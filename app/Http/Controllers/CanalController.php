@@ -23,8 +23,8 @@ class CanalController extends Controller
             ->orderBy('name', 'desc')
             ->take($limit)
             ->get();
-        dd($canal->toJson());
-        $conteudos = Canal::find()->conteudos->toJson();
+        
+        $conteudos = Canal::find($id)->conteudos->toJson();
         
         return $canal->toJson();
     }
