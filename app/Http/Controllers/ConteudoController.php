@@ -2,31 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Canal;
 use App\Conteudo;
 use Illuminate\Http\Request;
 
-class CanalController extends Controller
+class ConteudoController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Canal $canal, Request $request)
+    public function index()
     {
-        $limit = ($request->has('limit')) ? $request->query('limit') : 10;
-        $id = $request->has('id') ? $request->query('id') : 2 ;
-        
-        $canal = Canal::where('is_active', true)
-            ->where('slug','tv-anisio-teixeira')
-            ->orderBy('name', 'desc')
-            ->take($limit)
-            ->get();
-        dd($canal->toJson());
-        $conteudos = Canal::find()->conteudos->toJson();
-        
-        return $canal->toJson();
+        //
     }
 
     /**
@@ -53,10 +41,10 @@ class CanalController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Canal  $canal
+     * @param  \App\Conteudo  $conteudo
      * @return \Illuminate\Http\Response
      */
-    public function show(Canal $canal)
+    public function show(Conteudo $conteudo)
     {
         //
     }
@@ -64,10 +52,10 @@ class CanalController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Canal  $canal
+     * @param  \App\Conteudo  $conteudo
      * @return \Illuminate\Http\Response
      */
-    public function edit(Canal $canal)
+    public function edit(Conteudo $conteudo)
     {
         //
     }
@@ -76,10 +64,10 @@ class CanalController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Canal  $canal
+     * @param  \App\Conteudo  $conteudo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Canal $canal)
+    public function update(Request $request, Conteudo $conteudo)
     {
         //
     }
@@ -87,10 +75,10 @@ class CanalController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Canal  $canal
+     * @param  \App\Conteudo  $conteudo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Canal $canal)
+    public function destroy(Conteudo $conteudo)
     {
         //
     }

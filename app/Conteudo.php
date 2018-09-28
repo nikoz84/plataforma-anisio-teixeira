@@ -15,8 +15,8 @@ class Conteudo extends Model
         'options',
         'created_at'];
     
-    public function getConteudos()
+    public function getCanal()
     {
-        return $this->hasMany('App\Conteudo');
+        return $this->belongsTo('App\Canal');
     }
 }

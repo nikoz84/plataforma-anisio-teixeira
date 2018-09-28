@@ -15,33 +15,23 @@ class CreateConteudosTable extends Migration
     public function up()
     {
         Schema::create('conteudos', function (Blueprint $table) {
-            // ids
-            $table->bigIncrements('id');
-            $table->bigInteger('canal_id')->nullable();
-            $table->bigInteger('user_id');
-            // titulo
-            $table->string('title',120);
-            // aprovado
-            $table->boolean('is_approved')->default('false');
-            // destaque
-            $table->boolean('is_featured')->default('false');
-            // descrição
-            $table->text('description');
-            // autores e fonte
-            $table->text('autores');
-            $table->string('fonte',150);
-            // campo formato jsonb para acrecentar meta dados
-            $table->jsonb('options')->default('{}')->nullable();
-            // campos created_at e updated_at
-            $table->timestamps();
-            //campo deleted_at
-            $table->softDeletes();
             
-            // indices da tabelas
-            $table->index('id');
-            // chave foranea
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('canal_id')->references('id')->on('canais');
+            $table->bigIncrements('id')->comment('chave primaria do conteudo');
+            $table->bigInteger('canal_id')->nullable()->comment('chave foranea do canal');
+            $table->bigInteger('user_id')->comment('');
+            $table->string('title',120)->comment('título do conteudo');
+            $table->boolean('is_approved')->default('false')->comment('Se o conteúdo é aprovado');
+            $table->boolean('is_featured')->default('false')->comment('Se o conteúdo é destaque');
+            $table->text('description')->comment('Descrição do conteúdo');
+            $table->text('autores')->comment('Autores do conteúdo, como regra devem se adicionar separados com ponto e vírgula');
+            $table->string('fonte',150)->comment('Fonte do conteúdo');
+            $table->jsonb('options')->default('{}')->nullable()->comment('Campo de formato jsonb para acrecentar meta dados do conteúdo');
+            $table->timestamps()->comment('Campos created_at e updated_at');
+            $table->softDeletes()->comment('Campo deleted_at para no apagar completamente o conteúdo');
+            
+            $table->index('id')->comment('indice para busca');
+            $table->foreign('user_id')->references('id')->on('users')->comment('chave foranea do usuário');
+            $table->foreign('canal_id')->references('id')->on('canais')->comment('chave foranea do canal');;
         });
 
         // coluna para full text search

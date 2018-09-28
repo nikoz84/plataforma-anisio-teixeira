@@ -17,7 +17,7 @@ class Canal extends Model
         'created_at'
     ];
     
-    public function getConteudos()
+    public function conteudos()
     {
         return $this->hasMany('App\Conteudo');
     }
