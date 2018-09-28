@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateUserCanaisTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('user_canais', function (Blueprint $table) {
+            $table->bigInteger('user_id');
+            $table->bigInteger('canal_id');
+
+
+            $table->primary(['user_id', 'canal_id']);
+            
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('canal_id')->references('id')->on('canais');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('user_canais');
+    }
+}
