@@ -17,7 +17,7 @@ class CreateCanaisTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 100);
             $table->text('description');
-            $table->string('slug',100)->unique();
+            $table->string('slug', 100)->unique();
             $table->boolean('is_active')->default('false');
             // campo formato jsonb para acrecentar meta dados
             $table->jsonb('options')->default('{}')->nullable();

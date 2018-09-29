@@ -19,14 +19,14 @@ class CanalController extends Controller
         $id = $request->has('id') ? $request->query('id') : 2 ;
         
         $canal = Canal::where('is_active', true)
-            ->where('slug','tv-anisio-teixeira')
+            ->where('id',$id)
             ->orderBy('name', 'desc')
             ->take($limit)
             ->get();
         
         $conteudos = Canal::find($id)->conteudos->toJson();
         
-        return $canal->toJson();
+        return Canal::find($id)->conteudos->toJson();
     }
 
     /**

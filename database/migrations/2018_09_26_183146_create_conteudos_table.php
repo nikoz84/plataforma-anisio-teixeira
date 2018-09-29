@@ -26,7 +26,8 @@ class CreateConteudosTable extends Migration
             $table->text('autores')->comment('Autores do conteúdo, como regra devem se adicionar separados com ponto e vírgula');
             $table->string('fonte',150)->comment('Fonte do conteúdo');
             $table->jsonb('options')->default('{}')->nullable()->comment('Campo de formato jsonb para acrecentar meta dados do conteúdo');
-            $table->timestamps()->comment('Campos created_at e updated_at');
+            // cria campos created_at e updated_at
+            $table->timestamps();
             $table->softDeletes()->comment('Campo deleted_at para no apagar completamente o conteúdo');
             
             $table->index('id')->comment('indice para busca');
