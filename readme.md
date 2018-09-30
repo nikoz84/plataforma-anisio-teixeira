@@ -30,7 +30,6 @@ Postgresql tem embutido um sistema de buscas por texto completo (FULL TEXT SEARC
 - Indices invertidos (GIN index). Este é o coração da busca o que permitira que a busca seja mais rápida.
 - Uso de Extensão UNACCENT().
   
-
 ## INSTALAÇÃO
 
 Clone a aplicação desde o repositório em GitHub
