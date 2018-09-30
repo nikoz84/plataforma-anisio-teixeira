@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Conteudo;
+use App\Canal;
+
 use Illuminate\Http\Request;
 
 class ConteudoController extends Controller
@@ -12,9 +14,19 @@ class ConteudoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $limit = ($request->has('limit')) ? $request->query('limit') : 10;
+        $id = $request->has('canal') ? $request->query('canal') : 2;
+        $orderBy = $request->has('order') ? $request->query('order') : 'title';
+        
+        $conteudos = Conteudo::where('is_approved', true)
+            ->where('canal_id',$id)
+            ->orderBy($orderBy, 'desc')
+            ->take($limit)
+            ->get();
+
+        return $conteudos->toJson();    
     }
 
     /**

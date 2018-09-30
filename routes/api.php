@@ -20,3 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/canais', 'CanalController@index');
 
 Route::post('/canais', 'CanalController@create');
+
+
+Route::get('/conteudos', 'ConteudoController@index');

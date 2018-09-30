@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Canal;
-use App\Conteudo;
 use Illuminate\Http\Request;
 
 class CanalController extends Controller
@@ -13,10 +12,10 @@ class CanalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Canal $canal, Request $request)
+    public function index(Request $request)
     {
         $limit = ($request->has('limit')) ? $request->query('limit') : 10;
-        $id = $request->has('id') ? $request->query('id') : 2 ;
+        $id = $request->has('id') ? $request->query('id') : 2;
         
         $canal = Canal::where('is_active', true)
             ->where('id',$id)
@@ -24,9 +23,8 @@ class CanalController extends Controller
             ->take($limit)
             ->get();
         
-        $conteudos = Canal::find($id)->conteudos->toJson();
         
-        return Canal::find($id)->conteudos->toJson();
+        return $canal->toJson();
     }
 
     /**

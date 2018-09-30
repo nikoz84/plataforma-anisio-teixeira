@@ -1,58 +1,55 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# plataforma-anisio-teixeira
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+Plataforma Anísio Teixera é uma plataforma de codigo aberto da Secretaria da Educação do Estado da Bahia.
 
-## About Laravel
+O Plataforma Anísio Teixeira – PAT é um projeto de aprendizagem (baseado em LARAVEL FRAMEWORK de PHP) voltado ao compartilhamento de conteúdos digitais através de licenças livres, disponibilizado na internet no endereço (http://pat.educacao.ba.gov.br) para acesso e utilização de todos.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+Você poderá criar canais de forma dinâmica, conteúdos digitais, aplicativos educaionais em diferentes categorias.  
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+SOFTWARE LIVRE
+Estamos liberando o código da aplicação para cumprir com o propósito para o qual foi criado o ex Ambiente Educacional Web agora Plataforma Anísio Teixeira, ser um software livre, para que qualquer pessoa ou também outras secretarias de educação no Brasil sejam parte deste projeto aberto para a comunidade de desenvolvimento, por isso o convidamos a instalar o aplicativo em seu servidor local para testes ou para produção. Serão Liberadas diferentes versões para que o software possa ser distribuido.
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+## COMO ESTA IMPLEMENTADO
 
-## Learning Laravel
+* PHP (7.0 ou superior)
+* Laravel Framework (5.5 ou superior)
+* Postgresql (9.5 ou superior) com suporte a JSONB e Full Text Search
+* Vuejs (2.5 ou superior) camada do Front-End para uma melhor experiencia de usuário
+* Implentação de API restful api-v1
+* Templates Blade para redenrização desde o servidor (SSR)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+## BANCO DE DADOS
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+Se otimizaram as tabelas para melhorar a performance da aplicação para evitar aumentar a quantidade de tabelas para criar um objeto.
 
-## Laravel Sponsors
+O formato JSONB vai ajudar para escalar a aplicação e evitar criar mais tabelas para representar um objeto.
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
+Postgresql tem embutido um sistema de buscas por texto completo (FULL TEXT SEARCH) o que ajudará a:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Pulse Storm](http://www.pulsestorm.net/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
+- Buscar por tags, título, fontes, autores e descrição; cada um com um peso específico. Exemplo: tags (A), titulo (A), fontes (B), autores(C), descrição (D).
+- Indices invertidos (GIN index). Este é o coração da busca o que permitira que a busca seja mais rápida.
+- Uso de Extensão UNACCENT().
+  
 
-## Contributing
+## INSTALAÇÃO
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Clone a aplicação desde o repositório em GitHub
 
-## Security Vulnerabilities
+``$ git clone https://github.com/nikoz84/plataforma-anisio-teixeira.git``
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Instale as dependencias do Framework Laravel e da aplicação:
 
-## License
+ `` $ composer install ``
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Corra o servidor de desenvolvimento embutido:
+
+``$ php artisan serve``
+
+No navegador de internet escreva:
+
+``http://127.0.0.1:8000``
+
+Instale as dependencias de desenvolvimento do FRONTEND:
+
+ `` $ npm install ``
+
