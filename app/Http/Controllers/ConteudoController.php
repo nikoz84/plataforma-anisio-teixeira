@@ -17,8 +17,8 @@ class ConteudoController extends Controller
     public function index(Request $request)
     {
         $limit = ($request->has('limit')) ? $request->query('limit') : 10;
-        $id = $request->has('canal') ? $request->query('canal') : 2;
-        $orderBy = $request->has('order') ? $request->query('order') : 'title';
+        $id = ($request->has('canal')) ? $request->query('canal') : 2;
+        $orderBy = ($request->has('order')) ? $request->query('order') : 'title';
         
         $conteudos = Conteudo::where('is_approved', true)
             ->where('canal_id',$id)
