@@ -19,12 +19,11 @@ class CreateAplicativosTable extends Migration
             $table->string('name',120)->comment('Nome do aplicativo');
             $table->text('description')->comment('Descrição do aplicativo');
             $table->boolean('is_featured')->comment('Se o aplicativo é destaque');
-            // campo formato jsonb para acrecentar meta dados
             $table->jsonb('options')->default('{}')->nullable()->comment('Meta data do aplicativo');
             // campos created_at e updated_at
             $table->timestamps();
             // indice    
-            $table->index('id');
+            $table->index('id')->comment('Btree index por default');
             // chave foranea usuario
             $table->foreign('user_id')->references('id')->on('users');
         });

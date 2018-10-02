@@ -16,5 +16,6 @@ Route::get('/', function () {
 });
 
 Route::get('/devs', function() {
-    dd('sdksd');
+    
+    dd(session()->get('test'));
 });

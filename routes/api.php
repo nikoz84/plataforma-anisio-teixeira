@@ -17,9 +17,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// CANAIS
 Route::get('/canais', 'CanalController@index');
-
-Route::post('/canais', 'CanalController@create');
-
-
+Route::post('/canais/create', 'CanalController@create');
+Route::put('/canais/update/{id}', 'CanalController@update');
+Route::delete('/conais/delete/{id}', 'CanalController@destroy');
+// CONTEUDOS
 Route::get('/conteudos', 'ConteudoController@index');
+Route::post('/conteudos/create', 'ConteudoController@create');
+Route::put('/conteudos/update/{id}', 'ConteudoController@update');
+Route::delete('/conteudos/delete/{id}', 'ConteudoController@destroy');
+// TAGS
+Route::resource('/tags','TagController');
+Route::post('/tags/create','TagController@create');
+Route::put('/tags/update/{id}','TagController@update');
+Route::delete('/tags/delete/{id}','TagController@destroy');    

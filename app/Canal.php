@@ -8,13 +8,15 @@ class Canal extends Model
 {
     protected $table = 'canais';
     protected $id = 'id';
+    /**
+     * $fillable São todos os atributos que podem ser asignables
+     */
     protected $fillable = [
         'name', 
         'description', 
         'is_active', 
         'slug', 
-        'options',
-        'created_at'
+        'options'
     ];
     
     public function conteudos()

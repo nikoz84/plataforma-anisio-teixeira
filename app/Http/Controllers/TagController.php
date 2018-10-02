@@ -15,6 +15,7 @@ class TagController extends Controller
     public function index()
     {
         //
+        
     }
 
     /**
@@ -25,6 +26,7 @@ class TagController extends Controller
     public function create()
     {
         //
+        
     }
 
     /**
@@ -58,6 +60,7 @@ class TagController extends Controller
     public function edit(Tag $tag)
     {
         //
+        
     }
 
     /**
@@ -70,6 +73,7 @@ class TagController extends Controller
     public function update(Request $request, Tag $tag)
     {
         //
+        
     }
 
     /**
@@ -81,5 +85,6 @@ class TagController extends Controller
     public function destroy(Tag $tag)
     {
         //
+        
     }
 }

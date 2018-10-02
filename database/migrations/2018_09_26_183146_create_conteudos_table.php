@@ -18,7 +18,7 @@ class CreateConteudosTable extends Migration
             
             $table->bigIncrements('id')->comment('Identificador único e chave primaria do conteúdo');
             $table->bigInteger('canal_id')->nullable()->comment('Chave foranea do canal');
-            $table->bigInteger('user_id')->comment('Chave foranea do usuario');
+            $table->bigInteger('user_id')->unsigned()->comment('Chave foranea do usuario');
             $table->string('title',120)->comment('Título do conteúdo');
             $table->boolean('is_approved')->default('false')->comment('Se o conteúdo é aprovado');
             $table->boolean('is_featured')->default('false')->comment('Se o conteúdo é destaque');

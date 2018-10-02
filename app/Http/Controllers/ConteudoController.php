@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Conteudo;
-use App\Canal;
 
 use Illuminate\Http\Request;
 
@@ -37,39 +36,7 @@ class ConteudoController extends Controller
     public function create()
     {
         //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Conteudo  $conteudo
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Conteudo $conteudo)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Conteudo  $conteudo
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Conteudo $conteudo)
-    {
-        //
+        return '';
     }
 
     /**
@@ -79,9 +46,24 @@ class ConteudoController extends Controller
      * @param  \App\Conteudo  $conteudo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Conteudo $conteudo)
+    public function update(Request $request, $id)
     {
-        //
+        $conteudo = Conteudo::find($id);
+        
+        $data = [
+            'user_id'=> 2,
+            'title' => $request->get('title'),
+            'description' => $request->get('description'),
+            'is_featured' => $request->get('is_featured'), 
+            'is_approved' => $request->get('is_approved'), 
+            'options' => $request->get('options')
+        ];
+        
+        $conteudo->save($data);
+        
+        return response()->json($conteudo->toJson());
+
+        
     }
 
     /**
@@ -90,8 +72,22 @@ class ConteudoController extends Controller
      * @param  \App\Conteudo  $conteudo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Conteudo $conteudo)
+    public function destroy($id)
     {
-        //
+        $conteudo = Conteudo::find($id);
+        $resp = [];
+        if(is_null($conteudo)){
+            $resp = [
+                'menssage' => 'Conteúdo não encontrado',
+                'is_deleted' => false
+            ];
+        }else {
+            $resp = [
+                'menssage' => "Conteúdo de id: {$id} foi apagado com sucesso!!",
+                'is_deleted' => $conteudo->delete()
+            ];
+        }
+        
+        return response()->json($resp);
     }
 }
