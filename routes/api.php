@@ -29,6 +29,7 @@ Route::put('/conteudos/update/{id}', 'ConteudoController@update');
 Route::delete('/conteudos/delete/{id}', 'ConteudoController@delete');
 // TAGS
 Route::get('/tags','TagController@list');
+Route::get('/tags/search/{termo}','TagController@search');
 Route::post('/tags/create','TagController@create');
 Route::put('/tags/update/{id}','TagController@update');
 Route::delete('/tags/delete/{id}','TagController@delete');    

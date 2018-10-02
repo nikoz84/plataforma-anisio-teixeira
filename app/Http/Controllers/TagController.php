@@ -13,12 +13,15 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list()
+    public function list(Request $request)
     {
+        $limit = ($request->has('limit')) ? $request->query('limit'): 5;
+        $page = ($request->has('page')) ? $request->query('page'): 1;
+
         $tags = DB::table('tags')
                     ->select(['id','name','searched'])
-                    ->limit(2)
-                    ->offset(1)
+                    ->limit($limit)
+                    ->offset($page)
                     ->get();
         
         return response()->json(
@@ -43,7 +46,7 @@ class TagController extends Controller
             ]);
         
         return response()->json([
-                'menssage' => "Tag: {$name} adicionada com sucesso",
+                'menssage' => "Tag: <b>{$name}</b> adicionada com sucesso",
                 'id' => $id
             ]);
     }
@@ -58,17 +61,51 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $name = $request->get('name');
+        $name = ($request->has('name')) ? $request->get('name'): false;
+        $is_update = false;
+        if($name){
+            $is_update = DB::table('tags')
+                ->where('id', $id)
+                ->update(['name' => $name]);
+        }
 
-        DB::table('tags')
-            ->where('id', $id)
-            ->update(['name' => $name]);
+        return response()->json([
+            'message' => "Nome de tag: {$name} mudado com sucesso",
+            'is_update' => $is_update
+        ]);
+
     }
 
-    public function incrementSearchTag(Rquest $request, $id){
+    public function incrementSearchTag(Rquest $request, $id)
+    {
         
-        DB::table('tags')->increment('searched', 1);
+        if($request->has('searched')){
+            
+            $is_updated = DB::table('tags')
+                                ->where('id', $id)
+                                ->increment('searched', 1);
+        }
+
+        response()->json([
+            'is_updated' => $is_updated,
+            'id' => $id
+        ]);
+        
     }
+
+    public function search(Request $request, $termo)
+    {
+        $tags = DB::table('tags')
+                    ->select(['id','name'])
+                    ->where(DB::raw('unaccent(lower(name))'), 'ILIKE' , DB::raw("unaccent(lower('%{$termo}%'))"))
+                    ->get();
+        
+        return response()->json([
+            'message' => 'Resultados da busca',
+            'items' => $tags
+        ]);    
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -77,6 +114,10 @@ class TagController extends Controller
      */
     public function delete($id)
     {
-        //
+        if($id){
+            DB::table('tags')->where('id', '=', $id)->delete();
+        }
+
+        
     }
 }
