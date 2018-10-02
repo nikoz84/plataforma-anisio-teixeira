@@ -25,7 +25,7 @@ class ConteudoController extends Controller
             ->take($limit)
             ->get();
 
-        return $conteudos->toJson();    
+        return $conteudos->toJson(JSON_PRETTY_PRINT);    
     }
 
     /**
