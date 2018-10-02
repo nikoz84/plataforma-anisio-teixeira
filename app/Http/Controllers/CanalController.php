@@ -13,27 +13,23 @@ class CanalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function list(Request $request)
     {
-        $canal = Canal::orderBy('created_at', 'name')->paginate(2);
-        return view('canais.index',['canais'=> $canal]);
+        $limit = ($request->has('limit')) ? $request->query('limit') : 10;
+        $id = ($request->has('canal')) ? $request->query('canal') : 2;
+        $orderBy = ($request->has('order')) ? $request->query('order') : 'title';
+        $page = ($request->has('page')) ? $request->query('page') : 1;
+        
+        $canal = Canal::where('is_approved', true)
+            ->where('id',$id)
+            ->orderBy($orderBy, 'description')
+            ->limit($limit)
+            ->offset($page)
+            ->get();
+
+        return $canal->toJson(JSON_PRETTY_PRINT);
     }
-
-    //public function index(Canal $canal, Request $request)
-    //{
-        //$limit = ($request->has('limit')) ? $request->query('limit') : 10;
-        //$id = $request->has('id') ? $request->query('id') : 2 ;
-        
-       // $canal = Canal::where('is_active', true)
-            //->where('slug','tv-anisio-teixeira')
-            //->orderBy('name', 'desc')
-            //->take($limit)
-            //->get();
-       
-        
-       // return $canal->toJson();
-    //}
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -43,46 +39,7 @@ class CanalController extends Controller
     {
         return view('canal.create');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(CanalRequest $request)
-    {
-        $canal = new Canal;
-        $canal->name = $request->name;
-        $canal->description = $request->description;
-        $canal->slug = $request->slug;
-        $canal->is_active = $request->is_active;
-        $canal->options = $request->options;
-        $canal->created_at = $request->created_at;
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Canal  $canal
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Canal $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Canal  $canal
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Canal $canal)
-    {
-        $canal = Canal::findOrFail($id);
-        return view('canal.edit',compact('canal'));
-    }
+ 
 
     /**
      * Update the specified resource in storage.
@@ -91,17 +48,21 @@ class CanalController extends Controller
      * @param  \App\Canal  $canal
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Canal $canal)
+    public function update(Request $request, $id)
     {
-        $canal = Canal::findOrFail($id);
-        $canal->name        = $request->name;
-        $canal->description = $request->description;
-        $canal->slug        = $request->slug;
-        $canal->is_active   = $request->is_active;
-        $canal->options     = $request->options;
-        $canal->created_at  = $request->created_at;
-        $canal->save();
-        return redirect()->route('canal.index')->with('message', 'Canal atualizado com sucesso!');
+        $canal = Conteudo::find($id);
+        
+        $data = [
+            'title' => $request->get('title'),
+            'description' => $request->get('description'),
+            'is_featured' => $request->get('is_featured'), 
+            'is_approved' => $request->get('is_approved'), 
+            'options' => $request->get('options')
+        ];
+        
+        $canal->save($data);
+        
+        return response()->json($canal->toJson());
     }
 
     /**
@@ -110,10 +71,22 @@ class CanalController extends Controller
      * @param  \App\Canal  $canal
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Canal $canal)
+    public function delete($id)
     {
-        $canal = Canal::findOrFail($id);
-        $canal->delete();
-        return redirect()->route('canal.index')->with('alert-success','Conteúdo deste canal foi deletado!');
+        $canal = Conteudo::find($id);
+        $resp = [];
+        if(is_null($canal)){
+            $resp = [
+                'menssage' => 'Canal não encontrado',
+                'is_deleted' => false
+            ];
+        }else {
+            $resp = [
+                'menssage' => "Canal de id: {$id} foi excluido com sucesso!!",
+                'is_deleted' => $canal->delete()
+            ];
+        }
+        
+        return response()->json($resp);
     }
 }
