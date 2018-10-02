@@ -17,6 +17,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/canais', 'CanalController@index');
+Route::get('/canal', 'CanalController@index');
 
-Route::post('/canais', 'CanalController@create');
+
+Route::post('/canais', function(){
+    return json_encode(["error"=>"Falha ao carregar"]);
+});
+
+Route::post('/canais/inserir', 'CanalController@index');
+

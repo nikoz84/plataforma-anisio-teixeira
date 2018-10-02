@@ -16,5 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/devs', function() {
-    dd('sdksd');
+    //dd('sdksd');
 });
+
+Route::get('canal/store', 'CanalController@getInserir');
