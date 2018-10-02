@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Conteudo;
-use App\Canal;
 
 use Illuminate\Http\Request;
 
@@ -26,7 +25,7 @@ class ConteudoController extends Controller
             ->take($limit)
             ->get();
 
-        return $conteudos->toJson();    
+        return $conteudos->toJson(JSON_PRETTY_PRINT);    
     }
 
     /**

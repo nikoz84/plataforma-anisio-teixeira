@@ -23,3 +23,9 @@ Route::post('/canais', 'CanalController@create');
 
 
 Route::get('/conteudos', 'ConteudoController@index');
+
+
+Route::get('/tags','TagController@list');
+Route::post('/tags/create','TagController@create');
+Route::put('/tags/update/{id}','TagController@update');
+Route::delete('/tags/delete/{id}','TagController@delete');

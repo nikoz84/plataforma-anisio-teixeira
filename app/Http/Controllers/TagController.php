@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Tag;
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Http\Request;
 
 class TagController extends Controller
@@ -12,9 +14,24 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function list(Request $request)
     {
-        //
+        $limit = ($request->has('limit')) ? $request->query('limit'): 5;
+        if( $limit > 60 || $limit < 0 ){
+            $limit = 5;
+        }
+
+        $tags = DB::table('tags')
+                    ->select(['id', 'name', 'searched'])
+                    ->orderBy('name', 'desc')
+                    ->offset(1)
+                    ->limit($limit)
+                    ->get();
+        
+        return response()->json([
+            'titulo'=> 'Lista de Tags',
+            'tags' => $tags
+        ]);
     }
 
     /**
@@ -22,43 +39,18 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $data = [
+            'all' => $request->all()
+        ];
+        return response()->json([
+            'hola' => true,
+            'data' => $data
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Tag $tag)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Tag $tag)
-    {
-        //
-    }
+    
 
     /**
      * Update the specified resource in storage.
@@ -67,9 +59,12 @@ class TagController extends Controller
      * @param  \App\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tag $tag)
+    public function update(Request $request, $id)
     {
-        //
+        return response()->json([
+            'hola' => true,
+            'id' => $id
+        ]);
     }
 
     /**
@@ -78,8 +73,12 @@ class TagController extends Controller
      * @param  \App\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tag $tag)
+    public function delete(Request $request, $id)
     {
-        //
+        return response()->json([
+            'hola' => true,
+            'id' => $id
+        ]);
+
     }
 }
