@@ -100,4 +100,17 @@ class ConteudoController extends Controller
         
         return response()->json($resp);
     }
+
+    public function search(Request $request, $termo)
+    {
+        $tags = DB::table('tags')
+                    ->select(['id','title'])
+                    ->where(DB::raw('unaccent(lower(name))'), 'ILIKE' , DB::raw("unaccent(lower('%{$termo}%'))"))
+                    ->get();
+        
+        return response()->json([
+            'message' => 'Resultados da busca',
+            'items' => $tags
+        ]);    
+    }
 }
