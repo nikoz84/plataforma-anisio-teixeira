@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Canal;
 use App\Conteudo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CanalController extends Controller
 {
@@ -35,9 +36,16 @@ class CanalController extends Controller
      */
     public function create()
     {
-       
-    }
- 
+        DB::table('canais')->insert(
+            [
+                'name' => 'Canal Teste',
+                'description' => 'Adicionando um novo canal no banco de dados.',
+                'slug' => 'http://wwww',
+                'is_active' => true 
+            ]
+        );
+        return response()->json($canal->toJson());
+    } 
 
     /**
      * Update the specified resource in storage.
