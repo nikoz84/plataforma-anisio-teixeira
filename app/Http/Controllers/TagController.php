@@ -35,7 +35,7 @@ class TagController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resource.a
      *
      * @return \Illuminate\Http\Response
      */
