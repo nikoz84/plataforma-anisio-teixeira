@@ -15,14 +15,15 @@ class CanalController extends Controller
      */
     public function list(Request $request)
     {
+        
         $limit = ($request->has('limit')) ? $request->query('limit') : 10;
-        $id = ($request->has('canal')) ? $request->query('canal') : 2;
-        $orderBy = ($request->has('order')) ? $request->query('order') : 'title';
+        //$id = ($request->has('canal')) ? $request->query('canal') : 2;
+        //$orderBy = ($request->has('order')) ? $request->query('order') : 'description';
         $page = ($request->has('page')) ? $request->query('page') : 1;
         
-        $canal = Canal::where('is_approved', true)
-            ->where('id',$id)
-            ->orderBy($orderBy, 'description')
+        $canal = Canal::where('is_active', true)
+            //->where('id',$id)
+            //->orderBy($orderBy, 'description')
             ->limit($limit)
             ->offset($page)
             ->get();
@@ -37,7 +38,7 @@ class CanalController extends Controller
      */
     public function create()
     {
-        return view('canal.create');
+       
     }
  
 
