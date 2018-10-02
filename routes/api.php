@@ -17,12 +17,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/canal', 'CanalController@index');
-
-
-Route::post('/canais', function(){
-    return json_encode(["error"=>"Falha ao carregar"]);
-});
-
-Route::post('/canais/inserir', 'CanalController@index');
-
+// CANAIS
+Route::get('/canais', 'CanalController@list');
+Route::post('/canais/create', 'CanalController@create');
+Route::put('/canais/update/{id}', 'CanalController@update');
+Route::delete('/canais/delete/{id}', 'CanalController@delete');
+// CONTEUDOS
+Route::get('/conteudos', 'ConteudoController@list');
+Route::post('/conteudos/create', 'ConteudoController@create');
+Route::put('/conteudos/update/{id}', 'ConteudoController@update');
+Route::delete('/conteudos/delete/{id}', 'ConteudoController@delete');
+// TAGS
+Route::get('/tags','TagController@list');
+Route::post('/tags/create','TagController@create');
+Route::put('/tags/update/{id}','TagController@update');
+Route::delete('/tags/delete/{id}','TagController@delete');    

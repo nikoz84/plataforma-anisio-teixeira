@@ -12,7 +12,7 @@ class OptionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function list()
     {
         //
     }
@@ -23,39 +23,6 @@ class OptionsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Options  $options
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Options $options)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Options  $options
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Options $options)
     {
         //
     }
@@ -78,7 +45,7 @@ class OptionsController extends Controller
      * @param  \App\Options  $options
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Options $options)
+    public function delete(Options $options)
     {
         //
     }
