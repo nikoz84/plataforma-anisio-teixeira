@@ -17,16 +17,19 @@ class CreateConteudosTable extends Migration
         Schema::create('conteudos', function (Blueprint $table) {
             
             $table->bigIncrements('id')->comment('Identificador único e chave primaria do conteúdo');
-            $table->bigInteger('canal_id')->nullable()->comment('Chave foranea do canal');
+            $table->bigInteger('canal_id')->unsigned()->nullable()->comment('Chave foranea do canal');
             $table->bigInteger('user_id')->unsigned()->comment('Chave foranea do usuario');
             $table->string('title',120)->comment('Título do conteúdo');
             $table->boolean('is_approved')->default('false')->comment('Se o conteúdo é aprovado');
             $table->boolean('is_featured')->default('false')->comment('Se o conteúdo é destaque');
+            $table->boolean('is_site')->default(false)->comment('Se o conteuúdo é um site Temático');
             $table->text('description')->comment('Descrição do conteúdo');
             $table->text('autores')->comment('Autores do conteúdo, como regra devem se adicionar separados com ponto e vírgula');
             $table->string('fonte',150)->comment('Fonte do conteúdo');
+            $table->integer('qt_downloads')->default(0)->nullable()->comment('Quantidade de downloads');
+            $table->integer('qt_acessos')->default(0)->nullable()->comment('Quantidade de acessos');
             $table->jsonb('options')->default('{}')->nullable()->comment('Campo de formato jsonb para acrecentar meta dados do conteúdo');
-            $table->timestamps()->comment('Campos created_at e updated_at');
+            $table->timestamps();
             $table->softDeletes()->comment('Campo deleted_at para no apagar completamente o conteúdo');
             
             $table->index('id')->comment('indice para busca');

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Conteudo;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class ConteudoController extends Controller
 {
     /**
@@ -26,7 +26,13 @@ class ConteudoController extends Controller
             ->offset($page)
             ->get();
 
-        return $conteudos->toJson(JSON_PRETTY_PRINT);    
+        $data = $conteudos->map(function ($conteudo) {
+            return collect($conteudo->toArray())
+                ->only(['id', 'title', 'autores','fonte', 'options'])
+                ->all();
+        });    
+
+        return $data->toJson(JSON_PRETTY_PRINT);    
     }
 
     /**
@@ -36,7 +42,11 @@ class ConteudoController extends Controller
      */
     public function create()
     {
-        //
+        DB::table('conteudos')->insert(
+            [
+                'email' => 'john@example.com', 'votes' => 0
+            ]
+        );
         return '';
     }
 
