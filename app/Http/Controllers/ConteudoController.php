@@ -13,16 +13,18 @@ class ConteudoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function list(Request $request)
     {
         $limit = ($request->has('limit')) ? $request->query('limit') : 10;
         $id = ($request->has('canal')) ? $request->query('canal') : 2;
         $orderBy = ($request->has('order')) ? $request->query('order') : 'title';
+        $page = ($request->has('page')) ? $request->query('page') : 1;
         
         $conteudos = Conteudo::where('is_approved', true)
             ->where('canal_id',$id)
             ->orderBy($orderBy, 'desc')
-            ->take($limit)
+            ->limit($limit)
+            ->offset($page)
             ->get();
 
         return $conteudos->toJson(JSON_PRETTY_PRINT);    
@@ -51,7 +53,6 @@ class ConteudoController extends Controller
         $conteudo = Conteudo::find($id);
         
         $data = [
-            'user_id'=> 2,
             'title' => $request->get('title'),
             'description' => $request->get('description'),
             'is_featured' => $request->get('is_featured'), 
@@ -72,7 +73,7 @@ class ConteudoController extends Controller
      * @param  \App\Conteudo  $conteudo
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
         $conteudo = Conteudo::find($id);
         $resp = [];
