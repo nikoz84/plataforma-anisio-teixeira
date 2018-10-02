@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.1" last-position="0,0" last-zoom="0.75"
+	 default-schema="public" default-owner="postgres">
+<role name="niko"
+      superuser="true"
+      createdb="true"
+      replication="true"
+      createrole="true"
+      inherit="true"
+      login="true"
+      encrypted="true"
+      connlimit="100"
+      password="********">
+</role>
+
+<database name="migra_pat" encoding="UTF8" lc-collate="pt_BR.UTF-8" lc-ctype="pt_BR.UTF-8" is-template="false" allow-conns="true">
+	<role name="niko"/>
+	<tablespace name="pg_default"/>
+</database>
+
+<schema name="public" rect-visible="true" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<sequence name="migrations_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="niko"/>
+</sequence>
+
+<table name="migrations">
+	<schema name="public"/>
+	<role name="niko"/>
+	<position x="60" y="40"/>
+	<column name="id" not-null="true" sequence="public.migrations_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="migration" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="batch" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="migrations_pkey" type="pk-constr" table="public.migrations">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="users_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="niko"/>
+</sequence>
+
+<table name="users">
+	<schema name="public"/>
+	<role name="niko"/>
+	<position x="520" y="40"/>
+	<column name="id" not-null="true" sequence="public.users_id_seq">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="email" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="password" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="options" not-null="true">
+		<type name="jsonb" length="0"/>
+	</column>
+	<column name="remember_token">
+		<type name="character varying" length="100"/>
+	</column>
+	<column name="created_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="updated_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<constraint name="users_pkey" type="pk-constr" table="public.users">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="users_email_unique" type="uq-constr" table="public.users">
+		<columns names="email" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="password_resets">
+	<schema name="public"/>
+	<role name="niko"/>
+	<position x="60" y="260"/>
+	<column name="email" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="token" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="created_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+</table>
+
+<index name="password_resets_email_index" table="public.password_resets"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="email"/>
+		</idxelement>
+</index>
+
+<sequence name="canais_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="niko"/>
+</sequence>
+
+<table name="canais">
+	<schema name="public"/>
+	<role name="niko"/>
+	<position x="1180" y="360"/>
+	<column name="id" not-null="true" sequence="public.canais_id_seq">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<column name="description" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="slug" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<column name="is_active" not-null="true" default-value="false">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="options" default-value="'{}'">
+		<type name="jsonb" length="0"/>
+	</column>
+	<column name="created_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="updated_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="deleted_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<constraint name="canais_pkey" type="pk-constr" table="public.canais">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<index name="canais_id_index" table="public.canais"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="id"/>
+		</idxelement>
+</index>
+
+<index name="canais_options_index" table="public.canais"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="gin" factor="90">
+		<idxelement use-sorting="false">
+			<column name="options"/>
+		</idxelement>
+</index>
+
+<sequence name="conteudos_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="niko"/>
+</sequence>
+
+<table name="conteudos">
+	<schema name="public"/>
+	<role name="niko"/>
+	<position x="1700" y="40"/>
+	<column name="id" not-null="true" sequence="public.conteudos_id_seq">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="canal_id">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="user_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="title" not-null="true">
+		<type name="character varying" length="120"/>
+	</column>
+	<column name="is_approved" not-null="true" default-value="false">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="is_featured" not-null="true" default-value="false">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="description" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="options" default-value="'{}'">
+		<type name="jsonb" length="0"/>
+	</column>
+	<column name="created_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="updated_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="deleted_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="ts_documento">
+		<type name="tsvector" length="0"/>
+	</column>
+	<constraint name="conteudos_pkey" type="pk-constr" table="public.conteudos">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<index name="conteudos_id_index" table="public.conteudos"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="id"/>
+		</idxelement>
+</index>
+
+<index name="conteudos_ts_documento_index" table="public.conteudos"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="gin" factor="90">
+		<idxelement use-sorting="false">
+			<column name="ts_documento"/>
+		</idxelement>
+</index>
+
+<index name="conteudos_options_index" table="public.conteudos"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="gin" factor="90">
+		<idxelement use-sorting="false">
+			<column name="options"/>
+		</idxelement>
+</index>
+
+<sequence name="tags_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="niko"/>
+</sequence>
+
+<table name="tags">
+	<schema name="public"/>
+	<role name="niko"/>
+	<position x="1100" y="760"/>
+	<column name="id" not-null="true" sequence="public.tags_id_seq">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="nome" not-null="true">
+		<type name="character varying" length="120"/>
+	</column>
+	<column name="busca" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="created_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="updated_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<constraint name="tags_pkey" type="pk-constr" table="public.tags">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="aplicativos_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="niko"/>
+</sequence>
+
+<table name="aplicativos">
+	<schema name="public"/>
+	<role name="niko"/>
+	<position x="100" y="380"/>
+	<column name="id" not-null="true" sequence="public.aplicativos_id_seq">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="user_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="120"/>
+	</column>
+	<column name="description" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="is_featured" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="options" default-value="'{}'">
+		<type name="jsonb" length="0"/>
+	</column>
+	<column name="created_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="updated_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<constraint name="aplicativos_pkey" type="pk-constr" table="public.aplicativos">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<index name="aplicativos_id_index" table="public.aplicativos"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="id"/>
+		</idxelement>
+</index>
+
+<table name="conteudo_tags">
+	<schema name="public"/>
+	<role name="niko"/>
+	<position x="1700" y="740"/>
+	<column name="conteudo_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="tag_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="conteudo_tags_pkey" type="pk-constr" table="public.conteudo_tags">
+		<columns names="conteudo_id,tag_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="aplicativo_tags">
+	<schema name="public"/>
+	<role name="niko"/>
+	<position x="200" y="780"/>
+	<column name="aplicativo_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="tag_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="aplicativo_tags_pkey" type="pk-constr" table="public.aplicativo_tags">
+		<columns names="aplicativo_id,tag_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="options_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="niko"/>
+</sequence>
+
+<table name="options">
+	<schema name="public"/>
+	<role name="niko"/>
+	<position x="60" y="140"/>
+	<column name="id" not-null="true" sequence="public.options_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="nome" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="meta_data" default-value="'{}'">
+		<type name="jsonb" length="0"/>
+	</column>
+	<constraint name="options_pkey" type="pk-constr" table="public.options">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<index name="options_meta_data_index" table="public.options"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="gin" factor="90">
+		<idxelement use-sorting="false">
+			<column name="meta_data"/>
+		</idxelement>
+</index>
+
+<table name="user_canais">
+	<schema name="public"/>
+	<role name="niko"/>
+	<position x="540" y="400"/>
+	<column name="user_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="canal_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="user_canais_pkey" type="pk-constr" table="public.user_canais">
+		<columns names="user_id,canal_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<constraint name="conteudos_user_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.users" table="public.conteudos">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="conteudos_canal_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.canais" table="public.conteudos">
+	<columns names="canal_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="aplicativos_user_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.users" table="public.aplicativos">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="conteudo_tags_conteudo_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.conteudos" table="public.conteudo_tags">
+	<columns names="conteudo_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="conteudo_tags_tag_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.tags" table="public.conteudo_tags">
+	<columns names="tag_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="aplicativo_tags_aplicativo_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.aplicativos" table="public.aplicativo_tags">
+	<columns names="aplicativo_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="aplicativo_tags_tag_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.tags" table="public.aplicativo_tags">
+	<columns names="tag_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="user_canais_user_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.users" table="public.user_canais">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="user_canais_canal_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.canais" table="public.user_canais">
+	<columns names="canal_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="rel_conteudos_users" type="relfk"
+	 custom-color="#40ff65"
+	 src-table="public.conteudos"
+	 dst-table="public.users" reference-fk="conteudos_user_id_foreign"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_conteudos_canais" type="relfk"
+	 custom-color="#2fcdb3"
+	 src-table="public.conteudos"
+	 dst-table="public.canais" reference-fk="conteudos_canal_id_foreign"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_aplicativos_users" type="relfk"
+	 custom-color="#87149f"
+	 src-table="public.aplicativos"
+	 dst-table="public.users" reference-fk="aplicativos_user_id_foreign"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_conteudo_tags_conteudos" type="relfk"
+	 custom-color="#aba71a"
+	 src-table="public.conteudo_tags"
+	 dst-table="public.conteudos" reference-fk="conteudo_tags_conteudo_id_foreign"
+	 src-required="false" dst-required="false">
+	<label ref-type="name-label">
+		<position x="43.3947" y="47.2393"/>
+	</label>
+</relationship>
+
+<relationship name="rel_conteudo_tags_tags" type="relfk"
+	 custom-color="#54fdfe"
+	 src-table="public.conteudo_tags"
+	 dst-table="public.tags" reference-fk="conteudo_tags_tag_id_foreign"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_aplicativo_tags_aplicativos" type="relfk"
+	 custom-color="#e3410c"
+	 src-table="public.aplicativo_tags"
+	 dst-table="public.aplicativos" reference-fk="aplicativo_tags_aplicativo_id_foreign"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_aplicativo_tags_tags" type="relfk"
+	 custom-color="#055f96"
+	 src-table="public.aplicativo_tags"
+	 dst-table="public.tags" reference-fk="aplicativo_tags_tag_id_foreign"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_user_canais_users" type="relfk"
+	 custom-color="#ae74de"
+	 src-table="public.user_canais"
+	 dst-table="public.users" reference-fk="user_canais_user_id_foreign"
+	 src-required="false" dst-required="false">
+	<label ref-type="name-label">
+		<position x="22.3844" y="39.4955"/>
+	</label>
+</relationship>
+
+<relationship name="rel_user_canais_canais" type="relfk"
+	 custom-color="#edb806"
+	 src-table="public.user_canais"
+	 dst-table="public.canais" reference-fk="user_canais_canal_id_foreign"
+	 src-required="false" dst-required="false">
+	<label ref-type="dst-label">
+		<position x="0.1425" y="19.725"/>
+	</label>
+</relationship>
+
+</dbmodel>
