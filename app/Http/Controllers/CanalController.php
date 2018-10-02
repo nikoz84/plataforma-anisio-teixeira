@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Canal;
+use App\Conteudo;
 use Illuminate\Http\Request;
 
 class CanalController extends Controller
@@ -12,20 +13,26 @@ class CanalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $limit = ($request->has('limit')) ? $request->query('limit') : 10;
-        $id = $request->has('id') ? $request->query('id') : 2;
-        
-        $canal = Canal::where('is_active', true)
-            ->where('id',$id)
-            ->orderBy('name', 'desc')
-            ->take($limit)
-            ->get();
-        
-        
-        return $canal->toJson();
+        $canal = Canal::orderBy('created_at', 'name')->paginate(2);
+        return view('canais.index',['canais'=> $canal]);
     }
+
+    //public function index(Canal $canal, Request $request)
+    //{
+        //$limit = ($request->has('limit')) ? $request->query('limit') : 10;
+        //$id = $request->has('id') ? $request->query('id') : 2 ;
+        
+       // $canal = Canal::where('is_active', true)
+            //->where('slug','tv-anisio-teixeira')
+            //->orderBy('name', 'desc')
+            //->take($limit)
+            //->get();
+       
+        
+       // return $canal->toJson();
+    //}
 
     /**
      * Show the form for creating a new resource.
@@ -34,7 +41,7 @@ class CanalController extends Controller
      */
     public function create()
     {
-        //
+        return view('canal.create');
     }
 
     /**
@@ -43,9 +50,15 @@ class CanalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CanalRequest $request)
     {
-        //
+        $canal = new Canal;
+        $canal->name = $request->name;
+        $canal->description = $request->description;
+        $canal->slug = $request->slug;
+        $canal->is_active = $request->is_active;
+        $canal->options = $request->options;
+        $canal->created_at = $request->created_at;
     }
 
     /**
@@ -54,7 +67,7 @@ class CanalController extends Controller
      * @param  \App\Canal  $canal
      * @return \Illuminate\Http\Response
      */
-    public function show(Canal $canal)
+    public function show(Canal $id)
     {
         //
     }
@@ -67,7 +80,8 @@ class CanalController extends Controller
      */
     public function edit(Canal $canal)
     {
-        //
+        $canal = Canal::findOrFail($id);
+        return view('canal.edit',compact('canal'));
     }
 
     /**
@@ -79,7 +93,15 @@ class CanalController extends Controller
      */
     public function update(Request $request, Canal $canal)
     {
-        //
+        $canal = Canal::findOrFail($id);
+        $canal->name        = $request->name;
+        $canal->description = $request->description;
+        $canal->slug        = $request->slug;
+        $canal->is_active   = $request->is_active;
+        $canal->options     = $request->options;
+        $canal->created_at  = $request->created_at;
+        $canal->save();
+        return redirect()->route('canal.index')->with('message', 'Canal atualizado com sucesso!');
     }
 
     /**
@@ -90,6 +112,8 @@ class CanalController extends Controller
      */
     public function destroy(Canal $canal)
     {
-        //
+        $canal = Canal::findOrFail($id);
+        $canal->delete();
+        return redirect()->route('canal.index')->with('alert-success','Conteúdo deste canal foi deletado!');
     }
 }

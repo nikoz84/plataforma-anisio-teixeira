@@ -13,12 +13,9 @@ class Conteudo extends Model
         'is_featured', 
         'is_approved', 
         'options',
-        'created_at',
-        'updated_at'
-    ];
-    protected $hiden = ['ts_documento','deleted_at'];
-
-    public function canal()
+        'created_at'];
+    
+    public function getCanal()
     {
         return $this->belongsTo('App\Canal');
     }

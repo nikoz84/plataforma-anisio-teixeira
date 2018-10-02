@@ -21,7 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/canais', 'CanalController@list');
 Route::post('/canais/create', 'CanalController@create');
 Route::put('/canais/update/{id}', 'CanalController@update');
-Route::delete('/conais/delete/{id}', 'CanalController@delete');
+Route::delete('/canais/delete/{id}', 'CanalController@delete');
 // CONTEUDOS
 Route::get('/conteudos', 'ConteudoController@list');
 Route::post('/conteudos/create', 'ConteudoController@create');

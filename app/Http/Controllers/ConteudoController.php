@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Conteudo;
-
 use Illuminate\Http\Request;
 
 class ConteudoController extends Controller
