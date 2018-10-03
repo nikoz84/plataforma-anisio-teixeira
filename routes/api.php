@@ -39,4 +39,10 @@ Route::get('/aplicativos', 'AplicativoController@list');
 Route::post('/aplicativos/create', 'AplicativoController@create');
 Route::put('/aplicativos/update/{id}', 'AplicativoController@update');
 Route::delete('/aplicativos/delete/{id}', 'AplicativoController@delete');
-Route::get('/aplicativos/search/{termo}','AplicativoController@search');   
+Route::get('/aplicativos/search/{termo}','AplicativoController@search');
+// USUÁRIOS
+Route::get('/usuarios', 'UsuarioController@list');
+Route::post('/usuarios/create', 'UsuarioController@create');
+Route::put('/usuarios/update/{id}', 'UsuarioController@update');
+Route::delete('/usuarios/delete/{id}', 'UsuarioController@delete');
+Route::get('/usuarios/search/{termo}','UsuarioController@search');

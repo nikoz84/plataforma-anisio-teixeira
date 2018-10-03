@@ -68,7 +68,7 @@ class AplicativoController extends Controller
         $aplicativo = Aplicativo::find($id);
         
         $data = [
-            'name' => $request->get('title'),
+            'name' => $request->get('name'),
             'description' => $request->get('description'),
             'is_featured' => $request->get('is_featured'), 
             'options' => $request->get('options')
