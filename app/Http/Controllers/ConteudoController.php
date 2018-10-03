@@ -19,20 +19,19 @@ class ConteudoController extends Controller
         $orderBy = ($request->has('order')) ? $request->query('order') : 'title';
         $page = ($request->has('page')) ? $request->query('page') : 1;
         
-        $conteudos = Conteudo::where('is_approved', true)
-            ->where('canal_id',$id)
+        $conteudos = DB::table('conteudos')
+            ->select(['id','canal_id','user_id','title'])
+            ->where('is_approved', true)
+            ->where('canal_id', $id)
             ->orderBy($orderBy, 'desc')
-            ->limit($limit)
-            ->offset($page)
-            ->get();
-
-        $data = $conteudos->map(function ($conteudo) {
-            return collect($conteudo->toArray())
-                ->only(['id', 'title', 'autores','fonte', 'options'])
-                ->all();
-        });    
-
-        return $data->toJson(JSON_PRETTY_PRINT);    
+            ->paginate($limit);
+                    
+        $conteudos->currentPage($page);
+        
+        return response()->json([
+            'title'=> 'Mídias Educacionais',
+            'paginator'=> $conteudos
+        ]);    
     }
 
     /**
@@ -42,12 +41,25 @@ class ConteudoController extends Controller
      */
     public function create()
     {
-        DB::table('conteudos')->insert(
+        $id = DB::table('conteudos')->insertGetId(
             [
-                'email' => 'john@example.com', 'votes' => 0
+                'canal_id' => 1,
+                'user_id' => 1,
+                'title' => 'conteudo 1',
+                'description'=> 'Descricao do conteudo digital',
+                'is_approved' => true, 
+                'is_featured' => false, 
+                'autores' => 'niko;fabiano;julio',
+                'fonte' => 'anisio teixeira',
+                'qt_downloads' => 1,
+                'qt_acessos' => 2,
+                'options' => '{}'  
             ]
         );
-        return '';
+        return response()->json([
+            'message' => 'Conteúdo cadastrado com sucesso',
+            'id' => $id
+        ]);
     }
 
     /**
@@ -99,5 +111,18 @@ class ConteudoController extends Controller
         }
         
         return response()->json($resp);
+    }
+
+    public function search(Request $request, $termo)
+    {
+        $tags = DB::table('tags')
+                    ->select(['id','title'])
+                    ->where(DB::raw('unaccent(lower(name))'), 'ILIKE' , DB::raw("unaccent(lower('%{$termo}%'))"))
+                    ->get();
+        
+        return response()->json([
+            'message' => 'Resultados da busca',
+            'items' => $tags
+        ]);    
     }
 }

@@ -36,7 +36,8 @@ class CreateConteudosTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->comment('chave foranea do usuário');
             $table->foreign('canal_id')->references('id')->on('canais')->comment('chave foranea do canal');;
         });
-
+        // cria extensão sem acentos necesaria para full text search
+        DB::statement('CREATE EXTENSION IF NOT EXISTS unaccent');
         // coluna para full text search
         DB::statement("ALTER TABLE conteudos ADD COLUMN ts_documento TSVECTOR;");
         // indices para full text search e documento jsonb
