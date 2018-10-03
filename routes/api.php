@@ -24,6 +24,7 @@ Route::put('/canais/update/{id}', 'CanalController@update');
 Route::delete('/canais/delete/{id}', 'CanalController@delete');
 // CONTEUDOS
 Route::get('/conteudos', 'ConteudoController@list');
+Route::get('/conteudos/search/{termo}', 'ConteudoController@search');
 Route::post('/conteudos/create', 'ConteudoController@create');
 Route::put('/conteudos/update/{id}', 'ConteudoController@update');
 Route::delete('/conteudos/delete/{id}', 'ConteudoController@delete');

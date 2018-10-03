@@ -115,14 +115,19 @@ class ConteudoController extends Controller
 
     public function search(Request $request, $termo)
     {
-        $tags = DB::table('tags')
-                    ->select(['id','title'])
-                    ->where(DB::raw('unaccent(lower(name))'), 'ILIKE' , DB::raw("unaccent(lower('%{$termo}%'))"))
+        $conteudos = DB::table(DB::raw("conteudos, plainto_tsquery(lower(unaccent('${termo}'))) AS query"))
+                    ->select(['id','title',
+                            DB::raw('ts_rank_cd(cd.ts_documento, query) AS ranking')
+                            ])
+                    ->whereRaw('query @@ ts_documento')
+                    ->where('cd.flaprovado', '=', true )
+                    ->orderBy('ranking','desc')
                     ->get();
         
         return response()->json([
             'message' => 'Resultados da busca',
-            'items' => $tags
+            'items' => $conteudos
         ]);    
     }
 }
+
