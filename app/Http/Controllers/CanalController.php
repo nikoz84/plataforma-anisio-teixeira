@@ -35,7 +35,7 @@ class CanalController extends Controller
      */
     public function create()
     {
-        DB::table('canais')->insert(
+        $id = DB::table('canais')->insertGetId(
             [
                 'name' => 'Canal Teste',
                 'description' => 'Adicionando um novo canal no banco de dados.',
@@ -43,7 +43,10 @@ class CanalController extends Controller
                 'is_active' => true 
             ]
         );
-        return '';
+        return response()->json([
+            'message' => 'Canal cadastrado com sucesso',
+            'id' => $id
+        ]);
     } 
 
     /**
