@@ -10,7 +10,7 @@ Estamos liberando o código da aplicação para cumprir com o propósito para o 
 
 ## COMO ESTA IMPLEMENTADO
 
-Criamos uma API RESTFUL que se comunica com front-end feito em VUE.js permitindo desacoplar as camadas de frontend do backend:
+Criamos uma API RESTFUL que se comunica com frontend feito em VUE.js permitindo desacoplar as camadas de frontend do backend:
 
 - Backend - PHP 7+
 - Backend - Laravel Framework 5.5+
