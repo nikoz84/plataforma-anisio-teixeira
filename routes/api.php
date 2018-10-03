@@ -38,4 +38,5 @@ Route::delete('/tags/delete/{id}','TagController@delete');
 Route::get('/aplicativos', 'AplicativoController@list');
 Route::post('/aplicativos/create', 'AplicativoController@create');
 Route::put('/aplicativos/update/{id}', 'AplicativoController@update');
-Route::delete('/aplicativos/delete/{id}', 'AplicativoController@delete');   
+Route::delete('/aplicativos/delete/{id}', 'AplicativoController@delete');
+Route::get('/aplicativos/search/{termo}','AplicativoController@search');   
