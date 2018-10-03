@@ -16,22 +16,19 @@ class AplicativoController extends Controller
     public function list(Request $request)
     {
         $limit = ($request->has('limit')) ? $request->query('limit') : 10;
-        $id = ($request->has('aplicativos')) ? $request->query('aplicativos') : 2;
-        $orderBy = ($request->has('order')) ? $request->query('order') : 'title';
+        $orderBy = ($request->has('order')) ? $request->query('order') : 'name';
         $page = ($request->has('page')) ? $request->query('page') : 1;
         
-        $conteudos = DB::table('aplicativos')
+        $aplicativos = DB::table('aplicativos')
             ->select(['id','user_id','name','description'])
-            ->where('is_featured', true)
-            ->where('id', $id)
             ->orderBy($orderBy, 'name')
             ->paginate($limit);
                     
-        $conteudos->currentPage($page);
+        $aplicativos->currentPage($page);
         
         return response()->json([
             'title'=> 'Aplicativos Educacionais',
-            'paginator'=> $conteudos
+            'paginator'=> $aplicativos
         ]);    
     }
 
@@ -40,17 +37,17 @@ class AplicativoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        
         $id = DB::table('aplicativos')->insertGetId(
             [
-                'id' => 1,
                 'user_id' => 1,
-                'name' => 'Editor de Texto',
-                'description'=> 'Descricao do Aplicativo Educacional',
-                'is_featured' => false,
-                'options' => '{}'
-
+                'name' => $request->get('name'),
+                'description'=> $request->get('description'),
+                'is_featured' => $request->get('is_featured'),
+                'options' => $request->get('options')
+    
             ]
         );
         return response()->json([
