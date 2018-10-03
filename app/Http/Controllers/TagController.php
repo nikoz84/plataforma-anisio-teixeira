@@ -46,7 +46,7 @@ class TagController extends Controller
             ]);
         
         return response()->json([
-                'menssage' => "Tag: <b>{$name}</b> adicionada com sucesso",
+                'menssage' => "Tag: {$name} adicionada com sucesso",
                 'id' => $id
             ]);
     }
@@ -76,7 +76,7 @@ class TagController extends Controller
 
     }
 
-    public function incrementSearchTag(Rquest $request, $id)
+    public function incrementSearchTag(Request $request, $id)
     {
         
         if($request->has('searched')){
