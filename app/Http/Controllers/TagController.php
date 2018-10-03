@@ -76,7 +76,7 @@ class TagController extends Controller
 
     }
 
-    public function incrementSearchTag(Rquest $request, $id)
+    public function incrementSearchTag(Request $request, $id)
     {
         
         if($request->has('searched')){

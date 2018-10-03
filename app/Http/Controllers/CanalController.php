@@ -18,8 +18,7 @@ class CanalController extends Controller
     {
         
         $limit = ($request->has('limit')) ? $request->query('limit') : 10;        
-        $page = ($request->has('page')) ? $request->query('page') : 1;
-        
+        $page = ($request->has('page')) ? $request->query('page') : 1;        
         $canal = Canal::where('is_active', true)
             
             ->limit($limit)
@@ -40,11 +39,11 @@ class CanalController extends Controller
             [
                 'name' => 'Canal Teste',
                 'description' => 'Adicionando um novo canal no banco de dados.',
-                'slug' => 'http://wwww',
+                'slug' => 'teste-slug',
                 'is_active' => true 
             ]
         );
-        return response()->json($canal->toJson());
+        return '';
     } 
 
     /**
