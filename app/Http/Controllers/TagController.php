@@ -21,7 +21,7 @@ class TagController extends Controller
         $tags = DB::table('tags')
                     ->select(['id','name','searched'])
                     ->paginate($limit);
-                    
+
         $tags->currentPage($page);
         
         return response()->json(
@@ -46,7 +46,7 @@ class TagController extends Controller
             ]);
         
         return response()->json([
-                'menssage' => "Tag: <b>{$name}</b> adicionada com sucesso",
+                'menssage' => "Tag - {$name} - adicionada com sucesso",
                 'id' => $id
             ]);
     }
