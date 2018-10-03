@@ -32,4 +32,9 @@ Route::get('/tags','TagController@list');
 Route::get('/tags/search/{termo}','TagController@search');
 Route::post('/tags/create','TagController@create');
 Route::put('/tags/update/{id}','TagController@update');
-Route::delete('/tags/delete/{id}','TagController@delete');    
+Route::delete('/tags/delete/{id}','TagController@delete');
+// APLICATIVOS
+Route::get('/aplicativos', 'AplicativoController@list');
+Route::post('/aplicativos/create', 'AplicativoController@create');
+Route::put('/aplicativos/update/{id}', 'AplicativoController@update');
+Route::delete('/aplicativos/delete/{id}', 'AplicativoController@delete');   
