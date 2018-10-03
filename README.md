@@ -1,6 +1,6 @@
 # PLATAFORMA ANÍSIO TEIXEIRA
 
-O Ambiente Educacional Web – AEW é um projeto de aprendizagem (Baseado agora em Laravel 5.5) voltado ao compartilhamento de conteúdos digitais através de licenças livres, disponibilizado na internet no endereço (http://pat.educacao.ba.gov.br) para acesso e utilização de todos; constituído pelos seguintes módulos:
+O Ambiente Educacional Web – AEW é um projeto de aprendizagem (Baseado em Laravel 5.5) voltado ao compartilhamento de conteúdos digitais através de licenças livres, disponibilizado na internet no endereço (http://pat.educacao.ba.gov.br) para acesso e utilização de todos; constituído pelos seguintes módulos:
 
 Você poderá criar canais dinámicos, conteúdos digitais, aplicativos educacionais, sites temáticos.
 
