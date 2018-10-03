@@ -24,8 +24,8 @@ class CreateConteudosTable extends Migration
             $table->boolean('is_featured')->default('false')->comment('Se o conteúdo é destaque');
             $table->boolean('is_site')->default(false)->comment('Se o conteuúdo é um site Temático');
             $table->text('description')->comment('Descrição do conteúdo');
-            $table->text('autores')->comment('Autores do conteúdo, como regra devem se adicionar separados com ponto e vírgula');
-            $table->string('fonte',150)->comment('Fonte do conteúdo');
+            $table->text('authors')->comment('Autores do conteúdo, como regra devem se adicionar separados com ponto e vírgula');
+            $table->string('source',150)->comment('Fonte do conteúdo');
             $table->integer('qt_downloads')->default(0)->nullable()->comment('Quantidade de downloads');
             $table->integer('qt_acessos')->default(0)->nullable()->comment('Quantidade de acessos');
             $table->jsonb('options')->default('{}')->nullable()->comment('Campo de formato jsonb para acrecentar meta dados do conteúdo');

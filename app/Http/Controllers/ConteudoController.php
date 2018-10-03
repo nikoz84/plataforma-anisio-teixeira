@@ -39,21 +39,20 @@ class ConteudoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $id = DB::table('conteudos')->insertGetId(
             [
-                'canal_id' => 1,
-                'user_id' => 1,
-                'title' => 'conteudo 1',
-                'description'=> 'Descricao do conteudo digital',
-                'is_approved' => true, 
-                'is_featured' => false, 
-                'autores' => 'niko;fabiano;julio',
-                'fonte' => 'anisio teixeira',
-                'qt_downloads' => 1,
-                'qt_acessos' => 2,
-                'options' => '{}'  
+                'user_id' => $request->get('user_id'),
+                'canal_id' => $request->get('canal_id'),
+                'title' => $request->get('title'),
+                'description' => $request->get('description'),
+                'authors' => $request->get('authors'),
+                'source' => $request->get('source'),
+                'is_featured' => $request->get('is_featured'), 
+                'is_approved' => $request->get('is_approved'),
+                'is_site' =>  $request->get('is_site'),
+                'options' => $request->get('options') 
             ]
         );
         return response()->json([
@@ -71,15 +70,22 @@ class ConteudoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $conteudo = Conteudo::find($id);
+        $is_update = DB::table('tags')
+                ->where('id', $id)
+                ->update(['name' => $name]);
         
-        $data = [
-            'title' => $request->get('title'),
-            'description' => $request->get('description'),
-            'is_featured' => $request->get('is_featured'), 
-            'is_approved' => $request->get('is_approved'), 
-            'options' => $request->get('options')
-        ];
+        $id =DB::table('tags')
+                    ->where('id', $id)
+                    ->update( [
+                        'title' => $request->get('title'),
+                        'description' => $request->get('description'),
+                        'authors' => $request->get('authors'),
+                        'source' => $request->get('source'),
+                        'is_featured' => $request->get('is_featured'), 
+                        'is_approved' => $request->get('is_approved'),
+                        'is_site' =>  $request->get('is_site'),
+                        'options' => $request->get('options')
+                    ]);
         
         $conteudo->save($data);
         
@@ -115,12 +121,12 @@ class ConteudoController extends Controller
 
     public function search(Request $request, $termo)
     {
-        $conteudos = DB::table(DB::raw("conteudos, plainto_tsquery(lower(unaccent('${termo}'))) AS query"))
-                    ->select(['id','title',
+        $conteudos = DB::table(DB::raw("conteudos as cd, plainto_tsquery('simple',lower(unaccent('${termo}'))) query"))
+                    ->select(['cd.id','cd.title',
                             DB::raw('ts_rank_cd(cd.ts_documento, query) AS ranking')
                             ])
-                    ->whereRaw('query @@ ts_documento')
-                    ->where('cd.flaprovado', '=', true )
+                    ->whereRaw('query @@ cd.ts_documento')
+                    //->where('cd.is_approved', '=', 'true' )
                     ->orderBy('ranking','desc')
                     ->get();
         
