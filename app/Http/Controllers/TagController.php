@@ -15,19 +15,19 @@ class TagController extends Controller
      */
     public function list(Request $request)
     {
-        $limit = ($request->has('limit')) ? $request->query('limit'): 5;
+        $limit = ($request->has('limit')) ? $request->query('limit'): 2;
         $page = ($request->has('page')) ? $request->query('page'): 1;
 
         $tags = DB::table('tags')
                     ->select(['id','name','searched'])
-                    ->limit($limit)
-                    ->offset($page)
-                    ->get();
+                    ->paginate($limit);
+                    
+        $tags->currentPage($page);
         
         return response()->json(
             [
                 'title'=> 'Lista de tags',
-                'tags' => $tags
+                'paginator' => $tags
             ]
         );
     }
