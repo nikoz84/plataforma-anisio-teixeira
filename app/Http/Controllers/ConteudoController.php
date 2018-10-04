@@ -123,7 +123,7 @@ class ConteudoController extends Controller
 
     public function search(Request $request, $termo)
     {
-        $conteudos = DB::table(DB::raw("conteudos as cd, plainto_tsquery('simple',lower(unaccent('${termo}'))) query"))
+        $conteudos = DB::table(DB::raw("conteudos as cd, plainto_tsquery('simple', lower(unaccent('${termo}'))) query"))
                     ->select(['cd.id','cd.title',
                             DB::raw('ts_rank_cd(cd.ts_documento, query) AS ranking')
                             ])
