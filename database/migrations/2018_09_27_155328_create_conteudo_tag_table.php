@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateConteudoTagsTable extends Migration
+class CreateConteudoTagTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateConteudoTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('conteudo_tags', function (Blueprint $table) {
+        Schema::create('conteudo_tag', function (Blueprint $table) {
             $table->bigInteger('conteudo_id');
             $table->bigInteger('tag_id');
 
@@ -30,6 +30,6 @@ class CreateConteudoTagsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('conteudo_tags');
+        Schema::dropIfExists('conteudo_tag');
     }
 }

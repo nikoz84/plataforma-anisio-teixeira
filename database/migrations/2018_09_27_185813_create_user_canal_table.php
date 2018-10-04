@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserCanaisTable extends Migration
+class CreateUserCanalTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateUserCanaisTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_canais', function (Blueprint $table) {
+        Schema::create('user_canal', function (Blueprint $table) {
             $table->bigInteger('user_id');
             $table->bigInteger('canal_id');
 
@@ -32,6 +32,6 @@ class CreateUserCanaisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_canais');
+        Schema::dropIfExists('user_canal');
     }
 }

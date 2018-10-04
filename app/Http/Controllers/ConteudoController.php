@@ -41,7 +41,7 @@ class ConteudoController extends Controller
      */
     public function create(Request $request)
     {
-        $id = DB::table('conteudos')->insertGetId(
+        $id = Conteudo::createinsertGetId(
             [
                 'user_id' => $request->get('user_id'),
                 'canal_id' => $request->get('canal_id'),
@@ -70,30 +70,32 @@ class ConteudoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $is_update = DB::table('tags')
-                ->where('id', $id)
-                ->update(['name' => $name]);
         
-        $id =DB::table('tags')
-                    ->where('id', $id)
-                    ->update( [
-                        'title' => $request->get('title'),
-                        'description' => $request->get('description'),
-                        'authors' => $request->get('authors'),
-                        'source' => $request->get('source'),
-                        'is_featured' => $request->get('is_featured'), 
-                        'is_approved' => $request->get('is_approved'),
-                        'is_site' =>  $request->get('is_site'),
-                        'options' => $request->get('options')
-                    ]);
+        $idConteudo = DB::table('conteudos')
+                        ->where('id', $id)
+                        ->update( [
+                            'title' => $request->get('title'),
+                            'description' => $request->get('description'),
+                            'authors' => $request->get('authors'),
+                            'source' => $request->get('source'),
+                            'is_featured' => $request->get('is_featured'), 
+                            'is_approved' => $request->get('is_approved'),
+                            'is_site' =>  $request->get('is_site'),
+                            'options' => $request->get('options')
+                        ]);
         
         $conteudo->save($data);
+
         
         return response()->json($conteudo->toJson());
 
         
     }
-
+    public function createConteudoTags()
+    {
+        $conteudoModel = Conteudo::find($id);
+        $conteudoModel->tags()->attach($request->get('tags')); 
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -134,6 +136,16 @@ class ConteudoController extends Controller
             'message' => 'Resultados da busca',
             'items' => $conteudos
         ]);    
+    }
+
+    public function teste(){
+        $conteudo = Conteudo::find(4);
+        //$conteudo->tags()->detach([1,5]);
+        
+        
+        return response()->json([
+            'tags' => $conteudo->tags
+        ]);
     }
 }
 

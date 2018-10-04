@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAplicativoTagsTable extends Migration
+class CreateAplicativoTagTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAplicativoTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('aplicativo_tags', function (Blueprint $table) {
+        Schema::create('aplicativo_tag', function (Blueprint $table) {
             $table->bigInteger('aplicativo_id');
             $table->bigInteger('tag_id');
 
@@ -30,6 +30,6 @@ class CreateAplicativoTagsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('aplicativo_tags');
+        Schema::dropIfExists('aplicativo_tag');
     }
 }
