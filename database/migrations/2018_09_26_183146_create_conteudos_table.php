@@ -20,8 +20,8 @@ class CreateConteudosTable extends Migration
             $table->bigInteger('canal_id')->unsigned()->nullable()->comment('Chave foranea do canal');
             $table->bigInteger('user_id')->unsigned()->comment('Chave foranea do usuario');
             $table->string('title',120)->comment('Título do conteúdo');
-            $table->boolean('is_approved')->default('false')->comment('Se o conteúdo é aprovado');
-            $table->boolean('is_featured')->default('false')->comment('Se o conteúdo é destaque');
+            $table->boolean('is_approved')->default(false)->comment('Se o conteúdo é aprovado');
+            $table->boolean('is_featured')->default(false)->nullable()->comment('Se o conteúdo é destaque');
             $table->boolean('is_site')->default(false)->comment('Se o conteuúdo é um site Temático');
             $table->text('description')->comment('Descrição do conteúdo');
             $table->text('authors')->comment('Autores do conteúdo, como regra devem se adicionar separados com ponto e vírgula');
