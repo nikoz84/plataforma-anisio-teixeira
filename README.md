@@ -20,6 +20,10 @@ Criamos uma API RESTFUL que se comunica com frontend feito em VUE.js permitindo 
 
 ## COMO INSTALAR
 
+Faça uma copia do arquivo .env.example, e renomee a copia para .env, em este arquivo você vai adicionar as configurações do banco de dados o outras configurações. Além disso, você precisará criar um chave de verificação da aplicação na variavel global chamada APP_KEY. Pode criar esta chave com o comando que criará uma chave em base 64.
+
+``$ php artisan key:generate``
+
 Instalar as dependencias do laravel com composer:
 
 ``$ composer install``
@@ -27,6 +31,14 @@ Instalar as dependencias do laravel com composer:
 Instalar as dependências do Vuejs com npm:
 
 ``$ npm install``
+
+se tiver algum problema com instalar o modulo node-sass pode forçar a instalação com:
+
+``$ npm i node-sass --unsafe-perm=true``
+
+Crie o esquema do banco de dados no Postgresql e crie o esquema do banco de dados com o comando:
+
+``$ php arstisan migrate``
 
 Agora podemos arrancar o servidor embutido do framework:
 

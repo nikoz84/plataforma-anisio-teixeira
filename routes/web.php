@@ -15,7 +15,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/devs', function() {
-    
-    dd(session()->get('test'));
-});
+Route::get('/admin', 'SpaController@index')->where('admin', '.*');

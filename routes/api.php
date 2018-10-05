@@ -43,6 +43,6 @@ Route::put('/aplicativos/update/{id}', 'AplicativoController@update');
 Route::delete('/aplicativos/delete/{id}', 'AplicativoController@delete');
 Route::get('/aplicativos/search/{termo}','AplicativoController@search');
 // USUÁRIOS
-Route::post('/users/login', 'UserCanalController@login');
-Route::post('/users/register', 'UserCanalController@register');
-Route::put('/users/reset_pass', 'UserCanalController@reset_pass');
+Route::post('/users/login', 'UserController@login');
+Route::post('/users/register', 'UserController@register');
+Route::put('/users/reset_pass', 'UserController@resetPass');
