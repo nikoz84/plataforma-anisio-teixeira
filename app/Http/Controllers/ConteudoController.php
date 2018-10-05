@@ -91,10 +91,11 @@ class ConteudoController extends Controller
 
         
     }
-    public function createConteudoTags()
+    public function createConteudoTags(Request $request, $id)
     {
-        $conteudoModel = Conteudo::find($id);
-        $conteudoModel->tags()->attach($request->get('tags')); 
+        $conteudo = Conteudo::find($id);
+        $conteudo->tags()->attach($request->get('tags'));
+
     }
     /**
      * Remove the specified resource from storage.
