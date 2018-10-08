@@ -6,6 +6,7 @@
 <script>
 
 export default {
+    name : 'admin',
     data() {
         return {
             title: 'Admin'

@@ -10,9 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/admin', 'SpaController@index')->where('admin', '.*');
+*/
+Route::get('/{any}', 'SpaController@index')->where('any', '.*');

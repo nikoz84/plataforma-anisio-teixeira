@@ -6,9 +6,10 @@
 <script>
 
 export default {
+    name : 'home',
     data() {
         return {
-            title: 'Home'
+            title: 'Inicio'
         }
     }
 }
