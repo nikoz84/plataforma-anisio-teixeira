@@ -32,11 +32,11 @@ Instalar as dependências do Vuejs com npm:
 
 ``$ npm install``
 
-se tiver algum problema com instalar o modulo node-sass pode forçar a instalação com:
+Nota: Se tiver algum problema com instalar o modulo node-sass pode forçar a instalação com:
 
 ``$ npm i node-sass --unsafe-perm=true``
 
-Crie o esquema do banco de dados no Postgresql e crie o esquema do banco de dados com o comando:
+Crie o esquema do banco de dados no Postgresql com o comando:
 
 ``$ php arstisan migrate``
 
