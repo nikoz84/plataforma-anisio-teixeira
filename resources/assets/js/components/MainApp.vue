@@ -17,6 +17,6 @@ export default {
     components:{
         NavApp, FooterApp
     },
-    
+
 }
 </script>
