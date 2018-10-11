@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Canal extends Model
 {
     protected $table = 'canais';
@@ -18,7 +18,8 @@ class Canal extends Model
         'slug', 
         'options'
     ];
-    
+    protected $hidden = ['token'];
+    protected $dates = ['deleted_at'];
     public function conteudos()
     {
         return $this->hasMany('App\Conteudo');

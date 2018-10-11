@@ -14,13 +14,13 @@ class CreateCanaisTable extends Migration
     public function up()
     {
         Schema::create('canais', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name', 100);
-            $table->text('description');
-            $table->string('slug',100)->unique();
-            $table->boolean('is_active')->default('false');
-            // campo formato jsonb para acrecentar meta dados
-            $table->jsonb('options')->default('{}')->nullable();
+            $table->bigIncrements('id')->comment('Chave primaria e editificador unico do canal');
+            $table->string('name', 100)->comment('Nome do canal');
+            $table->text('description')->comment('Descrição do canal');
+            $table->string('slug',100)->unique()->comment('Url amigavel do canal');
+            $table->boolean('is_active')->default('false')->comment('Se o canal está ativo');
+            $table->text('token')->nullable()->comment('Token de coneção com apis externas');
+            $table->jsonb('options')->default('{}')->comment('Campo formato jsonb para acrecentar meta dados');
             // campo de data created_at and updated_at
             $table->timestamps();
             // campo de data deleted_at

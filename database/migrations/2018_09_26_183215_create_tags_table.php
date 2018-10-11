@@ -14,8 +14,8 @@ class CreateTagsTable extends Migration
     public function up()
     {
         Schema::create('tags', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name', 120);
+            $table->bigIncrements('id')->commet('Nome da tag deve ser única');
+            $table->string('name', 120)->unique()->comment('Nome da tag deve ser única');
             $table->integer('searched')->default(0)->nullable();
             $table->timestamps();
         });

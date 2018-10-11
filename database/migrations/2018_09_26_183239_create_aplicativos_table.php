@@ -16,7 +16,8 @@ class CreateAplicativosTable extends Migration
         Schema::create('aplicativos', function (Blueprint $table) {
             $table->bigIncrements('id')->comment('Identificador unico e chave primaria do aplicativo');
             $table->bigInteger('user_id')->comment('Chave foranea do usuário publicador');
-            $table->string('name',120)->comment('Nome do aplicativo');
+            $table->string('name',200)->comment('Nome do aplicativo');
+            $table->string('url',250)->comment('Url do projeto');
             $table->text('description')->comment('Descrição do aplicativo');
             $table->boolean('is_featured')->comment('Se o aplicativo é destaque');
             $table->jsonb('options')->default('{}')->nullable()->comment('Meta data do aplicativo');
