@@ -15,4 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 */
+Auth::routes();
+
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');
+
+Route::get('/home', 'HomeController@index')->name('home');
