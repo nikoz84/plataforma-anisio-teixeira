@@ -1,5 +1,7 @@
 {
     "/js/admin.bundle.js": "/js/admin.bundle.js",
+    "/js/canal.bundle.js": "/js/canal.bundle.js",
+    "/js/login.bundle.js": "/js/login.bundle.js",
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css"
 }

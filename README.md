@@ -29,8 +29,9 @@ Instalar as dependencias do laravel com composer:
 ``$ composer install``
 
 Se tiver problemas com a instalação das dependencias verifique as extensões de PHP
-- php7.*-tokenizer
-- php7.*-dom
+
+``sudo apt install php7.*-tokenizer php7.*-dom php7.*-mbstring``
+
 
 Instalar as dependências do Vuejs com npm:
 

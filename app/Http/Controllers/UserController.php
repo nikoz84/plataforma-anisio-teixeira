@@ -40,4 +40,19 @@ class UserController extends Controller
         
         
     }
+
+    public function list(Request $request){
+      $limit = ($request->has('limit')) ? $request->query('limit') : 10;        
+      $page = ($request->has('page')) ? $request->query('page') : 1;   
+
+      $users = User::where("options->is_active",'true')
+                    ->limit($limit)
+                    ->offset($page)
+                    ->get();
+
+      return response()->json([
+        'title'=> 'Lista de usuários',
+        'items'=>$users
+      ]);
+    }
 }

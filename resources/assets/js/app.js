@@ -17,7 +17,9 @@ Vue.use(Vuex);
 
 const router = new VueRouter({
     mode: 'history',
-    routes
+    routes,
+    //linkActiveClass: "active",
+    linkExactActiveClass: "active"
 });
 
 

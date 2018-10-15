@@ -1,6 +1,5 @@
 
 import Home from './pages/Home.vue';
-import Canal from './pages/Canal.vue';
 import Sobre from './pages/Sobre.vue';
 import Listar from './pages/Listar.vue';
 import Exibir from './pages/Exibir.vue';
@@ -14,7 +13,12 @@ const routes =[
     {
       path: '/admin',
       name: 'Admin',
-      component: () => import(/* webpackChunkName: "admin" */ './pages/Login.vue')
+      component: () => import(/* webpackChunkName: "admin" */ './pages/Admin.vue')
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: () => import(/* webpackChunkName: "login" */ './pages/Login.vue')
     },
     {
       path: '/:slug',

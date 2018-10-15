@@ -46,3 +46,4 @@ Route::get('/aplicativos/search/{termo}','AplicativoController@search');
 Route::post('/users/login', 'UserController@login');
 Route::post('/users/register', 'UserController@register');
 Route::put('/users/reset_pass', 'UserController@resetPass');
+Route::get('/users', 'UserController@list');

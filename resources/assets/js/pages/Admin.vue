@@ -1,43 +1,37 @@
 <template>
     <div>
-        <h1>{{ title }}</h1>
+
         <Sidebar class="col-sm-3"></Sidebar>
-        <Content class="col-sm-9"></Content>
+        <section class="col-sm-9">
+            
+            <Search class="row"></Search>
+
+            <List class="row mt-15" items></List>
+        </section>
     </div>
 </template>
 <script>
 import Sidebar from '../components/SidebarComponent.vue';
-import Content from '../components/ContentComponent.vue';
+import Search from '../components/SearchComponent.vue';
+import List from '../components/ListComponent.vue';
 
 export default {
     name : 'admin',
     components:{
-        Sidebar, Content
+        Sidebar, Search, List
     },
     data() {
         return {
-            title: 'Admin'
+            title: 'Administração',
+            data: {}
         }
     },
     methods:{
-        getConteudos(){
-        axios.get('/users')
-        .then(function (response) {
-            // handle success
-            console.log(response);
-        })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-        })
-        .then(function () {
-            // always executed
-        });
-        }
+        
     }
 }
 </script>
 <style lang="sass" scoped>
-
+.mt-15{ margin-top: 15px; }
 </style>
 

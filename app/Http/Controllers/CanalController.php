@@ -19,13 +19,15 @@ class CanalController extends Controller
         
         $limit = ($request->has('limit')) ? $request->query('limit') : 10;        
         $page = ($request->has('page')) ? $request->query('page') : 1;        
-        $canal = Canal::where('is_active', true)
-            
-            ->limit($limit)
-            ->offset($page)
-            ->get();
+        $canais = Canal::where('is_active', true)
+                        ->limit($limit)
+                        ->offset($page)
+                        ->get();
 
-        return $canal->toJson(JSON_PRETTY_PRINT);
+        return response()->json([
+            'title'=> 'Lista de canais',
+            'items' => $canais
+        ]);
     }
     
     /**
