@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name')->comment('Nome do usuário');
             $table->string('email')->unique()->comment('Email do usuário');
             $table->string('password')->comment('Senha do usuário');
-            $table->jsonb('options')->comment('Metadados do usuário em formato json');
+            $table->jsonb('options')->default('{}')->nullable()->comment('Metadados do usuário em formato json');
             $table->rememberToken();
             $table->timestamps();
         });

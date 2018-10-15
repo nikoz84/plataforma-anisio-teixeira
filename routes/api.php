@@ -33,17 +33,28 @@ Route::delete('/conteudos/delete/{id}', 'ConteudoController@delete');
 // TAGS
 Route::get('/tags','TagController@list');
 Route::get('/tags/search/{termo}','TagController@search');
-Route::post('/tags/create','TagController@create');
-Route::put('/tags/update/{id}','TagController@update');
-Route::delete('/tags/delete/{id}','TagController@delete');
+
 // APLICATIVOS
 Route::get('/aplicativos', 'AplicativoController@list');
-Route::post('/aplicativos/create', 'AplicativoController@create');
-Route::put('/aplicativos/update/{id}', 'AplicativoController@update');
-Route::delete('/aplicativos/delete/{id}', 'AplicativoController@delete');
 Route::get('/aplicativos/search/{termo}','AplicativoController@search');
 // USUÁRIOS
 Route::post('/users/login', 'UserController@login');
 Route::post('/users/register', 'UserController@register');
 Route::put('/users/reset_pass', 'UserController@resetPass');
-Route::get('/users', 'UserController@list');
+
+
+Route::group(['middleware' => 'auth.jwt'], function () {
+    Route::get('/users/logout', 'UserController@logout');
+    Route::delete('/users/delete/{id}', 'UserController@delete');
+    Route::get('/users', 'UserController@list');
+
+    // APLICATIVOS ACESSO RESTRITO
+    Route::post('/aplicativos/create', 'AplicativoController@create');
+    Route::put('/aplicativos/update/{id}', 'AplicativoController@update');
+    Route::delete('/aplicativos/delete/{id}', 'AplicativoController@delete');
+
+    // TAGS ACESSO RESTRITO
+    Route::post('/tags/create','TagController@create');
+    Route::put('/tags/update/{id}','TagController@update');
+    Route::delete('/tags/delete/{id}','TagController@delete');
+});

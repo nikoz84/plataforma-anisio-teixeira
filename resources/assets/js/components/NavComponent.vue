@@ -13,8 +13,9 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Link </a></li>
-                    <li><a href="#">Link</a></li>
+                    <router-link tag="li" to="/login">
+                        <a>Login</a>
+                    </router-link>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mídias Educacionais <span class="caret"></span></a>
                         <ul class="dropdown-menu">

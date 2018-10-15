@@ -1,14 +1,167 @@
 webpackJsonp([2],{
 
+/***/ 108:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'login',
+  data: function data() {
+    return {
+      user: {
+        email: null,
+        password: null
+      }
+    };
+  },
+
+  methods: {
+    login: function login() {
+      // console.log(this.user.email, this.user.password);
+      axios.post('/api-v1/users/login', { email: this.user.email, password: this.user.password }).then(function (resp) {
+        console.log(resp.data);
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ 109:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 center-xs"
+        },
+        [
+          _c("h3", { staticClass: "center-xs" }, [
+            _vm._v("Faça seu login agora")
+          ]),
+          _vm._v(" "),
+          _c(
+            "form",
+            {
+              attrs: { enctype: "application/x-www-form-urlencoded" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  _vm.login()
+                }
+              }
+            },
+            [
+              _c("label", { attrs: { for: "email" } }, [_vm._v("E-mail")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.user.email,
+                    expression: "user.email"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { id: "email", type: "text" },
+                domProps: { value: _vm.user.email },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.user, "email", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "senha" } }, [_vm._v("Senha")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.user.password,
+                    expression: "user.password"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { id: "senha", type: "password" },
+                domProps: { value: _vm.user.password },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.user, "password", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "btn btn-default", attrs: { type: "submit" } },
+                [_vm._v("Login")]
+              )
+            ]
+          )
+        ]
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5b96cafc", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ 78:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(94)
+var __vue_script__ = __webpack_require__(108)
 /* template */
-var __vue_template__ = __webpack_require__(95)
+var __vue_template__ = __webpack_require__(109)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -45,164 +198,6 @@ if (false) {(function () {
 
 module.exports = Component.exports
 
-
-/***/ }),
-
-/***/ 94:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'login',
-  data: function data() {
-    return {
-      user: {
-        email: null,
-        password: null
-      }
-    };
-  }
-});
-
-/***/ }),
-
-/***/ 95:
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "login" },
-    [
-      _c("md-toolbar", { staticClass: "center-xs" }, [
-        _c("div", { staticClass: "md-title" }, [
-          _vm._v("Plataforma Anisio Teixeira")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "row" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 center-xs"
-            },
-            [
-              _c("md-subheader", { staticClass: "center-xs" }, [
-                _vm._v("Faça seu login agora")
-              ]),
-              _vm._v(" "),
-              _c(
-                "form",
-                {
-                  on: {
-                    submit: function($event) {
-                      _vm.handleSubmit($event)
-                    }
-                  }
-                },
-                [
-                  _c(
-                    "md-input-container",
-                    [
-                      _c("label", [_vm._v("E-mail")]),
-                      _vm._v(" "),
-                      _c("md-input", {
-                        model: {
-                          value: _vm.user.email,
-                          callback: function($$v) {
-                            _vm.$set(_vm.user, "email", $$v)
-                          },
-                          expression: "user.email"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "md-input-container",
-                    { attrs: { "md-has-password": "" } },
-                    [
-                      _c("label", [_vm._v("Senha")]),
-                      _vm._v(" "),
-                      _c("md-input", {
-                        attrs: { type: "password" },
-                        model: {
-                          value: _vm.user.password,
-                          callback: function($$v) {
-                            _vm.$set(_vm.user, "password", $$v)
-                          },
-                          expression: "user.password"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "md-button",
-                    {
-                      staticClass: "md-raised md-primary",
-                      attrs: { type: "submit" }
-                    },
-                    [_c("md-icon", {}), _vm._v(" Login")],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ])
-      ])
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-5b96cafc", module.exports)
-  }
-}
 
 /***/ })
 

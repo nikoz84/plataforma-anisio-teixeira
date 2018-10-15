@@ -47287,7 +47287,7 @@ var content = __webpack_require__(46);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("10758648", content, false, {});
+var update = __webpack_require__(3)("226a86c2", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -47453,7 +47453,7 @@ var content = __webpack_require__(52);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("d461acc2", content, false, {});
+var update = __webpack_require__(3)("8059c70e", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -47586,7 +47586,7 @@ var content = __webpack_require__(57);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("270068c7", content, false, {});
+var update = __webpack_require__(3)("3d7ad12d", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -47719,7 +47719,7 @@ var content = __webpack_require__(62);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("07b38737", content, false, {});
+var update = __webpack_require__(3)("1e2def9d", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -47931,7 +47931,7 @@ var content = __webpack_require__(69);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("1740009e", content, false, {});
+var update = __webpack_require__(3)("77bb7784", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -48015,6 +48015,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'nav-app',
@@ -48040,97 +48041,102 @@ var render = function() {
           attrs: { id: "bs-example-navbar-collapse-1" }
         },
         [
-          _c("ul", { staticClass: "nav navbar-nav navbar-right" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _vm._m(2),
-            _vm._v(" "),
-            _c("li", { staticClass: "dropdown" }, [
-              _vm._m(3),
+          _c(
+            "ul",
+            { staticClass: "nav navbar-nav navbar-right" },
+            [
+              _c("router-link", { attrs: { tag: "li", to: "/login" } }, [
+                _c("a", [_vm._v("Login")])
+              ]),
               _vm._v(" "),
-              _c(
-                "ul",
-                { staticClass: "dropdown-menu" },
-                [
-                  _c("router-link", { attrs: { tag: "li", to: "/" } }, [
-                    _c("a", [_vm._v("Inicio")])
-                  ]),
-                  _vm._v(" "),
-                  _c("router-link", { attrs: { tag: "li", to: "/admin" } }, [
-                    _c("a", [_vm._v("Administração")])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "router-link",
-                    {
-                      attrs: {
-                        tag: "li",
-                        to: {
-                          name: "Inicio",
-                          params: { slug: "tv-anisio-teixeira" }
+              _c("li", { staticClass: "dropdown" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "ul",
+                  { staticClass: "dropdown-menu" },
+                  [
+                    _c("router-link", { attrs: { tag: "li", to: "/" } }, [
+                      _c("a", [_vm._v("Inicio")])
+                    ]),
+                    _vm._v(" "),
+                    _c("router-link", { attrs: { tag: "li", to: "/admin" } }, [
+                      _c("a", [_vm._v("Administração")])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          tag: "li",
+                          to: {
+                            name: "Inicio",
+                            params: { slug: "tv-anisio-teixeira" }
+                          }
                         }
-                      }
-                    },
-                    [_c("a", [_vm._v("Tv Anísio Teixeira")])]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "router-link",
-                    {
-                      attrs: {
-                        tag: "li",
-                        to: {
-                          name: "Inicio",
-                          params: { slug: "radio-anisio-teixeira" }
+                      },
+                      [_c("a", [_vm._v("Tv Anísio Teixeira")])]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          tag: "li",
+                          to: {
+                            name: "Inicio",
+                            params: { slug: "radio-anisio-teixeira" }
+                          }
                         }
-                      }
-                    },
-                    [_c("a", [_vm._v("Radio Anísio Teixeira")])]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "router-link",
-                    {
-                      attrs: {
-                        tag: "li",
-                        to: { name: "Inicio", params: { slug: "emitec" } }
-                      }
-                    },
-                    [_c("a", [_vm._v("Emitec")])]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "router-link",
-                    {
-                      attrs: {
-                        tag: "li",
-                        to: {
-                          name: "Inicio",
-                          params: { slug: "projetos-artisticos" }
+                      },
+                      [_c("a", [_vm._v("Radio Anísio Teixeira")])]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          tag: "li",
+                          to: { name: "Inicio", params: { slug: "emitec" } }
                         }
-                      }
-                    },
-                    [_c("a", [_vm._v("Projetos Artisticos")])]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "router-link",
-                    {
-                      attrs: {
-                        tag: "li",
-                        to: {
-                          name: "Inicio",
-                          params: { slug: "sites-tematicos" }
+                      },
+                      [_c("a", [_vm._v("Emitec")])]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          tag: "li",
+                          to: {
+                            name: "Inicio",
+                            params: { slug: "projetos-artisticos" }
+                          }
                         }
-                      }
-                    },
-                    [_c("a", [_vm._v("Sites Temáticos")])]
-                  )
-                ],
-                1
-              )
-            ])
-          ])
+                      },
+                      [_c("a", [_vm._v("Projetos Artisticos")])]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          tag: "li",
+                          to: {
+                            name: "Inicio",
+                            params: { slug: "sites-tematicos" }
+                          }
+                        }
+                      },
+                      [_c("a", [_vm._v("Sites Temáticos")])]
+                    )
+                  ],
+                  1
+                )
+              ])
+            ],
+            1
+          )
         ]
       )
     ])
@@ -48168,18 +48174,6 @@ var staticRenderFns = [
         _vm._v("Plataforma Anísio Teixeira")
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Link ")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Link")])])
   },
   function() {
     var _vm = this
