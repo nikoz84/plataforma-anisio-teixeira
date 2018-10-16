@@ -21,6 +21,9 @@
 <script>
   export default {
     name: 'Paginator',
+    props:[
+      
+    ],
     data() {
       return {
   

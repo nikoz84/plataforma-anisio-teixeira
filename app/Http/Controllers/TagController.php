@@ -15,7 +15,7 @@ class TagController extends Controller
      */
     public function list(Request $request)
     {
-        $limit = ($request->has('limit')) ? $request->query('limit'): 2;
+        $limit = ($request->has('limit')) ? $request->query('limit'): 15;
         $page = ($request->has('page')) ? $request->query('page'): 1;
 
         $tags = DB::table('tags')

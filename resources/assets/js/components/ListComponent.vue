@@ -1,9 +1,7 @@
 <template>
-    <section>
-        <div class="row">
-            <div class="col-sm-6 col-lg-3">
-                <Card></Card>
-            </div>
+    <section class="row">
+        <div v-if="items" class="col-sm-6 col-lg-3" v-for="(key, item) in items" :key="key">
+            <Card v-bind:item="item"></Card>
         </div>
     </section>
 </template>
@@ -16,7 +14,8 @@ export default {
         Card
     },
     props:{
-        items: {}
+        title: String,
+        items: Array
     },
     data() {
         return {
