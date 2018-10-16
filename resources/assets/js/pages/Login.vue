@@ -41,17 +41,18 @@ export default {
   },
   methods:{
     login: function(){
-      // console.log(this.user.email, this.user.password);
+      
       axios.post(`/api-v1/users/login`,
                  { email:this.user.email, 
                  password:this.user.password})
             .then(resp => {
               this.loginSuccess = resp.data.success;
-              localStorage.setItem('token', JSON.stringify(resp.data.token))
-              localStorage.setItem('login_success', JSON.stringify(this.loginSuccess))
+              localStorage.setItem('token', resp.data.token)
+              localStorage.setItem('login_success', this.loginSuccess)
+              localStorage.setItem('username', resp.data.user.name)
+              localStorage.setItem('user_id', resp.data.user.id)
               this.$router.push('Admin')
             }).catch(error => {
-              
               if (error.response.status === 401) {
                 this.message = error.response.data.message;
                 this.loginSuccess = error.response.data.success;

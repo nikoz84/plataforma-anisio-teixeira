@@ -3,7 +3,7 @@
         <a href="#" class="thumbnail">
             <img class="w-150" src="https://robohash.org/32" alt="Foto Usuário">
         </a>
-        <p>Nome do usuário</p>
+        <p>{{ 'Benvindo ' + username }}</p>
         <a v-on:click="getCanais" class="list-group-item pointer">Canais</a>
         <a v-on:click="getUsers" class="list-group-item pointer">Usuários</a>
         <a v-on:click="getConteudos" class="list-group-item pointer">Mídias Educacionais</a>
@@ -13,39 +13,64 @@
     </nav>
 </template>
 <script>
-import Http from '../http-service.js';
 
 export default {
     name : 'Sidebar',
     data() {
         return {
-            
+            username: localStorage.getItem('username'),
+            user_id: localStorage.getItem('user_id'),    
         }
     },
     methods:{
-        getCanais: function(){
-            let result = new Http('canais').getData();
-            
-            result.then(res => {
-                this.$parent.data = res.data;
-            })
+        getCanais( ){
+            axios.get('/api-v1/canais').then(resp =>{
+                console.log(resp);
+            }).catch( error => {
+
+            });
             
             // this.$parent.items =
         },
-        getUsers: async function(){
+        getUsers() {
             
+            axios.get('/api-v1/users',{ token:localStorage.getItem('token') } )
+                .then(resp =>{
+                    console.log(resp);
+                })
+                .catch( error => {
+
+                });
                 
         },
-        getConteudos: function(){
-            console.log('conteudos')
+        getConteudos() {
+            axios.get('/api-v1/conteudos')
+                .then(resp =>{
+                    console.log(resp);
+                })
+                .catch( error => {
+
+                });
         },
-        getAplicativos: function(){
-            console.log('aplicativos')
+        getAplicativos() {
+            axios.get('/api-v1/aplicativos')
+                .then(resp =>{
+                    console.log(resp);
+                })
+                .catch( error => {
+
+                });
         },
-        getTags: function(){
-            console.log('tags')
+        getTags() {
+            axios.get('/api-v1/tags')
+                .then(resp =>{
+                    console.log(resp);
+                })
+                .catch( error => {
+
+                });
         },
-        getLicencas: function(){
+        getLicencas() {
             console.log('licenças')    
         },
 

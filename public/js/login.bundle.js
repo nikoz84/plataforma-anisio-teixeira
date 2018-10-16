@@ -1,6 +1,6 @@
 webpackJsonp([2],{
 
-/***/ 108:
+/***/ 107:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -51,15 +51,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     login: function login() {
       var _this = this;
 
-      // console.log(this.user.email, this.user.password);
       axios.post('/api-v1/users/login', { email: this.user.email,
         password: this.user.password }).then(function (resp) {
         _this.loginSuccess = resp.data.success;
-        localStorage.setItem('token', JSON.stringify(resp.data.token));
-        localStorage.setItem('login_success', JSON.stringify(_this.loginSuccess));
+        localStorage.setItem('token', resp.data.token);
+        localStorage.setItem('login_success', _this.loginSuccess);
+        localStorage.setItem('username', resp.data.user.name);
+        localStorage.setItem('user_id', resp.data.user.id);
         _this.$router.push('Admin');
       }).catch(function (error) {
-
         if (error.response.status === 401) {
           _this.message = error.response.data.message;
           _this.loginSuccess = error.response.data.success;
@@ -72,7 +72,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 109:
+/***/ 108:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -194,9 +194,9 @@ if (false) {
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(108)
+var __vue_script__ = __webpack_require__(107)
 /* template */
-var __vue_template__ = __webpack_require__(109)
+var __vue_template__ = __webpack_require__(108)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */

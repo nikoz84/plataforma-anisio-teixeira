@@ -20,21 +20,16 @@
 </template>
 <script>
   export default {
-    name: 'Search',
+    name: 'Paginator',
     data() {
       return {
-  
-        placeholder: 'Busque em nosso repositorio de conteúdos'
   
       }
   
     },
   
     methods: {
-      onSearch: function() {
-        console.log('sad');
-  
-      }
+      
     }
   
   }
