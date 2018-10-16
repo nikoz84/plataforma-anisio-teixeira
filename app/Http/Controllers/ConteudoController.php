@@ -15,23 +15,23 @@ class ConteudoController extends Controller
     public function list(Request $request)
     {
         $limit = ($request->has('limit')) ? $request->query('limit') : 10;
-        $id = ($request->has('canal')) ? $request->query('canal') : 2;
+
         $orderBy = ($request->has('order')) ? $request->query('order') : 'title';
         $page = ($request->has('page')) ? $request->query('page') : 1;
-        
+
         $conteudos = DB::table('conteudos')
             ->select(['id','canal_id','user_id','title'])
             ->where('is_approved', true)
-            ->where('canal_id', $id)
+            ->where('canal_id', $request->query('id'))
             ->orderBy($orderBy, 'desc')
             ->paginate($limit);
-                    
+
         $conteudos->currentPage($page);
-        
+
         return response()->json([
             'title'=> 'Mídias educacionais',
             'paginator'=> $conteudos
-        ]);    
+        ],200);
     }
 
     /**

@@ -1559,13 +1559,11 @@ router.beforeEach(function (to, from, next) {
         return record.meta.requiresAuth;
     })) {
         if (localStorage.getItem('token') == null) {
-
             next({
                 path: '/login',
                 params: { nextUrl: to.fullPath }
             });
         } else {
-
             next();
         }
     } else if (to.matched.some(function (record) {
@@ -47287,10 +47285,12 @@ var routes = [{
     requiresAuth: false,
     guest: true
   }
-}, {
+},
+/*{
   path: '/sair',
   redirect: '/'
-}, {
+},*/
+{
   path: '/:slug',
   name: 'Canal',
   component: function component() {
@@ -48079,12 +48079,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         logout: function logout() {
-            var _this = this;
-
-            axios.get('/api-v1/users/logout', { token: localStorage.getItem('token') }).then(function (resp) {
-                localStorage.setItem('login_success', false);
-                _this.$router.push('Home');
-            }).catch(function (error) {});
+            localStorage.clear();
+            this.$router.push('Home');
         }
     }
 });
@@ -48206,8 +48202,18 @@ var render = function() {
                     _c("a", [_vm._v("Login")])
                   ]),
                   _vm._v(" "),
-                  _c("router-link", { attrs: { tag: "li", to: "/sair" } }, [
-                    _c("a", [_vm._v("Sair")])
+                  _c("li", [
+                    _c(
+                      "a",
+                      {
+                        on: {
+                          click: function($event) {
+                            _vm.logout()
+                          }
+                        }
+                      },
+                      [_vm._v("Sair")]
+                    )
                   ])
                 ],
                 1

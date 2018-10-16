@@ -10,7 +10,7 @@ const routes =[
       path: '/',
       name: 'Home',
       component: () => import(/* webpackChunkName: "home" */ './pages/Home.vue'),
-      meta: { 
+      meta: {
         requiresAuth: false
       }
     },
@@ -18,7 +18,7 @@ const routes =[
       path: '/admin',
       name: 'Admin',
       component: () => import(/* webpackChunkName: "admin" */ './pages/Admin.vue'),
-      meta: { 
+      meta: {
         requiresAuth: true,
         //is_admin : true
       }
@@ -27,15 +27,15 @@ const routes =[
       path: '/login',
       name: 'Login',
       component: () => import(/* webpackChunkName: "login" */ './pages/Login.vue'),
-      meta: { 
+      meta: {
         requiresAuth: false,
         guest: true
       }
     },
-    {
+    /*{
       path: '/sair',
       redirect: '/'
-    },
+    },*/
     {
       path: '/:slug',
       name: 'Canal',

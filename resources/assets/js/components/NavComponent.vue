@@ -13,7 +13,7 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    
+
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mídias Educacionais <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -46,14 +46,14 @@
                             <router-link tag="li" to="/login" >
                                 <a>Login</a>
                             </router-link>
-                            <router-link tag="li" to="/sair">
-                                <a>Sair</a>
-                            </router-link>
+                            <li>
+                                <a v-on:click="logout()">Sair</a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
-            </div>    
-        </div>    
+            </div>
+        </div>
     </nav>
 </template>
 
@@ -62,23 +62,17 @@
         name : 'nav-app',
         data () {
             return {
-                       
+
             }
         },
         mounted() {
-            
         },
         methods: {
-            logout: function(){
-                axios.get('/api-v1/users/logout', {token:localStorage.getItem('token')})
-                    .then(resp =>{
-                        localStorage.setItem('login_success', false);
-                        this.$router.push('Home')
-                    }).catch( error => {
-
-                    })
+            logout(){
+                localStorage.clear();
+                this.$router.push('Home');
             }
-        }    
+        }
     }
 </script>
 <style lang="sass" scoped>

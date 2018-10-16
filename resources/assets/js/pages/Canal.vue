@@ -11,6 +11,14 @@
                 
             </nav>
         </aside>
+
+        <ul v-for="(item, i) in paginator.data" v-bind:key="i">
+            <li v-bind:id="item.id">
+                {{ item.title }}
+            </li>
+        </ul>
+        {{paginator.last_page}}
+        <a v-bind:href="paginator.last_page_url">{{ paginator.last_page_url }}</a>
     </div>
 </template>
 <script>
@@ -19,7 +27,27 @@ export default {
     name : 'canal',
     data() {
         return {
-            title: 'Canal'
+            title: null,
+            paginator: {}
+        }
+    },
+    mounted() {
+        this.getConteudos();
+    },
+    watch: {
+        '$route' (to, from) {
+            this.getConteudos()
+        }
+    },
+    methods:{
+        getConteudos(){
+            console.log(this.$route.params.slug)
+            axios.get(`/api-v1/conteudos`, {canal_id : 1}).then(resp =>{
+                console.log(resp.data.paginator)
+                this.paginator = resp.data.paginator;
+                this.title = resp.data.title;
+            })
+            
         }
     }
 }
