@@ -1528,7 +1528,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routes__ = __webpack_require__(123);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routes__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_MainApp__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_MainApp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_MainApp__);
 /**
@@ -1559,13 +1559,11 @@ router.beforeEach(function (to, from, next) {
         return record.meta.requiresAuth;
     })) {
         if (localStorage.getItem('token') == null) {
-
             next({
                 path: '/login',
                 params: { nextUrl: to.fullPath }
             });
         } else {
-
             next();
         }
     } else if (to.matched.some(function (record) {
@@ -47240,7 +47238,89 @@ var index_esm = {
 
 
 /***/ }),
-/* 44 */,
+/* 44 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_Home_vue__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__pages_Home_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_Sobre_vue__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_Sobre_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__pages_Sobre_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_Listar_vue__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_Listar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__pages_Listar_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_Exibir_vue__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_Exibir_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__pages_Exibir_vue__);
+
+
+
+
+
+
+var routes = [{
+  path: '/',
+  name: 'Home',
+  component: function component() {
+    return new Promise(function(resolve) { resolve(); }).then(__webpack_require__.bind(null, 12));
+  },
+  meta: {
+    requiresAuth: false
+  }
+}, {
+  path: '/admin',
+  name: 'Admin',
+  component: function component() {
+    return __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, 77));
+  },
+  meta: {
+    requiresAuth: true
+    //is_admin : true
+  }
+}, {
+  path: '/login',
+  name: 'Login',
+  component: function component() {
+    return __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, 78));
+  },
+  meta: {
+    requiresAuth: false,
+    guest: true
+  }
+},
+/*{
+  path: '/sair',
+  redirect: '/'
+},*/
+{
+  path: '/:slug',
+  name: 'Canal',
+  component: function component() {
+    return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 79));
+  },
+  meta: {
+    requiresAuth: false
+  },
+  children: [{
+    path: 'inicio',
+    name: 'Inicio',
+    component: __WEBPACK_IMPORTED_MODULE_0__pages_Home_vue___default.a
+  }, {
+    path: 'sobre',
+    name: 'Sobre',
+    component: __WEBPACK_IMPORTED_MODULE_1__pages_Sobre_vue___default.a
+  }, {
+    path: 'listar',
+    name: 'Listar',
+    component: __WEBPACK_IMPORTED_MODULE_2__pages_Listar_vue___default.a
+  }, {
+    path: 'exibir',
+    name: 'Exibir',
+    component: __WEBPACK_IMPORTED_MODULE_3__pages_Exibir_vue___default.a
+  }]
+}];
+
+/* harmony default export */ __webpack_exports__["a"] = (routes);
+
+/***/ }),
 /* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -47251,7 +47331,7 @@ var content = __webpack_require__(46);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("10758648", content, false, {});
+var update = __webpack_require__(3)("226a86c2", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -47417,7 +47497,7 @@ var content = __webpack_require__(52);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("d461acc2", content, false, {});
+var update = __webpack_require__(3)("8059c70e", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -47550,7 +47630,7 @@ var content = __webpack_require__(57);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("270068c7", content, false, {});
+var update = __webpack_require__(3)("3d7ad12d", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -47683,7 +47763,7 @@ var content = __webpack_require__(62);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("07b38737", content, false, {});
+var update = __webpack_require__(3)("1e2def9d", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -47895,7 +47975,7 @@ var content = __webpack_require__(69);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("1740009e", content, false, {});
+var update = __webpack_require__(3)("77bb7784", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -48001,11 +48081,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         logout: function logout() {
             var _this = this;
 
-            axios.get('/api-v1/users/logout', { token: localStorage.getItem('token') }).then(function (resp) {
+            event.preventDefault();
+            //console.log('hdshjds')
+            sessionStorage.clear();
+            var token = localStorage.getItem('token');
+            axios.get('/api-v1/users/logout?token=' + token).then(function (resp) {
                 localStorage.setItem('login_success', false);
+                localStorage.removeItem('token');
                 _this.$router.push('Home');
-            }).catch(function (error) {});
+            }).catch(function (error) {
+                console.log(error.response);
+            });
         }
+
     }
 });
 
@@ -48126,9 +48214,17 @@ var render = function() {
                     _c("a", [_vm._v("Login")])
                   ]),
                   _vm._v(" "),
-                  _c("router-link", { attrs: { tag: "li", to: "/sair" } }, [
-                    _c("a", [_vm._v("Sair")])
-                  ])
+                  _c(
+                    "li",
+                    {
+                      on: {
+                        click: function($event) {
+                          _vm.logout()
+                        }
+                      }
+                    },
+                    [_c("a", [_vm._v("Sair")])]
+                  )
                 ],
                 1
               )
@@ -48340,133 +48436,6 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 77 */,
-/* 78 */,
-/* 79 */,
-/* 80 */,
-/* 81 */,
-/* 82 */,
-/* 83 */,
-/* 84 */,
-/* 85 */,
-/* 86 */,
-/* 87 */,
-/* 88 */,
-/* 89 */,
-/* 90 */,
-/* 91 */,
-/* 92 */,
-/* 93 */,
-/* 94 */,
-/* 95 */,
-/* 96 */,
-/* 97 */,
-/* 98 */,
-/* 99 */,
-/* 100 */,
-/* 101 */,
-/* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */,
-/* 106 */,
-/* 107 */,
-/* 108 */,
-/* 109 */,
-/* 110 */,
-/* 111 */,
-/* 112 */,
-/* 113 */,
-/* 114 */,
-/* 115 */,
-/* 116 */,
-/* 117 */,
-/* 118 */,
-/* 119 */,
-/* 120 */,
-/* 121 */,
-/* 122 */,
-/* 123 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_Home_vue__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__pages_Home_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_Sobre_vue__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_Sobre_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__pages_Sobre_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_Listar_vue__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_Listar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__pages_Listar_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_Exibir_vue__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_Exibir_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__pages_Exibir_vue__);
-
-
-
-
-
-
-var routes = [{
-  path: '/',
-  name: 'Home',
-  component: function component() {
-    return new Promise(function(resolve) { resolve(); }).then(__webpack_require__.bind(null, 12));
-  },
-  meta: {
-    requiresAuth: false
-  }
-}, {
-  path: '/admin',
-  name: 'Admin',
-  component: function component() {
-    return __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, 77));
-  },
-  meta: {
-    requiresAuth: true
-    //is_admin : true
-  }
-}, {
-  path: '/login',
-  name: 'Login',
-  component: function component() {
-    return __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, 78));
-  },
-  meta: {
-    requiresAuth: false,
-    guest: true
-  }
-}, {
-  path: '/sair',
-  redirect: '/'
-}, {
-  path: '/:slug',
-  name: 'Canal',
-  component: function component() {
-    return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 79));
-  },
-  meta: {
-    requiresAuth: false
-  },
-  children: [{
-    path: 'inicio',
-    name: 'Inicio',
-    component: __WEBPACK_IMPORTED_MODULE_0__pages_Home_vue___default.a
-  }, {
-    path: 'sobre',
-    name: 'Sobre',
-    component: __WEBPACK_IMPORTED_MODULE_1__pages_Sobre_vue___default.a
-  }, {
-    path: 'listar',
-    name: 'Listar',
-    component: __WEBPACK_IMPORTED_MODULE_2__pages_Listar_vue___default.a
-  }, {
-    path: 'exibir',
-    name: 'Exibir',
-    component: __WEBPACK_IMPORTED_MODULE_3__pages_Exibir_vue___default.a
-  }]
-}];
-
-/* harmony default export */ __webpack_exports__["a"] = (routes);
 
 /***/ })
 /******/ ]);

@@ -46,9 +46,9 @@
                             <router-link tag="li" to="/login" >
                                 <a>Login</a>
                             </router-link>
-                            <router-link tag="li" to="/sair">
+                            <li v-on:click="logout()">
                                 <a>Sair</a>
-                            </router-link>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -70,14 +70,21 @@
         },
         methods: {
             logout: function(){
-                axios.get('/api-v1/users/logout', {token:localStorage.getItem('token')})
+                event.preventDefault();
+                //console.log('hdshjds')
+                sessionStorage.clear();
+                let token = localStorage.getItem('token');
+                axios.get(`/api-v1/users/logout?token=${token}`)
                     .then(resp =>{
                         localStorage.setItem('login_success', false);
+                        localStorage.removeItem('token');
                         this.$router.push('Home')
                     }).catch( error => {
-
+                        console.log(error.response)
                     })
+                
             }
+            
         }    
     }
 </script>

@@ -75,14 +75,13 @@ class UserController extends Controller
         $this->validate($request, [
             'token' => 'required'
         ]);
-            dd($request->token);
         try {
-            JWTAuth::invalidate($request->token);
+        JWTAuth::invalidate($request->token);
 
             return response()->json([
                 'success' => true,
                 'message' => 'Usuário desconectado'
-            ]);
+            ], 200);
         } catch (JWTException $exception) {
             return response()->json([
                 'success' => false,
