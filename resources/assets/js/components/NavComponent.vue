@@ -13,7 +13,7 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    
+
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mídias Educacionais <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -46,14 +46,14 @@
                             <router-link tag="li" to="/login" >
                                 <a>Login</a>
                             </router-link>
-                            <li v-on:click="logout()">
-                                <a>Sair</a>
+                            <li>
+                                <a v-on:click="logout()">Sair</a>
                             </li>
                         </ul>
                     </li>
                 </ul>
-            </div>    
-        </div>    
+            </div>
+        </div>
     </nav>
 </template>
 
@@ -69,22 +69,9 @@
             
         },
         methods: {
-            logout: function(){
-                event.preventDefault();
-                //console.log('hdshjds')
-                sessionStorage.clear();
-                let token = localStorage.getItem('token');
-                axios.get(`/api-v1/users/logout?token=${token}`)
-                    .then(resp =>{
-                        localStorage.setItem('login_success', false);
-                        localStorage.removeItem('token');
-                        this.$router.push('Home')
-                    }).catch( error => {
-                        console.log(error.response)
-                    })
-                
-            }
-            
+            logout(){
+                localStorage.clear();                
+            } 
         }    
     }
 </script>

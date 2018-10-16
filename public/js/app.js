@@ -48079,21 +48079,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         logout: function logout() {
-            var _this = this;
-
-            event.preventDefault();
-            //console.log('hdshjds')
-            sessionStorage.clear();
-            var token = localStorage.getItem('token');
-            axios.get('/api-v1/users/logout?token=' + token).then(function (resp) {
-                localStorage.setItem('login_success', false);
-                localStorage.removeItem('token');
-                _this.$router.push('Home');
-            }).catch(function (error) {
-                console.log(error.response);
-            });
+            localStorage.clear();
         }
-
     }
 });
 
@@ -48214,17 +48201,19 @@ var render = function() {
                     _c("a", [_vm._v("Login")])
                   ]),
                   _vm._v(" "),
-                  _c(
-                    "li",
-                    {
-                      on: {
-                        click: function($event) {
-                          _vm.logout()
+                  _c("li", [
+                    _c(
+                      "a",
+                      {
+                        on: {
+                          click: function($event) {
+                            _vm.logout()
+                          }
                         }
-                      }
-                    },
-                    [_c("a", [_vm._v("Sair")])]
-                  )
+                      },
+                      [_vm._v("Sair")]
+                    )
+                  ])
                 ],
                 1
               )

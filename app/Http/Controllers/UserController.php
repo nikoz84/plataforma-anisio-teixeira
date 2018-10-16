@@ -28,11 +28,12 @@ class UserController extends Controller
                 'message' => 'Email ou Senha inválidos',
             ], 401);
         }
- 
+        $currentUser = JWTAuth::user();
+
         return response()->json([
             'success' => true,
-            'is_admin' => true,
             'token' => $jwt_token,
+            'user' => $currentUser
         ], 200);
     }
 
@@ -106,7 +107,8 @@ class UserController extends Controller
     public function list(Request $request)
     {
       $limit = ($request->has('limit')) ? $request->query('limit') : 10;        
-      $page = ($request->has('page')) ? $request->query('page') : 1;   
+      $page = ($request->has('page')) ? $request->query('page') : 1;
+         
 
       $users = User::where("options->is_active",'true')
                     ->limit($limit)
