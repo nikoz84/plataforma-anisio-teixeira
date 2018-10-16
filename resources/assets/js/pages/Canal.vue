@@ -28,7 +28,8 @@ export default {
     data() {
         return {
             title: null,
-            paginator: {}
+            urlProximaPagina: null,
+            //paginator: {}
         }
     },
     mounted() {
@@ -44,10 +45,13 @@ export default {
             console.log(this.$route.params.slug)
             axios.get(`/api-v1/conteudos`, {canal_id : 1}).then(resp =>{
                 console.log(resp.data.paginator)
-                this.paginator = resp.data.paginator;
-                this.title = resp.data.title;
+                if(resp.data.paginator){
+                    this.urlProximaPagina = resp.data.paginator.next_page_url;
+                }
+                //this.paginator = resp.data.paginator;
+                //this.title = resp.data.title;
             })
-            
+
         }
     }
 }
