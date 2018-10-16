@@ -20,9 +20,9 @@ Criamos uma API RESTFUL que se comunica com frontend feito em VUE.js permitindo 
 
 ## COMO INSTALAR
 
-Faça uma copia do arquivo .env.example, e renomee a copia para .env, em este arquivo você vai adicionar as configurações do banco de dados o outras configurações. Além disso, você precisará criar um chave de verificação da aplicação na variavel global chamada APP_KEY. Pode criar esta chave com o comando que criará uma chave em base 64.
+Faça uma copia do arquivo .env.example, e renomee a copia para .env, em este arquivo você vai adicionar as configurações do banco de dados o outras configurações. Além disso, você precisará criar um chave de verificação da aplicação na variavel global chamada APP_KEY. Pode criar esta chave com o comando que criará uma chave em base 64. E também criar a secret key para a autenticação com Json Web Token.
 
-``$ php artisan key:generate``
+``$ php artisan key:generate; php artisan jwt:secret``
 
 Instalar as dependencias do laravel com composer:
 

@@ -31,8 +31,9 @@ class UserController extends Controller
  
         return response()->json([
             'success' => true,
+            'is_admin' => true,
             'token' => $jwt_token,
-        ]);
+        ], 200);
     }
 
     /**
@@ -42,20 +43,20 @@ class UserController extends Controller
      */
     public function register(Request $request)
     {
-      $user = new User();
-      $user->name = $request->name;
-      $user->email = $request->email;
-      $user->password = bcrypt($request->password);
-      $user->save();
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->save();
 
-      if ($this->loginAfterSignUp) {
-          return $this->login($request);
-      }
+        if ($this->loginAfterSignUp) {
+            return $this->login($request);
+        }
 
-      return response()->json([
-          'success' => true,
-          'data' => $user
-      ], 200);
+        return response()->json([
+            'success' => true,
+            'data' => $user
+        ], 200);
         
     }
 
@@ -71,23 +72,23 @@ class UserController extends Controller
     }
     public function logout(Request $request)
     {
-      $this->validate($request, [
-        'token' => 'required'
-      ]);
-
-    try {
-        JWTAuth::invalidate($request->token);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Usuário desconectado'
+        $this->validate($request, [
+            'token' => 'required'
         ]);
-    } catch (JWTException $exception) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Desculpe, erro ao desconectar'
-        ], 500);
-    }
+            dd($request->token);
+        try {
+            JWTAuth::invalidate($request->token);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Usuário desconectado'
+            ]);
+        } catch (JWTException $exception) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Desculpe, erro ao desconectar'
+            ], 500);
+        }
     }
     public function getAuthUser(Request $request)
     {
@@ -103,7 +104,8 @@ class UserController extends Controller
     {
       
     }
-    public function list(Request $request){
+    public function list(Request $request)
+    {
       $limit = ($request->has('limit')) ? $request->query('limit') : 10;        
       $page = ($request->has('page')) ? $request->query('page') : 1;   
 

@@ -8,7 +8,7 @@ require('./bootstrap');
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Vuex from 'vuex';
-import routes from './router';
+import routes from './routes';
 import MainApp from './components/MainApp';
 
 Vue.use(VueRouter);
@@ -23,6 +23,31 @@ const router = new VueRouter({
 });
 
 
+router.beforeEach((to, from, next) => {
+    if(to.matched.some(record => record.meta.requiresAuth)) {
+        if (localStorage.getItem('token') == null) {
+            
+            next({
+                path: '/login',
+                params: { nextUrl: to.fullPath }
+            })
+        } else {
+            
+           
+           
+           next()
+        }
+    } else if(to.matched.some(record => record.meta.guest)) {
+        if(localStorage.getItem('token') == null){
+            next()
+        }
+        else{
+            next({ name: 'Admin'})
+        }
+    }else {
+        next(); 
+    }
+  });
 
 
 new Vue({

@@ -1528,7 +1528,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__router__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routes__ = __webpack_require__(123);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_MainApp__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_MainApp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_MainApp__);
 /**
@@ -1549,9 +1549,36 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     mode: 'history',
-    routes: __WEBPACK_IMPORTED_MODULE_3__router__["a" /* default */],
+    routes: __WEBPACK_IMPORTED_MODULE_3__routes__["a" /* default */],
     //linkActiveClass: "active",
     linkExactActiveClass: "active"
+});
+
+router.beforeEach(function (to, from, next) {
+    if (to.matched.some(function (record) {
+        return record.meta.requiresAuth;
+    })) {
+        if (localStorage.getItem('token') == null) {
+
+            next({
+                path: '/login',
+                params: { nextUrl: to.fullPath }
+            });
+        } else {
+
+            next();
+        }
+    } else if (to.matched.some(function (record) {
+        return record.meta.guest;
+    })) {
+        if (localStorage.getItem('token') == null) {
+            next();
+        } else {
+            next({ name: 'Admin' });
+        }
+    } else {
+        next();
+    }
 });
 
 new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
@@ -47213,70 +47240,7 @@ var index_esm = {
 
 
 /***/ }),
-/* 44 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_Home_vue__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__pages_Home_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_Sobre_vue__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_Sobre_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__pages_Sobre_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_Listar_vue__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_Listar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__pages_Listar_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_Exibir_vue__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_Exibir_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__pages_Exibir_vue__);
-
-
-
-
-
-
-var routes = [{
-  path: '/',
-  name: 'Home',
-  component: function component() {
-    return new Promise(function(resolve) { resolve(); }).then(__webpack_require__.bind(null, 12));
-  }
-}, {
-  path: '/admin',
-  name: 'Admin',
-  component: function component() {
-    return __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, 77));
-  }
-}, {
-  path: '/login',
-  name: 'Login',
-  component: function component() {
-    return __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, 78));
-  }
-}, {
-  path: '/:slug',
-  name: 'Canal',
-  component: function component() {
-    return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 79));
-  },
-  children: [{
-    path: 'inicio',
-    name: 'Inicio',
-    component: __WEBPACK_IMPORTED_MODULE_0__pages_Home_vue___default.a
-  }, {
-    path: 'sobre',
-    name: 'Sobre',
-    component: __WEBPACK_IMPORTED_MODULE_1__pages_Sobre_vue___default.a
-  }, {
-    path: 'listar',
-    name: 'Listar',
-    component: __WEBPACK_IMPORTED_MODULE_2__pages_Listar_vue___default.a
-  }, {
-    path: 'exibir',
-    name: 'Exibir',
-    component: __WEBPACK_IMPORTED_MODULE_3__pages_Exibir_vue___default.a
-  }]
-}];
-
-/* harmony default export */ __webpack_exports__["a"] = (routes);
-
-/***/ }),
+/* 44 */,
 /* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -47287,7 +47251,7 @@ var content = __webpack_require__(46);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("226a86c2", content, false, {});
+var update = __webpack_require__(3)("10758648", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -47453,7 +47417,7 @@ var content = __webpack_require__(52);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("8059c70e", content, false, {});
+var update = __webpack_require__(3)("d461acc2", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -47586,7 +47550,7 @@ var content = __webpack_require__(57);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("3d7ad12d", content, false, {});
+var update = __webpack_require__(3)("270068c7", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -47719,7 +47683,7 @@ var content = __webpack_require__(62);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("1e2def9d", content, false, {});
+var update = __webpack_require__(3)("07b38737", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -47931,7 +47895,7 @@ var content = __webpack_require__(69);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("77bb7784", content, false, {});
+var update = __webpack_require__(3)("1740009e", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -48016,10 +47980,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'nav-app',
-    mounted: function mounted() {}
+    data: function data() {
+        return {};
+    },
+    mounted: function mounted() {},
+
+    methods: {
+        logout: function logout() {
+            var _this = this;
+
+            axios.get('/api-v1/users/logout', { token: localStorage.getItem('token') }).then(function (resp) {
+                localStorage.setItem('login_success', false);
+                _this.$router.push('Home');
+            }).catch(function (error) {});
+        }
+    }
 });
 
 /***/ }),
@@ -48041,102 +48028,112 @@ var render = function() {
           attrs: { id: "bs-example-navbar-collapse-1" }
         },
         [
-          _c(
-            "ul",
-            { staticClass: "nav navbar-nav navbar-right" },
-            [
-              _c("router-link", { attrs: { tag: "li", to: "/login" } }, [
-                _c("a", [_vm._v("Login")])
-              ]),
+          _c("ul", { staticClass: "nav navbar-nav navbar-right" }, [
+            _c("li", { staticClass: "dropdown" }, [
+              _vm._m(1),
               _vm._v(" "),
-              _c("li", { staticClass: "dropdown" }, [
-                _vm._m(1),
-                _vm._v(" "),
-                _c(
-                  "ul",
-                  { staticClass: "dropdown-menu" },
-                  [
-                    _c("router-link", { attrs: { tag: "li", to: "/" } }, [
-                      _c("a", [_vm._v("Inicio")])
-                    ]),
-                    _vm._v(" "),
-                    _c("router-link", { attrs: { tag: "li", to: "/admin" } }, [
-                      _c("a", [_vm._v("Administração")])
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "router-link",
-                      {
-                        attrs: {
-                          tag: "li",
-                          to: {
-                            name: "Inicio",
-                            params: { slug: "tv-anisio-teixeira" }
-                          }
+              _c(
+                "ul",
+                { staticClass: "dropdown-menu" },
+                [
+                  _c("router-link", { attrs: { tag: "li", to: "/" } }, [
+                    _c("a", [_vm._v("Inicio")])
+                  ]),
+                  _vm._v(" "),
+                  _c("router-link", { attrs: { tag: "li", to: "/admin" } }, [
+                    _c("a", [_vm._v("Administração")])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        tag: "li",
+                        to: {
+                          name: "Inicio",
+                          params: { slug: "tv-anisio-teixeira" }
                         }
-                      },
-                      [_c("a", [_vm._v("Tv Anísio Teixeira")])]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "router-link",
-                      {
-                        attrs: {
-                          tag: "li",
-                          to: {
-                            name: "Inicio",
-                            params: { slug: "radio-anisio-teixeira" }
-                          }
+                      }
+                    },
+                    [_c("a", [_vm._v("Tv Anísio Teixeira")])]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        tag: "li",
+                        to: {
+                          name: "Inicio",
+                          params: { slug: "radio-anisio-teixeira" }
                         }
-                      },
-                      [_c("a", [_vm._v("Radio Anísio Teixeira")])]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "router-link",
-                      {
-                        attrs: {
-                          tag: "li",
-                          to: { name: "Inicio", params: { slug: "emitec" } }
+                      }
+                    },
+                    [_c("a", [_vm._v("Radio Anísio Teixeira")])]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        tag: "li",
+                        to: { name: "Inicio", params: { slug: "emitec" } }
+                      }
+                    },
+                    [_c("a", [_vm._v("Emitec")])]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        tag: "li",
+                        to: {
+                          name: "Inicio",
+                          params: { slug: "projetos-artisticos" }
                         }
-                      },
-                      [_c("a", [_vm._v("Emitec")])]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "router-link",
-                      {
-                        attrs: {
-                          tag: "li",
-                          to: {
-                            name: "Inicio",
-                            params: { slug: "projetos-artisticos" }
-                          }
+                      }
+                    },
+                    [_c("a", [_vm._v("Projetos Artisticos")])]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        tag: "li",
+                        to: {
+                          name: "Inicio",
+                          params: { slug: "sites-tematicos" }
                         }
-                      },
-                      [_c("a", [_vm._v("Projetos Artisticos")])]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "router-link",
-                      {
-                        attrs: {
-                          tag: "li",
-                          to: {
-                            name: "Inicio",
-                            params: { slug: "sites-tematicos" }
-                          }
-                        }
-                      },
-                      [_c("a", [_vm._v("Sites Temáticos")])]
-                    )
-                  ],
-                  1
-                )
-              ])
-            ],
-            1
-          )
+                      }
+                    },
+                    [_c("a", [_vm._v("Sites Temáticos")])]
+                  )
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "dropdown" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c(
+                "ul",
+                { staticClass: "dropdown-menu" },
+                [
+                  _c("router-link", { attrs: { tag: "li", to: "/login" } }, [
+                    _c("a", [_vm._v("Login")])
+                  ]),
+                  _vm._v(" "),
+                  _c("router-link", { attrs: { tag: "li", to: "/sair" } }, [
+                    _c("a", [_vm._v("Sair")])
+                  ])
+                ],
+                1
+              )
+            ])
+          ])
         ]
       )
     ])
@@ -48192,6 +48189,25 @@ var staticRenderFns = [
         }
       },
       [_vm._v("Mídias Educacionais "), _c("span", { staticClass: "caret" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "dropdown-toggle",
+        attrs: {
+          href: "#",
+          "data-toggle": "dropdown",
+          role: "button",
+          "aria-haspopup": "true",
+          "aria-expanded": "false"
+        }
+      },
+      [_vm._v("Usuário "), _c("span", { staticClass: "caret" })]
     )
   }
 ]
@@ -48324,6 +48340,133 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */,
+/* 84 */,
+/* 85 */,
+/* 86 */,
+/* 87 */,
+/* 88 */,
+/* 89 */,
+/* 90 */,
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */,
+/* 96 */,
+/* 97 */,
+/* 98 */,
+/* 99 */,
+/* 100 */,
+/* 101 */,
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */,
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */,
+/* 119 */,
+/* 120 */,
+/* 121 */,
+/* 122 */,
+/* 123 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_Home_vue__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__pages_Home_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_Sobre_vue__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_Sobre_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__pages_Sobre_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_Listar_vue__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_Listar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__pages_Listar_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_Exibir_vue__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_Exibir_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__pages_Exibir_vue__);
+
+
+
+
+
+
+var routes = [{
+  path: '/',
+  name: 'Home',
+  component: function component() {
+    return new Promise(function(resolve) { resolve(); }).then(__webpack_require__.bind(null, 12));
+  },
+  meta: {
+    requiresAuth: false
+  }
+}, {
+  path: '/admin',
+  name: 'Admin',
+  component: function component() {
+    return __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, 77));
+  },
+  meta: {
+    requiresAuth: true
+    //is_admin : true
+  }
+}, {
+  path: '/login',
+  name: 'Login',
+  component: function component() {
+    return __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, 78));
+  },
+  meta: {
+    requiresAuth: false,
+    guest: true
+  }
+}, {
+  path: '/sair',
+  redirect: '/'
+}, {
+  path: '/:slug',
+  name: 'Canal',
+  component: function component() {
+    return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 79));
+  },
+  meta: {
+    requiresAuth: false
+  },
+  children: [{
+    path: 'inicio',
+    name: 'Inicio',
+    component: __WEBPACK_IMPORTED_MODULE_0__pages_Home_vue___default.a
+  }, {
+    path: 'sobre',
+    name: 'Sobre',
+    component: __WEBPACK_IMPORTED_MODULE_1__pages_Sobre_vue___default.a
+  }, {
+    path: 'listar',
+    name: 'Listar',
+    component: __WEBPACK_IMPORTED_MODULE_2__pages_Listar_vue___default.a
+  }, {
+    path: 'exibir',
+    name: 'Exibir',
+    component: __WEBPACK_IMPORTED_MODULE_3__pages_Exibir_vue___default.a
+  }]
+}];
+
+/* harmony default export */ __webpack_exports__["a"] = (routes);
 
 /***/ })
 /******/ ]);

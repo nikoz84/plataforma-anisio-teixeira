@@ -4,26 +4,45 @@ import Sobre from './pages/Sobre.vue';
 import Listar from './pages/Listar.vue';
 import Exibir from './pages/Exibir.vue';
 
+
 const routes =[
     {
       path: '/',
       name: 'Home',
-      component: () => import(/* webpackChunkName: "home" */ './pages/Home.vue')
+      component: () => import(/* webpackChunkName: "home" */ './pages/Home.vue'),
+      meta: { 
+        requiresAuth: false
+      }
     },
     {
       path: '/admin',
       name: 'Admin',
-      component: () => import(/* webpackChunkName: "admin" */ './pages/Admin.vue')
+      component: () => import(/* webpackChunkName: "admin" */ './pages/Admin.vue'),
+      meta: { 
+        requiresAuth: true,
+        //is_admin : true
+      }
     },
     {
       path: '/login',
       name: 'Login',
-      component: () => import(/* webpackChunkName: "login" */ './pages/Login.vue')
+      component: () => import(/* webpackChunkName: "login" */ './pages/Login.vue'),
+      meta: { 
+        requiresAuth: false,
+        guest: true
+      }
+    },
+    {
+      path: '/sair',
+      redirect: '/'
     },
     {
       path: '/:slug',
       name: 'Canal',
       component: () => import(/* webpackChunkName: "canal" */ './pages/Canal.vue'),
+      meta: { 
+        requiresAuth: false
+      },
       children: [
         {
           path: 'inicio',
@@ -49,5 +68,9 @@ const routes =[
       ]
     }
 ];
+
+
+
+
 
 export default routes;
