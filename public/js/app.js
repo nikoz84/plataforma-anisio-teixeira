@@ -48080,6 +48080,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         logout: function logout() {
             localStorage.clear();
+            this.$router.push('Home');
         }
     }
 });

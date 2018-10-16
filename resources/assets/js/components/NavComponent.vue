@@ -70,7 +70,8 @@
         },
         methods: {
             logout(){
-                localStorage.clear();                
+                localStorage.clear();
+                this.$router.push('Home');                
             } 
         }    
     }
