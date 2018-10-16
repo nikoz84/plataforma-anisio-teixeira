@@ -62,18 +62,17 @@
         name : 'nav-app',
         data () {
             return {
-                       
+
             }
         },
         mounted() {
-            
         },
         methods: {
             logout(){
                 localStorage.clear();
-                this.$router.push('Home');                
-            } 
-        }    
+                this.$router.push('Home');
+            }
+        }
     }
 </script>
 <style lang="sass" scoped>

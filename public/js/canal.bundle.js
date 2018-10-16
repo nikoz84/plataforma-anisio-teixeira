@@ -62,14 +62,44 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'canal',
     data: function data() {
         return {
-            title: 'Canal'
+            title: null,
+            paginator: {}
         };
+    },
+    mounted: function mounted() {
+        this.getConteudos();
+    },
+
+    watch: {
+        '$route': function $route(to, from) {
+            this.getConteudos();
+        }
+    },
+    methods: {
+        getConteudos: function getConteudos() {
+            var _this = this;
+
+            console.log(this.$route.params.slug);
+            axios.get('/api-v1/conteudos', { canal_id: 1 }).then(function (resp) {
+                console.log(resp.data.paginator);
+                _this.paginator = resp.data.paginator;
+                _this.title = resp.data.title;
+            });
+        }
     }
 });
 
@@ -136,9 +166,21 @@ var render = function() {
           ],
           1
         )
+      ]),
+      _vm._v(" "),
+      _vm._l(_vm.paginator.data, function(item, i) {
+        return _c("ul", { key: i }, [
+          _c("li", { attrs: { id: item.id } }, [
+            _vm._v("\n            " + _vm._s(item.title) + "\n        ")
+          ])
+        ])
+      }),
+      _vm._v("\n    " + _vm._s(_vm.paginator.last_page) + "\n    "),
+      _c("a", { attrs: { href: _vm.paginator.last_page_url } }, [
+        _vm._v(_vm._s(_vm.paginator.last_page_url))
       ])
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []
