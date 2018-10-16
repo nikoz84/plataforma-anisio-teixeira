@@ -29,7 +29,7 @@ class ConteudoController extends Controller
         $conteudos->currentPage($page);
 
         return response()->json([
-            'title'=> 'Mídias Educacionais',
+            'title'=> 'Mídias educacionais',
             'paginator'=> $conteudos
         ],200);
     }

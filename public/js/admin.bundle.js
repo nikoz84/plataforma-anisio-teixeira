@@ -20,7 +20,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'Card',
-    props: {}
+    props: {
+        item: Object
+    }
 
 });
 
@@ -72,11 +74,20 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("section", [
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-sm-6 col-lg-3" }, [_c("Card")], 1)
-    ])
-  ])
+  return _c(
+    "section",
+    { staticClass: "row" },
+    _vm._l(_vm.items, function(key, item) {
+      return _vm.items
+        ? _c(
+            "div",
+            { key: key, staticClass: "col-sm-6 col-lg-3" },
+            [_c("Card", { attrs: { item: item } })],
+            1
+          )
+        : _vm._e()
+    })
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -102,21 +113,64 @@ var render = function() {
     [
       _c("Sidebar", { staticClass: "col-sm-3" }),
       _vm._v(" "),
-      _c(
-        "section",
-        { staticClass: "col-sm-9" },
-        [
-          _c("Search", { staticClass: "row" }),
-          _vm._v(" "),
-          _c("List", { staticClass: "row mt-15", attrs: { items: "" } })
-        ],
-        1
-      )
+      _c("section", { staticClass: "col-sm-9" }, [
+        _c(
+          "header",
+          { staticClass: "page-header" },
+          [
+            _c("h1", [
+              _c("small", [
+                _vm._v(_vm._s(_vm.title + "  " + _vm.complementTitle))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("Search")
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          _vm._l(_vm.paginator.data, function(item, i) {
+            return _vm.paginator.data
+              ? _c("ul", { key: i, staticClass: "list-unstyled" }, [
+                  _c(
+                    "li",
+                    {
+                      staticClass: "panel panel-default",
+                      attrs: { id: item.id }
+                    },
+                    [
+                      _c("div", { staticClass: "panel-body" }, [
+                        _c("h4", [
+                          _vm._v(_vm._s(item.name ? item.name : item.title))
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(0, true)
+                      ])
+                    ]
+                  )
+                ])
+              : _vm._e()
+          })
+        )
+      ])
     ],
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "pull-right" }, [
+      _c("a", [_vm._v("editar")]),
+      _vm._v(" "),
+      _c("a", [_vm._v("deletar")])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -215,7 +269,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.mt-15[data-v-7943083c] {\n  margin-top: 15px;\n}\n", ""]);
+exports.push([module.i, "\n.mt-15[data-v-7943083c] {\n  margin-top: 15px;\n}\n.page-header[data-v-7943083c] {\n  margin-top: 0px;\n}\n.page-header > h1[data-v-7943083c] {\n  margin-top: 0px;\n}\n", ""]);
 
 // exports
 
@@ -245,6 +299,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -258,7 +325,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             title: 'Administração',
-            data: {}
+            paginator: {},
+            complementTitle: ''
         };
     },
 
@@ -387,41 +455,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             username: localStorage.getItem('username'),
-            user_id: localStorage.getItem('user_id')
+            userId: localStorage.getItem('user_id')
         };
     },
 
     methods: {
-        getCanais: function getCanais() {
-            axios.get('/api-v1/canais').then(function (resp) {
-                console.log(resp);
-            }).catch(function (error) {});
+        get: function get(endpoint) {
+            var _this = this;
 
-            // this.$parent.items =
-        },
-        getUsers: function getUsers() {
-
-            axios.get('/api-v1/users', { token: localStorage.getItem('token') }).then(function (resp) {
-                console.log(resp);
-            }).catch(function (error) {});
-        },
-        getConteudos: function getConteudos() {
-            axios.get('/api-v1/conteudos').then(function (resp) {
-                console.log(resp);
-            }).catch(function (error) {});
-        },
-        getAplicativos: function getAplicativos() {
-            axios.get('/api-v1/aplicativos').then(function (resp) {
-                console.log(resp);
-            }).catch(function (error) {});
-        },
-        getTags: function getTags() {
-            axios.get('/api-v1/tags').then(function (resp) {
-                console.log(resp);
-            }).catch(function (error) {});
-        },
-        getLicencas: function getLicencas() {
-            console.log('licenças');
+            axios.get('/api-v1/' + endpoint).then(function (resp) {
+                console.log(resp.data);
+                _this.$parent.paginator = resp.data.paginator;
+                _this.$parent.complementTitle = resp.data.title;
+            }).catch(function (error) {
+                console.log(error.response);
+            });
         }
     }
 });
@@ -436,19 +484,41 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("nav", { staticClass: "list-group" }, [
-    _vm._m(0),
+    _c("a", { staticClass: "thumbnail", attrs: { href: "#" } }, [
+      _c("img", {
+        staticClass: "w-150",
+        attrs: {
+          src: "https://via.placeholder.com/300x200",
+          alt: "Foto Usuário"
+        }
+      })
+    ]),
     _vm._v(" "),
     _c("p", [_vm._v(_vm._s("Benvindo " + _vm.username))]),
     _vm._v(" "),
     _c(
       "a",
-      { staticClass: "list-group-item pointer", on: { click: _vm.getCanais } },
+      {
+        staticClass: "list-group-item pointer",
+        on: {
+          click: function($event) {
+            _vm.get("canais")
+          }
+        }
+      },
       [_vm._v("Canais")]
     ),
     _vm._v(" "),
     _c(
       "a",
-      { staticClass: "list-group-item pointer", on: { click: _vm.getUsers } },
+      {
+        staticClass: "list-group-item pointer",
+        on: {
+          click: function($event) {
+            _vm.get("users")
+          }
+        }
+      },
       [_vm._v("Usuários")]
     ),
     _vm._v(" "),
@@ -456,7 +526,11 @@ var render = function() {
       "a",
       {
         staticClass: "list-group-item pointer",
-        on: { click: _vm.getConteudos }
+        on: {
+          click: function($event) {
+            _vm.get("conteudos")
+          }
+        }
       },
       [_vm._v("Mídias Educacionais")]
     ),
@@ -465,14 +539,25 @@ var render = function() {
       "a",
       {
         staticClass: "list-group-item pointer",
-        on: { click: _vm.getAplicativos }
+        on: {
+          click: function($event) {
+            _vm.get("aplicativos")
+          }
+        }
       },
       [_vm._v("Aplicativos Educacionais")]
     ),
     _vm._v(" "),
     _c(
       "a",
-      { staticClass: "list-group-item pointer", on: { click: _vm.getTags } },
+      {
+        staticClass: "list-group-item pointer",
+        on: {
+          click: function($event) {
+            _vm.get("tags")
+          }
+        }
+      },
       [_vm._v("Tags")]
     ),
     _vm._v(" "),
@@ -480,25 +565,17 @@ var render = function() {
       "a",
       {
         staticClass: "list-group-item pointer",
-        on: { click: _vm.getLicencas }
+        on: {
+          click: function($event) {
+            _vm.get("licenses")
+          }
+        }
       },
       [_vm._v("Licenças")]
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "thumbnail", attrs: { href: "#" } }, [
-      _c("img", {
-        staticClass: "w-150",
-        attrs: { src: "https://robohash.org/32", alt: "Foto Usuário" }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -800,8 +877,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 
@@ -811,7 +886,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         Card: __WEBPACK_IMPORTED_MODULE_0__components_CardComponent_vue___default.a
     },
     props: {
-        items: {}
+        title: String,
+        items: Array
     },
     data: function data() {
         return {};

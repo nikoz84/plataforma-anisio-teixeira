@@ -1,12 +1,25 @@
 <template>
     <div>
-
         <Sidebar class="col-sm-3"></Sidebar>
         <section class="col-sm-9">
-            
-            <Search class="row"></Search>
-
-            <List class="row mt-15" items></List>
+            <header class="page-header">
+                <h1><small>{{ `${title}  ${complementTitle}` }}</small></h1>
+                <Search></Search>
+            </header>
+            <div>
+                <ul class="list-unstyled" v-if="paginator.data" v-for="(item, i) in paginator.data" :key="i">
+                    <li class="panel panel-default" v-bind:id="item.id">
+                        <div class="panel-body">
+                            
+                            <h4>{{ (item.name) ? item.name : item.title }}</h4>
+                            <div class="pull-right">
+                                <a>editar</a>
+                                <a>deletar</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </section>
     </div>
 </template>
@@ -23,7 +36,8 @@ export default {
     data() {
         return {
             title: 'Administração',
-            data: {}
+            paginator: {},
+            complementTitle: ''
         }
     },
     methods:{
@@ -33,5 +47,8 @@ export default {
 </script>
 <style lang="sass" scoped>
 .mt-15{ margin-top: 15px; }
+.page-header { margin-top: 0px; }
+.page-header > h1 { margin-top: 0px; }
+
 </style>
 

@@ -22,11 +22,12 @@ class CanalController extends Controller
         $canais = Canal::where('is_active', true)
                         ->limit($limit)
                         ->offset($page)
-                        ->get();
+                        ->paginate($limit);
+        $canais->currentPage($page);
 
         return response()->json([
             'title'=> 'Lista de canais',
-            'items' => $canais
+            'paginator' => $canais
         ]);
     }
     
