@@ -1,9 +1,11 @@
 <template>
     <div>
-        <Sidebar class="col-sm-3"></Sidebar>
+        <!-- Sidebar -->
+        <Sidebar class="col-sm-3" v-bind:search="search"></Sidebar>
         <section class="col-sm-9">
             <header class="page-header">
-                <h1><small>{{ `${title}  ${complementTitle}` }}</small></h1>
+                <h1><small>{{ title }}</small></h1>
+                <!-- Search -->
                 <Search></Search>
             </header>
             <div>
@@ -20,6 +22,7 @@
                     </li>
                 </ul>
             </div>
+            <Paginator v-bind:paginator="paginator"></Paginator>
         </section>
     </div>
 </template>
@@ -27,21 +30,22 @@
 import Sidebar from '../components/SidebarComponent.vue';
 import Search from '../components/SearchComponent.vue';
 import List from '../components/ListComponent.vue';
+import Paginator from '../components/PaginatorComponent.vue';
 
 export default {
     name : 'admin',
     components:{
-        Sidebar, Search, List
+        Sidebar, Search, List, Paginator
     },
     data() {
         return {
-            title: 'Administração',
+            title: '',
             paginator: {},
-            complementTitle: ''
+            search: ''
         }
     },
     methods:{
-        
+
     }
 }
 </script>

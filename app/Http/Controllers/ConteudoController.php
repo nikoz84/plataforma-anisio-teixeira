@@ -15,14 +15,14 @@ class ConteudoController extends Controller
     public function list(Request $request)
     {
         $limit = ($request->has('limit')) ? $request->query('limit') : 10;
-
-        $orderBy = ($request->has('order')) ? $request->query('order') : 'title';
         $page = ($request->has('page')) ? $request->query('page') : 1;
+        $orderBy = ($request->has('order')) ? $request->query('order') : 'title';
+        
 
         $conteudos = DB::table('conteudos')
             ->select(['id','canal_id','user_id','title'])
             ->where('is_approved', true)
-            ->where('canal_id', $request->query('id'))
+            //->where('canal_id', $request->query('id'))
             ->orderBy($orderBy, 'desc')
             ->paginate($limit);
 
@@ -124,18 +124,27 @@ class ConteudoController extends Controller
 
     public function search(Request $request, $termo)
     {
+        $limit = $request->query('limit', 15);
+        $page = $request->query('page', 1);
+
         $conteudos = DB::table(DB::raw("conteudos as cd, plainto_tsquery('simple', lower(unaccent('${termo}'))) query"))
                     ->select(['cd.id','cd.title',
                             DB::raw('ts_rank_cd(cd.ts_documento, query) AS ranking')
                             ])
                     ->whereRaw('query @@ cd.ts_documento')
-                    //->where('cd.is_approved', '=', 'true' )
+                    ->where('cd.is_approved', '=', 'true' )
                     ->orderBy('ranking','desc')
-                    ->get();
-        
+                    ->paginate($limit);
+
+        //$conteudos->currentPage($page);
+        //$conteudos->setPath('custom/url');
+
         return response()->json([
             'message' => 'Resultados da busca',
-            'items' => $conteudos
+            'paginator' => $conteudos,
+            'has_more_pages' => $conteudos->hasMorePages(),
+            'pages'=> $conteudos->count(),
+            
         ]);    
     }
 
