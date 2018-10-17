@@ -3,10 +3,9 @@
         <!-- Sidebar -->
         <Sidebar class="col-sm-3" v-bind:search="search"></Sidebar>
         <section class="col-sm-9">
+            <Search></Search>
             <header class="page-header">
                 <h1><small>{{ title }}</small></h1>
-                <!-- Search -->
-                <Search></Search>
             </header>
             <div>
                 <ul class="list-unstyled" v-if="paginator.data" v-for="(item, i) in paginator.data" :key="i">
