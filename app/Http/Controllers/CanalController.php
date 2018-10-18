@@ -16,9 +16,8 @@ class CanalController extends Controller
      */
     public function list(Request $request)
     {
-        
-        $limit = ($request->has('limit')) ? $request->query('limit') : 10;        
-        $page = ($request->has('page')) ? $request->query('page') : 1;        
+        $limit = ($request->has('limit')) ? $request->query('limit') : 10;
+        $page = ($request->has('page')) ? $request->query('page') : 1;
         $canais = Canal::where('is_active', true)
                         ->limit($limit)
                         ->offset($page)
@@ -30,7 +29,7 @@ class CanalController extends Controller
             'paginator' => $canais
         ]);
     }
-    
+
     /**
      * Show the form for creating a new resource.
      *
@@ -43,14 +42,14 @@ class CanalController extends Controller
                 'name' => 'Canal Teste',
                 'description' => 'Adicionando um novo canal no banco de dados.',
                 'slug' => 'teste-slug',
-                'is_active' => true 
+                'is_active' => true
             ]
         );
         return response()->json([
             'message' => 'Canal cadastrado com sucesso',
             'id' => $id
         ]);
-    } 
+    }
 
     /**
      * Update the specified resource in storage.
@@ -61,8 +60,8 @@ class CanalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $canal = Conteudo::find($id);
-        
+        $canal = Canal::find($id);
+
         $data = [
             'title' => $request->get('title'),
             'description' => $request->get('description'),
@@ -84,7 +83,7 @@ class CanalController extends Controller
      */
     public function delete($id)
     {
-        $canal = Conteudo::find($id);
+        $canal = Canal::find($id);
         $resp = [];
         if(is_null($canal)){
             $resp = [
@@ -97,13 +96,21 @@ class CanalController extends Controller
                 'is_deleted' => $canal->delete()
             ];
         }
-        
+
         return response()->json($resp);
     }
+    public function getBySlug($slug)
+    {
+        $canal = Canal::where('slug','ilike',$slug)->first();
 
+        return response()->json([
+            'canal' => $canal
+        ]);
+
+    }
     public function search(Request $request, $termo)
     {
-        $limit = ($request->has('limit')) ? $request->query('limit') : 10;        
+        $limit = ($request->has('limit')) ? $request->query('limit') : 10;
         $page = ($request->has('page')) ? $request->query('page') : 1;
 
         $canais = Canal::where('name','ilike',$termo)

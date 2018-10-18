@@ -73,6 +73,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -80,31 +84,47 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             title: null,
-            urlProximaPagina: null
-            //paginator: {}
+            urlProximaPagina: null,
+            idCanal: null,
+            paginator: {}
         };
     },
+    created: function created() {
+        console.log('componente criado');
+    },
     mounted: function mounted() {
-        this.getConteudos();
+        console.log('componente montado: ', this.$route.params.slug);
+        this.getCanal();
     },
 
     watch: {
         '$route': function $route(to, from) {
-            this.getConteudos();
+            //this.getConteudos()
+            console.log('mudança do router ', this.$route.params.slug);
+            this.getCanal();
         }
     },
     methods: {
         getConteudos: function getConteudos() {
+            axios.get('/api-v1/conteudos', { canal_id: this.idCanal }).then(function (resp) {
+                console.log(resp.data);
+                /*
+                if(resp.data.paginator){
+                    this.urlProximaPagina = resp.data.paginator.next_page_url;
+                }
+                this.paginator = resp.data.paginator;
+                this.title = resp.data.title;
+                */
+            });
+        },
+        getCanal: function getCanal() {
             var _this = this;
 
-            console.log(this.$route.params.slug);
-            axios.get('/api-v1/conteudos', { canal_id: 1 }).then(function (resp) {
-                console.log(resp.data.paginator);
-                if (resp.data.paginator) {
-                    _this.urlProximaPagina = resp.data.paginator.next_page_url;
-                }
-                _this.paginator = resp.data.paginator;
-                _this.title = resp.data.title;
+            axios.get('/api-v1/canais/slug/' + this.$route.params.slug).then(function (resp) {
+                _this.idCanal = resp.data.canal.id;
+                _this.getConteudos();
+                //console.log(JSON.parse(resp.data.canal.options))
+                console.log(resp.data.canal);
             });
         }
     }
@@ -173,23 +193,9 @@ var render = function() {
           ],
           1
         )
-      ]),
-      _vm._v(" "),
-      _vm._l(_vm.paginator.data, function(item, i) {
-        return _c("ul", { key: i }, [
-          _c("li", { attrs: { id: item.id } }, [
-            _vm._v(
-              "\n\n                " + _vm._s(item.title) + "\n\n\n        "
-            )
-          ])
-        ])
-      }),
-      _vm._v("\n    " + _vm._s(_vm.paginator.last_page) + "\n    "),
-      _c("a", { attrs: { href: _vm.paginator.last_page_url } }, [
-        _vm._v(_vm._s(_vm.paginator.last_page_url))
       ])
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []

@@ -48081,6 +48081,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         logout: function logout() {
             localStorage.clear();
             this.$router.push('/');
+        },
+        get: function get(endpoint) {
+            var _this = this;
+
+            axios.get('/api-v1/' + endpoint).then(function (resp) {
+                _this.$parent.paginator = resp.data.paginator;
+                _this.$parent.title = resp.data.title;
+            }).catch(function (error) {
+                console.log(error.response);
+            });
         }
     }
 });
@@ -48135,14 +48145,11 @@ var render = function() {
                       _c(
                         "a",
                         {
-                          directives: [
-                            {
-                              name: "link",
-                              rawName: "v-link",
-                              value: _vm.Home,
-                              expression: "Home"
+                          on: {
+                            click: function($event) {
+                              _vm.get("canais")
                             }
-                          ]
+                          }
                         },
                         [_vm._v("Tv Anísio Teixeira")]
                       )
@@ -48156,7 +48163,7 @@ var render = function() {
                         tag: "li",
                         to: {
                           name: "Inicio",
-                          params: { slug: "Radio-anisio-teixeira" }
+                          params: { slug: "radio-anisio-teixeira" }
                         }
                       }
                     },

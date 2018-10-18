@@ -24,9 +24,9 @@
                                 <a>Administração</a>
                             </router-link>
                             <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'tv-anisio-teixeira'}}">
-                                <a v-link="Home">Tv Anísio Teixeira</a>
+                               <a v-on:click="get('canais')">Tv Anísio Teixeira</a>
                             </router-link>
-                            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'Radio-anisio-teixeira'}}">
+                            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'radio-anisio-teixeira'}}">
                                 <a>Radio Anísio Teixeira</a>
                             </router-link>
                             <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'emitec'}}">
@@ -71,7 +71,15 @@
             logout(){
                 localStorage.clear();
                 this.$router.push('/');
-            }
+            },
+            get(endpoint){
+            axios.get(`/api-v1/${endpoint}`).then(resp =>{
+                this.$parent.paginator = resp.data.paginator;
+                this.$parent.title = resp.data.title;
+            }).catch(error =>{
+                console.log(error.response)
+            })
+        }
         }
     }
 </script>

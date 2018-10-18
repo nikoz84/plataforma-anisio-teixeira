@@ -12,16 +12,20 @@
             </nav>
         </aside>
 
-        <ul v-for="(item, i) in paginator.data" v-bind:key="i">
-            <li v-bind:id="item.id">
+        <!-- section class="col-sm-3">
+            <div>
+                <ul class="list-unstyled" v-if="paginator.data" v-for="(item, i) in paginator.data" :key="i">
+                    <li class="panel panel-default" v-bind:id="item.id">
+                        <div class="panel-body">
 
-                    {{ item.title }}
+                            <h4>{{ (item.name) ? item.name : item.title }}</h4>
 
-
-            </li>
-        </ul>
-        {{paginator.last_page}}
-        <a v-bind:href="paginator.last_page_url">{{ paginator.last_page_url }}</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <Paginator v-bind:paginator="paginator"></Paginator>
+        </section-->
     </div>
 </template>
 <script>
@@ -32,30 +36,45 @@ export default {
         return {
             title: null,
             urlProximaPagina: null,
-            //paginator: {}
+            idCanal: null,
+            paginator:{}
         }
     },
+    created(){
+        console.log('componente criado')
+    },
     mounted() {
-        this.getConteudos();
+        console.log('componente montado: ', this.$route.params.slug);
+        this.getCanal();
     },
     watch: {
         '$route' (to, from) {
-            this.getConteudos()
+            //this.getConteudos()
+            console.log('mudança do router ', this.$route.params.slug)
+            this.getCanal();
         }
     },
     methods:{
         getConteudos(){
-            console.log(this.$route.params.slug)
-            axios.get(`/api-v1/conteudos`, {canal_id : 1}).then(resp =>{
-                console.log(resp.data.paginator)
+            axios.get(`/api-v1/conteudos`, {canal_id : this.idCanal}).then(resp =>{
+                console.log(resp.data)
+                /*
                 if(resp.data.paginator){
                     this.urlProximaPagina = resp.data.paginator.next_page_url;
                 }
                 this.paginator = resp.data.paginator;
                 this.title = resp.data.title;
-            })
-
-        }
+                */
+            });
+        },
+        getCanal(){
+            axios.get(`/api-v1/canais/slug/${this.$route.params.slug}`).then(resp =>{
+                this.idCanal = resp.data.canal.id;
+                this.getConteudos();
+                //console.log(JSON.parse(resp.data.canal.options))
+                console.log(resp.data.canal)
+            });
+        },
     }
 }
 </script>
