@@ -21,7 +21,7 @@ export default {
     methods:{
         onSearch: function (){
             let url = `/api-v1/${this.$parent.search}/search/${this.termo}`;
-            console.log(url);
+            
             axios.get(url).then(resp => {
                 console.log(resp)
             }).catch(error=>{

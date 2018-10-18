@@ -120,7 +120,7 @@ class CanalController extends Controller
         $canais->currentPage($page);
 
         return response()->json([
-            'items' => $canais
+            'paginator' => $canais
         ]);
     }
 }
