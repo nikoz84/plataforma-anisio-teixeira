@@ -14,7 +14,7 @@ class ConteudoController extends Controller
      */
     public function list(Request $request)
     {
-        $limit = ($request->has('limit')) ? $request->query('limit') : 10;
+        $limit = ($request->has('limit')) ? $request->query('limit') : 5;
 
         $orderBy = ($request->has('order')) ? $request->query('order') : 'title';
         $page = ($request->has('page')) ? $request->query('page') : 1;

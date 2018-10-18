@@ -48131,7 +48131,22 @@ var render = function() {
                         }
                       }
                     },
-                    [_c("a", [_vm._v("Tv Anísio Teixeira")])]
+                    [
+                      _c(
+                        "a",
+                        {
+                          directives: [
+                            {
+                              name: "link",
+                              rawName: "v-link",
+                              value: _vm.Home,
+                              expression: "Home"
+                            }
+                          ]
+                        },
+                        [_vm._v("Tv Anísio Teixeira")]
+                      )
+                    ]
                   ),
                   _vm._v(" "),
                   _c(
@@ -48141,7 +48156,7 @@ var render = function() {
                         tag: "li",
                         to: {
                           name: "Inicio",
-                          params: { slug: "radio-anisio-teixeira" }
+                          params: { slug: "Radio-anisio-teixeira" }
                         }
                       }
                     },

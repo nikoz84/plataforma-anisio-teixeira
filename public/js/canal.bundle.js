@@ -70,6 +70,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -77,7 +80,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             title: null,
-            paginator: {}
+            urlProximaPagina: null
+            //paginator: {}
         };
     },
     mounted: function mounted() {
@@ -96,6 +100,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             console.log(this.$route.params.slug);
             axios.get('/api-v1/conteudos', { canal_id: 1 }).then(function (resp) {
                 console.log(resp.data.paginator);
+                if (resp.data.paginator) {
+                    _this.urlProximaPagina = resp.data.paginator.next_page_url;
+                }
                 _this.paginator = resp.data.paginator;
                 _this.title = resp.data.title;
             });
@@ -171,7 +178,9 @@ var render = function() {
       _vm._l(_vm.paginator.data, function(item, i) {
         return _c("ul", { key: i }, [
           _c("li", { attrs: { id: item.id } }, [
-            _vm._v("\n            " + _vm._s(item.title) + "\n        ")
+            _vm._v(
+              "\n\n                " + _vm._s(item.title) + "\n\n\n        "
+            )
           ])
         ])
       }),

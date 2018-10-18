@@ -40,7 +40,7 @@ const routes =[
       path: '/:slug',
       name: 'Canal',
       component: () => import(/* webpackChunkName: "canal" */ './pages/Canal.vue'),
-      meta: { 
+      meta: {
         requiresAuth: false
       },
       children: [

@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar navbar-default navbar-static-top">
-        <div class="container-fluid">   
+        <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -24,9 +24,9 @@
                                 <a>Administração</a>
                             </router-link>
                             <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'tv-anisio-teixeira'}}">
-                                <a>Tv Anísio Teixeira</a>
+                                <a v-link="Home">Tv Anísio Teixeira</a>
                             </router-link>
-                            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'radio-anisio-teixeira'}}">
+                            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'Radio-anisio-teixeira'}}">
                                 <a>Radio Anísio Teixeira</a>
                             </router-link>
                             <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'emitec'}}">

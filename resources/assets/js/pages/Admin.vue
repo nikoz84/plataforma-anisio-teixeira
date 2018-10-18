@@ -10,7 +10,7 @@
                 <ul class="list-unstyled" v-if="paginator.data" v-for="(item, i) in paginator.data" :key="i">
                     <li class="panel panel-default" v-bind:id="item.id">
                         <div class="panel-body">
-                            
+
                             <h4>{{ (item.name) ? item.name : item.title }}</h4>
                             <div class="pull-right">
                                 <a>editar</a>
@@ -41,7 +41,7 @@ export default {
         }
     },
     methods:{
-        
+
     }
 }
 </script>

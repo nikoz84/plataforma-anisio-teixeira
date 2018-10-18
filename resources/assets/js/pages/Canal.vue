@@ -8,13 +8,16 @@
                 <router-link :to="{ name: 'Sobre', params: {slug: $route.params.slug}}">Sobre</router-link> |
                 <router-link :to="{ name: 'Listar', params: {slug: $route.params.slug}}">Listar</router-link>
 
-                
+
             </nav>
         </aside>
 
         <ul v-for="(item, i) in paginator.data" v-bind:key="i">
             <li v-bind:id="item.id">
-                {{ item.title }}
+
+                    {{ item.title }}
+
+
             </li>
         </ul>
         {{paginator.last_page}}
@@ -48,8 +51,8 @@ export default {
                 if(resp.data.paginator){
                     this.urlProximaPagina = resp.data.paginator.next_page_url;
                 }
-                //this.paginator = resp.data.paginator;
-                //this.title = resp.data.title;
+                this.paginator = resp.data.paginator;
+                this.title = resp.data.title;
             })
 
         }
