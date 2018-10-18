@@ -71,12 +71,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -84,47 +78,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             title: null,
-            urlProximaPagina: null,
+            descricao: null,
             idCanal: null,
-            paginator: {}
+            metaData: null
         };
     },
-    created: function created() {
-        console.log('componente criado');
-    },
     mounted: function mounted() {
-        console.log('componente montado: ', this.$route.params.slug);
         this.getCanal();
     },
 
     watch: {
         '$route': function $route(to, from) {
-            //this.getConteudos()
-            console.log('mudança do router ', this.$route.params.slug);
             this.getCanal();
         }
     },
     methods: {
-        getConteudos: function getConteudos() {
-            axios.get('/api-v1/conteudos', { canal_id: this.idCanal }).then(function (resp) {
-                console.log(resp.data);
-                /*
-                if(resp.data.paginator){
-                    this.urlProximaPagina = resp.data.paginator.next_page_url;
-                }
-                this.paginator = resp.data.paginator;
-                this.title = resp.data.title;
-                */
-            });
-        },
         getCanal: function getCanal() {
             var _this = this;
 
             axios.get('/api-v1/canais/slug/' + this.$route.params.slug).then(function (resp) {
                 _this.idCanal = resp.data.canal.id;
-                _this.getConteudos();
-                //console.log(JSON.parse(resp.data.canal.options))
-                console.log(resp.data.canal);
+                _this.title = resp.data.canal.name;
+                //this.descricao = resp.data.canal.description;
+                //this.pagina = this.$route.name;
+                //this.metaData = JSON.parse(resp.data.canal.options);
+                //console.log(resp.data.canal)
             });
         }
     }
@@ -139,16 +117,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h1", [
-        _vm._v(_vm._s(_vm.title) + " " + _vm._s(_vm.$route.params.slug))
-      ]),
-      _vm._v(" "),
-      _c("router-view"),
-      _vm._v(" "),
-      _c("aside", [
+  return _c("div", [
+    _c("aside", { staticClass: "col-sm-3" }, [
+      _vm._v("\n        sidebar\n    ")
+    ]),
+    _vm._v(" "),
+    _c("section", { staticClass: "col-sm-9" }, [
+      _c("header", { staticClass: "page-header" }, [
+        _c("h1", [_c("small", [_vm._v(_vm._s(_vm.title))])]),
+        _vm._v(" "),
         _c(
           "nav",
           [
@@ -162,9 +139,22 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v("Inicio")]
+              [_vm._v("Home")]
             ),
-            _vm._v(" |\n            "),
+            _vm._v(" |\n                "),
+            _c(
+              "router-link",
+              {
+                attrs: {
+                  to: {
+                    name: "Listar",
+                    params: { slug: _vm.$route.params.slug }
+                  }
+                }
+              },
+              [_vm._v("Programas")]
+            ),
+            _vm._v(" |\n                "),
             _c(
               "router-link",
               {
@@ -176,27 +166,15 @@ var render = function() {
                 }
               },
               [_vm._v("Sobre")]
-            ),
-            _vm._v(" |\n            "),
-            _c(
-              "router-link",
-              {
-                attrs: {
-                  to: {
-                    name: "Listar",
-                    params: { slug: _vm.$route.params.slug }
-                  }
-                }
-              },
-              [_vm._v("Listar")]
             )
           ],
           1
         )
-      ])
-    ],
-    1
-  )
+      ]),
+      _vm._v(" "),
+      _c("article", [_c("router-view")], 1)
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -210,7 +188,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 83:
+/***/ 93:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false

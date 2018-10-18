@@ -1,31 +1,25 @@
 <template>
     <div>
-        <h1>{{ title }} {{ $route.params.slug }}</h1>
-        <router-view></router-view>
-        <aside>
-            <nav>
-                <router-link :to="{ name: 'Inicio', params: {slug: $route.params.slug}}">Inicio</router-link> |
-                <router-link :to="{ name: 'Sobre', params: {slug: $route.params.slug}}">Sobre</router-link> |
-                <router-link :to="{ name: 'Listar', params: {slug: $route.params.slug}}">Listar</router-link>
-
-
-            </nav>
+        <aside class="col-sm-3">
+            sidebar
         </aside>
-
-        <!-- section class="col-sm-3">
-            <div>
-                <ul class="list-unstyled" v-if="paginator.data" v-for="(item, i) in paginator.data" :key="i">
-                    <li class="panel panel-default" v-bind:id="item.id">
-                        <div class="panel-body">
-
-                            <h4>{{ (item.name) ? item.name : item.title }}</h4>
-
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <Paginator v-bind:paginator="paginator"></Paginator>
-        </section-->
+        <section class="col-sm-9">
+            <header class="page-header">
+                <h1><small>{{ title }}</small></h1>
+                <nav>
+                    <router-link :to="{ name: 'Inicio', params: {slug: $route.params.slug}}">Home</router-link> |
+                    <router-link :to="{ name: 'Listar', params: {slug: $route.params.slug}}">Programas</router-link> |
+                    <router-link :to="{ name: 'Sobre', params: {slug: $route.params.slug}}">Sobre</router-link>
+                </nav>
+            </header>
+            <article>
+                <router-view></router-view>
+            </article>
+            <!--p v-html="descricao"></p>
+            <p>{{metaData.descricao_complemento.que}}</p>
+            <p>{{metaData.descricao_complemento.porque}}</p>
+            <p>{{metaData.descricao_complemento.como}}</p-->
+        </section>
     </div>
 </template>
 <script>
@@ -35,44 +29,28 @@ export default {
     data() {
         return {
             title: null,
-            urlProximaPagina: null,
+            descricao: null,
             idCanal: null,
-            paginator:{}
+            metaData: null
         }
     },
-    created(){
-        console.log('componente criado')
-    },
     mounted() {
-        console.log('componente montado: ', this.$route.params.slug);
         this.getCanal();
     },
     watch: {
         '$route' (to, from) {
-            //this.getConteudos()
-            console.log('mudança do router ', this.$route.params.slug)
             this.getCanal();
         }
     },
     methods:{
-        getConteudos(){
-            axios.get(`/api-v1/conteudos`, {canal_id : this.idCanal}).then(resp =>{
-                console.log(resp.data)
-                /*
-                if(resp.data.paginator){
-                    this.urlProximaPagina = resp.data.paginator.next_page_url;
-                }
-                this.paginator = resp.data.paginator;
-                this.title = resp.data.title;
-                */
-            });
-        },
         getCanal(){
             axios.get(`/api-v1/canais/slug/${this.$route.params.slug}`).then(resp =>{
                 this.idCanal = resp.data.canal.id;
-                this.getConteudos();
-                //console.log(JSON.parse(resp.data.canal.options))
-                console.log(resp.data.canal)
+                this.title = resp.data.canal.name;
+                //this.descricao = resp.data.canal.description;
+                //this.pagina = this.$route.name;
+                //this.metaData = JSON.parse(resp.data.canal.options);
+                //console.log(resp.data.canal)
             });
         },
     }
