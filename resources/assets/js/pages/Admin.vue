@@ -1,26 +1,15 @@
 <template>
     <div>
         <!-- Sidebar -->
-        <Sidebar class="col-sm-3" v-bind:search="search"></Sidebar>
+        <Sidebar class="col-sm-3" ></Sidebar>
         <section class="col-sm-9">
-            <Search></Search>
+            <Search v-bind:search="search"></Search>
+            
             <header class="page-header">
                 <h1><small>{{ title }}</small></h1>
             </header>
-            <div>
-                <ul class="list-unstyled" v-if="paginator.data" v-for="(item, i) in paginator.data" :key="i">
-                    <li class="panel panel-default" v-bind:id="item.id">
-                        <div class="panel-body">
-                            
-                            <h4>{{ (item.name) ? item.name : item.title }}</h4>
-                            <div class="pull-right">
-                                <a>editar</a>
-                                <a>deletar</a>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+            
+            <List v-bind:items="paginator.data"></List>
             <Paginator v-bind:paginator="paginator"></Paginator>
         </section>
     </div>

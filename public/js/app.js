@@ -1515,7 +1515,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(14);
-module.exports = __webpack_require__(76);
+module.exports = __webpack_require__(80);
 
 
 /***/ }),
@@ -1546,6 +1546,8 @@ __webpack_require__(15);
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex__["a" /* default */]);
+
+__webpack_require__(76);
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     mode: 'history',
@@ -47269,7 +47271,7 @@ var routes = [{
   path: '/admin',
   name: 'Admin',
   component: function component() {
-    return __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, 77));
+    return __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, 81));
   },
   meta: {
     requiresAuth: true
@@ -47279,7 +47281,7 @@ var routes = [{
   path: '/login',
   name: 'Login',
   component: function component() {
-    return __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, 78));
+    return __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, 82));
   },
   meta: {
     requiresAuth: false,
@@ -47294,7 +47296,7 @@ var routes = [{
   path: '/:slug',
   name: 'Canal',
   component: function component() {
-    return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 79));
+    return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 83));
   },
   meta: {
     requiresAuth: false
@@ -48423,6 +48425,505 @@ if (false) {
 
 /***/ }),
 /* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(77);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(78)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../css-loader/index.js!../../../sass-loader/lib/loader.js!./vue2-animate.scss", function() {
+			var newContent = require("!!../../../css-loader/index.js!../../../sass-loader/lib/loader.js!./vue2-animate.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+
+
+// module
+exports.push([module.i, "/*!\r\n * vue2-animate\r\n * (c) 2018 Pavel Savushkin\r\n * Released under the MIT License.\r\n * Documentation: https://github.com/asika32764/vue2-animate\r\n */\n@keyframes bounceIn {\n  from, 20%, 40%, 60%, 80%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1); }\n  0% {\n    opacity: 0;\n    transform: scale3d(0.3, 0.3, 0.3); }\n  20% {\n    transform: scale3d(1.1, 1.1, 1.1); }\n  40% {\n    transform: scale3d(0.9, 0.9, 0.9); }\n  60% {\n    opacity: 1;\n    transform: scale3d(1.03, 1.03, 1.03); }\n  80% {\n    transform: scale3d(0.97, 0.97, 0.97); }\n  to {\n    opacity: 1;\n    transform: scale3d(1, 1, 1); } }\n\n@keyframes bounceOut {\n  20% {\n    transform: scale3d(0.9, 0.9, 0.9); }\n  50%, 55% {\n    opacity: 1;\n    transform: scale3d(1.1, 1.1, 1.1); }\n  to {\n    opacity: 0;\n    transform: scale3d(0.3, 0.3, 0.3); } }\n\n@keyframes bounceInDown {\n  from, 60%, 75%, 90%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1); }\n  0% {\n    opacity: 0;\n    transform: translate3d(0, -3000px, 0); }\n  60% {\n    opacity: 1;\n    transform: translate3d(0, 25px, 0); }\n  75% {\n    transform: translate3d(0, -10px, 0); }\n  90% {\n    transform: translate3d(0, 5px, 0); }\n  to {\n    transform: none; } }\n\n@keyframes bounceOutDown {\n  20% {\n    transform: translate3d(0, 10px, 0); }\n  40%, 45% {\n    opacity: 1;\n    transform: translate3d(0, -20px, 0); }\n  to {\n    opacity: 0;\n    transform: translate3d(0, 2000px, 0); } }\n\n@keyframes bounceInLeft {\n  from, 60%, 75%, 90%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1); }\n  0% {\n    opacity: 0;\n    transform: translate3d(-3000px, 0, 0); }\n  60% {\n    opacity: 1;\n    transform: translate3d(25px, 0, 0); }\n  75% {\n    transform: translate3d(-10px, 0, 0); }\n  90% {\n    transform: translate3d(5px, 0, 0); }\n  to {\n    transform: none; } }\n\n@keyframes bounceOutLeft {\n  20% {\n    opacity: 1;\n    transform: translate3d(20px, 0, 0); }\n  to {\n    opacity: 0;\n    transform: translate3d(-2000px, 0, 0); } }\n\n@keyframes bounceInRight {\n  from, 60%, 75%, 90%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1); }\n  from {\n    opacity: 0;\n    transform: translate3d(3000px, 0, 0); }\n  60% {\n    opacity: 1;\n    transform: translate3d(-25px, 0, 0); }\n  75% {\n    transform: translate3d(10px, 0, 0); }\n  90% {\n    transform: translate3d(-5px, 0, 0); }\n  to {\n    transform: none; } }\n\n@keyframes bounceOutRight {\n  20% {\n    opacity: 1;\n    transform: translate3d(-20px, 0, 0); }\n  to {\n    opacity: 0;\n    transform: translate3d(2000px, 0, 0); } }\n\n@keyframes bounceInUp {\n  from, 60%, 75%, 90%, to {\n    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1); }\n  from {\n    opacity: 0;\n    transform: translate3d(0, 3000px, 0); }\n  60% {\n    opacity: 1;\n    transform: translate3d(0, -20px, 0); }\n  75% {\n    transform: translate3d(0, 10px, 0); }\n  90% {\n    transform: translate3d(0, -5px, 0); }\n  to {\n    transform: translate3d(0, 0, 0); } }\n\n@keyframes bounceOutUp {\n  20% {\n    transform: translate3d(0, -10px, 0); }\n  40%, 45% {\n    opacity: 1;\n    transform: translate3d(0, 20px, 0); }\n  to {\n    opacity: 0;\n    transform: translate3d(0, -2000px, 0); } }\n\n.bounce-enter-active, .bounceIn,\n.bounce-leave-active, .bounceOut {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.bounce-enter-active, .bounceIn {\n  animation-name: bounceIn; }\n\n.bounce-leave-active, .bounceOut {\n  animation-name: bounceOut; }\n\n.bounceDown-enter-active, .bounceInDown,\n.bounceDown-leave-active, .bounceOutDown {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.bounceDown-enter-active, .bounceInDown {\n  animation-name: bounceInDown; }\n\n.bounceDown-leave-active, .bounceOutDown {\n  animation-name: bounceOutDown; }\n\n.bounceLeft-enter-active, .bounceInLeft,\n.bounceLeft-leave-active, .bounceOutLeft {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.bounceLeft-enter-active, .bounceInLeft {\n  animation-name: bounceInLeft; }\n\n.bounceLeft-leave-active, .bounceOutLeft {\n  animation-name: bounceOutLeft; }\n\n.bounceRight-enter-active, .bounceInRight,\n.bounceRight-leave-active, .bounceOutRight {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.bounceRight-enter-active, .bounceInRight {\n  animation-name: bounceInRight; }\n\n.bounceRight-leave-active, .bounceOutRight {\n  animation-name: bounceOutRight; }\n\n.bounceUp-enter-active, .bounceInUp,\n.bounceUp-leave-active, .bounceOutUp {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.bounceUp-enter-active, .bounceInUp {\n  animation-name: bounceInUp; }\n\n.bounceUp-leave-active, .bounceOutUp {\n  animation-name: bounceOutUp; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@keyframes fadeOut {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0; } }\n\n@keyframes fadeInDown {\n  from {\n    opacity: 0;\n    transform: translate3d(0, -100%, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n@keyframes fadeOutDown {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0;\n    transform: translate3d(0, 100%, 0); } }\n\n@keyframes fadeInDownBig {\n  from {\n    opacity: 0;\n    transform: translate3d(0, -2000px, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n@keyframes fadeOutDownBig {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0;\n    transform: translate3d(0, 2000px, 0); } }\n\n@keyframes fadeInLeft {\n  from {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n@keyframes fadeOutLeft {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0;\n    transform: translate3d(-100%, 0, 0); } }\n\n@keyframes fadeInLeftBig {\n  from {\n    opacity: 0;\n    transform: translate3d(-2000px, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n@keyframes fadeOutLeftBig {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0;\n    transform: translate3d(-2000px, 0, 0); } }\n\n@keyframes fadeInRight {\n  from {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n@keyframes fadeOutRight {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0;\n    transform: translate3d(100%, 0, 0); } }\n\n@keyframes fadeInRightBig {\n  from {\n    opacity: 0;\n    transform: translate3d(2000px, 0, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n@keyframes fadeOutRightBig {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0;\n    transform: translate3d(2000px, 0, 0); } }\n\n@keyframes fadeInUp {\n  from {\n    opacity: 0;\n    transform: translate3d(0, 100%, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n@keyframes fadeOutUp {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0;\n    transform: translate3d(0, -100%, 0); } }\n\n@keyframes fadeInUpBig {\n  from {\n    opacity: 0;\n    transform: translate3d(0, 2000px, 0); }\n  to {\n    opacity: 1;\n    transform: none; } }\n\n@keyframes fadeOutUp {\n  from {\n    opacity: 1; }\n  to {\n    opacity: 0;\n    transform: translate3d(0, -100%, 0); } }\n\n.fade-enter-active, .fadeIn,\n.fade-leave-active, .fadeOut {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.fade-enter-active, .fadeIn {\n  animation-name: fadeIn; }\n\n.fade-leave-active, .fadeOut {\n  animation-name: fadeOut; }\n\n.fadeDown-enter-active, .fadeInDown,\n.fadeDown-leave-active, .fadeOutDown {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.fadeDown-enter-active, .fadeInDown {\n  animation-name: fadeInDown; }\n\n.fadeDown-leave-active, .fadeOutDown {\n  animation-name: fadeOutDown; }\n\n.fadeDownBig-enter-active, .fadeInDownBig,\n.fadeDownBig-leave-active, .fadeOutDownBig {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.fadeDownBig-enter-active, .fadeInDownBig {\n  animation-name: fadeInDownBig; }\n\n.fadeDownBig-leave-active, .fadeOutDownBig {\n  animation-name: fadeOutDownBig; }\n\n.fadeLeft-enter-active, .fadeInLeft,\n.fadeLeft-leave-active, .fadeOutLeft {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.fadeLeft-enter-active, .fadeInLeft {\n  animation-name: fadeInLeft; }\n\n.fadeLeft-leave-active, .fadeOutLeft {\n  animation-name: fadeOutLeft; }\n\n.fadeLeftBig-enter-active, .fadeInLeftBig,\n.fadeLeftBig-leave-active, .fadeOutLeftBig {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.fadeLeftBig-enter-active, .fadeInLeftBig {\n  animation-name: fadeInLeftBig; }\n\n.fadeLeftBig-leave-active, .fadeOutLeftBig {\n  animation-name: fadeOutLeftBig; }\n\n.fadeRight-enter-active, .fadeInRight,\n.fadeRight-leave-active, .fadeOutRight {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.fadeRight-enter-active, .fadeInRight {\n  animation-name: fadeInRight; }\n\n.fadeRight-leave-active, .fadeOutRight {\n  animation-name: fadeOutRight; }\n\n.fadeRightBig-enter-active, .fadeInRightBig,\n.fadeRightBig-leave-active, .fadeOutRightBig {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.fadeRightBig-enter-active, .fadeInRightBig {\n  animation-name: fadeInRightBig; }\n\n.fadeRightBig-leave-active, .fadeOutRightBig {\n  animation-name: fadeOutRightBig; }\n\n.fadeUp-enter-active, .fadeInUp,\n.fadeUp-leave-active, .fadeOutUp {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.fadeUp-enter-active, .fadeInUp {\n  animation-name: fadeInUp; }\n\n.fadeUp-leave-active, .fadeOutUp {\n  animation-name: fadeOutUp; }\n\n.fadeUpBig-enter-active, .fadeInUpBig,\n.fadeUpBig-leave-active, .fadeOutUpBig {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.fadeUpBig-enter-active, .fadeInUpBig {\n  animation-name: fadeInUpBig; }\n\n.fadeUpBig-leave-active, .fadeOutUpBig {\n  animation-name: fadeOutUpBig; }\n\n@keyframes rotateIn {\n  from {\n    transform-origin: center;\n    transform: rotate3d(0, 0, 1, -200deg);\n    opacity: 0; }\n  to {\n    transform-origin: center;\n    transform: none;\n    opacity: 1; } }\n\n@keyframes rotateOut {\n  from {\n    transform-origin: center;\n    opacity: 1; }\n  to {\n    transform-origin: center;\n    transform: rotate3d(0, 0, 1, 200deg);\n    opacity: 0; } }\n\n@keyframes rotateInDownLeft {\n  from {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, -45deg);\n    opacity: 0; }\n  to {\n    transform-origin: left bottom;\n    transform: none;\n    opacity: 1; } }\n\n@keyframes rotateOutDownLeft {\n  from {\n    transform-origin: left bottom;\n    opacity: 1; }\n  to {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, 45deg);\n    opacity: 0; } }\n\n@keyframes rotateInDownRight {\n  from {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, 45deg);\n    opacity: 0; }\n  to {\n    transform-origin: right bottom;\n    transform: none;\n    opacity: 1; } }\n\n@keyframes rotateOutDownRight {\n  from {\n    transform-origin: right bottom;\n    opacity: 1; }\n  to {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, -45deg);\n    opacity: 0; } }\n\n@keyframes rotateInUpLeft {\n  from {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, 45deg);\n    opacity: 0; }\n  to {\n    transform-origin: left bottom;\n    transform: none;\n    opacity: 1; } }\n\n@keyframes rotateOutUpLeft {\n  from {\n    transform-origin: left bottom;\n    opacity: 1; }\n  to {\n    transform-origin: left bottom;\n    transform: rotate3d(0, 0, 1, -45deg);\n    opacity: 0; } }\n\n@keyframes rotateInUpRight {\n  from {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, -90deg);\n    opacity: 0; }\n  to {\n    transform-origin: right bottom;\n    transform: none;\n    opacity: 1; } }\n\n@keyframes rotateOutUpRight {\n  from {\n    transform-origin: right bottom;\n    opacity: 1; }\n  to {\n    transform-origin: right bottom;\n    transform: rotate3d(0, 0, 1, 90deg);\n    opacity: 0; } }\n\n.rotate-enter-active, .rotateIn,\n.rotate-leave-active, .rotateOut {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.rotate-enter-active, .rotateIn {\n  animation-name: rotateIn; }\n\n.rotate-leave-active, .rotateOut {\n  animation-name: rotateOut; }\n\n.rotateDownLeft-enter-active, .rotateInDownLeft,\n.rotateDownLeft-leave-active, .rotateOutDownLeft {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.rotateDownLeft-enter-active, .rotateInDownLeft {\n  animation-name: rotateInDownLeft; }\n\n.rotateDownLeft-leave-active, .rotateOutDownLeft {\n  animation-name: rotateOutDownLeft; }\n\n.rotateDownRight-enter-active, .rotateInDownRight,\n.rotateDownRight-leave-active, .rotateOutDownRight {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.rotateDownRight-enter-active, .rotateInDownRight {\n  animation-name: rotateInDownRight; }\n\n.rotateDownRight-leave-active, .rotateOutDownRight {\n  animation-name: rotateOutDownRight; }\n\n.rotateUpLeft-enter-active, .rotateInUpLeft,\n.rotateUpLeft-leave-active, .rotateOutUpLeft {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.rotateUpLeft-enter-active, .rotateInUpLeft {\n  animation-name: rotateInUpLeft; }\n\n.rotateUpLeft-leave-active, .rotateOutUpLeft {\n  animation-name: rotateOutUpLeft; }\n\n.rotateUpRight-enter-active, .rotateInUpRight,\n.rotateUpRight-leave-active, .rotateOutUpRight {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.rotateUpRight-enter-active, .rotateInUpRight {\n  animation-name: rotateInUpRight; }\n\n.rotateUpRight-leave-active, .rotateOutUpRight {\n  animation-name: rotateOutUpRight; }\n\n@keyframes slideInDown {\n  from {\n    transform: translate3d(0, -100%, 0);\n    visibility: visible; }\n  to {\n    transform: translate3d(0, 0, 0); } }\n\n@keyframes slideOutDown {\n  from {\n    transform: translate3d(0, 0, 0); }\n  to {\n    visibility: hidden;\n    transform: translate3d(0, 100%, 0); } }\n\n@keyframes slideInLeft {\n  from {\n    transform: translate3d(-100%, 0, 0);\n    visibility: visible; }\n  to {\n    transform: translate3d(0, 0, 0); } }\n\n@keyframes slideOutLeft {\n  from {\n    transform: translate3d(0, 0, 0); }\n  to {\n    visibility: hidden;\n    transform: translate3d(-100%, 0, 0); } }\n\n@keyframes slideInRight {\n  from {\n    transform: translate3d(100%, 0, 0);\n    visibility: visible; }\n  to {\n    transform: translate3d(0, 0, 0); } }\n\n@keyframes slideOutRight {\n  from {\n    transform: translate3d(0, 0, 0); }\n  to {\n    visibility: hidden;\n    transform: translate3d(100%, 0, 0); } }\n\n@keyframes slideInUp {\n  from {\n    transform: translate3d(0, 100%, 0);\n    visibility: visible; }\n  to {\n    transform: translate3d(0, 0, 0); } }\n\n@keyframes slideOutUp {\n  from {\n    transform: translate3d(0, 0, 0); }\n  to {\n    visibility: hidden;\n    transform: translate3d(0, -100%, 0); } }\n\n.slide-enter-active, .slideIn,\n.slide-leave-active, .slideOut {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.slide-enter-active, .slideIn {\n  animation-name: slideIn; }\n\n.slide-leave-active, .slideOut {\n  animation-name: slideOut; }\n\n.slideDown-enter-active, .slideInDown,\n.slideDown-leave-active, .slideOutDown {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.slideDown-enter-active, .slideInDown {\n  animation-name: slideInDown; }\n\n.slideDown-leave-active, .slideOutDown {\n  animation-name: slideOutDown; }\n\n.slideLeft-enter-active, .slideInLeft,\n.slideLeft-leave-active, .slideOutLeft {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.slideLeft-enter-active, .slideInLeft {\n  animation-name: slideInLeft; }\n\n.slideLeft-leave-active, .slideOutLeft {\n  animation-name: slideOutLeft; }\n\n.slideRight-enter-active, .slideInRight,\n.slideRight-leave-active, .slideOutRight {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.slideRight-enter-active, .slideInRight {\n  animation-name: slideInRight; }\n\n.slideRight-leave-active, .slideOutRight {\n  animation-name: slideOutRight; }\n\n.slideUp-enter-active, .slideInUp,\n.slideUp-leave-active, .slideOutUp {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.slideUp-enter-active, .slideInUp {\n  animation-name: slideInUp; }\n\n.slideUp-leave-active, .slideOutUp {\n  animation-name: slideOutUp; }\n\n@keyframes zoomIn {\n  from {\n    opacity: 0;\n    transform: scale3d(0.3, 0.3, 0.3); }\n  50% {\n    opacity: 1; } }\n\n@keyframes zoomOut {\n  from {\n    opacity: 1; }\n  50% {\n    opacity: 0;\n    transform: scale3d(0.3, 0.3, 0.3); }\n  to {\n    opacity: 0; } }\n\n@keyframes zoomInDown {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -1000px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19); }\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1); } }\n\n@keyframes zoomOutDown {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19); }\n  to {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 2000px, 0);\n    transform-origin: center bottom;\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1); } }\n\n@keyframes zoomInLeft {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(-1000px, 0, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19); }\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(10px, 0, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1); } }\n\n@keyframes zoomOutLeft {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(42px, 0, 0); }\n  to {\n    opacity: 0;\n    transform: scale(0.1) translate3d(-2000px, 0, 0);\n    transform-origin: left center; } }\n\n@keyframes zoomInRight {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19); }\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1); } }\n\n@keyframes zoomOutRight {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(-42px, 0, 0); }\n  to {\n    opacity: 0;\n    transform: scale(0.1) translate3d(2000px, 0, 0);\n    transform-origin: right center; } }\n\n@keyframes zoomInUp {\n  from {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 1000px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19); }\n  60% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1); } }\n\n@keyframes zoomOutUp {\n  40% {\n    opacity: 1;\n    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);\n    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19); }\n  to {\n    opacity: 0;\n    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -2000px, 0);\n    transform-origin: center bottom;\n    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1); } }\n\n.zoom-enter-active, .zoomIn,\n.zoom-leave-active, .zoomOut {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.zoom-enter-active, .zoomIn {\n  animation-name: zoomIn; }\n\n.zoom-leave-active, .zoomOut {\n  animation-name: zoomOut; }\n\n.zoomDown-enter-active, .zoomInDown,\n.zoomDown-leave-active, .zoomOutDown {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.zoomDown-enter-active, .zoomInDown {\n  animation-name: zoomInDown; }\n\n.zoomDown-leave-active, .zoomOutDown {\n  animation-name: zoomOutDown; }\n\n.zoomLeft-enter-active, .zoomInLeft,\n.zoomLeft-leave-active, .zoomOutLeft {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.zoomLeft-enter-active, .zoomInLeft {\n  animation-name: zoomInLeft; }\n\n.zoomLeft-leave-active, .zoomOutLeft {\n  animation-name: zoomOutLeft; }\n\n.zoomRight-enter-active, .zoomInRight,\n.zoomRight-leave-active, .zoomOutRight {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.zoomRight-enter-active, .zoomInRight {\n  animation-name: zoomInRight; }\n\n.zoomRight-leave-active, .zoomOutRight {\n  animation-name: zoomOutRight; }\n\n.zoomUp-enter-active, .zoomInUp,\n.zoomUp-leave-active, .zoomOutUp {\n  animation-duration: 1s;\n  animation-fill-mode: both; }\n\n.zoomUp-enter-active, .zoomInUp {\n  animation-name: zoomInUp; }\n\n.zoomUp-leave-active, .zoomOutUp {\n  animation-name: zoomOutUp; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+
+var stylesInDom = {};
+
+var	memoize = function (fn) {
+	var memo;
+
+	return function () {
+		if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+		return memo;
+	};
+};
+
+var isOldIE = memoize(function () {
+	// Test for IE <= 9 as proposed by Browserhacks
+	// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+	// Tests for existence of standard globals is to allow style-loader
+	// to operate correctly into non-standard environments
+	// @see https://github.com/webpack-contrib/style-loader/issues/177
+	return window && document && document.all && !window.atob;
+});
+
+var getElement = (function (fn) {
+	var memo = {};
+
+	return function(selector) {
+		if (typeof memo[selector] === "undefined") {
+			memo[selector] = fn.call(this, selector);
+		}
+
+		return memo[selector]
+	};
+})(function (target) {
+	return document.querySelector(target)
+});
+
+var singleton = null;
+var	singletonCounter = 0;
+var	stylesInsertedAtTop = [];
+
+var	fixUrls = __webpack_require__(79);
+
+module.exports = function(list, options) {
+	if (typeof DEBUG !== "undefined" && DEBUG) {
+		if (typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+	}
+
+	options = options || {};
+
+	options.attrs = typeof options.attrs === "object" ? options.attrs : {};
+
+	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+	// tags it will allow on a page
+	if (!options.singleton) options.singleton = isOldIE();
+
+	// By default, add <style> tags to the <head> element
+	if (!options.insertInto) options.insertInto = "head";
+
+	// By default, add <style> tags to the bottom of the target
+	if (!options.insertAt) options.insertAt = "bottom";
+
+	var styles = listToStyles(list, options);
+
+	addStylesToDom(styles, options);
+
+	return function update (newList) {
+		var mayRemove = [];
+
+		for (var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+
+			domStyle.refs--;
+			mayRemove.push(domStyle);
+		}
+
+		if(newList) {
+			var newStyles = listToStyles(newList, options);
+			addStylesToDom(newStyles, options);
+		}
+
+		for (var i = 0; i < mayRemove.length; i++) {
+			var domStyle = mayRemove[i];
+
+			if(domStyle.refs === 0) {
+				for (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();
+
+				delete stylesInDom[domStyle.id];
+			}
+		}
+	};
+};
+
+function addStylesToDom (styles, options) {
+	for (var i = 0; i < styles.length; i++) {
+		var item = styles[i];
+		var domStyle = stylesInDom[item.id];
+
+		if(domStyle) {
+			domStyle.refs++;
+
+			for(var j = 0; j < domStyle.parts.length; j++) {
+				domStyle.parts[j](item.parts[j]);
+			}
+
+			for(; j < item.parts.length; j++) {
+				domStyle.parts.push(addStyle(item.parts[j], options));
+			}
+		} else {
+			var parts = [];
+
+			for(var j = 0; j < item.parts.length; j++) {
+				parts.push(addStyle(item.parts[j], options));
+			}
+
+			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+		}
+	}
+}
+
+function listToStyles (list, options) {
+	var styles = [];
+	var newStyles = {};
+
+	for (var i = 0; i < list.length; i++) {
+		var item = list[i];
+		var id = options.base ? item[0] + options.base : item[0];
+		var css = item[1];
+		var media = item[2];
+		var sourceMap = item[3];
+		var part = {css: css, media: media, sourceMap: sourceMap};
+
+		if(!newStyles[id]) styles.push(newStyles[id] = {id: id, parts: [part]});
+		else newStyles[id].parts.push(part);
+	}
+
+	return styles;
+}
+
+function insertStyleElement (options, style) {
+	var target = getElement(options.insertInto)
+
+	if (!target) {
+		throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
+	}
+
+	var lastStyleElementInsertedAtTop = stylesInsertedAtTop[stylesInsertedAtTop.length - 1];
+
+	if (options.insertAt === "top") {
+		if (!lastStyleElementInsertedAtTop) {
+			target.insertBefore(style, target.firstChild);
+		} else if (lastStyleElementInsertedAtTop.nextSibling) {
+			target.insertBefore(style, lastStyleElementInsertedAtTop.nextSibling);
+		} else {
+			target.appendChild(style);
+		}
+		stylesInsertedAtTop.push(style);
+	} else if (options.insertAt === "bottom") {
+		target.appendChild(style);
+	} else {
+		throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+	}
+}
+
+function removeStyleElement (style) {
+	if (style.parentNode === null) return false;
+	style.parentNode.removeChild(style);
+
+	var idx = stylesInsertedAtTop.indexOf(style);
+	if(idx >= 0) {
+		stylesInsertedAtTop.splice(idx, 1);
+	}
+}
+
+function createStyleElement (options) {
+	var style = document.createElement("style");
+
+	options.attrs.type = "text/css";
+
+	addAttrs(style, options.attrs);
+	insertStyleElement(options, style);
+
+	return style;
+}
+
+function createLinkElement (options) {
+	var link = document.createElement("link");
+
+	options.attrs.type = "text/css";
+	options.attrs.rel = "stylesheet";
+
+	addAttrs(link, options.attrs);
+	insertStyleElement(options, link);
+
+	return link;
+}
+
+function addAttrs (el, attrs) {
+	Object.keys(attrs).forEach(function (key) {
+		el.setAttribute(key, attrs[key]);
+	});
+}
+
+function addStyle (obj, options) {
+	var style, update, remove, result;
+
+	// If a transform function was defined, run it on the css
+	if (options.transform && obj.css) {
+	    result = options.transform(obj.css);
+
+	    if (result) {
+	    	// If transform returns a value, use that instead of the original css.
+	    	// This allows running runtime transformations on the css.
+	    	obj.css = result;
+	    } else {
+	    	// If the transform function returns a falsy value, don't add this css.
+	    	// This allows conditional loading of css
+	    	return function() {
+	    		// noop
+	    	};
+	    }
+	}
+
+	if (options.singleton) {
+		var styleIndex = singletonCounter++;
+
+		style = singleton || (singleton = createStyleElement(options));
+
+		update = applyToSingletonTag.bind(null, style, styleIndex, false);
+		remove = applyToSingletonTag.bind(null, style, styleIndex, true);
+
+	} else if (
+		obj.sourceMap &&
+		typeof URL === "function" &&
+		typeof URL.createObjectURL === "function" &&
+		typeof URL.revokeObjectURL === "function" &&
+		typeof Blob === "function" &&
+		typeof btoa === "function"
+	) {
+		style = createLinkElement(options);
+		update = updateLink.bind(null, style, options);
+		remove = function () {
+			removeStyleElement(style);
+
+			if(style.href) URL.revokeObjectURL(style.href);
+		};
+	} else {
+		style = createStyleElement(options);
+		update = applyToTag.bind(null, style);
+		remove = function () {
+			removeStyleElement(style);
+		};
+	}
+
+	update(obj);
+
+	return function updateStyle (newObj) {
+		if (newObj) {
+			if (
+				newObj.css === obj.css &&
+				newObj.media === obj.media &&
+				newObj.sourceMap === obj.sourceMap
+			) {
+				return;
+			}
+
+			update(obj = newObj);
+		} else {
+			remove();
+		}
+	};
+}
+
+var replaceText = (function () {
+	var textStore = [];
+
+	return function (index, replacement) {
+		textStore[index] = replacement;
+
+		return textStore.filter(Boolean).join('\n');
+	};
+})();
+
+function applyToSingletonTag (style, index, remove, obj) {
+	var css = remove ? "" : obj.css;
+
+	if (style.styleSheet) {
+		style.styleSheet.cssText = replaceText(index, css);
+	} else {
+		var cssNode = document.createTextNode(css);
+		var childNodes = style.childNodes;
+
+		if (childNodes[index]) style.removeChild(childNodes[index]);
+
+		if (childNodes.length) {
+			style.insertBefore(cssNode, childNodes[index]);
+		} else {
+			style.appendChild(cssNode);
+		}
+	}
+}
+
+function applyToTag (style, obj) {
+	var css = obj.css;
+	var media = obj.media;
+
+	if(media) {
+		style.setAttribute("media", media)
+	}
+
+	if(style.styleSheet) {
+		style.styleSheet.cssText = css;
+	} else {
+		while(style.firstChild) {
+			style.removeChild(style.firstChild);
+		}
+
+		style.appendChild(document.createTextNode(css));
+	}
+}
+
+function updateLink (link, options, obj) {
+	var css = obj.css;
+	var sourceMap = obj.sourceMap;
+
+	/*
+		If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
+		and there is no publicPath defined then lets turn convertToAbsoluteUrls
+		on by default.  Otherwise default to the convertToAbsoluteUrls option
+		directly
+	*/
+	var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
+
+	if (options.convertToAbsoluteUrls || autoFixUrls) {
+		css = fixUrls(css);
+	}
+
+	if (sourceMap) {
+		// http://stackoverflow.com/a/26603875
+		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+	}
+
+	var blob = new Blob([css], { type: "text/css" });
+
+	var oldSrc = link.href;
+
+	link.href = URL.createObjectURL(blob);
+
+	if(oldSrc) URL.revokeObjectURL(oldSrc);
+}
+
+
+/***/ }),
+/* 79 */
+/***/ (function(module, exports) {
+
+
+/**
+ * When source maps are enabled, `style-loader` uses a link element with a data-uri to
+ * embed the css on the page. This breaks all relative urls because now they are relative to a
+ * bundle instead of the current page.
+ *
+ * One solution is to only use full urls, but that may be impossible.
+ *
+ * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
+ *
+ * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
+ *
+ */
+
+module.exports = function (css) {
+  // get current location
+  var location = typeof window !== "undefined" && window.location;
+
+  if (!location) {
+    throw new Error("fixUrls requires window.location");
+  }
+
+	// blank or null?
+	if (!css || typeof css !== "string") {
+	  return css;
+  }
+
+  var baseUrl = location.protocol + "//" + location.host;
+  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
+
+	// convert each url(...)
+	/*
+	This regular expression is just a way to recursively match brackets within
+	a string.
+
+	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
+	   (  = Start a capturing group
+	     (?:  = Start a non-capturing group
+	         [^)(]  = Match anything that isn't a parentheses
+	         |  = OR
+	         \(  = Match a start parentheses
+	             (?:  = Start another non-capturing groups
+	                 [^)(]+  = Match anything that isn't a parentheses
+	                 |  = OR
+	                 \(  = Match a start parentheses
+	                     [^)(]*  = Match anything that isn't a parentheses
+	                 \)  = Match a end parentheses
+	             )  = End Group
+              *\) = Match anything and then a close parens
+          )  = Close non-capturing group
+          *  = Match anything
+       )  = Close capturing group
+	 \)  = Match a close parens
+
+	 /gi  = Get all matches, not the first.  Be case insensitive.
+	 */
+	var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(fullMatch, origUrl) {
+		// strip quotes (if they exist)
+		var unquotedOrigUrl = origUrl
+			.trim()
+			.replace(/^"(.*)"$/, function(o, $1){ return $1; })
+			.replace(/^'(.*)'$/, function(o, $1){ return $1; });
+
+		// already a full url? no change
+		if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/)/i.test(unquotedOrigUrl)) {
+		  return fullMatch;
+		}
+
+		// convert the url to a full url
+		var newUrl;
+
+		if (unquotedOrigUrl.indexOf("//") === 0) {
+		  	//TODO: should we add protocol?
+			newUrl = unquotedOrigUrl;
+		} else if (unquotedOrigUrl.indexOf("/") === 0) {
+			// path should be relative to the base url
+			newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
+		} else {
+			// path should be relative to current directory
+			newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
+		}
+
+		// send back the fixed url(...)
+		return "url(" + JSON.stringify(newUrl) + ")";
+	});
+
+	// send back the fixed css
+	return fixedCss;
+};
+
+
+/***/ }),
+/* 80 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

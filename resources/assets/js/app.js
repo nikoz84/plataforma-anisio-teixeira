@@ -14,6 +14,7 @@ import MainApp from './components/MainApp';
 Vue.use(VueRouter);
 Vue.use(Vuex);
 
+require('vue2-animate/src/sass/vue2-animate.scss');
 
 const router = new VueRouter({
     mode: 'history',
