@@ -14,14 +14,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -51,40 +43,20 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "section",
+    "div",
     _vm._l(_vm.items, function(item, i) {
       return _vm.items
-        ? _c("ul", { key: i, staticClass: "list-unstyled" }, [
-            _c(
-              "li",
-              { staticClass: "panel panel-default", attrs: { id: item.id } },
-              [
-                _c("div", { staticClass: "panel-body" }, [
-                  _c("h4", [
-                    _vm._v(_vm._s(item.name ? item.name : item.title))
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(0, true)
-                ])
-              ]
-            )
-          ])
+        ? _c(
+            "div",
+            { key: i },
+            [_c("SimpleCard", { attrs: { item: item } })],
+            1
+          )
         : _vm._e()
     })
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "pull-right" }, [
-      _c("a", [_vm._v("editar")]),
-      _vm._v(" "),
-      _c("a", { staticClass: "text-danger" }, [_vm._v("deletar")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -469,24 +441,29 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "article",
+    { staticClass: "panel panel-default", attrs: { id: _vm.item.id } },
+    [
+      _c("div", { staticClass: "panel-body" }, [
+        _c("h4", [
+          _vm._v(_vm._s(_vm.item.name ? _vm.item.name : _vm.item.title))
+        ]),
+        _vm._v(" "),
+        _vm._m(0)
+      ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "thumbnail" }, [
-      _c("a", { attrs: { href: "#" } }, [
-        _c("img", {
-          staticStyle: { width: "100%" },
-          attrs: { src: "https://robohash.org/niko", alt: "Lights" }
-        })
-      ]),
+    return _c("div", { staticClass: "pull-right" }, [
+      _c("a", { staticClass: "text-default" }, [_vm._v("editar")]),
       _vm._v(" "),
-      _c("div", { staticClass: "caption" }, [
-        _c("a", [_c("h4", [_vm._v("Lorem ipsum...")])])
-      ])
+      _c("a", { staticClass: "text-danger" }, [_vm._v("deletar")])
     ])
   }
 ]

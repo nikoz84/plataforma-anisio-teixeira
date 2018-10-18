@@ -1,13 +1,13 @@
 <template>
-    <div class="thumbnail">
-        <a href="#">
-            <img src="https://robohash.org/niko" alt="Lights" style="width:100%">
-        </a>
-        <div class="caption">
-          <a><h4>Lorem ipsum...</h4></a>
+    <article class="panel panel-default" v-bind:id="item.id">
+        <div class="panel-body">
+            <h4>{{ (item.name) ? item.name : item.title }}</h4>
+            <div class="pull-right">
+                <a class="text-default">editar</a>
+                <a class="text-danger">deletar</a>
+            </div>
         </div>
-      
-    </div>
+    </article>
 </template>
 <script>
 
