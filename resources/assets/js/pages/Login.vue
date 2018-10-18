@@ -51,7 +51,7 @@ export default {
               localStorage.setItem('login_success', this.loginSuccess)
               localStorage.setItem('username', resp.data.user.name)
               localStorage.setItem('user_id', resp.data.user.id)
-              this.$router.push('Admin')
+              this.$router.push('admin')
             }).catch(error => {
               if (error.response.status === 401) {
                 this.message = error.response.data.message;

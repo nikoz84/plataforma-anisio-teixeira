@@ -100,4 +100,20 @@ class CanalController extends Controller
         
         return response()->json($resp);
     }
+
+    public function search(Request $request, $termo)
+    {
+        $limit = ($request->has('limit')) ? $request->query('limit') : 10;        
+        $page = ($request->has('page')) ? $request->query('page') : 1;
+
+        $canais = Canal::where('name','ilike',$termo)
+                        ->limit($limit)
+                        ->offset($page)
+                        ->paginate($limit);
+        $canais->currentPage($page);
+
+        return response()->json([
+            'items' => $canais
+        ]);
+    }
 }

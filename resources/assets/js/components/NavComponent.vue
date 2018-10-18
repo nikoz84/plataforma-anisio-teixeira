@@ -70,7 +70,7 @@
         methods: {
             logout(){
                 localStorage.clear();
-                this.$router.push('Home');
+                this.$router.push('/');
             }
         }
     }
