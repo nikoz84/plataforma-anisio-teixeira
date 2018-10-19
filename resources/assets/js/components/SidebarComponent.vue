@@ -19,13 +19,13 @@ export default {
     data() {
         return {
             username: localStorage.getItem('username'),
-            userId: localStorage.getItem('user_id'),    
+            userId: localStorage.getItem('user_id'),
         }
     },
     methods:{
         get(endpoint){
             axios.get(`/api-v1/${endpoint}`).then(resp =>{
-                
+
                 this.$parent.paginator = resp.data.paginator;
                 this.$parent.title = resp.data.title;
                 this.$parent.search = endpoint;
