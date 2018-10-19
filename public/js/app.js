@@ -47741,24 +47741,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             title: 'Listar',
+            url: null,
             paginator: {}
         };
     },
     created: function created() {
-
-        console.log(localStorage.getItem('idCanal'));
+        this.getConteudos();
     },
 
     methods: {
         getConteudos: function getConteudos() {
             var _this = this;
 
-            //if(this.$parent.idCanal)
-            consol.log(this.$parent.idCanal);
-            axios.get('/api-v1/conteudos', { canal_id: this.$parent.idCanal }).then(function (resp) {
+            var idCanal = localStorage.getItem('idCanal');
+            var url = this.getUrl(idCanal);
+            console.log(url);
+            axios.get(url).then(function (resp) {
+                console.log(resp);
                 _this.title = resp.data.title;
                 _this.paginator = resp.data.paginator;
             });
+        },
+        getUrl: function getUrl(canal) {
+
+            switch (true) {
+                case canal == 5:
+                    return '/api-v1/conteudos?site=true';
+                    break;
+                case canal == 9:
+                    return '/api-v1/aplicativos';
+                    break;
+                default:
+                    return '/api-v1/conteudos?canal=' + canal;
+            }
         }
     }
 });
@@ -48460,6 +48475,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'nav-app',
@@ -48598,6 +48616,20 @@ var render = function() {
                       }
                     },
                     [_c("a", [_vm._v("Sites Temáticos")])]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        tag: "li",
+                        to: {
+                          name: "Inicio",
+                          params: { slug: "aplicativos-educacionais" }
+                        }
+                      }
+                    },
+                    [_c("a", [_vm._v("Aplicativos Educacionais")])]
                   )
                 ],
                 1
@@ -48875,22 +48907,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'footer-app',
@@ -48927,9 +48943,7 @@ var render = function() {
     _c("section", { staticClass: "footer-copyleft text-center" }, [
       _c("span", { staticClass: "copyleft" }, [_vm._v("©")]),
       _vm._v(" " + _vm._s(_vm.year) + " CopyLeft:\n        "),
-      _c("a", { attrs: { href: "http://pat" } }, [
-        _vm._v(" Plataforma Anísio Teixeira")
-      ])
+      _c("a", { attrs: { href: "/" } }, [_vm._v(" Plataforma Anísio Teixeira")])
     ])
   ])
 }
@@ -48955,16 +48969,8 @@ var staticRenderFns = [
                 _c("i", { staticClass: "fa fa-facebook white-text mr-4" })
               ]),
               _vm._v(" "),
-              _c("a", { staticClass: "tw-ic" }, [
-                _c("i", { staticClass: "fa fa-twitter white-text mr-4" })
-              ]),
-              _vm._v(" "),
               _c("a", { staticClass: "gplus-ic" }, [
                 _c("i", { staticClass: "fa fa-google-plus white-text mr-4" })
-              ]),
-              _vm._v(" "),
-              _c("a", { staticClass: "li-ic" }, [
-                _c("i", { staticClass: "fa fa-linkedin white-text mr-4" })
               ]),
               _vm._v(" "),
               _c("a", { staticClass: "ins-ic" }, [
@@ -48985,13 +48991,13 @@ var staticRenderFns = [
       { staticClass: "container text-center text-md-left mt-5" },
       [
         _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-3 col-lg-4 col-xl-3 mb-4" }, [
+          _c("div", { staticClass: "col-md-3 col-lg-4" }, [
             _c("h6", { staticClass: "text-uppercase font-weight-bold" }, [
               _vm._v("Plataforma Anísio Teixeira")
             ]),
             _vm._v(" "),
             _c("hr", {
-              staticClass: "teal accent-3 mb-4 mt-0 d-inline-block mx-auto",
+              staticClass: "teal accent-3 ",
               staticStyle: { width: "60px" }
             }),
             _vm._v(" "),
@@ -49002,138 +49008,124 @@ var staticRenderFns = [
             ])
           ]),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "col-md-2 col-lg-2 col-xl-2 mx-auto mb-4" },
-            [
-              _c("h6", { staticClass: "text-uppercase font-weight-bold" }, [
-                _vm._v("Canais")
-              ]),
-              _vm._v(" "),
-              _c("hr", {
-                staticClass: "teal accent-3 mb-4 mt-0 d-inline-block mx-auto",
-                staticStyle: { width: "60px" }
-              }),
-              _vm._v(" "),
-              _c("p", [
-                _c("a", { attrs: { href: "/tv-anisio-teixeira/inicio" } }, [
-                  _vm._v("Tv Anísio Teixeira")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _c("a", { attrs: { href: "/emitec/inicio" } }, [
-                  _vm._v("Emitec")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _c("a", { attrs: { href: "/radio-anisio-teixeira/inicio" } }, [
-                  _vm._v("Radio Anísio Teixeira")
-                ])
+          _c("div", { staticClass: "col-md-2 col-lg-2" }, [
+            _c("h6", { staticClass: "text-uppercase font-weight-bold" }, [
+              _vm._v("Canais")
+            ]),
+            _vm._v(" "),
+            _c("hr", {
+              staticClass: "teal accent-3 ",
+              staticStyle: { width: "60px" }
+            }),
+            _vm._v(" "),
+            _c("p", [
+              _c("a", { attrs: { href: "/tv-anisio-teixeira/inicio" } }, [
+                _vm._v("Tv Anísio Teixeira")
               ])
-            ]
-          ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _c("a", { attrs: { href: "/emitec/inicio" } }, [_vm._v("Emitec")])
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _c("a", { attrs: { href: "/radio-anisio-teixeira/inicio" } }, [
+                _vm._v("Radio Anísio Teixeira")
+              ])
+            ])
+          ]),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "col-md-3 col-lg-2 col-xl-2 mx-auto mb-4" },
-            [
-              _c("h6", { staticClass: "text-uppercase font-weight-bold" }, [
-                _vm._v("Secretaría da Educação")
-              ]),
-              _vm._v(" "),
-              _c("hr", {
-                staticClass: "teal accent-3 mb-4 mt-0 d-inline-block mx-auto",
-                staticStyle: { width: "60px" }
-              }),
-              _vm._v(" "),
-              _c("p", [
-                _c(
-                  "a",
-                  {
-                    staticClass: "dark-grey-text",
-                    attrs: { href: "http://escolas.educacao.ba.gov.br/" }
-                  },
-                  [_vm._v("Escolas")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _c(
-                  "a",
-                  {
-                    staticClass: "dark-grey-text",
-                    attrs: { href: "http://estudantes.educacao.ba.gov.br/" }
-                  },
-                  [_vm._v("Estudantes")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _c(
-                  "a",
-                  {
-                    staticClass: "dark-grey-text",
-                    attrs: { href: "http://educadores.educacao.ba.gov.br/" }
-                  },
-                  [_vm._v("Educadores")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _c(
-                  "a",
-                  {
-                    staticClass: "dark-grey-text",
-                    attrs: { href: "http://institucional.educacao.ba.gov.br/" }
-                  },
-                  [_vm._v("Institucional")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _c(
-                  "a",
-                  {
-                    staticClass: "dark-grey-text",
-                    attrs: { href: "http://municipios.educacao.ba.gov.br/" }
-                  },
-                  [_vm._v("Municípios")]
-                )
-              ])
-            ]
-          ),
+          _c("div", { staticClass: "col-md-3 col-lg-2" }, [
+            _c("h6", { staticClass: "text-uppercase font-weight-bold" }, [
+              _vm._v("Secretaría da Educação")
+            ]),
+            _vm._v(" "),
+            _c("hr", {
+              staticClass: "teal accent-3 ",
+              staticStyle: { width: "60px" }
+            }),
+            _vm._v(" "),
+            _c("p", [
+              _c(
+                "a",
+                {
+                  staticClass: "dark-grey-text",
+                  attrs: { href: "http://escolas.educacao.ba.gov.br/" }
+                },
+                [_vm._v("Escolas")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _c(
+                "a",
+                {
+                  staticClass: "dark-grey-text",
+                  attrs: { href: "http://estudantes.educacao.ba.gov.br/" }
+                },
+                [_vm._v("Estudantes")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _c(
+                "a",
+                {
+                  staticClass: "dark-grey-text",
+                  attrs: { href: "http://educadores.educacao.ba.gov.br/" }
+                },
+                [_vm._v("Educadores")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _c(
+                "a",
+                {
+                  staticClass: "dark-grey-text",
+                  attrs: { href: "http://institucional.educacao.ba.gov.br/" }
+                },
+                [_vm._v("Institucional")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _c(
+                "a",
+                {
+                  staticClass: "dark-grey-text",
+                  attrs: { href: "http://municipios.educacao.ba.gov.br/" }
+                },
+                [_vm._v("Municípios")]
+              )
+            ])
+          ]),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4" },
-            [
-              _c("h6", { staticClass: "text-uppercase font-weight-bold" }, [
-                _vm._v("Contato")
-              ]),
-              _vm._v(" "),
-              _c("hr", {
-                staticClass: "teal accent-3 mb-4 mt-0 d-inline-block mx-auto",
-                staticStyle: { width: "60px" }
-              }),
-              _vm._v(" "),
-              _c("p", [
-                _c("i", { staticClass: "fa fa-home mr-3" }),
-                _vm._v(" Salvador, Bahia, Brasil")
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _c("i", { staticClass: "fa fa-envelope mr-3" }),
-                _vm._v(" info@example.com")
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _c("i", { staticClass: "fa fa-phone mr-3" }),
-                _vm._v(" +55 71 3115 9061")
-              ])
-            ]
-          )
+          _c("div", { staticClass: "col-md-4 col-lg-3" }, [
+            _c("h6", { staticClass: "text-uppercase font-weight-bold" }, [
+              _vm._v("Contato")
+            ]),
+            _vm._v(" "),
+            _c("hr", {
+              staticClass: "teal accent-3",
+              staticStyle: { width: "60px" }
+            }),
+            _vm._v(" "),
+            _c("p", [
+              _c("i", { staticClass: "fa fa-home mr-3" }),
+              _vm._v(" Salvador, Bahia, Brasil")
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _c("i", { staticClass: "fa fa-envelope mr-3" }),
+              _vm._v(" info@example.com")
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _c("i", { staticClass: "fa fa-phone mr-3" }),
+              _vm._v(" +55 71 3115 9061")
+            ])
+          ])
         ])
       ]
     )

@@ -35,9 +35,8 @@ export default {
 }
 </script>
 <style lang="sass" scoped>
-.mt-15{ margin-top: 15px; }
-.page-header { margin-top: 0px; }
-.page-header > h1 { margin-top: 0px; }
+.page-header { margin-top: 15px; }
+.page-header > h1 { margin-top: 0px; font-size: 5vh;}
 
 </style>
 

@@ -151,7 +151,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Programas")]
+                [_vm._v("Listar")]
               ),
               _vm._v(" |\n                "),
               _c(
@@ -171,7 +171,7 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _c("router-view", { attrs: { id: _vm.idCanal } })
+        _c("router-view", { attrs: { id: "idCanal" } })
       ],
       1
     )

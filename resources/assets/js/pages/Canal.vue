@@ -8,11 +8,11 @@
                 <h1><small>{{ title }}</small></h1>
                 <nav>
                     <router-link :to="{ name: 'Inicio', params: {slug: $route.params.slug}}">Home</router-link> |
-                    <router-link :to="{ name: 'Listar', params: {slug: $route.params.slug}}">Programas</router-link> |
+                    <router-link :to="{ name: 'Listar', params: {slug: $route.params.slug}}">Listar</router-link> |
                     <router-link :to="{ name: 'Sobre', params: {slug: $route.params.slug}}">Sobre</router-link>
                 </nav>
             </header>
-            <router-view v-bind:id="idCanal"></router-view>
+            <router-view id="idCanal"></router-view>
         </article>
     </div>
 </template>

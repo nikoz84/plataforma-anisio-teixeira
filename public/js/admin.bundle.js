@@ -841,7 +841,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.mt-15[data-v-7943083c] {\n  margin-top: 15px;\n}\n.page-header[data-v-7943083c] {\n  margin-top: 0px;\n}\n.page-header > h1[data-v-7943083c] {\n  margin-top: 0px;\n}\n", ""]);
+exports.push([module.i, "\n.page-header[data-v-7943083c] {\n  margin-top: 15px;\n}\n.page-header > h1[data-v-7943083c] {\n  margin-top: 0px;\n  font-size: 5vh;\n}\n", ""]);
 
 // exports
 
