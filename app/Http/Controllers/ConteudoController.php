@@ -19,13 +19,18 @@ class ConteudoController extends Controller
         $orderBy = ($request->has('order')) ? $request->query('order') : 'title';
         $page = ($request->has('page')) ? $request->query('page') : 1;
         $orderBy = ($request->has('order')) ? $request->query('order') : 'title';
-        
+        $approved = $request->query('approved', true);
+        $isCanal = $request->query('canal', null);
+        $canal = (is_null($isCanal)) ?  'canal_id IS NULL' : "canal_id = {$isCanal}";
+        $isSite = $request->query('site', false);
+
 
         $conteudos = DB::table('conteudos')
             ->select(['id','canal_id','user_id','title'])
-            ->where('is_approved', true)
-            ->where('canal_id', $request->query('canal_id'))
-            ->orderBy($orderBy, 'desc')
+            ->where('is_approved', $approved)
+            ->whereRaw($canal)
+            ->where('is_site', $isSite)
+            ->orderBy($orderBy, 'asc')
             ->paginate($limit);
 
         return response()->json([

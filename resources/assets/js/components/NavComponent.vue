@@ -38,6 +38,9 @@
                             <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'sites-tematicos'}}">
                                 <a>Sites Temáticos</a>
                             </router-link>
+                            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'aplicativos-educacionais'}}">
+                                <a>Aplicativos Educacionais</a>
+                            </router-link>
                         </ul>
                     </li>
                     <li class="dropdown">
