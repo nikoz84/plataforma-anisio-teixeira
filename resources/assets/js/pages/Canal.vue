@@ -1,24 +1,19 @@
 <template>
-    <div>
-        <h1>{{ title }} {{ $route.params.slug }}</h1>
-        <router-view></router-view>
-        <aside>
-            <nav>
-                <router-link :to="{ name: 'Inicio', params: {slug: $route.params.slug}}">Inicio</router-link> |
-                <router-link :to="{ name: 'Sobre', params: {slug: $route.params.slug}}">Sobre</router-link> |
-                <router-link :to="{ name: 'Listar', params: {slug: $route.params.slug}}">Listar</router-link>
-
-                
-            </nav>
+    <div class="row">
+        <aside class="col-sm-3">
+            sidebar
         </aside>
-
-        <ul v-for="(item, i) in paginator.data" v-bind:key="i">
-            <li v-bind:id="item.id">
-                {{ item.title }}
-            </li>
-        </ul>
-        {{paginator.last_page}}
-        <a v-bind:href="paginator.last_page_url">{{ paginator.last_page_url }}</a>
+        <article class="col-sm-9">
+            <header class="page-header">
+                <h1><small>{{ title }}</small></h1>
+                <nav>
+                    <router-link :to="{ name: 'Inicio', params: {slug: $route.params.slug}}">Home</router-link> |
+                    <router-link :to="{ name: 'Listar', params: {slug: $route.params.slug}}">Programas</router-link> |
+                    <router-link :to="{ name: 'Sobre', params: {slug: $route.params.slug}}">Sobre</router-link>
+                </nav>
+            </header>
+            <router-view v-bind:id="idCanal"></router-view>
+        </article>
     </div>
 </template>
 <script>
@@ -28,27 +23,34 @@ export default {
     data() {
         return {
             title: null,
-            paginator: {}
+            descricao: null,
+            idCanal: null,
+            metaData: null
         }
     },
+    created() {
+        
+    },
     mounted() {
-        this.getConteudos();
+        this.getCanal();
     },
     watch: {
         '$route' (to, from) {
-            this.getConteudos()
+            this.getCanal();
         }
     },
     methods:{
-        getConteudos(){
-            console.log(this.$route.params.slug)
-            axios.get(`/api-v1/conteudos`, {canal_id : 1}).then(resp =>{
-                console.log(resp.data.paginator)
-                this.paginator = resp.data.paginator;
-                this.title = resp.data.title;
-            })
-            
-        }
+        getCanal(){
+            axios.get(`/api-v1/canais/slug/${this.$route.params.slug}`).then(resp =>{
+                this.idCanal = resp.data.canal.id;
+                this.title = resp.data.canal.name;
+                localStorage.setItem('idCanal', this.idCanal);
+                //this.descricao = resp.data.canal.description;
+                //this.pagina = this.$route.name;
+                //this.metaData = JSON.parse(resp.data.canal.options);
+                //console.log(resp.data.canal)
+            });
+        },
     }
 }
 </script>

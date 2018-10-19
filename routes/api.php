@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // CANAIS
 Route::get('/canais', 'CanalController@list');
 Route::get('/canais/search/{term}', 'CanalController@search');
+Route::get('/canais/slug/{slug}', 'CanalController@getBySlug');
 
 // CONTEUDOS
 Route::get('/conteudos', 'ConteudoController@list');

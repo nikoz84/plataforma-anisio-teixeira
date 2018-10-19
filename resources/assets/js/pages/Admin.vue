@@ -1,14 +1,11 @@
 <template>
     <div>
-        <!-- Sidebar -->
         <Sidebar class="col-sm-3" ></Sidebar>
         <section class="col-sm-9">
             <Search v-bind:search="search"></Search>
-            
             <header class="page-header">
                 <h1><small>{{ title }}</small></h1>
             </header>
-            
             <List v-bind:items="paginator.data"></List>
             <Paginator v-bind:paginator="paginator"></Paginator>
         </section>

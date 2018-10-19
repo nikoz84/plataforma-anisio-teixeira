@@ -1,12 +1,12 @@
 webpackJsonp([1],{
 
-/***/ 115:
+/***/ 117:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(116);
+var content = __webpack_require__(118);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -27,7 +27,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 116:
+/***/ 118:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -42,16 +42,11 @@ exports.push([module.i, "", ""]);
 
 /***/ }),
 
-/***/ 117:
+/***/ 119:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
 //
 //
 //
@@ -77,27 +72,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             title: null,
-            paginator: {}
+            descricao: null,
+            idCanal: null,
+            metaData: null
         };
     },
+    created: function created() {},
     mounted: function mounted() {
-        this.getConteudos();
+        this.getCanal();
     },
 
     watch: {
         '$route': function $route(to, from) {
-            this.getConteudos();
+            this.getCanal();
         }
     },
     methods: {
-        getConteudos: function getConteudos() {
+        getCanal: function getCanal() {
             var _this = this;
 
-            console.log(this.$route.params.slug);
-            axios.get('/api-v1/conteudos', { canal_id: 1 }).then(function (resp) {
-                console.log(resp.data.paginator);
-                _this.paginator = resp.data.paginator;
-                _this.title = resp.data.title;
+            axios.get('/api-v1/canais/slug/' + this.$route.params.slug).then(function (resp) {
+                _this.idCanal = resp.data.canal.id;
+                _this.title = resp.data.canal.name;
+                localStorage.setItem('idCanal', _this.idCanal);
+                //this.descricao = resp.data.canal.description;
+                //this.pagina = this.$route.name;
+                //this.metaData = JSON.parse(resp.data.canal.options);
+                //console.log(resp.data.canal)
             });
         }
     }
@@ -105,83 +106,76 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 118:
+/***/ 120:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h1", [
-        _vm._v(_vm._s(_vm.title) + " " + _vm._s(_vm.$route.params.slug))
-      ]),
-      _vm._v(" "),
-      _c("router-view"),
-      _vm._v(" "),
-      _c("aside", [
-        _c(
-          "nav",
-          [
-            _c(
-              "router-link",
-              {
-                attrs: {
-                  to: {
-                    name: "Inicio",
-                    params: { slug: _vm.$route.params.slug }
+  return _c("div", { staticClass: "row" }, [
+    _c("aside", { staticClass: "col-sm-3" }, [
+      _vm._v("\n        sidebar\n    ")
+    ]),
+    _vm._v(" "),
+    _c(
+      "article",
+      { staticClass: "col-sm-9" },
+      [
+        _c("header", { staticClass: "page-header" }, [
+          _c("h1", [_c("small", [_vm._v(_vm._s(_vm.title))])]),
+          _vm._v(" "),
+          _c(
+            "nav",
+            [
+              _c(
+                "router-link",
+                {
+                  attrs: {
+                    to: {
+                      name: "Inicio",
+                      params: { slug: _vm.$route.params.slug }
+                    }
                   }
-                }
-              },
-              [_vm._v("Inicio")]
-            ),
-            _vm._v(" |\n            "),
-            _c(
-              "router-link",
-              {
-                attrs: {
-                  to: {
-                    name: "Sobre",
-                    params: { slug: _vm.$route.params.slug }
+                },
+                [_vm._v("Home")]
+              ),
+              _vm._v(" |\n                "),
+              _c(
+                "router-link",
+                {
+                  attrs: {
+                    to: {
+                      name: "Listar",
+                      params: { slug: _vm.$route.params.slug }
+                    }
                   }
-                }
-              },
-              [_vm._v("Sobre")]
-            ),
-            _vm._v(" |\n            "),
-            _c(
-              "router-link",
-              {
-                attrs: {
-                  to: {
-                    name: "Listar",
-                    params: { slug: _vm.$route.params.slug }
+                },
+                [_vm._v("Programas")]
+              ),
+              _vm._v(" |\n                "),
+              _c(
+                "router-link",
+                {
+                  attrs: {
+                    to: {
+                      name: "Sobre",
+                      params: { slug: _vm.$route.params.slug }
+                    }
                   }
-                }
-              },
-              [_vm._v("Listar")]
-            )
-          ],
-          1
-        )
-      ]),
-      _vm._v(" "),
-      _vm._l(_vm.paginator.data, function(item, i) {
-        return _c("ul", { key: i }, [
-          _c("li", { attrs: { id: item.id } }, [
-            _vm._v("\n            " + _vm._s(item.title) + "\n        ")
-          ])
-        ])
-      }),
-      _vm._v("\n    " + _vm._s(_vm.paginator.last_page) + "\n    "),
-      _c("a", { attrs: { href: _vm.paginator.last_page_url } }, [
-        _vm._v(_vm._s(_vm.paginator.last_page_url))
-      ])
-    ],
-    2
-  )
+                },
+                [_vm._v("Sobre")]
+              )
+            ],
+            1
+          )
+        ]),
+        _vm._v(" "),
+        _c("router-view", { attrs: { id: _vm.idCanal } })
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -195,19 +189,19 @@ if (false) {
 
 /***/ }),
 
-/***/ 83:
+/***/ 95:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(115)
+  __webpack_require__(117)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(117)
+var __vue_script__ = __webpack_require__(119)
 /* template */
-var __vue_template__ = __webpack_require__(118)
+var __vue_template__ = __webpack_require__(120)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */

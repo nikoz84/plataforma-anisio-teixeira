@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar navbar-default navbar-static-top">
-        <div class="container-fluid">   
+        <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Plataforma Anísio Teixeira</a>
+                <a class="navbar-brand" href="/">Plataforma Anísio Teixeira</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
@@ -24,7 +24,7 @@
                                 <a>Administração</a>
                             </router-link>
                             <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'tv-anisio-teixeira'}}">
-                                <a>Tv Anísio Teixeira</a>
+                               <a v-on:click="get('canais')">Tv Anísio Teixeira</a>
                             </router-link>
                             <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'radio-anisio-teixeira'}}">
                                 <a>Radio Anísio Teixeira</a>
@@ -71,7 +71,15 @@
             logout(){
                 localStorage.clear();
                 this.$router.push('/');
-            }
+            },
+            get(endpoint){
+            axios.get(`/api-v1/${endpoint}`).then(resp =>{
+                this.$parent.paginator = resp.data.paginator;
+                this.$parent.title = resp.data.title;
+            }).catch(error =>{
+                console.log(error.response)
+            })
+        }
         }
     }
 </script>

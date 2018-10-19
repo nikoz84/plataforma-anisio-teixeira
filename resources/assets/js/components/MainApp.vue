@@ -1,11 +1,9 @@
 <template>
-    <div>
+    <main>
         <nav-app></nav-app>
-        <main class="container-fluid">
-            <router-view ></router-view>
-        </main>
+        <router-view class="container-fluid heigth"></router-view>
         <footer-app></footer-app>
-    </div>
+    </main>
 </template>
 
 <script>
@@ -20,3 +18,8 @@ export default {
 
 }
 </script>
+<style lang="scss" >
+.heigth {
+    min-height: 80vh;
+}
+</style>
