@@ -3,7 +3,8 @@
         <Sidebar class="col-sm-3"></Sidebar>
         <section class="col-sm-9">
             <header class="page-header">
-                <h1><small>{{ `${title}  ${complementTitle}` }}</small></h1>
+                <h1>{{ title }}<small class="pull-rigth"> {{ complementTitle }}</small></h1>
+
                 <Search></Search>
             </header>
             <div>

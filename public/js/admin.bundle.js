@@ -119,8 +119,9 @@ var render = function() {
           { staticClass: "page-header" },
           [
             _c("h1", [
-              _c("small", [
-                _vm._v(_vm._s(_vm.title + "  " + _vm.complementTitle))
+              _vm._v(_vm._s(_vm.title)),
+              _c("small", { staticClass: "pull-rigth" }, [
+                _vm._v(" " + _vm._s(_vm.complementTitle))
               ])
             ]),
             _vm._v(" "),
@@ -244,7 +245,7 @@ var content = __webpack_require__(81);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("d2db82be", content, false, {});
+var update = __webpack_require__(3)("6c8e4bc7", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -287,6 +288,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_SearchComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_SearchComponent_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_ListComponent_vue__ = __webpack_require__(93);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_ListComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_ListComponent_vue__);
+//
 //
 //
 //
@@ -397,7 +399,7 @@ var content = __webpack_require__(85);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("1443cc7c", content, false, {});
+var update = __webpack_require__(3)("5df2b3bc", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -649,7 +651,7 @@ var content = __webpack_require__(90);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("3bb5a10d", content, false, {});
+var update = __webpack_require__(3)("e5cbeea6", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -831,7 +833,7 @@ var content = __webpack_require__(95);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("04df99bb", content, false, {});
+var update = __webpack_require__(3)("1579695b", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -960,7 +962,7 @@ var content = __webpack_require__(99);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("547ae8ed", content, false, {});
+var update = __webpack_require__(3)("6514b88d", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
