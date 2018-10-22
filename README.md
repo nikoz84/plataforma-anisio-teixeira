@@ -28,7 +28,7 @@ Faça uma copia do arquivo .env.example, e renomee para .env, em este arquivo vo
 - Também será adicionado um link simbólico da pasta public na pasta storage/app/public: `$ php artisan storage:link`
 - Lembre dar as permissões para o usuário apache para a pasta storage, em UBUNTU seria: `$ sudo chown www:data:www:data storage`
 
-Instalar as dependencias do laravel com composer:
+Instalar as dependências do laravel com composer:
 
 ``$ composer install``
 
