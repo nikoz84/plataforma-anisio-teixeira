@@ -26,7 +26,6 @@ export default {
         get(endpoint){
             this.$parent.show = false;
             axios.get(`/api-v1/${endpoint}`).then(resp =>{
-                
                 this.$parent.paginator = resp.data.paginator;
                 this.$parent.title = resp.data.title;
                 this.$parent.search = endpoint;
