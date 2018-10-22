@@ -19,7 +19,7 @@ export default {
     data() {
         return {
             username: localStorage.getItem('username'),
-            userId: localStorage.getItem('user_id'),    
+            userId: localStorage.getItem('user_id'),
         }
     },
     methods:{

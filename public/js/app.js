@@ -49132,30 +49132,44 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("footer", { staticClass: "page-footer font-small" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _vm._m(1),
-    _vm._v(" "),
-    _c("section", { staticClass: "footer-copyleft text-center" }, [
-      _c("span", { staticClass: "copyleft" }, [_vm._v("©")]),
-      _vm._v(" " + _vm._s(_vm.year) + " CopyLeft:\n        "),
-      _c("a", { attrs: { href: "/" } }, [_vm._v(" Plataforma Anísio Teixeira")])
-    ])
-  ])
+  return _c(
+    "footer",
+    {
+      staticClass: "page-footer font-small",
+      staticStyle: { "background-color": "#2E2E2E" }
+    },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
+      _c(
+        "section",
+        {
+          staticClass: "footer-copyleft text-center",
+          staticStyle: { "background-color": "#D8D8D8" }
+        },
+        [
+          _c("span", { staticClass: "copyleft" }, [_vm._v("©")]),
+          _vm._v(" " + _vm._s(_vm.year) + " CopyLeft:\n        "),
+          _c("a", { attrs: { href: "/" } }, [
+            _vm._v(" Plataforma Anísio Teixeira")
+          ])
+        ]
+      )
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("section", { staticStyle: { "background-color": "#21d192" } }, [
+    return _c("section", { staticStyle: { "background-color": "#A4A4A4" } }, [
       _c("div", { staticClass: "container" }, [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-6 col-lg-5" }, [
-            _c("h6", { staticClass: "mb-0" }, [
-              _vm._v("Get connected with us on social networks!")
-            ])
+            _c("h6", { staticClass: "mb-0" })
           ]),
           _vm._v(" "),
           _c(
@@ -49189,9 +49203,14 @@ var staticRenderFns = [
       [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-3 col-lg-4" }, [
-            _c("h6", { staticClass: "text-uppercase font-weight-bold" }, [
-              _vm._v("Plataforma Anísio Teixeira")
-            ]),
+            _c(
+              "h6",
+              {
+                staticClass: "text-uppercase font-weight-bold",
+                staticStyle: { color: "#FFFFFF" }
+              },
+              [_vm._v("Plataforma Anísio Teixeira")]
+            ),
             _vm._v(" "),
             _c("hr", {
               staticClass: "teal accent-3 ",
@@ -49205,37 +49224,51 @@ var staticRenderFns = [
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-2 col-lg-2" }, [
-            _c("h6", { staticClass: "text-uppercase font-weight-bold" }, [
-              _vm._v("Canais")
-            ]),
-            _vm._v(" "),
-            _c("hr", {
-              staticClass: "teal accent-3 ",
-              staticStyle: { width: "60px" }
-            }),
-            _vm._v(" "),
-            _c("p", [
-              _c("a", { attrs: { href: "/tv-anisio-teixeira/inicio" } }, [
-                _vm._v("Tv Anísio Teixeira")
+          _c(
+            "div",
+            {
+              staticClass: "col-md-2 col-lg-2",
+              staticStyle: { color: "#FFFFFF" }
+            },
+            [
+              _c("h6", { staticClass: "text-uppercase font-weight-bold" }, [
+                _vm._v("Canais")
+              ]),
+              _vm._v(" "),
+              _c("hr", {
+                staticClass: "teal accent-3 ",
+                staticStyle: { width: "60px" }
+              }),
+              _vm._v(" "),
+              _c("p", [
+                _c("a", { attrs: { href: "/tv-anisio-teixeira/inicio" } }, [
+                  _vm._v("Tv Anísio Teixeira")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("p", [
+                _c("a", { attrs: { href: "/emitec/inicio" } }, [
+                  _vm._v("Emitec")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("p", [
+                _c("a", { attrs: { href: "/radio-anisio-teixeira/inicio" } }, [
+                  _vm._v("Radio Anísio Teixeira")
+                ])
               ])
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _c("a", { attrs: { href: "/emitec/inicio" } }, [_vm._v("Emitec")])
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _c("a", { attrs: { href: "/radio-anisio-teixeira/inicio" } }, [
-                _vm._v("Radio Anísio Teixeira")
-              ])
-            ])
-          ]),
+            ]
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-3 col-lg-2" }, [
-            _c("h6", { staticClass: "text-uppercase font-weight-bold" }, [
-              _vm._v("Secretaría da Educação")
-            ]),
+            _c(
+              "h6",
+              {
+                staticClass: "text-uppercase font-weight-bold",
+                staticStyle: { color: "#FFFFFF" }
+              },
+              [_vm._v("Secretaría da Educação")]
+            ),
             _vm._v(" "),
             _c("hr", {
               staticClass: "teal accent-3 ",
@@ -49299,9 +49332,14 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-4 col-lg-3" }, [
-            _c("h6", { staticClass: "text-uppercase font-weight-bold" }, [
-              _vm._v("Contato")
-            ]),
+            _c(
+              "h6",
+              {
+                staticClass: "text-uppercase font-weight-bold",
+                staticStyle: { color: "#FFFFFF" }
+              },
+              [_vm._v("Contato")]
+            ),
             _vm._v(" "),
             _c("hr", {
               staticClass: "teal accent-3",

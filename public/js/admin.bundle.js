@@ -526,6 +526,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             var url = '/api-v1/' + this.$parent.search + '/search/' + this.termo;
+            console.log(url);
             this.$parent.show = false;
             axios.get(url).then(function (resp) {
                 _this.$parent.paginator = resp.data.paginator;
