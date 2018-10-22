@@ -1,7 +1,7 @@
 <template>
     <main>
         <nav-app></nav-app>
-        <router-view class="container-fluid heigth"></router-view>
+        <router-view></router-view>
         <footer-app></footer-app>
     </main>
 </template>

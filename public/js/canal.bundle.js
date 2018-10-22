@@ -1,52 +1,29 @@
 webpackJsonp([1],{
 
-/***/ 119:
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(120);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("3d9066f0", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4931cae4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Canal.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4931cae4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Canal.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ 120:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/***/ }),
-
 /***/ 121:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -91,6 +68,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getCanal: function getCanal() {
             var _this = this;
 
+            this.show = false;
             axios.get('/api-v1/canais/slug/' + this.$route.params.slug).then(function (resp) {
                 _this.idCanal = resp.data.canal.id;
                 _this.title = resp.data.canal.name;
@@ -113,15 +91,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("aside", { staticClass: "col-sm-3" }, [
-      _vm._v("\n        sidebar\n    ")
-    ]),
-    _vm._v(" "),
-    _c(
-      "article",
-      { staticClass: "col-sm-9" },
-      [
+  return _c("div", { staticClass: "container-fluid heigth" }, [
+    _c("div", { staticClass: "row" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("article", { staticClass: "col-sm-9" }, [
         _c("header", { staticClass: "page-header" }, [
           _c("h1", [_c("small", [_vm._v(_vm._s(_vm.title))])]),
           _vm._v(" "),
@@ -138,9 +112,9 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Home")]
+                [_c("a", [_vm._v("Home")])]
               ),
-              _vm._v(" |\n                "),
+              _vm._v(" |\n                    "),
               _c(
                 "router-link",
                 {
@@ -151,9 +125,9 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Listar")]
+                [_c("a", [_vm._v("Listar")])]
               ),
-              _vm._v(" |\n                "),
+              _vm._v(" |\n                    "),
               _c(
                 "router-link",
                 {
@@ -164,20 +138,49 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Sobre")]
+                [_c("a", [_vm._v("Sobre")])]
               )
             ],
             1
           )
         ]),
         _vm._v(" "),
-        _c("router-view", { attrs: { id: "idCanal" } })
-      ],
-      1
-    )
+        _c(
+          "section",
+          [
+            _c(
+              "transition",
+              { attrs: { name: "fade", mode: "out-in" } },
+              [_c("router-view")],
+              1
+            )
+          ],
+          1
+        )
+      ])
+    ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("aside", { staticClass: "col-sm-3" }, [
+      _c("header", [_vm._v("Categorias")]),
+      _vm._v(" "),
+      _c("ul", [
+        _c("li", [_vm._v("categoria 1")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("categoria 2")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("categoria 3")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("categoria 4")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -189,13 +192,55 @@ if (false) {
 
 /***/ }),
 
+/***/ 136:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(137);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("bee04172", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4931cae4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Canal.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4931cae4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Canal.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 137:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.page-header[data-v-4931cae4] {\n  margin-top: 0px;\n}\n.page-header > h1[data-v-4931cae4] {\n  margin-top: 0px;\n}\n.fade-enter[data-v-4931cae4] {\n  opacity: 0;\n}\n.fade-enter-active[data-v-4931cae4] {\n  -webkit-transition: opacity 1s ease;\n  transition: opacity 1s ease;\n}\n.fade-leave-active[data-v-4931cae4] {\n  -webkit-transition: opacity 1s ease;\n  transition: opacity 1s ease;\n  opacity: 0;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ 97:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(119)
+  __webpack_require__(136)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */

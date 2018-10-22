@@ -21,12 +21,14 @@ export default {
     methods:{
         onSearch: function (){
             let url = `/api-v1/${this.$parent.search}/search/${this.termo}`;
-            
+            this.$parent.show = false;
             axios.get(url).then(resp => {
-                console.log(resp)
+                this.$parent.paginator = resp.data.paginator;
+                this.$parent.show = true;
             }).catch(error=>{
                 console.log(error.response)
             })
+            
         }
     }
 }

@@ -95,14 +95,17 @@ class TagController extends Controller
 
     public function search(Request $request, $termo)
     {
+        $limit = $request->query('limit', 15);
+        $page = $request->query('page', 1);
+
         $tags = DB::table('tags')
                     ->select(['id','name'])
                     ->where(DB::raw('unaccent(lower(name))'), 'ILIKE' , DB::raw("unaccent(lower('%{$termo}%'))"))
-                    ->get();
+                    ->paginate($limit);
         
         return response()->json([
             'message' => 'Resultados da busca',
-            'items' => $tags
+            'paginator' => $tags
         ]);    
     }
 

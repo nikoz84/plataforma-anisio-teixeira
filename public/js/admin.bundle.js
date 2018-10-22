@@ -26,6 +26,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -41,7 +43,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             title: '',
             paginator: {},
-            search: ''
+            search: '',
+            show: false
         };
     },
 
@@ -145,50 +148,9 @@ exports.push([module.i, "\n.pointer[data-v-1d893ab8] {\n  cursor: pointer;\n}\n.
 /***/ }),
 
 /***/ 104:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    name: 'Sidebar',
-    data: function data() {
-        return {
-            username: localStorage.getItem('username'),
-            userId: localStorage.getItem('user_id')
-        };
-    },
-
-    methods: {
-        get: function get(endpoint) {
-            var _this = this;
-
-            axios.get('/api-v1/' + endpoint).then(function (resp) {
-
-                _this.$parent.paginator = resp.data.paginator;
-                _this.$parent.title = resp.data.title;
-                _this.$parent.search = endpoint;
-            }).catch(function (error) {
-                console.log(error.response);
-            });
-        }
-    }
-});
+throw new Error("Module build failed: SyntaxError: Unexpected token (29:0)\n\n\u001b[0m \u001b[90m 27 | \u001b[39m            \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39m$parent\u001b[33m.\u001b[39mshow \u001b[33m=\u001b[39m \u001b[36mfalse\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 28 | \u001b[39m            axios\u001b[33m.\u001b[39mget(\u001b[32m`/api-v1/${endpoint}`\u001b[39m)\u001b[33m.\u001b[39mthen(resp \u001b[33m=>\u001b[39m{\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 29 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m    | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 30 | \u001b[39m\n \u001b[90m 31 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\n \u001b[90m 32 | \u001b[39m\u001b[33m>>>\u001b[39m\u001b[33m>>>\u001b[39m\u001b[33m>\u001b[39m \u001b[35m762\u001b[39mdbb40b6dfee1fc5f17705b0b74cb731d142dc\u001b[0m\n");
 
 /***/ }),
 
@@ -425,10 +387,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         onSearch: function onSearch() {
-            var url = '/api-v1/' + this.$parent.search + '/search/' + this.termo;
+            var _this = this;
 
+            var url = '/api-v1/' + this.$parent.search + '/search/' + this.termo;
+            this.$parent.show = false;
             axios.get(url).then(function (resp) {
-                console.log(resp);
+                _this.$parent.paginator = resp.data.paginator;
+                _this.$parent.show = true;
             }).catch(function (error) {
                 console.log(error.response);
             });
@@ -719,6 +684,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "container-fluid heigth" },
     [
       _c("Sidebar", { staticClass: "col-sm-3" }),
       _vm._v(" "),
@@ -732,7 +698,16 @@ var render = function() {
             _c("h1", [_c("small", [_vm._v(_vm._s(_vm.title))])])
           ]),
           _vm._v(" "),
-          _c("List", { attrs: { items: _vm.paginator.data } }),
+          _c(
+            "transition",
+            { attrs: { name: "fade" } },
+            [
+              _vm.show
+                ? _c("List", { attrs: { items: _vm.paginator.data } })
+                : _vm._e()
+            ],
+            1
+          ),
           _vm._v(" "),
           _c("Paginator", { attrs: { paginator: _vm.paginator } })
         ],
@@ -754,13 +729,55 @@ if (false) {
 
 /***/ }),
 
+/***/ 134:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(135);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("4c6eebf4", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7943083c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Admin.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7943083c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Admin.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 135:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.page-header > h1[data-v-7943083c] {\n  margin-top: 0px;\n  font-size: 20px;\n}\n.fade-enter-active[data-v-7943083c], .fade-leave-active[data-v-7943083c] {\n  -webkit-transition: opacity .5s;\n  transition: opacity .5s;\n}\n.fade-enter[data-v-7943083c], .fade-leave-to[data-v-7943083c] {\n  opacity: 0;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ 95:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(98)
+  __webpack_require__(134)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
@@ -802,48 +819,6 @@ if (false) {(function () {
 })()}
 
 module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 98:
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(99);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("d2db82be", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7943083c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Admin.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7943083c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Admin.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ 99:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.page-header[data-v-7943083c] {\n  margin-top: 15px;\n}\n.page-header > h1[data-v-7943083c] {\n  margin-top: 0px;\n  font-size: 5vh;\n}\n", ""]);
-
-// exports
 
 
 /***/ })

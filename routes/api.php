@@ -39,6 +39,8 @@ Route::post('/users/login', 'UserController@login');
 Route::post('/users/register', 'UserController@register');
 Route::put('/users/reset_pass', 'UserController@resetPass');
 
+// STORAGE
+
 
 /** ACESSO RESTRITO */
 Route::group(['middleware' => 'auth.jwt'], function () {

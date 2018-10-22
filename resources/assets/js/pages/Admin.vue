@@ -1,12 +1,14 @@
 <template>
-    <div>
+    <div class="container-fluid heigth">
         <Sidebar class="col-sm-3" ></Sidebar>
         <section class="col-sm-9">
             <Search v-bind:search="search"></Search>
             <header class="page-header">
                 <h1><small>{{ title }}</small></h1>
             </header>
-            <List v-bind:items="paginator.data"></List>
+            <transition name="fade">
+                <List v-if="show" v-bind:items="paginator.data"></List>
+            </transition>
             <Paginator v-bind:paginator="paginator"></Paginator>
         </section>
     </div>
@@ -26,7 +28,8 @@ export default {
         return {
             title: '',
             paginator: {},
-            search: ''
+            search: '',
+            show: false
         }
     },
     methods:{
@@ -34,9 +37,14 @@ export default {
     }
 }
 </script>
-<style lang="sass" scoped>
-.page-header { margin-top: 15px; }
-.page-header > h1 { margin-top: 0px; font-size: 5vh;}
+<style lang="scss" scoped>
 
+.page-header > h1 { margin-top: 0px; font-size: 20px;}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 </style>
 
