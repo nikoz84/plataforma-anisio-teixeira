@@ -24,10 +24,13 @@ export default {
     },
     methods:{
         get(endpoint){
+            this.$parent.show = false;
             axios.get(`/api-v1/${endpoint}`).then(resp =>{
-                console.log(resp.data)
+                
                 this.$parent.paginator = resp.data.paginator;
-                this.$parent.complementTitle = resp.data.title;
+                this.$parent.title = resp.data.title;
+                this.$parent.search = endpoint;
+                this.$parent.show = true;
             }).catch(error =>{
                 console.log(error.response)
             })

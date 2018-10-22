@@ -20,9 +20,13 @@ Criamos uma API RESTFUL que se comunica com frontend feito em VUE.js permitindo 
 
 ## COMO INSTALAR
 
-Faça uma copia do arquivo .env.example, e renomee a copia para .env, em este arquivo você vai adicionar as configurações do banco de dados o outras configurações. Além disso, você precisará criar um chave de verificação da aplicação na variavel global chamada APP_KEY. Pode criar esta chave com o comando que criará uma chave em base 64. E também criar a secret key para a autenticação com Json Web Token.
+Faça uma copia do arquivo .env.example, e renomee para .env, em este arquivo você vai adicionar as seguintes configurações:
 
-``$ php artisan key:generate; php artisan jwt:secret``
+- Banco de dados
+- APP_KEY: variavel global de verificação da aplicação em base 64: `$ php artisan key:generate;`
+- JWT_SECRET: chave para a autenticação com Json Web Token: `$ php artisan jwt:secret;`
+- Também será adicionado um link simbólico da pasta public na pasta storage/app/public: `$ php artisan storage:link`
+- Lembre dar as permissões para o usuário apache para a pasta storage, em UBUNTU seria: `$ sudo chown www:data:www:data storage`
 
 Instalar as dependencias do laravel com composer:
 
@@ -30,16 +34,13 @@ Instalar as dependencias do laravel com composer:
 
 Se tiver problemas com a instalação das dependencias verifique as extensões de PHP
 
-``sudo apt install php7.*-tokenizer php7.*-dom php7.*-mbstring``
+``$ sudo apt install php7.*-tokenizer php7.*-dom php7.*-mbstring``
 
-
-Instalar as dependências do Vuejs com npm:
+Instalar as dependências do Vuejs com npm, lembre ter instalado o NODEJS:
 
 ``$ npm install``
 
-Nota: Se tiver algum problema com instalar o modulo node-sass pode forçar a instalação com:
-
-``$ npm i node-sass --unsafe-perm=true``
+> Nota: Se tiver algum problema com instalar o modulo node-sass pode forçar a instalação com: ``$ npm i node-sass --unsafe-perm=true``
 
 Crie o esquema do banco de dados no Postgresql com o comando:
 

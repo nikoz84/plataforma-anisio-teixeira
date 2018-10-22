@@ -20,28 +20,33 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 // CANAIS
 Route::get('/canais', 'CanalController@list');
+Route::get('/canais/search/{term}', 'CanalController@search');
+Route::get('/canais/slug/{slug}', 'CanalController@getBySlug');
 
 // CONTEUDOS
 Route::get('/conteudos', 'ConteudoController@list');
-Route::get('/conteudos/search/{termo}', 'ConteudoController@search');
+Route::get('/conteudos/search/{term}', 'ConteudoController@search');
 Route::get('/conteudos/teste', 'ConteudoController@teste');
 // TAGS
 Route::get('/tags','TagController@list');
-Route::get('/tags/search/{termo}','TagController@search');
+Route::get('/tags/search/{term}','TagController@search');
 
 // APLICATIVOS
 Route::get('/aplicativos', 'AplicativoController@list');
-Route::get('/aplicativos/search/{termo}','AplicativoController@search');
+Route::get('/aplicativos/search/{term}','AplicativoController@search');
 // USUÁRIOS
 Route::post('/users/login', 'UserController@login');
 Route::post('/users/register', 'UserController@register');
 Route::put('/users/reset_pass', 'UserController@resetPass');
+
+// STORAGE
 
 
 /** ACESSO RESTRITO */
 Route::group(['middleware' => 'auth.jwt'], function () {
     
     // USUÁRIOS
+    Route::get('/users/search/{term}', 'UserController@search');
     Route::get('/users/logout', 'UserController@logout');
     Route::delete('/users/delete/{id}', 'UserController@delete');
     Route::get('/users', 'UserController@list');

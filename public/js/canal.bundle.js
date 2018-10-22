@@ -1,52 +1,24 @@
 webpackJsonp([1],{
 
-/***/ 106:
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(107);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("138c7416", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4931cae4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Canal.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4931cae4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Canal.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ 107:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ 108:
+/***/ 121:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -77,27 +49,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             title: null,
-            paginator: {}
+            descricao: null,
+            idCanal: null,
+            metaData: null
         };
     },
+    created: function created() {},
     mounted: function mounted() {
-        this.getConteudos();
+        this.getCanal();
     },
 
     watch: {
         '$route': function $route(to, from) {
-            this.getConteudos();
+            this.getCanal();
         }
     },
     methods: {
-        getConteudos: function getConteudos() {
+        getCanal: function getCanal() {
             var _this = this;
 
-            console.log(this.$route.params.slug);
-            axios.get('/api-v1/conteudos', { canal_id: 1 }).then(function (resp) {
-                console.log(resp.data.paginator);
-                _this.paginator = resp.data.paginator;
-                _this.title = resp.data.title;
+            this.show = false;
+            axios.get('/api-v1/canais/slug/' + this.$route.params.slug).then(function (resp) {
+                _this.idCanal = resp.data.canal.id;
+                _this.title = resp.data.canal.name;
+                localStorage.setItem('idCanal', _this.idCanal);
+                //this.descricao = resp.data.canal.description;
+                //this.pagina = this.$route.name;
+                //this.metaData = JSON.parse(resp.data.canal.options);
+                //console.log(resp.data.canal)
             });
         }
     }
@@ -105,85 +84,103 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 109:
+/***/ 122:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h1", [
-        _vm._v(_vm._s(_vm.title) + " " + _vm._s(_vm.$route.params.slug))
-      ]),
+  return _c("div", { staticClass: "container-fluid heigth" }, [
+    _c("div", { staticClass: "row" }, [
+      _vm._m(0),
       _vm._v(" "),
-      _c("router-view"),
-      _vm._v(" "),
-      _c("aside", [
+      _c("article", { staticClass: "col-sm-9" }, [
+        _c("header", { staticClass: "page-header" }, [
+          _c("h1", [_c("small", [_vm._v(_vm._s(_vm.title))])]),
+          _vm._v(" "),
+          _c(
+            "nav",
+            [
+              _c(
+                "router-link",
+                {
+                  attrs: {
+                    to: {
+                      name: "Inicio",
+                      params: { slug: _vm.$route.params.slug }
+                    }
+                  }
+                },
+                [_c("a", [_vm._v("Home")])]
+              ),
+              _vm._v(" |\n                    "),
+              _c(
+                "router-link",
+                {
+                  attrs: {
+                    to: {
+                      name: "Listar",
+                      params: { slug: _vm.$route.params.slug }
+                    }
+                  }
+                },
+                [_c("a", [_vm._v("Listar")])]
+              ),
+              _vm._v(" |\n                    "),
+              _c(
+                "router-link",
+                {
+                  attrs: {
+                    to: {
+                      name: "Sobre",
+                      params: { slug: _vm.$route.params.slug }
+                    }
+                  }
+                },
+                [_c("a", [_vm._v("Sobre")])]
+              )
+            ],
+            1
+          )
+        ]),
+        _vm._v(" "),
         _c(
-          "nav",
+          "section",
           [
             _c(
-              "router-link",
-              {
-                attrs: {
-                  to: {
-                    name: "Inicio",
-                    params: { slug: _vm.$route.params.slug }
-                  }
-                }
-              },
-              [_vm._v("Inicio")]
-            ),
-            _vm._v(" |\n            "),
-            _c(
-              "router-link",
-              {
-                attrs: {
-                  to: {
-                    name: "Sobre",
-                    params: { slug: _vm.$route.params.slug }
-                  }
-                }
-              },
-              [_vm._v("Sobre")]
-            ),
-            _vm._v(" |\n            "),
-            _c(
-              "router-link",
-              {
-                attrs: {
-                  to: {
-                    name: "Listar",
-                    params: { slug: _vm.$route.params.slug }
-                  }
-                }
-              },
-              [_vm._v("Listar")]
+              "transition",
+              { attrs: { name: "fade", mode: "out-in" } },
+              [_c("router-view")],
+              1
             )
           ],
           1
         )
-      ]),
-      _vm._v(" "),
-      _vm._l(_vm.paginator.data, function(item, i) {
-        return _c("ul", { key: i }, [
-          _c("li", { attrs: { id: item.id } }, [
-            _vm._v("\n            " + _vm._s(item.title) + "\n        ")
-          ])
-        ])
-      }),
-      _vm._v("\n    " + _vm._s(_vm.paginator.last_page) + "\n    "),
-      _c("a", { attrs: { href: _vm.paginator.last_page_url } }, [
-        _vm._v(_vm._s(_vm.paginator.last_page_url))
       ])
-    ],
-    2
-  )
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("aside", { staticClass: "col-sm-3" }, [
+      _c("header", [_vm._v("Categorias")]),
+      _vm._v(" "),
+      _c("ul", [
+        _c("li", [_vm._v("categoria 1")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("categoria 2")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("categoria 3")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("categoria 4")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -195,19 +192,61 @@ if (false) {
 
 /***/ }),
 
-/***/ 79:
+/***/ 136:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(137);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("768bec6d", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4931cae4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Canal.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4931cae4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Canal.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 137:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.page-header[data-v-4931cae4] {\n  margin-top: 0px;\n}\n.page-header > h1[data-v-4931cae4] {\n  margin-top: 0px;\n}\n.fade-enter[data-v-4931cae4] {\n  opacity: 0;\n}\n.fade-enter-active[data-v-4931cae4] {\n  -webkit-transition: opacity 1s ease;\n  transition: opacity 1s ease;\n}\n.fade-leave-active[data-v-4931cae4] {\n  -webkit-transition: opacity 1s ease;\n  transition: opacity 1s ease;\n  opacity: 0;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ 97:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(106)
+  __webpack_require__(136)
 }
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(108)
+var __vue_script__ = __webpack_require__(121)
 /* template */
-var __vue_template__ = __webpack_require__(109)
+var __vue_template__ = __webpack_require__(122)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */

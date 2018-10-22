@@ -18,15 +18,20 @@ class ConteudoController extends Controller
 
         $orderBy = ($request->has('order')) ? $request->query('order') : 'title';
         $page = ($request->has('page')) ? $request->query('page') : 1;
+        $orderBy = ($request->has('order')) ? $request->query('order') : 'title';
+        $approved = $request->query('approved', true);
+        $isCanal = $request->query('canal', null);
+        $canal = (is_null($isCanal)) ?  'canal_id IS NULL' : "canal_id = {$isCanal}";
+        $isSite = $request->query('site', false);
+
 
         $conteudos = DB::table('conteudos')
             ->select(['id','canal_id','user_id','title'])
-            ->where('is_approved', true)
-            ->where('canal_id', $request->query('id'))
-            ->orderBy($orderBy, 'desc')
+            ->where('is_approved', $approved)
+            ->whereRaw($canal)
+            ->where('is_site', $isSite)
+            ->orderBy($orderBy, 'asc')
             ->paginate($limit);
-
-        $conteudos->currentPage($page);
 
         return response()->json([
             'title'=> 'Mídias educacionais',
@@ -124,18 +129,27 @@ class ConteudoController extends Controller
 
     public function search(Request $request, $termo)
     {
+        $limit = $request->query('limit', 15);
+        $page = $request->query('page', 1);
+
         $conteudos = DB::table(DB::raw("conteudos as cd, plainto_tsquery('simple', lower(unaccent('${termo}'))) query"))
                     ->select(['cd.id','cd.title',
                             DB::raw('ts_rank_cd(cd.ts_documento, query) AS ranking')
                             ])
                     ->whereRaw('query @@ cd.ts_documento')
-                    //->where('cd.is_approved', '=', 'true' )
+                    ->where('cd.is_approved', '=', 'true' )
                     ->orderBy('ranking','desc')
-                    ->get();
-        
+                    ->paginate($limit);
+
+        //$conteudos->currentPage($page);
+        //$conteudos->setPath('custom/url');
+
         return response()->json([
             'message' => 'Resultados da busca',
-            'items' => $conteudos
+            'paginator' => $conteudos,
+            'has_more_pages' => $conteudos->hasMorePages(),
+            'pages'=> $conteudos->count(),
+            
         ]);    
     }
 

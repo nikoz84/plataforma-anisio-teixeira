@@ -1,14 +1,10 @@
 webpackJsonp([2],{
 
-/***/ 104:
+/***/ 117:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
 //
 //
 //
@@ -58,7 +54,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         localStorage.setItem('login_success', _this.loginSuccess);
         localStorage.setItem('username', resp.data.user.name);
         localStorage.setItem('user_id', resp.data.user.id);
-        _this.$router.push('Admin');
+        _this.$router.push('admin');
       }).catch(function (error) {
         if (error.response.status === 401) {
           _this.message = error.response.data.message;
@@ -72,108 +68,106 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 105:
+/***/ 118:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row" }, [
-      _c(
-        "div",
-        {
-          staticClass:
-            "col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 center-xs"
-        },
-        [
-          _c("h3", { staticClass: "center-xs" }, [
-            _vm._v("Faça seu login agora")
-          ]),
-          _vm._v(" "),
-          _c(
-            "form",
-            {
-              attrs: { enctype: "application/x-www-form-urlencoded" },
-              on: {
-                submit: function($event) {
-                  $event.preventDefault()
-                  _vm.login()
-                }
+  return _c("div", { staticClass: "row" }, [
+    _c(
+      "div",
+      {
+        staticClass:
+          "col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 center-xs"
+      },
+      [
+        _c("h3", { staticClass: "center-xs" }, [
+          _vm._v("Faça seu login agora")
+        ]),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            attrs: { enctype: "application/x-www-form-urlencoded" },
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                _vm.login()
               }
-            },
-            [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "email" } }, [_vm._v("E-mail")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.user.email,
-                      expression: "user.email"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { id: "email", type: "text" },
-                  domProps: { value: _vm.user.email },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.user, "email", $event.target.value)
-                    }
-                  }
-                })
-              ]),
+            }
+          },
+          [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "email" } }, [_vm._v("E-mail")]),
               _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "senha" } }, [_vm._v("Senha")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.user.password,
-                      expression: "user.password"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { id: "senha", type: "password" },
-                  domProps: { value: _vm.user.password },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.user, "password", $event.target.value)
-                    }
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.user.email,
+                    expression: "user.email"
                   }
-                })
-              ]),
+                ],
+                staticClass: "form-control",
+                attrs: { id: "email", type: "text" },
+                domProps: { value: _vm.user.email },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.user, "email", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "senha" } }, [_vm._v("Senha")]),
               _vm._v(" "),
-              _c(
-                "button",
-                { staticClass: "btn btn-default", attrs: { type: "submit" } },
-                [_vm._v("Login")]
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _vm.loginSuccess == false
-            ? _c(
-                "div",
-                { staticClass: "alert alert-info", attrs: { role: "alert" } },
-                [_vm._v("\n        " + _vm._s(_vm.message) + "\n      ")]
-              )
-            : _vm._e()
-        ]
-      )
-    ])
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.user.password,
+                    expression: "user.password"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { id: "senha", type: "password" },
+                domProps: { value: _vm.user.password },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.user, "password", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-default", attrs: { type: "submit" } },
+              [_vm._v("Login")]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _vm.loginSuccess == false
+          ? _c(
+              "div",
+              { staticClass: "alert alert-info", attrs: { role: "alert" } },
+              [_vm._v("\n      " + _vm._s(_vm.message) + "\n    ")]
+            )
+          : _vm._e()
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -188,15 +182,15 @@ if (false) {
 
 /***/ }),
 
-/***/ 78:
+/***/ 96:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(104)
+var __vue_script__ = __webpack_require__(117)
 /* template */
-var __vue_template__ = __webpack_require__(105)
+var __vue_template__ = __webpack_require__(118)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */

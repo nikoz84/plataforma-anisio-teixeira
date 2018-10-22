@@ -1,26 +1,15 @@
 <template>
-    <div>
-        <Sidebar class="col-sm-3"></Sidebar>
+    <div class="container-fluid heigth">
+        <Sidebar class="col-sm-3" ></Sidebar>
         <section class="col-sm-9">
+            <Search v-bind:search="search"></Search>
             <header class="page-header">
-                <h1>{{ title }}<small class="pull-rigth"> {{ complementTitle }}</small></h1>
-
-                <Search></Search>
+                <h1><small>{{ title }}</small></h1>
             </header>
-            <div>
-                <ul class="list-unstyled" v-if="paginator.data" v-for="(item, i) in paginator.data" :key="i">
-                    <li class="panel panel-default" v-bind:id="item.id">
-                        <div class="panel-body">
-                            
-                            <h4>{{ (item.name) ? item.name : item.title }}</h4>
-                            <div class="pull-right">
-                                <a>editar</a>
-                                <a>deletar</a>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+            <transition name="fade">
+                <List v-if="show" v-bind:items="paginator.data"></List>
+            </transition>
+            <Paginator v-bind:paginator="paginator"></Paginator>
         </section>
     </div>
 </template>
@@ -28,28 +17,34 @@
 import Sidebar from '../components/SidebarComponent.vue';
 import Search from '../components/SearchComponent.vue';
 import List from '../components/ListComponent.vue';
+import Paginator from '../components/PaginatorComponent.vue';
 
 export default {
     name : 'admin',
     components:{
-        Sidebar, Search, List
+        Sidebar, Search, List, Paginator
     },
     data() {
         return {
-            title: 'Administração',
+            title: '',
             paginator: {},
-            complementTitle: ''
+            search: '',
+            show: false
         }
     },
     methods:{
-        
+
     }
 }
 </script>
-<style lang="sass" scoped>
-.mt-15{ margin-top: 15px; }
-.page-header { margin-top: 0px; }
-.page-header > h1 { margin-top: 0px; }
+<style lang="scss" scoped>
 
+.page-header > h1 { margin-top: 0px; font-size: 20px;}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 </style>
 
