@@ -1,5 +1,5 @@
 
-import Home from './pages/Home.vue';
+import HomeCanal from './pages/HomeCanal.vue';
 import Sobre from './pages/Sobre.vue';
 import Listar from './pages/Listar.vue';
 import Exibir from './pages/Exibir.vue';
@@ -47,7 +47,7 @@ const routes =[
         {
           path: 'inicio',
           name: 'Inicio',
-          component: Home
+          component: HomeCanal
         },
         {
           path: 'sobre',

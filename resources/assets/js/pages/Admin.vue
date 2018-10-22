@@ -6,7 +6,7 @@
             <header class="page-header">
                 <h1><small>{{ title }}</small></h1>
             </header>
-            <transition name="fade">
+            <transition name="fade" mode="out-in">
                 <List v-if="show" v-bind:items="paginator.data"></List>
             </transition>
             <Paginator v-bind:paginator="paginator"></Paginator>

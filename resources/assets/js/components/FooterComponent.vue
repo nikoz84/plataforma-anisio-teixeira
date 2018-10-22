@@ -48,6 +48,9 @@
                     <p><i class="fa fa-envelope mr-3"></i> info@example.com</p>
                     <p><i class="fa fa-phone mr-3"></i> +55 71 3115 9061</p>
                 </div>
+                <div class="col-md-12">
+                    <img src="http://pat.educacao.ba.gov.br/assets/img/img-logomarca-rodape.png">
+                </div>
             </div>
         </section>
         <!--  -->

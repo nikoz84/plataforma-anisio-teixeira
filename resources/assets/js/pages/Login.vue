@@ -1,23 +1,25 @@
 <template>
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 center-xs">
-      <h3 class="center-xs">Faça seu login agora</h3>
-      <form enctype="application/x-www-form-urlencoded" v-on:submit.prevent="login()">
-        <div class="form-group">
-          <label for="email">E-mail</label>
-          <input class="form-control" v-model="user.email" id="email" type="text">
+  <section class="container-fluid heigth">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 center-xs">
+        <h3 class="center-xs">Faça seu login agora</h3>
+        <form v-on:submit.prevent="login()">
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input class="form-control" v-model="user.email" id="email" type="text">
+          </div>
+          <div class="form-group">
+            <label for="senha">Senha</label>
+            <input class="form-control" v-model="user.password" id="senha" type="password">
+          </div>
+          <button type="submit" class="btn btn-default">Login</button>
+        </form>
+        <div v-if="loginSuccess == false" class="alert alert-info" role="alert" >
+          {{ message }}
         </div>
-        <div class="form-group">
-          <label for="senha">Senha</label>
-          <input class="form-control" v-model="user.password" id="senha" type="password">
-        </div>
-        <button type="submit" class="btn btn-default">Login</button>
-      </form>
-      <div v-if="loginSuccess == false" class="alert alert-info" role="alert" >
-        {{ message }}
       </div>
-    </div>
-  </div>
+    </div>  
+  </section>
 </template>
 
 <script>
