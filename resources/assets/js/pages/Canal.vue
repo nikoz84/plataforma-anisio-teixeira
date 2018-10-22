@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid heigth">
+    <section class="container-fluid heigth">
         <div class="row">
             <aside class="col-sm-3">
                 <header>Categorias</header>
@@ -33,7 +33,7 @@
                     
             </article>
         </div>
-    </div>
+    </section>
 </template>
 <script>
 

@@ -1,15 +1,17 @@
 <template>
     <div>
         <List v-bind:items="paginator.data"></List>
+        <Paginator v-bind:paginator="paginator"></Paginator>
     </div>
 </template>
 <script>
 import List from '../components/ListComponent.vue';
+import Paginator from '../components/PaginatorComponent.vue';
 
 
 export default {
     name : 'listar',
-    components:{ List },
+    components:{ List, Paginator },
     props:['idCanal'],
     data() {
         return {
