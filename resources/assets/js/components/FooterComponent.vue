@@ -1,10 +1,10 @@
 <template>
-    <footer class="page-footer font-small">
-        <section style="background-color: #21d192;">
+    <footer class="page-footer font-small" style="background-color: #2E2E2E;">
+        <section style="background-color: #A4A4A4;">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-lg-5">
-                        <h6 class="mb-0">Get connected with us on social networks!</h6>
+                        <h6 class="mb-0"></h6>
                     </div>
                     <div class="col-md-6 col-lg-7 text-center text-md-right">
                         <a class="fb-ic"><i class="fa fa-facebook white-text mr-4"> </i></a>
@@ -18,12 +18,12 @@
                 <div class="row">
                 <!-- Plataforma -->
                 <div class="col-md-3 col-lg-4">
-                    <h6 class="text-uppercase font-weight-bold">Plataforma Anísio Teixeira</h6>
+                    <h6 class="text-uppercase font-weight-bold" style="color:#FFFFFF">Plataforma Anísio Teixeira</h6>
                     <hr class="teal accent-3 " style="width: 60px;">
                     <p>Here you can use rows and columns here to organize your footer content. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                 </div>
                 <!-- Canais -->
-                <div class="col-md-2 col-lg-2">
+                <div class="col-md-2 col-lg-2" style="color:#FFFFFF">
                     <h6 class="text-uppercase font-weight-bold">Canais</h6>
                     <hr class="teal accent-3 " style="width: 60px;">
                     <p><a href="/tv-anisio-teixeira/inicio">Tv Anísio Teixeira</a></p>
@@ -32,7 +32,7 @@
                 </div>
                 <!-- Secretária -->
                 <div class="col-md-3 col-lg-2">
-                    <h6 class="text-uppercase font-weight-bold">Secretaría da Educação</h6>
+                    <h6 class="text-uppercase font-weight-bold" style="color:#FFFFFF">Secretaría da Educação</h6>
                     <hr class="teal accent-3 " style="width: 60px;">
                     <p><a class="dark-grey-text" href="http://escolas.educacao.ba.gov.br/">Escolas</a></p>
                     <p><a class="dark-grey-text" href="http://estudantes.educacao.ba.gov.br/">Estudantes</a></p>
@@ -42,7 +42,7 @@
                 </div>
                 <!-- Contato -->
                 <div class="col-md-4 col-lg-3">
-                    <h6 class="text-uppercase font-weight-bold">Contato</h6>
+                    <h6 class="text-uppercase font-weight-bold" style="color:#FFFFFF">Contato</h6>
                     <hr class="teal accent-3" style="width: 60px;">
                     <p><i class="fa fa-home mr-3"></i> Salvador, Bahia, Brasil</p>
                     <p><i class="fa fa-envelope mr-3"></i> info@example.com</p>
@@ -51,7 +51,7 @@
             </div>
         </section>
         <!--  -->
-        <section class="footer-copyleft text-center"><span class="copyleft">&copy;</span> {{ year }} CopyLeft:
+        <section class="footer-copyleft text-center" style="background-color: #D8D8D8;"><span class="copyleft">&copy;</span> {{ year }} CopyLeft:
             <a href="/"> Plataforma Anísio Teixeira</a>
         </section>
     </footer>
