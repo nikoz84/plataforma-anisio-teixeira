@@ -138,9 +138,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             title: '',
             paginator: {},
             search: '',
-            show: false,
-            limit: 15,
-            page: 1
+            show: false
         };
     },
 
@@ -709,13 +707,7 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c("Paginator", {
-            attrs: {
-              paginator: _vm.paginator,
-              page: _vm.page,
-              limit: _vm.limit
-            }
-          })
+          _c("Paginator", { attrs: { paginator: _vm.paginator } })
         ],
         1
       )

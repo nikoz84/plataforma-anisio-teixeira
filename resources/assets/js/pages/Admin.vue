@@ -9,7 +9,7 @@
             <transition name="fade" mode="out-in">
                 <List v-if="show" v-bind:items="paginator.data"></List>
             </transition>
-            <Paginator v-bind:paginator="paginator" v-bind:page="page" v-bind:limit="limit"></Paginator>
+            <Paginator v-bind:paginator="paginator"></Paginator>
         </section>
     </div>
 </template>
@@ -29,9 +29,7 @@ export default {
             title: '',
             paginator: {},
             search: '',
-            show: false,
-            limit: 15,
-            page: 1
+            show: false
         }
     },
     methods:{

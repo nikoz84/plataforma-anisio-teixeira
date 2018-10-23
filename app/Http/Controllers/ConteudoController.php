@@ -18,7 +18,7 @@ class ConteudoController extends Controller
 
         $orderBy = ($request->has('order')) ? $request->query('order') : 'title';
         $page = ($request->has('page')) ? $request->query('page') : 1;
-        $approved = $request->query('approved', true);
+        $approved = $request->query('approved', 'true');
         $isCanal = $request->query('canal', null);
         $canal = (is_null($isCanal)) ?  'canal_id IS NULL' : "canal_id = {$isCanal}";
         $isSite = $request->query('site', 'false');

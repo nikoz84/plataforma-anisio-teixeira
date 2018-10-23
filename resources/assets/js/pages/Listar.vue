@@ -1,7 +1,7 @@
 <template>
     <div>
         <List v-bind:items="paginator.data"></List>
-        <Paginator v-bind:paginator="paginator" v-bind:limit="limit" v-bind:page="page"></Paginator>
+        <Paginator v-bind:paginator="paginator"></Paginator>
     </div>
 </template>
 <script>

@@ -121,7 +121,7 @@ class AplicativoController extends Controller
 
         return response()->json([
             'message' => 'Resultados da busca',
-            'items' => $aplicativos,
+            'paginator' => $aplicativos,
             'page'=> $aplicativos->currentPage(),
             'limit' => $aplicativos->perPage()
         ]);    
