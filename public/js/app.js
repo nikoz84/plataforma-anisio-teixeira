@@ -1025,25 +1025,46 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Http = function () {
     function Http() {
+<<<<<<< HEAD
         var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+=======
+        var idCanal = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+        var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+>>>>>>> 61a5074bc9d9f8aef12ec4d0d7b3d2087a087a5d
 
         _classCallCheck(this, Http);
 
         this.endpoint = '/api-v1';
         this.data = data;
+<<<<<<< HEAD
     }
 
     _createClass(Http, [{
         key: 'getDataFromIdCanal',
         value: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(idCanal, limit, page) {
+=======
+        this.idCanal = idCanal;
+    }
+
+    _createClass(Http, [{
+        key: 'getData',
+        value: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+                var limit = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 15;
+                var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+>>>>>>> 61a5074bc9d9f8aef12ec4d0d7b3d2087a087a5d
                 var url;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 _context.prev = 0;
+<<<<<<< HEAD
                                 url = this.getCanal(idCanal, limit, page);
+=======
+                                url = this.getCanal(limit, page);
+>>>>>>> 61a5074bc9d9f8aef12ec4d0d7b3d2087a087a5d
                                 _context.next = 4;
                                 return axios.get(url, this.data);
 
@@ -1067,11 +1088,19 @@ var Http = function () {
                 }, _callee, this, [[0, 7]]);
             }));
 
+<<<<<<< HEAD
             function getDataFromIdCanal(_x2, _x3, _x4) {
                 return _ref.apply(this, arguments);
             }
 
             return getDataFromIdCanal;
+=======
+            function getData() {
+                return _ref.apply(this, arguments);
+            }
+
+            return getData;
+>>>>>>> 61a5074bc9d9f8aef12ec4d0d7b3d2087a087a5d
         }()
     }, {
         key: 'getDataFromUrl',
@@ -1115,7 +1144,13 @@ var Http = function () {
     }, {
         key: 'search',
         value: function () {
+<<<<<<< HEAD
             var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(termo, limit, page) {
+=======
+            var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(termo) {
+                var limit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 15;
+                var page = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+>>>>>>> 61a5074bc9d9f8aef12ec4d0d7b3d2087a087a5d
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
                     while (1) {
                         switch (_context3.prev = _context3.next) {
@@ -1144,7 +1179,11 @@ var Http = function () {
                 }, _callee3, this, [[0, 6]]);
             }));
 
+<<<<<<< HEAD
             function search(_x6, _x7, _x8) {
+=======
+            function search(_x8) {
+>>>>>>> 61a5074bc9d9f8aef12ec4d0d7b3d2087a087a5d
                 return _ref3.apply(this, arguments);
             }
 
@@ -1266,6 +1305,7 @@ var Http = function () {
         }()
     }, {
         key: 'getCanal',
+<<<<<<< HEAD
         value: function getCanal(idCanal, limit, page) {
 
             switch (true) {
@@ -1277,6 +1317,19 @@ var Http = function () {
                     break;
                 default:
                     return this.endpoint + '/conteudos?canal=' + idCanal + '&limit=' + limit + '&page=' + page;
+=======
+        value: function getCanal(limit, page) {
+
+            switch (true) {
+                case this.idCanal == 5:
+                    return this.endpoint + '/conteudos?site=true&limit=' + limit + '&page=' + page;
+                    break;
+                case this.idCanal == 9:
+                    return this.endpoint + '/aplicativos?limit=' + limit + '&page=' + page;
+                    break;
+                default:
+                    return this.endpoint + '/conteudos?canal=' + this.idCanal + '&limit=' + limit + '&page=' + page;
+>>>>>>> 61a5074bc9d9f8aef12ec4d0d7b3d2087a087a5d
             }
         }
     }]);
@@ -48399,6 +48452,7 @@ if (hadRuntime) {
           callInvokeWithMethodAndArg
         ) : callInvokeWithMethodAndArg();
     }
+<<<<<<< HEAD
 
     // Define the unified helper method that is used to implement .next,
     // .throw, and .return (see defineIteratorMethods).
@@ -48580,6 +48634,189 @@ if (hadRuntime) {
       return info;
     }
 
+=======
+
+    // Define the unified helper method that is used to implement .next,
+    // .throw, and .return (see defineIteratorMethods).
+    this._invoke = enqueue;
+  }
+
+  defineIteratorMethods(AsyncIterator.prototype);
+  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
+    return this;
+  };
+  runtime.AsyncIterator = AsyncIterator;
+
+  // Note that simple async functions are implemented on top of
+  // AsyncIterator objects; they just return a Promise for the value of
+  // the final result produced by the iterator.
+  runtime.async = function(innerFn, outerFn, self, tryLocsList) {
+    var iter = new AsyncIterator(
+      wrap(innerFn, outerFn, self, tryLocsList)
+    );
+
+    return runtime.isGeneratorFunction(outerFn)
+      ? iter // If outerFn is a generator, return the full iterator.
+      : iter.next().then(function(result) {
+          return result.done ? result.value : iter.next();
+        });
+  };
+
+  function makeInvokeMethod(innerFn, self, context) {
+    var state = GenStateSuspendedStart;
+
+    return function invoke(method, arg) {
+      if (state === GenStateExecuting) {
+        throw new Error("Generator is already running");
+      }
+
+      if (state === GenStateCompleted) {
+        if (method === "throw") {
+          throw arg;
+        }
+
+        // Be forgiving, per 25.3.3.3.3 of the spec:
+        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
+        return doneResult();
+      }
+
+      context.method = method;
+      context.arg = arg;
+
+      while (true) {
+        var delegate = context.delegate;
+        if (delegate) {
+          var delegateResult = maybeInvokeDelegate(delegate, context);
+          if (delegateResult) {
+            if (delegateResult === ContinueSentinel) continue;
+            return delegateResult;
+          }
+        }
+
+        if (context.method === "next") {
+          // Setting context._sent for legacy support of Babel's
+          // function.sent implementation.
+          context.sent = context._sent = context.arg;
+
+        } else if (context.method === "throw") {
+          if (state === GenStateSuspendedStart) {
+            state = GenStateCompleted;
+            throw context.arg;
+          }
+
+          context.dispatchException(context.arg);
+
+        } else if (context.method === "return") {
+          context.abrupt("return", context.arg);
+        }
+
+        state = GenStateExecuting;
+
+        var record = tryCatch(innerFn, self, context);
+        if (record.type === "normal") {
+          // If an exception is thrown from innerFn, we leave state ===
+          // GenStateExecuting and loop back for another invocation.
+          state = context.done
+            ? GenStateCompleted
+            : GenStateSuspendedYield;
+
+          if (record.arg === ContinueSentinel) {
+            continue;
+          }
+
+          return {
+            value: record.arg,
+            done: context.done
+          };
+
+        } else if (record.type === "throw") {
+          state = GenStateCompleted;
+          // Dispatch the exception by looping back around to the
+          // context.dispatchException(context.arg) call above.
+          context.method = "throw";
+          context.arg = record.arg;
+        }
+      }
+    };
+  }
+
+  // Call delegate.iterator[context.method](context.arg) and handle the
+  // result, either by returning a { value, done } result from the
+  // delegate iterator, or by modifying context.method and context.arg,
+  // setting context.delegate to null, and returning the ContinueSentinel.
+  function maybeInvokeDelegate(delegate, context) {
+    var method = delegate.iterator[context.method];
+    if (method === undefined) {
+      // A .throw or .return when the delegate iterator has no .throw
+      // method always terminates the yield* loop.
+      context.delegate = null;
+
+      if (context.method === "throw") {
+        if (delegate.iterator.return) {
+          // If the delegate iterator has a return method, give it a
+          // chance to clean up.
+          context.method = "return";
+          context.arg = undefined;
+          maybeInvokeDelegate(delegate, context);
+
+          if (context.method === "throw") {
+            // If maybeInvokeDelegate(context) changed context.method from
+            // "return" to "throw", let that override the TypeError below.
+            return ContinueSentinel;
+          }
+        }
+
+        context.method = "throw";
+        context.arg = new TypeError(
+          "The iterator does not provide a 'throw' method");
+      }
+
+      return ContinueSentinel;
+    }
+
+    var record = tryCatch(method, delegate.iterator, context.arg);
+
+    if (record.type === "throw") {
+      context.method = "throw";
+      context.arg = record.arg;
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    var info = record.arg;
+
+    if (! info) {
+      context.method = "throw";
+      context.arg = new TypeError("iterator result is not an object");
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    if (info.done) {
+      // Assign the result of the finished delegate to the temporary
+      // variable specified by delegate.resultName (see delegateYield).
+      context[delegate.resultName] = info.value;
+
+      // Resume execution at the desired location (see delegateYield).
+      context.next = delegate.nextLoc;
+
+      // If context.method was "throw" but the delegate handled the
+      // exception, let the outer generator proceed normally. If
+      // context.method was "next", forget context.arg since it has been
+      // "consumed" by the delegate iterator. If context.method was
+      // "return", allow the original .return call to continue in the
+      // outer generator.
+      if (context.method !== "return") {
+        context.method = "next";
+        context.arg = undefined;
+      }
+
+    } else {
+      // Re-yield the result returned by the delegate method.
+      return info;
+    }
+
+>>>>>>> 61a5074bc9d9f8aef12ec4d0d7b3d2087a087a5d
     // The delegate iterator is finished, so forget it and continue with
     // the outer generator.
     context.delegate = null;
@@ -49092,6 +49329,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+<<<<<<< HEAD
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -49247,6 +49485,21 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     return {};
   },
 
+=======
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'SimpleCard',
+    props: {
+        item: Object
+    }
+
+});
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+>>>>>>> 61a5074bc9d9f8aef12ec4d0d7b3d2087a087a5d
 
   methods: {
     goTo: function () {
@@ -49297,6 +49550,186 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+<<<<<<< HEAD
+=======
+  return _c(
+    "article",
+    { staticClass: "panel panel-default", attrs: { id: _vm.item.id } },
+    [
+      _c("div", { staticClass: "panel-body" }, [
+        _c("figure", { staticClass: "figure" }),
+        _vm._v(" "),
+        _c("h4", [
+          _vm._v(_vm._s(_vm.item.name ? _vm.item.name : _vm.item.title))
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-59445f58", module.exports)
+  }
+}
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "min-heigth-list" },
+    _vm._l(_vm.items, function(item, i) {
+      return _vm.items
+        ? _c(
+            "div",
+            { key: i },
+            [_c("SimpleCard", { attrs: { item: item } })],
+            1
+          )
+        : _vm._e()
+    })
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-db8b0450", module.exports)
+  }
+}
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(75);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("525ddb07", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-cb31973a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PaginatorComponent.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-cb31973a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PaginatorComponent.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/***/ }),
+/* 76 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(7);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'Paginator',
+  props: ['paginator'],
+  data: function data() {
+    return {};
+  },
+
+
+  methods: {
+    goTo: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(url) {
+        var idCanal, data, resp;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+
+                if (url) console.log(url);
+                idCanal = localStorage.getItem('idCanal');
+                data = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */](idCanal);
+                _context.next = 5;
+                return data.getData();
+
+              case 5:
+                resp = _context.sent;
+
+                console.log(resp.data.per_page, resp.data.current_page);
+                this.$parent.paginator = resp.data.paginator;
+
+              case 8:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function goTo(_x) {
+        return _ref.apply(this, arguments);
+      }
+
+      return goTo;
+    }()
+  }
+
+});
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+>>>>>>> 61a5074bc9d9f8aef12ec4d0d7b3d2087a087a5d
   return _vm.paginator.total
     ? _c("nav", { attrs: { "aria-label": "..." } }, [
         _c("p", { staticClass: "text-center" }, [
@@ -49314,7 +49747,10 @@ var render = function() {
             _c(
               "a",
               {
+<<<<<<< HEAD
                 staticClass: "pointer",
+=======
+>>>>>>> 61a5074bc9d9f8aef12ec4d0d7b3d2087a087a5d
                 on: {
                   click: function($event) {
                     _vm.goTo(_vm.paginator.prev_page_url)
@@ -49323,7 +49759,11 @@ var render = function() {
               },
               [
                 _c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("←")]),
+<<<<<<< HEAD
                 _vm._v(" Anterior\n      ")
+=======
+                _vm._v(" Anterior")
+>>>>>>> 61a5074bc9d9f8aef12ec4d0d7b3d2087a087a5d
               ]
             )
           ]),
@@ -49332,7 +49772,10 @@ var render = function() {
             _c(
               "a",
               {
+<<<<<<< HEAD
                 staticClass: "pointer",
+=======
+>>>>>>> 61a5074bc9d9f8aef12ec4d0d7b3d2087a087a5d
                 on: {
                   click: function($event) {
                     _vm.goTo(_vm.paginator.next_page_url)
@@ -49340,7 +49783,11 @@ var render = function() {
                 }
               },
               [
+<<<<<<< HEAD
                 _vm._v("\n        Próximo "),
+=======
+                _vm._v("Próximo "),
+>>>>>>> 61a5074bc9d9f8aef12ec4d0d7b3d2087a087a5d
                 _c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("→")])
               ]
             )
@@ -49372,9 +49819,13 @@ var render = function() {
     [
       _c("List", { attrs: { items: _vm.paginator.data } }),
       _vm._v(" "),
+<<<<<<< HEAD
       _c("Paginator", {
         attrs: { paginator: _vm.paginator, limit: _vm.limit, page: _vm.page }
       })
+=======
+      _c("Paginator", { attrs: { paginator: _vm.paginator } })
+>>>>>>> 61a5074bc9d9f8aef12ec4d0d7b3d2087a087a5d
     ],
     1
   )
@@ -49608,7 +50059,11 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
+<<<<<<< HEAD
 exports.push([module.i, "\n.heigth {\n  min-height: 80vh;\n}\n.pointer {\n  cursor: pointer;\n}\n", ""]);
+=======
+exports.push([module.i, "\n.heigth {\n  min-height: 80vh;\n}\n", ""]);
+>>>>>>> 61a5074bc9d9f8aef12ec4d0d7b3d2087a087a5d
 
 // exports
 
@@ -49646,6 +50101,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ }),
 /* 88 */
 /***/ (function(module, exports, __webpack_require__) {
+<<<<<<< HEAD
 
 var disposed = false
 function injectStyle (ssrContext) {
@@ -50075,6 +50531,437 @@ if (false) {
   }
 }
 
+=======
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(89)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(91)
+/* template */
+var __vue_template__ = __webpack_require__(92)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-9f59c05e"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/NavComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-9f59c05e", Component.options)
+  } else {
+    hotAPI.reload("data-v-9f59c05e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 89 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(90);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("77bb7784", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-9f59c05e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NavComponent.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-9f59c05e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NavComponent.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/***/ }),
+/* 91 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'nav-app',
+    data: function data() {
+        return {};
+    },
+    mounted: function mounted() {},
+
+    methods: {
+        logout: function logout() {
+            localStorage.clear();
+            this.$router.push('/');
+        },
+        get: function get(endpoint) {
+            var _this = this;
+
+            axios.get('/api-v1/' + endpoint).then(function (resp) {
+                _this.$parent.paginator = resp.data.paginator;
+                _this.$parent.title = resp.data.title;
+            }).catch(function (error) {
+                console.log(error.response);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 92 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("nav", { staticClass: "navbar navbar-default navbar-static-top" }, [
+    _c("div", { staticClass: "container-fluid" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "collapse navbar-collapse",
+          attrs: { id: "bs-example-navbar-collapse-1" }
+        },
+        [
+          _c("ul", { staticClass: "nav navbar-nav navbar-right" }, [
+            _c("li", { staticClass: "dropdown" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "ul",
+                { staticClass: "dropdown-menu" },
+                [
+                  _c("router-link", { attrs: { tag: "li", to: "/" } }, [
+                    _c("a", [_vm._v("Inicio")])
+                  ]),
+                  _vm._v(" "),
+                  _c("router-link", { attrs: { tag: "li", to: "/admin" } }, [
+                    _c("a", [_vm._v("Administração")])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        tag: "li",
+                        to: {
+                          name: "Inicio",
+                          params: { slug: "tv-anisio-teixeira" }
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "a",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.get("canais")
+                            }
+                          }
+                        },
+                        [_vm._v("Tv Anísio Teixeira")]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        tag: "li",
+                        to: {
+                          name: "Inicio",
+                          params: { slug: "radio-anisio-teixeira" }
+                        }
+                      }
+                    },
+                    [_c("a", [_vm._v("Radio Anísio Teixeira")])]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        tag: "li",
+                        to: { name: "Inicio", params: { slug: "emitec" } }
+                      }
+                    },
+                    [_c("a", [_vm._v("Emitec")])]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        tag: "li",
+                        to: {
+                          name: "Inicio",
+                          params: { slug: "projetos-artisticos" }
+                        }
+                      }
+                    },
+                    [_c("a", [_vm._v("Projetos Artisticos")])]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        tag: "li",
+                        to: {
+                          name: "Inicio",
+                          params: { slug: "sites-tematicos" }
+                        }
+                      }
+                    },
+                    [_c("a", [_vm._v("Sites Temáticos")])]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        tag: "li",
+                        to: {
+                          name: "Inicio",
+                          params: { slug: "aplicativos-educacionais" }
+                        }
+                      }
+                    },
+                    [_c("a", [_vm._v("Aplicativos Educacionais")])]
+                  )
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "dropdown" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c(
+                "ul",
+                { staticClass: "dropdown-menu" },
+                [
+                  _c("router-link", { attrs: { tag: "li", to: "/login" } }, [
+                    _c("a", [_vm._v("Login")])
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c(
+                      "a",
+                      {
+                        on: {
+                          click: function($event) {
+                            _vm.logout()
+                          }
+                        }
+                      },
+                      [_vm._v("Sair")]
+                    )
+                  ])
+                ],
+                1
+              )
+            ])
+          ])
+        ]
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "navbar-header" }, [
+      _c(
+        "button",
+        {
+          staticClass: "navbar-toggle collapsed",
+          attrs: {
+            type: "button",
+            "data-toggle": "collapse",
+            "data-target": "#bs-example-navbar-collapse-1",
+            "aria-expanded": "false"
+          }
+        },
+        [
+          _c("span", { staticClass: "sr-only" }, [_vm._v("Toggle navigation")]),
+          _vm._v(" "),
+          _c("span", { staticClass: "icon-bar" }),
+          _vm._v(" "),
+          _c("span", { staticClass: "icon-bar" }),
+          _vm._v(" "),
+          _c("span", { staticClass: "icon-bar" })
+        ]
+      ),
+      _vm._v(" "),
+      _c("a", { staticClass: "navbar-brand", attrs: { href: "/" } }, [
+        _vm._v("Plataforma Anísio Teixeira")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "dropdown-toggle",
+        attrs: {
+          href: "#",
+          "data-toggle": "dropdown",
+          role: "button",
+          "aria-haspopup": "true",
+          "aria-expanded": "false"
+        }
+      },
+      [_vm._v("Mídias Educacionais "), _c("span", { staticClass: "caret" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "dropdown-toggle",
+        attrs: {
+          href: "#",
+          "data-toggle": "dropdown",
+          role: "button",
+          "aria-haspopup": "true",
+          "aria-expanded": "false"
+        }
+      },
+      [_vm._v("Usuário "), _c("span", { staticClass: "caret" })]
+    )
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-9f59c05e", module.exports)
+  }
+}
+
+>>>>>>> 61a5074bc9d9f8aef12ec4d0d7b3d2087a087a5d
 /***/ }),
 /* 93 */
 /***/ (function(module, exports, __webpack_require__) {
