@@ -48085,7 +48085,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'listar',
     components: { List: __WEBPACK_IMPORTED_MODULE_1__components_ListComponent_vue___default.a, Paginator: __WEBPACK_IMPORTED_MODULE_2__components_PaginatorComponent_vue___default.a },
-    props: [],
+    props: ['color'],
     data: function data() {
         return {
             paginator: {},
@@ -48945,7 +48945,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.min-heigth-list[data-v-db8b0450] {\n  min-height: 70vh;\n}\n", ""]);
+exports.push([module.i, "\n.container-columns[data-v-db8b0450] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  min-height: 90vh;\n  padding: 0 4px;\n}\n.column[data-v-db8b0450] {\n  -webkit-box-flex: 50%;\n      -ms-flex: 50%;\n          flex: 50%;\n  padding: 0 4px;\n}\n", ""]);
 
 // exports
 
@@ -49092,6 +49092,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -49110,19 +49111,21 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "article",
-    { staticClass: "panel panel-default", attrs: { id: _vm.item.id } },
-    [
-      _c("div", { staticClass: "panel-body" }, [
-        _c("figure", { staticClass: "figure" }),
-        _vm._v(" "),
-        _c("h4", [
-          _vm._v(_vm._s(_vm.item.name ? _vm.item.name : _vm.item.title))
+  return _c("div", [
+    _c(
+      "article",
+      { staticClass: "panel panel-default", attrs: { id: _vm.item.id } },
+      [
+        _c("div", { staticClass: "panel-body" }, [
+          _c("figure", { staticClass: "figure" }),
+          _vm._v(" "),
+          _c("h4", [
+            _vm._v(_vm._s(_vm.item.name ? _vm.item.name : _vm.item.title))
+          ])
         ])
-      ])
-    ]
-  )
+      ]
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -49144,12 +49147,12 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "min-heigth-list" },
+    { staticClass: "container-columns" },
     _vm._l(_vm.items, function(item, i) {
       return _vm.items
         ? _c(
             "div",
-            { key: i },
+            { key: i, staticClass: "column" },
             [_c("SimpleCard", { attrs: { item: item } })],
             1
           )
@@ -49369,6 +49372,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { attrs: { color: _vm.color } },
     [
       _c("List", { attrs: { items: _vm.paginator.data } }),
       _vm._v(" "),
@@ -50159,7 +50163,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.page-footer[data-v-8651e08a] {\n  margin-top: 5vh;\n}\n.font-weight-bold[data-v-8651e08a] {\n  font-weight: bold;\n}\n.mb-4[data-v-8651e08a], .my-4[data-v-8651e08a] {\n  margin-bottom: 1.5rem !important;\n}\n.footer-copyleft[data-v-8651e08a] {\n  margin-top: 5vh;\n}\n.copyleft[data-v-8651e08a] {\n  display: inline-block;\n  -webkit-transform: rotate(180deg);\n  transform: rotate(180deg);\n}\nhr[data-v-8651e08a] {\n  margin-top: 1rem;\n  margin-bottom: 1rem;\n  border: 0;\n  border-top: 1px solid rgba(0, 0, 0, 0.1);\n}\np[data-v-8651e08a] {\n  color: #e6e6e6;\n}\n", ""]);
+exports.push([module.i, "\n.page-footer[data-v-8651e08a] {\n  margin-top: 5vh;\n}\n.font-weight-bold[data-v-8651e08a] {\n  font-weight: bold;\n}\n.mb-4[data-v-8651e08a], .my-4[data-v-8651e08a] {\n  margin-bottom: 1.5rem !important;\n}\n.footer-copyleft[data-v-8651e08a] {\n  margin-top: 5vh;\n  background-color: #D8D8D8;\n}\n.copyleft[data-v-8651e08a] {\n  display: inline-block;\n  -webkit-transform: rotate(180deg);\n  transform: rotate(180deg);\n}\nhr[data-v-8651e08a] {\n  margin-top: 1rem;\n  margin-bottom: 1rem;\n  border: 0;\n  border-top: 1px solid #1e78c2;\n}\np[data-v-8651e08a] {\n  color: #e6e6e6;\n}\n", ""]);
 
 // exports
 
@@ -50271,20 +50275,13 @@ var render = function() {
       _vm._v(" "),
       _vm._m(1),
       _vm._v(" "),
-      _c(
-        "section",
-        {
-          staticClass: "footer-copyleft text-center",
-          staticStyle: { "background-color": "#D8D8D8" }
-        },
-        [
-          _c("span", { staticClass: "copyleft" }, [_vm._v("©")]),
-          _vm._v(" " + _vm._s(_vm.year) + " CopyLeft:\n        "),
-          _c("a", { attrs: { href: "/" } }, [
-            _vm._v(" Plataforma Anísio Teixeira")
-          ])
-        ]
-      )
+      _c("section", { staticClass: "footer-copyleft text-center" }, [
+        _c("span", { staticClass: "copyleft" }, [_vm._v("©")]),
+        _vm._v(" " + _vm._s(_vm.year) + " CopyLeft:\n        "),
+        _c("a", { attrs: { href: "/" } }, [
+          _vm._v(" Plataforma Anísio Teixeira")
+        ])
+      ])
     ]
   )
 }

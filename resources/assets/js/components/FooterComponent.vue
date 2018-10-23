@@ -54,7 +54,7 @@
             </div>
         </section>
         <!--  -->
-        <section class="footer-copyleft text-center" style="background-color: #D8D8D8;"><span class="copyleft">&copy;</span> {{ year }} CopyLeft:
+        <section class="footer-copyleft text-center"><span class="copyleft">&copy;</span> {{ year }} CopyLeft:
             <a href="/"> Plataforma Anísio Teixeira</a>
         </section>
     </footer>
@@ -83,7 +83,7 @@
 .page-footer { margin-top: 5vh; }
 .font-weight-bold { font-weight: bold; }
 .mb-4, .my-4 { margin-bottom: 1.5rem!important;}
-.footer-copyleft { margin-top: 5vh; }
+.footer-copyleft { margin-top: 5vh; background-color: #D8D8D8;}
 .copyleft{
     display:inline-block;
     -moz-transform: rotate(180deg);
@@ -96,7 +96,7 @@ hr{
     margin-top: 1rem;
     margin-bottom: 1rem;
     border: 0;
-    border-top: 1px solid rgba(0,0,0,.1);
+    border-top: 1px solid #1e78c2;
 }
 p{
     color: #e6e6e6;

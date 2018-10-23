@@ -1,6 +1,6 @@
 <template>
-    <div class="min-heigth-list">
-        <div  v-if="items" v-for="(item, i) in items" :key="i">
+    <div class="container-columns">
+        <div class="column" v-if="items" v-for="(item, i) in items" :key="i">
             <SimpleCard v-bind:item="item"></SimpleCard>
         </div>
     </div>
@@ -28,8 +28,16 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.min-heigth-list {
-    min-height: 70vh;
+.container-columns {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 90vh;
+  padding: 0 4px;
+}
+
+.column {
+  flex: 50%;
+  padding: 0 4px;
 }
 </style>
 

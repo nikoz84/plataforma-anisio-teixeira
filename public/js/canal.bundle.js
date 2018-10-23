@@ -153,7 +153,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             title: null,
             descricao: null,
             idCanal: null,
-            metaData: null
+            options: null,
+            color: '#1e78c2'
         };
     },
     created: function created() {},
@@ -185,9 +186,12 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
                                 this.idCanal = resp.data.canal.id;
                                 this.title = resp.data.canal.name;
+                                this.options = JSON.parse(resp.data.canal.options);
+                                this.color = this.options.color;
+
                                 localStorage.setItem('idCanal', this.idCanal);
 
-                            case 8:
+                            case 10:
                             case 'end':
                                 return _context.stop();
                         }
@@ -218,54 +222,61 @@ var render = function() {
       _vm._m(0),
       _vm._v(" "),
       _c("article", { staticClass: "col-sm-9" }, [
-        _c("header", { staticClass: "page-header" }, [
-          _c("h1", [_c("small", [_vm._v(_vm._s(_vm.title))])]),
-          _vm._v(" "),
-          _c(
-            "nav",
-            [
-              _c(
-                "router-link",
-                {
-                  attrs: {
-                    to: {
-                      name: "Inicio",
-                      params: { slug: _vm.$route.params.slug }
+        _c(
+          "header",
+          {
+            staticClass: "page-header",
+            style: "border-bottom-color:" + _vm.color
+          },
+          [
+            _c("h1", [_c("small", [_vm._v(_vm._s(_vm.title))])]),
+            _vm._v(" "),
+            _c(
+              "nav",
+              [
+                _c(
+                  "router-link",
+                  {
+                    attrs: {
+                      to: {
+                        name: "Inicio",
+                        params: { slug: _vm.$route.params.slug }
+                      }
                     }
-                  }
-                },
-                [_c("a", [_vm._v("Home")])]
-              ),
-              _vm._v(" |\n                    "),
-              _c(
-                "router-link",
-                {
-                  attrs: {
-                    to: {
-                      name: "Listar",
-                      params: { slug: _vm.$route.params.slug }
+                  },
+                  [_c("a", [_vm._v("Home")])]
+                ),
+                _vm._v(" |\n                    "),
+                _c(
+                  "router-link",
+                  {
+                    attrs: {
+                      to: {
+                        name: "Listar",
+                        params: { slug: _vm.$route.params.slug }
+                      }
                     }
-                  }
-                },
-                [_c("a", [_vm._v("Listar")])]
-              ),
-              _vm._v(" |\n                    "),
-              _c(
-                "router-link",
-                {
-                  attrs: {
-                    to: {
-                      name: "Sobre",
-                      params: { slug: _vm.$route.params.slug }
+                  },
+                  [_c("a", [_vm._v("Listar")])]
+                ),
+                _vm._v(" |\n                    "),
+                _c(
+                  "router-link",
+                  {
+                    attrs: {
+                      to: {
+                        name: "Sobre",
+                        params: { slug: _vm.$route.params.slug }
+                      }
                     }
-                  }
-                },
-                [_c("a", [_vm._v("Sobre")])]
-              )
-            ],
-            1
-          )
-        ]),
+                  },
+                  [_c("a", [_vm._v("Sobre")])]
+                )
+              ],
+              1
+            )
+          ]
+        ),
         _vm._v(" "),
         _c(
           "section",
@@ -273,7 +284,7 @@ var render = function() {
             _c(
               "transition",
               { attrs: { name: "fade", mode: "out-in" } },
-              [_c("router-view")],
+              [_c("router-view", { attrs: { color: _vm.color } })],
               1
             )
           ],

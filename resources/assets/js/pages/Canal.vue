@@ -11,7 +11,7 @@
                 </ul>
             </aside>
             <article class="col-sm-9">
-                <header class="page-header">
+                <header class="page-header" v-bind:style="'border-bottom-color:' + color">
                     <h1><small>{{ title }}</small></h1>
                     <nav>
                         <router-link :to="{ name: 'Inicio', params: {slug: $route.params.slug}}">
@@ -27,7 +27,7 @@
                 </header>
                 <section>
                     <transition name="fade" mode="out-in">
-                        <router-view></router-view>
+                        <router-view v-bind:color="color"></router-view>
                     </transition>
                 </section>
                     
@@ -45,7 +45,8 @@ export default {
             title: null,
             descricao: null,
             idCanal: null,
-            metaData: null
+            options: null,
+            color: '#1e78c2'
         }
     },
     created() {
@@ -67,6 +68,9 @@ export default {
             
             this.idCanal = resp.data.canal.id;
             this.title = resp.data.canal.name;
+            this.options = JSON.parse(resp.data.canal.options)
+            this.color = this.options.color;
+            
             localStorage.setItem('idCanal', this.idCanal);
         }
     }
@@ -86,4 +90,6 @@ export default {
   transition: opacity 1s ease;
   opacity: 0;
 }
+
+
 </style>

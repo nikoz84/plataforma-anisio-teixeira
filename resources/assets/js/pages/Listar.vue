@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-bind:color="color">
         <List v-bind:items="paginator.data"></List>
         <Paginator v-bind:paginator="paginator"></Paginator>
     </div>
@@ -13,7 +13,7 @@ import Http from '../http.js';
 export default {
     name : 'listar',
     components:{ List, Paginator },
-    props:[],
+    props:['color'],
     data() {
         return {
             paginator: {},
