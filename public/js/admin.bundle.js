@@ -138,9 +138,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             title: '',
             paginator: {},
             search: '',
-            show: false,
-            limit: 15,
-            page: 1
+            show: false
         };
     },
 
@@ -236,7 +234,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.pointer[data-v-1d893ab8] {\n  cursor: pointer;\n}\n.w-150[data-v-1d893ab8] {\n  width: 150px;\n}\n", ""]);
+exports.push([module.i, "\n.w-150[data-v-1d893ab8] {\n  width: 150px;\n}\n", ""]);
 
 // exports
 
@@ -284,15 +282,15 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     methods: {
         get: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(endpoint) {
-                var items, resp;
+                var http, resp;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 this.$parent.show = false;
-                                items = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
+                                http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                 _context.next = 4;
-                                return items.getDataFromUrl('/' + endpoint);
+                                return http.getDataFromUrl('/' + endpoint);
 
                             case 4:
                                 resp = _context.sent;
@@ -564,17 +562,18 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     methods: {
         onSearch: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-                var url, busca, resp;
+                var url, http, resp;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 url = '/' + this.$parent.search + '/search/' + this.termo;
 
+
                                 this.$parent.show = false;
-                                busca = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
+                                http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                 _context.next = 5;
-                                return busca.getDataFromUrl(url);
+                                return http.getDataFromUrl(url);
 
                             case 5:
                                 resp = _context.sent;
@@ -708,13 +707,7 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c("Paginator", {
-            attrs: {
-              paginator: _vm.paginator,
-              page: _vm.page,
-              limit: _vm.limit
-            }
-          })
+          _c("Paginator", { attrs: { paginator: _vm.paginator } })
         ],
         1
       )

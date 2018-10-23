@@ -53,6 +53,13 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(7);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 //
 //
 //
@@ -77,6 +84,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -94,25 +102,49 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   methods: {
-    login: function login() {
-      var _this = this;
+    login: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+        var _this = this;
 
-      axios.post('/api-v1/users/login', { email: this.user.email,
-        password: this.user.password }).then(function (resp) {
-        _this.loginSuccess = resp.data.success;
-        localStorage.setItem('token', resp.data.token);
-        localStorage.setItem('login_success', _this.loginSuccess);
-        localStorage.setItem('username', resp.data.user.name);
-        localStorage.setItem('user_id', resp.data.user.id);
-        _this.$router.push('admin');
-      }).catch(function (error) {
-        if (error.response.status === 401) {
-          _this.message = error.response.data.message;
-          _this.loginSuccess = error.response.data.success;
-          localStorage.setItem('login_success', _this.loginSuccess);
-        }
-      });
-    }
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+
+                axios.post('/api-v1/users/login', { email: this.user.email,
+                  password: this.user.password }).then(function (resp) {
+                  _this.loginSuccess = resp.data.success;
+                  localStorage.setItem('token', resp.data.token);
+                  localStorage.setItem('login_success', _this.loginSuccess);
+                  localStorage.setItem('username', resp.data.user.name);
+                  localStorage.setItem('user_id', resp.data.user.id);
+                  _this.$router.push('admin');
+                }).catch(function (error) {
+                  if (error.response.status === 401) {
+                    _this.message = error.response.data.message;
+                    _this.loginSuccess = error.response.data.success;
+                    localStorage.setItem('login_success', _this.loginSuccess);
+                  }
+                });
+
+                //let http = new Http();
+                //let resp = await http.postData();
+                //console.log(resp);     
+
+              case 1:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function login() {
+        return _ref.apply(this, arguments);
+      }
+
+      return login;
+    }()
   }
 });
 

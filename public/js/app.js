@@ -1025,29 +1025,25 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Http = function () {
     function Http() {
-        var idCanal = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-        var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
         _classCallCheck(this, Http);
 
         this.endpoint = '/api-v1';
         this.data = data;
-        this.idCanal = idCanal;
     }
 
     _createClass(Http, [{
-        key: 'getData',
+        key: 'getDataFromIdCanal',
         value: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-                var limit = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 15;
-                var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(idCanal, limit, page) {
                 var url;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 _context.prev = 0;
-                                url = this.getCanal(limit, page);
+                                url = this.getCanal(idCanal, limit, page);
                                 _context.next = 4;
                                 return axios.get(url, this.data);
 
@@ -1071,11 +1067,11 @@ var Http = function () {
                 }, _callee, this, [[0, 7]]);
             }));
 
-            function getData() {
+            function getDataFromIdCanal(_x2, _x3, _x4) {
                 return _ref.apply(this, arguments);
             }
 
-            return getData;
+            return getDataFromIdCanal;
         }()
     }, {
         key: 'getDataFromUrl',
@@ -1119,9 +1115,7 @@ var Http = function () {
     }, {
         key: 'search',
         value: function () {
-            var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(termo) {
-                var limit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 15;
-                var page = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+            var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(termo, limit, page) {
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
                     while (1) {
                         switch (_context3.prev = _context3.next) {
@@ -1150,7 +1144,7 @@ var Http = function () {
                 }, _callee3, this, [[0, 6]]);
             }));
 
-            function search(_x8) {
+            function search(_x6, _x7, _x8) {
                 return _ref3.apply(this, arguments);
             }
 
@@ -1272,17 +1266,17 @@ var Http = function () {
         }()
     }, {
         key: 'getCanal',
-        value: function getCanal(limit, page) {
+        value: function getCanal(idCanal, limit, page) {
 
             switch (true) {
-                case this.idCanal == 5:
+                case idCanal == 5:
                     return this.endpoint + '/conteudos?site=true&limit=' + limit + '&page=' + page;
                     break;
-                case this.idCanal == 9:
+                case idCanal == 9:
                     return this.endpoint + '/aplicativos?limit=' + limit + '&page=' + page;
                     break;
                 default:
-                    return this.endpoint + '/conteudos?canal=' + this.idCanal + '&limit=' + limit + '&page=' + page;
+                    return this.endpoint + '/conteudos?canal=' + idCanal + '&limit=' + limit + '&page=' + page;
             }
         }
     }]);
@@ -48094,25 +48088,27 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     props: [],
     data: function data() {
         return {
-            paginator: {}
+            paginator: {},
+            page: 1,
+            limit: 20
         };
     },
     created: function created() {
-        this.getConteudos(20, 1);
+        this.getConteudos();
     },
 
     methods: {
         getConteudos: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(limit, page) {
-                var idCanal, conteudos, resp;
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+                var idCanal, http, resp;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 idCanal = localStorage.getItem('idCanal');
-                                conteudos = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */](idCanal);
+                                http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */](idCanal);
                                 _context.next = 4;
-                                return conteudos.getData(limit, page);
+                                return http.getDataFromIdCanal(idCanal, this.limit, this.page);
 
                             case 4:
                                 resp = _context.sent;
@@ -48120,8 +48116,10 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
                                 this.title = resp.data.title;
                                 this.paginator = resp.data.paginator;
+                                this.page = resp.data.page;
+                                this.limit = resp.data.limit;
 
-                            case 7:
+                            case 9:
                             case 'end':
                                 return _context.stop();
                         }
@@ -48129,7 +48127,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                 }, _callee, this);
             }));
 
-            function getConteudos(_x, _x2) {
+            function getConteudos() {
                 return _ref.apply(this, arguments);
             }
 
@@ -49231,6 +49229,14 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -49245,25 +49251,27 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
   methods: {
     goTo: function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(url) {
-        var idCanal, data, resp;
+        var http, resp;
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                if (!url) {
+                  _context.next = 6;
+                  break;
+                }
 
-                if (url) console.log(url);
-                idCanal = localStorage.getItem('idCanal');
-                data = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */](idCanal);
-                _context.next = 5;
-                return data.getData();
+                http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
+                _context.next = 4;
+                return http.getDataFromUrl(url);
 
-              case 5:
+              case 4:
                 resp = _context.sent;
 
-                console.log(resp.data.per_page, resp.data.current_page);
+
                 this.$parent.paginator = resp.data.paginator;
 
-              case 8:
+              case 6:
               case 'end':
                 return _context.stop();
             }
@@ -49306,6 +49314,7 @@ var render = function() {
             _c(
               "a",
               {
+                staticClass: "pointer",
                 on: {
                   click: function($event) {
                     _vm.goTo(_vm.paginator.prev_page_url)
@@ -49314,7 +49323,7 @@ var render = function() {
               },
               [
                 _c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("←")]),
-                _vm._v(" Anterior")
+                _vm._v(" Anterior\n      ")
               ]
             )
           ]),
@@ -49323,6 +49332,7 @@ var render = function() {
             _c(
               "a",
               {
+                staticClass: "pointer",
                 on: {
                   click: function($event) {
                     _vm.goTo(_vm.paginator.next_page_url)
@@ -49330,7 +49340,7 @@ var render = function() {
                 }
               },
               [
-                _vm._v("Próximo "),
+                _vm._v("\n        Próximo "),
                 _c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("→")])
               ]
             )
@@ -49596,7 +49606,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.heigth {\n  min-height: 80vh;\n}\n", ""]);
+exports.push([module.i, "\n.heigth {\n  min-height: 80vh;\n}\n.pointer {\n  cursor: pointer;\n}\n", ""]);
 
 // exports
 

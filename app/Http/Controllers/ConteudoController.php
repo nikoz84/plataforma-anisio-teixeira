@@ -18,10 +18,10 @@ class ConteudoController extends Controller
 
         $orderBy = ($request->has('order')) ? $request->query('order') : 'title';
         $page = ($request->has('page')) ? $request->query('page') : 1;
-        $approved = $request->query('approved', true);
+        $approved = $request->query('approved', 'true');
         $isCanal = $request->query('canal', null);
         $canal = (is_null($isCanal)) ?  'canal_id IS NULL' : "canal_id = {$isCanal}";
-        $isSite = $request->query('site', false);
+        $isSite = $request->query('site', 'false');
 
 
         $conteudos = DB::table('conteudos')
@@ -37,8 +37,8 @@ class ConteudoController extends Controller
         return response()->json([
             'title'=> 'Mídias educacionais',
             'paginator'=> $conteudos,
-            'current_page'=> $conteudos->currentPage(),
-            'per_page' => $conteudos->perPage()
+            'page'=> $conteudos->currentPage(),
+            'limit' => $conteudos->perPage()
         ],200);
     }
 
@@ -152,8 +152,8 @@ class ConteudoController extends Controller
             'paginator' => $conteudos,
             'has_more_pages' => $conteudos->hasMorePages(),
             'pages'=> $conteudos->count(),
-            'current_page'=> $conteudos->currentPage(),
-            'per_page' => $conteudos->perPage()
+            'page'=> $conteudos->currentPage(),
+            'limit' => $conteudos->perPage()
         ]);    
     }
 

@@ -1,13 +1,13 @@
 
 export default class Http {
-    constructor(idCanal = null, data = {}){
+    constructor(data = {}){
         this.endpoint = '/api-v1';
         this.data = data;
-        this.idCanal = idCanal;
+        
     }
-    async getData(limit = 15, page = 1){
+    async getDataFromIdCanal(idCanal,limit, page){
         try{
-            let url = this.getCanal(limit, page);
+            let url = this.getCanal(idCanal,limit, page);
             return await axios.get(url, this.data);
         } catch (error){
             return await error.response;
@@ -21,7 +21,7 @@ export default class Http {
             return await error.response;
         }
     }
-    async search(termo, limit = 15, page = 1){
+    async search(termo, limit, page){
         
         try {
             return await this.http.get(`${this.url}/search/termo/${termo}/limit/${limit}/page/${page}`, this.data);
@@ -55,17 +55,17 @@ export default class Http {
         }
     }
 
-    getCanal(limit, page){
+    getCanal(idCanal,limit, page){
 
         switch(true){
-            case (this.idCanal == 5):
+            case (idCanal == 5):
                 return `${this.endpoint}/conteudos?site=true&limit=${limit}&page=${page}`;
             break;
-            case (this.idCanal == 9):
+            case (idCanal == 9):
                 return `${this.endpoint}/aplicativos?limit=${limit}&page=${page}`;
             break;
             default:
-                return `${this.endpoint}/conteudos?canal=${this.idCanal}&limit=${limit}&page=${page}`;     
+                return `${this.endpoint}/conteudos?canal=${idCanal}&limit=${limit}&page=${page}`;     
         }
     }
 }

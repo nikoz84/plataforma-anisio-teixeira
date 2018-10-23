@@ -27,8 +27,8 @@ class TagController extends Controller
         return response()->json([
                 'title'=> 'Lista de tags',
                 'paginator' => $tags,
-                'current_page'=> $tags->currentPage(),
-                'per_page' => $tags->perPage()
+                'page'=> $tags->currentPage(),
+                'limit' => $tags->perPage()
             ]);
     }
 
@@ -108,8 +108,8 @@ class TagController extends Controller
         return response()->json([
             'message' => 'Resultados da busca',
             'paginator' => $tags,
-            'current_page'=> $tags->currentPage(),
-            'per_page' => $tags->perPage()
+            'page'=> $tags->currentPage(),
+            'limit' => $tags->perPage()
         ]);    
     }
 

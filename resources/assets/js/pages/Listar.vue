@@ -16,22 +16,25 @@ export default {
     props:[],
     data() {
         return {
-            paginator: {}
+            paginator: {},
+            page: 1,
+            limit: 20
         }
     },
     created() {
-        this.getConteudos(20,1);
+        this.getConteudos();
         
     },
     methods:{
-        async getConteudos(limit, page){
+        async getConteudos(){
             let idCanal = localStorage.getItem('idCanal');
-            let conteudos = new Http(idCanal);   
-            let resp = await conteudos.getData(limit,page);
+            let http = new Http(idCanal);   
+            let resp = await http.getDataFromIdCanal(idCanal,this.limit, this.page);
 
             this.title = resp.data.title;
             this.paginator = resp.data.paginator;
-            
+            this.page = resp.data.page;
+            this.limit = resp.data.limit;
         }
     }
 }

@@ -26,8 +26,8 @@ export default {
     methods:{
         async get(endpoint){
             this.$parent.show = false;
-            let items = new Http();
-            let resp = await items.getDataFromUrl(`/${endpoint}`);
+            let http = new Http();
+            let resp = await http.getDataFromUrl(`/${endpoint}`);
             
             this.$parent.paginator = resp.data.paginator;
             this.$parent.title = resp.data.title;
@@ -40,7 +40,6 @@ export default {
 }
 </script>
 <style lang="sass" scoped>
-.pointer { cursor: pointer; }
 .w-150 { width: 150px; }
 </style>
 

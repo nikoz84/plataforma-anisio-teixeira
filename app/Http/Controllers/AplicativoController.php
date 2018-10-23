@@ -29,8 +29,8 @@ class AplicativoController extends Controller
         return response()->json([
             'title'=> 'Aplicativos Educacionais',
             'paginator'=> $aplicativos,
-            'current_page'=> $aplicativos->currentPage(),
-            'per_page' => $aplicativos->perPage()
+            'page'=> $aplicativos->currentPage(),
+            'limit' => $aplicativos->perPage()
         ]);    
     }
 
@@ -121,9 +121,9 @@ class AplicativoController extends Controller
 
         return response()->json([
             'message' => 'Resultados da busca',
-            'items' => $aplicativos,
-            'current_page'=> $aplicativos->currentPage(),
-            'per_page' => $aplicativos->perPage()
+            'paginator' => $aplicativos,
+            'page'=> $aplicativos->currentPage(),
+            'limit' => $aplicativos->perPage()
         ]);    
     }
 
