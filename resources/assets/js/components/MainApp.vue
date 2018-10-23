@@ -19,7 +19,6 @@ export default {
 }
 </script>
 <style lang="scss" >
-.heigth {
-    min-height: 80vh;
-}
+.heigth { min-height: 80vh;}
+.pointer { cursor: pointer;}
 </style>

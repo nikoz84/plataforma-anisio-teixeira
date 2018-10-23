@@ -117,8 +117,8 @@ class UserController extends Controller
       return response()->json([
         'title'=> 'Lista de usuários',
         'items'=>$users,
-        'current_page'=> $users->currentPage(),
-        'per_page' => $users->perPage()
+        'page'=> $users->currentPage(),
+        'limit' => $users->perPage()
       ]);
     }
 }

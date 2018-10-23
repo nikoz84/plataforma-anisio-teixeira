@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import Http from '../http.js';
 
 export default {
   name: 'login',
@@ -38,7 +39,7 @@ export default {
     }
   },
   methods:{
-    login: function(){
+    async login(){
       
       axios.post(`/api-v1/users/login`,
                  { email:this.user.email, 
@@ -58,6 +59,10 @@ export default {
               }
     
             })
+
+      //let http = new Http();
+      //let resp = await http.postData();
+      //console.log(resp);     
     }
   }
 }
