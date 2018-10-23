@@ -12,10 +12,10 @@ class Canal extends Model
      * $fillable São todos os atributos que podem ser asignables
      */
     protected $fillable = [
-        'name', 
-        'description', 
-        'is_active', 
-        'slug', 
+        'name',
+        'description',
+        'is_active',
+        'slug',
         'options'
     ];
     protected $hidden = ['token'];
