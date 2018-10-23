@@ -18,7 +18,6 @@ class ConteudoController extends Controller
 
         $orderBy = ($request->has('order')) ? $request->query('order') : 'title';
         $page = ($request->has('page')) ? $request->query('page') : 1;
-        $orderBy = ($request->has('order')) ? $request->query('order') : 'title';
         $approved = $request->query('approved', true);
         $isCanal = $request->query('canal', null);
         $canal = (is_null($isCanal)) ?  'canal_id IS NULL' : "canal_id = {$isCanal}";
@@ -32,10 +31,14 @@ class ConteudoController extends Controller
             ->where('is_site', $isSite)
             ->orderBy($orderBy, 'asc')
             ->paginate($limit);
+        
+        $conteudos->setPath("/conteudos?canal={$isCanal}&site={$isSite}&limit={$limit}");    
 
         return response()->json([
             'title'=> 'Mídias educacionais',
-            'paginator'=> $conteudos
+            'paginator'=> $conteudos,
+            'current_page'=> $conteudos->currentPage(),
+            'per_page' => $conteudos->perPage()
         ],200);
     }
 
@@ -141,15 +144,16 @@ class ConteudoController extends Controller
                     ->orderBy('ranking','desc')
                     ->paginate($limit);
 
-        //$conteudos->currentPage($page);
-        //$conteudos->setPath('custom/url');
+        
+        $conteudos->setPath("/conteudos/search/{$termo}?limit={$limit}");
 
         return response()->json([
             'message' => 'Resultados da busca',
             'paginator' => $conteudos,
             'has_more_pages' => $conteudos->hasMorePages(),
             'pages'=> $conteudos->count(),
-            
+            'current_page'=> $conteudos->currentPage(),
+            'per_page' => $conteudos->perPage()
         ]);    
     }
 

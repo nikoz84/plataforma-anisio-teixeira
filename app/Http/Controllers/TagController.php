@@ -22,14 +22,14 @@ class TagController extends Controller
                     ->select(['id','name','searched'])
                     ->paginate($limit);
 
-        $tags->currentPage($page);
+        $tags->setPath("/tags?limit={$limit}"); 
         
-        return response()->json(
-            [
+        return response()->json([
                 'title'=> 'Lista de tags',
-                'paginator' => $tags
-            ]
-        );
+                'paginator' => $tags,
+                'current_page'=> $tags->currentPage(),
+                'per_page' => $tags->perPage()
+            ]);
     }
 
     /**
@@ -103,9 +103,13 @@ class TagController extends Controller
                     ->where(DB::raw('unaccent(lower(name))'), 'ILIKE' , DB::raw("unaccent(lower('%{$termo}%'))"))
                     ->paginate($limit);
         
+        $tags->setPath("/tags/search/{$termo}?limit={$limit}");                                
+
         return response()->json([
             'message' => 'Resultados da busca',
-            'paginator' => $tags
+            'paginator' => $tags,
+            'current_page'=> $tags->currentPage(),
+            'per_page' => $tags->perPage()
         ]);    
     }
 

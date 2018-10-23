@@ -8,7 +8,9 @@
   </nav>
 </template>
 <script>
-  export default {
+import Http from '../http.js';
+
+export default {
     name: 'Paginator',
     props:['paginator'],
     data() {
@@ -19,11 +21,18 @@
     },
   
     methods: {
-      goTo(url) {
+      async goTo(url) {
+        
         if(url)
-        axios.get(url).then(resp => {
-          this.$parent.paginator = resp.data.paginator;
-        })
+        console.log(url)
+        let idCanal = localStorage.getItem('idCanal');
+        let data = new Http(idCanal);
+        let resp = await data.getData(); 
+        console.log(resp.data.per_page, resp.data.current_page);
+        this.$parent.paginator = resp.data.paginator;
+        
+        
+
       }
     }
   

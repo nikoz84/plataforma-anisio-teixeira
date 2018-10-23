@@ -7,47 +7,30 @@
 <script>
 import List from '../components/ListComponent.vue';
 import Paginator from '../components/PaginatorComponent.vue';
+import Http from '../http.js';
 
 
 export default {
     name : 'listar',
     components:{ List, Paginator },
-    props:['idCanal'],
+    props:[],
     data() {
         return {
-            title: 'Listar',
-            url : null,
             paginator: {}
         }
     },
     created() {
-        this.getConteudos();
+        this.getConteudos(20,1);
         
     },
     methods:{
-        getConteudos(){
+        async getConteudos(limit, page){
             let idCanal = localStorage.getItem('idCanal');
-            let url = this.getUrl(idCanal);
-            console.log(url);
-            axios.get(url).then(resp =>{
-                  console.log(resp);
-                  this.title = resp.data.title;
-                  this.paginator = resp.data.paginator;
-                  
-                });
-        },
-        getUrl(canal){
-            
-            switch(true){
-                case (canal == 5):
-                    return `/api-v1/conteudos?site=true`;
-                break;
-                case (canal == 9):
-                    return `/api-v1/aplicativos`;
-                break;
-                default:
-                    return `/api-v1/conteudos?canal=${canal}`;     
-            }
+            let conteudos = new Http(idCanal);   
+            let resp = await conteudos.getData(limit,page);
+
+            this.title = resp.data.title;
+            this.paginator = resp.data.paginator;
             
         }
     }

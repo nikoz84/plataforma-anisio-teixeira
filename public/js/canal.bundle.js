@@ -62,7 +62,7 @@ var content = __webpack_require__(125);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("bee04172", content, false, {});
+var update = __webpack_require__(3)("768bec6d", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -99,6 +99,13 @@ exports.push([module.i, "\n.page-header[data-v-4931cae4] {\n  margin-top: 0px;\n
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(135);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 //
 //
 //
@@ -136,6 +143,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -159,20 +167,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
-        getCanal: function getCanal() {
-            var _this = this;
+        getCanal: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+                var url, canal, resp;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                url = '/canais/slug/' + this.$route.params.slug;
+                                canal = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
+                                _context.next = 4;
+                                return canal.getDataFromUrl(url);
 
-            this.show = false;
-            axios.get('/api-v1/canais/slug/' + this.$route.params.slug).then(function (resp) {
-                _this.idCanal = resp.data.canal.id;
-                _this.title = resp.data.canal.name;
-                localStorage.setItem('idCanal', _this.idCanal);
-                //this.descricao = resp.data.canal.description;
-                //this.pagina = this.$route.name;
-                //this.metaData = JSON.parse(resp.data.canal.options);
-                //console.log(resp.data.canal)
-            });
-        }
+                            case 4:
+                                resp = _context.sent;
+
+
+                                this.idCanal = resp.data.canal.id;
+                                this.title = resp.data.canal.name;
+                                localStorage.setItem('idCanal', this.idCanal);
+
+                            case 8:
+                            case 'end':
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, this);
+            }));
+
+            function getCanal() {
+                return _ref.apply(this, arguments);
+            }
+
+            return getCanal;
+        }()
     }
 });
 

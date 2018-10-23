@@ -13,26 +13,27 @@
     </nav>
 </template>
 <script>
+import Http from '../http.js';
 
 export default {
     name : 'Sidebar',
     data() {
         return {
             username: localStorage.getItem('username'),
-            userId: localStorage.getItem('user_id'),
+            userId: localStorage.getItem('idUser'),
         }
     },
     methods:{
-        get(endpoint){
+        async get(endpoint){
             this.$parent.show = false;
-            axios.get(`/api-v1/${endpoint}`).then(resp =>{
-                this.$parent.paginator = resp.data.paginator;
-                this.$parent.title = resp.data.title;
-                this.$parent.search = endpoint;
-                this.$parent.show = true;
-            }).catch(error =>{
-                console.log(error.response)
-            })
+            let items = new Http();
+            let resp = await items.getDataFromUrl(`/${endpoint}`);
+            
+            this.$parent.paginator = resp.data.paginator;
+            this.$parent.title = resp.data.title;
+            this.$parent.search = endpoint;
+            this.$parent.show = true;
+            
         }
 
     }

@@ -9,6 +9,7 @@
     </form>
 </template>
 <script>
+import Http from '../http.js';
 
 export default {
     name : 'Search',
@@ -19,17 +20,14 @@ export default {
         }
     },
     methods:{
-        onSearch: function (){
-            let url = `/api-v1/${this.$parent.search}/search/${this.termo}`;
-            console.log(url);
+        async onSearch(){
+            let url = `/${this.$parent.search}/search/${this.termo}`;
             this.$parent.show = false;
-            axios.get(url).then(resp => {
-                this.$parent.paginator = resp.data.paginator;
-                this.$parent.show = true;
-            }).catch(error=>{
-                console.log(error.response)
-            })
+            let busca = new Http();
+            let resp = await busca.getDataFromUrl(url);
             
+            this.$parent.paginator = resp.data.paginator;
+            this.$parent.show = true;
         }
     }
 }

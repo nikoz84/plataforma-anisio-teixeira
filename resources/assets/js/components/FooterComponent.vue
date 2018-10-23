@@ -82,7 +82,6 @@
 <style lang="scss" scoped>
 .page-footer { margin-top: 5vh; }
 .font-weight-bold { font-weight: bold; }
-.teal { background-color: #009688!important; }
 .mb-4, .my-4 { margin-bottom: 1.5rem!important;}
 .footer-copyleft { margin-top: 5vh; }
 .copyleft{
@@ -98,5 +97,8 @@ hr{
     margin-bottom: 1rem;
     border: 0;
     border-top: 1px solid rgba(0,0,0,.1);
+}
+p{
+    color: #e6e6e6;
 }
 </style>

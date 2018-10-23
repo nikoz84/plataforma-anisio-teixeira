@@ -24,11 +24,13 @@ class AplicativoController extends Controller
             ->orderBy($orderBy, 'name')
             ->paginate($limit);
                     
-        $aplicativos->currentPage($page);
+        $aplicativos->setPath("/aplicativos?limit={$limit}"); 
         
         return response()->json([
             'title'=> 'Aplicativos Educacionais',
-            'paginator'=> $aplicativos
+            'paginator'=> $aplicativos,
+            'current_page'=> $aplicativos->currentPage(),
+            'per_page' => $aplicativos->perPage()
         ]);    
     }
 
@@ -107,14 +109,21 @@ class AplicativoController extends Controller
 
     public function search(Request $request, $termo)
     {
-        $aplicativo = DB::table('aplicativos')
+        $limit = $request->query('limit', 15);
+        $page = $request->query('page', 1);
+
+        $aplicativos = DB::table('aplicativos')
                     ->select(['id','name'])
                     ->where(DB::raw('unaccent(lower(name))'), 'ILIKE' , DB::raw("unaccent(lower('%{$termo}%'))"))
-                    ->get();
-        
+                    ->paginate($limit);
+
+        $aplicativos->setPath("/aplicativos/search/{$termo}?limit={$limit}");  
+
         return response()->json([
             'message' => 'Resultados da busca',
-            'items' => $aplicativo
+            'items' => $aplicativos,
+            'current_page'=> $aplicativos->currentPage(),
+            'per_page' => $aplicativos->perPage()
         ]);    
     }
 

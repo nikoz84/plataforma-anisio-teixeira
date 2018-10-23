@@ -36,6 +36,7 @@
     </section>
 </template>
 <script>
+import Http from '../http.js';
 
 export default {
     name : 'canal',
@@ -59,19 +60,15 @@ export default {
         }
     },
     methods:{
-        getCanal(){
-            this.show = false;
-            axios.get(`/api-v1/canais/slug/${this.$route.params.slug}`).then(resp =>{
-                this.idCanal = resp.data.canal.id;
-                this.title = resp.data.canal.name;
-                localStorage.setItem('idCanal', this.idCanal);
-                //this.descricao = resp.data.canal.description;
-                //this.pagina = this.$route.name;
-                //this.metaData = JSON.parse(resp.data.canal.options);
-                //console.log(resp.data.canal)
-                
-            });
-        },
+        async getCanal(){
+            let url = `/canais/slug/${this.$route.params.slug}`; 
+            let canal = new Http();
+            let resp = await canal.getDataFromUrl(url);
+            
+            this.idCanal = resp.data.canal.id;
+            this.title = resp.data.canal.name;
+            localStorage.setItem('idCanal', this.idCanal);
+        }
     }
 }
 </script>

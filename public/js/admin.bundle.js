@@ -62,7 +62,7 @@ var content = __webpack_require__(109);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("4c6eebf4", content, false, {});
+var update = __webpack_require__(3)("a076d1a8", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -138,7 +138,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             title: '',
             paginator: {},
             search: '',
-            show: false
+            show: false,
+            limit: 15,
+            page: 1
         };
     },
 
@@ -209,7 +211,7 @@ var content = __webpack_require__(113);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("1443cc7c", content, false, {});
+var update = __webpack_require__(3)("5df2b3bc", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -246,6 +248,13 @@ exports.push([module.i, "\n.pointer[data-v-1d893ab8] {\n  cursor: pointer;\n}\n.
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(135);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 //
 //
 //
@@ -260,6 +269,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -267,24 +277,46 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             username: localStorage.getItem('username'),
-            userId: localStorage.getItem('user_id')
+            userId: localStorage.getItem('idUser')
         };
     },
 
     methods: {
-        get: function get(endpoint) {
-            var _this = this;
+        get: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(endpoint) {
+                var items, resp;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                this.$parent.show = false;
+                                items = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
+                                _context.next = 4;
+                                return items.getDataFromUrl('/' + endpoint);
 
-            this.$parent.show = false;
-            axios.get('/api-v1/' + endpoint).then(function (resp) {
-                _this.$parent.paginator = resp.data.paginator;
-                _this.$parent.title = resp.data.title;
-                _this.$parent.search = endpoint;
-                _this.$parent.show = true;
-            }).catch(function (error) {
-                console.log(error.response);
-            });
-        }
+                            case 4:
+                                resp = _context.sent;
+
+
+                                this.$parent.paginator = resp.data.paginator;
+                                this.$parent.title = resp.data.title;
+                                this.$parent.search = endpoint;
+                                this.$parent.show = true;
+
+                            case 9:
+                            case 'end':
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, this);
+            }));
+
+            function get(_x) {
+                return _ref.apply(this, arguments);
+            }
+
+            return get;
+        }()
     }
 });
 
@@ -463,7 +495,7 @@ var content = __webpack_require__(118);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("3bb5a10d", content, false, {});
+var update = __webpack_require__(3)("e5cbeea6", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -500,6 +532,13 @@ exports.push([module.i, "", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(135);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 //
 //
 //
@@ -510,6 +549,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -522,19 +562,41 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        onSearch: function onSearch() {
-            var _this = this;
+        onSearch: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+                var url, busca, resp;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                url = '/' + this.$parent.search + '/search/' + this.termo;
 
-            var url = '/api-v1/' + this.$parent.search + '/search/' + this.termo;
-            console.log(url);
-            this.$parent.show = false;
-            axios.get(url).then(function (resp) {
-                _this.$parent.paginator = resp.data.paginator;
-                _this.$parent.show = true;
-            }).catch(function (error) {
-                console.log(error.response);
-            });
-        }
+                                this.$parent.show = false;
+                                busca = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
+                                _context.next = 5;
+                                return busca.getDataFromUrl(url);
+
+                            case 5:
+                                resp = _context.sent;
+
+
+                                this.$parent.paginator = resp.data.paginator;
+                                this.$parent.show = true;
+
+                            case 8:
+                            case 'end':
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, this);
+            }));
+
+            function onSearch() {
+                return _ref.apply(this, arguments);
+            }
+
+            return onSearch;
+        }()
     }
 });
 
@@ -646,7 +708,13 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c("Paginator", { attrs: { paginator: _vm.paginator } })
+          _c("Paginator", {
+            attrs: {
+              paginator: _vm.paginator,
+              page: _vm.page,
+              limit: _vm.limit
+            }
+          })
         ],
         1
       )

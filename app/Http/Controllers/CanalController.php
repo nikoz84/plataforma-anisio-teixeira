@@ -22,11 +22,14 @@ class CanalController extends Controller
                         ->limit($limit)
                         ->offset($page)
                         ->paginate($limit);
-        $canais->currentPage($page);
+        
+        $canais->setPath("/canais?limit={$limit}");                        
 
         return response()->json([
             'title'=> 'Lista de canais',
-            'paginator' => $canais
+            'paginator' => $canais,
+            'current_page'=> $canais->currentPage(),
+            'per_page' => $canais->currentPage()
         ]);
     }
 
@@ -113,14 +116,17 @@ class CanalController extends Controller
         $limit = ($request->has('limit')) ? $request->query('limit') : 10;
         $page = ($request->has('page')) ? $request->query('page') : 1;
 
-        $canais = Canal::where('name','ilike',$termo)
+        $canais = Canal::where(DB::raw('unaccent(lower(name))'), 'ILIKE' , DB::raw("unaccent(lower('%{$termo}%'))"))
                         ->limit($limit)
                         ->offset($page)
                         ->paginate($limit);
-        $canais->currentPage($page);
+        
+        $canais->setPath("/canais/search/{$termo}?limit={$limit}");                        
 
         return response()->json([
-            'paginator' => $canais
+            'paginator' => $canais,
+            'current_page'=> $canais->currentPage(),
+            'per_page' => $canais->currentPage()
         ]);
     }
 }

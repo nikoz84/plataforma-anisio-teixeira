@@ -112,13 +112,13 @@ class UserController extends Controller
          
 
       $users = User::where("options->is_active",'true')
-                    ->limit($limit)
-                    ->offset($page)
-                    ->get();
+                    ->paginator($limit);
 
       return response()->json([
         'title'=> 'Lista de usuários',
-        'items'=>$users
+        'items'=>$users,
+        'current_page'=> $users->currentPage(),
+        'per_page' => $users->perPage()
       ]);
     }
 }
