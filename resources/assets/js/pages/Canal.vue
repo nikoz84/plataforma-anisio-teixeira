@@ -11,8 +11,8 @@
                 </ul>
             </aside>
             <article class="col-sm-9">
-                <header class="page-header" v-bind:style="'border-bottom-color:' + color">
-                    <h1><small>{{ title }}</small></h1>
+                <header class="page-header">
+                    <h1 class="page-title" v-bind:style="`--color:${color}`" v-bind:stylepseudo="`after:`">{{ title }}</h1>
                     <nav>
                         <router-link :to="{ name: 'Inicio', params: {slug: $route.params.slug}}">
                             <a>Home</a>
@@ -77,8 +77,23 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.page-header { margin-top: 0px; }
-.page-header > h1 { margin-top: 0px; }
+.page-header { margin : 0; }
+.page-header > h1 { font-size: 22px;}
+.page-header .page-title {
+    margin-top: 0;
+    position: relative;
+    margin-bottom: 30px;
+}
+.page-header .page-title:after {
+    
+    width: 25%;
+    height: 2px;
+    content: '';
+    background: var(--color);
+    display: block;
+    position: absolute;
+    bottom: -10px;
+}
 .fade-enter {
   opacity: 0;
 }
