@@ -36,7 +36,8 @@ export default {
             descricao: null,
             idCanal: null,
             options: null,
-            color: '#1e78c2'
+            color: '#1e78c2',
+            hasCategories: false
         }
     },
     created() {
@@ -60,7 +61,8 @@ export default {
             this.title = resp.data.canal.name;
             this.options = JSON.parse(resp.data.canal.options)
             this.color = this.options.color;
-            
+            this.hasCategories = this.options.has_categories;
+            console.log(this.hasCategories);
             localStorage.setItem('idCanal', this.idCanal);
         }
     }
@@ -68,7 +70,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .page-header { margin : 0; }
-.page-header > h1 { font-size: 22px;}
+.page-header > h1 { font-size: 22px; }
 .page-header .page-title {
     margin-top: 0;
     position: relative;
@@ -94,6 +96,9 @@ export default {
   transition: opacity 1s ease;
   opacity: 0;
 }
-
+aside > header > h3 {
+    margin-top: 5px;
+    font-size: 18px;
+}
 
 </style>

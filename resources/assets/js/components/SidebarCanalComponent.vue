@@ -1,10 +1,10 @@
 <template>
     <nav>
         <ul class="nav nav-pills nav-stacked">
-            <router-link tag="li" :to="{ name: 'Listar', query: { category: 'todos'}}">
+            <router-link tag="li" :to="{ name: 'Listar', query: { category: 'todos'}}" exact>
                 <a>Todos</a>
             </router-link>
-            <router-link tag="li" :to="{ name: 'Listar', query: { category: '1'}}">
+            <router-link tag="li" :to="{ name: 'Listar', query: { category: '1'}}" exact>
                 <a>Matematicas</a>
             </router-link>
         </ul>    
