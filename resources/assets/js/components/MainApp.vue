@@ -15,10 +15,15 @@ export default {
     components:{
         NavApp, FooterApp
     },
+    methods: {
+    
+    }
 
 }
 </script>
 <style lang="scss" >
+body{ padding-top: 60px; }
 .heigth { min-height: 80vh;}
 .pointer { cursor: pointer;}
+
 </style>

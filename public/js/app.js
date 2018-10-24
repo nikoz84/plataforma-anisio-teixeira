@@ -47720,7 +47720,7 @@ var content = __webpack_require__(50);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("e7db59c4", content, false, {});
+var update = __webpack_require__(3)("85514578", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -47892,7 +47892,7 @@ var content = __webpack_require__(56);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("8059c70e", content, false, {});
+var update = __webpack_require__(3)("d461acc2", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -48025,7 +48025,7 @@ var content = __webpack_require__(61);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("3d7ad12d", content, false, {});
+var update = __webpack_require__(3)("270068c7", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -48921,7 +48921,7 @@ var content = __webpack_require__(66);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("394b1fd2", content, false, {});
+var update = __webpack_require__(3)("49e4ef72", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -49046,7 +49046,7 @@ var content = __webpack_require__(70);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("ee06a5ba", content, false, {});
+var update = __webpack_require__(3)("3ca444c3", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -49181,7 +49181,7 @@ var content = __webpack_require__(75);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("525ddb07", content, false, {});
+var update = __webpack_require__(3)("0594cf67", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -49453,7 +49453,7 @@ var content = __webpack_require__(81);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("1e2def9d", content, false, {});
+var update = __webpack_require__(3)("07b38737", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -49586,7 +49586,7 @@ var content = __webpack_require__(86);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("41818ecf", content, false, {});
+var update = __webpack_require__(3)("01d0d322", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -49610,7 +49610,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.heigth {\n  min-height: 80vh;\n}\n.pointer {\n  cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\nbody {\n  padding-top: 60px;\n}\n.heigth {\n  min-height: 80vh;\n}\n.pointer {\n  cursor: pointer;\n}\n", ""]);
 
 // exports
 
@@ -49641,7 +49641,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     name: 'main-app',
     components: {
         NavApp: __WEBPACK_IMPORTED_MODULE_0__NavComponent_vue___default.a, FooterApp: __WEBPACK_IMPORTED_MODULE_1__FooterComponent_vue___default.a
-    }
+    },
+    methods: {}
 
 });
 
@@ -49652,7 +49653,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(89)
+  __webpack_require__(139)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
@@ -49697,51 +49698,16 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 89 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(90);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("77bb7784", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-9f59c05e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NavComponent.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-9f59c05e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NavComponent.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 90 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/***/ }),
+/* 89 */,
+/* 90 */,
 /* 91 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
 //
 //
 //
@@ -49817,16 +49783,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             localStorage.clear();
             this.$router.push('/');
         },
-        get: function get(endpoint) {
-            var _this = this;
-
-            axios.get('/api-v1/' + endpoint).then(function (resp) {
-                _this.$parent.paginator = resp.data.paginator;
-                _this.$parent.title = resp.data.title;
-            }).catch(function (error) {
-                console.log(error.response);
-            });
+        handleScroll: function handleScroll(event) {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = winScroll / height * 100;
+            document.getElementById("myBar").style.width = scrolled + "%";
         }
+    },
+    created: function created() {
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    destroyed: function destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
     }
 });
 
@@ -49838,7 +49806,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("nav", { staticClass: "navbar navbar-default navbar-static-top" }, [
+  return _c("nav", { staticClass: "navbar navbar-default navbar-fixed-top" }, [
     _c("div", { staticClass: "container-fluid" }, [
       _vm._m(0),
       _vm._v(" "),
@@ -49993,7 +49961,9 @@ var render = function() {
           ])
         ]
       )
-    ])
+    ]),
+    _vm._v(" "),
+    _vm._m(3)
   ])
 }
 var staticRenderFns = [
@@ -50066,6 +50036,14 @@ var staticRenderFns = [
       },
       [_vm._v("Usuário "), _c("span", { staticClass: "caret" })]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "progress-container" }, [
+      _c("div", { staticClass: "progress-bar", attrs: { id: "myBar" } })
+    ])
   }
 ]
 render._withStripped = true
@@ -50139,7 +50117,7 @@ var content = __webpack_require__(95);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("55b91fce", content, false, {});
+var update = __webpack_require__(3)("2687d7b9", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -51043,6 +51021,81 @@ module.exports = function (css) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */,
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */,
+/* 119 */,
+/* 120 */,
+/* 121 */,
+/* 122 */,
+/* 123 */,
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(140);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("005248ba", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-9f59c05e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NavComponent.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-9f59c05e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NavComponent.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 140 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.progress-container[data-v-9f59c05e] {\n  width: 100%;\n  height: 2px;\n  background: #ccc;\n}\n.progress-bar[data-v-9f59c05e] {\n  height: 2px;\n  background: #1e78c2;\n  width: 0%;\n}\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);

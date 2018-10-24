@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-default navbar-static-top">
+    <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -57,6 +57,9 @@
                 </ul>
             </div>
         </div>
+        <div class="progress-container">
+            <div class="progress-bar" id="myBar"></div>
+        </div>
     </nav>
 </template>
 
@@ -75,17 +78,32 @@
                 localStorage.clear();
                 this.$router.push('/');
             },
-            get(endpoint){
-            axios.get(`/api-v1/${endpoint}`).then(resp =>{
-                this.$parent.paginator = resp.data.paginator;
-                this.$parent.title = resp.data.title;
-            }).catch(error =>{
-                console.log(error.response)
-            })
-        }
+            handleScroll (event) {
+                let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                var scrolled = (winScroll / height) * 100;
+                document.getElementById("myBar").style.width = scrolled + "%";
+            }    
+        
+        },
+        created () {
+            window.addEventListener('scroll', this.handleScroll);
+        },
+        destroyed () {
+            window.removeEventListener('scroll', this.handleScroll);
         }
     }
 </script>
-<style lang="sass" scoped>
+<style lang="scss" scoped>
+.progress-container {
+  width: 100%;
+  height: 2px;
+  background: #ccc;
+}
 
+.progress-bar {
+  height: 2px;
+  background: #1e78c2;
+  width: 0%;
+}
 </style>
