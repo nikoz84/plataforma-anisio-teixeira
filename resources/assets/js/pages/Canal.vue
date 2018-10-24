@@ -3,27 +3,12 @@
         <div class="row">
             <aside class="col-sm-3">
                 <header>Categorias</header>
-                <ul>
-                    <li>categoria 1</li>
-                    <li>categoria 2</li>
-                    <li>categoria 3</li>
-                    <li>categoria 4</li>
-                </ul>
+                <SidebarCanal></SidebarCanal>
             </aside>
             <article class="col-sm-9">
                 <header class="page-header">
                     <h1 class="page-title" v-bind:style="`--color:${color}`" v-bind:stylepseudo="`after:`">{{ title }}</h1>
-                    <nav>
-                        <router-link :to="{ name: 'Inicio', params: {slug: $route.params.slug}}">
-                            <a>Home</a>
-                        </router-link> |
-                        <router-link :to="{ name: 'Listar', params: {slug: $route.params.slug}}">
-                            <a>Listar</a>
-                        </router-link> |
-                        <router-link :to="{ name: 'Sobre', params: {slug: $route.params.slug}}">
-                            <a>Sobre</a>
-                        </router-link>
-                    </nav>
+                    <NavCanal></NavCanal>
                 </header>
                 <section>
                     <transition name="fade" mode="out-in">
@@ -36,10 +21,13 @@
     </section>
 </template>
 <script>
+import NavCanal from '../components/NavCanalComponent.vue';
+import SidebarCanal from '../components/SidebarCanalComponent.vue';
 import Http from '../http.js';
 
 export default {
     name : 'canal',
+    components:{ NavCanal,  SidebarCanal},
     data() {
         return {
             title: null,
