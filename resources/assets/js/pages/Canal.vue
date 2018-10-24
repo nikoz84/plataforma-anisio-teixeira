@@ -85,7 +85,6 @@ export default {
     margin-bottom: 30px;
 }
 .page-header .page-title:after {
-    
     width: 25%;
     height: 2px;
     content: '';
