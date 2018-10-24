@@ -2,7 +2,9 @@
     <section class="container-fluid heigth">
         <div class="row">
             <aside class="col-sm-3">
-                <header>Categorias</header>
+                <header class="text-center"> 
+                    <h3>Categorias</h3>
+                </header>
                 <SidebarCanal></SidebarCanal>
             </aside>
             <article class="col-sm-9">

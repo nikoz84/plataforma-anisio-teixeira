@@ -132,6 +132,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
 
 
 
@@ -397,7 +399,7 @@ var render = function() {
       _c(
         "aside",
         { staticClass: "col-sm-3" },
-        [_c("header", [_vm._v("Categorias")]), _vm._v(" "), _c("SidebarCanal")],
+        [_vm._m(0), _vm._v(" "), _c("SidebarCanal")],
         1
       ),
       _vm._v(" "),
@@ -437,7 +439,16 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("header", { staticClass: "text-center" }, [
+      _c("h3", [_vm._v("Categorias")])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -557,6 +568,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'SidebarCanal'
@@ -582,13 +596,21 @@ var render = function() {
           {
             attrs: {
               tag: "li",
-              to: {
-                name: "Listar",
-                params: { slug: _vm.$route.params.slug, category: "categoria" }
-              }
+              to: { name: "Listar", query: { category: "todos" } }
             }
           },
-          [_c("a", [_vm._v("Categoria 1")])]
+          [_c("a", [_vm._v("Todos")])]
+        ),
+        _vm._v(" "),
+        _c(
+          "router-link",
+          {
+            attrs: {
+              tag: "li",
+              to: { name: "Listar", query: { category: "1" } }
+            }
+          },
+          [_c("a", [_vm._v("Matematicas")])]
         )
       ],
       1

@@ -1,9 +1,12 @@
 <template>
     <nav>
         <ul class="nav nav-pills nav-stacked">
-            <router-link tag="li" :to="{ name: 'Listar', params: {slug: $route.params.slug, category: 'categoria'}}">
-                <a>Categoria 1</a>
-            </router-link> 
+            <router-link tag="li" :to="{ name: 'Listar', query: { category: 'todos'}}">
+                <a>Todos</a>
+            </router-link>
+            <router-link tag="li" :to="{ name: 'Listar', query: { category: '1'}}">
+                <a>Matematicas</a>
+            </router-link>
         </ul>    
     </nav>
 </template>
