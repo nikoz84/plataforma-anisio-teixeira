@@ -41,23 +41,27 @@ export default {
   methods:{
     async login(){
       
-      axios.post(`/api-v1/users/login`,
+      axios.post(`/api-v1/auth/login`,
                  { email:this.user.email, 
                  password:this.user.password})
             .then(resp => {
-              this.loginSuccess = resp.data.success;
-              localStorage.setItem('token', resp.data.token)
-              localStorage.setItem('login_success', this.loginSuccess)
-              localStorage.setItem('username', resp.data.user.name)
-              localStorage.setItem('user_id', resp.data.user.id)
-              this.$router.push('admin')
+              //this.loginSuccess = resp.data.success;
+              console.log(resp)
+              localStorage.setItem('token', resp.data.access_token)
+              //localStorage.setItem('login_success', this.loginSuccess)
+              //localStorage.setItem('username', resp.data.user.name)
+              //localStorage.setItem('user_id', resp.data.user.id)
+              if(localStorage.getItem('token')){
+                this.$router.push('admin')
+              }
             }).catch(error => {
+              /*
               if (error.response.status === 401) {
                 this.message = error.response.data.message;
                 this.loginSuccess = error.response.data.success;
                 localStorage.setItem('login_success', this.loginSuccess)
               }
-    
+              */
             })
 
       //let http = new Http();
