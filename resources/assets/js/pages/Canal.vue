@@ -2,28 +2,15 @@
     <section class="container-fluid heigth">
         <div class="row">
             <aside class="col-sm-3">
-                <header>Categorias</header>
-                <ul>
-                    <li>categoria 1</li>
-                    <li>categoria 2</li>
-                    <li>categoria 3</li>
-                    <li>categoria 4</li>
-                </ul>
+                <header class="text-center"> 
+                    <h3>Categorias</h3>
+                </header>
+                <SidebarCanal></SidebarCanal>
             </aside>
             <article class="col-sm-9">
                 <header class="page-header">
                     <h1 class="page-title" v-bind:style="`--color:${color}`" v-bind:stylepseudo="`after:`">{{ title }}</h1>
-                    <nav>
-                        <router-link :to="{ name: 'Inicio', params: {slug: $route.params.slug}}">
-                            <a>Home</a>
-                        </router-link> |
-                        <router-link :to="{ name: 'Listar', params: {slug: $route.params.slug}}">
-                            <a>Listar</a>
-                        </router-link> |
-                        <router-link :to="{ name: 'Sobre', params: {slug: $route.params.slug}}">
-                            <a>Sobre</a>
-                        </router-link>
-                    </nav>
+                    <NavCanal></NavCanal>
                 </header>
                 <section>
                     <transition name="fade" mode="out-in">
@@ -36,17 +23,21 @@
     </section>
 </template>
 <script>
+import NavCanal from '../components/NavCanalComponent.vue';
+import SidebarCanal from '../components/SidebarCanalComponent.vue';
 import Http from '../http.js';
 
 export default {
     name : 'canal',
+    components:{ NavCanal,  SidebarCanal},
     data() {
         return {
             title: null,
             descricao: null,
             idCanal: null,
             options: null,
-            color: '#1e78c2'
+            color: '#1e78c2',
+            hasCategories: false
         }
     },
     created() {
@@ -70,7 +61,8 @@ export default {
             this.title = resp.data.canal.name;
             this.options = JSON.parse(resp.data.canal.options)
             this.color = this.options.color;
-            
+            this.hasCategories = this.options.has_categories;
+            console.log(this.hasCategories);
             localStorage.setItem('idCanal', this.idCanal);
         }
     }
@@ -78,7 +70,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .page-header { margin : 0; }
-.page-header > h1 { font-size: 22px;}
+.page-header > h1 { font-size: 22px; }
 .page-header .page-title {
     margin-top: 0;
     position: relative;
@@ -104,6 +96,9 @@ export default {
   transition: opacity 1s ease;
   opacity: 0;
 }
-
+aside > header > h3 {
+    margin-top: 5px;
+    font-size: 18px;
+}
 
 </style>
