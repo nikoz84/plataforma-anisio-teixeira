@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 */
 
+Route::get('/licencas','LicencaController@list');
 // CANAIS
 Route::get('/canais', 'CanalController@list');
 Route::get('/canais/search/{term}', 'CanalController@search');
@@ -70,5 +71,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('/canais/create', 'CanalController@create');
     Route::put('/canais/update/{id}', 'CanalController@update');
     Route::delete('/canais/delete/{id}', 'CanalController@delete');
+
+    // Licencas
+    Route::post('/licencas/create','LicencaController@create');
+    Route::put('/licencas/update/{id}','LicencaController@update');
+    Route::delete('/licencas/delete/{id}','LicencaController@delete');
 
 });

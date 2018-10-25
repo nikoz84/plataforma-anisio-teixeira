@@ -20,6 +20,7 @@ class Canal extends Model
     ];
     protected $hidden = ['token'];
     protected $dates = ['deleted_at'];
+    
     public function conteudos()
     {
         return $this->hasMany('App\Conteudo');

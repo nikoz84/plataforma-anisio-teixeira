@@ -3,7 +3,7 @@
         <div class="row">
             <aside class="col-sm-3">
                 <header class="text-center"> 
-                    <h3>Categorias</h3>
+                    <h3>Filtro</h3>
                 </header>
                 <SidebarCanal></SidebarCanal>
             </aside>
