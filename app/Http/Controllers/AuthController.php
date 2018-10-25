@@ -37,7 +37,7 @@ class AuthController extends Controller
             }
         }catch (JWTException $e) {
             
-            return response()->json(['error' => 'could_not_create_token'], 500);
+            return response()->json(['error' => 'Impossível criar Token de acesso'], 500);
         }
 
         return $this->respondWithToken($token);
@@ -82,7 +82,8 @@ class AuthController extends Controller
         auth()->logout();
 
         return response()->json([
-            'message' => 'Usuário Deslogado com sucesso!!'
+            'message' => 'Usuário Deslogado com sucesso!!',
+            'is_logout' => true
         ]);
     }
     /**

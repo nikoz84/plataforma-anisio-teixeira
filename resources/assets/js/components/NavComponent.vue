@@ -58,41 +58,49 @@
             </div>
         </div>
         <div class="progress-container">
-            <div class="progress-bar" id="myBar"></div>
+            <div class="progress-bar" id="bar"></div>
         </div>
     </nav>
 </template>
 
 <script>
-    export default {
-        name : 'nav-app',
-        data () {
-            return {
+import Http from '../http.js';
 
-            }
-        },
-        mounted() {
-        },
-        methods: {
-            logout(){
+export default {
+    name : 'nav-app',
+    data () {
+        return {
+
+        }
+    },
+    mounted() {
+    },
+    methods: {
+        async logout(){
+            let http = new Http();
+            let resp = await http.postData('/auth/logout');    
+            if(resp.data.is_logout){
+                console.log(resp.data.message)
                 localStorage.clear();
                 this.$router.push('/');
-            },
-            handleScroll (event) {
-                let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                var scrolled = (winScroll / height) * 100;
-                document.getElementById("myBar").style.width = scrolled + "%";
             }    
-        
+            
         },
-        created () {
-            window.addEventListener('scroll', this.handleScroll);
-        },
-        destroyed () {
-            window.removeEventListener('scroll', this.handleScroll);
-        }
+        handleScroll (event) {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("bar").style.width = scrolled + "%";
+        }    
+    
+    },
+    created () {
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    destroyed () {
+        window.removeEventListener('scroll', this.handleScroll);
     }
+}
 </script>
 <style lang="scss" scoped>
 .progress-container {

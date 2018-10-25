@@ -95,7 +95,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         email: null,
         password: null
       },
-      token: '',
       message: '',
       loginSuccess: null
     };
@@ -104,39 +103,29 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
   methods: {
     login: function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-        var _this = this;
-
+        var data, http, resp;
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                data = { email: this.user.email, password: this.user.password };
+                http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
+                _context.next = 4;
+                return http.postData('/auth/login', data);
 
-                axios.post('/api-v1/auth/login', { email: this.user.email,
-                  password: this.user.password }).then(function (resp) {
-                  //this.loginSuccess = resp.data.success;
-                  console.log(resp);
-                  localStorage.setItem('token', resp.data.access_token);
-                  //localStorage.setItem('login_success', this.loginSuccess)
-                  //localStorage.setItem('username', resp.data.user.name)
-                  //localStorage.setItem('user_id', resp.data.user.id)
-                  if (localStorage.getItem('token')) {
-                    _this.$router.push('admin');
-                  }
-                }).catch(function (error) {
-                  /*
-                  if (error.response.status === 401) {
-                    this.message = error.response.data.message;
-                    this.loginSuccess = error.response.data.success;
-                    localStorage.setItem('login_success', this.loginSuccess)
-                  }
-                  */
-                });
+              case 4:
+                resp = _context.sent;
 
-                //let http = new Http();
-                //let resp = await http.postData();
-                //console.log(resp);     
 
-              case 1:
+                localStorage.setItem('token', resp.data.access_token);
+
+                if (localStorage.token == null || localStorage.token == undefined) {
+                  this.$router.push('login');
+                }
+
+                this.$router.push('admin');
+
+              case 8:
               case 'end':
                 return _context.stop();
             }

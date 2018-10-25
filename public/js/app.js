@@ -925,12 +925,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Http = function () {
     function Http() {
-        var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
         _classCallCheck(this, Http);
 
         this.endpoint = '/api-v1';
-        this.data = data;
+        this.headersData = { headers: { Authorization: "Bearer " + localStorage.token } };
     }
 
     _createClass(Http, [{
@@ -967,7 +965,7 @@ var Http = function () {
                 }, _callee, this, [[0, 7]]);
             }));
 
-            function getDataFromIdCanal(_x2, _x3, _x4) {
+            function getDataFromIdCanal(_x, _x2, _x3) {
                 return _ref.apply(this, arguments);
             }
 
@@ -1044,7 +1042,7 @@ var Http = function () {
                 }, _callee3, this, [[0, 6]]);
             }));
 
-            function search(_x6, _x7, _x8) {
+            function search(_x5, _x6, _x7) {
                 return _ref3.apply(this, arguments);
             }
 
@@ -1053,36 +1051,38 @@ var Http = function () {
     }, {
         key: 'postData',
         value: function () {
-            var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4() {
+            var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4(url, data) {
+                var urlPost;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
                     while (1) {
                         switch (_context4.prev = _context4.next) {
                             case 0:
                                 _context4.prev = 0;
-                                _context4.next = 3;
-                                return axios.post(this.endpoint + '/auth/register', this.data);
+                                urlPost = this.endpoint + url;
+                                _context4.next = 4;
+                                return axios.post(urlPost, data, this.headersData);
 
-                            case 3:
+                            case 4:
                                 return _context4.abrupt('return', _context4.sent);
 
-                            case 6:
-                                _context4.prev = 6;
+                            case 7:
+                                _context4.prev = 7;
                                 _context4.t0 = _context4['catch'](0);
-                                _context4.next = 10;
+                                _context4.next = 11;
                                 return _context4.t0.response;
 
-                            case 10:
+                            case 11:
                                 return _context4.abrupt('return', _context4.sent);
 
-                            case 11:
+                            case 12:
                             case 'end':
                                 return _context4.stop();
                         }
                     }
-                }, _callee4, this, [[0, 6]]);
+                }, _callee4, this, [[0, 7]]);
             }));
 
-            function postData() {
+            function postData(_x8, _x9) {
                 return _ref4.apply(this, arguments);
             }
 
@@ -1091,36 +1091,38 @@ var Http = function () {
     }, {
         key: 'putData',
         value: function () {
-            var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5() {
+            var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5(url, data) {
+                var urlPost;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee5$(_context5) {
                     while (1) {
                         switch (_context5.prev = _context5.next) {
                             case 0:
                                 _context5.prev = 0;
-                                _context5.next = 3;
-                                return axios.put(this.url, this.data);
+                                urlPost = this.endpoint + url;
+                                _context5.next = 4;
+                                return axios.put(urlPost, data, this.headersData);
 
-                            case 3:
+                            case 4:
                                 return _context5.abrupt('return', _context5.sent);
 
-                            case 6:
-                                _context5.prev = 6;
+                            case 7:
+                                _context5.prev = 7;
                                 _context5.t0 = _context5['catch'](0);
-                                _context5.next = 10;
+                                _context5.next = 11;
                                 return _context5.t0.response;
 
-                            case 10:
+                            case 11:
                                 return _context5.abrupt('return', _context5.sent);
 
-                            case 11:
+                            case 12:
                             case 'end':
                                 return _context5.stop();
                         }
                     }
-                }, _callee5, this, [[0, 6]]);
+                }, _callee5, this, [[0, 7]]);
             }));
 
-            function putData() {
+            function putData(_x10, _x11) {
                 return _ref5.apply(this, arguments);
             }
 
@@ -1129,36 +1131,38 @@ var Http = function () {
     }, {
         key: 'deleteData',
         value: function () {
-            var _ref6 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee6() {
+            var _ref6 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee6(url, data) {
+                var urlPost;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee6$(_context6) {
                     while (1) {
                         switch (_context6.prev = _context6.next) {
                             case 0:
                                 _context6.prev = 0;
-                                _context6.next = 3;
-                                return axios.delete(this.url, this.data);
+                                urlPost = this.endpoint + url;
+                                _context6.next = 4;
+                                return axios.delete(urlPost, data, this.headersData);
 
-                            case 3:
+                            case 4:
                                 return _context6.abrupt('return', _context6.sent);
 
-                            case 6:
-                                _context6.prev = 6;
+                            case 7:
+                                _context6.prev = 7;
                                 _context6.t0 = _context6['catch'](0);
-                                _context6.next = 10;
+                                _context6.next = 11;
                                 return _context6.t0.response;
 
-                            case 10:
+                            case 11:
                                 return _context6.abrupt('return', _context6.sent);
 
-                            case 11:
+                            case 12:
                             case 'end':
                                 return _context6.stop();
                         }
                     }
-                }, _callee6, this, [[0, 6]]);
+                }, _callee6, this, [[0, 7]]);
             }));
 
-            function deleteData() {
+            function deleteData(_x12, _x13) {
                 return _ref6.apply(this, arguments);
             }
 
@@ -50219,6 +50223,13 @@ exports.push([module.i, "\n.progress-container[data-v-9f59c05e] {\n  width: 100%
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(6);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 //
 //
 //
@@ -50284,6 +50295,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'nav-app',
@@ -50293,15 +50306,45 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {},
 
     methods: {
-        logout: function logout() {
-            localStorage.clear();
-            this.$router.push('/');
-        },
+        logout: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+                var http, resp;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
+                                _context.next = 3;
+                                return http.postData('/auth/logout');
+
+                            case 3:
+                                resp = _context.sent;
+
+                                if (resp.data.is_logout) {
+                                    console.log(resp.data.message);
+                                    localStorage.clear();
+                                    this.$router.push('/');
+                                }
+
+                            case 5:
+                            case 'end':
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, this);
+            }));
+
+            function logout() {
+                return _ref.apply(this, arguments);
+            }
+
+            return logout;
+        }(),
         handleScroll: function handleScroll(event) {
             var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             var scrolled = winScroll / height * 100;
-            document.getElementById("myBar").style.width = scrolled + "%";
+            document.getElementById("bar").style.width = scrolled + "%";
         }
     },
     created: function created() {
@@ -50556,7 +50599,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "progress-container" }, [
-      _c("div", { staticClass: "progress-bar", attrs: { id: "myBar" } })
+      _c("div", { staticClass: "progress-bar", attrs: { id: "bar" } })
     ])
   }
 ]
