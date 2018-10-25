@@ -23,23 +23,23 @@ export default {
     props:['paginator'],
     data() {
       return {
-        
+
       }
-  
+
     },
-  
+
     methods: {
       async goTo(url) {
         if(url){
           let http = new Http();
-          let resp = await http.getDataFromUrl(url); 
-          
+          let resp = await http.getDataFromUrl(url);
+
           this.$parent.paginator = resp.data.paginator;
-        }  
-          
+        }
+
       }
     }
-  
+
   }
 </script>
 <style lang="sass" scoped>
