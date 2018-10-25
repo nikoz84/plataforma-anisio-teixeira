@@ -12,11 +12,15 @@ class LicencaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list()
+    public function list(Request $request)
     {
-        //
+        $limit = ($request->has('limit')) ? $request->query('limit') : 10;
+        $page = ($request->has('page')) ? $request->query('page') : 1;
+
+        $paginator = Licenca::paginate($limit);
+
         return response()->json(
-            ['hola' => 'mundo']
+            ['paginator' => $paginator]
         );
     }
 

@@ -9,7 +9,7 @@
         <a v-on:click="get('conteudos')" class="list-group-item pointer">Mídias Educacionais</a>
         <a v-on:click="get('aplicativos')" class="list-group-item pointer">Aplicativos Educacionais</a>
         <a v-on:click="get('tags')" class="list-group-item pointer">Tags</a>
-        <a v-on:click="get('licenses')" class="list-group-item pointer">Licenças</a>
+        <a v-on:click="get('licencas')" class="list-group-item pointer">Licenças</a>
     </nav>
 </template>
 <script>
