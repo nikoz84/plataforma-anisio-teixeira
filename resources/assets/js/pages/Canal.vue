@@ -85,7 +85,7 @@ export default {
     margin-bottom: 30px;
 }
 .page-header .page-title:after {
-    width: 25%;
+    width: 15%;
     height: 2px;
     content: '';
     background: var(--color);

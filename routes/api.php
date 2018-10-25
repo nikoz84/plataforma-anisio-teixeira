@@ -35,22 +35,22 @@ Route::get('/tags/search/{term}','TagController@search');
 Route::get('/aplicativos', 'AplicativoController@list');
 Route::get('/aplicativos/search/{term}','AplicativoController@search');
 // USUÁRIOS
-Route::post('/users/login', 'UserController@login');
-Route::post('/users/register', 'UserController@register');
-Route::put('/users/reset_pass', 'UserController@resetPass');
 
-// STORAGE
+Route::post('/auth/login', 'AuthController@login')->name('login');
 
-
-/** ACESSO RESTRITO */
-Route::group(['middleware' => 'auth.jwt'], function () {
+Route::group(['middleware' => ['jwt.verify']], function() {
     
-    // USUÁRIOS
-    Route::get('/users/search/{term}', 'UserController@search');
-    Route::get('/users/logout', 'UserController@logout');
-    Route::delete('/users/delete/{id}', 'UserController@delete');
-    Route::get('/users', 'UserController@list');
+    // AUTH
+    Route::post('/auth/logout', 'AuthController@logout')->name('logout');
+    Route::post('/auth/refresh', 'AuthController@refresh')->name('refresh');
+    Route::post('/auth/user', 'AuthController@getAuthUser')->name('me');
 
+    // USUARIO
+    Route::get('/users/search/{term}', 'UserController@search');
+    Route::delete('/users/delete/{id}', 'UserController@delete');
+    Route::delete('/users/{id}', 'UserController@getById');
+    Route::get('/users', 'UserController@list');
+    Route::put('/users/reset_pass', 'UserController@resetPass');
     // APLICATIVOS
     Route::post('/aplicativos/create', 'AplicativoController@create');
     Route::put('/aplicativos/update/{id}', 'AplicativoController@update');
