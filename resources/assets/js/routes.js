@@ -3,7 +3,7 @@ import HomeCanal from './pages/HomeCanal.vue';
 import Sobre from './pages/Sobre.vue';
 import Listar from './pages/Listar.vue';
 import Exibir from './pages/Exibir.vue';
-
+import Formulario from './forms/AdicionarConteudoDigital.vue';
 
 const routes =[
     {
@@ -22,7 +22,7 @@ const routes =[
         requiresAuth: true,
         //is_admin : true
       }
-    },
+    },    
     {
       path: '/login',
       name: 'Login',
@@ -63,14 +63,17 @@ const routes =[
           path: 'exibir',
           name: 'Exibir',
           component: Exibir
+        },
+        {
+          path: 'formulario',
+          name: 'Formulario',
+          component: Formulario
         }
+
 
       ]
     }
 ];
-
-
-
 
 
 export default routes;

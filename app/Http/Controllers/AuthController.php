@@ -15,7 +15,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.verify')->except(['login']);
+        $this->middleware('jwt.verify')->except(['login','register']);
     }
     /**
      * Login Usuario.
@@ -120,7 +120,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6',
         ]);
 
         if($validator->fails()){
@@ -138,16 +138,5 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
         
     }
-    /*
-    public function getAuthUser(Request $request)
-    {
-        $this->validate($request, [
-            'token' => 'required'
-        ]);
- 
-        $user = JWTAuth::authenticate($request->token);
- 
-        return response()->json(['user' => $user]);
-    }
-    */
+    
 }

@@ -32,7 +32,7 @@ export default class Http {
     }
     async postData(){
         try {
-            return await axios.post(this.url, this.data);
+            return await axios.post(this.endpoint + '/auth/register', this.data);
             
         } catch (error) {
             return await error.response;

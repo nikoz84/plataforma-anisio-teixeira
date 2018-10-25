@@ -10,6 +10,9 @@
             <router-link tag="li" :to="{ name: 'Sobre', params: {slug: $route.params.slug}}">
                 <a>Sobre</a>
             </router-link>
+            <router-link tag="li" :to="{ name: 'Formulario', params: {slug: $route.params.slug}}">
+                <a>Formulario</a>
+            </router-link>
         </ul>    
     </nav>
 </template>

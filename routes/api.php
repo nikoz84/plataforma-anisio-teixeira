@@ -35,9 +35,10 @@ Route::get('/tags/search/{term}','TagController@search');
 // APLICATIVOS
 Route::get('/aplicativos', 'AplicativoController@list');
 Route::get('/aplicativos/search/{term}','AplicativoController@search');
-// USUÁRIOS
 
 Route::post('/auth/login', 'AuthController@login')->name('login');
+Route::post('/auth/register', 'AuthController@register')->name('register');
+
 
 Route::group(['middleware' => ['jwt.verify']], function() {
     
