@@ -1,14 +1,14 @@
 webpackJsonp([3],{
 
-/***/ 109:
+/***/ 110:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(129)
+var __vue_script__ = __webpack_require__(130)
 /* template */
-var __vue_template__ = __webpack_require__(130)
+var __vue_template__ = __webpack_require__(131)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -48,14 +48,15 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 129:
+/***/ 130:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store_js__ = __webpack_require__(16);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -87,6 +88,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'login',
   data: function data() {
@@ -96,8 +98,13 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         password: null
       },
       message: '',
-      loginSuccess: null
+      isError: true
     };
+  },
+  beforeCreate: function beforeCreate() {
+    if (!__WEBPACK_IMPORTED_MODULE_2__store_js__["a" /* default */].state.isLogged) {
+      this.$router.push('/login');
+    }
   },
 
   methods: {
@@ -116,16 +123,20 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
               case 4:
                 resp = _context.sent;
 
-
-                localStorage.setItem('token', resp.data.access_token);
-
-                if (localStorage.token == null || localStorage.token == undefined) {
-                  this.$router.push('login');
+                if (!resp.data.success) {
+                  this.isError = resp.data.success;
+                  this.message = resp.data.message;
+                  this.$router.push('/login');
+                } else {
+                  this.isError = resp.data.success;
+                  if (resp.data.token.access_token) {
+                    localStorage.setItem('token', resp.data.token.access_token);
+                    __WEBPACK_IMPORTED_MODULE_2__store_js__["a" /* default */].commit('LOGIN_USER');
+                    this.$router.push('/admin');
+                  }
                 }
 
-                this.$router.push('admin');
-
-              case 8:
+              case 6:
               case 'end':
                 return _context.stop();
             }
@@ -144,7 +155,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 /***/ }),
 
-/***/ 130:
+/***/ 131:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -235,7 +246,7 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm.loginSuccess == false
+          !_vm.isError
             ? _c(
                 "div",
                 { staticClass: "alert alert-info", attrs: { role: "alert" } },

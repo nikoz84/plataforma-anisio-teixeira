@@ -14,7 +14,7 @@
           </div>
           <button type="submit" class="btn btn-default">Login</button>
         </form>
-        <div v-if="loginSuccess == false" class="alert alert-info" role="alert" >
+        <div v-if="!isError" class="alert alert-info" role="alert" >
           {{ message }}
         </div>
       </div>
@@ -24,6 +24,7 @@
 
 <script>
 import Http from '../http.js';
+import store from '../store.js';
 
 export default {
   name: 'login',
@@ -34,7 +35,12 @@ export default {
         password: null
       },
       message : '',
-      loginSuccess : null
+      isError : true
+    }
+  },
+  beforeCreate () {
+    if (!store.state.isLogged) {
+        this.$router.push('/login')
     }
   },
   methods:{
@@ -42,17 +48,25 @@ export default {
       
       let data = { email: this.user.email, password: this.user.password };
       let http = new Http();
-      let resp = await http.postData('/auth/login', data);
       
-      localStorage.setItem('token', resp.data.access_token)
+        let resp = await http.postData('/auth/login', data);
+        if(!resp.data.success){
+          this.isError = resp.data.success;
+          this.message = resp.data.message;
+          this.$router.push('/login')
+        }else{
+          this.isError = resp.data.success;
+          if(resp.data.token.access_token){
+            localStorage.setItem('token', resp.data.token.access_token)
+            store.commit('LOGIN_USER')
+            this.$router.push('/admin')
+          }
+        }
+        
       
-      if(localStorage.token == null || localStorage.token == undefined){
-        this.$router.push('login')
-      }
-
-      this.$router.push('admin')
+        
       
-           
+      
     }
   }
 }

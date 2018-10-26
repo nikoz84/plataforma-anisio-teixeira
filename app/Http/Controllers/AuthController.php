@@ -33,14 +33,20 @@ class AuthController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => 'Email ou Senha inválidos',
-                ], 401);
+                ]);
             }
         }catch (JWTException $e) {
             
-            return response()->json(['error' => 'Impossível criar Token de acesso'], 500);
+            return response()->json([
+                'success' => false,
+                'error' => 'Impossível criar Token de acesso'
+            ], 500);
         }
 
-        return $this->respondWithToken($token);
+        return response()->json([
+            'success' => true,
+            'token' => $this->respondWithToken($token)
+        ]);
     }
     /**
      * Get the authenticated User.
@@ -83,7 +89,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Usuário Deslogado com sucesso!!',
-            'is_logout' => true
+            'success' => true
         ]);
     }
     /**
@@ -93,7 +99,10 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        return response()->json([
+            'success' => true,
+            'token' => $this->respondWithToken(auth()->refresh())
+        ]);
     }
 
     /**
@@ -105,11 +114,11 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
-        return response()->json([
+        return [
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
-        ]);
+        ];
     }
     /**
      * Registro do usuário.
@@ -136,7 +145,9 @@ class AuthController extends Controller
 
         $token = auth()->login($user);
 
-        return $this->respondWithToken($token);
+        return response()->json([
+            $this->respondWithToken($token)
+        ]);
         
     }
     

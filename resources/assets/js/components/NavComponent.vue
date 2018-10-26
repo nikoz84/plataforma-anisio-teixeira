@@ -46,11 +46,11 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuário <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <router-link tag="li" to="/login" >
+                            <router-link tag="li" to="/login" v-if="!isLogged">
                                 <a>Login</a>
                             </router-link>
-                            <li>
-                                <a v-on:click="logout()">Sair</a>
+                            <li v-else-if="isLogged">
+                                <a v-on:click.prevent="logout()">Sair</a>
                             </li>
                         </ul>
                     </li>
@@ -65,25 +65,33 @@
 
 <script>
 import Http from '../http.js';
+import store from '../store.js'
 
 export default {
     name : 'nav-app',
     data () {
         return {
-
+            isLogged : store.state.isLogged   
         }
     },
     mounted() {
+        console.log(store.state.isLogged)        
     },
     methods: {
         async logout(){
             let http = new Http();
-            let resp = await http.postData('/auth/logout');    
-            if(resp.data.is_logout){
-                console.log(resp.data.message)
-                localStorage.clear();
-                this.$router.push('/');
-            }    
+            try{
+                let resp = await http.postData('/auth/logout');
+                
+                if(resp.data.success){
+                    localStorage.removeItem('token')
+                    store.commit('LOGOUT_USER')
+                    this.$router.push('/')
+                }
+                
+            } catch (error){
+                console.warn(error.response)
+            }
             
         },
         handleScroll (event) {
