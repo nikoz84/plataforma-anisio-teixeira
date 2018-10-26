@@ -3,7 +3,7 @@ import HomeCanal from './pages/HomeCanal.vue';
 import Sobre from './pages/Sobre.vue';
 import Listar from './pages/Listar.vue';
 import Exibir from './pages/Exibir.vue';
-import Formulario from './forms/AdicionarConteudoDigital.vue';
+import Formulario from './forms/ConteudoForm.vue';
 
 const routes =[
     {
@@ -53,7 +53,7 @@ const routes =[
         {
           path: 'listar',
           name: 'Listar',
-          component: () => import(/* webpackChunkName: "listar" */ './pages/Listar.vue')
+          component: Listar
         },
         {
           path: 'exibir',
