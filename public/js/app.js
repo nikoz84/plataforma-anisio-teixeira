@@ -18228,7 +18228,9 @@ var staticRenderFns = [
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "panel-body" })
+        _c("div", { staticClass: "panel-body" }, [
+          _c("i", { staticClass: "fa fa-ellipsis-v" })
+        ])
       ])
     ])
   },
