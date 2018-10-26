@@ -2,9 +2,9 @@
     <section class="container-fluid heigth">
         <div class="row">
             <aside class="col-sm-3">
-                <header class="text-center"> 
+                <div class="text-center"> 
                     <h3>Filtro</h3>
-                </header>
+                </div>
                 <SidebarCanal></SidebarCanal>
             </aside>
             <article class="col-sm-9">
@@ -13,7 +13,10 @@
                     <NavCanal></NavCanal>
                 </header>
                 <section>
-                    <transition name="fade" mode="out-in">
+                    <transition name="custom-classes-transition" 
+                                enter-active-class="animated fadeIn" 
+                                leave-active-class="animated fadeOut"
+                                mode="out-in">
                         <router-view v-bind:color="color"></router-view>
                     </transition>
                 </section>
@@ -85,17 +88,7 @@ export default {
     position: absolute;
     bottom: -10px;
 }
-.fade-enter {
-  opacity: 0;
-}
-.fade-enter-active {
-  transition: opacity 1s ease;
-}
-.fade-leave {}
-.fade-leave-active {
-  transition: opacity 1s ease;
-  opacity: 0;
-}
+
 aside > header > h3 {
     margin-top: 5px;
     font-size: 18px;

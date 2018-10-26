@@ -7,7 +7,7 @@ import store from './store.js';
 
 Vue.use(VueRouter);
 
-require('vue2-animate/src/sass/vue2-animate.scss');
+require('animate.css/animate.min.css');
 require('./bootstrap');
 
 
