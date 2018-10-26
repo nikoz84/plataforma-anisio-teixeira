@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\DB;
 
 class CanalController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('jwt.verify')->except(['list','search','getBySlug']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,14 +24,14 @@ class CanalController extends Controller
         $page = ($request->has('page')) ? $request->query('page') : 1;
         $canais = Canal::where('is_active', true)
                         ->paginate($limit);
-        
+        $canais->currentPage($page);
         $canais->setPath("/canais?limit={$limit}");                        
 
         return response()->json([
             'title'=> 'Lista de canais',
             'paginator' => $canais,
             'page'=> $canais->currentPage(),
-            'limit' => $canais->currentPage()
+            'limit' => $canais->perPage()
         ]);
     }
 
@@ -116,13 +120,13 @@ class CanalController extends Controller
 
         $canais = Canal::where(DB::raw('unaccent(lower(name))'), 'ILIKE' , DB::raw("unaccent(lower('%{$termo}%'))"))
                         ->paginate($limit);
-        
+        $canais->currentPage($page);
         $canais->setPath("/canais/search/{$termo}?limit={$limit}");                        
 
         return response()->json([
             'paginator' => $canais,
             'page'=> $canais->currentPage(),
-            'limit' => $canais->currentPage()
+            'limit' => $canais->perPage()
         ]);
     }
 }

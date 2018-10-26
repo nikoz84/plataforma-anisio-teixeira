@@ -40,7 +40,7 @@ Route::post('/auth/login', 'AuthController@login')->name('login');
 Route::post('/auth/register', 'AuthController@register')->name('register');
 
 
-Route::group(['middleware' => ['jwt.verify']], function() {
+Route::group(['middleware' => ['jwt.verify','cors']], function() {
     
     // AUTH
     Route::post('/auth/logout', 'AuthController@logout')->name('logout');
@@ -77,5 +77,5 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('/licencas/create','LicencaController@create');
     Route::put('/licencas/update/{id}','LicencaController@update');
     Route::delete('/licencas/delete/{id}','LicencaController@delete');
-
+    Route::get('/licencas/search/{term}', 'LicencaController@search');
 });

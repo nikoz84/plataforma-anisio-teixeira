@@ -86,7 +86,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "js/" + ({"0":"admin","1":"canal","2":"home","3":"login"}[chunkId]||chunkId) + ".bundle.js";
+/******/ 		script.src = __webpack_require__.p + "js/" + ({"0":"admin","1":"canal","2":"login","3":"home"}[chunkId]||chunkId) + ".bundle.js";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -459,6 +459,88 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports) {
 
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
 /* globals __VUE_SSR_CONTEXT__ */
 
 // IMPORTANT: Do NOT use ES2015 features in this file.
@@ -561,88 +643,6 @@ module.exports = function normalizeComponent (
     exports: scriptExports,
     options: options
   }
-}
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
 }
 
 
@@ -900,8 +900,7 @@ var Http = function () {
     function Http() {
         _classCallCheck(this, Http);
 
-        this.endpoint = '/api-v1';
-        this.headersData = { headers: { Authorization: "Bearer " + localStorage.token } };
+        this.api = '/api-v1';
     }
 
     _createClass(Http, [{
@@ -948,33 +947,37 @@ var Http = function () {
         key: 'getDataFromUrl',
         value: function () {
             var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
-                var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+                var endPoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+                var url;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
                     while (1) {
                         switch (_context2.prev = _context2.next) {
                             case 0:
                                 _context2.prev = 0;
-                                _context2.next = 3;
-                                return axios.get(this.endpoint + url, this.data);
+                                url = this.api + '/' + endPoint + '?token=' + localStorage.token;
 
-                            case 3:
+                                console.warn(url);
+                                _context2.next = 5;
+                                return axios.get(url, this.data);
+
+                            case 5:
                                 return _context2.abrupt('return', _context2.sent);
 
-                            case 6:
-                                _context2.prev = 6;
+                            case 8:
+                                _context2.prev = 8;
                                 _context2.t0 = _context2['catch'](0);
-                                _context2.next = 10;
+                                _context2.next = 12;
                                 return _context2.t0.response;
 
-                            case 10:
+                            case 12:
                                 return _context2.abrupt('return', _context2.sent);
 
-                            case 11:
+                            case 13:
                             case 'end':
                                 return _context2.stop();
                         }
                     }
-                }, _callee2, this, [[0, 6]]);
+                }, _callee2, this, [[0, 8]]);
             }));
 
             function getDataFromUrl() {
@@ -984,45 +987,47 @@ var Http = function () {
             return getDataFromUrl;
         }()
     }, {
-        key: 'search',
+        key: 'postData',
         value: function () {
-            var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(termo, limit, page) {
+            var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(url, data) {
+                var urlPost;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
                     while (1) {
                         switch (_context3.prev = _context3.next) {
                             case 0:
                                 _context3.prev = 0;
-                                _context3.next = 3;
-                                return this.http.get(this.url + '/search/termo/' + termo + '/limit/' + limit + '/page/' + page, this.data);
+                                urlPost = this.api + url + ('?token=' + localStorage.token);
+                                _context3.next = 4;
+                                return axios.post(urlPost, data);
 
-                            case 3:
+                            case 4:
                                 return _context3.abrupt('return', _context3.sent);
 
-                            case 6:
-                                _context3.prev = 6;
+                            case 7:
+                                _context3.prev = 7;
                                 _context3.t0 = _context3['catch'](0);
-                                _context3.next = 10;
+                                _context3.next = 11;
                                 return _context3.t0.response;
 
-                            case 10:
+                            case 11:
                                 return _context3.abrupt('return', _context3.sent);
 
-                            case 11:
+                            case 12:
                             case 'end':
                                 return _context3.stop();
                         }
                     }
-                }, _callee3, this, [[0, 6]]);
+                }, _callee3, this, [[0, 7]]);
             }));
 
-            function search(_x5, _x6, _x7) {
+            function postData(_x5, _x6) {
                 return _ref3.apply(this, arguments);
             }
 
-            return search;
+            return postData;
         }()
     }, {
-        key: 'postData',
+        key: 'putData',
         value: function () {
             var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4(url, data) {
                 var urlPost;
@@ -1031,9 +1036,9 @@ var Http = function () {
                         switch (_context4.prev = _context4.next) {
                             case 0:
                                 _context4.prev = 0;
-                                urlPost = this.endpoint + url;
+                                urlPost = this.api + url + ('?token=' + localStorage.token);
                                 _context4.next = 4;
-                                return axios.post(urlPost, data, this.headersData);
+                                return axios.put(urlPost, data, this.headersData);
 
                             case 4:
                                 return _context4.abrupt('return', _context4.sent);
@@ -1055,14 +1060,14 @@ var Http = function () {
                 }, _callee4, this, [[0, 7]]);
             }));
 
-            function postData(_x8, _x9) {
+            function putData(_x7, _x8) {
                 return _ref4.apply(this, arguments);
             }
 
-            return postData;
+            return putData;
         }()
     }, {
-        key: 'putData',
+        key: 'deleteData',
         value: function () {
             var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5(url, data) {
                 var urlPost;
@@ -1071,9 +1076,9 @@ var Http = function () {
                         switch (_context5.prev = _context5.next) {
                             case 0:
                                 _context5.prev = 0;
-                                urlPost = this.endpoint + url;
+                                urlPost = this.api + url + ('?token=' + localStorage.token);
                                 _context5.next = 4;
-                                return axios.put(urlPost, data, this.headersData);
+                                return axios.delete(urlPost, data, this.headersData);
 
                             case 4:
                                 return _context5.abrupt('return', _context5.sent);
@@ -1095,48 +1100,8 @@ var Http = function () {
                 }, _callee5, this, [[0, 7]]);
             }));
 
-            function putData(_x10, _x11) {
+            function deleteData(_x9, _x10) {
                 return _ref5.apply(this, arguments);
-            }
-
-            return putData;
-        }()
-    }, {
-        key: 'deleteData',
-        value: function () {
-            var _ref6 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee6(url, data) {
-                var urlPost;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee6$(_context6) {
-                    while (1) {
-                        switch (_context6.prev = _context6.next) {
-                            case 0:
-                                _context6.prev = 0;
-                                urlPost = this.endpoint + url;
-                                _context6.next = 4;
-                                return axios.delete(urlPost, data, this.headersData);
-
-                            case 4:
-                                return _context6.abrupt('return', _context6.sent);
-
-                            case 7:
-                                _context6.prev = 7;
-                                _context6.t0 = _context6['catch'](0);
-                                _context6.next = 11;
-                                return _context6.t0.response;
-
-                            case 11:
-                                return _context6.abrupt('return', _context6.sent);
-
-                            case 12:
-                            case 'end':
-                                return _context6.stop();
-                        }
-                    }
-                }, _callee6, this, [[0, 7]]);
-            }));
-
-            function deleteData(_x12, _x13) {
-                return _ref6.apply(this, arguments);
             }
 
             return deleteData;
@@ -1147,13 +1112,13 @@ var Http = function () {
 
             switch (true) {
                 case idCanal == 5:
-                    return this.endpoint + '/conteudos?site=true&limit=' + limit + '&page=' + page;
+                    return this.api + '/conteudos?site=true&limit=' + limit + '&page=' + page;
                     break;
                 case idCanal == 9:
-                    return this.endpoint + '/aplicativos?limit=' + limit + '&page=' + page;
+                    return this.api + '/aplicativos?limit=' + limit + '&page=' + page;
                     break;
                 default:
-                    return this.endpoint + '/conteudos?canal=' + idCanal + '&limit=' + limit + '&page=' + page;
+                    return this.api + '/conteudos?canal=' + idCanal + '&limit=' + limit + '&page=' + page;
             }
         }
     }]);
@@ -12487,7 +12452,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(36)
 }
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(38)
 /* template */
@@ -12806,7 +12771,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(41)
 }
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(43)
 /* template */
@@ -12857,7 +12822,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(50)
 }
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(52)
 /* template */
@@ -15892,7 +15857,7 @@ var routes = [{
   path: '/',
   name: 'Home',
   component: function component() {
-    return __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, 108));
+    return __webpack_require__.e/* import() */(3).then(__webpack_require__.bind(null, 108));
   },
   meta: {
     requiresAuth: false
@@ -15911,7 +15876,7 @@ var routes = [{
   path: '/login',
   name: 'Login',
   component: function component() {
-    return __webpack_require__.e/* import() */(3).then(__webpack_require__.bind(null, 110));
+    return __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, 110));
   },
   meta: {
     requiresAuth: false,
@@ -15962,7 +15927,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(26)
 }
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(29)
 /* template */
@@ -16034,7 +15999,7 @@ if(false) {
 /* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -16134,7 +16099,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(32)
 }
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(34)
 /* template */
@@ -16206,7 +16171,7 @@ if(false) {
 /* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -16288,7 +16253,7 @@ if(false) {
 /* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -17184,7 +17149,7 @@ if(false) {
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -17237,7 +17202,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(45)
 }
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(47)
 /* template */
@@ -17309,7 +17274,7 @@ if(false) {
 /* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -17444,7 +17409,7 @@ if(false) {
 /* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -17504,7 +17469,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             switch (_context.prev = _context.next) {
               case 0:
                 if (!url) {
-                  _context.next = 6;
+                  _context.next = 7;
                   break;
                 }
 
@@ -17515,10 +17480,10 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
               case 4:
                 resp = _context.sent;
 
-
+                console.log(resp.data);
                 this.$parent.paginator = resp.data.paginator;
 
-              case 6:
+              case 7:
               case 'end':
                 return _context.stop();
             }
@@ -17644,7 +17609,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(56)
 }
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(58)
 /* template */
@@ -17716,7 +17681,7 @@ if(false) {
 /* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -17773,7 +17738,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(61)
 /* template */
@@ -19191,7 +19156,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(65)
 }
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(67)
 /* template */
@@ -19263,7 +19228,7 @@ if(false) {
 /* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -19313,7 +19278,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(69)
 }
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(71)
 /* template */
@@ -19385,7 +19350,7 @@ if(false) {
 /* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -19505,28 +19470,28 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                             case 4:
                                 resp = _context.sent;
 
-
+                                console.warn(resp.data);
                                 if (resp.data.success) {
                                     localStorage.removeItem('token');
                                     __WEBPACK_IMPORTED_MODULE_2__store_js__["a" /* default */].commit('LOGOUT_USER');
                                     this.$router.push('/');
                                 }
 
-                                _context.next = 11;
+                                _context.next = 12;
                                 break;
 
-                            case 8:
-                                _context.prev = 8;
+                            case 9:
+                                _context.prev = 9;
                                 _context.t0 = _context['catch'](1);
 
                                 console.warn(_context.t0.response);
 
-                            case 11:
+                            case 12:
                             case 'end':
                                 return _context.stop();
                         }
                     }
-                }, _callee, this, [[1, 8]]);
+                }, _callee, this, [[1, 9]]);
             }));
 
             function logout() {
@@ -19821,7 +19786,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(74)
 }
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(76)
 /* template */
@@ -19893,7 +19858,7 @@ if(false) {
 /* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -20309,7 +20274,7 @@ if(false) {
 /* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 

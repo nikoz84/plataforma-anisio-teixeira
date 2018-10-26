@@ -27,8 +27,8 @@ export default {
         async get(endpoint){
             this.$parent.show = false;
             let http = new Http();
-            let resp = await http.getDataFromUrl(`/${endpoint}`);
-            
+            let resp = await http.getDataFromUrl(endpoint);
+            console.log(resp.data)
             this.$parent.paginator = resp.data.paginator;
             this.$parent.title = resp.data.title;
             this.$parent.search = endpoint;

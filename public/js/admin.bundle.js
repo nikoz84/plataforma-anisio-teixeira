@@ -8,7 +8,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(116)
 }
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(118)
 /* template */
@@ -82,7 +82,7 @@ if(false) {
 /***/ 117:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -162,7 +162,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(120)
 }
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(122)
 /* template */
@@ -236,7 +236,7 @@ if(false) {
 /***/ 121:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -297,18 +297,18 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                 this.$parent.show = false;
                                 http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                 _context.next = 4;
-                                return http.getDataFromUrl('/' + endpoint);
+                                return http.getDataFromUrl(endpoint);
 
                             case 4:
                                 resp = _context.sent;
 
-
+                                console.log(resp.data);
                                 this.$parent.paginator = resp.data.paginator;
                                 this.$parent.title = resp.data.title;
                                 this.$parent.search = endpoint;
                                 this.$parent.show = true;
 
-                            case 9:
+                            case 10:
                             case 'end':
                                 return _context.stop();
                         }
@@ -446,7 +446,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(125)
 }
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(127)
 /* template */
@@ -520,7 +520,7 @@ if(false) {
 /***/ 126:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -574,7 +574,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
-                                url = '/' + this.$parent.search + '/search/' + this.termo;
+                                url = this.$parent.search + '/search/' + this.termo;
 
 
                                 this.$parent.show = false;

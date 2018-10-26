@@ -33,7 +33,7 @@ export default {
         if(url){
           let http = new Http();
           let resp = await http.getDataFromUrl(url);
-
+          console.log(resp.data)  
           this.$parent.paginator = resp.data.paginator;
         }
 

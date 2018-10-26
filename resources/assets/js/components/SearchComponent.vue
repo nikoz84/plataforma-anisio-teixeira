@@ -21,7 +21,7 @@ export default {
     },
     methods:{
         async onSearch(){
-            let url = `/${this.$parent.search}/search/${this.termo}`;
+            let url = `${this.$parent.search}/search/${this.termo}`;
             
             this.$parent.show = false;
             let http = new Http();

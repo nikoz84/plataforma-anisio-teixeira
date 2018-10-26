@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('jwt.verify')->except(['list','search']);
+    }
+
     /**
      * Display a listing of the resource.
      *

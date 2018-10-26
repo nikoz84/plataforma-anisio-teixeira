@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class ConteudoController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('jwt.verify')->except(['list','search']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -78,7 +82,6 @@ class ConteudoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
         $idConteudo = DB::table('conteudos')
                         ->where('id', $id)
                         ->update( [
