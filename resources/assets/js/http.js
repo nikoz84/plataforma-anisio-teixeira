@@ -1,8 +1,8 @@
 
 export default class Http {
-    constructor(data = {}){
+    constructor(){
         this.endpoint = '/api-v1';
-        this.data = data;
+        this.headersData = { headers: { Authorization: "Bearer " + localStorage.token }};
         
     }
     async getDataFromIdCanal(idCanal,limit, page){
@@ -30,25 +30,27 @@ export default class Http {
             return await error.response;
         }
     }
-    async postData(){
+    async postData(url, data){
         try {
-            return await axios.post(this.endpoint + '/auth/register', this.data);
+            let urlPost = this.endpoint + url;
+            return await axios.post( urlPost, data, this.headersData);
+        } catch (error) {
+            return await error.response;
+        }
+    }
+    async putData(url, data){
+        try {
+            let urlPost = this.endpoint + url;
+            return await axios.put( urlPost, data, this.headersData);
             
         } catch (error) {
             return await error.response;
         }
     }
-    async putData(){
+    async deleteData(url, data){
         try {
-            return await axios.put(this.url,this.data);
-            
-        } catch (error) {
-            return await error.response;
-        }
-    }
-    async deleteData(){
-        try {
-            return await axios.delete(this.url,this.data);
+            let urlPost = this.endpoint + url;
+            return await axios.delete( urlPost, data, this.headersData);
             //return response.data;
         } catch (error) {
             return await error.response;

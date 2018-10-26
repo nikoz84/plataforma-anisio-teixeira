@@ -1,14 +1,14 @@
 webpackJsonp([3],{
 
-/***/ 109:
+/***/ 110:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(129)
+var __vue_script__ = __webpack_require__(130)
 /* template */
-var __vue_template__ = __webpack_require__(130)
+var __vue_template__ = __webpack_require__(131)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -48,14 +48,15 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 129:
+/***/ 130:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store_js__ = __webpack_require__(16);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -87,6 +88,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'login',
   data: function data() {
@@ -95,48 +97,46 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         email: null,
         password: null
       },
-      token: '',
       message: '',
-      loginSuccess: null
+      isError: true
     };
+  },
+  beforeCreate: function beforeCreate() {
+    if (!__WEBPACK_IMPORTED_MODULE_2__store_js__["a" /* default */].state.isLogged) {
+      this.$router.push('/login');
+    }
   },
 
   methods: {
     login: function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-        var _this = this;
-
+        var data, http, resp;
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                data = { email: this.user.email, password: this.user.password };
+                http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
+                _context.next = 4;
+                return http.postData('/auth/login', data);
 
-                axios.post('/api-v1/auth/login', { email: this.user.email,
-                  password: this.user.password }).then(function (resp) {
-                  //this.loginSuccess = resp.data.success;
-                  console.log(resp);
-                  localStorage.setItem('token', resp.data.access_token);
-                  //localStorage.setItem('login_success', this.loginSuccess)
-                  //localStorage.setItem('username', resp.data.user.name)
-                  //localStorage.setItem('user_id', resp.data.user.id)
-                  if (localStorage.getItem('token')) {
-                    _this.$router.push('admin');
+              case 4:
+                resp = _context.sent;
+
+                if (!resp.data.success) {
+                  this.isError = resp.data.success;
+                  this.message = resp.data.message;
+                  this.$router.push('/login');
+                } else {
+                  this.isError = resp.data.success;
+                  if (resp.data.token.access_token) {
+                    localStorage.setItem('token', resp.data.token.access_token);
+                    __WEBPACK_IMPORTED_MODULE_2__store_js__["a" /* default */].commit('LOGIN_USER');
+                    this.$router.push('/admin');
                   }
-                }).catch(function (error) {
-                  /*
-                  if (error.response.status === 401) {
-                    this.message = error.response.data.message;
-                    this.loginSuccess = error.response.data.success;
-                    localStorage.setItem('login_success', this.loginSuccess)
-                  }
-                  */
-                });
+                }
 
-                //let http = new Http();
-                //let resp = await http.postData();
-                //console.log(resp);     
-
-              case 1:
+              case 6:
               case 'end':
                 return _context.stop();
             }
@@ -155,7 +155,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 /***/ }),
 
-/***/ 130:
+/***/ 131:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -246,7 +246,7 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm.loginSuccess == false
+          !_vm.isError
             ? _c(
                 "div",
                 { staticClass: "alert alert-info", attrs: { role: "alert" } },

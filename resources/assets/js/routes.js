@@ -32,10 +32,6 @@ const routes =[
         guest: true
       }
     },
-    /*{
-      path: '/sair',
-      redirect: '/'
-    },*/
     {
       path: '/:slug',
       name: 'Canal',
@@ -57,7 +53,7 @@ const routes =[
         {
           path: 'listar',
           name: 'Listar',
-          component: Listar
+          component: () => import(/* webpackChunkName: "listar" */ './pages/Listar.vue')
         },
         {
           path: 'exibir',

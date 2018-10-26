@@ -46,11 +46,11 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuário <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <router-link tag="li" to="/login" >
+                            <router-link tag="li" to="/login" v-if="!isLogged">
                                 <a>Login</a>
                             </router-link>
-                            <li>
-                                <a v-on:click="logout()">Sair</a>
+                            <li v-else-if="isLogged">
+                                <a v-on:click.prevent="logout()">Sair</a>
                             </li>
                         </ul>
                     </li>
@@ -58,41 +58,57 @@
             </div>
         </div>
         <div class="progress-container">
-            <div class="progress-bar" id="myBar"></div>
+            <div class="progress-bar" id="bar"></div>
         </div>
     </nav>
 </template>
 
 <script>
-    export default {
-        name : 'nav-app',
-        data () {
-            return {
+import Http from '../http.js';
+import store from '../store.js'
 
-            }
-        },
-        mounted() {
-        },
-        methods: {
-            logout(){
-                localStorage.clear();
-                this.$router.push('/');
-            },
-            handleScroll (event) {
-                let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                var scrolled = (winScroll / height) * 100;
-                document.getElementById("myBar").style.width = scrolled + "%";
-            }    
-        
-        },
-        created () {
-            window.addEventListener('scroll', this.handleScroll);
-        },
-        destroyed () {
-            window.removeEventListener('scroll', this.handleScroll);
+export default {
+    name : 'nav-app',
+    data () {
+        return {
+            isLogged : store.state.isLogged   
         }
+    },
+    mounted() {
+        console.log(store.state.isLogged)        
+    },
+    methods: {
+        async logout(){
+            let http = new Http();
+            try{
+                let resp = await http.postData('/auth/logout');
+                
+                if(resp.data.success){
+                    localStorage.removeItem('token')
+                    store.commit('LOGOUT_USER')
+                    this.$router.push('/')
+                }
+                
+            } catch (error){
+                console.warn(error.response)
+            }
+            
+        },
+        handleScroll (event) {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("bar").style.width = scrolled + "%";
+        }    
+    
+    },
+    created () {
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    destroyed () {
+        window.removeEventListener('scroll', this.handleScroll);
     }
+}
 </script>
 <style lang="scss" scoped>
 .progress-container {

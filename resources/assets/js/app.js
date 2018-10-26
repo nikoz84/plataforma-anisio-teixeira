@@ -1,20 +1,15 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
-require('./bootstrap');
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Vuex from 'vuex';
 import routes from './routes';
 import MainApp from './components/MainApp';
+import store from './store.js';
+
 
 Vue.use(VueRouter);
-Vue.use(Vuex);
 
 require('vue2-animate/src/sass/vue2-animate.scss');
+require('./bootstrap');
+
 
 const router = new VueRouter({
     mode: 'history',
@@ -24,9 +19,11 @@ const router = new VueRouter({
 });
 
 
+/*
 router.beforeEach((to, from, next) => {
     if(to.matched.some(record => record.meta.requiresAuth)) {
-        if (localStorage.getItem('token') == null) {
+        
+        if ( localStorage.getItem('token') == null) {
             next({
                 path: '/login',
                 params: { nextUrl: to.fullPath }
@@ -36,7 +33,10 @@ router.beforeEach((to, from, next) => {
         }
     } else if(to.matched.some(record => record.meta.guest)) {
         if(localStorage.getItem('token') == null){
-            next()
+            next({
+                path: '/login',
+                params: { nextUrl: to.fullPath }
+            })
         }
         else{
             next({ name: 'Admin'})
@@ -46,7 +46,7 @@ router.beforeEach((to, from, next) => {
     }
   });
 
-
+*/
 new Vue({
     router,
     render: h => h(MainApp)

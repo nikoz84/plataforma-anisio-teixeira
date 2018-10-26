@@ -14,7 +14,7 @@
           </div>
           <button type="submit" class="btn btn-default">Login</button>
         </form>
-        <div v-if="loginSuccess == false" class="alert alert-info" role="alert" >
+        <div v-if="!isError" class="alert alert-info" role="alert" >
           {{ message }}
         </div>
       </div>
@@ -24,6 +24,7 @@
 
 <script>
 import Http from '../http.js';
+import store from '../store.js';
 
 export default {
   name: 'login',
@@ -33,40 +34,39 @@ export default {
         email: null,
         password: null
       },
-      token: '',
       message : '',
-      loginSuccess : null
+      isError : true
+    }
+  },
+  beforeCreate () {
+    if (!store.state.isLogged) {
+        this.$router.push('/login')
     }
   },
   methods:{
     async login(){
       
-      axios.post(`/api-v1/auth/login`,
-                 { email:this.user.email, 
-                 password:this.user.password})
-            .then(resp => {
-              //this.loginSuccess = resp.data.success;
-              console.log(resp)
-              localStorage.setItem('token', resp.data.access_token)
-              //localStorage.setItem('login_success', this.loginSuccess)
-              //localStorage.setItem('username', resp.data.user.name)
-              //localStorage.setItem('user_id', resp.data.user.id)
-              if(localStorage.getItem('token')){
-                this.$router.push('admin')
-              }
-            }).catch(error => {
-              /*
-              if (error.response.status === 401) {
-                this.message = error.response.data.message;
-                this.loginSuccess = error.response.data.success;
-                localStorage.setItem('login_success', this.loginSuccess)
-              }
-              */
-            })
-
-      //let http = new Http();
-      //let resp = await http.postData();
-      //console.log(resp);     
+      let data = { email: this.user.email, password: this.user.password };
+      let http = new Http();
+      
+        let resp = await http.postData('/auth/login', data);
+        if(!resp.data.success){
+          this.isError = resp.data.success;
+          this.message = resp.data.message;
+          this.$router.push('/login')
+        }else{
+          this.isError = resp.data.success;
+          if(resp.data.token.access_token){
+            localStorage.setItem('token', resp.data.token.access_token)
+            store.commit('LOGIN_USER')
+            this.$router.push('/admin')
+          }
+        }
+        
+      
+        
+      
+      
     }
   }
 }
