@@ -297,18 +297,18 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                 this.$parent.show = false;
                                 http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                 _context.next = 4;
-                                return http.getDataFromUrl(endpoint);
+                                return http.getDataFromUrl('/' + endpoint);
 
                             case 4:
                                 resp = _context.sent;
 
-                                console.log(resp.data);
+
                                 this.$parent.paginator = resp.data.paginator;
                                 this.$parent.title = resp.data.title;
                                 this.$parent.search = endpoint;
                                 this.$parent.show = true;
 
-                            case 10:
+                            case 9:
                             case 'end':
                                 return _context.stop();
                         }
@@ -574,7 +574,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
-                                url = this.$parent.search + '/search/' + this.termo;
+                                url = '/' + this.$parent.search + '/search/' + this.termo;
 
 
                                 this.$parent.show = false;
