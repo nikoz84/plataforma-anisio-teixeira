@@ -85,7 +85,7 @@
             <div class="panel panel-default col-md-5">
             <div class="panel-heading">Selecione o(s) componente(s) curricular(es) ou disciplina(s) que mais se adequem ao contéudo:</div>
             <div class="panel-body">
-            <i class="fa fa-ellipsis-v"></i>
+            <font-awesome-icon icon="coffee" />
 
             </div>
             </div>
