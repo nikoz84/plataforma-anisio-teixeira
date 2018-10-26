@@ -12883,9 +12883,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 __WEBPACK_IMPORTED_MODULE_5__fortawesome_fontawesome_svg_core__["library"].add(__WEBPACK_IMPORTED_MODULE_6__fortawesome_free_solid_svg_icons__["a" /* faCoffee */]);
-
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('font-awesome-icon', __WEBPACK_IMPORTED_MODULE_7__fortawesome_vue_fontawesome__["FontAwesomeIcon"]);
-
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.config.productionTip = false;
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
