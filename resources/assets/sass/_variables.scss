@@ -59,7 +59,7 @@ $nav-pills-active-link-hover-color: adjust-color($gray, $lightness: -30%);
 $nav-tabs-border-color: adjust-color($gray, $lightness: 20%);
 $nav-tabs-link-hover-border-color: adjust-color($gray, $lightness: -10%);
 $nav-tabs-active-link-hover-bg: $body-bg;
-$nav-tabs-active-link-hover-color: $gray;
+$nav-tabs-active-link-hover-color: adjust-color($gray, $lightness: 50%);
 $nav-tabs-active-link-hover-border-color: #ddd;
 $nav-tabs-justified-link-border-color: #ddd;
 $nav-tabs-justified-active-link-border-color: $body-bg;

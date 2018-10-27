@@ -44,7 +44,10 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuário <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            Usuário 
+                            <span class="caret"></span>
+                        </a>
                         <ul class="dropdown-menu">
                             <router-link tag="li" to="/login" v-if="isLogged == false">
                                 <a>Login</a>
