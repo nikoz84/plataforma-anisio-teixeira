@@ -27,14 +27,18 @@ export default {
         async get(endpoint){
             this.$parent.show = false;
             let http = new Http();
-            let resp = await http.getDataFromUrl(`/${endpoint}`);
+            let resp = await http.getDataFromUrl('/'+endpoint);
             
-            this.$parent.paginator = resp.data.paginator;
-            this.$parent.title = resp.data.title;
-            this.$parent.search = endpoint;
-            this.$parent.show = true;
-            
-        }
+            if(!resp.data.success){
+                console.log(resp.data.status)
+            }else{
+                this.$parent.paginator = resp.data.paginator;
+                this.$parent.title = resp.data.title;
+                this.$parent.search = endpoint;
+                this.$parent.show = true;
+            }
+        },
+        
 
     }
 }

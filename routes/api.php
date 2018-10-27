@@ -18,29 +18,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 */
 
-Route::get('/licencas','LicencaController@list');
-// CANAIS
-Route::get('/canais', 'CanalController@list');
-Route::get('/canais/search/{term}', 'CanalController@search');
-Route::get('/canais/slug/{slug}', 'CanalController@getBySlug');
 
+// CANAIS
+Route::get('/canais/slug/{slug}', 'CanalController@getBySlug');
 // CONTEUDOS
 Route::get('/conteudos', 'ConteudoController@list');
 Route::get('/conteudos/search/{term}', 'ConteudoController@search');
 Route::get('/conteudos/teste', 'ConteudoController@teste');
-// TAGS
-Route::get('/tags','TagController@list');
-Route::get('/tags/search/{term}','TagController@search');
-
 // APLICATIVOS
 Route::get('/aplicativos', 'AplicativoController@list');
 Route::get('/aplicativos/search/{term}','AplicativoController@search');
-
+// AUTH
 Route::post('/auth/login', 'AuthController@login')->name('login');
 Route::post('/auth/register', 'AuthController@register')->name('register');
 
 
-Route::group(['middleware' => ['jwt.verify']], function() {
+Route::group(['middleware' => ['jwt.verify','cors']], function() {
     
     // AUTH
     Route::post('/auth/logout', 'AuthController@logout')->name('logout');
@@ -58,7 +51,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::put('/aplicativos/update/{id}', 'AplicativoController@update');
     Route::delete('/aplicativos/delete/{id}', 'AplicativoController@delete');
 
-    // TAGS 
+    // TAGS
+    Route::get('/tags','TagController@list');
+    Route::get('/tags/search/{term}','TagController@search'); 
     Route::post('/tags/create','TagController@create');
     Route::put('/tags/update/{id}','TagController@update');
     Route::delete('/tags/delete/{id}','TagController@delete');
@@ -72,10 +67,14 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('/canais/create', 'CanalController@create');
     Route::put('/canais/update/{id}', 'CanalController@update');
     Route::delete('/canais/delete/{id}', 'CanalController@delete');
+    Route::get('/canais', 'CanalController@list');
+    Route::get('/canais/search/{term}', 'CanalController@search');
 
     // Licencas
+    Route::get('/licencas','LicencaController@list');
+    Route::get('/licencas/search/{term}', 'LicencaController@search');
     Route::post('/licencas/create','LicencaController@create');
     Route::put('/licencas/update/{id}','LicencaController@update');
     Route::delete('/licencas/delete/{id}','LicencaController@delete');
-
+    
 });

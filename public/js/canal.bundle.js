@@ -1,18 +1,18 @@
 webpackJsonp([1],{
 
-/***/ 111:
+/***/ 114:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(132)
+  __webpack_require__(137)
 }
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(134)
+var __vue_script__ = __webpack_require__(139)
 /* template */
-var __vue_template__ = __webpack_require__(145)
+var __vue_template__ = __webpack_require__(150)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -52,13 +52,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 132:
+/***/ 137:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(133);
+var content = __webpack_require__(138);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -79,37 +79,42 @@ if(false) {
 
 /***/ }),
 
-/***/ 133:
+/***/ 138:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
 // module
-exports.push([module.i, "\n.page-header[data-v-4931cae4] {\n  margin: 0;\n}\n.page-header > h1[data-v-4931cae4] {\n  font-size: 22px;\n}\n.page-header .page-title[data-v-4931cae4] {\n  margin-top: 0;\n  position: relative;\n  margin-bottom: 30px;\n}\n.page-header .page-title[data-v-4931cae4]:after {\n  width: 15%;\n  height: 2px;\n  content: '';\n  background: var(--color);\n  display: block;\n  position: absolute;\n  bottom: -10px;\n}\n.fade-enter[data-v-4931cae4] {\n  opacity: 0;\n}\n.fade-enter-active[data-v-4931cae4] {\n  -webkit-transition: opacity 1s ease;\n  transition: opacity 1s ease;\n}\n.fade-leave-active[data-v-4931cae4] {\n  -webkit-transition: opacity 1s ease;\n  transition: opacity 1s ease;\n  opacity: 0;\n}\naside > header > h3[data-v-4931cae4] {\n  margin-top: 5px;\n  font-size: 18px;\n}\n", ""]);
+exports.push([module.i, "\n.page-header[data-v-4931cae4] {\n  margin: 0;\n}\n.page-header > h1[data-v-4931cae4] {\n  font-size: 22px;\n}\n.page-header .page-title[data-v-4931cae4] {\n  margin-top: 0;\n  position: relative;\n  margin-bottom: 30px;\n}\n.page-header .page-title[data-v-4931cae4]:after {\n  width: 15%;\n  height: 2px;\n  content: '';\n  background: var(--color);\n  display: block;\n  position: absolute;\n  bottom: -10px;\n}\naside > header > h3[data-v-4931cae4] {\n  margin-top: 5px;\n  font-size: 18px;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
 
-/***/ 134:
+/***/ 139:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue__ = __webpack_require__(135);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue__ = __webpack_require__(140);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue__ = __webpack_require__(145);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__http_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__http_js__ = __webpack_require__(6);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -144,7 +149,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     components: { NavCanal: __WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue___default.a, SidebarCanal: __WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue___default.a },
     data: function data() {
         return {
-            title: null,
+            title: '',
             descricao: null,
             idCanal: null,
             options: null,
@@ -165,29 +170,29 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     methods: {
         getCanal: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-                var url, canal, resp;
+                var url, http, resp;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 url = '/canais/slug/' + this.$route.params.slug;
-                                canal = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
+                                http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
                                 _context.next = 4;
-                                return canal.getDataFromUrl(url);
+                                return http.getDataFromUrl(url);
 
                             case 4:
                                 resp = _context.sent;
 
+                                if (resp.data.success) {
+                                    this.idCanal = resp.data.canal.id;
+                                    this.title = resp.data.canal.name;
+                                    this.options = JSON.parse(resp.data.canal.options);
+                                    this.color = this.options.color;
+                                    this.hasCategories = this.options.has_categories;
+                                    localStorage.setItem('idCanal', this.idCanal);
+                                }
 
-                                this.idCanal = resp.data.canal.id;
-                                this.title = resp.data.canal.name;
-                                this.options = JSON.parse(resp.data.canal.options);
-                                this.color = this.options.color;
-                                this.hasCategories = this.options.has_categories;
-                                console.log(this.hasCategories);
-                                localStorage.setItem('idCanal', this.idCanal);
-
-                            case 12:
+                            case 6:
                             case 'end':
                                 return _context.stop();
                         }
@@ -206,19 +211,19 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 /***/ }),
 
-/***/ 135:
+/***/ 140:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(136)
+  __webpack_require__(141)
 }
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(138)
+var __vue_script__ = __webpack_require__(143)
 /* template */
-var __vue_template__ = __webpack_require__(139)
+var __vue_template__ = __webpack_require__(144)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -258,13 +263,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 136:
+/***/ 141:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(137);
+var content = __webpack_require__(142);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -285,10 +290,10 @@ if(false) {
 
 /***/ }),
 
-/***/ 137:
+/***/ 142:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -300,7 +305,7 @@ exports.push([module.i, "", ""]);
 
 /***/ }),
 
-/***/ 138:
+/***/ 143:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -331,7 +336,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 139:
+/***/ 144:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -406,19 +411,19 @@ if (false) {
 
 /***/ }),
 
-/***/ 140:
+/***/ 145:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(141)
+  __webpack_require__(146)
 }
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(143)
+var __vue_script__ = __webpack_require__(148)
 /* template */
-var __vue_template__ = __webpack_require__(144)
+var __vue_template__ = __webpack_require__(149)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -458,13 +463,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 141:
+/***/ 146:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(142);
+var content = __webpack_require__(147);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -485,10 +490,10 @@ if(false) {
 
 /***/ }),
 
-/***/ 142:
+/***/ 147:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -500,7 +505,7 @@ exports.push([module.i, "", ""]);
 
 /***/ }),
 
-/***/ 143:
+/***/ 148:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -525,7 +530,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 144:
+/***/ 149:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -577,7 +582,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 145:
+/***/ 150:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -605,7 +610,13 @@ var render = function() {
                 style: "--color:" + _vm.color,
                 attrs: { stylepseudo: "after:" }
               },
-              [_vm._v(_vm._s(_vm.title))]
+              [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.title) +
+                    "\n                "
+                )
+              ]
             ),
             _vm._v(" "),
             _c("NavCanal")
@@ -618,7 +629,14 @@ var render = function() {
           [
             _c(
               "transition",
-              { attrs: { name: "fade", mode: "out-in" } },
+              {
+                attrs: {
+                  name: "custom-classes-transition",
+                  "enter-active-class": "animated fadeIn",
+                  "leave-active-class": "animated fadeOut",
+                  mode: "out-in"
+                }
+              },
               [_c("router-view", { attrs: { color: _vm.color } })],
               1
             )
@@ -634,7 +652,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("header", { staticClass: "text-center" }, [
+    return _c("div", { staticClass: "text-center" }, [
       _c("h3", [_vm._v("Filtro")])
     ])
   }

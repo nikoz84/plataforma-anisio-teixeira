@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Licenca;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class LicencaController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('jwt.verify')->except(['list','search']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,9 +23,13 @@ class LicencaController extends Controller
 
         $paginator = Licenca::paginate($limit);
 
-        return response()->json(
-            ['paginator' => $paginator]
-        );
+        $paginator->setPath("/licencas?limit={$limit}"); 
+        
+        return response()->json([
+                'success'=> true,
+                'title'=> 'Lista de Licenças',
+                'paginator' => $paginator
+            ]);
     }
 
     /**
@@ -55,5 +63,21 @@ class LicencaController extends Controller
     public function delete(Options $options)
     {
         //
+    }
+    public function search(Request $request, $termo)
+    {
+        $limit = ($request->has('limit')) ? $request->query('limit') : 20; 
+
+        $paginator = Licenca::where(DB::raw('unaccent(lower(name))'), 'ILIKE' , DB::raw("unaccent(lower('%{$termo}%'))"))
+                    ->paginate($limit);
+        
+        $paginator->setPath("/licencas/search/{$termo}?limit={$limit}"); 
+        
+        return response()->json([
+            'success'=> true,
+            'title'=> 'Resultado da busca',   
+            'paginator' => $paginator
+        ]);              
+      
     }
 }

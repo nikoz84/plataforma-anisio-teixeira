@@ -3,6 +3,7 @@
     <div class="row">
       <div class="col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 center-xs">
         <h3 class="center-xs">Faça seu login agora</h3>
+        
         <form v-on:submit.prevent="login()">
           <div class="form-group">
             <label for="email">E-mail</label>
@@ -14,9 +15,14 @@
           </div>
           <button type="submit" class="btn btn-default">Login</button>
         </form>
-        <div v-if="!isError" class="alert alert-info" role="alert" >
-          {{ message }}
-        </div>
+        
+        <transition  name="custom-classes-transition" 
+                     enter-active-class="animated shake" 
+                     leave-active-class="animated fadeOut">
+          <div v-if="!isError" class="alert alert-info" role="alert" >
+            {{ message }}
+          </div>
+        </transition>
       </div>
     </div>  
   </section>
@@ -49,25 +55,26 @@ export default {
       let data = { email: this.user.email, password: this.user.password };
       let http = new Http();
       
-        let resp = await http.postData('/auth/login', data);
-        if(!resp.data.success){
-          this.isError = resp.data.success;
-          this.message = resp.data.message;
-          this.$router.push('/login')
-        }else{
-          this.isError = resp.data.success;
-          if(resp.data.token.access_token){
-            localStorage.setItem('token', resp.data.token.access_token)
-            store.commit('LOGIN_USER')
-            this.$router.push('/admin')
-          }
+      let resp = await http.postData('/auth/login', data);
+      if(!resp.data.success){
+        this.isError = resp.data.success;
+        this.message = resp.data.message;
+        this.$router.push('/login')
+        setTimeout(()=>{
+          this.isError = true; 
+        },3000)
+      }else{
+        this.isError = resp.data.success;
+        if(resp.data.token.access_token){
+          localStorage.setItem('token', resp.data.token.access_token)
+          store.commit('LOGIN_USER')
+          this.$router.push('/admin')
         }
-        
-      
-        
-      
-      
+      }
     }
   }
 }
 </script>
+<style lang="scss" scoped>
+form { margin-top: 30px; margin-bottom: 30px;}
+</style>

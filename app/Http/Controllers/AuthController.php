@@ -58,20 +58,32 @@ class AuthController extends Controller
         try {
 
             if (! $user = JWTAuth::parseToken()->authenticate()) {
-                    return response()->json(['user_not_found'], 404);
+                    return response()->json([
+                        'success'=> false,
+                        'message'=> 'Usuário não encontrado',
+                        'status'=>'user_not_found'], 404);
             }
 
             } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
 
-                    return response()->json(['token_expired'], $e->getStatusCode());
+                    return response()->json([
+                        'success'=> false,
+                        'message'=> 'Token Expirado',
+                        'status'=>'token_expired'], $e->getStatusCode());
 
             } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
 
-                    return response()->json(['token_invalid'], $e->getStatusCode());
+                    return response()->json([
+                        'success'=> false,
+                        'message'=> 'Token Inválido',
+                        'status'=>'token_invalid'], $e->getStatusCode());
 
             } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
 
-                    return response()->json(['token_absent'], $e->getStatusCode());
+                    return response()->json([
+                        'success'=> false,
+                        'message'=> 'Token Ausente',
+                        'status'=>'token_absent'], $e->getStatusCode());
 
         }
 
@@ -146,6 +158,7 @@ class AuthController extends Controller
         $token = auth()->login($user);
 
         return response()->json([
+            'success'=> true,
             $this->respondWithToken($token)
         ]);
         

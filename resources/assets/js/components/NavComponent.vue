@@ -82,7 +82,7 @@ export default {
             let http = new Http();
             try{
                 let resp = await http.postData('/auth/logout');
-                
+                console.warn(resp.data)
                 if(resp.data.success){
                     localStorage.removeItem('token')
                     store.commit('LOGOUT_USER')

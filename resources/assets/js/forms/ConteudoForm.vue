@@ -3,6 +3,12 @@
 
         <form v-on:submit.prevent="createConteudo()">
 
+            <div class="row">
+                
+            <div class="panel panel-default col-md-7">
+            <div class="panel-heading">Adicionar conteúdo digital</div>
+            <div class="panel-body">
+            
             <div class="form-group">
                 <label for="titulo">Título:*</label>
                 <input type="text" class="form-control" id="titulo" aria-describedby="titulo">
@@ -73,6 +79,20 @@
                 <small id="icone-licenca" class="form-text text-muted">Imagem no formato .png, dimensão: 200px x 90px, tamanho máximo: 600KB</small>
             </div>
 
+            </div>
+            </div>
+
+            <div class="panel panel-default col-md-5">
+            <div class="panel-heading">Selecione o(s) componente(s) curricular(es) ou disciplina(s) que mais se adequem ao contéudo:</div>
+            <div class="panel-body">
+            <font-awesome-icon icon="coffee" />
+
+            </div>
+            </div>
+
+
+            </div>
+
             <div class="form-group">
                 <button class="btn btn-default">Enviar</button>
             </div>
@@ -86,7 +106,7 @@
 import Http from '../http.js';
 
 export default {
-    name: 'AdicionarConteudoDigital',
+    name: 'ConteudoForm',
     data(){
         return {
             

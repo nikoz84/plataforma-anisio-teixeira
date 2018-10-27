@@ -1,9 +1,7 @@
 
 export default class Http {
     constructor(){
-        this.endpoint = '/api-v1';
-        this.headersData = { headers: { Authorization: "Bearer " + localStorage.token }};
-        
+        this.api = '/api-v1';
     }
     async getDataFromIdCanal(idCanal,limit, page){
         try{
@@ -14,33 +12,30 @@ export default class Http {
         } 
         
     }
-    async getDataFromUrl(url = ''){
+    async getDataFromUrl(endPoint = '', data ={}){
         try{
-            return await axios.get( this.endpoint + url, this.data);
+            let url = `${this.api}${endPoint}?token=${localStorage.token}`;
+            if(!localStorage.token){
+                url = `${this.api}${endPoint}`;
+            }
+            console.warn(url);
+            return await axios.get( url, data );
         }catch (error){
             return await error.response;
         }
     }
-    async search(termo, limit, page){
-        
-        try {
-            return await this.http.get(`${this.url}/search/termo/${termo}/limit/${limit}/page/${page}`, this.data);
-        } catch (error)
-        {
-            return await error.response;
-        }
-    }
+    
     async postData(url, data){
         try {
-            let urlPost = this.endpoint + url;
-            return await axios.post( urlPost, data, this.headersData);
+            let urlPost = this.api + url + `?token=${localStorage.token}`;
+            return await axios.post(urlPost, data);
         } catch (error) {
             return await error.response;
         }
     }
     async putData(url, data){
         try {
-            let urlPost = this.endpoint + url;
+            let urlPost = this.api + url + `?token=${localStorage.token}`;
             return await axios.put( urlPost, data, this.headersData);
             
         } catch (error) {
@@ -49,7 +44,7 @@ export default class Http {
     }
     async deleteData(url, data){
         try {
-            let urlPost = this.endpoint + url;
+            let urlPost = this.api + url + `?token=${localStorage.token}`;
             return await axios.delete( urlPost, data, this.headersData);
             //return response.data;
         } catch (error) {
@@ -61,13 +56,13 @@ export default class Http {
 
         switch(true){
             case (idCanal == 5):
-                return `${this.endpoint}/conteudos?site=true&limit=${limit}&page=${page}`;
+                return `${this.api}/conteudos?site=true&limit=${limit}&page=${page}`;
             break;
             case (idCanal == 9):
-                return `${this.endpoint}/aplicativos?limit=${limit}&page=${page}`;
+                return `${this.api}/aplicativos?limit=${limit}&page=${page}`;
             break;
             default:
-                return `${this.endpoint}/conteudos?canal=${idCanal}&limit=${limit}&page=${page}`;     
+                return `${this.api}/conteudos?canal=${idCanal}&limit=${limit}&page=${page}`;     
         }
     }
 }

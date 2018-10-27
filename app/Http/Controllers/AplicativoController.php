@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\DB;
 
 class AplicativoController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('jwt.verify')->except(['list','search']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -27,6 +31,7 @@ class AplicativoController extends Controller
         $aplicativos->setPath("/aplicativos?limit={$limit}"); 
         
         return response()->json([
+            'success'=> true,
             'title'=> 'Aplicativos Educacionais',
             'paginator'=> $aplicativos,
             'page'=> $aplicativos->currentPage(),
@@ -120,6 +125,7 @@ class AplicativoController extends Controller
         $aplicativos->setPath("/aplicativos/search/{$termo}?limit={$limit}");  
 
         return response()->json([
+            'success'=> true,
             'message' => 'Resultados da busca',
             'paginator' => $aplicativos,
             'page'=> $aplicativos->currentPage(),
