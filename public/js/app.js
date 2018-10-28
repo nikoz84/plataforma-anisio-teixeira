@@ -19838,6 +19838,13 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -19873,7 +19880,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
                                 console.warn(data);
                                 //let http = new Http();
-                                //let resp = await http.postData('/conteudos/create', data);
+                                //let resp = await http.postData('/conteudos/', data);
 
                             case 2:
                             case 'end':
@@ -19901,7 +19908,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "conteiner" }, [
+  return _c("div", { staticClass: "row" }, [
     _c(
       "form",
       {
@@ -19913,274 +19920,268 @@ var render = function() {
         }
       },
       [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "panel panel-default col-md-7" }, [
-            _c("div", { staticClass: "panel-heading" }, [
-              _vm._v(
-                "\n                    Adicionar conteúdo digital\n                "
+        _c("div", { staticClass: "panel panel-default col-md-7" }, [
+          _c("div", { staticClass: "panel-heading" }, [
+            _vm._v("\n                Adicionar conteúdo digital\n            ")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "panel-body" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "titulo" } }, [_vm._v("Título:*")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.title,
+                    expression: "title"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  id: "titulo",
+                  "aria-describedby": "titulo"
+                },
+                domProps: { value: _vm.title },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.title = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "small",
+                {
+                  staticClass: "form-text text-muted",
+                  attrs: { id: "titulo" }
+                },
+                [_vm._v("Adicione o nome original da mídia.")]
               )
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "panel-body" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "titulo" } }, [_vm._v("Título:*")]),
-                _vm._v(" "),
-                _c("input", {
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "estado" } }, [
+                _vm._v("Tipo de Conteúdo:*")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
                   directives: [
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.title,
-                      expression: "title"
+                      value: _vm.tipo,
+                      expression: "tipo"
                     }
                   ],
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "text",
-                    id: "titulo",
-                    "aria-describedby": "titulo"
-                  },
-                  domProps: { value: _vm.title },
+                  staticClass: "form-control form-control-lg",
+                  attrs: { id: "licenca-relacionada" },
                   on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.title = $event.target.value
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.tipo = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
                     }
                   }
-                }),
-                _vm._v(" "),
-                _c(
-                  "small",
-                  {
-                    staticClass: "form-text text-muted",
-                    attrs: { id: "titulo" }
-                  },
-                  [_vm._v("Adicione o nome original da mídia.")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "estado" } }, [
-                  _vm._v("Tipo de Conteúdo:*")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.tipo,
-                        expression: "tipo"
-                      }
-                    ],
-                    staticClass: "form-control form-control-lg",
-                    attrs: { id: "licenca-relacionada" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.tipo = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("« SELECIONE »")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "7" } }, [
-                      _vm._v("Animação/Simulação")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "3" } }, [
-                      _vm._v("Apresentação")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "4" } }, [_vm._v("Áudio")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "1" } }, [
-                      _vm._v("Documento/Experimento")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "6" } }, [_vm._v("Imagem")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "2" } }, [
-                      _vm._v("Planilha")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "10" } }, [
-                      _vm._v("Sequência Didática")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "8" } }, [_vm._v("Site")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "9" } }, [
-                      _vm._v("Software Educacional")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "5" } }, [_vm._v("Vídeo")])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "descricao" } }, [
-                  _vm._v("Descrição:*")
-                ]),
-                _vm._v(" "),
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.description,
-                      expression: "description"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { id: "descricao" },
-                  domProps: { value: _vm.description },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.description = $event.target.value
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _vm._m(0),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "autores" } }, [
-                  _vm._v("Autores:*")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.authors,
-                      expression: "authors"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text", id: "autores" },
-                  domProps: { value: _vm.authors },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.authors = $event.target.value
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "fonte" } }, [_vm._v("Fonte:*")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.source,
-                      expression: "source"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text", id: "fonte" },
-                  domProps: { value: _vm.source },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.source = $event.target.value
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "licenca-conteudo" } }, [
-                  _vm._v("Licença de Conteúdo:*")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.license,
-                        expression: "license"
-                      }
-                    ],
-                    staticClass: "form-control form-control-lg",
-                    attrs: { id: "licenca-conteudo" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.license = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("« SELECIONE »")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "1" } }, [_vm._v("Outros")]),
-                    _vm._v(" "),
-                    _vm._m(1),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "3" } }, [
-                      _vm._v("Todos direitos reservados (Copyright)")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "4" } }, [
-                      _vm._v("Domínio público")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "5" } }, [_vm._v("GPL")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "13" } }, [_vm._v("MIT")])
-                  ]
-                )
-              ])
+                },
+                [
+                  _c("option", { attrs: { value: "" } }, [
+                    _vm._v("« SELECIONE »")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "7" } }, [
+                    _vm._v("Animação/Simulação")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "3" } }, [
+                    _vm._v("Apresentação")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "4" } }, [_vm._v("Áudio")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "1" } }, [
+                    _vm._v("Documento/Experimento")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "6" } }, [_vm._v("Imagem")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "2" } }, [_vm._v("Planilha")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "10" } }, [
+                    _vm._v("Sequência Didática")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "8" } }, [_vm._v("Site")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "9" } }, [
+                    _vm._v("Software Educacional")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "5" } }, [_vm._v("Vídeo")])
+                ]
+              )
             ]),
             _vm._v(" "),
-            _vm._m(2)
-          ])
-        ])
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "descricao" } }, [
+                _vm._v("Descrição:*")
+              ]),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.description,
+                    expression: "description"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { id: "descricao" },
+                domProps: { value: _vm.description },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.description = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "autores" } }, [_vm._v("Autores:*")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.authors,
+                    expression: "authors"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "autores" },
+                domProps: { value: _vm.authors },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.authors = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "fonte" } }, [_vm._v("Fonte:*")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.source,
+                    expression: "source"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "fonte" },
+                domProps: { value: _vm.source },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.source = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "licenca-conteudo" } }, [
+                _vm._v("Licença de Conteúdo:*")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.license,
+                      expression: "license"
+                    }
+                  ],
+                  staticClass: "form-control form-control-lg",
+                  attrs: { id: "licenca-conteudo" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.license = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "" } }, [
+                    _vm._v("« SELECIONE »")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "1" } }, [_vm._v("Outros")]),
+                  _vm._v(" "),
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "3" } }, [
+                    _vm._v("Todos direitos reservados (Copyright)")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "4" } }, [
+                    _vm._v("Domínio público")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "5" } }, [_vm._v("GPL")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "13" } }, [_vm._v("MIT")])
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _vm._m(2)
+        ]),
+        _vm._v(" "),
+        _vm._m(3)
       ]
     )
   ])
@@ -20246,6 +20247,22 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "form-group" }, [
       _c("button", { staticClass: "btn btn-default" }, [_vm._v("Enviar")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-default col-md-5" }, [
+      _c("div", { staticClass: "panel-heading" }, [
+        _vm._v(
+          "\n                Selecione o(s) componente(s) curricular(es) ou disciplina(s) que mais se adequem ao contéudo:\n            "
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "panel-body" }, [
+        _vm._v("\n                asdada asd ad asdaa sd\n            ")
+      ])
     ])
   }
 ]
