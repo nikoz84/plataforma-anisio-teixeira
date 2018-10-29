@@ -35,7 +35,7 @@ export default {
           let resp = await http.getDataFromUrl(url);
           console.log(resp.data)
           if(resp.data.success){
-            //this.$parent.paginator = resp.data.paginator;
+            this.$parent.paginator = resp.data.paginator;
           }  
           
         }

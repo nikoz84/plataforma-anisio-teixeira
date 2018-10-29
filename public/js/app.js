@@ -19444,7 +19444,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
                 console.log(resp.data);
                 if (resp.data.success) {
-                  //this.$parent.paginator = resp.data.paginator;
+                  this.$parent.paginator = resp.data.paginator;
                 }
 
               case 7:
@@ -20253,7 +20253,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "panel-default col-md-5" }, [
+    return _c("div", { staticClass: "panel panel-default col-md-5" }, [
       _c("div", { staticClass: "panel-heading" }, [
         _vm._v(
           "\n                Selecione o(s) componente(s) curricular(es) ou disciplina(s) que mais se adequem ao contéudo:\n            "
