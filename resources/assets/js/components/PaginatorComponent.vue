@@ -1,5 +1,5 @@
 <template>
-  <nav aria-label="..." v-if="paginator.total">
+  <nav aria-label="...">
     <p class="text-center">{{ (paginator.total) ? `Total: ${paginator.total}` : `Sem Resultados` }}</p>
     <ul class="pager">
       <li class="previous">
@@ -33,8 +33,11 @@ export default {
         if(url){
           let http = new Http();
           let resp = await http.getDataFromUrl(url);
-
-          this.$parent.paginator = resp.data.paginator;
+          console.log(resp.data)
+          if(resp.data.success){
+            //this.$parent.paginator = resp.data.paginator;
+          }  
+          
         }
 
       }

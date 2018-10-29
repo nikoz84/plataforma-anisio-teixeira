@@ -135,6 +135,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
 
 
 
@@ -160,6 +162,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
   methods: {
     login: function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+        var _this = this;
+
         var data, http, resp;
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -177,6 +181,9 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                   this.isError = resp.data.success;
                   this.message = resp.data.message;
                   this.$router.push('/login');
+                  setTimeout(function () {
+                    _this.isError = true;
+                  }, 3000);
                 } else {
                   this.isError = resp.data.success;
                   if (resp.data.token.access_token) {
@@ -301,7 +308,8 @@ var render = function() {
             {
               attrs: {
                 name: "custom-classes-transition",
-                "enter-active-class": "animated shake"
+                "enter-active-class": "animated shake",
+                "leave-active-class": "animated fadeOut"
               }
             },
             [

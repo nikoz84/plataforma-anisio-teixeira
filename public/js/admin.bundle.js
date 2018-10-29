@@ -87,7 +87,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.page-header > h1[data-v-7943083c] {\n  margin-top: 0px;\n  font-size: 20px;\n}\n.fade-enter-active[data-v-7943083c], .fade-leave-active[data-v-7943083c] {\n  -webkit-transition: opacity .5s;\n  transition: opacity .5s;\n}\n.fade-enter[data-v-7943083c], .fade-leave-to[data-v-7943083c] {\n  opacity: 0;\n}\n", ""]);
+exports.push([module.i, "\n.page-header > h1[data-v-7943083c] {\n  margin-top: 0px;\n}\n", ""]);
 
 // exports
 
@@ -108,6 +108,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_PaginatorComponent_vue__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_PaginatorComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_PaginatorComponent_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store_js__ = __webpack_require__(8);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -303,12 +309,16 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                 resp = _context.sent;
 
 
-                                this.$parent.paginator = resp.data.paginator;
-                                this.$parent.title = resp.data.title;
-                                this.$parent.search = endpoint;
-                                this.$parent.show = true;
+                                if (!resp.data.success) {
+                                    console.log(resp.data.status);
+                                } else {
+                                    this.$parent.paginator = resp.data.paginator;
+                                    this.$parent.title = resp.data.title;
+                                    this.$parent.search = endpoint;
+                                    this.$parent.show = true;
+                                }
 
-                            case 9:
+                            case 6:
                             case 'end':
                                 return _context.stop();
                         }
@@ -574,7 +584,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
-                                url = '/' + this.$parent.search + '/search/' + this.termo;
+                                url = this.$parent.search + '/search/' + this.termo;
 
 
                                 this.$parent.show = false;
@@ -705,16 +715,28 @@ var render = function() {
           _vm._v(" "),
           _c(
             "transition",
-            { attrs: { name: "fade", mode: "out-in" } },
+            {
+              attrs: {
+                name: "custom-classes-transition",
+                "enter-active-class": "animated fadeInUp",
+                "leave-active-class": "animated bounceOut",
+                mode: "out-in"
+              }
+            },
             [
               _vm.show
-                ? _c("List", { attrs: { items: _vm.paginator.data } })
+                ? _c(
+                    "div",
+                    [
+                      _c("List", { attrs: { items: _vm.paginator.data } }),
+                      _vm._v(" "),
+                      _c("Paginator", { attrs: { paginator: _vm.paginator } })
+                    ],
+                    1
+                  )
                 : _vm._e()
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("Paginator", { attrs: { paginator: _vm.paginator } })
+            ]
+          )
         ],
         1
       )

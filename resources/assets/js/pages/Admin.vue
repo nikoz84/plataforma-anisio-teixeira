@@ -6,10 +6,16 @@
             <header class="page-header">
                 <h1><small>{{ title }}</small></h1>
             </header>
-            <transition name="fade" mode="out-in">
-                <List v-if="show" v-bind:items="paginator.data"></List>
+            <transition name="custom-classes-transition" 
+                     enter-active-class="animated fadeInUp" 
+                     leave-active-class="animated bounceOut"
+                     mode="out-in">
+                <div v-if="show">
+                    <List v-bind:items="paginator.data"></List>
+                    <Paginator v-bind:paginator="paginator"></Paginator>    
+                </div>    
             </transition>
-            <Paginator v-bind:paginator="paginator"></Paginator>
+            
         </section>
     </div>
 </template>
@@ -44,13 +50,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-
-.page-header > h1 { margin-top: 0px; font-size: 20px;}
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-}
+.page-header > h1 { margin-top: 0px; }
 </style>
 

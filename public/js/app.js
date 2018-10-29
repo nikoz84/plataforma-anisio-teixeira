@@ -927,8 +927,7 @@ var Http = function () {
     function Http() {
         _classCallCheck(this, Http);
 
-        this.endpoint = '/api-v1';
-        this.headersData = { headers: { Authorization: "Bearer " + localStorage.token } };
+        this.api = '/api-v1';
     }
 
     _createClass(Http, [{
@@ -975,33 +974,41 @@ var Http = function () {
         key: 'getDataFromUrl',
         value: function () {
             var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
-                var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+                var endPoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+                var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+                var url;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
                     while (1) {
                         switch (_context2.prev = _context2.next) {
                             case 0:
                                 _context2.prev = 0;
-                                _context2.next = 3;
-                                return axios.get(this.endpoint + url, this.data);
+                                url = '' + this.api + endPoint + '?token=' + localStorage.token;
 
-                            case 3:
-                                return _context2.abrupt('return', _context2.sent);
+                                if (!localStorage.token) {
+                                    url = '' + this.api + endPoint;
+                                }
+                                console.warn(url);
+                                _context2.next = 6;
+                                return axios.get(url, data);
 
                             case 6:
-                                _context2.prev = 6;
-                                _context2.t0 = _context2['catch'](0);
-                                _context2.next = 10;
-                                return _context2.t0.response;
-
-                            case 10:
                                 return _context2.abrupt('return', _context2.sent);
 
-                            case 11:
+                            case 9:
+                                _context2.prev = 9;
+                                _context2.t0 = _context2['catch'](0);
+                                _context2.next = 13;
+                                return _context2.t0.response;
+
+                            case 13:
+                                return _context2.abrupt('return', _context2.sent);
+
+                            case 14:
                             case 'end':
                                 return _context2.stop();
                         }
                     }
-                }, _callee2, this, [[0, 6]]);
+                }, _callee2, this, [[0, 9]]);
             }));
 
             function getDataFromUrl() {
@@ -1011,45 +1018,47 @@ var Http = function () {
             return getDataFromUrl;
         }()
     }, {
-        key: 'search',
+        key: 'postData',
         value: function () {
-            var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(termo, limit, page) {
+            var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(url, data) {
+                var urlPost;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
                     while (1) {
                         switch (_context3.prev = _context3.next) {
                             case 0:
                                 _context3.prev = 0;
-                                _context3.next = 3;
-                                return this.http.get(this.url + '/search/termo/' + termo + '/limit/' + limit + '/page/' + page, this.data);
+                                urlPost = this.api + url + ('?token=' + localStorage.token);
+                                _context3.next = 4;
+                                return axios.post(urlPost, data);
 
-                            case 3:
+                            case 4:
                                 return _context3.abrupt('return', _context3.sent);
 
-                            case 6:
-                                _context3.prev = 6;
+                            case 7:
+                                _context3.prev = 7;
                                 _context3.t0 = _context3['catch'](0);
-                                _context3.next = 10;
+                                _context3.next = 11;
                                 return _context3.t0.response;
 
-                            case 10:
+                            case 11:
                                 return _context3.abrupt('return', _context3.sent);
 
-                            case 11:
+                            case 12:
                             case 'end':
                                 return _context3.stop();
                         }
                     }
-                }, _callee3, this, [[0, 6]]);
+                }, _callee3, this, [[0, 7]]);
             }));
 
-            function search(_x5, _x6, _x7) {
+            function postData(_x6, _x7) {
                 return _ref3.apply(this, arguments);
             }
 
-            return search;
+            return postData;
         }()
     }, {
-        key: 'postData',
+        key: 'putData',
         value: function () {
             var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4(url, data) {
                 var urlPost;
@@ -1058,9 +1067,9 @@ var Http = function () {
                         switch (_context4.prev = _context4.next) {
                             case 0:
                                 _context4.prev = 0;
-                                urlPost = this.endpoint + url;
+                                urlPost = this.api + url + ('?token=' + localStorage.token);
                                 _context4.next = 4;
-                                return axios.post(urlPost, data, this.headersData);
+                                return axios.put(urlPost, data, this.headersData);
 
                             case 4:
                                 return _context4.abrupt('return', _context4.sent);
@@ -1082,14 +1091,14 @@ var Http = function () {
                 }, _callee4, this, [[0, 7]]);
             }));
 
-            function postData(_x8, _x9) {
+            function putData(_x8, _x9) {
                 return _ref4.apply(this, arguments);
             }
 
-            return postData;
+            return putData;
         }()
     }, {
-        key: 'putData',
+        key: 'deleteData',
         value: function () {
             var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5(url, data) {
                 var urlPost;
@@ -1098,9 +1107,9 @@ var Http = function () {
                         switch (_context5.prev = _context5.next) {
                             case 0:
                                 _context5.prev = 0;
-                                urlPost = this.endpoint + url;
+                                urlPost = this.api + url + ('?token=' + localStorage.token);
                                 _context5.next = 4;
-                                return axios.put(urlPost, data, this.headersData);
+                                return axios.delete(urlPost, data, this.headersData);
 
                             case 4:
                                 return _context5.abrupt('return', _context5.sent);
@@ -1122,48 +1131,8 @@ var Http = function () {
                 }, _callee5, this, [[0, 7]]);
             }));
 
-            function putData(_x10, _x11) {
+            function deleteData(_x10, _x11) {
                 return _ref5.apply(this, arguments);
-            }
-
-            return putData;
-        }()
-    }, {
-        key: 'deleteData',
-        value: function () {
-            var _ref6 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee6(url, data) {
-                var urlPost;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee6$(_context6) {
-                    while (1) {
-                        switch (_context6.prev = _context6.next) {
-                            case 0:
-                                _context6.prev = 0;
-                                urlPost = this.endpoint + url;
-                                _context6.next = 4;
-                                return axios.delete(urlPost, data, this.headersData);
-
-                            case 4:
-                                return _context6.abrupt('return', _context6.sent);
-
-                            case 7:
-                                _context6.prev = 7;
-                                _context6.t0 = _context6['catch'](0);
-                                _context6.next = 11;
-                                return _context6.t0.response;
-
-                            case 11:
-                                return _context6.abrupt('return', _context6.sent);
-
-                            case 12:
-                            case 'end':
-                                return _context6.stop();
-                        }
-                    }
-                }, _callee6, this, [[0, 7]]);
-            }));
-
-            function deleteData(_x12, _x13) {
-                return _ref6.apply(this, arguments);
             }
 
             return deleteData;
@@ -1174,13 +1143,13 @@ var Http = function () {
 
             switch (true) {
                 case idCanal == 5:
-                    return this.endpoint + '/conteudos?site=true&limit=' + limit + '&page=' + page;
+                    return this.api + '/conteudos?site=true&limit=' + limit + '&page=' + page;
                     break;
                 case idCanal == 9:
-                    return this.endpoint + '/aplicativos?limit=' + limit + '&page=' + page;
+                    return this.api + '/aplicativos?limit=' + limit + '&page=' + page;
                     break;
                 default:
-                    return this.endpoint + '/conteudos?canal=' + idCanal + '&limit=' + limit + '&page=' + page;
+                    return this.api + '/conteudos?canal=' + idCanal + '&limit=' + limit + '&page=' + page;
             }
         }
     }]);
@@ -15836,7 +15805,6 @@ if (inBrowser && window.Vue) {
 
 
 
-
 var routes = [{
   path: '/',
   name: 'Home',
@@ -17502,7 +17470,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             switch (_context.prev = _context.next) {
               case 0:
                 if (!url) {
-                  _context.next = 6;
+                  _context.next = 7;
                   break;
                 }
 
@@ -17513,10 +17481,12 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
               case 4:
                 resp = _context.sent;
 
+                console.log(resp.data);
+                if (resp.data.success) {
+                  //this.$parent.paginator = resp.data.paginator;
+                }
 
-                this.$parent.paginator = resp.data.paginator;
-
-              case 6:
+              case 7:
               case 'end':
                 return _context.stop();
             }
@@ -17542,57 +17512,55 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.paginator.total
-    ? _c("nav", { attrs: { "aria-label": "..." } }, [
-        _c("p", { staticClass: "text-center" }, [
-          _vm._v(
-            _vm._s(
-              _vm.paginator.total
-                ? "Total: " + _vm.paginator.total
-                : "Sem Resultados"
-            )
-          )
-        ]),
-        _vm._v(" "),
-        _c("ul", { staticClass: "pager" }, [
-          _c("li", { staticClass: "previous" }, [
-            _c(
-              "a",
-              {
-                staticClass: "pointer",
-                on: {
-                  click: function($event) {
-                    _vm.goTo(_vm.paginator.prev_page_url)
-                  }
-                }
-              },
-              [
-                _c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("←")]),
-                _vm._v(" Anterior\n      ")
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "next" }, [
-            _c(
-              "a",
-              {
-                staticClass: "pointer",
-                on: {
-                  click: function($event) {
-                    _vm.goTo(_vm.paginator.next_page_url)
-                  }
-                }
-              },
-              [
-                _vm._v("\n        Próximo "),
-                _c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("→")])
-              ]
-            )
-          ])
-        ])
+  return _c("nav", { attrs: { "aria-label": "..." } }, [
+    _c("p", { staticClass: "text-center" }, [
+      _vm._v(
+        _vm._s(
+          _vm.paginator.total
+            ? "Total: " + _vm.paginator.total
+            : "Sem Resultados"
+        )
+      )
+    ]),
+    _vm._v(" "),
+    _c("ul", { staticClass: "pager" }, [
+      _c("li", { staticClass: "previous" }, [
+        _c(
+          "a",
+          {
+            staticClass: "pointer",
+            on: {
+              click: function($event) {
+                _vm.goTo(_vm.paginator.prev_page_url)
+              }
+            }
+          },
+          [
+            _c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("←")]),
+            _vm._v(" Anterior\n      ")
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", { staticClass: "next" }, [
+        _c(
+          "a",
+          {
+            staticClass: "pointer",
+            on: {
+              click: function($event) {
+                _vm.goTo(_vm.paginator.next_page_url)
+              }
+            }
+          },
+          [
+            _vm._v("\n        Próximo "),
+            _c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("→")])
+          ]
+        )
       ])
-    : _vm._e()
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -17933,6 +17901,77 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -17941,27 +17980,38 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'ConteudoForm',
     data: function data() {
-        return {};
+        return {
+            tipo: null,
+            title: null,
+            description: null,
+            authors: null,
+            source: null,
+            license: null
+        };
     },
 
     methods: {
         createConteudo: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-                var http, resp;
+                var data;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
-                                http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]({ name: 'felipe', email: 'felipe@gmail.com', password: '123456' });
-                                _context.next = 3;
-                                return http.postData();
+                                data = {
+                                    tipo: this.tipo,
+                                    title: this.title,
+                                    description: this.description,
+                                    authors: this.authors,
+                                    source: this.source,
+                                    license: this.license
+                                };
 
-                            case 3:
-                                resp = _context.sent;
+                                console.warn(data);
+                                //let http = new Http();
+                                //let resp = await http.postData('/conteudos/', data);
 
-                                console.warn(resp);
-
-                            case 5:
+                            case 2:
                             case 'end':
                                 return _context.stop();
                         }
@@ -23029,273 +23079,7 @@ var _iconsCache = {
 /* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "conteiner" }, [
-    _c(
-      "form",
-      {
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            _vm.createConteudo()
-          }
-        }
-      },
-      [_vm._m(0), _vm._v(" "), _vm._m(1)]
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "panel panel-default col-md-7" }, [
-        _c("div", { staticClass: "panel-heading" }, [
-          _vm._v("Adicionar conteúdo digital")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "panel-body" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "titulo" } }, [_vm._v("Título:*")]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "titulo",
-                "aria-describedby": "titulo"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "small",
-              { staticClass: "form-text text-muted", attrs: { id: "titulo" } },
-              [_vm._v("Adicione o nome original da mídia.")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "estado" } }, [
-              _vm._v("Tipo de Conteúdo:*")
-            ]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                staticClass: "form-control form-control-lg",
-                attrs: { id: "licenca-relacionada" }
-              },
-              [
-                _c("option", { attrs: { value: "" } }, [
-                  _vm._v("« SELECIONE »")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "7" } }, [
-                  _vm._v("Animação/Simulação")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "3" } }, [
-                  _vm._v("Apresentação")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "4" } }, [_vm._v("Áudio")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "1" } }, [
-                  _vm._v("Documento/Experimento")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "6" } }, [_vm._v("Imagem")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2" } }, [_vm._v("Planilha")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "10" } }, [
-                  _vm._v("Sequência Didática")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "8" } }, [_vm._v("Site")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "9" } }, [
-                  _vm._v("Software Educacional")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "5" } }, [_vm._v("Vídeo")])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "descricao" } }, [
-              _vm._v("Descrição:*")
-            ]),
-            _vm._v(" "),
-            _c("textarea", {
-              staticClass: "form-control",
-              attrs: { id: "descricao" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "palavra-chave" } }, [
-              _vm._v("Palavras-Chave:*")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "text", id: "palavra-chave" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "autores" } }, [_vm._v("Autores:*")]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "text", id: "autores" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "fonte" } }, [_vm._v("Fonte:*")]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "text", id: "fonte" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "licenca-conteudo" } }, [
-              _vm._v("Licença de Conteúdo:*")
-            ]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                staticClass: "form-control form-control-lg",
-                attrs: { id: "licenca-conteudo" }
-              },
-              [
-                _c("option", { attrs: { value: "" } }, [
-                  _vm._v("« SELECIONE »")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "1" } }, [_vm._v("Outros")]),
-                _vm._v(" "),
-                _c(
-                  "optgroup",
-                  {
-                    attrs: {
-                      id: "idconteudolicenca-optgroup-Creative Commons",
-                      label: "Creative Commons"
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "6" } }, [
-                      _vm._v("Atribuição CC BY")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "7" } }, [
-                      _vm._v("Atribuição-CompartilhaIgual CC BY-SA")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "8" } }, [
-                      _vm._v("Atribuição-SemDerivações CC BY-ND")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "9" } }, [
-                      _vm._v("Atribuição-NãoComercial CC BY-NC")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "10" } }, [
-                      _vm._v(
-                        "Atribuição-NãoComercial-CompartilhaIgual CC BY-NC-SA"
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "11" } }, [
-                      _vm._v("Atribuição-NãoComercial-SemDerivados CC BY-NC-ND")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "12" } }, [
-                      _vm._v("Atribuição CC 0")
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "3" } }, [
-                  _vm._v("Todos direitos reservados (Copyright)")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "4" } }, [
-                  _vm._v("Domínio público")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "5" } }, [_vm._v("GPL")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "13" } }, [_vm._v("MIT")])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "icone-licenca" } }, [
-              _vm._v("Icone da Licença:*")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: {
-                type: "file",
-                id: "icone-licenca",
-                "aria-describedby": "icone-licenca"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "small",
-              {
-                staticClass: "form-text text-muted",
-                attrs: { id: "icone-licenca" }
-              },
-              [
-                _vm._v(
-                  "Imagem no formato .png, dimensão: 200px x 90px, tamanho máximo: 600KB"
-                )
-              ]
-            )
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "panel panel-default col-md-5" }, [
-        _c("div", { staticClass: "panel-heading" }, [
-          _vm._v(
-            "Selecione o(s) componente(s) curricular(es) ou disciplina(s) que mais se adequem ao contéudo:"
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "panel-body" }, [
-          _c("p", [_vm._v("Áreas específicas/Séries")])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("button", { staticClass: "btn btn-default" }, [_vm._v("Enviar")])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
+module.exports={render:function(){},staticRenderFns:[]}
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
@@ -24540,6 +24324,9 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
 
 
 
@@ -24571,28 +24358,28 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                             case 4:
                                 resp = _context.sent;
 
-
+                                console.warn(resp.data);
                                 if (resp.data.success) {
                                     localStorage.removeItem('token');
                                     __WEBPACK_IMPORTED_MODULE_2__store_js__["a" /* default */].commit('LOGOUT_USER');
                                     this.$router.push('/');
                                 }
 
-                                _context.next = 11;
+                                _context.next = 12;
                                 break;
 
-                            case 8:
-                                _context.prev = 8;
+                            case 9:
+                                _context.prev = 9;
                                 _context.t0 = _context['catch'](1);
 
                                 console.warn(_context.t0.response);
 
-                            case 11:
+                            case 12:
                             case 'end':
                                 return _context.stop();
                         }
                     }
-                }, _callee, this, [[1, 8]]);
+                }, _callee, this, [[1, 9]]);
             }));
 
             function logout() {
@@ -24755,28 +24542,30 @@ var render = function() {
                 "ul",
                 { staticClass: "dropdown-menu" },
                 [
-                  !_vm.isLogged
+                  _vm.isLogged == false
                     ? _c(
                         "router-link",
                         { attrs: { tag: "li", to: "/login" } },
                         [_c("a", [_vm._v("Login")])]
                       )
-                    : _vm.isLogged
-                      ? _c("li", [
-                          _c(
-                            "a",
-                            {
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  _vm.logout()
-                                }
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.isLogged == true
+                    ? _c("li", [
+                        _c(
+                          "a",
+                          {
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.logout()
                               }
-                            },
-                            [_vm._v("Sair")]
-                          )
-                        ])
-                      : _vm._e()
+                            }
+                          },
+                          [_vm._v("Sair")]
+                        )
+                      ])
+                    : _vm._e()
                 ],
                 1
               )
@@ -24857,7 +24646,10 @@ var staticRenderFns = [
           "aria-expanded": "false"
         }
       },
-      [_vm._v("Usuário "), _c("span", { staticClass: "caret" })]
+      [
+        _vm._v("\n                        Usuário \n                        "),
+        _c("span", { staticClass: "caret" })
+      ]
     )
   },
   function() {

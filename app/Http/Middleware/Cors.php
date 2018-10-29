@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-
+use Illuminate\Http\Request;
 class Cors
 {
     /**
@@ -13,10 +13,17 @@ class Cors
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        return $next($request)->header('Access-Control-Allow-Origin', '*')
-                            ->header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE')
-                            ->header('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token, Authorization');
+        $origin = env('APP_URL_DESENV');
+        
+        
+
+        return $next($request)->header('Access-Control-Allow-Origin', $origin)
+        ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+        ->header('Access-Control-Allow-Headers','Authorization')
+        ->header('Access-Control-Allow-Credentials','true');
+            
+    
     }
 }

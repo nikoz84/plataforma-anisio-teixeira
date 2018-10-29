@@ -44,12 +44,15 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuário <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            Usuário 
+                            <span class="caret"></span>
+                        </a>
                         <ul class="dropdown-menu">
-                            <router-link tag="li" to="/login" v-if="!isLogged">
+                            <router-link tag="li" to="/login" v-if="isLogged == false">
                                 <a>Login</a>
                             </router-link>
-                            <li v-else-if="isLogged">
+                            <li v-if="isLogged == true">
                                 <a v-on:click.prevent="logout()">Sair</a>
                             </li>
                         </ul>
@@ -82,7 +85,7 @@ export default {
             let http = new Http();
             try{
                 let resp = await http.postData('/auth/logout');
-                
+                console.warn(resp.data)
                 if(resp.data.success){
                     localStorage.removeItem('token')
                     store.commit('LOGOUT_USER')

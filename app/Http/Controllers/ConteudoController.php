@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class ConteudoController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('jwt.verify')->except(['list','search']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -35,6 +39,7 @@ class ConteudoController extends Controller
         $conteudos->setPath("/conteudos?canal={$isCanal}&site={$isSite}&limit={$limit}");    
 
         return response()->json([
+            'success'=> true,
             'title'=> 'Mídias educacionais',
             'paginator'=> $conteudos,
             'page'=> $conteudos->currentPage(),
@@ -78,7 +83,6 @@ class ConteudoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
         $idConteudo = DB::table('conteudos')
                         ->where('id', $id)
                         ->update( [
@@ -148,6 +152,7 @@ class ConteudoController extends Controller
         $conteudos->setPath("/conteudos/search/{$termo}?limit={$limit}");
 
         return response()->json([
+            'success'=> true,
             'message' => 'Resultados da busca',
             'paginator' => $conteudos,
             'has_more_pages' => $conteudos->hasMorePages(),

@@ -1,4 +1,3 @@
-
 import HomeCanal from './pages/HomeCanal.vue';
 import Sobre from './pages/Sobre.vue';
 import Listar from './pages/Listar.vue';

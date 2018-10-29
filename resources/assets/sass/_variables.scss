@@ -1,6 +1,7 @@
 
 // Body
-$body-bg: #f5f8fa;
+$body-bg: #eff3f7;
+$gray: #333333;
 
 // Borders
 $laravel-border-color: darken($body-bg, 10%);
@@ -10,7 +11,7 @@ $panel-default-border: $laravel-border-color;
 $panel-inner-border: $laravel-border-color;
 
 // Brands
-$brand-primary: #1e78c2;
+$brand-primary: #636363;
 $brand-info: #5ba8d8;
 $brand-success: #3ba77c;
 $brand-warning: #bdaa43;
@@ -21,8 +22,11 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 $font-family-sans-serif: "Raleway", sans-serif;
 $font-size-base: 14px;
 $line-height-base: 1.6;
-$text-color: #636b6f;
+$text-color: #333333;
 
+// link color
+$link-color: #316ca3;
+$link-hover-color: darken($link-color, 50%);
 // Navbar
 $navbar-default-bg: #fff;
 
@@ -40,3 +44,35 @@ $panel-default-heading-bg: #fff;
 $border-radius-base:             1px;
 $border-radius-large:            2px;
 $border-radius-small:            1.5px;
+
+// Shared Nav
+$nav-link-padding: 5px 15px;
+$nav-link-hover-bg: adjust-color($gray, $lightness: 20%);
+$nav-disabled-link-color: adjust-color($gray, $lightness: 10%) ;
+$nav-disabled-link-hover-color: adjust-color($gray, $lightness: -40%);
+$nav-link-hover-bg: adjust-color($gray, $lightness: 30%) ;
+$nav-disabled-link-hover-color: adjust-color($gray, $lightness: 30%);
+
+$nav-pills-active-link-hover-bg: adjust-color($gray, $lightness: 50%);
+$nav-pills-active-link-hover-color: adjust-color($gray, $lightness: -30%);
+
+$nav-tabs-border-color: adjust-color($gray, $lightness: 20%);
+$nav-tabs-link-hover-border-color: adjust-color($gray, $lightness: -10%);
+$nav-tabs-active-link-hover-bg: $body-bg;
+$nav-tabs-active-link-hover-color: adjust-color($gray, $lightness: 50%);
+$nav-tabs-active-link-hover-border-color: #ddd;
+$nav-tabs-justified-link-border-color: #ddd;
+$nav-tabs-justified-active-link-border-color: $body-bg;
+
+
+// Fontes
+
+$font-size-base: 16px;
+$font-size-large: ceil(($font-size-base * 1.25));
+$font-size-small: ceil(($font-size-base * 1));
+$font-size-h1: floor(($font-size-base * 1.8));
+$font-size-h2: floor(($font-size-base * 1.6));
+$font-size-h3: floor(($font-size-base * 1.4));
+$font-size-h4: floor(($font-size-base * 1.2));
+$font-size-h5: floor(($font-size-base * 1.1));
+$font-size-h6: floor(($font-size-base * 1));

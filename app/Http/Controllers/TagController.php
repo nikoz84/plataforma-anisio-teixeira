@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('jwt.verify')->except(['list','search']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,6 +30,7 @@ class TagController extends Controller
         $tags->setPath("/tags?limit={$limit}"); 
         
         return response()->json([
+                'success'=> true,
                 'title'=> 'Lista de tags',
                 'paginator' => $tags,
                 'page'=> $tags->currentPage(),
@@ -106,6 +112,7 @@ class TagController extends Controller
         $tags->setPath("/tags/search/{$termo}?limit={$limit}");                                
 
         return response()->json([
+            'success'=> true,
             'message' => 'Resultados da busca',
             'paginator' => $tags,
             'page'=> $tags->currentPage(),

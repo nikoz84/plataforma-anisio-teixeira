@@ -137,6 +137,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
 
 
 
@@ -147,7 +149,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     components: { NavCanal: __WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue___default.a, SidebarCanal: __WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue___default.a },
     data: function data() {
         return {
-            title: null,
+            title: '',
             descricao: null,
             idCanal: null,
             options: null,
@@ -168,29 +170,29 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     methods: {
         getCanal: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-                var url, canal, resp;
+                var url, http, resp;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 url = '/canais/slug/' + this.$route.params.slug;
-                                canal = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
+                                http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
                                 _context.next = 4;
-                                return canal.getDataFromUrl(url);
+                                return http.getDataFromUrl(url);
 
                             case 4:
                                 resp = _context.sent;
 
+                                if (resp.data.success) {
+                                    this.idCanal = resp.data.canal.id;
+                                    this.title = resp.data.canal.name;
+                                    this.options = JSON.parse(resp.data.canal.options);
+                                    this.color = this.options.color;
+                                    this.hasCategories = this.options.has_categories;
+                                    localStorage.setItem('idCanal', this.idCanal);
+                                }
 
-                                this.idCanal = resp.data.canal.id;
-                                this.title = resp.data.canal.name;
-                                this.options = JSON.parse(resp.data.canal.options);
-                                this.color = this.options.color;
-                                this.hasCategories = this.options.has_categories;
-                                console.log(this.hasCategories);
-                                localStorage.setItem('idCanal', this.idCanal);
-
-                            case 12:
+                            case 6:
                             case 'end':
                                 return _context.stop();
                         }
@@ -608,7 +610,13 @@ var render = function() {
                 style: "--color:" + _vm.color,
                 attrs: { stylepseudo: "after:" }
               },
-              [_vm._v(_vm._s(_vm.title))]
+              [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.title) +
+                    "\n                "
+                )
+              ]
             ),
             _vm._v(" "),
             _c("NavCanal")
