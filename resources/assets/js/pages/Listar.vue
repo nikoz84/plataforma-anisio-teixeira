@@ -1,7 +1,7 @@
 <template>
     <div v-bind:color="color">
         <List v-bind:items="paginator.data"></List>
-        <Paginator v-bind:paginator="paginator"></Paginator>
+        <Paginator v-bind:paginator="paginator" v-bind:limit="limit" v-bind:page="page"></Paginator>
     </div>
 </template>
 <script>
@@ -28,13 +28,16 @@ export default {
     methods:{
         async getConteudos(){
             let idCanal = localStorage.getItem('idCanal');
-            let http = new Http(idCanal);   
-            let resp = await http.getDataFromIdCanal(idCanal,this.limit, this.page);
-
-            this.title = resp.data.title;
-            this.paginator = resp.data.paginator;
-            this.page = resp.data.page;
-            this.limit = resp.data.limit;
+            let http = new Http();   
+            let params = { limit: this.limit, page: this.page };
+            let resp = await http.getDataFromIdCanal( idCanal, params);
+            if(resp.data.success){
+                this.title = resp.data.title;
+                this.paginator = resp.data.paginator;
+                this.page = resp.data.page;
+                this.limit = resp.data.limit;
+            }
+            
         }
     }
 }

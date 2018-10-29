@@ -33,7 +33,7 @@ Route::post('/auth/login', 'AuthController@login')->name('login');
 Route::post('/auth/register', 'AuthController@register')->name('register');
 
 
-Route::group(['middleware' => ['jwt.verify','cors']], function() {
+Route::group(['middleware' => ['jwt.verify']], function() {
     
     // AUTH
     Route::post('/auth/logout', 'AuthController@logout')->name('logout');

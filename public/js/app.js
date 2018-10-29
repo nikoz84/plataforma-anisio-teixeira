@@ -933,16 +933,17 @@ var Http = function () {
     _createClass(Http, [{
         key: 'getDataFromIdCanal',
         value: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(idCanal, limit, page) {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(idCanal) {
+                var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
                 var url;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 _context.prev = 0;
-                                url = this.getCanal(idCanal, limit, page);
+                                url = this.getCanal(idCanal);
                                 _context.next = 4;
-                                return axios.get(url, this.data);
+                                return axios.get(url, params);
 
                             case 4:
                                 return _context.abrupt('return', _context.sent);
@@ -964,7 +965,7 @@ var Http = function () {
                 }, _callee, this, [[0, 7]]);
             }));
 
-            function getDataFromIdCanal(_x, _x2, _x3) {
+            function getDataFromIdCanal(_x2) {
                 return _ref.apply(this, arguments);
             }
 
@@ -975,40 +976,35 @@ var Http = function () {
         value: function () {
             var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
                 var endPoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-                var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+                var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
                 var url;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
                     while (1) {
                         switch (_context2.prev = _context2.next) {
                             case 0:
                                 _context2.prev = 0;
-                                url = '' + this.api + endPoint + '?token=' + localStorage.token;
+                                url = '' + this.api + endPoint;
+                                _context2.next = 4;
+                                return axios.get(url, params);
 
-                                if (!localStorage.token) {
-                                    url = '' + this.api + endPoint;
-                                }
-                                console.warn(url);
-                                _context2.next = 6;
-                                return axios.get(url, data);
-
-                            case 6:
+                            case 4:
                                 return _context2.abrupt('return', _context2.sent);
 
-                            case 9:
-                                _context2.prev = 9;
+                            case 7:
+                                _context2.prev = 7;
                                 _context2.t0 = _context2['catch'](0);
-                                _context2.next = 13;
+                                _context2.next = 11;
                                 return _context2.t0.response;
 
-                            case 13:
+                            case 11:
                                 return _context2.abrupt('return', _context2.sent);
 
-                            case 14:
+                            case 12:
                             case 'end':
                                 return _context2.stop();
                         }
                     }
-                }, _callee2, this, [[0, 9]]);
+                }, _callee2, this, [[0, 7]]);
             }));
 
             function getDataFromUrl() {
@@ -1018,41 +1014,89 @@ var Http = function () {
             return getDataFromUrl;
         }()
     }, {
-        key: 'postData',
+        key: 'getDataWithTokenUrl',
         value: function () {
-            var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(url, data) {
-                var urlPost;
+            var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
+                var endPoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+                var url, data;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
                     while (1) {
                         switch (_context3.prev = _context3.next) {
                             case 0:
                                 _context3.prev = 0;
-                                urlPost = this.api + url + ('?token=' + localStorage.token);
-                                _context3.next = 4;
-                                return axios.post(urlPost, data);
+                                url = '' + this.api + endPoint;
+                                data = { params: { token: localStorage.token } };
+                                //let config = { headers:{'Authorization':'Bearer ' + localStorage.token } };
 
-                            case 4:
+                                console.log(endPoint);
+                                _context3.next = 6;
+                                return axios.get(url, data);
+
+                            case 6:
                                 return _context3.abrupt('return', _context3.sent);
 
-                            case 7:
-                                _context3.prev = 7;
+                            case 9:
+                                _context3.prev = 9;
                                 _context3.t0 = _context3['catch'](0);
-                                _context3.next = 11;
+                                _context3.next = 13;
                                 return _context3.t0.response;
 
-                            case 11:
+                            case 13:
                                 return _context3.abrupt('return', _context3.sent);
 
-                            case 12:
+                            case 14:
                             case 'end':
                                 return _context3.stop();
                         }
                     }
-                }, _callee3, this, [[0, 7]]);
+                }, _callee3, this, [[0, 9]]);
             }));
 
-            function postData(_x6, _x7) {
+            function getDataWithTokenUrl() {
                 return _ref3.apply(this, arguments);
+            }
+
+            return getDataWithTokenUrl;
+        }()
+    }, {
+        key: 'postData',
+        value: function () {
+            var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4() {
+                var endPoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+                var params = arguments[1];
+                var data, urlPost;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
+                    while (1) {
+                        switch (_context4.prev = _context4.next) {
+                            case 0:
+                                _context4.prev = 0;
+                                data = { params: { token: localStorage.token } };
+                                urlPost = '' + this.api + endPoint;
+                                _context4.next = 5;
+                                return axios.post(urlPost, params);
+
+                            case 5:
+                                return _context4.abrupt('return', _context4.sent);
+
+                            case 8:
+                                _context4.prev = 8;
+                                _context4.t0 = _context4['catch'](0);
+                                _context4.next = 12;
+                                return _context4.t0.response;
+
+                            case 12:
+                                return _context4.abrupt('return', _context4.sent);
+
+                            case 13:
+                            case 'end':
+                                return _context4.stop();
+                        }
+                    }
+                }, _callee4, this, [[0, 8]]);
+            }));
+
+            function postData() {
+                return _ref4.apply(this, arguments);
             }
 
             return postData;
@@ -1060,56 +1104,16 @@ var Http = function () {
     }, {
         key: 'putData',
         value: function () {
-            var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4(url, data) {
-                var urlPost;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
-                    while (1) {
-                        switch (_context4.prev = _context4.next) {
-                            case 0:
-                                _context4.prev = 0;
-                                urlPost = this.api + url + ('?token=' + localStorage.token);
-                                _context4.next = 4;
-                                return axios.put(urlPost, data, this.headersData);
-
-                            case 4:
-                                return _context4.abrupt('return', _context4.sent);
-
-                            case 7:
-                                _context4.prev = 7;
-                                _context4.t0 = _context4['catch'](0);
-                                _context4.next = 11;
-                                return _context4.t0.response;
-
-                            case 11:
-                                return _context4.abrupt('return', _context4.sent);
-
-                            case 12:
-                            case 'end':
-                                return _context4.stop();
-                        }
-                    }
-                }, _callee4, this, [[0, 7]]);
-            }));
-
-            function putData(_x8, _x9) {
-                return _ref4.apply(this, arguments);
-            }
-
-            return putData;
-        }()
-    }, {
-        key: 'deleteData',
-        value: function () {
-            var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5(url, data) {
-                var urlPost;
+            var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5(endPoint, params) {
+                var urlUpdate;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee5$(_context5) {
                     while (1) {
                         switch (_context5.prev = _context5.next) {
                             case 0:
                                 _context5.prev = 0;
-                                urlPost = this.api + url + ('?token=' + localStorage.token);
+                                urlUpdate = localStorage.token ? '' + this.api + endPoint + '&token=' + token : '' + this.api + endPoint;
                                 _context5.next = 4;
-                                return axios.delete(urlPost, data, this.headersData);
+                                return axios.put(urlUpdate, params, this.headersData);
 
                             case 4:
                                 return _context5.abrupt('return', _context5.sent);
@@ -1131,25 +1135,65 @@ var Http = function () {
                 }, _callee5, this, [[0, 7]]);
             }));
 
-            function deleteData(_x10, _x11) {
+            function putData(_x7, _x8) {
                 return _ref5.apply(this, arguments);
+            }
+
+            return putData;
+        }()
+    }, {
+        key: 'deleteData',
+        value: function () {
+            var _ref6 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee6(endPoint, params) {
+                var urlDelete;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee6$(_context6) {
+                    while (1) {
+                        switch (_context6.prev = _context6.next) {
+                            case 0:
+                                _context6.prev = 0;
+                                urlDelete = localStorage.token ? '' + this.api + endPoint + '&token=' + token : '' + this.api + endPoint;
+                                _context6.next = 4;
+                                return axios.delete(urlDelete, params, this.headersData);
+
+                            case 4:
+                                return _context6.abrupt('return', _context6.sent);
+
+                            case 7:
+                                _context6.prev = 7;
+                                _context6.t0 = _context6['catch'](0);
+                                _context6.next = 11;
+                                return _context6.t0.response;
+
+                            case 11:
+                                return _context6.abrupt('return', _context6.sent);
+
+                            case 12:
+                            case 'end':
+                                return _context6.stop();
+                        }
+                    }
+                }, _callee6, this, [[0, 7]]);
+            }));
+
+            function deleteData(_x9, _x10) {
+                return _ref6.apply(this, arguments);
             }
 
             return deleteData;
         }()
     }, {
         key: 'getCanal',
-        value: function getCanal(idCanal, limit, page) {
+        value: function getCanal(idCanal) {
 
             switch (true) {
                 case idCanal == 5:
-                    return this.api + '/conteudos?site=true&limit=' + limit + '&page=' + page;
+                    return this.api + '/conteudos?site=true';
                     break;
                 case idCanal == 9:
-                    return this.api + '/aplicativos?limit=' + limit + '&page=' + page;
+                    return this.api + '/aplicativos';
                     break;
                 default:
-                    return this.api + '/conteudos?canal=' + idCanal + '&limit=' + limit + '&page=' + page;
+                    return this.api + '/conteudos?canal=' + idCanal + '&site=false';
             }
         }
     }]);
@@ -17995,11 +18039,16 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     methods: {
         createConteudo: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+<<<<<<< HEAD
                 var data;
+=======
+                var idCanal, http, params, resp;
+>>>>>>> 7218b1a0c4edb2486c9dbf29856ffa72a7da8f4d
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
+<<<<<<< HEAD
                                 data = {
                                     tipo: this.tipo,
                                     title: this.title,
@@ -18014,6 +18063,25 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                 //let resp = await http.postData('/conteudos/', data);
 
                             case 2:
+=======
+                                idCanal = localStorage.getItem('idCanal');
+                                http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
+                                params = { limit: this.limit, page: this.page };
+                                _context.next = 5;
+                                return http.getDataFromIdCanal(idCanal, params);
+
+                            case 5:
+                                resp = _context.sent;
+
+                                if (resp.data.success) {
+                                    this.title = resp.data.title;
+                                    this.paginator = resp.data.paginator;
+                                    this.page = resp.data.page;
+                                    this.limit = resp.data.limit;
+                                }
+
+                            case 7:
+>>>>>>> 7218b1a0c4edb2486c9dbf29856ffa72a7da8f4d
                             case 'end':
                                 return _context.stop();
                         }
@@ -19029,9 +19097,16 @@ var makeIconStandard = function (_ref) {
 
   var styleString = joinStyles(styles);
 
+<<<<<<< HEAD
   if (styleString.length > 0) {
     attributes['style'] = styleString;
   }
+=======
+                console.log(resp.data);
+                if (resp.data.success) {
+                  this.$parent.paginator = resp.data.paginator;
+                }
+>>>>>>> 7218b1a0c4edb2486c9dbf29856ffa72a7da8f4d
 
   if (transformIsMeaningful(transform)) {
     var trans = transformForSvg({ transform: transform, containerWidth: main.width, iconWidth: main.width });
@@ -19108,6 +19183,7 @@ var asSymbol = function (_ref) {
   }];
 };
 
+<<<<<<< HEAD
 function makeInlineSvgAbstract(params) {
   var _params$icons = params.icons,
       main = _params$icons.main,
@@ -19120,6 +19196,34 @@ function makeInlineSvgAbstract(params) {
       extra = params.extra,
       _params$watchable = params.watchable,
       watchable = _params$watchable === undefined ? false : _params$watchable;
+=======
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { attrs: { color: _vm.color } },
+    [
+      _c("List", { attrs: { items: _vm.paginator.data } }),
+      _vm._v(" "),
+      _c("Paginator", {
+        attrs: { paginator: _vm.paginator, limit: _vm.limit, page: _vm.page }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-a0edab68", module.exports)
+  }
+}
+>>>>>>> 7218b1a0c4edb2486c9dbf29856ffa72a7da8f4d
 
   var _ref = mask.found ? mask : main,
       width = _ref.width,
