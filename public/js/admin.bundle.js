@@ -303,22 +303,20 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                 this.$parent.show = false;
                                 http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                 _context.next = 4;
-                                return http.getDataFromUrl('/' + endpoint);
+                                return http.getDataWithTokenUrl('/' + endpoint);
 
                             case 4:
                                 resp = _context.sent;
 
-
-                                if (!resp.data.success) {
-                                    console.log(resp.data.status);
-                                } else {
+                                console.warn(resp.headers);
+                                if (resp.data.success) {
                                     this.$parent.paginator = resp.data.paginator;
                                     this.$parent.title = resp.data.title;
                                     this.$parent.search = endpoint;
                                     this.$parent.show = true;
                                 }
 
-                            case 6:
+                            case 7:
                             case 'end':
                                 return _context.stop();
                         }
@@ -584,8 +582,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
-                                url = this.$parent.search + '/search/' + this.termo;
-
+                                url = '/' + this.$parent.search + '/search/' + this.termo;
 
                                 this.$parent.show = false;
                                 http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
@@ -596,10 +593,12 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                 resp = _context.sent;
 
 
-                                this.$parent.paginator = resp.data.paginator;
-                                this.$parent.show = true;
+                                if (resp.data) {
+                                    this.$parent.paginator = resp.data.paginator;
+                                    this.$parent.show = true;
+                                }
 
-                            case 8:
+                            case 7:
                             case 'end':
                                 return _context.stop();
                         }

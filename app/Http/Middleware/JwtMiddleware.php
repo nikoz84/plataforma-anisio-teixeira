@@ -6,6 +6,7 @@ use Closure;
 use JWTAuth;
 use Exception;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
+// use Tymon\JWTAuth\Facades\JWTAuth;
 
 class JwtMiddleware extends BaseMiddleware
 {
@@ -26,19 +27,19 @@ class JwtMiddleware extends BaseMiddleware
                 return response()->json([
                     'success'=> false,
                     'message'=> 'Token Inválido',
-                    'status' => 'invalid_token'
+                    'status' => 'invalid_token_md'
                  ]);
             }else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException){
                 return response()->json([
                     'success'=> false,
                     'message'=> 'Token Expirado',
-                    'status' => 'expired_token']
+                    'status' => 'expired_token_md']
                 );
             }else{
                 return response()->json([
                     'success'=> false,
                     'message' => 'Token de autorização não encontrado',
-                    'status' => 'token_not_found'
+                    'status' => 'token_not_found_md'
                 ]);
             }
         }

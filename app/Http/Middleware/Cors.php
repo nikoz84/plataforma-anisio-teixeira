@@ -17,13 +17,9 @@ class Cors
     {
         $origin = env('APP_URL_DESENV');
         
-        
-
         return $next($request)->header('Access-Control-Allow-Origin', $origin)
-        ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-        ->header('Access-Control-Allow-Headers','Authorization')
-        ->header('Access-Control-Allow-Credentials','true');
-            
-    
+                                ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+                                ->header('Access-Control-Allow-Headers','Authorization')
+                                ->header('Access-Control-Allow-Credentials','true');
     }
 }

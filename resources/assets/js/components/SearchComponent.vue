@@ -21,14 +21,16 @@ export default {
     },
     methods:{
         async onSearch(){
-            let url = `${this.$parent.search}/search/${this.termo}`;
-            
+            let url = `/${this.$parent.search}/search/${this.termo}`;
             this.$parent.show = false;
             let http = new Http();
             let resp = await http.getDataFromUrl(url);
             
-            this.$parent.paginator = resp.data.paginator;
-            this.$parent.show = true;
+            if(resp.data){
+                this.$parent.paginator = resp.data.paginator;
+                this.$parent.show = true;
+            }
+            
         }
     }
 }

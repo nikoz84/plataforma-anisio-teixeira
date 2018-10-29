@@ -60,7 +60,8 @@ export default {
         async getCanal(){
             let url = `/canais/slug/${this.$route.params.slug}`; 
             let http = new Http();
-            let resp = await http.getDataFromUrl(url);
+            let resp = await http.getDataFromUrl( url );
+            
             if(resp.data.success){
                 this.idCanal = resp.data.canal.id;
                 this.title = resp.data.canal.name;
