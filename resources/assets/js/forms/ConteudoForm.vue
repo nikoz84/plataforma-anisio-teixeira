@@ -85,7 +85,7 @@
             <div class="panel panel-default col-md-5">
             <div class="panel-heading">Selecione o(s) componente(s) curricular(es) ou disciplina(s) que mais se adequem ao contéudo:</div>
             <div class="panel-body">
-            <font-awesome-icon icon="coffee" />
+                <p>Áreas específicas/Séries</p>
 
             </div>
             </div>
@@ -104,6 +104,8 @@
 
 <script>
 import Http from '../http.js';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 export default {
     name: 'ConteudoForm',
@@ -119,6 +121,10 @@ export default {
             let resp = await http.postData();
             console.warn(resp);
         }
+    },
+
+    components:{
+        FontAwesomeIcon
     }
 
 }
