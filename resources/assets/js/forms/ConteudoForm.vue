@@ -84,8 +84,6 @@
             </div>
             </div>
 
-
-=======
             <div class="panel panel-default col-md-7">
                 <div class="panel-heading">
                     Adicionar conteúdo digital
@@ -159,9 +157,9 @@
                 <div class="form-group">
                     <button class="btn btn-default">Enviar</button>
                 </div>
->>>>>>> ab587248207aa489a500cabbd08b628ade406652
+
             </div>
-            <div class="panel-default col-md-5">
+            <div class="panel panel-default col-md-5">
                 <div class="panel-heading">
                     Selecione o(s) componente(s) curricular(es) ou disciplina(s) que mais se adequem ao contéudo:
                 </div>
@@ -169,6 +167,7 @@
                     asdada asd ad asdaa sd
                 </div>
             </div>
+            
         </form>
     </div>
 </template>
