@@ -76,7 +76,7 @@
                     <button class="btn btn-default">Enviar</button>
                 </div>
             </div>
-            <div class="panel-default col-md-5">
+            <div class="panel panel-default col-md-5">
                 <div class="panel-heading">
                     Selecione o(s) componente(s) curricular(es) ou disciplina(s) que mais se adequem ao contéudo:
                 </div>
@@ -84,6 +84,7 @@
                     asdada asd ad asdaa sd
                 </div>
             </div>
+            
         </form>
     </div>
 </template>
