@@ -2,7 +2,7 @@ import HomeCanal from './pages/HomeCanal.vue';
 import Sobre from './pages/Sobre.vue';
 import Listar from './pages/Listar.vue';
 import Exibir from './pages/Exibir.vue';
-import Formulario from './forms/ConteudoForm.vue';
+import Formulario from './forms/AplicativoForm.vue';
 import LoginForm from './forms/LoginForm.vue';
 import RecoverPassForm from './forms/RecoverPassForm.vue';
 import RegisterForm from './forms/RegisterForm.vue'; 
@@ -39,7 +39,7 @@ const routes =[
           component: LoginForm
         },
         {
-          path: 'recuperar-senha/:code',
+          path: 'recuperar-senha',
           name: 'Recover',
           component: RecoverPassForm
         },

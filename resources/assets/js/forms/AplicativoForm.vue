@@ -9,9 +9,14 @@
                 <div class="panel-body">
                     <!-- TITULO -->
                     <div class="form-group">
-                        <label for="titulo">Título:*</label>
-                        <input type="text" class="form-control" id="titulo" v-model="title">                        
-                    </div>                    
+                        <label for="titulo">Nome do aplicativo:*</label>
+                        <input type="text" class="form-control" id="titulo" v-model="name">
+                    </div>
+                    <!-- URL -->
+                    <div class="form-group">
+                        <label for="url">URL:*</label>
+                        <input type="text" class="form-control" id="url" v-model="url">
+                    </div>
                     <!-- DESCRICAO -->
                     <div class="form-group">
                         <label for="descricao">Descrição:*</label>
@@ -19,7 +24,7 @@
                     </div>
                     <!-- TIPO -->
                     <div class="form-group">
-                        <label for="estado">Categotia:*</label>
+                        <label for="estado">Categoria:*</label>
                         <select name="idambientedeapoiocategoria" id="idambientedeapoiocategoria" class="form-control" v-model="categoria">
                             <option value="0">« SELECIONE »</option>
                             <option value="8">Ambiente de Aprendizagem</option>
@@ -41,8 +46,8 @@
                     </div>
                     <!-- DESCRICAO -->
                     <div class="form-group">
-                        <label for="tags">Palavra-Chave:*</label>
-                        <textarea class="form-control" id="tags" v-model="description" style="resize: none"></textarea>
+                        <label for="tags">Palavra-Chave:* </label>
+                        <textarea class="form-control" id="tags" v-model="tags" style="resize: none"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="icone">URL  do projeto:</label>
@@ -51,13 +56,17 @@
                     </div>
                     <div class="form-group">
                         <label for="usopedagogico">Informações para o uso pedagógico:</label>
-                        <textarea class="form-control" id="usopedagogico" v-model="description" style="resize: none"></textarea>
+                        <textarea class="form-control" id="usopedagogico" v-model="uso_pedagogico" style="resize: none"></textarea>
                     </div>
-                <div class="form-group">
-                    <button class="btn btn-default">Enviar</button>
+                    <div class="form-group">
+                        <label for="destaque">Marcar como destaque</label>
+                        <input type="checkbox" id="destaque" v-model="is_featured">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-default">Enviar</button>
+                    </div>
                 </div>
             </div>
-            
         </form>
     </div>
 </template>
@@ -69,22 +78,38 @@ export default {
     name: 'AplicativoForm',
     data(){
         return {
-            title: null,
+            name: null,
             description:null,
-            categoria: 0
+            categoria: 0,
+            url: null,
+            is_featured: false,
+            uso_pedagogico: null,
+            tags:[],
+            option: {},
         }
 
     },
     methods:{
         async createAplicativo(){
+            
             let data = {
-                title: this.title,
+                name: this.name,
                 description:this.description,
-                category: this.categoria
+                category: this.categoria,
+                url: this.url,
+                is_featured: this.is_featured,
+                options: JSON.stringify(this.options),
+                token: localStorage.token
             };
-            console.warn(data);
-            //let http = new Http();
-            //let resp = await http.postData('/conteudos/', data);
+            console.warn(data)
+            let http = new Http();
+            //let resp = await http.postData('/aplicativos/create', data);
+
+            //if(resp.data.success){
+              //  console.warn(resp.data.message)
+            //}
+
+
 
         }
     }

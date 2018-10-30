@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Aplicativo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class AplicativoController extends Controller
 {
@@ -49,18 +50,28 @@ class AplicativoController extends Controller
         
         $id = DB::table('aplicativos')->insertGetId(
             [
-                'user_id' => 1,
+                'user_id' => Auth::user()->id,
                 'name' => $request->get('name'),
+                'url' => $request->get('url'),
                 'description'=> $request->get('description'),
                 'is_featured' => $request->get('is_featured'),
                 'options' => $request->get('options')
     
             ]
         );
-        return response()->json([
-            'message' => 'Aplicativo cadastrado com sucesso',
-            'id' => $id
-        ]);
+        if($id){
+            return response()->json([
+                'success'=> true,
+                'message' => 'Aplicativo cadastrado com sucesso',
+                'id' => $id
+            ]);
+        }else {
+            return response()->json([
+                'success'=> false,
+                'message' => 'Não foi possível cadastrar aplicativo'
+            ]);
+        }
+        
     }
 
 /**
