@@ -15946,7 +15946,7 @@ var routes = [{
     name: 'Login',
     component: __WEBPACK_IMPORTED_MODULE_5__forms_LoginForm_vue___default.a
   }, {
-    path: 'recuperar-senha',
+    path: 'recuperar-senha/:code',
     name: 'Recover',
     component: __WEBPACK_IMPORTED_MODULE_6__forms_RecoverPassForm_vue___default.a
   }, {
@@ -20907,6 +20907,9 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
 
 
 
@@ -20917,11 +20920,13 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         return {
             password: '',
             confirmPassword: '',
-            verificationCode: ''
+            verificationCode: this.$route.params.code
         };
     },
+    created: function created() {
+        console.log(this.verificationCode);
+    },
 
-    computed: {},
     methods: {
         recoverPass: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
@@ -20985,81 +20990,90 @@ var render = function() {
             }
           },
           [
-            _c("div", { staticClass: "panel panel-default col-md-7" }, [
-              _c("div", { staticClass: "panel-heading" }, [
-                _vm._v("\n                    Mudar Senha\n                ")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "panel-body" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "senha" } }, [_vm._v("Senha")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.password,
-                        expression: "password"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      id: "senha",
-                      "aria-describedby": "senha"
-                    },
-                    domProps: { value: _vm.password },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+            _c(
+              "div",
+              { staticClass: "panel panel-default col-md-7" },
+              [
+                _c("div", { staticClass: "panel-heading" }, [
+                  _vm._v("\n                    Mudar Senha\n                ")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "panel-body" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "senha" } }, [_vm._v("Senha")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.password,
+                          expression: "password"
                         }
-                        _vm.password = $event.target.value
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "senha",
+                        "aria-describedby": "senha"
+                      },
+                      domProps: { value: _vm.password },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.password = $event.target.value
+                        }
                       }
-                    }
-                  }),
+                    }),
+                    _vm._v(" "),
+                    _c("small", { staticClass: "form-text text-muted" }, [
+                      _vm._v("Escreva uma nova senha")
+                    ])
+                  ]),
                   _vm._v(" "),
-                  _c("small", { staticClass: "form-text text-muted" }, [
-                    _vm._v("Escreva uma nova senha")
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "confirmasenha" } }, [
+                      _vm._v("Repita a Senha")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.confirmPassword,
+                          expression: "confirmPassword"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "password",
+                        id: "confirmasenha",
+                        "aria-describedby": "confirmar senha"
+                      },
+                      domProps: { value: _vm.confirmPassword },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.confirmPassword = $event.target.value
+                        }
+                      }
+                    })
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "confirmasenha" } }, [
-                    _vm._v("Repita a Senha")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.confirmPassword,
-                        expression: "confirmPassword"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "password",
-                      id: "confirmasenha",
-                      "aria-describedby": "confirmar senha"
-                    },
-                    domProps: { value: _vm.confirmPassword },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.confirmPassword = $event.target.value
-                      }
-                    }
-                  })
+                _vm._m(0),
+                _vm._v(" "),
+                _c("router-link", { attrs: { to: "/usuario/login" } }, [
+                  _vm._v("\n                    Login \n                ")
                 ])
-              ]),
-              _vm._v(" "),
-              _vm._m(0)
-            ])
+              ],
+              1
+            )
           ]
         )
       ]

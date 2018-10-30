@@ -22,6 +22,9 @@
                     <div class="form-group">
                         <button class="btn btn-default">Enviar</button>
                     </div>
+                    <router-link to="/usuario/login">
+                        Login 
+                    </router-link>
                 </div>
             </form>
         </div>
@@ -39,12 +42,12 @@ export default {
         return {
             password: '',
             confirmPassword: '',
-            verificationCode: ''
+            verificationCode: this.$route.params.code
         }
 
     },
-    computed:{
-        
+    created(){
+        console.log(this.verificationCode);
     },
     methods:{
         async recoverPass(){

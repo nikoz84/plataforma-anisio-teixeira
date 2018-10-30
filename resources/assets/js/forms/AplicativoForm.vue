@@ -1,10 +1,10 @@
 <template>
     <div class="row">
-        <form v-on:submit.prevent="createConteudo()">
+        <form v-on:submit.prevent="createAplicativo()">
             
             <div class="panel panel-default col-md-7">
                 <div class="panel-heading">
-                    Adicionar
+                    Adicionar Aplicativos
                 </div>
                 <div class="panel-body">
                     <!-- TITULO -->
@@ -14,14 +14,14 @@
                     </div>                    
                     <!-- DESCRICAO -->
                     <div class="form-group">
-                        <label for="idambientedeapoiocategoria">Descrição:*</label>
-                        <textarea class="form-control" id="idambientedeapoiocategoria" v-model="description" style="resize: none"></textarea>
+                        <label for="descricao">Descrição:*</label>
+                        <textarea class="form-control" id="descricao" v-model="description" style="resize: none"></textarea>
                     </div>
                     <!-- TIPO -->
                     <div class="form-group">
                         <label for="estado">Categotia:*</label>
-                        <select name="idambientedeapoiocategoria" id="idambientedeapoiocategoria" class="form-control" v-model="tipo">
-                            <option value="">« SELECIONE »</option>
+                        <select name="idambientedeapoiocategoria" id="idambientedeapoiocategoria" class="form-control" v-model="categoria">
+                            <option value="0">« SELECIONE »</option>
                             <option value="8">Ambiente de Aprendizagem</option>
                             <option value="9">Ambiente de Programação</option>
                             <option value="10">Aplicativos Educacionais</option>
@@ -57,27 +57,21 @@
 import Http from '../http.js';
 
 export default {
-    name: 'ConteudoForm',
+    name: 'AplicativoForm',
     data(){
         return {
-            tipo: null,
             title: null,
             description:null,
-            authors:null,
-            source:null,
-            license:null
+            categoria: 0
         }
 
     },
     methods:{
-        async createConteudo(){
+        async createAplicativo(){
             let data = {
-                tipo: this.tipo,
                 title: this.title,
                 description:this.description,
-                authors:this.authors,
-                source:this.source,
-                license:this.license
+                category: this.categoria
             };
             console.warn(data);
             //let http = new Http();
