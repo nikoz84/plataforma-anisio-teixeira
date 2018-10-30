@@ -39,9 +39,9 @@ export default {
             show: false
         }
     },
-    beforeCreate: function () {
+    beforeCreate () {
         if (!store.state.isLogged) {
-            this.$router.push('/login')
+            this.$router.push('/usuario/login')
         }
     },
     methods:{

@@ -1,7 +1,9 @@
 <template>
     <div v-bind:color="color">
-        <List v-bind:items="paginator.data"></List>
-        <Paginator v-bind:paginator="paginator" v-bind:limit="limit" v-bind:page="page"></Paginator>
+        <keep-alive>
+            <List v-bind:items="paginator.data"></List>
+            <Paginator v-bind:paginator="paginator" v-bind:limit="limit" v-bind:page="page"></Paginator>
+        </keep-alive>
     </div>
 </template>
 <script>

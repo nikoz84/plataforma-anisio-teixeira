@@ -38,7 +38,11 @@
                     <!-- TAGS -->
                     <div class="form-group">
                         <label for="palavra-chave">Palavras-Chave:*</label>
-                        <input type="text" class="form-control" id="palavra-chave">
+                        <input type="text" class="form-control" v-model="tag"
+                                        v-bind:tags="tags"
+                                        v-bind:autocomplete-items="autocompleteItems"
+                                        v-on:tags-changed="update"
+                        />
                     </div>
                     <!-- AUTORES -->
                     <div class="form-group">
@@ -54,7 +58,7 @@
                     <div class="form-group">
                         <label for="licenca-conteudo">Licença de Conteúdo:*</label>
                         <select class="form-control form-control-lg" id="licenca-conteudo" v-model="license">
-                            <option value="">« SELECIONE »</option>
+                            <option value="" >« SELECIONE »</option>
                             <option value="1">Outros</option>
                             <optgroup id="idconteudolicenca-optgroup-Creative Commons" label="Creative Commons">
                                 <option value="6">Atribuição CC BY</option>
@@ -84,7 +88,7 @@
                     asdada asd ad asdaa sd
                 </div>
             </div>
-            
+
         </form>
     </div>
 </template>
@@ -92,34 +96,67 @@
 <script>
 import Http from '../http.js';
 
+
 export default {
     name: 'ConteudoForm',
+    components: {},
     data(){
         return {
-            tipo: null,
+            tipo: '',
             title: null,
             description:null,
             authors:null,
             source:null,
-            license:null
+            license:'',
+            options: {},
+            tags: [],
+            tag: '',
+            autocompleteItems: []
         }
 
     },
+    computed:{
+        
+    },
     methods:{
         async createConteudo(){
+            
             let data = {
                 tipo: this.tipo,
                 title: this.title,
                 description:this.description,
                 authors:this.authors,
                 source:this.source,
-                license:this.license
+                license:this.license,
+                tags: this.tags,
+                options: JSON.stringify(this.options)
             };
-            console.warn(data);            
+            console.warn(data);
             //let http = new Http();
             //let resp = await http.postData('/conteudos/', data);
+
+        },
+        update(newTags) {
+            this.autocompleteItems = [];
+            this.tags = newTags;
+        },
+        async getItems(){
+            if (this.tag.length === 0) return;
+            let http = new Http();
+            let params = {token:localStorage.token};
+            let resp = await http.getDataFromUrl(`/tags/search/${this.tag}`, params);
+            
+            if(resp.data.success){
+                this.autocompleteItems = resp.data.paginator.data.map(a =>{
+                    return {name: a.name, id: a.id  };
+                });
+                
+            }
             
         }
+    },
+    watch:{
+        'tag':'getItems'
     }
 
 }
