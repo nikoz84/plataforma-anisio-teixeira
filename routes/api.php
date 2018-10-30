@@ -76,5 +76,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('/licencas/create','LicencaController@create');
     Route::put('/licencas/update/{id}','LicencaController@update');
     Route::delete('/licencas/delete/{id}','LicencaController@delete');
+
+    // Administração
+    Route::get('/admin','TagController@list');
     
 });
