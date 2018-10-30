@@ -27,9 +27,9 @@ export default {
         async get(endpoint){
             this.$parent.show = false;
             let http = new Http();
+            let params ={ token: localStorage.token };
+            let resp = await http.getDataWithTokenUrl(`/${endpoint}`, params);
             
-            let resp = await http.getDataWithTokenUrl(`/${endpoint}`);
-            console.warn(resp.headers);
             if(resp.data.success){
                 this.$parent.paginator = resp.data.paginator;
                 this.$parent.title = resp.data.title;
@@ -37,7 +37,7 @@ export default {
                 this.$parent.show = true;
             }
         },
-        
+
 
     }
 }

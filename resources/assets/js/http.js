@@ -14,19 +14,20 @@ export default class Http {
     }
     async getDataFromUrl(endPoint = '', params = {}){
         try{
-            let url = `${this.api}${endPoint}`; 
-            return await axios.get( url , params);
+            let url = `${this.api}${endPoint}`;
+            console.log(params)
+            return await axios.get( url , {params});
         }catch (error){
             return await error.response;
         }
     }
-    async getDataWithTokenUrl(endPoint = ''){
+    async getDataWithTokenUrl(endPoint = '', params= {}){
         try{
             let url = `${this.api}${endPoint}`;
-            let data = { params:{token: localStorage.token} };
+            
             //let config = { headers:{'Authorization':'Bearer ' + localStorage.token } };
             console.log(endPoint)
-            return await axios.get( url, data );
+            return await axios.get( url, {params} );
         }catch (error){
             return await error.response;
         }
