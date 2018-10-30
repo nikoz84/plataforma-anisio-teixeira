@@ -3,66 +3,74 @@ export default class Http {
     constructor(){
         this.api = '/api-v1';
     }
-    async getDataFromIdCanal(idCanal,limit, page){
+    async getDataFromIdCanal( idCanal, params = {}){
         try{
-            let url = this.getCanal(idCanal,limit, page);
-            return await axios.get(url, this.data);
+            let url = this.getCanal( idCanal );
+            return await axios.get( url, params );
         } catch (error){
             return await error.response;
         } 
         
     }
-    async getDataFromUrl(endPoint = '', data ={}){
+    async getDataFromUrl(endPoint = '', params = {}){
         try{
-            let url = `${this.api}${endPoint}?token=${localStorage.token}`;
-            if(!localStorage.token){
-                url = `${this.api}${endPoint}`;
-            }
-            console.warn(url);
-            return await axios.get( url, data );
+            let url = `${this.api}${endPoint}`;
+            console.log(params)
+            return await axios.get( url , {params});
         }catch (error){
             return await error.response;
         }
     }
-    
-    async postData(url, data){
+    async getDataWithTokenUrl(endPoint = '', params= {}){
+        try{
+            let url = `${this.api}${endPoint}`;
+            
+            //let config = { headers:{'Authorization':'Bearer ' + localStorage.token } };
+            console.log(endPoint)
+            return await axios.get( url, {params} );
+        }catch (error){
+            return await error.response;
+        }
+    }
+    async postData(endPoint = '', params){
         try {
-            let urlPost = this.api + url + `?token=${localStorage.token}`;
-            return await axios.post(urlPost, data);
+            let data = { params:{token: localStorage.token} };
+            let urlPost = `${this.api}${endPoint}`;
+            return await axios.post(urlPost, params);
         } catch (error) {
             return await error.response;
         }
     }
-    async putData(url, data){
+    async putData(endPoint, params){
         try {
-            let urlPost = this.api + url + `?token=${localStorage.token}`;
-            return await axios.put( urlPost, data, this.headersData);
+            let urlUpdate = (localStorage.token) ?  `${this.api}${endPoint}&token=${token}` : `${this.api}${endPoint}`;
+            return await axios.put( urlUpdate, params, this.headersData);
             
         } catch (error) {
             return await error.response;
         }
     }
-    async deleteData(url, data){
+    async deleteData(endPoint, params){
         try {
-            let urlPost = this.api + url + `?token=${localStorage.token}`;
-            return await axios.delete( urlPost, data, this.headersData);
+            let urlDelete = (localStorage.token) ?  `${this.api}${endPoint}&token=${token}` : `${this.api}${endPoint}`;
+            return await axios.delete( urlDelete, params, this.headersData);
             //return response.data;
         } catch (error) {
             return await error.response;
         }
     }
 
-    getCanal(idCanal,limit, page){
-
+    getCanal(idCanal){
+        
         switch(true){
             case (idCanal == 5):
-                return `${this.api}/conteudos?site=true&limit=${limit}&page=${page}`;
-            break;
+                return `${this.api}/conteudos?site=true`;
+                break;
             case (idCanal == 9):
-                return `${this.api}/aplicativos?limit=${limit}&page=${page}`;
-            break;
+                return `${this.api}/aplicativos`;
+                break;
             default:
-                return `${this.api}/conteudos?canal=${idCanal}&limit=${limit}&page=${page}`;     
+                return `${this.api}/conteudos?canal=${idCanal}&site=false`;     
         }
     }
 }

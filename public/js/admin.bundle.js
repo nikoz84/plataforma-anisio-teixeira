@@ -150,11 +150,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
-    beforeCreate: function beforeCreate() {
-        if (!__WEBPACK_IMPORTED_MODULE_4__store_js__["a" /* default */].state.isLogged) {
-            this.$router.push('/login');
-        }
-    },
     methods: {}
 });
 
@@ -295,30 +290,29 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     methods: {
         get: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(endpoint) {
-                var http, resp;
+                var http, params, resp;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 this.$parent.show = false;
                                 http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
-                                _context.next = 4;
-                                return http.getDataFromUrl('/' + endpoint);
+                                params = { token: localStorage.token };
+                                _context.next = 5;
+                                return http.getDataWithTokenUrl('/' + endpoint, params);
 
-                            case 4:
+                            case 5:
                                 resp = _context.sent;
 
 
-                                if (!resp.data.success) {
-                                    console.log(resp.data.status);
-                                } else {
+                                if (resp.data.success) {
                                     this.$parent.paginator = resp.data.paginator;
                                     this.$parent.title = resp.data.title;
                                     this.$parent.search = endpoint;
                                     this.$parent.show = true;
                                 }
 
-                            case 6:
+                            case 7:
                             case 'end':
                                 return _context.stop();
                         }
@@ -579,25 +573,27 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     methods: {
         onSearch: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-                var url, http, resp;
+                var url, http, params, resp;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
-                                url = this.$parent.search + '/search/' + this.termo;
-
+                                url = '/' + this.$parent.search + '/search/' + this.termo;
 
                                 this.$parent.show = false;
                                 http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
-                                _context.next = 5;
-                                return http.getDataFromUrl(url);
+                                params = { token: localStorage.token };
+                                _context.next = 6;
+                                return http.getDataFromUrl(url, params);
 
-                            case 5:
+                            case 6:
                                 resp = _context.sent;
 
 
-                                this.$parent.paginator = resp.data.paginator;
-                                this.$parent.show = true;
+                                if (resp.data) {
+                                    this.$parent.paginator = resp.data.paginator;
+                                    this.$parent.show = true;
+                                }
 
                             case 8:
                             case 'end':

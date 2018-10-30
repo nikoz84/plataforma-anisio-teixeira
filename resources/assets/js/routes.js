@@ -55,7 +55,7 @@ const routes =[
           component: Listar
         },
         {
-          path: 'exibir',
+          path: 'exibir/:id',
           name: 'Exibir',
           component: Exibir
         },

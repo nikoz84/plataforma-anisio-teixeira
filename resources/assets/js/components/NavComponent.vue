@@ -49,10 +49,10 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <router-link tag="li" to="/login" v-if="isLogged == false">
+                            <router-link tag="li" to="/login" v-if="!isLogged">
                                 <a>Login</a>
                             </router-link>
-                            <li v-if="isLogged == true">
+                            <li v-if="isLogged">
                                 <a v-on:click.prevent="logout()">Sair</a>
                             </li>
                         </ul>
@@ -83,18 +83,17 @@ export default {
     methods: {
         async logout(){
             let http = new Http();
-            try{
-                let resp = await http.postData('/auth/logout');
-                console.warn(resp.data)
-                if(resp.data.success){
-                    localStorage.removeItem('token')
-                    store.commit('LOGOUT_USER')
-                    this.$router.push('/')
-                }
-                
-            } catch (error){
-                console.warn(error.response)
+            let params = {token: localStorage.token };             
+            
+            let resp = await http.postData('/auth/logout', params);
+            
+            if(resp.data.success){
+                localStorage.removeItem('token')
+                store.commit('LOGOUT_USER')
+                this.$router.push('/login')
             }
+                
+            
             
         },
         handleScroll (event) {

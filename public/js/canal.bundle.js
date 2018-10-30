@@ -183,6 +183,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                             case 4:
                                 resp = _context.sent;
 
+
                                 if (resp.data.success) {
                                     this.idCanal = resp.data.canal.id;
                                     this.title = resp.data.canal.name;
