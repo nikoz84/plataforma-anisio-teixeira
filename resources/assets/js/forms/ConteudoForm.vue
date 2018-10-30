@@ -84,7 +84,7 @@
                     asdada asd ad asdaa sd
                 </div>
             </div>
-            
+
         </form>
     </div>
 </template>
@@ -115,10 +115,10 @@ export default {
                 source:this.source,
                 license:this.license
             };
-            console.warn(data);            
+            console.warn(data);
             //let http = new Http();
             //let resp = await http.postData('/conteudos/', data);
-            
+
         }
     }
 
