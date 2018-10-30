@@ -280,6 +280,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
 
 
 
@@ -432,6 +433,19 @@ var render = function() {
         }
       },
       [_vm._v("Licenças")]
+    ),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        staticClass: "list-group-item pointer",
+        on: {
+          click: function($event) {
+            _vm.get("admin")
+          }
+        }
+      },
+      [_vm._v("Área Administrativa")]
     )
   ])
 }

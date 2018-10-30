@@ -10,6 +10,7 @@
         <a v-on:click="get('aplicativos')" class="list-group-item pointer">Aplicativos Educacionais</a>
         <a v-on:click="get('tags')" class="list-group-item pointer">Tags</a>
         <a v-on:click="get('licencas')" class="list-group-item pointer">Licenças</a>
+        <a v-on:click="get('admin')" class="list-group-item pointer">Área Administrativa</a>
     </nav>
 </template>
 <script>

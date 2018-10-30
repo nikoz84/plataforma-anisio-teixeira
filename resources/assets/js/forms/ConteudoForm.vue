@@ -33,7 +33,7 @@
                     <!-- DESCRICAO -->
                     <div class="form-group">
                         <label for="descricao">Descrição:*</label>
-                        <textarea class="form-control" id="descricao" v-model="description"></textarea>
+                        <textarea class="form-control" id="descricao" v-model="description" style="resize: none"></textarea>
                     </div>
                     <!-- TAGS -->
                     <div class="form-group">
@@ -85,7 +85,244 @@
                     Selecione o(s) componente(s) curricular(es) ou disciplina(s) que mais se adequem ao contéudo:
                 </div>
                 <div class="panel-body">
-                    asdada asd ad asdaa sd
+                    
+                    <div class="col-auto my-1">
+                        <div class="custom-control custom-checkbox mr-sm-2">
+                            <input type="checkbox" class="custom-control-input item-superior" id="item-superior" name="item-superior">
+                            <label class="custom-control-label" for="customControlAutosizing">Áreas de Conhecimento</label>
+                        </div>
+                    </div>
+
+                    <input type="checkbox"     name="item-superior1" value="java"/>Ciências da natureza<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Humanas<br/>
+                    <input type="checkbox"     name="item-superior1" value="css"/>Linguagens e seus códigos<br/>
+                    <input type="checkbox"     name="item-superior1" value="css"/>Matemática<br/>
+
+                   <br>
+                    <div class="col-auto my-1">
+                        <div class="custom-control custom-checkbox mr-sm-2">
+                            <input type="checkbox" class="custom-control-input item-superior" id="item-superior" name="item-superior">
+                            <label class="custom-control-label" for="customControlAutosizing">Linguagens Artísticas</label>
+                        </div>
+                    </div>
+
+                    <input type="checkbox"     name="item-superior1" value="java"/>Artes Visuais<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Audiovisual<br/>
+                    <input type="checkbox"     name="item-superior1" value="css"/>Circo<br/>
+                    <input type="checkbox"     name="item-superior1" value="css"/>Dança<br/>
+                    <input type="checkbox"     name="item-superior1" value="css"/>Literatura<br/>
+                    <input type="checkbox"     name="item-superior1" value="css"/>Música<br/>
+                    <input type="checkbox"     name="item-superior1" value="css"/>Teatro<br/>
+
+                    <br>
+                    <div class="col-auto my-1">
+                        <div class="custom-control custom-checkbox mr-sm-2">
+                            <input type="checkbox" class="custom-control-input item-superior" id="item-superior" name="item-superior">
+                            <label class="custom-control-label" for="customControlAutosizing">Temas Transversais</label>
+                        </div>
+                    </div>
+
+                    <input type="checkbox"     name="item-superior1" value="java"/>Educação Ambiental<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Educação Especial<br/>
+                    <input type="checkbox"     name="item-superior1" value="css"/>Gênero e Sexualidade<br/>
+                    <input type="checkbox"     name="item-superior1" value="css"/>História e Cultura Africana<br/>
+                    <input type="checkbox"     name="item-superior1" value="css"/>História e Cultura Indígena<br/>
+                    <input type="checkbox"     name="item-superior1" value="css"/>Pluralidade Cultural<br/>
+                    <input type="checkbox"     name="item-superior1" value="css"/>Saúde<br/>
+                    <input type="checkbox"     name="item-superior1" value="css"/>Trabalho e Consumo<br/>
+                    <input type="checkbox"     name="item-superior1" value="css"/>Ética e Cidadania<br/>
+
+                    <br>
+                    <div class="col-auto my-1">
+                        <div class="custom-control custom-checkbox mr-sm-2">
+                            <input type="checkbox" class="custom-control-input item-superior" id="item-superior" name="item-superior">
+                            <label class="custom-control-label" for="customControlAutosizing">Séries - Educação Infantil</label>
+                        </div>
+                    </div>
+
+                    <input type="checkbox"     name="item-superior1" value="java"/>Creche<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Pré-Escola<br/>
+
+                    <br>
+                    <div class="col-auto my-1">
+                        <div class="custom-control custom-checkbox mr-sm-2">
+                            <input type="checkbox" class="custom-control-input item-superior" id="item-superior" name="item-superior">
+                            <label class="custom-control-label" for="customControlAutosizing">Séries - Ensino Fundamental</label>
+                        </div>
+                    </div>
+
+                    <input type="checkbox"     name="item-superior1" value="java"/>1º Ano<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>2º Ano<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>3º Ano<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>4º Ano<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>5º Ano<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>6º Ano<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>7º Ano<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>8º Ano<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>9º Ano<br/>
+
+                    <br>
+                    <div class="col-auto my-1">
+                        <div class="custom-control custom-checkbox mr-sm-2">
+                            <input type="checkbox" class="custom-control-input item-superior" id="item-superior" name="item-superior">
+                            <label class="custom-control-label" for="customControlAutosizing">Séries - Ensino Médio</label>
+                        </div>
+                    </div>
+
+                    <input type="checkbox"     name="item-superior1" value="java"/>1º Série<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>2º Série<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>3º Série<br/>
+
+                    <br>
+                    <strong>Componente curricular/Disciplina</strong>
+
+                    <div class="col-auto my-1">
+                        <div class="custom-control custom-checkbox mr-sm-2">
+                            <input type="checkbox" class="custom-control-input item-superior" id="item-superior" name="item-superior">
+                            <label class="custom-control-label" for="customControlAutosizing">Ensino Médio</label>
+                        </div>
+                    </div>
+
+                    <input type="checkbox"     name="item-superior1" value="java"/>Arte<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Biologia<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Educação Física<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Filosofia<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Física<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Geografia<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>História<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Literatura<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Língua Estrangeira<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Língua Portuguesa<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Matemáticabr/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Química<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Sociologia<br/>
+                    
+                    <br>
+
+                    <div class="col-auto my-1">
+                        <div class="custom-control custom-checkbox mr-sm-2">
+                            <input type="checkbox" class="custom-control-input item-superior" id="item-superior" name="item-superior">
+                            <label class="custom-control-label" for="customControlAutosizing">Educação Infantil</label>
+                        </div>
+                    </div>
+
+                    <input type="checkbox"     name="item-superior1" value="java"/>Arte Visual<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Linguagem oral e escrita<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Matemática<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Movimento<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Natureza e Sociedade<br/>
+
+                    <br>
+
+                    <div class="col-auto my-1">
+                        <div class="custom-control custom-checkbox mr-sm-2">
+                            <input type="checkbox" class="custom-control-input item-superior" id="item-superior" name="item-superior">
+                            <label class="custom-control-label" for="customControlAutosizing">Ensino Fundamental Inicial</label>
+                        </div>
+                    </div>
+
+                    <input type="checkbox"     name="item-superior1" value="java"/>Alfabetização<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Artes<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Ciências Naturais<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Educação Física<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Geografia<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>História<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Língua Portuguesa<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Matemática<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Meio Ambiente<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Orientação Sexual<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Pluralidade Cultural<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Saúde<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Ética<br/>
+
+                    <br>
+
+                    <div class="col-auto my-1">
+                        <div class="custom-control custom-checkbox mr-sm-2">
+                            <input type="checkbox" class="custom-control-input item-superior" id="item-superior" name="item-superior">
+                            <label class="custom-control-label" for="customControlAutosizing">Ensino Fundamental Final</label>
+                        </div>
+                    </div>
+                   
+                    <input type="checkbox"     name="item-superior1" value="html"/>Artes<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Ciências Naturais<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Educação Física<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Geografia<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>História<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Língua Estrangeira<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Língua Portuguesa<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Matemática<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Meio Ambiente<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Orientação Sexual<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Pluralidade Cultural<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Saúde<br/>
+
+                    <br>
+
+                    <div class="col-auto my-1">
+                        <div class="custom-control custom-checkbox mr-sm-2">
+                            <input type="checkbox" class="custom-control-input item-superior" id="item-superior" name="item-superior">
+                            <label class="custom-control-label" for="customControlAutosizing">Educação Escolar Indígena</label>
+                        </div>
+                    </div>
+                   
+                    <input type="checkbox"     name="item-superior1" value="html"/>Artes<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Ciências<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Educação Física<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Geografia<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>História<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Línguas<br/>
+                    
+                    <br>
+
+                    <div class="col-auto my-1">
+                        <div class="custom-control custom-checkbox mr-sm-2">
+                            <input type="checkbox" class="custom-control-input item-superior" id="item-superior" name="item-superior">
+                            <label class="custom-control-label" for="customControlAutosizing">Ensino Superior</label>
+                        </div>
+                    </div>
+                   
+                    <input type="checkbox"     name="item-superior1" value="html"/>Ciência Sociais Aplicadas<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Ciências Agrárias<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Ciências Biológicas<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Ciências Exatas e da Terra<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Ciências Humanas<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Ciências da Saúde<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Engenharias<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Interdisciplinar<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Lingüística, Letras e Artes<br/>
+
+                    <br>
+
+                    <div class="col-auto my-1">
+                        <div class="custom-control custom-checkbox mr-sm-2">
+                            <input type="checkbox" class="custom-control-input item-superior" id="item-superior" name="item-superior">
+                            <label class="custom-control-label" for="customControlAutosizing">Educação de Jovens e Adultos 1</label>
+                        </div>
+                    </div>
+                   
+                    <input type="checkbox"     name="item-superior1" value="html"/>Estudo da Sociedade e da Natureza<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Língua Portuguesa<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Matemática<br/>
+
+                    <br>
+
+                    <div class="col-auto my-1">
+                        <div class="custom-control custom-checkbox mr-sm-2">
+                            <input type="checkbox" class="custom-control-input item-superior" id="item-superior" name="item-superior">
+                            <label class="custom-control-label" for="customControlAutosizing">Educação de Jovens e Adultos 2</label>
+                        </div>
+                    </div>
+                   
+                    <input type="checkbox"     name="item-superior1" value="html"/>Artes<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Ciências Naturais<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Educação Física<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>História<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Língua Estrangeira<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Língua Portuguesa<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Matemática<br/>
+                    <input type="checkbox"     name="item-superior1" value="html"/>Outros<br/>
+
                 </div>
             </div>
 

@@ -18052,6 +18052,243 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -18318,6 +18555,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
+                staticStyle: { resize: "none" },
                 attrs: { id: "descricao" },
                 domProps: { value: _vm.description },
                 on: {
@@ -18543,7 +18781,957 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "panel-body" }, [
-        _vm._v("\n                asdada asd ad asdaa sd\n            ")
+        _c("div", { staticClass: "col-auto my-1" }, [
+          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+            _c("input", {
+              staticClass: "custom-control-input item-superior",
+              attrs: {
+                type: "checkbox",
+                id: "item-superior",
+                name: "item-superior"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label",
+                attrs: { for: "customControlAutosizing" }
+              },
+              [_vm._v("Áreas de Conhecimento")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
+        }),
+        _vm._v("Ciências da natureza"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Humanas"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Linguagens e seus códigos"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Matemática"),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-auto my-1" }, [
+          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+            _c("input", {
+              staticClass: "custom-control-input item-superior",
+              attrs: {
+                type: "checkbox",
+                id: "item-superior",
+                name: "item-superior"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label",
+                attrs: { for: "customControlAutosizing" }
+              },
+              [_vm._v("Linguagens Artísticas")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
+        }),
+        _vm._v("Artes Visuais"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Audiovisual"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Circo"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Dança"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Literatura"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Música"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Teatro"),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-auto my-1" }, [
+          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+            _c("input", {
+              staticClass: "custom-control-input item-superior",
+              attrs: {
+                type: "checkbox",
+                id: "item-superior",
+                name: "item-superior"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label",
+                attrs: { for: "customControlAutosizing" }
+              },
+              [_vm._v("Temas Transversais")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
+        }),
+        _vm._v("Educação Ambiental"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Educação Especial"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Gênero e Sexualidade"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("História e Cultura Africana"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("História e Cultura Indígena"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Pluralidade Cultural"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Saúde"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Trabalho e Consumo"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Ética e Cidadania"),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-auto my-1" }, [
+          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+            _c("input", {
+              staticClass: "custom-control-input item-superior",
+              attrs: {
+                type: "checkbox",
+                id: "item-superior",
+                name: "item-superior"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label",
+                attrs: { for: "customControlAutosizing" }
+              },
+              [_vm._v("Séries - Educação Infantil")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
+        }),
+        _vm._v("Creche"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Pré-Escola"),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-auto my-1" }, [
+          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+            _c("input", {
+              staticClass: "custom-control-input item-superior",
+              attrs: {
+                type: "checkbox",
+                id: "item-superior",
+                name: "item-superior"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label",
+                attrs: { for: "customControlAutosizing" }
+              },
+              [_vm._v("Séries - Ensino Fundamental")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
+        }),
+        _vm._v("1º Ano"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("2º Ano"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("3º Ano"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("4º Ano"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("5º Ano"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("6º Ano"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("7º Ano"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("8º Ano"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("9º Ano"),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-auto my-1" }, [
+          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+            _c("input", {
+              staticClass: "custom-control-input item-superior",
+              attrs: {
+                type: "checkbox",
+                id: "item-superior",
+                name: "item-superior"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label",
+                attrs: { for: "customControlAutosizing" }
+              },
+              [_vm._v("Séries - Ensino Médio")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
+        }),
+        _vm._v("1º Série"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("2º Série"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("3º Série"),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("strong", [_vm._v("Componente curricular/Disciplina")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-auto my-1" }, [
+          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+            _c("input", {
+              staticClass: "custom-control-input item-superior",
+              attrs: {
+                type: "checkbox",
+                id: "item-superior",
+                name: "item-superior"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label",
+                attrs: { for: "customControlAutosizing" }
+              },
+              [_vm._v("Ensino Médio")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
+        }),
+        _vm._v("Arte"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Biologia"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Educação Física"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Filosofia"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Física"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Geografia"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("História"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Literatura"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Língua Estrangeira"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Língua Portuguesa"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Matemáticabr/>\n                "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Química"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Sociologia"),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-auto my-1" }, [
+          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+            _c("input", {
+              staticClass: "custom-control-input item-superior",
+              attrs: {
+                type: "checkbox",
+                id: "item-superior",
+                name: "item-superior"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label",
+                attrs: { for: "customControlAutosizing" }
+              },
+              [_vm._v("Educação Infantil")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
+        }),
+        _vm._v("Arte Visual"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Linguagem oral e escrita"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Matemática"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Movimento"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Natureza e Sociedade"),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-auto my-1" }, [
+          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+            _c("input", {
+              staticClass: "custom-control-input item-superior",
+              attrs: {
+                type: "checkbox",
+                id: "item-superior",
+                name: "item-superior"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label",
+                attrs: { for: "customControlAutosizing" }
+              },
+              [_vm._v("Ensino Fundamental Inicial")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
+        }),
+        _vm._v("Alfabetização"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Artes"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Ciências Naturais"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Educação Física"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Geografia"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("História"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Língua Portuguesa"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Matemática"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Meio Ambiente"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Orientação Sexual"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Pluralidade Cultural"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Saúde"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Ética"),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-auto my-1" }, [
+          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+            _c("input", {
+              staticClass: "custom-control-input item-superior",
+              attrs: {
+                type: "checkbox",
+                id: "item-superior",
+                name: "item-superior"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label",
+                attrs: { for: "customControlAutosizing" }
+              },
+              [_vm._v("Ensino Fundamental Final")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Artes"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Ciências Naturais"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Educação Física"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Geografia"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("História"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Língua Estrangeira"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Língua Portuguesa"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Matemática"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Meio Ambiente"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Orientação Sexual"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Pluralidade Cultural"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Saúde"),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-auto my-1" }, [
+          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+            _c("input", {
+              staticClass: "custom-control-input item-superior",
+              attrs: {
+                type: "checkbox",
+                id: "item-superior",
+                name: "item-superior"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label",
+                attrs: { for: "customControlAutosizing" }
+              },
+              [_vm._v("Educação Escolar Indígena")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Artes"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Ciências"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Educação Física"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Geografia"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("História"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Línguas"),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-auto my-1" }, [
+          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+            _c("input", {
+              staticClass: "custom-control-input item-superior",
+              attrs: {
+                type: "checkbox",
+                id: "item-superior",
+                name: "item-superior"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label",
+                attrs: { for: "customControlAutosizing" }
+              },
+              [_vm._v("Ensino Superior")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Ciência Sociais Aplicadas"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Ciências Agrárias"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Ciências Biológicas"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Ciências Exatas e da Terra"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Ciências Humanas"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Ciências da Saúde"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Engenharias"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Interdisciplinar"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Lingüística, Letras e Artes"),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-auto my-1" }, [
+          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+            _c("input", {
+              staticClass: "custom-control-input item-superior",
+              attrs: {
+                type: "checkbox",
+                id: "item-superior",
+                name: "item-superior"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label",
+                attrs: { for: "customControlAutosizing" }
+              },
+              [_vm._v("Educação de Jovens e Adultos 1")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Estudo da Sociedade e da Natureza"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Língua Portuguesa"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Matemática"),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-auto my-1" }, [
+          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+            _c("input", {
+              staticClass: "custom-control-input item-superior",
+              attrs: {
+                type: "checkbox",
+                id: "item-superior",
+                name: "item-superior"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label",
+                attrs: { for: "customControlAutosizing" }
+              },
+              [_vm._v("Educação de Jovens e Adultos 2")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Artes"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Ciências Naturais"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Educação Física"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("História"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Língua Estrangeira"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Língua Portuguesa"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Matemática"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Outros"),
+        _c("br")
       ])
     ])
   }
