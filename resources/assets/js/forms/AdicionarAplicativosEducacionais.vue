@@ -44,6 +44,15 @@
                         <label for="tags">Palavra-Chave:*</label>
                         <textarea class="form-control" id="tags" v-model="description" style="resize: none"></textarea>
                     </div>
+                    <div class="form-group">
+                        <label for="icone">URL  do projeto:</label>
+                        <input type="file" class="form-control" id="icone" name="icone" aria-describedby="icone">
+                        <small id="login_usuario" class="form-text text-muted">Imagem no formato .png com tamanho de 250px (altura) e 250px (largura)</small>               
+                    </div>
+                    <div class="form-group">
+                        <label for="usopedagogico">Informações para o uso pedagógico:</label>
+                        <textarea class="form-control" id="usopedagogico" v-model="description" style="resize: none"></textarea>
+                    </div>
                 <div class="form-group">
                     <button class="btn btn-default">Enviar</button>
                 </div>
