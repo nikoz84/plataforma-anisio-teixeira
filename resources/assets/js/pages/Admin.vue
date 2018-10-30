@@ -39,6 +39,11 @@ export default {
             show: false
         }
     },
+    beforeCreate () {
+        if (!store.state.isLogged) {
+            this.$router.push('/usuario/login')
+        }
+    },
     methods:{
 
     }

@@ -49,7 +49,7 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <router-link tag="li" to="/login" v-if="!isLogged">
+                            <router-link tag="li" to="/usuario/login" v-if="!isLogged">
                                 <a>Login</a>
                             </router-link>
                             <li v-if="isLogged">

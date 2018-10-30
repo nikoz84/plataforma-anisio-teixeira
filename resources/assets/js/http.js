@@ -32,11 +32,12 @@ export default class Http {
             return await error.response;
         }
     }
-    async postData(endPoint = '', params){
+    async postData(endPoint = ''){
         try {
             let data = { params:{token: localStorage.token} };
+            console.log(data); console.warn(endPoint);
             let urlPost = `${this.api}${endPoint}`;
-            return await axios.post(urlPost, params);
+            return await axios.post(urlPost, data);
         } catch (error) {
             return await error.response;
         }
