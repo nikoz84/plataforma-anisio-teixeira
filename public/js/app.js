@@ -15977,7 +15977,7 @@ var content = __webpack_require__(26);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("85514578", content, false, {});
+var update = __webpack_require__(3)("e7db59c4", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -16149,7 +16149,7 @@ var content = __webpack_require__(32);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("d461acc2", content, false, {});
+var update = __webpack_require__(3)("8059c70e", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -16282,7 +16282,7 @@ var content = __webpack_require__(37);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("270068c7", content, false, {});
+var update = __webpack_require__(3)("3d7ad12d", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -17182,7 +17182,7 @@ var content = __webpack_require__(42);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("49e4ef72", content, false, {});
+var update = __webpack_require__(3)("394b1fd2", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -17307,7 +17307,7 @@ var content = __webpack_require__(46);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("3ca444c3", content, false, {});
+var update = __webpack_require__(3)("ee06a5ba", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -17465,7 +17465,7 @@ var content = __webpack_require__(51);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("0594cf67", content, false, {});
+var update = __webpack_require__(3)("525ddb07", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -17753,7 +17753,7 @@ var content = __webpack_require__(57);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("0eee21e8", content, false, {});
+var update = __webpack_require__(3)("0f035772", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -17884,6 +17884,93 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -18182,6 +18269,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
+                staticStyle: { resize: "none" },
                 attrs: { id: "descricao" },
                 domProps: { value: _vm.description },
                 on: {
@@ -18391,7 +18479,351 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "panel-body" }, [
-        _vm._v("\n                asdada asd ad asdaa sd\n            ")
+        _c("div", { staticClass: "col-auto my-1" }, [
+          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+            _c("input", {
+              staticClass: "custom-control-input item-superior",
+              attrs: {
+                type: "checkbox",
+                id: "item-superior",
+                name: "item-superior"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label",
+                attrs: { for: "customControlAutosizing" }
+              },
+              [_vm._v("Áreas de Conhecimento")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
+        }),
+        _vm._v("Ciências da natureza"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Humanas"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Linguagens e seus códigos"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Matemática"),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-auto my-1" }, [
+          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+            _c("input", {
+              staticClass: "custom-control-input item-superior",
+              attrs: {
+                type: "checkbox",
+                id: "item-superior",
+                name: "item-superior"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label",
+                attrs: { for: "customControlAutosizing" }
+              },
+              [_vm._v("Linguagens Artísticas")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
+        }),
+        _vm._v("Artes Visuais"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Audiovisual"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Circo"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Dança"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Literatura"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Música"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Teatro"),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-auto my-1" }, [
+          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+            _c("input", {
+              staticClass: "custom-control-input item-superior",
+              attrs: {
+                type: "checkbox",
+                id: "item-superior",
+                name: "item-superior"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label",
+                attrs: { for: "customControlAutosizing" }
+              },
+              [_vm._v("Temas Transversais")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
+        }),
+        _vm._v("Educação Ambiental"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Educação Especial"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Gênero e Sexualidade"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("História e Cultura Africana"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("História e Cultura Indígena"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Pluralidade Cultural"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Saúde"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Trabalho e Consumo"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
+        }),
+        _vm._v("Ética e Cidadania"),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-auto my-1" }, [
+          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+            _c("input", {
+              staticClass: "custom-control-input item-superior",
+              attrs: {
+                type: "checkbox",
+                id: "item-superior",
+                name: "item-superior"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label",
+                attrs: { for: "customControlAutosizing" }
+              },
+              [_vm._v("Séries - Educação Infantil")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
+        }),
+        _vm._v("Creche"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("Pré-Escola"),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-auto my-1" }, [
+          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+            _c("input", {
+              staticClass: "custom-control-input item-superior",
+              attrs: {
+                type: "checkbox",
+                id: "item-superior",
+                name: "item-superior"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label",
+                attrs: { for: "customControlAutosizing" }
+              },
+              [_vm._v("Séries - Ensino Fundamental")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
+        }),
+        _vm._v("1º Ano"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("2º Ano"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("3º Ano"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("4º Ano"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("5º Ano"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("6º Ano"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("7º Ano"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("8º Ano"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("9º Ano"),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-auto my-1" }, [
+          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+            _c("input", {
+              staticClass: "custom-control-input item-superior",
+              attrs: {
+                type: "checkbox",
+                id: "item-superior",
+                name: "item-superior"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label",
+                attrs: { for: "customControlAutosizing" }
+              },
+              [_vm._v("Séries - Ensino Médio")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
+        }),
+        _vm._v("1º Série"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("2º Série"),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
+        }),
+        _vm._v("3º Série"),
+        _c("br")
       ])
     ])
   }
@@ -19412,7 +19844,7 @@ var content = __webpack_require__(66);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("01d0d322", content, false, {});
+var update = __webpack_require__(3)("41818ecf", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -19534,7 +19966,7 @@ var content = __webpack_require__(70);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("005248ba", content, false, {});
+var update = __webpack_require__(3)("a68dc17a", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -20041,7 +20473,7 @@ var content = __webpack_require__(75);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("2687d7b9", content, false, {});
+var update = __webpack_require__(3)("55b91fce", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
