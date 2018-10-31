@@ -91,7 +91,9 @@ export default {
     position: absolute;
     bottom: -10px;
 }
-
+:root {
+    --background: var(--color);
+} 
 aside > header > h3 {
     margin-top: 5px;
     font-size: 18px;

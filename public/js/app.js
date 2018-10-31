@@ -17331,7 +17331,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n[data-v-59445f58]:root {\n  --background: #495060;\n}\n.panel-default[data-v-59445f58] {\n  border-top-color: var(--background);\n  border-top-width: 3px;\n}\n", ""]);
+exports.push([module.i, "\n.panel-default[data-v-59445f58] {\n  border-top-color: var(--background);\n  border-top-width: 3px;\n}\n", ""]);
 
 // exports
 
