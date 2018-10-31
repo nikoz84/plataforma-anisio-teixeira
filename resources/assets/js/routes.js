@@ -39,7 +39,7 @@ const routes =[
           component: LoginForm
         },
         {
-          path: 'recuperar-senha/:code',
+          path: 'recuperar-senha',
           name: 'Recover',
           component: RecoverPassForm
         },

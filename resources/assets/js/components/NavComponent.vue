@@ -88,9 +88,11 @@ export default {
             let resp = await http.postData('/auth/logout', params);
             
             if(resp.data.success){
-                localStorage.removeItem('token')
+                localStorage.clear();
                 store.commit('LOGOUT_USER')
                 this.$router.push('/login')
+            }else{
+                localStorage.clear();
             }
                 
             
@@ -118,7 +120,6 @@ export default {
   height: 2px;
   background: #ccc;
 }
-
 .progress-bar {
   height: 2px;
   background: #1e78c2;
