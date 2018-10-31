@@ -85,7 +85,7 @@ export default {
             is_featured: false,
             uso_pedagogico: null,
             tags:[],
-            option: {},
+            options: {},
         }
 
     },
@@ -103,11 +103,11 @@ export default {
             };
             console.warn(data)
             let http = new Http();
-            //let resp = await http.postData('/aplicativos/create', data);
+            let resp = await http.postData('/aplicativos/create', data);
 
-            //if(resp.data.success){
-              //  console.warn(resp.data.message)
-            //}
+            if(resp.data.success){
+                console.warn(resp.data.message)
+            }
 
 
 

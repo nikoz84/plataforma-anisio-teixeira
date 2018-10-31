@@ -30,6 +30,14 @@
                             <option value="5">Vídeo</option>
                         </select>
                     </div>
+                    <!-- CATEGORIA -->
+                    <div class="form-group">
+                        <label for="estado">Categoria de Conteúdo:*</label>
+                        <select class="form-control form-control-lg" id="categoria" v-model="category">
+                            <option value="">« SELECIONE »</option>
+                            <option v-for="(item, i) in categories" v-bind:value="item.name" v-bind:key="i">{{item.name}}</option>
+                        </select>
+                    </div>
                     <!-- DESCRICAO -->
                     <div class="form-group">
                         <label for="descricao">Descrição:*</label>
@@ -346,32 +354,52 @@ export default {
             source:null,
             license:'',
             options: {},
+            canal: null,
             tags: [],
             tag: '',
-            autocompleteItems: []
+            is_featured: false,
+            is_site:false,
+            is_approved: false,
+            autocompleteItems: [],
+            category: '',
+            categories:[]
         }
 
     },
+    created:function(){
+        this.getOptions();
+    },
     computed:{
-        
+
     },
     methods:{
         async createConteudo(){
-            
-            let data = {
+            this.options ={
+                category: this.category
+            };
+            let params = {
                 tipo: this.tipo,
+                canal_id: localStorage.idCanal,
                 title: this.title,
                 description:this.description,
                 authors:this.authors,
                 source:this.source,
-                license:this.license,
+                license_id:this.license,
                 tags: this.tags,
-                options: JSON.stringify(this.options)
+                is_featured: this.is_featured,
+                is_site: this.is_site,
+                is_approved: this.is_approved,
+                options: this.options,
+                token: localStorage.token
             };
-            console.warn(data);
-            //let http = new Http();
-            //let resp = await http.postData('/conteudos/', data);
+            console.warn(params);
+            let http = new Http();
+            let resp = await http.postData('/conteudos/create', params);
 
+            console.log(resp);
+            if(resp.data.success){
+                console.log(resp.data);
+            }
         },
         update(newTags) {
             this.autocompleteItems = [];
@@ -382,14 +410,26 @@ export default {
             let http = new Http();
             let params = {token:localStorage.token};
             let resp = await http.getDataFromUrl(`/tags/search/${this.tag}`, params);
-            
+
             if(resp.data.success){
                 this.autocompleteItems = resp.data.paginator.data.map(a =>{
                     return {name: a.name, id: a.id  };
                 });
-                
+
             }
-            
+
+        },
+        async getOptions(){
+            let http = new Http();
+            let params = {
+                token: localStorage.token
+            };
+            let name= 'category_aplicativos';
+            let resp = await http.postData(`/options/name/${name}`);
+
+            if(resp.data.success){
+                this.categories = JSON.parse(resp.data.options.meta_data).category
+            }
         }
     },
     watch:{
