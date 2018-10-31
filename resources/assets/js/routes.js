@@ -3,6 +3,9 @@ import Sobre from './pages/Sobre.vue';
 import Listar from './pages/Listar.vue';
 import Exibir from './pages/Exibir.vue';
 import Formulario from './forms/ConteudoForm.vue';
+import LoginForm from './forms/LoginForm.vue';
+import RecoverPassForm from './forms/RecoverPassForm.vue';
+import RegisterForm from './forms/RegisterForm.vue'; 
 
 const routes =[
     {
@@ -23,13 +26,29 @@ const routes =[
       }
     },    
     {
-      path: '/login',
-      name: 'Login',
-      component: () => import(/* webpackChunkName: "login" */ './pages/Login.vue'),
+      path: '/usuario',
+      name: 'User',
+      component: () => import(/* webpackChunkName: "user" */ './pages/User.vue'),
       meta: {
-        requiresAuth: false,
-        guest: true
-      }
+        requiresAuth: false
+      },
+      children: [
+        {
+          path: 'login',
+          name: 'Login',
+          component: LoginForm
+        },
+        {
+          path: 'recuperar-senha',
+          name: 'Recover',
+          component: RecoverPassForm
+        },
+        {
+          path: 'registro',
+          name: 'Register',
+          component: RegisterForm
+        }    
+      ]
     },
     {
       path: '/:slug',

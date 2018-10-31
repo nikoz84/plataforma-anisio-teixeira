@@ -161,7 +161,5 @@ class AuthController extends Controller
             'success'=> true,
             $this->respondWithToken($token)
         ]);
-        
     }
-    
 }
