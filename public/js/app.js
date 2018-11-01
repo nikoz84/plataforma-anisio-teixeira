@@ -18383,7 +18383,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                 params = {
                                     token: localStorage.token
                                 };
-                                name = 'category_aplicativos';
+                                name = this.$route.params.slug;
                                 _context3.next = 5;
                                 return http.postData('/options/name/' + name);
 
@@ -18392,7 +18392,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
                                 if (resp.data.success) {
-                                    this.categories = JSON.parse(resp.data.options.meta_data).category;
+                                    this.categories = JSON.parse(resp.data.options.meta_data).categories;
                                 }
 
                             case 7:
