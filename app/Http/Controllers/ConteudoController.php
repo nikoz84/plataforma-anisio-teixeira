@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Conteudo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 class ConteudoController extends Controller
 {
     public function __construct()
@@ -54,11 +56,13 @@ class ConteudoController extends Controller
      */
     public function create(Request $request)
     {
-        $id = Conteudo::createinsertGetId(
+        $id = DB::table('conteudos')->insertGetId(
             [
-                'user_id' => $request->get('user_id'),
+                'user_id' => Auth::user()->id,
+                'approving_user_id'=> Auth::user()->id,
                 'canal_id' => $request->get('canal_id'),
                 'title' => $request->get('title'),
+                'license_id' => $request->get('license_id'),
                 'description' => $request->get('description'),
                 'authors' => $request->get('authors'),
                 'source' => $request->get('source'),

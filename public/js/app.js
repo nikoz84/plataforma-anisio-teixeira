@@ -957,29 +957,27 @@ var Http = function () {
                             case 0:
                                 _context2.prev = 0;
                                 url = '' + this.api + endPoint;
-
-                                console.log(params);
-                                _context2.next = 5;
+                                _context2.next = 4;
                                 return axios.get(url, { params: params });
 
-                            case 5:
+                            case 4:
                                 return _context2.abrupt('return', _context2.sent);
 
-                            case 8:
-                                _context2.prev = 8;
+                            case 7:
+                                _context2.prev = 7;
                                 _context2.t0 = _context2['catch'](0);
-                                _context2.next = 12;
+                                _context2.next = 11;
                                 return _context2.t0.response;
 
-                            case 12:
+                            case 11:
                                 return _context2.abrupt('return', _context2.sent);
 
-                            case 13:
+                            case 12:
                             case 'end':
                                 return _context2.stop();
                         }
                     }
-                }, _callee2, this, [[0, 8]]);
+                }, _callee2, this, [[0, 7]]);
             }));
 
             function getDataFromUrl() {
@@ -1001,31 +999,27 @@ var Http = function () {
                             case 0:
                                 _context3.prev = 0;
                                 url = '' + this.api + endPoint;
-
-                                //let config = { headers:{'Authorization':'Bearer ' + localStorage.token } };
-
-                                console.log(endPoint);
-                                _context3.next = 5;
+                                _context3.next = 4;
                                 return axios.get(url, { params: params });
 
-                            case 5:
+                            case 4:
                                 return _context3.abrupt('return', _context3.sent);
 
-                            case 8:
-                                _context3.prev = 8;
+                            case 7:
+                                _context3.prev = 7;
                                 _context3.t0 = _context3['catch'](0);
-                                _context3.next = 12;
+                                _context3.next = 11;
                                 return _context3.t0.response;
 
-                            case 12:
+                            case 11:
                                 return _context3.abrupt('return', _context3.sent);
 
-                            case 13:
+                            case 12:
                             case 'end':
                                 return _context3.stop();
                         }
                     }
-                }, _callee3, this, [[0, 8]]);
+                }, _callee3, this, [[0, 7]]);
             }));
 
             function getDataWithTokenUrl() {
@@ -1039,37 +1033,35 @@ var Http = function () {
         value: function () {
             var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4() {
                 var endPoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-                var data, urlPost;
+                var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+                var urlPost;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
                     while (1) {
                         switch (_context4.prev = _context4.next) {
                             case 0:
                                 _context4.prev = 0;
-                                data = { params: { token: localStorage.token } };
-
-                                console.log(data);console.warn(endPoint);
                                 urlPost = '' + this.api + endPoint;
-                                _context4.next = 7;
-                                return axios.post(urlPost, data);
+                                _context4.next = 4;
+                                return axios.post(urlPost, params);
+
+                            case 4:
+                                return _context4.abrupt('return', _context4.sent);
 
                             case 7:
-                                return _context4.abrupt('return', _context4.sent);
-
-                            case 10:
-                                _context4.prev = 10;
+                                _context4.prev = 7;
                                 _context4.t0 = _context4['catch'](0);
-                                _context4.next = 14;
+                                _context4.next = 11;
                                 return _context4.t0.response;
 
-                            case 14:
+                            case 11:
                                 return _context4.abrupt('return', _context4.sent);
 
-                            case 15:
+                            case 12:
                             case 'end':
                                 return _context4.stop();
                         }
                     }
-                }, _callee4, this, [[0, 10]]);
+                }, _callee4, this, [[0, 7]]);
             }));
 
             function postData() {
@@ -1088,9 +1080,9 @@ var Http = function () {
                         switch (_context5.prev = _context5.next) {
                             case 0:
                                 _context5.prev = 0;
-                                urlUpdate = localStorage.token ? '' + this.api + endPoint + '&token=' + token : '' + this.api + endPoint;
+                                urlUpdate = '' + this.api + endPoint;
                                 _context5.next = 4;
-                                return axios.put(urlUpdate, params, this.headersData);
+                                return axios.put(urlUpdate, { params: params });
 
                             case 4:
                                 return _context5.abrupt('return', _context5.sent);
@@ -1112,7 +1104,7 @@ var Http = function () {
                 }, _callee5, this, [[0, 7]]);
             }));
 
-            function putData(_x8, _x9) {
+            function putData(_x9, _x10) {
                 return _ref5.apply(this, arguments);
             }
 
@@ -1128,9 +1120,9 @@ var Http = function () {
                         switch (_context6.prev = _context6.next) {
                             case 0:
                                 _context6.prev = 0;
-                                urlDelete = localStorage.token ? '' + this.api + endPoint + '&token=' + token : '' + this.api + endPoint;
+                                urlDelete = '' + this.api + endPoint;
                                 _context6.next = 4;
-                                return axios.delete(urlDelete, params, this.headersData);
+                                return axios.delete(urlDelete, { params: params });
 
                             case 4:
                                 return _context6.abrupt('return', _context6.sent);
@@ -1152,7 +1144,7 @@ var Http = function () {
                 }, _callee6, this, [[0, 7]]);
             }));
 
-            function deleteData(_x10, _x11) {
+            function deleteData(_x11, _x12) {
                 return _ref6.apply(this, arguments);
             }
 
@@ -18238,6 +18230,14 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -18253,37 +18253,64 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             source: null,
             license: '',
             options: {},
+            canal: null,
             tags: [],
             tag: '',
-            autocompleteItems: []
+            is_featured: false,
+            is_site: false,
+            is_approved: false,
+            autocompleteItems: [],
+            category: '',
+            categories: []
         };
     },
 
+    created: function created() {
+        this.getOptions();
+    },
     computed: {},
     methods: {
         createConteudo: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-                var data;
+                var params, http, resp;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
-                                data = {
+                                this.options = {
+                                    category: this.category
+                                };
+                                params = {
                                     tipo: this.tipo,
+                                    canal_id: localStorage.idCanal,
                                     title: this.title,
                                     description: this.description,
                                     authors: this.authors,
                                     source: this.source,
-                                    license: this.license,
+                                    license_id: this.license,
                                     tags: this.tags,
-                                    options: JSON.stringify(this.options)
+                                    is_featured: this.is_featured,
+                                    is_site: this.is_site,
+                                    is_approved: this.is_approved,
+                                    options: this.options,
+                                    token: localStorage.token
                                 };
 
-                                console.warn(data);
-                                //let http = new Http();
-                                //let resp = await http.postData('/conteudos/', data);
+                                console.warn(params);
+                                http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
+                                _context.next = 6;
+                                return http.postData('/conteudos/create', params);
 
-                            case 2:
+                            case 6:
+                                resp = _context.sent;
+
+
+                                console.log(resp);
+                                if (resp.data.success) {
+                                    console.log(resp.data);
+                                }
+
+                            case 9:
                             case 'end':
                                 return _context.stop();
                         }
@@ -18344,6 +18371,43 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             }
 
             return getItems;
+        }(),
+        getOptions: function () {
+            var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
+                var http, params, name, resp;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+                    while (1) {
+                        switch (_context3.prev = _context3.next) {
+                            case 0:
+                                http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
+                                params = {
+                                    token: localStorage.token
+                                };
+                                name = 'category_aplicativos';
+                                _context3.next = 5;
+                                return http.postData('/options/name/' + name);
+
+                            case 5:
+                                resp = _context3.sent;
+
+
+                                if (resp.data.success) {
+                                    this.categories = JSON.parse(resp.data.options.meta_data).category;
+                                }
+
+                            case 7:
+                            case 'end':
+                                return _context3.stop();
+                        }
+                    }
+                }, _callee3, this);
+            }));
+
+            function getOptions() {
+                return _ref3.apply(this, arguments);
+            }
+
+            return getOptions;
         }()
     },
     watch: {
@@ -18486,6 +18550,57 @@ var render = function() {
                   _vm._v(" "),
                   _c("option", { attrs: { value: "5" } }, [_vm._v("Vídeo")])
                 ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "estado" } }, [
+                _vm._v("Categoria de Conteúdo:*")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.category,
+                      expression: "category"
+                    }
+                  ],
+                  staticClass: "form-control form-control-lg",
+                  attrs: { id: "categoria" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.category = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "" } }, [
+                    _vm._v("« SELECIONE »")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.categories, function(item, i) {
+                    return _c(
+                      "option",
+                      { key: i, domProps: { value: item.name } },
+                      [_vm._v(_vm._s(item.name))]
+                    )
+                  })
+                ],
+                2
               )
             ]),
             _vm._v(" "),
@@ -21123,12 +21238,10 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         return {
             password: '',
             confirmPassword: '',
-            verificationCode: this.$route.params.code
+            verificationCode: ''
         };
     },
-    created: function created() {
-        console.log(this.verificationCode);
-    },
+    created: function created() {},
 
     methods: {
         recoverPass: function () {
@@ -21216,7 +21329,7 @@ var render = function() {
                       ],
                       staticClass: "form-control",
                       attrs: {
-                        type: "text",
+                        type: "password",
                         id: "senha",
                         "aria-describedby": "senha"
                       },

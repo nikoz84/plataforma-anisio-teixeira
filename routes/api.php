@@ -31,7 +31,8 @@ Route::get('/aplicativos/search/{term}','AplicativoController@search');
 // AUTH
 Route::post('/auth/login', 'AuthController@login')->name('login');
 Route::post('/auth/register', 'AuthController@register')->name('register');
-
+// OPTIONS
+Route::post('options/name/{name}','OptionsController@getByName');
 
 Route::group(['middleware' => ['jwt.verify']], function() {
     

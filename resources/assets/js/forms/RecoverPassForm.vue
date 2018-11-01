@@ -11,7 +11,7 @@
                         <!-- Nova senha -->
                         <div class="form-group">
                             <label for="senha">Senha</label>
-                            <input type="text" class="form-control" id="senha" aria-describedby="senha" v-model="password">
+                            <input type="password" class="form-control" id="senha" aria-describedby="senha" v-model="password">
                             <small class="form-text text-muted">Escreva uma nova senha</small>
                         </div>
                         <div class="form-group">
@@ -42,12 +42,12 @@ export default {
         return {
             password: '',
             confirmPassword: '',
-            verificationCode: this.$route.params.code
+            verificationCode: ''
         }
 
     },
     created(){
-        console.log(this.verificationCode);
+        
     },
     methods:{
         async recoverPass(){
