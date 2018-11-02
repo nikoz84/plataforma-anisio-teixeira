@@ -424,11 +424,12 @@ export default {
             let params = {
                 token: localStorage.token
             };
-            let name= 'category_aplicativos';
-            let resp = await http.postData(`/options/name/${name}`);
+            
+            let resp = await http.postData(`/options/name/${this.$route.params.slug}`);
 
             if(resp.data.success){
-                this.categories = JSON.parse(resp.data.options.meta_data).category
+                this.categories = JSON.parse(resp.data.options.meta_data).categories
+                console.log(resp.data)
             }
         }
     },
