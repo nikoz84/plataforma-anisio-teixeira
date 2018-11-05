@@ -187,7 +187,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                 if (resp.data.success) {
                                     this.idCanal = resp.data.canal.id;
                                     this.title = resp.data.canal.name;
-                                    this.options = JSON.parse(resp.data.canal.options);
+                                    this.options = resp.data.canal.options;
                                     this.color = this.options.color;
                                     this.hasCategories = this.options.has_categories;
                                     localStorage.setItem('idCanal', this.idCanal);

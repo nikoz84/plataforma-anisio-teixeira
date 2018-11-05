@@ -18374,7 +18374,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         }(),
         getOptions: function () {
             var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
-                var http, params, resp;
+                var http, params, name, resp;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
                     while (1) {
                         switch (_context3.prev = _context3.next) {
@@ -18383,19 +18383,19 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                 params = {
                                     token: localStorage.token
                                 };
-                                _context3.next = 4;
-                                return http.postData('/options/name/' + this.$route.params.slug);
+                                name = this.$route.params.slug;
+                                _context3.next = 5;
+                                return http.postData('/options/name/' + name);
 
-                            case 4:
+                            case 5:
                                 resp = _context3.sent;
 
 
                                 if (resp.data.success) {
-                                    this.categories = JSON.parse(resp.data.options.meta_data).categories;
-                                    console.log(resp.data);
+                                    this.categories = resp.data.options.meta_data.categories;
                                 }
 
-                            case 6:
+                            case 7:
                             case 'end':
                                 return _context3.stop();
                         }
@@ -22096,9 +22096,11 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
                                 if (resp.data.success) {
-                                    localStorage.removeItem('token');
+                                    localStorage.clear();
                                     __WEBPACK_IMPORTED_MODULE_2__store_js__["a" /* default */].commit('LOGOUT_USER');
                                     this.$router.push('/login');
+                                } else {
+                                    localStorage.clear();
                                 }
 
                             case 6:

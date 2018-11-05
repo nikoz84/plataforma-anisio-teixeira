@@ -424,12 +424,11 @@ export default {
             let params = {
                 token: localStorage.token
             };
-            
-            let resp = await http.postData(`/options/name/${this.$route.params.slug}`);
+            let name= this.$route.params.slug;
+            let resp = await http.postData(`/options/name/${name}`);
 
             if(resp.data.success){
-                this.categories = JSON.parse(resp.data.options.meta_data).categories
-                console.log(resp.data)
+                this.categories = resp.data.options.meta_data.categories
             }
         }
     },
