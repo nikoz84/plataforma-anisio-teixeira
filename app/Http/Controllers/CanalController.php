@@ -22,6 +22,17 @@ class CanalController extends Controller
     {
         $limit = ($request->has('limit')) ? $request->query('limit') : 10;
         $page = ($request->has('page')) ? $request->query('page') : 1;
+        
+        if ($request->has('name')) {
+            $name = $request->query('name');
+            $canais = Canal::where('name', $name)
+                        ->paginate($limit);
+            $canais->setPath("/canais?name={$name}limit={$limit}");     
+            return response()->toJson([
+                'success' => true,
+                'paginator' => $canais
+            ]);
+        }
         $canais = Canal::where('is_active', true)
                         ->paginate($limit);
         
@@ -41,12 +52,12 @@ class CanalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $id = DB::table('canais')->insertGetId(
             [
-                'name' => 'Canal Teste',
-                'description' => 'Adicionando um novo canal no banco de dados.',
+                'name' => $request->get('name'),
+                'description' => $request->get('description'),
                 'slug' => 'teste-slug',
                 'is_active' => true
             ]

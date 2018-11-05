@@ -14,7 +14,13 @@ class Conteudo extends Model
         'is_approved', 
         'options',
         'created_at'];
+    
+    protected $casts = [
+            'options' => 'array',
+    ];   
+    
     protected $hidden = ['ts_documento'];
+
     public function canal()
     {
         return $this->belongsTo('App\Canal', 'canal_id');

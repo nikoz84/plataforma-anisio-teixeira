@@ -65,7 +65,7 @@ export default {
             if(resp.data.success){
                 this.idCanal = resp.data.canal.id;
                 this.title = resp.data.canal.name;
-                this.options = JSON.parse(resp.data.canal.options)
+                this.options = resp.data.canal.options
                 this.color = this.options.color;
                 this.hasCategories = this.options.has_categories;
                 localStorage.setItem('idCanal', this.idCanal);
@@ -91,7 +91,9 @@ export default {
     position: absolute;
     bottom: -10px;
 }
-
+:root {
+    --background: var(--color);
+} 
 aside > header > h3 {
     margin-top: 5px;
     font-size: 18px;

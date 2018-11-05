@@ -27,9 +27,7 @@ export default {
 }    
 </script>
 <style lang="scss" scoped>
-:root {
-          --background: #495060;
-       } 
+
 .panel-default{
     border-top-color: var(--background);
     border-top-width: 3px;
