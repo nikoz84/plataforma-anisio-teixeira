@@ -10,7 +10,7 @@
                     <!-- TITULO -->
                     <div class="form-group">
                         <label for="titulo">Título:*</label>
-                        <input type="text" class="form-control" id="titulo" aria-describedby="titulo" v-model="title">
+                        <input type="text" class="form-control" id="titulo" aria-describedby="titulo" v-model.trim="title">
                         <small id="titulo" class="form-text text-muted">Adicione o nome original da mídia.</small>
                     </div>
                     <!-- TIPO -->
@@ -31,7 +31,7 @@
                         </select>
                     </div>
                     <!-- CATEGORIA -->
-                    <div class="form-group">
+                    <div class="form-group" v-if="categories.length != 0">
                         <label for="estado">Categoria de Conteúdo:*</label>
                         <select class="form-control form-control-lg" id="categoria" v-model="category">
                             <option value="">« SELECIONE »</option>
@@ -375,21 +375,21 @@ export default {
     methods:{
         async createConteudo(){
             this.options ={
-                category: this.category
+                category: this.category,
+                tipo: this.tipo,
+                tags: this.tags,
             };
             let params = {
-                tipo: this.tipo,
                 canal_id: localStorage.idCanal,
                 title: this.title,
                 description:this.description,
                 authors:this.authors,
                 source:this.source,
                 license_id:this.license,
-                tags: this.tags,
                 is_featured: this.is_featured,
                 is_site: this.is_site,
                 is_approved: this.is_approved,
-                options: this.options,
+                options: JSON.stringify(this.options),
                 token: localStorage.token
             };
             console.warn(params);
@@ -427,7 +427,11 @@ export default {
             let name= this.$route.params.slug;
             let resp = await http.postData(`/options/name/${name}`);
             
+<<<<<<< HEAD
             if(resp.data.success){
+=======
+            if(resp.data.success && resp.data.options != null ){
+>>>>>>> aa23de6a11bfffb60d6ea7d1ee389ad4d3c1ceec
                 this.categories = resp.data.options.meta_data.categories
             }
         }

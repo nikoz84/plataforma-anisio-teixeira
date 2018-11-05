@@ -8,17 +8,16 @@ class Conteudo extends Model
 {
     protected $id = 'id';
     protected $fillable = [
-        'title', 
-        'description', 
-        'is_featured', 
-        'is_approved', 
+        'title',
+        'description',
+        'is_featured',
+        'is_approved',
         'options',
         'created_at'];
-    
+
     protected $casts = [
             'options' => 'array',
-    ];   
-    
+    ];
     protected $hidden = ['ts_documento'];
 
     public function canal()

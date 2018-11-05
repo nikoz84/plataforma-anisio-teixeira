@@ -15991,7 +15991,7 @@ var content = __webpack_require__(26);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("85514578", content, false, {});
+var update = __webpack_require__(3)("e7db59c4", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -16163,7 +16163,7 @@ var content = __webpack_require__(32);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("d461acc2", content, false, {});
+var update = __webpack_require__(3)("8059c70e", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -16296,7 +16296,7 @@ var content = __webpack_require__(37);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("270068c7", content, false, {});
+var update = __webpack_require__(3)("3d7ad12d", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -17196,7 +17196,7 @@ var content = __webpack_require__(42);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("49e4ef72", content, false, {});
+var update = __webpack_require__(3)("394b1fd2", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -17321,7 +17321,7 @@ var content = __webpack_require__(46);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("3ca444c3", content, false, {});
+var update = __webpack_require__(3)("ee06a5ba", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -17479,7 +17479,7 @@ var content = __webpack_require__(51);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("0594cf67", content, false, {});
+var update = __webpack_require__(3)("525ddb07", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -17767,7 +17767,7 @@ var content = __webpack_require__(57);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("0eee21e8", content, false, {});
+var update = __webpack_require__(3)("0f035772", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -18278,21 +18278,21 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                         switch (_context.prev = _context.next) {
                             case 0:
                                 this.options = {
-                                    category: this.category
+                                    category: this.category,
+                                    tipo: this.tipo,
+                                    tags: this.tags
                                 };
                                 params = {
-                                    tipo: this.tipo,
                                     canal_id: localStorage.idCanal,
                                     title: this.title,
                                     description: this.description,
                                     authors: this.authors,
                                     source: this.source,
                                     license_id: this.license,
-                                    tags: this.tags,
                                     is_featured: this.is_featured,
                                     is_site: this.is_site,
                                     is_approved: this.is_approved,
-                                    options: this.options,
+                                    options: JSON.stringify(this.options),
                                     token: localStorage.token
                                 };
 
@@ -18391,7 +18391,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                 resp = _context3.sent;
 
 
-                                if (resp.data.success) {
+                                if (resp.data.success && resp.data.options != null) {
                                     this.categories = resp.data.options.meta_data.categories;
                                 }
 
@@ -18449,9 +18449,10 @@ var render = function() {
                 directives: [
                   {
                     name: "model",
-                    rawName: "v-model",
+                    rawName: "v-model.trim",
                     value: _vm.title,
-                    expression: "title"
+                    expression: "title",
+                    modifiers: { trim: true }
                   }
                 ],
                 staticClass: "form-control",
@@ -18466,7 +18467,10 @@ var render = function() {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.title = $event.target.value
+                    _vm.title = $event.target.value.trim()
+                  },
+                  blur: function($event) {
+                    _vm.$forceUpdate()
                   }
                 }
               }),
@@ -18553,56 +18557,58 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "estado" } }, [
-                _vm._v("Categoria de Conteúdo:*")
-              ]),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.category,
-                      expression: "category"
-                    }
-                  ],
-                  staticClass: "form-control form-control-lg",
-                  attrs: { id: "categoria" },
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.category = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    }
-                  }
-                },
-                [
-                  _c("option", { attrs: { value: "" } }, [
-                    _vm._v("« SELECIONE »")
+            _vm.categories.length != 0
+              ? _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "estado" } }, [
+                    _vm._v("Categoria de Conteúdo:*")
                   ]),
                   _vm._v(" "),
-                  _vm._l(_vm.categories, function(item, i) {
-                    return _c(
-                      "option",
-                      { key: i, domProps: { value: item.name } },
-                      [_vm._v(_vm._s(item.name))]
-                    )
-                  })
-                ],
-                2
-              )
-            ]),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.category,
+                          expression: "category"
+                        }
+                      ],
+                      staticClass: "form-control form-control-lg",
+                      attrs: { id: "categoria" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.category = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "" } }, [
+                        _vm._v("« SELECIONE »")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.categories, function(item, i) {
+                        return _c(
+                          "option",
+                          { key: i, domProps: { value: item.name } },
+                          [_vm._v(_vm._s(item.name))]
+                        )
+                      })
+                    ],
+                    2
+                  )
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "descricao" } }, [
@@ -19871,7 +19877,7 @@ var content = __webpack_require__(65);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("7e460db9", content, false, {});
+var update = __webpack_require__(3)("4d010393", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -21830,7 +21836,7 @@ var content = __webpack_require__(77);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("01d0d322", content, false, {});
+var update = __webpack_require__(3)("41818ecf", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -21952,7 +21958,7 @@ var content = __webpack_require__(81);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("005248ba", content, false, {});
+var update = __webpack_require__(3)("a68dc17a", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -22461,7 +22467,7 @@ var content = __webpack_require__(86);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("2687d7b9", content, false, {});
+var update = __webpack_require__(3)("55b91fce", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
