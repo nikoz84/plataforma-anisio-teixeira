@@ -10,7 +10,7 @@
                     <!-- TITULO -->
                     <div class="form-group">
                         <label for="titulo">Título:*</label>
-                        <input type="text" class="form-control" id="titulo" aria-describedby="titulo" v-model="title">
+                        <input type="text" class="form-control" id="titulo" aria-describedby="titulo" v-model.trim="title">
                         <small id="titulo" class="form-text text-muted">Adicione o nome original da mídia.</small>
                     </div>
                     <!-- TIPO -->
@@ -31,7 +31,7 @@
                         </select>
                     </div>
                     <!-- CATEGORIA -->
-                    <div class="form-group">
+                    <div class="form-group" v-if="categories.length != 0">
                         <label for="estado">Categoria de Conteúdo:*</label>
                         <select class="form-control form-control-lg" id="categoria" v-model="category">
                             <option value="">« SELECIONE »</option>
@@ -426,8 +426,8 @@ export default {
             };
             let name= this.$route.params.slug;
             let resp = await http.postData(`/options/name/${name}`);
-
-            if(resp.data.success){
+            
+            if(resp.data.success && resp.data.options != null ){
                 this.categories = JSON.parse(resp.data.options.meta_data).categories
             }
         }

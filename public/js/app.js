@@ -18391,7 +18391,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                 resp = _context3.sent;
 
 
-                                if (resp.data.success) {
+                                if (resp.data.success && resp.data.options != null) {
                                     this.categories = JSON.parse(resp.data.options.meta_data).categories;
                                 }
 
@@ -18449,9 +18449,10 @@ var render = function() {
                 directives: [
                   {
                     name: "model",
-                    rawName: "v-model",
+                    rawName: "v-model.trim",
                     value: _vm.title,
-                    expression: "title"
+                    expression: "title",
+                    modifiers: { trim: true }
                   }
                 ],
                 staticClass: "form-control",
@@ -18466,7 +18467,10 @@ var render = function() {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.title = $event.target.value
+                    _vm.title = $event.target.value.trim()
+                  },
+                  blur: function($event) {
+                    _vm.$forceUpdate()
                   }
                 }
               }),
@@ -18553,56 +18557,58 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "estado" } }, [
-                _vm._v("Categoria de Conteúdo:*")
-              ]),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.category,
-                      expression: "category"
-                    }
-                  ],
-                  staticClass: "form-control form-control-lg",
-                  attrs: { id: "categoria" },
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.category = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    }
-                  }
-                },
-                [
-                  _c("option", { attrs: { value: "" } }, [
-                    _vm._v("« SELECIONE »")
+            _vm.categories.length != 0
+              ? _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "estado" } }, [
+                    _vm._v("Categoria de Conteúdo:*")
                   ]),
                   _vm._v(" "),
-                  _vm._l(_vm.categories, function(item, i) {
-                    return _c(
-                      "option",
-                      { key: i, domProps: { value: item.name } },
-                      [_vm._v(_vm._s(item.name))]
-                    )
-                  })
-                ],
-                2
-              )
-            ]),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.category,
+                          expression: "category"
+                        }
+                      ],
+                      staticClass: "form-control form-control-lg",
+                      attrs: { id: "categoria" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.category = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "" } }, [
+                        _vm._v("« SELECIONE »")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.categories, function(item, i) {
+                        return _c(
+                          "option",
+                          { key: i, domProps: { value: item.name } },
+                          [_vm._v(_vm._s(item.name))]
+                        )
+                      })
+                    ],
+                    2
+                  )
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "descricao" } }, [
