@@ -426,7 +426,7 @@ export default {
             };
             let name= this.$route.params.slug;
             let resp = await http.postData(`/options/name/${name}`);
-
+            
             if(resp.data.success){
                 this.categories = resp.data.options.meta_data.categories
             }
