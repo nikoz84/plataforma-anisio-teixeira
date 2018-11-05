@@ -54,25 +54,44 @@ class ConteudoController extends Controller
      */
     public function create(Request $request)
     {
+        dd($request->get('options'));
+
+        $conteudo = new Conteudo;
+
+        $conteudo->user_id = Auth::user()->id;
+        $conteudo->approving_user_id = Auth::user()->id;
+        $conteudo->title = $request->get('title');
+        $conteudo->description = $request->get('description');
+        $conteudo->authors = $request->get('authors');
+        $conteudo->source = $request->get('source');
+        $conteudo->license_id = $request->get('license_id');
+        $conteudo->is_featured = $request->get('is_featured');
+        $conteudo->is_approved = $request->get('is_approved');
+        $conteudo->is_site = $request->get('is_site');
+        $conteudo->options = json_decode($request->get('options'));
+
+        $conteudo->save();
+        /*dd($request->get('options'));
         $id = DB::table('conteudos')->insertGetId(
             [
                 'user_id' => Auth::user()->id,
                 'approving_user_id'=> Auth::user()->id,
                 'canal_id' => $request->get('canal_id'),
                 'title' => $request->get('title'),
-                'license_id' => $request->get('license_id'),
                 'description' => $request->get('description'),
                 'authors' => $request->get('authors'),
                 'source' => $request->get('source'),
-                'is_featured' => $request->get('is_featured'), 
+                'license_id' => $request->get('license_id'),
+                'is_featured' => $request->get('is_featured'),
                 'is_approved' => $request->get('is_approved'),
                 'is_site' =>  $request->get('is_site'),
-                'options' => $request->get('options') 
+                'options' => json_decode($request->get('options'))
             ]
         );
+        */
         return response()->json([
             'message' => 'Conteúdo cadastrado com sucesso',
-            'id' => $id
+            'id' => $conteudo->id
         ]);
     }
 
@@ -142,13 +161,13 @@ class ConteudoController extends Controller
         $page = $request->query('page', 1);
 
         $conteudos = DB::table(DB::raw("conteudos as cd, plainto_tsquery('simple', lower(unaccent('${termo}'))) query"))
-                    ->select(['cd.id','cd.title',
-                            DB::raw('ts_rank_cd(cd.ts_documento, query) AS ranking')
-                            ])
-                    ->whereRaw('query @@ cd.ts_documento')
-                    ->where('cd.is_approved', '=', 'true' )
-                    ->orderBy('ranking','desc')
-                    ->paginate($limit);
+                        ->select(['cd.id','cd.title',
+                                DB::raw('ts_rank_cd(cd.ts_documento, query) AS ranking')
+                                ])
+                        ->whereRaw('query @@ cd.ts_documento')
+                        ->where('cd.is_approved', '=', 'true' )
+                        ->orderBy('ranking','desc')
+                        ->paginate($limit);
 
         
         $conteudos->setPath("/conteudos/search/{$termo}?limit={$limit}");

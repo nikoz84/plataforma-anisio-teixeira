@@ -375,21 +375,21 @@ export default {
     methods:{
         async createConteudo(){
             this.options ={
-                category: this.category
+                category: this.category,
+                tipo: this.tipo,
+                tags: this.tags,
             };
             let params = {
-                tipo: this.tipo,
                 canal_id: localStorage.idCanal,
                 title: this.title,
                 description:this.description,
                 authors:this.authors,
                 source:this.source,
                 license_id:this.license,
-                tags: this.tags,
                 is_featured: this.is_featured,
                 is_site: this.is_site,
                 is_approved: this.is_approved,
-                options: this.options,
+                options: JSON.stringify(this.options),
                 token: localStorage.token
             };
             console.warn(params);
@@ -428,7 +428,7 @@ export default {
             let resp = await http.postData(`/options/name/${name}`);
             
             if(resp.data.success && resp.data.options != null ){
-                this.categories = JSON.parse(resp.data.options.meta_data).categories
+                this.categories = resp.data.options.meta_data.categories
             }
         }
     },
