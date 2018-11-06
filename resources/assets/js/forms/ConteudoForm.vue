@@ -393,6 +393,7 @@ export default {
                 token: localStorage.token
             };
             console.warn(params);
+            
             let http = new Http();
             let resp = await http.postData('/conteudos/create', params);
 
@@ -400,6 +401,7 @@ export default {
             if(resp.data.success){
                 console.log(resp.data);
             }
+            
         },
         update(newTags) {
             this.autocompleteItems = [];
@@ -427,11 +429,7 @@ export default {
             let name= this.$route.params.slug;
             let resp = await http.postData(`/options/name/${name}`);
             
-<<<<<<< HEAD
-            if(resp.data.success){
-=======
             if(resp.data.success && resp.data.options != null ){
->>>>>>> aa23de6a11bfffb60d6ea7d1ee389ad4d3c1ceec
                 this.categories = resp.data.options.meta_data.categories
             }
         }

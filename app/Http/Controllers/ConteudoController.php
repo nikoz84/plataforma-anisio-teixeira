@@ -54,7 +54,7 @@ class ConteudoController extends Controller
      */
     public function create(Request $request)
     {
-        dd($request->get('options'));
+        
 
         $conteudo = new Conteudo;
 
@@ -68,27 +68,10 @@ class ConteudoController extends Controller
         $conteudo->is_featured = $request->get('is_featured');
         $conteudo->is_approved = $request->get('is_approved');
         $conteudo->is_site = $request->get('is_site');
-        $conteudo->options = json_decode($request->get('options'));
+        $conteudo->options = json_decode($request->get('options'), true);
 
         $conteudo->save();
-        /*dd($request->get('options'));
-        $id = DB::table('conteudos')->insertGetId(
-            [
-                'user_id' => Auth::user()->id,
-                'approving_user_id'=> Auth::user()->id,
-                'canal_id' => $request->get('canal_id'),
-                'title' => $request->get('title'),
-                'description' => $request->get('description'),
-                'authors' => $request->get('authors'),
-                'source' => $request->get('source'),
-                'license_id' => $request->get('license_id'),
-                'is_featured' => $request->get('is_featured'),
-                'is_approved' => $request->get('is_approved'),
-                'is_site' =>  $request->get('is_site'),
-                'options' => json_decode($request->get('options'))
-            ]
-        );
-        */
+       
         return response()->json([
             'message' => 'Conteúdo cadastrado com sucesso',
             'id' => $conteudo->id

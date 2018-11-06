@@ -18297,6 +18297,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                 };
 
                                 console.warn(params);
+
                                 http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                 _context.next = 6;
                                 return http.postData('/conteudos/create', params);

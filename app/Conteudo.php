@@ -28,4 +28,5 @@ class Conteudo extends Model
     {
         return $this->belongsToMany('App\Tag');
     }
+    
 }

@@ -15,5 +15,8 @@ class Licenca extends Model
         'name', 'description', 'site',
     ];
 
-    
+    public function conteudo()
+    {
+        return $this->belongsTo('App\Conteudo', 'license_id');
+    }
 }
