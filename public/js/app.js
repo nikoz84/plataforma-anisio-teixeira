@@ -18322,14 +18322,11 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
                                 if (!resp.data.success) {
                                     this.isError = resp.data.success;
-                                    this.message = resp.data.message;
+                                    this.message = "Dados cadastrados com sucesso!";
 
                                     setTimeout(function () {
                                         _this.isError = true;
                                     }, 3000);
-                                } else {
-                                    this.isError = resp.data.success;
-                                    console.log(resp.data);
                                 }
 
                                 /*console.log(resp);
