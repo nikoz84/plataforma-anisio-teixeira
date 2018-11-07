@@ -110,7 +110,7 @@ onchange="try{setCustomValidity('')}catch(e){}">
                     Selecione o(s) componente(s) curricular(es) ou disciplina(s) que mais se adequem ao contéudo:
                 </div>
                 <div class="panel-body">
-                    
+
                     <div class="col-auto my-1">
                         <div class="custom-control custom-checkbox mr-sm-2">
                             <input type="checkbox" class="custom-control-input item-superior" id="item-superior" name="item-superior">
@@ -221,7 +221,7 @@ onchange="try{setCustomValidity('')}catch(e){}">
                     <input type="checkbox"     name="item-superior1" value="html"/>Matemáticabr/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Química<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Sociologia<br/>
-                    
+
                     <br>
 
                     <div class="col-auto my-1">
@@ -268,7 +268,7 @@ onchange="try{setCustomValidity('')}catch(e){}">
                             <label class="custom-control-label" for="customControlAutosizing">Ensino Fundamental Final</label>
                         </div>
                     </div>
-                   
+
                     <input type="checkbox"     name="item-superior1" value="html"/>Artes<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Ciências Naturais<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Educação Física<br/>
@@ -290,14 +290,14 @@ onchange="try{setCustomValidity('')}catch(e){}">
                             <label class="custom-control-label" for="customControlAutosizing">Educação Escolar Indígena</label>
                         </div>
                     </div>
-                   
+
                     <input type="checkbox"     name="item-superior1" value="html"/>Artes<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Ciências<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Educação Física<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Geografia<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>História<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Línguas<br/>
-                    
+
                     <br>
 
                     <div class="col-auto my-1">
@@ -306,7 +306,7 @@ onchange="try{setCustomValidity('')}catch(e){}">
                             <label class="custom-control-label" for="customControlAutosizing">Ensino Superior</label>
                         </div>
                     </div>
-                   
+
                     <input type="checkbox"     name="item-superior1" value="html"/>Ciência Sociais Aplicadas<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Ciências Agrárias<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Ciências Biológicas<br/>
@@ -325,7 +325,7 @@ onchange="try{setCustomValidity('')}catch(e){}">
                             <label class="custom-control-label" for="customControlAutosizing">Educação de Jovens e Adultos 1</label>
                         </div>
                     </div>
-                   
+
                     <input type="checkbox"     name="item-superior1" value="html"/>Estudo da Sociedade e da Natureza<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Língua Portuguesa<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Matemática<br/>
@@ -338,7 +338,7 @@ onchange="try{setCustomValidity('')}catch(e){}">
                             <label class="custom-control-label" for="customControlAutosizing">Educação de Jovens e Adultos 2</label>
                         </div>
                     </div>
-                   
+
                     <input type="checkbox"     name="item-superior1" value="html"/>Artes<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Ciências Naturais<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Educação Física<br/>
@@ -365,7 +365,7 @@ export default {
     components: {},
     data(){
         return {
-            
+
             tipo: '',
             title: null,
             description:null,
@@ -413,16 +413,18 @@ export default {
                 options: JSON.stringify(this.options),
                 token: localStorage.token
             };
-            
-            
+
+
             let resp = await http.postData('/conteudos/create', params);
 
             if(!resp.data.success){
                 this.isError = resp.data.success;
                 this.message = "Dados cadastrados com sucesso!";
+                
                 console.log(resp.data);
+                
                 setTimeout(()=>{
-                this.isError = true; 
+                this.isError = true;
                 },3000)
             }
 
@@ -430,7 +432,7 @@ export default {
             if(resp.data.success){
                 console.log(resp.data);
             }*/
-            
+
         },
         updateTag(newTags) {
             this.autocompleteItems = [];
@@ -438,7 +440,7 @@ export default {
         },
         async getItems(){
             if (this.tag.length === 0) return;
-            
+
             let params = {token:localStorage.token};
             let resp = await http.getDataFromUrl(`/tags/search/${this.tag}`, params);
 
@@ -451,13 +453,13 @@ export default {
 
         },
         async getOptions(){
-            
+
             let params = {
                 token: localStorage.token
             };
             let name= this.$route.params.slug;
             let resp = await http.postData(`/options/name/${name}`);
-            
+
             if(resp.data.success && resp.data.options != null ){
                 this.categories = resp.data.options.meta_data.categories
             }
