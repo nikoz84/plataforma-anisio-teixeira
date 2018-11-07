@@ -24,10 +24,9 @@ class AplicativoController extends Controller
         $orderBy = ($request->has('order')) ? $request->query('order') : 'name';
         $page = ($request->has('page')) ? $request->query('page') : 1;
         
-        $aplicativos = DB::table('aplicativos')
-            ->select(['id','user_id','name','description'])
-            ->orderBy($orderBy, 'name')
-            ->paginate($limit);
+        $aplicativos = Aplicativo::select(['id','user_id','name','description'])
+                                    ->orderBy($orderBy, 'name')
+                                    ->paginate($limit);
                     
         $aplicativos->setPath("/aplicativos?limit={$limit}"); 
         

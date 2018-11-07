@@ -11,7 +11,7 @@ class ConteudoController extends Controller
 {
     public function __construct()
     {
-      $this->middleware('jwt.verify')->except(['list','search']);
+      $this->middleware('jwt.verify')->except(['list','search','getById']);
     }
     /**
      * Display a listing of the resource.
@@ -73,13 +73,14 @@ class ConteudoController extends Controller
         $conteudo->save();
        
         return response()->json([
+            'success' => true,
             'message' => 'Conteúdo cadastrado com sucesso',
             'id' => $conteudo->id
         ]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Atualiza o conteudo.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Conteudo  $conteudo
@@ -87,23 +88,29 @@ class ConteudoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $idConteudo = DB::table('conteudos')
-                        ->where('id', $id)
-                        ->update( [
-                            'title' => $request->get('title'),
-                            'description' => $request->get('description'),
-                            'authors' => $request->get('authors'),
-                            'source' => $request->get('source'),
-                            'is_featured' => $request->get('is_featured'), 
-                            'is_approved' => $request->get('is_approved'),
-                            'is_site' =>  $request->get('is_site'),
-                            'options' => $request->get('options')
-                        ]);
         
-        $conteudo->save($data);
+        $conteudo = Conteudo::find($id);
+        
+        
+        $conteudo->update([
+            'canal_id' => $request->get('canal_id'),
+            'title' => $request->get('title'),
+            'description' => $request->get('description'),
+            'authors' => $request->get('authors'),
+            'source' => $request->get('source'),
+            'license_id' => $request->get('license_id'),
+            'is_featured' => $request->get('is_featured'),
+            'is_approved' => $request->get('is_approved'),
+            'is_site' => $request->get('is_site'),
+            'options' => json_decode( $request->get('options'), true )
+        ]);
+        
+        $conteudo->save();
 
-        
-        return response()->json($conteudo->toJson());
+        return response()->json([
+            'success' => true,
+            'data' => $conteudo
+        ]);
 
         
     }
@@ -165,7 +172,22 @@ class ConteudoController extends Controller
             'limit' => $conteudos->perPage()
         ]);    
     }
+    public function getById(Request $request, $id)
+    {
+        $conteudo = Conteudo::find($id);
 
+        if($conteudo){
+            return response()->json([
+                'success' => true,
+                'conteudo' => $conteudo
+            ]);
+        }else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Conteudo não encontrado' 
+            ]);
+        }
+    }
     public function teste(){
         $conteudo = Conteudo::find(4);
         //$conteudo->tags()->detach([1,5]);

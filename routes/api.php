@@ -25,6 +25,7 @@ Route::get('/canais/slug/{slug}', 'CanalController@getBySlug');
 Route::get('/conteudos', 'ConteudoController@list');
 Route::get('/conteudos/search/{term}', 'ConteudoController@search');
 Route::get('/conteudos/teste', 'ConteudoController@teste');
+Route::get('/conteudos/{id}', 'ConteudoController@getById');
 // APLICATIVOS
 Route::get('/aplicativos', 'AplicativoController@list');
 Route::get('/aplicativos/search/{term}','AplicativoController@search');
