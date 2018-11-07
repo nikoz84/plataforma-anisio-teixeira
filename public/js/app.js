@@ -18466,14 +18466,11 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
 
                                 if (!resp.data.success) {
                                     this.isError = resp.data.success;
-                                    this.message = resp.data.message;
+                                    this.message = "Dados cadastrados com sucesso!";
 
                                     setTimeout(function () {
                                         _this.isError = true;
                                     }, 3000);
-                                } else {
-                                    this.isError = resp.data.success;
-                                    console.log(resp.data);
                                 }
 
                                 /*console.log(resp);

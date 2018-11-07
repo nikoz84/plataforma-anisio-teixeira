@@ -411,14 +411,11 @@ export default {
 
             if(!resp.data.success){
                 this.isError = resp.data.success;
-                this.message = resp.data.message;
+                this.message = "Dados cadastrados com sucesso!";
                 
                 setTimeout(()=>{
                 this.isError = true; 
                 },3000)
-            }else{
-                this.isError = resp.data.success;
-                console.log(resp.data);
             }
 
             /*console.log(resp);
