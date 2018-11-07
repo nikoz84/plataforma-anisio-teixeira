@@ -15921,6 +15921,10 @@ var routes = [{
     name: 'Exibir',
     component: __WEBPACK_IMPORTED_MODULE_3__pages_Exibir_vue___default.a
   }, {
+    path: 'editar/:id',
+    name: 'Editar',
+    component: __WEBPACK_IMPORTED_MODULE_4__forms_ConteudoForm_vue___default.a
+  }, {
     path: 'formulario',
     name: 'Formulario',
     component: __WEBPACK_IMPORTED_MODULE_4__forms_ConteudoForm_vue___default.a
@@ -17791,7 +17795,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "\n@charset \"UTF-8\";\n.tag[data-v-0f97259c] {\n  margin-right: 10px;\n  margin-bottom: 5px;\n}\n.label[data-v-0f97259c] {\n  padding: 6px;\n  margin-right: 15px;\n}\ni[data-v-0f97259c]:before {\n  content: \" \\BB   \";\n  padding-right: 5px;\n}\n", ""]);
 
 // exports
 
@@ -17802,19 +17806,112 @@ exports.push([module.i, "", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(5);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
 //
 //
 
+
+
+var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'exibir',
     data: function data() {
         return {
-            title: 'Exibir'
+            conteudo: {
+                title: '',
+                description: '',
+                authors: '',
+                source: '',
+                createdAt: '',
+                options: {
+                    tags: [],
+                    componentes: [],
+                    tipo: ''
+                }
+
+            }
         };
+    },
+    created: function created() {
+        this.getConteudo(this.$route.params.id);
+    },
+
+    computed: {
+        splitAuthors: function splitAuthors() {
+            var arrayAuthors = [];
+            arrayAuthors = this.conteudo.authors.split(',');
+
+            console.warn(arrayAuthors);
+            return arrayAuthors;
+        }
+    },
+    methods: {
+        getConteudo: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(id) {
+                var params, resp;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                params = {
+                                    token: localStorage.token
+                                };
+                                _context.next = 3;
+                                return http.getDataFromUrl('/conteudos/' + id, params);
+
+                            case 3:
+                                resp = _context.sent;
+
+
+                                if (resp.data.success) {
+                                    this.conteudo = resp.data.conteudo;
+                                }
+                                console.log(this.conteudo);
+
+                            case 6:
+                            case 'end':
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, this);
+            }));
+
+            function getConteudo(_x) {
+                return _ref.apply(this, arguments);
+            }
+
+            return getConteudo;
+        }()
     }
 });
 
@@ -17826,7 +17923,56 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_c("h1", [_vm._v(_vm._s(_vm.title))])])
+  return _c("article", [
+    _c("div", { staticClass: "panel panel-default" }, [
+      _c(
+        "div",
+        { staticClass: "panel-body" },
+        [
+          _c("h2", { domProps: { textContent: _vm._s(_vm.conteudo.title) } }),
+          _vm._v(" "),
+          _c("div", {
+            domProps: { innerHTML: _vm._s(_vm.conteudo.description) }
+          }),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("span", { staticClass: "label label-default" }, [
+            _vm._v(" Fonte: ")
+          ]),
+          _vm._v(" "),
+          _c("i", [_vm._v(_vm._s(_vm.conteudo.source))]),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("span", { staticClass: "label label-default" }, [
+            _vm._v(" Autores: ")
+          ]),
+          _vm._v(" "),
+          _vm._l(_vm.splitAuthors, function(author, i) {
+            return _c("i", {
+              key: i,
+              domProps: { textContent: _vm._s(author) }
+            })
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "panel-footer" },
+        _vm._l(_vm.conteudo.options.tags, function(item, i) {
+          return _c("a", {
+            key: i,
+            staticClass: "btn btn-default tag",
+            attrs: { href: "" },
+            domProps: { textContent: _vm._s(item.tag) }
+          })
+        })
+      )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -18250,6 +18396,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 
+var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'ConteudoForm',
     components: {},
@@ -18286,7 +18434,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
                 var _this = this;
 
-                var params, http, resp;
+                var params, resp;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
@@ -18309,14 +18457,10 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                     options: JSON.stringify(this.options),
                                     token: localStorage.token
                                 };
-
-                                console.warn(params);
-
-                                http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
-                                _context.next = 6;
+                                _context.next = 4;
                                 return http.postData('/conteudos/create', params);
 
-                            case 6:
+                            case 4:
                                 resp = _context.sent;
 
 
@@ -18334,7 +18478,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                     console.log(resp.data);
                                 }*/
 
-                            case 8:
+                            case 6:
                             case 'end':
                                 return _context.stop();
                         }
@@ -18348,13 +18492,13 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
             return createConteudo;
         }(),
-        update: function update(newTags) {
+        updateTag: function updateTag(newTags) {
             this.autocompleteItems = [];
             this.tags = newTags;
         },
         getItems: function () {
             var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
-                var http, params, resp;
+                var params, resp;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
                     while (1) {
                         switch (_context2.prev = _context2.next) {
@@ -18367,12 +18511,11 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                 return _context2.abrupt('return');
 
                             case 2:
-                                http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                 params = { token: localStorage.token };
-                                _context2.next = 6;
+                                _context2.next = 5;
                                 return http.getDataFromUrl('/tags/search/' + this.tag, params);
 
-                            case 6:
+                            case 5:
                                 resp = _context2.sent;
 
 
@@ -18382,7 +18525,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                     });
                                 }
 
-                            case 8:
+                            case 7:
                             case 'end':
                                 return _context2.stop();
                         }
@@ -18398,20 +18541,19 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         }(),
         getOptions: function () {
             var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
-                var http, params, name, resp;
+                var params, name, resp;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
                     while (1) {
                         switch (_context3.prev = _context3.next) {
                             case 0:
-                                http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                 params = {
                                     token: localStorage.token
                                 };
                                 name = this.$route.params.slug;
-                                _context3.next = 5;
+                                _context3.next = 4;
                                 return http.postData('/options/name/' + name);
 
-                            case 5:
+                            case 4:
                                 resp = _context3.sent;
 
 
@@ -18419,7 +18561,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                     this.categories = resp.data.options.meta_data.categories;
                                 }
 
-                            case 7:
+                            case 6:
                             case 'end':
                                 return _context3.stop();
                         }
@@ -18694,7 +18836,7 @@ var render = function() {
                   },
                   domProps: { value: _vm.tag },
                   on: {
-                    "tags-changed": _vm.update,
+                    "tags-changed": _vm.updateTag,
                     input: function($event) {
                       if ($event.target.composing) {
                         return

@@ -32,6 +32,8 @@ import NavCanal from '../components/NavCanalComponent.vue';
 import SidebarCanal from '../components/SidebarCanalComponent.vue';
 import Http from '../http.js';
 
+const http = new Http();
+
 export default {
     name : 'canal',
     components:{ NavCanal,  SidebarCanal},
@@ -59,7 +61,6 @@ export default {
     methods:{
         async getCanal(){
             let url = `/canais/slug/${this.$route.params.slug}`; 
-            let http = new Http();
             let resp = await http.getDataFromUrl( url );
             
             if(resp.data.success){

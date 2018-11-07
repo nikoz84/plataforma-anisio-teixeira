@@ -50,7 +50,7 @@ onchange="try{setCustomValidity('')}catch(e){}">
                         <input type="text" class="form-control" v-model="tag"
                                         v-bind:tags="tags"
                                         v-bind:autocomplete-items="autocompleteItems"
-                                        v-on:tags-changed="update"
+                                        v-on:tags-changed="updateTag"
                         />
                     </div>
                     <!-- AUTORES -->
@@ -351,6 +351,7 @@ onchange="try{setCustomValidity('')}catch(e){}">
 <script>
 import Http from '../http.js';
 
+const http = new Http();
 
 export default {
     name: 'ConteudoForm',
@@ -405,9 +406,8 @@ export default {
                 options: JSON.stringify(this.options),
                 token: localStorage.token
             };
-            console.warn(params);
             
-            let http = new Http();
+            
             let resp = await http.postData('/conteudos/create', params);
 
             if(!resp.data.success){
@@ -425,13 +425,13 @@ export default {
             }*/
             
         },
-        update(newTags) {
+        updateTag(newTags) {
             this.autocompleteItems = [];
             this.tags = newTags;
         },
         async getItems(){
             if (this.tag.length === 0) return;
-            let http = new Http();
+            
             let params = {token:localStorage.token};
             let resp = await http.getDataFromUrl(`/tags/search/${this.tag}`, params);
 
@@ -444,7 +444,7 @@ export default {
 
         },
         async getOptions(){
-            let http = new Http();
+            
             let params = {
                 token: localStorage.token
             };

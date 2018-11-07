@@ -144,6 +144,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 
+var http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'canal',
     components: { NavCanal: __WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue___default.a, SidebarCanal: __WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue___default.a },
@@ -170,17 +172,16 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     methods: {
         getCanal: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-                var url, http, resp;
+                var url, resp;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 url = '/canais/slug/' + this.$route.params.slug;
-                                http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
-                                _context.next = 4;
+                                _context.next = 3;
                                 return http.getDataFromUrl(url);
 
-                            case 4:
+                            case 3:
                                 resp = _context.sent;
 
 
@@ -193,7 +194,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                     localStorage.setItem('idCanal', this.idCanal);
                                 }
 
-                            case 6:
+                            case 5:
                             case 'end':
                                 return _context.stop();
                         }

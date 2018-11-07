@@ -79,6 +79,11 @@ const routes =[
           component: Exibir
         },
         {
+          path: 'editar/:id',
+          name: 'Editar',
+          component: Formulario
+        },
+        {
           path: 'formulario',
           name: 'Formulario',
           component: Formulario
