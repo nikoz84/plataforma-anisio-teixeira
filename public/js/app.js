@@ -18459,6 +18459,7 @@ var render = function() {
                 staticClass: "form-control",
                 attrs: {
                   type: "text",
+                  name: "titulo",
                   id: "titulo",
                   "aria-describedby": "titulo"
                 },

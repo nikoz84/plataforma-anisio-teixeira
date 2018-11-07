@@ -24,14 +24,14 @@ class ConteudoFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min: 50|max:150',
+            'titulo' => 'required|min: 50|max:150',
         ];
     }
 
     public function messages()
     {
         return[
-            'name.required' => 'O campo nome é de preenchimento obrigatório!',
+            'titulo.required' => 'O campo nome é de preenchimento obrigatório!',
         ];
     }
 }

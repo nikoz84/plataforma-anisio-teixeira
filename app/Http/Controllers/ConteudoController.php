@@ -6,6 +6,7 @@ use App\Conteudo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ConteudoFormRequest;
 
 class ConteudoController extends Controller
 {
@@ -46,6 +47,13 @@ class ConteudoController extends Controller
             'limit' => $conteudos->perPage()
         ],200);
     }
+
+    public function store(ConteudoFormRequest $request)
+    {
+        $conteudos = $request->all();
+        
+    }
+
 
     /**
      * Show the form for creating a new resource.
