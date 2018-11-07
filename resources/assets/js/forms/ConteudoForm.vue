@@ -10,7 +10,7 @@
                     <!-- TITULO -->
                     <div class="form-group">
                         <label for="titulo">Título:*</label>
-                        <input type="text" class="form-control" id="titulo" aria-describedby="titulo" v-model.trim="title">
+                        <input type="text" class="form-control" name="titulo" id="titulo" aria-describedby="titulo" v-model.trim="title">
                         <small id="titulo" class="form-text text-muted">Adicione o nome original da mídia.</small>
                     </div>
                     <!-- TIPO -->
@@ -87,6 +87,15 @@
                 <div class="form-group">
                     <button class="btn btn-default">Enviar</button>
                 </div>
+
+                <transition  name="custom-classes-transition" 
+                            enter-active-class="animated shake" 
+                            leave-active-class="animated fadeOut">
+                <div v-if="!isError" class="alert alert-info" role="alert" >
+                    {{ message }}
+                </div>
+                </transition>
+
             </div>
             <div class="panel panel-default col-md-5">
                 <div class="panel-heading">
@@ -347,6 +356,7 @@ export default {
     components: {},
     data(){
         return {
+            
             tipo: '',
             title: null,
             description:null,
@@ -362,7 +372,9 @@ export default {
             is_approved: false,
             autocompleteItems: [],
             category: '',
-            categories:[]
+            categories:[],
+            message : 'Mensagem aqui',
+            isError : true
         }
 
     },
@@ -397,10 +409,22 @@ export default {
             let http = new Http();
             let resp = await http.postData('/conteudos/create', params);
 
-            console.log(resp);
-            if(resp.data.success){
+            if(!resp.data.success){
+                this.isError = resp.data.success;
+                this.message = resp.data.message;
+                
+                setTimeout(()=>{
+                this.isError = true; 
+                },3000)
+            }else{
+                this.isError = resp.data.success;
                 console.log(resp.data);
             }
+
+            /*console.log(resp);
+            if(resp.data.success){
+                console.log(resp.data);
+            }*/
             
         },
         update(newTags) {

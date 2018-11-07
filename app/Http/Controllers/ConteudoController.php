@@ -50,7 +50,9 @@ class ConteudoController extends Controller
 
     public function store(ConteudoFormRequest $request)
     {
-        $conteudos = $request->all();
+        $this->validate($request, [
+            'titulo' => 'required|unique:titulo'
+        ]);
         
     }
 
@@ -63,7 +65,6 @@ class ConteudoController extends Controller
     public function create(Request $request)
     {
         
-
         $conteudo = new Conteudo;
 
         $conteudo->user_id = Auth::user()->id;
