@@ -18481,6 +18481,14 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -18555,7 +18563,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                 if (!resp.data.success) {
                                     this.isError = resp.data.success;
                                     this.message = "Dados cadastrados com sucesso!";
-
+                                    console.log(resp.data);
                                     setTimeout(function () {
                                         _this.isError = true;
                                     }, 3000);
@@ -18696,7 +18704,7 @@ var render = function() {
           [
             _c("div", { staticClass: "panel-heading" }, [
               _vm._v(
-                "\n                Adicionar conteúdo digital\n            "
+                "\n                    Adicionar conteúdo digital\n                "
               )
             ]),
             _vm._v(" "),
@@ -18719,7 +18727,11 @@ var render = function() {
                     type: "text",
                     name: "titulo",
                     id: "titulo",
-                    "aria-describedby": "titulo"
+                    "aria-describedby": "titulo",
+                    required: "",
+                    oninvalid:
+                      "this.setCustomValidity('Favor adicione um título!')",
+                    onchange: "try{setCustomValidity('')}catch(e){}"
                   },
                   domProps: { value: _vm.title },
                   on: {
@@ -18762,7 +18774,13 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control form-control-lg",
-                    attrs: { id: "licenca-relacionada" },
+                    attrs: {
+                      id: "licenca-relacionada",
+                      required: "",
+                      oninvalid:
+                        "this.setCustomValidity('Favor selecione o tipo de conteúdo!')",
+                      onchange: "try{setCustomValidity('')}catch(e){}"
+                    },
                     on: {
                       change: function($event) {
                         var $$selectedVal = Array.prototype.filter
@@ -18837,7 +18855,13 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control form-control-lg",
-                        attrs: { id: "categoria" },
+                        attrs: {
+                          id: "categoria",
+                          required: "",
+                          oninvalid:
+                            "this.setCustomValidity('Favor selecione a categoria do conteúdo!')",
+                          onchange: "try{setCustomValidity('')}catch(e){}"
+                        },
                         on: {
                           change: function($event) {
                             var $$selectedVal = Array.prototype.filter
@@ -18888,7 +18912,13 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: { resize: "none" },
-                  attrs: { id: "descricao" },
+                  attrs: {
+                    id: "descricao",
+                    required: "",
+                    oninvalid:
+                      "this.setCustomValidity('Favor preencha a descrição!')",
+                    onchange: "try{setCustomValidity('')}catch(e){}"
+                  },
                   domProps: { value: _vm.description },
                   on: {
                     input: function($event) {
@@ -18919,7 +18949,11 @@ var render = function() {
                   attrs: {
                     type: "text",
                     tags: _vm.tags,
-                    "autocomplete-items": _vm.autocompleteItems
+                    "autocomplete-items": _vm.autocompleteItems,
+                    required: "",
+                    oninvalid:
+                      "this.setCustomValidity('Favor adicione as Palavras-Chave!')",
+                    onchange: "try{setCustomValidity('')}catch(e){}"
                   },
                   domProps: { value: _vm.tag },
                   on: {
@@ -18949,7 +18983,14 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { type: "text", id: "autores" },
+                  attrs: {
+                    type: "text",
+                    id: "autores",
+                    required: "",
+                    oninvalid:
+                      "this.setCustomValidity('Favor informar os Autores!')",
+                    onchange: "try{setCustomValidity('')}catch(e){}"
+                  },
                   domProps: { value: _vm.authors },
                   on: {
                     input: function($event) {
@@ -18975,7 +19016,14 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { type: "text", id: "fonte" },
+                  attrs: {
+                    type: "text",
+                    id: "fonte",
+                    required: "",
+                    oninvalid:
+                      "this.setCustomValidity('Favor informar a fonte!')",
+                    onchange: "try{setCustomValidity('')}catch(e){}"
+                  },
                   domProps: { value: _vm.source },
                   on: {
                     input: function($event) {
@@ -19005,7 +19053,13 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control form-control-lg",
-                    attrs: { id: "licenca-conteudo" },
+                    attrs: {
+                      id: "licenca-conteudo",
+                      required: "",
+                      oninvalid:
+                        "this.setCustomValidity('Favor selecione o tipo da Licença!')",
+                      onchange: "try{setCustomValidity('')}catch(e){}"
+                    },
                     on: {
                       change: function($event) {
                         var $$selectedVal = Array.prototype.filter
@@ -19068,9 +19122,9 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\n                " +
+                          "\n                    " +
                             _vm._s(_vm.message) +
-                            "\n            "
+                            "\n                "
                         )
                       ]
                     )
@@ -19141,7 +19195,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "panel panel-default col-md-5" }, [
       _c("div", { staticClass: "panel-heading" }, [
         _vm._v(
-          "\n                Selecione o(s) componente(s) curricular(es) ou disciplina(s) que mais se adequem ao contéudo:\n            "
+          "\n                    Selecione o(s) componente(s) curricular(es) ou disciplina(s) que mais se adequem ao contéudo:\n                "
         )
       ]),
       _vm._v(" "),
@@ -19581,7 +19635,7 @@ var staticRenderFns = [
         _c("input", {
           attrs: { type: "checkbox", name: "item-superior1", value: "html" }
         }),
-        _vm._v("Matemáticabr/>\n                "),
+        _vm._v("Matemáticabr/>\n                    "),
         _c("input", {
           attrs: { type: "checkbox", name: "item-superior1", value: "html" }
         }),

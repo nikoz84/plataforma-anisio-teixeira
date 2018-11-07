@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <form v-on:submit.prevent="createConteudo()">
-            
+
             <div class="panel panel-default col-md-7">
                 <div class="panel-heading">
                     Adicionar conteúdo digital
@@ -10,13 +10,15 @@
                     <!-- TITULO -->
                     <div class="form-group">
                         <label for="titulo">Título:*</label>
-                        <input type="text" class="form-control" name="titulo" id="titulo" aria-describedby="titulo" v-model.trim="title">
+                        <input type="text" class="form-control" name="titulo" id="titulo" aria-describedby="titulo" v-model.trim="title" required oninvalid="this.setCustomValidity('Favor adicione um título!')" 
+onchange="try{setCustomValidity('')}catch(e){}">
                         <small id="titulo" class="form-text text-muted">Adicione o nome original da mídia.</small>
                     </div>
                     <!-- TIPO -->
                     <div class="form-group">
                         <label for="estado">Tipo de Conteúdo:*</label>
-                        <select class="form-control form-control-lg" id="licenca-relacionada" v-model="tipo">
+                        <select class="form-control form-control-lg" id="licenca-relacionada" v-model="tipo" required oninvalid="this.setCustomValidity('Favor selecione o tipo de conteúdo!')" 
+onchange="try{setCustomValidity('')}catch(e){}">
                             <option value="">« SELECIONE »</option>
                             <option value="7">Animação/Simulação</option>
                             <option value="3">Apresentação</option>
@@ -33,7 +35,8 @@
                     <!-- CATEGORIA -->
                     <div class="form-group" v-if="categories.length != 0">
                         <label for="estado">Categoria de Conteúdo:*</label>
-                        <select class="form-control form-control-lg" id="categoria" v-model="category">
+                        <select class="form-control form-control-lg" id="categoria" v-model="category" required oninvalid="this.setCustomValidity('Favor selecione a categoria do conteúdo!')" 
+onchange="try{setCustomValidity('')}catch(e){}">
                             <option value="">« SELECIONE »</option>
                             <option v-for="(item, i) in categories" v-bind:value="item.name" v-bind:key="i">{{item.name}}</option>
                         </select>
@@ -41,7 +44,8 @@
                     <!-- DESCRICAO -->
                     <div class="form-group">
                         <label for="descricao">Descrição:*</label>
-                        <textarea class="form-control" id="descricao" v-model="description" style="resize: none"></textarea>
+                        <textarea class="form-control" id="descricao" v-model="description" style="resize: none" required oninvalid="this.setCustomValidity('Favor preencha a descrição!')" 
+onchange="try{setCustomValidity('')}catch(e){}"></textarea>
                     </div>
                     <!-- TAGS -->
                     <div class="form-group">
@@ -50,22 +54,26 @@
                                         v-bind:tags="tags"
                                         v-bind:autocomplete-items="autocompleteItems"
                                         v-on:tags-changed="updateTag"
-                        />
+                        required oninvalid="this.setCustomValidity('Favor adicione as Palavras-Chave!')" 
+onchange="try{setCustomValidity('')}catch(e){}">
                     </div>
                     <!-- AUTORES -->
                     <div class="form-group">
                         <label for="autores">Autores:*</label>
-                        <input type="text" class="form-control" id="autores" v-model="authors">
+                        <input type="text" class="form-control" id="autores" v-model="authors" required oninvalid="this.setCustomValidity('Favor informar os Autores!')" 
+onchange="try{setCustomValidity('')}catch(e){}">
                     </div>
                     <!-- FONTE -->
                     <div class="form-group">
                         <label for="fonte">Fonte:*</label>
-                        <input type="text" class="form-control" id="fonte" v-model="source">
+                        <input type="text" class="form-control" id="fonte" v-model="source" required oninvalid="this.setCustomValidity('Favor informar a fonte!')" 
+onchange="try{setCustomValidity('')}catch(e){}">
                     </div>
                     <!-- LICENCA -->
                     <div class="form-group">
                         <label for="licenca-conteudo">Licença de Conteúdo:*</label>
-                        <select class="form-control form-control-lg" id="licenca-conteudo" v-model="license">
+                        <select class="form-control form-control-lg" id="licenca-conteudo" v-model="license" required oninvalid="this.setCustomValidity('Favor selecione o tipo da Licença!')" 
+onchange="try{setCustomValidity('')}catch(e){}">
                             <option value="" >« SELECIONE »</option>
                             <option value="1">Outros</option>
                             <optgroup id="idconteudolicenca-optgroup-Creative Commons" label="Creative Commons">
@@ -88,8 +96,8 @@
                     <button class="btn btn-default">Enviar</button>
                 </div>
 
-                <transition  name="custom-classes-transition" 
-                            enter-active-class="animated shake" 
+                <transition  name="custom-classes-transition"
+                            enter-active-class="animated shake"
                             leave-active-class="animated fadeOut">
                 <div v-if="!isError" class="alert alert-info" role="alert" >
                     {{ message }}
@@ -102,7 +110,7 @@
                     Selecione o(s) componente(s) curricular(es) ou disciplina(s) que mais se adequem ao contéudo:
                 </div>
                 <div class="panel-body">
-                    
+
                     <div class="col-auto my-1">
                         <div class="custom-control custom-checkbox mr-sm-2">
                             <input type="checkbox" class="custom-control-input item-superior" id="item-superior" name="item-superior">
@@ -213,7 +221,7 @@
                     <input type="checkbox"     name="item-superior1" value="html"/>Matemáticabr/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Química<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Sociologia<br/>
-                    
+
                     <br>
 
                     <div class="col-auto my-1">
@@ -260,7 +268,7 @@
                             <label class="custom-control-label" for="customControlAutosizing">Ensino Fundamental Final</label>
                         </div>
                     </div>
-                   
+
                     <input type="checkbox"     name="item-superior1" value="html"/>Artes<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Ciências Naturais<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Educação Física<br/>
@@ -282,14 +290,14 @@
                             <label class="custom-control-label" for="customControlAutosizing">Educação Escolar Indígena</label>
                         </div>
                     </div>
-                   
+
                     <input type="checkbox"     name="item-superior1" value="html"/>Artes<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Ciências<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Educação Física<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Geografia<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>História<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Línguas<br/>
-                    
+
                     <br>
 
                     <div class="col-auto my-1">
@@ -298,7 +306,7 @@
                             <label class="custom-control-label" for="customControlAutosizing">Ensino Superior</label>
                         </div>
                     </div>
-                   
+
                     <input type="checkbox"     name="item-superior1" value="html"/>Ciência Sociais Aplicadas<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Ciências Agrárias<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Ciências Biológicas<br/>
@@ -317,7 +325,7 @@
                             <label class="custom-control-label" for="customControlAutosizing">Educação de Jovens e Adultos 1</label>
                         </div>
                     </div>
-                   
+
                     <input type="checkbox"     name="item-superior1" value="html"/>Estudo da Sociedade e da Natureza<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Língua Portuguesa<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Matemática<br/>
@@ -330,7 +338,7 @@
                             <label class="custom-control-label" for="customControlAutosizing">Educação de Jovens e Adultos 2</label>
                         </div>
                     </div>
-                   
+
                     <input type="checkbox"     name="item-superior1" value="html"/>Artes<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Ciências Naturais<br/>
                     <input type="checkbox"     name="item-superior1" value="html"/>Educação Física<br/>
@@ -357,7 +365,7 @@ export default {
     components: {},
     data(){
         return {
-            
+
             tipo: '',
             title: null,
             description:null,
@@ -405,16 +413,18 @@ export default {
                 options: JSON.stringify(this.options),
                 token: localStorage.token
             };
-            
-            
+
+
             let resp = await http.postData('/conteudos/create', params);
 
             if(!resp.data.success){
                 this.isError = resp.data.success;
                 this.message = "Dados cadastrados com sucesso!";
                 
+                console.log(resp.data);
+                
                 setTimeout(()=>{
-                this.isError = true; 
+                this.isError = true;
                 },3000)
             }
 
@@ -422,7 +432,7 @@ export default {
             if(resp.data.success){
                 console.log(resp.data);
             }*/
-            
+
         },
         updateTag(newTags) {
             this.autocompleteItems = [];
@@ -430,7 +440,7 @@ export default {
         },
         async getItems(){
             if (this.tag.length === 0) return;
-            
+
             let params = {token:localStorage.token};
             let resp = await http.getDataFromUrl(`/tags/search/${this.tag}`, params);
 
@@ -443,13 +453,13 @@ export default {
 
         },
         async getOptions(){
-            
+
             let params = {
                 token: localStorage.token
             };
             let name= this.$route.params.slug;
             let resp = await http.postData(`/options/name/${name}`);
-            
+
             if(resp.data.success && resp.data.options != null ){
                 this.categories = resp.data.options.meta_data.categories
             }
