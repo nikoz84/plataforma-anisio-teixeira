@@ -12,6 +12,6 @@ class Tag extends Model
         return $this->belongsToMany('App\Conteudo');
     }
     public function aplicativos(){
-        return $this->belongsToMany('App\Aplicativos');
+        return $this->belongsToMany('App\Aplicativo');
     }
 }

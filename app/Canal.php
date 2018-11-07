@@ -19,7 +19,11 @@ class Canal extends Model
         'options'
     ];
     protected $hidden = ['token'];
-    protected $dates = ['deleted_at'];
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
     protected $casts = [
         'options' => 'array',
     ];

@@ -3,12 +3,14 @@
         <article class="panel panel-default" v-bind:id="item.id">
             <div class="panel-body">
                 <figure class="figure">
-                    <!-- img width="250" height="150" src="/storage/img/default.svg" v-bind:alt="'imagem:' + item.title" srcset="" -->
+                    <!-- img width="250" height="150" src="/storage/img/default.svg" v-bind:alt="'imagem destacada'" srcset="" -->
                 </figure>
-                <router-link :to="{ name: 'Exibir', params: { slug: this.$route.params.slug, id: item.id }}">
-                    ir
+                <router-link :to="{ name: 'Exibir', params: { slug: this.$route.params.slug, id: item.id }}"
+                            aria-label="Título" 
+                            v-bind:title="title">
+                    <h4>{{ title }}</h4>
                 </router-link>
-                <h4>{{ (item.name) ? item.name : item.title }}</h4>
+                
             </div>
         </article>
     </div>
@@ -20,8 +22,13 @@ export default {
     props:{
         item: Object
     },
+    computed:{
+        title(){
+            return (this.item.name) ? this.item.name : this.item.title;
+        }
+    },
     created(){
-        console.log('sdf')
+        
     }
     
 }    

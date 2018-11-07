@@ -77,7 +77,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .page-header { margin : 0; }
-.page-header > h1 { font-size: 22px; }
+
 .page-header .page-title {
     margin-top: 0;
     position: relative;

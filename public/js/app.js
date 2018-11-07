@@ -17375,6 +17375,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -17382,9 +17384,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: {
         item: Object
     },
-    created: function created() {
-        console.log('sdf');
-    }
+    computed: {
+        title: function title() {
+            return this.item.name ? this.item.name : this.item.title;
+        }
+    },
+    created: function created() {}
 });
 
 /***/ }),
@@ -17413,15 +17418,13 @@ var render = function() {
                   to: {
                     name: "Exibir",
                     params: { slug: this.$route.params.slug, id: _vm.item.id }
-                  }
+                  },
+                  "aria-label": "Título",
+                  title: _vm.title
                 }
               },
-              [_vm._v("\n                ir\n            ")]
-            ),
-            _vm._v(" "),
-            _c("h4", [
-              _vm._v(_vm._s(_vm.item.name ? _vm.item.name : _vm.item.title))
-            ])
+              [_c("h4", [_vm._v(_vm._s(_vm.title))])]
+            )
           ],
           1
         )
@@ -17795,7 +17798,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n@charset \"UTF-8\";\n.tag[data-v-0f97259c] {\n  margin-right: 10px;\n  margin-bottom: 5px;\n}\n.label[data-v-0f97259c] {\n  padding: 6px;\n  margin-right: 15px;\n}\ni[data-v-0f97259c]:before {\n  content: \" \\BB   \";\n  padding-right: 5px;\n}\n", ""]);
+exports.push([module.i, "\n@charset \"UTF-8\";\n.break-word[data-v-0f97259c] {\n  word-wrap: break-word;\n}\n.tag[data-v-0f97259c] {\n  margin-right: 10px;\n  margin-bottom: 5px;\n}\n.label[data-v-0f97259c] {\n  padding: 6px;\n  margin-right: 15px;\n}\ni[data-v-0f97259c]:before {\n  content: \" \\BB   \";\n  padding-right: 5px;\n  padding-left: 7px;\n}\nhr.line[data-v-0f97259c] {\n  border: 0;\n  height: 1px;\n  background: #333;\n  background-image: -webkit-gradient(linear, left top, right top, from(#ccc), color-stop(#a2a9af), to(#ccc));\n  background-image: linear-gradient(to right, #ccc, #a2a9af, #ccc);\n}\n", ""]);
 
 // exports
 
@@ -17809,6 +17812,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_PlayerComponent_vue__ = __webpack_require__(166);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_PlayerComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_PlayerComponent_vue__);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -17838,6 +17843,27 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -17845,6 +17871,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'exibir',
+    components: { PlayerApp: __WEBPACK_IMPORTED_MODULE_2__components_PlayerComponent_vue___default.a },
     data: function data() {
         return {
             conteudo: {
@@ -17856,7 +17883,10 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                 options: {
                     tags: [],
                     componentes: [],
-                    tipo: ''
+                    tipo: '',
+                    download: '',
+                    visualizacao: '',
+                    guia: ''
                 }
 
             }
@@ -17868,11 +17898,8 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
 
     computed: {
         splitAuthors: function splitAuthors() {
-            var arrayAuthors = [];
-            arrayAuthors = this.conteudo.authors.split(',');
-
-            console.warn(arrayAuthors);
-            return arrayAuthors;
+            var replace = this.conteudo.authors.replace(',', ';');
+            return replace.split(';');
         }
     },
     methods: {
@@ -17892,11 +17919,13 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                             case 3:
                                 resp = _context.sent;
 
-
+                                console.log(resp.data);
                                 if (resp.data.success) {
                                     this.conteudo = resp.data.conteudo;
+                                } else {
+                                    this.conteudo = null;
+                                    this.message = resp.data.message;
                                 }
-                                console.log(this.conteudo);
 
                             case 6:
                             case 'end':
@@ -17923,55 +17952,114 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("article", [
-    _c("div", { staticClass: "panel panel-default" }, [
-      _c(
-        "div",
-        { staticClass: "panel-body" },
-        [
-          _c("h2", { domProps: { textContent: _vm._s(_vm.conteudo.title) } }),
-          _vm._v(" "),
-          _c("div", {
-            domProps: { innerHTML: _vm._s(_vm.conteudo.description) }
-          }),
-          _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _c("span", { staticClass: "label label-default" }, [
-            _vm._v(" Fonte: ")
-          ]),
-          _vm._v(" "),
-          _c("i", [_vm._v(_vm._s(_vm.conteudo.source))]),
-          _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _c("span", { staticClass: "label label-default" }, [
-            _vm._v(" Autores: ")
-          ]),
-          _vm._v(" "),
-          _vm._l(_vm.splitAuthors, function(author, i) {
-            return _c("i", {
-              key: i,
-              domProps: { textContent: _vm._s(author) }
-            })
-          })
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "panel-footer" },
-        _vm._l(_vm.conteudo.options.tags, function(item, i) {
-          return _c("a", {
-            key: i,
-            staticClass: "btn btn-default tag",
-            attrs: { href: "" },
-            domProps: { textContent: _vm._s(item.tag) }
-          })
-        })
-      )
-    ])
+  return _c("div", [
+    this.conteudo != null
+      ? _c(
+          "article",
+          [
+            _c("PlayerApp", {
+              attrs: {
+                tipo: _vm.conteudo.options.tipo,
+                download: _vm.conteudo.options.download,
+                visualizacao: _vm.conteudo.options.visualizacao,
+                guia: _vm.conteudo.options.guia
+              }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "panel panel-default" }, [
+              _c(
+                "div",
+                { staticClass: "panel-body" },
+                [
+                  _c("h2", {
+                    domProps: { textContent: _vm._s(_vm.conteudo.title) }
+                  }),
+                  _vm._v(" "),
+                  _c("small"),
+                  _vm._v(" "),
+                  _c("div", {
+                    staticClass: "break-word",
+                    domProps: { innerHTML: _vm._s(_vm.conteudo.description) }
+                  }),
+                  _vm._v(" "),
+                  _c("hr", { staticClass: "line" }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "label label-default" }, [
+                    _vm._v(" Fonte: ")
+                  ]),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "break-word" }, [
+                    _vm._v(_vm._s(_vm.conteudo.source))
+                  ]),
+                  _vm._v(" "),
+                  _c("hr", { staticClass: "line" }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "label label-default" }, [
+                    _vm._v(" Autores: ")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.splitAuthors, function(author, i) {
+                    return _c("i", {
+                      key: i,
+                      staticClass: "break-word",
+                      domProps: { textContent: _vm._s(author) }
+                    })
+                  }),
+                  _vm._v(" "),
+                  _c("hr", { staticClass: "line" }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "label label-default" }, [
+                    _vm._v(" Componentes: ")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.conteudo.options.componentes, function(item) {
+                    return _c("i", {
+                      key: item.id,
+                      staticClass: "break-word",
+                      domProps: { textContent: _vm._s(item.componente) }
+                    })
+                  }),
+                  _vm._v(" "),
+                  _c("hr", { staticClass: "line" }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "label label-default" }, [
+                    _vm._v(" Licença: ")
+                  ]),
+                  _vm._v(" "),
+                  _c("i", {
+                    staticClass: "break-word",
+                    domProps: { textContent: _vm._s(_vm.conteudo.options) }
+                  })
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "panel-footer" },
+                [
+                  _c("h5", [_vm._v(" Tags: ")]),
+                  _vm._v(" "),
+                  _vm._l(_vm.conteudo.options.tags, function(item) {
+                    return _c("a", {
+                      key: item.id,
+                      staticClass: "btn btn-default tag",
+                      attrs: { href: "" },
+                      domProps: { textContent: _vm._s(item.tag) }
+                    })
+                  })
+                ],
+                2
+              )
+            ])
+          ],
+          1
+        )
+      : _c("article", { staticClass: "jumbotron" }, [
+          _c("h1", { staticClass: "text-center" }, [
+            _vm._v(_vm._s(_vm.message))
+          ])
+        ])
   ])
 }
 var staticRenderFns = []
@@ -54425,6 +54513,157 @@ module.exports = function spread(callback) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 119 */,
+/* 120 */,
+/* 121 */,
+/* 122 */,
+/* 123 */,
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */,
+/* 165 */,
+/* 166 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(167)
+/* template */
+var __vue_template__ = __webpack_require__(168)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/PlayerComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-76586c35", Component.options)
+  } else {
+    hotAPI.reload("data-v-76586c35", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 167 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'PlayerApp',
+    props: ['guia', 'download', 'visualizacao', 'tipo'],
+    computed: {
+        visualizarConteudo: function visualizarConteudo() {
+            console.log(this.guia);
+            console.log(this.download);
+            console.log(this.visualizacao);
+            console.log(this.tipo);
+        }
+    }
+});
+
+/***/ }),
+/* 168 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm._v(
+      "\n    Player\n    " + _vm._s(_vm.visualizarConteudo) + "\n    \n    "
+    ),
+    _c("video")
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-76586c35", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

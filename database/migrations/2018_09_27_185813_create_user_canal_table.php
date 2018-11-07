@@ -16,8 +16,6 @@ class CreateUserCanalTable extends Migration
         Schema::create('user_canal', function (Blueprint $table) {
             $table->bigInteger('user_id');
             $table->bigInteger('canal_id');
-
-
             $table->primary(['user_id', 'canal_id']);
             
             $table->foreign('user_id')->references('id')->on('users');

@@ -139,15 +139,15 @@ class ConteudoController extends Controller
     {
         $conteudo = Conteudo::find($id);
         $resp = [];
-        if(is_null($conteudo)){
+        if(!$conteudo){
             $resp = [
-                'menssage' => 'Conteúdo não encontrado',
-                'is_deleted' => false
+                'menssage' => 'Não foi Possível deletar o conteúdo',
+                'success' => false
             ];
         }else {
             $resp = [
                 'menssage' => "Conteúdo de id: {$id} foi apagado com sucesso!!",
-                'is_deleted' => $conteudo->delete()
+                'success' => $conteudo->delete()
             ];
         }
         
@@ -183,7 +183,7 @@ class ConteudoController extends Controller
     }
     public function getById(Request $request, $id)
     {
-        $conteudo = Conteudo::find($id);
+        $conteudo = Conteudo::with(['user','canal','tags'])->find($id);
 
         if($conteudo){
             return response()->json([

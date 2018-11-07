@@ -11,11 +11,22 @@ class Aplicativo extends Model
         'name',
         'description',
         'is_featured',
-        'options',
-        'created_at'];
-
-    public function getAplicativo()
+        'options'
+        ];
+    protected $dates = [
+            'created_at',
+            'updated_at',
+            'deleted_at'
+    ];    
+    protected $casts = [
+        'options' => 'array',
+    ];
+    public function user()
     {
-        return $this->belongsTo('App\Aplicativo');
+        return $this->belongsTo('App\User', 'user_id');
+    }
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag');
     }
 }
