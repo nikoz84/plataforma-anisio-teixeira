@@ -6,6 +6,7 @@ use App\Conteudo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ConteudoFormRequest;
 
 class ConteudoController extends Controller
 {
@@ -47,6 +48,15 @@ class ConteudoController extends Controller
         ],200);
     }
 
+    public function store(ConteudoFormRequest $request)
+    {
+        $this->validate($request, [
+            'titulo' => 'required|unique:titulo'
+        ]);
+        
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -55,7 +65,6 @@ class ConteudoController extends Controller
     public function create(Request $request)
     {
         
-
         $conteudo = new Conteudo;
 
         $conteudo->user_id = Auth::user()->id;
