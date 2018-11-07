@@ -10,7 +10,8 @@
                     <!-- TITULO -->
                     <div class="form-group">
                         <label for="titulo">Título:*</label>
-                        <input type="text" class="form-control" name="titulo" id="titulo" aria-describedby="titulo" v-model.trim="title">
+                        <input type="text" class="form-control" name="titulo" id="titulo" aria-describedby="titulo" v-model.trim="title" required oninvalid="this.setCustomValidity('Campo Obrigatorio')" 
+onchange="try{setCustomValidity('')}catch(e){}">
                         <small id="titulo" class="form-text text-muted">Adicione o nome original da mídia.</small>
                     </div>
                     <!-- TIPO -->

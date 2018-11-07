@@ -18489,7 +18489,8 @@ var render = function() {
                     type: "text",
                     name: "titulo",
                     id: "titulo",
-                    "aria-describedby": "titulo"
+                    "aria-describedby": "titulo",
+                    required: ""
                   },
                   domProps: { value: _vm.title },
                   on: {
