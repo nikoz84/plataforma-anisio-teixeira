@@ -11,7 +11,7 @@ class AplicativoController extends Controller
 {
     public function __construct()
     {
-      $this->middleware('jwt.verify')->except(['list','search']);
+      $this->middleware('jwt.verify')->except(['list','search','getById']);
     }
     /**
      * Display a listing of the resource.
@@ -142,7 +142,22 @@ class AplicativoController extends Controller
             'limit' => $aplicativos->perPage()
         ]);    
     }
+    public function getById(Request $request, $id)
+    {
+        $aplicativo = Aplicativo::with(['user','tags'])->find($id);
 
+        if($aplicativo){
+            return response()->json([
+                'success' => true,
+                'aplicativo' => $aplicativo
+            ]);
+        }else {
+            return response()->json([
+                'success' => false,
+                'aplicativo' => 'Conteudo não encontrado' 
+            ]);
+        }
+    }
 
 
 }

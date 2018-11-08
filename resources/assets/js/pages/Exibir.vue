@@ -1,57 +1,17 @@
 <template>
     <div>
-        <article v-if="this.conteudo != null">
-            <PlayerApp :tipo="conteudo.options.tipo"
-                    :download="conteudo.options.download"
-                    :visualizacao="conteudo.options.visualizacao"
-                    :guia="conteudo.options.guia"
-                    />
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h2 v-text="conteudo.title"></h2>
-                    <small></small>
-                    <div class="break-word" v-html="conteudo.description"></div>
-                    <hr class="line">
-                    <span class="label label-default"> Fonte: </span> 
-                        <i class="break-word">{{ conteudo.source }}</i>
-                    <hr class="line">
-                    <span class="label label-default"> Autores: </span>
-                    <i class="break-word" v-for="(author,i) in splitAuthors" v-bind:key="i" v-text="author"></i> 
-                    <hr class="line">
-                    <span class="label label-default"> Componentes: </span>
-                    <i class="break-word" 
-                       v-for="(item) in conteudo.options.componentes"
-                       v-bind:key="item.id"
-                       v-text="item.componente"
-                       ></i> 
-                    <hr class="line">
-                    <span class="label label-default"> Licença: </span>
-                    <i class="break-word" v-text="conteudo.options"></i> 
-                </div>
-                <div class="panel-footer">
-                    <h5> Tags: </h5>
-                    <a class="btn btn-default tag" href="" 
-                        v-for="item in conteudo.options.tags" 
-                        v-bind:key="item.id"
-                        v-text="item.tag">
-                    </a>
-                </div>
-            </div>
-        </article>
-        <article class="jumbotron" v-else>
-            <h1 class="text-center">{{ message }}</h1>
-        </article>
+        <ConteudoApp v-bind:conteudo="conteudo" />
     </div>
 </template>
 <script>
 import Http from '../http.js';
-import PlayerApp from '../components/PlayerComponent.vue';
+import ConteudoApp from '../components/ConteudoComponent.vue';
 
 let http = new Http();
 
 export default {
     name : 'exibir',
-    components:{PlayerApp},
+    components:{ ConteudoApp },
     data() {
         return {
             conteudo: {
@@ -73,7 +33,14 @@ export default {
         }
     },
     created(){
-        this.getConteudo(this.$route.params.id)
+        if(this.$route.params.slug == 'aplicativos-educacionais'){
+            this.getAplicativo(this.$route.params.id);
+        }else{
+            this.getConteudo(this.$route.params.id);
+        }
+        
+        
+        
     },
     computed:{
         splitAuthors(){
@@ -83,18 +50,18 @@ export default {
     },
     methods: {
         async getConteudo(id){
-            let params = {
-                token: localStorage.token
-            };
-            let resp = await http.getDataFromUrl(`/conteudos/${id}`, params);
-            console.log(resp.data);     
+            let resp = await http.getDataFromUrl(`/conteudos/${id}`);
+            
             if(resp.data.success){
                 this.conteudo = resp.data.conteudo;
             }else{
                 this.conteudo = null;
                 this.message = resp.data.message;
             }    
-            
+        },
+        async getAplicativo(id){
+            let resp = await http.getDataFromUrl(`/aplicativos/${id}`);
+            console.log(resp)
         }
     }
 }

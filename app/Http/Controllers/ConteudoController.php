@@ -141,10 +141,10 @@ class ConteudoController extends Controller
 
     }
     /**
-     * Remove the specified resource from storage.
+     * Apaga o aplicativo do banco de dados.
      *
      * @param  \App\Conteudo  $conteudo
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response\Json
      */
     public function delete($id)
     {
@@ -164,7 +164,12 @@ class ConteudoController extends Controller
         
         return response()->json($resp);
     }
-
+    /**
+     * Procura conteudos por full text search.
+     *
+     * @param  \App\Conteudo  $conteudo
+     * @return \Illuminate\Http\Response
+     */
     public function search(Request $request, $termo)
     {
         $limit = $request->query('limit', 15);
@@ -192,6 +197,12 @@ class ConteudoController extends Controller
             'limit' => $conteudos->perPage()
         ]);    
     }
+    /**
+     * Procura um conteúdo por id
+     * 
+     * @param id $id do conteúdo digital
+     * @return \Illuminate\Http\Response
+     */
     public function getById(Request $request, $id)
     {
         $conteudo = Conteudo::with(['user','canal','tags'])->find($id);
