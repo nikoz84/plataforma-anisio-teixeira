@@ -8,16 +8,26 @@
                 </div>
                 <div class="panel-body">
                     <!-- TITULO -->
-                    <div class="form-group">
+                    <div class="form-group" v-bind:class="{ 'has-error': titleErrors.length > 0 }">
                         <label for="titulo">Título:*</label>
-                        <input type="text" class="form-control" name="titulo" id="titulo" aria-describedby="titulo" v-model.trim="title" required oninvalid="this.setCustomValidity('Favor adicione um título!')" 
-onchange="try{setCustomValidity('')}catch(e){}">
+                        <input type="text"
+                                class="form-control"
+                                name="titulo"
+                                id="titulo"
+                                aria-describedby="titulo"
+                                v-model.trim="title">
                         <small id="titulo" class="form-text text-muted">Adicione o nome original da mídia.</small>
+                        <small class="text-danger"
+                                v-if="titleErrors"
+                                v-for="(error,t) in titleErrors"
+                                v-bind:key="t"
+                                v-text="error">
+                        </small>
                     </div>
                     <!-- TIPO -->
                     <div class="form-group">
                         <label for="estado">Tipo de Conteúdo:*</label>
-                        <select class="form-control form-control-lg" id="licenca-relacionada" v-model="tipo" required oninvalid="this.setCustomValidity('Favor selecione o tipo de conteúdo!')" 
+                        <select class="form-control form-control-lg" id="licenca-relacionada" v-model="tipo"  oninvalid="this.setCustomValidity('Favor selecione o tipo de conteúdo!')" 
 onchange="try{setCustomValidity('')}catch(e){}">
                             <option value="">« SELECIONE »</option>
                             <option value="7">Animação/Simulação</option>
@@ -35,17 +45,25 @@ onchange="try{setCustomValidity('')}catch(e){}">
                     <!-- CATEGORIA -->
                     <div class="form-group" v-if="categories.length != 0">
                         <label for="estado">Categoria de Conteúdo:*</label>
-                        <select class="form-control form-control-lg" id="categoria" v-model="category" required oninvalid="this.setCustomValidity('Favor selecione a categoria do conteúdo!')" 
+                        <select class="form-control form-control-lg" id="categoria" v-model="category"  oninvalid="this.setCustomValidity('Favor selecione a categoria do conteúdo!')" 
 onchange="try{setCustomValidity('')}catch(e){}">
                             <option value="">« SELECIONE »</option>
                             <option v-for="(item, i) in categories" v-bind:value="item.name" v-bind:key="i">{{item.name}}</option>
                         </select>
                     </div>
                     <!-- DESCRICAO -->
-                    <div class="form-group">
+                    <div class="form-group" v-bind:class="{ 'has-error': descriptionErrors.length > 0 }">
                         <label for="descricao">Descrição:*</label>
-                        <textarea class="form-control" id="descricao" v-model="description" style="resize: none" required oninvalid="this.setCustomValidity('Favor preencha a descrição!')" 
-onchange="try{setCustomValidity('')}catch(e){}"></textarea>
+                        <textarea class="form-control"
+                                    id="descricao"
+                                    v-model="description"
+                                    style="resize: none"></textarea>
+                        <small class="text-danger"
+                                v-if="descriptionErrors"
+                                v-for="(error,d) in descriptionErrors"
+                                v-bind:key="d"
+                                v-text="error">
+                        </small>
                     </div>
                     <!-- TAGS -->
                     <div class="form-group">
@@ -54,25 +72,25 @@ onchange="try{setCustomValidity('')}catch(e){}"></textarea>
                                         v-bind:tags="tags"
                                         v-bind:autocomplete-items="autocompleteItems"
                                         v-on:tags-changed="updateTag"
-                        required oninvalid="this.setCustomValidity('Favor adicione as Palavras-Chave!')" 
+                         oninvalid="this.setCustomValidity('Favor adicione as Palavras-Chave!')" 
 onchange="try{setCustomValidity('')}catch(e){}">
                     </div>
                     <!-- AUTORES -->
                     <div class="form-group">
                         <label for="autores">Autores:*</label>
-                        <input type="text" class="form-control" id="autores" v-model="authors" required oninvalid="this.setCustomValidity('Favor informar os Autores!')" 
+                        <input type="text" class="form-control" id="autores" v-model="authors"  oninvalid="this.setCustomValidity('Favor informar os Autores!')" 
 onchange="try{setCustomValidity('')}catch(e){}">
                     </div>
                     <!-- FONTE -->
                     <div class="form-group">
                         <label for="fonte">Fonte:*</label>
-                        <input type="text" class="form-control" id="fonte" v-model="source" required oninvalid="this.setCustomValidity('Favor informar a fonte!')" 
+                        <input type="text" class="form-control" id="fonte" v-model="source"  oninvalid="this.setCustomValidity('Favor informar a fonte!')" 
 onchange="try{setCustomValidity('')}catch(e){}">
                     </div>
                     <!-- LICENCA -->
                     <div class="form-group">
                         <label for="licenca-conteudo">Licença de Conteúdo:*</label>
-                        <select class="form-control form-control-lg" id="licenca-conteudo" v-model="license" required oninvalid="this.setCustomValidity('Favor selecione o tipo da Licença!')" 
+                        <select class="form-control form-control-lg" id="licenca-conteudo" v-model="license"  oninvalid="this.setCustomValidity('Favor selecione o tipo da Licença!')" 
 onchange="try{setCustomValidity('')}catch(e){}">
                             <option value="" >« SELECIONE »</option>
                             <option value="1">Outros</option>
@@ -92,10 +110,11 @@ onchange="try{setCustomValidity('')}catch(e){}">
                         </select>
                     </div>
                 </div>
+                <!-- BUTÃO DE ENVIO -->
                 <div class="form-group">
                     <button class="btn btn-default">Enviar</button>
                 </div>
-
+                <!-- RESPOSTA FORMULARIO -->
                 <transition  name="custom-classes-transition"
                             enter-active-class="animated shake"
                             leave-active-class="animated fadeOut">
@@ -105,6 +124,8 @@ onchange="try{setCustomValidity('')}catch(e){}">
                 </transition>
 
             </div>
+
+            <!-- COMPONENTES E NIVEIS DE ENSINO -->
             <div class="panel panel-default col-md-5">
                 <div class="panel-heading">
                     Selecione o(s) componente(s) curricular(es) ou disciplina(s) que mais se adequem ao contéudo:
@@ -352,6 +373,7 @@ onchange="try{setCustomValidity('')}catch(e){}">
             </div>
 
         </form>
+
     </div>
 </template>
 
@@ -366,8 +388,8 @@ export default {
     data(){
         return {
 
-            tipo: '',
-            title: null,
+            tipo: {},
+            title: '',
             description:null,
             authors:null,
             source:null,
@@ -383,7 +405,9 @@ export default {
             category: '',
             categories:[],
             message : 'Mensagem aqui',
-            isError : true
+            isError : true,
+            titleErrors : [],
+            descriptionErrors:[]
         }
 
     },
@@ -413,26 +437,21 @@ export default {
                 options: JSON.stringify(this.options),
                 token: localStorage.token
             };
-
-
             let resp = await http.postData('/conteudos/create', params);
 
-            if(!resp.data.success){
+            if(resp.data.success){
+                console.log(resp);
+                this.$router.push('listar')
+            }else{
+                console.warn(resp.data);
                 this.isError = resp.data.success;
-                this.message = "Dados cadastrados com sucesso!";
-                
-                console.log(resp.data);
-                
+                this.message = resp.data.message;
+                this.titleErrors = resp.data.errors.title;
+                this.descriptionErrors = resp.data.errors.description;
                 setTimeout(()=>{
-                this.isError = true;
+                    this.isError = true; 
                 },3000)
             }
-
-            /*console.log(resp);
-            if(resp.data.success){
-                console.log(resp.data);
-            }*/
-
         },
         updateTag(newTags) {
             this.autocompleteItems = [];

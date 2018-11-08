@@ -61,17 +61,17 @@ export default {
   },
   methods:{
     async login(){
-      
+
       let data = { email: this.user.email, password: this.user.password };
       let http = new Http();
-      
+
       let resp = await http.postData('/auth/login', data);
       if(!resp.data.success){
         this.isError = resp.data.success;
         this.message = resp.data.message;
         this.$router.push('/usuario/login')
         setTimeout(()=>{
-          this.isError = true; 
+          this.isError = true;
         },3000)
       }else{
         this.isError = resp.data.success;

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ConteudoFormRequest;
+use Illuminate\Support\Facades\Validator;
 
 class ConteudoController extends Controller
 {
@@ -23,7 +24,7 @@ class ConteudoController extends Controller
     {
         $limit = ($request->has('limit')) ? $request->query('limit') : 10;
 
-        $orderBy = ($request->has('order')) ? $request->query('order') : 'title';
+        $orderBy = ($request->has('order')) ? $request->query('order') : 'created_at';
         $page = ($request->has('page')) ? $request->query('page') : 1;
         $isApproved = $request->query('approved', 'true');
         $isCanal = $request->query('canal', null);
@@ -37,7 +38,7 @@ class ConteudoController extends Controller
                             ->orderBy($orderBy, 'asc')
                             ->paginate($limit);
 
-        $conteudos->setPath("/conteudos?canal={$isCanal}&site={$isSite}&limit={$limit}");    
+        $conteudos->setPath("/conteudos?canal={$isCanal}&site={$isSite}&limit={$limit}");
 
         return response()->json([
             'success'=> true,
@@ -48,12 +49,14 @@ class ConteudoController extends Controller
         ],200);
     }
 
-    public function store(ConteudoFormRequest $request)
+    private function validar($request)
     {
-        $this->validate($request, [
-            'titulo' => 'required|unique:titulo'
+        $validator = Validator::make($request->all(),[
+            'title' => 'required|min:10|max:255',
+            'description' => 'required|min:140',
         ]);
-        
+
+        return $validator;
     }
 
 
@@ -64,7 +67,15 @@ class ConteudoController extends Controller
      */
     public function create(Request $request)
     {
-        
+        $validator = $this->validar($request);
+        if($validator->fails()){
+            return response()->json([
+                'success' => false,
+                'message' => 'Não foi possível efetuar o cadastro',
+                'errors' => $validator->errors()
+            ], 200);
+        }
+
         $conteudo = new Conteudo;
 
         $conteudo->user_id = Auth::user()->id;
@@ -80,7 +91,7 @@ class ConteudoController extends Controller
         $conteudo->options = json_decode($request->get('options'), true);
 
         $conteudo->save();
-       
+
         return response()->json([
             'success' => true,
             'message' => 'Conteúdo cadastrado com sucesso',
