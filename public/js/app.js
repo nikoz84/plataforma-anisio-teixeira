@@ -18644,8 +18644,10 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             categories: [],
             message: 'Mensagem aqui',
             isError: true,
-            titleErrors: [],
-            descriptionErrors: []
+            errors: {
+                title: [],
+                description: []
+            }
         };
     },
 
@@ -18695,8 +18697,10 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                     console.warn(resp.data);
                                     this.isError = resp.data.success;
                                     this.message = resp.data.message;
-                                    this.titleErrors = resp.data.errors.title;
-                                    this.descriptionErrors = resp.data.errors.description;
+                                    if (resp.data.errors) {
+                                        this.errors = resp.data.errors;
+                                    }
+
                                     setTimeout(function () {
                                         _this.isError = true;
                                     }, 3000);
@@ -18841,7 +18845,7 @@ var render = function() {
                 "div",
                 {
                   staticClass: "form-group",
-                  class: { "has-error": _vm.titleErrors.length > 0 }
+                  class: { "has-error": _vm.errors.title.length > 0 }
                 },
                 [
                   _c("label", { attrs: { for: "titulo" } }, [
@@ -18888,8 +18892,8 @@ var render = function() {
                     [_vm._v("Adicione o nome original da mídia.")]
                   ),
                   _vm._v(" "),
-                  _vm._l(_vm.titleErrors, function(error, t) {
-                    return _vm.titleErrors
+                  _vm._l(_vm.errors.title, function(error, t) {
+                    return _vm.errors.title
                       ? _c("small", {
                           key: t,
                           staticClass: "text-danger",
@@ -19042,7 +19046,7 @@ var render = function() {
                 "div",
                 {
                   staticClass: "form-group",
-                  class: { "has-error": _vm.descriptionErrors.length > 0 }
+                  class: { "has-error": _vm.errors.description.length > 0 }
                 },
                 [
                   _c("label", { attrs: { for: "descricao" } }, [
@@ -19072,8 +19076,8 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _vm._l(_vm.descriptionErrors, function(error, d) {
-                    return _vm.descriptionErrors
+                  _vm._l(_vm.errors.description, function(error, d) {
+                    return _vm.errors.description
                       ? _c("small", {
                           key: d,
                           staticClass: "text-danger",

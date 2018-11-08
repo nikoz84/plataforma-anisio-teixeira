@@ -8,7 +8,7 @@
                 </div>
                 <div class="panel-body">
                     <!-- TITULO -->
-                    <div class="form-group" v-bind:class="{ 'has-error': titleErrors.length > 0 }">
+                    <div class="form-group" v-bind:class="{ 'has-error': errors.title.length > 0 }">
                         <label for="titulo">Título:*</label>
                         <input type="text"
                                 class="form-control"
@@ -18,8 +18,8 @@
                                 v-model.trim="title">
                         <small id="titulo" class="form-text text-muted">Adicione o nome original da mídia.</small>
                         <small class="text-danger"
-                                v-if="titleErrors"
-                                v-for="(error,t) in titleErrors"
+                                v-if="errors.title"
+                                v-for="(error,t) in errors.title"
                                 v-bind:key="t"
                                 v-text="error">
                         </small>
@@ -52,15 +52,15 @@ onchange="try{setCustomValidity('')}catch(e){}">
                         </select>
                     </div>
                     <!-- DESCRICAO -->
-                    <div class="form-group" v-bind:class="{ 'has-error': descriptionErrors.length > 0 }">
+                    <div class="form-group" v-bind:class="{ 'has-error': errors.description.length > 0 }">
                         <label for="descricao">Descrição:*</label>
                         <textarea class="form-control"
                                     id="descricao"
                                     v-model="description"
                                     style="resize: none"></textarea>
                         <small class="text-danger"
-                                v-if="descriptionErrors"
-                                v-for="(error,d) in descriptionErrors"
+                                v-if="errors.description"
+                                v-for="(error,d) in errors.description"
                                 v-bind:key="d"
                                 v-text="error">
                         </small>
@@ -406,8 +406,10 @@ export default {
             categories:[],
             message : 'Mensagem aqui',
             isError : true,
-            titleErrors : [],
-            descriptionErrors:[]
+            errors: {
+                title: [],
+                description: []
+            }
         }
 
     },
@@ -446,8 +448,10 @@ export default {
                 console.warn(resp.data);
                 this.isError = resp.data.success;
                 this.message = resp.data.message;
-                this.titleErrors = resp.data.errors.title;
-                this.descriptionErrors = resp.data.errors.description;
+                if(resp.data.errors){
+                    this.errors = resp.data.errors;
+                }
+                
                 setTimeout(()=>{
                     this.isError = true; 
                 },3000)
