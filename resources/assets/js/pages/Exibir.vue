@@ -1,17 +1,22 @@
 <template>
     <div>
-        <ConteudoApp v-bind:conteudo="conteudo" />
+        <ConteudoApp v-bind:conteudo="conteudo" v-if="showConteudo" />
+        <AplicativoApp v-bind:aplicativo="aplicativo" v-if="showAplicativo"/>
+        <article class="jumbotron" v-if="showMessage">
+            <h1 class="text-center">{{ message }}</h1>
+        </article>
     </div>
 </template>
 <script>
 import Http from '../http.js';
 import ConteudoApp from '../components/ConteudoComponent.vue';
+import AplicativoApp from '../components/AplicativoComponent.vue';
 
 let http = new Http();
 
 export default {
     name : 'exibir',
-    components:{ ConteudoApp },
+    components:{ ConteudoApp, AplicativoApp },
     data() {
         return {
             conteudo: {
@@ -27,26 +32,33 @@ export default {
                     download:'',
                     visualizacao:'',
                     guia:''
-                },
-                
-            }
+                }   
+            },
+            message: null,
+            showMessage: false,
+            showConteudo: false,
+            showAplicativo: false,
+            aplicativo: {
+                name: '',
+                description: '',
+                options: {},
+            } 
         }
     },
     created(){
         if(this.$route.params.slug == 'aplicativos-educacionais'){
             this.getAplicativo(this.$route.params.id);
+            
         }else{
             this.getConteudo(this.$route.params.id);
+            
         }
         
         
         
     },
     computed:{
-        splitAuthors(){
-            let replace = this.conteudo.authors.replace(',',';')
-            return replace.split(';');
-        }
+        
     },
     methods: {
         async getConteudo(id){
@@ -54,40 +66,26 @@ export default {
             
             if(resp.data.success){
                 this.conteudo = resp.data.conteudo;
+                this.showConteudo = true;
             }else{
-                this.conteudo = null;
+                this.showMessage = true;
                 this.message = resp.data.message;
             }    
         },
         async getAplicativo(id){
             let resp = await http.getDataFromUrl(`/aplicativos/${id}`);
             console.log(resp)
+            if(resp.data.success){
+                this.aplicativo = resp.data.aplicativo;
+                this.showAplicativo = true;
+            }else{
+                this.showMessage = true;
+                this.message = resp.data.message;
+            }
         }
     }
 }
 </script>
 <style lang="scss" scoped>
-.break-word {
-    word-wrap: break-word;
-}
-.tag{
-    margin-right: 10px;
-    margin-bottom: 5px;
-}
-.label{
-    padding: 6px;
-    margin-right: 15px;
-}
 
-i:before{
-  content: " » ";
-  padding-right: 5px;
-  padding-left: 7px;
-}
-hr.line {
-    border: 0;
-    height: 1px;
-    background: #333;
-    background-image: linear-gradient(to right, #ccc, #a2a9af, #ccc);
-}
 </style>

@@ -108,7 +108,6 @@ class ConteudoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
         $conteudo = Conteudo::find($id);
         
         
@@ -205,6 +204,7 @@ class ConteudoController extends Controller
      */
     public function getById(Request $request, $id)
     {
+        
         $conteudo = Conteudo::with(['user','canal','tags'])->find($id);
 
         if($conteudo){
