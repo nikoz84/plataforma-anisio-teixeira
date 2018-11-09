@@ -1,11 +1,9 @@
 <template>
     <div>
-        Player
-        {{ visualizarConteudo }}
-        
-        <video>
-            
-        </video>
+        <article>
+            <h3> {{tipo.nome}} </h3>
+            <video src=""></video>
+        </article>
         
     </div>
 </template>
@@ -20,9 +18,14 @@
                 console.log(this.download)
                 console.log(this.visualizacao)
                 console.log(this.tipo)
-
+                this.selectTipo();
             }
 
+        },
+        methods:{
+            visualizar(){
+
+            }
         }    
     }
 </script>

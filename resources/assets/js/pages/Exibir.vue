@@ -3,7 +3,7 @@
         <ConteudoApp v-bind:conteudo="conteudo" v-if="showConteudo" />
         <AplicativoApp v-bind:aplicativo="aplicativo" v-if="showAplicativo"/>
         <article class="jumbotron" v-if="showMessage">
-            <h1 class="text-center">{{ message }}</h1>
+            <h3 class="text-center">{{ message }}</h3>
         </article>
     </div>
 </template>
@@ -46,41 +46,26 @@ export default {
         }
     },
     created(){
-        if(this.$route.params.slug == 'aplicativos-educacionais'){
-            this.getAplicativo(this.$route.params.id);
-            
-        }else{
-            this.getConteudo(this.$route.params.id);
-            
-        }
-        
-        
+        this.getData();
         
     },
     computed:{
         
     },
     methods: {
-        async getConteudo(id){
-            let resp = await http.getDataFromUrl(`/conteudos/${id}`);
-            
-            if(resp.data.success){
+        async getData(){
+            let id = this.$route.params.id;
+            let slug = (this.$route.params.slug == 'aplicativos-educacionais') ? 'aplicativos': 'conteudos';
+            let resp = await http.getDataFromUrl(`/${slug}/${id}`);
+            if( slug == 'aplicativos' ){
+                this.aplicativo = resp.data.aplicativo
+                this.showAplicativo = true;
+            }else if( slug == 'conteudos' ){
                 this.conteudo = resp.data.conteudo;
                 this.showConteudo = true;
             }else{
-                this.showMessage = true;
-                this.message = resp.data.message;
-            }    
-        },
-        async getAplicativo(id){
-            let resp = await http.getDataFromUrl(`/aplicativos/${id}`);
-            console.log(resp)
-            if(resp.data.success){
-                this.aplicativo = resp.data.aplicativo;
-                this.showAplicativo = true;
-            }else{
-                this.showMessage = true;
-                this.message = resp.data.message;
+                 this.showMessage = true;
+                 this.message = resp.data.message;
             }
         }
     }

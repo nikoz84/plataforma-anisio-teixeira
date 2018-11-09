@@ -3,7 +3,8 @@
         <article class="panel panel-default" v-bind:id="item.id">
             <div class="panel-body">
                 <figure class="figure">
-                    <!-- img width="250" height="150" src="/storage/img/default.svg" v-bind:alt="'imagem destacada'" srcset="" -->
+                    
+                  <img width="250" height="150" src="/img/fundo-padrao.svg" alt="imagem destacada" srcset="">
                 </figure>
                 <router-link :to="{ name: 'Exibir', params: { slug: this.$route.params.slug, id: item.id }}"
                             aria-label="Título" 
@@ -36,7 +37,7 @@ export default {
 <style lang="scss" scoped>
 
 .panel-default{
-    border-top-color: var(--background);
+    border-top-color: #333;
     border-top-width: 3px;
 
 }
