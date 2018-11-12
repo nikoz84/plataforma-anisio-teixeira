@@ -1,7 +1,6 @@
 <template>
     <div class="row">
         <form v-on:submit.prevent="createAplicativo()">
-            
             <div class="panel panel-default col-md-7">
                 <div class="panel-heading">
                     Adicionar Aplicativos
@@ -56,13 +55,13 @@
                     </div>
                     <div class="form-group">
                         <label for="usopedagogico">Informações para o uso pedagógico:</label>
-                       $conteudos['active'] = ( !isset($conteudos['active'])) ? 0 : 1; <textarea class="form-control" id="usopedagogico" v-model="uso_pedagogico" style="resize: none"></textarea>
-                    </d$conteudos['active'] = ( !isset($conteudos['active'])) ? 0 : 1;iv>
-                    <di$conteudos['active'] = ( !isset($conteudos['active'])) ? 0 : 1;v class="form-group">
-                       $conteudos['active'] = ( !isset($conteudos['active'])) ? 0 : 1; <label for="destaque">Marcar como destaque</label>
-                       $conteudos['active'] = ( !isset($conteudos['active'])) ? 0 : 1; <input type="checkbox" id="destaque" v-model="is_featured">
-                    </d$conteudos['active'] = ( !isset($conteudos['active'])) ? 0 : 1;iv>
-                    <di$conteudos['active'] = ( !isset($conteudos['active'])) ? 0 : 1;v class="form-group">
+                       <textarea class="form-control" id="usopedagogico" v-model="uso_pedagogico" style="resize: none"></textarea>
+                    </div>
+                    <div class="form-group">
+                       <label for="destaque">Marcar como destaque</label>
+                       <input type="checkbox" id="destaque" v-model="is_featured">
+                    </div>
+                    <div class="form-group">
                         <button class="btn btn-default">Enviar</button>
                     </div>
                 </div>
