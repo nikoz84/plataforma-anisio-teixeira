@@ -29,6 +29,7 @@ Route::get('/conteudos/{id}', 'ConteudoController@getById');
 // APLICATIVOS
 Route::get('/aplicativos', 'AplicativoController@list');
 Route::get('/aplicativos/search/{term}','AplicativoController@search');
+Route::get('/aplicativos/{id}', 'AplicativoController@getById');
 // AUTH
 Route::post('/auth/login', 'AuthController@login')->name('login');
 Route::post('/auth/register', 'AuthController@register')->name('register');

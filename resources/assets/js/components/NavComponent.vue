@@ -3,15 +3,18 @@
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu-deslizante" aria-expanded="false">
+                <span class="sr-only">Menu deslizante</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">Plataforma Anísio Teixeira</a>
+                <a class="navbar-brand" href="/">
+                    <img class="logo pull-left" alt="Logo da plataforma" src="/logo.svg" width="30" height="30">
+                    <span class="name pull-left hidden-xs">Plataforma Anísio Teixeira</span> 
+                </a>
             </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="collapse navbar-collapse" id="menu-deslizante">
                 <ul class="nav navbar-nav navbar-right">
 
                     <li class="dropdown">
@@ -115,6 +118,16 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.logo{
+    width: 30px;
+    height: 30px;
+}
+.name{
+    font-size: 20px;
+    color: #333;
+    padding-top: 5px;
+    display: block;
+}
 .progress-container {
   width: 100%;
   height: 2px;
