@@ -25,10 +25,9 @@
                         </small>
                     </div>
                     <!-- TIPO -->
-                    <div class="form-group">
-                        <label for="estado">Tipo de Conteúdo:*</label>
-                        <select class="form-control form-control-lg" id="licenca-relacionada" v-model="tipo"  oninvalid="this.setCustomValidity('Favor selecione o tipo de conteúdo!')" 
-onchange="try{setCustomValidity('')}catch(e){}">
+                    <div class="form-group" v-bind:class="{ 'has-error': errors.options.tipo.length > 0 }">
+                        <label for="tipoconteudo">Tipo de Conteúdo:*</label>
+                        <select class="form-control form-control-lg" id="tipoconteudo" v-model="tipo">
                             <option value="">« SELECIONE »</option>
                             <option value="7">Animação/Simulação</option>
                             <option value="3">Apresentação</option>
@@ -41,6 +40,12 @@ onchange="try{setCustomValidity('')}catch(e){}">
                             <option value="9">Software Educacional</option>
                             <option value="5">Vídeo</option>
                         </select>
+                        <small class="text-danger"
+                                v-if="errors.options.tipo"
+                                v-for="(error,ot) in errors.options.tipo"
+                                v-bind:key="ot"
+                                v-text="error">
+                        </small>
                     </div>
                     <!-- CATEGORIA -->
                     <div class="form-group" v-if="categories.length != 0">
@@ -68,12 +73,7 @@ onchange="try{setCustomValidity('')}catch(e){}">
                     <!-- TAGS -->
                     <div class="form-group">
                         <label for="palavra-chave">Palavras-Chave:*</label>
-                        <input type="text" class="form-control" v-model="tag"
-                                        v-bind:tags="tags"
-                                        v-bind:autocomplete-items="autocompleteItems"
-                                        v-on:tags-changed="updateTag"
-                         oninvalid="this.setCustomValidity('Favor adicione as Palavras-Chave!')" 
-onchange="try{setCustomValidity('')}catch(e){}">
+                        <input type="text" class="form-control">                        
                     </div>
                     <!-- AUTORES -->
                     <div class="form-group">
@@ -404,11 +404,14 @@ export default {
             autocompleteItems: [],
             category: '',
             categories:[],
-            message : 'Mensagem aqui',
+            message : '',
             isError : true,
             errors: {
                 title: [],
-                description: []
+                description: [],
+                options: {
+                    tipo:[]
+                }
             }
         }
 
