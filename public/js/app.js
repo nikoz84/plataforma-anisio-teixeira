@@ -19020,15 +19020,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -19056,12 +19047,14 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             autocompleteItems: [],
             category: '',
             categories: [],
-            message: 'Mensagem aqui',
+            message: '',
             isError: true,
             errors: {
                 title: [],
                 description: [],
-                options: []
+                options: {
+                    tipo: []
+                }
             }
         };
     },
@@ -19324,7 +19317,7 @@ var render = function() {
                 "div",
                 {
                   staticClass: "form-group",
-                  class: { "has-error": _vm.errors.options }
+                  class: { "has-error": _vm.errors.options.tipo.length > 0 }
                 },
                 [
                   _c("label", { attrs: { for: "tipoconteudo" } }, [
@@ -19403,10 +19396,10 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  _vm._l(_vm.errors.tags, function(error, o) {
-                    return _vm.errors.tags
+                  _vm._l(_vm.errors.options.tipo, function(error, ot) {
+                    return _vm.errors.options.tipo
                       ? _c("small", {
-                          key: o,
+                          key: ot,
                           staticClass: "text-danger",
                           domProps: { textContent: _vm._s(error) }
                         })
@@ -19521,56 +19514,7 @@ var render = function() {
                 2
               ),
               _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "form-group",
-                  class: { "has-error": _vm.errors.options.length > 0 }
-                },
-                [
-                  _c("label", { attrs: { for: "palavra-chave" } }, [
-                    _vm._v("Palavras-Chave:*")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.tag,
-                        expression: "tag"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      tags: _vm.tags,
-                      "autocomplete-items": _vm.autocompleteItems
-                    },
-                    domProps: { value: _vm.tag },
-                    on: {
-                      "tags-changed": _vm.updateTag,
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.tag = $event.target.value
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm._l(_vm.errors.options, function(error, o) {
-                    return _vm.errors.options
-                      ? _c("small", {
-                          key: o,
-                          staticClass: "text-danger",
-                          domProps: { textContent: _vm._s(error) }
-                        })
-                      : _vm._e()
-                  })
-                ],
-                2
-              ),
+              _vm._m(0),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
                 _c("label", { attrs: { for: "autores" } }, [
@@ -19684,7 +19628,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("option", { attrs: { value: "1" } }, [_vm._v("Outros")]),
                     _vm._v(" "),
-                    _vm._m(0),
+                    _vm._m(1),
                     _vm._v(" "),
                     _c("option", { attrs: { value: "3" } }, [
                       _vm._v("Todos direitos reservados (Copyright)")
@@ -19702,7 +19646,7 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _vm._m(1),
+            _vm._m(2),
             _vm._v(" "),
             _c(
               "transition",
@@ -19736,12 +19680,24 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _vm._m(2)
+        _vm._m(3)
       ]
     )
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "palavra-chave" } }, [
+        _vm._v("Palavras-Chave:*")
+      ]),
+      _vm._v(" "),
+      _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

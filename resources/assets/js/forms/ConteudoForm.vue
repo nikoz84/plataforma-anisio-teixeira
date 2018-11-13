@@ -25,7 +25,7 @@
                         </small>
                     </div>
                     <!-- TIPO -->
-                    <div class="form-group" v-bind:class="{ 'has-error': errors.options }">
+                    <div class="form-group" v-bind:class="{ 'has-error': errors.options.tipo.length > 0 }">
                         <label for="tipoconteudo">Tipo de Conteúdo:*</label>
                         <select class="form-control form-control-lg" id="tipoconteudo" v-model="tipo">
                             <option value="">« SELECIONE »</option>
@@ -41,9 +41,9 @@
                             <option value="5">Vídeo</option>
                         </select>
                         <small class="text-danger"
-                                v-if="errors.tags"
-                                v-for="(error,o) in errors.tags"
-                                v-bind:key="o"
+                                v-if="errors.options.tipo"
+                                v-for="(error,ot) in errors.options.tipo"
+                                v-bind:key="ot"
                                 v-text="error">
                         </small>
                     </div>
@@ -71,18 +71,9 @@ onchange="try{setCustomValidity('')}catch(e){}">
                         </small>
                     </div>
                     <!-- TAGS -->
-                    <div class="form-group" v-bind:class="{ 'has-error': errors.options.length > 0 }">
+                    <div class="form-group">
                         <label for="palavra-chave">Palavras-Chave:*</label>
-                        <input type="text" class="form-control" v-model="tag"
-                                        v-bind:tags="tags"
-                                        v-bind:autocomplete-items="autocompleteItems"
-                                        v-on:tags-changed="updateTag">
-                        <small class="text-danger"
-                            v-if="errors.options"
-                            v-for="(error,o) in errors.options"
-                            v-bind:key="o"
-                            v-text="error">
-                        </small>
+                        <input type="text" class="form-control">                        
                     </div>
                     <!-- AUTORES -->
                     <div class="form-group">
@@ -413,12 +404,14 @@ export default {
             autocompleteItems: [],
             category: '',
             categories:[],
-            message : 'Mensagem aqui',
+            message : '',
             isError : true,
             errors: {
                 title: [],
                 description: [],
-                options: []
+                options: {
+                    tipo:[]
+                }
             }
         }
 
