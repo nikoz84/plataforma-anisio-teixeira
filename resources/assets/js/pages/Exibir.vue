@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div top>
         <ConteudoApp v-bind:conteudo="conteudo" v-if="showConteudo" />
         <AplicativoApp v-bind:aplicativo="aplicativo" v-if="showAplicativo"/>
         <article class="jumbotron" v-if="showMessage">
@@ -47,7 +47,7 @@ export default {
     },
     created(){
         this.getData();
-        
+        window.addEventListener('scroll', this.goToTop);
     },
     computed:{
         
@@ -67,8 +67,20 @@ export default {
                  this.showMessage = true;
                  this.message = resp.data.message;
             }
+            
+        },
+        goToTop(){
+            //let top = window.pageYOffset;
+            console.log('sdf')
+            
+            
+            
         }
+    },
+    destroyed () {
+        window.removeEventListener('scroll', this.goToTop);
     }
+
 }
 </script>
 <style lang="scss" scoped>

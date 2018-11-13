@@ -1158,6 +1158,9 @@ var Http = function () {
                 case idCanal == 5:
                     return this.api + '/conteudos?site=true';
                     break;
+                case idCanal == 6:
+                    return this.api + '/conteudos';
+                    break;
                 case idCanal == 9:
                     return this.api + '/aplicativos';
                     break;
@@ -16392,6 +16395,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                 resp = _context.sent;
 
                                 if (resp.data.success) {
+                                    console.log(resp.data);
                                     this.title = resp.data.title;
                                     this.paginator = resp.data.paginator;
                                     this.page = resp.data.page;
@@ -17388,6 +17392,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {
         title: function title() {
             return this.item.name ? this.item.name : this.item.title;
+        },
+        getImage: function getImage() {
+            var image = '/img/fundo-padrao.svg';
+            if (this.item.id && localStorage.idCanal == 9) {
+                image = '/storage/conteudos/aplicativos-educacionais/imagem-associada/' + this.item.id + '.jpg';
+            } else if (this.item.id && localStorage.idCanal == 1) {
+                var random = Math.floor(Math.random() * 6) + 3;
+                image = '/storage/conteudos/conteudos-digitais/imagem-associada/sinopse/' + this.item.id + '.0' + random + '.jpg';
+            }
+            return image;
         }
     },
     created: function created() {}
@@ -17410,7 +17424,17 @@ var render = function() {
           "div",
           { staticClass: "panel-body" },
           [
-            _vm._m(0),
+            _c("figure", { staticClass: "figure" }, [
+              _c("img", {
+                attrs: {
+                  width: "250",
+                  height: "150",
+                  src: _vm.getImage,
+                  alt: "imagem destacada",
+                  srcset: ""
+                }
+              })
+            ]),
             _vm._v(" "),
             _c(
               "router-link",
@@ -17421,7 +17445,7 @@ var render = function() {
                     params: { slug: this.$route.params.slug, id: _vm.item.id }
                   },
                   "aria-label": "Título",
-                  title: _vm.title
+                  title: "Nome do aplicativo: " + _vm.title
                 }
               },
               [_c("h4", [_vm._v(_vm._s(_vm.title))])]
@@ -17433,24 +17457,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("figure", { staticClass: "figure" }, [
-      _c("img", {
-        attrs: {
-          width: "250",
-          height: "150",
-          src: "/img/fundo-padrao.svg",
-          alt: "imagem destacada",
-          srcset: ""
-        }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -17887,6 +17894,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
     },
     created: function created() {
         this.getData();
+        window.addEventListener('scroll', this.goToTop);
     },
 
     computed: {},
@@ -17930,7 +17938,14 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             }
 
             return getData;
-        }()
+        }(),
+        goToTop: function goToTop() {
+            //let top = window.pageYOffset;
+            console.log('sdf');
+        }
+    },
+    destroyed: function destroyed() {
+        window.removeEventListener('scroll', this.goToTop);
     }
 });
 
@@ -18073,6 +18088,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -18086,7 +18102,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return replace.split(';');
         },
         backgroundColor: function backgroundColor() {
-            console.warn(this.conteudo);
             var color = !this.conteudo.canal ? '#333' : this.conteudo.canal.options.color;
             return 'background-color: ' + color;
         }
@@ -18156,17 +18171,65 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'PlayerApp',
-    props: ['guia', 'download', 'visualizacao', 'tipo'],
+    props: ['guia', 'download', 'visualizacao', 'tipo', 'id'],
+    mounted: function mounted() {
+        //this.$refs.videoRef.src = ``;
+        //console.log()
+    },
+
     computed: {
         visualizarConteudo: function visualizarConteudo() {
             console.log(this.guia);
             console.log(this.download);
             console.log(this.visualizacao);
             console.log(this.tipo);
-            this.selectTipo();
+            console.log(this.id);
+        },
+        video: function video() {
+            return '/storage/conteudos/conteudos-digitais/visualizacao/' + this.visualizacao;
         }
     },
     methods: {
@@ -18183,11 +18246,117 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("article", [
-      _c("h3", [_vm._v(" " + _vm._s(_vm.tipo.nome) + " ")]),
-      _vm._v(" "),
-      _c("video", { attrs: { src: "" } })
-    ])
+    _vm._v(
+      "\n    \n    \n    " +
+        _vm._s(_vm.download) +
+        " " +
+        _vm._s(_vm.visualizacao) +
+        "\n    "
+    ),
+    _vm._v(" "),
+    _vm.tipo.id == 1
+      ? _c("div", { attrs: { documento: "" } }, [
+          _c("h3", [
+            _vm._v(
+              " " + _vm._s(_vm.tipo.nome) + " - " + _vm._s(_vm.tipo.id) + " "
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.tipo.id == 2
+      ? _c("div", { attrs: { planilha: "" } }, [
+          _c("h3", [
+            _vm._v(
+              " " + _vm._s(_vm.tipo.nome) + " - " + _vm._s(_vm.tipo.id) + " "
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.tipo.id == 3
+      ? _c("div", { attrs: { apresentacao: "" } }, [
+          _c("h3", [
+            _vm._v(
+              " " + _vm._s(_vm.tipo.nome) + " - " + _vm._s(_vm.tipo.id) + " "
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.tipo.id == 4
+      ? _c("div", { attrs: { audio: "" } }, [
+          _c("h3", [
+            _vm._v(
+              " " + _vm._s(_vm.tipo.nome) + " - " + _vm._s(_vm.tipo.id) + " "
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.tipo.id == 5
+      ? _c("div", { attrs: { video: "" } }, [
+          _c("h3", [
+            _vm._v(
+              " " + _vm._s(_vm.tipo.nome) + " - " + _vm._s(_vm.tipo.id) + " "
+            )
+          ]),
+          _vm._v(" "),
+          _c("video", { attrs: { controls: "" } }, [
+            _c("source", { attrs: { src: _vm.video, type: "video/webm" } })
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.tipo.id == 6
+      ? _c("div", { attrs: { imagem: "" } }, [
+          _c("h3", [
+            _vm._v(
+              " " + _vm._s(_vm.tipo.nome) + " - " + _vm._s(_vm.tipo.id) + " "
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.tipo.id == 7
+      ? _c("div", { attrs: { animacao: "" } }, [
+          _c("h3", [
+            _vm._v(
+              " " + _vm._s(_vm.tipo.nome) + " - " + _vm._s(_vm.tipo.id) + " "
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.tipo.id == 8
+      ? _c("div", { attrs: { site: "" } }, [
+          _c("h3", [
+            _vm._v(
+              " " + _vm._s(_vm.tipo.nome) + " - " + _vm._s(_vm.tipo.id) + " "
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.tipo.id == 9
+      ? _c("div", { attrs: { software: "" } }, [
+          _c("h3", [
+            _vm._v(
+              " " + _vm._s(_vm.tipo.nome) + " - " + _vm._s(_vm.tipo.id) + " "
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.tipo.id == 10
+      ? _c("div", { attrs: { sequencia: "" } }, [
+          _c("h3", [
+            _vm._v(
+              " " + _vm._s(_vm.tipo.nome) + " - " + _vm._s(_vm.tipo.id) + " "
+            )
+          ])
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -18216,7 +18385,8 @@ var render = function() {
           tipo: _vm.conteudo.options.tipo,
           download: _vm.conteudo.options.download,
           visualizacao: _vm.conteudo.options.visualizacao,
-          guia: _vm.conteudo.options.guia
+          guia: _vm.conteudo.options.guia,
+          id: _vm.conteudo.id
         }
       }),
       _vm._v(" "),
@@ -18551,6 +18721,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { attrs: { top: "" } },
     [
       _vm.showConteudo
         ? _c("ConteudoApp", { attrs: { conteudo: _vm.conteudo } })
@@ -23076,13 +23247,23 @@ var render = function() {
                 "ul",
                 { staticClass: "dropdown-menu" },
                 [
-                  _c("router-link", { attrs: { tag: "li", to: "/" } }, [
-                    _c("a", [_vm._v("Inicio")])
-                  ]),
-                  _vm._v(" "),
                   _c("router-link", { attrs: { tag: "li", to: "/admin" } }, [
                     _c("a", [_vm._v("Administração")])
                   ]),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        tag: "li",
+                        to: {
+                          name: "Inicio",
+                          params: { slug: "recursos-educacionais-abertos" }
+                        }
+                      }
+                    },
+                    [_c("a", [_vm._v("Recursos Educacionais Abertos")])]
+                  ),
                   _vm._v(" "),
                   _c(
                     "router-link",
@@ -23095,19 +23276,7 @@ var render = function() {
                         }
                       }
                     },
-                    [
-                      _c(
-                        "a",
-                        {
-                          on: {
-                            click: function($event) {
-                              _vm.get("canais")
-                            }
-                          }
-                        },
-                        [_vm._v("Tv Anísio Teixeira")]
-                      )
-                    ]
+                    [_c("a", [_vm._v("Tv Anísio Teixeira")])]
                   ),
                   _vm._v(" "),
                   _c(

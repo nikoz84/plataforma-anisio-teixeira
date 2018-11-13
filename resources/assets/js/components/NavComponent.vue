@@ -20,14 +20,14 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mídias Educacionais <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <router-link tag="li" to="/">
-                                <a>Inicio</a>
-                            </router-link>
                             <router-link tag="li" to="/admin">
                                 <a>Administração</a>
                             </router-link>
+                            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'recursos-educacionais-abertos'}}">
+                               <a>Recursos Educacionais Abertos</a>
+                            </router-link>
                             <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'tv-anisio-teixeira'}}">
-                               <a v-on:click="get('canais')">Tv Anísio Teixeira</a>
+                               <a>Tv Anísio Teixeira</a>
                             </router-link>
                             <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'radio-anisio-teixeira'}}">
                                 <a>Radio Anísio Teixeira</a>

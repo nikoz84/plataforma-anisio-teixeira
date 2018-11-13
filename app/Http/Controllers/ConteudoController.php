@@ -11,34 +11,46 @@ use Illuminate\Support\Facades\Validator;
 
 class ConteudoController extends Controller
 {
-    public function __construct()
+    public function __construct(Conteudo $conteudo, Request $request)
     {
       $this->middleware('jwt.verify')->except(['list','search','getById']);
+      $this->conteudo = $conteudo;
+      $this->request = $request;
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function list(Request $request)
+    public function list()
     {
-        $limit = ($request->has('limit')) ? $request->query('limit') : 10;
+        $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;
 
-        $orderBy = ($request->has('order')) ? $request->query('order') : 'created_at';
-        $page = ($request->has('page')) ? $request->query('page') : 1;
-        $isApproved = $request->query('approved', 'true');
-        $isCanal = $request->query('canal', null);
-        $canal = (is_null($isCanal)) ?  'canal_id IS NULL' : "canal_id = {$isCanal}";
-        $isSite = $request->query('site', 'false');
+        $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
+        $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
+        $isApproved = $this->request->query('approved', 'true');
+        
 
-        $conteudos = Conteudo::select('id','canal_id','user_id','title','options')
+        $conteudos = null;
+        if($this->request->has('canal')){
+            $canal = $this->request->query('canal');
+            $site = $this->request->query('site', 'false');
+
+            $conteudos = $this->conteudo::select('id','canal_id','user_id','title','options')
                             ->where('is_approved', $isApproved)
-                            ->where('is_site', $isSite)
-                            ->whereRaw($canal)
-                            ->orderBy($orderBy, 'asc')
+                            ->where('is_site', $site)
+                            ->where('canal_id', $canal)
+                            ->orderBy($orderBy, 'desc')
                             ->paginate($limit);
-
-        $conteudos->setPath("/conteudos?canal={$isCanal}&site={$isSite}&limit={$limit}");
+            $conteudos->setPath("/conteudos?canal={$canal}&site={$site}&limit={$limit}");                
+        }else{
+            $conteudos = $this->conteudo::select('id','canal_id','user_id','title','options')
+                            ->where('is_approved', $isApproved)
+                            ->orderBy($orderBy, 'desc')
+                            ->paginate($limit);
+            $conteudos->setPath("/conteudos?limit={$limit}");                
+        }
+        
 
         return response()->json([
             'success'=> true,
@@ -49,9 +61,9 @@ class ConteudoController extends Controller
         ],200);
     }
 
-    private function validar($request)
+    private function validar()
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($this->request->all(),[
             'title' => 'required|min:10|max:255',
             'description' => 'required|min:140',
         ]);
@@ -65,9 +77,9 @@ class ConteudoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        $validator = $this->validar($request);
+        $validator = $this->validar($this->request);
         if($validator->fails()){
             return response()->json([
                 'success' => false,
@@ -76,19 +88,19 @@ class ConteudoController extends Controller
             ], 200);
         }
 
-        $conteudo = new Conteudo;
+        $conteudo = $this->conteudo;
 
         $conteudo->user_id = Auth::user()->id;
         $conteudo->approving_user_id = Auth::user()->id;
-        $conteudo->title = $request->get('title');
-        $conteudo->description = $request->get('description');
-        $conteudo->authors = $request->get('authors');
-        $conteudo->source = $request->get('source');
-        $conteudo->license_id = $request->get('license_id');
-        $conteudo->is_featured = $request->get('is_featured');
-        $conteudo->is_approved = $request->get('is_approved');
-        $conteudo->is_site = $request->get('is_site');
-        $conteudo->options = json_decode($request->get('options'), true);
+        $conteudo->title = $this->request->get('title');
+        $conteudo->description = $this->request->get('description');
+        $conteudo->authors = $this->request->get('authors');
+        $conteudo->source = $this->request->get('source');
+        $conteudo->license_id = $this->request->get('license_id');
+        $conteudo->is_featured = $this->request->get('is_featured');
+        $conteudo->is_approved = $this->request->get('is_approved');
+        $conteudo->is_site = $this->request->get('is_site');
+        $conteudo->options = json_decode($this->request->get('options'), true);
 
         $conteudo->save();
 
@@ -106,22 +118,22 @@ class ConteudoController extends Controller
      * @param  \App\Conteudo  $conteudo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update( $id )
     {
-        $conteudo = Conteudo::find($id);
+        $conteudo = $this->conteudo::find($id);
         
         
         $conteudo->update([
-            'canal_id' => $request->get('canal_id'),
-            'title' => $request->get('title'),
-            'description' => $request->get('description'),
-            'authors' => $request->get('authors'),
-            'source' => $request->get('source'),
-            'license_id' => $request->get('license_id'),
-            'is_featured' => $request->get('is_featured'),
-            'is_approved' => $request->get('is_approved'),
-            'is_site' => $request->get('is_site'),
-            'options' => json_decode( $request->get('options'), true )
+            'canal_id' => $this->request->get('canal_id'),
+            'title' => $this->request->get('title'),
+            'description' => $this->request->get('description'),
+            'authors' => $this->request->get('authors'),
+            'source' => $this->request->get('source'),
+            'license_id' => $this->request->get('license_id'),
+            'is_featured' => $this->request->get('is_featured'),
+            'is_approved' => $this->request->get('is_approved'),
+            'is_site' => $this->request->get('is_site'),
+            'options' => json_decode( $this->request->get('options'), true )
         ]);
         
         $conteudo->save();
@@ -133,10 +145,10 @@ class ConteudoController extends Controller
 
         
     }
-    public function createConteudoTags(Request $request, $id)
+    public function createConteudoTags( $id ) 
     {
-        $conteudo = Conteudo::find($id);
-        $conteudo->tags()->attach($request->get('tags'));
+        $conteudo = $this->conteudo::find($id);
+        $conteudo->tags()->attach($this->request->get('tags'));
 
     }
     /**
@@ -145,9 +157,9 @@ class ConteudoController extends Controller
      * @param  \App\Conteudo  $conteudo
      * @return \Illuminate\Http\Response\Json
      */
-    public function delete($id)
+    public function delete( $id )
     {
-        $conteudo = Conteudo::find($id);
+        $conteudo = $this->conteudo::find($id);
         $resp = [];
         if(!$conteudo){
             $resp = [
@@ -169,10 +181,10 @@ class ConteudoController extends Controller
      * @param  \App\Conteudo  $conteudo
      * @return \Illuminate\Http\Response
      */
-    public function search(Request $request, $termo)
+    public function search($termo)
     {
-        $limit = $request->query('limit', 15);
-        $page = $request->query('page', 1);
+        $limit = $this->request->query('limit', 15);
+        $page = $this->request->query('page', 1);
 
         $conteudos = DB::table(DB::raw("conteudos as cd, plainto_tsquery('simple', lower(unaccent('${termo}'))) query"))
                         ->select(['cd.id','cd.title',
@@ -202,10 +214,10 @@ class ConteudoController extends Controller
      * @param id $id do conteúdo digital
      * @return \Illuminate\Http\Response
      */
-    public function getById(Request $request, $id)
+    public function getById( $id )
     {
         
-        $conteudo = Conteudo::with(['user','canal','tags'])->find($id);
+        $conteudo = $this->conteudo::with(['user','canal','tags'])->find($id);
 
         if($conteudo){
             return response()->json([
@@ -227,6 +239,9 @@ class ConteudoController extends Controller
         return response()->json([
             'tags' => $conteudo->tags
         ]);
+    }
+    public function getFiles($id){
+        
     }
 }
 

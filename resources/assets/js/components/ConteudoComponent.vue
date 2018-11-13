@@ -4,6 +4,7 @@
                 :download="conteudo.options.download"
                 :visualizacao="conteudo.options.visualizacao"
                 :guia="conteudo.options.guia"
+                :id="conteudo.id"
                 />
         <div class="panel panel-default">
             <div class="panel-body">
@@ -51,7 +52,6 @@ export default {
             return replace.split(';');
         },
         backgroundColor(){
-            console.warn(this.conteudo)
             let color = (!this.conteudo.canal) ? '#333': this.conteudo.canal.options.color;
             return `background-color: ${color}`;
         }

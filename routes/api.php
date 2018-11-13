@@ -17,7 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 */
-
+Route::get('/file/{id}','ConteudoController@getFiles');
 
 // CANAIS
 Route::get('/canais/slug/{slug}', 'CanalController@getBySlug');

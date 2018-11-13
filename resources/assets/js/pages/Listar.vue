@@ -34,6 +34,7 @@ export default {
             let params = { limit: this.limit, page: this.page };
             let resp = await http.getDataFromIdCanal( idCanal, params);
             if(resp.data.success){
+                console.log(resp.data)
                 this.title = resp.data.title;
                 this.paginator = resp.data.paginator;
                 this.page = resp.data.page;
