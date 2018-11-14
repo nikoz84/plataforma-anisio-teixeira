@@ -66,6 +66,12 @@ class ConteudoController extends Controller
         $validator = Validator::make($this->request->all(),[
             'title' => 'required|min:10|max:255',
             'description' => 'required|min:140',
+            'tipo' => 'required',
+            'authors' => 'required',
+            'source' => 'required',
+            'license' => 'required',
+            'terms' => 'required|in:true,false'
+            //'is_approved' => 'required|in:true,false'
         ]);
 
         return $validator;

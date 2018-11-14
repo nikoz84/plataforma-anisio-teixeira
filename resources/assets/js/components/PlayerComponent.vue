@@ -24,11 +24,13 @@
         <div v-if="tipo.id == 4" audio>
             <h3> {{tipo.nome}} - {{tipo.id}} </h3>
         </div>
-        <div v-if="tipo.id == 5" video>
+        <div class="col-sm-8" v-if="tipo.id == 5" video>
             <h3> {{tipo.nome}} - {{tipo.id}} </h3>
-            <video controls>
-                <source :src="video" type="video/webm">
-            </video>
+            <div align="center" class="embed-responsive embed-responsive-16by9">
+                <video controls>
+                    <source  class="embed-responsive-item" :src="video" type="video/webm">
+                </video>
+            </div>
         </div>
         <div v-if="tipo.id == 6" imagem>
             <h3> {{tipo.nome}} - {{tipo.id}} </h3>

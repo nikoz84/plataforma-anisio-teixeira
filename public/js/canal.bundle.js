@@ -330,6 +330,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'NavCanal'
@@ -383,19 +386,33 @@ var render = function() {
           [_c("a", [_vm._v("Sobre")])]
         ),
         _vm._v(" "),
-        _c(
-          "router-link",
-          {
-            attrs: {
-              tag: "li",
-              to: {
-                name: "Formulario",
-                params: { slug: _vm.$route.params.slug }
-              }
-            }
-          },
-          [_c("a", [_vm._v("Formulario")])]
-        )
+        _vm.$route.params.slug != "aplicativos-educacionais"
+          ? _c(
+              "router-link",
+              {
+                attrs: {
+                  tag: "li",
+                  to: {
+                    name: "AdicionarConteudo",
+                    params: { slug: _vm.$route.params.slug }
+                  }
+                }
+              },
+              [_c("a", [_vm._v("Adicionar")])]
+            )
+          : _c(
+              "router-link",
+              {
+                attrs: {
+                  tag: "li",
+                  to: {
+                    name: "AdicionarAplicativo",
+                    params: { slug: _vm.$route.params.slug }
+                  }
+                }
+              },
+              [_c("a", [_vm._v("Adicionar")])]
+            )
       ],
       1
     )

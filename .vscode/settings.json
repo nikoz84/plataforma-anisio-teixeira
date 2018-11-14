@@ -1,3 +1,4 @@
 {
-    "svn.path": "/usr/bin/svn"
+    "svn.path": "/usr/bin/svn",
+    "svn.ignoreWorkingCopyIsTooOld": true
 }

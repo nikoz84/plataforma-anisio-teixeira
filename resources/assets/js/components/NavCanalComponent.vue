@@ -10,8 +10,11 @@
             <router-link tag="li" :to="{ name: 'Sobre', params: {slug: $route.params.slug}}">
                 <a>Sobre</a>
             </router-link>
-            <router-link tag="li" :to="{ name: 'Formulario', params: {slug: $route.params.slug}}">
-                <a>Formulario</a>
+            <router-link tag="li" :to="{ name: 'AdicionarConteudo', params: {slug: $route.params.slug}}" v-if="$route.params.slug != 'aplicativos-educacionais'">
+                <a>Adicionar</a>
+            </router-link>
+            <router-link tag="li" :to="{ name: 'AdicionarAplicativo', params: {slug: $route.params.slug}}" v-else>
+                <a>Adicionar</a>
             </router-link>
         </ul>    
     </nav>

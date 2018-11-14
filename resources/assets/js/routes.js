@@ -2,7 +2,8 @@ import HomeCanal from './pages/HomeCanal.vue';
 import Sobre from './pages/Sobre.vue';
 import Listar from './pages/Listar.vue';
 import Exibir from './pages/Exibir.vue';
-import Formulario from './forms/ConteudoForm.vue';
+import ConteudoForm from './forms/ConteudoForm.vue';
+import AplicativoForm from './forms/AplicativoForm.vue';
 import LoginForm from './forms/LoginForm.vue';
 import RecoverPassForm from './forms/RecoverPassForm.vue';
 import RegisterForm from './forms/RegisterForm.vue'; 
@@ -79,14 +80,24 @@ const routes =[
           component: Exibir
         },
         {
-          path: 'editar/:id',
-          name: 'Editar',
-          component: Formulario
+          path: 'editar-conteudo/:id',
+          name: 'EditarConteudo',
+          component: ConteudoForm
         },
         {
-          path: 'formulario',
-          name: 'Formulario',
-          component: Formulario
+          path: 'adicionar-conteudo',
+          name: 'AdicionarConteudo',
+          component: ConteudoForm
+        },
+        {
+          path: 'editar-aplicativo/:id',
+          name: 'EditarAplicativo',
+          component: AplicativoForm
+        },
+        {
+          path: 'adicionar-aplicativo',
+          name: 'AdicionarAplicativo',
+          component: AplicativoForm
         }
 
 

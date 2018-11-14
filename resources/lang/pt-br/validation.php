@@ -116,6 +116,12 @@ return [
         'description' => 'descrição',
         'name' => 'nome',
         'options' => 'opções',
-        'email' => 'e-mail'
+        'email' => 'e-mail',
+        'source' => 'fonte',
+        'authors' => 'autores',
+        'tipo' => 'tipo de conteúdo',
+        'license' => 'licença',
+        //'is_approved' => 'aprovar',
+        'terms' => 'termos e condições'
     ],
 ];

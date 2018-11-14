@@ -8,7 +8,7 @@
                 </div>
                 <div class="panel-body">
                     <!-- TITULO -->
-                    <div class="form-group" v-bind:class="{ 'has-error': errors.title.length > 0 }">
+                    <div class="form-group" v-bind:class="{ 'has-error': errors.title && errors.title.length > 0 }">
                         <label for="titulo">Título:*</label>
                         <input type="text"
                                 class="form-control"
@@ -16,7 +16,7 @@
                                 id="titulo"
                                 aria-describedby="titulo"
                                 v-model.trim="title">
-                        <small id="titulo" class="form-text text-muted">Adicione o nome original da mídia.</small>
+                        <small id="titulo" class="text-info">Adicione o nome original da mídia.</small>
                         <small class="text-danger"
                                 v-if="errors.title"
                                 v-for="(error,t) in errors.title"
@@ -25,7 +25,7 @@
                         </small>
                     </div>
                     <!-- TIPO -->
-                    <div class="form-group" v-bind:class="{ 'has-error': errors.options.tipo.length > 0 }">
+                    <div class="form-group" v-bind:class="{ 'has-error': errors.tipo && errors.tipo.length > 0 }">
                         <label for="tipoconteudo">Tipo de Conteúdo:*</label>
                         <select class="form-control form-control-lg" id="tipoconteudo" v-model="tipo">
                             <option value="">« SELECIONE »</option>
@@ -40,29 +40,36 @@
                             <option value="9">Software Educacional</option>
                             <option value="5">Vídeo</option>
                         </select>
+                        <small class="text-info">Escolha a opção mais adequada à mídia que deseja publicar, conforme tipos disponíveis.</small>
                         <small class="text-danger"
-                                v-if="errors.options.tipo"
-                                v-for="(error,ot) in errors.options.tipo"
-                                v-bind:key="ot"
+                                v-if="errors.tipo"
+                                v-for="(error, ti) in errors.tipo"
+                                v-bind:key="ti"
                                 v-text="error">
                         </small>
                     </div>
-                    <!-- CATEGORIA -->
+                    <!-- CATEGORIA OPCIONAL-->
                     <div class="form-group" v-if="categories.length != 0">
                         <label for="estado">Categoria de Conteúdo:*</label>
-                        <select class="form-control form-control-lg" id="categoria" v-model="category"  oninvalid="this.setCustomValidity('Favor selecione a categoria do conteúdo!')" 
-onchange="try{setCustomValidity('')}catch(e){}">
+                        <select class="form-control form-control-lg" id="categoria" v-model="category">
                             <option value="">« SELECIONE »</option>
-                            <option v-for="(item, i) in categories" v-bind:value="item.name" v-bind:key="i">{{item.name}}</option>
+                            <option v-for="(item, i) in categories" 
+                                    v-bind:value="item.name" 
+                                    v-bind:key="i">{{item.name}}
+                            </option>
                         </select>
                     </div>
                     <!-- DESCRICAO -->
-                    <div class="form-group" v-bind:class="{ 'has-error': errors.description.length > 0 }">
+                    <div class="form-group" v-bind:class="{ 'has-error': errors.description && errors.description.length > 0 }">
                         <label for="descricao">Descrição:*</label>
                         <textarea class="form-control"
                                     id="descricao"
                                     v-model="description"
                                     style="resize: none"></textarea>
+                        <small class="text-info">Descreva á mídia de forma <b>resumida</b> e <b>objetiva</b>. 
+                            Esta é a primeira apresentação da mídia e pode ser o diferencial na hora do usuário escolher se acessa ou não. 
+                            Verifique outras descrições para adotar o modelo mais adequado.
+                        </small>            
                         <small class="text-danger"
                                 v-if="errors.description"
                                 v-for="(error,d) in errors.description"
@@ -76,22 +83,33 @@ onchange="try{setCustomValidity('')}catch(e){}">
                         <input type="text" class="form-control">                        
                     </div>
                     <!-- AUTORES -->
-                    <div class="form-group">
+                    <div class="form-group" v-bind:class="{ 'has-error': errors.authors && errors.authors.length > 0 }">
                         <label for="autores">Autores:*</label>
-                        <input type="text" class="form-control" id="autores" v-model="authors"  oninvalid="this.setCustomValidity('Favor informar os Autores!')" 
-onchange="try{setCustomValidity('')}catch(e){}">
+                        <input type="text" class="form-control" id="autores" v-model="authors">
+                        <small>Nome dos autores ou grupo de trabalho responsável pelo desenvolvimento da mídia.</small>
+                        <small class="text-danger"
+                                v-if="errors.authors"
+                                v-for="(error,a) in errors.authors"
+                                v-bind:key="a"
+                                v-text="error">
+                        </small>
                     </div>
                     <!-- FONTE -->
-                    <div class="form-group">
+                    <div class="form-group" v-bind:class="{ 'has-error': errors.source && errors.source.length > 0 }">
                         <label for="fonte">Fonte:*</label>
-                        <input type="text" class="form-control" id="fonte" v-model="source"  oninvalid="this.setCustomValidity('Favor informar a fonte!')" 
-onchange="try{setCustomValidity('')}catch(e){}">
+                        <input type="text" class="form-control" id="fonte" v-model="source" >
+                        <small>Indique o site ou o nome da instituição que produziu a mídia.</small>
+                        <small class="text-danger"
+                                v-if="errors.source"
+                                v-for="(error,s) in errors.source"
+                                v-bind:key="s"
+                                v-text="error">
+                        </small>
                     </div>
                     <!-- LICENCA -->
-                    <div class="form-group">
+                    <div class="form-group" v-bind:class="{ 'has-error': errors.license && errors.license.length > 0 }">
                         <label for="licenca-conteudo">Licença de Conteúdo:*</label>
-                        <select class="form-control form-control-lg" id="licenca-conteudo" v-model="license"  oninvalid="this.setCustomValidity('Favor selecione o tipo da Licença!')" 
-onchange="try{setCustomValidity('')}catch(e){}">
+                        <select class="form-control form-control-lg" id="licenca-conteudo" v-model="license">
                             <option value="" >« SELECIONE »</option>
                             <option value="1">Outros</option>
                             <optgroup id="idconteudolicenca-optgroup-Creative Commons" label="Creative Commons">
@@ -108,9 +126,43 @@ onchange="try{setCustomValidity('')}catch(e){}">
                             <option value="5">GPL</option>
                             <option value="13">MIT</option>
                         </select>
+                        <small>
+                            Escolha a opção que mais adequada à mídia que deseja publicar, conforme opções disponíveis. 
+                            Se precisar de ajuda clique aqui
+                        </small>
+                        <small class="text-danger"
+                                v-if="errors.license"
+                                v-for="(error,li) in errors.license"
+                                v-bind:key="li"
+                                v-text="error">
+                        </small>
+                    </div>
+                    <!-- CONDIÇÕES DE USO -->
+                    <div class="checkbox" v-bind:class="{ 'has-error': errors.terms && errors.terms.length > 0 }">
+                        <label for="termosecondicoes">
+                            <input id="termosecondicoes" type="checkbox" v-model="terms"> Li e concordo com os termos e condições de uso 
+                        </label>
+                        <small class="text-danger"
+                                v-if="errors.terms"
+                                v-for="(error,te) in errors.terms"
+                                v-bind:key="te"
+                                v-text="error">
+                        </small>
+                    </div>
+                    <!-- APROVAR CONTEÚDO -->
+                    <div class="checkbox" v-bind:class="{ 'has-error': errors.is_aproved && errors.is_aproved.length > 0 }">
+                        <label for="aprovado">
+                            <input id="aprovado" type="checkbox" v-model="is_approved"> Deseja publicar o conteúdo? 
+                        </label>
+                        <small class="text-danger"
+                                v-if="errors.is_approved"
+                                v-for="(error,ia) in errors.is_approved"
+                                v-bind:key="ia"
+                                v-text="error">
+                        </small>
                     </div>
                 </div>
-                <!-- BUTÃO DE ENVIO -->
+                <!-- BOTÃO DE ENVIO -->
                 <div class="form-group">
                     <button class="btn btn-default">Enviar</button>
                 </div>
@@ -387,36 +439,39 @@ export default {
     components: {},
     data(){
         return {
-
-            tipo: {},
             title: '',
             description:null,
             authors:null,
             source:null,
-            license:'',
+            license: '',
             options: {},
-            canal: null,
+            tipo: '',
             tags: [],
+            canal: null,
             tag: '',
+            terms: false,
             is_featured: false,
             is_site:false,
             is_approved: false,
             autocompleteItems: [],
             category: '',
             categories:[],
+            site: '',
             message : '',
             isError : true,
             errors: {
                 title: [],
                 description: [],
-                options: {
-                    tipo:[]
-                }
+                tipo: [],
+                authors: [],
+                license: [],
+                terms: [],
+                is_approved: [],
             }
         }
 
     },
-    created:function(){
+    created() {
         this.getOptions();
     },
     computed:{
@@ -428,14 +483,17 @@ export default {
                 category: this.category,
                 tipo: this.tipo,
                 tags: this.tags,
+                site: this.site
             };
             let params = {
+                tipo: this.tipo,
                 canal_id: localStorage.idCanal,
                 title: this.title,
                 description:this.description,
                 authors:this.authors,
                 source:this.source,
                 license_id:this.license,
+                terms: this.terms,
                 is_featured: this.is_featured,
                 is_site: this.is_site,
                 is_approved: this.is_approved,
