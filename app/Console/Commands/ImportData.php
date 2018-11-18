@@ -48,7 +48,7 @@ class ImportData extends Command
         $licenses = storage_path('dumps\8_licenses');
         $category_conteudo = storage_path('dumps\9_category_conteudo');
         $componentes = explode("\n", file_get_contents(storage_path('dumps\10_componentes')));
-        //$niveis = file_get_contents(storage_path('dumps/11_niveis_ensino'));
+        $niveis = explode("\n", file_get_contents(storage_path('dumps\11_niveis_ensino')));
         /*
         DB::statement("copy users FROM '{$users}' delimiter '*';");
         DB::statement("copy canais FROM '{$canais}' delimiter '*';");
@@ -60,16 +60,20 @@ class ImportData extends Command
         DB::statement("copy licenses FROM '{$licenses}' delimiter '*';");
         DB::statement("copy categories FROM '{$category_conteudo}' delimiter '*';");
         */
-        
-        foreach ($componentes as $key => $value) {
+        $this->importToOptions($componentes);
+        $this->importToOptions($niveis);
+    }
+
+    private function importToOptions($meta_data)
+    {
+        foreach ($meta_data as $key => $value) {
             # code...
             $data = explode("*", $value);
-            dd($data);
             $resp = [];
-            //$resp['name']
-            //DB::statement("insert into options (name, meta_data) values ($data[$key],$data[)");
+            $meta = json_decode($data[1], true);
+            $resp['data'] = $meta;
+            $info = json_encode($resp, true);
+            DB::statement("insert into options (name, meta_data) values ('$data[0]','{$info}')");
         }
-        
-        //DB::statement("insert into options");
     }
 }
