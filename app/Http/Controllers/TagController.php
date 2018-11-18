@@ -10,7 +10,7 @@ class TagController extends Controller
 {
     public function __construct()
     {
-      $this->middleware('jwt.verify')->except(['list','search']);
+        $this->middleware('jwt.verify')->except(['list','search','getById']);
     }
 
     /**
@@ -27,7 +27,7 @@ class TagController extends Controller
                     ->select(['id','name','searched'])
                     ->paginate($limit);
 
-        $tags->setPath("/tags?limit={$limit}"); 
+        $tags->setPath("/tags?limit={$limit}");
         
         return response()->json([
                 'success'=> true,
@@ -47,7 +47,7 @@ class TagController extends Controller
     {
         $name = $request->get('name');
         
-        $id = DB::table('tags')->insertGetId([ 
+        $id = DB::table('tags')->insertGetId([
                 'name' => $name
             ]);
         
@@ -69,7 +69,7 @@ class TagController extends Controller
     {
         $name = ($request->has('name')) ? $request->get('name'): false;
         $is_update = false;
-        if($name){
+        if ($name) {
             $is_update = DB::table('tags')
                 ->where('id', $id)
                 ->update(['name' => $name]);
@@ -79,24 +79,6 @@ class TagController extends Controller
             'message' => "Nome de tag: {$name} mudado com sucesso",
             'is_update' => $is_update
         ]);
-
-    }
-
-    public function incrementSearchTag(Request $request, $id)
-    {
-        
-        if($request->has('searched')){
-            
-            $is_updated = DB::table('tags')
-                                ->where('id', $id)
-                                ->increment('searched', 1);
-        }
-
-        response()->json([
-            'is_updated' => $is_updated,
-            'id' => $id
-        ]);
-        
     }
 
     public function search(Request $request, $termo)
@@ -106,10 +88,10 @@ class TagController extends Controller
 
         $tags = DB::table('tags')
                     ->select(['id','name'])
-                    ->where(DB::raw('unaccent(lower(name))'), 'ILIKE' , DB::raw("unaccent(lower('%{$termo}%'))"))
+                    ->where(DB::raw('unaccent(lower(name))'), 'ILIKE', DB::raw("unaccent(lower('%{$termo}%'))"))
                     ->paginate($limit);
         
-        $tags->setPath("/tags/search/{$termo}?limit={$limit}");                                
+        $tags->setPath("/tags/search/{$termo}?limit={$limit}");
 
         return response()->json([
             'success'=> true,
@@ -117,7 +99,7 @@ class TagController extends Controller
             'paginator' => $tags,
             'page'=> $tags->currentPage(),
             'limit' => $tags->perPage()
-        ]);    
+        ]);
     }
 
     /**
@@ -128,10 +110,30 @@ class TagController extends Controller
      */
     public function delete($id)
     {
-        if($id){
+        if ($id) {
             DB::table('tags')->where('id', '=', $id)->delete();
         }
 
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
+    public function getById($id)
+    {
+        $tag = Tag::where('id', $id);
         
+        $this->incrementSearchTag($id);
+
+        return response()->json([
+            'success' => true,
+            'tag' => $tag
+        ]);
+    }
+
+    private function incrementSearchTag($id)
+    {
+        return DB::table('tags')->where('id', $id)
+                                ->increment('searched', 1);
     }
 }

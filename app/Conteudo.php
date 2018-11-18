@@ -17,7 +17,7 @@ class Conteudo extends Model
             'created_at',
             'updated_at',
             'deleted_at'
-    ];    
+    ];
     protected $casts = [
             'options' => 'array',
     ];
@@ -39,5 +39,4 @@ class Conteudo extends Model
     {
         return $this->hasOne('App\Licenca');
     }
-    
 }

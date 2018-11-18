@@ -13,12 +13,12 @@ class ConteudoController extends Controller
 {
     public function __construct(Conteudo $conteudo, Request $request)
     {
-      $this->middleware('jwt.verify')->except(['list','search','getById']);
-      $this->conteudo = $conteudo;
-      $this->request = $request;
+        $this->middleware('jwt.verify')->except(['list','search','getById']);
+        $this->conteudo = $conteudo;
+        $this->request = $request;
     }
     /**
-     * Display a listing of the resource.
+     * Lista de conteúdos.
      *
      * @return \Illuminate\Http\Response
      */
@@ -29,26 +29,25 @@ class ConteudoController extends Controller
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
         $isApproved = $this->request->query('approved', 'true');
-        
-
         $conteudos = null;
-        if($this->request->has('canal')){
+        
+        if ($this->request->has('canal')) {
             $canal = $this->request->query('canal');
             $site = $this->request->query('site', 'false');
 
-            $conteudos = $this->conteudo::select('id','canal_id','user_id','title','options')
+            $conteudos = $this->conteudo::select('id', 'canal_id', 'user_id', 'title', 'options')
                             ->where('is_approved', $isApproved)
                             ->where('is_site', $site)
                             ->where('canal_id', $canal)
                             ->orderBy($orderBy, 'desc')
                             ->paginate($limit);
-            $conteudos->setPath("/conteudos?canal={$canal}&site={$site}&limit={$limit}");                
-        }else{
-            $conteudos = $this->conteudo::select('id','canal_id','user_id','title','options')
+            $conteudos->setPath("/conteudos?canal={$canal}&site={$site}&limit={$limit}");
+        } else {
+            $conteudos = $this->conteudo::select('id', 'canal_id', 'user_id', 'title', 'options')
                             ->where('is_approved', $isApproved)
                             ->orderBy($orderBy, 'desc')
                             ->paginate($limit);
-            $conteudos->setPath("/conteudos?limit={$limit}");                
+            $conteudos->setPath("/conteudos?limit={$limit}");
         }
         
 
@@ -58,12 +57,12 @@ class ConteudoController extends Controller
             'paginator'=> $conteudos,
             'page'=> $conteudos->currentPage(),
             'limit' => $conteudos->perPage()
-        ],200);
+        ], 200);
     }
 
     private function validar()
     {
-        $validator = Validator::make($this->request->all(),[
+        $validator = Validator::make($this->request->all(), [
             'title' => 'required|min:10|max:255',
             'description' => 'required|min:140',
             'tipo' => 'required',
@@ -86,7 +85,7 @@ class ConteudoController extends Controller
     public function create()
     {
         $validator = $this->validar($this->request);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
                 'success' => false,
                 'message' => 'Não foi possível efetuar o cadastro',
@@ -124,7 +123,7 @@ class ConteudoController extends Controller
      * @param  \App\Conteudo  $conteudo
      * @return \Illuminate\Http\Response
      */
-    public function update( $id )
+    public function update($id)
     {
         $conteudo = $this->conteudo::find($id);
         
@@ -139,7 +138,7 @@ class ConteudoController extends Controller
             'is_featured' => $this->request->get('is_featured'),
             'is_approved' => $this->request->get('is_approved'),
             'is_site' => $this->request->get('is_site'),
-            'options' => json_decode( $this->request->get('options'), true )
+            'options' => json_decode($this->request->get('options'), true)
         ]);
         
         $conteudo->save();
@@ -148,14 +147,11 @@ class ConteudoController extends Controller
             'success' => true,
             'data' => $conteudo
         ]);
-
-        
     }
-    public function createConteudoTags( $id ) 
+    public function createConteudoTags($id)
     {
         $conteudo = $this->conteudo::find($id);
         $conteudo->tags()->attach($this->request->get('tags'));
-
     }
     /**
      * Apaga o aplicativo do banco de dados.
@@ -163,16 +159,16 @@ class ConteudoController extends Controller
      * @param  \App\Conteudo  $conteudo
      * @return \Illuminate\Http\Response\Json
      */
-    public function delete( $id )
+    public function delete($id)
     {
         $conteudo = $this->conteudo::find($id);
         $resp = [];
-        if(!$conteudo){
+        if (!$conteudo) {
             $resp = [
                 'menssage' => 'Não foi Possível deletar o conteúdo',
                 'success' => false
             ];
-        }else {
+        } else {
             $resp = [
                 'menssage' => "Conteúdo de id: {$id} foi apagado com sucesso!!",
                 'success' => $conteudo->delete()
@@ -197,8 +193,8 @@ class ConteudoController extends Controller
                                 DB::raw('ts_rank_cd(cd.ts_documento, query) AS ranking')
                                 ])
                         ->whereRaw('query @@ cd.ts_documento')
-                        ->where('cd.is_approved', '=', 'true' )
-                        ->orderBy('ranking','desc')
+                        ->where('cd.is_approved', '=', 'true')
+                        ->orderBy('ranking', 'desc')
                         ->paginate($limit);
 
         
@@ -212,32 +208,33 @@ class ConteudoController extends Controller
             'pages'=> $conteudos->count(),
             'page'=> $conteudos->currentPage(),
             'limit' => $conteudos->perPage()
-        ]);    
+        ]);
     }
     /**
      * Procura um conteúdo por id
-     * 
+     *
      * @param id $id do conteúdo digital
      * @return \Illuminate\Http\Response
      */
-    public function getById( $id )
+    public function getById($id)
     {
         
         $conteudo = $this->conteudo::with(['user','canal','tags'])->find($id);
 
-        if($conteudo){
+        if ($conteudo) {
             return response()->json([
                 'success' => true,
                 'conteudo' => $conteudo
             ]);
-        }else {
+        } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Conteudo não encontrado' 
+                'message' => 'Conteudo não encontrado'
             ]);
         }
     }
-    public function teste(){
+    public function teste()
+    {
         $conteudo = Conteudo::find(4);
         //$conteudo->tags()->detach([1,5]);
         
@@ -246,8 +243,4 @@ class ConteudoController extends Controller
             'tags' => $conteudo->tags
         ]);
     }
-    public function getFiles($id){
-        
-    }
 }
-

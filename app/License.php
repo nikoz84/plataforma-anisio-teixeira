@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Licenca extends Model
+class License extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -17,6 +17,6 @@ class Licenca extends Model
 
     public function conteudo()
     {
-        return $this->belongsTo('App\Conteudo','license_id');
+        return $this->belongsTo('App\Conteudo', 'license_id');
     }
 }

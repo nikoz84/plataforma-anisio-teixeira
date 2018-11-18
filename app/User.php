@@ -28,7 +28,7 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token','email'
     ];
     /**
-     * Datas 
+     * Datas
      */
     protected $dates = [
         'created_at',
@@ -65,7 +65,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->getKey();
     }
     /**
-     * Retorna os 
+     * Retorna os
      */
     public function getJWTCustomClaims()
     {

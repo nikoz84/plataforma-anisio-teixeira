@@ -45,7 +45,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => storage_path('app') ,
         ],
 
         'public' => [
@@ -55,6 +55,36 @@ return [
             'visibility' => 'public',
         ],
 
+        'conteudos-blog' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/conteudos/conteudos-blog')
+        ],
+
+        'conteudos-digitais' =>[
+            'driver'=> 'local',
+            'root' => storage_path('app/public/conteudos/conteudos-digitais')
+        ],
+
+        'aplicativos-educacionais' =>[
+            'driver'=> 'local',
+            'root' => storage_path('app/public/conteudos/aplicativos-educacionais')
+        ],
+
+        'download' =>[
+            'driver'=> 'local',
+            'root' => storage_path('app/public/conteudos/aplicativos-educacionais/download')
+        ],
+
+        'visualizacao' =>[
+            'driver'=> 'local',
+            'root' => storage_path('app/public/conteudos/aplicativos-educacionais/visualizacao') 
+        ],
+
+        'sinopse' =>[
+            'driver'=> 'local',
+            'root' => storage_path('app/public/conteudos/aplicativos-educacionais/sinopse')
+        ],
+        
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -64,5 +94,13 @@ return [
         ],
 
     ],
+    'ftp' => [
+        'driver'   => 'ftp',
+        'host'     => env('DISK_FTP_HOST', ''),
+        'port'     => env('DISK_FTP_PORT', 21),
+        'username' => env('DISK_FTP_USERNAME', ''),
+        'password' => env('DISK_FTP_PASSWORD', ''),
+        'root'     => env('DISK_FTP_ROOT', ''),
+    ]
 
 ];

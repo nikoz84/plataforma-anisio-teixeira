@@ -49,9 +49,9 @@ class OptionsController extends Controller
     {
         //
     }
-    public function getByName(Request $request, Options $options,$name)
-    {   
-        $option = $options->where('nome','like',$name)->first();
+    public function getByName(Request $request, Options $options, $name)
+    {
+        $option = $options->where('nome', 'like', $name)->first();
 
         return response()->json([
             'success'=> true,

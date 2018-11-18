@@ -8,10 +8,12 @@ class Tag extends Model
 {
     protected $fillable= ['name','searched'];
 
-    public function conteudos(){
+    public function conteudos()
+    {
         return $this->belongsToMany('App\Conteudo');
     }
-    public function aplicativos(){
+    public function aplicativos()
+    {
         return $this->belongsToMany('App\Aplicativo');
     }
 }

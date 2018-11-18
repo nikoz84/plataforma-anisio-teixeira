@@ -35,8 +35,7 @@ class AuthController extends Controller
                     'message' => 'Email ou Senha inválidos',
                 ]);
             }
-        }catch (JWTException $e) {
-            
+        } catch (JWTException $e) {
             return response()->json([
                 'success' => false,
                 'error' => 'Impossível criar Token de acesso'
@@ -53,38 +52,30 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getAuthUser() 
+    public function getAuthUser()
     {
         try {
-
             if (! $user = JWTAuth::parseToken()->authenticate()) {
                     return response()->json([
                         'success'=> false,
                         'message'=> 'Usuário não encontrado',
                         'status'=>'user_not_found'], 404);
             }
-
-            } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-
-                    return response()->json([
-                        'success'=> false,
-                        'message'=> 'Token Expirado',
-                        'status'=>'token_expired'], $e->getStatusCode());
-
-            } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-
-                    return response()->json([
-                        'success'=> false,
-                        'message'=> 'Token Inválido',
-                        'status'=>'token_invalid'], $e->getStatusCode());
-
-            } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-
-                    return response()->json([
-                        'success'=> false,
-                        'message'=> 'Token Ausente',
-                        'status'=>'token_absent'], $e->getStatusCode());
-
+        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+                return response()->json([
+                    'success'=> false,
+                    'message'=> 'Token Expirado',
+                    'status'=>'token_expired'], $e->getStatusCode());
+        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+                return response()->json([
+                    'success'=> false,
+                    'message'=> 'Token Inválido',
+                    'status'=>'token_invalid'], $e->getStatusCode());
+        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+                return response()->json([
+                    'success'=> false,
+                    'message'=> 'Token Ausente',
+                    'status'=>'token_absent'], $e->getStatusCode());
         }
 
         return response()->json(compact('user'));
@@ -145,7 +136,7 @@ class AuthController extends Controller
             'password' => 'required|string|min:6',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
 

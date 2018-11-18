@@ -11,7 +11,7 @@ class CanalController extends Controller
 {
     public function __construct()
     {
-      $this->middleware('jwt.verify')->except(['list','search','getBySlug']);
+        $this->middleware('jwt.verify')->except(['list','search','getBySlug']);
     }
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class CanalController extends Controller
             $name = $request->query('name');
             $canais = Canal::where('name', $name)
                         ->paginate($limit);
-            $canais->setPath("/canais?name={$name}limit={$limit}");     
+            $canais->setPath("/canais?name={$name}limit={$limit}");
             return response()->toJson([
                 'success' => true,
                 'paginator' => $canais
@@ -36,7 +36,7 @@ class CanalController extends Controller
         $canais = Canal::where('is_active', true)
                         ->paginate($limit);
         
-        $canais->setPath("/canais?limit={$limit}");                        
+        $canais->setPath("/canais?limit={$limit}");
 
         return response()->json([
             'success'=> true,
@@ -82,8 +82,8 @@ class CanalController extends Controller
         $data = [
             'title' => $request->get('title'),
             'description' => $request->get('description'),
-            'is_featured' => $request->get('is_featured'), 
-            'is_approved' => $request->get('is_approved'), 
+            'is_featured' => $request->get('is_featured'),
+            'is_approved' => $request->get('is_approved'),
             'options' => $request->get('options')
         ];
         
@@ -102,12 +102,12 @@ class CanalController extends Controller
     {
         $canal = Canal::find($id);
         $resp = [];
-        if(is_null($canal)){
+        if (is_null($canal)) {
             $resp = [
                 'menssage' => 'Canal não encontrado',
                 'is_deleted' => false
             ];
-        }else {
+        } else {
             $resp = [
                 'menssage' => "Canal de id: {$id} foi excluido com sucesso!!",
                 'is_deleted' => $canal->delete()
@@ -118,23 +118,22 @@ class CanalController extends Controller
     }
     public function getBySlug($slug)
     {
-        $canal = Canal::where('slug','ilike',$slug)->first();
+        $canal = Canal::where('slug', 'ilike', $slug)->first();
 
         return response()->json([
             'success'=> true,
             'canal' => $canal
         ]);
-
     }
     public function search(Request $request, $termo)
     {
         $limit = ($request->has('limit')) ? $request->query('limit') : 10;
         $page = ($request->has('page')) ? $request->query('page') : 1;
 
-        $canais = Canal::where(DB::raw('unaccent(lower(name))'), 'ILIKE' , DB::raw("unaccent(lower('%{$termo}%'))"))
+        $canais = Canal::where(DB::raw('unaccent(lower(name))'), 'ILIKE', DB::raw("unaccent(lower('%{$termo}%'))"))
                         ->paginate($limit);
         $canais->currentPage($page);
-        $canais->setPath("/canais/search/{$termo}?limit={$limit}");                        
+        $canais->setPath("/canais/search/{$termo}?limit={$limit}");
 
         return response()->json([
             'success'=> true,
