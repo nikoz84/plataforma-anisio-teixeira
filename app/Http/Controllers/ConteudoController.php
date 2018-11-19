@@ -248,17 +248,19 @@ class ConteudoController extends Controller
         $limit = $this->request->query('limit', 15);
 
         $conteudos = $this->conteudo
-        ->whereRaw("{$id} = ANY(SELECT (CAST(jsonb_array_elements(options->'tags')->>'id' AS INT)))")
-                                        ->paginate(15);
+        ->whereRaw("? = ANY(SELECT (CAST(jsonb_array_elements(options->'tags')->>'id' AS INT)))")
+        ->setBindings([$id])
+        ->paginate(15);
+
         $conteudos->setPath("/conteudos/tag/{$id}?limit={$limit}");
 
         DB::table('tags')->where('id', $id)->increment('searched', 1);
         
-        $tag = Tag::find($id);
+        $tag = Tag::select('name', 'searched')->find($id);
 
         return response()->json([
             'success' => true,
-            'tag_name' => $tag,
+            'tag' => $tag,
             'paginator' => $conteudos
         ]);
     }
