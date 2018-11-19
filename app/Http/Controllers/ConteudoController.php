@@ -126,8 +126,7 @@ class ConteudoController extends Controller
     public function update($id)
     {
         $conteudo = $this->conteudo::find($id);
-        
-        
+
         $conteudo->update([
             'canal_id' => $this->request->get('canal_id'),
             'title' => $this->request->get('title'),
@@ -140,7 +139,7 @@ class ConteudoController extends Controller
             'is_site' => $this->request->get('is_site'),
             'options' => json_decode($this->request->get('options'), true)
         ]);
-        
+
         $conteudo->save();
 
         return response()->json([
