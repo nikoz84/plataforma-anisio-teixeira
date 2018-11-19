@@ -1,6 +1,5 @@
 {
-    "svn.path": "/usr/bin/svn",
-    "svn.ignoreWorkingCopyIsTooOld": true,
+    "phpcs.executablePath": "vendor/bin",
     "phpcs.composerJsonPath": "composer.json",
     "phpcs.enable": true,
     "phpcs.standard": "PSR2",

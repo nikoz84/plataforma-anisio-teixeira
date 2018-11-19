@@ -69,7 +69,7 @@
                         <small class="text-info">Descreva á mídia de forma <b>resumida</b> e <b>objetiva</b>. 
                             Esta é a primeira apresentação da mídia e pode ser o diferencial na hora do usuário escolher se acessa ou não. 
                             Verifique outras descrições para adotar o modelo mais adequado.
-                        </small>            
+                        </small>
                         <small class="text-danger"
                                 v-if="errors.description"
                                 v-for="(error,d) in errors.description"
@@ -142,7 +142,6 @@
                         <label for="termosecondicoes">
                             <input id="termosecondicoes" type="checkbox" v-model="terms"> Li e concordo com os termos e condições de uso 
                         </label>
-                        <br>
                         <small class="text-danger"
                                 v-if="errors.terms"
                                 v-for="(error,te) in errors.terms"
@@ -151,11 +150,10 @@
                         </small>
                     </div>
                     <!-- APROVAR CONTEÚDO -->
-                    <div class="checkbox" v-bind:class="{ 'has-error': errors.is_approved && errors.is_approved.length > 0 }">
+                    <div class="checkbox" v-bind:class="{ 'has-error': errors.is_aproved && errors.is_aproved.length > 0 }">
                         <label for="aprovado">
                             <input id="aprovado" type="checkbox" v-model="is_approved"> Deseja publicar o conteúdo? 
                         </label>
-                        <br>
                         <small class="text-danger"
                                 v-if="errors.is_approved"
                                 v-for="(error,ia) in errors.is_approved"
@@ -185,55 +183,51 @@
                     Selecione o(s) componente(s) curricular(es) ou disciplina(s) que mais se adequem ao contéudo:
                 </div>
                 <div class="panel-body">
-
+                    
+                    <!-- checkbox1 Áreas de Conhecimento -->
                     <b-form-group>
-                        <template slot="label">                            
+                        <template slot="label">    
                             <b-form-checkbox v-model="allSelected"
                                             :indeterminate="indeterminate"
-                                            aria-describedby="flavours"
-                                            aria-controls="flavours"
+                                            aria-describedby="checkbox1"
+                                            aria-controls="checkbox1"
                                             @change="toggleAll"
-                            >
-                            {{ allSelected ? 'Un-select All' : 'Áreas de Conhecimento' }}
+                            >Áreas de Conhecimento
                             </b-form-checkbox>
                         </template>
-                        <b-form-checkbox-group id="flavors"
+                        <b-form-checkbox-group id="checkbox1"
                                                 stacked
                                                 v-model="selected"
-                                                name="flavs"
-                                                :options="flavours"
+                                                name="checkbox1"
+                                                :options="checkbox1"
                                                 class="ml-4"
-                                                aria-label="Individual flavours"
+                                                aria-label="Individual checkbox1"
                         ></b-form-checkbox-group>
-                        </b-form-group>
+                    </b-form-group>
 
-                    <div class="col-auto my-1">
-                        <div class="custom-control custom-checkbox mr-sm-2">
-                            <input type="checkbox" class="custom-control-input item-superior" id="item-superior" name="item-superior">
-                            <label class="custom-control-label" for="customControlAutosizing"></label>
-                        </div>
-                    </div>
+                    <!-- checkbox2 Linguagens Artísticas -->
+                    <b-form-group>
+                        <template slot="label">    
+                            <b-form-checkbox v-model="allSelected"
+                                            :indeterminate="indeterminate"
+                                            aria-describedby="checkbox2"
+                                            aria-controls="checkbox2"
+                                            @change="toggleAll"
+                            >Linguagens Artísticas
+                            </b-form-checkbox>
+                        </template>
+                        <b-form-checkbox-group id="checkbox2"
+                                                stacked
+                                                v-model="selected"
+                                                name="checkbox2"
+                                                :options="checkbox2"
+                                                class="ml-4"
+                                                aria-label="Individual checkbox2"
+                        ></b-form-checkbox-group>
+                    </b-form-group>
 
-                    <input type="checkbox"     name="item-superior1" value="java"/>Ciências da natureza<br/>
-                    <input type="checkbox"     name="item-superior1" value="html"/>Humanas<br/>
-                    <input type="checkbox"     name="item-superior1" value="css"/>Linguagens e seus códigos<br/>
-                    <input type="checkbox"     name="item-superior1" value="css"/>Matemática<br/>
 
-                   <br>
-                    <div class="col-auto my-1">
-                        <div class="custom-control custom-checkbox mr-sm-2">
-                            <input type="checkbox" class="custom-control-input item-superior" id="item-superior" name="item-superior">
-                            <label class="custom-control-label" for="customControlAutosizing">Linguagens Artísticas</label>
-                        </div>
-                    </div>
-
-                    <input type="checkbox"     name="item-superior1" value="java"/>Artes Visuais<br/>
-                    <input type="checkbox"     name="item-superior1" value="html"/>Audiovisual<br/>
-                    <input type="checkbox"     name="item-superior1" value="css"/>Circo<br/>
-                    <input type="checkbox"     name="item-superior1" value="css"/>Dança<br/>
-                    <input type="checkbox"     name="item-superior1" value="css"/>Literatura<br/>
-                    <input type="checkbox"     name="item-superior1" value="css"/>Música<br/>
-                    <input type="checkbox"     name="item-superior1" value="css"/>Teatro<br/>
+                    
 
                     <br>
                     <div class="col-auto my-1">
@@ -490,7 +484,12 @@ export default {
                 license: [],
                 terms: [],
                 is_approved: [],
-            }
+            },
+            checkbox1: ['Ciências da natureza', 'Humanas', 'Linguagens e seus códigos', 'Matemática'],
+            checkbox2: ['Artes Visuais', 'Audiovisual', 'Circo', 'Dança', 'Literatura', 'Música', 'Teatro'],
+            selected: [],
+            allSelected: false,
+            indeterminate: false
         }
 
     },
@@ -570,7 +569,12 @@ export default {
             if(resp.data.success && resp.data.options != null ){
                 this.categories = resp.data.options.meta_data.categories
             }
+        },
+
+        toggleAll (checked) {
+            this.selected = checked ? this.checkbox1.slice() : []
         }
+
     },
     watch:{
         'tag':'getItems'
