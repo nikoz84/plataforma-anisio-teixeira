@@ -572,7 +572,7 @@ function applyToTag (styleElement, obj) {
 
 
 var bind = __webpack_require__(11);
-var isBuffer = __webpack_require__(114);
+var isBuffer = __webpack_require__(117);
 
 /*global toString:true*/
 
@@ -1209,7 +1209,7 @@ module.exports = g;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(83);
 
 
 
@@ -1242,7 +1242,7 @@ var mutations = {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(3);
-var normalizeHeaderName = __webpack_require__(116);
+var normalizeHeaderName = __webpack_require__(119);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -12516,12 +12516,12 @@ module.exports = function bind(fn, thisArg) {
 
 
 var utils = __webpack_require__(3);
-var settle = __webpack_require__(117);
-var buildURL = __webpack_require__(119);
-var parseHeaders = __webpack_require__(120);
-var isURLSameOrigin = __webpack_require__(121);
+var settle = __webpack_require__(120);
+var buildURL = __webpack_require__(122);
+var parseHeaders = __webpack_require__(123);
+var isURLSameOrigin = __webpack_require__(124);
 var createError = __webpack_require__(13);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(122);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(125);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -12618,7 +12618,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(123);
+      var cookies = __webpack_require__(126);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -12702,7 +12702,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(118);
+var enhanceError = __webpack_require__(121);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -12865,7 +12865,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(19);
-module.exports = __webpack_require__(131);
+module.exports = __webpack_require__(134);
 
 
 /***/ }),
@@ -12878,7 +12878,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__routes__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_MainApp__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_MainApp__ = __webpack_require__(91);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_MainApp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_MainApp__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store_js__ = __webpack_require__(7);
 
@@ -12889,8 +12889,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 
-__webpack_require__(103);
-__webpack_require__(107);
+__webpack_require__(106);
+__webpack_require__(110);
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     mode: 'history',
@@ -15842,13 +15842,13 @@ if (inBrowser && window.Vue) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_Exibir_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__pages_Exibir_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__forms_ConteudoForm_vue__ = __webpack_require__(73);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__forms_ConteudoForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__forms_ConteudoForm_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__forms_AplicativoForm_vue__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__forms_AplicativoForm_vue__ = __webpack_require__(76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__forms_AplicativoForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__forms_AplicativoForm_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__forms_LoginForm_vue__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__forms_LoginForm_vue__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__forms_LoginForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__forms_LoginForm_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__forms_RecoverPassForm_vue__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__forms_RecoverPassForm_vue__ = __webpack_require__(85);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__forms_RecoverPassForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__forms_RecoverPassForm_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__forms_RegisterForm_vue__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__forms_RegisterForm_vue__ = __webpack_require__(88);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__forms_RegisterForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__forms_RegisterForm_vue__);
 
 
@@ -15864,7 +15864,7 @@ var routes = [{
   path: '/',
   name: 'Home',
   component: function component() {
-    return __webpack_require__.e/* import() */(3).then(__webpack_require__.bind(null, 132));
+    return __webpack_require__.e/* import() */(3).then(__webpack_require__.bind(null, 135));
   },
   meta: {
     requiresAuth: false
@@ -15873,7 +15873,7 @@ var routes = [{
   path: '/admin',
   name: 'Admin',
   component: function component() {
-    return __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, 133));
+    return __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, 136));
   },
   meta: {
     requiresAuth: true
@@ -15883,7 +15883,7 @@ var routes = [{
   path: '/usuario',
   name: 'User',
   component: function component() {
-    return __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, 134));
+    return __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, 137));
   },
   meta: {
     requiresAuth: false
@@ -15905,7 +15905,7 @@ var routes = [{
   path: '/:slug',
   name: 'Canal',
   component: function component() {
-    return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 135));
+    return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 138));
   },
   meta: {
     requiresAuth: false
@@ -19268,6 +19268,27 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -20143,7 +20164,1165 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _vm._m(4)
+        _c("div", { staticClass: "panel panel-default col-md-5" }, [
+          _c("div", { staticClass: "panel-heading" }, [
+            _vm._v(
+              "\n                Selecione o(s) componente(s) curricular(es) ou disciplina(s) que mais se adequem ao contéudo:\n            "
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "panel-body" },
+            [
+              _c(
+                "b-form-group",
+                [
+                  _c(
+                    "template",
+                    { slot: "label" },
+                    [
+                      _c(
+                        "b-form-checkbox",
+                        {
+                          attrs: {
+                            indeterminate: _vm.indeterminate,
+                            "aria-describedby": "flavours",
+                            "aria-controls": "flavours"
+                          },
+                          on: { change: _vm.toggleAll },
+                          model: {
+                            value: _vm.allSelected,
+                            callback: function($$v) {
+                              _vm.allSelected = $$v
+                            },
+                            expression: "allSelected"
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(
+                                _vm.allSelected
+                                  ? "Un-select All"
+                                  : "Áreas de Conhecimento"
+                              ) +
+                              "\n                        "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("b-form-checkbox-group", {
+                    staticClass: "ml-4",
+                    attrs: {
+                      id: "flavors",
+                      stacked: "",
+                      name: "flavs",
+                      options: _vm.flavours,
+                      "aria-label": "Individual flavours"
+                    },
+                    model: {
+                      value: _vm.selected,
+                      callback: function($$v) {
+                        _vm.selected = $$v
+                      },
+                      expression: "selected"
+                    }
+                  })
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _vm._m(4),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "java"
+                }
+              }),
+              _vm._v("Ciências da natureza"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Humanas"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "css"
+                }
+              }),
+              _vm._v("Linguagens e seus códigos"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "css"
+                }
+              }),
+              _vm._v("Matemática"),
+              _c("br"),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _vm._m(5),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "java"
+                }
+              }),
+              _vm._v("Artes Visuais"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Audiovisual"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "css"
+                }
+              }),
+              _vm._v("Circo"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "css"
+                }
+              }),
+              _vm._v("Dança"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "css"
+                }
+              }),
+              _vm._v("Literatura"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "css"
+                }
+              }),
+              _vm._v("Música"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "css"
+                }
+              }),
+              _vm._v("Teatro"),
+              _c("br"),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _vm._m(6),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "java"
+                }
+              }),
+              _vm._v("Educação Ambiental"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Educação Especial"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "css"
+                }
+              }),
+              _vm._v("Gênero e Sexualidade"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "css"
+                }
+              }),
+              _vm._v("História e Cultura Africana"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "css"
+                }
+              }),
+              _vm._v("História e Cultura Indígena"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "css"
+                }
+              }),
+              _vm._v("Pluralidade Cultural"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "css"
+                }
+              }),
+              _vm._v("Saúde"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "css"
+                }
+              }),
+              _vm._v("Trabalho e Consumo"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "css"
+                }
+              }),
+              _vm._v("Ética e Cidadania"),
+              _c("br"),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _vm._m(7),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "java"
+                }
+              }),
+              _vm._v("Creche"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Pré-Escola"),
+              _c("br"),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _vm._m(8),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "java"
+                }
+              }),
+              _vm._v("1º Ano"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("2º Ano"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("3º Ano"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("4º Ano"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("5º Ano"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("6º Ano"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("7º Ano"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("8º Ano"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("9º Ano"),
+              _c("br"),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _vm._m(9),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "java"
+                }
+              }),
+              _vm._v("1º Série"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("2º Série"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("3º Série"),
+              _c("br"),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("strong", [_vm._v("Componente curricular/Disciplina")]),
+              _vm._v(" "),
+              _vm._m(10),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "java"
+                }
+              }),
+              _vm._v("Arte"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Biologia"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Educação Física"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Filosofia"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Física"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Geografia"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("História"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Literatura"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Língua Estrangeira"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Língua Portuguesa"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Matemáticabr/>\n                "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Química"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Sociologia"),
+              _c("br"),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _vm._m(11),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "java"
+                }
+              }),
+              _vm._v("Arte Visual"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Linguagem oral e escrita"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Matemática"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Movimento"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Natureza e Sociedade"),
+              _c("br"),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _vm._m(12),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "java"
+                }
+              }),
+              _vm._v("Alfabetização"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Artes"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Ciências Naturais"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Educação Física"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Geografia"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("História"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Língua Portuguesa"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Matemática"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Meio Ambiente"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Orientação Sexual"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Pluralidade Cultural"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Saúde"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Ética"),
+              _c("br"),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _vm._m(13),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Artes"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Ciências Naturais"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Educação Física"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Geografia"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("História"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Língua Estrangeira"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Língua Portuguesa"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Matemática"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Meio Ambiente"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Orientação Sexual"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Pluralidade Cultural"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Saúde"),
+              _c("br"),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _vm._m(14),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Artes"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Ciências"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Educação Física"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Geografia"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("História"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Línguas"),
+              _c("br"),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _vm._m(15),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Ciência Sociais Aplicadas"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Ciências Agrárias"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Ciências Biológicas"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Ciências Exatas e da Terra"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Ciências Humanas"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Ciências da Saúde"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Engenharias"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Interdisciplinar"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Lingüística, Letras e Artes"),
+              _c("br"),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _vm._m(16),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Estudo da Sociedade e da Natureza"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Língua Portuguesa"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Matemática"),
+              _c("br"),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _vm._m(17),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Artes"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Ciências Naturais"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Educação Física"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("História"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Língua Estrangeira"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Língua Portuguesa"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Matemática"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Outros"),
+              _c("br")
+            ],
+            1
+          )
+        ])
       ]
     )
   ])
@@ -20226,965 +21405,359 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "panel panel-default col-md-5" }, [
-      _c("div", { staticClass: "panel-heading" }, [
-        _vm._v(
-          "\n                Selecione o(s) componente(s) curricular(es) ou disciplina(s) que mais se adequem ao contéudo:\n            "
+    return _c("div", { staticClass: "col-auto my-1" }, [
+      _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+        _c("input", {
+          staticClass: "custom-control-input item-superior",
+          attrs: {
+            type: "checkbox",
+            id: "item-superior",
+            name: "item-superior"
+          }
+        }),
+        _vm._v(" "),
+        _c("label", {
+          staticClass: "custom-control-label",
+          attrs: { for: "customControlAutosizing" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto my-1" }, [
+      _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+        _c("input", {
+          staticClass: "custom-control-input item-superior",
+          attrs: {
+            type: "checkbox",
+            id: "item-superior",
+            name: "item-superior"
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "custom-control-label",
+            attrs: { for: "customControlAutosizing" }
+          },
+          [_vm._v("Linguagens Artísticas")]
         )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "panel-body" }, [
-        _c("div", { staticClass: "col-auto my-1" }, [
-          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
-            _c("input", {
-              staticClass: "custom-control-input item-superior",
-              attrs: {
-                type: "checkbox",
-                id: "item-superior",
-                name: "item-superior"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "custom-control-label",
-                attrs: { for: "customControlAutosizing" }
-              },
-              [_vm._v("Áreas de Conhecimento")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
-        }),
-        _vm._v("Ciências da natureza"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Humanas"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
-        }),
-        _vm._v("Linguagens e seus códigos"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
-        }),
-        _vm._v("Matemática"),
-        _c("br"),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-auto my-1" }, [
-          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
-            _c("input", {
-              staticClass: "custom-control-input item-superior",
-              attrs: {
-                type: "checkbox",
-                id: "item-superior",
-                name: "item-superior"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "custom-control-label",
-                attrs: { for: "customControlAutosizing" }
-              },
-              [_vm._v("Linguagens Artísticas")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
-        }),
-        _vm._v("Artes Visuais"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Audiovisual"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
-        }),
-        _vm._v("Circo"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
-        }),
-        _vm._v("Dança"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
-        }),
-        _vm._v("Literatura"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
-        }),
-        _vm._v("Música"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
-        }),
-        _vm._v("Teatro"),
-        _c("br"),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-auto my-1" }, [
-          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
-            _c("input", {
-              staticClass: "custom-control-input item-superior",
-              attrs: {
-                type: "checkbox",
-                id: "item-superior",
-                name: "item-superior"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "custom-control-label",
-                attrs: { for: "customControlAutosizing" }
-              },
-              [_vm._v("Temas Transversais")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
-        }),
-        _vm._v("Educação Ambiental"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Educação Especial"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
-        }),
-        _vm._v("Gênero e Sexualidade"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
-        }),
-        _vm._v("História e Cultura Africana"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
-        }),
-        _vm._v("História e Cultura Indígena"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
-        }),
-        _vm._v("Pluralidade Cultural"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
-        }),
-        _vm._v("Saúde"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
-        }),
-        _vm._v("Trabalho e Consumo"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "css" }
-        }),
-        _vm._v("Ética e Cidadania"),
-        _c("br"),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-auto my-1" }, [
-          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
-            _c("input", {
-              staticClass: "custom-control-input item-superior",
-              attrs: {
-                type: "checkbox",
-                id: "item-superior",
-                name: "item-superior"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "custom-control-label",
-                attrs: { for: "customControlAutosizing" }
-              },
-              [_vm._v("Séries - Educação Infantil")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
-        }),
-        _vm._v("Creche"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Pré-Escola"),
-        _c("br"),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-auto my-1" }, [
-          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
-            _c("input", {
-              staticClass: "custom-control-input item-superior",
-              attrs: {
-                type: "checkbox",
-                id: "item-superior",
-                name: "item-superior"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "custom-control-label",
-                attrs: { for: "customControlAutosizing" }
-              },
-              [_vm._v("Séries - Ensino Fundamental")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
-        }),
-        _vm._v("1º Ano"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("2º Ano"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("3º Ano"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("4º Ano"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("5º Ano"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("6º Ano"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("7º Ano"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("8º Ano"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("9º Ano"),
-        _c("br"),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-auto my-1" }, [
-          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
-            _c("input", {
-              staticClass: "custom-control-input item-superior",
-              attrs: {
-                type: "checkbox",
-                id: "item-superior",
-                name: "item-superior"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "custom-control-label",
-                attrs: { for: "customControlAutosizing" }
-              },
-              [_vm._v("Séries - Ensino Médio")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
-        }),
-        _vm._v("1º Série"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("2º Série"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("3º Série"),
-        _c("br"),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("strong", [_vm._v("Componente curricular/Disciplina")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-auto my-1" }, [
-          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
-            _c("input", {
-              staticClass: "custom-control-input item-superior",
-              attrs: {
-                type: "checkbox",
-                id: "item-superior",
-                name: "item-superior"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "custom-control-label",
-                attrs: { for: "customControlAutosizing" }
-              },
-              [_vm._v("Ensino Médio")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
-        }),
-        _vm._v("Arte"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Biologia"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Educação Física"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Filosofia"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Física"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Geografia"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("História"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Literatura"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Língua Estrangeira"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Língua Portuguesa"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Matemáticabr/>\n                "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Química"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Sociologia"),
-        _c("br"),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-auto my-1" }, [
-          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
-            _c("input", {
-              staticClass: "custom-control-input item-superior",
-              attrs: {
-                type: "checkbox",
-                id: "item-superior",
-                name: "item-superior"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "custom-control-label",
-                attrs: { for: "customControlAutosizing" }
-              },
-              [_vm._v("Educação Infantil")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
-        }),
-        _vm._v("Arte Visual"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Linguagem oral e escrita"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Matemática"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Movimento"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Natureza e Sociedade"),
-        _c("br"),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-auto my-1" }, [
-          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
-            _c("input", {
-              staticClass: "custom-control-input item-superior",
-              attrs: {
-                type: "checkbox",
-                id: "item-superior",
-                name: "item-superior"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "custom-control-label",
-                attrs: { for: "customControlAutosizing" }
-              },
-              [_vm._v("Ensino Fundamental Inicial")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "java" }
-        }),
-        _vm._v("Alfabetização"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Artes"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Ciências Naturais"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Educação Física"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Geografia"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("História"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Língua Portuguesa"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Matemática"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Meio Ambiente"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Orientação Sexual"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Pluralidade Cultural"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Saúde"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Ética"),
-        _c("br"),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-auto my-1" }, [
-          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
-            _c("input", {
-              staticClass: "custom-control-input item-superior",
-              attrs: {
-                type: "checkbox",
-                id: "item-superior",
-                name: "item-superior"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "custom-control-label",
-                attrs: { for: "customControlAutosizing" }
-              },
-              [_vm._v("Ensino Fundamental Final")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Artes"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Ciências Naturais"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Educação Física"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Geografia"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("História"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Língua Estrangeira"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Língua Portuguesa"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Matemática"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Meio Ambiente"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Orientação Sexual"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Pluralidade Cultural"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Saúde"),
-        _c("br"),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-auto my-1" }, [
-          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
-            _c("input", {
-              staticClass: "custom-control-input item-superior",
-              attrs: {
-                type: "checkbox",
-                id: "item-superior",
-                name: "item-superior"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "custom-control-label",
-                attrs: { for: "customControlAutosizing" }
-              },
-              [_vm._v("Educação Escolar Indígena")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Artes"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Ciências"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Educação Física"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Geografia"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("História"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Línguas"),
-        _c("br"),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-auto my-1" }, [
-          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
-            _c("input", {
-              staticClass: "custom-control-input item-superior",
-              attrs: {
-                type: "checkbox",
-                id: "item-superior",
-                name: "item-superior"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "custom-control-label",
-                attrs: { for: "customControlAutosizing" }
-              },
-              [_vm._v("Ensino Superior")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Ciência Sociais Aplicadas"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Ciências Agrárias"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Ciências Biológicas"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Ciências Exatas e da Terra"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Ciências Humanas"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Ciências da Saúde"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Engenharias"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Interdisciplinar"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Lingüística, Letras e Artes"),
-        _c("br"),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-auto my-1" }, [
-          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
-            _c("input", {
-              staticClass: "custom-control-input item-superior",
-              attrs: {
-                type: "checkbox",
-                id: "item-superior",
-                name: "item-superior"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "custom-control-label",
-                attrs: { for: "customControlAutosizing" }
-              },
-              [_vm._v("Educação de Jovens e Adultos 1")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Estudo da Sociedade e da Natureza"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Língua Portuguesa"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Matemática"),
-        _c("br"),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-auto my-1" }, [
-          _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
-            _c("input", {
-              staticClass: "custom-control-input item-superior",
-              attrs: {
-                type: "checkbox",
-                id: "item-superior",
-                name: "item-superior"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "custom-control-label",
-                attrs: { for: "customControlAutosizing" }
-              },
-              [_vm._v("Educação de Jovens e Adultos 2")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Artes"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Ciências Naturais"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Educação Física"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("História"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Língua Estrangeira"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Língua Portuguesa"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Matemática"),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "checkbox", name: "item-superior1", value: "html" }
-        }),
-        _vm._v("Outros"),
-        _c("br")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto my-1" }, [
+      _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+        _c("input", {
+          staticClass: "custom-control-input item-superior",
+          attrs: {
+            type: "checkbox",
+            id: "item-superior",
+            name: "item-superior"
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "custom-control-label",
+            attrs: { for: "customControlAutosizing" }
+          },
+          [_vm._v("Temas Transversais")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto my-1" }, [
+      _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+        _c("input", {
+          staticClass: "custom-control-input item-superior",
+          attrs: {
+            type: "checkbox",
+            id: "item-superior",
+            name: "item-superior"
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "custom-control-label",
+            attrs: { for: "customControlAutosizing" }
+          },
+          [_vm._v("Séries - Educação Infantil")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto my-1" }, [
+      _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+        _c("input", {
+          staticClass: "custom-control-input item-superior",
+          attrs: {
+            type: "checkbox",
+            id: "item-superior",
+            name: "item-superior"
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "custom-control-label",
+            attrs: { for: "customControlAutosizing" }
+          },
+          [_vm._v("Séries - Ensino Fundamental")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto my-1" }, [
+      _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+        _c("input", {
+          staticClass: "custom-control-input item-superior",
+          attrs: {
+            type: "checkbox",
+            id: "item-superior",
+            name: "item-superior"
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "custom-control-label",
+            attrs: { for: "customControlAutosizing" }
+          },
+          [_vm._v("Séries - Ensino Médio")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto my-1" }, [
+      _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+        _c("input", {
+          staticClass: "custom-control-input item-superior",
+          attrs: {
+            type: "checkbox",
+            id: "item-superior",
+            name: "item-superior"
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "custom-control-label",
+            attrs: { for: "customControlAutosizing" }
+          },
+          [_vm._v("Ensino Médio")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto my-1" }, [
+      _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+        _c("input", {
+          staticClass: "custom-control-input item-superior",
+          attrs: {
+            type: "checkbox",
+            id: "item-superior",
+            name: "item-superior"
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "custom-control-label",
+            attrs: { for: "customControlAutosizing" }
+          },
+          [_vm._v("Educação Infantil")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto my-1" }, [
+      _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+        _c("input", {
+          staticClass: "custom-control-input item-superior",
+          attrs: {
+            type: "checkbox",
+            id: "item-superior",
+            name: "item-superior"
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "custom-control-label",
+            attrs: { for: "customControlAutosizing" }
+          },
+          [_vm._v("Ensino Fundamental Inicial")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto my-1" }, [
+      _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+        _c("input", {
+          staticClass: "custom-control-input item-superior",
+          attrs: {
+            type: "checkbox",
+            id: "item-superior",
+            name: "item-superior"
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "custom-control-label",
+            attrs: { for: "customControlAutosizing" }
+          },
+          [_vm._v("Ensino Fundamental Final")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto my-1" }, [
+      _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+        _c("input", {
+          staticClass: "custom-control-input item-superior",
+          attrs: {
+            type: "checkbox",
+            id: "item-superior",
+            name: "item-superior"
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "custom-control-label",
+            attrs: { for: "customControlAutosizing" }
+          },
+          [_vm._v("Educação Escolar Indígena")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto my-1" }, [
+      _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+        _c("input", {
+          staticClass: "custom-control-input item-superior",
+          attrs: {
+            type: "checkbox",
+            id: "item-superior",
+            name: "item-superior"
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "custom-control-label",
+            attrs: { for: "customControlAutosizing" }
+          },
+          [_vm._v("Ensino Superior")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto my-1" }, [
+      _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+        _c("input", {
+          staticClass: "custom-control-input item-superior",
+          attrs: {
+            type: "checkbox",
+            id: "item-superior",
+            name: "item-superior"
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "custom-control-label",
+            attrs: { for: "customControlAutosizing" }
+          },
+          [_vm._v("Educação de Jovens e Adultos 1")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto my-1" }, [
+      _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
+        _c("input", {
+          staticClass: "custom-control-input item-superior",
+          attrs: {
+            type: "checkbox",
+            id: "item-superior",
+            name: "item-superior"
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "custom-control-label",
+            attrs: { for: "customControlAutosizing" }
+          },
+          [_vm._v("Educação de Jovens e Adultos 2")]
+        )
       ])
     ])
   }
@@ -21203,15 +21776,586 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(77)
+/* template */
+var __vue_template__ = __webpack_require__(78)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/forms/AplicativoForm.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6ba6f364", Component.options)
+  } else {
+    hotAPI.reload("data-v-6ba6f364", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 77 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(5);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'AplicativoForm',
+    data: function data() {
+        return {
+            name: null,
+            description: null,
+            categoria: 0,
+            url: null,
+            is_featured: false,
+            uso_pedagogico: null,
+            tags: [],
+            options: {}
+        };
+    },
+
+    methods: {
+        createAplicativo: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+                var data, http, resp;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                data = {
+                                    name: this.name,
+                                    description: this.description,
+                                    category: this.categoria,
+                                    url: this.url,
+                                    is_featured: this.is_featured,
+                                    options: JSON.stringify(this.options),
+                                    token: localStorage.token
+                                };
+
+                                console.warn(data);
+                                http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
+                                _context.next = 5;
+                                return http.postData('/aplicativos/create', data);
+
+                            case 5:
+                                resp = _context.sent;
+
+
+                                if (resp.data.success) {
+                                    console.warn(resp.data.message);
+                                }
+
+                            case 7:
+                            case 'end':
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, this);
+            }));
+
+            function createAplicativo() {
+                return _ref.apply(this, arguments);
+            }
+
+            return createAplicativo;
+        }()
+    }
+
+});
+
+/***/ }),
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _c(
+      "form",
+      {
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            _vm.createAplicativo()
+          }
+        }
+      },
+      [
+        _c("div", { staticClass: "panel panel-default col-md-7" }, [
+          _c("div", { staticClass: "panel-heading" }, [
+            _vm._v("\n                Adicionar Aplicativos\n            ")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "panel-body" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "titulo" } }, [
+                _vm._v("Nome do aplicativo:*")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.name,
+                    expression: "name"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "titulo" },
+                domProps: { value: _vm.name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.name = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "url" } }, [_vm._v("URL:*")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.url,
+                    expression: "url"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "url" },
+                domProps: { value: _vm.url },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.url = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "descricao" } }, [
+                _vm._v("Descrição:*")
+              ]),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.description,
+                    expression: "description"
+                  }
+                ],
+                staticClass: "form-control",
+                staticStyle: { resize: "none" },
+                attrs: { id: "descricao" },
+                domProps: { value: _vm.description },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.description = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "estado" } }, [
+                _vm._v("Categoria:*")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.categoria,
+                      expression: "categoria"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    name: "idambientedeapoiocategoria",
+                    id: "idambientedeapoiocategoria"
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.categoria = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "0" } }, [
+                    _vm._v("« SELECIONE »")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "8" } }, [
+                    _vm._v("Ambiente de Aprendizagem")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "9" } }, [
+                    _vm._v("Ambiente de Programação")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "10" } }, [
+                    _vm._v("Aplicativos Educacionais")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "11" } }, [
+                    _vm._v("Aplicativos para Escritório")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "36" } }, [
+                    _vm._v("Biblioteca")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "12" } }, [
+                    _vm._v("Editor de Animação")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "13" } }, [
+                    _vm._v("Editor de Imagem")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "20" } }, [
+                    _vm._v("Editor de Vídeo")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "37" } }, [
+                    _vm._v("Editor de Áudio")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "22" } }, [
+                    _vm._v("Gerenciador de Conteúdo")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "14" } }, [
+                    _vm._v("Gerenciador de Projetos")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "18" } }, [
+                    _vm._v("Gerenciador de Revistas")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "38" } }, [
+                    _vm._v("Internet")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "23" } }, [
+                    _vm._v("Portais Educacionais")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "21" } }, [
+                    _vm._v("Sistemas Operacionais Livres")
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "tags" } }, [
+                _vm._v("Palavra-Chave:* ")
+              ]),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.tags,
+                    expression: "tags"
+                  }
+                ],
+                staticClass: "form-control",
+                staticStyle: { resize: "none" },
+                attrs: { id: "tags" },
+                domProps: { value: _vm.tags },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.tags = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "usopedagogico" } }, [
+                _vm._v("Informações para o uso pedagógico:")
+              ]),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.uso_pedagogico,
+                    expression: "uso_pedagogico"
+                  }
+                ],
+                staticClass: "form-control",
+                staticStyle: { resize: "none" },
+                attrs: { id: "usopedagogico" },
+                domProps: { value: _vm.uso_pedagogico },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.uso_pedagogico = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "destaque" } }, [
+                _vm._v("Marcar como destaque")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.is_featured,
+                    expression: "is_featured"
+                  }
+                ],
+                attrs: { type: "checkbox", id: "destaque" },
+                domProps: {
+                  checked: Array.isArray(_vm.is_featured)
+                    ? _vm._i(_vm.is_featured, null) > -1
+                    : _vm.is_featured
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.is_featured,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && (_vm.is_featured = $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          (_vm.is_featured = $$a
+                            .slice(0, $$i)
+                            .concat($$a.slice($$i + 1)))
+                      }
+                    } else {
+                      _vm.is_featured = $$c
+                    }
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _vm._m(1)
+          ])
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "icone" } }, [_vm._v("URL  do projeto:")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: {
+          type: "file",
+          id: "icone",
+          name: "icone",
+          "aria-describedby": "icone"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "small",
+        { staticClass: "form-text text-muted", attrs: { id: "login_usuario" } },
+        [
+          _vm._v(
+            "Imagem no formato .png com tamanho de 250px (altura) e 250px (largura)"
+          )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("button", { staticClass: "btn btn-default" }, [_vm._v("Enviar")])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6ba6f364", module.exports)
+  }
+}
+
+/***/ }),
+/* 79 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(77)
+  __webpack_require__(80)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(79)
+var __vue_script__ = __webpack_require__(82)
 /* template */
-var __vue_template__ = __webpack_require__(81)
+var __vue_template__ = __webpack_require__(84)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -21250,13 +22394,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 77 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(78);
+var content = __webpack_require__(81);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -21276,7 +22420,7 @@ if(false) {
 }
 
 /***/ }),
-/* 78 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -21290,7 +22434,7 @@ exports.push([module.i, "\nform[data-v-4e686d0b] {\n  margin-top: 30px;\n  margi
 
 
 /***/ }),
-/* 79 */
+/* 82 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21416,7 +22560,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 });
 
 /***/ }),
-/* 80 */
+/* 83 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -22361,7 +23505,7 @@ var index_esm = {
 
 
 /***/ }),
-/* 81 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -22525,15 +23669,15 @@ if (false) {
 }
 
 /***/ }),
-/* 82 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(83)
+var __vue_script__ = __webpack_require__(86)
 /* template */
-var __vue_template__ = __webpack_require__(84)
+var __vue_template__ = __webpack_require__(87)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -22572,7 +23716,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 83 */
+/* 86 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -22669,7 +23813,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 });
 
 /***/ }),
-/* 84 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -22805,15 +23949,15 @@ if (false) {
 }
 
 /***/ }),
-/* 85 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(86)
+var __vue_script__ = __webpack_require__(89)
 /* template */
-var __vue_template__ = __webpack_require__(87)
+var __vue_template__ = __webpack_require__(90)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -22852,7 +23996,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 86 */
+/* 89 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -22959,7 +24103,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 });
 
 /***/ }),
-/* 87 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -23158,19 +24302,19 @@ if (false) {
 }
 
 /***/ }),
-/* 88 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(89)
+  __webpack_require__(92)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(91)
+var __vue_script__ = __webpack_require__(94)
 /* template */
-var __vue_template__ = __webpack_require__(102)
+var __vue_template__ = __webpack_require__(105)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -23209,13 +24353,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 89 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(90);
+var content = __webpack_require__(93);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -23235,7 +24379,7 @@ if(false) {
 }
 
 /***/ }),
-/* 90 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -23249,14 +24393,14 @@ exports.push([module.i, "\nbody {\n  padding-top: 60px;\n}\n.heigth {\n  min-hei
 
 
 /***/ }),
-/* 91 */
+/* 94 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__NavComponent_vue__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__NavComponent_vue__ = __webpack_require__(95);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__NavComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__NavComponent_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FooterComponent_vue__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FooterComponent_vue__ = __webpack_require__(100);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FooterComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__FooterComponent_vue__);
 //
 //
@@ -23280,19 +24424,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 92 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(93)
+  __webpack_require__(96)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(95)
+var __vue_script__ = __webpack_require__(98)
 /* template */
-var __vue_template__ = __webpack_require__(96)
+var __vue_template__ = __webpack_require__(99)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -23331,13 +24475,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 93 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(94);
+var content = __webpack_require__(97);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -23357,7 +24501,7 @@ if(false) {
 }
 
 /***/ }),
-/* 94 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -23371,7 +24515,7 @@ exports.push([module.i, "\n.logo[data-v-9f59c05e] {\n  width: 30px;\n  height: 3
 
 
 /***/ }),
-/* 95 */
+/* 98 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23525,7 +24669,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 });
 
 /***/ }),
-/* 96 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -23802,19 +24946,19 @@ if (false) {
 }
 
 /***/ }),
-/* 97 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(98)
+  __webpack_require__(101)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(100)
+var __vue_script__ = __webpack_require__(103)
 /* template */
-var __vue_template__ = __webpack_require__(101)
+var __vue_template__ = __webpack_require__(104)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -23853,13 +24997,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 98 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(99);
+var content = __webpack_require__(102);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -23879,7 +25023,7 @@ if(false) {
 }
 
 /***/ }),
-/* 99 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -23893,7 +25037,7 @@ exports.push([module.i, "\n.page-footer[data-v-8651e08a] {\n  margin-top: 5vh;\n
 
 
 /***/ }),
-/* 100 */
+/* 103 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23981,7 +25125,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 101 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -24235,7 +25379,7 @@ if (false) {
 }
 
 /***/ }),
-/* 102 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -24265,13 +25409,13 @@ if (false) {
 }
 
 /***/ }),
-/* 103 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(104);
+var content = __webpack_require__(107);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -24279,7 +25423,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(105)(content, options);
+var update = __webpack_require__(108)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -24296,7 +25440,7 @@ if(false) {
 }
 
 /***/ }),
-/* 104 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -24310,7 +25454,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n\n/*!\n * animate.css -http://dane
 
 
 /***/ }),
-/* 105 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -24356,7 +25500,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(106);
+var	fixUrls = __webpack_require__(109);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -24669,7 +25813,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 106 */
+/* 109 */
 /***/ (function(module, exports) {
 
 
@@ -24764,11 +25908,11 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 107 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-window._ = __webpack_require__(108);
+window._ = __webpack_require__(111);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -24777,9 +25921,9 @@ window._ = __webpack_require__(108);
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(110);
+  window.$ = window.jQuery = __webpack_require__(113);
 
-  __webpack_require__(111);
+  __webpack_require__(114);
 } catch (e) {}
 
 /**
@@ -24788,7 +25932,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(112);
+window.axios = __webpack_require__(115);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -24824,7 +25968,7 @@ if (token) {
 // });
 
 /***/ }),
-/* 108 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -41936,10 +43080,10 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(109)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(112)(module)))
 
 /***/ }),
-/* 109 */
+/* 112 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -41967,7 +43111,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 110 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -52338,7 +53482,7 @@ return jQuery;
 
 
 /***/ }),
-/* 111 */
+/* 114 */
 /***/ (function(module, exports) {
 
 /*!
@@ -54721,13 +55865,13 @@ if (typeof jQuery === 'undefined') {
 
 
 /***/ }),
-/* 112 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(113);
+module.exports = __webpack_require__(116);
 
 /***/ }),
-/* 113 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54735,7 +55879,7 @@ module.exports = __webpack_require__(113);
 
 var utils = __webpack_require__(3);
 var bind = __webpack_require__(11);
-var Axios = __webpack_require__(115);
+var Axios = __webpack_require__(118);
 var defaults = __webpack_require__(8);
 
 /**
@@ -54770,14 +55914,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(15);
-axios.CancelToken = __webpack_require__(129);
+axios.CancelToken = __webpack_require__(132);
 axios.isCancel = __webpack_require__(14);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(130);
+axios.spread = __webpack_require__(133);
 
 module.exports = axios;
 
@@ -54786,7 +55930,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 114 */
+/* 117 */
 /***/ (function(module, exports) {
 
 /*!
@@ -54813,7 +55957,7 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 115 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54821,8 +55965,8 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(8);
 var utils = __webpack_require__(3);
-var InterceptorManager = __webpack_require__(124);
-var dispatchRequest = __webpack_require__(125);
+var InterceptorManager = __webpack_require__(127);
+var dispatchRequest = __webpack_require__(128);
 
 /**
  * Create a new instance of Axios
@@ -54899,7 +56043,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 116 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54918,7 +56062,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 117 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54951,7 +56095,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 118 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54979,7 +56123,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 119 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55054,7 +56198,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 120 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55114,7 +56258,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 121 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55189,7 +56333,7 @@ module.exports = (
 
 
 /***/ }),
-/* 122 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55232,7 +56376,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 123 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55292,7 +56436,7 @@ module.exports = (
 
 
 /***/ }),
-/* 124 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55351,18 +56495,18 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 125 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(3);
-var transformData = __webpack_require__(126);
+var transformData = __webpack_require__(129);
 var isCancel = __webpack_require__(14);
 var defaults = __webpack_require__(8);
-var isAbsoluteURL = __webpack_require__(127);
-var combineURLs = __webpack_require__(128);
+var isAbsoluteURL = __webpack_require__(130);
+var combineURLs = __webpack_require__(131);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -55444,7 +56588,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 126 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55471,7 +56615,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 127 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55492,7 +56636,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 128 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55513,7 +56657,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 129 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55577,7 +56721,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 130 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55611,628 +56755,10 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 131 */
+/* 134 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 132 */,
-/* 133 */,
-/* 134 */,
-/* 135 */,
-/* 136 */,
-/* 137 */,
-/* 138 */,
-/* 139 */,
-/* 140 */,
-/* 141 */,
-/* 142 */,
-/* 143 */,
-/* 144 */,
-/* 145 */,
-/* 146 */,
-/* 147 */,
-/* 148 */,
-/* 149 */,
-/* 150 */,
-/* 151 */,
-/* 152 */,
-/* 153 */,
-/* 154 */,
-/* 155 */,
-/* 156 */,
-/* 157 */,
-/* 158 */,
-/* 159 */,
-/* 160 */,
-/* 161 */,
-/* 162 */,
-/* 163 */,
-/* 164 */,
-/* 165 */,
-/* 166 */,
-/* 167 */,
-/* 168 */,
-/* 169 */,
-/* 170 */,
-/* 171 */,
-/* 172 */,
-/* 173 */,
-/* 174 */,
-/* 175 */,
-/* 176 */,
-/* 177 */,
-/* 178 */,
-/* 179 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = __webpack_require__(180)
-/* template */
-var __vue_template__ = __webpack_require__(181)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/forms/AplicativoForm.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6ba6f364", Component.options)
-  } else {
-    hotAPI.reload("data-v-6ba6f364", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 180 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(5);
-
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    name: 'AplicativoForm',
-    data: function data() {
-        return {
-            name: null,
-            description: null,
-            categoria: 0,
-            url: null,
-            is_featured: false,
-            uso_pedagogico: null,
-            tags: [],
-            options: {}
-        };
-    },
-
-    methods: {
-        createAplicativo: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-                var data, http, resp;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-                    while (1) {
-                        switch (_context.prev = _context.next) {
-                            case 0:
-                                data = {
-                                    name: this.name,
-                                    description: this.description,
-                                    category: this.categoria,
-                                    url: this.url,
-                                    is_featured: this.is_featured,
-                                    options: JSON.stringify(this.options),
-                                    token: localStorage.token
-                                };
-
-                                console.warn(data);
-                                http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
-                                _context.next = 5;
-                                return http.postData('/aplicativos/create', data);
-
-                            case 5:
-                                resp = _context.sent;
-
-
-                                if (resp.data.success) {
-                                    console.warn(resp.data.message);
-                                }
-
-                            case 7:
-                            case 'end':
-                                return _context.stop();
-                        }
-                    }
-                }, _callee, this);
-            }));
-
-            function createAplicativo() {
-                return _ref.apply(this, arguments);
-            }
-
-            return createAplicativo;
-        }()
-    }
-
-});
-
-/***/ }),
-/* 181 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c(
-      "form",
-      {
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            _vm.createAplicativo()
-          }
-        }
-      },
-      [
-        _c("div", { staticClass: "panel panel-default col-md-7" }, [
-          _c("div", { staticClass: "panel-heading" }, [
-            _vm._v("\n                Adicionar Aplicativos\n            ")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "panel-body" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "titulo" } }, [
-                _vm._v("Nome do aplicativo:*")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.name,
-                    expression: "name"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text", id: "titulo" },
-                domProps: { value: _vm.name },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.name = $event.target.value
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "url" } }, [_vm._v("URL:*")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.url,
-                    expression: "url"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text", id: "url" },
-                domProps: { value: _vm.url },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.url = $event.target.value
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "descricao" } }, [
-                _vm._v("Descrição:*")
-              ]),
-              _vm._v(" "),
-              _c("textarea", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.description,
-                    expression: "description"
-                  }
-                ],
-                staticClass: "form-control",
-                staticStyle: { resize: "none" },
-                attrs: { id: "descricao" },
-                domProps: { value: _vm.description },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.description = $event.target.value
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "estado" } }, [
-                _vm._v("Categoria:*")
-              ]),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.categoria,
-                      expression: "categoria"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    name: "idambientedeapoiocategoria",
-                    id: "idambientedeapoiocategoria"
-                  },
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.categoria = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    }
-                  }
-                },
-                [
-                  _c("option", { attrs: { value: "0" } }, [
-                    _vm._v("« SELECIONE »")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "8" } }, [
-                    _vm._v("Ambiente de Aprendizagem")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "9" } }, [
-                    _vm._v("Ambiente de Programação")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "10" } }, [
-                    _vm._v("Aplicativos Educacionais")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "11" } }, [
-                    _vm._v("Aplicativos para Escritório")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "36" } }, [
-                    _vm._v("Biblioteca")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "12" } }, [
-                    _vm._v("Editor de Animação")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "13" } }, [
-                    _vm._v("Editor de Imagem")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "20" } }, [
-                    _vm._v("Editor de Vídeo")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "37" } }, [
-                    _vm._v("Editor de Áudio")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "22" } }, [
-                    _vm._v("Gerenciador de Conteúdo")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "14" } }, [
-                    _vm._v("Gerenciador de Projetos")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "18" } }, [
-                    _vm._v("Gerenciador de Revistas")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "38" } }, [
-                    _vm._v("Internet")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "23" } }, [
-                    _vm._v("Portais Educacionais")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "21" } }, [
-                    _vm._v("Sistemas Operacionais Livres")
-                  ])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "tags" } }, [
-                _vm._v("Palavra-Chave:* ")
-              ]),
-              _vm._v(" "),
-              _c("textarea", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.tags,
-                    expression: "tags"
-                  }
-                ],
-                staticClass: "form-control",
-                staticStyle: { resize: "none" },
-                attrs: { id: "tags" },
-                domProps: { value: _vm.tags },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.tags = $event.target.value
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _vm._m(0),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "usopedagogico" } }, [
-                _vm._v("Informações para o uso pedagógico:")
-              ]),
-              _vm._v(" "),
-              _c("textarea", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.uso_pedagogico,
-                    expression: "uso_pedagogico"
-                  }
-                ],
-                staticClass: "form-control",
-                staticStyle: { resize: "none" },
-                attrs: { id: "usopedagogico" },
-                domProps: { value: _vm.uso_pedagogico },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.uso_pedagogico = $event.target.value
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "destaque" } }, [
-                _vm._v("Marcar como destaque")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.is_featured,
-                    expression: "is_featured"
-                  }
-                ],
-                attrs: { type: "checkbox", id: "destaque" },
-                domProps: {
-                  checked: Array.isArray(_vm.is_featured)
-                    ? _vm._i(_vm.is_featured, null) > -1
-                    : _vm.is_featured
-                },
-                on: {
-                  change: function($event) {
-                    var $$a = _vm.is_featured,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = null,
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 && (_vm.is_featured = $$a.concat([$$v]))
-                      } else {
-                        $$i > -1 &&
-                          (_vm.is_featured = $$a
-                            .slice(0, $$i)
-                            .concat($$a.slice($$i + 1)))
-                      }
-                    } else {
-                      _vm.is_featured = $$c
-                    }
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _vm._m(1)
-          ])
-        ])
-      ]
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "icone" } }, [_vm._v("URL  do projeto:")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "file",
-          id: "icone",
-          name: "icone",
-          "aria-describedby": "icone"
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "small",
-        { staticClass: "form-text text-muted", attrs: { id: "login_usuario" } },
-        [
-          _vm._v(
-            "Imagem no formato .png com tamanho de 250px (altura) e 250px (largura)"
-          )
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("button", { staticClass: "btn btn-default" }, [_vm._v("Enviar")])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-6ba6f364", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);

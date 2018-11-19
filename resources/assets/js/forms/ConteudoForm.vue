@@ -184,10 +184,31 @@
                 </div>
                 <div class="panel-body">
 
+                    <b-form-group>
+                        <template slot="label">                            
+                            <b-form-checkbox v-model="allSelected"
+                                            :indeterminate="indeterminate"
+                                            aria-describedby="flavours"
+                                            aria-controls="flavours"
+                                            @change="toggleAll"
+                            >
+                            {{ allSelected ? 'Un-select All' : 'Áreas de Conhecimento' }}
+                            </b-form-checkbox>
+                        </template>
+                        <b-form-checkbox-group id="flavors"
+                                                stacked
+                                                v-model="selected"
+                                                name="flavs"
+                                                :options="flavours"
+                                                class="ml-4"
+                                                aria-label="Individual flavours"
+                        ></b-form-checkbox-group>
+                        </b-form-group>
+
                     <div class="col-auto my-1">
                         <div class="custom-control custom-checkbox mr-sm-2">
                             <input type="checkbox" class="custom-control-input item-superior" id="item-superior" name="item-superior">
-                            <label class="custom-control-label" for="customControlAutosizing">Áreas de Conhecimento</label>
+                            <label class="custom-control-label" for="customControlAutosizing"></label>
                         </div>
                     </div>
 
