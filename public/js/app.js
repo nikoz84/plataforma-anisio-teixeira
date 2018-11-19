@@ -19330,6 +19330,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             },
             checkbox1: ['Ciências da natureza', 'Humanas', 'Linguagens e seus códigos', 'Matemática'],
             checkbox2: ['Artes Visuais', 'Audiovisual', 'Circo', 'Dança', 'Literatura', 'Música', 'Teatro'],
+            checkbox3: ['Educação Ambiental', 'Educação Especial', 'Gênero e Sexualidade', 'História e Cultura Africana', 'História e Cultura Indígena', 'Pluralidade Cultural', 'Saúde', 'Trabalho e Consumo', 'Ética e Cidadania'],
             selected: [],
             allSelected: false,
             indeterminate: false
@@ -19491,8 +19492,14 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
 
             return getOptions;
         }(),
-        toggleAll: function toggleAll(checked) {
-            this.selected = checked ? this.checkbox1.slice() : [];
+        check1: function check1(checked) {
+            this.selectbox1 = checked ? this.checkbox1.slice() : [];
+        },
+        check2: function check2(checked) {
+            this.selectbox2 = checked ? this.checkbox2.slice() : [];
+        },
+        check3: function check3(checked) {
+            this.selectbox3 = checked ? this.checkbox3.slice() : [];
         }
     },
     watch: {
@@ -20198,7 +20205,7 @@ var render = function() {
                             "aria-describedby": "checkbox1",
                             "aria-controls": "checkbox1"
                           },
-                          on: { change: _vm.toggleAll },
+                          on: { change: _vm.check1 },
                           model: {
                             value: _vm.allSelected,
                             callback: function($$v) {
@@ -20227,11 +20234,11 @@ var render = function() {
                       "aria-label": "Individual checkbox1"
                     },
                     model: {
-                      value: _vm.selected,
+                      value: _vm.selectbox1,
                       callback: function($$v) {
-                        _vm.selected = $$v
+                        _vm.selectbox1 = $$v
                       },
-                      expression: "selected"
+                      expression: "selectbox1"
                     }
                   })
                 ],
@@ -20253,7 +20260,7 @@ var render = function() {
                             "aria-describedby": "checkbox2",
                             "aria-controls": "checkbox2"
                           },
-                          on: { change: _vm.toggleAll },
+                          on: { change: _vm.check2 },
                           model: {
                             value: _vm.allSelected,
                             callback: function($$v) {
@@ -20282,11 +20289,62 @@ var render = function() {
                       "aria-label": "Individual checkbox2"
                     },
                     model: {
-                      value: _vm.selected,
+                      value: _vm.selectbox2,
                       callback: function($$v) {
-                        _vm.selected = $$v
+                        _vm.selectbox2 = $$v
                       },
-                      expression: "selected"
+                      expression: "selectbox2"
+                    }
+                  })
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "b-form-group",
+                [
+                  _c(
+                    "template",
+                    { slot: "label" },
+                    [
+                      _c(
+                        "b-form-checkbox",
+                        {
+                          attrs: {
+                            indeterminate: _vm.indeterminate,
+                            "aria-describedby": "checkbox3",
+                            "aria-controls": "checkbox3"
+                          },
+                          on: { change: _vm.check3 },
+                          model: {
+                            value: _vm.allSelected,
+                            callback: function($$v) {
+                              _vm.allSelected = $$v
+                            },
+                            expression: "allSelected"
+                          }
+                        },
+                        [_vm._v("Temas Transversais\n                        ")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("b-form-checkbox-group", {
+                    staticClass: "ml-4",
+                    attrs: {
+                      id: "checkbox3",
+                      stacked: "",
+                      name: "checkbox3",
+                      options: _vm.checkbox3,
+                      "aria-label": "Individual checkbox3"
+                    },
+                    model: {
+                      value: _vm.selectbox3,
+                      callback: function($$v) {
+                        _vm.selectbox3 = $$v
+                      },
+                      expression: "selectbox3"
                     }
                   })
                 ],
@@ -20296,100 +20354,6 @@ var render = function() {
               _c("br"),
               _vm._v(" "),
               _vm._m(4),
-              _vm._v(" "),
-              _c("input", {
-                attrs: {
-                  type: "checkbox",
-                  name: "item-superior1",
-                  value: "java"
-                }
-              }),
-              _vm._v("Educação Ambiental"),
-              _c("br"),
-              _vm._v(" "),
-              _c("input", {
-                attrs: {
-                  type: "checkbox",
-                  name: "item-superior1",
-                  value: "html"
-                }
-              }),
-              _vm._v("Educação Especial"),
-              _c("br"),
-              _vm._v(" "),
-              _c("input", {
-                attrs: {
-                  type: "checkbox",
-                  name: "item-superior1",
-                  value: "css"
-                }
-              }),
-              _vm._v("Gênero e Sexualidade"),
-              _c("br"),
-              _vm._v(" "),
-              _c("input", {
-                attrs: {
-                  type: "checkbox",
-                  name: "item-superior1",
-                  value: "css"
-                }
-              }),
-              _vm._v("História e Cultura Africana"),
-              _c("br"),
-              _vm._v(" "),
-              _c("input", {
-                attrs: {
-                  type: "checkbox",
-                  name: "item-superior1",
-                  value: "css"
-                }
-              }),
-              _vm._v("História e Cultura Indígena"),
-              _c("br"),
-              _vm._v(" "),
-              _c("input", {
-                attrs: {
-                  type: "checkbox",
-                  name: "item-superior1",
-                  value: "css"
-                }
-              }),
-              _vm._v("Pluralidade Cultural"),
-              _c("br"),
-              _vm._v(" "),
-              _c("input", {
-                attrs: {
-                  type: "checkbox",
-                  name: "item-superior1",
-                  value: "css"
-                }
-              }),
-              _vm._v("Saúde"),
-              _c("br"),
-              _vm._v(" "),
-              _c("input", {
-                attrs: {
-                  type: "checkbox",
-                  name: "item-superior1",
-                  value: "css"
-                }
-              }),
-              _vm._v("Trabalho e Consumo"),
-              _c("br"),
-              _vm._v(" "),
-              _c("input", {
-                attrs: {
-                  type: "checkbox",
-                  name: "item-superior1",
-                  value: "css"
-                }
-              }),
-              _vm._v("Ética e Cidadania"),
-              _c("br"),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _vm._m(5),
               _vm._v(" "),
               _c("input", {
                 attrs: {
@@ -20413,7 +20377,7 @@ var render = function() {
               _vm._v(" "),
               _c("br"),
               _vm._v(" "),
-              _vm._m(6),
+              _vm._m(5),
               _vm._v(" "),
               _c("input", {
                 attrs: {
@@ -20507,7 +20471,7 @@ var render = function() {
               _vm._v(" "),
               _c("br"),
               _vm._v(" "),
-              _vm._m(7),
+              _vm._m(6),
               _vm._v(" "),
               _c("input", {
                 attrs: {
@@ -20543,7 +20507,7 @@ var render = function() {
               _vm._v(" "),
               _c("strong", [_vm._v("Componente curricular/Disciplina")]),
               _vm._v(" "),
-              _vm._m(8),
+              _vm._m(7),
               _vm._v(" "),
               _c("input", {
                 attrs: {
@@ -20675,7 +20639,7 @@ var render = function() {
               _vm._v(" "),
               _c("br"),
               _vm._v(" "),
-              _vm._m(9),
+              _vm._m(8),
               _vm._v(" "),
               _c("input", {
                 attrs: {
@@ -20729,7 +20693,7 @@ var render = function() {
               _vm._v(" "),
               _c("br"),
               _vm._v(" "),
-              _vm._m(10),
+              _vm._m(9),
               _vm._v(" "),
               _c("input", {
                 attrs: {
@@ -20863,7 +20827,7 @@ var render = function() {
               _vm._v(" "),
               _c("br"),
               _vm._v(" "),
-              _vm._m(11),
+              _vm._m(10),
               _vm._v(" "),
               _c("input", {
                 attrs: {
@@ -20987,7 +20951,7 @@ var render = function() {
               _vm._v(" "),
               _c("br"),
               _vm._v(" "),
-              _vm._m(12),
+              _vm._m(11),
               _vm._v(" "),
               _c("input", {
                 attrs: {
@@ -21051,7 +21015,7 @@ var render = function() {
               _vm._v(" "),
               _c("br"),
               _vm._v(" "),
-              _vm._m(13),
+              _vm._m(12),
               _vm._v(" "),
               _c("input", {
                 attrs: {
@@ -21145,7 +21109,7 @@ var render = function() {
               _vm._v(" "),
               _c("br"),
               _vm._v(" "),
-              _vm._m(14),
+              _vm._m(13),
               _vm._v(" "),
               _c("input", {
                 attrs: {
@@ -21179,7 +21143,7 @@ var render = function() {
               _vm._v(" "),
               _c("br"),
               _vm._v(" "),
-              _vm._m(15),
+              _vm._m(14),
               _vm._v(" "),
               _c("input", {
                 attrs: {
@@ -21340,32 +21304,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "form-group" }, [
       _c("button", { staticClass: "btn btn-default" }, [_vm._v("Enviar")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-auto my-1" }, [
-      _c("div", { staticClass: "custom-control custom-checkbox mr-sm-2" }, [
-        _c("input", {
-          staticClass: "custom-control-input item-superior",
-          attrs: {
-            type: "checkbox",
-            id: "item-superior",
-            name: "item-superior"
-          }
-        }),
-        _vm._v(" "),
-        _c(
-          "label",
-          {
-            staticClass: "custom-control-label",
-            attrs: { for: "customControlAutosizing" }
-          },
-          [_vm._v("Temas Transversais")]
-        )
-      ])
     ])
   },
   function() {

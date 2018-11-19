@@ -191,13 +191,13 @@
                                             :indeterminate="indeterminate"
                                             aria-describedby="checkbox1"
                                             aria-controls="checkbox1"
-                                            @change="toggleAll"
+                                            @change="check1"
                             >Áreas de Conhecimento
                             </b-form-checkbox>
                         </template>
                         <b-form-checkbox-group id="checkbox1"
                                                 stacked
-                                                v-model="selected"
+                                                v-model="selectbox1"
                                                 name="checkbox1"
                                                 :options="checkbox1"
                                                 class="ml-4"
@@ -207,18 +207,18 @@
 
                     <!-- checkbox2 Linguagens Artísticas -->
                     <b-form-group>
-                        <template slot="label">    
+                        <template slot="label">
                             <b-form-checkbox v-model="allSelected"
                                             :indeterminate="indeterminate"
                                             aria-describedby="checkbox2"
                                             aria-controls="checkbox2"
-                                            @change="toggleAll"
+                                            @change="check2"
                             >Linguagens Artísticas
                             </b-form-checkbox>
                         </template>
                         <b-form-checkbox-group id="checkbox2"
                                                 stacked
-                                                v-model="selected"
+                                                v-model="selectbox2"
                                                 name="checkbox2"
                                                 :options="checkbox2"
                                                 class="ml-4"
@@ -226,26 +226,26 @@
                         ></b-form-checkbox-group>
                     </b-form-group>
 
-
-                    
-
-                    <br>
-                    <div class="col-auto my-1">
-                        <div class="custom-control custom-checkbox mr-sm-2">
-                            <input type="checkbox" class="custom-control-input item-superior" id="item-superior" name="item-superior">
-                            <label class="custom-control-label" for="customControlAutosizing">Temas Transversais</label>
-                        </div>
-                    </div>
-
-                    <input type="checkbox"     name="item-superior1" value="java"/>Educação Ambiental<br/>
-                    <input type="checkbox"     name="item-superior1" value="html"/>Educação Especial<br/>
-                    <input type="checkbox"     name="item-superior1" value="css"/>Gênero e Sexualidade<br/>
-                    <input type="checkbox"     name="item-superior1" value="css"/>História e Cultura Africana<br/>
-                    <input type="checkbox"     name="item-superior1" value="css"/>História e Cultura Indígena<br/>
-                    <input type="checkbox"     name="item-superior1" value="css"/>Pluralidade Cultural<br/>
-                    <input type="checkbox"     name="item-superior1" value="css"/>Saúde<br/>
-                    <input type="checkbox"     name="item-superior1" value="css"/>Trabalho e Consumo<br/>
-                    <input type="checkbox"     name="item-superior1" value="css"/>Ética e Cidadania<br/>
+                    <!-- checkbox3 Temas Transversais -->
+                    <b-form-group>
+                        <template slot="label">
+                            <b-form-checkbox v-model="allSelected"
+                                            :indeterminate="indeterminate"
+                                            aria-describedby="checkbox3"
+                                            aria-controls="checkbox3"
+                                            @change="check3"
+                            >Temas Transversais
+                            </b-form-checkbox>
+                        </template>
+                        <b-form-checkbox-group id="checkbox3"
+                                                stacked
+                                                v-model="selectbox3"
+                                                name="checkbox3"
+                                                :options="checkbox3"
+                                                class="ml-4"
+                                                aria-label="Individual checkbox3"
+                        ></b-form-checkbox-group>
+                    </b-form-group>
 
                     <br>
                     <div class="col-auto my-1">
@@ -487,6 +487,7 @@ export default {
             },
             checkbox1: ['Ciências da natureza', 'Humanas', 'Linguagens e seus códigos', 'Matemática'],
             checkbox2: ['Artes Visuais', 'Audiovisual', 'Circo', 'Dança', 'Literatura', 'Música', 'Teatro'],
+            checkbox3: ['Educação Ambiental', 'Educação Especial', 'Gênero e Sexualidade', 'História e Cultura Africana', 'História e Cultura Indígena', 'Pluralidade Cultural', 'Saúde', 'Trabalho e Consumo', 'Ética e Cidadania'],
             selected: [],
             allSelected: false,
             indeterminate: false
@@ -571,10 +572,17 @@ export default {
             }
         },
 
-        toggleAll (checked) {
-            this.selected = checked ? this.checkbox1.slice() : []
-        }
+        check1 (checked) {
+            this.selectbox1 = checked ? this.checkbox1.slice() : []
+        },
 
+        check2 (checked) {
+            this.selectbox2 = checked ? this.checkbox2.slice() : []
+        },
+
+        check3 (checked) {
+            this.selectbox3 = checked ? this.checkbox3.slice() : []
+        }
     },
     watch:{
         'tag':'getItems'
