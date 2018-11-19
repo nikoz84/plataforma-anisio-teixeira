@@ -3,6 +3,9 @@ import VueRouter from 'vue-router';
 import routes from './routes';
 import MainApp from './components/MainApp';
 import store from './store.js';
+import BootstrapVue from 'bootstrap-vue';
+
+Vue.use(BootstrapVue);
 
 Vue.use(VueRouter);
 

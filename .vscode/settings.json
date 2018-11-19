@@ -1,7 +1,9 @@
 {
-    "phpcs.enable": true,
+    "phpcs.executablePath": "vendor/bin/phpcs",
     "phpcs.composerJsonPath": "composer.json",
+    "phpcs.enable": true,
     "phpcs.standard": "PSR2",
     "editor.renderWhitespace": "all",
-    "php-cs-fixer.documentFormattingProvider": true,
+    "editor.renderIndentGuides": true,
+    "autoimport.autoComplete": true,
 }

@@ -70,8 +70,8 @@ class ConteudoController extends Controller
             'authors' => 'required',
             'source' => 'required',
             'license' => 'required',
-            'terms' => 'required|in:true,false'
-            //'is_approved' => 'required|in:true,false'
+            'terms' => 'required|in:true,false',
+            'is_approved' => 'required|in:true,false'
         ]);
 
         return $validator;
@@ -120,15 +120,13 @@ class ConteudoController extends Controller
     /**
      * Atualiza o conteudo.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Conteudo  $conteudo
      * @return \Illuminate\Http\Response
      */
     public function update($id)
     {
         $conteudo = $this->conteudo::find($id);
-        
-        
+
         $conteudo->update([
             'canal_id' => $this->request->get('canal_id'),
             'title' => $this->request->get('title'),
@@ -141,7 +139,7 @@ class ConteudoController extends Controller
             'is_site' => $this->request->get('is_site'),
             'options' => json_decode($this->request->get('options'), true)
         ]);
-        
+
         $conteudo->save();
 
         return response()->json([
@@ -247,10 +245,13 @@ class ConteudoController extends Controller
 
     public function getByTagId($id)
     {
-        $conteudos = DB::table('conteudos')
-        ->whereRaw(DB::raw("{$id} = ANY(SELECT (CAST(jsonb_array_elements(options->'tags')->>'id' AS INT)))"))
+        $limit = $this->request->query('limit', 15);
+
+        $conteudos = $this->conteudo
+        ->whereRaw("{$id} = ANY(SELECT (CAST(jsonb_array_elements(options->'tags')->>'id' AS INT)))")
                                         ->paginate(15);
-                                        
+        $conteudos->setPath("/conteudos/tag/{$id}?limit={$limit}");
+
         DB::table('tags')->where('id', $id)->increment('searched', 1);
         
         $tag = Tag::find($id);
