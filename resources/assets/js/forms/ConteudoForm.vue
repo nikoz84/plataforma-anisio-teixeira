@@ -142,6 +142,7 @@
                         <label for="termosecondicoes">
                             <input id="termosecondicoes" type="checkbox" v-model="terms"> Li e concordo com os termos e condições de uso 
                         </label>
+                        <br>
                         <small class="text-danger"
                                 v-if="errors.terms"
                                 v-for="(error,te) in errors.terms"
@@ -150,10 +151,11 @@
                         </small>
                     </div>
                     <!-- APROVAR CONTEÚDO -->
-                    <div class="checkbox" v-bind:class="{ 'has-error': errors.is_aproved && errors.is_aproved.length > 0 }">
+                    <div class="checkbox" v-bind:class="{ 'has-error': errors.is_approved && errors.is_approved.length > 0 }">
                         <label for="aprovado">
                             <input id="aprovado" type="checkbox" v-model="is_approved"> Deseja publicar o conteúdo? 
                         </label>
+                        <br>
                         <small class="text-danger"
                                 v-if="errors.is_approved"
                                 v-for="(error,ia) in errors.is_approved"

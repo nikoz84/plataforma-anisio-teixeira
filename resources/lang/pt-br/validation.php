@@ -121,7 +121,7 @@ return [
         'authors' => 'autores',
         'tipo' => 'tipo de conteúdo',
         'license' => 'licença',
-        //'is_approved' => 'aprovar',
+        'is_approved' => 'aprovar conteúdo',
         'terms' => 'termos e condições'
     ],
 ];

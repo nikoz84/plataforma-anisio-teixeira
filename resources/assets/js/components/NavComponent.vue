@@ -81,7 +81,7 @@ export default {
         }
     },
     mounted() {
-        console.log(store.state.isLogged)        
+               
     },
     methods: {
         async logout(){
@@ -92,8 +92,9 @@ export default {
             
             if(resp.data.success){
                 localStorage.clear();
-                store.commit('LOGOUT_USER')
-                this.$router.push('/login')
+                this.$router.push('/usuario/login');
+                store.commit('LOGOUT_USER');
+                
             }else{
                 localStorage.clear();
             }

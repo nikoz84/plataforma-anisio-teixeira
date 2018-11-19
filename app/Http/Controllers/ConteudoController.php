@@ -70,8 +70,8 @@ class ConteudoController extends Controller
             'authors' => 'required',
             'source' => 'required',
             'license' => 'required',
-            'terms' => 'required|in:true,false'
-            //'is_approved' => 'required|in:true,false'
+            'terms' => 'required|in:true,false',
+            'is_approved' => 'required|in:true,false'
         ]);
 
         return $validator;
@@ -120,7 +120,6 @@ class ConteudoController extends Controller
     /**
      * Atualiza o conteudo.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Conteudo  $conteudo
      * @return \Illuminate\Http\Response
      */
