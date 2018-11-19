@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Conteudo;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,7 @@ class ConteudoController extends Controller
 {
     public function __construct(Conteudo $conteudo, Request $request)
     {
-        $this->middleware('jwt.verify')->except(['list','search','getById']);
+        $this->middleware('jwt.verify')->except(['list','search','getById','getByTagId']);
         $this->conteudo = $conteudo;
         $this->request = $request;
     }
@@ -241,6 +242,23 @@ class ConteudoController extends Controller
         
         return response()->json([
             'tags' => $conteudo->tags
+        ]);
+    }
+
+    public function getByTagId($id)
+    {
+        $conteudos = DB::table('conteudos')
+        ->whereRaw(DB::raw("{$id} = ANY(SELECT (CAST(jsonb_array_elements(options->'tags')->>'id' AS INT)))"))
+                                        ->paginate(15);
+                                        
+        DB::table('tags')->where('id', $id)->increment('searched', 1);
+        
+        $tag = Tag::find($id);
+
+        return response()->json([
+            'success' => true,
+            'tag_name' => $tag,
+            'paginator' => $conteudos
         ]);
     }
 }

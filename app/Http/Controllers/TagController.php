@@ -123,8 +123,7 @@ class TagController extends Controller
     {
         $tag = Tag::where('id', $id);
         
-        $this->incrementSearchTag($id);
-
+        
         return response()->json([
             'success' => true,
             'tag' => $tag
