@@ -4,8 +4,4 @@
     "phpcs.standard": "PSR2",
     "editor.renderWhitespace": "all",
     "php-cs-fixer.documentFormattingProvider": true,
-    "php-docblocker.author": {
-        "name": "Nicolás Romero",
-        "email": "nikoz.1984@gmail.com"
-    }
 }

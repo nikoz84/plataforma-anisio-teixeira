@@ -49,7 +49,7 @@ class ImportData extends Command
         $category_conteudo = storage_path('dumps\9_category_conteudo');
         $componentes = explode("\n", file_get_contents(storage_path('dumps\10_componentes')));
         $niveis = explode("\n", file_get_contents(storage_path('dumps\11_niveis_ensino')));
-        /*
+        
         DB::statement("copy users FROM '{$users}' delimiter '*';");
         DB::statement("copy canais FROM '{$canais}' delimiter '*';");
         DB::statement("copy tags FROM '{$tags}' delimiter '*';");
@@ -59,7 +59,7 @@ class ImportData extends Command
         DB::statement("copy conteudo_tag FROM '{$conteudo_tag}' delimiter '*';");
         DB::statement("copy licenses FROM '{$licenses}' delimiter '*';");
         DB::statement("copy categories FROM '{$category_conteudo}' delimiter '*';");
-        */
+        
         $this->importToOptions($componentes);
         $this->importToOptions($niveis);
     }
@@ -67,13 +67,8 @@ class ImportData extends Command
     private function importToOptions($meta_data)
     {
         foreach ($meta_data as $key => $value) {
-            # code...
             $data = explode("*", $value);
-            $resp = [];
-            $meta = json_decode($data[1], true);
-            $resp['data'] = $meta;
-            $info = json_encode($resp, true);
-            DB::statement("insert into options (name, meta_data) values ('$data[0]','{$info}')");
+            DB::statement("insert into options (name, meta_data) values ('$data[0]','$data[1]')");
         }
     }
 }
