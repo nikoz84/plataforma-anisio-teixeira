@@ -1,9 +1,9 @@
 <?php
-
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Canal extends Model
 {
     protected $table = 'canais';
@@ -18,18 +18,21 @@ class Canal extends Model
         'slug',
         'options'
     ];
+
     protected $hidden = ['token'];
+    
     protected $dates = [
         'created_at',
         'updated_at',
         'deleted_at'
     ];
+
     protected $casts = [
         'options' => 'array',
     ];
+
     public function conteudos()
     {
         return $this->hasMany('App\Conteudo');
     }
-
 }

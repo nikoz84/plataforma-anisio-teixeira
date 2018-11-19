@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Aplicativo;
@@ -11,7 +10,7 @@ class AplicativoController extends Controller
 {
     public function __construct()
     {
-      $this->middleware('jwt.verify')->except(['list','search','getById']);
+        $this->middleware('jwt.verify')->except(['list','search','getById']);
     }
     /**
      * Display a listing of the resource.
@@ -28,7 +27,7 @@ class AplicativoController extends Controller
                                     ->orderBy($orderBy, 'name')
                                     ->paginate($limit);
                     
-        $aplicativos->setPath("/aplicativos?limit={$limit}"); 
+        $aplicativos->setPath("/aplicativos?limit={$limit}");
         
         return response()->json([
             'success'=> true,
@@ -36,7 +35,7 @@ class AplicativoController extends Controller
             'paginator'=> $aplicativos,
             'page'=> $aplicativos->currentPage(),
             'limit' => $aplicativos->perPage()
-        ]);    
+        ]);
     }
 
 /**
@@ -58,19 +57,18 @@ class AplicativoController extends Controller
     
             ]
         );
-        if($id){
+        if ($id) {
             return response()->json([
                 'success'=> true,
                 'message' => 'Aplicativo cadastrado com sucesso',
                 'id' => $id
             ]);
-        }else {
+        } else {
             return response()->json([
                 'success'=> false,
                 'message' => 'Não foi possível cadastrar aplicativo'
             ]);
         }
-        
     }
 
 /**
@@ -87,14 +85,13 @@ class AplicativoController extends Controller
         $data = [
             'name' => $request->get('name'),
             'description' => $request->get('description'),
-            'is_featured' => $request->get('is_featured'), 
+            'is_featured' => $request->get('is_featured'),
             'options' => $request->get('options')
         ];
         
         $aplicativo->save($data);
         
         return response()->json($aplicativo->toJson());
-        
     }
 
     /**
@@ -107,12 +104,12 @@ class AplicativoController extends Controller
     {
         $aplicativo = Aplicativo::find($id);
         $resp = [];
-        if(is_null($aplicativo)){
+        if (is_null($aplicativo)) {
             $resp = [
                 'menssage' => 'Aplicativo não encontrado',
                 'is_deleted' => false
             ];
-        }else {
+        } else {
             $resp = [
                 'menssage' => "Aplicativo de id: {$id} foi apagado com sucesso!!",
                 'is_deleted' => $aplicativo->delete()
@@ -129,10 +126,10 @@ class AplicativoController extends Controller
 
         $aplicativos = DB::table('aplicativos')
                     ->select(['id','name'])
-                    ->where(DB::raw('unaccent(lower(name))'), 'ILIKE' , DB::raw("unaccent(lower('%{$termo}%'))"))
+                    ->where(DB::raw('unaccent(lower(name))'), 'ILIKE', DB::raw("unaccent(lower('%{$termo}%'))"))
                     ->paginate($limit);
 
-        $aplicativos->setPath("/aplicativos/search/{$termo}?limit={$limit}");  
+        $aplicativos->setPath("/aplicativos/search/{$termo}?limit={$limit}");
 
         return response()->json([
             'success'=> true,
@@ -140,24 +137,22 @@ class AplicativoController extends Controller
             'paginator' => $aplicativos,
             'page'=> $aplicativos->currentPage(),
             'limit' => $aplicativos->perPage()
-        ]);    
+        ]);
     }
     public function getById(Request $request, $id)
     {
         $aplicativo = Aplicativo::with(['user','tags'])->find($id);
 
-        if($aplicativo){
+        if ($aplicativo) {
             return response()->json([
                 'success' => true,
                 'aplicativo' => $aplicativo
             ]);
-        }else {
+        } else {
             return response()->json([
                 'success' => false,
-                'aplicativo' => 'Conteudo não encontrado' 
+                'aplicativo' => 'Não encontrado'
             ]);
         }
     }
-
-
 }

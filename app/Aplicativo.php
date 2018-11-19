@@ -17,7 +17,7 @@ class Aplicativo extends Model
             'created_at',
             'updated_at',
             'deleted_at'
-    ];    
+    ];
     protected $casts = [
         'options' => 'array',
     ];
