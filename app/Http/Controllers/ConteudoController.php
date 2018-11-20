@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Conteudo;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,7 @@ class ConteudoController extends Controller
 {
     public function __construct(Conteudo $conteudo, Request $request)
     {
-        $this->middleware('jwt.verify')->except(['list','search','getById']);
+        $this->middleware('jwt.verify')->except(['list','search','getById','getByTagId']);
         $this->conteudo = $conteudo;
         $this->request = $request;
     }
@@ -59,7 +60,11 @@ class ConteudoController extends Controller
             'limit' => $conteudos->perPage()
         ], 200);
     }
-
+    /**
+     * Valida a criação do conteúdo
+     *
+     * @return 
+     */
     private function validar()
     {
         $validator = Validator::make($this->request->all(), [
@@ -78,9 +83,9 @@ class ConteudoController extends Controller
 
 
     /**
-     * Show the form for creating a new resource.
+     * Adiciona e valida um novo conteúdo.
      *
-     * @return \Illuminate\Http\Response
+     * @return Json
      */
     public function create()
     {
@@ -97,6 +102,7 @@ class ConteudoController extends Controller
 
         $conteudo->user_id = Auth::user()->id;
         $conteudo->approving_user_id = Auth::user()->id;
+        $conteudo->canal_id = $this->request->get('canal_id','');
         $conteudo->title = $this->request->get('title');
         $conteudo->description = $this->request->get('description');
         $conteudo->authors = $this->request->get('authors');
@@ -117,16 +123,15 @@ class ConteudoController extends Controller
     }
 
     /**
-     * Atualiza o conteudo.
+     * Atualiza o conteúdo.
      *
-     * @param  \App\Conteudo  $conteudo
-     * @return \Illuminate\Http\Response
+     * @param  Integer $id
+     * @return Json
      */
     public function update($id)
     {
         $conteudo = $this->conteudo::find($id);
-        
-        
+
         $conteudo->update([
             'canal_id' => $this->request->get('canal_id'),
             'title' => $this->request->get('title'),
@@ -139,7 +144,7 @@ class ConteudoController extends Controller
             'is_site' => $this->request->get('is_site'),
             'options' => json_decode($this->request->get('options'), true)
         ]);
-        
+
         $conteudo->save();
 
         return response()->json([
@@ -153,10 +158,10 @@ class ConteudoController extends Controller
         $conteudo->tags()->attach($this->request->get('tags'));
     }
     /**
-     * Apaga o aplicativo do banco de dados.
+     * Apaga o conteúdo do banco de dados.
      *
-     * @param  \App\Conteudo  $conteudo
-     * @return \Illuminate\Http\Response\Json
+     * @param  Integer $id
+     * @return Json
      */
     public function delete($id)
     {
@@ -179,20 +184,21 @@ class ConteudoController extends Controller
     /**
      * Procura conteudos por full text search.
      *
-     * @param  \App\Conteudo  $conteudo
-     * @return \Illuminate\Http\Response
+     * @param  String $termo
+     * @return Json
      */
     public function search($termo)
     {
         $limit = $this->request->query('limit', 15);
         $page = $this->request->query('page', 1);
 
-        $conteudos = DB::table(DB::raw("conteudos as cd, plainto_tsquery('simple', lower(unaccent('${termo}'))) query"))
+        $conteudos = DB::table(DB::raw("conteudos as cd, plainto_tsquery('simple', lower(unaccent('?'))) query"))
                         ->select(['cd.id','cd.title',
                                 DB::raw('ts_rank_cd(cd.ts_documento, query) AS ranking')
                                 ])
                         ->whereRaw('query @@ cd.ts_documento')
                         ->where('cd.is_approved', '=', 'true')
+                        ->setBindings([$termo])
                         ->orderBy('ranking', 'desc')
                         ->paginate($limit);
 
@@ -212,8 +218,8 @@ class ConteudoController extends Controller
     /**
      * Procura um conteúdo por id
      *
-     * @param id $id do conteúdo digital
-     * @return \Illuminate\Http\Response
+     * @param Integer $id
+     * @return Json
      */
     public function getById($id)
     {
@@ -240,6 +246,33 @@ class ConteudoController extends Controller
         
         return response()->json([
             'tags' => $conteudo->tags
+        ]);
+    }
+    /**
+     * Lista de Conteúdos por Tag ID
+     *
+     * @param Integer $id 
+     * @return Json
+     */
+    public function getByTagId($id)
+    {
+        $limit = $this->request->query('limit', 15);
+
+        $conteudos = $this->conteudo
+        ->whereRaw("? = ANY(SELECT (CAST(jsonb_array_elements(options->'tags')->>'id' AS INT)))")
+        ->setBindings([$id])
+        ->paginate(15);
+
+        $conteudos->setPath("/conteudos/tag/{$id}?limit={$limit}");
+
+        DB::table('tags')->where('id', $id)->increment('searched', 1);
+        
+        $tag = Tag::select('name', 'searched')->find($id);
+
+        return response()->json([
+            'success' => true,
+            'tag' => $tag,
+            'paginator' => $conteudos
         ]);
     }
 }

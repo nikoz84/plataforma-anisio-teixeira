@@ -88,7 +88,8 @@ class TagController extends Controller
 
         $tags = DB::table('tags')
                     ->select(['id','name'])
-                    ->where(DB::raw('unaccent(lower(name))'), 'ILIKE', DB::raw("unaccent(lower('%{$termo}%'))"))
+                    ->where(DB::raw('unaccent(lower(name))'), 'ILIKE', DB::raw("unaccent(lower('%?%'))"))
+                    ->setBinding([$termo])
                     ->paginate($limit);
         
         $tags->setPath("/tags/search/{$termo}?limit={$limit}");
@@ -123,17 +124,10 @@ class TagController extends Controller
     {
         $tag = Tag::where('id', $id);
         
-        $this->incrementSearchTag($id);
-
+        
         return response()->json([
             'success' => true,
             'tag' => $tag
         ]);
-    }
-
-    private function incrementSearchTag($id)
-    {
-        return DB::table('tags')->where('id', $id)
-                                ->increment('searched', 1);
     }
 }

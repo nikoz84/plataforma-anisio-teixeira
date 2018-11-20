@@ -1,6 +1,6 @@
 # PLATAFORMA ANÍSIO TEIXEIRA
 
-O Ambiente Educacional Web – AEW é um projeto de aprendizagem (Baseado em Laravel 5.5) voltado ao compartilhamento de conteúdos digitais através de licenças livres, disponibilizado na internet no endereço (http://pat.educacao.ba.gov.br) para acesso e utilização de todos; constituído pelos seguintes módulos:
+O Ambiente Educacional Web – AEW é um projeto de aprendizagem (Baseado em Laravel 5.5) voltado ao compartilhamento de conteúdos digitais através de licenças livres, disponibilizado na internet no endereço (http://pat.educacao.ba.gov.br) para acesso e utilização de todos.
 
 Você poderá criar canais dinámicos, conteúdos digitais, aplicativos educacionais, sites temáticos.
 
@@ -26,7 +26,10 @@ Faça uma copia do arquivo .env.example, e renomee para .env, em este arquivo vo
 - APP_KEY: variavel global de verificação da aplicação em base 64: `$ php artisan key:generate;`
 - JWT_SECRET: chave para a autenticação com Json Web Token: `$ php artisan jwt:secret;`
 - Também será adicionado um link simbólico da pasta public na pasta storage/app/public: `$ php artisan storage:link`
-- Lembre dar as permissões para o usuário apache para a pasta storage, em UBUNTU seria: `$ sudo chown www:data:www:data storage`
+- Lembre dar as permissões para o usuário apache para a pasta storage, em UBUNTU seria:
+
+``$ sudo chgrp -R www-data storage bootstrap/cache``
+``$ sudo chmod -R ug+rwx storage bootstrap/cache``
 
 Instalar as dependências do laravel com composer:
 
@@ -51,10 +54,10 @@ Agora podemos arrancar o servidor embutido do framework:
 ``$ php artisan serve``
 
 ## CONTRIBUTORS
+
 Nicolás Romero
 
 <a href="https://github.com/nikoz84"><img src="https://avatars1.githubusercontent.com/u/6708508?s=460&v=4" title="Nicolás Romero" width="80" height="80"></a>
-
 
 Fabiano Muniz
 

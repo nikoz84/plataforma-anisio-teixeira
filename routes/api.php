@@ -28,12 +28,14 @@ Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscaCanal
  * Métodos: list -> Listar conteúdos
  * search -> Buscar conteúdos
  * getById -> Dados do conteúdo pelo id
+ * getByTagId -> Lista de conteúdos por Tag
  *
  */
 Route::get('/conteudos', 'ConteudoController@list')->name('listaConteudo');
 Route::get('/conteudos/search/{term}', 'ConteudoController@search')->name('buscaConteudo');
 Route::get('/conteudos/teste', 'ConteudoController@teste');
 Route::get('/conteudos/{id}', 'ConteudoController@getById')->name('buscaxConteudoId');
+Route::get('/conteudos/tag/{id}', 'ConteudoController@getByTagId')->name('buscaxTagId');
 /******
  *
  * Controlador: Aplicativo
