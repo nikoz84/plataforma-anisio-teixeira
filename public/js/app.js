@@ -12881,15 +12881,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_MainApp__ = __webpack_require__(91);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_MainApp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_MainApp__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store_js__ = __webpack_require__(7);
-throw new Error("Cannot find module \"bootstrap-vue\"");
 
 
 
 
 
-
-
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_5_bootstrap_vue___default.a);
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 
@@ -19278,17 +19274,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -19328,12 +19313,12 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                 terms: [],
                 is_approved: []
             },
-            checkbox1: ['Ciências da natureza', 'Humanas', 'Linguagens e seus códigos', 'Matemática'],
-            checkbox2: ['Artes Visuais', 'Audiovisual', 'Circo', 'Dança', 'Literatura', 'Música', 'Teatro'],
-            checkbox3: ['Educação Ambiental', 'Educação Especial', 'Gênero e Sexualidade', 'História e Cultura Africana', 'História e Cultura Indígena', 'Pluralidade Cultural', 'Saúde', 'Trabalho e Consumo', 'Ética e Cidadania'],
+
+            areaConhecimentoBoxs: [{ "id": "Ciências da natureza", "name": "Ciências da natureza" }, { "id": "Humanas", "name": "Humanas" }, { "id": "Linguagens e seus códigos", "name": "Linguagens e seus códigos" }, { "id": "Matemática", "name": "Matemática" }],
             selected: [],
             allSelected: false,
-            indeterminate: false
+            areaConhecimento: []
+
         };
     },
     created: function created() {
@@ -19492,15 +19477,22 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
 
             return getOptions;
         }(),
-        check1: function check1(checked) {
-            this.selectbox1 = checked ? this.checkbox1.slice() : [];
+
+
+        selectAll: function selectAll() {
+            this.areaConhecimento = [];
+
+            if (this.allSelected) {
+                for (areaConhecimentoBox in this.areaConhecimentoBoxs) {
+                    this.areaConhecimento.push(this.areaConhecimentoBoxs[areaConhecimentoBox].id.toString());
+                }
+            }
         },
-        check2: function check2(checked) {
-            this.selectbox2 = checked ? this.checkbox2.slice() : [];
-        },
-        check3: function check3(checked) {
-            this.selectbox3 = checked ? this.checkbox3.slice() : [];
+
+        select: function select() {
+            this.allSelected = false;
         }
+
     },
     watch: {
         'tag': 'getItems'
@@ -20190,60 +20182,98 @@ var render = function() {
             "div",
             { staticClass: "panel-body" },
             [
-              _c(
-                "b-form-group",
-                [
-                  _c(
-                    "template",
-                    { slot: "label" },
-                    [
-                      _c(
-                        "b-form-checkbox",
-                        {
-                          attrs: {
-                            indeterminate: _vm.indeterminate,
-                            "aria-describedby": "checkbox1",
-                            "aria-controls": "checkbox1"
-                          },
-                          on: { change: _vm.check1 },
-                          model: {
-                            value: _vm.allSelected,
-                            callback: function($$v) {
-                              _vm.allSelected = $$v
-                            },
-                            expression: "allSelected"
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "Áreas de Conhecimento\n                        "
-                          )
-                        ]
-                      )
-                    ],
-                    1
+              _vm._v(
+                "\n                Áreas de Conhecimento\n                "
+              ),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.allSelected,
+                    expression: "allSelected"
+                  }
+                ],
+                attrs: { type: "checkbox" },
+                domProps: {
+                  checked: Array.isArray(_vm.allSelected)
+                    ? _vm._i(_vm.allSelected, null) > -1
+                    : _vm.allSelected
+                },
+                on: {
+                  click: _vm.selectAll,
+                  change: function($event) {
+                    var $$a = _vm.allSelected,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && (_vm.allSelected = $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          (_vm.allSelected = $$a
+                            .slice(0, $$i)
+                            .concat($$a.slice($$i + 1)))
+                      }
+                    } else {
+                      _vm.allSelected = $$c
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.areaConhecimentoBoxs, function(areaConhecimentoBox) {
+                return _c("div", [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(areaConhecimentoBox.name) +
+                      "\n                    "
                   ),
-                  _vm._v(" "),
-                  _c("b-form-checkbox-group", {
-                    staticClass: "ml-4",
-                    attrs: {
-                      id: "checkbox1",
-                      stacked: "",
-                      name: "checkbox1",
-                      options: _vm.checkbox1,
-                      "aria-label": "Individual checkbox1"
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.areaConhecimento,
+                        expression: "areaConhecimento"
+                      }
+                    ],
+                    attrs: { type: "checkbox" },
+                    domProps: {
+                      value: areaConhecimentoBox.id,
+                      checked: Array.isArray(_vm.areaConhecimento)
+                        ? _vm._i(_vm.areaConhecimento, areaConhecimentoBox.id) >
+                          -1
+                        : _vm.areaConhecimento
                     },
-                    model: {
-                      value: _vm.selectbox1,
-                      callback: function($$v) {
-                        _vm.selectbox1 = $$v
-                      },
-                      expression: "selectbox1"
+                    on: {
+                      click: _vm.select,
+                      change: function($event) {
+                        var $$a = _vm.areaConhecimento,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = areaConhecimentoBox.id,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              (_vm.areaConhecimento = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.areaConhecimento = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
+                        } else {
+                          _vm.areaConhecimento = $$c
+                        }
+                      }
                     }
                   })
-                ],
-                2
-              ),
+                ])
+              }),
               _vm._v(" "),
               _c(
                 "b-form-group",
@@ -21225,7 +21255,7 @@ var render = function() {
               _vm._v("Outros"),
               _c("br")
             ],
-            1
+            2
           )
         ])
       ]
