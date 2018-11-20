@@ -45,7 +45,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app') ,
+            'root' => storage_path('app') , 
         ],
 
         'public' => [
@@ -67,22 +67,22 @@ return [
 
         'aplicativos-educacionais' =>[
             'driver'=> 'local',
-            'root' => storage_path('app/public/conteudos/aplicativos-educacionais')
+            'root' => storage_path('app/public/conteudos/aplicativos-educacionais/')
         ],
 
         'download' =>[
             'driver'=> 'local',
-            'root' => storage_path('app/public/conteudos/aplicativos-educacionais/download')
+            'root' => storage_path('app/public/conteudos/conteudos-digitais/download')
         ],
 
         'visualizacao' =>[
             'driver'=> 'local',
-            'root' => storage_path('app/public/conteudos/aplicativos-educacionais/visualizacao') 
+            'root' => storage_path('app/public/conteudos/conteudos-digitais/visualizacao') 
         ],
 
         'sinopse' =>[
             'driver'=> 'local',
-            'root' => storage_path('app/public/conteudos/aplicativos-educacionais/sinopse')
+            'root' => storage_path('app/public/conteudos/conteudos-digitais/sinopse')
         ],
         
         's3' => [

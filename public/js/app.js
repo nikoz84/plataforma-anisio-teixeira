@@ -12559,7 +12559,6 @@ var isHTMLTag = makeMap(
   'content,element,shadow,template,blockquote,iframe,tfoot'
 );
 
-<<<<<<< HEAD
 // this map is intentionally selective, only covering SVG elements that may
 // contain child elements.
 var isSVG = makeMap(
@@ -12568,18 +12567,6 @@ var isSVG = makeMap(
   'polygon,polyline,rect,switch,symbol,text,textpath,tspan,use,view',
   true
 );
-=======
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__routes__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_MainApp__ = __webpack_require__(91);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_MainApp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_MainApp__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store_js__ = __webpack_require__(7);
-throw new Error("Cannot find module \"bootstrap-vue\"");
->>>>>>> 1a06e6e0edd2355a54bfb405b64ba5009390c719
 
 var isPreTag = function (tag) { return tag === 'pre'; };
 
@@ -12628,7 +12615,6 @@ var isTextInputType = makeMap('text,number,password,search,email,tel,url');
 
 /*  */
 
-<<<<<<< HEAD
 /**
  * Query an element selector if it's not an element already.
  */
@@ -12640,54 +12626,6 @@ function query (el) {
         'Cannot find element: ' + el
       );
       return document.createElement('div')
-=======
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_5_bootstrap_vue___default.a);
-
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
-
-__webpack_require__(106);
-__webpack_require__(110);
-
-var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
-    mode: 'history',
-    routes: __WEBPACK_IMPORTED_MODULE_2__routes__["a" /* default */],
-    //linkActiveClass: "active",
-    linkExactActiveClass: "active"
-});
-
-/*
-router.beforeEach((to, from, next) => {
-    if(to.matched.some(record => record.meta.requiresAuth)) {
-        
-        if ( localStorage.getItem('token') == null) {
-            next({
-                path: '/login',
-                params: { nextUrl: to.fullPath }
-            })
-        } else {
-            next()
-        }
-    } else if(to.matched.some(record => record.meta.guest)) {
-        if(localStorage.getItem('token') == null){
-            next({
-                path: '/login',
-                params: { nextUrl: to.fullPath }
-            })
-        }
-        else{
-            next({ name: 'Admin'})
-        }
-    }else {
-        next(); 
-    }
-  });
-*/
-
-new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
-    router: router,
-    render: function render(h) {
-        return h(__WEBPACK_IMPORTED_MODULE_3__components_MainApp___default.a);
->>>>>>> 1a06e6e0edd2355a54bfb405b64ba5009390c719
     }
     return selected
   } else {
@@ -62593,7 +62531,6 @@ var Sizzle =
  *
  * Date: 2016-08-08
  */
-<<<<<<< HEAD
 (function( window ) {
 
 var i,
@@ -75718,8 +75655,6 @@ module.exports = CancelToken;
  * @param {Function} callback
  * @returns {Function}
  */
-=======
->>>>>>> 1a06e6e0edd2355a54bfb405b64ba5009390c719
 module.exports = function spread(callback) {
   return function wrap(arr) {
     return callback.apply(null, arr);
@@ -75728,11 +75663,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-<<<<<<< HEAD
 /* 308 */
-=======
-/* 134 */
->>>>>>> 1a06e6e0edd2355a54bfb405b64ba5009390c719
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
