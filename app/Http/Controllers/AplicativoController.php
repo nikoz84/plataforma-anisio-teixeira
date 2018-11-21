@@ -126,7 +126,8 @@ class AplicativoController extends Controller
 
         $aplicativos = DB::table('aplicativos')
                     ->select(['id','name'])
-                    ->where(DB::raw('unaccent(lower(name))'), 'ILIKE', DB::raw("unaccent(lower('%{$termo}%'))"))
+                    ->where(DB::raw('unaccent(lower(name))'), 'ILIKE', DB::raw("unaccent(lower('%?%'))"))
+                    ->setBinding([$termo])
                     ->paginate($limit);
 
         $aplicativos->setPath("/aplicativos/search/{$termo}?limit={$limit}");

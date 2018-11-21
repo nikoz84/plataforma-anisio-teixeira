@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/file/{id}', 'FileController@getFiles')->name('buscaArquivo');
+Route::post('/file/{id}', 'FileController@createFile')->name('adicionaArquivo');
 
 /******
  *

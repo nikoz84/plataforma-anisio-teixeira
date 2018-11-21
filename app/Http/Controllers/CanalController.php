@@ -130,8 +130,9 @@ class CanalController extends Controller
         $limit = ($request->has('limit')) ? $request->query('limit') : 10;
         $page = ($request->has('page')) ? $request->query('page') : 1;
 
-        $canais = Canal::where(DB::raw('unaccent(lower(name))'), 'ILIKE', DB::raw("unaccent(lower('%{$termo}%'))"))
-                        ->paginate($limit);
+        $canais = Canal::where(DB::raw('unaccent(lower(name))'), 'ILIKE', DB::raw("unaccent(lower('%?%'))"))
+                    ->setBinding([$termo])
+                    ->paginate($limit);
         $canais->currentPage($page);
         $canais->setPath("/canais/search/{$termo}?limit={$limit}");
 
