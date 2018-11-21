@@ -15348,6 +15348,17 @@ function setSelected (el, binding, vm) {
   }
 }
 
+<<<<<<< HEAD
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__routes__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_MainApp__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_MainApp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_MainApp__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store_js__ = __webpack_require__(7);
+=======
 function actuallySetSelected (el, binding, vm) {
   var value = binding.value;
   var isMultiple = el.multiple;
@@ -15380,6 +15391,7 @@ function actuallySetSelected (el, binding, vm) {
     el.selectedIndex = -1;
   }
 }
+>>>>>>> ba2debec02e1518c630b37b29602181380497fc9
 
 function hasNoMatchingOption (value, options) {
   return options.every(function (o) { return !looseEqual(o, value); })
@@ -15408,6 +15420,9 @@ function trigger (el, type) {
   el.dispatchEvent(e);
 }
 
+<<<<<<< HEAD
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
+=======
 /*  */
 
 // recursively search for possible transition defined inside the component root
@@ -15420,6 +15435,7 @@ function locateNode (vnode) {
 var show = {
   bind: function bind (el, ref, vnode) {
     var value = ref.value;
+>>>>>>> ba2debec02e1518c630b37b29602181380497fc9
 
     vnode = locateNode(vnode);
     var transition$$1 = vnode.data && vnode.data.transition;
@@ -22312,6 +22328,445 @@ var Link = {
     var route = ref.route;
     var href = ref.href;
 
+<<<<<<< HEAD
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+=======
     var classes = {};
     var globalActiveClass = router.options.linkActiveClass;
     var globalExactActiveClass = router.options.linkExactActiveClass;
@@ -22331,6 +22786,7 @@ var Link = {
     var compareTarget = location.path
       ? createRoute(null, location, null, router)
       : route;
+>>>>>>> ba2debec02e1518c630b37b29602181380497fc9
 
     classes[exactActiveClass] = isSameRoute(current, compareTarget);
     classes[activeClass] = this.exact
@@ -22354,6 +22810,52 @@ var Link = {
       on[this.event] = handler;
     }
 
+<<<<<<< HEAD
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'ConteudoForm',
+    components: {},
+    data: function data() {
+        return {
+            title: '',
+            description: null,
+            authors: null,
+            source: null,
+            license: '',
+            options: {},
+            tipo: '',
+            tags: [],
+            canal: null,
+            tag: '',
+            terms: false,
+            is_featured: false,
+            is_site: false,
+            is_approved: false,
+            autocompleteItems: [],
+            category: '',
+            categories: [],
+            site: '',
+            message: '',
+            isError: true,
+            errors: {
+                title: [],
+                description: [],
+                tipo: [],
+                authors: [],
+                license: [],
+                terms: [],
+                is_approved: []
+            },
+
+            areaConhecimentoBoxs: [{ "id": "Ciências da natureza", "name": "Ciências da natureza" }, { "id": "Humanas", "name": "Humanas" }, { "id": "Linguagens e seus códigos", "name": "Linguagens e seus códigos" }, { "id": "Matemática", "name": "Matemática" }],
+            selected: [],
+            allSelected: false,
+            areaConhecimento: []
+
+        };
+    },
+    created: function created() {
+        this.getOptions();
+=======
     var data = {
       class: classes
     };
@@ -22444,6 +22946,7 @@ function install (Vue) {
         this._routerRoot = (this.$parent && this.$parent._routerRoot) || this;
       }
       registerInstance(this, this);
+>>>>>>> ba2debec02e1518c630b37b29602181380497fc9
     },
     destroyed: function destroyed () {
       registerInstance(this);
@@ -22572,6 +23075,29 @@ var PATH_REGEXP = new RegExp([
   '([\\/.])?(?:(?:\\:(\\w+)(?:\\(((?:\\\\.|[^\\\\()])+)\\))?|\\(((?:\\\\.|[^\\\\()])+)\\))([+*?])?|(\\*))'
 ].join('|'), 'g');
 
+<<<<<<< HEAD
+            return getOptions;
+        }(),
+
+
+        selectAll: function selectAll() {
+            this.areaConhecimento = [];
+
+            if (this.allSelected) {
+                for (areaConhecimentoBox in this.areaConhecimentoBoxs) {
+                    this.areaConhecimento.push(this.areaConhecimentoBoxs[areaConhecimentoBox].id.toString());
+                }
+            }
+        },
+
+        select: function select() {
+            this.allSelected = false;
+        }
+
+    },
+    watch: {
+        'tag': 'getItems'
+=======
 /**
  * Parse a string for the raw tokens.
  *
@@ -22598,6 +23124,7 @@ function parse (str, options) {
     if (escaped) {
       path += escaped[1];
       continue
+>>>>>>> ba2debec02e1518c630b37b29602181380497fc9
     }
 
     var next = str[index];
@@ -28883,60 +29410,98 @@ var render = function() {
             "div",
             { staticClass: "panel-body" },
             [
-              _c(
-                "b-form-group",
-                [
-                  _c(
-                    "template",
-                    { slot: "label" },
-                    [
-                      _c(
-                        "b-form-checkbox",
-                        {
-                          attrs: {
-                            indeterminate: _vm.indeterminate,
-                            "aria-describedby": "checkbox1",
-                            "aria-controls": "checkbox1"
-                          },
-                          on: { change: _vm.check1 },
-                          model: {
-                            value: _vm.allSelected,
-                            callback: function($$v) {
-                              _vm.allSelected = $$v
-                            },
-                            expression: "allSelected"
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "Áreas de Conhecimento\n                        "
-                          )
-                        ]
-                      )
-                    ],
-                    1
+              _vm._v(
+                "\n                Áreas de Conhecimento\n                "
+              ),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.allSelected,
+                    expression: "allSelected"
+                  }
+                ],
+                attrs: { type: "checkbox" },
+                domProps: {
+                  checked: Array.isArray(_vm.allSelected)
+                    ? _vm._i(_vm.allSelected, null) > -1
+                    : _vm.allSelected
+                },
+                on: {
+                  click: _vm.selectAll,
+                  change: function($event) {
+                    var $$a = _vm.allSelected,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && (_vm.allSelected = $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          (_vm.allSelected = $$a
+                            .slice(0, $$i)
+                            .concat($$a.slice($$i + 1)))
+                      }
+                    } else {
+                      _vm.allSelected = $$c
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.areaConhecimentoBoxs, function(areaConhecimentoBox) {
+                return _c("div", [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(areaConhecimentoBox.name) +
+                      "\n                    "
                   ),
-                  _vm._v(" "),
-                  _c("b-form-checkbox-group", {
-                    staticClass: "ml-4",
-                    attrs: {
-                      id: "checkbox1",
-                      stacked: "",
-                      name: "checkbox1",
-                      options: _vm.checkbox1,
-                      "aria-label": "Individual checkbox1"
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.areaConhecimento,
+                        expression: "areaConhecimento"
+                      }
+                    ],
+                    attrs: { type: "checkbox" },
+                    domProps: {
+                      value: areaConhecimentoBox.id,
+                      checked: Array.isArray(_vm.areaConhecimento)
+                        ? _vm._i(_vm.areaConhecimento, areaConhecimentoBox.id) >
+                          -1
+                        : _vm.areaConhecimento
                     },
-                    model: {
-                      value: _vm.selectbox1,
-                      callback: function($$v) {
-                        _vm.selectbox1 = $$v
-                      },
-                      expression: "selectbox1"
+                    on: {
+                      click: _vm.select,
+                      change: function($event) {
+                        var $$a = _vm.areaConhecimento,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = areaConhecimentoBox.id,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              (_vm.areaConhecimento = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.areaConhecimento = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
+                        } else {
+                          _vm.areaConhecimento = $$c
+                        }
+                      }
                     }
                   })
-                ],
-                2
-              ),
+                ])
+              }),
               _vm._v(" "),
               _c(
                 "b-form-group",
@@ -33769,6 +34334,20 @@ var staticRenderFns = [
                 ])
               ]),
               _vm._v(" "),
+<<<<<<< HEAD
+              _c("input", {
+                attrs: {
+                  type: "checkbox",
+                  name: "item-superior1",
+                  value: "html"
+                }
+              }),
+              _vm._v("Outros"),
+              _c("br")
+            ],
+            2
+          )
+=======
               _c("p", [
                 _c("a", { attrs: { href: "/radio-anisio-teixeira/inicio" } }, [
                   _vm._v("Radio Anísio Teixeira")
@@ -33888,6 +34467,7 @@ var staticRenderFns = [
               }
             })
           ])
+>>>>>>> ba2debec02e1518c630b37b29602181380497fc9
         ])
       ]
     )
