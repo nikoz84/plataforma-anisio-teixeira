@@ -73,6 +73,8 @@
 <script>
 import Http from '../http.js';
 
+const http = new Http;
+
 export default {
     name: 'AplicativoForm',
     data(){
@@ -101,7 +103,7 @@ export default {
                 token: localStorage.token
             };
             console.warn(data)
-            let http = new Http();
+            
             let resp = await http.postData('/aplicativos/create', data);
 
             if(resp.data.success){

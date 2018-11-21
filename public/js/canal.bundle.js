@@ -156,7 +156,8 @@ var http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
             idCanal: null,
             options: null,
             color: '#1e78c2',
-            hasCategories: false
+            hasCategories: false,
+            categories: null
         };
     },
     created: function created() {},
@@ -192,6 +193,9 @@ var http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
                                     this.color = this.options.color;
                                     this.hasCategories = this.options.has_categories;
                                     localStorage.setItem('idCanal', this.idCanal);
+                                    if (this.hasCategories) {
+                                        this.getCategories();
+                                    }
                                 }
 
                             case 5:
@@ -207,6 +211,40 @@ var http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
             }
 
             return getCanal;
+        }(),
+        getCategories: function () {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
+                var params, resp;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+                    while (1) {
+                        switch (_context2.prev = _context2.next) {
+                            case 0:
+                                params = {
+                                    canal: this.idCanal
+                                };
+                                _context2.next = 3;
+                                return http.getDataFromUrl('/categories', params);
+
+                            case 3:
+                                resp = _context2.sent;
+
+                                if (resp.data.success) {
+                                    this.categories = resp.data.categories;
+                                }
+
+                            case 5:
+                            case 'end':
+                                return _context2.stop();
+                        }
+                    }
+                }, _callee2, this);
+            }));
+
+            function getCategories() {
+                return _ref2.apply(this, arguments);
+            }
+
+            return getCategories;
         }()
     }
 });
@@ -529,6 +567,7 @@ exports.push([module.i, "", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__http_js__ = __webpack_require__(13);
 //
 //
 //
@@ -541,10 +580,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+var http = new __WEBPACK_IMPORTED_MODULE_0__http_js__["a" /* default */]();
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: 'SidebarCanal'
-
+    name: 'SidebarCanal',
+    props: ['categories']
 });
 
 /***/ }),
@@ -583,9 +634,29 @@ var render = function() {
             }
           },
           [_c("a", [_vm._v("Matematicas")])]
-        )
+        ),
+        _vm._v(" "),
+        _vm._l(_vm.categories, function(category, c) {
+          return _c("li", { key: c }, [
+            _vm._v("\n            " + _vm._s(category.name) + "\n            "),
+            _c(
+              "ul",
+              _vm._l(category.sub_categories, function(subcategory, s) {
+                return subcategory.options.is_active
+                  ? _c("li", { key: s }, [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(subcategory.name) +
+                          "\n                "
+                      )
+                    ])
+                  : _vm._e()
+              })
+            )
+          ])
+        })
       ],
-      1
+      2
     )
   ])
 }
@@ -613,7 +684,13 @@ var render = function() {
       _c(
         "aside",
         { staticClass: "col-sm-3" },
-        [_vm._m(0), _vm._v(" "), _c("SidebarCanal")],
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _vm.hasCategories
+            ? _c("SidebarCanal", { attrs: { categories: _vm.categories } })
+            : _vm._e()
+        ],
         1
       ),
       _vm._v(" "),

@@ -30430,6 +30430,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 
+var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'AplicativoForm',
     data: function data() {
@@ -30448,7 +30450,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     methods: {
         createAplicativo: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-                var data, http, resp;
+                var data, resp;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
@@ -30464,11 +30466,11 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                 };
 
                                 console.warn(data);
-                                http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
-                                _context.next = 5;
+
+                                _context.next = 4;
                                 return http.postData('/aplicativos/create', data);
 
-                            case 5:
+                            case 4:
                                 resp = _context.sent;
 
 
@@ -30476,7 +30478,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                     console.warn(resp.data.message);
                                 }
 
-                            case 7:
+                            case 6:
                             case 'end':
                                 return _context.stop();
                         }
