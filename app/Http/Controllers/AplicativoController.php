@@ -51,7 +51,8 @@ class AplicativoController extends Controller
     {
         $validator = Validator::make($this->request->all(), [
             'name' => 'required|min:10|max:255',
-            'url' => 'regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/'
+            'url' => 'regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
+            'description' => 'required|min:140',
         ]);
 
         return $validator;

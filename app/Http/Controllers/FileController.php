@@ -12,7 +12,7 @@ class FileController extends File
     
     }
     public function createFile($id){
-        $request->file('imagem-destacada')
+        $request->file('imagem-destacada');
     }
     public function downloadFile($id){
     

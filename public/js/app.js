@@ -21120,13 +21120,10 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
-//
-//
-//
-//
-//
 
 
+
+var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'AplicativoForm',
@@ -21140,9 +21137,14 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             uso_pedagogico: null,
             tags: [],
             options: {},
+            categories: [],
+            message: null,
+            isError: false,
             errors: {
                 name: [],
-                url: []
+                url: [],
+                description: [],
+                category: []
             }
         };
     },
@@ -21152,13 +21154,14 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
                 var _this = this;
 
-                var data, http, resp;
+                var data, resp;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 this.options = {
-                                    url: this.url
+                                    url: this.url,
+                                    category: this.category
                                 };
                                 data = {
                                     name: this.name,
@@ -21171,11 +21174,11 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                 };
 
                                 console.warn(data);
-                                http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
-                                _context.next = 6;
+
+                                _context.next = 5;
                                 return http.postData('/aplicativos/create', data);
 
-                            case 6:
+                            case 5:
                                 resp = _context.sent;
 
 
@@ -21194,7 +21197,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                     }, 3000);
                                 }
 
-                            case 8:
+                            case 7:
                             case 'end':
                                 return _context.stop();
                         }
@@ -21362,139 +21365,117 @@ var render = function() {
                 2
               ),
               _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "descricao" } }, [
-                  _vm._v("Descrição:*")
-                ]),
-                _vm._v(" "),
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.description,
-                      expression: "description"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  staticStyle: { resize: "none" },
-                  attrs: { id: "descricao" },
-                  domProps: { value: _vm.description },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.description = $event.target.value
-                    }
+              _c(
+                "div",
+                {
+                  staticClass: "form-group",
+                  class: {
+                    "has-error":
+                      _vm.errors.description &&
+                      _vm.errors.description.length > 0
                   }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "estado" } }, [
-                  _vm._v("Categoria:*")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
+                },
+                [
+                  _c("label", { attrs: { for: "descricao" } }, [
+                    _vm._v("Descrição:*")
+                  ]),
+                  _vm._v(" "),
+                  _c("textarea", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.categoria,
-                        expression: "categoria"
+                        value: _vm.description,
+                        expression: "description"
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: {
-                      name: "idambientedeapoiocategoria",
-                      id: "idambientedeapoiocategoria"
-                    },
+                    staticStyle: { resize: "none" },
+                    attrs: { id: "descricao" },
+                    domProps: { value: _vm.description },
                     on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.categoria = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.description = $event.target.value
                       }
                     }
-                  },
-                  [
-                    _c("option", { attrs: { value: "0" } }, [
-                      _vm._v("« SELECIONE »")
+                  }),
+                  _vm._v(" "),
+                  _vm._l(_vm.errors.description, function(error, des) {
+                    return _vm.errors.description
+                      ? _c("small", {
+                          key: des,
+                          staticClass: "text-danger",
+                          domProps: { textContent: _vm._s(error) }
+                        })
+                      : _vm._e()
+                  })
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _vm.categories.length != 0
+                ? _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "estado" } }, [
+                      _vm._v("Categoria:*")
                     ]),
                     _vm._v(" "),
-                    _c("option", { attrs: { value: "8" } }, [
-                      _vm._v("Ambiente de Aprendizagem")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "9" } }, [
-                      _vm._v("Ambiente de Programação")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "10" } }, [
-                      _vm._v("Aplicativos Educacionais")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "11" } }, [
-                      _vm._v("Aplicativos para Escritório")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "36" } }, [
-                      _vm._v("Biblioteca")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "12" } }, [
-                      _vm._v("Editor de Animação")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "13" } }, [
-                      _vm._v("Editor de Imagem")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "20" } }, [
-                      _vm._v("Editor de Vídeo")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "37" } }, [
-                      _vm._v("Editor de Áudio")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "22" } }, [
-                      _vm._v("Gerenciador de Conteúdo")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "14" } }, [
-                      _vm._v("Gerenciador de Projetos")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "18" } }, [
-                      _vm._v("Gerenciador de Revistas")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "38" } }, [
-                      _vm._v("Internet")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "23" } }, [
-                      _vm._v("Portais Educacionais")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "21" } }, [
-                      _vm._v("Sistemas Operacionais Livres")
-                    ])
-                  ]
-                )
-              ]),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.categoria,
+                            expression: "categoria"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          name: "idambientedeapoiocategoria",
+                          id: "idambientedeapoiocategoria"
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.categoria = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "" } }, [
+                          _vm._v("« SELECIONE »")
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.categories, function(category, i) {
+                          return _c(
+                            "option",
+                            { key: i, domProps: { value: category.name } },
+                            [
+                              _vm._v(
+                                _vm._s(category.name) +
+                                  "\n                        "
+                              )
+                            ]
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  ])
+                : _vm._e(),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
                 _c("label", { attrs: { for: "tags" } }, [

@@ -7,7 +7,6 @@ use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\ConteudoFormRequest;
 use Illuminate\Support\Facades\Validator;
 
 class ConteudoController extends Controller

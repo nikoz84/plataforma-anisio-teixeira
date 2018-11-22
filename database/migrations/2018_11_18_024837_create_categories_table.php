@@ -14,8 +14,12 @@ class CreateCategoriesTable extends Migration
     public function up()
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name', 255);
+            $table->increments('id')->comment('Chave primaria');
+            $table->integer('parent_id')->nullable()->comment('Categoria pai');
+            $table->integer('canal_id')->nullable()->comment('Categoria do canal');
+            $table->string('name', 255)->comment('Nome da categoria');
+            $table->jsonb('options')->comment('Meta dados da categoria');
+            $table->timestamps();
         });
     }
 

@@ -13,8 +13,21 @@ use Illuminate\Http\Request;
 |
 */
 
+/******
+ *
+ * Controlador: File
+ * Métodos: getFiles -> Lista dos arquivos relacionados a um id específico
+ * createFile -> Adiciona um novo arquivo para um recurso específico
+ */
 Route::get('/file/{id}', 'FileController@getFiles')->name('buscaArquivo');
 Route::post('/file/{id}', 'FileController@createFile')->name('adicionaArquivo');
+
+/******
+ *
+ * Controlador: Category
+ * Métodos: list -> Lista das categorias
+ */
+Route::get('/categories', 'CategoryController@list')->name('listaCategorias');
 
 /******
  *
