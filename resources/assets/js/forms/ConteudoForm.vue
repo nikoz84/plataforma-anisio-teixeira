@@ -185,57 +185,12 @@
                 <div class="panel-body">
                     
                     <!-- checkbox1 Áreas de Conhecimento -->
-                    Áreas de Conhecimento
-                    <input type="checkbox" @click="selectAll" v-model="allSelected">
-                    
-                    <div v-for="areaConhecimentoBox in areaConhecimentoBoxs">
-                        {{ areaConhecimentoBox.name }}
-                        <input type="checkbox" v-model="areaConhecimento" @click="select" :value="areaConhecimentoBox.id">
-                    </div>
                     
 
                     <!-- checkbox2 Linguagens Artísticas -->
-                    <b-form-group>
-                        <template slot="label">
-                            <b-form-checkbox v-model="allSelected"
-                                            :indeterminate="indeterminate"
-                                            aria-describedby="checkbox2"
-                                            aria-controls="checkbox2"
-                                            @change="check2"
-                            >Linguagens Artísticas
-                            </b-form-checkbox>
-                        </template>
-                        <b-form-checkbox-group id="checkbox2"
-                                                stacked
-                                                v-model="selectbox2"
-                                                name="checkbox2"
-                                                :options="checkbox2"
-                                                class="ml-4"
-                                                aria-label="Individual checkbox2"
-                        ></b-form-checkbox-group>
-                    </b-form-group>
-
+                    
                     <!-- checkbox3 Temas Transversais -->
-                    <b-form-group>
-                        <template slot="label">
-                            <b-form-checkbox v-model="allSelected"
-                                            :indeterminate="indeterminate"
-                                            aria-describedby="checkbox3"
-                                            aria-controls="checkbox3"
-                                            @change="check3"
-                            >Temas Transversais
-                            </b-form-checkbox>
-                        </template>
-                        <b-form-checkbox-group id="checkbox3"
-                                                stacked
-                                                v-model="selectbox3"
-                                                name="checkbox3"
-                                                :options="checkbox3"
-                                                class="ml-4"
-                                                aria-label="Individual checkbox3"
-                        ></b-form-checkbox-group>
-                    </b-form-group>
-
+                    
                     <br>
                     <div class="col-auto my-1">
                         <div class="custom-control custom-checkbox mr-sm-2">
@@ -474,16 +429,7 @@ export default {
                 terms: [],
                 is_approved: [],
             },
-            
-            areaConhecimentoBoxs: [ 
-                { "id": "Ciências da natureza", "name": "Ciências da natureza" }, 
-                { "id": "Humanas", "name": "Humanas" }, 
-                { "id": "Linguagens e seus códigos", "name": "Linguagens e seus códigos" }, 
-                { "id": "Matemática", "name": "Matemática" }
-            ],
-            selected: [],
-            allSelected: false,
-            areaConhecimento: []
+
 
         }
 
@@ -529,7 +475,7 @@ export default {
                 if(resp.data.errors){
                     this.errors = resp.data.errors;
                 }
-                
+
                 setTimeout(()=>{
                     this.isError = true; 
                 },3000)
@@ -566,21 +512,7 @@ export default {
                 this.categories = resp.data.options.meta_data.categories
             }
         },
-
-        selectAll: function() {
-            this.areaConhecimento = [];
-
-            if (this.allSelected) {
-                for (areaConhecimentoBox in this.areaConhecimentoBoxs) {
-                    this.areaConhecimento.push(this.areaConhecimentoBoxs[areaConhecimentoBox].id.toString());
-                }
-            }
-        },
-
-        select: function() {
-            this.allSelected = false;
-        }
-
+        
     },
     watch:{
         'tag':'getItems'

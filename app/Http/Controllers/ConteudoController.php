@@ -102,7 +102,7 @@ class ConteudoController extends Controller
 
         $conteudo->user_id = Auth::user()->id;
         $conteudo->approving_user_id = Auth::user()->id;
-        $conteudo->canal_id = $this->request->get('canal_id','');
+        $conteudo->canal_id = $this->request->get('canal_id', '');
         $conteudo->title = $this->request->get('title');
         $conteudo->description = $this->request->get('description');
         $conteudo->authors = $this->request->get('authors');

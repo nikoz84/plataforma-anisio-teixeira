@@ -2,15 +2,19 @@
 namespace App\Http\Controllers;
 
 use App\Aplicativo;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Http\Requests\AplicativoFormRequest;
+use Illuminate\Support\Facades\Validator;
 
 class AplicativoController extends Controller
 {
-    public function __construct()
+    public function __construct(Aplicativo $aplicativo, Request $request)
     {
         $this->middleware('jwt.verify')->except(['list','search','getById']);
+        $this->aplicativo = $aplicativo;
+        $this->request = $request;
     }
     /**
      * Display a listing of the resource.
@@ -22,13 +26,13 @@ class AplicativoController extends Controller
         $limit = ($request->has('limit')) ? $request->query('limit') : 10;
         $orderBy = ($request->has('order')) ? $request->query('order') : 'name';
         $page = ($request->has('page')) ? $request->query('page') : 1;
-        
+
         $aplicativos = Aplicativo::select(['id','user_id','name','description'])
                                     ->orderBy($orderBy, 'name')
                                     ->paginate($limit);
-                    
+
         $aplicativos->setPath("/aplicativos?limit={$limit}");
-        
+
         return response()->json([
             'success'=> true,
             'title'=> 'Aplicativos Educacionais',
@@ -38,6 +42,21 @@ class AplicativoController extends Controller
         ]);
     }
 
+    /**
+     * Valida a criação do Aplicativo
+     *
+     * @return
+     */
+    private function validar()
+    {
+        $validator = Validator::make($this->request->all(), [
+            'name' => 'required|min:10|max:255',
+            'url' => 'regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/'
+        ]);
+
+        return $validator;
+    }
+
 /**
      * Show the form for creating a new resource.
      *
@@ -45,30 +64,32 @@ class AplicativoController extends Controller
      */
     public function create(Request $request)
     {
-        
-        $id = DB::table('aplicativos')->insertGetId(
-            [
-                'user_id' => Auth::user()->id,
-                'name' => $request->get('name'),
-                'url' => $request->get('url'),
-                'description'=> $request->get('description'),
-                'is_featured' => $request->get('is_featured'),
-                'options' => $request->get('options')
-    
-            ]
-        );
-        if ($id) {
+
+        $validator = $this->validar($this->request);
+        if ($validator->fails()) {
             return response()->json([
-                'success'=> true,
-                'message' => 'Aplicativo cadastrado com sucesso',
-                'id' => $id
-            ]);
-        } else {
-            return response()->json([
-                'success'=> false,
-                'message' => 'Não foi possível cadastrar aplicativo'
-            ]);
+                'success' => false,
+                'message' => 'Não foi possível efetuar o cadastro',
+                'errors' => $validator->errors()
+            ], 200);
         }
+
+        $aplicativo = $this->aplicativo;
+
+        $aplicativo->user_id = Auth::user()->id;
+        $aplicativo->name = $this->request->get('name', '');
+        $aplicativo->url = $this->request->get('url');
+        $aplicativo->description = $this->request->get('description');
+        $aplicativo->is_featured = $this->request->get('is_featured');
+        $aplicativo->options = $this->request->get('options');
+
+        $aplicativo->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Aplicativo cadastrado com sucesso',
+            'id' => $aplicativo->id
+        ]);
     }
 
 /**
@@ -93,7 +114,7 @@ class AplicativoController extends Controller
         
         return response()->json($aplicativo->toJson());
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
