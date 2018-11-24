@@ -2,11 +2,12 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import routes from './routes';
 import MainApp from './components/MainApp';
-import store from './store.js';
-import BootstrapVue from 'bootstrap-vue';
+import Vuex from 'vuex';
+import 'es6-promise/auto';
+import store from './store/index.js';
 
-Vue.use(BootstrapVue);
 
+Vue.use(Vuex);
 Vue.use(VueRouter);
 
 require('animate.css/animate.min.css');
@@ -51,5 +52,6 @@ router.beforeEach((to, from, next) => {
 
 new Vue({
     router,
+    store,
     render: h => h(MainApp)
   }).$mount('#app')

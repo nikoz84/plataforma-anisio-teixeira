@@ -14,7 +14,7 @@ class ConteudoController extends Controller
 {
     public function __construct(Conteudo $conteudo, Request $request)
     {
-        $this->middleware('jwt.verify')->except(['list','search','getById','getByTagId']);
+        $this->middleware('jwt.verify')->except(['list','search','getById','getByTagId','getSitesTematicos']);
         $this->conteudo = $conteudo;
         $this->request = $request;
     }
@@ -25,42 +25,44 @@ class ConteudoController extends Controller
      */
     public function list()
     {
-        $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;
-
+        $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
-        $isApproved = $this->request->query('approved', 'true');
-        $conteudos = null;
-        
-        if ($this->request->has('canal')) {
-            $canal = $this->request->query('canal');
-            $site = $this->request->query('site', 'false');
+        $isCanal = $this->request->query('canal');
+       
+        $query = $this->conteudo::query();
+        $query->when($isCanal, function ($q, $canal) {
+            return $q->where('canal_id', $canal)
+                    ->where('is_approved', 'true');
+        });
 
-            $conteudos = $this->conteudo::select('id', 'canal_id', 'user_id', 'title', 'options')
-                            ->where('is_approved', $isApproved)
-                            ->where('is_site', $site)
-                            ->where('canal_id', $canal)
-                            ->orderBy($orderBy, 'desc')
-                            ->paginate($limit);
-            $conteudos->setPath("/conteudos?canal={$canal}&site={$site}&limit={$limit}");
-        } else {
-            $conteudos = $this->conteudo::select('id', 'canal_id', 'user_id', 'title', 'options')
-                            ->where('is_approved', $isApproved)
-                            ->orderBy($orderBy, 'desc')
-                            ->paginate($limit);
-            $conteudos->setPath("/conteudos?limit={$limit}");
-        }
+        $conteudos = $query->orderBy($orderBy, 'desc')
+                        ->paginate($limit)
+                        ->setPath("/conteudos?limit={$limit}&canal=$isCanal");
         
-
         return response()->json([
             'success'=> true,
             'title'=> 'Mídias educacionais',
-            'paginator'=> $conteudos,
-            'page'=> $conteudos->currentPage(),
-            'limit' => $conteudos->perPage()
+            'paginator'=> $conteudos
         ], 200);
     }
-
+    public function getSitesTematicos()
+    {
+        $limit = $this->request->query('limit', 15);
+        $orderBy = $this->request->query('order', 'created_at');
+        
+        $sitesTematicos = $this->conteudo::where('is_site', 'true')
+                        ->where('is_approved', 'true')
+                        ->orderBy($orderBy, 'desc')
+                        ->paginate($limit)
+                        ->setPath("/sites-tematicos?limit={$limit}");
+        
+        return response()->json([
+            'success'=> true,
+            'title'=> 'Sites Temáticos',
+            'paginator'=> $sitesTematicos
+        ], 200);
+    }
     private function validar()
     {
         $validator = Validator::make($this->request->all(), [

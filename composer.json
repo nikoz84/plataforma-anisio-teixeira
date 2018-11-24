@@ -10,6 +10,7 @@
         "laravel/framework": "5.5.*",
         "laravel/passport": "~4.0.3",
         "laravel/tinker": "~1.0",
+        "php-ai/php-ml": "^0.7.0",
         "tymon/jwt-auth": "dev-develop"
     },
     "require-dev": {

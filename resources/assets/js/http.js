@@ -57,7 +57,7 @@ export default class Http {
 
         switch(true){
             case (idCanal == 5):
-                return `${this.api}/conteudos?site=true`;
+                return `${this.api}/conteudos/sites`;
                 break;
             case (idCanal == 6):
                 return `${this.api}/conteudos`;
