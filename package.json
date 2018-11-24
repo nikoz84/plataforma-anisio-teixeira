@@ -10,6 +10,14 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
+<<<<<<< HEAD
+=======
+    "bootstrap-vue": "^2.0.0-rc.11",
+    "i": "^0.3.6",
+    "@fortawesome/fontawesome-svg-core": "^1.2.7",
+    "@fortawesome/free-solid-svg-icons": "^5.4.2",
+    "@fortawesome/vue-fontawesome": "^0.1.1",
+>>>>>>> 8f2cfa56bbd2e9f6d3b8e96aba7a5395cb7a36f2
     "animate.css": "^3.7.0",
     "axios": "^0.17",
     "babel-plugin-dynamic-import-webpack": "^1.0.2",

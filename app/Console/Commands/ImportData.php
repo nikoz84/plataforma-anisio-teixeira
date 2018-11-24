@@ -38,28 +38,36 @@ class ImportData extends Command
      */
     public function handle()
     {
-        $users = storage_path('dumps\1_users');
-        $canais = storage_path('dumps\2_canais');
-        $tags = storage_path('dumps\3_tags');
-        $aplicativos = storage_path('dumps\4_aplicativos');
-        $aplicativo_tag = storage_path('dumps\5_aplicativo_tag');
-        $conteudos = storage_path('dumps\6_conteudos');
-        $conteudo_tag = storage_path('dumps\7_conteudo_tag');
-        $licenses = storage_path('dumps\8_licenses');
-        $category_conteudo = storage_path('dumps\9_category_conteudo');
-        $componentes = explode("\n", file_get_contents(storage_path('dumps\10_componentes')));
-        $niveis = explode("\n", file_get_contents(storage_path('dumps\11_niveis_ensino')));
+        $users = storage_path('dumps/1.users');
+        $canais = storage_path('dumps/2.canais');
+        $tags = storage_path('dumps/3.tags');
+        $aplicativos = storage_path('dumps/4.aplicativos');
+        $aplicativo_tag = storage_path('dumps/5.aplicativo_tag');
+        $conteudos = storage_path('dumps/6.conteudos');
+        $conteudo_tag = storage_path('dumps/7.conteudo_tag');
+        $licenses = storage_path('dumps/8.licenses');
+        $categories = storage_path('dumps/9.categories');
+        $componentes = explode("\n", file_get_contents(storage_path('dumps/10.componentes')));
+        $niveis = explode("\n", file_get_contents(storage_path('dumps/11.niveis')));
         
-        DB::statement("copy users FROM '{$users}' delimiter '*';");
-        DB::statement("copy canais FROM '{$canais}' delimiter '*';");
-        DB::statement("copy tags FROM '{$tags}' delimiter '*';");
-        DB::statement("copy aplicativos FROM '{$aplicativos}' delimiter '*';");
-        DB::statement("copy aplicativo_tag FROM '{$aplicativo_tag}' delimiter '*';");
-        DB::statement("copy conteudos FROM '{$conteudos}' delimiter '*';");
-        DB::statement("copy conteudo_tag FROM '{$conteudo_tag}' delimiter '*';");
-        DB::statement("copy licenses FROM '{$licenses}' delimiter '*';");
-        DB::statement("copy categories FROM '{$category_conteudo}' delimiter '*';");
+        DB::statement("COPY users FROM '{$users}' DELIMITER '*';");
+        DB::statement("COPY canais FROM '{$canais}' DELIMITER '*';");
+        DB::statement("COPY tags FROM '{$tags}' DELIMITER '*';");
+        DB::statement("COPY aplicativos FROM '{$aplicativos}' DELIMITER '*';");
+        DB::statement("COPY aplicativo_tag FROM '{$aplicativo_tag}' DELIMITER '*';");
+        DB::statement("COPY conteudos FROM '{$conteudos}' DELIMITER '*';");
+        DB::statement("COPY conteudo_tag FROM '{$conteudo_tag}' DELIMITER '*';");
+        DB::statement("COPY licenses FROM '{$licenses}' DELIMITER '*';");
+        DB::statement("COPY categories FROM '{$categories}' DELIMITER '*';");
         
+        DB::statement("ALTER SEQUENCE users_id_seq RESTART WITH 2668;");
+        DB::statement("ALTER SEQUENCE canais_id_seq RESTART WITH 15;");
+        DB::statement("ALTER SEQUENCE tags_id_seq RESTART WITH 13877;");
+        DB::statement("ALTER SEQUENCE aplicativos_id_seq RESTART WITH 125;");
+        DB::statement("ALTER SEQUENCE conteudos_id_seq RESTART WITH 8670;");
+        DB::statement("ALTER SEQUENCE licenses_id_seq RESTART WITH 14;");
+        DB::statement("ALTER SEQUENCE categories_id_seq RESTART WITH 69;"); 
+
         $this->importToOptions($componentes);
         $this->importToOptions($niveis);
     }
@@ -68,7 +76,7 @@ class ImportData extends Command
     {
         foreach ($meta_data as $key => $value) {
             $data = explode("*", $value);
-            DB::statement("insert into options (name, meta_data) values ('$data[0]','$data[1]')");
+            DB::statement("insert into options (name, meta_data) values ('{$data[0]}','{$data[1]}')");
         }
     }
 }

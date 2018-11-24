@@ -5,7 +5,7 @@
                 <div class="text-center"> 
                     <h3>Filtro</h3>
                 </div>
-                <SidebarCanal></SidebarCanal>
+                <SidebarCanal v-if="hasCategories" v-bind:categories="categories"></SidebarCanal>
             </aside>
             <article class="col-sm-9">
                 <header class="page-header">
@@ -44,7 +44,8 @@ export default {
             idCanal: null,
             options: null,
             color: '#1e78c2',
-            hasCategories: false
+            hasCategories: false,
+            categories: null
         }
     },
     created() {
@@ -70,7 +71,19 @@ export default {
                 this.color = this.options.color;
                 this.hasCategories = this.options.has_categories;
                 localStorage.setItem('idCanal', this.idCanal);
+                if(this.hasCategories){
+                    this.getCategories();
+                }
             } 
+        },
+        async getCategories(){
+            let params = {
+                canal: this.idCanal
+            }
+            let resp = await http.getDataFromUrl('/categories', params);
+            if(resp.data.success){
+                this.categories = resp.data.categories;
+            }
         }
     }
 }

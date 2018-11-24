@@ -20,9 +20,9 @@
                 <hr class="line">
                 <span class="label label-default" v-bind:style="backgroundColor"> Componentes: </span>
                 <i class="i-list break-word" 
-                    v-for="(item) in conteudo.options.componentes"
-                    v-bind:key="item.id"
-                    v-text="item.componente"
+                    v-for="(componente) in conteudo.options.componentes"
+                    v-bind:key="componente.id"
+                    v-text="componente.name"
                     ></i> 
                 <hr class="line">
                 <span class="label label-default" v-bind:style="backgroundColor"> Licença: </span>
@@ -31,9 +31,9 @@
             <div class="panel-footer">
                 <span class="label label-default" v-bind:style="backgroundColor"> Tags: </span>
                 <a class="btn btn-default tag" href="" 
-                    v-for="item in conteudo.options.tags" 
-                    v-bind:key="item.id"
-                    v-text="item.tag">
+                    v-for="tag in conteudo.options.tags" 
+                    v-bind:key="tag.id"
+                    v-text="tag.name">
                 </a>
             </div>
         </div>

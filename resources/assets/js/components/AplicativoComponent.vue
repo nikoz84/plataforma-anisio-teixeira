@@ -13,9 +13,9 @@
             <div class="panel-footer">
                 <h5> Tags: </h5>
                 <a class="btn btn-default tag" href="" 
-                    v-for="item in aplicativo.options.tags" 
-                    v-bind:key="item.id"
-                    v-text="item.tag">
+                    v-for="tag in aplicativo.options.tags" 
+                    v-bind:key="tag.id"
+                    v-text="tag.name">
                 </a>
             </div>
         </div>

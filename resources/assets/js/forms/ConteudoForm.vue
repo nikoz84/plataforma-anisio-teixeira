@@ -185,68 +185,12 @@
                 <div class="panel-body">
                     
                     <!-- checkbox1 Áreas de Conhecimento -->
-                    <b-form-group>
-                        <template slot="label">    
-                            <b-form-checkbox v-model="allSelected"
-                                            :indeterminate="indeterminate"
-                                            aria-describedby="checkbox1"
-                                            aria-controls="checkbox1"
-                                            @change="check1"
-                            >Áreas de Conhecimento
-                            </b-form-checkbox>
-                        </template>
-                        <b-form-checkbox-group id="checkbox1"
-                                                stacked
-                                                v-model="selectbox1"
-                                                name="checkbox1"
-                                                :options="checkbox1"
-                                                class="ml-4"
-                                                aria-label="Individual checkbox1"
-                        ></b-form-checkbox-group>
-                    </b-form-group>
+                    
 
                     <!-- checkbox2 Linguagens Artísticas -->
-                    <b-form-group>
-                        <template slot="label">
-                            <b-form-checkbox v-model="allSelected"
-                                            :indeterminate="indeterminate"
-                                            aria-describedby="checkbox2"
-                                            aria-controls="checkbox2"
-                                            @change="check2"
-                            >Linguagens Artísticas
-                            </b-form-checkbox>
-                        </template>
-                        <b-form-checkbox-group id="checkbox2"
-                                                stacked
-                                                v-model="selectbox2"
-                                                name="checkbox2"
-                                                :options="checkbox2"
-                                                class="ml-4"
-                                                aria-label="Individual checkbox2"
-                        ></b-form-checkbox-group>
-                    </b-form-group>
-
+                    
                     <!-- checkbox3 Temas Transversais -->
-                    <b-form-group>
-                        <template slot="label">
-                            <b-form-checkbox v-model="allSelected"
-                                            :indeterminate="indeterminate"
-                                            aria-describedby="checkbox3"
-                                            aria-controls="checkbox3"
-                                            @change="check3"
-                            >Temas Transversais
-                            </b-form-checkbox>
-                        </template>
-                        <b-form-checkbox-group id="checkbox3"
-                                                stacked
-                                                v-model="selectbox3"
-                                                name="checkbox3"
-                                                :options="checkbox3"
-                                                class="ml-4"
-                                                aria-label="Individual checkbox3"
-                        ></b-form-checkbox-group>
-                    </b-form-group>
-
+                    
                     <br>
                     <div class="col-auto my-1">
                         <div class="custom-control custom-checkbox mr-sm-2">
@@ -485,12 +429,8 @@ export default {
                 terms: [],
                 is_approved: [],
             },
-            checkbox1: ['Ciências da natureza', 'Humanas', 'Linguagens e seus códigos', 'Matemática'],
-            checkbox2: ['Artes Visuais', 'Audiovisual', 'Circo', 'Dança', 'Literatura', 'Música', 'Teatro'],
-            checkbox3: ['Educação Ambiental', 'Educação Especial', 'Gênero e Sexualidade', 'História e Cultura Africana', 'História e Cultura Indígena', 'Pluralidade Cultural', 'Saúde', 'Trabalho e Consumo', 'Ética e Cidadania'],
-            selected: [],
-            allSelected: false,
-            indeterminate: false
+
+
         }
 
     },
@@ -535,11 +475,12 @@ export default {
                 if(resp.data.errors){
                     this.errors = resp.data.errors;
                 }
-                
+
                 setTimeout(()=>{
                     this.isError = true; 
                 },3000)
             }
+
         },
         updateTag(newTags) {
             this.autocompleteItems = [];
@@ -571,18 +512,7 @@ export default {
                 this.categories = resp.data.options.meta_data.categories
             }
         },
-
-        check1 (checked) {
-            this.selectbox1 = checked ? this.checkbox1.slice() : []
-        },
-
-        check2 (checked) {
-            this.selectbox2 = checked ? this.checkbox2.slice() : []
-        },
-
-        check3 (checked) {
-            this.selectbox3 = checked ? this.checkbox3.slice() : []
-        }
+        
     },
     watch:{
         'tag':'getItems'

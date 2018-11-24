@@ -7,7 +7,6 @@ use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\ConteudoFormRequest;
 use Illuminate\Support\Facades\Validator;
 
 class ConteudoController extends Controller
@@ -19,7 +18,7 @@ class ConteudoController extends Controller
         $this->request = $request;
     }
     /**
-     * Lista de conteúdos.
+     * Lista de conteúdos por canal
      *
      * @return \Illuminate\Http\Response
      */
@@ -46,6 +45,11 @@ class ConteudoController extends Controller
             'paginator'=> $conteudos
         ], 200);
     }
+    /**
+     * Lista de sites temáticos
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function getSitesTematicos()
     {
         $limit = $this->request->query('limit', 15);
@@ -55,7 +59,7 @@ class ConteudoController extends Controller
                         ->where('is_approved', 'true')
                         ->orderBy($orderBy, 'desc')
                         ->paginate($limit)
-                        ->setPath("/sites-tematicos?limit={$limit}");
+                        ->setPath("/conteudos/sites?limit={$limit}");
         
         return response()->json([
             'success'=> true,
@@ -63,6 +67,11 @@ class ConteudoController extends Controller
             'paginator'=> $sitesTematicos
         ], 200);
     }
+    /**
+     * Valida a criação do conteúdo
+     *
+     * @return
+     */
     private function validar()
     {
         $validator = Validator::make($this->request->all(), [
@@ -81,9 +90,9 @@ class ConteudoController extends Controller
 
 
     /**
-     * Show the form for creating a new resource.
+     * Adiciona e valida um novo conteúdo.
      *
-     * @return \Illuminate\Http\Response
+     * @return Json
      */
     public function create()
     {
@@ -100,6 +109,7 @@ class ConteudoController extends Controller
 
         $conteudo->user_id = Auth::user()->id;
         $conteudo->approving_user_id = Auth::user()->id;
+        $conteudo->canal_id = $this->request->get('canal_id', '');
         $conteudo->title = $this->request->get('title');
         $conteudo->description = $this->request->get('description');
         $conteudo->authors = $this->request->get('authors');
@@ -120,10 +130,10 @@ class ConteudoController extends Controller
     }
 
     /**
-     * Atualiza o conteudo.
+     * Atualiza o conteúdo.
      *
-     * @param  \App\Conteudo  $conteudo
-     * @return \Illuminate\Http\Response
+     * @param  Integer $id
+     * @return Json
      */
     public function update($id)
     {
@@ -155,10 +165,10 @@ class ConteudoController extends Controller
         $conteudo->tags()->attach($this->request->get('tags'));
     }
     /**
-     * Apaga o aplicativo do banco de dados.
+     * Apaga o conteúdo do banco de dados.
      *
-     * @param  \App\Conteudo  $conteudo
-     * @return \Illuminate\Http\Response\Json
+     * @param  Integer $id
+     * @return Json
      */
     public function delete($id)
     {
@@ -181,20 +191,21 @@ class ConteudoController extends Controller
     /**
      * Procura conteudos por full text search.
      *
-     * @param  \App\Conteudo  $conteudo
-     * @return \Illuminate\Http\Response
+     * @param  String $termo
+     * @return Json
      */
     public function search($termo)
     {
         $limit = $this->request->query('limit', 15);
         $page = $this->request->query('page', 1);
 
-        $conteudos = DB::table(DB::raw("conteudos as cd, plainto_tsquery('simple', lower(unaccent('${termo}'))) query"))
+        $conteudos = DB::table(DB::raw("conteudos as cd, plainto_tsquery('simple', lower(unaccent('?'))) query"))
                         ->select(['cd.id','cd.title',
                                 DB::raw('ts_rank_cd(cd.ts_documento, query) AS ranking')
                                 ])
                         ->whereRaw('query @@ cd.ts_documento')
                         ->where('cd.is_approved', '=', 'true')
+                        ->setBindings([$termo])
                         ->orderBy('ranking', 'desc')
                         ->paginate($limit);
 
@@ -214,8 +225,8 @@ class ConteudoController extends Controller
     /**
      * Procura um conteúdo por id
      *
-     * @param id $id do conteúdo digital
-     * @return \Illuminate\Http\Response
+     * @param Integer $id
+     * @return Json
      */
     public function getById($id)
     {
@@ -244,7 +255,12 @@ class ConteudoController extends Controller
             'tags' => $conteudo->tags
         ]);
     }
-
+    /**
+     * Lista de Conteúdos por Tag ID
+     *
+     * @param Integer $id
+     * @return Json
+     */
     public function getByTagId($id)
     {
         $limit = $this->request->query('limit', 15);
