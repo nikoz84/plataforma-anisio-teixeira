@@ -5,6 +5,9 @@ const mutations = {
     },
     LOGOUT_USER (state) {
         state.isLogged = false
+    },
+    SET_PAGINATOR: (state, { paginator }) => {
+        state.paginator = paginator
     }
 };
 

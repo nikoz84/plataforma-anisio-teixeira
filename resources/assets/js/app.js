@@ -2,14 +2,10 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import routes from './routes';
 import MainApp from './components/MainApp';
-<<<<<<< HEAD
 import Vuex from 'vuex';
 import 'es6-promise/auto';
 import store from './store/index.js';
 
-=======
-import store from './store.js';
->>>>>>> 8f2cfa56bbd2e9f6d3b8e96aba7a5395cb7a36f2
 
 Vue.use(Vuex);
 Vue.use(VueRouter);

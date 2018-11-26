@@ -42,6 +42,7 @@
 
 <script>
 import Http from '../http.js';
+import { mapState } from 'vuex'
 
 const http = new Http();
 
@@ -58,7 +59,14 @@ export default {
 
     },
     computed:{
+        ...mapState({
+            paginator: state => state.paginator
+        }),
+
         
+    },
+    mounted(){
+        this.$store.dispatch('GET_PAGINATOR')
     },
     methods:{
         async registerUser(){
@@ -69,7 +77,6 @@ export default {
                 email: this.email
             };
             
-
             if(this.password === this.confirmPassword && this.password != ''){
                 let resp = await http.postData('/auth/register', data);
                 console.log(resp);
