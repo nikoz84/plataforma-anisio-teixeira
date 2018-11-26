@@ -75,8 +75,8 @@ export default {
         this.isError = resp.data.success;
         if(resp.data.token.access_token){
           localStorage.setItem('token', resp.data.token.access_token)
-          store.commit('LOGIN_USER')
-          this.$router.push('/admin')
+          store.commit('LOGIN_USER');
+          this.$router.push('/admin');
         }
       }
     }
