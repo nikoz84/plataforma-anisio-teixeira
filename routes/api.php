@@ -82,6 +82,10 @@ Route::post('options/name/{name}', 'OptionsController@getByName')->name('buscaMe
 * Métodos: getById -> Busca tag por Id
 */
 Route::get('/tags/{id}', 'TagController@getById')->name('buscaxTagId');
+
+
+
+
 /**
  *
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN

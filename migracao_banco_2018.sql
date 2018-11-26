@@ -221,7 +221,12 @@ select idconteudodigital as conteudo_id, idtag as tag_id from conteudodigitaltag
 ) to '/home/niko/Documentos/db/MIGRA/final/7.conteudo_tag' WITH ( FORMAT TEXT, DELIMITER '*' );
 
 -- EXPORTAR LICENSES 
+COPY(
+select idconteudolicenca as id,idconteudolicencapai as parent_id, nomeconteudolicenca as name, descricaoconteudolicenca as description, siteconteudolicenca as site 
+from conteudolicenca	
+) to '/home/niko/Documentos/db/MIGRA/final/8.licenses' WITH ( FORMAT TEXT, DELIMITER '*' );
 
+-- EXPORTAR CATEGORIAS
 COPY(
 select sc.idconteudodigitalcategoria AS id,
       sc.idconteudodigitalcategoriapai as parent_id,

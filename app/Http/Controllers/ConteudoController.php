@@ -28,26 +28,27 @@ class ConteudoController extends Controller
 
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
-        $isApproved = $this->request->query('approved', 'true');
+        $site = ($this->request->has('site')) ? $this->request->query('site') : 'false';
         $conteudos = null;
         
         if ($this->request->has('canal')) {
             $canal = $this->request->query('canal');
-            $site = $this->request->query('site', 'false');
-
+            
             $conteudos = $this->conteudo::select('id', 'canal_id', 'user_id', 'title', 'options')
-                            ->where('is_approved', $isApproved)
-                            ->where('is_site', $site)
+                            ->where('is_approved', 'true')
+                            ->where('is_site', 'false')
                             ->where('canal_id', $canal)
                             ->orderBy($orderBy, 'desc')
                             ->paginate($limit);
-            $conteudos->setPath("/conteudos?canal={$canal}&site={$site}&limit={$limit}");
+            
+            $conteudos->setPath("/conteudos?canal={$canal}&site=false&limit={$limit}");
         } else {
             $conteudos = $this->conteudo::select('id', 'canal_id', 'user_id', 'title', 'options')
-                            ->where('is_approved', $isApproved)
+                            ->where('is_approved', 'true')
+                            ->where('is_site', $site)
                             ->orderBy($orderBy, 'desc')
                             ->paginate($limit);
-            $conteudos->setPath("/conteudos?limit={$limit}");
+            $conteudos->setPath("/conteudos?site={$site}&limit={$limit}");
         }
         
 
@@ -62,7 +63,7 @@ class ConteudoController extends Controller
     /**
      * Valida a criação do conteúdo
      *
-     * @return 
+     * @return
      */
     private function validar()
     {
@@ -250,7 +251,7 @@ class ConteudoController extends Controller
     /**
      * Lista de Conteúdos por Tag ID
      *
-     * @param Integer $id 
+     * @param Integer $id
      * @return Json
      */
     public function getByTagId($id)

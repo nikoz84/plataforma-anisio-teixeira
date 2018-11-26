@@ -5,7 +5,7 @@ export default class Http {
     }
     async getDataFromIdCanal( idCanal, params = {}){
         try{
-            let url = this.getCanal( idCanal );
+            let url = this.getUrlCanal( idCanal );
             return await axios.get( url, params );
         } catch (error){
             return await error.response;
@@ -53,20 +53,21 @@ export default class Http {
         }
     }
 
-    getCanal(idCanal){
+    getUrlCanal(id){
 
         switch(true){
-            case (idCanal == 5):
+            case (id == 5):
                 return `${this.api}/conteudos?site=true`;
                 break;
-            case (idCanal == 6):
+            case (id == 6):
                 return `${this.api}/conteudos`;
                 break;    
-            case (idCanal == 9):
+            case (id == 9):
                 return `${this.api}/aplicativos`;
                 break;
             default:
-                return `${this.api}/conteudos?canal=${idCanal}&site=false`;
+                console.log(id)
+                return `${this.api}/conteudos?canal=${id}&site=false`;
         }
     }
 }
