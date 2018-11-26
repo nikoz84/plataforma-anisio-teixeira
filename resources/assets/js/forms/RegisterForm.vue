@@ -42,7 +42,6 @@
 
 <script>
 import Http from '../http.js';
-import { mapState } from 'vuex'
 
 const http = new Http();
 
@@ -59,14 +58,10 @@ export default {
 
     },
     computed:{
-        ...mapState({
-            paginator: state => state.paginator
-        }),
-
-        
+        //
     },
     mounted(){
-        this.$store.dispatch('GET_PAGINATOR')
+        //
     },
     methods:{
         async registerUser(){

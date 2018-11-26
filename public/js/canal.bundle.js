@@ -6,13 +6,13 @@ webpackJsonp([1],{
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(165)
+  __webpack_require__(160)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(167)
+var __vue_script__ = __webpack_require__(162)
 /* template */
-var __vue_template__ = __webpack_require__(178)
+var __vue_template__ = __webpack_require__(173)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -52,13 +52,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 165:
+/***/ 160:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(166);
+var content = __webpack_require__(161);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -79,7 +79,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 166:
+/***/ 161:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -94,16 +94,16 @@ exports.push([module.i, "\n.page-header[data-v-4931cae4] {\n  margin: 0;\n}\n.pa
 
 /***/ }),
 
-/***/ 167:
+/***/ 162:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue__ = __webpack_require__(168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue__ = __webpack_require__(163);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue__ = __webpack_require__(173);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue__ = __webpack_require__(168);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__http_js__ = __webpack_require__(5);
 
@@ -251,19 +251,19 @@ var http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
 
 /***/ }),
 
-/***/ 168:
+/***/ 163:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(169)
+  __webpack_require__(164)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(171)
+var __vue_script__ = __webpack_require__(166)
 /* template */
-var __vue_template__ = __webpack_require__(172)
+var __vue_template__ = __webpack_require__(167)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -303,13 +303,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 169:
+/***/ 164:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(170);
+var content = __webpack_require__(165);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -330,7 +330,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 170:
+/***/ 165:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -345,14 +345,12 @@ exports.push([module.i, "", ""]);
 
 /***/ }),
 
-/***/ 171:
+/***/ 166:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_index_js__ = __webpack_require__(7);
 //
 //
 //
@@ -372,14 +370,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: 'NavCanal'
+    name: 'NavCanal',
+    data: function data() {
+        return {
+            isLogged: __WEBPACK_IMPORTED_MODULE_0__store_index_js__["a" /* default */].state.isLogged
+        };
+    },
+    beforeCreate: function beforeCreate() {
+        console.log(__WEBPACK_IMPORTED_MODULE_0__store_index_js__["a" /* default */].state.isLogged);
+    },
+
+    computed: {
+        showAdicionarConteudo: function showAdicionarConteudo() {
+            if (this.isLogged && this.$route.params.slug != 'aplicativos-educacionais') {
+                return this.isLogged;
+            }
+            return false;
+        },
+        showAdicionarAplicativo: function showAdicionarAplicativo() {
+            if (this.isLogged && this.$route.params.slug == 'aplicativos-educacionais') {
+                return this.isLogged;
+            }
+            return false;
+        }
+    }
 
 });
 
 /***/ }),
 
-/***/ 172:
+/***/ 167:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -413,18 +436,7 @@ var render = function() {
           [_c("a", [_vm._v("Listar")])]
         ),
         _vm._v(" "),
-        _c(
-          "router-link",
-          {
-            attrs: {
-              tag: "li",
-              to: { name: "Sobre", params: { slug: _vm.$route.params.slug } }
-            }
-          },
-          [_c("a", [_vm._v("Sobre")])]
-        ),
-        _vm._v(" "),
-        _vm.$route.params.slug != "aplicativos-educacionais"
+        _vm.showAdicionarConteudo
           ? _c(
               "router-link",
               {
@@ -438,7 +450,10 @@ var render = function() {
               },
               [_c("a", [_vm._v("Adicionar")])]
             )
-          : _c(
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.showAdicionarAplicativo
+          ? _c(
               "router-link",
               {
                 attrs: {
@@ -451,6 +466,7 @@ var render = function() {
               },
               [_c("a", [_vm._v("Adicionar")])]
             )
+          : _vm._e()
       ],
       1
     )
@@ -468,19 +484,19 @@ if (false) {
 
 /***/ }),
 
-/***/ 173:
+/***/ 168:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(174)
+  __webpack_require__(169)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(176)
+var __vue_script__ = __webpack_require__(171)
 /* template */
-var __vue_template__ = __webpack_require__(177)
+var __vue_template__ = __webpack_require__(172)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -520,13 +536,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 174:
+/***/ 169:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(175);
+var content = __webpack_require__(170);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -547,7 +563,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 175:
+/***/ 170:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -562,7 +578,7 @@ exports.push([module.i, "", ""]);
 
 /***/ }),
 
-/***/ 176:
+/***/ 171:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -607,7 +623,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_0__http_js__["a" /* default */]();
 
 /***/ }),
 
-/***/ 177:
+/***/ 172:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -701,7 +717,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 178:
+/***/ 173:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {

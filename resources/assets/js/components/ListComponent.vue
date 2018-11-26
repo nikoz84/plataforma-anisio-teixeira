@@ -4,6 +4,7 @@
         <div class="column" v-if="pagMutate.data" v-for="(item, i) in pagMutate.data" :key="i">
             <SimpleCard v-bind:item="item"></SimpleCard>
         </div>
+        <hr>
         <!-- PAGINATOR -->
         <nav aria-label="paginador de resultados">
             <p class="text-center">{{ (pagMutate.total) ? `Total: ${pagMutate.total}` : `Sem Resultados` }}</p>
@@ -47,10 +48,8 @@ export default {
     methods:{
         async goTo(url) {
             let params ={ token: localStorage.token };
-            console.log(url);
             this.$parent.show = false;
             let resp = await http.getDataFromUrl(url, params);
-          
             if(resp.data.success){
                 this.$parent.paginator = resp.data.paginator;
                 this.$parent.show = true;
