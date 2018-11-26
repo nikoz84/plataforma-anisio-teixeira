@@ -56,8 +56,13 @@ export default class Http {
     getUrlCanal(id){
 
         switch(true){
+<<<<<<< HEAD
             case (id == 5):
                 return `${this.api}/conteudos?site=true`;
+=======
+            case (idCanal == 5):
+                return `${this.api}/conteudos/sites`;
+>>>>>>> ac5ac2d37e159a3ad7ae94b1efc6bf1f0ec9f62e
                 break;
             case (id == 6):
                 return `${this.api}/conteudos`;

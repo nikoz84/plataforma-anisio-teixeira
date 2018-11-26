@@ -45,7 +45,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app') , 
+            'root' => storage_path('app') ,
         ],
 
         'public' => [
@@ -77,7 +77,7 @@ return [
 
         'visualizacao' =>[
             'driver'=> 'local',
-            'root' => storage_path('app/public/conteudos/conteudos-digitais/visualizacao') 
+            'root' => storage_path('app/public/conteudos/conteudos-digitais/visualizacao')
         ],
 
         'sinopse' =>[

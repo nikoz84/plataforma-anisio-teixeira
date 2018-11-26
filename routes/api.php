@@ -46,6 +46,7 @@ Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscaCanal
  *
  */
 Route::get('/conteudos', 'ConteudoController@list')->name('listaConteudo');
+Route::get('/conteudos/sites', 'ConteudoController@getSitesTematicos')->name('listaSitesTematicos');
 Route::get('/conteudos/search/{term}', 'ConteudoController@search')->name('buscaConteudo');
 Route::get('/conteudos/teste', 'ConteudoController@teste');
 Route::get('/conteudos/{id}', 'ConteudoController@getById')->name('buscaxConteudoId');

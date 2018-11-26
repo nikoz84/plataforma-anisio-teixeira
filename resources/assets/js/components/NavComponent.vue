@@ -71,7 +71,8 @@
 
 <script>
 import Http from '../http.js';
-import store from '../store.js'
+import store from '../store/index.js'
+const http = new Http();
 
 export default {
     name : 'nav-app',
@@ -85,22 +86,15 @@ export default {
     },
     methods: {
         async logout(){
-            let http = new Http();
             let params = {token: localStorage.token };             
-            
             let resp = await http.postData('/auth/logout', params);
             
             if(resp.data.success){
-                localStorage.clear();
+                
                 this.$router.push('/usuario/login');
                 store.commit('LOGOUT_USER');
-                
-            }else{
                 localStorage.clear();
             }
-                
-            
-            
         },
         handleScroll (event) {
             let winScroll = document.body.scrollTop || document.documentElement.scrollTop;

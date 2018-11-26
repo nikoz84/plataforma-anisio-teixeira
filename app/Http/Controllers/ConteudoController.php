@@ -13,51 +13,58 @@ class ConteudoController extends Controller
 {
     public function __construct(Conteudo $conteudo, Request $request)
     {
-        $this->middleware('jwt.verify')->except(['list','search','getById','getByTagId']);
+        $this->middleware('jwt.verify')->except(['list','search','getById','getByTagId','getSitesTematicos']);
         $this->conteudo = $conteudo;
         $this->request = $request;
     }
     /**
-     * Lista de conteúdos.
+     * Lista de conteúdos por canal
      *
      * @return \Illuminate\Http\Response
      */
     public function list()
     {
-        $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;
-
+        $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
-        $site = ($this->request->has('site')) ? $this->request->query('site') : 'false';
-        $conteudos = null;
-        
-        if ($this->request->has('canal')) {
-            $canal = $this->request->query('canal');
-            
-            $conteudos = $this->conteudo::select('id', 'canal_id', 'user_id', 'title', 'options')
-                            ->where('is_approved', 'true')
-                            ->where('is_site', 'false')
-                            ->where('canal_id', $canal)
-                            ->orderBy($orderBy, 'desc')
-                            ->paginate($limit);
-            
-            $conteudos->setPath("/conteudos?canal={$canal}&site=false&limit={$limit}");
-        } else {
-            $conteudos = $this->conteudo::select('id', 'canal_id', 'user_id', 'title', 'options')
-                            ->where('is_approved', 'true')
-                            ->where('is_site', $site)
-                            ->orderBy($orderBy, 'desc')
-                            ->paginate($limit);
-            $conteudos->setPath("/conteudos?site={$site}&limit={$limit}");
-        }
-        
+        $isCanal = $this->request->query('canal');
+       
+        $query = $this->conteudo::query();
+        $query->when($isCanal, function ($q, $canal) {
+            return $q->where('canal_id', $canal)
+                    ->where('is_approved', 'true');
+        });
 
+        $conteudos = $query->orderBy($orderBy, 'desc')
+                        ->paginate($limit)
+                        ->setPath("/conteudos?limit={$limit}&canal=$isCanal");
+        
         return response()->json([
             'success'=> true,
             'title'=> 'Mídias educacionais',
-            'paginator'=> $conteudos,
-            'page'=> $conteudos->currentPage(),
-            'limit' => $conteudos->perPage()
+            'paginator'=> $conteudos
+        ], 200);
+    }
+    /**
+     * Lista de sites temáticos
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getSitesTematicos()
+    {
+        $limit = $this->request->query('limit', 15);
+        $orderBy = $this->request->query('order', 'created_at');
+        
+        $sitesTematicos = $this->conteudo::where('is_site', 'true')
+                        ->where('is_approved', 'true')
+                        ->orderBy($orderBy, 'desc')
+                        ->paginate($limit)
+                        ->setPath("/conteudos/sites?limit={$limit}");
+        
+        return response()->json([
+            'success'=> true,
+            'title'=> 'Sites Temáticos',
+            'paginator'=> $sitesTematicos
         ], 200);
     }
     /**
@@ -102,7 +109,7 @@ class ConteudoController extends Controller
 
         $conteudo->user_id = Auth::user()->id;
         $conteudo->approving_user_id = Auth::user()->id;
-        //$conteudo->canal_id = $this->request->get('canal_id','');
+        $conteudo->canal_id = $this->request->get('canal_id', '');
         $conteudo->title = $this->request->get('title');
         $conteudo->description = $this->request->get('description');
         $conteudo->authors = $this->request->get('authors');

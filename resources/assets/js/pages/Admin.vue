@@ -24,7 +24,7 @@ import Sidebar from '../components/SidebarComponent.vue';
 import Search from '../components/SearchComponent.vue';
 import List from '../components/ListComponent.vue';
 import Paginator from '../components/PaginatorComponent.vue';
-import store from '../store.js';
+import store from '../store/index.js';
 
 export default {
     name : 'admin',
@@ -41,7 +41,7 @@ export default {
     },
     beforeCreate () {
         if (!store.state.isLogged) {
-            this.$router.push('/usuario/login')
+            this.$router.go('/usuario/login')
         }
     },
     methods:{

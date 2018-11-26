@@ -7,8 +7,7 @@
 <script>
 
 export default {
-  name: 'User',
-  //components: { LoginForm }
+  name: 'User'
 }
 </script>
 <style lang="scss" scoped>
