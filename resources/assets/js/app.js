@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import routes from './routes';
 import MainApp from './components/MainApp';
 import Vuex from 'vuex';
-import 'es6-promise/auto';
+//import 'es6-promise/auto';
 import store from './store/index.js';
 
 

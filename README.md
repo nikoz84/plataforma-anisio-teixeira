@@ -43,9 +43,13 @@ Instalar as dependências do Vuejs com npm, lembre ter instalado o NODEJS:
 
 ``$ npm install``
 
+### node-sass
+
 > Nota: Se tiver algum problema com instalar o modulo node-sass pode forçar a instalação com: ``$ npm i node-sass --unsafe-perm=true``
-> Nota: Se trabalhar com windows ou linux o git pode ter uma incosistência para converter
-como terminam as linhas de um arquivo de texto, para evitar esse comportamento adicione nas configurações gerais do git ``$ git config core.autocrlf true``
+
+### crlf
+
+> Nota: Se trabalhar com windows ou linux o git pode ter uma incosistência para converter como terminam as linhas de um arquivo de texto, para evitar esse comportamento adicione nas configurações gerais do git ``$ git config core.autocrlf true``
 
 Crie o esquema do banco de dados no Postgresql com o comando:
 
