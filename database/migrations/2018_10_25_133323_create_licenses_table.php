@@ -16,6 +16,7 @@ class CreateLicensesTable extends Migration
         
         Schema::create('licenses', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('parent_id')->nullable()->comment('Licença pai');
             $table->string('name', 255)->comment('Nome da licenca');
             $table->text('description')->comment('Descrição da Licença');
             $table->string('site', 255)->nullable()->comment('Url da licença');
