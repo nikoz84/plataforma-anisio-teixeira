@@ -8,11 +8,7 @@
         <title>Plataforma Anísio Teixeira</title>
 
         <!-- Fonts -->
-<<<<<<< HEAD
-        <!--link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css"-->
-=======
         <!-- link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css" -->
->>>>>>> 017da31038f424faf5bb617981dc79bdbffc7454
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
