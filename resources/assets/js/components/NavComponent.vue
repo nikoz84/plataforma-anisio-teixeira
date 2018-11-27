@@ -49,7 +49,7 @@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            Usuário 
+                            Usuário
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
@@ -57,6 +57,7 @@
                                 <a>Login</a>
                             </router-link>
                             <li v-if="isLogged">
+                                <a v-on:click.prevent="perfil()">Editar Perfil</a>
                                 <a v-on:click.prevent="logout()">Sair</a>
                             </li>
                         </ul>
@@ -83,13 +84,17 @@ export default {
         }
     },
     mounted() {
-               
+
     },
     methods: {
+        async perfil(){
+            this.$router.push('/usuario/editar');
+
+        },
         async logout(){
             let params = {token: localStorage.token };
             let resp = await http.postData('/auth/logout', params);
-            
+
             if(resp.data.success){
                 store.commit('LOGOUT_USER');
                 localStorage.clear();

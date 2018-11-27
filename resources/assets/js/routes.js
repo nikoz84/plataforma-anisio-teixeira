@@ -6,7 +6,8 @@ import ConteudoForm from './forms/ConteudoForm.vue';
 import AplicativoForm from './forms/AplicativoForm.vue';
 import LoginForm from './forms/LoginForm.vue';
 import RecoverPassForm from './forms/RecoverPassForm.vue';
-import RegisterForm from './forms/RegisterForm.vue'; 
+import RegisterForm from './forms/RegisterForm.vue';
+import EditarForm from './forms/EditarForm.vue';
 
 const routes =[
     {
@@ -48,7 +49,12 @@ const routes =[
           path: 'registro',
           name: 'Register',
           component: RegisterForm
-        }    
+        },
+        {
+          path: 'editar',
+          name: 'Editar',
+          component: EditarForm
+        }
       ]
     },
     {
