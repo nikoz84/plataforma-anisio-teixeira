@@ -25,7 +25,7 @@ const router = new VueRouter({
 /*
 router.beforeEach((to, from, next) => {
     if(to.matched.some(record => record.meta.requiresAuth)) {
-        
+
         if ( localStorage.getItem('token') == null) {
             next({
                 path: '/login',
@@ -45,7 +45,7 @@ router.beforeEach((to, from, next) => {
             next({ name: 'Admin'})
         }
     }else {
-        next(); 
+        next();
     }
   });
 */
