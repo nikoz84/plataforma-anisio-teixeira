@@ -53,21 +53,15 @@ const routes =[
     },
     {
       path: '/:slug',
-      name: 'Canal',
       component: () => import(/* webpackChunkName: "canal" */ './pages/Canal.vue'),
       meta: {
         requiresAuth: false
       },
       children: [
         {
-          path: 'inicio',
+          path: '/',
           name: 'Inicio',
           component: HomeCanal
-        },
-        {
-          path: 'sobre',
-          name: 'Sobre',
-          component: Sobre
         },
         {
           path: 'listar',
@@ -82,22 +76,34 @@ const routes =[
         {
           path: 'editar-conteudo/:id',
           name: 'EditarConteudo',
-          component: ConteudoForm
+          component: ConteudoForm,
+          meta: {
+            requiresAuth: true
+          }
         },
         {
           path: 'adicionar-conteudo',
           name: 'AdicionarConteudo',
-          component: ConteudoForm
+          component: ConteudoForm,
+          meta: {
+            requiresAuth: true
+          }
         },
         {
           path: 'editar-aplicativo/:id',
           name: 'EditarAplicativo',
-          component: AplicativoForm
+          component: AplicativoForm,
+          meta: {
+            requiresAuth: true
+          }
         },
         {
           path: 'adicionar-aplicativo',
           name: 'AdicionarAplicativo',
-          component: AplicativoForm
+          component: AplicativoForm,
+          meta: {
+            requiresAuth: true
+          }
         }
 
 

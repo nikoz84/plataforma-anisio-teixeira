@@ -46,6 +46,7 @@ Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscaCanal
  *
  */
 Route::get('/conteudos', 'ConteudoController@list')->name('listaConteudo');
+Route::get('/conteudos/sites', 'ConteudoController@getSitesTematicos')->name('listaSitesTematicos');
 Route::get('/conteudos/search/{term}', 'ConteudoController@search')->name('buscaConteudo');
 Route::get('/conteudos/teste', 'ConteudoController@teste');
 Route::get('/conteudos/{id}', 'ConteudoController@getById')->name('buscaxConteudoId');
@@ -82,6 +83,10 @@ Route::post('options/name/{name}', 'OptionsController@getByName')->name('buscaMe
 * Métodos: getById -> Busca tag por Id
 */
 Route::get('/tags/{id}', 'TagController@getById')->name('buscaxTagId');
+
+
+
+
 /**
  *
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN

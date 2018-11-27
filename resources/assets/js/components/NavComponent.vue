@@ -20,9 +20,6 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mídias Educacionais <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <router-link tag="li" to="/admin">
-                                <a>Administração</a>
-                            </router-link>
                             <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'recursos-educacionais-abertos'}}">
                                <a>Recursos Educacionais Abertos</a>
                             </router-link>
@@ -43,6 +40,10 @@
                             </router-link>
                             <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'aplicativos-educacionais'}}">
                                 <a>Aplicativos Educacionais</a>
+                            </router-link>
+                            <li role="separador" class="divider" v-if="isLogged"></li>
+                            <router-link tag="li" to="/admin" v-if="isLogged">
+                                <a>Administração</a>
                             </router-link>
                         </ul>
                     </li>
@@ -71,13 +72,14 @@
 
 <script>
 import Http from '../http.js';
-import store from '../store.js'
+import store from '../store/index.js'
+const http = new Http();
 
 export default {
     name : 'nav-app',
     data () {
         return {
-            isLogged : store.state.isLogged   
+            isLogged : store.state.isLogged
         }
     },
     mounted() {
@@ -85,30 +87,21 @@ export default {
     },
     methods: {
         async logout(){
-            let http = new Http();
-            let params = {token: localStorage.token };             
-            
+            let params = {token: localStorage.token };
             let resp = await http.postData('/auth/logout', params);
             
             if(resp.data.success){
+                store.commit('LOGOUT_USER');
                 localStorage.clear();
                 this.$router.push('/usuario/login');
-                store.commit('LOGOUT_USER');
-                
-            }else{
-                localStorage.clear();
             }
-                
-            
-            
         },
         handleScroll (event) {
             let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             var scrolled = (winScroll / height) * 100;
             document.getElementById("bar").style.width = scrolled + "%";
-        }    
-    
+        }
     },
     created () {
         window.addEventListener('scroll', this.handleScroll);

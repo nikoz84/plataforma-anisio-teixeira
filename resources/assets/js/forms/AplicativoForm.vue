@@ -113,7 +113,6 @@ export default {
                 url: [],
                 description: [],
                 category: [],
-                chave: [],
             },
         }
 

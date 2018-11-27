@@ -1,26 +1,25 @@
 <template>
-    <div v-bind:color="color">
-        <keep-alive>
-            <List v-bind:items="paginator.data"></List>
-            <Paginator v-bind:paginator="paginator" v-bind:limit="limit" v-bind:page="page"></Paginator>
-        </keep-alive>
+    <div>
+        
+        <!-- keep-alive -->
+            <List v-bind:paginator="paginator"></List>
+        <!--/keep-alive -->
     </div>
 </template>
 <script>
 import List from '../components/ListComponent.vue';
-import Paginator from '../components/PaginatorComponent.vue';
 import Http from '../http.js';
 
+const http = new Http();
 
 export default {
     name : 'listar',
-    components:{ List, Paginator },
+    components:{ List },
     props:['color'],
     data() {
         return {
             paginator: {},
-            page: 1,
-            limit: 20
+            title: null
         }
     },
     created() {
@@ -29,16 +28,17 @@ export default {
     },
     methods:{
         async getConteudos(){
-            let idCanal = localStorage.getItem('idCanal');
-            let http = new Http();   
-            let params = { limit: this.limit, page: this.page };
+            let idCanal = localStorage.idCanal;
+               
+            let params = {  };
+            console.log(idCanal);
             let resp = await http.getDataFromIdCanal( idCanal, params);
+            
+            console.warn(resp)
             if(resp.data.success){
-                console.log(resp.data)
+                
                 this.title = resp.data.title;
                 this.paginator = resp.data.paginator;
-                this.page = resp.data.page;
-                this.limit = resp.data.limit;
             }
             
         }

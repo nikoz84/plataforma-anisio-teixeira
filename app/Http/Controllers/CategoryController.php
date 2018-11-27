@@ -17,12 +17,16 @@ class CategoryController extends Controller
 
     public function list()
     {
-        if($this->request->has('canal')){
-            $categories = $this->category::where('canal_id',$this->request->get('canal'))
+        if ($this->request->has('canal')) {
+            $categories = $this->category::where('canal_id', $this->request->get('canal'))
                         ->whereRaw('parent_id is null')
-                        ->with('subCategories')->get();
-        }else{
+                        ->where('options->is_active', 'true')
+                        ->with('subCategories')
+                        ->orderBy('name', 'asc')
+                        ->get();
+        } else {
             $categories = $this->category::whereRaw('parent_id is null')
+                                ->where('options->is_active', 'true')
                                 ->with('subCategories')->get();
         }
         return response()->json([

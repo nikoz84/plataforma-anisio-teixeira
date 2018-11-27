@@ -1,18 +1,18 @@
 webpackJsonp([1],{
 
-/***/ 138:
+/***/ 137:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(161)
+  __webpack_require__(160)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(163)
+var __vue_script__ = __webpack_require__(162)
 /* template */
-var __vue_template__ = __webpack_require__(174)
+var __vue_template__ = __webpack_require__(173)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -52,17 +52,17 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 161:
+/***/ 160:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(162);
+var content = __webpack_require__(161);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("bee04172", content, false, {});
+var update = __webpack_require__(2)("768bec6d", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -79,7 +79,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 162:
+/***/ 161:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -94,16 +94,16 @@ exports.push([module.i, "\n.page-header[data-v-4931cae4] {\n  margin: 0;\n}\n.pa
 
 /***/ }),
 
-/***/ 163:
+/***/ 162:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue__ = __webpack_require__(164);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue__ = __webpack_require__(163);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue__ = __webpack_require__(169);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue__ = __webpack_require__(168);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__http_js__ = __webpack_require__(5);
 
@@ -251,19 +251,19 @@ var http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
 
 /***/ }),
 
-/***/ 164:
+/***/ 163:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(165)
+  __webpack_require__(164)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(167)
+var __vue_script__ = __webpack_require__(166)
 /* template */
-var __vue_template__ = __webpack_require__(168)
+var __vue_template__ = __webpack_require__(167)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -303,17 +303,17 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 165:
+/***/ 164:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(166);
+var content = __webpack_require__(165);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("67e6eaac", content, false, {});
+var update = __webpack_require__(2)("1c602b68", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -330,7 +330,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 166:
+/***/ 165:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -345,14 +345,12 @@ exports.push([module.i, "", ""]);
 
 /***/ }),
 
-/***/ 167:
+/***/ 166:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_index_js__ = __webpack_require__(7);
 //
 //
 //
@@ -372,14 +370,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: 'NavCanal'
+    name: 'NavCanal',
+    data: function data() {
+        return {
+            isLogged: __WEBPACK_IMPORTED_MODULE_0__store_index_js__["a" /* default */].state.isLogged
+        };
+    },
+    beforeCreate: function beforeCreate() {
+        console.log(__WEBPACK_IMPORTED_MODULE_0__store_index_js__["a" /* default */].state.isLogged);
+    },
+
+    computed: {
+        showAdicionarConteudo: function showAdicionarConteudo() {
+            if (this.isLogged && this.$route.params.slug != 'aplicativos-educacionais') {
+                return this.isLogged;
+            }
+            return false;
+        },
+        showAdicionarAplicativo: function showAdicionarAplicativo() {
+            if (this.isLogged && this.$route.params.slug == 'aplicativos-educacionais') {
+                return this.isLogged;
+            }
+            return false;
+        }
+    }
 
 });
 
 /***/ }),
 
-/***/ 168:
+/***/ 167:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -413,18 +436,7 @@ var render = function() {
           [_c("a", [_vm._v("Listar")])]
         ),
         _vm._v(" "),
-        _c(
-          "router-link",
-          {
-            attrs: {
-              tag: "li",
-              to: { name: "Sobre", params: { slug: _vm.$route.params.slug } }
-            }
-          },
-          [_c("a", [_vm._v("Sobre")])]
-        ),
-        _vm._v(" "),
-        _vm.$route.params.slug != "aplicativos-educacionais"
+        _vm.showAdicionarConteudo
           ? _c(
               "router-link",
               {
@@ -438,7 +450,10 @@ var render = function() {
               },
               [_c("a", [_vm._v("Adicionar")])]
             )
-          : _c(
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.showAdicionarAplicativo
+          ? _c(
               "router-link",
               {
                 attrs: {
@@ -451,6 +466,7 @@ var render = function() {
               },
               [_c("a", [_vm._v("Adicionar")])]
             )
+          : _vm._e()
       ],
       1
     )
@@ -468,19 +484,19 @@ if (false) {
 
 /***/ }),
 
-/***/ 169:
+/***/ 168:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(170)
+  __webpack_require__(169)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(172)
+var __vue_script__ = __webpack_require__(171)
 /* template */
-var __vue_template__ = __webpack_require__(173)
+var __vue_template__ = __webpack_require__(172)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -520,17 +536,17 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 170:
+/***/ 169:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(171);
+var content = __webpack_require__(170);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("f1d1eaba", content, false, {});
+var update = __webpack_require__(2)("21918b7a", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -547,7 +563,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 171:
+/***/ 170:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -562,12 +578,19 @@ exports.push([module.i, "", ""]);
 
 /***/ }),
 
-/***/ 172:
+/***/ 171:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__http_js__ = __webpack_require__(5);
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -600,7 +623,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_0__http_js__["a" /* default */]();
 
 /***/ }),
 
-/***/ 173:
+/***/ 172:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -617,43 +640,65 @@ var render = function() {
           {
             attrs: {
               tag: "li",
-              to: { name: "Listar", query: { category: "todos" } },
-              exact: ""
+              to: { name: "Listar", params: { slug: _vm.$route.params.slug } }
             }
           },
           [_c("a", [_vm._v("Todos")])]
         ),
         _vm._v(" "),
-        _c(
-          "router-link",
-          {
-            attrs: {
-              tag: "li",
-              to: { name: "Listar", query: { category: "1" } },
-              exact: ""
-            }
-          },
-          [_c("a", [_vm._v("Matematicas")])]
-        ),
-        _vm._v(" "),
         _vm._l(_vm.categories, function(category, c) {
-          return _c("li", { key: c }, [
-            _vm._v("\n            " + _vm._s(category.name) + "\n            "),
-            _c(
-              "ul",
-              _vm._l(category.sub_categories, function(subcategory, s) {
-                return subcategory.options.is_active
-                  ? _c("li", { key: s }, [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(subcategory.name) +
-                          "\n                "
-                      )
-                    ])
-                  : _vm._e()
-              })
-            )
-          ])
+          return _c(
+            "li",
+            { key: c },
+            [
+              _c(
+                "router-link",
+                {
+                  attrs: {
+                    to: {
+                      name: "Listar",
+                      params: { slug: _vm.$route.params.slug },
+                      query: { categoria: category.id }
+                    },
+                    exact: ""
+                  }
+                },
+                [_c("a", [_vm._v(_vm._s(category.name))])]
+              ),
+              _vm._v(" "),
+              category.sub_categories && category.sub_categories.length > 0
+                ? _c(
+                    "ul",
+                    _vm._l(category.sub_categories, function(subcategory, s) {
+                      return subcategory.options.is_active
+                        ? _c(
+                            "li",
+                            { key: s },
+                            [
+                              _c(
+                                "router-link",
+                                {
+                                  attrs: {
+                                    to: {
+                                      name: "Listar",
+                                      params: { slug: _vm.$route.params.slug },
+                                      query: { categoria: subcategory.id }
+                                    },
+                                    exact: ""
+                                  }
+                                },
+                                [_c("a", [_vm._v(_vm._s(subcategory.name))])]
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    })
+                  )
+                : _vm._e()
+            ],
+            1
+          )
         })
       ],
       2
@@ -672,7 +717,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 174:
+/***/ 173:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {

@@ -221,7 +221,12 @@ select idconteudodigital as conteudo_id, idtag as tag_id from conteudodigitaltag
 ) to '/home/niko/Documentos/db/MIGRA/final/7.conteudo_tag' WITH ( FORMAT TEXT, DELIMITER '*' );
 
 -- EXPORTAR LICENSES 
+COPY(
+select idconteudolicenca as id,idconteudolicencapai as parent_id, nomeconteudolicenca as name, descricaoconteudolicenca as description, siteconteudolicenca as site 
+from conteudolicenca	
+) to '/home/niko/Documentos/db/MIGRA/final/8.licenses' WITH ( FORMAT TEXT, DELIMITER '*' );
 
+-- EXPORTAR CATEGORIAS
 COPY(
 select sc.idconteudodigitalcategoria AS id,
       sc.idconteudodigitalcategoriapai as parent_id,
@@ -237,82 +242,5 @@ select sc.idconteudodigitalcategoria AS id,
 from conteudodigitalcategoria AS sc
 ) to '/home/niko/Documentos/db/MIGRA/final/9.categories' WITH ( FORMAT TEXT, DELIMITER '*' );
 
-  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-select * from conteudodigitalcategoria
-order by 1
-
-
-
-SELECT idconteudolicenca,
-	nomeconteudolicenca
-FROM conteudolicenca
-LEFT JOIN (
-  SELECT cl.idconteudolicencapai, 
-	cl.nomeconteudolicenca 
-  FROM conteudolicenca cl
-  WHERE cl.idconteudolicencapai IS NOT NULL
-) ON pai = 2	
-
-WITH licencas AS(
-	SELECT idconteudolicenca AS id,
-		nomeconteudolicenca AS nome,
-		descricaoconteudolicenca AS descricao
-	FROM conteudolicenca
-), pai AS(
-	SELECT idconteudolicencapai AS id_pai
-	FROM conteudolicenca
-	WHERE idconteudolicencapai IS NOT NULL
-) SELECT *
-FROM pai
-JOIN licencas
-ON pai.id_pai = licencas.id
-
-select cd.titulo, 
-      cd.idlicencaconteudo, 
-      case when cl.idconteudolicencapai is not null 
-           then (select concat( pai.nomeconteudolicenca, ' - ', cl.nomeconteudolicenca) from conteudolicenca as pai where cl.idconteudolicencapai = pai.idconteudolicenca ) 
-           else cl.nomeconteudolicenca
-      end as licenca     
-from conteudodigital as cd 
-join conteudolicenca as cl on cl.idconteudolicenca = cd.idlicencaconteudo
-limit 10
 

@@ -10,7 +10,6 @@ class Category extends Model
     protected $casts = ['options' => 'array',];
     public function subCategories()
     {
-        return $this->hasMany('App\Category','parent_id','id');
+        return $this->hasMany('App\Category', 'parent_id', 'id');
     }
-    
 }
