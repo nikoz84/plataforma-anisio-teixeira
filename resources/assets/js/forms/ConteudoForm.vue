@@ -80,7 +80,7 @@
                     <!-- TAGS -->
                     <div class="form-group">
                         <label for="palavra-chave">Palavras-Chave:*</label>
-                        <input type="text" class="form-control">                        
+                        <input type="text" class="form-control">
                     </div>
                     <!-- AUTORES -->
                     <div class="form-group" v-bind:class="{ 'has-error': errors.authors && errors.authors.length > 0 }">
@@ -477,7 +477,7 @@ export default {
                 }
 
                 setTimeout(()=>{
-                    this.isError = true; 
+                    this.isError = true;
                 },3000)
             }
 
@@ -512,7 +512,7 @@ export default {
                 this.categories = resp.data.options.meta_data.categories
             }
         },
-        
+
     },
     watch:{
         'tag':'getItems'

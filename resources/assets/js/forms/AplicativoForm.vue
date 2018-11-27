@@ -55,14 +55,14 @@
                         </select>
                     </div>
                     <!-- DESCRICAO -->
-                    <div class="form-group">
+                    <div class="form-group" v-bind:class="{ 'has-error': errors.chave && errors.chave.length > 0 }">
                         <label for="tags">Palavra-Chave:* </label>
                         <textarea class="form-control" id="tags" v-model="tags" style="resize: none"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="imagem">Imagem destacada:</label>
                         <input type="file" class="form-control" id="imagem" name="imagem" aria-describedby="icone">
-                        <small id="login_usuario" class="form-text text-muted">Imagem no formato .png com tamanho de 250px (altura) e 250px (largura)</small>               
+                        <small id="login_usuario" class="form-text text-muted">Imagem no formato .png com tamanho de 250px (altura) e 250px (largura)</small>   
                     </div>
                     <div class="form-group">
                         <label for="usopedagogico">Informações para o uso pedagógico:</label>
@@ -113,6 +113,7 @@ export default {
                 url: [],
                 description: [],
                 category: [],
+                chave: [],
             },
         }
 
@@ -121,13 +122,15 @@ export default {
         async createAplicativo(){
             this.options = {
                 url : this.url,
-                category: this.category
+                category: this.category,
+                chave: this.chave
             }
             let data = {
                 name: this.name,
                 description:this.description,
                 category: this.categoria,
                 url: this.url,
+                chave: this.chave,
                 is_featured: this.is_featured,
                 options: JSON.stringify(this.options),
                 token: localStorage.token

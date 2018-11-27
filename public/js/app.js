@@ -21144,7 +21144,8 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                 name: [],
                 url: [],
                 description: [],
-                category: []
+                category: [],
+                chave: []
             }
         };
     },
@@ -21161,13 +21162,15 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                             case 0:
                                 this.options = {
                                     url: this.url,
-                                    category: this.category
+                                    category: this.category,
+                                    chave: this.chave
                                 };
                                 data = {
                                     name: this.name,
                                     description: this.description,
                                     category: this.categoria,
                                     url: this.url,
+                                    chave: this.chave,
                                     is_featured: this.is_featured,
                                     options: JSON.stringify(this.options),
                                     token: localStorage.token
@@ -21477,34 +21480,43 @@ var render = function() {
                   ])
                 : _vm._e(),
               _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "tags" } }, [
-                  _vm._v("Palavra-Chave:* ")
-                ]),
-                _vm._v(" "),
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.tags,
-                      expression: "tags"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  staticStyle: { resize: "none" },
-                  attrs: { id: "tags" },
-                  domProps: { value: _vm.tags },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.tags = $event.target.value
-                    }
+              _c(
+                "div",
+                {
+                  staticClass: "form-group",
+                  class: {
+                    "has-error": _vm.errors.chave && _vm.errors.chave.length > 0
                   }
-                })
-              ]),
+                },
+                [
+                  _c("label", { attrs: { for: "tags" } }, [
+                    _vm._v("Palavra-Chave:* ")
+                  ]),
+                  _vm._v(" "),
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.tags,
+                        expression: "tags"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: { resize: "none" },
+                    attrs: { id: "tags" },
+                    domProps: { value: _vm.tags },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.tags = $event.target.value
+                      }
+                    }
+                  })
+                ]
+              ),
               _vm._v(" "),
               _vm._m(0),
               _vm._v(" "),
@@ -24677,15 +24689,7 @@ var staticRenderFns = [
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-12" }, [
-            _c("img", {
-              staticClass: "img-responsive",
-              attrs: {
-                src:
-                  "http://pat.educacao.ba.gov.br/assets/img/img-logomarca-rodape.png"
-              }
-            })
-          ])
+          _c("div", { staticClass: "col-md-12" })
         ])
       ]
     )

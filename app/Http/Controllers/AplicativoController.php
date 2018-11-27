@@ -83,7 +83,7 @@ class AplicativoController extends Controller
         $aplicativo->description = $this->request->get('description');
         $aplicativo->is_featured = $this->request->get('is_featured');
         $aplicativo->options = $this->request->get('options');
-
+        $aplicativo->tags->attach($this->request->get('tags'));
         $aplicativo->save();
 
         return response()->json([
