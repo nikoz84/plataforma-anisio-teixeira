@@ -18,7 +18,7 @@ class CreateCategoriesTable extends Migration
             $table->integer('parent_id')->nullable()->comment('Categoria pai');
             $table->integer('canal_id')->nullable()->comment('Categoria do canal');
             $table->string('name', 255)->comment('Nome da categoria');
-            $table->jsonb('options')->comment('Meta dados da categoria');
+            $table->jsonb('options')->nullable()->comment('Meta dados da categoria');
             $table->timestamps();
         });
     }

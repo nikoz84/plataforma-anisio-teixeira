@@ -79,20 +79,20 @@ update tag set nometag = (concat('deletar_',nometag)) where idtag = 7520;
 
 -- EXPORTAR USUARIOS
 COPY (
-    select DISTINCT(u.email) as email,
-	    u.idusuario as id, 
-            u.nomeusuario as name,
-            case when u.senha is null then md5('teste') else u.senha end as password,
-            u.datacriacao as created_at,
-            u.dataatualizacao as updated_at,
-            null as remember_token,
+    select u.idusuario as id, 
+	    u.nomeusuario as name,
+	    u.email as email,	
+	    case when u.senha is null then md5('teste') else u.senha end as password,
             jsonb_build_object('role', (select ut.nomeusuariotipo from usuariotipo as ut where ut.idusuariotipo = u.idusuariotipo),
 		'is_active', u.flativo,
 		'sexo', u.sexo,
 		'birthday', u.datanascimento,
 		'telefone', telefone,
 		'neighborhood', bairro	
-            ) as options
+            ) as options,
+            null as remember_token,
+            u.datacriacao as created_at,
+            u.dataatualizacao as updated_at	
     from usuario as u  
 ) TO '/home/niko/Documentos/db/MIGRA/final/1.users' WITH (FORMAT text, DELIMITER '*')
 
@@ -100,8 +100,8 @@ COPY (
 copy (
   select idcanal as id,
         nomecanal as name,
-	nomemodulocanal as slug,
 	descricaocanal as description,
+	nomemodulocanal as slug,
 	flativo as is_active,
 	case when idcanal = 8 then tokencanal else null end AS token,
 	jsonb_build_object('url', case when idcanal = 7 then urlcanal when idcanal =8 then urlcanal else null end,
@@ -117,7 +117,7 @@ copy (
 	null as updated_at,
 	null as deletet_at
   from canal			
-) to '/home/niko/Documentos/db/MIGRA/final/3.canais' WITH ( FORMAT TEXT, DELIMITER '*' );
+) to '/home/niko/Documentos/db/MIGRA/final/2.canais' WITH ( FORMAT TEXT, DELIMITER '*' );
 
 -- EXPORTAR TAGS
 copy(
@@ -134,6 +134,8 @@ select * from ambientedeapoio
 COPY(
 SELECT aa.idambientedeapoio as id,
 		aa.idusuariopublicador as user_id,
+		aa.idambientedeapoiocategoria as category_id,
+		9 as canal_id,
 		aa.titulo as name, 
 		aa.descricao as description,
 		aa.url AS url,
@@ -155,7 +157,16 @@ SELECT aa.idambientedeapoio as id,
 COPY(
 select idambientedeapoio as aplicativo_id, idtag as tag_id from ambientedeapoiotag
 ) to '/home/niko/Documentos/db/MIGRA/final/5.aplicativo_tag' WITH ( FORMAT TEXT, DELIMITER '*' );
+-- EXPORTAR AMBIENTE DE APOIO CATEGORIA
+COPY (
+select  idambientedeapoiocategoria as id,
+       nomeambientedeapoiocategoria as name
+from ambientedeapoiocategoria
+) to '/home/niko/Documentos/db/MIGRA/final/6.aplicativo_categories' WITH (FORMAT TEXT, DELIMITER '*')
+-- EXPORTAR TIPOS
 
+select f.*, ct.* from formato as f
+join conteudotipo as ct on ct.idconteudotipo = f.idconteudotipo
 
 -- EXPORTAR CONTEUDOS
 copy (
@@ -241,6 +252,9 @@ select sc.idconteudodigitalcategoria AS id,
       null as updated_at
 from conteudodigitalcategoria AS sc
 ) to '/home/niko/Documentos/db/MIGRA/final/9.categories' WITH ( FORMAT TEXT, DELIMITER '*' );
+
+
+
 
 
 

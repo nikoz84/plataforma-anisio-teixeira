@@ -38,17 +38,17 @@ class ImportData extends Command
      */
     public function handle()
     {
-        $users = storage_path('dumps\1.users');
-        $canais = storage_path('dumps\2.canais');
-        $tags = storage_path('dumps\3.tags');
-        $aplicativos = storage_path('dumps\4.aplicativos');
-        $aplicativo_tag = storage_path('dumps\5.aplicativo_tag');
-        $conteudos = storage_path('dumps\6.conteudos');
-        $conteudo_tag = storage_path('dumps\7.conteudo_tag');
-        $licenses = storage_path('dumps\8.licenses');
-        $categories = storage_path('dumps\9.categories');
-        $componentes = explode("\n", file_get_contents(storage_path('dumps\10.componentes')));
-        $niveis = explode("\n", file_get_contents(storage_path('dumps\11.niveis')));
+        $users = storage_path('dumps/1.users');
+        $canais = storage_path('dumps/2.canais');
+        $tags = storage_path('dumps/3.tags');
+        $aplicativos = storage_path('dumps/4.aplicativos');
+        $aplicativo_tag = storage_path('dumps/5.aplicativo_tag');
+        $conteudos = storage_path('dumps/6.conteudos');
+        $conteudo_tag = storage_path('dumps/7.conteudo_tag');
+        $licenses = storage_path('dumps/8.licenses');
+        $categories = storage_path('dumps/9.categories');
+        $componentes = explode("\n", file_get_contents(storage_path('dumps/10.componentes')));
+        $niveis = explode("\n", file_get_contents(storage_path('dumps/11.niveis')));
         
         DB::statement("COPY users FROM '{$users}' DELIMITER '*';");
         DB::statement("COPY canais FROM '{$canais}' DELIMITER '*';");

@@ -157,7 +157,8 @@ var http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
             options: null,
             color: '#1e78c2',
             hasCategories: false,
-            categories: null
+            categories: null,
+            hasAbout: false
         };
     },
     created: function created() {},
@@ -191,6 +192,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
                                     this.title = resp.data.canal.name;
                                     this.options = resp.data.canal.options;
                                     this.color = this.options.color;
+                                    this.hasAbout = this.options.has_about;
                                     this.hasCategories = this.options.has_categories;
                                     localStorage.setItem('idCanal', this.idCanal);
                                     if (this.hasCategories) {
@@ -374,6 +376,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'NavCanal',
+    props: ['about'],
     data: function data() {
         return {
             isLogged: __WEBPACK_IMPORTED_MODULE_0__store_index_js__["a" /* default */].state.isLogged
@@ -414,16 +417,21 @@ var render = function() {
       "ul",
       { staticClass: "nav nav-pills" },
       [
-        _c(
-          "router-link",
-          {
-            attrs: {
-              tag: "li",
-              to: { name: "Inicio", params: { slug: _vm.$route.params.slug } }
-            }
-          },
-          [_c("a", [_vm._v("Home")])]
-        ),
+        _vm.hasAbout
+          ? _c(
+              "router-link",
+              {
+                attrs: {
+                  tag: "li",
+                  to: {
+                    name: "Inicio",
+                    params: { slug: _vm.$route.params.slug }
+                  }
+                }
+              },
+              [_c("a", [_vm._v("Home")])]
+            )
+          : _vm._e(),
         _vm._v(" "),
         _c(
           "router-link",
@@ -760,7 +768,7 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            _c("NavCanal")
+            _c("NavCanal", { attrs: { hasAbout: _vm.hasAbout } })
           ],
           1
         ),

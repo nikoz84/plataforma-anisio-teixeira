@@ -12,11 +12,16 @@ class License extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'site',
+        'name', 'description', 'site', 'parent_id'
     ];
 
     public function conteudo()
     {
         return $this->belongsTo('App\Conteudo', 'license_id');
+    }
+    
+    public function parent()
+    {
+        return $this->hasMany('App\License', 'parent_id', 'id');
     }
 }

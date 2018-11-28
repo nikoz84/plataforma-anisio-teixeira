@@ -23267,7 +23267,8 @@ var staticRenderFns = [
         }
       },
       [
-        _vm._v("\n                        Usuário \n                        "),
+        _c("i", { staticClass: "glyphicon glyphicon-user" }),
+        _vm._v(" "),
         _c("span", { staticClass: "caret" })
       ]
     )

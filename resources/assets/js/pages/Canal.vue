@@ -12,7 +12,7 @@
                     <h1 class="page-title" v-bind:style="`--color:${color}`" v-bind:stylepseudo="`after:`" >
                         {{ title }}
                     </h1>
-                    <NavCanal></NavCanal>
+                    <NavCanal v-bind:hasAbout="hasAbout"></NavCanal>
                 </header>
                 <section>
                     <transition name="custom-classes-transition" 
@@ -45,7 +45,8 @@ export default {
             options: null,
             color: '#1e78c2',
             hasCategories: false,
-            categories: null
+            categories: null,
+            hasAbout: false
         }
     },
     created() {
@@ -69,6 +70,7 @@ export default {
                 this.title = resp.data.canal.name;
                 this.options = resp.data.canal.options
                 this.color = this.options.color;
+                this.hasAbout = this.options.has_about;
                 this.hasCategories = this.options.has_categories;
                 localStorage.setItem('idCanal', this.idCanal);
                 if(this.hasCategories){
