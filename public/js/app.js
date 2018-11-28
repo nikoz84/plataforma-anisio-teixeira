@@ -22808,6 +22808,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
   data: function data() {
     return {
       user: {
+        name: null,
         email: null,
         password: null
       },
@@ -22817,12 +22818,12 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
   },
   beforeCreate: function beforeCreate() {
     if (!__WEBPACK_IMPORTED_MODULE_2__store_index_js__["a" /* default */].state.isLogged) {
-      this.$router.push('/usuario/login');
+      this.$router.push('/usuario/editar');
     }
   },
 
   methods: {
-    login: function () {
+    alterar: function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
         var _this = this;
 
@@ -22831,9 +22832,9 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                data = { email: this.user.email, password: this.user.password };
+                data = { name: this.user.name, email: this.user.email, password: this.user.password };
                 _context.next = 3;
-                return http.postData('/auth/login', data);
+                return http.postData('/auth/editar', data);
 
               case 3:
                 resp = _context.sent;
@@ -22842,7 +22843,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                 if (!resp.data.success) {
                   this.isError = resp.data.success;
                   this.message = resp.data.message;
-                  this.$router.push('/usuario/login');
+                  this.$router.push('/usuario/editar');
                   setTimeout(function () {
                     _this.isError = true;
                   }, 3000);
@@ -22863,11 +22864,11 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
         }, _callee, this);
       }));
 
-      function login() {
+      function alterar() {
         return _ref.apply(this, arguments);
       }
 
-      return login;
+      return alterar;
     }()
   }
 });
@@ -22978,7 +22979,16 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "button",
-                  { staticClass: "btn btn-default", attrs: { type: "submit" } },
+                  {
+                    staticClass: "btn btn-default",
+                    attrs: { type: "submit" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.alterar()
+                      }
+                    }
+                  },
                   [_vm._v("Alterar")]
                 )
               ]),

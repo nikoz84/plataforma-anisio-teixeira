@@ -19,7 +19,7 @@
                         <label for="senha">Senha</label>
                         <input class="form-control" v-model="user.password" id="senha" type="password">
                     </div>
-                    <button type="submit" class="btn btn-default">Alterar</button>
+                    <button type="submit" class="btn btn-default" v-on:click.prevent="alterar()">Alterar</button>
                     
                     <!--<router-link to="/usuario/recuperar-senha">
                         Recuperar senha
@@ -51,6 +51,7 @@ export default {
   data () {
     return {
       user: {
+        name: null,
         email: null,
         password: null
       },
@@ -60,18 +61,18 @@ export default {
   },
   beforeCreate () {
     if (!store.state.isLogged) {
-        this.$router.push('/usuario/login')
+        this.$router.push('/usuario/editar')
     }
   },
   methods:{
-    async login(){
-      let data = { email: this.user.email, password: this.user.password };
-      let resp = await http.postData('/auth/login', data);
+    async alterar(){
+      let data = { name: this.user.name, email: this.user.email, password: this.user.password };
+      let resp = await http.postData('/auth/editar', data);
       
       if(!resp.data.success){
         this.isError = resp.data.success;
         this.message = resp.data.message;
-        this.$router.push('/usuario/login')
+        this.$router.push('/usuario/editar')
         setTimeout(()=>{
           this.isError = true;
         },3000)
