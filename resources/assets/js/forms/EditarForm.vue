@@ -5,7 +5,7 @@
             <div class="panel-heading">
                 Editar Perfil
             </div>
-            <div class="panel-body">  
+            <div class="panel-body">
                 <form>
                     <div class="form-group">
                         <label for="nome">Nome</label>
@@ -20,26 +20,26 @@
                         <input class="form-control" v-model="user.password" id="senha" type="password">
                     </div>
                     <button type="submit" class="btn btn-default">Alterar</button>
-                    
+
                     <!--<router-link to="/usuario/recuperar-senha">
                         Recuperar senha
                     </router-link>
                     <router-link to="/usuario/registro">
-                        Cadastrese 
+                        Cadastrese
                     </router-link>-->
                 </form>
-        
-                <transition  name="custom-classes-transition" 
-                            enter-active-class="animated shake" 
+
+                <transition  name="custom-classes-transition"
+                            enter-active-class="animated shake"
                             leave-active-class="animated fadeOut">
                 <div v-if="!isError" class="alert alert-info" role="alert" >
                     {{ message }}
                 </div>
                 </transition>
             </div>
-        </div>    
+        </div>
       </div>
-    </div> 
+    </div>
 </template>
 <script>
 import Http from '../http.js';
@@ -67,7 +67,7 @@ export default {
     async login(){
       let data = { email: this.user.email, password: this.user.password };
       let resp = await http.postData('/auth/login', data);
-      
+
       if(!resp.data.success){
         this.isError = resp.data.success;
         this.message = resp.data.message;

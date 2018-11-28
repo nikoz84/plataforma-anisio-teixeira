@@ -89,7 +89,6 @@ export default {
     methods: {
         async perfil(){
             this.$router.push('/usuario/editar');
-
         },
         async logout(){
             let params = {token: localStorage.token };
