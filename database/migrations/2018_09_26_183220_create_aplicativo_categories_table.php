@@ -15,7 +15,7 @@ class CreateAplicativoCategoriesTable extends Migration
     {
         Schema::create('aplicativo_categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',250);
+            $table->string('name',250)->unique()->comment('Nome da categoria');
             $table->timestamps();
         });
     }

@@ -49,11 +49,7 @@
                     <p><i class="fa fa-phone mr-3"></i> +55 71 3115 9061</p>
                 </div>
                 <div class="col-md-12">
-<<<<<<< HEAD
-                    <!-- img class="img-responsive" src="http://pat.educacao.ba.gov.br/assets/img/img-logomarca-rodape.png" -->
-=======
-                    <img class="img-responsive" src="img/img-logomarca-rodape.png">
->>>>>>> 017da31038f424faf5bb617981dc79bdbffc7454
+                    <img class="img-responsive" src="http://pat.educacao.ba.gov.br/assets/img/img-logomarca-rodape.png">
                 </div>
             </div>
         </section>

@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class ImportData extends Command
 {
@@ -38,27 +39,14 @@ class ImportData extends Command
      */
     public function handle()
     {
-        $users = storage_path('dumps/1.users');
-        $canais = storage_path('dumps/2.canais');
-        $tags = storage_path('dumps/3.tags');
-        $aplicativos = storage_path('dumps/4.aplicativos');
-        $aplicativo_tag = storage_path('dumps/5.aplicativo_tag');
-        $conteudos = storage_path('dumps/6.conteudos');
-        $conteudo_tag = storage_path('dumps/7.conteudo_tag');
-        $licenses = storage_path('dumps/8.licenses');
-        $categories = storage_path('dumps/9.categories');
-        $componentes = explode("\n", file_get_contents(storage_path('dumps/10.componentes')));
-        $niveis = explode("\n", file_get_contents(storage_path('dumps/11.niveis')));
-        
-        DB::statement("COPY users FROM '{$users}' DELIMITER '*';");
-        DB::statement("COPY canais FROM '{$canais}' DELIMITER '*';");
-        DB::statement("COPY tags FROM '{$tags}' DELIMITER '*';");
-        DB::statement("COPY aplicativos FROM '{$aplicativos}' DELIMITER '*';");
-        DB::statement("COPY aplicativo_tag FROM '{$aplicativo_tag}' DELIMITER '*';");
-        DB::statement("COPY conteudos FROM '{$conteudos}' DELIMITER '*';");
-        DB::statement("COPY conteudo_tag FROM '{$conteudo_tag}' DELIMITER '*';");
-        DB::statement("COPY licenses FROM '{$licenses}' DELIMITER '*';");
-        DB::statement("COPY categories FROM '{$categories}' DELIMITER '*';");
+         
+        $files = array_sort(File::files(storage_path('dumps')), function ($file) {
+                    return $file->getFilename();
+        });
+         
+        foreach ($files as $file) {
+            DB::statement("COPY {$file->getExtension()} FROM '{$file->getPathname()}' DELIMITER '*';");
+        }
         
         DB::statement("ALTER SEQUENCE users_id_seq RESTART WITH 2668;");
         DB::statement("ALTER SEQUENCE canais_id_seq RESTART WITH 15;");
@@ -67,9 +55,14 @@ class ImportData extends Command
         DB::statement("ALTER SEQUENCE conteudos_id_seq RESTART WITH 8670;");
         DB::statement("ALTER SEQUENCE licenses_id_seq RESTART WITH 14;");
         DB::statement("ALTER SEQUENCE categories_id_seq RESTART WITH 69;");
+        DB::statement("ALTER SEQUENCE aplicativo_categories_id_seq RESTART WITH 16;");
 
+        /*
+        $componentes = explode("\n", file_get_contents(storage_path('dumps/10.componentes')));
+        $niveis = explode("\n", file_get_contents(storage_path('dumps/11.niveis')));
         $this->importToOptions($componentes);
         $this->importToOptions($niveis);
+        */
     }
 
     private function importToOptions($meta_data)

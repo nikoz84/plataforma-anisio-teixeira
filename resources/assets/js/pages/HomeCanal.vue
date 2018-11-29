@@ -16,6 +16,8 @@ export default {
     }
 }
 </script>
-<style lang="sass" scoped>
-
+<style lang="scss" scoped>
+section{
+    background: var(--color);
+}
 </style>

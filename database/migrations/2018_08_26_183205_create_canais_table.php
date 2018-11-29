@@ -17,7 +17,7 @@ class CreateCanaisTable extends Migration
             $table->bigIncrements('id')->comment('Chave primaria e editificador unico do canal');
             $table->string('name', 155)->comment('Nome do canal');
             $table->text('description')->comment('Descrição do canal');
-            $table->string('slug',255)->unique()->comment('Url amigavel do canal');
+            $table->string('slug',255)->unique()->comment('Url amigável do canal');
             $table->boolean('is_active')->default('false')->comment('Se o canal está ativo');
             $table->text('token')->nullable()->comment('Token de coneção com apis externas');
             $table->jsonb('options')->default('{}')->comment('Campo formato jsonb para acrecentar meta dados');

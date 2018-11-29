@@ -57,6 +57,9 @@
                                 <a>Login</a>
                             </router-link>
                             <li v-if="isLogged">
+                                <a v-on:click.prevent="perfil()">Editar Perfil</a>
+                            </li>
+                            <li v-if="isLogged">
                                 <a v-on:click.prevent="logout()">Sair</a>
                             </li>
                         </ul>
@@ -83,13 +86,16 @@ export default {
         }
     },
     mounted() {
-               
+
     },
     methods: {
+        perfil(){
+            this.$router.push('/usuario/editar');
+        },
         async logout(){
             let params = {token: localStorage.token };
             let resp = await http.postData('/auth/logout', params);
-            
+
             if(resp.data.success){
                 store.commit('LOGOUT_USER');
                 localStorage.clear();

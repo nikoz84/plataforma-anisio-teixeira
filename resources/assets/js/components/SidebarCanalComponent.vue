@@ -1,5 +1,5 @@
 <template>
-    <nav>
+    <nav role="menu categorias">
         <ul class="nav nav-pills nav-stacked">
             <router-link tag="li" :to="{ name: 'Listar', params: { slug : $route.params.slug }}">
                 <a>Todos</a>

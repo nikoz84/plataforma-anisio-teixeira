@@ -29,5 +29,9 @@ class Aplicativo extends Model
     {
         return $this->belongsToMany('App\Tag');
     }
+    public function category()
+    {
+        return $this->hasOne('App\AplivativoCategory', 'category_id');
+    }
     
 }

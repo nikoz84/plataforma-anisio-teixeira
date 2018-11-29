@@ -16,6 +16,7 @@ class CreateAplicativosTable extends Migration
         Schema::create('aplicativos', function (Blueprint $table) {
             $table->bigIncrements('id')->comment('Identificador unico e chave primaria do aplicativo');
             $table->integer('user_id')->comment('Chave foranea do usuário publicador');
+            $table->integer('category_id')->comment('Chave foranea da categoria');
             $table->integer('canal_id')->comment('Chave foranea do canal');
             $table->string('name',200)->comment('Nome do aplicativo');
             $table->text('description')->comment('Descrição do aplicativo');
@@ -24,10 +25,12 @@ class CreateAplicativosTable extends Migration
             $table->jsonb('options')->default('{}')->nullable()->comment('Meta data do aplicativo');
             // campos created_at e updated_at
             $table->timestamps();
-            // indice    
+            // indice
             $table->index('id')->comment('btree index por default');
-            // chave foranea usuario
+            //chaves foraneas
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('category_id')->references('id')->on('aplicativo_categories');
+            $table->foreign('canal_id')->references('id')->on('canais');
         });
     }
 

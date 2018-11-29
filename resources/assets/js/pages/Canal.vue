@@ -9,19 +9,19 @@
             </aside>
             <article class="col-sm-9">
                 <header class="page-header">
-                    <h1 class="page-title" v-bind:style="`--color:${color}`" v-bind:stylepseudo="`after:`" >
+                    <h1 class="page-title" v-bind:style="`--color:${color}`">
                         {{ title }}
                     </h1>
-                    <NavCanal v-bind:hasAbout="hasAbout"></NavCanal>
+                    <NavCanal></NavCanal>
                 </header>
-                <section>
+                <div>
                     <transition name="custom-classes-transition" 
                                 enter-active-class="animated fadeIn" 
                                 leave-active-class="animated fadeOut"
                                 mode="out-in">
-                        <router-view v-bind:color="color"></router-view>
+                        <router-view v-bind:style="`--color:${color}`"></router-view>
                     </transition>
-                </section>
+                </div>
                     
             </article>
         </div>

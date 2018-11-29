@@ -1,7 +1,7 @@
 <template>
     <nav>
         <ul class="nav nav-pills">
-            <router-link v-if="hasAbout" tag="li" :to="{ name: 'Inicio', params: {slug: $route.params.slug}}">
+            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: $route.params.slug}}">
                 <a>Home</a>
             </router-link> 
             <router-link tag="li" :to="{ name: 'Listar', params: {slug: $route.params.slug}}">
@@ -21,7 +21,7 @@ import store from '../store/index.js'
 
 export default {
     name : 'NavCanal',
-    props: ['about'],
+    props: ['hasAbout'],
     data(){
         return {
             isLogged: store.state.isLogged
