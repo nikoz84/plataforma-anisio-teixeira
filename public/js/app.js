@@ -22814,134 +22814,9 @@ exports.push([module.i, "\nform[data-v-654f25d1] {\n  margin-top: 30px;\n  margi
 
 /***/ }),
 /* 91 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store_index_js__ = __webpack_require__(6);
-
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'LoginForm',
-  data: function data() {
-    return {
-      user: {
-        email: null,
-        password: null
-      },
-      message: '',
-      isError: true
-    };
-  },
-  beforeCreate: function beforeCreate() {
-    if (!__WEBPACK_IMPORTED_MODULE_2__store_index_js__["a" /* default */].state.isLogged) {
-      this.$router.push('/usuario/login');
-    }
-  },
-
-  methods: {
-    login: function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-        var _this = this;
-
-        var data, resp;
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                data = { email: this.user.email, password: this.user.password };
-                _context.next = 3;
-                return http.postData('/auth/login', data);
-
-              case 3:
-                resp = _context.sent;
-
-
-                if (!resp.data.success) {
-                  this.isError = resp.data.success;
-                  this.message = resp.data.message;
-                  this.$router.push('/usuario/login');
-                  setTimeout(function () {
-                    _this.isError = true;
-                  }, 3000);
-                } else {
-                  this.isError = resp.data.success;
-                  if (resp.data.token.access_token) {
-                    localStorage.setItem('token', resp.data.token.access_token);
-                    __WEBPACK_IMPORTED_MODULE_2__store_index_js__["a" /* default */].commit('LOGIN_USER');
-                    this.$router.push('/admin');
-                  }
-                }
-
-              case 5:
-              case 'end':
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function login() {
-        return _ref.apply(this, arguments);
-      }
-
-      return login;
-    }()
-  }
-});
+throw new Error("Module build failed: SyntaxError: Unexpected token (73:0)\n\n\u001b[0m \u001b[90m 71 | \u001b[39m  }\u001b[33m,\u001b[39m\n \u001b[90m 72 | \u001b[39m  methods\u001b[33m:\u001b[39m{\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 73 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m    | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 74 | \u001b[39m    async alterar(){\n \u001b[90m 75 | \u001b[39m      let data \u001b[33m=\u001b[39m { name\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39muser\u001b[33m.\u001b[39mname\u001b[33m,\u001b[39m email\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39muser\u001b[33m.\u001b[39memail\u001b[33m,\u001b[39m password\u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39muser\u001b[33m.\u001b[39mpassword }\u001b[33m;\u001b[39m\n \u001b[90m 76 | \u001b[39m      let resp \u001b[33m=\u001b[39m await http\u001b[33m.\u001b[39mpostData(\u001b[32m'/auth/editar'\u001b[39m\u001b[33m,\u001b[39m data)\u001b[33m;\u001b[39m\u001b[0m\n");
 
 /***/ }),
 /* 92 */
@@ -22961,7 +22836,7 @@ var render = function() {
       [
         _c("div", { staticClass: "panel panel-default col-md-7" }, [
           _c("div", { staticClass: "panel-heading" }, [
-            _vm._v("\n            Editar Perfil\n        ")
+            _vm._v("\n                Editar Perfil\n            ")
           ]),
           _vm._v(" "),
           _c(
@@ -23046,11 +22921,29 @@ var render = function() {
                     }
                   })
                 ]),
-                _vm._v(" "),
+                _vm._v("\n<<<<<<< HEAD\n                    "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-default",
+                    attrs: { type: "submit" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.alterar()
+                      }
+                    }
+                  },
+                  [_vm._v("Alterar")]
+                ),
+                _vm._v("\n                    \n=======\n                    "),
                 _c(
                   "button",
                   { staticClass: "btn btn-default", attrs: { type: "submit" } },
                   [_vm._v("Alterar")]
+                ),
+                _vm._v(
+                  "\n\n>>>>>>> 36be2000d953931e9a993c41045324d1b0516b66\n                    "
                 )
               ]),
               _vm._v(" "),
@@ -23073,9 +22966,9 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                " +
+                            "\n                    " +
                               _vm._s(_vm.message) +
-                              "\n            "
+                              "\n                "
                           )
                         ]
                       )

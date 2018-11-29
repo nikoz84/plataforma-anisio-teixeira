@@ -5,7 +5,7 @@
             <div class="panel-heading">
                 Editar Perfil
             </div>
-            <div class="panel-body">  
+            <div class="panel-body">
                 <form>
                     <div class="form-group">
                         <label for="nome">Nome</label>
@@ -19,27 +19,32 @@
                         <label for="senha">Senha</label>
                         <input class="form-control" v-model="user.password" id="senha" type="password">
                     </div>
-                    <button type="submit" class="btn btn-default">Alterar</button>
+<<<<<<< HEAD
+                    <button type="submit" class="btn btn-default" v-on:click.prevent="alterar()">Alterar</button>
                     
+=======
+                    <button type="submit" class="btn btn-default">Alterar</button>
+
+>>>>>>> 36be2000d953931e9a993c41045324d1b0516b66
                     <!--<router-link to="/usuario/recuperar-senha">
                         Recuperar senha
                     </router-link>
                     <router-link to="/usuario/registro">
-                        Cadastrese 
+                        Cadastrese
                     </router-link>-->
                 </form>
-        
-                <transition  name="custom-classes-transition" 
-                            enter-active-class="animated shake" 
+
+                <transition  name="custom-classes-transition"
+                            enter-active-class="animated shake"
                             leave-active-class="animated fadeOut">
                 <div v-if="!isError" class="alert alert-info" role="alert" >
                     {{ message }}
                 </div>
                 </transition>
             </div>
-        </div>    
+        </div>
       </div>
-    </div> 
+    </div>
 </template>
 <script>
 import Http from '../http.js';
@@ -51,6 +56,7 @@ export default {
   data () {
     return {
       user: {
+        name: null,
         email: null,
         password: null
       },
@@ -60,18 +66,25 @@ export default {
   },
   beforeCreate () {
     if (!store.state.isLogged) {
-        this.$router.push('/usuario/login')
+        this.$router.push('/usuario/editar')
     }
   },
   methods:{
+<<<<<<< HEAD
+    async alterar(){
+      let data = { name: this.user.name, email: this.user.email, password: this.user.password };
+      let resp = await http.postData('/auth/editar', data);
+      
+=======
     async login(){
       let data = { email: this.user.email, password: this.user.password };
       let resp = await http.postData('/auth/login', data);
-      
+
+>>>>>>> 36be2000d953931e9a993c41045324d1b0516b66
       if(!resp.data.success){
         this.isError = resp.data.success;
         this.message = resp.data.message;
-        this.$router.push('/usuario/login')
+        this.$router.push('/usuario/editar')
         setTimeout(()=>{
           this.isError = true;
         },3000)

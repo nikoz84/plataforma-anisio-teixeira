@@ -71,6 +71,7 @@ Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('buscaxApl
  */
 Route::post('/auth/login', 'AuthController@login')->name('loginUsuario');
 Route::post('/auth/register', 'AuthController@register')->name('registroUsuario');
+Route::post('/auth/update', 'AuthController@update')->name('updateUsuario');
 /******
  *
  * Controlador: Options

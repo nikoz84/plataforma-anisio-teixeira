@@ -26,7 +26,7 @@ const routes =[
         requiresAuth: true,
         //is_admin : true
       }
-    },    
+    },
     {
       path: '/usuario',
       name: 'User',
@@ -112,10 +112,8 @@ const routes =[
           }
         }
 
-
       ]
     }
 ];
-
 
 export default routes;
