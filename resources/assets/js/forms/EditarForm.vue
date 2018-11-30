@@ -65,10 +65,10 @@ export default {
     }
   },
   methods:{
-    async login(){
-      let data = { email: this.user.email, password: this.user.password };
-      let resp = await http.postData('/auth/login', data);
-
+    async alterar(){
+      let data = { name: this.user.name, email: this.user.email, password: this.user.password };
+      let resp = await http.postData('/auth/editar', data);
+      
       if(!resp.data.success){
         this.isError = resp.data.success;
         this.message = resp.data.message;
