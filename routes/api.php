@@ -116,7 +116,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
      * resetPass -< Resetar senha
      *
      */
-    Route::get('/users/search/{term}', 'UserController@search')->name('buscarUsuario');
+    Route::get('/users/search/{termo}', 'UserController@search')->name('buscarUsuario');
     Route::delete('/users/delete/{id}', 'UserController@delete')->name('apagarUsuario');
     Route::delete('/users/{id}', 'UserController@getById')->name('buscaxUsuarioId');
     Route::get('/users', 'UserController@list')->name('listaUsuario');
@@ -182,9 +182,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
      * delete -> Apagar licença
      *
      */
-    Route::get('/licencas', 'LicenseController@list')->name('listaLicenca');
-    Route::get('/licencas/search/{term}', 'LicenseController@search')->name('buscaLicenca');
-    Route::post('/licencas/create', 'LicenseController@create')->name('adicionarLicenca');
-    Route::put('/licencas/update/{id}', 'LicenseController@update')->name('atualizarLicenca');
-    Route::delete('/licencas/delete/{id}', 'LicenseController@delete')->name('apagarLicenca');
+    Route::get('/licenses', 'LicenseController@list')->name('listaLicenca');
+    Route::get('/licenses/search/{term}', 'LicenseController@search')->name('buscaLicenca');
+    Route::post('/licenses/create', 'LicenseController@create')->name('adicionarLicenca');
+    Route::put('/licenses/update/{id}', 'LicenseController@update')->name('atualizarLicenca');
+    Route::delete('/licenses/delete/{id}', 'LicenseController@delete')->name('apagarLicenca');
 });

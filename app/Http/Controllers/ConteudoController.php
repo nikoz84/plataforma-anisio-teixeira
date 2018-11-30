@@ -198,13 +198,13 @@ class ConteudoController extends Controller
     {
         $limit = $this->request->query('limit', 15);
         $page = $this->request->query('page', 1);
-
-        $conteudos = DB::table(DB::raw("conteudos as cd, plainto_tsquery('simple', lower(unaccent('?'))) query"))
+        
+        $conteudos = DB::table(DB::raw("conteudos as cd, plainto_tsquery('simple', lower(unaccent(?))) query"))
                         ->select(['cd.id','cd.title',
                                 DB::raw('ts_rank_cd(cd.ts_documento, query) AS ranking')
                                 ])
                         ->whereRaw('query @@ cd.ts_documento')
-                        ->where('cd.is_approved', '=', 'true')
+                        ->whereRaw('cd.is_approved = true')
                         ->setBindings([$termo])
                         ->orderBy('ranking', 'desc')
                         ->paginate($limit);
@@ -231,7 +231,9 @@ class ConteudoController extends Controller
     public function getById($id)
     {
         
-        $conteudo = $this->conteudo::with(['user','canal','tags'])->find($id);
+        $conteudo = $this->conteudo::with([
+            'user','canal','tags'
+            ])->find($id);
 
         if ($conteudo) {
             return response()->json([

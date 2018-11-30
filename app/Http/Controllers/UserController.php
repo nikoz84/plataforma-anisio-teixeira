@@ -23,11 +23,11 @@ class UserController extends Controller
         $paginator->setPath("/users?limit={$limit}");
       
         return response()->json([
-        'success'=> true,
-        'title'=> 'Lista de usuários',
-        'paginator'=> $paginator,
-        'page'=> $paginator->currentPage(),
-        'limit' => $paginator->perPage()
+            'success'=> true,
+            'title'=> 'Lista de usuários',
+            'paginator'=> $paginator,
+            'page'=> $paginator->currentPage(),
+            'limit' => $paginator->perPage()
         ]);
     }
     public function getById(Request $request, $id)
@@ -39,8 +39,8 @@ class UserController extends Controller
     public function search(Request $request, $termo)
     {
         $limit = ($request->has('limit')) ? $request->query('limit') : 20;
-
-        $paginator = User::where('name', 'ilike', $termo)
+        $search = "%{$termo}%";
+        $paginator = User::whereRaw('unaccent(lower(name)) ilike unaccent(lower(?))', [$search])
                     ->paginate($limit);
 
         $paginator->setPath("/users/search/{$termo}?limit={$limit}");

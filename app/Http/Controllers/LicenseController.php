@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Licenca;
+use App\License;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class LicenseController extends Controller
 {
-    public function __construct(Request $request)
+    public function __construct(Request $request, License $license)
     {
         $this->middleware('jwt.verify')->except(['list','search']);
         $this->request = $request;
+        $this->license = $license;
     }
     /**
      * Lista das licenças.
@@ -23,9 +24,9 @@ class LicenseController extends Controller
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
 
-        $paginator = License::paginate($limit);
+        $paginator = $this->license::paginate($limit);
 
-        $paginator->setPath("/licencas?limit={$limit}");
+        $paginator->setPath("/licenses?limit={$limit}");
         
         return response()->json([
                 'success'=> true,
@@ -69,7 +70,7 @@ class LicenseController extends Controller
     /**
      * Busca por nome da licença.
      *
-     * @param  \App\License  $termo
+     * @param   $termo
      * @return \Illuminate\Http\Response
      */
     public function search($termo)
@@ -80,7 +81,7 @@ class LicenseController extends Controller
                     ->setBinding([$termo])
                     ->paginate($limit);
         
-        $paginator->setPath("/licencas/search/{$termo}?limit={$limit}");
+        $paginator->setPath("/licenses/search/{$termo}?limit={$limit}");
         
         return response()->json([
             'success'=> true,

@@ -9,7 +9,8 @@ const store = new Vuex.Store({
     state: {
         isLogged: !!localStorage.getItem('token'),
         userProfile: {},
-        paginator: {}
+        paginator: {},
+        message: ''
     },
     mutations,
     actions,

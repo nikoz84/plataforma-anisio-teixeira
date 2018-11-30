@@ -85,11 +85,10 @@ class TagController extends Controller
     {
         $limit = $request->query('limit', 15);
         $page = $request->query('page', 1);
-
+        $search = "%{$termo}%";
         $tags = DB::table('tags')
                     ->select(['id','name'])
-                    ->where(DB::raw('unaccent(lower(name))'), 'ILIKE', DB::raw("unaccent(lower('%?%'))"))
-                    ->setBinding([$termo])
+                    ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
                     ->paginate($limit);
         
         $tags->setPath("/tags/search/{$termo}?limit={$limit}");

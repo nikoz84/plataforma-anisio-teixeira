@@ -276,7 +276,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
-//
 
 
 
@@ -424,24 +423,11 @@ var render = function() {
         staticClass: "list-group-item pointer",
         on: {
           click: function($event) {
-            _vm.get("licencas")
+            _vm.get("licenses")
           }
         }
       },
       [_vm._v("Licenças")]
-    ),
-    _vm._v(" "),
-    _c(
-      "a",
-      {
-        staticClass: "list-group-item pointer",
-        on: {
-          click: function($event) {
-            _vm.get("admin")
-          }
-        }
-      },
-      [_vm._v("Área Administrativa")]
     )
   ])
 }
@@ -578,6 +564,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'Search',
+    props: ['search'],
     data: function data() {
         return {
             placeholder: 'Pesquise de conteúdos',
@@ -593,7 +580,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
-                                url = '/' + this.$parent.search + '/search/' + this.termo;
+                                url = '/' + this.search + '/search/' + this.termo;
 
                                 this.$parent.show = false;
                                 http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
@@ -659,7 +646,7 @@ var render = function() {
             }
           ],
           staticClass: "form-control",
-          attrs: { type: "text", placeholder: _vm.placeholder },
+          attrs: { type: "text" },
           domProps: { value: _vm.termo },
           on: {
             input: function($event) {
@@ -724,26 +711,15 @@ var render = function() {
             _c("h1", [_c("small", [_vm._v(_vm._s(_vm.title))])])
           ]),
           _vm._v(" "),
-          _c(
-            "transition",
-            {
-              attrs: {
-                name: "custom-classes-transition",
-                "enter-active-class": "animated fadeInUp",
-                "leave-active-class": "animated bounceOut",
-                mode: "out-in"
-              }
-            },
-            [
-              _vm.show
-                ? _c(
-                    "div",
-                    [_c("List", { attrs: { items: _vm.paginator } })],
-                    1
-                  )
-                : _vm._e()
-            ]
-          )
+          _vm.show
+            ? _c("div", [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.paginator.data) +
+                    "\n            "
+                )
+              ])
+            : _vm._e()
         ],
         1
       )

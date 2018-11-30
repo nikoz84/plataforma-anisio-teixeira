@@ -66,7 +66,6 @@ export default class Http {
                 return `${this.api}/aplicativos`;
                 break;
             default:
-                console.log(id)
                 return `${this.api}/conteudos?canal=${id}&site=false`;
         }
     }

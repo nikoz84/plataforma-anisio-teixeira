@@ -35,4 +35,8 @@ class Canal extends Model
     {
         return $this->hasMany('App\Conteudo');
     }
+    public function aplicativos()
+    {
+        return $this->hasMany('App\Aplicativos');
+    }
 }

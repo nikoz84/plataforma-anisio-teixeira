@@ -19,13 +19,8 @@
                         <label for="senha">Senha</label>
                         <input class="form-control" v-model="user.password" id="senha" type="password">
                     </div>
-<<<<<<< HEAD
                     <button type="submit" class="btn btn-default" v-on:click.prevent="alterar()">Alterar</button>
                     
-=======
-                    <button type="submit" class="btn btn-default">Alterar</button>
-
->>>>>>> 36be2000d953931e9a993c41045324d1b0516b66
                     <!--<router-link to="/usuario/recuperar-senha">
                         Recuperar senha
                     </router-link>
@@ -70,17 +65,10 @@ export default {
     }
   },
   methods:{
-<<<<<<< HEAD
-    async alterar(){
-      let data = { name: this.user.name, email: this.user.email, password: this.user.password };
-      let resp = await http.postData('/auth/editar', data);
-      
-=======
     async login(){
       let data = { email: this.user.email, password: this.user.password };
       let resp = await http.postData('/auth/login', data);
 
->>>>>>> 36be2000d953931e9a993c41045324d1b0516b66
       if(!resp.data.success){
         this.isError = resp.data.success;
         this.message = resp.data.message;

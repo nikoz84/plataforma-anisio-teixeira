@@ -8,6 +8,9 @@ const mutations = {
     },
     SET_PAGINATOR: (state, { paginator }) => {
         state.paginator = paginator
+    },
+    SET_MESSAGE: (state, { message }) => {
+        state.message = message
     }
 };
 

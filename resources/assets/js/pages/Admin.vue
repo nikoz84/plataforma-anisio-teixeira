@@ -6,14 +6,14 @@
             <header class="page-header">
                 <h1><small>{{ title }}</small></h1>
             </header>
-            <transition name="custom-classes-transition" 
+            <!-- transition name="custom-classes-transition" 
                      enter-active-class="animated fadeInUp" 
                      leave-active-class="animated bounceOut"
-                     mode="out-in">
+                     mode="out-in" -->
                 <div v-if="show">
-                    <List v-bind:items="paginator"></List>
+                    {{ paginator.data }}
                 </div>    
-            </transition>
+            <!-- /transition -->
             
         </section>
     </div>

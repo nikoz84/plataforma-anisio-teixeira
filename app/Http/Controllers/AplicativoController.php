@@ -146,12 +146,10 @@ class AplicativoController extends Controller
     {
         $limit = $request->query('limit', 15);
         $page = $request->query('page', 1);
-
-        $aplicativos = DB::table('aplicativos')
-                    ->select(['id','name'])
-                    ->where(DB::raw('unaccent(lower(name))'), 'ILIKE', DB::raw("unaccent(lower('%?%'))"))
-                    ->setBinding([$termo])
-                    ->paginate($limit);
+        $search= "%{$termo}%";
+        $aplicativos = Aplicativo::select(['id','name'])
+                                ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
+                                ->paginate($limit);
 
         $aplicativos->setPath("/aplicativos/search/{$termo}?limit={$limit}");
 
@@ -165,7 +163,8 @@ class AplicativoController extends Controller
     }
     public function getById(Request $request, $id)
     {
-        $aplicativo = Aplicativo::with(['user','tags'])->find($id);
+        $aplicativo = Aplicativo::with(['tags','category','user','canal'])
+                                ->find($id);
 
         if ($aplicativo) {
             return response()->json([

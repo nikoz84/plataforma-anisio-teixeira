@@ -23,15 +23,23 @@ class Aplicativo extends Model
     ];
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\User', 'user_id')
+                    ->select(['id','name']);
     }
     public function tags()
     {
-        return $this->belongsToMany('App\Tag');
+        return $this->belongsToMany('App\Tag')
+                    ->select(['id', 'name']);
     }
     public function category()
     {
-        return $this->hasOne('App\AplivativoCategory', 'category_id');
+        return $this->hasOne('App\AplicativoCategory', 'id', 'category_id')
+                    ->select(['id', 'name']);
+    }
+    public function canal()
+    {
+        return $this->hasOne('App\Canal', 'id', 'canal_id')
+                    ->selectRaw("id, name, options->>'color' as color ");
     }
     
 }
