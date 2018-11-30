@@ -157,7 +157,8 @@ var http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
             options: null,
             color: '#1e78c2',
             hasCategories: false,
-            categories: null
+            categories: null,
+            hasAbout: false
         };
     },
     created: function created() {},
@@ -191,6 +192,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
                                     this.title = resp.data.canal.name;
                                     this.options = resp.data.canal.options;
                                     this.color = this.options.color;
+                                    this.hasAbout = this.options.has_about;
                                     this.hasCategories = this.options.has_categories;
                                     localStorage.setItem('idCanal', this.idCanal);
                                     if (this.hasCategories) {
@@ -374,6 +376,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'NavCanal',
+    props: ['hasAbout'],
     data: function data() {
         return {
             isLogged: __WEBPACK_IMPORTED_MODULE_0__store_index_js__["a" /* default */].state.isLogged
@@ -630,7 +633,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("nav", [
+  return _c("nav", { attrs: { role: "menu categorias" } }, [
     _c(
       "ul",
       { staticClass: "nav nav-pills nav-stacked" },
@@ -746,11 +749,7 @@ var render = function() {
           [
             _c(
               "h1",
-              {
-                staticClass: "page-title",
-                style: "--color:" + _vm.color,
-                attrs: { stylepseudo: "after:" }
-              },
+              { staticClass: "page-title", style: "--color:" + _vm.color },
               [
                 _vm._v(
                   "\n                    " +
@@ -766,7 +765,7 @@ var render = function() {
         ),
         _vm._v(" "),
         _c(
-          "section",
+          "div",
           [
             _c(
               "transition",
@@ -778,7 +777,7 @@ var render = function() {
                   mode: "out-in"
                 }
               },
-              [_c("router-view", { attrs: { color: _vm.color } })],
+              [_c("router-view", { style: "--color:" + _vm.color })],
               1
             )
           ],

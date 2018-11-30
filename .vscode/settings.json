@@ -1,15 +1,12 @@
 {
-<<<<<<< HEAD
     "phpcs.executablePath": "/usr/bin/phpcs",
-=======
-    "phpcs.executablePath": "vendor/bin/phpcs",
->>>>>>> 01d65610b5e5e4a5bf36bb9cdaa24a96fe04757f
     "phpcs.composerJsonPath": "composer.json",
     "phpcs.enable": true,
     "phpcs.standard": "PSR2",
     "editor.renderWhitespace": "all",
     "editor.renderIndentGuides": true,
     "autoimport.autoComplete": true,
+    "files.eol": "\n",
     "auto-close-tag.enableAutoCloseTag": true,
     "auto-close-tag.activationOnLanguage": [
         "xml",

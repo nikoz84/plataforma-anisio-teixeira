@@ -1,30 +1,29 @@
 <template>
     <div class="conteiner">
-
         <form>
-
+            <!-- NOME -->
             <div class="form-group">
                 <label for="nomelicenca">Nome da Licença:*</label>
                 <input type="text" class="form-control" id="nomelicenca">
             </div>
-
+            <!-- LICENCA -->
             <div class="form-group">
-            <label for="estado">Licença relacionada:</label>
-            <select class="form-control form-control-lg" id="licenca-relacionada">
-                <option value="">« SELECIONE »</option>
-            </select>
+                <label for="estado">Licença relacionada:</label>
+                <select class="form-control form-control-lg" id="licenca-relacionada">
+                    <option value="">« SELECIONE »</option>
+                </select>
             </div>
-
+            <!-- DESCRIÇÃO -->
             <div class="form-group">
                 <label for="descricao">Descrição:*</label>
                 <textarea class="form-control" id="descricao"></textarea>
             </div>
-
+            <!-- SITE -->
             <div class="form-group">
                 <label for="site-referenciado">Site referenciado:</label>
                 <input type="text" class="form-control" id="site-referenciado">
             </div>
-
+            <!-- ICONE -->
             <div class="form-group">
                 <label for="icone-licenca">Icone da Licença:*</label>
                 <input type="file" class="form-control" id="icone-licenca" aria-describedby="icone-licenca">

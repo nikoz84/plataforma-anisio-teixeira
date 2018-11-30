@@ -13,7 +13,7 @@
             <router-link tag="li" :to="{ name: 'AdicionarAplicativo', params: {slug: $route.params.slug}}" v-if="showAdicionarAplicativo">
                 <a>Adicionar</a>
             </router-link>
-        </ul>    
+        </ul>
     </nav>
 </template>
 <script>
@@ -21,6 +21,7 @@ import store from '../store/index.js'
 
 export default {
     name : 'NavCanal',
+    props: ['hasAbout'],
     data(){
         return {
             isLogged: store.state.isLogged

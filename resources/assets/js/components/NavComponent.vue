@@ -49,7 +49,7 @@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            Usuário
+                            <i class="glyphicon glyphicon-user"></i> 
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
@@ -58,6 +58,8 @@
                             </router-link>
                             <li v-if="isLogged">
                                 <a v-on:click.prevent="perfil()">Editar Perfil</a>
+                            </li>
+                            <li v-if="isLogged">
                                 <a v-on:click.prevent="logout()">Sair</a>
                             </li>
                         </ul>
@@ -87,7 +89,7 @@ export default {
 
     },
     methods: {
-        async perfil(){
+        perfil(){
             this.$router.push('/usuario/editar');
         },
         async logout(){

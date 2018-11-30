@@ -9,19 +9,19 @@
             </aside>
             <article class="col-sm-9">
                 <header class="page-header">
-                    <h1 class="page-title" v-bind:style="`--color:${color}`" v-bind:stylepseudo="`after:`" >
+                    <h1 class="page-title" v-bind:style="`--color:${color}`">
                         {{ title }}
                     </h1>
                     <NavCanal></NavCanal>
                 </header>
-                <section>
+                <div>
                     <transition name="custom-classes-transition" 
                                 enter-active-class="animated fadeIn" 
                                 leave-active-class="animated fadeOut"
                                 mode="out-in">
-                        <router-view v-bind:color="color"></router-view>
+                        <router-view v-bind:style="`--color:${color}`"></router-view>
                     </transition>
-                </section>
+                </div>
                     
             </article>
         </div>
@@ -45,7 +45,8 @@ export default {
             options: null,
             color: '#1e78c2',
             hasCategories: false,
-            categories: null
+            categories: null,
+            hasAbout: false
         }
     },
     created() {
@@ -69,6 +70,7 @@ export default {
                 this.title = resp.data.canal.name;
                 this.options = resp.data.canal.options
                 this.color = this.options.color;
+                this.hasAbout = this.options.has_about;
                 this.hasCategories = this.options.has_categories;
                 localStorage.setItem('idCanal', this.idCanal);
                 if(this.hasCategories){
