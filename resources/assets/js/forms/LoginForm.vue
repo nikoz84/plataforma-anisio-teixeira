@@ -63,7 +63,7 @@ export default {
     async login(){
       let data = { email: this.user.email, password: this.user.password };
       let resp = await http.postData('/auth/login', data);
-      
+      console.log(resp)
       if(!resp.data.success){
         this.isError = resp.data.success;
         this.message = resp.data.message;

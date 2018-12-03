@@ -3,16 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\AplicativoCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
-    public function __construct(Category $category, Request $request)
+    public function __construct(Category $category, Request $request, AplicativoCategory $appCategory)
     {
-        $this->middleware('jwt.verify')->except(['list','search','getById','getByTagId']);
+        $this->middleware('jwt.verify')->except([
+            'list','search','getById','getByTagId','getAplicativoCategories'
+        ]);
         $this->category = $category;
         $this->request = $request;
+        $this->appCategory =  $appCategory;
     }
 
     public function list()
@@ -45,5 +49,13 @@ class CategoryController extends Controller
     public function delete()
     {
         //
+    }
+    public function getAplicativoCategories()
+    {
+        $categories = $this->appCategory::get();
+
+        return response()->json([
+            'categories' => $categories
+        ]);
     }
 }
