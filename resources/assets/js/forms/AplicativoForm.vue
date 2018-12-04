@@ -113,7 +113,6 @@ export default {
                 name: [],
                 url: [],
                 description: [],
-                category: [],
             },
         }
 

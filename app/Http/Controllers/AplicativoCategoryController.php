@@ -9,16 +9,16 @@ class AplicativoCategoryController extends Controller
 {
     public function __construct(AplicativoCategory $category, Request $request)
     {
-        die('sdfs');
+        //die('sdfs');
         $this->middleware('jwt.verify')->except(['list']);
         $this->category = $category;
         $this->request= $request;
     }
     public function list()
     {
-        dd("sadsa");
+        //dd("sadsa");
         $categories = $this->category::all()->toSql();
-        dd($categories);
+        //dd($categories);
         return response()->json([
             'success' => true,
             'categories' => $categories

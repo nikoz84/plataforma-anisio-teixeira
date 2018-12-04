@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Request;
 
 class FileController extends File
 {
@@ -17,5 +18,9 @@ class FileController extends File
     public function downloadFile($id)
     {
         //
+    }
+    public function store (Request $request){
+        $file = $request->file('imagem');
+        dd($file);
     }
 }
