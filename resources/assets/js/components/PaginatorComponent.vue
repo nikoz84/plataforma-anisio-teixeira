@@ -9,7 +9,7 @@ export default {
     props:['pag'],
     data() {
       return {
-        
+
       }
     },
     computed:{

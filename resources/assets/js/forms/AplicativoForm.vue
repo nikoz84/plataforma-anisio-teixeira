@@ -46,7 +46,7 @@
                     <!-- CATEGORIA -->
                     <div class="form-group" v-if="categories.length != 0">
                         <label for="estado">Categoria:*</label>
-                        <select name="idambientedeapoiocategoria" id="idambientedeapoiocategoria" class="form-control" v-model="categoria">
+                        <select name="idambientedeapoiocategoria" id="idambientedeapoiocategoria" class="form-control" v-model="category">
                             <option value="">« SELECIONE »</option>
                             <option v-for="(category, i) in categories"
                                     v-bind:value="category.name"
@@ -105,6 +105,7 @@ export default {
             uso_pedagogico: null,
             tags:[],
             options: {},
+            category: '',
             categories:[],
             message: null,
             isError: false,
@@ -112,10 +113,12 @@ export default {
                 name: [],
                 url: [],
                 description: [],
-                category: [],
             },
         }
 
+    },
+    created(){
+        this.getCategories();
     },
     methods:{
         async createAplicativo(){
@@ -155,6 +158,11 @@ export default {
 
 
 
+        },
+        async getCategories(){
+            let resp = await http.getDataFromUrl('/categories/aplicativos');
+
+            this.categories = resp.data.categories;
         }
     }
 

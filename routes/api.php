@@ -28,7 +28,7 @@ Route::post('/file/{id}', 'FileController@createFile')->name('adicionaArquivo');
  * Métodos: list -> Lista das categorias
  */
 Route::get('/categories', 'CategoryController@list')->name('listaCategorias');
-
+Route::get('/categories/aplicativos', 'CategoryController@getAplicativoCategories')->name('listaCategoriasAplicativos');
 /******
  *
  * Controlador: Canal
@@ -62,6 +62,13 @@ Route::get('/conteudos/tag/{id}', 'ConteudoController@getByTagId')->name('buscax
 Route::get('/aplicativos', 'AplicativoController@list')->name('listaAplicativo');
 Route::get('/aplicativos/search/{term}', 'AplicativoController@search')->name('buscaAplicativo');
 Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('buscaxAplicativoId');
+/******
+ *
+ * Controlador: AplicativoCategory
+ * Métodos: list -> lista de categorias
+ *
+ */
+Route::get('/aplicativos/categories', 'AplicativoCategoryController@list')->name('listaCategoriasAplicativo');
 /******
  *
  * Controlador: Auth
