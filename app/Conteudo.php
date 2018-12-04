@@ -12,6 +12,7 @@ class Conteudo extends Model
         'description',
         'is_featured',
         'is_approved',
+        'is_site',
         'options'];
     protected $dates = [
             'created_at',
@@ -25,18 +26,25 @@ class Conteudo extends Model
 
     public function canal()
     {
-        return $this->belongsTo('App\Canal', 'canal_id');
+        return $this->belongsTo('App\Canal', 'canal_id')
+                    ->selectRaw("id, name, options->>'color' as color ");
     }
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\User', 'user_id')
+                    ->select(['id', 'name']);
     }
     public function tags()
     {
-        return $this->belongsToMany('App\Tag');
+        return $this->belongsToMany('App\Tag')
+                    ->select(['id', 'name']);
     }
-    public function licenca()
+    public function componentes()
     {
-        return $this->hasOne('App\Licenca');
+        return $this->belongsToMany('App\CurricularComponent')->with(['categories','niveis']);
+    }
+    public function license()
+    {
+        return $this->hasOne('App\License', 'id', 'license_id');
     }
 }

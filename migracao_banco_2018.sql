@@ -231,8 +231,8 @@ SELECT 	 cd.idconteudodigital as id,
 	 null as deleted_at,
 	  cd.site
 	 ,(SELECT jsonb_build_object('id', ct.idconteudotipo, 'name',ct.nomeconteudotipo) FROM conteudotipo AS ct JOIN formato AS f ON f.idformato = cd.idformato AND ct.idconteudotipo = f.idconteudotipo) as tipo
-	 ,(SELECT jsonb_agg(jsonb_build_object('id',tag.idtag, 'name', tag.nometag)) FROM conteudodigitaltag INNER JOIN tag ON tag.idtag = conteudodigitaltag.idtag WHERE conteudodigitaltag.idconteudodigital = cd.idconteudodigital) as tags
-	 ,(SELECT jsonb_agg(jsonb_build_object('id',cc.idcomponentecurricular, 'name', cc.nomecomponentecurricular)) FROM conteudodigitalcomponente as cdc INNER JOIN componentecurricular as cc on cc.idcomponentecurricular = cdc.idcomponentecurricular WHERE cdc.idconteudodigital = cd.idconteudodigital) as componentes	
+	 --,(SELECT jsonb_agg(jsonb_build_object('id',tag.idtag, 'name', tag.nometag)) FROM conteudodigitaltag INNER JOIN tag ON tag.idtag = conteudodigitaltag.idtag WHERE conteudodigitaltag.idconteudodigital = cd.idconteudodigital) as tags
+	 --,(SELECT jsonb_agg(jsonb_build_object('id',cc.idcomponentecurricular, 'name', cc.nomecomponentecurricular)) FROM conteudodigitalcomponente as cdc INNER JOIN componentecurricular as cc on cc.idcomponentecurricular = cdc.idcomponentecurricular WHERE cdc.idconteudodigital = cd.idconteudodigital) as componentes	
 	,(SELECT case when fv.nomeformato = 'link' then cd.site when fv.nomeformato is not null then concat(cd.idconteudodigital,'.',fv.nomeformato) else '' end from formato as fv where fv.idformato = cd.idformato) AS visualizacao
 	,(SELECT case when fd.nomeformato = 'link' then cd.site when fd.nomeformato is not null then concat(cd.idconteudodigital,'.',fd.nomeformato) else '' end from formato as fd where fd.idformato = cd.idformatodownload) AS download
 	,(SELECT case when fg.nomeformato is not null then concat(cd.idconteudodigital,'.',fg.nomeformato) else '' end from formato as fg where fg.idformato = cd.idformatoguiapedagogico) AS guia_pedagogica
@@ -254,7 +254,6 @@ INNER JOIN usuario ON usuario.idusuario = cd.idusuariopublicador
         description, authors, source, is_approved, is_featured, is_site,
         qt_downloads, qt_access,
         jsonb_build_object('tipo',tipo,
-                        'componentes',componentes, 
                         'site', site,
                         'download', download,
                         'visualizacao', visualizacao,
@@ -269,6 +268,36 @@ from conteudos ) to '/home/niko/Documentos/db/MIGRA/final/j.conteudos' WITH ( FO
 COPY(
 select idconteudodigital as conteudo_id, idtag as tag_id from conteudodigitaltag
 ) to '/home/niko/Documentos/db/MIGRA/final/k.conteudo_tag' WITH ( FORMAT TEXT, DELIMITER '*' );
+
+-- EXPORTAR NIVEIS DE ENSINO
+COPY(
+select idnivelensino as id, nomenivelensino as name from nivelensino
+) to '/home/niko/Documentos/db/MIGRA/final/l.niveis_ensino' WITH ( FORMAT TEXT, DELIMITER '*' );
+
+-- EXPORTAR CATEGORIA COMPONENTE CURRICULAR
+COPY(
+select idcategoriacomponentecurricular as id,
+	nomecategoriacomponentecurricular as name
+from categoriacomponentecurricular
+) to '/home/niko/Documentos/db/MIGRA/final/m.curricular_components_categories' WITH ( FORMAT TEXT, DELIMITER '*' );
+
+-- EXPORTAR COMPONENTES_CURRICULARES
+COPY(
+select idcomponentecurricular as id, 
+	idcategoriacomponentecurricular as category_id, 
+	idnivelensino as nivel_id,
+	nomecomponentecurricular as name 
+from componentecurricular
+) to '/home/niko/Documentos/db/MIGRA/final/n.curricular_components' WITH ( FORMAT TEXT, DELIMITER '*' );
+
+
+-- EXPORTAR CONTEUDO_COMPONENT
+COPY(
+select idconteudodigital as conteudo_id, 
+idcomponentecurricular as componente_id 
+from conteudodigitalcomponente
+) to '/home/niko/Documentos/db/MIGRA/final/o.conteudo_curricular_component' WITH ( FORMAT TEXT, DELIMITER '*' );
+
 
 
 
