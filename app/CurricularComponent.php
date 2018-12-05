@@ -10,7 +10,8 @@ class CurricularComponent extends Model
     
     public function categories()
     {
-        return $this->hasMany('App\CurricularComponentCategory', 'id', 'category_id')->groupBy(['id','name']);
+        return $this->hasMany('App\CurricularComponentCategory', 'id', 'category_id')
+                    ->groupBy(['id','name']);
     }
     public function niveis()
     {
