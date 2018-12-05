@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class CurricularComponent extends Model
 {
     protected $table = 'curricular_components';
+    protected $hidden = ['pivot'];
     
     public function categories()
     {

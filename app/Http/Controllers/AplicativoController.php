@@ -6,7 +6,6 @@ use App\Aplicativo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Http\Requests\AplicativoFormRequest;
 use Illuminate\Support\Facades\Validator;
 
 class AplicativoController extends Controller
@@ -28,7 +27,7 @@ class AplicativoController extends Controller
         $orderBy = ($request->has('order')) ? $request->query('order') : 'name';
         $page = ($request->has('page')) ? $request->query('page') : 1;
 
-        $aplicativos = Aplicativo::select(['id','user_id','name','description'])
+        $aplicativos = $this->aplicativo::select(['id','user_id','name','description'])
                                     ->orderBy($orderBy, 'name')
                                     ->paginate($limit);
 
@@ -37,9 +36,7 @@ class AplicativoController extends Controller
         return response()->json([
             'success'=> true,
             'title'=> 'Aplicativos Educacionais',
-            'paginator'=> $aplicativos,
-            'page'=> $aplicativos->currentPage(),
-            'limit' => $aplicativos->perPage()
+            'paginator'=> $aplicativos
         ]);
     }
 
@@ -52,23 +49,24 @@ class AplicativoController extends Controller
     {
         $validator = Validator::make($this->request->all(), [
             'name' => 'required|min:10|max:255',
-            'url' => 'regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
             'description' => 'required|min:140',
-            'category' => 'required'
+            'url' => 'regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
+            'category' => 'required',
+            'is_featured' => 'required'
         ]);
 
         return $validator;
     }
 
 /**
-     * Show the form for creating a new resource.
+     * Cria um novo aplicativo.
      *
-     * @return \Illuminate\Http\Response
+     * 
      */
-    public function create(Request $request)
+    public function create()
     {
-
         $validator = $this->validar($this->request);
+        
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
