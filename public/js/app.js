@@ -21018,13 +21018,9 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             errors: {
                 name: [],
                 url: [],
-<<<<<<< HEAD
                 description: [],
                 category: [],
                 tags: []
-=======
-                description: []
->>>>>>> bd1ebdd3557dfa6d63c224bf4544d0ce556d6828
             }
         };
     },
