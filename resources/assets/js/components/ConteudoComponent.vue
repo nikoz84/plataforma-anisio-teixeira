@@ -20,7 +20,7 @@
                 <hr class="line">
                 <span class="label label-default" v-bind:style="backgroundColor"> Componentes: </span>
                 <i class="i-list break-word" 
-                    v-for="(componente) in conteudo.options.componentes"
+                    v-for="(componente) in conteudo.componentes"
                     v-bind:key="componente.id"
                     v-text="componente.name"
                     ></i> 
@@ -31,7 +31,7 @@
             <div class="panel-footer">
                 <span class="label label-default" v-bind:style="backgroundColor"> Tags: </span>
                 <a class="btn btn-default tag" href="" 
-                    v-for="tag in conteudo.options.tags" 
+                    v-for="tag in conteudo.tags" 
                     v-bind:key="tag.id"
                     v-text="tag.name">
                 </a>
@@ -52,7 +52,7 @@ export default {
             return replace.split(';');
         },
         backgroundColor(){
-            let color = (!this.conteudo.canal) ? '#333': this.conteudo.canal.options.color;
+            let color = (!this.conteudo.canal) ? '#333': this.conteudo.canal.color;
             return `background-color: ${color}`;
         }
     }

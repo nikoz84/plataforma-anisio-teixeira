@@ -232,7 +232,7 @@ class ConteudoController extends Controller
     {
         
         $conteudo = $this->conteudo::with([
-            'user','canal','tags'
+            'user','canal','tags','license', 'componentes'
             ])->find($id);
 
         if ($conteudo) {

@@ -18933,7 +18933,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return replace.split(';');
         },
         backgroundColor: function backgroundColor() {
-            var color = !this.conteudo.canal ? '#333' : this.conteudo.canal.options.color;
+            var color = !this.conteudo.canal ? '#333' : this.conteudo.canal.color;
             return 'background-color: ' + color;
         }
     }
@@ -19294,7 +19294,7 @@ var render = function() {
               [_vm._v(" Componentes: ")]
             ),
             _vm._v(" "),
-            _vm._l(_vm.conteudo.options.componentes, function(componente) {
+            _vm._l(_vm.conteudo.componentes, function(componente) {
               return _c("i", {
                 key: componente.id,
                 staticClass: "i-list break-word",
@@ -19334,7 +19334,7 @@ var render = function() {
               [_vm._v(" Tags: ")]
             ),
             _vm._v(" "),
-            _vm._l(_vm.conteudo.options.tags, function(tag) {
+            _vm._l(_vm.conteudo.tags, function(tag) {
               return _c("a", {
                 key: tag.id,
                 staticClass: "btn btn-default tag",

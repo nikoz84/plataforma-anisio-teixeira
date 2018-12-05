@@ -41,5 +41,8 @@ class Aplicativo extends Model
         return $this->hasOne('App\Canal', 'id', 'canal_id')
                     ->selectRaw("id, name, options->>'color' as color ");
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 796ca6e34b2acb0f60777e731ab47b10763f3802
 }
