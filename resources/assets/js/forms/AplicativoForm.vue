@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <form v-on:submit.prevent="createAplicativo()" enctype=”multipart/form-data”>
+        <form v-on:submit.prevent="createAplicativo()">
             <div class="panel panel-default col-md-7">
                 <div class="panel-heading">
                     Adicionar Aplicativos
@@ -38,26 +38,38 @@
                         <textarea class="form-control" id="descricao" v-model="description" style="resize: none"></textarea>
                         <small class="text-danger"
                                 v-if="errors.description"
-                                v-for="(error,des) in errors.description"
-                                v-bind:key="des"
+                                v-for="(error,d) in errors.description"
+                                v-bind:key="d"
                                 v-text="error">
                         </small>
                     </div>
                     <!-- CATEGORIA -->
                     <div class="form-group" v-if="categories.length != 0">
                         <label for="estado">Categoria:*</label>
-                        <select name="idambientedeapoiocategoria" id="idambientedeapoiocategoria" class="form-control" v-model="category">
+                        <select name="categoria" id="categoria" class="form-control" v-model="category">
                             <option value="">« SELECIONE »</option>
                             <option v-for="(category, i) in categories"
                                     v-bind:value="category.name"
                                     v-bind:key="i">{{category.name}}
                             </option>
                         </select>
+                        <small class="text-danger"
+                                v-if="errors.category"
+                                v-for="(error,ca) in errors.category"
+                                v-bind:key="ca"
+                                v-text="error">
+                        </small>
                     </div>
                     <!-- DESCRICAO -->
-                    <div class="form-group" v-bind:class="{ 'has-error': errors.chave && errors.chave.length > 0 }">
+                    <div class="form-group" v-bind:class="{ 'has-error': errors.tags && errors.tags.length > 0 }">
                         <label for="tags">Palavra-Chave:* </label>
                         <textarea class="form-control" id="tags" v-model="tags" style="resize: none"></textarea>
+                        <small class="text-danger"
+                                v-if="errors.tags"
+                                v-for="(error,tag) in errors.tags"
+                                v-bind:key="tag"
+                                v-text="error">
+                        </small>
                     </div>
                     <div class="form-group">
                         <label for="imagem">Imagem destacada:</label>
@@ -97,42 +109,46 @@ export default {
     name: 'AplicativoForm',
     data(){
         return {
-            name: '',
+            name:null,
             description:null,
             categoria: 0,
             url: null,
             is_featured: false,
             uso_pedagogico: null,
-            tags:[],
+            tags: null,
             options: {},
             category: '',
             categories:[],
             message: null,
             isError: false,
+            file: null,
             errors: {
                 name: [],
                 url: [],
                 description: [],
+                category: [],
+                tags: [],
             },
         }
 
     },
     created(){
         this.getCategories();
+        this.getFile();
     },
     methods:{
         async createAplicativo(){
             this.options = {
                 url : this.url,
                 category: this.category,
-                chave: this.chave
+                tags: this.tags
             }
             let data = {
                 name: this.name,
                 description:this.description,
                 category: this.categoria,
+                tags: this.tags,
                 url: this.url,
-                chave: this.chave,
                 is_featured: this.is_featured,
                 options: JSON.stringify(this.options),
                 token: localStorage.token
@@ -156,13 +172,15 @@ export default {
                 },3000)
             }
 
-
-
         },
         async getCategories(){
             let resp = await http.getDataFromUrl('/categories/aplicativos');
 
             this.categories = resp.data.categories;
+        },
+
+        async getFile(){
+            let resp = await http.getDataFromUrl('/file');
         }
     }
 

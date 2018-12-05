@@ -54,6 +54,7 @@ class AplicativoController extends Controller
             'name' => 'required|min:10|max:255',
             'url' => 'regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
             'description' => 'required|min:140',
+            'category' => 'required'
         ]);
 
         return $validator;

@@ -20986,6 +20986,18 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -20995,28 +21007,31 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
     name: 'AplicativoForm',
     data: function data() {
         return {
-            name: '',
+            name: null,
             description: null,
             categoria: 0,
             url: null,
             is_featured: false,
             uso_pedagogico: null,
-            tags: [],
+            tags: null,
             options: {},
             category: '',
             categories: [],
             message: null,
             isError: false,
+            file: null,
             errors: {
                 name: [],
                 url: [],
                 description: [],
-                category: []
+                category: [],
+                tags: []
             }
         };
     },
     created: function created() {
         this.getCategories();
+        this.getFile();
     },
 
     methods: {
@@ -21032,14 +21047,14 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                 this.options = {
                                     url: this.url,
                                     category: this.category,
-                                    chave: this.chave
+                                    tags: this.tags
                                 };
                                 data = {
                                     name: this.name,
                                     description: this.description,
                                     category: this.categoria,
+                                    tags: this.tags,
                                     url: this.url,
-                                    chave: this.chave,
                                     is_featured: this.is_featured,
                                     options: JSON.stringify(this.options),
                                     token: localStorage.token
@@ -21112,6 +21127,33 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             }
 
             return getCategories;
+        }(),
+        getFile: function () {
+            var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
+                var resp;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+                    while (1) {
+                        switch (_context3.prev = _context3.next) {
+                            case 0:
+                                _context3.next = 2;
+                                return http.getDataFromUrl('/file');
+
+                            case 2:
+                                resp = _context3.sent;
+
+                            case 3:
+                            case 'end':
+                                return _context3.stop();
+                        }
+                    }
+                }, _callee3, this);
+            }));
+
+            function getFile() {
+                return _ref3.apply(this, arguments);
+            }
+
+            return getFile;
         }()
     }
 
@@ -21129,7 +21171,6 @@ var render = function() {
     _c(
       "form",
       {
-        attrs: { enctype: "”multipart/form-data”" },
         on: {
           submit: function($event) {
             $event.preventDefault()
@@ -21305,10 +21346,10 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _vm._l(_vm.errors.description, function(error, des) {
+                  _vm._l(_vm.errors.description, function(error, d) {
                     return _vm.errors.description
                       ? _c("small", {
-                          key: des,
+                          key: d,
                           staticClass: "text-danger",
                           domProps: { textContent: _vm._s(error) }
                         })
@@ -21319,64 +21360,76 @@ var render = function() {
               ),
               _vm._v(" "),
               _vm.categories.length != 0
-                ? _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "estado" } }, [
-                      _vm._v("Categoria:*")
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.category,
-                            expression: "category"
+                ? _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("label", { attrs: { for: "estado" } }, [
+                        _vm._v("Categoria:*")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.category,
+                              expression: "category"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { name: "categoria", id: "categoria" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.category = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            }
                           }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          name: "idambientedeapoiocategoria",
-                          id: "idambientedeapoiocategoria"
                         },
-                        on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.category = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          }
-                        }
-                      },
-                      [
-                        _c("option", { attrs: { value: "" } }, [
-                          _vm._v("« SELECIONE »")
-                        ]),
-                        _vm._v(" "),
-                        _vm._l(_vm.categories, function(category, i) {
-                          return _c(
-                            "option",
-                            { key: i, domProps: { value: category.name } },
-                            [
-                              _vm._v(
-                                _vm._s(category.name) +
-                                  "\n                        "
-                              )
-                            ]
-                          )
-                        })
-                      ],
-                      2
-                    )
-                  ])
+                        [
+                          _c("option", { attrs: { value: "" } }, [
+                            _vm._v("« SELECIONE »")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.categories, function(category, i) {
+                            return _c(
+                              "option",
+                              { key: i, domProps: { value: category.name } },
+                              [
+                                _vm._v(
+                                  _vm._s(category.name) +
+                                    "\n                        "
+                                )
+                              ]
+                            )
+                          })
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _vm._l(_vm.errors.category, function(error, ca) {
+                        return _vm.errors.category
+                          ? _c("small", {
+                              key: ca,
+                              staticClass: "text-danger",
+                              domProps: { textContent: _vm._s(error) }
+                            })
+                          : _vm._e()
+                      })
+                    ],
+                    2
+                  )
                 : _vm._e(),
               _vm._v(" "),
               _c(
@@ -21384,7 +21437,7 @@ var render = function() {
                 {
                   staticClass: "form-group",
                   class: {
-                    "has-error": _vm.errors.chave && _vm.errors.chave.length > 0
+                    "has-error": _vm.errors.tags && _vm.errors.tags.length > 0
                   }
                 },
                 [
@@ -21413,8 +21466,19 @@ var render = function() {
                         _vm.tags = $event.target.value
                       }
                     }
+                  }),
+                  _vm._v(" "),
+                  _vm._l(_vm.errors.tags, function(error, tag) {
+                    return _vm.errors.tags
+                      ? _c("small", {
+                          key: tag,
+                          staticClass: "text-danger",
+                          domProps: { textContent: _vm._s(error) }
+                        })
+                      : _vm._e()
                   })
-                ]
+                ],
+                2
               ),
               _vm._v(" "),
               _vm._m(0),
