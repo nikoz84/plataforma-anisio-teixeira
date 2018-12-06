@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <form v-on:submit.prevent="createAplicativo()">
+        <form v-on:submit.prevent="createAplicativo()" enctype="multipart/form-data">
             <div class="panel panel-default col-md-7">
                 <div class="panel-heading">
                     Adicionar Aplicativos
@@ -49,7 +49,7 @@
                         <select name="categoria" id="categoria" class="form-control" v-model="category">
                             <option value="">« SELECIONE »</option>
                             <option v-for="(category, i) in categories"
-                                    v-bind:value="category.name"
+                                    v-bind:value="category.id"
                                     v-bind:key="i">{{category.name}}
                             </option>
                         </select>
@@ -73,12 +73,13 @@
                     </div>
                     <div class="form-group">
                         <label for="imagem">Imagem destacada:</label>
-                        <input type="file" class="form-control" id="imagem" name="imagem" aria-describedby="icone">
-                        <small id="login_usuario" class="form-text text-muted">Imagem no formato .png com tamanho de 250px (altura) e 250px (largura)</small>   
-                    </div>
-                    <div class="form-group">
-                        <label for="usopedagogico">Informações para o uso pedagógico:</label>
-                       <textarea class="form-control" id="usopedagogico" v-model="uso_pedagogico" style="resize: none"></textarea>
+                        <input type="file" class="form-control" id="imagem" name="imagem" 
+                                aria-describedby="imagem de destaque"
+                                v-on:change="onFileChange($event)">
+                        <small class="form-text text-muted">Imagem no formato .jpg com tamanho de 250px (altura) e 250px (largura)</small>
+                        <small v-if="this.file">
+                            {{ ` ${this.file.name} -- ${this.file.size} -- ${this.file.type} `}}
+                        </small>
                     </div>
                     <div class="form-group">
                        <label for="destaque">Marcar como destaque</label>
@@ -111,17 +112,15 @@ export default {
         return {
             name:null,
             description:null,
-            categoria: 0,
             url: null,
             is_featured: false,
-            uso_pedagogico: null,
             tags: null,
             options: {},
+            file: null,
             category: '',
             categories:[],
             message: null,
-            isError: false,
-            file: null,
+            isError: true,
             errors: {
                 name: [],
                 url: [],
@@ -134,19 +133,17 @@ export default {
     },
     created(){
         this.getCategories();
-        this.getFile();
     },
     methods:{
         async createAplicativo(){
             this.options = {
-                url : this.url,
-                category: this.category,
-                tags: this.tags
+                qt_access : 0
             }
             let data = {
                 name: this.name,
                 description:this.description,
-                category: this.categoria,
+                category: this.category,
+                canal: localStorage.idCanal,
                 tags: this.tags,
                 url: this.url,
                 is_featured: this.is_featured,
@@ -159,6 +156,7 @@ export default {
 
             if(resp.data.success){
                 console.warn(resp.data.message)
+
             }else{
                 console.warn(resp.data);
                 this.isError = resp.data.success;
@@ -178,9 +176,21 @@ export default {
 
             this.categories = resp.data.categories;
         },
-
-        async getFile(){
-            let resp = await http.getDataFromUrl('/file');
+        onFileChange(e){
+            
+            let file = e.target.files[0];
+            this.file = file;
+            let fd = new FormData();
+            fd.append('image',file, file.name)
+            let config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                };
+            let params = {
+                        image: file
+                };
+            axios.post('/api-v1/files/150',fd).then((resp) => console.warn(resp.data));
         }
     }
 

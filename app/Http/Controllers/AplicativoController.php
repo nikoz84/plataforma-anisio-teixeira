@@ -61,12 +61,11 @@ class AplicativoController extends Controller
 /**
      * Cria um novo aplicativo.
      *
-     * 
+     *
      */
     public function create()
     {
         $validator = $this->validar($this->request);
-        
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
@@ -78,12 +77,14 @@ class AplicativoController extends Controller
         $aplicativo = $this->aplicativo;
 
         $aplicativo->user_id = Auth::user()->id;
+        $aplicativo->category_id = $this->request->get('category', '');
+        $aplicativo->canal_id = $this->request->get('canal', 9);
         $aplicativo->name = $this->request->get('name', '');
         $aplicativo->url = $this->request->get('url');
         $aplicativo->description = $this->request->get('description');
         $aplicativo->is_featured = $this->request->get('is_featured');
-        $aplicativo->options = $this->request->get('options');
-        $aplicativo->tags->attach($this->request->get('tags'));
+        $aplicativo->options = json_decode($this->request->get('options', '{}'), true);
+        //$aplicativo->tags->attach($this->request->get('tags'));
         $aplicativo->save();
 
         return response()->json([

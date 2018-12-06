@@ -19,8 +19,8 @@ use Illuminate\Http\Request;
  * Métodos: getFiles -> Lista dos arquivos relacionados a um id específico
  * createFile -> Adiciona um novo arquivo para um recurso específico
  */
-Route::get('/file/{id}', 'FileController@getFiles')->name('buscaArquivo');
-Route::post('/file/{id}', 'FileController@createFile')->name('adicionaArquivo');
+Route::get('/files/{id}', 'FileController@getFiles')->name('buscaArquivo');
+Route::post('/files/{id}', 'FileController@createFile')->name('adicionaArquivo');
 
 /******
  *
