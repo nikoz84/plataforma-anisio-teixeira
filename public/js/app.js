@@ -20999,6 +20999,12 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -21470,50 +21476,53 @@ var render = function() {
                 2
               ),
               _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "imagem" } }, [
-                  _vm._v("Imagem destacada:")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "file",
-                    id: "imagem",
-                    name: "imagem",
-                    "aria-describedby": "imagem de destaque"
-                  },
-                  on: {
-                    change: function($event) {
-                      _vm.onFileChange($event)
-                    }
+              _c(
+                "div",
+                {
+                  staticClass: "form-group",
+                  class: {
+                    "has-error": _vm.errors.file && _vm.errors.file.length > 0
                   }
-                }),
-                _vm._v(" "),
-                _c("small", { staticClass: "form-text text-muted" }, [
-                  _vm._v(
-                    "Imagem no formato .jpg com tamanho de 250px (altura) e 250px (largura)"
-                  )
-                ]),
-                _vm._v(" "),
-                this.file
-                  ? _c("small", [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(
-                            " " +
-                              this.file.name +
-                              " -- " +
-                              this.file.size +
-                              " -- " +
-                              this.file.type +
-                              " "
-                          ) +
-                          "\n                    "
-                      )
-                    ])
-                  : _vm._e()
-              ]),
+                },
+                [
+                  _c("label", { attrs: { for: "imagem" } }, [
+                    _vm._v("Imagem destacada:*")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "file",
+                      id: "imagem",
+                      name: "imagem",
+                      "aria-describedby": "imagem de destaque"
+                    },
+                    on: {
+                      change: function($event) {
+                        _vm.onFileChange($event)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("small", { staticClass: "form-text text-muted" }, [
+                    _vm._v(
+                      "Imagem no formato .jpg com tamanho de 250px (altura) e 250px (largura)"
+                    )
+                  ]),
+                  _c("br"),
+                  _vm._v(" "),
+                  _vm._l(_vm.errors.file, function(error, f) {
+                    return _vm.errors.file
+                      ? _c("small", {
+                          key: f,
+                          staticClass: "text-danger",
+                          domProps: { textContent: _vm._s(error) }
+                        })
+                      : _vm._e()
+                  })
+                ],
+                2
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
                 _c("label", { attrs: { for: "destaque" } }, [

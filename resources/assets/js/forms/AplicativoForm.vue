@@ -71,15 +71,21 @@
                                 v-text="error">
                         </small>
                     </div>
-                    <div class="form-group">
-                        <label for="imagem">Imagem destacada:</label>
+                    <div class="form-group" v-bind:class="{ 'has-error': errors.file && errors.file.length > 0 }">
+                        <label for="imagem">Imagem destacada:*</label>
                         <input type="file" class="form-control" id="imagem" name="imagem" 
                                 aria-describedby="imagem de destaque"
                                 v-on:change="onFileChange($event)">
-                        <small class="form-text text-muted">Imagem no formato .jpg com tamanho de 250px (altura) e 250px (largura)</small>
-                        <small v-if="this.file">
-                            {{ ` ${this.file.name} -- ${this.file.size} -- ${this.file.type} `}}
+                        <small class="form-text text-muted">Imagem no formato .jpg com tamanho de 250px (altura) e 250px (largura)</small><br>
+                        <small class="text-danger"
+                                v-if="errors.file"
+                                v-for="(error,f) in errors.file"
+                                v-bind:key="f"
+                                v-text="error">
                         </small>
+                        <!--<small v-if="this.file">
+                            {{ ` ${this.file.name} -- ${this.file.size} -- ${this.file.type} `}}
+                        </small>-->
                     </div>
                     <div class="form-group">
                        <label for="destaque">Marcar como destaque</label>
