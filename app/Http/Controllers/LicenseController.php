@@ -76,10 +76,9 @@ class LicenseController extends Controller
     public function search($termo)
     {
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 20;
-
-        $paginator = License::where(DB::raw('unaccent(lower(name))'), 'ILIKE', DB::raw("unaccent(lower('%?%'))"))
-                    ->setBinding([$termo])
-                    ->paginate($limit);
+        $search = "%{$termo}%";
+        $paginator = License::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search])
+                            ->paginate($limit);
         
         $paginator->setPath("/licenses/search/{$termo}?limit={$limit}");
         

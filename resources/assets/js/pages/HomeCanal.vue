@@ -17,7 +17,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+/**
 section{
-    background: var(--color);
+     background: var(--color); 
 }
+**/
 </style>

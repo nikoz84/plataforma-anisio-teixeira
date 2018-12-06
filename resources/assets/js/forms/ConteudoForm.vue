@@ -243,7 +243,7 @@ export default {
 
     },
     created() {
-        this.getOptions();
+        //this.getOptions();
     },
     computed:{
 
@@ -308,13 +308,13 @@ export default {
             }
 
         },
-        async getOptions(){
+        async getCategories(){
 
             let params = {
                 token: localStorage.token
             };
             let name= this.$route.params.slug;
-            let resp = await http.postData(`/options/name/${name}`);
+            //let resp = await http.postData(`/categories/${name}`);
 
             if(resp.data.success && resp.data.options != null ){
                 this.categories = resp.data.options.meta_data.categories

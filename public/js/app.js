@@ -16945,7 +16945,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\nsection[data-v-7ea1ca22] {\n  background: var(--color);\n}\n", ""]);
+exports.push([module.i, "/**\nsection{\n     background: var(--color); \n}\n**/\n", ""]);
 
 // exports
 
@@ -19310,7 +19310,7 @@ var render = function() {
             _vm._v(" "),
             _c("i", {
               staticClass: "i-list break-word",
-              domProps: { textContent: _vm._s(_vm.conteudo.options) }
+              domProps: { textContent: _vm._s(_vm.conteudo.license.name) }
             })
           ],
           2
@@ -19895,7 +19895,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
         };
     },
     created: function created() {
-        this.getOptions();
+        //this.getOptions();
     },
 
     computed: {},
@@ -20014,9 +20014,9 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
 
             return getItems;
         }(),
-        getOptions: function () {
+        getCategories: function () {
             var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
-                var params, name, resp;
+                var params, name;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
                     while (1) {
                         switch (_context3.prev = _context3.next) {
@@ -20025,18 +20025,13 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                     token: localStorage.token
                                 };
                                 name = this.$route.params.slug;
-                                _context3.next = 4;
-                                return http.postData('/options/name/' + name);
-
-                            case 4:
-                                resp = _context3.sent;
-
+                                //let resp = await http.postData(`/categories/${name}`);
 
                                 if (resp.data.success && resp.data.options != null) {
                                     this.categories = resp.data.options.meta_data.categories;
                                 }
 
-                            case 6:
+                            case 3:
                             case 'end':
                                 return _context3.stop();
                         }
@@ -20044,11 +20039,11 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                 }, _callee3, this);
             }));
 
-            function getOptions() {
+            function getCategories() {
                 return _ref3.apply(this, arguments);
             }
 
-            return getOptions;
+            return getCategories;
         }()
     },
     watch: {

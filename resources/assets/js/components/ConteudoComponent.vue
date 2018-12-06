@@ -26,7 +26,7 @@
                     ></i> 
                 <hr class="line">
                 <span class="label label-default" v-bind:style="backgroundColor"> Licença: </span>
-                <i class="i-list break-word" v-text="conteudo.options"></i> 
+                <i class="i-list break-word" v-text="conteudo.license.name"></i> 
             </div>
             <div class="panel-footer">
                 <span class="label label-default" v-bind:style="backgroundColor"> Tags: </span>
