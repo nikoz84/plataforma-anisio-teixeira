@@ -17,8 +17,13 @@ class FileController extends Controller
 
     public function getFiles($id)
     {
+        $exists = Storage::disk('aplicativos-educacionais')->exists('4.jpg');
+        $files = Storage::disk('aplicativos-educacionais');
+        //dd($files);
         return response()->json([
-                'success' => true
+                'success' => $exists,
+                'path' => 'app/public/conteudos/aplicativos-educacionais/',
+                'disk', $files
             ]);
     }
 
@@ -26,11 +31,10 @@ class FileController extends Controller
     {
         if ($this->request->hasFile('image')) {
             $image = $this->request->file('image');
+            $file_name = "{$id}.{$image->guessExtension()}";
 
-            $path = $this->request->file('image')->store(
-                $id,
-                'aplicativos-educacionais'
-            );
+            $path = $this->request->file('image')
+                            ->storeAs('imagem-associada', $file_name, 'aplicativos-educacionais');
 
             return response()->json([
                 'success' => true,
