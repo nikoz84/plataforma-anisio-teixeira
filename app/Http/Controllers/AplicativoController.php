@@ -52,6 +52,7 @@ class AplicativoController extends Controller
             'description' => 'required|min:140',
             'url' => 'regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
             'category' => 'required',
+            'tags' => 'required',
             'is_featured' => 'required',
             'file' => 'required|mimes:jpg,jpeg,png'
         ]);
