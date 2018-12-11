@@ -48,7 +48,7 @@ class FileController extends Controller
         }
         return response()->json([
             'success' => false,
-            'message' => 'Erro no envio'
+            'message' => 'Erro no envio do arquivo'
         ]);
     }
 
