@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class FileController extends Controller
 {
@@ -33,6 +34,9 @@ class FileController extends Controller
             $image = $this->request->file('image');
             $file_name = "{$id}.{$image->guessExtension()}";
 
+            $image_resize = Image::make($file_name->getRealPath());
+            $image_resize->resize(250, 250);
+
             $path = $this->request->file('image')
                             ->storeAs('imagem-associada', $file_name, 'aplicativos-educacionais');
 
@@ -44,7 +48,7 @@ class FileController extends Controller
         }
         return response()->json([
             'success' => false,
-            'message' => 'Erro no envio'
+            'message' => 'Erro no envio do arquivo'
         ]);
     }
 

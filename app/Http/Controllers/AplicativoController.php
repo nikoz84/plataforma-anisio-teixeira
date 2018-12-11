@@ -55,7 +55,7 @@ class AplicativoController extends Controller
             'category' => 'required',
             'tags' => 'required',
             'is_featured' => 'required',
-            'file' => 'required|mimes:jpg,jpeg,png'
+            'file' => 'required|image|mimes:jpeg,png,jpg|dimensions:width=250,width=250'
         ]);
 
         return $validator;
