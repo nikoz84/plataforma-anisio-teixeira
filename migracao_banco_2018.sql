@@ -212,7 +212,11 @@ group by ct.idconteudotipo, ct.nomeconteudotipo
 copy (
 with conteudos as (
 SELECT 	 cd.idconteudodigital as id,
-	 cd.idcanal as canal_id,
+	 case 
+		when (cd.idcanal is null and cd.flsitetematico = false) then 6
+		when (cd.idcanal is null and cd.flsitetematico = true) then 5
+		else cd.idcanal
+	 end as canal_id,	 	
 	 cd.idusuariopublicador as user_id,
 	 cd.idusuariopublicador as approving_user_id,
 	 cd.idlicencaconteudo as license_id,

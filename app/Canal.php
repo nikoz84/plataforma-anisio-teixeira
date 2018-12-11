@@ -37,6 +37,6 @@ class Canal extends Model
     }
     public function aplicativos()
     {
-        return $this->hasMany('App\Aplicativos');
+        return $this->hasMany('App\Aplicativo');
     }
 }

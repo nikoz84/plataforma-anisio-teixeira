@@ -9,6 +9,9 @@ class Aplicativo extends Model
     protected $id = 'id';
     protected $fillable = [
         'name',
+        'user_id',
+        'canal_id',
+        'category_id',
         'description',
         'is_featured',
         'options'
@@ -38,7 +41,7 @@ class Aplicativo extends Model
     }
     public function canal()
     {
-        return $this->hasOne('App\Canal', 'id', 'canal_id')
-                    ->selectRaw("id, name, options->>'color' as color ");
+        return $this->belongsTo('App\Canal', 'canal_id')
+                    ->selectRaw("id, name, slug, options->>'color' as color ");
     }
 }

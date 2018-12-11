@@ -8,11 +8,11 @@ class CurricularComponent extends Model
 {
     protected $table = 'curricular_components';
     protected $hidden = ['pivot'];
-    
+
     public function categories()
     {
         return $this->hasMany('App\CurricularComponentCategory', 'id', 'category_id')
-                    ->groupBy(['id','name']);
+                    ;
     }
     public function niveis()
     {

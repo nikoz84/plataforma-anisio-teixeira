@@ -12,7 +12,7 @@
 import Http from '../http.js';
 
 export default {
-    name : 'Search',
+    name : 'SearchForm',
     props: ['search'],
     data() {
         return {

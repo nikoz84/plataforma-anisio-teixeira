@@ -23,14 +23,15 @@ class AplicativoController extends Controller
      */
     public function list(Request $request)
     {
-        $limit = ($request->has('limit')) ? $request->query('limit') : 10;
+        $limit = ($request->has('limit')) ? $request->query('limit') : 15;
         $orderBy = ($request->has('order')) ? $request->query('order') : 'name';
         $page = ($request->has('page')) ? $request->query('page') : 1;
 
-        $aplicativos = $this->aplicativo::select(['id','user_id','name','description'])
+        $aplicativos = Aplicativo::with(['category','canal'])
+                                    //->select(['id','user_id','name'])
                                     ->orderBy($orderBy, 'name')
                                     ->paginate($limit);
-
+        
         $aplicativos->setPath("/aplicativos?limit={$limit}");
 
         return response()->json([

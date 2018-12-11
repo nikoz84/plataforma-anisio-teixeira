@@ -253,8 +253,7 @@ export default {
             this.options ={
                 category: this.category,
                 tipo: this.tipo,
-                tags: this.tags,
-                site: this.site
+                site: this.site,
             };
             let params = {
                 tipo: this.tipo,
@@ -314,7 +313,7 @@ export default {
                 token: localStorage.token
             };
             let name= this.$route.params.slug;
-            //let resp = await http.postData(`/categories/${name}`);
+            let resp = await http.postData(`/categories/${name}`);
 
             if(resp.data.success && resp.data.options != null ){
                 this.categories = resp.data.options.meta_data.categories

@@ -1,5 +1,5 @@
 <template>
-    <article>
+    <article class="row">
         <PlayerApp :tipo="conteudo.options.tipo"
                 :download="conteudo.options.download"
                 :visualizacao="conteudo.options.visualizacao"
@@ -52,7 +52,7 @@ export default {
             return replace.split(';');
         },
         backgroundColor(){
-            let color = (!this.conteudo.canal) ? '#333': this.conteudo.canal.color;
+            let color = this.conteudo.canal.color;
             return `background-color: ${color}`;
         }
     }

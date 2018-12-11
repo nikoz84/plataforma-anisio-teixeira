@@ -27,7 +27,7 @@ class Conteudo extends Model
     public function canal()
     {
         return $this->belongsTo('App\Canal', 'canal_id')
-                    ->selectRaw("id, name, options->>'color' as color ");
+                    ->selectRaw("id, name, slug,options->>'color' as color ");
     }
     public function user()
     {

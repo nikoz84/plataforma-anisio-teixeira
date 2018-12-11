@@ -1,15 +1,19 @@
 <template>
     <div>
-        <article class="panel panel-default" v-bind:id="item.id">
-            <div class="panel-body">
+        <article class="panel panel-default" v-bind:id="item.id" v-bind:style="'border-bottom-color:' + color">
+            <div class="panel-heading">
                 <figure class="figure">
-                    
-                  <img width="250" height="150" v-bind:src="getImage" alt="imagem destacada" srcset="">
+                    <img class="img-responsive" 
+                        v-bind:src="getImage" 
+                        alt="imagem destacada" 
+                        srcset="">
                 </figure>
-                <router-link :to="{ name: 'Exibir', params: { slug: this.$route.params.slug, id: item.id }}"
+            </div>
+            <div class="panel-body">
+                <router-link :to="{ name: 'Exibir', params: { slug: slug, id: item.id }}"
                             aria-label="Título" 
-                            v-bind:title="'Nome do aplicativo: ' + title">
-                    <h4>{{ title }}</h4>
+                            v-bind:title="'Título: ' + title">
+                    <h4 class="text-center">{{ title }}</h4>
                 </router-link>
                 
             </div>
@@ -26,6 +30,12 @@ export default {
     computed:{
         title(){
             return (this.item.name) ? this.item.name : this.item.title;
+        },
+        slug(){
+            return this.item.canal.slug;
+        },
+        color(){
+            return this.item.canal.color;
         },
         getImage(){
             let image = '/img/fundo-padrao.svg';
@@ -45,10 +55,16 @@ export default {
 }    
 </script>
 <style lang="scss" scoped>
-
 .panel-default{
-    border-top-color: #333;
-    border-top-width: 3px;
-
+    border-right-width: 3px;
+}
+.panel-default .panel-heading{
+    padding: 2px 2px;
+}
+.figure .img-responsive {
+    margin: 0 auto;
+}
+.img-responsive{
+    width: 100%;
 }
 </style>

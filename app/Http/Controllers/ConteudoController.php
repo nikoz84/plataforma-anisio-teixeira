@@ -35,7 +35,8 @@ class ConteudoController extends Controller
                     ->where('is_approved', 'true');
         });
 
-        $conteudos = $query->orderBy($orderBy, 'desc')
+        $conteudos = $query->with('canal')
+                        ->orderBy($orderBy, 'desc')
                         ->paginate($limit)
                         ->setPath("/conteudos?limit={$limit}&canal=$isCanal");
         
@@ -55,7 +56,8 @@ class ConteudoController extends Controller
         $limit = $this->request->query('limit', 15);
         $orderBy = $this->request->query('order', 'created_at');
         
-        $sitesTematicos = $this->conteudo::where('is_site', 'true')
+        $sitesTematicos = $this->conteudo::with('canal')
+                        ->where('is_site', 'true')
                         ->where('is_approved', 'true')
                         ->orderBy($orderBy, 'desc')
                         ->paginate($limit)

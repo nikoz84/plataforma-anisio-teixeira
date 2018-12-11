@@ -7,13 +7,13 @@
                 <div class="break-word" v-html="aplicativo.description"></div>
                 
                 <hr class="line">
-                <span class="label label-default"> Licença: </span>
-                <i class="i-list break-word" v-text="aplicativo.options"></i> 
+                <span class="label label-default" v-bind:style="'background-color:' + aplicativo.canal.color"> Acessos: </span>
+                <i class="i-list break-word" v-text="aplicativo.options.qt_access"></i> 
             </div>
             <div class="panel-footer">
                 <h5> Tags: </h5>
                 <a class="btn btn-default tag" href="" 
-                    v-for="tag in aplicativo.options.tags" 
+                    v-for="tag in aplicativo.tags" 
                     v-bind:key="tag.id"
                     v-text="tag.name">
                 </a>
