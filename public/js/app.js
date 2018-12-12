@@ -21093,7 +21093,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             is_featured: false,
             tags: null,
             options: {},
-            file: null,
+            image: null,
             category: '',
             categories: [],
             message: null,
@@ -21116,7 +21116,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
                 var _this = this;
 
-                var data, resp;
+                var form, resp;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
@@ -21124,24 +21124,33 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                 this.options = {
                                     qt_access: 0
                                 };
-                                data = {
-                                    name: this.name,
-                                    description: this.description,
-                                    category: this.category,
-                                    canal: localStorage.idCanal,
-                                    tags: this.tags,
-                                    url: this.url,
-                                    is_featured: this.is_featured,
-                                    options: JSON.stringify(this.options),
-                                    token: localStorage.token
-                                };
 
-                                console.warn(data);
+                                if (this.image) {
+                                    _context.next = 3;
+                                    break;
+                                }
 
-                                _context.next = 5;
-                                return http.postData('/aplicativos/create', data);
+                                return _context.abrupt('return');
 
-                            case 5:
+                            case 3:
+                                form = new FormData();
+
+                                form.append('name', this.name);
+                                form.append('description', this.description);
+                                form.append('category', this.category);
+                                form.append('canal', localStorage.idCanal);
+                                form.append('tags', this.tags);
+                                form.append('url', this.url);
+                                form.append('is_featured', this.is_featured);
+                                form.append('options', JSON.stringify(this.options));
+                                form.append('image', this.image, this.image.name);
+                                form.append('token', localStorage.token);
+                                console.warn(form);
+
+                                _context.next = 17;
+                                return http.postData('/aplicativos/create', form);
+
+                            case 17:
                                 resp = _context.sent;
 
 
@@ -21160,7 +21169,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                     }, 3000);
                                 }
 
-                            case 7:
+                            case 19:
                             case 'end':
                                 return _context.stop();
                         }
@@ -21205,22 +21214,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             return getCategories;
         }(),
         onFileChange: function onFileChange(e) {
-
-            var file = e.target.files[0];
-            this.file = file;
-            var fd = new FormData();
-            fd.append('image', file, file.name);
-            var config = {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            };
-            var params = {
-                image: file
-            };
-            axios.post('/api-v1/files/150', fd).then(function (resp) {
-                return console.warn(resp.data);
-            });
+            this.image = e.target.files[0];
         }
     }
 
@@ -21554,7 +21548,7 @@ var render = function() {
                 {
                   staticClass: "form-group",
                   class: {
-                    "has-error": _vm.errors.file && _vm.errors.file.length > 0
+                    "has-error": _vm.errors.image && _vm.errors.image.length > 0
                   }
                 },
                 [
@@ -21578,14 +21572,12 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("small", { staticClass: "form-text text-muted" }, [
-                    _vm._v(
-                      "Imagem no formato .jpg com tamanho de 250px (altura) e 250px (largura)"
-                    )
+                    _vm._v("Imagem no formato .jpg")
                   ]),
                   _c("br"),
                   _vm._v(" "),
-                  _vm._l(_vm.errors.file, function(error, f) {
-                    return _vm.errors.file
+                  _vm._l(_vm.errors.image, function(error, f) {
+                    return _vm.errors.image
                       ? _c("small", {
                           key: f,
                           staticClass: "text-danger",

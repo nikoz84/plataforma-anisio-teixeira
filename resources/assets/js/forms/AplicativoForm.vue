@@ -71,15 +71,15 @@
                                 v-text="error">
                         </small>
                     </div>
-                    <div class="form-group" v-bind:class="{ 'has-error': errors.file && errors.file.length > 0 }">
+                    <div class="form-group" v-bind:class="{ 'has-error': errors.image && errors.image.length > 0 }">
                         <label for="imagem">Imagem destacada:*</label>
                         <input type="file" class="form-control" id="imagem" name="imagem" 
                                 aria-describedby="imagem de destaque"
                                 v-on:change="onFileChange($event)">
-                        <small class="form-text text-muted">Imagem no formato .jpg com tamanho de 250px (altura) e 250px (largura)</small><br>
+                        <small class="form-text text-muted">Imagem no formato .jpg</small><br>
                         <small class="text-danger"
-                                v-if="errors.file"
-                                v-for="(error,f) in errors.file"
+                                v-if="errors.image"
+                                v-for="(error,f) in errors.image"
                                 v-bind:key="f"
                                 v-text="error">
                         </small>
@@ -122,7 +122,7 @@ export default {
             is_featured: false,
             tags: null,
             options: {},
-            file: null,
+            image: null,
             category: '',
             categories:[],
             message: null,
@@ -145,20 +145,23 @@ export default {
             this.options = {
                 qt_access : 0
             }
-            let data = {
-                name: this.name,
-                description:this.description,
-                category: this.category,
-                canal: localStorage.idCanal,
-                tags: this.tags,
-                url: this.url,
-                is_featured: this.is_featured,
-                options: JSON.stringify(this.options),
-                token: localStorage.token
-            };
-            console.warn(data)
-
-            let resp = await http.postData('/aplicativos/create', data);
+            if(!this.image){
+                return;
+            }
+            let form = new FormData();
+            form.append('name', this.name);
+            form.append('description',this.description);
+            form.append('category', this.category);
+            form.append('canal', localStorage.idCanal);
+            form.append('tags', this.tags);
+            form.append('url', this.url);
+            form.append('is_featured', this.is_featured);
+            form.append('options', JSON.stringify(this.options));
+            form.append('image',this.image, this.image.name);
+            form.append('token', localStorage.token);
+            console.warn(form);
+            
+            let resp = await http.postData('/aplicativos/create', form);
 
             if(resp.data.success){
                 console.warn(resp.data.message)
@@ -183,20 +186,7 @@ export default {
             this.categories = resp.data.categories;
         },
         onFileChange(e){
-            
-            let file = e.target.files[0];
-            this.file = file;
-            let fd = new FormData();
-            fd.append('image',file, file.name)
-            let config = {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                };
-            let params = {
-                        image: file
-                };
-            axios.post('/api-v1/files/150',fd).then((resp) => console.warn(resp.data));
+            this.image = e.target.files[0];
         }
     }
 
