@@ -106,7 +106,7 @@ class AplicativoController extends Controller
     {
         $file_name = "{$id}.{$image->guessExtension()}";
         $path = $this->request->file('image')
-                            ->storeAs('imagem-associada', $file_name, 'public');
+                            ->storeAs('imagem-associada', $file_name, 'aplicativos-educacionais');
         $image = new ResizeImage;
 
         return $image->resize($this->storage::disk('aplicativos-educacionais')->files($path));
