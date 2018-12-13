@@ -234,7 +234,7 @@ class ConteudoController extends Controller
     {
         
         $conteudo = $this->conteudo::with([
-            'user','canal','tags','license', 'componentes'
+            'user','canal','tags','license', 'componentes', 'niveis'
             ])->find($id);
 
         if ($conteudo) {

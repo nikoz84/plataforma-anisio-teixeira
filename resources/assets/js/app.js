@@ -5,14 +5,14 @@ import MainApp from './components/MainApp';
 import Vuex from 'vuex';
 //import 'es6-promise/auto';
 import store from './store/index.js';
+import VueTinyLazyloadImg from 'vue-tiny-lazyload-img'
 
-
+Vue.use(VueTinyLazyloadImg);
 Vue.use(Vuex);
 Vue.use(VueRouter);
 
 require('animate.css/animate.min.css');
 require('./bootstrap');
-
 
 const router = new VueRouter({
     mode: 'history',

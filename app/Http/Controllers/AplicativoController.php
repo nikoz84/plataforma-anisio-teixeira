@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\Storage;
 class AplicativoController extends Controller
 {
     public function __construct(Aplicativo $aplicativo, Request $request)
@@ -168,11 +168,12 @@ class AplicativoController extends Controller
     {
         $aplicativo = Aplicativo::with(['tags','category','user','canal'])
                                 ->find($id);
-
+        
         if ($aplicativo) {
+            
             return response()->json([
                 'success' => true,
-                'aplicativo' => $aplicativo
+                'aplicativo' => $aplicativo,
             ]);
         } else {
             return response()->json([

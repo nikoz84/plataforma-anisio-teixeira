@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Conteudo extends Model
 {
@@ -19,6 +20,7 @@ class Conteudo extends Model
             'updated_at',
             'deleted_at'
     ];
+    protected $appends = ['image'];
     protected $casts = [
             'options' => 'array',
     ];
@@ -41,10 +43,32 @@ class Conteudo extends Model
     }
     public function componentes()
     {
-        return $this->belongsToMany('App\CurricularComponent')->with(['categories','niveis']);
+        return $this->belongsToMany('App\CurricularComponent')
+                    ->whereRaw('category_id IS NOT NULL')
+                    ->with('categories');
+    }
+    public function niveis()
+    {
+        return $this->belongsToMany('App\CurricularComponent')
+                    ->whereRaw('nivel_id IS NOT NULL')
+                    ->with('niveis');
     }
     public function license()
     {
         return $this->hasOne('App\License', 'id', 'license_id');
+    }
+    public function getImageAttribute()
+    {
+        $image = "{$this['id']}.jpg";
+        if (Storage::disk('sinopse')->exists($image)) {
+            //return Storage::disk('sinopse')
+            //            ->url($image);
+
+        } elseif ($this['canal_id'] == 2) {
+
+            return 'emitec';
+        } else {
+            return '';
+        }
     }
 }

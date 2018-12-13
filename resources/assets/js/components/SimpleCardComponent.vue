@@ -4,8 +4,11 @@
             <div class="panel-heading">
                 <figure class="figure">
                     <img class="img-responsive" 
-                        v-bind:src="getImage" 
-                        alt="imagem destacada" 
+                        v-lazyload
+                        src="/img/fundo-padrao.svg" 
+                        v-bind:data-src="getImage"
+                        data-err="/img/fundo-padrao.svg"
+                        alt="imagem destacada"
                         srcset="">
                 </figure>
             </div>
@@ -38,14 +41,7 @@ export default {
             return this.item.canal.color;
         },
         getImage(){
-            let image = '/img/fundo-padrao.svg';
-            if(this.item.id && localStorage.idCanal == 9){
-                image = `/storage/conteudos/aplicativos-educacionais/imagem-associada/${this.item.id}.jpg`;    
-            }else if(this.item.id && localStorage.idCanal == 1){
-                let random = Math.floor(Math.random() * 6) + 3; 
-                image = `/storage/conteudos/conteudos-digitais/imagem-associada/sinopse/${this.item.id}.0${random}.jpg`;
-            }
-            return image; 
+            return this.item.image; 
         }
     },
     created(){

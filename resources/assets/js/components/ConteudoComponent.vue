@@ -29,7 +29,7 @@
                 <i class="i-list break-word" v-text="conteudo.license.name"></i> 
             </div>
             <div class="panel-footer">
-                <span class="label label-default" v-bind:style="backgroundColor"> Tags: </span>
+                <h5>Tags: </h5>
                 <a class="btn btn-default tag" href="" 
                     v-for="tag in conteudo.tags" 
                     v-bind:key="tag.id"

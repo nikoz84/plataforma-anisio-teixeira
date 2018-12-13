@@ -57,32 +57,44 @@ return [
 
         'conteudos-blog' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/conteudos/conteudos-blog')
+            'root' => storage_path('app/public/conteudos/conteudos-blog'),
+            'url' => env('APP_URL').'/storage/conteudos/conteudos-blog',
+            'visibility' => 'public',
         ],
 
         'conteudos-digitais' =>[
             'driver'=> 'local',
-            'root' => storage_path('app/public/conteudos/conteudos-digitais')
+            'root' => storage_path('app/public/conteudos/conteudos-digitais'),
+            'url' => env('APP_URL').'/storage/conteudos/conteudos-digitais',
+            'visibility' => 'public',
         ],
 
         'aplicativos-educacionais' =>[
             'driver'=> 'local',
-            'root' => storage_path('app/public/conteudos/aplicativos-educacionais/')
+            'root' => storage_path('app/public/conteudos/aplicativos-educacionais/'),
+            'url' => env('APP_URL').'/storage/conteudos/aplicativos-educacionais/',
+            'visibility' => 'public'
         ],
 
         'download' =>[
             'driver'=> 'local',
-            'root' => storage_path('app/public/conteudos/conteudos-digitais/download')
+            'root' => storage_path('app/public/conteudos/conteudos-digitais/download'),
+            'url' => env('APP_URL').'/storage/conteudos/conteudos-digitais/download',
+            'visibility' => 'public',
         ],
 
         'visualizacao' =>[
             'driver'=> 'local',
-            'root' => storage_path('app/public/conteudos/conteudos-digitais/visualizacao')
+            'root' => storage_path('app/public/conteudos/conteudos-digitais/visualizacao'),
+            'url' => env('APP_URL').'/storage/conteudos/conteudos-digitais/visualizacao',
+            'visibility' => 'public',
         ],
 
         'sinopse' =>[
             'driver'=> 'local',
-            'root' => storage_path('app/public/conteudos/conteudos-digitais/sinopse')
+            'root' => storage_path('app/public/conteudos/conteudos-digitais/imagem-associada/sinopse'),
+            'url' => env('APP_URL').'/storage/conteudos/conteudos-digitais/imagem-associada/sinopse',
+            'visibility' => 'public',
         ],
 
         's3' => [
