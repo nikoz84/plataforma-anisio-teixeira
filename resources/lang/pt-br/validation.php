@@ -122,6 +122,11 @@ return [
         'tipo' => 'tipo de conteúdo',
         'license' => 'licença',
         'is_approved' => 'aprovar conteúdo',
-        'terms' => 'termos e condições'
+        'terms' => 'termos e condições',
+        'image' => 'imagem',
+        'video' => 'vídeo',
+        'file' => 'arquivo',
+        'url' => 'url',
+        'category' => 'categoria'
     ],
 ];

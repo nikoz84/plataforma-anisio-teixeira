@@ -7,14 +7,18 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Helpers\UrlValidator;
 use Illuminate\Support\Facades\Storage;
+use App\Helpers\ResizeImage;
+
 class AplicativoController extends Controller
 {
-    public function __construct(Aplicativo $aplicativo, Request $request)
+    public function __construct(Aplicativo $aplicativo, Request $request, Storage $storage)
     {
         $this->middleware('jwt.verify')->except(['list','search','getById']);
         $this->aplicativo = $aplicativo;
         $this->request = $request;
+        $this->storage = $storage;
     }
     /**
      * Display a listing of the resource.
@@ -24,12 +28,11 @@ class AplicativoController extends Controller
     public function list(Request $request)
     {
         $limit = ($request->has('limit')) ? $request->query('limit') : 15;
-        $orderBy = ($request->has('order')) ? $request->query('order') : 'name';
         $page = ($request->has('page')) ? $request->query('page') : 1;
 
         $aplicativos = Aplicativo::with(['category','canal'])
                                     //->select(['id','user_id','name'])
-                                    ->orderBy($orderBy, 'name')
+                                    ->orderBy('created_at', 'desc')
                                     ->paginate($limit);
         
         $aplicativos->setPath("/aplicativos?limit={$limit}");
@@ -49,13 +52,12 @@ class AplicativoController extends Controller
     private function validar()
     {
         $validator = Validator::make($this->request->all(), [
-            'name' => 'required|min:10|max:255',
+            'name' => 'required|min:2|max:255',
             'description' => 'required|min:140',
-            'url' => 'regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
+            'url' => ['required', new UrlValidator],
             'category' => 'required',
             'tags' => 'required',
-            'is_featured' => 'required',
-            'file' => 'required|image|mimes:jpeg,png,jpg|dimensions:width=250,width=250'
+            'is_featured' => 'required'
         ]);
 
         return $validator;
@@ -90,14 +92,25 @@ class AplicativoController extends Controller
         //$aplicativo->tags->attach($this->request->get('tags'));
         $aplicativo->save();
 
+        $path = $this->createFile($aplicativo->id, $this->request->file('image'));
+
         return response()->json([
             'success' => true,
             'message' => 'Aplicativo cadastrado com sucesso',
-            'id' => $aplicativo->id
+            'id' => $aplicativo->id,
+            'image' => $path
         ]);
     }
+    private function createFile($id, $image)
+    {
+        $file_name = "{$id}.{$image->guessExtension()}";
+        $path = $this->request->file('image')
+                            ->storeAs('imagem-associada', $file_name, 'aplicativos-educacionais');
+        $image = new ResizeImage();
 
-/**
+        return $image->resize($this->storage::disk('aplicativos-educacionais')->files($path));
+    }
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -107,19 +120,18 @@ class AplicativoController extends Controller
     public function update(Request $request, $id)
     {
         $aplicativo = Aplicativo::find($id);
-        
+
         $data = [
             'name' => $request->get('name'),
             'description' => $request->get('description'),
             'is_featured' => $request->get('is_featured'),
             'options' => $request->get('options')
         ];
-        
+
         $aplicativo->save($data);
-        
+
         return response()->json($aplicativo->toJson());
     }
-    
     /**
      * Remove the specified resource from storage.
      *
