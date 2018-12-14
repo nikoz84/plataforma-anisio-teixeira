@@ -15,7 +15,7 @@ class AplicativoController extends Controller
 {
     public function __construct(Aplicativo $aplicativo, Request $request, Storage $storage)
     {
-        $this->middleware('jwt.verify')->except(['list','search','getById']);
+        $this->middleware('jwt.verify')->except(['list', 'search', 'getById']);
         $this->aplicativo = $aplicativo;
         $this->request = $request;
         $this->storage = $storage;
@@ -30,17 +30,17 @@ class AplicativoController extends Controller
         $limit = ($request->has('limit')) ? $request->query('limit') : 15;
         $page = ($request->has('page')) ? $request->query('page') : 1;
 
-        $aplicativos = Aplicativo::with(['category','canal'])
+        $aplicativos = Aplicativo::with(['category', 'canal'])
                                     //->select(['id','user_id','name'])
-                                    ->orderBy('created_at', 'desc')
-                                    ->paginate($limit);
-        
+            ->orderBy('created_at', 'desc')
+            ->paginate($limit);
+
         $aplicativos->setPath("/aplicativos?limit={$limit}");
 
         return response()->json([
-            'success'=> true,
-            'title'=> 'Aplicativos Educacionais',
-            'paginator'=> $aplicativos
+            'success' => true,
+            'title' => 'Aplicativos Educacionais',
+            'paginator' => $aplicativos
         ]);
     }
 
@@ -63,7 +63,7 @@ class AplicativoController extends Controller
         return $validator;
     }
 
-/**
+    /**
      * Cria um novo aplicativo.
      *
      *
@@ -103,12 +103,13 @@ class AplicativoController extends Controller
     }
     private function createFile($id, $image)
     {
-        $file_name = "{$id}.{$image->guessExtension()}";
+        $fileName = "{$id}.{$image->guessExtension()}";
         $path = $this->request->file('image')
-                            ->storeAs('imagem-associada', $file_name, 'aplicativos-educacionais');
+            ->storeAs('imagem-associada', $fileName, 'aplicativos-educacionais');
         $image = new ResizeImage();
-
-        return $image->resize($this->storage::disk('aplicativos-educacionais')->files($path));
+        $filePath = $this->storage::disk('aplicativos-educacionais')->url($path);
+        $dir = $this->storage::disk('aplicativos-educacionais')->getDriver()->getAdapter()->getPathPrefix() . "imagem-associada/";
+        $image->resize($filePath, $fileName, $dir);
     }
     /**
      * Update the specified resource in storage.
@@ -153,7 +154,7 @@ class AplicativoController extends Controller
                 'is_deleted' => $aplicativo->delete()
             ];
         }
-        
+
         return response()->json($resp);
     }
 
@@ -161,28 +162,27 @@ class AplicativoController extends Controller
     {
         $limit = $request->query('limit', 15);
         $page = $request->query('page', 1);
-        $search= "%{$termo}%";
-        $aplicativos = Aplicativo::select(['id','name'])
-                                ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
-                                ->paginate($limit);
+        $search = "%{$termo}%";
+        $aplicativos = Aplicativo::select(['id', 'name'])
+            ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
+            ->paginate($limit);
 
         $aplicativos->setPath("/aplicativos/search/{$termo}?limit={$limit}");
 
         return response()->json([
-            'success'=> true,
+            'success' => true,
             'message' => 'Resultados da busca',
             'paginator' => $aplicativos,
-            'page'=> $aplicativos->currentPage(),
+            'page' => $aplicativos->currentPage(),
             'limit' => $aplicativos->perPage()
         ]);
     }
     public function getById(Request $request, $id)
     {
-        $aplicativo = Aplicativo::with(['tags','category','user','canal'])
-                                ->find($id);
-        
+        $aplicativo = Aplicativo::with(['tags', 'category', 'user', 'canal'])
+            ->find($id);
+
         if ($aplicativo) {
-            
             return response()->json([
                 'success' => true,
                 'aplicativo' => $aplicativo,

@@ -21116,6 +21116,13 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -21135,6 +21142,8 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             category: '',
             categories: [],
             message: null,
+            count: 0,
+            success: false,
             isError: true,
             errors: {
                 name: [],
@@ -21253,6 +21262,12 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
         }(),
         onFileChange: function onFileChange(e) {
             this.image = e.target.files[0];
+        },
+        countCaracters: function countCaracters(e) {
+            if (e.target.value.length > 140) {
+                this.success = true;
+            }
+            this.count = e.target.value.length;
         }
     }
 
@@ -21438,6 +21453,9 @@ var render = function() {
                     attrs: { id: "descricao" },
                     domProps: { value: _vm.description },
                     on: {
+                      keyup: function($event) {
+                        _vm.countCaracters($event)
+                      },
                       input: function($event) {
                         if ($event.target.composing) {
                           return
@@ -21449,6 +21467,22 @@ var render = function() {
                       }
                     }
                   }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "pull-right",
+                      class: { "text-success": _vm.success },
+                      attrs: { id: "sprestante" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(_vm.count) +
+                          "\n                    "
+                      )
+                    ]
+                  ),
                   _vm._v(" "),
                   _vm._l(_vm.errors.description, function(error, d) {
                     return _vm.errors.description

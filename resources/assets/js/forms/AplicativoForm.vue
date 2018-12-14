@@ -35,7 +35,18 @@
                     <!-- DESCRICAO -->
                     <div class="form-group" v-bind:class="{ 'has-error': errors.description && errors.description.length > 0 }">
                         <label for="descricao">Descrição:*</label>
+<<<<<<< HEAD
+                        <textarea class="form-control"
+                                    id="descricao"
+                                    v-model="description"
+                                    style="resize: none"
+                                    v-on:keyup="countCaracters($event)"></textarea>
+                        <span id="sprestante" class="pull-right" v-bind:class="{'text-success': success }">
+                            {{ count }}
+                        </span>
+=======
                         <textarea class="form-control" id="descricao" v-model.trim="description" style="resize: none"></textarea>
+>>>>>>> fae050025f8cf93fb168dba8f58586ea58241562
                         <small class="text-danger"
                                 v-if="errors.description"
                                 v-for="(error,d) in errors.description"
@@ -73,7 +84,7 @@
                     </div>
                     <div class="form-group" v-bind:class="{ 'has-error': errors.image && errors.image.length > 0 }">
                         <label for="imagem">Imagem destacada:*</label>
-                        <input type="file" class="form-control" id="imagem" name="imagem" 
+                        <input type="file" class="form-control" id="imagem" name="imagem"
                                 aria-describedby="imagem de destaque"
                                 v-on:change="onFileChange($event)">
                         <small class="form-text text-muted">Imagem no formato .jpg</small><br>
@@ -126,6 +137,8 @@ export default {
             category: '',
             categories:[],
             message: null,
+            count: 0,
+            success: false,
             isError: true,
             errors: {
                 name: [],
@@ -187,6 +200,12 @@ export default {
         },
         onFileChange(e){
             this.image = e.target.files[0];
+        },
+        countCaracters(e){
+            if(e.target.value.length > 140){
+                this.success = true;
+            }
+            this.count = e.target.value.length;
         }
     }
 
