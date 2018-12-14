@@ -422,7 +422,8 @@ var render = function() {
           {
             attrs: {
               tag: "li",
-              to: { name: "Inicio", params: { slug: _vm.$route.params.slug } }
+              to: { name: "Inicio", params: { slug: _vm.$route.params.slug } },
+              exact: ""
             }
           },
           [_c("a", [_vm._v("Home")])]
@@ -433,7 +434,8 @@ var render = function() {
           {
             attrs: {
               tag: "li",
-              to: { name: "Listar", params: { slug: _vm.$route.params.slug } }
+              to: { name: "Listar", params: { slug: _vm.$route.params.slug } },
+              exact: ""
             }
           },
           [_c("a", [_vm._v("Listar")])]
@@ -448,7 +450,8 @@ var render = function() {
                   to: {
                     name: "AdicionarConteudo",
                     params: { slug: _vm.$route.params.slug }
-                  }
+                  },
+                  exact: ""
                 }
               },
               [_c("a", [_vm._v("Adicionar")])]
@@ -464,7 +467,8 @@ var render = function() {
                   to: {
                     name: "AdicionarAplicativo",
                     params: { slug: _vm.$route.params.slug }
-                  }
+                  },
+                  exact: ""
                 }
               },
               [_c("a", [_vm._v("Adicionar")])]

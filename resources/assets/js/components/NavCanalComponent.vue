@@ -1,16 +1,16 @@
 <template>
     <nav>
         <ul class="nav nav-pills">
-            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: $route.params.slug}}">
+            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: $route.params.slug}}" exact>
                 <a>Home</a>
             </router-link> 
-            <router-link tag="li" :to="{ name: 'Listar', params: {slug: $route.params.slug}}">
+            <router-link tag="li" :to="{ name: 'Listar', params: {slug: $route.params.slug}}" exact>
                 <a>Listar</a>
             </router-link> 
-            <router-link tag="li" :to="{ name: 'AdicionarConteudo', params: {slug: $route.params.slug}}" v-if="showAdicionarConteudo">
+            <router-link tag="li" :to="{ name: 'AdicionarConteudo', params: {slug: $route.params.slug}}" v-if="showAdicionarConteudo" exact>
                 <a>Adicionar</a>
             </router-link>
-            <router-link tag="li" :to="{ name: 'AdicionarAplicativo', params: {slug: $route.params.slug}}" v-if="showAdicionarAplicativo">
+            <router-link tag="li" :to="{ name: 'AdicionarAplicativo', params: {slug: $route.params.slug}}" v-if="showAdicionarAplicativo" exact>
                 <a>Adicionar</a>
             </router-link>
         </ul>

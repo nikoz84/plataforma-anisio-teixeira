@@ -17289,7 +17289,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 var http = new __WEBPACK_IMPORTED_MODULE_2__http_js__["a" /* default */]();
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: 'listar',
+    name: 'Listar',
     components: { List: __WEBPACK_IMPORTED_MODULE_1__components_ListComponent_vue___default.a },
     props: ['color'],
     data: function data() {
@@ -17312,23 +17312,20 @@ var http = new __WEBPACK_IMPORTED_MODULE_2__http_js__["a" /* default */]();
                             case 0:
                                 idCanal = localStorage.idCanal;
                                 params = {};
-
-                                console.log(idCanal);
-                                _context.next = 5;
+                                _context.next = 4;
                                 return http.getDataFromIdCanal(idCanal, params);
 
-                            case 5:
+                            case 4:
                                 resp = _context.sent;
 
 
-                                console.warn(resp);
                                 if (resp.data.success) {
 
                                     this.title = resp.data.title;
                                     this.paginator = resp.data.paginator;
                                 }
 
-                            case 8:
+                            case 6:
                             case 'end':
                                 return _context.stop();
                         }
@@ -19068,6 +19065,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'PlayerApp',
@@ -19086,7 +19084,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             console.log(this.id);
         },
         video: function video() {
-            return '/storage/conteudos/conteudos-digitais/visualizacao/' + this.visualizacao;
+            if (this.visualizacao) {
+                return '/storage/conteudos/conteudos-digitais/visualizacao/' + this.visualizacao;
+            } else {
+                return '/storage/conteudos/conteudos-digitais/download/' + this.download;
+            }
         }
     },
     methods: {
@@ -19111,15 +19113,14 @@ var render = function() {
               _vm._s(_vm.download) +
               " " +
               _vm._s(_vm.visualizacao) +
-              "\n                "
+              "\n                \n                "
           ),
-          _vm._v(" "),
-          _vm.tipo.id == 1
+          _vm.tipo.id == 1 || _vm.guia
             ? _c("div", { attrs: { documento: "" } }, [
                 _c("h3", [
                   _vm._v(
                     " " +
-                      _vm._s(_vm.tipo.nome) +
+                      _vm._s(_vm.tipo.name) +
                       " - " +
                       _vm._s(_vm.tipo.id) +
                       " "
@@ -19133,7 +19134,7 @@ var render = function() {
                 _c("h3", [
                   _vm._v(
                     " " +
-                      _vm._s(_vm.tipo.nome) +
+                      _vm._s(_vm.tipo.name) +
                       " - " +
                       _vm._s(_vm.tipo.id) +
                       " "
@@ -19147,7 +19148,7 @@ var render = function() {
                 _c("h3", [
                   _vm._v(
                     " " +
-                      _vm._s(_vm.tipo.nome) +
+                      _vm._s(_vm.tipo.name) +
                       " - " +
                       _vm._s(_vm.tipo.id) +
                       " "
@@ -19161,7 +19162,7 @@ var render = function() {
                 _c("h3", [
                   _vm._v(
                     " " +
-                      _vm._s(_vm.tipo.nome) +
+                      _vm._s(_vm.tipo.name) +
                       " - " +
                       _vm._s(_vm.tipo.id) +
                       " "
@@ -19175,7 +19176,7 @@ var render = function() {
                 _c("h3", [
                   _vm._v(
                     " " +
-                      _vm._s(_vm.tipo.nome) +
+                      _vm._s(_vm.tipo.name) +
                       " - " +
                       _vm._s(_vm.tipo.id) +
                       " "
@@ -19205,7 +19206,7 @@ var render = function() {
                 _c("h3", [
                   _vm._v(
                     " " +
-                      _vm._s(_vm.tipo.nome) +
+                      _vm._s(_vm.tipo.name) +
                       " - " +
                       _vm._s(_vm.tipo.id) +
                       " "
@@ -19219,7 +19220,7 @@ var render = function() {
                 _c("h3", [
                   _vm._v(
                     " " +
-                      _vm._s(_vm.tipo.nome) +
+                      _vm._s(_vm.tipo.name) +
                       " - " +
                       _vm._s(_vm.tipo.id) +
                       " "
@@ -19233,7 +19234,7 @@ var render = function() {
                 _c("h3", [
                   _vm._v(
                     " " +
-                      _vm._s(_vm.tipo.nome) +
+                      _vm._s(_vm.tipo.name) +
                       " - " +
                       _vm._s(_vm.tipo.id) +
                       " "
@@ -19247,7 +19248,7 @@ var render = function() {
                 _c("h3", [
                   _vm._v(
                     " " +
-                      _vm._s(_vm.tipo.nome) +
+                      _vm._s(_vm.tipo.name) +
                       " - " +
                       _vm._s(_vm.tipo.id) +
                       " "
@@ -19261,7 +19262,7 @@ var render = function() {
                 _c("h3", [
                   _vm._v(
                     " " +
-                      _vm._s(_vm.tipo.nome) +
+                      _vm._s(_vm.tipo.name) +
                       " - " +
                       _vm._s(_vm.tipo.id) +
                       " "
