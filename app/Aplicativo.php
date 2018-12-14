@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Aplicativo extends Model
 {
@@ -16,6 +17,7 @@ class Aplicativo extends Model
         'is_featured',
         'options'
         ];
+    protected $appends = ['image'];
     protected $dates = [
             'created_at',
             'updated_at',
@@ -43,5 +45,12 @@ class Aplicativo extends Model
     {
         return $this->belongsTo('App\Canal', 'canal_id')
                     ->selectRaw("id, name, slug, options->>'color' as color ");
+    }
+
+    public function getImageAttribute()
+    {
+        $image = "{$this['id']}.jpg";
+        return Storage::disk('aplicativos-educacionais')
+                        ->url("imagem-associada/{$image}");
     }
 }

@@ -7,6 +7,7 @@
                     Adicionar conteúdo digital
                 </div>
                 <div class="panel-body">
+                    <!-- div class="tab" -->
                     <!-- TITULO -->
                     <div class="form-group" v-bind:class="{ 'has-error': errors.title && errors.title.length > 0 }">
                         <label for="titulo">Título:*</label>
@@ -64,6 +65,8 @@
                         <label for="descricao">Descrição:*</label>
                         <textarea class="form-control"
                                     id="descricao"
+                                    rows="15" 
+                                    cols="50"
                                     v-model="description"
                                     style="resize: none"></textarea>
                         <small class="text-info">Descreva á mídia de forma <b>resumida</b> e <b>objetiva</b>. 

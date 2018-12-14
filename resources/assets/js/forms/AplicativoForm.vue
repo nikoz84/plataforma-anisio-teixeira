@@ -35,6 +35,7 @@
                     <!-- DESCRICAO -->
                     <div class="form-group" v-bind:class="{ 'has-error': errors.description && errors.description.length > 0 }">
                         <label for="descricao">Descrição:*</label>
+<<<<<<< HEAD
                         <textarea class="form-control"
                                     id="descricao"
                                     v-model="description"
@@ -43,6 +44,9 @@
                         <span id="sprestante" class="pull-right" v-bind:class="{'text-success': success }">
                             {{ count }}
                         </span>
+=======
+                        <textarea class="form-control" id="descricao" v-model.trim="description" style="resize: none"></textarea>
+>>>>>>> fae050025f8cf93fb168dba8f58586ea58241562
                         <small class="text-danger"
                                 v-if="errors.description"
                                 v-for="(error,d) in errors.description"

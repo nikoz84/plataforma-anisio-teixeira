@@ -11,8 +11,7 @@ class CurricularComponent extends Model
 
     public function categories()
     {
-        return $this->hasMany('App\CurricularComponentCategory', 'id', 'category_id')
-                    ;
+        return $this->hasMany('App\CurricularComponentCategory', 'id', 'category_id');
     }
     public function niveis()
     {
