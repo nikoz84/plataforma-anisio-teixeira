@@ -2,17 +2,16 @@
 
 namespace App\Helpers;
 
-use Intervention\Image\ImageManagerStatic as Image;
+use Intervention\Image\Image;
 
 class ResizeImage
 {
 
-    public function resize($path)
+    public function resize($filePath, $fileName, $dir)
     {
-        Image::configure(config('image'));
+        //Image::configure(config('image'));
+        $img = Image::make($filePath)->resize(300, 200);
 
-        $image = Image::make($path)
-                        ->resize(310, 210);
-        return $img->response('jpg');
+        $img->save($dir . $fileName, 70);
     }
 }

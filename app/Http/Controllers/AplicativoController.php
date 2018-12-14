@@ -104,12 +104,13 @@ class AplicativoController extends Controller
     }
     private function createFile($id, $image)
     {
-        $file_name = "{$id}.{$image->guessExtension()}";
+        $fileName = "{$id}.{$image->guessExtension()}";
         $path = $this->request->file('image')
-                            ->storeAs('imagem-associada', $file_name, 'aplicativos-educacionais');
-        $image = new ResizeImage;
-
-        return $image->resize($this->storage::disk('aplicativos-educacionais')->files($path));
+                            ->storeAs('imagem-associada', $fileName, 'aplicativos-educacionais');
+        $resize = new ResizeImage;
+        $filePath = $this->storage::disk('aplicativos-educacionais')->getDriver()->getAdapter()->getPathPrefix() . $path;
+        $dir = $this->storage::disk('aplicativos-educacionais')->getDriver()->getAdapter()->getPathPrefix(). 'imagem-associada/';
+        return $resize->resize($filePath, $fileName, $dir);
     }
     /**
      * Update the specified resource in storage.
