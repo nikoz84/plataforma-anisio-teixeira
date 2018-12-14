@@ -11,9 +11,10 @@ class ResizeImage
 
     public function resize($filePath, $fileName, $dir)
     {
-        $img = Image::make($filePath);
-        $img->resize(300, 200);
-        $img->save($dir . $fileName, 70);
+
+        $img = Image::make($filePath); // faz o redimensionamento da imagem selecionada
+        $img->resize(300, 200); // redimensiona a imagem width e Height
+        $img->save($dir . $fileName, 70); //salva imagem
     }
     public function resizeDirAplicativos()
     {
