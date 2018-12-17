@@ -57,6 +57,7 @@ class AplicativoController extends Controller
             'url' => ['required', new UrlValidator],
             'category' => 'required',
             'tags' => 'required',
+            'file' => 'required',
             'is_featured' => 'required'
         ]);
 
