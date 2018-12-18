@@ -16949,7 +16949,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "/**\nsection{\n     background: var(--color); \n}\n**/\n", ""]);
+exports.push([module.i, "/**\r\nsection{\r\n     background: var(--color); \r\n}\r\n**/\n", ""]);
 
 // exports
 
@@ -18883,7 +18883,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\ni[data-v-44c68a2e]::before {\n  content: \" \\BB   \";\n  padding-right: 5px;\n  padding-left: 7px;\n}\n", ""]);
+exports.push([module.i, "\ni[data-v-44c68a2e]::before {\r\n  content: \" \\BB   \";\r\n  padding-right: 5px;\r\n  padding-left: 7px;\n}\r\n", ""]);
 
 // exports
 
@@ -19065,7 +19065,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'PlayerApp',
@@ -19113,9 +19112,10 @@ var render = function() {
               _vm._s(_vm.download) +
               " " +
               _vm._s(_vm.visualizacao) +
-              "\n                \n                "
+              "\n                "
           ),
-          _vm.tipo.id == 1 || _vm.guia
+          _vm._v(" "),
+          _vm.tipo.id == 1
             ? _c("div", { attrs: { documento: "" } }, [
                 _c("h3", [
                   _vm._v(
@@ -19511,7 +19511,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\ni[data-v-334619be]::before {\n  content: \" \\BB   \";\n  padding-right: 5px;\n  padding-left: 7px;\n}\n\n", ""]);
+exports.push([module.i, "\ni[data-v-334619be]::before {\r\n  content: \" \\BB   \";\r\n  padding-right: 5px;\r\n  padding-left: 7px;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -21123,6 +21123,10 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -21296,7 +21300,9 @@ var render = function() {
       [
         _c("div", { staticClass: "panel panel-default col-md-7" }, [
           _c("div", { staticClass: "panel-heading" }, [
-            _vm._v("\n                Adicionar Aplicativos\n            ")
+            _vm._v(
+              "\n                    Adicionar Aplicativos\n                "
+            )
           ]),
           _vm._v(" "),
           _c(
@@ -21437,7 +21443,49 @@ var render = function() {
                   _c("label", { attrs: { for: "descricao" } }, [
                     _vm._v("Descrição:*")
                   ]),
+                  _vm._v("\n<<<<<<< HEAD\n                        "),
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.description,
+                        expression: "description"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: { resize: "none" },
+                    attrs: { id: "descricao" },
+                    domProps: { value: _vm.description },
+                    on: {
+                      keyup: function($event) {
+                        _vm.countCaracters($event)
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.description = $event.target.value
+                      }
+                    }
+                  }),
                   _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "pull-right",
+                      class: { "text-success": _vm.success },
+                      attrs: { id: "sprestante" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(_vm.count) +
+                          "\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v("\n=======\n                        "),
                   _c("textarea", {
                     directives: [
                       {
@@ -21453,9 +21501,6 @@ var render = function() {
                     attrs: { id: "descricao" },
                     domProps: { value: _vm.description },
                     on: {
-                      keyup: function($event) {
-                        _vm.countCaracters($event)
-                      },
                       input: function($event) {
                         if ($event.target.composing) {
                           return
@@ -21467,23 +21512,9 @@ var render = function() {
                       }
                     }
                   }),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    {
-                      staticClass: "pull-right",
-                      class: { "text-success": _vm.success },
-                      attrs: { id: "sprestante" }
-                    },
-                    [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(_vm.count) +
-                          "\n                    "
-                      )
-                    ]
+                  _vm._v(
+                    "\n>>>>>>> fae050025f8cf93fb168dba8f58586ea58241562\n                        "
                   ),
-                  _vm._v(" "),
                   _vm._l(_vm.errors.description, function(error, d) {
                     return _vm.errors.description
                       ? _c("small", {
@@ -21547,7 +21578,7 @@ var render = function() {
                               [
                                 _vm._v(
                                   _vm._s(category.name) +
-                                    "\n                        "
+                                    "\n                            "
                                 )
                               ]
                             )
@@ -21730,9 +21761,9 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                    " +
+                            "\n                        " +
                               _vm._s(_vm.message) +
-                              "\n                "
+                              "\n                    "
                           )
                         ]
                       )

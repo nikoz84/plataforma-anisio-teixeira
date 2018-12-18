@@ -4,10 +4,7 @@
             <div class="row">
                 <div class="col-sm-9">
                     {{download}} {{visualizacao}}
-                    
-                    <div v-if="tipo.id == 1 || guia" documento>
-                        <h3> {{tipo.name}} - {{tipo.id}} </h3>
-                        <!--object v-if="guia"
+                    <!--object v-if="guia"
                         v-bind:data="`/storage/conteudos/conteudos-digitais/guias-pedagogicos/` + id.guia" 
                         type="application/pdf" width="100%" height="460">
                         <p>Alternative text - include a link 
@@ -15,7 +12,9 @@
                                 to the PDF!
                             </a>
                         </p>
-                        </object -->
+                    </object -->
+                    <div v-if="tipo.id == 1" documento>
+                        <h3> {{tipo.name}} - {{tipo.id}} </h3>
                     </div>
                     <div v-if="tipo.id == 2" planilha>
                         <h3> {{tipo.name}} - {{tipo.id}} </h3>

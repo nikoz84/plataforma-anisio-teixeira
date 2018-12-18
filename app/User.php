@@ -43,6 +43,13 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'options' => 'array',
     ];
+
+    protected $appends = ['is_admin'];
+    
+    public function getIsAdminAttribute()
+    {
+        return $this->where('options->role', 'administrador')->exists();
+    }
     /**
      * Usuário tem varios conteudos
      */
@@ -70,5 +77,8 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+    public function role(){
+
     }
 }
