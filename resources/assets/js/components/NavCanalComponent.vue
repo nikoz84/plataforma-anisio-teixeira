@@ -3,10 +3,10 @@
         <ul class="nav nav-pills">
             <router-link tag="li" :to="{ name: 'Inicio', params: {slug: $route.params.slug}}">
                 <a>Home</a>
-            </router-link> 
+            </router-link>
             <router-link tag="li" :to="{ name: 'Listar', params: {slug: $route.params.slug}}">
                 <a>Listar</a>
-            </router-link> 
+            </router-link>
             <router-link tag="li" :to="{ name: 'AdicionarConteudo', params: {slug: $route.params.slug}}" v-if="showAdicionarConteudo">
                 <a>Adicionar</a>
             </router-link>

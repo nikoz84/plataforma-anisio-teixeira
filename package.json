@@ -26,5 +26,8 @@
     "vue-router": "^3.0.2",
     "vuex": "^3.0.1",
     "vue-tiny-lazyload-img": "0.0.3"
+  },
+  "dependencies": {
+    "lodash": "^4.17.11"
   }
 }
