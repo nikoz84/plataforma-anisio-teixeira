@@ -2,6 +2,7 @@
     <article class="panel panel-default">
         <div class="panel-body">
             <h2 v-text="aplicativo.name"></h2>
+            <button class="btn btn-info" v-on:click="updateAplicativo()">Editar</button>
             <button class="btn btn-danger" v-on:click="deleteAplicativo()">Apagar</button>
             <div class="row">
                 <div class="col-sm-8 break-word" v-html="aplicativo.description"></div>
@@ -60,6 +61,9 @@ export default {
                 this.$router.push({ name: 'Listar', params: {slug: this.$route.params.slug}})
             }
         },
+        updateAplicativo(){
+            this.$router.push({ name: 'EditarAplicativo', params: {slug: this.$route.params.slug, id: this.$route.params.id, update: true }})
+        }
     }
 }
 </script>

@@ -19737,6 +19737,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
 
 
 
@@ -19786,7 +19787,10 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             }
 
             return deleteAplicativo;
-        }()
+        }(),
+        updateAplicativo: function updateAplicativo() {
+            this.$router.push({ name: 'EditarAplicativo', params: { slug: this.$route.params.slug, id: this.$route.params.id, update: true } });
+        }
     }
 });
 
@@ -19801,6 +19805,19 @@ var render = function() {
   return _c("article", { staticClass: "panel panel-default" }, [
     _c("div", { staticClass: "panel-body" }, [
       _c("h2", { domProps: { textContent: _vm._s(_vm.aplicativo.name) } }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-info",
+          on: {
+            click: function($event) {
+              _vm.updateAplicativo()
+            }
+          }
+        },
+        [_vm._v("Editar")]
+      ),
       _vm._v(" "),
       _c(
         "button",
@@ -21354,6 +21371,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
 
 
 
@@ -21387,11 +21406,14 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
     },
     created: function created() {
         this.getCategories();
+        if (this.$route.params.update) {
+            this.getAplicativo();
+        }
     },
 
     methods: {
         createAplicativo: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(update) {
                 var _this = this;
 
                 var form, resp;
@@ -21399,18 +21421,28 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
+                                if (!update) {
+                                    _context.next = 3;
+                                    break;
+                                }
+
+                                this.updateAplicativo();
+                                return _context.abrupt('return');
+
+                            case 3:
+
                                 this.options = {
                                     qt_access: 0
                                 };
 
                                 if (this.image) {
-                                    _context.next = 3;
+                                    _context.next = 6;
                                     break;
                                 }
 
                                 return _context.abrupt('return');
 
-                            case 3:
+                            case 6:
                                 form = new FormData();
 
                                 form.append('name', this.name);
@@ -21423,19 +21455,17 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                 form.append('options', JSON.stringify(this.options));
                                 form.append('image', this.image, this.image.name);
                                 form.append('token', localStorage.token);
-                                console.warn(form);
 
-                                _context.next = 17;
+                                _context.next = 19;
                                 return http.postData('/aplicativos/create', form);
 
-                            case 17:
+                            case 19:
                                 resp = _context.sent;
 
 
                                 if (resp.data.success) {
                                     console.warn(resp.data.message);
                                 } else {
-                                    console.warn(resp.data);
                                     this.isError = resp.data.success;
                                     this.message = resp.data.message;
                                     if (resp.data.errors) {
@@ -21447,7 +21477,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                     }, 3000);
                                 }
 
-                            case 19:
+                            case 21:
                             case 'end':
                                 return _context.stop();
                         }
@@ -21455,7 +21485,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                 }, _callee, this);
             }));
 
-            function createAplicativo() {
+            function createAplicativo(_x) {
                 return _ref.apply(this, arguments);
             }
 
@@ -21500,12 +21530,30 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             }
             this.count = e.target.value.length;
         },
-        updateAplicativo: function () {
+        getAplicativo: function () {
             var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
+                var resp;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
                     while (1) {
                         switch (_context3.prev = _context3.next) {
                             case 0:
+                                _context3.next = 2;
+                                return http.getDataFromUrl('/aplicativos/' + this.$route.params.id);
+
+                            case 2:
+                                resp = _context3.sent;
+
+                                console.log(resp.data.aplicativo);
+                                if (resp.data.success) {
+                                    this.name = resp.data.aplicativo.name;
+                                    this.category = resp.data.aplicativo.category_id;
+                                    this.description = resp.data.aplicativo.description;
+                                    this.url = resp.data.aplicativo.url;
+                                    this.is_featured = resp.data.aplicativo.is_featured;
+                                    this.image = resp.data.aplicativo.image;
+                                }
+
+                            case 5:
                             case 'end':
                                 return _context3.stop();
                         }
@@ -21513,8 +21561,39 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                 }, _callee3, this);
             }));
 
-            function updateAplicativo() {
+            function getAplicativo() {
                 return _ref3.apply(this, arguments);
+            }
+
+            return getAplicativo;
+        }(),
+        updateAplicativo: function () {
+            var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4() {
+                var params, resp;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
+                    while (1) {
+                        switch (_context4.prev = _context4.next) {
+                            case 0:
+                                params = { 'token': localStorage.token };
+                                _context4.next = 3;
+                                return http.putData('/aplicativos/update/' + this.$route.params.id, params);
+
+                            case 3:
+                                resp = _context4.sent;
+
+
+                                console.log(resp);
+
+                            case 5:
+                            case 'end':
+                                return _context4.stop();
+                        }
+                    }
+                }, _callee4, this);
+            }));
+
+            function updateAplicativo() {
+                return _ref4.apply(this, arguments);
             }
 
             return updateAplicativo;
@@ -21539,7 +21618,7 @@ var render = function() {
         on: {
           submit: function($event) {
             $event.preventDefault()
-            _vm.createAplicativo()
+            _vm.createAplicativo(_vm.$route.params.update)
           }
         }
       },
@@ -21874,6 +21953,13 @@ var render = function() {
                   }
                 },
                 [
+                  _vm.image
+                    ? _c("img", {
+                        staticClass: "img-responsive",
+                        attrs: { width: "150", height: "150", src: _vm.image }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
                   _c("label", { attrs: { for: "imagem" } }, [
                     _vm._v("Imagem destacada:*")
                   ]),

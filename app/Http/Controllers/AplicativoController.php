@@ -119,18 +119,21 @@ class AplicativoController extends Controller
      * @param  \App\Aplicativo  $aplicativo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
         $aplicativo = Aplicativo::find($id);
 
-        $data = [
-            'name' => $request->get('name'),
-            'description' => $request->get('description'),
-            'is_featured' => $request->get('is_featured'),
-            'options' => $request->get('options')
-        ];
+        $aplicativo->name = $this->request->get('name', '');
+        $aplicativo->category_id = $this->request->get('category');
+        $aplicativo->url = $this->request->get('url');
+        $aplicativo->description = $this->request->get('description');
+        $aplicativo->is_featured = $this->request->get('is_featured');
+        $aplicativo->options = json_decode($this->request->get('options', '{}'), true);
 
-        $aplicativo->save($data);
+
+        $aplicativo->save();
+
+        $this->createFile($aplicativo->id, $this->request->file('image'));
 
         return response()->json($aplicativo->toJson());
     }
@@ -168,9 +171,15 @@ class AplicativoController extends Controller
             'paginator' => $aplicativos
         ]);
     }
-    public function getById(Request $request, $id)
+    /**
+     * Seleciona um recurso por id
+     *
+     * @param Integer $id
+     * @return json
+     */
+    public function getById($id)
     {
-        $aplicativo = Aplicativo::with(['tags', 'category', 'user', 'canal'])
+        $aplicativo = $this->aplicativo::with(['tags', 'category', 'user', 'canal'])
             ->find($id);
 
         if ($aplicativo) {
