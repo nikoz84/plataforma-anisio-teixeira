@@ -202,6 +202,9 @@ export default {
                 this.success = true;
             }
             this.count = e.target.value.length;
+        },
+        async updateAplicativo(){
+
         }
     }
 

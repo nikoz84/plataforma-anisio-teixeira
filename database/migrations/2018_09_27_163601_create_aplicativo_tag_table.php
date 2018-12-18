@@ -18,7 +18,7 @@ class CreateAplicativoTagTable extends Migration
             $table->bigInteger('tag_id');
 
             $table->primary(['aplicativo_id', 'tag_id']);
-            $table->foreign('aplicativo_id')->references('id')->on('aplicativos');
+            $table->foreign('aplicativo_id')->references('id')->on('aplicativos')->onDelete('cascade');
             $table->foreign('tag_id')->references('id')->on('tags');
         });
     }

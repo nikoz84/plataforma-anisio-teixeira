@@ -8,12 +8,4 @@ class Tag extends Model
 {
     protected $fillable= ['name','searched'];
     protected $hidden = ['pivot'];
-    public function conteudos()
-    {
-        return $this->belongsToMany('App\Conteudo');
-    }
-    public function aplicativos()
-    {
-        return $this->belongsToMany('App\Aplicativo');
-    }
 }

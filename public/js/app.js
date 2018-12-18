@@ -902,6 +902,12 @@ var Http = function () {
 
         this.api = '/api-v1';
     }
+    /**
+     * Retorna dados do canal
+     * @param {*} idCanal identificador do canal
+     * @param {*} params parametros
+     */
+
 
     _createClass(Http, [{
         key: 'getDataFromIdCanal',
@@ -944,6 +950,12 @@ var Http = function () {
 
             return getDataFromIdCanal;
         }()
+        /**
+         * Retorna dados da url fornecida
+         * @param {*} endPoint url do recurso
+         * @param {*} params parametros
+         */
+
     }, {
         key: 'getDataFromUrl',
         value: function () {
@@ -986,6 +998,12 @@ var Http = function () {
 
             return getDataFromUrl;
         }()
+        /**
+         * 
+         * @param {*} endPoint 
+         * @param {*} params 
+         */
+
     }, {
         key: 'getDataWithTokenUrl',
         value: function () {
@@ -1028,6 +1046,12 @@ var Http = function () {
 
             return getDataWithTokenUrl;
         }()
+        /**
+         * Criar recurso
+         * @param {*} endPoint url do recurso
+         * @param {*} params parametros
+         */
+
     }, {
         key: 'postData',
         value: function () {
@@ -1070,6 +1094,12 @@ var Http = function () {
 
             return postData;
         }()
+        /**
+         * Atualizar dados de um recurso
+         * @param {*} endPoint url do recurso
+         * @param {*} params parametros
+         */
+
     }, {
         key: 'putData',
         value: function () {
@@ -1110,6 +1140,12 @@ var Http = function () {
 
             return putData;
         }()
+        /**
+         * Apagar recurso
+         * @param {*} endPoint url do recurso
+         * @param {*} params parametros
+         */
+
     }, {
         key: 'deleteData',
         value: function () {
@@ -1150,10 +1186,14 @@ var Http = function () {
 
             return deleteData;
         }()
+        /**
+         * Retorna a url do recurso segundo o canal
+         * @param {*} id identificador unico do canal
+         */
+
     }, {
         key: 'getUrlCanal',
         value: function getUrlCanal(id) {
-
             switch (true) {
                 case id == 5:
                     return this.api + '/conteudos/sites';
@@ -19653,6 +19693,14 @@ exports.push([module.i, "\ni[data-v-334619be]::before {\n  content: \" \\BB   \"
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(5);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+//
 //
 //
 //
@@ -19690,6 +19738,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
+var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'AplicativoApp',
@@ -19700,6 +19751,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var replace = this.aplicativo.authors.replace(',', ';');
             return replace.split(';');
         }
+    },
+    methods: {
+        deleteAplicativo: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+                var params, resp;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                params = {
+                                    token: localStorage.token
+                                };
+                                _context.next = 3;
+                                return http.deleteData('/aplicativos/delete/' + this.$route.params.id, params);
+
+                            case 3:
+                                resp = _context.sent;
+
+                                if (resp.data.success) {
+                                    this.$router.push({ name: 'Listar', params: { slug: this.$route.params.slug } });
+                                }
+
+                            case 5:
+                            case 'end':
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, this);
+            }));
+
+            function deleteAplicativo() {
+                return _ref.apply(this, arguments);
+            }
+
+            return deleteAplicativo;
+        }()
     }
 });
 
@@ -19714,6 +19801,19 @@ var render = function() {
   return _c("article", { staticClass: "panel panel-default" }, [
     _c("div", { staticClass: "panel-body" }, [
       _c("h2", { domProps: { textContent: _vm._s(_vm.aplicativo.name) } }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger",
+          on: {
+            click: function($event) {
+              _vm.deleteAplicativo()
+            }
+          }
+        },
+        [_vm._v("Apagar")]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c("div", {
@@ -21399,7 +21499,26 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                 this.success = true;
             }
             this.count = e.target.value.length;
-        }
+        },
+        updateAplicativo: function () {
+            var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+                    while (1) {
+                        switch (_context3.prev = _context3.next) {
+                            case 0:
+                            case 'end':
+                                return _context3.stop();
+                        }
+                    }
+                }, _callee3, this);
+            }));
+
+            function updateAplicativo() {
+                return _ref3.apply(this, arguments);
+            }
+
+            return updateAplicativo;
+        }()
     }
 
 });

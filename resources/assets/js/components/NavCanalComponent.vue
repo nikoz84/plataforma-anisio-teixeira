@@ -34,18 +34,16 @@ export default {
         showAdicionarConteudo (){
             if(this.isLogged && this.$route.params.slug != 'aplicativos-educacionais'){
                 return this.isLogged;
-            } 
+            }
             return false;
         },
         showAdicionarAplicativo (){
             if(this.isLogged && this.$route.params.slug == 'aplicativos-educacionais'){
                 return this.isLogged;
-            } 
+            }
             return false;
         }
     }
-
-    
 }
 </script>
 <style lang="scss" scoped>

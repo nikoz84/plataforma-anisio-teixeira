@@ -136,27 +136,19 @@ class AplicativoController extends Controller
     }
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Aplicativo  $conteudo
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response json
      */
     public function delete($id)
     {
-        $aplicativo = Aplicativo::find($id);
+        $aplicativo = $this->aplicativo::find($id);
         $resp = [];
-        if (is_null($aplicativo)) {
-            $resp = [
-                'menssage' => 'Aplicativo não encontrado',
-                'is_deleted' => false
-            ];
-        } else {
-            $resp = [
-                'menssage' => "Aplicativo de id: {$id} foi apagado com sucesso!!",
-                'is_deleted' => $aplicativo->delete()
-            ];
-        }
+        $aplicativo->delete();
+        $aplicativo->tags()->delete();
 
-        return response()->json($resp);
+        return response()->json([
+            'success' => true,
+            'message' => 'Aplicativo deletado com sucesso!!'
+        ]);
     }
 
     public function search(Request $request, $termo)
@@ -166,10 +158,7 @@ class AplicativoController extends Controller
         $search = "%{$termo}%";
         $aplicativos = Aplicativo::select(['id', 'name'])
             ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
-            ->toSql();
-            print_r($aplicativos);
-            die();
-            //->paginate($limit);
+            ->paginate($limit);
 
         $aplicativos->setPath("/aplicativos/search/{$termo}?limit={$limit}");
 

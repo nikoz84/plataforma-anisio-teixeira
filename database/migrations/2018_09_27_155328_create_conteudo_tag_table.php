@@ -18,7 +18,7 @@ class CreateConteudoTagTable extends Migration
             $table->bigInteger('tag_id');
 
             $table->primary(['conteudo_id', 'tag_id']);
-            $table->foreign('conteudo_id')->references('id')->on('conteudos');
+            $table->foreign('conteudo_id')->references('id')->on('conteudos')->onDelete('cascade');
             $table->foreign('tag_id')->references('id')->on('tags');
         });
     }
