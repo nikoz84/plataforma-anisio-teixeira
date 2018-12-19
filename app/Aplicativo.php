@@ -33,7 +33,7 @@ class Aplicativo extends Model
     }
     public function tags()
     {
-        return $this->belongsToMany('App\Tag')
+        return $this->belongsToMany('App\Tag', 'aplicativo_tag', 'aplicativo_id', 'tag_id')
                     ->select(['id', 'name']);
     }
     public function category()

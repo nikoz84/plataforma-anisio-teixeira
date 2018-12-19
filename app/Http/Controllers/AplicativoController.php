@@ -57,7 +57,7 @@ class AplicativoController extends Controller
             'url' => ['required', new UrlValidator],
             'category' => 'required',
             'tags' => 'required',
-            'file' => 'required',
+            'image' => 'required',
             'is_featured' => 'required'
         ]);
 
@@ -119,44 +119,40 @@ class AplicativoController extends Controller
      * @param  \App\Aplicativo  $aplicativo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        $aplicativo = Aplicativo::find($id);
-
         $data = [
-            'name' => $request->get('name'),
-            'description' => $request->get('description'),
-            'is_featured' => $request->get('is_featured'),
-            'options' => $request->get('options')
+            'category_id' => $this->request->get('category'),
+            'canal_id' => $this->request->get('canal', 9),
+            'name' => $this->request->get('name'),
+            'url' => $this->request->get('url'),
+            'description' => $this->request->get('description'),
+            'is_featured' => $this->request->get('is_featured'),
+            'options' => json_decode($this->request->get('options', '{}'), true)
         ];
+        $aplicativo = Aplicativo::find($id)->update($data);
 
-        $aplicativo->save($data);
+        $this->createFile($aplicativo->id, $this->request->file('image'));
 
-        return response()->json($aplicativo->toJson());
+        return response()->json([
+                'aplicativo'=>$aplicativo
+            ]);
     }
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Aplicativo  $conteudo
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response json
      */
     public function delete($id)
     {
-        $aplicativo = Aplicativo::find($id);
+        $aplicativo = $this->aplicativo::find($id);
         $resp = [];
-        if (is_null($aplicativo)) {
-            $resp = [
-                'menssage' => 'Aplicativo não encontrado',
-                'is_deleted' => false
-            ];
-        } else {
-            $resp = [
-                'menssage' => "Aplicativo de id: {$id} foi apagado com sucesso!!",
-                'is_deleted' => $aplicativo->delete()
-            ];
-        }
+        $aplicativo->delete();
+        $aplicativo->tags()->delete();
 
-        return response()->json($resp);
+        return response()->json([
+            'success' => true,
+            'message' => 'Aplicativo deletado com sucesso!!'
+        ]);
     }
 
     public function search(Request $request, $termo)
@@ -166,10 +162,7 @@ class AplicativoController extends Controller
         $search = "%{$termo}%";
         $aplicativos = Aplicativo::select(['id', 'name'])
             ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
-            ->toSql();
-            print_r($aplicativos);
-            die();
-            //->paginate($limit);
+            ->paginate($limit);
 
         $aplicativos->setPath("/aplicativos/search/{$termo}?limit={$limit}");
 
@@ -179,9 +172,15 @@ class AplicativoController extends Controller
             'paginator' => $aplicativos
         ]);
     }
-    public function getById(Request $request, $id)
+    /**
+     * Seleciona um recurso por id
+     *
+     * @param Integer $id
+     * @return json
+     */
+    public function getById($id)
     {
-        $aplicativo = Aplicativo::with(['tags', 'category', 'user', 'canal'])
+        $aplicativo = $this->aplicativo::with(['tags', 'category', 'user', 'canal'])
             ->find($id);
 
         if ($aplicativo) {

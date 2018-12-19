@@ -24,10 +24,8 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only(['email', 'password']);
         $token = null;
-        
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
                 return response()->json([

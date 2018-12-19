@@ -38,7 +38,7 @@ class Conteudo extends Model
     }
     public function tags()
     {
-        return $this->belongsToMany('App\Tag')
+        return $this->belongsToMany('App\Tag', 'conteudo_tag', 'conteudo_id', 'tag_id')
                     ->select(['id', 'name']);
     }
     public function componentes()

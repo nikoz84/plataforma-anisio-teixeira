@@ -78,7 +78,9 @@
                                 v-text="error">
                         </small>
                     </div>
+                    <!-- IMAGEM -->
                     <div class="form-group" v-bind:class="{ 'has-error': errors.image && errors.image.length > 0 }">
+                        <img class="img-responsive" width="150" height="150" v-if="image" :src="image">
                         <label for="imagem">Imagem destacada:*</label>
                         <input type="file" class="form-control" id="imagem" name="imagem"
                                 aria-describedby="imagem de destaque"
@@ -148,6 +150,9 @@ export default {
     },
     created(){
         this.getCategories();
+        if(this.$route.params.update){
+            this.getAplicativo();
+        }
     },
     methods:{
         async createAplicativo(){
@@ -168,15 +173,19 @@ export default {
             form.append('options', JSON.stringify(this.options));
             form.append('image',this.image, this.image.name);
             form.append('token', localStorage.token);
-            console.warn(form);
             
-            let resp = await http.postData('/aplicativos/create', form);
+            let resp = null;
+            if(this.$route.params.update){
+                resp = await http.putData(`/aplicativos/update/${this.$route.params.id}&data=true`, form);
+            } else{
+                resp = await http.postData('/aplicativos/create', form);
+            }
+            console.warn(resp);
 
             if(resp.data.success){
                 console.warn(resp.data.message)
 
             }else{
-                console.warn(resp.data);
                 this.isError = resp.data.success;
                 this.message = resp.data.message;
                 if(resp.data.errors){
@@ -187,7 +196,7 @@ export default {
                     this.isError = true;
                 },3000)
             }
-
+            
         },
         async getCategories(){
             let resp = await http.getDataFromUrl('/categories/aplicativos');
@@ -202,6 +211,17 @@ export default {
                 this.success = true;
             }
             this.count = e.target.value.length;
+        },
+        async getAplicativo(){
+            let resp = await http.getDataFromUrl(`/aplicativos/${this.$route.params.id}`);
+            if(resp.data.success){
+                this.name = resp.data.aplicativo.name;
+                this.category = resp.data.aplicativo.category_id;
+                this.description = resp.data.aplicativo.description;
+                this.url = resp.data.aplicativo.url;
+                this.is_featured = resp.data.aplicativo.is_featured;
+                this.image = resp.data.aplicativo.image;
+            }
         }
     }
 
