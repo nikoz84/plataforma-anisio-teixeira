@@ -121,21 +121,22 @@ class AplicativoController extends Controller
      */
     public function update($id)
     {
-        $aplicativo = Aplicativo::find($id);
-
-        $aplicativo->name = $this->request->get('name', '');
-        $aplicativo->category_id = $this->request->get('category');
-        $aplicativo->url = $this->request->get('url');
-        $aplicativo->description = $this->request->get('description');
-        $aplicativo->is_featured = $this->request->get('is_featured');
-        $aplicativo->options = json_decode($this->request->get('options', '{}'), true);
-
-
-        $aplicativo->save();
+        $data = [
+            'category_id' => $this->request->get('category'),
+            'canal_id' => $this->request->get('canal', 9),
+            'name' => $this->request->get('name'),
+            'url' => $this->request->get('url'),
+            'description' => $this->request->get('description'),
+            'is_featured' => $this->request->get('is_featured'),
+            'options' => json_decode($this->request->get('options', '{}'), true)
+        ];
+        $aplicativo = Aplicativo::find($id)->update($data);
 
         $this->createFile($aplicativo->id, $this->request->file('image'));
 
-        return response()->json($aplicativo->toJson());
+        return response()->json([
+                'aplicativo'=>$aplicativo
+            ]);
     }
     /**
      * Remove the specified resource from storage.

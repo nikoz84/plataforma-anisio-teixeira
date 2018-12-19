@@ -60,10 +60,10 @@ export default class Http {
      * @param {*} endPoint url do recurso
      * @param {*} params parametros
      */
-    async putData(endPoint, params){
+    async putData(endPoint = '', params = {}){
         try {
             let urlUpdate = `${this.api}${endPoint}`;
-            return await axios.put( urlUpdate, {params});
+            return await axios.put( urlUpdate, params);
         } catch (error) {
             return await error.response;
         }
@@ -73,10 +73,10 @@ export default class Http {
      * @param {*} endPoint url do recurso
      * @param {*} params parametros
      */
-    async deleteData(endPoint, params){
+    async deleteData(endPoint = '', params = {}){
         try {
             let urlDelete = `${this.api}${endPoint}`;
-            return await axios.delete( urlDelete, {params});
+            return await axios.delete( urlDelete, params);
         } catch (error) {
             return await error.response;
         }

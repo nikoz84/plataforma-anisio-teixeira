@@ -573,6 +573,344 @@ module.exports = __webpack_require__(39);
 
 /***/ }),
 /* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Http = function () {
+    function Http() {
+        _classCallCheck(this, Http);
+
+        this.api = '/api-v1';
+    }
+    /**
+     * Retorna dados do canal
+     * @param {*} idCanal identificador do canal
+     * @param {*} params parametros
+     */
+
+
+    _createClass(Http, [{
+        key: 'getDataFromIdCanal',
+        value: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(idCanal) {
+                var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+                var url;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                _context.prev = 0;
+                                url = this.getUrlCanal(idCanal);
+                                _context.next = 4;
+                                return axios.get(url, params);
+
+                            case 4:
+                                return _context.abrupt('return', _context.sent);
+
+                            case 7:
+                                _context.prev = 7;
+                                _context.t0 = _context['catch'](0);
+                                _context.next = 11;
+                                return _context.t0.response;
+
+                            case 11:
+                                return _context.abrupt('return', _context.sent);
+
+                            case 12:
+                            case 'end':
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, this, [[0, 7]]);
+            }));
+
+            function getDataFromIdCanal(_x2) {
+                return _ref.apply(this, arguments);
+            }
+
+            return getDataFromIdCanal;
+        }()
+        /**
+         * Retorna dados da url fornecida
+         * @param {*} endPoint url do recurso
+         * @param {*} params parametros
+         */
+
+    }, {
+        key: 'getDataFromUrl',
+        value: function () {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
+                var endPoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+                var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+                var url;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+                    while (1) {
+                        switch (_context2.prev = _context2.next) {
+                            case 0:
+                                _context2.prev = 0;
+                                url = '' + this.api + endPoint;
+                                _context2.next = 4;
+                                return axios.get(url, { params: params });
+
+                            case 4:
+                                return _context2.abrupt('return', _context2.sent);
+
+                            case 7:
+                                _context2.prev = 7;
+                                _context2.t0 = _context2['catch'](0);
+                                _context2.next = 11;
+                                return _context2.t0.response;
+
+                            case 11:
+                                return _context2.abrupt('return', _context2.sent);
+
+                            case 12:
+                            case 'end':
+                                return _context2.stop();
+                        }
+                    }
+                }, _callee2, this, [[0, 7]]);
+            }));
+
+            function getDataFromUrl() {
+                return _ref2.apply(this, arguments);
+            }
+
+            return getDataFromUrl;
+        }()
+        /**
+         * 
+         * @param {*} endPoint 
+         * @param {*} params 
+         */
+
+    }, {
+        key: 'getDataWithTokenUrl',
+        value: function () {
+            var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
+                var endPoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+                var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+                var url;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+                    while (1) {
+                        switch (_context3.prev = _context3.next) {
+                            case 0:
+                                _context3.prev = 0;
+                                url = '' + this.api + endPoint;
+                                _context3.next = 4;
+                                return axios.get(url, { params: params });
+
+                            case 4:
+                                return _context3.abrupt('return', _context3.sent);
+
+                            case 7:
+                                _context3.prev = 7;
+                                _context3.t0 = _context3['catch'](0);
+                                _context3.next = 11;
+                                return _context3.t0.response;
+
+                            case 11:
+                                return _context3.abrupt('return', _context3.sent);
+
+                            case 12:
+                            case 'end':
+                                return _context3.stop();
+                        }
+                    }
+                }, _callee3, this, [[0, 7]]);
+            }));
+
+            function getDataWithTokenUrl() {
+                return _ref3.apply(this, arguments);
+            }
+
+            return getDataWithTokenUrl;
+        }()
+        /**
+         * Criar recurso
+         * @param {*} endPoint url do recurso
+         * @param {*} params parametros
+         */
+
+    }, {
+        key: 'postData',
+        value: function () {
+            var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4() {
+                var endPoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+                var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+                var urlPost;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
+                    while (1) {
+                        switch (_context4.prev = _context4.next) {
+                            case 0:
+                                _context4.prev = 0;
+                                urlPost = '' + this.api + endPoint;
+                                _context4.next = 4;
+                                return axios.post(urlPost, params);
+
+                            case 4:
+                                return _context4.abrupt('return', _context4.sent);
+
+                            case 7:
+                                _context4.prev = 7;
+                                _context4.t0 = _context4['catch'](0);
+                                _context4.next = 11;
+                                return _context4.t0.response;
+
+                            case 11:
+                                return _context4.abrupt('return', _context4.sent);
+
+                            case 12:
+                            case 'end':
+                                return _context4.stop();
+                        }
+                    }
+                }, _callee4, this, [[0, 7]]);
+            }));
+
+            function postData() {
+                return _ref4.apply(this, arguments);
+            }
+
+            return postData;
+        }()
+        /**
+         * Atualizar dados de um recurso
+         * @param {*} endPoint url do recurso
+         * @param {*} params parametros
+         */
+
+    }, {
+        key: 'putData',
+        value: function () {
+            var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5() {
+                var endPoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+                var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+                var urlUpdate;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee5$(_context5) {
+                    while (1) {
+                        switch (_context5.prev = _context5.next) {
+                            case 0:
+                                _context5.prev = 0;
+                                urlUpdate = '' + this.api + endPoint;
+                                _context5.next = 4;
+                                return axios.put(urlUpdate, params);
+
+                            case 4:
+                                return _context5.abrupt('return', _context5.sent);
+
+                            case 7:
+                                _context5.prev = 7;
+                                _context5.t0 = _context5['catch'](0);
+                                _context5.next = 11;
+                                return _context5.t0.response;
+
+                            case 11:
+                                return _context5.abrupt('return', _context5.sent);
+
+                            case 12:
+                            case 'end':
+                                return _context5.stop();
+                        }
+                    }
+                }, _callee5, this, [[0, 7]]);
+            }));
+
+            function putData() {
+                return _ref5.apply(this, arguments);
+            }
+
+            return putData;
+        }()
+        /**
+         * Apagar recurso
+         * @param {*} endPoint url do recurso
+         * @param {*} params parametros
+         */
+
+    }, {
+        key: 'deleteData',
+        value: function () {
+            var _ref6 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee6() {
+                var endPoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+                var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+                var urlDelete;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee6$(_context6) {
+                    while (1) {
+                        switch (_context6.prev = _context6.next) {
+                            case 0:
+                                _context6.prev = 0;
+                                urlDelete = '' + this.api + endPoint;
+                                _context6.next = 4;
+                                return axios.delete(urlDelete, params);
+
+                            case 4:
+                                return _context6.abrupt('return', _context6.sent);
+
+                            case 7:
+                                _context6.prev = 7;
+                                _context6.t0 = _context6['catch'](0);
+                                _context6.next = 11;
+                                return _context6.t0.response;
+
+                            case 11:
+                                return _context6.abrupt('return', _context6.sent);
+
+                            case 12:
+                            case 'end':
+                                return _context6.stop();
+                        }
+                    }
+                }, _callee6, this, [[0, 7]]);
+            }));
+
+            function deleteData() {
+                return _ref6.apply(this, arguments);
+            }
+
+            return deleteData;
+        }()
+        /**
+         * Retorna a url do recurso segundo o canal
+         * @param {*} id identificador unico do canal
+         */
+
+    }, {
+        key: 'getUrlCanal',
+        value: function getUrlCanal(id) {
+            switch (true) {
+                case id == 5:
+                    return this.api + '/conteudos/sites';
+                    break;
+                case id == 6:
+                    return this.api + '/conteudos';
+                    break;
+                case id == 9:
+                    return this.api + '/aplicativos';
+                    break;
+                default:
+                    return this.api + '/conteudos?canal=' + id + '&site=false';
+            }
+        }
+    }]);
+
+    return Http;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (Http);
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -882,340 +1220,6 @@ module.exports = {
 
 
 /***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Http = function () {
-    function Http() {
-        _classCallCheck(this, Http);
-
-        this.api = '/api-v1';
-    }
-    /**
-     * Retorna dados do canal
-     * @param {*} idCanal identificador do canal
-     * @param {*} params parametros
-     */
-
-
-    _createClass(Http, [{
-        key: 'getDataFromIdCanal',
-        value: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(idCanal) {
-                var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-                var url;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-                    while (1) {
-                        switch (_context.prev = _context.next) {
-                            case 0:
-                                _context.prev = 0;
-                                url = this.getUrlCanal(idCanal);
-                                _context.next = 4;
-                                return axios.get(url, params);
-
-                            case 4:
-                                return _context.abrupt('return', _context.sent);
-
-                            case 7:
-                                _context.prev = 7;
-                                _context.t0 = _context['catch'](0);
-                                _context.next = 11;
-                                return _context.t0.response;
-
-                            case 11:
-                                return _context.abrupt('return', _context.sent);
-
-                            case 12:
-                            case 'end':
-                                return _context.stop();
-                        }
-                    }
-                }, _callee, this, [[0, 7]]);
-            }));
-
-            function getDataFromIdCanal(_x2) {
-                return _ref.apply(this, arguments);
-            }
-
-            return getDataFromIdCanal;
-        }()
-        /**
-         * Retorna dados da url fornecida
-         * @param {*} endPoint url do recurso
-         * @param {*} params parametros
-         */
-
-    }, {
-        key: 'getDataFromUrl',
-        value: function () {
-            var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
-                var endPoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-                var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-                var url;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
-                    while (1) {
-                        switch (_context2.prev = _context2.next) {
-                            case 0:
-                                _context2.prev = 0;
-                                url = '' + this.api + endPoint;
-                                _context2.next = 4;
-                                return axios.get(url, { params: params });
-
-                            case 4:
-                                return _context2.abrupt('return', _context2.sent);
-
-                            case 7:
-                                _context2.prev = 7;
-                                _context2.t0 = _context2['catch'](0);
-                                _context2.next = 11;
-                                return _context2.t0.response;
-
-                            case 11:
-                                return _context2.abrupt('return', _context2.sent);
-
-                            case 12:
-                            case 'end':
-                                return _context2.stop();
-                        }
-                    }
-                }, _callee2, this, [[0, 7]]);
-            }));
-
-            function getDataFromUrl() {
-                return _ref2.apply(this, arguments);
-            }
-
-            return getDataFromUrl;
-        }()
-        /**
-         * 
-         * @param {*} endPoint 
-         * @param {*} params 
-         */
-
-    }, {
-        key: 'getDataWithTokenUrl',
-        value: function () {
-            var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
-                var endPoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-                var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-                var url;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
-                    while (1) {
-                        switch (_context3.prev = _context3.next) {
-                            case 0:
-                                _context3.prev = 0;
-                                url = '' + this.api + endPoint;
-                                _context3.next = 4;
-                                return axios.get(url, { params: params });
-
-                            case 4:
-                                return _context3.abrupt('return', _context3.sent);
-
-                            case 7:
-                                _context3.prev = 7;
-                                _context3.t0 = _context3['catch'](0);
-                                _context3.next = 11;
-                                return _context3.t0.response;
-
-                            case 11:
-                                return _context3.abrupt('return', _context3.sent);
-
-                            case 12:
-                            case 'end':
-                                return _context3.stop();
-                        }
-                    }
-                }, _callee3, this, [[0, 7]]);
-            }));
-
-            function getDataWithTokenUrl() {
-                return _ref3.apply(this, arguments);
-            }
-
-            return getDataWithTokenUrl;
-        }()
-        /**
-         * Criar recurso
-         * @param {*} endPoint url do recurso
-         * @param {*} params parametros
-         */
-
-    }, {
-        key: 'postData',
-        value: function () {
-            var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4() {
-                var endPoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-                var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-                var urlPost;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
-                    while (1) {
-                        switch (_context4.prev = _context4.next) {
-                            case 0:
-                                _context4.prev = 0;
-                                urlPost = '' + this.api + endPoint;
-                                _context4.next = 4;
-                                return axios.post(urlPost, params);
-
-                            case 4:
-                                return _context4.abrupt('return', _context4.sent);
-
-                            case 7:
-                                _context4.prev = 7;
-                                _context4.t0 = _context4['catch'](0);
-                                _context4.next = 11;
-                                return _context4.t0.response;
-
-                            case 11:
-                                return _context4.abrupt('return', _context4.sent);
-
-                            case 12:
-                            case 'end':
-                                return _context4.stop();
-                        }
-                    }
-                }, _callee4, this, [[0, 7]]);
-            }));
-
-            function postData() {
-                return _ref4.apply(this, arguments);
-            }
-
-            return postData;
-        }()
-        /**
-         * Atualizar dados de um recurso
-         * @param {*} endPoint url do recurso
-         * @param {*} params parametros
-         */
-
-    }, {
-        key: 'putData',
-        value: function () {
-            var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5(endPoint, params) {
-                var urlUpdate;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee5$(_context5) {
-                    while (1) {
-                        switch (_context5.prev = _context5.next) {
-                            case 0:
-                                _context5.prev = 0;
-                                urlUpdate = '' + this.api + endPoint;
-                                _context5.next = 4;
-                                return axios.put(urlUpdate, { params: params });
-
-                            case 4:
-                                return _context5.abrupt('return', _context5.sent);
-
-                            case 7:
-                                _context5.prev = 7;
-                                _context5.t0 = _context5['catch'](0);
-                                _context5.next = 11;
-                                return _context5.t0.response;
-
-                            case 11:
-                                return _context5.abrupt('return', _context5.sent);
-
-                            case 12:
-                            case 'end':
-                                return _context5.stop();
-                        }
-                    }
-                }, _callee5, this, [[0, 7]]);
-            }));
-
-            function putData(_x9, _x10) {
-                return _ref5.apply(this, arguments);
-            }
-
-            return putData;
-        }()
-        /**
-         * Apagar recurso
-         * @param {*} endPoint url do recurso
-         * @param {*} params parametros
-         */
-
-    }, {
-        key: 'deleteData',
-        value: function () {
-            var _ref6 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee6(endPoint, params) {
-                var urlDelete;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee6$(_context6) {
-                    while (1) {
-                        switch (_context6.prev = _context6.next) {
-                            case 0:
-                                _context6.prev = 0;
-                                urlDelete = '' + this.api + endPoint;
-                                _context6.next = 4;
-                                return axios.delete(urlDelete, { params: params });
-
-                            case 4:
-                                return _context6.abrupt('return', _context6.sent);
-
-                            case 7:
-                                _context6.prev = 7;
-                                _context6.t0 = _context6['catch'](0);
-                                _context6.next = 11;
-                                return _context6.t0.response;
-
-                            case 11:
-                                return _context6.abrupt('return', _context6.sent);
-
-                            case 12:
-                            case 'end':
-                                return _context6.stop();
-                        }
-                    }
-                }, _callee6, this, [[0, 7]]);
-            }));
-
-            function deleteData(_x11, _x12) {
-                return _ref6.apply(this, arguments);
-            }
-
-            return deleteData;
-        }()
-        /**
-         * Retorna a url do recurso segundo o canal
-         * @param {*} id identificador unico do canal
-         */
-
-    }, {
-        key: 'getUrlCanal',
-        value: function getUrlCanal(id) {
-            switch (true) {
-                case id == 5:
-                    return this.api + '/conteudos/sites';
-                    break;
-                case id == 6:
-                    return this.api + '/conteudos';
-                    break;
-                case id == 9:
-                    return this.api + '/aplicativos';
-                    break;
-                default:
-                    return this.api + '/conteudos?canal=' + id + '&site=false';
-            }
-        }
-    }]);
-
-    return Http;
-}();
-
-/* harmony default export */ __webpack_exports__["a"] = (Http);
-
-/***/ }),
 /* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1285,7 +1289,7 @@ module.exports = g;
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 var normalizeHeaderName = __webpack_require__(122);
 
 var DEFAULT_CONTENT_TYPE = {
@@ -13635,7 +13639,7 @@ module.exports = function bind(fn, thisArg) {
 "use strict";
 
 
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 var settle = __webpack_require__(123);
 var buildURL = __webpack_require__(125);
 var parseHeaders = __webpack_require__(126);
@@ -17440,7 +17444,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_ListComponent_vue__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_ListComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_ListComponent_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__http_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__http_js__ = __webpack_require__(4);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -18340,7 +18344,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_SimpleCardComponent_vue__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_SimpleCardComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_SimpleCardComponent_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__http_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__http_js__ = __webpack_require__(4);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -18859,7 +18863,7 @@ exports.push([module.i, "", ""]);
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_ConteudoComponent_vue__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_ConteudoComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_ConteudoComponent_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_AplicativoComponent_vue__ = __webpack_require__(63);
@@ -19695,7 +19699,7 @@ exports.push([module.i, "\ni[data-v-334619be]::before {\n  content: \" \\BB   \"
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(4);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -20009,7 +20013,7 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(4);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -21250,7 +21254,7 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(4);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -21413,7 +21417,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
 
     methods: {
         createAplicativo: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(update) {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
                 var _this = this;
 
                 var form, resp;
@@ -21421,28 +21425,18 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
-                                if (!update) {
-                                    _context.next = 3;
-                                    break;
-                                }
-
-                                this.updateAplicativo();
-                                return _context.abrupt('return');
-
-                            case 3:
-
                                 this.options = {
                                     qt_access: 0
                                 };
 
                                 if (this.image) {
-                                    _context.next = 6;
+                                    _context.next = 3;
                                     break;
                                 }
 
                                 return _context.abrupt('return');
 
-                            case 6:
+                            case 3:
                                 form = new FormData();
 
                                 form.append('name', this.name);
@@ -21455,13 +21449,29 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                 form.append('options', JSON.stringify(this.options));
                                 form.append('image', this.image, this.image.name);
                                 form.append('token', localStorage.token);
+                                resp = null;
 
-                                _context.next = 19;
+                                if (!this.$route.params.update) {
+                                    _context.next = 21;
+                                    break;
+                                }
+
+                                _context.next = 18;
+                                return http.putData('/aplicativos/update/' + this.$route.params.id, form);
+
+                            case 18:
+                                resp = _context.sent;
+                                _context.next = 24;
+                                break;
+
+                            case 21:
+                                _context.next = 23;
                                 return http.postData('/aplicativos/create', form);
 
-                            case 19:
+                            case 23:
                                 resp = _context.sent;
 
+                            case 24:
 
                                 if (resp.data.success) {
                                     console.warn(resp.data.message);
@@ -21477,7 +21487,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                     }, 3000);
                                 }
 
-                            case 21:
+                            case 25:
                             case 'end':
                                 return _context.stop();
                         }
@@ -21485,7 +21495,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                 }, _callee, this);
             }));
 
-            function createAplicativo(_x) {
+            function createAplicativo() {
                 return _ref.apply(this, arguments);
             }
 
@@ -21543,7 +21553,6 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                             case 2:
                                 resp = _context3.sent;
 
-                                console.log(resp.data.aplicativo);
                                 if (resp.data.success) {
                                     this.name = resp.data.aplicativo.name;
                                     this.category = resp.data.aplicativo.category_id;
@@ -21553,7 +21562,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                     this.image = resp.data.aplicativo.image;
                                 }
 
-                            case 5:
+                            case 4:
                             case 'end':
                                 return _context3.stop();
                         }
@@ -21566,37 +21575,6 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             }
 
             return getAplicativo;
-        }(),
-        updateAplicativo: function () {
-            var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4() {
-                var params, resp;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
-                    while (1) {
-                        switch (_context4.prev = _context4.next) {
-                            case 0:
-                                params = { 'token': localStorage.token };
-                                _context4.next = 3;
-                                return http.putData('/aplicativos/update/' + this.$route.params.id, params);
-
-                            case 3:
-                                resp = _context4.sent;
-
-
-                                console.log(resp);
-
-                            case 5:
-                            case 'end':
-                                return _context4.stop();
-                        }
-                    }
-                }, _callee4, this);
-            }));
-
-            function updateAplicativo() {
-                return _ref4.apply(this, arguments);
-            }
-
-            return updateAplicativo;
         }()
     }
 
@@ -21618,7 +21596,7 @@ var render = function() {
         on: {
           submit: function($event) {
             $event.preventDefault()
-            _vm.createAplicativo(_vm.$route.params.update)
+            _vm.createAplicativo()
           }
         }
       },
@@ -22197,7 +22175,7 @@ exports.push([module.i, "\nform[data-v-4e686d0b] {\n  margin-top: 30px;\n  margi
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store_index_js__ = __webpack_require__(6);
 
 
@@ -22351,7 +22329,7 @@ var mutations = {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(4);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -22617,7 +22595,7 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(4);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -22897,7 +22875,7 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(4);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -23425,7 +23403,7 @@ exports.push([module.i, "\nform[data-v-654f25d1] {\n  margin-top: 30px;\n  margi
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store_index_js__ = __webpack_require__(6);
 
 
@@ -23936,7 +23914,7 @@ exports.push([module.i, "\n.logo[data-v-9f59c05e] {\n  width: 30px;\n  height: 3
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store_index_js__ = __webpack_require__(6);
 
 
@@ -55362,7 +55340,7 @@ module.exports = __webpack_require__(119);
 "use strict";
 
 
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 var bind = __webpack_require__(12);
 var Axios = __webpack_require__(121);
 var defaults = __webpack_require__(8);
@@ -55449,7 +55427,7 @@ function isSlowBuffer (obj) {
 
 
 var defaults = __webpack_require__(8);
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 var InterceptorManager = __webpack_require__(130);
 var dispatchRequest = __webpack_require__(131);
 
@@ -55534,7 +55512,7 @@ module.exports = Axios;
 "use strict";
 
 
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -55614,7 +55592,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 "use strict";
 
 
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -55689,7 +55667,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 "use strict";
 
 
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 
 // Headers whose duplicates are ignored by node
 // c.f. https://nodejs.org/api/http.html#http_message_headers
@@ -55749,7 +55727,7 @@ module.exports = function parseHeaders(headers) {
 "use strict";
 
 
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -55867,7 +55845,7 @@ module.exports = btoa;
 "use strict";
 
 
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -55927,7 +55905,7 @@ module.exports = (
 "use strict";
 
 
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 
 function InterceptorManager() {
   this.handlers = [];
@@ -55986,7 +55964,7 @@ module.exports = InterceptorManager;
 "use strict";
 
 
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 var transformData = __webpack_require__(132);
 var isCancel = __webpack_require__(15);
 var defaults = __webpack_require__(8);
@@ -56079,7 +56057,7 @@ module.exports = function dispatchRequest(config) {
 "use strict";
 
 
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 
 /**
  * Transform the data for a request or a response

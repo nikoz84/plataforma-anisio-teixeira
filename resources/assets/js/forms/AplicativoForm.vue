@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <form v-on:submit.prevent="createAplicativo($route.params.update)" enctype="multipart/form-data">
+        <form v-on:submit.prevent="createAplicativo()" enctype="multipart/form-data">
             <div class="panel panel-default col-md-7">
                 <div class="panel-heading">
                     Adicionar Aplicativos
@@ -155,12 +155,7 @@ export default {
         }
     },
     methods:{
-        async createAplicativo(update){
-            if(update){
-                this.updateAplicativo();
-                return;
-            }
-
+        async createAplicativo(){
             this.options = {
                 qt_access : 0
             }
@@ -178,8 +173,12 @@ export default {
             form.append('options', JSON.stringify(this.options));
             form.append('image',this.image, this.image.name);
             form.append('token', localStorage.token);
-
-            let resp = await http.postData('/aplicativos/create', form);
+            let resp = null;
+            if(this.$route.params.update){
+                resp = await http.putData(`/aplicativos/update/${this.$route.params.id}`, form);
+            } else{
+                resp = await http.postData('/aplicativos/create', form);
+            }
 
             if(resp.data.success){
                 console.warn(resp.data.message)
@@ -213,7 +212,6 @@ export default {
         },
         async getAplicativo(){
             let resp = await http.getDataFromUrl(`/aplicativos/${this.$route.params.id}`);
-            console.log(resp.data.aplicativo)
             if(resp.data.success){
                 this.name = resp.data.aplicativo.name;
                 this.category = resp.data.aplicativo.category_id;
@@ -222,12 +220,6 @@ export default {
                 this.is_featured = resp.data.aplicativo.is_featured;
                 this.image = resp.data.aplicativo.image;
             }
-        },
-        async updateAplicativo(){
-            let params = { 'token': localStorage.token };
-            let resp = await http.putData(`/aplicativos/update/${this.$route.params.id}`, params);
-
-            console.log(resp)
         }
     }
 
