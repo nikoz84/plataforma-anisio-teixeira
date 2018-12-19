@@ -2,8 +2,8 @@
     <article class="panel panel-default">
         <div class="panel-body">
             <h2 v-text="aplicativo.name"></h2>
-            <button class="btn btn-info" v-on:click="updateAplicativo()">Editar</button>
-            <button class="btn btn-danger" v-on:click="deleteAplicativo()">Apagar</button>
+            <button class="btn btn-info btn-xs" v-on:click="updateAplicativo()">Editar</button>
+            <button class="btn btn-danger btn-xs" v-on:click="deleteAplicativo()">Apagar</button>
             <div class="row">
                 <div class="col-sm-8 break-word" v-html="aplicativo.description"></div>
                 <figure class="col-sm-4">

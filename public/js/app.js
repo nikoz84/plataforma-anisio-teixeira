@@ -19662,7 +19662,7 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "btn btn-info",
+          staticClass: "btn btn-info btn-xs",
           on: {
             click: function($event) {
               _vm.updateAplicativo()
@@ -19675,7 +19675,7 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "btn btn-danger",
+          staticClass: "btn btn-danger btn-xs",
           on: {
             click: function($event) {
               _vm.deleteAplicativo()
