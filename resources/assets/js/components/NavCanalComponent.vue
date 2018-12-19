@@ -3,11 +3,19 @@
         <ul class="nav nav-pills">
             <router-link tag="li" :to="{ name: 'Inicio', params: {slug: $route.params.slug}}" exact>
                 <a>Home</a>
+<<<<<<< HEAD
             </router-link> 
             <router-link tag="li" :to="{ name: 'Listar', params: {slug: $route.params.slug}}" exact>
                 <a>Listar</a>
             </router-link> 
             <router-link tag="li" :to="{ name: 'AdicionarConteudo', params: {slug: $route.params.slug}}" v-if="showAdicionarConteudo" exact>
+=======
+            </router-link>
+            <router-link tag="li" :to="{ name: 'Listar', params: {slug: $route.params.slug}}">
+                <a>Listar</a>
+            </router-link>
+            <router-link tag="li" :to="{ name: 'AdicionarConteudo', params: {slug: $route.params.slug}}" v-if="showAdicionarConteudo">
+>>>>>>> 174e9a163f4c74d5f932c63b3fc2136a98ec8792
                 <a>Adicionar</a>
             </router-link>
             <router-link tag="li" :to="{ name: 'AdicionarAplicativo', params: {slug: $route.params.slug}}" v-if="showAdicionarAplicativo" exact>

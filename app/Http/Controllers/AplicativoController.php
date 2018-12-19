@@ -57,6 +57,7 @@ class AplicativoController extends Controller
             'url' => ['required', new UrlValidator],
             'category' => 'required',
             'tags' => 'required',
+            'file' => 'required',
             'is_featured' => 'required'
         ]);
 
@@ -165,16 +166,17 @@ class AplicativoController extends Controller
         $search = "%{$termo}%";
         $aplicativos = Aplicativo::select(['id', 'name'])
             ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
-            ->paginate($limit);
+            ->toSql();
+            print_r($aplicativos);
+            die();
+            //->paginate($limit);
 
         $aplicativos->setPath("/aplicativos/search/{$termo}?limit={$limit}");
 
         return response()->json([
             'success' => true,
             'message' => 'Resultados da busca',
-            'paginator' => $aplicativos,
-            'page' => $aplicativos->currentPage(),
-            'limit' => $aplicativos->perPage()
+            'paginator' => $aplicativos
         ]);
     }
     public function getById(Request $request, $id)
