@@ -32,7 +32,7 @@ export default {
                     download:'',
                     visualizacao:'',
                     guia:''
-                }   
+                }
             },
             message: null,
             showMessage: false,
@@ -42,7 +42,7 @@ export default {
                 name: '',
                 description: '',
                 options: {},
-            } 
+            }
         }
     },
     created(){
