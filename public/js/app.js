@@ -20214,13 +20214,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -20238,6 +20231,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             license: '',
             options: {},
             tipo: '',
+            tipos: [],
             tags: [],
             canal: null,
             tag: '',
@@ -20254,7 +20248,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             errors: {
                 title: [],
                 description: [],
-                tipo: [],
+                tipos: [],
                 authors: [],
                 license: [],
                 terms: [],
@@ -20264,7 +20258,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
         };
     },
     created: function created() {
-        //this.getOptions();
+        this.getTipos();
     },
 
     computed: {},
@@ -20278,11 +20272,6 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
-                                this.options = {
-                                    category: this.category,
-                                    tipo: this.tipo,
-                                    site: this.site
-                                };
                                 params = {
                                     tipo: this.tipo,
                                     canal_id: localStorage.idCanal,
@@ -20298,10 +20287,10 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                     options: JSON.stringify(this.options),
                                     token: localStorage.token
                                 };
-                                _context.next = 4;
+                                _context.next = 3;
                                 return http.postData('/conteudos/create', params);
 
-                            case 4:
+                            case 3:
                                 resp = _context.sent;
 
 
@@ -20321,7 +20310,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                     }, 3000);
                                 }
 
-                            case 6:
+                            case 5:
                             case 'end':
                                 return _context.stop();
                         }
@@ -20382,29 +20371,22 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
 
             return getItems;
         }(),
-        getCategories: function () {
+        getTipos: function () {
             var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
-                var params, name, resp;
+                var resp;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
                     while (1) {
                         switch (_context3.prev = _context3.next) {
                             case 0:
-                                params = {
-                                    token: localStorage.token
-                                };
-                                name = this.$route.params.slug;
-                                _context3.next = 4;
-                                return http.postData('/categories/' + name);
+                                _context3.next = 2;
+                                return http.getDataFromUrl('/tipos/conteudos');
 
-                            case 4:
+                            case 2:
                                 resp = _context3.sent;
 
+                                this.tipos = resp.data.tipos;
 
-                                if (resp.data.success && resp.data.options != null) {
-                                    this.categories = resp.data.options.meta_data.categories;
-                                }
-
-                            case 6:
+                            case 4:
                             case 'end':
                                 return _context3.stop();
                         }
@@ -20412,15 +20394,12 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                 }, _callee3, this);
             }));
 
-            function getCategories() {
+            function getTipos() {
                 return _ref3.apply(this, arguments);
             }
 
-            return getCategories;
+            return getTipos;
         }()
-    },
-    watch: {
-        'tag': 'getItems'
     }
 
 });
@@ -20566,42 +20545,19 @@ var render = function() {
                         _vm._v("« SELECIONE »")
                       ]),
                       _vm._v(" "),
-                      _c("option", { attrs: { value: "7" } }, [
-                        _vm._v("Animação/Simulação")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "3" } }, [
-                        _vm._v("Apresentação")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "4" } }, [
-                        _vm._v("Áudio")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "1" } }, [
-                        _vm._v("Documento/Experimento")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "6" } }, [
-                        _vm._v("Imagem")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "2" } }, [
-                        _vm._v("Planilha")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "10" } }, [
-                        _vm._v("Sequência Didática")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "8" } }, [_vm._v("Site")]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "9" } }, [
-                        _vm._v("Software Educacional")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "5" } }, [_vm._v("Vídeo")])
-                    ]
+                      _vm._l(_vm.tipos, function(tipo, i) {
+                        return _c(
+                          "option",
+                          { key: i, domProps: { value: tipo.id } },
+                          [
+                            _vm._v(
+                              _vm._s(tipo.name) + "\n                        "
+                            )
+                          ]
+                        )
+                      })
+                    ],
+                    2
                   ),
                   _vm._v(" "),
                   _c("small", { staticClass: "text-info" }, [

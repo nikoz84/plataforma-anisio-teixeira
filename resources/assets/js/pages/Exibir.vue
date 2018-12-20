@@ -50,7 +50,7 @@ export default {
         window.addEventListener('scroll', this.goToTop);
     },
     computed:{
-        
+
     },
     methods: {
         async getData(){
@@ -67,14 +67,12 @@ export default {
                  this.showMessage = true;
                  this.message = resp.data.message;
             }
-            
+
         },
         goToTop(){
             //let top = window.pageYOffset;
             console.log('sdf')
-            
-            
-            
+
         }
     },
     destroyed () {

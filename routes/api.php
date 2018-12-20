@@ -29,6 +29,14 @@ Route::post('/files/{id}', 'FileController@createFile')->name('adicionaArquivo')
  */
 Route::get('/categories', 'CategoryController@list')->name('listaCategorias');
 Route::get('/categories/aplicativos', 'CategoryController@getAplicativoCategories')->name('listaCategoriasAplicativos');
+
+/******
+ *
+ * Controlador: Tipo
+ * Métodos: list -> Lista dos tipos
+ */
+Route::get('/tipos/conteudos', 'TipoController@list')->name('listaTipos');
+
 /******
  *
  * Controlador: Canal
@@ -36,6 +44,7 @@ Route::get('/categories/aplicativos', 'CategoryController@getAplicativoCategorie
  *
  */
 Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscaCanalxUrlAmigavel');
+
 /******
  *
  *  Controlador: Conteudo
@@ -51,6 +60,7 @@ Route::get('/conteudos/search/{term}', 'ConteudoController@search')->name('busca
 Route::get('/conteudos/teste', 'ConteudoController@teste');
 Route::get('/conteudos/{id}', 'ConteudoController@getById')->name('buscaxConteudoId');
 Route::get('/conteudos/tag/{id}', 'ConteudoController@getByTagId')->name('buscaxTagId');
+
 /******
  *
  * Controlador: Aplicativo
@@ -62,6 +72,7 @@ Route::get('/conteudos/tag/{id}', 'ConteudoController@getByTagId')->name('buscax
 Route::get('/aplicativos', 'AplicativoController@list')->name('listaAplicativo');
 Route::get('/aplicativos/search/{term}', 'AplicativoController@search')->name('buscaAplicativo');
 Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('buscaxAplicativoId');
+
 /******
  *
  * Controlador: AplicativoCategory
@@ -69,6 +80,7 @@ Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('buscaxApl
  *
  */
 Route::get('/aplicativos/categories', 'AplicativoCategoryController@list')->name('listaCategoriasAplicativo');
+
 /******
  *
  * Controlador: Auth
@@ -78,6 +90,7 @@ Route::get('/aplicativos/categories', 'AplicativoCategoryController@list')->name
  */
 Route::post('/auth/login', 'AuthController@login')->name('loginUsuario');
 Route::post('/auth/register', 'AuthController@register')->name('registroUsuario');
+
 /******
  *
  * Controlador: Options
@@ -85,13 +98,18 @@ Route::post('/auth/register', 'AuthController@register')->name('registroUsuario'
  *
  */
 Route::post('options/name/{name}', 'OptionsController@getByName')->name('buscaMetaDataxNome');
+
 /******
 * Controlador: Tag
 * Métodos: getById -> Busca tag por Id
 */
 Route::get('/tags/{id}', 'TagController@getById')->name('buscaxTagId');
 
-
+/******
+* Controlador: Licenses
+* Métodos: list -> lista as licenças
+*/
+Route::get('/licenses', 'LicenseController@list')->name('listaLicenca');
 
 
 /**
