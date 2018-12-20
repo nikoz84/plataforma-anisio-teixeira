@@ -29,15 +29,35 @@ export default class Http {
             return await error.response;
         }
     }
+    async getDataWithTokenUrl(endPoint = '', params= {}){
+        try{
+            let url = `${this.api}${endPoint}`;
+            return await axios.get( url, {params} );
+        }catch (error){
+            return await error.response;
+        }
+    }
+    /**
+     * 
+     * @param {*} method 
+     * @param {*} url 
+     * @param {*} data 
+     */
+    async config(method, url, data){
+        return await axios({
+            method,
+            url:this.api + url,
+            data
+          })
+    }
     /**
      * Criar recurso
      * @param {*} endPoint url do recurso
      * @param {*} params parametros
      */
-    async postData(endPoint, params){
+    async postData(endPoint = '', params ={}){
         try {
             let urlPost = `${this.api}${endPoint}`;
-            console.log(params)
             return await axios.post(urlPost, {params});
         } catch (error) {
             return await error.response;
@@ -48,7 +68,7 @@ export default class Http {
      * @param {*} endPoint url do recurso
      * @param {*} params parametros
      */
-    async putData(endPoint, params){
+    async putData(endPoint = '', params = {}){
         try {
             let urlUpdate = `${this.api}${endPoint}`;
             return await axios.put( urlUpdate, {params});
@@ -61,20 +81,13 @@ export default class Http {
      * @param {*} endPoint url do recurso
      * @param {*} params parametros
      */
-    async deleteData(endPoint, params){
+    async deleteData(endPoint = '', params = {}){
         try {
             let urlDelete = `${this.api}${endPoint}`;
             return await axios.delete( urlDelete, {params});
         } catch (error) {
             return await error.response;
         }
-    }
-    async config(method, url, data){
-        return await axios({
-            method,
-            url:this.api + url,
-            data
-          })
     }
     /**
      * Retorna a url do recurso segundo o canal

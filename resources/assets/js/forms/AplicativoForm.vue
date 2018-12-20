@@ -176,9 +176,9 @@ export default {
             
             let resp = null;
             if(this.$route.params.update){
-                resp = await http.putData(`/aplicativos/update/${this.$route.params.id}&data=true`, form);
+                resp = await http.config('PUT',`/aplicativos/update/${this.$route.params.id}`, form);
             } else{
-                resp = await http.postData('/aplicativos/create', form);
+                resp = await http.config('POST','/aplicativos/create', form);
             }
             console.warn(resp);
 

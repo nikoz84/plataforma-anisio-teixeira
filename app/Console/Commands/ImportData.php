@@ -48,10 +48,10 @@ class ImportData extends Command
             DB::statement("COPY {$file->getExtension()} FROM '{$file->getPathname()}' DELIMITER '*';");
         }
         
-        DB::statement("ALTER SEQUENCE users_id_seq RESTART WITH 2668;");
+        DB::statement("ALTER SEQUENCE users_id_seq RESTART WITH 2669;");
         DB::statement("ALTER SEQUENCE canais_id_seq RESTART WITH 15;");
         DB::statement("ALTER SEQUENCE tags_id_seq RESTART WITH 13877;");
-        DB::statement("ALTER SEQUENCE aplicativos_id_seq RESTART WITH 125;");
+        DB::statement("ALTER SEQUENCE aplicativos_id_seq RESTART WITH 126;");
         DB::statement("ALTER SEQUENCE conteudos_id_seq RESTART WITH 8670;");
         DB::statement("ALTER SEQUENCE licenses_id_seq RESTART WITH 14;");
         DB::statement("ALTER SEQUENCE categories_id_seq RESTART WITH 69;");

@@ -73,6 +73,7 @@ export default {
                 this.hasAbout = this.options.has_about;
                 this.hasCategories = this.options.has_categories;
                 localStorage.setItem('idCanal', this.idCanal);
+                console.log(this.hasCategories)
                 if(this.hasCategories){
                     this.getCategories();
                 }

@@ -195,6 +195,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
                                     this.hasAbout = this.options.has_about;
                                     this.hasCategories = this.options.has_categories;
                                     localStorage.setItem('idCanal', this.idCanal);
+                                    console.log(this.hasCategories);
                                     if (this.hasCategories) {
                                         this.getCategories();
                                     }
@@ -382,9 +383,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             isLogged: __WEBPACK_IMPORTED_MODULE_0__store_index_js__["a" /* default */].state.isLogged
         };
     },
-    beforeCreate: function beforeCreate() {
-        console.log(__WEBPACK_IMPORTED_MODULE_0__store_index_js__["a" /* default */].state.isLogged);
-    },
+    beforeCreate: function beforeCreate() {},
 
     computed: {
         showAdicionarConteudo: function showAdicionarConteudo() {

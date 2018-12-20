@@ -28,7 +28,7 @@ export default {
         }
     },
     beforeCreate() {
-        console.log(store.state.isLogged)
+        
     },
     computed:{
         showAdicionarConteudo (){

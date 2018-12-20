@@ -9,26 +9,27 @@ use Illuminate\Support\Facades\DB;
 
 class CanalController extends Controller
 {
-    public function __construct()
+    public function __construct(Request $request)
     {
         $this->middleware('jwt.verify')->except(['list','search','getBySlug']);
+        $this->request = $request;
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function list(Request $request)
+    public function list()
     {
-        $limit = ($request->has('limit')) ? $request->query('limit') : 10;
-        $page = ($request->has('page')) ? $request->query('page') : 1;
+        $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;
+        $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
         
-        if ($request->has('name')) {
-            $name = $request->query('name');
+        if ($this->request->has('name')) {
+            $name = $this->request->query('name');
             $canais = Canal::where('name', $name)
                         ->paginate($limit);
             $canais->setPath("/canais?name={$name}limit={$limit}");
-            return response()->toJson([
+            return response()->json([
                 'success' => true,
                 'paginator' => $canais
             ]);
@@ -52,12 +53,12 @@ class CanalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
         $id = DB::table('canais')->insertGetId(
             [
-                'name' => $request->get('name'),
-                'description' => $request->get('description'),
+                'name' => $this->request->get('name'),
+                'description' => $this->request->get('description'),
                 'slug' => 'teste-slug',
                 'is_active' => true
             ]
@@ -71,20 +72,19 @@ class CanalController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Canal  $canal
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
         $canal = Canal::find($id);
 
         $data = [
-            'title' => $request->get('title'),
-            'description' => $request->get('description'),
-            'is_featured' => $request->get('is_featured'),
-            'is_approved' => $request->get('is_approved'),
-            'options' => $request->get('options')
+            'title' => $this->request->get('title'),
+            'description' => $this->request->get('description'),
+            'is_featured' => $this->request->get('is_featured'),
+            'is_approved' => $this->request->get('is_approved'),
+            'options' => $this->request->get('options')
         ];
         
         $canal->save($data);
@@ -127,8 +127,8 @@ class CanalController extends Controller
     }
     public function search(Request $request, $termo)
     {
-        $limit = ($request->has('limit')) ? $request->query('limit') : 10;
-        $page = ($request->has('page')) ? $request->query('page') : 1;
+        $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;
+        $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
         $search = "%{$termo}%";
         $canais = Canal::whereRaw("unaccent(lower(name)) LIKE unaccent(lower(?))")
                     ->setBindings([$search])
