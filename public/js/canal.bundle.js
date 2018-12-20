@@ -195,6 +195,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
                                     this.hasAbout = this.options.has_about;
                                     this.hasCategories = this.options.has_categories;
                                     localStorage.setItem('idCanal', this.idCanal);
+                                    console.log(this.hasCategories);
                                     if (this.hasCategories) {
                                         this.getCategories();
                                     }
@@ -382,9 +383,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             isLogged: __WEBPACK_IMPORTED_MODULE_0__store_index_js__["a" /* default */].state.isLogged
         };
     },
-    beforeCreate: function beforeCreate() {
-        console.log(__WEBPACK_IMPORTED_MODULE_0__store_index_js__["a" /* default */].state.isLogged);
-    },
+    beforeCreate: function beforeCreate() {},
 
     computed: {
         showAdicionarConteudo: function showAdicionarConteudo() {
@@ -421,7 +420,8 @@ var render = function() {
           {
             attrs: {
               tag: "li",
-              to: { name: "Inicio", params: { slug: _vm.$route.params.slug } }
+              to: { name: "Inicio", params: { slug: _vm.$route.params.slug } },
+              exact: ""
             }
           },
           [_c("a", [_vm._v("Home")])]
@@ -463,7 +463,8 @@ var render = function() {
                   to: {
                     name: "AdicionarAplicativo",
                     params: { slug: _vm.$route.params.slug }
-                  }
+                  },
+                  exact: ""
                 }
               },
               [_c("a", [_vm._v("Adicionar")])]
@@ -695,8 +696,7 @@ var render = function() {
                             1
                           )
                         : _vm._e()
-                    }),
-                    0
+                    })
                   )
                 : _vm._e()
             ],

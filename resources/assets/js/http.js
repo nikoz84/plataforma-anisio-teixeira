@@ -29,11 +29,6 @@ export default class Http {
             return await error.response;
         }
     }
-    /**
-     * 
-     * @param {*} endPoint 
-     * @param {*} params 
-     */
     async getDataWithTokenUrl(endPoint = '', params= {}){
         try{
             let url = `${this.api}${endPoint}`;
@@ -43,6 +38,19 @@ export default class Http {
         }
     }
     /**
+     * 
+     * @param {*} method 
+     * @param {*} url 
+     * @param {*} data 
+     */
+    async config(method, url, data){
+        return await axios({
+            method,
+            url:this.api + url,
+            data
+          })
+    }
+    /**
      * Criar recurso
      * @param {*} endPoint url do recurso
      * @param {*} params parametros
@@ -50,7 +58,7 @@ export default class Http {
     async postData(endPoint = '', params ={}){
         try {
             let urlPost = `${this.api}${endPoint}`;
-            return await axios.post(urlPost, params);
+            return await axios.post(urlPost, {params});
         } catch (error) {
             return await error.response;
         }
@@ -63,7 +71,7 @@ export default class Http {
     async putData(endPoint = '', params = {}){
         try {
             let urlUpdate = `${this.api}${endPoint}`;
-            return await axios.put( urlUpdate, params);
+            return await axios.put( urlUpdate, {params});
         } catch (error) {
             return await error.response;
         }
@@ -76,7 +84,7 @@ export default class Http {
     async deleteData(endPoint = '', params = {}){
         try {
             let urlDelete = `${this.api}${endPoint}`;
-            return await axios.delete( urlDelete, params);
+            return await axios.delete( urlDelete, {params});
         } catch (error) {
             return await error.response;
         }

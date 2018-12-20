@@ -173,12 +173,14 @@ export default {
             form.append('options', JSON.stringify(this.options));
             form.append('image',this.image, this.image.name);
             form.append('token', localStorage.token);
+            
             let resp = null;
             if(this.$route.params.update){
-                resp = await http.putData(`/aplicativos/update/${this.$route.params.id}`, form);
+                resp = await http.config('PUT',`/aplicativos/update/${this.$route.params.id}`, form);
             } else{
-                resp = await http.postData('/aplicativos/create', form);
+                resp = await http.config('POST','/aplicativos/create', form);
             }
+            console.warn(resp);
 
             if(resp.data.success){
                 console.warn(resp.data.message)
@@ -194,7 +196,7 @@ export default {
                     this.isError = true;
                 },3000)
             }
-
+            
         },
         async getCategories(){
             let resp = await http.getDataFromUrl('/categories/aplicativos');
