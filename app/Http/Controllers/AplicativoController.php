@@ -55,7 +55,7 @@ class AplicativoController extends Controller
             'name' => 'required|min:2|max:255',
             'description' => 'required|min:140',
             'url' => ['required', new UrlValidator],
-            'category' => 'required',
+            'category_id' => 'required',
             'tags' => 'required',
             'image' => 'required',
             'is_featured' => 'required'
@@ -83,8 +83,8 @@ class AplicativoController extends Controller
         $aplicativo = $this->aplicativo;
 
         $aplicativo->user_id = Auth::user()->id;
-        $aplicativo->category_id = $this->request->get('category');
-        $aplicativo->canal_id = $this->request->get('canal', 9);
+        $aplicativo->category_id = $this->request->get('category_id');
+        $aplicativo->canal_id = $this->request->get('canal_id', 9);
         $aplicativo->name = $this->request->get('name');
         $aplicativo->url = $this->request->get('url');
         $aplicativo->description = $this->request->get('description');
@@ -121,21 +121,18 @@ class AplicativoController extends Controller
      */
     public function update($id)
     {
-        $data = [
-            'category_id' => $this->request->get('category'),
-            'canal_id' => $this->request->get('canal', 9),
-            'name' => $this->request->get('name'),
-            'url' => $this->request->get('url'),
-            'description' => $this->request->get('description'),
-            'is_featured' => $this->request->get('is_featured'),
-            'options' => json_decode($this->request->get('options', '{}'), true)
-        ];
-        $aplicativo = Aplicativo::find($id)->update($data);
+        
+        $aplicativo = Aplicativo::find($id);
+        $aplicativo->fill($this->request->all());
+        //$aplicativo->category_id = $this->request->get('category_id');
+        $aplicativo->save();
+        // 'options' => json_decode($this->request->get('options', '{}'), true)
 
-        $this->createFile($aplicativo->id, $this->request->file('image'));
+        //$this->createFile($aplicativo->id, $this->request->file('image'));
 
         return response()->json([
-                'aplicativo'=>$aplicativo
+                'success' => true,
+                'aplicativo'=> $aplicativo
             ]);
     }
     /**

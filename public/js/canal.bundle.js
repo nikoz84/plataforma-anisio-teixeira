@@ -153,7 +153,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
         return {
             title: '',
             descricao: null,
-            idCanal: null,
+            canal_id: null,
             options: null,
             color: '#1e78c2',
             hasCategories: false,
@@ -188,13 +188,13 @@ var http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
 
 
                                 if (resp.data.success) {
-                                    this.idCanal = resp.data.canal.id;
+                                    this.canal_id = resp.data.canal.id;
                                     this.title = resp.data.canal.name;
                                     this.options = resp.data.canal.options;
                                     this.color = this.options.color;
                                     this.hasAbout = this.options.has_about;
                                     this.hasCategories = this.options.has_categories;
-                                    localStorage.setItem('idCanal', this.idCanal);
+                                    localStorage.setItem('canal_id', this.canal_id);
                                     console.log(this.hasCategories);
                                     if (this.hasCategories) {
                                         this.getCategories();
@@ -223,7 +223,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
                         switch (_context2.prev = _context2.next) {
                             case 0:
                                 params = {
-                                    canal: this.idCanal
+                                    canal: this.canal_id
                                 };
                                 _context2.next = 3;
                                 return http.getDataFromUrl('/categories', params);

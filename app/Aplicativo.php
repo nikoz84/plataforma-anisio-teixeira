@@ -14,6 +14,7 @@ class Aplicativo extends Model
         'canal_id',
         'category_id',
         'description',
+        'url',
         'is_featured',
         'options'
         ];

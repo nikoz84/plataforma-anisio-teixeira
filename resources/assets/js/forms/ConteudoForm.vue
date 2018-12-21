@@ -61,7 +61,7 @@
                                     id="descricao"
                                     rows="15"
                                     cols="50"
-                                    v-model="description"
+                                    v-model.trim="description"
                                     style="resize: none"></textarea>
                         <small class="text-info">Descreva á mídia de forma <b>resumida</b> e <b>objetiva</b>. 
                             Esta é a primeira apresentação da mídia e pode ser o diferencial na hora do usuário escolher se acessa ou não. 
@@ -73,11 +73,6 @@
                                 v-bind:key="d"
                                 v-text="error">
                         </small>
-                    </div>
-                    <!-- TAGS -->
-                    <div class="form-group">
-                        <label for="palavra-chave">Palavras-Chave:*</label>
-                        <input type="text" class="form-control">
                     </div>
                     <!-- AUTORES -->
                     <div class="form-group" v-bind:class="{ 'has-error': errors.authors && errors.authors.length > 0 }">
@@ -214,7 +209,6 @@ export default {
             tipos: [],
             tags: [],
             canal: null,
-            tag: '',
             terms: false,
             is_featured: false,
             is_site:false,
@@ -283,25 +277,6 @@ export default {
             }
 
         },
-        updateTag(newTags) {
-            this.autocompleteItems = [];
-            this.tags = newTags;
-        },
-        async getItems(){
-            if (this.tag.length === 0) return;
-
-            let params = {token:localStorage.token};
-            let resp = await http.getDataFromUrl(`/tags/search/${this.tag}`, params);
-
-            if(resp.data.success){
-                this.autocompleteItems = resp.data.paginator.data.map(a =>{
-                    return {name: a.name, id: a.id  };
-                });
-
-            }
-
-        },
-
         async getTipos(){
             let resp = await http.getDataFromUrl('/tipos/conteudos');
             this.tipos = resp.data.tipos;
