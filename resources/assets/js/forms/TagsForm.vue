@@ -1,6 +1,14 @@
 <template>
     <div class="form-group">
         <label for="palavra-chave">Palavras-Chave:*</label>
+        <ul class="list-inline text-success">
+            <li v-for="(newTag,n) in newTags" 
+               v-bind:key="n"
+               class="text-info"
+               v-on:click="deleteTag(newTag)">
+            {{newTag.name}}
+            </li>
+        </ul>
         <input type="text" class="form-control" v-model="tag">
         <ul class="list-unstyled">
             <li v-for="(item,i) in autocompleteItems" 
@@ -24,7 +32,7 @@ export default {
             tag: '',
             autocompleteItems:[],
             tags:[],
-            tagsName:[]
+            newTags:[]
         }
     },
     created(){
@@ -38,11 +46,10 @@ export default {
     methods:{
         updateTag(newTag) {
             this.autocompleteItems = [];
-            let id = newTag.id;
-            let name = newTag.name
-            
-            this.tags.push({id,name});
-            console.log(this.tags)
+            this.tags.push(newTag);
+        },
+        deleteTag(index){
+            this.tags.splice(index, 1);
         },
         async getTags(){
             if (this.tag.length === 0) return;
