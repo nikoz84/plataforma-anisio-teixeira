@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <form v-on:submit.prevent="createAplicativo()" enctype="multipart/form-data">
+        <form v-on:submit.prevent="send()">
             <div class="panel panel-default col-md-7">
                 <div class="panel-heading">
                     Adicionar Aplicativos
@@ -101,8 +101,9 @@
                        <input type="checkbox" id="destaque" v-model="is_featured">
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-default">Enviar</button>
+                        <button class="btn btn-default" > {{ textButton }} </button>
                     </div>
+                    
                     <transition  name="custom-classes-transition"
                             enter-active-class="animated shake"
                             leave-active-class="animated fadeOut">
@@ -138,6 +139,8 @@ export default {
             count: 0,
             success: false,
             isError: true,
+            isUpdate: false,
+            textButton: 'Criar',
             errors: {
                 name: [],
                 url: [],
@@ -152,17 +155,26 @@ export default {
         this.getCategories();
         if(this.$route.params.update){
             this.getAplicativo();
+            this.isUpdate = true;
+            this.textButton = 'Editar';
         }
     },
     methods:{
+        send(){
+            if(this.isUpdate){
+                this.editAplicativo();
+            }else{
+                this.createAplicativo();
+            }
+        },
         async createAplicativo(){
             this.options = {
                 qt_access : 0
             }
-            if(!this.image){
-                return;
-            }
+            if(!this.image) return;
+            
             let form = new FormData();
+            form.append('_method','POST');
             form.append('name', this.name);
             form.append('description',this.description);
             form.append('category', this.category);
@@ -174,17 +186,11 @@ export default {
             form.append('image',this.image, this.image.name);
             form.append('token', localStorage.token);
             
-            let resp = null;
-            if(this.$route.params.update){
-                resp = await http.config('PUT',`/aplicativos/update/${this.$route.params.id}`, form);
-            } else{
-                resp = await http.config('POST','/aplicativos/create', form);
-            }
+            let resp = await http.postData('/aplicativos/create', form);
             console.warn(resp);
 
             if(resp.data.success){
-                console.warn(resp.data.message)
-
+                this.$router.push({ name: 'Listar', params: {slug: this.$route.params.slug}})
             }else{
                 this.isError = resp.data.success;
                 this.message = resp.data.message;
@@ -222,6 +228,19 @@ export default {
                 this.is_featured = resp.data.aplicativo.is_featured;
                 this.image = resp.data.aplicativo.image;
             }
+        },
+        async editAplicativo(){
+            console.log('editar')
+            let params ={
+                name: this.name,
+                category: this.category,
+                canal: localStorage.idCanal,
+                token: localStorage.token
+            }
+            console.log(params)
+            let resp = await http.config('PUT',`/aplicativos/update/${this.$route.params.id}`,params);
+            
+            console.log(resp)
         }
     }
 

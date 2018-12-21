@@ -631,6 +631,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 
+var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'SearchForm',
@@ -654,7 +655,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     methods: {
         onSearch: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-                var url, http, params, resp;
+                var url, params, resp;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
@@ -670,12 +671,12 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                 url = '/' + this.search + '/search/' + this.termo;
 
                                 this.$parent.show = false;
-                                http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
+
                                 params = { token: localStorage.token };
-                                _context.next = 8;
+                                _context.next = 7;
                                 return http.getDataFromUrl(url, params);
 
-                            case 8:
+                            case 7:
                                 resp = _context.sent;
 
 
@@ -684,7 +685,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                     this.$parent.show = true;
                                 }
 
-                            case 10:
+                            case 9:
                             case 'end':
                                 return _context.stop();
                         }

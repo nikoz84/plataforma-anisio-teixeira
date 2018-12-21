@@ -140,11 +140,11 @@ Route::group(['middleware' => ['jwt.verify']], function () {
      * resetPass -< Resetar senha
      *
      */
-    Route::get('/users/search/{termo}', 'UserController@search')->name('buscarUsuario');
-    Route::delete('/users/delete/{id}', 'UserController@delete')->name('apagarUsuario');
-    Route::delete('/users/{id}', 'UserController@getById')->name('buscaxUsuarioId');
-    Route::get('/users', 'UserController@list')->name('listaUsuario');
-    Route::put('/users/reset_pass', 'UserController@resetPass')->name('atualizarSenha');
+    Route::get('/users/search/{termo}', 'UserController@search')->name('usuario.buscar');
+    Route::delete('/users/delete/{id}', 'UserController@delete')->name('usuario.apagar');
+    Route::delete('/users/{id}', 'UserController@getById')->name('user.x.id');
+    Route::get('/users', 'UserController@list')->name('usuario.listar');
+    Route::put('/users/reset_pass', 'UserController@resetPass')->name('senha.atualizar');
     /**
      *
      * Controlador: Aplicativo
@@ -153,9 +153,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
      * delete -> Deletar aplicativo
      *
      */
-    Route::post('/aplicativos/create', 'AplicativoController@create')->name('adicionarAplicativo');
-    Route::put('/aplicativos/update/{id}', 'AplicativoController@update')->name('atualizarAplicativo');
-    Route::delete('/aplicativos/delete/{id}', 'AplicativoController@delete')->name('apagarAplicativo');
+    Route::post('/aplicativos/create', 'AplicativoController@create')->name('aplicativo.adicionar');
+    Route::put('/aplicativos/update/{id}', 'AplicativoController@update')->name('aplicativo.editar');
+    Route::delete('/aplicativos/delete/{id}', 'AplicativoController@delete')->name('aplicativo.apagar');
     /**
      *
      * Controllador: Tags

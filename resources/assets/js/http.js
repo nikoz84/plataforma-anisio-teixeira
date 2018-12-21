@@ -29,9 +29,10 @@ export default class Http {
             return await error.response;
         }
     }
-    async getDataWithTokenUrl(endPoint = '', params= {}){
+    async getDataWithTokenUrl(endPoint = '', params){
         try{
             let url = `${this.api}${endPoint}`;
+            console.warn(params)
             return await axios.get( url, {params} );
         }catch (error){
             return await error.response;
@@ -47,7 +48,7 @@ export default class Http {
         return await axios({
             method,
             url:this.api + url,
-            data
+            params: data
           })
     }
     /**
@@ -58,7 +59,7 @@ export default class Http {
     async postData(endPoint = '', params ={}){
         try {
             let urlPost = `${this.api}${endPoint}`;
-            return await axios.post(urlPost, {params});
+            return await axios.post(urlPost, params);
         } catch (error) {
             return await error.response;
         }
