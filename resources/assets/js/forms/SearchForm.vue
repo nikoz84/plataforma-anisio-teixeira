@@ -11,6 +11,7 @@
 <script>
 import Http from '../http.js';
 import debounce from 'lodash/debounce'
+const http = new Http();
 
 export default {
     name : 'SearchForm',
@@ -35,7 +36,7 @@ export default {
             if(!this.termo) return;
             let url = `/${this.search}/search/${this.termo}`;
             this.$parent.show = false;
-            let http = new Http();
+            
             let params ={ token: localStorage.token };
             let resp = await http.getDataFromUrl(url, params);
 

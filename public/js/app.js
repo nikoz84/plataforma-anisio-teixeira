@@ -693,7 +693,7 @@ var Http = function () {
         value: function () {
             var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
                 var endPoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-                var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+                var params = arguments[1];
                 var url;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
                     while (1) {
@@ -701,27 +701,29 @@ var Http = function () {
                             case 0:
                                 _context3.prev = 0;
                                 url = '' + this.api + endPoint;
-                                _context3.next = 4;
+
+                                console.warn(params);
+                                _context3.next = 5;
                                 return axios.get(url, { params: params });
 
-                            case 4:
+                            case 5:
                                 return _context3.abrupt('return', _context3.sent);
 
-                            case 7:
-                                _context3.prev = 7;
+                            case 8:
+                                _context3.prev = 8;
                                 _context3.t0 = _context3['catch'](0);
-                                _context3.next = 11;
+                                _context3.next = 12;
                                 return _context3.t0.response;
 
-                            case 11:
+                            case 12:
                                 return _context3.abrupt('return', _context3.sent);
 
-                            case 12:
+                            case 13:
                             case 'end':
                                 return _context3.stop();
                         }
                     }
-                }, _callee3, this, [[0, 7]]);
+                }, _callee3, this, [[0, 8]]);
             }));
 
             function getDataWithTokenUrl() {
@@ -749,7 +751,7 @@ var Http = function () {
                                 return axios({
                                     method: method,
                                     url: this.api + url,
-                                    data: data
+                                    params: data
                                 });
 
                             case 2:
@@ -763,7 +765,7 @@ var Http = function () {
                 }, _callee4, this);
             }));
 
-            function config(_x7, _x8, _x9) {
+            function config(_x6, _x7, _x8) {
                 return _ref4.apply(this, arguments);
             }
 
@@ -789,7 +791,7 @@ var Http = function () {
                                 _context5.prev = 0;
                                 urlPost = '' + this.api + endPoint;
                                 _context5.next = 4;
-                                return axios.post(urlPost, { params: params });
+                                return axios.post(urlPost, params);
 
                             case 4:
                                 return _context5.abrupt('return', _context5.sent);
@@ -21279,6 +21281,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
 
 
 
@@ -21301,6 +21304,8 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             count: 0,
             success: false,
             isError: true,
+            isUpdate: false,
+            textButton: 'Criar',
             errors: {
                 name: [],
                 url: [],
@@ -21314,10 +21319,19 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
         this.getCategories();
         if (this.$route.params.update) {
             this.getAplicativo();
+            this.isUpdate = true;
+            this.textButton = 'Editar';
         }
     },
 
     methods: {
+        send: function send() {
+            if (this.isUpdate) {
+                this.editAplicativo();
+            } else {
+                this.createAplicativo();
+            }
+        },
         createAplicativo: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
                 var _this = this;
@@ -21341,6 +21355,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                             case 3:
                                 form = new FormData();
 
+                                form.append('_method', 'POST');
                                 form.append('name', this.name);
                                 form.append('description', this.description);
                                 form.append('category', this.category);
@@ -21352,33 +21367,16 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                 form.append('image', this.image, this.image.name);
                                 form.append('token', localStorage.token);
 
-                                resp = null;
+                                _context.next = 17;
+                                return http.postData('/aplicativos/create', form);
 
-                                if (!this.$route.params.update) {
-                                    _context.next = 21;
-                                    break;
-                                }
-
-                                _context.next = 18;
-                                return http.config('PUT', '/aplicativos/update/' + this.$route.params.id, form);
-
-                            case 18:
-                                resp = _context.sent;
-                                _context.next = 24;
-                                break;
-
-                            case 21:
-                                _context.next = 23;
-                                return http.config('POST', '/aplicativos/create', form);
-
-                            case 23:
+                            case 17:
                                 resp = _context.sent;
 
-                            case 24:
                                 console.warn(resp);
 
                                 if (resp.data.success) {
-                                    console.warn(resp.data.message);
+                                    this.$router.push({ name: 'Listar', params: { slug: this.$route.params.slug } });
                                 } else {
                                     this.isError = resp.data.success;
                                     this.message = resp.data.message;
@@ -21391,7 +21389,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                     }, 3000);
                                 }
 
-                            case 26:
+                            case 20:
                             case 'end':
                                 return _context.stop();
                         }
@@ -21479,6 +21477,45 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             }
 
             return getAplicativo;
+        }(),
+        editAplicativo: function () {
+            var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4() {
+                var params, resp;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
+                    while (1) {
+                        switch (_context4.prev = _context4.next) {
+                            case 0:
+                                console.log('editar');
+                                params = {
+                                    name: this.name,
+                                    category: this.category,
+                                    canal: localStorage.idCanal,
+                                    token: localStorage.token
+                                };
+
+                                console.log(params);
+                                _context4.next = 5;
+                                return http.config('PUT', '/aplicativos/update/' + this.$route.params.id, params);
+
+                            case 5:
+                                resp = _context4.sent;
+
+
+                                console.log(resp);
+
+                            case 7:
+                            case 'end':
+                                return _context4.stop();
+                        }
+                    }
+                }, _callee4, this);
+            }));
+
+            function editAplicativo() {
+                return _ref4.apply(this, arguments);
+            }
+
+            return editAplicativo;
         }()
     }
 
@@ -21496,11 +21533,10 @@ var render = function() {
     _c(
       "form",
       {
-        attrs: { enctype: "multipart/form-data" },
         on: {
           submit: function($event) {
             $event.preventDefault()
-            _vm.createAplicativo()
+            _vm.send()
           }
         }
       },
@@ -21923,7 +21959,11 @@ var render = function() {
                 })
               ]),
               _vm._v(" "),
-              _vm._m(0),
+              _c("div", { staticClass: "form-group" }, [
+                _c("button", { staticClass: "btn btn-default" }, [
+                  _vm._v(" " + _vm._s(_vm.textButton) + " ")
+                ])
+              ]),
               _vm._v(" "),
               _c(
                 "transition",
@@ -21961,16 +22001,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("button", { staticClass: "btn btn-default" }, [_vm._v("Enviar")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
