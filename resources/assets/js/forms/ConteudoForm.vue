@@ -30,16 +30,10 @@
                         <label for="tipoconteudo">Tipo de Conteúdo:*</label>
                         <select class="form-control form-control-lg" id="tipoconteudo" v-model="tipo">
                             <option value="">« SELECIONE »</option>
-                            <option value="7">Animação/Simulação</option>
-                            <option value="3">Apresentação</option>
-                            <option value="4">Áudio</option>
-                            <option value="1">Documento/Experimento</option>
-                            <option value="6">Imagem</option>
-                            <option value="2">Planilha</option>
-                            <option value="10">Sequência Didática</option>
-                            <option value="8">Site</option>
-                            <option value="9">Software Educacional</option>
-                            <option value="5">Vídeo</option>
+                            <option v-for="(tipo, i) in tipos"
+                                    v-bind:value="tipo.id"
+                                    v-bind:key="i">{{tipo.name}}
+                            </option>
                         </select>
                         <small class="text-info">Escolha a opção mais adequada à mídia que deseja publicar, conforme tipos disponíveis.</small>
                         <small class="text-danger"
@@ -54,8 +48,8 @@
                         <label for="estado">Categoria de Conteúdo:*</label>
                         <select class="form-control form-control-lg" id="categoria" v-model="category">
                             <option value="">« SELECIONE »</option>
-                            <option v-for="(item, i) in categories" 
-                                    v-bind:value="item.name" 
+                            <option v-for="(item, i) in categories"
+                                    v-bind:value="item.name"
                                     v-bind:key="i">{{item.name}}
                             </option>
                         </select>
@@ -65,7 +59,7 @@
                         <label for="descricao">Descrição:*</label>
                         <textarea class="form-control"
                                     id="descricao"
-                                    rows="15" 
+                                    rows="15"
                                     cols="50"
                                     v-model="description"
                                     style="resize: none"></textarea>
@@ -186,14 +180,13 @@
                     Selecione o(s) componente(s) curricular(es) ou disciplina(s) que mais se adequem ao contéudo:
                 </div>
                 <div class="panel-body">
-                    
+
                     <!-- COMPONENTES CURRICULARES -->
-                    
+
 
                     <!-- NIVEIS DE ENSINO -->
-                    
-                    
-                </div>    
+
+                </div>
             </div>
 
         </form>
@@ -218,6 +211,7 @@ export default {
             license: '',
             options: {},
             tipo: '',
+            tipos: [],
             tags: [],
             canal: null,
             tag: '',
@@ -234,7 +228,7 @@ export default {
             errors: {
                 title: [],
                 description: [],
-                tipo: [],
+                tipos: [],
                 authors: [],
                 license: [],
                 terms: [],
@@ -246,18 +240,14 @@ export default {
 
     },
     created() {
-        //this.getOptions();
+        this.getTipos();
     },
     computed:{
 
     },
     methods:{
         async createConteudo(){
-            this.options ={
-                category: this.category,
-                tipo: this.tipo,
-                site: this.site,
-            };
+
             let params = {
                 tipo: this.tipo,
                 canal_id: localStorage.idCanal,
@@ -273,6 +263,7 @@ export default {
                 options: JSON.stringify(this.options),
                 token: localStorage.token
             };
+
             let resp = await http.postData('/conteudos/create', params);
 
             if(resp.data.success){
@@ -310,22 +301,12 @@ export default {
             }
 
         },
-        async getCategories(){
 
-            let params = {
-                token: localStorage.token
-            };
-            let name= this.$route.params.slug;
-            let resp = await http.postData(`/categories/${name}`);
-
-            if(resp.data.success && resp.data.options != null ){
-                this.categories = resp.data.options.meta_data.categories
-            }
+        async getTipos(){
+            let resp = await http.getDataFromUrl('/tipos/conteudos');
+            this.tipos = resp.data.tipos;
         },
 
-    },
-    watch:{
-        'tag':'getItems'
     }
 
 }
