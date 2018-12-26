@@ -24,7 +24,8 @@ class LicenseController extends Controller
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
 
-        $paginator = $this->license::paginate($limit);
+        $paginator = $this->license::with('parent')
+                                ->paginate($limit);
 
         $paginator->setPath("/licenses?limit={$limit}");
         

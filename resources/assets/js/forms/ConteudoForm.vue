@@ -4,7 +4,7 @@
 
             <div class="panel panel-default col-md-7">
                 <div class="panel-heading">
-                    Adicionar conteúdo digital
+                    <h2> Adicionar conteúdo digital</h2>
                 </div>
                 <div class="panel-body">
                     <!-- div class="tab" -->
@@ -17,7 +17,7 @@
                                 id="titulo"
                                 aria-describedby="titulo"
                                 v-model.trim="title">
-                        <small id="titulo" class="text-info">Adicione o nome original da mídia.</small>
+                        <small id="titulo" class="text-info">Adicione o nome original da mídia.</small><br>
                         <small class="text-danger"
                                 v-if="errors.title"
                                 v-for="(error,t) in errors.title"
@@ -35,7 +35,7 @@
                                     v-bind:key="i">{{tipo.name}}
                             </option>
                         </select>
-                        <small class="text-info">Escolha a opção mais adequada à mídia que deseja publicar, conforme tipos disponíveis.</small>
+                        <small class="text-info">Escolha a opção mais adequada à mídia que deseja publicar, conforme tipos disponíveis.</small><br>
                         <small class="text-danger"
                                 v-if="errors.tipo"
                                 v-for="(error, ti) in errors.tipo"
@@ -66,7 +66,7 @@
                         <small class="text-info">Descreva á mídia de forma <b>resumida</b> e <b>objetiva</b>.
                             Esta é a primeira apresentação da mídia e pode ser o diferencial na hora do usuário escolher se acessa ou não. 
                             Verifique outras descrições para adotar o modelo mais adequado.
-                        </small>
+                        </small><br>
                         <small class="text-danger"
                                 v-if="errors.description"
                                 v-for="(error,d) in errors.description"
@@ -83,7 +83,7 @@
                     <div class="form-group" v-bind:class="{ 'has-error': errors.authors && errors.authors.length > 0 }">
                         <label for="autores">Autores:*</label>
                         <input type="text" class="form-control" id="autores" v-model="authors">
-                        <small>Nome dos autores ou grupo de trabalho responsável pelo desenvolvimento da mídia.</small>
+                        <small>Nome dos autores ou grupo de trabalho responsável pelo desenvolvimento da mídia.</small><br>
                         <small class="text-danger"
                                 v-if="errors.authors"
                                 v-for="(error,a) in errors.authors"
@@ -95,7 +95,7 @@
                     <div class="form-group" v-bind:class="{ 'has-error': errors.source && errors.source.length > 0 }">
                         <label for="fonte">Fonte:*</label>
                         <input type="text" class="form-control" id="fonte" v-model="source" >
-                        <small>Indique o site ou o nome da instituição que produziu a mídia.</small>
+                        <small>Indique o site ou o nome da instituição que produziu a mídia.</small><br>
                         <small class="text-danger"
                                 v-if="errors.source"
                                 v-for="(error,s) in errors.source"
@@ -126,7 +126,7 @@
                         <small>
                             Escolha a opção que mais adequada à mídia que deseja publicar, conforme opções disponíveis. 
                             Se precisar de ajuda clique aqui
-                        </small>
+                        </small><br>
                         <small class="text-danger"
                                 v-if="errors.license"
                                 v-for="(error,li) in errors.license"
@@ -134,11 +134,27 @@
                                 v-text="error">
                         </small>
                     </div>
+                    <div class="form-group" v-bind:class="{ 'has-error': errors.arquivo && errors.arquivo.length > 0 }">
+                        <img class="img-responsive" width="150" height="150" v-if="image" :src="image">
+                        <label for="arquivo">Arquivo:</label>
+                        <input type="file" class="form-control" id="arquivo" name="arquivo"
+                                aria-describedby="arquivo"
+                                v-on:change="onFileChange($event)">
+                        <small class="text-danger"
+                                v-if="errors.image"
+                                v-for="(error,f) in errors.image"
+                                v-bind:key="f"
+                                v-text="error">
+                        </small>
+                        <!--<small v-if="this.file">
+                            {{ ` ${this.file.name} -- ${this.file.size} -- ${this.file.type} `}}
+                        </small>-->
+                    </div>
                     <!-- CONDIÇÕES DE USO -->
                     <div class="checkbox" v-bind:class="{ 'has-error': errors.terms && errors.terms.length > 0 }">
                         <label for="termosecondicoes">
                             <input id="termosecondicoes" type="checkbox" v-model="terms"> Li e concordo com os termos e condições de uso. 
-                        </label>
+                        </label><br>
                         <small class="text-danger"
                                 v-if="errors.terms"
                                 v-for="(error,te) in errors.terms"
@@ -149,8 +165,8 @@
                     <!-- APROVAR CONTEÚDO -->
                     <div class="checkbox" v-bind:class="{ 'has-error': errors.is_aproved && errors.is_aproved.length > 0 }">
                         <label for="aprovado">
-                            <input id="aprovado" type="checkbox" v-model="is_approved"> Deseja publicar o conteúdo? 
-                        </label>
+                            <input id="aprovado" type="checkbox" v-model="is_approved"> Deseja publicar o conteúdo?
+                        </label><br>
                         <small class="text-danger"
                                 v-if="errors.is_approved"
                                 v-for="(error,ia) in errors.is_approved"
@@ -241,6 +257,11 @@ export default {
     },
     created() {
         this.getTipos();
+        if(this.$route.params.update){
+            this.getConteudo();
+            this.isUpdate = true;
+            this.textButton = 'Editar';
+        }
     },
     computed:{
 
@@ -306,6 +327,31 @@ export default {
             let resp = await http.getDataFromUrl('/tipos/conteudos');
             this.tipos = resp.data.tipos;
         },
+
+        async getConteudo(){
+            let resp = await http.getDataFromUrl(`/conteudo/${this.$route.params.id}`);
+            if(resp.data.success){
+                this.name = resp.data.conteudo.name;
+                this.category = resp.data.conteudo.category_id;
+                this.description = resp.data.conteudo.description;
+                this.url = resp.data.conteudo.url;
+                this.is_featured = resp.data.conteudo.is_featured;
+                this.image = resp.data.conteudo.image;
+            }
+        },
+        async editConteudo(){
+            console.log('editar')
+            let params ={
+                name: this.name,
+                category: this.category,
+                canal: localStorage.idCanal,
+                token: localStorage.token
+            }
+            console.log(params)
+            let resp = await http.config('PUT',`/aplicativos/update/${this.$route.params.id}`,params);
+
+            console.log(resp)
+        }
 
     }
 

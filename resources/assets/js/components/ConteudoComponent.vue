@@ -8,30 +8,32 @@
                 />
         <div class="panel panel-default">
             <div class="panel-body">
+                <button class="btn btn-info btn-xs" v-on:click="updateConteudo()">Editar</button>
+                <button class="btn btn-danger btn-xs" v-on:click="deleteConteudo()">Apagar</button>
                 <h2 v-text="conteudo.title"></h2>
                 <small></small>
                 <div class="break-word" v-html="conteudo.description"></div>
                 <hr class="line">
-                <span class="label label-default" v-bind:style="backgroundColor"> Fonte: </span> 
+                <span class="label label-default" v-bind:style="backgroundColor"> Fonte: </span>
                     <i class="i-list break-word">{{ conteudo.source }}</i>
                 <hr class="line">
                 <span class="label label-default" v-bind:style="backgroundColor"> Autores: </span>
-                <i class="i-list break-word" v-for="(author,i) in splitAuthors" v-bind:key="i" v-text="author"></i> 
+                <i class="i-list break-word" v-for="(author,i) in splitAuthors" v-bind:key="i" v-text="author"></i>
                 <hr class="line">
                 <span class="label label-default" v-bind:style="backgroundColor"> Componentes: </span>
-                <i class="i-list break-word" 
+                <i class="i-list break-word"
                     v-for="(componente) in conteudo.componentes"
                     v-bind:key="componente.id"
                     v-text="componente.name"
-                    ></i> 
+                    ></i>
                 <hr class="line">
                 <span class="label label-default" v-bind:style="backgroundColor"> Licença: </span>
-                <i class="i-list break-word" v-text="conteudo.license.name"></i> 
+                <i class="i-list break-word" v-text="conteudo.license.name"></i>
             </div>
             <div class="panel-footer">
                 <h5>Tags: </h5>
-                <a class="btn btn-default tag" href="" 
-                    v-for="tag in conteudo.tags" 
+                <a class="btn btn-default tag" href=""
+                    v-for="tag in conteudo.tags"
                     v-bind:key="tag.id"
                     v-text="tag.name">
                 </a>
@@ -54,6 +56,9 @@ export default {
         backgroundColor(){
             let color = this.conteudo.canal.color;
             return `background-color: ${color}`;
+        },
+        updateConteudo(){
+            this.$router.push({ name: 'EditarConteudo', params: {slug: this.$route.params.slug, id: this.$route.params.id, update: true }})
         }
     }
 }

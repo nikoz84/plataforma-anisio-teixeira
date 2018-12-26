@@ -172,7 +172,7 @@ export default {
                 qt_access : 0
             }
             if(!this.image) return;
-            
+
             let form = new FormData();
             form.append('_method','POST');
             form.append('name', this.name);
@@ -185,7 +185,7 @@ export default {
             form.append('options', JSON.stringify(this.options));
             form.append('image',this.image, this.image.name);
             form.append('token', localStorage.token);
-            
+
             let resp = await http.postData('/aplicativos/create', form);
             console.warn(resp);
 
@@ -202,7 +202,7 @@ export default {
                     this.isError = true;
                 },3000)
             }
-            
+
         },
         async getCategories(){
             let resp = await http.getDataFromUrl('/categories/aplicativos');
@@ -239,7 +239,7 @@ export default {
             }
             console.log(params)
             let resp = await http.config('PUT',`/aplicativos/update/${this.$route.params.id}`,params);
-            
+
             console.log(resp)
         }
     }

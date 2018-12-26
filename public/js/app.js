@@ -19148,6 +19148,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -19163,6 +19165,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         backgroundColor: function backgroundColor() {
             var color = this.conteudo.canal.color;
             return 'background-color: ' + color;
+        },
+        updateConteudo: function updateConteudo() {
+            this.$router.push({ name: 'EditarConteudo', params: { slug: this.$route.params.slug, id: this.$route.params.id, update: true } });
         }
     }
 });
@@ -19523,6 +19528,32 @@ var render = function() {
           "div",
           { staticClass: "panel-body" },
           [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-info btn-xs",
+                on: {
+                  click: function($event) {
+                    _vm.updateConteudo()
+                  }
+                }
+              },
+              [_vm._v("Editar")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-danger btn-xs",
+                on: {
+                  click: function($event) {
+                    _vm.deleteConteudo()
+                  }
+                }
+              },
+              [_vm._v("Apagar")]
+            ),
+            _vm._v(" "),
             _c("h2", { domProps: { textContent: _vm._s(_vm.conteudo.title) } }),
             _vm._v(" "),
             _c("small"),
@@ -20250,6 +20281,22 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -20295,6 +20342,11 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
     },
     created: function created() {
         this.getTipos();
+        if (this.$route.params.update) {
+            this.getConteudo();
+            this.isUpdate = true;
+            this.textButton = 'Editar';
+        }
     },
 
     computed: {},
@@ -20435,6 +20487,81 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             }
 
             return getTipos;
+        }(),
+        getConteudo: function () {
+            var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4() {
+                var resp;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
+                    while (1) {
+                        switch (_context4.prev = _context4.next) {
+                            case 0:
+                                _context4.next = 2;
+                                return http.getDataFromUrl('/conteudo/' + this.$route.params.id);
+
+                            case 2:
+                                resp = _context4.sent;
+
+                                if (resp.data.success) {
+                                    this.name = resp.data.conteudo.name;
+                                    this.category = resp.data.conteudo.category_id;
+                                    this.description = resp.data.conteudo.description;
+                                    this.url = resp.data.conteudo.url;
+                                    this.is_featured = resp.data.conteudo.is_featured;
+                                    this.image = resp.data.conteudo.image;
+                                }
+
+                            case 4:
+                            case 'end':
+                                return _context4.stop();
+                        }
+                    }
+                }, _callee4, this);
+            }));
+
+            function getConteudo() {
+                return _ref4.apply(this, arguments);
+            }
+
+            return getConteudo;
+        }(),
+        editConteudo: function () {
+            var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5() {
+                var params, resp;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee5$(_context5) {
+                    while (1) {
+                        switch (_context5.prev = _context5.next) {
+                            case 0:
+                                console.log('editar');
+                                params = {
+                                    name: this.name,
+                                    category: this.category,
+                                    canal: localStorage.idCanal,
+                                    token: localStorage.token
+                                };
+
+                                console.log(params);
+                                _context5.next = 5;
+                                return http.config('PUT', '/aplicativos/update/' + this.$route.params.id, params);
+
+                            case 5:
+                                resp = _context5.sent;
+
+
+                                console.log(resp);
+
+                            case 7:
+                            case 'end':
+                                return _context5.stop();
+                        }
+                    }
+                }, _callee5, this);
+            }));
+
+            function editConteudo() {
+                return _ref5.apply(this, arguments);
+            }
+
+            return editConteudo;
         }()
     }
 
@@ -20464,11 +20591,7 @@ var render = function() {
           "div",
           { staticClass: "panel panel-default col-md-7" },
           [
-            _c("div", { staticClass: "panel-heading" }, [
-              _vm._v(
-                "\n                Adicionar conteúdo digital\n            "
-              )
-            ]),
+            _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "panel-body" }, [
               _c(
@@ -20520,6 +20643,7 @@ var render = function() {
                     { staticClass: "text-info", attrs: { id: "titulo" } },
                     [_vm._v("Adicione o nome original da mídia.")]
                   ),
+                  _c("br"),
                   _vm._v(" "),
                   _vm._l(_vm.errors.title, function(error, t) {
                     return _vm.errors.title
@@ -20601,6 +20725,7 @@ var render = function() {
                       "Escolha a opção mais adequada à mídia que deseja publicar, conforme tipos disponíveis."
                     )
                   ]),
+                  _c("br"),
                   _vm._v(" "),
                   _vm._l(_vm.errors.tipo, function(error, ti) {
                     return _vm.errors.tipo
@@ -20710,7 +20835,8 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _vm._m(0),
+                  _vm._m(1),
+                  _c("br"),
                   _vm._v(" "),
                   _vm._l(_vm.errors.description, function(error, d) {
                     return _vm.errors.description
@@ -20725,7 +20851,7 @@ var render = function() {
                 2
               ),
               _vm._v(" "),
-              _vm._m(1),
+              _vm._m(2),
               _vm._v(" "),
               _c(
                 "div",
@@ -20768,6 +20894,7 @@ var render = function() {
                       "Nome dos autores ou grupo de trabalho responsável pelo desenvolvimento da mídia."
                     )
                   ]),
+                  _c("br"),
                   _vm._v(" "),
                   _vm._l(_vm.errors.authors, function(error, a) {
                     return _vm.errors.authors
@@ -20821,6 +20948,7 @@ var render = function() {
                       "Indique o site ou o nome da instituição que produziu a mídia."
                     )
                   ]),
+                  _c("br"),
                   _vm._v(" "),
                   _vm._l(_vm.errors.source, function(error, s) {
                     return _vm.errors.source
@@ -20887,7 +21015,7 @@ var render = function() {
                         _vm._v("Outros")
                       ]),
                       _vm._v(" "),
-                      _vm._m(2),
+                      _vm._m(3),
                       _vm._v(" "),
                       _c("option", { attrs: { value: "3" } }, [
                         _vm._v("Todos direitos reservados (Copyright)")
@@ -20908,11 +21036,61 @@ var render = function() {
                       "\n                        Escolha a opção que mais adequada à mídia que deseja publicar, conforme opções disponíveis. \n                        Se precisar de ajuda clique aqui\n                    "
                     )
                   ]),
+                  _c("br"),
                   _vm._v(" "),
                   _vm._l(_vm.errors.license, function(error, li) {
                     return _vm.errors.license
                       ? _c("small", {
                           key: li,
+                          staticClass: "text-danger",
+                          domProps: { textContent: _vm._s(error) }
+                        })
+                      : _vm._e()
+                  })
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "form-group",
+                  class: {
+                    "has-error":
+                      _vm.errors.arquivo && _vm.errors.arquivo.length > 0
+                  }
+                },
+                [
+                  _vm.image
+                    ? _c("img", {
+                        staticClass: "img-responsive",
+                        attrs: { width: "150", height: "150", src: _vm.image }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("label", { attrs: { for: "arquivo" } }, [
+                    _vm._v("Arquivo:")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "file",
+                      id: "arquivo",
+                      name: "arquivo",
+                      "aria-describedby": "arquivo"
+                    },
+                    on: {
+                      change: function($event) {
+                        _vm.onFileChange($event)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm._l(_vm.errors.image, function(error, f) {
+                    return _vm.errors.image
+                      ? _c("small", {
+                          key: f,
                           staticClass: "text-danger",
                           domProps: { textContent: _vm._s(error) }
                         })
@@ -20973,6 +21151,7 @@ var render = function() {
                       " Li e concordo com os termos e condições de uso. \n                    "
                     )
                   ]),
+                  _c("br"),
                   _vm._v(" "),
                   _vm._l(_vm.errors.terms, function(error, te) {
                     return _vm.errors.terms
@@ -21035,10 +21214,9 @@ var render = function() {
                         }
                       }
                     }),
-                    _vm._v(
-                      " Deseja publicar o conteúdo? \n                    "
-                    )
+                    _vm._v(" Deseja publicar o conteúdo?\n                    ")
                   ]),
+                  _c("br"),
                   _vm._v(" "),
                   _vm._l(_vm.errors.is_approved, function(error, ia) {
                     return _vm.errors.is_approved
@@ -21054,7 +21232,7 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _vm._m(3),
+            _vm._m(4),
             _vm._v(" "),
             _c(
               "transition",
@@ -21088,12 +21266,20 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _vm._m(4)
+        _vm._m(5)
       ]
     )
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-heading" }, [
+      _c("h2", [_vm._v(" Adicionar conteúdo digital")])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
