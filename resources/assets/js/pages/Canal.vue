@@ -41,7 +41,7 @@ export default {
         return {
             title: '',
             descricao: null,
-            idCanal: null,
+            canal_id: null,
             options: null,
             color: '#1e78c2',
             hasCategories: false,
@@ -66,13 +66,13 @@ export default {
             let resp = await http.getDataFromUrl( url );
             
             if(resp.data.success){
-                this.idCanal = resp.data.canal.id;
+                this.canal_id = resp.data.canal.id;
                 this.title = resp.data.canal.name;
                 this.options = resp.data.canal.options
                 this.color = this.options.color;
                 this.hasAbout = this.options.has_about;
                 this.hasCategories = this.options.has_categories;
-                localStorage.setItem('idCanal', this.idCanal);
+                localStorage.setItem('canal_id', this.canal_id);
                 console.log(this.hasCategories)
                 if(this.hasCategories){
                     this.getCategories();
@@ -81,7 +81,7 @@ export default {
         },
         async getCategories(){
             let params = {
-                canal: this.idCanal
+                canal: this.canal_id
             }
             let resp = await http.getDataFromUrl('/categories', params);
             if(resp.data.success){

@@ -127,6 +127,7 @@ return [
         'video' => 'vídeo',
         'file' => 'arquivo',
         'url' => 'url',
-        'category' => 'categoria'
+        'category' => 'categoria',
+        'category_id' => 'categoria',
     ],
 ];

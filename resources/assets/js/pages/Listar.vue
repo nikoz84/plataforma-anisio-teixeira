@@ -28,7 +28,7 @@ export default {
     },
     methods:{
         async getConteudos(){
-            let idCanal = localStorage.idCanal;
+            let idCanal = localStorage.canal_id;
             let params = {  };
             let resp = await http.getDataFromIdCanal( idCanal, params);
             

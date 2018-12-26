@@ -1,18 +1,18 @@
 webpackJsonp([1],{
 
-/***/ 141:
+/***/ 158:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(176)
+  __webpack_require__(181)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(178)
+var __vue_script__ = __webpack_require__(183)
 /* template */
-var __vue_template__ = __webpack_require__(189)
+var __vue_template__ = __webpack_require__(194)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -52,13 +52,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 176:
+/***/ 181:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(177);
+var content = __webpack_require__(182);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -79,7 +79,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 177:
+/***/ 182:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -94,16 +94,16 @@ exports.push([module.i, "\n.page-header[data-v-4931cae4] {\n  margin: 0;\n}\n.pa
 
 /***/ }),
 
-/***/ 178:
+/***/ 183:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue__ = __webpack_require__(184);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue__ = __webpack_require__(184);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue__ = __webpack_require__(189);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__http_js__ = __webpack_require__(4);
 
@@ -153,7 +153,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
         return {
             title: '',
             descricao: null,
-            idCanal: null,
+            canal_id: null,
             options: null,
             color: '#1e78c2',
             hasCategories: false,
@@ -188,13 +188,13 @@ var http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
 
 
                                 if (resp.data.success) {
-                                    this.idCanal = resp.data.canal.id;
+                                    this.canal_id = resp.data.canal.id;
                                     this.title = resp.data.canal.name;
                                     this.options = resp.data.canal.options;
                                     this.color = this.options.color;
                                     this.hasAbout = this.options.has_about;
                                     this.hasCategories = this.options.has_categories;
-                                    localStorage.setItem('idCanal', this.idCanal);
+                                    localStorage.setItem('canal_id', this.canal_id);
                                     console.log(this.hasCategories);
                                     if (this.hasCategories) {
                                         this.getCategories();
@@ -223,7 +223,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
                         switch (_context2.prev = _context2.next) {
                             case 0:
                                 params = {
-                                    canal: this.idCanal
+                                    canal: this.canal_id
                                 };
                                 _context2.next = 3;
                                 return http.getDataFromUrl('/categories', params);
@@ -254,19 +254,19 @@ var http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
 
 /***/ }),
 
-/***/ 179:
+/***/ 184:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(180)
+  __webpack_require__(185)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(182)
+var __vue_script__ = __webpack_require__(187)
 /* template */
-var __vue_template__ = __webpack_require__(183)
+var __vue_template__ = __webpack_require__(188)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -306,13 +306,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 180:
+/***/ 185:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(181);
+var content = __webpack_require__(186);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -333,7 +333,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 181:
+/***/ 186:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -348,12 +348,12 @@ exports.push([module.i, "", ""]);
 
 /***/ }),
 
-/***/ 182:
+/***/ 187:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_index_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_index_js__ = __webpack_require__(7);
 //
 //
 //
@@ -403,7 +403,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 183:
+/***/ 188:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -487,19 +487,19 @@ if (false) {
 
 /***/ }),
 
-/***/ 184:
+/***/ 189:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(185)
+  __webpack_require__(190)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(187)
+var __vue_script__ = __webpack_require__(192)
 /* template */
-var __vue_template__ = __webpack_require__(188)
+var __vue_template__ = __webpack_require__(193)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -539,13 +539,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 185:
+/***/ 190:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(186);
+var content = __webpack_require__(191);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -566,7 +566,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 186:
+/***/ 191:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -581,7 +581,7 @@ exports.push([module.i, "", ""]);
 
 /***/ }),
 
-/***/ 187:
+/***/ 192:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -626,7 +626,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_0__http_js__["a" /* default */]();
 
 /***/ }),
 
-/***/ 188:
+/***/ 193:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -721,7 +721,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 189:
+/***/ 194:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
