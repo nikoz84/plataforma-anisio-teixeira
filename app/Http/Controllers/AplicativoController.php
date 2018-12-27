@@ -121,7 +121,7 @@ class AplicativoController extends Controller
      */
     public function update($id)
     {
-        
+
         $aplicativo = Aplicativo::find($id);
         $aplicativo->fill($this->request->all());
         //$aplicativo->category_id = $this->request->get('category_id');

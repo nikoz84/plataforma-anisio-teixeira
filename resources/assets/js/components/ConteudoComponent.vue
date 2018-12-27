@@ -43,6 +43,9 @@
 </template>
 <script>
 import PlayerApp from '../components/PlayerComponent.vue';
+import Http from '../http.js'
+
+const http = new Http;
 
 export default {
     name : 'ConteudoApp',
@@ -56,9 +59,12 @@ export default {
         backgroundColor(){
             let color = this.conteudo.canal.color;
             return `background-color: ${color}`;
-        },
+        }
+    },
+    methods: {
         updateConteudo(){
             this.$router.push({ name: 'EditarConteudo', params: {slug: this.$route.params.slug, id: this.$route.params.id, update: true }})
+
         }
     }
 }

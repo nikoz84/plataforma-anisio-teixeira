@@ -129,11 +129,11 @@
                                 v-text="error">
                         </small>
                     </div>
-                    <div class="form-group" v-bind:class="{ 'has-error': errors.arquivo && errors.arquivo.length > 0 }">
+                    <div class="form-group" v-bind:class="{ 'has-error': errors.image && errors.image.length > 0 }">
                         <img class="img-responsive" width="150" height="150" v-if="image" :src="image">
-                        <label for="arquivo">Arquivo:</label>
-                        <input type="file" class="form-control" id="arquivo" name="arquivo"
-                                aria-describedby="arquivo"
+                        <label for="image">Arquivo:</label>
+                        <input type="file" class="form-control" id="image" name="image"
+                                aria-describedby="image"
                                 v-on:change="onFileChange($event)">
                         <small class="text-danger"
                                 v-if="errors.image"
@@ -207,12 +207,13 @@
 
 <script>
 import Http from '../http.js';
+import TagsForm from './TagsForm.vue';
 
 const http = new Http();
 
 export default {
     name: 'ConteudoForm',
-    components: {},
+    components: {TagsForm},
     data(){
         return {
             title: '',
@@ -220,6 +221,7 @@ export default {
             authors:null,
             source:null,
             license: '',
+            image: '',
             options: {},
             tipo: '',
             tipos: [],
@@ -257,33 +259,33 @@ export default {
             this.textButton = 'Editar';
         }
     },
-    computed:{
-
-    },
     methods:{
+        send(){
+            if(this.isUpdate){
+                this.editConteudo();
+            }else{
+                this.createConteudo();
+            }
+        },
         async createConteudo(){
 
-            let params = {
-                tipo: this.tipo,
-                canal_id: localStorage.idCanal,
-                title: this.title,
-                description:this.description,
-                authors:this.authors,
-                source:this.source,
-                license_id:this.license,
-                terms: this.terms,
-                is_featured: this.is_featured,
-                is_site: this.is_site,
-                is_approved: this.is_approved,
-                options: JSON.stringify(this.options),
-                token: localStorage.token
-            };
+            let form = new FormData();
+            form.append('name', this.name);
+            form.append('description',this.description);
+            form.append('category_id', this.category_id);
+            form.append('canal_id', localStorage.canal_id);
+            form.append('tags', this.tags);
+            form.append('url', this.url);
+            form.append('is_featured', this.is_featured);
+            form.append('options', JSON.stringify(this.options));
+            form.append('image',this.image, this.image.name);
+            form.append('token', localStorage.token);
 
             let resp = await http.postData('/conteudos/create', params);
 
             if(resp.data.success){
                 console.log(resp);
-                this.$router.push('listar')
+                this.$router.push({ name: 'Listar', params: {slug: this.$route.params.slug}})
             }else{
                 console.warn(resp.data);
                 this.isError = resp.data.success;
@@ -307,25 +309,21 @@ export default {
             let resp = await http.getDataFromUrl(`/conteudo/${this.$route.params.id}`);
             if(resp.data.success){
                 this.name = resp.data.conteudo.name;
-                this.category = resp.data.conteudo.category_id;
                 this.description = resp.data.conteudo.description;
-                this.url = resp.data.conteudo.url;
+                this.category = resp.data.conteudo.category_id;
                 this.is_featured = resp.data.conteudo.is_featured;
-                this.image = resp.data.conteudo.image;
             }
         },
         async editConteudo(){
-            console.log('editar')
+            console.log(params)
             let params ={
                 name: this.name,
-                category: this.category,
+                description: this.description,
                 canal: localStorage.idCanal,
+                category: this.category,
                 token: localStorage.token
             }
-            console.log(params)
-            let resp = await http.config('PUT',`/aplicativos/update/${this.$route.params.id}`,params);
-
-            console.log(resp)
+            let resp = await http.config('PUT',`/conteudo/update/${this.$route.params.id}`,params);
         }
 
     }

@@ -19367,6 +19367,7 @@ exports.push([module.i, "\ni[data-v-44c68a2e]::before {\n  content: \" \\BB   \"
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_PlayerComponent_vue__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_PlayerComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_PlayerComponent_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(4);
 //
 //
 //
@@ -19412,6 +19413,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 
+
+
+var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'ConteudoApp',
@@ -19425,7 +19429,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         backgroundColor: function backgroundColor() {
             var color = this.conteudo.canal.color;
             return 'background-color: ' + color;
-        },
+        }
+    },
+    methods: {
         updateConteudo: function updateConteudo() {
             this.$router.push({ name: 'EditarConteudo', params: { slug: this.$route.params.slug, id: this.$route.params.id, update: true } });
         }
@@ -20341,6 +20347,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TagsForm_vue__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TagsForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__TagsForm_vue__);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -20555,11 +20563,12 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 
+
 var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'ConteudoForm',
-    components: {},
+    components: { TagsForm: __WEBPACK_IMPORTED_MODULE_2__TagsForm_vue___default.a },
     data: function data() {
         return {
             title: '',
@@ -20567,6 +20576,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             authors: null,
             source: null,
             license: '',
+            image: '',
             options: {},
             tipo: '',
             tipos: [],
@@ -20603,42 +20613,46 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
         }
     },
 
-    computed: {},
     methods: {
+        send: function send() {
+            if (this.isUpdate) {
+                this.editConteudo();
+            } else {
+                this.createConteudo();
+            }
+        },
         createConteudo: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
                 var _this = this;
 
-                var params, resp;
+                var form, resp;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
-                                params = {
-                                    tipo: this.tipo,
-                                    canal_id: localStorage.idCanal,
-                                    title: this.title,
-                                    description: this.description,
-                                    authors: this.authors,
-                                    source: this.source,
-                                    license_id: this.license,
-                                    terms: this.terms,
-                                    is_featured: this.is_featured,
-                                    is_site: this.is_site,
-                                    is_approved: this.is_approved,
-                                    options: JSON.stringify(this.options),
-                                    token: localStorage.token
-                                };
-                                _context.next = 3;
+                                form = new FormData();
+
+                                form.append('name', this.name);
+                                form.append('description', this.description);
+                                form.append('category_id', this.category_id);
+                                form.append('canal_id', localStorage.canal_id);
+                                form.append('tags', this.tags);
+                                form.append('url', this.url);
+                                form.append('is_featured', this.is_featured);
+                                form.append('options', JSON.stringify(this.options));
+                                form.append('image', this.image, this.image.name);
+                                form.append('token', localStorage.token);
+
+                                _context.next = 13;
                                 return http.postData('/conteudos/create', params);
 
-                            case 3:
+                            case 13:
                                 resp = _context.sent;
 
 
                                 if (resp.data.success) {
                                     console.log(resp);
-                                    this.$router.push('listar');
+                                    this.$router.push({ name: 'Listar', params: { slug: this.$route.params.slug } });
                                 } else {
                                     console.warn(resp.data);
                                     this.isError = resp.data.success;
@@ -20652,7 +20666,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                     }, 3000);
                                 }
 
-                            case 5:
+                            case 15:
                             case 'end':
                                 return _context.stop();
                         }
@@ -20710,11 +20724,9 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
 
                                 if (resp.data.success) {
                                     this.name = resp.data.conteudo.name;
-                                    this.category = resp.data.conteudo.category_id;
                                     this.description = resp.data.conteudo.description;
-                                    this.url = resp.data.conteudo.url;
+                                    this.category = resp.data.conteudo.category_id;
                                     this.is_featured = resp.data.conteudo.is_featured;
-                                    this.image = resp.data.conteudo.image;
                                 }
 
                             case 4:
@@ -20738,25 +20750,21 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                     while (1) {
                         switch (_context4.prev = _context4.next) {
                             case 0:
-                                console.log('editar');
+                                console.log(params);
                                 params = {
                                     name: this.name,
-                                    category: this.category,
+                                    description: this.description,
                                     canal: localStorage.idCanal,
+                                    category: this.category,
                                     token: localStorage.token
                                 };
+                                _context4.next = 4;
+                                return http.config('PUT', '/conteudo/update/' + this.$route.params.id, params);
 
-                                console.log(params);
-                                _context4.next = 5;
-                                return http.config('PUT', '/aplicativos/update/' + this.$route.params.id, params);
-
-                            case 5:
+                            case 4:
                                 resp = _context4.sent;
 
-
-                                console.log(resp);
-
-                            case 7:
+                            case 5:
                             case 'end':
                                 return _context4.stop();
                         }
@@ -21265,8 +21273,7 @@ var render = function() {
                 {
                   staticClass: "form-group",
                   class: {
-                    "has-error":
-                      _vm.errors.arquivo && _vm.errors.arquivo.length > 0
+                    "has-error": _vm.errors.image && _vm.errors.image.length > 0
                   }
                 },
                 [
@@ -21277,7 +21284,7 @@ var render = function() {
                       })
                     : _vm._e(),
                   _vm._v(" "),
-                  _c("label", { attrs: { for: "arquivo" } }, [
+                  _c("label", { attrs: { for: "image" } }, [
                     _vm._v("Arquivo:")
                   ]),
                   _vm._v(" "),
@@ -21285,9 +21292,9 @@ var render = function() {
                     staticClass: "form-control",
                     attrs: {
                       type: "file",
-                      id: "arquivo",
-                      name: "arquivo",
-                      "aria-describedby": "arquivo"
+                      id: "image",
+                      name: "image",
+                      "aria-describedby": "image"
                     },
                     on: {
                       change: function($event) {

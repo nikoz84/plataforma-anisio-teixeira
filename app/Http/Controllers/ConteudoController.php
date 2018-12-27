@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Conteudo;
 use App\Tag;
+use App\Helpers\UrlValidator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class ConteudoController extends Controller
 {
@@ -139,20 +141,9 @@ class ConteudoController extends Controller
      */
     public function update($id)
     {
+        dd($id);
         $conteudo = $this->conteudo::find($id);
-
-        $conteudo->update([
-            'canal_id' => $this->request->get('canal_id'),
-            'title' => $this->request->get('title'),
-            'description' => $this->request->get('description'),
-            'authors' => $this->request->get('authors'),
-            'source' => $this->request->get('source'),
-            'license_id' => $this->request->get('license_id'),
-            'is_featured' => $this->request->get('is_featured'),
-            'is_approved' => $this->request->get('is_approved'),
-            'is_site' => $this->request->get('is_site'),
-            'options' => json_decode($this->request->get('options'), true)
-        ]);
+        $conteudo->fill($this->request->all());
 
         $conteudo->save();
 
