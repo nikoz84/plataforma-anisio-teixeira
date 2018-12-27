@@ -2,14 +2,19 @@
     <div class="form-group">
         <label for="palavra-chave">Palavras-Chave:*</label>
         <ul class="list-inline text-success">
-            <li v-for="(newTag,n) in newTags" 
+            <li v-for="(tag,n) in tags" 
                v-bind:key="n"
                class="text-info"
-               v-on:click="deleteTag(newTag)">
-            {{newTag.name}}
+               :style="'margin:5px;'"
+               v-on:click="deleteTag(n)">
+                <small class="label label-default">{{tag.name}}</small>
             </li>
         </ul>
-        <input type="text" class="form-control" v-model="tag">
+        <input type="text" 
+                class="form-control" 
+                v-model="tag" 
+                is-multiple 
+                :options="tags">
         <ul class="list-unstyled">
             <li v-for="(item,i) in autocompleteItems" 
                v-bind:key="i"
@@ -22,6 +27,7 @@
 </template>
 <script>
 import Http from '../http.js';
+import InputTag from 'vue-input-tag';
 import debounce from 'lodash/debounce'
 const http = new Http();
 
@@ -46,10 +52,13 @@ export default {
     methods:{
         updateTag(newTag) {
             this.autocompleteItems = [];
+            this.tag = '';
             this.tags.push(newTag);
+            console.log(this.tags);
         },
         deleteTag(index){
             this.tags.splice(index, 1);
+            console.log(this.tags)
         },
         async getTags(){
             if (this.tag.length === 0) return;
