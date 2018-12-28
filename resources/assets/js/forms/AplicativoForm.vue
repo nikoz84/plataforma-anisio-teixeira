@@ -239,7 +239,7 @@ export default {
                 is_featured: this.is_featured,
                 token: localStorage.token
             }
-            
+
             let resp = await http.config('PUT',`/aplicativos/update/${this.$route.params.id}`,params);
 
             console.log(resp)
