@@ -10,20 +10,20 @@
                 <small class="label label-default">{{tag.name}}</small>
             </li>
         </ul>
-        <div class="input-group">
+        <div :class="{ 'input-group': !tagExists }">
             <input type="text"
                     class="form-control"
                     v-model="tag">
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button" v-if="tagExists">Criar</button>
+            <span class="input-group-btn" v-if="!tagExists">
+                <button class="btn btn-default" type="button" v-on:click="createTag()">Criar</button>
             </span>
         </div>
-        <ul class="list-unstyled">
+        <ul class="list-group">
             <li v-for="(item,i) in autocompleteItems" 
                v-bind:key="i"
-               class="text-info"
+               class="list-group-item"
                v-on:click="updateTag(item)">
-            {{item.name}}
+                <a>{{item.name}}</a>
             </li>
         </ul>
     </div>
@@ -42,7 +42,7 @@ export default {
             autocompleteItems:[],
             tags:[],
             newTags:[],
-            tagExists: false
+            tagExists: true
         }
     },
     created(){
@@ -62,7 +62,6 @@ export default {
         },
         deleteTag(index){
             this.tags.splice(index, 1);
-            console.log(this.tags)
         },
         async getTags(){
             if (this.tag.length === 0) return;
@@ -88,6 +87,9 @@ export default {
                 }
             }
             this.tags = result;
+        },
+        createTag(){
+            console.log('hola')
         }
     }
 }    
@@ -101,4 +103,5 @@ export default {
 .label:hover{
     background-color: #1e78c2;
 }
+
 </style>

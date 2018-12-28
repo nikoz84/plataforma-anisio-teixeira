@@ -22022,7 +22022,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             autocompleteItems: [],
             tags: [],
             newTags: [],
-            tagExists: false
+            tagExists: true
         };
     },
     created: function created() {
@@ -22043,7 +22043,6 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
         },
         deleteTag: function deleteTag(index) {
             this.tags.splice(index, 1);
-            console.log(this.tags);
         },
         getTags: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
@@ -22121,6 +22120,9 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             }
 
             this.tags = result;
+        },
+        createTag: function createTag() {
+            console.log('hola');
         }
     }
 });
@@ -24559,7 +24561,7 @@ var render = function() {
       })
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "input-group" }, [
+    _c("div", { class: { "input-group": !_vm.tagExists } }, [
       _c("input", {
         directives: [
           {
@@ -24582,33 +24584,41 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _c("span", { staticClass: "input-group-btn" }, [
-        _vm.tagExists
-          ? _c(
+      !_vm.tagExists
+        ? _c("span", { staticClass: "input-group-btn" }, [
+            _c(
               "button",
-              { staticClass: "btn btn-default", attrs: { type: "button" } },
+              {
+                staticClass: "btn btn-default",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    _vm.createTag()
+                  }
+                }
+              },
               [_vm._v("Criar")]
             )
-          : _vm._e()
-      ])
+          ])
+        : _vm._e()
     ]),
     _vm._v(" "),
     _c(
       "ul",
-      { staticClass: "list-unstyled" },
+      { staticClass: "list-group" },
       _vm._l(_vm.autocompleteItems, function(item, i) {
         return _c(
           "li",
           {
             key: i,
-            staticClass: "text-info",
+            staticClass: "list-group-item",
             on: {
               click: function($event) {
                 _vm.updateTag(item)
               }
             }
           },
-          [_vm._v("\n        " + _vm._s(item.name) + "\n        ")]
+          [_c("a", [_vm._v(_vm._s(item.name))])]
         )
       })
     )
