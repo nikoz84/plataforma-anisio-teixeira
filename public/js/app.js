@@ -21949,7 +21949,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "\n.label::after {\n  content: \"x\";\n  padding-right: 5px;\n  padding-left: 7px;\n}\n.label:hover {\n  background-color: #1e78c2;\n}\n", ""]);
 
 // exports
 
@@ -21998,6 +21998,9 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
 
 
 
@@ -22011,7 +22014,8 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             tag: '',
             autocompleteItems: [],
             tags: [],
-            newTags: []
+            newTags: [],
+            tagExists: false
         };
     },
     created: function created() {
@@ -22028,7 +22032,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             this.autocompleteItems = [];
             this.tag = '';
             this.tags.push(newTag);
-            console.log(this.tags);
+            this.onlyUnique(this.tags);
         },
         deleteTag: function deleteTag(index) {
             this.tags.splice(index, 1);
@@ -22075,9 +22079,41 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
 
             return getTags;
         }(),
-        onlyUnique: function onlyUnique(value, index, self) {
-            console.log(value);
-            return self.indexOf(value) === index;
+        onlyUnique: function onlyUnique(data) {
+            var result = [];
+            var map = new Map();
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var item = _step.value;
+
+                    if (!map.has(item.id)) {
+                        map.set(item.id, true); // set any value to Map
+                        result.push({
+                            id: item.id,
+                            name: item.name
+                        });
+                    }
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            this.tags = result;
         }
     }
 });
@@ -24516,22 +24552,39 @@ var render = function() {
       })
     ),
     _vm._v(" "),
-    _c("input", {
-      directives: [
-        { name: "model", rawName: "v-model", value: _vm.tag, expression: "tag" }
-      ],
-      staticClass: "form-control",
-      attrs: { type: "text", "is-multiple": "", options: _vm.tags },
-      domProps: { value: _vm.tag },
-      on: {
-        input: function($event) {
-          if ($event.target.composing) {
-            return
+    _c("div", { staticClass: "input-group" }, [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.tag,
+            expression: "tag"
           }
-          _vm.tag = $event.target.value
+        ],
+        staticClass: "form-control",
+        attrs: { type: "text" },
+        domProps: { value: _vm.tag },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.tag = $event.target.value
+          }
         }
-      }
-    }),
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "input-group-btn" }, [
+        _vm.tagExists
+          ? _c(
+              "button",
+              { staticClass: "btn btn-default", attrs: { type: "button" } },
+              [_vm._v("Criar")]
+            )
+          : _vm._e()
+      ])
+    ]),
     _vm._v(" "),
     _c(
       "ul",

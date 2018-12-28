@@ -10,11 +10,14 @@
                 <small class="label label-default">{{tag.name}}</small>
             </li>
         </ul>
-        <input type="text" 
-                class="form-control" 
-                v-model="tag" 
-                is-multiple 
-                :options="tags">
+        <div class="input-group">
+            <input type="text"
+                    class="form-control"
+                    v-model="tag">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" v-if="tagExists">Criar</button>
+            </span>
+        </div>
         <ul class="list-unstyled">
             <li v-for="(item,i) in autocompleteItems" 
                v-bind:key="i"
@@ -38,7 +41,8 @@ export default {
             tag: '',
             autocompleteItems:[],
             tags:[],
-            newTags:[]
+            newTags:[],
+            tagExists: false
         }
     },
     created(){
@@ -54,7 +58,7 @@ export default {
             this.autocompleteItems = [];
             this.tag = '';
             this.tags.push(newTag);
-            console.log(this.tags);
+            this.onlyUnique(this.tags);
         },
         deleteTag(index){
             this.tags.splice(index, 1);
@@ -71,13 +75,30 @@ export default {
             }
             
         },
-        onlyUnique(value, index, self) { 
-            console.log(value)
-            return self.indexOf(value) === index;
+        onlyUnique(data) { 
+            const result = [];
+            const map = new Map();
+            for (const item of data) {
+                if(!map.has(item.id)){
+                    map.set(item.id, true);    // set any value to Map
+                    result.push({
+                        id: item.id,
+                        name: item.name
+                    });
+                }
+            }
+            this.tags = result;
         }
     }
 }    
 </script>
 <style lang="scss">
-
+.label::after {
+  content: "x";
+  padding-right: 5px;
+  padding-left: 7px;
+}
+.label:hover{
+    background-color: #1e78c2;
+}
 </style>
