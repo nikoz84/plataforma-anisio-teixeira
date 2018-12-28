@@ -234,9 +234,9 @@ export default {
             autocompleteItems: [],
             category: '',
             categories:[],
-            site: '',
             message : '',
             isError : true,
+            isUpdate: false,
             errors: {
                 title: [],
                 description: [],
@@ -253,7 +253,9 @@ export default {
     },
     created() {
         this.getTipos();
+         console.log(this.$route.params)
         if(this.$route.params.update){
+            console.log('entrou');
             this.getConteudo();
             this.isUpdate = true;
             this.textButton = 'Editar';
@@ -261,6 +263,7 @@ export default {
     },
     methods:{
         send(){
+            
             if(this.isUpdate){
                 this.editConteudo();
             }else{
@@ -272,19 +275,16 @@ export default {
             let form = new FormData();
             form.append('name', this.name);
             form.append('description',this.description);
-            form.append('category_id', this.category_id);
             form.append('canal_id', localStorage.canal_id);
             form.append('tags', this.tags);
-            form.append('url', this.url);
+            form.append('category_id', this.category_id);
             form.append('is_featured', this.is_featured);
             form.append('options', JSON.stringify(this.options));
-            form.append('image',this.image, this.image.name);
             form.append('token', localStorage.token);
 
             let resp = await http.postData('/conteudos/create', params);
 
             if(resp.data.success){
-                console.log(resp);
                 this.$router.push({ name: 'Listar', params: {slug: this.$route.params.slug}})
             }else{
                 console.warn(resp.data);
@@ -306,9 +306,11 @@ export default {
         },
 
         async getConteudo(){
-            let resp = await http.getDataFromUrl(`/conteudo/${this.$route.params.id}`);
+            
+            let resp = await http.getDataFromUrl(`/conteudos/${this.$route.params.id}`);
+            console.warn(resp);
             if(resp.data.success){
-                this.name = resp.data.conteudo.name;
+                this.title = resp.data.conteudo.title;
                 this.description = resp.data.conteudo.description;
                 this.category = resp.data.conteudo.category_id;
                 this.is_featured = resp.data.conteudo.is_featured;
