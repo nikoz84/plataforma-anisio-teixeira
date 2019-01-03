@@ -10,6 +10,7 @@
                 <small class="label label-default">{{tag.name}}</small>
             </li>
         </ul>
+<<<<<<< HEAD
         <input type="text"
                 class="form-control"
                 v-model="tag"
@@ -17,10 +18,22 @@
                 :options="tags">
         <ul class="list-unstyled">
             <li v-for="(item,i) in autocompleteItems"
+=======
+        <div :class="{ 'input-group': !tagExists }">
+            <input type="text"
+                    class="form-control"
+                    v-model="tag">
+            <span class="input-group-btn" v-if="!tagExists">
+                <button class="btn btn-default" type="button" v-on:click="createTag()">Criar</button>
+            </span>
+        </div>
+        <ul class="list-group">
+            <li v-for="(item,i) in autocompleteItems" 
+>>>>>>> 44626991872aee97eafa6b4f5c03bf8570a42728
                v-bind:key="i"
-               class="text-info"
+               class="list-group-item"
                v-on:click="updateTag(item)">
-            {{item.name}}
+                <a>{{item.name}}</a>
             </li>
         </ul>
     </div>
@@ -38,7 +51,8 @@ export default {
             tag: '',
             autocompleteItems:[],
             tags:[],
-            newTags:[]
+            newTags:[],
+            tagExists: true
         }
     },
     created(){
@@ -54,11 +68,10 @@ export default {
             this.autocompleteItems = [];
             this.tag = '';
             this.tags.push(newTag);
-            console.log(this.tags);
+            this.onlyUnique(this.tags);
         },
         deleteTag(index){
             this.tags.splice(index, 1);
-            console.log(this.tags)
         },
         async getTags(){
             if (this.tag.length === 0) return;
@@ -71,13 +84,34 @@ export default {
             }
             
         },
-        onlyUnique(value, index, self) { 
-            console.log(value)
-            return self.indexOf(value) === index;
+        onlyUnique(data) { 
+            const result = [];
+            const map = new Map();
+            for (const item of data) {
+                if(!map.has(item.id)){
+                    map.set(item.id, true);    // set any value to Map
+                    result.push({
+                        id: item.id,
+                        name: item.name
+                    });
+                }
+            }
+            this.tags = result;
+        },
+        createTag(){
+            console.log('hola')
         }
     }
 }    
 </script>
 <style lang="scss">
+.label::after {
+  content: "x";
+  padding-right: 5px;
+  padding-left: 7px;
+}
+.label:hover{
+    background-color: #1e78c2;
+}
 
 </style>
