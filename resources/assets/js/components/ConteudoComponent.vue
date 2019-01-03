@@ -32,9 +32,10 @@
             </div>
             <div class="panel-footer">
                 <h5>Tags: </h5>
-                <a class="btn btn-default tag" href=""
+                <a class="btn btn-default tag" 
                     v-for="tag in conteudo.tags"
                     v-bind:key="tag.id"
+                    v-bind:href="'/recursos-educacionais-abertos/listar/tag/'+ tag.id"
                     v-text="tag.name">
                 </a>
             </div>

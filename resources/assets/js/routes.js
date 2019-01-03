@@ -75,6 +75,11 @@ const routes =[
           component: Listar
         },
         {
+          path: 'listar/tag/:id',
+          name: 'listarTagId',
+          component: Listar
+        },
+        {
           path: 'exibir/:id',
           name: 'Exibir',
           component: Exibir

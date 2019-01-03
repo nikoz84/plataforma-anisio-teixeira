@@ -54,12 +54,12 @@ Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscaCanal
  * getByTagId -> Lista de conteúdos por Tag
  *
  */
-Route::get('/conteudos', 'ConteudoController@list')->name('listaConteudo');
-Route::get('/conteudos/sites', 'ConteudoController@getSitesTematicos')->name('listaSitesTematicos');
-Route::get('/conteudos/search/{term}', 'ConteudoController@search')->name('buscaConteudo');
+Route::get('/conteudos', 'ConteudoController@list')->name('lista.conteudo');
+Route::get('/conteudos/sites', 'ConteudoController@getSitesTematicos')->name('lista.sites.tematicos');
+Route::get('/conteudos/search/{term}', 'ConteudoController@search')->name('busca.conteudo');
 Route::get('/conteudos/teste', 'ConteudoController@teste');
-Route::get('/conteudos/{id}', 'ConteudoController@getById')->name('buscaxConteudoId');
-Route::get('/conteudos/tag/{id}', 'ConteudoController@getByTagId')->name('buscaxTagId');
+Route::get('/conteudos/{id}', 'ConteudoController@getById')->name('busca.x.conteudo.id');
+Route::get('/conteudos/tag/{id}', 'ConteudoController@getByTagId')->name('busca.x.tag.id');
 
 /******
  *
@@ -69,9 +69,9 @@ Route::get('/conteudos/tag/{id}', 'ConteudoController@getByTagId')->name('buscax
  * getById -> Dados do aplicativo por id
  *
  */
-Route::get('/aplicativos', 'AplicativoController@list')->name('listaAplicativo');
-Route::get('/aplicativos/search/{term}', 'AplicativoController@search')->name('buscaAplicativo');
-Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('buscaxAplicativoId');
+Route::get('/aplicativos', 'AplicativoController@list')->name('lista.aplicativo');
+Route::get('/aplicativos/search/{term}', 'AplicativoController@search')->name('busca.aplicativo');
+Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('busca.x.aplicativo.id');
 
 /******
  *
@@ -79,7 +79,7 @@ Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('buscaxApl
  * Métodos: list -> lista de categorias
  *
  */
-Route::get('/aplicativos/categories', 'AplicativoCategoryController@list')->name('listaCategoriasAplicativo');
+Route::get('/aplicativos/categories', 'AplicativoCategoryController@list')->name('lista.categorias.aplicativo');
 
 /******
  *
@@ -97,7 +97,7 @@ Route::post('/auth/register', 'AuthController@register')->name('registroUsuario'
  * Métodos: getByName -> Metadados por nome
  *
  */
-Route::post('options/name/{name}', 'OptionsController@getByName')->name('buscaMetaDataxNome');
+Route::post('options/name/{name}', 'OptionsController@getByName')->name('busca.metadata.name');
 
 /******
 * Controlador: Tag

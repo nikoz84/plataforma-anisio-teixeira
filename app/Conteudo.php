@@ -41,6 +41,7 @@ class Conteudo extends Model
         return $this->belongsToMany('App\Tag', 'conteudo_tag', 'conteudo_id', 'tag_id')
                     ->select(['id', 'name']);
     }
+    
     public function componentes()
     {
         return $this->belongsToMany('App\CurricularComponent')
@@ -57,6 +58,7 @@ class Conteudo extends Model
     {
         return $this->hasOne('App\License', 'id', 'license_id');
     }
+    
     public function getImageAttribute()
     {
         $image = "{$this['id']}.jpg";
