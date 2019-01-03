@@ -207,13 +207,11 @@
 
 <script>
 import Http from '../http.js';
-import TagsForm from './TagsForm.vue';
 
 const http = new Http();
 
 export default {
     name: 'ConteudoForm',
-    components: {TagsForm},
     data(){
         return {
             title: '',
@@ -242,6 +240,7 @@ export default {
                 description: [],
                 tipos: [],
                 authors: [],
+                source: [],
                 license: [],
                 terms: [],
                 is_approved: [],
@@ -263,7 +262,7 @@ export default {
     },
     methods:{
         send(){
-            
+
             if(this.isUpdate){
                 this.editConteudo();
             }else{
@@ -273,7 +272,7 @@ export default {
         async createConteudo(){
 
             let form = new FormData();
-            form.append('name', this.name);
+            form.append('title', this.title);
             form.append('description',this.description);
             form.append('canal_id', localStorage.canal_id);
             form.append('tags', this.tags);
@@ -306,12 +305,14 @@ export default {
         },
 
         async getConteudo(){
-            
+
             let resp = await http.getDataFromUrl(`/conteudos/${this.$route.params.id}`);
             console.warn(resp);
             if(resp.data.success){
                 this.title = resp.data.conteudo.title;
                 this.description = resp.data.conteudo.description;
+                this.authors = resp.data.conteudo.authors;
+                this.source = resp.data.conteudo.source;
                 this.category = resp.data.conteudo.category_id;
                 this.is_featured = resp.data.conteudo.is_featured;
             }
