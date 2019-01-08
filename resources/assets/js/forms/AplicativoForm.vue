@@ -24,9 +24,9 @@
                     <!-- CATEGORIA -->
                     <div class="form-group" v-bind:class="{ 'has-error': errors.category_id && errors.category_id.length > 0 }">
                         <label for="estado">Categoria:*</label>
-                        <select name="categoria" 
-                                id="categoria" 
-                                class="form-control" 
+                        <select name="categoria"
+                                id="categoria"
+                                class="form-control"
                                 v-model="category_id">
                             <option value="">« SELECIONE »</option>
                             <option v-for="(category, i) in categories"
@@ -115,7 +115,7 @@
                 </div>
                 <TagsForm/>
             </div>
-        </div>        
+        </div>
     </div>
 </template>
 

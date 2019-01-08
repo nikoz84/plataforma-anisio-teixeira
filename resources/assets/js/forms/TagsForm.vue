@@ -2,7 +2,7 @@
     <div class="form-group">
         <label for="palavra-chave">Palavras-Chave:*</label>
         <ul class="list-inline text-success">
-            <li v-for="(tag,n) in tags" 
+            <li v-for="(tag,n) in tags"
                v-bind:key="n"
                class="text-info"
                :style="'margin:5px;'"
