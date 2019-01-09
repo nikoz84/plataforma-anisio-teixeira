@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\App;
 
 class ConteudoController extends Controller
 {
@@ -259,21 +260,18 @@ class ConteudoController extends Controller
     public function getByTagId($id)
     {
         $limit = $this->request->query('limit', 15);
-
-        $conteudos = $this->conteudo
-        ->whereRaw("? = ANY(SELECT (CAST(jsonb_array_elements(options->'tags')->>'id' AS INT)))")
-        ->setBindings([$id])
-        ->paginate(15);
+        
+        $conteudos = $this->conteudo::select(['id','title'])->whereHas('tags', function ($query) use ($id) {
+            $query->where('id', '=', $id);
+        })->paginate($limit);
+        
 
         $conteudos->setPath("/conteudos/tag/{$id}?limit={$limit}");
 
         DB::table('tags')->where('id', $id)->increment('searched', 1);
         
-        $tag = Tag::select('name', 'searched')->find($id);
-
         return response()->json([
             'success' => true,
-            'tag' => $tag,
             'paginator' => $conteudos
         ]);
     }

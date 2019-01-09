@@ -122,8 +122,35 @@ class CanalController extends Controller
 
         return response()->json([
             'success'=> true,
-            'canal' => $canal
+            'canal' => $canal,
+            'sidebar' => $this->getSideBar($canal->id)
         ]);
+    }
+    private function getSideBar($id)
+    {
+        switch ($id) {
+            case 1:
+            case 2:
+            case 3:
+            case 12:
+                $categories =  \App\Category::selectRaw("id, parent_id, name, options->'is_active' as is_active")->where('canal_id', $id)
+                ->whereRaw('parent_id is null')
+                ->where('options->is_active', 'true')
+                ->with('subCategories')
+                ->orderBy('name', 'asc')
+                ->get();
+                return $categories;
+            break;
+            case 5:
+                return [
+                    'temas' => \App\CurricularComponentCategory::where('id', '=', 3)->with('components')->get(),
+                    'disciplinas' => \App\NivelEnsino::where('id', '=', 5)->with('components')->get()
+                ];
+            break;
+            case 9:
+                return \App\AplicativoCategory::select(['id', 'name'])->get();
+            break;
+        }
     }
     public function search(Request $request, $termo)
     {

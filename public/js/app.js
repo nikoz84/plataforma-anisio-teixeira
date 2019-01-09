@@ -17348,6 +17348,10 @@ var routes = [{
     name: 'Listar',
     component: __WEBPACK_IMPORTED_MODULE_2__pages_Listar_vue___default.a
   }, {
+    path: 'listar/tag/:id',
+    name: 'listarTagId',
+    component: __WEBPACK_IMPORTED_MODULE_2__pages_Listar_vue___default.a
+  }, {
     path: 'exibir/:id',
     name: 'Exibir',
     component: __WEBPACK_IMPORTED_MODULE_3__pages_Exibir_vue___default.a
@@ -19416,9 +19420,16 @@ exports.push([module.i, "\ni[data-v-44c68a2e]::before {\n  content: \" \\BB   \"
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_PlayerComponent_vue__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_PlayerComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_PlayerComponent_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_PlayerComponent_vue__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_PlayerComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_PlayerComponent_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__http_js__ = __webpack_require__(3);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+//
 //
 //
 //
@@ -19466,11 +19477,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
+var http = new __WEBPACK_IMPORTED_MODULE_2__http_js__["a" /* default */]();
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'ConteudoApp',
-    components: { PlayerApp: __WEBPACK_IMPORTED_MODULE_0__components_PlayerComponent_vue___default.a },
+    components: { PlayerApp: __WEBPACK_IMPORTED_MODULE_1__components_PlayerComponent_vue___default.a },
     props: ['conteudo', 'message'],
     computed: {
         splitAuthors: function splitAuthors() {
@@ -19485,7 +19496,37 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
     methods: {
         updateConteudo: function updateConteudo() {
             this.$router.push({ name: 'EditarConteudo', params: { slug: this.$route.params.slug, id: this.$route.params.id, update: true } });
-        }
+        },
+        deleteConteudo: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+                var params, resp;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                params = {
+                                    token: localStorage.token
+                                };
+                                _context.next = 3;
+                                return http.deleteData('/conteudo/delete/' + this.$route.params.id, params);
+
+                            case 3:
+                                resp = _context.sent;
+
+                            case 4:
+                            case 'end':
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, this);
+            }));
+
+            function deleteConteudo() {
+                return _ref.apply(this, arguments);
+            }
+
+            return deleteConteudo;
+        }()
     }
 });
 
@@ -19962,7 +20003,9 @@ var render = function() {
               return _c("a", {
                 key: tag.id,
                 staticClass: "btn btn-default tag",
-                attrs: { href: "" },
+                attrs: {
+                  href: "/recursos-educacionais-abertos/listar/tag/" + tag.id
+                },
                 domProps: { textContent: _vm._s(tag.name) }
               })
             })
@@ -20875,7 +20918,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "\n.label::after {\n  content: \"x\";\n  padding-right: 5px;\n  padding-left: 7px;\n}\n.label:hover {\n  background-color: #1e78c2;\n}\n", ""]);
 
 // exports
 
@@ -20924,6 +20967,9 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
 
 
 
@@ -20937,7 +20983,8 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             tag: '',
             autocompleteItems: [],
             tags: [],
-            newTags: []
+            newTags: [],
+            tagExists: true
         };
     },
     created: function created() {
@@ -20954,11 +21001,10 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             this.autocompleteItems = [];
             this.tag = '';
             this.tags.push(newTag);
-            console.log(this.tags);
+            this.onlyUnique(this.tags);
         },
         deleteTag: function deleteTag(index) {
             this.tags.splice(index, 1);
-            console.log(this.tags);
         },
         getTags: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
@@ -21001,9 +21047,44 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
 
             return getTags;
         }(),
-        onlyUnique: function onlyUnique(value, index, self) {
-            console.log(value);
-            return self.indexOf(value) === index;
+        onlyUnique: function onlyUnique(data) {
+            var result = [];
+            var map = new Map();
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var item = _step.value;
+
+                    if (!map.has(item.id)) {
+                        map.set(item.id, true); // set any value to Map
+                        result.push({
+                            id: item.id,
+                            name: item.name
+                        });
+                    }
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            this.tags = result;
+        },
+        createTag: function createTag() {
+            console.log('hola');
         }
     }
 });
@@ -23443,39 +23524,64 @@ var render = function() {
       0
     ),
     _vm._v(" "),
-    _c("input", {
-      directives: [
-        { name: "model", rawName: "v-model", value: _vm.tag, expression: "tag" }
-      ],
-      staticClass: "form-control",
-      attrs: { type: "text", "is-multiple": "", options: _vm.tags },
-      domProps: { value: _vm.tag },
-      on: {
-        input: function($event) {
-          if ($event.target.composing) {
-            return
+    _c("div", { class: { "input-group": !_vm.tagExists } }, [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.tag,
+            expression: "tag"
           }
-          _vm.tag = $event.target.value
+        ],
+        staticClass: "form-control",
+        attrs: { type: "text" },
+        domProps: { value: _vm.tag },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.tag = $event.target.value
+          }
         }
-      }
-    }),
+      }),
+      _vm._v(" "),
+      !_vm.tagExists
+        ? _c("span", { staticClass: "input-group-btn" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-default",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    _vm.createTag()
+                  }
+                }
+              },
+              [_vm._v("Criar")]
+            )
+          ])
+        : _vm._e()
+    ]),
     _vm._v(" "),
     _c(
       "ul",
-      { staticClass: "list-unstyled" },
+      { staticClass: "list-group" },
       _vm._l(_vm.autocompleteItems, function(item, i) {
         return _c(
           "li",
           {
             key: i,
-            staticClass: "text-info",
+            staticClass: "list-group-item",
             on: {
               click: function($event) {
                 _vm.updateTag(item)
               }
             }
           },
-          [_vm._v("\n        " + _vm._s(item.name) + "\n        ")]
+          [_c("a", [_vm._v(_vm._s(item.name))])]
         )
       }),
       0
