@@ -179,9 +179,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
      * delete -> Apagar conteúdo
      *
      */
-    Route::post('/conteudos/create', 'ConteudoController@create')->name('adicionarConteudo');
-    Route::put('/conteudos/update/{id}', 'ConteudoController@update')->name('atualizarConteudo');
-    Route::delete('/conteudos/delete/{id}', 'ConteudoController@delete')->name('apagarConteudo');
+    Route::post('/conteudos/create', 'ConteudoController@create')->name('adicionar.conteudo');
+    Route::put('/conteudos/update/{id}', 'ConteudoController@update')->name('atualizar.conteudo');
+    Route::delete('/conteudos/delete/{id}', 'ConteudoController@delete')->name('apagar.conteudo');
     /**
      *
      * Controlador: Canal

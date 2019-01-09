@@ -71,8 +71,11 @@ export default {
             let params = {
                 token: localStorage.token
             }
-            let resp = await http.deleteData(`/conteudo/delete/${this.$route.params.id}`,params);
+            let resp = await http.deleteData(`/conteudos/delete/${this.$route.params.id}`,params);
 
+            if(resp.data.success){
+                this.$router.push({ name: 'Listar', params: {slug: this.$route.params.slug}})
+            }
         }
 
     }

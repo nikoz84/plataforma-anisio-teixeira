@@ -5,7 +5,7 @@
                 <div class="text-center"> 
                     <h3>Filtro</h3>
                 </div>
-                <SidebarCanal v-if="hasCategories" v-bind:categories="categories"></SidebarCanal>
+                <SidebarCanal></SidebarCanal>
             </aside>
             <article class="col-sm-9">
                 <header class="page-header">

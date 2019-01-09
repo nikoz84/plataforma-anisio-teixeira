@@ -249,7 +249,6 @@ export default {
                 is_approved: [],
             },
 
-
         }
 
     },
