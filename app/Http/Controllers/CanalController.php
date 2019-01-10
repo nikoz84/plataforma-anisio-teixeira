@@ -134,21 +134,37 @@ class CanalController extends Controller
             case 3:
             case 12:
                 $categories =  \App\Category::selectRaw("id, parent_id, name, options->'is_active' as is_active")->where('canal_id', $id)
-                ->whereRaw('parent_id is null')
-                ->where('options->is_active', 'true')
-                ->with('subCategories')
-                ->orderBy('name', 'asc')
-                ->get();
-                return $categories;
+                                            ->whereRaw('parent_id is null')
+                                            ->where('options->is_active', 'true')
+                                            ->with('subCategories')
+                                            ->orderBy('name', 'asc')
+                                            ->get();
+                $disciplinas = [];
+                if ($id == 2) {
+                    $disciplinas = \App\NivelEnsino::where('id', '=', 5)->with('components')->get();
+                }
+                
+                return [
+                    'categories' => $categories,
+                    'is_category' => true,
+                    'disciplinas' => $disciplinas,
+                    'temas' => []
+                ];
             break;
             case 5:
                 return [
                     'temas' => \App\CurricularComponentCategory::where('id', '=', 3)->with('components')->get(),
-                    'disciplinas' => \App\NivelEnsino::where('id', '=', 5)->with('components')->get()
+                    'disciplinas' => \App\NivelEnsino::where('id', '=', 5)->with('components')->get(),
+                    'is_category' => false,
+                    'categories' => []
                 ];
             break;
             case 9:
-                return \App\AplicativoCategory::select(['id', 'name'])->get();
+                return [
+                    'categories' => \App\AplicativoCategory::select(['id', 'name'])->get(),
+                    'temas' => [],
+                    'disciplinas' => []
+                ];
             break;
         }
     }
