@@ -73,6 +73,7 @@ export default {
             }
             let resp = await http.deleteData(`/conteudos/delete/${this.$route.params.id}`,params);
 
+            //lista os conteúdos
             if(resp.data.success){
                 this.$router.push({ name: 'Listar', params: {slug: this.$route.params.slug}})
             }

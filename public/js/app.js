@@ -19514,6 +19514,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_2__http_js__["a" /* default */]();
                                 resp = _context.sent;
 
 
+                                //lista os conteúdos
                                 if (resp.data.success) {
                                     this.$router.push({ name: 'Listar', params: { slug: this.$route.params.slug } });
                                 }
