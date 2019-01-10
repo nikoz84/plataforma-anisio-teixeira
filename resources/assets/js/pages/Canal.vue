@@ -5,7 +5,7 @@
                 <div class="text-center"> 
                     <h3>Filtro</h3>
                 </div>
-                <SidebarCanal v-if="hasCategories" v-bind:categories="categories"></SidebarCanal>
+                <SidebarCanal :sidebar="sidebar"></SidebarCanal>
             </aside>
             <article class="col-sm-9">
                 <header class="page-header">
@@ -22,7 +22,6 @@
                         <router-view v-bind:style="`--color:${color}`"></router-view>
                     </transition>
                 </div>
-                    
             </article>
         </div>
     </section>
@@ -46,7 +45,8 @@ export default {
             color: '#1e78c2',
             hasCategories: false,
             categories: null,
-            hasAbout: false
+            hasAbout: false,
+            sidebar: null
         }
     },
     created() {
@@ -62,6 +62,7 @@ export default {
     },
     methods:{
         async getCanal(){
+            
             let url = `/canais/slug/${this.$route.params.slug}`; 
             let resp = await http.getDataFromUrl( url );
             
@@ -72,8 +73,9 @@ export default {
                 this.color = this.options.color;
                 this.hasAbout = this.options.has_about;
                 this.hasCategories = this.options.has_categories;
+                this.sidebar = resp.data.sidebar;
                 localStorage.setItem('canal_id', this.canal_id);
-                console.log(this.hasCategories)
+                
                 if(this.hasCategories){
                     this.getCategories();
                 }

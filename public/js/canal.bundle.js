@@ -138,7 +138,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
-//
 
 
 
@@ -158,7 +157,8 @@ var http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
             color: '#1e78c2',
             hasCategories: false,
             categories: null,
-            hasAbout: false
+            hasAbout: false,
+            sidebar: null
         };
     },
     created: function created() {},
@@ -194,8 +194,9 @@ var http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
                                     this.color = this.options.color;
                                     this.hasAbout = this.options.has_about;
                                     this.hasCategories = this.options.has_categories;
+                                    this.sidebar = resp.data.sidebar;
                                     localStorage.setItem('canal_id', this.canal_id);
-                                    console.log(this.hasCategories);
+
                                     if (this.hasCategories) {
                                         this.getCategories();
                                     }
@@ -614,6 +615,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -621,7 +653,23 @@ var http = new __WEBPACK_IMPORTED_MODULE_0__http_js__["a" /* default */]();
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'SidebarCanal',
-    props: ['categories']
+    props: ['sidebar'],
+    data: function data() {
+        return {};
+    },
+
+    computed: {
+        categoriesExists: function categoriesExists() {
+            return this.sidebar && this.sidebar.categories ? true : false;
+        },
+        disciplinasExists: function disciplinasExists() {
+            return this.sidebar && this.sidebar.disciplinas[0] ? true : false;
+        },
+        temasExists: function temasExists() {
+            return this.sidebar && this.sidebar.temas[0] ? true : false;
+        }
+    }
+
 });
 
 /***/ }),
@@ -633,79 +681,185 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("nav", { attrs: { role: "menu categorias" } }, [
-    _c(
-      "ul",
-      { staticClass: "nav nav-pills nav-stacked" },
-      [
-        _c(
-          "router-link",
-          {
-            attrs: {
-              tag: "li",
-              to: { name: "Listar", params: { slug: _vm.$route.params.slug } }
-            }
-          },
-          [_c("a", [_vm._v("Todos")])]
-        ),
-        _vm._v(" "),
-        _vm._l(_vm.categories, function(category, c) {
-          return _c(
-            "li",
-            { key: c },
+  return _c("div", [
+    _vm.categoriesExists
+      ? _c("nav", { attrs: { role: "menu categorias" } }, [
+          _c(
+            "ul",
+            { staticClass: "nav nav-pills nav-stacked" },
             [
               _c(
                 "router-link",
                 {
                   attrs: {
+                    tag: "li",
                     to: {
                       name: "Listar",
-                      params: { slug: _vm.$route.params.slug },
-                      query: { categoria: category.id }
-                    },
-                    exact: ""
+                      params: { slug: _vm.$route.params.slug }
+                    }
                   }
                 },
-                [_c("a", [_vm._v(_vm._s(category.name))])]
+                [_c("a", [_vm._v("Todos")])]
               ),
               _vm._v(" "),
-              category.sub_categories && category.sub_categories.length > 0
-                ? _c(
-                    "ul",
-                    _vm._l(category.sub_categories, function(subcategory, s) {
-                      return subcategory.options.is_active
-                        ? _c(
-                            "li",
-                            { key: s },
-                            [
-                              _c(
-                                "router-link",
-                                {
-                                  attrs: {
-                                    to: {
-                                      name: "Listar",
-                                      params: { slug: _vm.$route.params.slug },
-                                      query: { categoria: subcategory.id }
-                                    },
-                                    exact: ""
-                                  }
-                                },
-                                [_c("a", [_vm._v(_vm._s(subcategory.name))])]
-                              )
-                            ],
-                            1
-                          )
-                        : _vm._e()
-                    })
-                  )
-                : _vm._e()
+              _vm._l(_vm.sidebar.categories, function(category, c) {
+                return _c(
+                  "li",
+                  { key: c },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to: {
+                            name: "Listar",
+                            params: { slug: _vm.$route.params.slug },
+                            query: { categoria: category.id }
+                          },
+                          exact: ""
+                        }
+                      },
+                      [_c("a", [_vm._v(_vm._s(category.name))])]
+                    ),
+                    _vm._v(" "),
+                    category.sub_categories &&
+                    category.sub_categories.length > 0
+                      ? _c(
+                          "ul",
+                          _vm._l(category.sub_categories, function(
+                            subcategory,
+                            s
+                          ) {
+                            return _c(
+                              "li",
+                              { key: s },
+                              [
+                                _c(
+                                  "router-link",
+                                  {
+                                    attrs: {
+                                      to: {
+                                        name: "Listar",
+                                        params: {
+                                          slug: _vm.$route.params.slug
+                                        },
+                                        query: { categoria: subcategory.id }
+                                      },
+                                      exact: ""
+                                    }
+                                  },
+                                  [_c("a", [_vm._v(_vm._s(subcategory.name))])]
+                                )
+                              ],
+                              1
+                            )
+                          })
+                        )
+                      : _vm._e()
+                  ],
+                  1
+                )
+              })
             ],
-            1
+            2
           )
-        })
-      ],
-      2
-    )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.disciplinasExists
+      ? _c(
+          "nav",
+          {
+            style: "margin-top:30px;",
+            attrs: { role: "menu disciplinas ensino medio" }
+          },
+          [
+            _c("h4", { staticClass: "text-center" }, [_vm._v("Disciplinas")]),
+            _vm._v(" "),
+            _c(
+              "ul",
+              { staticClass: "nav nav-pills nav-stacked" },
+              _vm._l(_vm.sidebar.disciplinas[0].components, function(
+                disciplina,
+                d
+              ) {
+                return _c(
+                  "li",
+                  { key: d },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to: {
+                            name: "Listar",
+                            params: { slug: _vm.$route.params.slug },
+                            query: {
+                              categoria: _vm.$route.query.categoria,
+                              disciplina: disciplina.id
+                            }
+                          },
+                          exact: ""
+                        }
+                      },
+                      [_c("a", [_vm._v(_vm._s(disciplina.name))])]
+                    )
+                  ],
+                  1
+                )
+              })
+            )
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.temasExists
+      ? _c(
+          "nav",
+          {
+            style: "margin-top: 30px;",
+            attrs: { role: "menu temas transversáis" }
+          },
+          [
+            _c(
+              "h4",
+              { staticClass: "text-center", style: "margin-bottom: 20px;" },
+              [_vm._v("Temas Transversáis")]
+            ),
+            _vm._v(" "),
+            _c(
+              "ul",
+              { staticClass: "nav nav-pills nav-stacked" },
+              _vm._l(_vm.sidebar.temas[0].components, function(tema, t) {
+                return _c(
+                  "li",
+                  { key: t },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to: {
+                            name: "Listar",
+                            params: { slug: _vm.$route.params.slug },
+                            query: {
+                              categoria: _vm.$route.query.categoria,
+                              tema: tema.id
+                            }
+                          },
+                          exact: ""
+                        }
+                      },
+                      [_c("a", [_vm._v(_vm._s(tema.name))])]
+                    )
+                  ],
+                  1
+                )
+              })
+            )
+          ]
+        )
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -735,9 +889,7 @@ var render = function() {
         [
           _vm._m(0),
           _vm._v(" "),
-          _vm.hasCategories
-            ? _c("SidebarCanal", { attrs: { categories: _vm.categories } })
-            : _vm._e()
+          _c("SidebarCanal", { attrs: { sidebar: _vm.sidebar } })
         ],
         1
       ),
