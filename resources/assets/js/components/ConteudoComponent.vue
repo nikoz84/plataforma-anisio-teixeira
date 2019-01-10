@@ -32,7 +32,7 @@
             </div>
             <div class="panel-footer">
                 <h5>Tags: </h5>
-                <a class="btn btn-default tag" 
+                <a class="btn btn-default tag"
                     v-for="tag in conteudo.tags"
                     v-bind:key="tag.id"
                     v-bind:href="'/recursos-educacionais-abertos/listar/tag/'+ tag.id"
@@ -66,7 +66,18 @@ export default {
         updateConteudo(){
             this.$router.push({ name: 'EditarConteudo', params: {slug: this.$route.params.slug, id: this.$route.params.id, update: true }})
 
+        },
+        async deleteConteudo(){
+            let params = {
+                token: localStorage.token
+            }
+            let resp = await http.deleteData(`/conteudos/delete/${this.$route.params.id}`,params);
+
+            if(resp.data.success){
+                this.$router.push({ name: 'Listar', params: {slug: this.$route.params.slug}})
+            }
         }
+
     }
 }
 </script>

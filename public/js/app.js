@@ -19237,9 +19237,15 @@ exports.push([module.i, "\ni[data-v-44c68a2e]::before {\r\n  content: \" \\BB   
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_PlayerComponent_vue__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_PlayerComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_PlayerComponent_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_PlayerComponent_vue__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_PlayerComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_PlayerComponent_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__http_js__ = __webpack_require__(3);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 //
 //
 //
@@ -19288,11 +19294,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
+var http = new __WEBPACK_IMPORTED_MODULE_2__http_js__["a" /* default */]();
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'ConteudoApp',
-    components: { PlayerApp: __WEBPACK_IMPORTED_MODULE_0__components_PlayerComponent_vue___default.a },
+    components: { PlayerApp: __WEBPACK_IMPORTED_MODULE_1__components_PlayerComponent_vue___default.a },
     props: ['conteudo', 'message'],
     computed: {
         splitAuthors: function splitAuthors() {
@@ -19307,7 +19313,42 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
     methods: {
         updateConteudo: function updateConteudo() {
             this.$router.push({ name: 'EditarConteudo', params: { slug: this.$route.params.slug, id: this.$route.params.id, update: true } });
-        }
+        },
+        deleteConteudo: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+                var params, resp;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                params = {
+                                    token: localStorage.token
+                                };
+                                _context.next = 3;
+                                return http.deleteData('/conteudos/delete/' + this.$route.params.id, params);
+
+                            case 3:
+                                resp = _context.sent;
+
+
+                                if (resp.data.success) {
+                                    this.$router.push({ name: 'Listar', params: { slug: this.$route.params.slug } });
+                                }
+
+                            case 5:
+                            case 'end':
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, this);
+            }));
+
+            function deleteConteudo() {
+                return _ref.apply(this, arguments);
+            }
+
+            return deleteConteudo;
+        }()
     }
 });
 
@@ -20222,6 +20263,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TagsForm_vue__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TagsForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__TagsForm_vue__);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -20436,10 +20479,12 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 
+
 var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'ConteudoForm',
+    components: { TagsForm: __WEBPACK_IMPORTED_MODULE_2__TagsForm_vue___default.a },
     data: function data() {
         return {
             title: '',
@@ -20459,6 +20504,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             is_approved: false,
             autocompleteItems: [],
             category: '',
+            category_id: '',
             categories: [],
             message: '',
             isError: true,
@@ -20466,7 +20512,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
             errors: {
                 title: [],
                 description: [],
-                tipos: [],
+                tipo: [],
                 authors: [],
                 source: [],
                 license: [],
@@ -20478,7 +20524,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
     },
     created: function created() {
         this.getTipos();
-        console.log(this.$route.params);
+        //console.log(this.$route.params)
         if (this.$route.params.update) {
             console.log('entrou');
             this.getConteudo();
@@ -20512,14 +20558,16 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                 form.append('canal_id', localStorage.canal_id);
                                 form.append('tags', this.tags);
                                 form.append('category_id', this.category_id);
+                                form.append('authors', this.authors);
+                                form.append('source', this.source);
                                 form.append('is_featured', this.is_featured);
                                 form.append('options', JSON.stringify(this.options));
                                 form.append('token', localStorage.token);
 
-                                _context.next = 11;
-                                return http.postData('/conteudos/create', params);
+                                _context.next = 13;
+                                return http.postData('/conteudos/create', form);
 
-                            case 11:
+                            case 13:
                                 resp = _context.sent;
 
 
@@ -20538,7 +20586,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                     }, 3000);
                                 }
 
-                            case 13:
+                            case 15:
                             case 'end':
                                 return _context.stop();
                         }
@@ -20625,7 +20673,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                     while (1) {
                         switch (_context4.prev = _context4.next) {
                             case 0:
-                                console.log(params);
+                                //console.log(params)
                                 params = {
                                     name: this.name,
                                     description: this.description,
@@ -20633,13 +20681,13 @@ var http = new __WEBPACK_IMPORTED_MODULE_1__http_js__["a" /* default */]();
                                     category: this.category,
                                     token: localStorage.token
                                 };
-                                _context4.next = 4;
+                                _context4.next = 3;
                                 return http.config('PUT', '/conteudo/update/' + this.$route.params.id, params);
 
-                            case 4:
+                            case 3:
                                 resp = _context4.sent;
 
-                            case 5:
+                            case 4:
                             case 'end':
                                 return _context4.stop();
                         }
@@ -20672,7 +20720,7 @@ var render = function() {
         on: {
           submit: function($event) {
             $event.preventDefault()
-            _vm.createConteudo()
+            _vm.send()
           }
         }
       },

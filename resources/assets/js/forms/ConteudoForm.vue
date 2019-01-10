@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <form v-on:submit.prevent="createConteudo()">
+        <form v-on:submit.prevent="send()">
 
             <div class="panel panel-default col-md-7">
                 <div class="panel-heading">
@@ -207,11 +207,13 @@
 
 <script>
 import Http from '../http.js';
+import TagsForm from './TagsForm.vue';
 
 const http = new Http();
 
 export default {
     name: 'ConteudoForm',
+    components: {TagsForm},
     data(){
         return {
             title: '',
@@ -231,6 +233,7 @@ export default {
             is_approved: false,
             autocompleteItems: [],
             category: '',
+            category_id: '',
             categories:[],
             message : '',
             isError : true,
@@ -238,7 +241,7 @@ export default {
             errors: {
                 title: [],
                 description: [],
-                tipos: [],
+                tipo: [],
                 authors: [],
                 source: [],
                 license: [],
@@ -246,13 +249,12 @@ export default {
                 is_approved: [],
             },
 
-
         }
 
     },
     created() {
         this.getTipos();
-         console.log(this.$route.params)
+         //console.log(this.$route.params)
         if(this.$route.params.update){
             console.log('entrou');
             this.getConteudo();
@@ -277,11 +279,13 @@ export default {
             form.append('canal_id', localStorage.canal_id);
             form.append('tags', this.tags);
             form.append('category_id', this.category_id);
+            form.append('authors', this.authors);
+            form.append('source', this.source);
             form.append('is_featured', this.is_featured);
             form.append('options', JSON.stringify(this.options));
             form.append('token', localStorage.token);
 
-            let resp = await http.postData('/conteudos/create', params);
+            let resp = await http.postData('/conteudos/create', form);
 
             if(resp.data.success){
                 this.$router.push({ name: 'Listar', params: {slug: this.$route.params.slug}})
@@ -318,7 +322,7 @@ export default {
             }
         },
         async editConteudo(){
-            console.log(params)
+            //console.log(params)
             let params ={
                 name: this.name,
                 description: this.description,

@@ -166,7 +166,11 @@ class ConteudoController extends Controller
      */
     public function delete($id)
     {
-        $conteudo = $this->conteudo::find($id);
+        $conteudo = $this->conteudo::with('tags')->find($id);
+        $conteudo->tags()->detach();
+        $conteudo->componentes()->detach();
+        $conteudo->niveis()->detach();
+
         $resp = [];
         if (!$conteudo) {
             $resp = [
@@ -179,7 +183,7 @@ class ConteudoController extends Controller
                 'success' => $conteudo->delete()
             ];
         }
-        
+
         return response()->json($resp);
     }
     /**
@@ -192,7 +196,7 @@ class ConteudoController extends Controller
     {
         $limit = $this->request->query('limit', 15);
         $page = $this->request->query('page', 1);
-        
+
         $conteudos = DB::table(DB::raw("conteudos as cd, plainto_tsquery('simple', lower(unaccent(?))) query"))
                         ->select(['cd.id','cd.title',
                                 DB::raw('ts_rank_cd(cd.ts_documento, query) AS ranking')
@@ -203,7 +207,7 @@ class ConteudoController extends Controller
                         ->orderBy('ranking', 'desc')
                         ->paginate($limit);
 
-        
+
         $conteudos->setPath("/conteudos/search/{$termo}?limit={$limit}");
 
         return response()->json([
@@ -224,7 +228,7 @@ class ConteudoController extends Controller
      */
     public function getById($id)
     {
-        
+
         $conteudo = $this->conteudo::with([
             'user','canal','tags','license', 'componentes', 'niveis'
             ])->find($id);
