@@ -2,9 +2,6 @@
     <section class="container-fluid heigth">
         <div class="row">
             <aside class="col-sm-3">
-                <div class="text-center"> 
-                    <h3>Filtro</h3>
-                </div>
                 <SidebarCanal :sidebar="sidebar"></SidebarCanal>
             </aside>
             <article class="col-sm-9">

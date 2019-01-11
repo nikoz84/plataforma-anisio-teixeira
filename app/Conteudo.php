@@ -28,35 +28,35 @@ class Conteudo extends Model
 
     public function canal()
     {
-        return $this->belongsTo('App\Canal', 'canal_id')
+        return $this->belongsTo(\App\Canal::class, 'canal_id')
                     ->selectRaw("id, name, slug, options->>'color' as color");
     }
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id')
+        return $this->belongsTo(\App\User::class, 'user_id')
                     ->select(['id', 'name']);
     }
     public function tags()
     {
-        return $this->belongsToMany('App\Tag', 'conteudo_tag', 'conteudo_id', 'tag_id')
+        return $this->belongsToMany(\App\Tag::class, 'conteudo_tag', 'conteudo_id', 'tag_id')
                     ->select(['id', 'name']);
     }
     
     public function componentes()
     {
-        return $this->belongsToMany('App\CurricularComponent')
+        return $this->belongsToMany(\App\CurricularComponent::class)
                     ->whereRaw('category_id IS NOT NULL')
                     ->with('categories');
     }
     public function niveis()
     {
-        return $this->belongsToMany('App\CurricularComponent')
+        return $this->belongsToMany(\App\CurricularComponent::class)
                     ->whereRaw('nivel_id IS NOT NULL')
                     ->with('niveis');
     }
     public function license()
     {
-        return $this->hasOne('App\License', 'id', 'license_id');
+        return $this->hasOne(\App\License::class, 'id', 'license_id');
     }
     
     public function getImageAttribute()

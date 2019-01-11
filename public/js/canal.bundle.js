@@ -62,7 +62,7 @@ var content = __webpack_require__(183);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("bee04172", content, false, {});
+var update = __webpack_require__(3)("bee04172", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -99,20 +99,17 @@ exports.push([module.i, "\n.page-header[data-v-4931cae4] {\n  margin: 0;\n}\n.pa
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue__ = __webpack_require__(185);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue__ = __webpack_require__(190);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__http_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__http_js__ = __webpack_require__(4);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-//
-//
-//
 //
 //
 //
@@ -317,7 +314,7 @@ var content = __webpack_require__(187);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("67e6eaac", content, false, {});
+var update = __webpack_require__(3)("67e6eaac", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -550,7 +547,7 @@ var content = __webpack_require__(192);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("f1d1eaba", content, false, {});
+var update = __webpack_require__(3)("f1d1eaba", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -587,7 +584,25 @@ exports.push([module.i, "", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__http_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__http_js__ = __webpack_require__(4);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -667,6 +682,18 @@ var http = new __WEBPACK_IMPORTED_MODULE_0__http_js__["a" /* default */]();
         },
         temasExists: function temasExists() {
             return this.sidebar && this.sidebar.temas[0] ? true : false;
+        },
+        tiposExists: function tiposExists() {
+            return this.sidebar && this.sidebar.tipos ? true : false;
+        },
+        licensesExists: function licensesExists() {
+            return this.sidebar && this.sidebar.licenses ? true : false;
+        },
+        componentsExists: function componentsExists() {
+            return this.sidebar && this.sidebar.components ? true : false;
+        },
+        NiveisExists: function NiveisExists() {
+            return this.sidebar && this.sidebar.niveis ? true : false;
         }
     }
 
@@ -859,6 +886,46 @@ var render = function() {
             )
           ]
         )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.tiposExists
+      ? _c("nav", { attrs: { role: "menu tipo de conteúdos" } }, [
+          _c("h4", [_vm._v("Tipo de Conteúdo")]),
+          _vm._v(" "),
+          _c(
+            "ul",
+            _vm._l(_vm.sidebar.tipos, function(tipo, ti) {
+              return _c("li", { key: ti }, [_vm._v(_vm._s(tipo.name))])
+            })
+          ),
+          _vm._v(" "),
+          _c("h4", [_vm._v("Licenças")]),
+          _vm._v(" "),
+          _c(
+            "ul",
+            _vm._l(_vm.sidebar.licenses, function(license, li) {
+              return _c("li", { key: li }, [_vm._v(_vm._s(license.name))])
+            })
+          ),
+          _vm._v(" "),
+          _c("h4", [_vm._v("Componentes Curriculares")]),
+          _vm._v(" "),
+          _c(
+            "ul",
+            _vm._l(_vm.sidebar.components, function(catComponent, com) {
+              return _c("li", { key: com }, [_vm._v(_vm._s(catComponent.name))])
+            })
+          ),
+          _vm._v(" "),
+          _c("h4", [_vm._v("Niveis de Ensino")]),
+          _vm._v(" "),
+          _c(
+            "ul",
+            _vm._l(_vm.sidebar.niveis, function(nivel, ni) {
+              return _c("li", { key: ni }, [_vm._v(_vm._s(nivel.name))])
+            })
+          )
+        ])
       : _vm._e()
   ])
 }
@@ -886,11 +953,7 @@ var render = function() {
       _c(
         "aside",
         { staticClass: "col-sm-3" },
-        [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("SidebarCanal", { attrs: { sidebar: _vm.sidebar } })
-        ],
+        [_c("SidebarCanal", { attrs: { sidebar: _vm.sidebar } })],
         1
       ),
       _vm._v(" "),
@@ -939,16 +1002,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center" }, [
-      _c("h3", [_vm._v("Filtro")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
