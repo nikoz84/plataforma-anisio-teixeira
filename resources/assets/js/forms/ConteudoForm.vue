@@ -43,6 +43,14 @@
                                 v-text="error">
                         </small>
                     </div>
+                    <!-- CAMPO URL-->
+                    <div class="form-group" v-if="isTipoSite">
+                        <label for="url">URL:</label>
+                        <input type="text"
+                                class="form-control"
+                                name="url"
+                                id="url">
+                    </div>
                     <!-- CATEGORIA OPCIONAL-->
                     <div class="form-group" v-if="categories.length != 0">
                         <label for="estado">Categoria de Conteúdo:*</label>
@@ -129,7 +137,7 @@
                                 v-text="error">
                         </small>
                     </div>
-                    <div class="form-group" v-bind:class="{ 'has-error': errors.image && errors.image.length > 0 }">
+                    <!--<div class="form-group" v-bind:class="{ 'has-error': errors.image && errors.image.length > 0 }">
                         <img class="img-responsive" width="150" height="150" v-if="image" :src="image">
                         <label for="image">Arquivo:</label>
                         <input type="file" class="form-control" id="image" name="image"
@@ -141,10 +149,10 @@
                                 v-bind:key="f"
                                 v-text="error">
                         </small>
-                        <!--<small v-if="this.file">
+                        <small v-if="this.file">
                             {{ ` ${this.file.name} -- ${this.file.size} -- ${this.file.type} `}}
-                        </small>-->
-                    </div>
+                        </small>
+                </div>-->
                     <!-- CONDIÇÕES DE USO -->
                     <div class="checkbox" v-bind:class="{ 'has-error': errors.terms && errors.terms.length > 0 }">
                         <label for="termosecondicoes">
@@ -172,7 +180,7 @@
                 </div>
                 <!-- BOTÃO DE ENVIO -->
                 <div class="form-group">
-                    <button class="btn btn-default">Enviar</button>
+                    <button class="btn btn-default">Avançar</button>
                 </div>
                 <!-- RESPOSTA FORMULARIO -->
                 <transition  name="custom-classes-transition"
@@ -186,7 +194,7 @@
             </div>
 
             <!-- COMPONENTES E NIVEIS DE ENSINO -->
-            <div class="panel panel-default col-md-5">
+            <div class="panel panel-default col-md-5" v-if="categories.length != 0">
                 <div class="panel-heading">
                     Selecione o(s) componente(s) curricular(es) ou disciplina(s) que mais se adequem ao contéudo:
                 </div>
@@ -217,9 +225,9 @@ export default {
     data(){
         return {
             title: '',
-            description:null,
-            authors:null,
-            source:null,
+            description: '',
+            authors: '',
+            source: '',
             license: '',
             image: '',
             options: {},
@@ -262,6 +270,11 @@ export default {
             this.textButton = 'Editar';
         }
     },
+    computed:{
+        isTipoSite(){
+            return (this.tipo == 8) ? true: false;
+        }
+    },
     methods:{
         send(){
 
@@ -275,12 +288,15 @@ export default {
 
             let form = new FormData();
             form.append('title', this.title);
+            form.append('tipo', this.tipo);
             form.append('description',this.description);
+            form.append('url',this.options);
             form.append('canal_id', localStorage.canal_id);
             form.append('tags', this.tags);
             form.append('category_id', this.category_id);
             form.append('authors', this.authors);
             form.append('source', this.source);
+            form.append('license',this.license);
             form.append('is_featured', this.is_featured);
             form.append('options', JSON.stringify(this.options));
             form.append('token', localStorage.token);
