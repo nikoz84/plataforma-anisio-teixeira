@@ -661,6 +661,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -912,8 +938,71 @@ var render = function() {
           _vm._v(" "),
           _c(
             "ul",
-            _vm._l(_vm.sidebar.components, function(catComponent, com) {
-              return _c("li", { key: com }, [_vm._v(_vm._s(catComponent.name))])
+            { staticClass: "list-unstyled" },
+            _vm._l(_vm.sidebar.components, function(categoriaComponent, cat) {
+              return _c(
+                "li",
+                {
+                  key: cat,
+                  attrs: { id: "categoria-" + categoriaComponent.id }
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      attrs: {
+                        "data-toggle": "collapse",
+                        "data-target":
+                          "#collapse-categoria-" + categoriaComponent.id,
+                        "aria-expanded": "false",
+                        "aria-controls":
+                          "#collapse-categoria-" + categoriaComponent.id
+                      }
+                    },
+                    [
+                      _c("b", [
+                        _vm._v(
+                          _vm._s(categoriaComponent.name) +
+                            " \r\n                        "
+                        ),
+                        _c("i", {
+                          staticClass:
+                            "glyphicon glyphicon-chevron-up pull-right"
+                        })
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "ul",
+                    {
+                      staticClass: "collapse",
+                      attrs: {
+                        id: "collapse-categoria-" + categoriaComponent.id
+                      }
+                    },
+                    _vm._l(categoriaComponent.components, function(
+                      component,
+                      com
+                    ) {
+                      return _c(
+                        "li",
+                        {
+                          key: com,
+                          attrs: { id: "componente-" + component.id }
+                        },
+                        [
+                          _vm._v(
+                            "\r\n                        " +
+                              _vm._s(component.name) +
+                              "\r\n                    "
+                          )
+                        ]
+                      )
+                    })
+                  )
+                ]
+              )
             })
           ),
           _vm._v(" "),
@@ -921,8 +1010,45 @@ var render = function() {
           _vm._v(" "),
           _c(
             "ul",
+            { staticClass: "list-unstyled" },
             _vm._l(_vm.sidebar.niveis, function(nivel, ni) {
-              return _c("li", { key: ni }, [_vm._v(_vm._s(nivel.name))])
+              return _c("li", { key: ni, attrs: { id: "nivel-" + nivel.id } }, [
+                _c(
+                  "b",
+                  {
+                    attrs: {
+                      "data-toggle": "collapse",
+                      "data-target": "#collapse-nivel-" + nivel.id,
+                      "aria-expanded": "false",
+                      "aria-controls": "#collapse-nivel-" + nivel.id
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\r\n                    " +
+                        _vm._s(nivel.name) +
+                        "\r\n                "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "ul",
+                  {
+                    staticClass: "collapse",
+                    attrs: { id: "collapse-nivel-" + nivel.id }
+                  },
+                  _vm._l(nivel.components, function(component, com) {
+                    return _c("li", { key: com }, [
+                      _vm._v(
+                        "\r\n                        " +
+                          _vm._s(component.name) +
+                          "\r\n                    "
+                      )
+                    ])
+                  })
+                )
+              ])
             })
           )
         ])

@@ -64,12 +64,38 @@
             <li v-for="(license, li) in sidebar.licenses" :key="li">{{license.name}}</li>
         </ul>
         <h4>Componentes Curriculares</h4>
-        <ul>
-            <li v-for="(catComponent, com) in sidebar.components" :key="com">{{catComponent.name}}</li>
+        <ul class="list-unstyled">
+            <li v-for="(categoriaComponent, cat) in sidebar.components" :key="cat" :id="'categoria-' + categoriaComponent.id">
+                <div data-toggle="collapse" 
+                   :data-target="'#collapse-categoria-' + categoriaComponent.id" 
+                   aria-expanded="false" 
+                   :aria-controls="'#collapse-categoria-' + categoriaComponent.id">
+                    <b>{{categoriaComponent.name}} 
+                        <i class="glyphicon glyphicon-chevron-up pull-right"></i>
+                    </b>
+                </div>
+                <ul class="collapse" :id="'collapse-categoria-' + categoriaComponent.id">
+                    <li v-for="(component, com) in categoriaComponent.components" :key="com" :id="'componente-' + component.id">
+                        {{component.name}}
+                    </li>
+                </ul>
+            </li>
         </ul>
         <h4>Niveis de Ensino</h4>
-        <ul>
-            <li v-for="(nivel, ni) in sidebar.niveis" :key="ni">{{nivel.name}}</li>
+        <ul class="list-unstyled">
+            <li v-for="(nivel, ni) in sidebar.niveis" :key="ni" :id="'nivel-' + nivel.id">
+                <b data-toggle="collapse" 
+                   :data-target="'#collapse-nivel-' + nivel.id" 
+                   aria-expanded="false" 
+                   :aria-controls="'#collapse-nivel-' + nivel.id">
+                    {{nivel.name}}
+                </b>
+                <ul class="collapse" :id="'collapse-nivel-' + nivel.id">
+                    <li v-for="(component, com) in nivel.components" :key="com">
+                        {{ component.name }}
+                    </li>
+                </ul>
+            </li>
         </ul>
     </nav>
 </div>
