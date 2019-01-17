@@ -709,6 +709,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -718,7 +752,12 @@ var http = new __WEBPACK_IMPORTED_MODULE_0__http_js__["a" /* default */]();
     name: 'SidebarCanal',
     props: ['sidebar'],
     data: function data() {
-        return {};
+        return {
+            checkedTipos: [],
+            checkedLicenses: [],
+            checkedComponents: [],
+            isVisible: false
+        };
     },
 
     computed: {
@@ -742,9 +781,17 @@ var http = new __WEBPACK_IMPORTED_MODULE_0__http_js__["a" /* default */]();
         },
         NiveisExists: function NiveisExists() {
             return this.sidebar && this.sidebar.niveis ? true : false;
-        },
-        icon: function icon() {
-            console.log();
+        }
+    },
+    methods: {
+        addToQuery: function addToQuery() {
+            this.$router.push({ name: 'Listar',
+                params: { slug: this.$route.params.slug },
+                query: {
+                    tipos: [this.checkedTipos],
+                    licencas: [this.checkedLicenses],
+                    componentes: [this.checkedComponents] }
+            });
         }
     }
 
@@ -852,7 +899,7 @@ var render = function() {
             attrs: { role: "menu disciplinas ensino medio" }
           },
           [
-            _c("h4", { staticClass: "text-center" }, [_vm._v("Disciplinas")]),
+            _c("h5", { staticClass: "text-center" }, [_vm._v("Disciplinas")]),
             _vm._v(" "),
             _c(
               "ul",
@@ -900,7 +947,7 @@ var render = function() {
           },
           [
             _c(
-              "h4",
+              "h5",
               { staticClass: "text-center", style: "margin-bottom: 20px;" },
               [_vm._v("Temas Transversáis")]
             ),
@@ -940,66 +987,141 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _vm.tiposExists
-      ? _c("nav", { attrs: { role: "menu tipo de conteúdos" } }, [
-          _c("h4", [_vm._v("Tipo de Conteúdo")]),
+      ? _c("nav", { attrs: { role: "menu tipos de mídias" } }, [
+          _vm._m(0),
           _vm._v(" "),
           _c(
             "ul",
+            {
+              staticClass: "collapse list-unstyled",
+              attrs: { id: "collapse-tipos" }
+            },
             _vm._l(_vm.sidebar.tipos, function(tipo, ti) {
               return _c(
                 "li",
-                { key: ti },
+                { key: ti, staticStyle: { "padding-left": "5px" } },
                 [
-                  _c(
-                    "router-link",
-                    {
-                      attrs: {
-                        to: {
-                          name: "Listar",
-                          params: { slug: _vm.$route.params.slug },
-                          query: { tipo: tipo.id }
-                        },
-                        exact: ""
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.checkedTipos,
+                        expression: "checkedTipos"
                       }
+                    ],
+                    attrs: { type: "checkbox", id: "tipo-" + tipo.id },
+                    domProps: {
+                      value: tipo.id,
+                      checked: Array.isArray(_vm.checkedTipos)
+                        ? _vm._i(_vm.checkedTipos, tipo.id) > -1
+                        : _vm.checkedTipos
                     },
-                    [_c("a", [_vm._v(_vm._s(tipo.name))])]
-                  )
-                ],
-                1
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$a = _vm.checkedTipos,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = tipo.id,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 && (_vm.checkedTipos = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.checkedTipos = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.checkedTipos = $$c
+                          }
+                        },
+                        _vm.addToQuery
+                      ]
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("label", { attrs: { for: "tipo-" + tipo.id } }, [
+                    _vm._v(
+                      "\r\n                    " +
+                        _vm._s(tipo.name) +
+                        "\r\n                "
+                    )
+                  ])
+                ]
               )
             })
           ),
           _vm._v(" "),
-          _c("h4", [_vm._v("Licenças")]),
+          _vm._m(1),
           _vm._v(" "),
           _c(
             "ul",
+            {
+              staticClass: "collapse list-unstyled",
+              attrs: { id: "collapse-licenses" }
+            },
             _vm._l(_vm.sidebar.licenses, function(license, li) {
               return _c(
                 "li",
-                { key: li },
+                { key: li, staticStyle: { "padding-left": "5px" } },
                 [
-                  _c(
-                    "router-link",
-                    {
-                      attrs: {
-                        to: {
-                          name: "Listar",
-                          params: { slug: _vm.$route.params.slug },
-                          query: { licenca: license.id }
-                        },
-                        exact: ""
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.checkedLicenses,
+                        expression: "checkedLicenses"
                       }
+                    ],
+                    attrs: { type: "checkbox", id: "license-" + license.id },
+                    domProps: {
+                      value: license.id,
+                      checked: Array.isArray(_vm.checkedLicenses)
+                        ? _vm._i(_vm.checkedLicenses, license.id) > -1
+                        : _vm.checkedLicenses
                     },
-                    [_c("a", [_vm._v(_vm._s(license.name))])]
-                  )
-                ],
-                1
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$a = _vm.checkedLicenses,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = license.id,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                (_vm.checkedLicenses = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.checkedLicenses = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.checkedLicenses = $$c
+                          }
+                        },
+                        _vm.addToQuery
+                      ]
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("label", { attrs: { for: "license-" + license.id } }, [
+                    _vm._v(
+                      "\r\n                    " +
+                        _vm._s(license.name) +
+                        "\r\n                "
+                    )
+                  ])
+                ]
               )
             })
           ),
-          _vm._v(" "),
-          _c("h4", [_vm._v("Componentes Curriculares")]),
           _vm._v(" "),
           _c(
             "ul",
@@ -1013,7 +1135,7 @@ var render = function() {
                 },
                 [
                   _c(
-                    "div",
+                    "h5",
                     {
                       staticClass: "pointer",
                       attrs: {
@@ -1041,7 +1163,7 @@ var render = function() {
                   _c(
                     "ul",
                     {
-                      staticClass: "collapse",
+                      staticClass: "collapse list-unstyled",
                       attrs: {
                         id: "collapse-categoria-" + categoriaComponent.id
                       }
@@ -1052,27 +1174,62 @@ var render = function() {
                     ) {
                       return _c(
                         "li",
-                        {
-                          key: com,
-                          attrs: { id: "componente-" + component.id }
-                        },
+                        { key: com, staticStyle: { "padding-left": "5px" } },
                         [
-                          _c(
-                            "router-link",
-                            {
-                              attrs: {
-                                to: {
-                                  name: "Listar",
-                                  params: { slug: _vm.$route.params.slug },
-                                  query: { componentes: component.id }
-                                },
-                                exact: ""
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.checkedComponents,
+                                expression: "checkedComponents"
                               }
+                            ],
+                            attrs: {
+                              type: "checkbox",
+                              id: "component-" + component.id
                             },
-                            [_c("a", [_vm._v(_vm._s(component.name))])]
-                          )
-                        ],
-                        1
+                            domProps: {
+                              value: component.id,
+                              checked: Array.isArray(_vm.checkedComponents)
+                                ? _vm._i(_vm.checkedComponents, component.id) >
+                                  -1
+                                : _vm.checkedComponents
+                            },
+                            on: {
+                              change: [
+                                function($event) {
+                                  var $$a = _vm.checkedComponents,
+                                    $$el = $event.target,
+                                    $$c = $$el.checked ? true : false
+                                  if (Array.isArray($$a)) {
+                                    var $$v = component.id,
+                                      $$i = _vm._i($$a, $$v)
+                                    if ($$el.checked) {
+                                      $$i < 0 &&
+                                        (_vm.checkedComponents = $$a.concat([
+                                          $$v
+                                        ]))
+                                    } else {
+                                      $$i > -1 &&
+                                        (_vm.checkedComponents = $$a
+                                          .slice(0, $$i)
+                                          .concat($$a.slice($$i + 1)))
+                                    }
+                                  } else {
+                                    _vm.checkedComponents = $$c
+                                  }
+                                },
+                                _vm.addToQuery
+                              ]
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("label", {
+                            attrs: { for: "component-" + component.id },
+                            domProps: { textContent: _vm._s(component.name) }
+                          })
+                        ]
                       )
                     })
                   )
@@ -1081,77 +1238,199 @@ var render = function() {
             })
           ),
           _vm._v(" "),
-          _c("h4", [_vm._v("Niveis de Ensino")]),
-          _vm._v(" "),
           _c(
-            "ul",
-            { staticClass: "list-unstyled" },
-            _vm._l(_vm.sidebar.niveis, function(nivel, ni) {
-              return _c("li", { key: ni, attrs: { id: "nivel-" + nivel.id } }, [
-                _c(
-                  "div",
-                  {
-                    staticClass: "pointer",
-                    attrs: {
-                      "data-toggle": "collapse",
-                      "data-target": "#collapse-nivel-" + nivel.id,
-                      "aria-expanded": "false",
-                      "aria-controls": "#collapse-nivel-" + nivel.id
-                    }
-                  },
-                  [
-                    _vm._v(
-                      "\r\n                    " +
-                        _vm._s(nivel.name) +
-                        "\r\n                    "
-                    ),
-                    nivel.components.length > 0
-                      ? _c("i", {
-                          staticClass:
-                            "glyphicon glyphicon-chevron-down pull-right"
+            "button",
+            {
+              staticClass: "btn btn-default",
+              on: {
+                click: function($event) {
+                  _vm.isVisible = !_vm.isVisible
+                }
+              }
+            },
+            [!_vm.isVisible ? _c("b", [_vm._v("+")]) : _c("b", [_vm._v("-")])]
+          ),
+          _vm._v(" "),
+          _vm.isVisible
+            ? _c(
+                "h5",
+                {
+                  staticStyle: {
+                    "padding-top": "30px",
+                    "padding-bottom": "30px"
+                  }
+                },
+                [
+                  _vm._v(
+                    "\r\n            Outras Modalidades / Níveis de Ensino\r\n        "
+                  )
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.isVisible
+            ? _c(
+                "ul",
+                { staticClass: "list-unstyled" },
+                _vm._l(_vm.sidebar.niveis, function(nivel, ni) {
+                  return _c(
+                    "li",
+                    { key: ni, attrs: { id: "nivel-" + nivel.id } },
+                    [
+                      nivel.id != 12 && nivel.id != 13
+                        ? _c(
+                            "h5",
+                            {
+                              staticClass: "pointer",
+                              attrs: {
+                                "data-toggle": "collapse",
+                                "data-target": "#collapse-nivel-" + nivel.id,
+                                "aria-expanded": "false",
+                                "aria-controls": "#collapse-nivel-" + nivel.id
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\r\n                    " +
+                                  _vm._s(nivel.name) +
+                                  "\r\n                    "
+                              ),
+                              _c("i", {
+                                staticClass:
+                                  "glyphicon glyphicon-chevron-down pull-right"
+                              })
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "ul",
+                        {
+                          staticClass: "collapse list-unstyled",
+                          attrs: { id: "collapse-nivel-" + nivel.id }
+                        },
+                        _vm._l(nivel.components, function(component, com) {
+                          return _c(
+                            "li",
+                            {
+                              key: com,
+                              staticStyle: { "padding-left": "5px" }
+                            },
+                            [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.checkedComponents,
+                                    expression: "checkedComponents"
+                                  }
+                                ],
+                                attrs: {
+                                  type: "checkbox",
+                                  id: "component-" + component.id
+                                },
+                                domProps: {
+                                  value: component.id,
+                                  checked: Array.isArray(_vm.checkedComponents)
+                                    ? _vm._i(
+                                        _vm.checkedComponents,
+                                        component.id
+                                      ) > -1
+                                    : _vm.checkedComponents
+                                },
+                                on: {
+                                  change: [
+                                    function($event) {
+                                      var $$a = _vm.checkedComponents,
+                                        $$el = $event.target,
+                                        $$c = $$el.checked ? true : false
+                                      if (Array.isArray($$a)) {
+                                        var $$v = component.id,
+                                          $$i = _vm._i($$a, $$v)
+                                        if ($$el.checked) {
+                                          $$i < 0 &&
+                                            (_vm.checkedComponents = $$a.concat(
+                                              [$$v]
+                                            ))
+                                        } else {
+                                          $$i > -1 &&
+                                            (_vm.checkedComponents = $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1)))
+                                        }
+                                      } else {
+                                        _vm.checkedComponents = $$c
+                                      }
+                                    },
+                                    _vm.addToQuery
+                                  ]
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("label", {
+                                attrs: { for: "component-" + component.id },
+                                domProps: {
+                                  textContent: _vm._s(component.name)
+                                }
+                              })
+                            ]
+                          )
                         })
-                      : _vm._e()
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "ul",
-                  {
-                    staticClass: "collapse",
-                    attrs: { id: "collapse-nivel-" + nivel.id }
-                  },
-                  _vm._l(nivel.components, function(component, com) {
-                    return _c(
-                      "li",
-                      { key: com },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            attrs: {
-                              to: {
-                                name: "Listar",
-                                params: { slug: _vm.$route.params.slug },
-                                query: { componentes: component.id }
-                              },
-                              exact: ""
-                            }
-                          },
-                          [_c("a", [_vm._v(_vm._s(component.name))])]
-                        )
-                      ],
-                      1
-                    )
-                  })
-                )
-              ])
-            })
-          )
+                      )
+                    ]
+                  )
+                })
+              )
+            : _vm._e()
         ])
       : _vm._e()
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "h5",
+      {
+        staticClass: "pointer",
+        attrs: {
+          "data-toggle": "collapse",
+          "data-target": "#collapse-tipos",
+          "aria-expanded": "false",
+          "aria-controls": "#collapse-tipos"
+        }
+      },
+      [
+        _vm._v("\r\n                   Tipos de Mídia\r\n                   "),
+        _c("i", { staticClass: "glyphicon glyphicon-chevron-down pull-right" })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "h5",
+      {
+        staticClass: "pointer",
+        attrs: {
+          "data-toggle": "collapse",
+          "data-target": "#collapse-licenses",
+          "aria-expanded": "false",
+          "aria-controls": "#collapse-licenses"
+        }
+      },
+      [
+        _vm._v("\r\n                   Licenças\r\n                   "),
+        _c("i", { staticClass: "glyphicon glyphicon-chevron-down pull-right" })
+      ]
+    )
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
