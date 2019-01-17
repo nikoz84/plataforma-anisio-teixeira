@@ -687,6 +687,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -720,6 +742,9 @@ var http = new __WEBPACK_IMPORTED_MODULE_0__http_js__["a" /* default */]();
         },
         NiveisExists: function NiveisExists() {
             return this.sidebar && this.sidebar.niveis ? true : false;
+        },
+        icon: function icon() {
+            console.log();
         }
     }
 
@@ -921,7 +946,27 @@ var render = function() {
           _c(
             "ul",
             _vm._l(_vm.sidebar.tipos, function(tipo, ti) {
-              return _c("li", { key: ti }, [_vm._v(_vm._s(tipo.name))])
+              return _c(
+                "li",
+                { key: ti },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        to: {
+                          name: "Listar",
+                          params: { slug: _vm.$route.params.slug },
+                          query: { tipo: tipo.id }
+                        },
+                        exact: ""
+                      }
+                    },
+                    [_c("a", [_vm._v(_vm._s(tipo.name))])]
+                  )
+                ],
+                1
+              )
             })
           ),
           _vm._v(" "),
@@ -930,7 +975,27 @@ var render = function() {
           _c(
             "ul",
             _vm._l(_vm.sidebar.licenses, function(license, li) {
-              return _c("li", { key: li }, [_vm._v(_vm._s(license.name))])
+              return _c(
+                "li",
+                { key: li },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        to: {
+                          name: "Listar",
+                          params: { slug: _vm.$route.params.slug },
+                          query: { licenca: license.id }
+                        },
+                        exact: ""
+                      }
+                    },
+                    [_c("a", [_vm._v(_vm._s(license.name))])]
+                  )
+                ],
+                1
+              )
             })
           ),
           _vm._v(" "),
@@ -950,6 +1015,7 @@ var render = function() {
                   _c(
                     "div",
                     {
+                      staticClass: "pointer",
                       attrs: {
                         "data-toggle": "collapse",
                         "data-target":
@@ -960,16 +1026,15 @@ var render = function() {
                       }
                     },
                     [
-                      _c("b", [
-                        _vm._v(
+                      _vm._v(
+                        "\r\n                    " +
                           _vm._s(categoriaComponent.name) +
-                            " \r\n                        "
-                        ),
-                        _c("i", {
-                          staticClass:
-                            "glyphicon glyphicon-chevron-up pull-right"
-                        })
-                      ])
+                          " \r\n                    "
+                      ),
+                      _c("i", {
+                        staticClass:
+                          "glyphicon glyphicon-chevron-down pull-right"
+                      })
                     ]
                   ),
                   _vm._v(" "),
@@ -992,12 +1057,22 @@ var render = function() {
                           attrs: { id: "componente-" + component.id }
                         },
                         [
-                          _vm._v(
-                            "\r\n                        " +
-                              _vm._s(component.name) +
-                              "\r\n                    "
+                          _c(
+                            "router-link",
+                            {
+                              attrs: {
+                                to: {
+                                  name: "Listar",
+                                  params: { slug: _vm.$route.params.slug },
+                                  query: { componentes: component.id }
+                                },
+                                exact: ""
+                              }
+                            },
+                            [_c("a", [_vm._v(_vm._s(component.name))])]
                           )
-                        ]
+                        ],
+                        1
                       )
                     })
                   )
@@ -1014,8 +1089,9 @@ var render = function() {
             _vm._l(_vm.sidebar.niveis, function(nivel, ni) {
               return _c("li", { key: ni, attrs: { id: "nivel-" + nivel.id } }, [
                 _c(
-                  "b",
+                  "div",
                   {
+                    staticClass: "pointer",
                     attrs: {
                       "data-toggle": "collapse",
                       "data-target": "#collapse-nivel-" + nivel.id,
@@ -1027,8 +1103,14 @@ var render = function() {
                     _vm._v(
                       "\r\n                    " +
                         _vm._s(nivel.name) +
-                        "\r\n                "
-                    )
+                        "\r\n                    "
+                    ),
+                    nivel.components.length > 0
+                      ? _c("i", {
+                          staticClass:
+                            "glyphicon glyphicon-chevron-down pull-right"
+                        })
+                      : _vm._e()
                   ]
                 ),
                 _vm._v(" "),
@@ -1039,13 +1121,27 @@ var render = function() {
                     attrs: { id: "collapse-nivel-" + nivel.id }
                   },
                   _vm._l(nivel.components, function(component, com) {
-                    return _c("li", { key: com }, [
-                      _vm._v(
-                        "\r\n                        " +
-                          _vm._s(component.name) +
-                          "\r\n                    "
-                      )
-                    ])
+                    return _c(
+                      "li",
+                      { key: com },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            attrs: {
+                              to: {
+                                name: "Listar",
+                                params: { slug: _vm.$route.params.slug },
+                                query: { componentes: component.id }
+                              },
+                              exact: ""
+                            }
+                          },
+                          [_c("a", [_vm._v(_vm._s(component.name))])]
+                        )
+                      ],
+                      1
+                    )
                   })
                 )
               ])

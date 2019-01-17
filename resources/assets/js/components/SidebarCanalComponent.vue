@@ -57,26 +57,42 @@
     <nav role="menu tipo de conteúdos" v-if="tiposExists">
         <h4>Tipo de Conteúdo</h4>
         <ul>
-            <li v-for="(tipo, ti) in sidebar.tipos" :key="ti">{{ tipo.name }}</li>
+            <li v-for="(tipo, ti) in sidebar.tipos" :key="ti">
+                <router-link :to="{ name: 'Listar', 
+                            params: { slug : $route.params.slug }, 
+                            query: { tipo: tipo.id }}" exact>
+                            <a>{{tipo.name}}</a>
+                </router-link>
+            </li>
         </ul>
         <h4>Licenças</h4>
         <ul>
-            <li v-for="(license, li) in sidebar.licenses" :key="li">{{license.name}}</li>
+            <li v-for="(license, li) in sidebar.licenses" :key="li">
+                <router-link :to="{ name: 'Listar', 
+                            params: { slug : $route.params.slug }, 
+                            query: { licenca: license.id }}" exact>
+                            <a>{{license.name}}</a>
+                </router-link>
+            </li>
         </ul>
         <h4>Componentes Curriculares</h4>
         <ul class="list-unstyled">
             <li v-for="(categoriaComponent, cat) in sidebar.components" :key="cat" :id="'categoria-' + categoriaComponent.id">
-                <div data-toggle="collapse" 
+                <div data-toggle="collapse"
+                    class="pointer" 
                    :data-target="'#collapse-categoria-' + categoriaComponent.id" 
                    aria-expanded="false" 
                    :aria-controls="'#collapse-categoria-' + categoriaComponent.id">
-                    <b>{{categoriaComponent.name}} 
-                        <i class="glyphicon glyphicon-chevron-up pull-right"></i>
-                    </b>
+                    {{categoriaComponent.name}} 
+                    <i class="glyphicon glyphicon-chevron-down pull-right" ></i>
                 </div>
                 <ul class="collapse" :id="'collapse-categoria-' + categoriaComponent.id">
                     <li v-for="(component, com) in categoriaComponent.components" :key="com" :id="'componente-' + component.id">
-                        {{component.name}}
+                        <router-link :to="{ name: 'Listar', 
+                            params: { slug : $route.params.slug }, 
+                            query: { componentes: component.id }}" exact>
+                            <a>{{component.name}}</a>
+                        </router-link>
                     </li>
                 </ul>
             </li>
@@ -84,15 +100,21 @@
         <h4>Niveis de Ensino</h4>
         <ul class="list-unstyled">
             <li v-for="(nivel, ni) in sidebar.niveis" :key="ni" :id="'nivel-' + nivel.id">
-                <b data-toggle="collapse" 
-                   :data-target="'#collapse-nivel-' + nivel.id" 
+                <div data-toggle="collapse"
+                    class="pointer"
+                   :data-target="'#collapse-nivel-' + nivel.id"
                    aria-expanded="false" 
                    :aria-controls="'#collapse-nivel-' + nivel.id">
                     {{nivel.name}}
-                </b>
+                    <i class="glyphicon glyphicon-chevron-down pull-right" v-if="nivel.components.length > 0"></i>
+                </div>
                 <ul class="collapse" :id="'collapse-nivel-' + nivel.id">
                     <li v-for="(component, com) in nivel.components" :key="com">
-                        {{ component.name }}
+                        <router-link :to="{ name: 'Listar', 
+                            params: { slug : $route.params.slug }, 
+                            query: { componentes: component.id }}" exact>
+                            <a>{{component.name}}</a>
+                        </router-link>
                     </li>
                 </ul>
             </li>
@@ -134,6 +156,9 @@ export default {
         },
         NiveisExists(){
             return (this.sidebar && this.sidebar.niveis) ? true : false;
+        },
+        icon(){
+            console.log();
         }
     }
 
