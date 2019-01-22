@@ -661,6 +661,88 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -670,7 +752,12 @@ var http = new __WEBPACK_IMPORTED_MODULE_0__http_js__["a" /* default */]();
     name: 'SidebarCanal',
     props: ['sidebar'],
     data: function data() {
-        return {};
+        return {
+            checkedTipos: [],
+            checkedLicenses: [],
+            checkedComponents: [],
+            isVisible: false
+        };
     },
 
     computed: {
@@ -694,6 +781,17 @@ var http = new __WEBPACK_IMPORTED_MODULE_0__http_js__["a" /* default */]();
         },
         NiveisExists: function NiveisExists() {
             return this.sidebar && this.sidebar.niveis ? true : false;
+        }
+    },
+    methods: {
+        addToQuery: function addToQuery() {
+            this.$router.push({ name: 'Listar',
+                params: { slug: this.$route.params.slug },
+                query: {
+                    tipos: [this.checkedTipos],
+                    licencas: [this.checkedLicenses],
+                    componentes: [this.checkedComponents] }
+            });
         }
     }
 
@@ -802,7 +900,7 @@ var render = function() {
             attrs: { role: "menu disciplinas ensino medio" }
           },
           [
-            _c("h4", { staticClass: "text-center" }, [_vm._v("Disciplinas")]),
+            _c("h5", { staticClass: "text-center" }, [_vm._v("Disciplinas")]),
             _vm._v(" "),
             _c(
               "ul",
@@ -851,7 +949,7 @@ var render = function() {
           },
           [
             _c(
-              "h4",
+              "h5",
               { staticClass: "text-center", style: "margin-bottom: 20px;" },
               [_vm._v("Temas Transversáis")]
             ),
@@ -892,28 +990,34 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _vm.tiposExists
-      ? _c("nav", { attrs: { role: "menu tipo de conteúdos" } }, [
-          _c("h4", [_vm._v("Tipo de Conteúdo")]),
+      ? _c("nav", { attrs: { role: "menu tipos de mídias" } }, [
+          _vm._m(0),
           _vm._v(" "),
           _c(
             "ul",
+            {
+              staticClass: "collapse list-unstyled",
+              attrs: { id: "collapse-tipos" }
+            },
             _vm._l(_vm.sidebar.tipos, function(tipo, ti) {
               return _c("li", { key: ti }, [_vm._v(_vm._s(tipo.name))])
             }),
             0
           ),
           _vm._v(" "),
-          _c("h4", [_vm._v("Licenças")]),
+          _vm._m(1),
           _vm._v(" "),
           _c(
             "ul",
+            {
+              staticClass: "collapse list-unstyled",
+              attrs: { id: "collapse-licenses" }
+            },
             _vm._l(_vm.sidebar.licenses, function(license, li) {
               return _c("li", { key: li }, [_vm._v(_vm._s(license.name))])
             }),
             0
           ),
-          _vm._v(" "),
-          _c("h4", [_vm._v("Componentes Curriculares")]),
           _vm._v(" "),
           _c(
             "ul",
@@ -922,8 +1026,6 @@ var render = function() {
             }),
             0
           ),
-          _vm._v(" "),
-          _c("h4", [_vm._v("Niveis de Ensino")]),
           _vm._v(" "),
           _c(
             "ul",
@@ -936,7 +1038,50 @@ var render = function() {
       : _vm._e()
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "h5",
+      {
+        staticClass: "pointer",
+        attrs: {
+          "data-toggle": "collapse",
+          "data-target": "#collapse-tipos",
+          "aria-expanded": "false",
+          "aria-controls": "#collapse-tipos"
+        }
+      },
+      [
+        _vm._v("\r\n                   Tipos de Mídia\r\n                   "),
+        _c("i", { staticClass: "glyphicon glyphicon-chevron-down pull-right" })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "h5",
+      {
+        staticClass: "pointer",
+        attrs: {
+          "data-toggle": "collapse",
+          "data-target": "#collapse-licenses",
+          "aria-expanded": "false",
+          "aria-controls": "#collapse-licenses"
+        }
+      },
+      [
+        _vm._v("\r\n                   Licenças\r\n                   "),
+        _c("i", { staticClass: "glyphicon glyphicon-chevron-down pull-right" })
+      ]
+    )
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

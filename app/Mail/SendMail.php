@@ -28,6 +28,14 @@ class SendMail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->from('plataforma-f0d1bd@inbox.mailtrap.io')
+                ->view('emails.test')
+                ->with([
+                    'name' => $this->name,
+                    'email'=> $this->email,
+                    'url'=> $this->url,
+                    'subject'=> $this->subject,
+                    'message'=> $this->message,
+                ]);
     }
 }
