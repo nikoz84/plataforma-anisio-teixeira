@@ -17,11 +17,10 @@ class License extends Model
 
     public function conteudo()
     {
-        return $this->belongsTo('App\Conteudo', 'license_id');
+        return $this->belongsTo(\App\Conteudo::class, 'license_id');
     }
-    
     public function parent()
     {
-        return $this->hasMany('App\License', 'parent_id', 'id');
+        return $this->hasMany(\App\License::class, 'parent_id', 'id');
     }
 }

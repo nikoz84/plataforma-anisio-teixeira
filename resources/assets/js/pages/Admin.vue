@@ -6,15 +6,7 @@
             <header class="page-header">
                 <h1><small>{{ title }}</small></h1>
             </header>
-            <!-- transition name="custom-classes-transition" 
-                     enter-active-class="animated fadeInUp" 
-                     leave-active-class="animated bounceOut"
-                     mode="out-in" -->
-                <div v-if="show">
-                    {{ paginator.data }}
-                </div>    
-            <!-- /transition -->
-            
+            <router-view></router-view>
         </section>
     </div>
 </template>
@@ -40,6 +32,11 @@ export default {
     beforeCreate () {
         if (!store.state.isLogged) {
             this.$router.go('/usuario/login')
+        }
+    },
+    watch:{
+        search(novo,antigo){
+            this.$router.push(`/admin/listar/${novo}`)
         }
     },
     methods:{

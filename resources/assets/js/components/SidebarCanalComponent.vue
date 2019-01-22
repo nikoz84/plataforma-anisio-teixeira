@@ -54,6 +54,24 @@
             </li>
         </ul>
     </nav>
+    <nav role="menu tipo de conteúdos" v-if="tiposExists">
+        <h4>Tipo de Conteúdo</h4>
+        <ul>
+            <li v-for="(tipo, ti) in sidebar.tipos" :key="ti">{{ tipo.name }}</li>
+        </ul>
+        <h4>Licenças</h4>
+        <ul>
+            <li v-for="(license, li) in sidebar.licenses" :key="li">{{license.name}}</li>
+        </ul>
+        <h4>Componentes Curriculares</h4>
+        <ul>
+            <li v-for="(catComponent, com) in sidebar.components" :key="com">{{catComponent.name}}</li>
+        </ul>
+        <h4>Niveis de Ensino</h4>
+        <ul>
+            <li v-for="(nivel, ni) in sidebar.niveis" :key="ni">{{nivel.name}}</li>
+        </ul>
+    </nav>
 </div>
 </template>
 <script>
@@ -78,6 +96,18 @@ export default {
         },
         temasExists(){
             return (this.sidebar && this.sidebar.temas[0]) ? true : false;
+        },
+        tiposExists(){
+            return (this.sidebar && this.sidebar.tipos) ? true : false;
+        },
+        licensesExists(){
+            return (this.sidebar && this.sidebar.licenses) ? true : false;
+        },
+        componentsExists(){
+            return (this.sidebar && this.sidebar.components) ? true : false;
+        },
+        NiveisExists(){
+            return (this.sidebar && this.sidebar.niveis) ? true : false;
         }
     }
 

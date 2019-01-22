@@ -2,6 +2,10 @@
     <div class="conteiner">
 
         <form>
+            <p>Este espaço serve para você informar quaisquer dificuldade ocorrida na
+                visualização do conteúdo. Tem alguma dúvida, sugestão ou crítica a fazer?
+                Então entre em contato com a gente. Sua opinião é fundamental para o nosso 
+                aperfeiçoamento.</p>
 
             <div class="form-group">
                 <label for="nome">Nome:*</label>

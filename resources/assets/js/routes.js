@@ -1,5 +1,4 @@
 import HomeCanal from './pages/HomeCanal.vue';
-import Sobre from './pages/Sobre.vue';
 import Listar from './pages/Listar.vue';
 import Exibir from './pages/Exibir.vue';
 import ConteudoForm from './forms/ConteudoForm.vue';
@@ -8,6 +7,9 @@ import LoginForm from './forms/LoginForm.vue';
 import RecoverPassForm from './forms/RecoverPassForm.vue';
 import RegisterForm from './forms/RegisterForm.vue';
 import EditarForm from './forms/EditarForm.vue';
+import CanalForm from './forms/CanalForm.vue';
+import ListAdmin from './components/ListAdminComponent.vue';
+
 
 const routes =[
     {
@@ -25,7 +27,19 @@ const routes =[
       meta: {
         requiresAuth: true,
         //is_admin : true
-      }
+      },
+      children:[
+        {
+          path: 'listar/:canal',
+          name: 'ListarItens',
+          component: ListAdmin
+        },
+        {
+          path: 'adicionar-canal',
+          name: 'AddCanal',
+          component: CanalForm
+        }
+      ]
     },
     {
       path: '/usuario',

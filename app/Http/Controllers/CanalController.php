@@ -146,25 +146,34 @@ class CanalController extends Controller
                 
                 return [
                     'categories' => $categories,
-                    'is_category' => true,
-                    'disciplinas' => $disciplinas,
-                    'temas' => []
+                    'temas' => [],
+                    'disciplinas' => $disciplinas
                 ];
             break;
             case 5:
                 return [
+                    'categories' => [],
                     'temas' => \App\CurricularComponentCategory::where('id', '=', 3)->with('components')->get(),
-                    'disciplinas' => \App\NivelEnsino::where('id', '=', 5)->with('components')->get(),
-                    'is_category' => false,
-                    'categories' => []
+                    'disciplinas' => \App\NivelEnsino::where('id', '=', 5)->with('components')->get()
                 ];
+            break;
+            case 6:
+                return [
+                        'categories' => [],
+                        'temas' => [],
+                        'disciplinas' => [],
+                        'tipos' => \App\Tipo::select(['id','name'])->get(),
+                        'licenses' => \App\License::select(['id','name'])->whereRaw('parent_id is null')->get(),
+                        'components' => \App\CurricularComponentCategory::with('components')->get(),
+                        'niveis' => \App\NivelEnsino::with('components')->get()
+                    ];
             break;
             case 9:
                 return [
-                    'categories' => \App\AplicativoCategory::select(['id', 'name'])->get(),
-                    'temas' => [],
-                    'disciplinas' => []
-                ];
+                        'categories' => \App\AplicativoCategory::get(),
+                        'temas' => [],
+                        'disciplinas' => []
+                    ];
             break;
         }
     }

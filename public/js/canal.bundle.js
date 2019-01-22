@@ -1,18 +1,18 @@
 webpackJsonp([1],{
 
-/***/ 159:
+/***/ 164:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(182)
+  __webpack_require__(187)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(184)
+var __vue_script__ = __webpack_require__(189)
 /* template */
-var __vue_template__ = __webpack_require__(195)
+var __vue_template__ = __webpack_require__(200)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -52,13 +52,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 182:
+/***/ 187:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(183);
+var content = __webpack_require__(188);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -79,7 +79,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 183:
+/***/ 188:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -94,25 +94,22 @@ exports.push([module.i, "\n.page-header[data-v-4931cae4] {\n  margin: 0;\n}\n.pa
 
 /***/ }),
 
-/***/ 184:
+/***/ 189:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue__ = __webpack_require__(185);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue__ = __webpack_require__(190);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_NavCanalComponent_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue__ = __webpack_require__(190);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue__ = __webpack_require__(195);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_SidebarCanalComponent_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__http_js__ = __webpack_require__(4);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-//
-//
-//
 //
 //
 //
@@ -255,19 +252,19 @@ var http = new __WEBPACK_IMPORTED_MODULE_3__http_js__["a" /* default */]();
 
 /***/ }),
 
-/***/ 185:
+/***/ 190:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(186)
+  __webpack_require__(191)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(188)
+var __vue_script__ = __webpack_require__(193)
 /* template */
-var __vue_template__ = __webpack_require__(189)
+var __vue_template__ = __webpack_require__(194)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -307,13 +304,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 186:
+/***/ 191:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(187);
+var content = __webpack_require__(192);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -334,7 +331,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 187:
+/***/ 192:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -349,7 +346,7 @@ exports.push([module.i, "", ""]);
 
 /***/ }),
 
-/***/ 188:
+/***/ 193:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -404,7 +401,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 189:
+/***/ 194:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -488,19 +485,19 @@ if (false) {
 
 /***/ }),
 
-/***/ 190:
+/***/ 195:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(191)
+  __webpack_require__(196)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(193)
+var __vue_script__ = __webpack_require__(198)
 /* template */
-var __vue_template__ = __webpack_require__(194)
+var __vue_template__ = __webpack_require__(199)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -540,13 +537,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 191:
+/***/ 196:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(192);
+var content = __webpack_require__(197);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -567,7 +564,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 192:
+/***/ 197:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -582,12 +579,30 @@ exports.push([module.i, "", ""]);
 
 /***/ }),
 
-/***/ 193:
+/***/ 198:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__http_js__ = __webpack_require__(4);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -667,6 +682,18 @@ var http = new __WEBPACK_IMPORTED_MODULE_0__http_js__["a" /* default */]();
         },
         temasExists: function temasExists() {
             return this.sidebar && this.sidebar.temas[0] ? true : false;
+        },
+        tiposExists: function tiposExists() {
+            return this.sidebar && this.sidebar.tipos ? true : false;
+        },
+        licensesExists: function licensesExists() {
+            return this.sidebar && this.sidebar.licenses ? true : false;
+        },
+        componentsExists: function componentsExists() {
+            return this.sidebar && this.sidebar.components ? true : false;
+        },
+        NiveisExists: function NiveisExists() {
+            return this.sidebar && this.sidebar.niveis ? true : false;
         }
     }
 
@@ -674,7 +701,7 @@ var http = new __WEBPACK_IMPORTED_MODULE_0__http_js__["a" /* default */]();
 
 /***/ }),
 
-/***/ 194:
+/***/ 199:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -862,6 +889,50 @@ var render = function() {
             )
           ]
         )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.tiposExists
+      ? _c("nav", { attrs: { role: "menu tipo de conteúdos" } }, [
+          _c("h4", [_vm._v("Tipo de Conteúdo")]),
+          _vm._v(" "),
+          _c(
+            "ul",
+            _vm._l(_vm.sidebar.tipos, function(tipo, ti) {
+              return _c("li", { key: ti }, [_vm._v(_vm._s(tipo.name))])
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _c("h4", [_vm._v("Licenças")]),
+          _vm._v(" "),
+          _c(
+            "ul",
+            _vm._l(_vm.sidebar.licenses, function(license, li) {
+              return _c("li", { key: li }, [_vm._v(_vm._s(license.name))])
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _c("h4", [_vm._v("Componentes Curriculares")]),
+          _vm._v(" "),
+          _c(
+            "ul",
+            _vm._l(_vm.sidebar.components, function(catComponent, com) {
+              return _c("li", { key: com }, [_vm._v(_vm._s(catComponent.name))])
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _c("h4", [_vm._v("Niveis de Ensino")]),
+          _vm._v(" "),
+          _c(
+            "ul",
+            _vm._l(_vm.sidebar.niveis, function(nivel, ni) {
+              return _c("li", { key: ni }, [_vm._v(_vm._s(nivel.name))])
+            }),
+            0
+          )
+        ])
       : _vm._e()
   ])
 }
@@ -877,7 +948,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 195:
+/***/ 200:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -889,11 +960,7 @@ var render = function() {
       _c(
         "aside",
         { staticClass: "col-sm-3" },
-        [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("SidebarCanal", { attrs: { sidebar: _vm.sidebar } })
-        ],
+        [_c("SidebarCanal", { attrs: { sidebar: _vm.sidebar } })],
         1
       ),
       _vm._v(" "),
@@ -942,16 +1009,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center" }, [
-      _c("h3", [_vm._v("Filtro")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

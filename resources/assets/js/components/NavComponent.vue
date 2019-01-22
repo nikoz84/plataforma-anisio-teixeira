@@ -93,12 +93,13 @@ export default {
             this.$router.push('/usuario/editar');
         },
         async logout(){
+            localStorage.removeItem('token');
             let params = {token: localStorage.token };
             let resp = await http.postData('/auth/logout', params);
 
             if(resp.data.success){
                 store.commit('LOGOUT_USER');
-                localStorage.clear();
+                localStorage.removeItem('token');
                 this.$router.push('/usuario/login');
             }
         },
