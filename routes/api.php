@@ -119,6 +119,19 @@ Route::get('/tags/{id}', 'TagController@getById')->name('buscaxTagId');
 */
 Route::get('/licenses', 'LicenseController@list')->name('listaLicenca');
 
+/******
+ *
+ * Controlador: Mail
+ * Métodos: getSend -> enviar os emails para formulário denúncia e fale conosco
+ */
+Route::post('/email/enviar', 'DenunciaController@create')->name('denuncia.create');
+
+/******
+ *
+ * Controlador: Fale Conosco
+ * Métodos: getSend -> enviar formulário fale conosco
+ */
+Route::post('/faleconosco/enviar', 'FaleconoscoController@enviar')->name('faleconosco.enviar');
 
 /**
  *

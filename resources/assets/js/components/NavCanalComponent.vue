@@ -13,6 +13,9 @@
             <router-link tag="li" :to="{ name: 'AdicionarAplicativo', params: {slug: $route.params.slug}}" v-if="showAdicionarAplicativo" exact>
                 <a>Adicionar</a>
             </router-link>
+            <li>
+                <a  v-on:click.prevent="getUrl">Denúnciar</a>
+            </li>
         </ul>
     </nav>
 </template>
@@ -28,7 +31,7 @@ export default {
         }
     },
     beforeCreate() {
-        
+
     },
     computed:{
         showAdicionarConteudo (){
@@ -43,6 +46,14 @@ export default {
             }
             return false;
         }
+    },
+    methods:{
+        getUrl(){
+            let url = encodeURI(location.href);
+            this.$router.push(
+                { name:'DenunciaForm', params: {slug: this.$route.params.slug, url}}
+            )
+        },
     }
 }
 </script>

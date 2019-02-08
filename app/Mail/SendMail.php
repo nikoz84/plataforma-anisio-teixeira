@@ -2,10 +2,14 @@
 
 namespace App\Mail;
 
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class SendMail extends Mailable
 {
@@ -37,5 +41,19 @@ class SendMail extends Mailable
                     'subject'=> $this->subject,
                     'message'=> $this->message,
                 ]);
+    }
+
+    public function enviaEmail()
+    {
+        $emails = $this->listaEmails->
+        $name = $this->name;
+        $email = $this->email;
+        $url = $this->url;
+        $subject = $this->subject;
+        $message = $this->message;
+
+        $data = array('description' => $description, 'subject' => $subject);
+
+        $send = Mail::send('email.email-multiple', $data);
     }
 }

@@ -9,6 +9,7 @@ import RegisterForm from './forms/RegisterForm.vue';
 import EditarForm from './forms/EditarForm.vue';
 import CanalForm from './forms/CanalForm.vue';
 import ListAdmin from './components/ListAdminComponent.vue';
+import DenunciaForm from './forms/DenunciaForm.vue';
 
 
 const routes =[
@@ -129,6 +130,11 @@ const routes =[
           meta: {
             requiresAuth: true
           }
+        },
+        {
+          path: 'denuncia/:url',
+          name: 'DenunciaForm',
+          component: DenunciaForm
         }
 
       ]

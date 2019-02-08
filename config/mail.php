@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mailtrap.io'),
+    'host' => env('MAIL_HOST', 'smtp.gmail.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'plataforma-f0d1bd@inbox.mailtrap.io'),
+        'address' => env('MAIL_FROM_ADDRESS', 'plataforma-b532cb@inbox.mailtrap.io'),
         'name' => env('MAIL_FROM_NAME', 'Plataforma IAT'),
     ],
 

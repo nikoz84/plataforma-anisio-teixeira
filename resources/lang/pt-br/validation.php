@@ -129,5 +129,9 @@ return [
         'url' => 'url',
         'category' => 'categoria',
         'category_id' => 'categoria',
+        'recaptcha' => 'código de segurança'
+    ],
+    'options' => [
+        'lang' => 'pt-BR',
     ],
 ];

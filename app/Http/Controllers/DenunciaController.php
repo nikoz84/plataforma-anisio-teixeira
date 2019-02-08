@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Denuncia;
 use Illuminate\Http\Request;
 use Validator;
+use App\User;
+use Mail;
+use App\Helpers\GoogleRecaptcha;
 
 class DenunciaController extends Controller
 {
@@ -38,6 +41,7 @@ class DenunciaController extends Controller
      */
     public function create()
     {
+
         $validator = $this->validar($this->request->all());
         if ($validator->fails()) {
             return response()->json([
@@ -47,6 +51,12 @@ class DenunciaController extends Controller
             ], 200);
         }
 
+        $google_recap = new GoogleRecaptcha($this->request);
+        $resp_recaptcha = $google_recap->validateRecaptcha();
+        if (!$resp_recaptcha) {
+            return response()->json($resp_recaptcha);
+        }
+
         $denuncia = $this->denuncia;
         $denuncia->name = $this->request->get('name', '');
         $denuncia->email = $this->request->get('email');
@@ -54,13 +64,32 @@ class DenunciaController extends Controller
         $denuncia->subject = $this->request->get('subject');
         $denuncia->message = $this->request->get('message');
 
-        $denuncia->save();
+        $resp = $denuncia->save();
+        if (!$resp) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Denúncia não registrada'
+            ]);
+        }
+        $this->sendToAdminUsers(); // Envio de email a usuários admin e super admin
 
         return response()->json([
             'success' => true,
-            'message' => 'Denúncia registrada com sucesso',
-            'id' => $denuncia->id
+            'message' => 'Denúncia registrada com sucesso'
         ]);
+    }
+
+    private function sendToAdminUsers()
+    {
+        $users = User::whereRaw("options->>'role' = 'administrador' or options->>'role' = 'super administrador'")->get();
+
+        foreach ($users as $user) {
+            Mail::send('emails', [], function ($message) use ($user) {
+                $message->from('plataforma-b532cb@inbox.mailtrap.io', 'IAT - Instituto Anísio Teixeira');
+                $message->to($user->email)->subject('Nova denúncia');
+            });
+        }
+        return true;
     }
 
     /**
@@ -99,7 +128,8 @@ class DenunciaController extends Controller
             'email' => 'required',
             'url' => 'required',
             'subject' => 'required',
-            'message' => 'required'
+            'message' => 'required',
+            'recaptcha' => 'required'
         ]);
 
         return $validator;
