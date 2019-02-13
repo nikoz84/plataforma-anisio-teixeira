@@ -58,7 +58,7 @@ class DenunciaController extends Controller
         }
 
         $denuncia = $this->denuncia;
-        $denuncia->name = $this->request->get('name', '');
+        $denuncia->name = $this->request->get('name');
         $denuncia->email = $this->request->get('email');
         $denuncia->url = $this->request->get('url');
         $denuncia->subject = $this->request->get('subject');
@@ -134,5 +134,4 @@ class DenunciaController extends Controller
 
         return $validator;
     }
-
 }

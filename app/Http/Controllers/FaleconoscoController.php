@@ -23,6 +23,12 @@ class FaleconoscoController extends Controller
             ], 200);
         }
 
+        $google_recap = new GoogleRecaptcha($this->request);
+        $resp_recaptcha = $google_recap->validateRecaptcha();
+        if (!$resp_recaptcha) {
+            return response()->json($resp_recaptcha);
+        }
+
         $faleconosco = $this->faleconosco;
         $faleconosco->name = $this->request->get('name', '');
         $faleconosco->email = $this->request->get('email');
@@ -48,6 +54,25 @@ class FaleconoscoController extends Controller
             });
         }
         return true;
+    }
+
+    /**
+     * Valida os campos do formulário denúncia
+     *
+     * @return
+     */
+    private function validar()
+    {
+        $validator = Validator::make($this->request->all(), [
+            'name' => 'required|min:5',
+            'email' => 'required',
+            'url' => 'required',
+            'subject' => 'required',
+            'message' => 'required',
+            'recaptcha' => 'required'
+        ]);
+
+        return $validator;
     }
 }
 

@@ -1,7 +1,7 @@
 <template>
     <div class="conteiner">
 
-        <form>
+        <form v-on:submit.prevent="enviar()" v-if="!isSend">
             <p>Este espaço serve para você informar quaisquer dificuldade ocorrida na
                 visualização do conteúdo. Tem alguma dúvida, sugestão ou crítica a fazer?
                 Então entre em contato com a gente. Sua opinião é fundamental para o nosso
@@ -38,14 +38,32 @@
                 aperfeiçoamento.</p>
 
             <div class="form-group">
+                <label for="mensagem">Código de segurança:*</label>
+                <div class="form-group row">
+                    <div class="col-md-6 offset-md-4">
+                       <div class="g-recaptcha" :data-sitekey="siteKey"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group">
                 <button class="btn btn-default">Enviar</button>
             </div>
 
         </form>
+        <div v-else-if="isSend">
+            Formulario enviado com sucesso!!
+        </div>
+        <div class="col-md-12" v-if="isLoading">
+            <div class="col-md-1"><Loader></Loader></div>
+            <div class="col-md-4">enviando denúncia...</div>
+        </div>
 
     </div>
 </template>
 <script>
+import Loader from '../components/LoaderComponent.vue';
 import Http from '../http.js';
 
 const http = new Http();
@@ -56,8 +74,19 @@ export default {
       email: '',
       url: this.$route.params.url,
       subject: '',
-      message: ''
+      message: '',
+      isSend: false,
+      isLoading: false,
+      r_id: 0,
+      siteKey: '6LegZ48UAAAAAI-sKAY09kHtR-uBkiizT6XKcOli'
     }
+  },
+  mounted(){
+      //console.log(window.grecaptcha)
+      if(window.grecaptcha){
+          let container = document.getElementsByClassName('g-recaptcha')[0];
+          this.r_id = grecaptcha.render(container, { sitekey: this.siteKey })
+      }
   },
   computed:{
       getUrl(){
@@ -66,12 +95,17 @@ export default {
   },
   methods:{
     async enviar(){
+      this.isLoading = true;
+      let resRecaptcha = grecaptcha.getResponse();
       let data = { name: this.name, email: this.email,
                     url: this.url, subject: this.subject, message: this.message
         };
       let resp = await http.config('POST','/faleconosco/enviar', data);
+      this.isSend = resp.data.success;
       if(resp.data.success){
-          this.$router.push('/');
+          this.isLoading = false;
+      }else{
+          this.isLoading = false;
       }
 
     }
