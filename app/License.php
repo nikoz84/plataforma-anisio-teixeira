@@ -19,6 +19,7 @@ class License extends Model
     {
         return $this->belongsTo(\App\Conteudo::class, 'license_id');
     }
+
     public function parent()
     {
         return $this->hasMany(\App\License::class, 'parent_id', 'id');

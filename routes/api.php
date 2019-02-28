@@ -35,7 +35,15 @@ Route::get('/categories/aplicativos', 'CategoryController@getAplicativoCategorie
  * Controlador: Tipo
  * Métodos: list -> Lista dos tipos
  */
-Route::get('/tipos/conteudos', 'TipoController@list')->name('listaTipos');
+Route::get('/tipos/conteudos', 'TipoController@list')->name('listar.tipos');
+
+/******
+ *
+ * Controlador: Denuncia
+ * Métodos: adicionar -> Denúncias
+ */
+Route::get('/denuncias', 'DenunciaController@list')->name('listar.denuncias');
+Route::post('/denuncias/create', 'DenunciaController@create')->name('criar.denuncias');
 
 /******
  *
@@ -43,7 +51,7 @@ Route::get('/tipos/conteudos', 'TipoController@list')->name('listaTipos');
  * Métodos: getBySlug -> Dados do canal pela url amigável
  *
  */
-Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscaCanalxUrlAmigavel');
+Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscar.canal.x.url.amigavel');
 
 /******
  *
@@ -111,6 +119,19 @@ Route::get('/tags/{id}', 'TagController@getById')->name('buscaxTagId');
 */
 Route::get('/licenses', 'LicenseController@list')->name('listaLicenca');
 
+/******
+ *
+ * Controlador: Mail
+ * Métodos: getSend -> enviar os emails para formulário denúncia e fale conosco
+ */
+Route::post('/email/enviar', 'DenunciaController@create')->name('denuncia.create');
+
+/******
+ *
+ * Controlador: Fale Conosco
+ * Métodos: getSend -> enviar formulário fale conosco
+ */
+Route::post('/faleconosco/enviar', 'FaleconoscoController@enviar')->name('faleconosco.enviar');
 
 /**
  *
@@ -211,4 +232,12 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/licenses/create', 'LicenseController@create')->name('adicionarLicenca');
     Route::put('/licenses/update/{id}', 'LicenseController@update')->name('atualizarLicenca');
     Route::delete('/licenses/delete/{id}', 'LicenseController@delete')->name('apagarLicenca');
+    /**
+     *
+     * Controlador: Denúncia
+     * Métodos: delete -> deletar denúncias
+     * delete -> Apagar denúncias
+     *
+     */
+    Route::delete('/denuncias/delete/{id}', 'DenunciaController@delete')->name('apagar.denuncias');
 });

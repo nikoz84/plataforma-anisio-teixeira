@@ -158,7 +158,7 @@ class ConteudoController extends Controller
      */
     public function update($id)
     {
-        dd($id);
+        //dd($id);
         $conteudo = $this->conteudo::find($id);
         $conteudo->fill($this->request->all());
 
