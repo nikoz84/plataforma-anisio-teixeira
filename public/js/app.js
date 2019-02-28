@@ -602,39 +602,39 @@ var Http = function () {
     _createClass(Http, [{
         key: 'getDataFromIdCanal',
         value: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(idCanal) {
-                var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-                var url;
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(params) {
+                var id, url;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 _context.prev = 0;
-                                url = this.getUrlCanal(idCanal);
-                                _context.next = 4;
+                                id = localStorage.canal_id;
+                                url = this.getUrlCanal(id);
+                                _context.next = 5;
                                 return axios.get(url, params);
 
-                            case 4:
+                            case 5:
                                 return _context.abrupt('return', _context.sent);
 
-                            case 7:
-                                _context.prev = 7;
+                            case 8:
+                                _context.prev = 8;
                                 _context.t0 = _context['catch'](0);
-                                _context.next = 11;
+                                _context.next = 12;
                                 return _context.t0.response;
 
-                            case 11:
+                            case 12:
                                 return _context.abrupt('return', _context.sent);
 
-                            case 12:
+                            case 13:
                             case 'end':
                                 return _context.stop();
                         }
                     }
-                }, _callee, this, [[0, 7]]);
+                }, _callee, this, [[0, 8]]);
             }));
 
-            function getDataFromIdCanal(_x2) {
+            function getDataFromIdCanal(_x) {
                 return _ref.apply(this, arguments);
             }
 
@@ -765,7 +765,7 @@ var Http = function () {
                 }, _callee4, this);
             }));
 
-            function config(_x6, _x7, _x8) {
+            function config(_x5, _x6, _x7) {
                 return _ref4.apply(this, arguments);
             }
 
@@ -928,6 +928,7 @@ var Http = function () {
                     return this.api + '/conteudos/sites';
                     break;
                 case id == 6:
+                    //console.warn('as')
                     return this.api + '/conteudos';
                     break;
                 case id == 9:
@@ -17696,30 +17697,35 @@ var http = new __WEBPACK_IMPORTED_MODULE_2__http_js__["a" /* default */]();
         this.getConteudos();
     },
 
+    watch: {
+        '$route': function $route(to, from) {
+            this.getConteudos();
+        }
+    },
     methods: {
         getConteudos: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-                var idCanal, params, resp;
+                var params, resp;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
-                                idCanal = localStorage.canal_id;
-                                params = {};
+                                console.log(this.$route.query);
+                                params = this.$route.query;
                                 _context.next = 4;
-                                return http.getDataFromIdCanal(idCanal, params);
+                                return http.getDataFromIdCanal(params);
 
                             case 4:
                                 resp = _context.sent;
 
-
+                                console.log(resp);
                                 if (resp.data.success) {
 
                                     this.title = resp.data.title;
                                     this.paginator = resp.data.paginator;
                                 }
 
-                            case 6:
+                            case 7:
                             case 'end':
                                 return _context.stop();
                         }

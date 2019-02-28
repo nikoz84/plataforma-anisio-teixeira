@@ -386,13 +386,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {
         showAdicionarConteudo: function showAdicionarConteudo() {
             if (this.isLogged && this.$route.params.slug != 'aplicativos-educacionais') {
-                return this.isLogged;
+                return true;
             }
             return false;
         },
         showAdicionarAplicativo: function showAdicionarAplicativo() {
             if (this.isLogged && this.$route.params.slug == 'aplicativos-educacionais') {
-                return this.isLogged;
+                return true;
             }
             return false;
         }

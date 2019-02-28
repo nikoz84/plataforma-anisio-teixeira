@@ -33,13 +33,13 @@ export default {
     computed:{
         showAdicionarConteudo (){
             if(this.isLogged && this.$route.params.slug != 'aplicativos-educacionais'){
-                return this.isLogged;
+                return true;
             }
             return false;
         },
         showAdicionarAplicativo (){
             if(this.isLogged && this.$route.params.slug == 'aplicativos-educacionais'){
-                return this.isLogged;
+                return true;
             }
             return false;
         }
