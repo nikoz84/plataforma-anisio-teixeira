@@ -84,7 +84,7 @@ class DenunciaController extends Controller
         $users = User::whereRaw("options->>'role' = 'administrador' or options->>'role' = 'super administrador'")->get();
 
         foreach ($users as $user) {
-            Mail::send('emails', [], function ($message) use ($user) {
+            Mail::send('emails', [], new SendMail(name), function ($message) use ($user) {
                 $message->from('plataforma-b532cb@inbox.mailtrap.io', 'IAT - Instituto Anísio Teixeira');
                 $message->to($user->email)->subject('Nova denúncia');
             });

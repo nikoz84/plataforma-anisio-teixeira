@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Plataforma Anísio Teixeira'),
+    'name' => 'Plataforma Anísio Teixeira',
 
     /*
     |--------------------------------------------------------------------------

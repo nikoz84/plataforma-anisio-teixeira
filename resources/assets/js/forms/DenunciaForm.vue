@@ -79,7 +79,7 @@
 
         </form>
         <div v-else-if="isSend">
-            Formulario enviado com sucesso!!
+            Denúncia enviada com sucesso!!
         </div>
         <div class="col-md-12" v-if="isLoading">
             <div class="col-md-1"><Loader></Loader></div>
@@ -112,13 +112,13 @@ export default {
         isError: true,
         success: false,
         errors: {
-                    name: [],
-                    email: [],
-                    url: [],
-                    subject: [],
-                    message: [],
-                    recaptcha: []
-                },
+            name: [],
+            email: [],
+            url: [],
+            subject: [],
+            message: [],
+            recaptcha: []
+        },
         }
     },
   mounted(){

@@ -10,6 +10,8 @@ import EditarForm from './forms/EditarForm.vue';
 import CanalForm from './forms/CanalForm.vue';
 import ListAdmin from './components/ListAdminComponent.vue';
 import DenunciaForm from './forms/DenunciaForm.vue';
+import FaleConoscoForm from './forms/FaleConoscoForm.vue';
+import UsuarioForm from './forms/UsuarioForm.vue';
 
 
 const routes =[
@@ -69,6 +71,11 @@ const routes =[
           path: 'editar',
           name: 'Editar',
           component: EditarForm
+        },
+        {
+          path: 'create',
+          name: 'Create',
+          component: UsuarioForm
         }
       ]
     },
@@ -135,6 +142,11 @@ const routes =[
           path: 'denuncia/:url',
           name: 'DenunciaForm',
           component: DenunciaForm
+        },
+        {
+          path: 'faleconosco/:url',
+          name: 'FaleConoscoForm',
+          component: FaleConoscoForm
         }
 
       ]

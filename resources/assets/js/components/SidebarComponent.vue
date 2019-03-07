@@ -29,7 +29,7 @@ export default {
             let http = new Http();
             let params ={ token: localStorage.token };
             let resp = await http.getDataWithTokenUrl(`/${endpoint}`, params);
-            
+
             if(resp.data.success){
                 this.$parent.paginator = resp.data.paginator;
                 this.$parent.title = resp.data.title;
@@ -43,6 +43,6 @@ export default {
 }
 </script>
 <style lang="sass" scoped>
-.w-150 { width: 150px; }
+
 </style>
 

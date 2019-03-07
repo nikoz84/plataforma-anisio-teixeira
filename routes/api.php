@@ -47,6 +47,13 @@ Route::post('/denuncias/create', 'DenunciaController@create')->name('criar.denun
 
 /******
  *
+ * Controlador: Fale Cconosco
+ * Métodos: enviar -> Fale Conosco
+ */
+Route::post('/faleconosco/create', 'FaleconoscoController@list')->name('criar.faleconosco');
+
+/******
+ *
  * Controlador: Canal
  * Métodos: getBySlug -> Dados do canal pela url amigável
  *
@@ -166,6 +173,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::delete('/users/{id}', 'UserController@getById')->name('user.x.id');
     Route::get('/users', 'UserController@list')->name('usuario.listar');
     Route::put('/users/reset_pass', 'UserController@resetPass')->name('senha.atualizar');
+    Route::post('/users/create', 'UserController@create')->name('adicionar.usuario');
     /**
      *
      * Controlador: Aplicativo

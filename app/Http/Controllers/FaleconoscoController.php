@@ -11,7 +11,7 @@ class FaleconoscoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function enviar()
+    public function create()
     {
 
         $validator = $this->validar($this->request->all());
