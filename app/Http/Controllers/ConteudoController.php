@@ -36,12 +36,14 @@ class ConteudoController extends Controller
         $licencas = $this->request->query('licencas');
         $componentes = $this->request->query('componentes');
         $categorias =  $this->request->query('categorias');
+        /*
         return response()->json([
                 'tipos' => $tipos,
                 'componentes'=> $componentes,
                 'licencas' => $licencas,
                 'categorias' => $categorias
             ]);
+        */
         $query = $this->conteudo::query();
         $query->when($canal, function ($q, $canal) {
             return $q->where('canal_id', $canal)

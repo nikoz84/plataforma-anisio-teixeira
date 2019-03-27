@@ -91,6 +91,8 @@ COPY (
 		'neighborhood', bairro	
             ) as options,
             null as remember_token,
+            null as verification_token,
+            TRUE as verified,
             u.datacriacao as created_at,
             u.dataatualizacao as updated_at	
     from usuario as u  
