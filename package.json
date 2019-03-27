@@ -20,17 +20,18 @@
     "jquery": "^3.2",
     "laravel-mix": "^4.0.15",
     "lodash": "^4.17.4",
-    "node-sass": "^4.10.0",
+    "node-sass": "^4.11.0",
     "resolve-url-loader": "^2.3.1",
     "sass-loader": "^7.1.0",
-    "vue": "^2.5.7",
+    "vue": "^2.6.10",
     "vue-router": "^3.0.2",
-    "vue-template-compiler": "^2.6.6",
+    "vue-template-compiler": "^2.6.10",
     "vue-tiny-lazyload-img": "0.0.3",
     "vuex": "^3.0.1"
   },
   "dependencies": {
     "lodash": "^4.17.11",
-    "vue-input-tag": "^2.0.1"
+    "vue-input-tag": "^2.0.1",
+    "vue-loader": "^15.7.0"
   }
 }
