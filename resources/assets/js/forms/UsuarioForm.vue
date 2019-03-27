@@ -1,5 +1,6 @@
 <template>
     <div class="conteiner">
+        <div class="row col-lg-6 col-xs-offset-3">
 
         <form>
 
@@ -82,10 +83,16 @@
             </div>
             <div class="form-check">
                 <label class="form-check-label" for="sexo">
-                    Sexo:
+                Sexo:
                 </label>
+                <label>
                 <input class="form-check-input" type="radio" name="sexo" id="sexo-m" value="m" checked>
-                <input class="form-check-input" type="radio" name="sexo" id="sexo-f" value="f" checked>
+                Masculino
+                </label>
+                <label>
+                <input class="form-check-input" type="radio" name="sexo" id="sexo-f" value="f">
+                Feminino
+                </label>
             </div>
             <div class="form-group">
                 <label for="datanascimento">Data de nascimento:</label>
@@ -94,10 +101,6 @@
             <div class="form-group">
                 <label for="emailinstitucional">E-mail Institucional:*</label>
                 <input type="email" class="form-control" id="emailinstitucional" name="emailinstitucional">
-            </div>
-            <div class="form-group">
-                <label for="emailpessoal">E-mail Pessoal:*</label>
-                <input type="email" class="form-control" id="emailpessoal" name="emailpessoal">
             </div>
             <div class="form-group">
                 <label for="emailpessoal">E-mail Pessoal:*</label>
@@ -182,10 +185,127 @@
                 </select>
             </div>
 
-
-
+            <button class="btn btn-success">Adicionar</button>
 
         </form>
 
     </div>
+    </div>
 </template>
+
+<script>
+import Http from '../http.js';
+import TagsForm from './TagsForm.vue';
+const http = new Http;
+
+export default {
+    name: 'UsuarioForm',
+    data(){
+        return {
+            login: null,
+            name: null,
+            email: null,
+            options: {},
+            message: null,
+            count: 0,
+            success: false,
+            isError: true,
+            isUpdate: false,
+            textButton: 'Criar',
+            errors: {
+                name: [],
+                url: [],
+                description: [],
+                category: []
+            },
+        }
+
+    },
+    
+    methods:{
+        send(){
+            if(this.isUpdate){
+                this.editAplicativo();
+            }else{
+                this.createAplicativo();
+            }
+        },
+        async createAplicativo(){
+            this.options = {
+                qt_access : 0
+            }
+            if(!this.image) return;
+            let form = new FormData();
+            form.append('name', this.name);
+            form.append('description',this.description);
+            form.append('category_id', this.category_id);
+            form.append('canal_id', localStorage.canal_id);
+            form.append('tags', this.tags);
+            form.append('url', this.url);
+            form.append('is_featured', this.is_featured);
+            form.append('options', JSON.stringify(this.options));
+            form.append('image',this.image, this.image.name);
+            form.append('token', localStorage.token);
+
+            let resp = await http.postData('/aplicativos/create', form);
+            console.warn(resp);
+
+            if(resp.data.success){
+                this.$router.push({ name: 'Listar', params: {slug: this.$route.params.slug}})
+            }else{
+                this.isError = resp.data.success;
+                this.message = resp.data.message;
+                if(resp.data.errors){
+                    this.errors = resp.data.errors;
+                }
+
+                setTimeout(()=>{
+                    this.isError = true;
+                },3000)
+            }
+
+        },
+        async getCategories(){
+            let resp = await http.getDataFromUrl('/categories/aplicativos');
+
+            this.categories = resp.data.categories;
+        },
+        onFileChange(e){
+            this.image = e.target.files[0];
+        },
+        countCaracters(e){
+            if(e.target.value.length > 140){
+                this.success = true;
+            }
+            this.count = e.target.value.length;
+        },
+        async getAplicativo(){
+            let resp = await http.getDataFromUrl(`/aplicativos/${this.$route.params.id}`);
+            if(resp.data.success){
+                this.name = resp.data.aplicativo.name;
+                this.category_id = resp.data.aplicativo.category_id;
+                this.description = resp.data.aplicativo.description;
+                this.url = resp.data.aplicativo.url;
+                this.is_featured = resp.data.aplicativo.is_featured;
+                this.image = resp.data.aplicativo.image;
+            }
+        },
+        async editAplicativo(){
+            let params ={
+                name: this.name,
+                category_id: this.category_id,
+                canal_id: localStorage.canal_id,
+                description: this.description,
+                url: this.url,
+                is_featured: this.is_featured,
+                token: localStorage.token
+            }
+
+            let resp = await http.config('PUT',`/aplicativos/update/${this.$route.params.id}`,params);
+
+            console.log(resp)
+        }
+    }
+
+}
+</script>

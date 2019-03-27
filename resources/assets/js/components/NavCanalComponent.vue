@@ -16,6 +16,9 @@
             <li>
                 <a  v-on:click.prevent="getUrl">Denúnciar</a>
             </li>
+            <li>
+                <a  v-on:click.prevent="getUrlFaleConosco">Fale Conosco</a>
+            </li>
         </ul>
     </nav>
 </template>
@@ -52,6 +55,12 @@ export default {
             let url = encodeURI(location.href);
             this.$router.push(
                 { name:'DenunciaForm', params: {slug: this.$route.params.slug, url}}
+            )
+        },
+        getUrlFaleConosco(){
+            let url = encodeURI(location.href);
+            this.$router.push(
+                { name:'FaleConoscoForm', params: {slug: this.$route.params.slug, url}}
             )
         },
     }

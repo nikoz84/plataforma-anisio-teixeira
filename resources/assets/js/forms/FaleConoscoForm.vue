@@ -1,15 +1,21 @@
 <template>
     <div class="conteiner">
-
-        <form v-on:submit.prevent="enviar()" v-if="!isSend">
+        <div class="row col-md-7">
+            <form v-on:submit.prevent="enviar()" v-if="!isSend">
             <p>Este espaço serve para você informar quaisquer dificuldade ocorrida na
                 visualização do conteúdo. Tem alguma dúvida, sugestão ou crítica a fazer?
                 Então entre em contato com a gente. Sua opinião é fundamental para o nosso
                 aperfeiçoamento.</p>
 
-            <div class="form-group">
+            <div class="form-group" v-bind:class="{ 'has-error': errors.name && errors.name.length > 0 }">
                 <label for="nome">Nome:*</label>
                 <input type="text" class="form-control" id="nome" v-model="name" placeholder="Digite seu nome">
+                <small class="text-danger"
+                        v-if="errors.name"
+                        v-for="(error,n) in errors.name"
+                        v-bind:key="n"
+                        v-text="error">
+                </small>
             </div>
 
             <div class="form-group">
@@ -51,15 +57,15 @@
                 <button class="btn btn-default">Enviar</button>
             </div>
 
-        </form>
-        <div v-else-if="isSend">
-            Formulario enviado com sucesso!!
+            </form>
+            <div v-else-if="isSend">
+                mensagem enviada com sucesso!!
+            </div>
+            <div class="col-md-12" v-if="isLoading">
+                <div class="col-md-1"><Loader></Loader></div>
+                <div class="col-md-4">enviando mensagem...</div>
+            </div>
         </div>
-        <div class="col-md-12" v-if="isLoading">
-            <div class="col-md-1"><Loader></Loader></div>
-            <div class="col-md-4">enviando denúncia...</div>
-        </div>
-
     </div>
 </template>
 <script>
@@ -68,17 +74,29 @@ import Http from '../http.js';
 
 const http = new Http();
 export default {
-  data () {
-    return {
-      name: '',
-      email: '',
-      url: this.$route.params.url,
-      subject: '',
-      message: '',
-      isSend: false,
-      isLoading: false,
-      r_id: 0,
-      siteKey: '6LegZ48UAAAAAI-sKAY09kHtR-uBkiizT6XKcOli'
+    name: 'FaleConoscoForm',
+    components: { Loader },
+    data () {
+        return {
+        name: '',
+        email: '',
+        url: this.$route.params.url,
+        subject: '',
+        message: '',
+        isSend: false,
+        isLoading: false,
+        r_id: 0,
+        siteKey: '6LegZ48UAAAAAI-sKAY09kHtR-uBkiizT6XKcOli',
+        isError: true,
+            success: false,
+            errors: {
+                name: [],
+                email: [],
+                url: [],
+                subject: [],
+                message: [],
+                recaptcha: []
+            },
     }
   },
   mounted(){
@@ -100,13 +118,23 @@ export default {
       let data = { name: this.name, email: this.email,
                     url: this.url, subject: this.subject, message: this.message
         };
+
       let resp = await http.config('POST','/faleconosco/enviar', data);
       this.isSend = resp.data.success;
+
       if(resp.data.success){
-          this.isLoading = false;
+            this.isLoading = false;
       }else{
-          this.isLoading = false;
+            this.isLoading = false;
+            this.isError = resp.data.success;
+            if(resp.data.errors){
+                this.errors = resp.data.errors;
+            }
       }
+
+      setTimeout(()=>{
+            this.isError = true;
+        },3000)
 
     }
   }

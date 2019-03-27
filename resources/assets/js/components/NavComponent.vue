@@ -11,10 +11,11 @@
                 </button>
                 <a class="navbar-brand" href="/">
                     <img class="logo pull-left" alt="Logo da plataforma" src="/logo.svg" width="30" height="30">
-                    <span class="name pull-left hidden-xs">Plataforma Anísio Teixeira</span> 
+                    <span class="name pull-left hidden-xs">Plataforma Anísio Teixeira</span>
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="menu-deslizante">
+
                 <ul class="nav navbar-nav navbar-right">
 
                     <li class="dropdown">
@@ -65,6 +66,30 @@
                         </ul>
                     </li>
                 </ul>
+                <!-- menu configurações -->
+                <li v-if="isLogged">
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-cog"></i> <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'recursos-educacionais-abertos'}}">
+                               <a>Alterar minha senha</a>
+                            </router-link>
+                            <li>
+                                <a v-on:click.prevent="getCreateUsuario()">Criar Usuário</a>
+                            </li>
+                            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'Listar'}}">
+                                <a>Listar usuários</a>
+                            </router-link>
+                            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'Denúncia'}}">
+                                <a>Verificar denúncias</a>
+                            </router-link>
+                        </ul>
+                    </li>
+                </ul>
+                </li>
+                <!--/END menu configurações -->
             </div>
         </div>
         <div class="progress-container">
@@ -108,6 +133,9 @@ export default {
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             var scrolled = (winScroll / height) * 100;
             document.getElementById("bar").style.width = scrolled + "%";
+        },
+        getCreateUsuario(){
+            this.$router.push('/usuario/create');
         }
     },
     created () {

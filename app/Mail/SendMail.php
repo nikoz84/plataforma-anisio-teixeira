@@ -10,19 +10,28 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-
 class SendMail extends Mailable
 {
     use Queueable, SerializesModels;
+
+    public $name;
+    public $email;
+    public $url;
+    public $subject;
+    public $message;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($name, $email, $url, $subject, $message)
     {
-        //
+        $this->name = $name;
+        $this->email = $email;
+        $this->url = $url;
+        $this->subject = $subject;
+        $this->message = $message;
     }
 
     /**
@@ -41,19 +50,5 @@ class SendMail extends Mailable
                     'subject'=> $this->subject,
                     'message'=> $this->message,
                 ]);
-    }
-
-    public function enviaEmail()
-    {
-        $emails = $this->listaEmails->
-        $name = $this->name;
-        $email = $this->email;
-        $url = $this->url;
-        $subject = $this->subject;
-        $message = $this->message;
-
-        $data = array('description' => $description, 'subject' => $subject);
-
-        $send = Mail::send('email.email-multiple', $data);
     }
 }
