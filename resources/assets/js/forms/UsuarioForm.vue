@@ -204,7 +204,6 @@
 
 <script>
 import Http from '../http.js';
-import TagsForm from './TagsForm.vue';
 const http = new Http;
 
 export default {
