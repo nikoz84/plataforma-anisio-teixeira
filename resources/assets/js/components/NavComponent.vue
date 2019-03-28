@@ -79,7 +79,7 @@
                             <li>
                                 <a v-on:click.prevent="getCreateUsuario()">Criar Usuário</a>
                             </li>
-                            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'Listar'}}">
+                            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'users'}}">
                                 <a>Listar usuários</a>
                             </router-link>
                             <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'Denúncia'}}">

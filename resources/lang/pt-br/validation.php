@@ -119,7 +119,7 @@ return [
         'email' => 'e-mail',
         'source' => 'fonte',
         'authors' => 'autores',
-        'tipo' => 'tipo de conteúdo',
+        'tipo' => 'tipo',
         'license' => 'licença',
         'is_approved' => 'aprovar conteúdo',
         'terms' => 'termos e condições',

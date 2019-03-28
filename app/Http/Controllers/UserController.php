@@ -10,26 +10,27 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    public function __construct()
+    public function __construct(Request $request, User $user)
     {
-        $this->middleware('jwt.verify');
+        $this->middleware('jwt.verify')->except(['list','create', 'delete', 'search']);
+        $this->user = $user;
+        $this->request = $request;
     }
-    public function list(Request $request)
+
+    /**
+     * Lista de usuários
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function list()
     {
-        $limit = ($request->has('limit')) ? $request->query('limit') : 20;
-        $page = ($request->has('page')) ? $request->query('page') : 1;
-
-        $paginator = User::where("options->is_active", 'true')
-          ->paginate($limit);
-
-        $paginator->setPath("/users?limit={$limit}");
+        $limit = $this->request->query('limit', 15);
+        $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
+        $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
 
         return response()->json([
-            'success'=> true,
-            'title'=> 'Lista de usuários',
-            'paginator'=> $paginator,
-            'page'=> $paginator->currentPage(),
-            'limit' => $paginator->perPage()
+            'success' => true,
+            'users' => $this->user::all()
         ]);
     }
     public function getById(Request $request, $id)
@@ -69,12 +70,47 @@ class UserController extends Controller
     private function validar()
     {
         $validator = Validator::make($this->request->all(), [
+            'login' => 'required',
             'name' => 'required|min:2|max:255',
             'tipo' => 'required',
-            'telefone' => 'required',
-            'category_id' => 'required'
+            'nascimento' => 'required',
+            'emailinstitucional' => 'required',
+            'emailpessoal' => 'required'
         ]);
 
         return $validator;
+    }
+
+    public function create()
+    {
+
+        $validator = $this->validar($this->request->all());
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Não foi possível salvar usuário',
+                'errors' => $validator->errors()
+            ], 200);
+        }
+
+        $user = $this->user;
+        $user->email = $this->request->get('email');
+        $user->login = $this->request->get('login');
+        $user->name = $this->request->get('name');
+        $user->telefone = $this->request->get('telefone');
+        $user->is_featured = $this->request->get('is_featured');
+        $user->options = json_decode($this->request->get('options', '{}'), true);
+
+        $resp = $user->save();
+        if (!$resp) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Usuário não registrado'
+            ]);
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Usuário registrado com sucesso'
+        ]);
     }
 }

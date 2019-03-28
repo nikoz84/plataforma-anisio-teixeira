@@ -5083,6 +5083,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 var http = new _http_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
@@ -5090,9 +5099,13 @@ var http = new _http_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
   name: 'UsuarioForm',
   data: function data() {
     return {
-      login: null,
+      estado: null,
+      cidade: null,
+      email: '',
       name: null,
-      email: null,
+      tipo: '',
+      login: '',
+      emailpessoal: '',
       options: {},
       message: null,
       count: 0,
@@ -5102,22 +5115,22 @@ var http = new _http_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
       textButton: 'Criar',
       errors: {
         name: [],
-        url: [],
-        description: [],
-        category: []
+        login: [],
+        category: [],
+        tipo: []
       }
     };
   },
   methods: {
     send: function send() {
       if (this.isUpdate) {
-        this.editAplicativo();
+        this.editUsuario();
       } else {
-        this.createAplicativo();
+        this.createUsuario();
       }
     },
-    createAplicativo: function () {
-      var _createAplicativo = _asyncToGenerator(
+    createUsuario: function () {
+      var _createUsuario = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var _this = this;
@@ -5127,33 +5140,17 @@ var http = new _http_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                this.options = {
-                  qt_access: 0
-                };
-
-                if (this.image) {
-                  _context.next = 3;
-                  break;
-                }
-
-                return _context.abrupt("return");
-
-              case 3:
                 form = new FormData();
                 form.append('name', this.name);
                 form.append('description', this.description);
                 form.append('category_id', this.category_id);
-                form.append('canal_id', localStorage.canal_id);
-                form.append('tags', this.tags);
-                form.append('url', this.url);
                 form.append('is_featured', this.is_featured);
                 form.append('options', JSON.stringify(this.options));
-                form.append('image', this.image, this.image.name);
                 form.append('token', localStorage.token);
-                _context.next = 16;
-                return http.postData('/aplicativos/create', form);
+                _context.next = 9;
+                return http.postData('/users/create', form);
 
-              case 16:
+              case 9:
                 resp = _context.sent;
                 console.warn(resp);
 
@@ -5177,7 +5174,7 @@ var http = new _http_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
                   }, 3000);
                 }
 
-              case 19:
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -5185,128 +5182,11 @@ var http = new _http_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
         }, _callee, this);
       }));
 
-      function createAplicativo() {
-        return _createAplicativo.apply(this, arguments);
+      function createUsuario() {
+        return _createUsuario.apply(this, arguments);
       }
 
-      return createAplicativo;
-    }(),
-    getCategories: function () {
-      var _getCategories = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var resp;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.next = 2;
-                return http.getDataFromUrl('/categories/aplicativos');
-
-              case 2:
-                resp = _context2.sent;
-                this.categories = resp.data.categories;
-
-              case 4:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function getCategories() {
-        return _getCategories.apply(this, arguments);
-      }
-
-      return getCategories;
-    }(),
-    onFileChange: function onFileChange(e) {
-      this.image = e.target.files[0];
-    },
-    countCaracters: function countCaracters(e) {
-      if (e.target.value.length > 140) {
-        this.success = true;
-      }
-
-      this.count = e.target.value.length;
-    },
-    getAplicativo: function () {
-      var _getAplicativo = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var resp;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.next = 2;
-                return http.getDataFromUrl("/aplicativos/".concat(this.$route.params.id));
-
-              case 2:
-                resp = _context3.sent;
-
-                if (resp.data.success) {
-                  this.name = resp.data.aplicativo.name;
-                  this.category_id = resp.data.aplicativo.category_id;
-                  this.description = resp.data.aplicativo.description;
-                  this.url = resp.data.aplicativo.url;
-                  this.is_featured = resp.data.aplicativo.is_featured;
-                  this.image = resp.data.aplicativo.image;
-                }
-
-              case 4:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, this);
-      }));
-
-      function getAplicativo() {
-        return _getAplicativo.apply(this, arguments);
-      }
-
-      return getAplicativo;
-    }(),
-    editAplicativo: function () {
-      var _editAplicativo = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var params, resp;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                params = {
-                  name: this.name,
-                  category_id: this.category_id,
-                  canal_id: localStorage.canal_id,
-                  description: this.description,
-                  url: this.url,
-                  is_featured: this.is_featured,
-                  token: localStorage.token
-                };
-                _context4.next = 3;
-                return http.config('PUT', "/aplicativos/update/".concat(this.$route.params.id), params);
-
-              case 3:
-                resp = _context4.sent;
-                console.log(resp);
-
-              case 5:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4, this);
-      }));
-
-      function editAplicativo() {
-        return _editAplicativo.apply(this, arguments);
-      }
-
-      return editAplicativo;
+      return createUsuario;
     }()
   }
 });
@@ -41800,7 +41680,7 @@ var render = function() {
                           {
                             attrs: {
                               tag: "li",
-                              to: { name: "Inicio", params: { slug: "Listar" } }
+                              to: { name: "Inicio", params: { slug: "users" } }
                             }
                           },
                           [_c("a", [_vm._v("Listar usuários")])]
@@ -44969,550 +44849,738 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "conteiner" }, [
+    _c("div", { staticClass: "row col-lg-6 col-xs-offset-3" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.send()
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "form-group",
+              class: {
+                "has-error": _vm.errors.login && _vm.errors.login.length > 0
+              }
+            },
+            [
+              _c("label", { attrs: { for: "login" } }, [_vm._v("Login:*")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "email",
+                  id: "login",
+                  "aria-describedby": "login_usuario",
+                  placeholder: "Digite o login de usuário"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "small",
+                {
+                  staticClass: "form-text text-muted",
+                  attrs: { id: "login_usuario" }
+                },
+                [
+                  _vm._v(
+                    "Pode utilizar uma conta de e-mail como login (exemplo: aew.usuario@gmail.com, aew.usuario@hotmail.com)"
+                  )
+                ]
+              ),
+              _c("br"),
+              _vm._v(" "),
+              _vm._l(_vm.errors.login, function(error, l) {
+                return _vm.errors.login
+                  ? _c("small", {
+                      key: l,
+                      staticClass: "text-danger",
+                      domProps: { textContent: _vm._s(error) }
+                    })
+                  : _vm._e()
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "form-group",
+              class: {
+                "has-error": _vm.errors.name && _vm.errors.name.length > 0
+              }
+            },
+            [
+              _c("label", { attrs: { for: "nome" } }, [_vm._v("Nome:*")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  id: "nome",
+                  placeholder: "Digite o completo do usuário"
+                }
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.errors.name, function(error, n) {
+                return _vm.errors.name
+                  ? _c("small", {
+                      key: n,
+                      staticClass: "text-danger",
+                      domProps: { textContent: _vm._s(error) }
+                    })
+                  : _vm._e()
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "form-group",
+              class: {
+                "has-error": _vm.errors.tipo && _vm.errors.tipo.length > 0
+              }
+            },
+            [
+              _c("label", { attrs: { for: "tipo" } }, [
+                _vm._v("Tipo usuário:*")
+              ]),
+              _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _vm._l(_vm.errors.tipo, function(error, t) {
+                return _vm.errors.tipo
+                  ? _c("small", {
+                      key: t,
+                      staticClass: "text-danger",
+                      domProps: { textContent: _vm._s(error) }
+                    })
+                  : _vm._e()
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c("legend", [
+            _vm._v("Marque o(s) canais ao qual pertence o usuário:")
+          ]),
+          _vm._v(" "),
+          _vm._m(2),
+          _vm._v(" "),
+          _vm._m(3),
+          _vm._v(" "),
+          _vm._m(4),
+          _vm._v(" "),
+          _vm._m(5),
+          _vm._v(" "),
+          _vm._m(6),
+          _vm._v(" "),
+          _vm._m(7),
+          _vm._v(" "),
+          _vm._m(8),
+          _vm._v(" "),
+          _vm._m(9),
+          _vm._v(" "),
+          _vm._m(10),
+          _vm._v(" "),
+          _vm._m(11),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "form-group",
+              class: {
+                "has-error":
+                  _vm.errors.nascimento && _vm.errors.nascimento.length > 0
+              }
+            },
+            [
+              _c("label", { attrs: { for: "datanascimento" } }, [
+                _vm._v("Data de nascimento:")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "date",
+                  id: "datanascimento",
+                  name: "datanascimento"
+                }
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.errors.nascimento, function(error, n) {
+                return _vm.errors.nascimento
+                  ? _c("small", {
+                      key: n,
+                      staticClass: "text-danger",
+                      domProps: { textContent: _vm._s(error) }
+                    })
+                  : _vm._e()
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "form-group",
+              class: {
+                "has-error":
+                  _vm.errors.emailinstitucional &&
+                  _vm.errors.emailinstitucional.length > 0
+              }
+            },
+            [
+              _c("label", { attrs: { for: "emailinstitucional" } }, [
+                _vm._v("E-mail Institucional:*")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "email",
+                  id: "emailinstitucional",
+                  name: "emailinstitucional"
+                }
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.errors.emailinstitucional, function(error, ei) {
+                return _vm.errors.emailinstitucional
+                  ? _c("small", {
+                      key: ei,
+                      staticClass: "text-danger",
+                      domProps: { textContent: _vm._s(error) }
+                    })
+                  : _vm._e()
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "form-group",
+              class: {
+                "has-error":
+                  _vm.errors.emailpessoal && _vm.errors.emailpessoal.length > 0
+              }
+            },
+            [
+              _c("label", { attrs: { for: "emailpessoal" } }, [
+                _vm._v("E-mail Pessoal:*")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "email",
+                  id: "emailpessoal",
+                  name: "emailpessoal"
+                }
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.errors.emailpessoal, function(error, ep) {
+                return _vm.errors.emailpessoal
+                  ? _c("small", {
+                      key: ep,
+                      staticClass: "text-danger",
+                      domProps: { textContent: _vm._s(error) }
+                    })
+                  : _vm._e()
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _vm._m(12),
+          _vm._v(" "),
+          _vm._m(13),
+          _vm._v(" "),
+          _vm._m(14),
+          _vm._v(" "),
+          _vm._m(15),
+          _vm._v(" "),
+          _vm._m(16),
+          _vm._v(" "),
+          _vm._m(17),
+          _vm._v(" "),
+          _vm._m(18),
+          _vm._v(" "),
+          _vm._m(19),
+          _vm._v(" "),
+          _vm._m(20),
+          _vm._v(" "),
+          _vm._m(21),
+          _vm._v(" "),
+          _vm._m(22),
+          _vm._v(" "),
+          _c("button", { staticClass: "btn btn-success" }, [_vm._v("Salvar")])
+        ]
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "conteiner" }, [
-      _c("div", { staticClass: "row col-lg-6 col-xs-offset-3" }, [
-        _c("form", [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "login" } }, [_vm._v("Login:*")]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: {
-                type: "email",
-                id: "login",
-                "aria-describedby": "login_usuario",
-                placeholder: "Digite o login de usuário"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "small",
-              {
-                staticClass: "form-text text-muted",
-                attrs: { id: "login_usuario" }
-              },
-              [
-                _vm._v(
-                  "Pode utilizar uma conta de e-mail como login (exemplo: aew.usuario@gmail.com, aew.usuario@hotmail.com)"
-                )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "nome" } }, [_vm._v("Nome:*")]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "nome",
-                placeholder: "Digite o completo do usuário"
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "tipo_usuario" } }, [
-              _vm._v("Tipo usuário:*")
-            ]),
-            _vm._v(" "),
-            _c(
-              "select",
-              { staticClass: "form-control", attrs: { id: "tipo_usuario" } },
-              [
-                _c("option", { attrs: { value: "0" } }, [
-                  _vm._v(" SELECIONE ")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "1" } }, [
-                  _vm._v("super administrador")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2" } }, [
-                  _vm._v("administrador")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "3" } }, [
-                  _vm._v("coordenador")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "4" } }, [_vm._v("editor")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "5" } }, [_vm._v("colaborador")])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-check" }, [
-            _c("input", {
-              staticClass: "form-check-input",
-              attrs: {
-                name: "usuarioperfilcanal[]",
-                type: "checkbox",
-                value: "",
-                id: "usuarioperfilcanal1"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "form-check-label",
-                attrs: { for: "usuarioperfilcanal1" }
-              },
-              [
-                _vm._v(
-                  "\n                Ambiente de Ensino a Aprendizagem Colaborativa\n            "
-                )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-check" }, [
-            _c("input", {
-              staticClass: "form-check-input",
-              attrs: {
-                name: "usuarioperfilcanal[]",
-                type: "checkbox",
-                value: "",
-                id: "usuarioperfilcanal2"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "form-check-label",
-                attrs: { for: "usuarioperfilcanal2" }
-              },
-              [
-                _vm._v(
-                  "\n                Aplicativos Educacionais\n            "
-                )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-check" }, [
-            _c("input", {
-              staticClass: "form-check-input",
-              attrs: {
-                name: "usuarioperfilcanal[]",
-                type: "checkbox",
-                value: "",
-                id: "usuarioperfilcanal3"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "form-check-label",
-                attrs: { for: "usuarioperfilcanal3" }
-              },
-              [_vm._v("\n                Blog da Rede\n            ")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-check" }, [
-            _c("input", {
-              staticClass: "form-check-input",
-              attrs: {
-                name: "usuarioperfilcanal[]",
-                type: "checkbox",
-                value: "",
-                id: "usuarioperfilcanal4"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "form-check-label",
-                attrs: { for: "usuarioperfilcanal4" }
-              },
-              [
-                _vm._v(
-                  "\n                EMITEC - Ensino Médio com Intermediação Tecnológica\n            "
-                )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-check" }, [
-            _c("input", {
-              staticClass: "form-check-input",
-              attrs: {
-                name: "usuarioperfilcanal[]",
-                type: "checkbox",
-                value: "",
-                id: "usuarioperfilcanal5"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "form-check-label",
-                attrs: { for: "usuarioperfilcanal5" }
-              },
-              [_vm._v("\n                Mídias Educacionais\n            ")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-check" }, [
-            _c("input", {
-              staticClass: "form-check-input",
-              attrs: {
-                name: "usuarioperfilcanal[]",
-                type: "checkbox",
-                value: "",
-                id: "usuarioperfilcanal6"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "form-check-label",
-                attrs: { for: "usuarioperfilcanal6" }
-              },
-              [_vm._v("\n                Projetos Artísticos\n            ")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-check" }, [
-            _c("input", {
-              staticClass: "form-check-input",
-              attrs: {
-                name: "usuarioperfilcanal[]",
-                type: "checkbox",
-                value: "",
-                id: "usuarioperfilcanal7"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "form-check-label",
-                attrs: { for: "usuarioperfilcanal7" }
-              },
-              [_vm._v("\n                Rádio Anísio Teixeira\n            ")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-check" }, [
-            _c("input", {
-              staticClass: "form-check-input",
-              attrs: {
-                name: "usuarioperfilcanal[]",
-                type: "checkbox",
-                value: "",
-                id: "usuarioperfilcanal8"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "form-check-label",
-                attrs: { for: "usuarioperfilcanal8" }
-              },
-              [_vm._v("\n                Sites Temáticos\n            ")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-check" }, [
-            _c("input", {
-              staticClass: "form-check-input",
-              attrs: {
-                name: "usuarioperfilcanal[]",
-                type: "checkbox",
-                value: "",
-                id: "usuarioperfilcanal9"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "form-check-label",
-                attrs: { for: "usuarioperfilcanal9" }
-              },
-              [_vm._v("\n                Tv Anísio Teixeira\n            ")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-check" }, [
-            _c(
-              "label",
-              { staticClass: "form-check-label", attrs: { for: "sexo" } },
-              [_vm._v("\n            Sexo:\n            ")]
-            ),
-            _vm._v(" "),
-            _c("label", [
-              _c("input", {
-                staticClass: "form-check-input",
-                attrs: {
-                  type: "radio",
-                  name: "sexo",
-                  id: "sexo-m",
-                  value: "m",
-                  checked: ""
-                }
-              }),
-              _vm._v("\n            Masculino\n            ")
-            ]),
-            _vm._v(" "),
-            _c("label", [
-              _c("input", {
-                staticClass: "form-check-input",
-                attrs: { type: "radio", name: "sexo", id: "sexo-f", value: "f" }
-              }),
-              _vm._v("\n            Feminino\n            ")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "datanascimento" } }, [
-              _vm._v("Data de nascimento:")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: {
-                type: "date",
-                id: "datanascimento",
-                name: "datanascimento"
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "emailinstitucional" } }, [
-              _vm._v("E-mail Institucional:*")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: {
-                type: "email",
-                id: "emailinstitucional",
-                name: "emailinstitucional"
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "emailpessoal" } }, [
-              _vm._v("E-mail Pessoal:*")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "email", id: "emailpessoal", name: "emailpessoal" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "cpf" } }, [_vm._v("CPF:")]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "text", id: "cpf", name: "cpf" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "cpf" } }, [_vm._v("RG:")]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "text", id: "rg", name: "rg" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "telefone" } }, [_vm._v("Telefone:")]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "text", id: "telefone", name: "telefone" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "endereco" } }, [_vm._v("Endereço:")]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "text", id: "endereco", name: "endereco" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "numero" } }, [_vm._v("Número:")]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "text", id: "numero", name: "numero" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "complemento" } }, [
-              _vm._v("complemento:")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "text", id: "complemento", name: "complemento " }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "estado" } }, [_vm._v("Estado:")]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                staticClass: "form-control form-control-lg",
-                attrs: { id: "estado" }
-              },
-              [
-                _c("option", { attrs: { value: "" } }, [
-                  _vm._v("« SELECIONE »")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2" } }, [
-                  _vm._v("Não Informado")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2116" } }, [_vm._v("BA")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2573" } }, [_vm._v("AC")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2574" } }, [_vm._v("AL")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2575" } }, [_vm._v("AP")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2576" } }, [_vm._v("AM")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2577" } }, [_vm._v("CE")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2578" } }, [_vm._v("DF")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2579" } }, [_vm._v("ES")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2580" } }, [_vm._v("GO")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2581" } }, [_vm._v("MA")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2582" } }, [_vm._v("MT")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2583" } }, [_vm._v("MS")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2584" } }, [_vm._v("MG")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2585" } }, [_vm._v("PA")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2586" } }, [_vm._v("PB")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2587" } }, [_vm._v("PR")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2588" } }, [_vm._v("PE")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2589" } }, [_vm._v("PI")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2590" } }, [_vm._v("RJ")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2591" } }, [_vm._v("RN")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2592" } }, [_vm._v("RS")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2593" } }, [_vm._v("RO")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2594" } }, [_vm._v("RR")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2595" } }, [_vm._v("SC")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2596" } }, [_vm._v("SP")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2597" } }, [_vm._v("SE")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2598" } }, [_vm._v("TO")])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "municipio" } }, [
-              _vm._v("Município:")
-            ]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                staticClass: "form-control form-control-lg",
-                attrs: { id: "municipio" }
-              },
-              [
-                _c("option", { attrs: { value: "" } }, [
-                  _vm._v("« SELECIONE »")
-                ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "bairro" } }, [_vm._v("Bairro:")]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "text", id: "bairro", name: "bairro" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "cep" } }, [_vm._v("CEP:")]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "text", id: "cep", name: "cep" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "escola" } }, [_vm._v("Escola:")]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                staticClass: "form-control form-control-lg",
-                attrs: { id: "escola" }
-              },
-              [
-                _c("option", { attrs: { value: "" } }, [
-                  _vm._v("« SELECIONE »")
-                ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("button", { staticClass: "btn btn-success" }, [
-            _vm._v("Adicionar")
-          ])
+    return _c("h2", [_c("legend", [_vm._v("Adicionar Usuário")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "select",
+      { staticClass: "form-control", attrs: { id: "tipo" } },
+      [
+        _c("option", { attrs: { value: "0" } }, [_vm._v(" SELECIONE ")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "super administrador" } }, [
+          _vm._v("super administrador")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "administrador" } }, [
+          _vm._v("administrador")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "coordenador" } }, [
+          _vm._v("coordenador")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "editor" } }, [_vm._v("editor")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "colaborador" } }, [
+          _vm._v("colaborador")
         ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-check" }, [
+      _c("input", {
+        staticClass: "form-check-input",
+        attrs: {
+          name: "usuarioperfilcanal[]",
+          type: "checkbox",
+          value: "",
+          id: "usuarioperfilcanal1"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "form-check-label",
+          attrs: { for: "usuarioperfilcanal1" }
+        },
+        [
+          _vm._v(
+            "\n                Ambiente de Ensino a Aprendizagem Colaborativa\n            "
+          )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-check" }, [
+      _c("input", {
+        staticClass: "form-check-input",
+        attrs: {
+          name: "usuarioperfilcanal[]",
+          type: "checkbox",
+          value: "",
+          id: "usuarioperfilcanal2"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "form-check-label",
+          attrs: { for: "usuarioperfilcanal2" }
+        },
+        [_vm._v("\n                Aplicativos Educacionais\n            ")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-check" }, [
+      _c("input", {
+        staticClass: "form-check-input",
+        attrs: {
+          name: "usuarioperfilcanal[]",
+          type: "checkbox",
+          value: "",
+          id: "usuarioperfilcanal3"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "form-check-label",
+          attrs: { for: "usuarioperfilcanal3" }
+        },
+        [_vm._v("\n                Blog da Rede\n            ")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-check" }, [
+      _c("input", {
+        staticClass: "form-check-input",
+        attrs: {
+          name: "usuarioperfilcanal[]",
+          type: "checkbox",
+          value: "",
+          id: "usuarioperfilcanal4"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "form-check-label",
+          attrs: { for: "usuarioperfilcanal4" }
+        },
+        [
+          _vm._v(
+            "\n                EMITEC - Ensino Médio com Intermediação Tecnológica\n            "
+          )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-check" }, [
+      _c("input", {
+        staticClass: "form-check-input",
+        attrs: {
+          name: "usuarioperfilcanal[]",
+          type: "checkbox",
+          value: "",
+          id: "usuarioperfilcanal5"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "form-check-label",
+          attrs: { for: "usuarioperfilcanal5" }
+        },
+        [_vm._v("\n                Mídias Educacionais\n            ")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-check" }, [
+      _c("input", {
+        staticClass: "form-check-input",
+        attrs: {
+          name: "usuarioperfilcanal[]",
+          type: "checkbox",
+          value: "",
+          id: "usuarioperfilcanal6"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "form-check-label",
+          attrs: { for: "usuarioperfilcanal6" }
+        },
+        [_vm._v("\n                Projetos Artísticos\n            ")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-check" }, [
+      _c("input", {
+        staticClass: "form-check-input",
+        attrs: {
+          name: "usuarioperfilcanal[]",
+          type: "checkbox",
+          value: "",
+          id: "usuarioperfilcanal7"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "form-check-label",
+          attrs: { for: "usuarioperfilcanal7" }
+        },
+        [_vm._v("\n                Rádio Anísio Teixeira\n            ")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-check" }, [
+      _c("input", {
+        staticClass: "form-check-input",
+        attrs: {
+          name: "usuarioperfilcanal[]",
+          type: "checkbox",
+          value: "",
+          id: "usuarioperfilcanal8"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "form-check-label",
+          attrs: { for: "usuarioperfilcanal8" }
+        },
+        [_vm._v("\n                Sites Temáticos\n            ")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-check" }, [
+      _c("input", {
+        staticClass: "form-check-input",
+        attrs: {
+          name: "usuarioperfilcanal[]",
+          type: "checkbox",
+          value: "",
+          id: "usuarioperfilcanal9"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "form-check-label",
+          attrs: { for: "usuarioperfilcanal9" }
+        },
+        [_vm._v("\n                Tv Anísio Teixeira\n            ")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-check" }, [
+      _c("label", { staticClass: "form-check-label", attrs: { for: "sexo" } }, [
+        _vm._v("\n            Sexo:\n            ")
+      ]),
+      _vm._v(" "),
+      _c("label", [
+        _c("input", {
+          staticClass: "form-check-input",
+          attrs: {
+            type: "radio",
+            name: "sexo",
+            id: "sexo-m",
+            value: "m",
+            checked: ""
+          }
+        }),
+        _vm._v("\n            Masculino\n            ")
+      ]),
+      _vm._v(" "),
+      _c("label", [
+        _c("input", {
+          staticClass: "form-check-input",
+          attrs: { type: "radio", name: "sexo", id: "sexo-f", value: "f" }
+        }),
+        _vm._v("\n            Feminino\n            ")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "cpf" } }, [_vm._v("CPF:")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", id: "cpf", name: "cpf" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "cpf" } }, [_vm._v("RG:")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", id: "rg", name: "rg" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "telefone" } }, [_vm._v("Telefone:")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", id: "telefone", name: "telefone" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "endereco" } }, [_vm._v("Endereço:")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", id: "endereco", name: "endereco" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "numero" } }, [_vm._v("Número:")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", id: "numero", name: "numero" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "complemento" } }, [_vm._v("complemento:")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", id: "complemento", name: "complemento " }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "estado" } }, [_vm._v("Estado:")]),
+      _vm._v(" "),
+      _c("select", {
+        staticClass: "form-control form-control-lg",
+        attrs: { id: "estado" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "municipio" } }, [_vm._v("Município:")]),
+      _vm._v(" "),
+      _c("select", {
+        staticClass: "form-control form-control-lg",
+        attrs: { id: "municipio" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "bairro" } }, [_vm._v("Bairro:")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", id: "bairro", name: "bairro" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "cep" } }, [_vm._v("CEP:")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", id: "cep", name: "cep" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "escola" } }, [_vm._v("Escola:")]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          staticClass: "form-control form-control-lg",
+          attrs: { id: "escola" }
+        },
+        [_c("option", { attrs: { value: "" } }, [_vm._v("« SELECIONE »")])]
+      )
     ])
   }
 ]
