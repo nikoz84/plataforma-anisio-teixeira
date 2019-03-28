@@ -30,18 +30,36 @@ class ConteudoController extends Controller
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
-        $isCanal = $this->request->query('canal');
-       
+        $canal = $this->request->query('canal');
+        
+        $tipos = $this->request->get('tipos');
+        $licencas = $this->request->query('licencas');
+        $componentes = $this->request->query('componentes');
+        $categorias =  $this->request->query('categorias');
+        /*
+        return response()->json([
+                'tipos' => $tipos,
+                'componentes'=> $componentes,
+                'licencas' => $licencas,
+                'categorias' => $categorias
+            ]);
+        */
         $query = $this->conteudo::query();
-        $query->when($isCanal, function ($q, $canal) {
+        $query->when($canal, function ($q, $canal) {
             return $q->where('canal_id', $canal)
                     ->where('is_approved', 'true');
         });
+        
+        $query->when($tipos, function ($q, $tipos) {
+            return $q->whereIn('options->tipo->id', explode(',', $tipos));
+        });
+        $url = "limit={$limit}&canal={$canal}";
+        $url .= "&tipos={$tipos}&componentes={$componentes}&categorias={$categorias}&licencas={$licencas}";
 
         $conteudos = $query->with('canal')
                         ->orderBy($orderBy, 'desc')
                         ->paginate($limit)
-                        ->setPath("/conteudos?limit={$limit}&canal=$isCanal");
+                        ->setPath("/conteudos?{$url}");
         
         return response()->json([
             'success'=> true,

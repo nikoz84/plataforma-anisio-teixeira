@@ -83,7 +83,6 @@ class UserController extends Controller
 
     public function create()
     {
-
         $validator = $this->validar($this->request->all());
         if ($validator->fails()) {
             return response()->json([
@@ -94,12 +93,11 @@ class UserController extends Controller
         }
 
         $user = $this->user;
-        $user->email = $this->request->get('email');
         $user->login = $this->request->get('login');
         $user->name = $this->request->get('name');
-        $user->telefone = $this->request->get('telefone');
+        $user->email = $this->request->get('email');
         $user->is_featured = $this->request->get('is_featured');
-        $user->options = json_decode($this->request->get('options', '{}'), true);
+        //$user->options = json_decode($this->request->get('options', '{}'), true);
 
         $resp = $user->save();
         if (!$resp) {

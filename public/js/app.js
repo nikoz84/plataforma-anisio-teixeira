@@ -2624,8 +2624,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
 
 var http = new _http_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
@@ -5099,24 +5097,19 @@ var http = new _http_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
   name: 'UsuarioForm',
   data: function data() {
     return {
-      estado: null,
-      cidade: null,
-      email: '',
+      email: null,
       name: null,
-      tipo: '',
-      login: '',
-      emailpessoal: '',
+      tipo: null,
+      login: null,
+      emailinstitucional: null,
+      emailpessoal: null,
+      nascimento: null,
       options: {},
       message: null,
-      count: 0,
       success: false,
       isError: true,
       isUpdate: false,
-      textButton: 'Criar',
       errors: {
-        name: [],
-        login: [],
-        category: [],
         tipo: []
       }
     };
@@ -5141,11 +5134,12 @@ var http = new _http_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
             switch (_context.prev = _context.next) {
               case 0:
                 form = new FormData();
+                form.append('login', this.login);
                 form.append('name', this.name);
-                form.append('description', this.description);
-                form.append('category_id', this.category_id);
-                form.append('is_featured', this.is_featured);
-                form.append('options', JSON.stringify(this.options));
+                form.append('tipo', this.tipo);
+                form.append('nascimento', this.nascimento);
+                form.append('is_featured', this.is_featured); //form.append('options', JSON.stringify(this.options));
+
                 form.append('token', localStorage.token);
                 _context.next = 9;
                 return http.postData('/users/create', form);
@@ -5155,12 +5149,7 @@ var http = new _http_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
                 console.warn(resp);
 
                 if (resp.data.success) {
-                  this.$router.push({
-                    name: 'Listar',
-                    params: {
-                      slug: this.$route.params.slug
-                    }
-                  });
+                  this.message = resp.data.message;
                 } else {
                   this.isError = resp.data.success;
                   this.message = resp.data.message;
@@ -5392,30 +5381,36 @@ var http = new _http_js__WEBPACK_IMPORTED_MODULE_2__["default"]();
   created: function created() {
     this.getConteudos();
   },
+  watch: {
+    '$route': function $route(to, from) {
+      this.getConteudos();
+    }
+  },
   methods: {
     getConteudos: function () {
       var _getConteudos = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var idCanal, params, resp;
+        var params, resp;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                idCanal = localStorage.canal_id;
-                params = {};
+                console.log(this.$route.query);
+                params = this.$route.query;
                 _context.next = 4;
-                return http.getDataFromIdCanal(idCanal, params);
+                return http.getDataFromIdCanal(params);
 
               case 4:
                 resp = _context.sent;
+                console.log(resp);
 
                 if (resp.data.success) {
                   this.title = resp.data.title;
                   this.paginator = resp.data.paginator;
                 }
 
-              case 6:
+              case 7:
               case "end":
                 return _context.stop();
             }
@@ -41634,78 +41629,69 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm.isLogged
-            ? _c("li", [
-                _c("ul", { staticClass: "nav navbar-nav navbar-right" }, [
-                  _c("li", { staticClass: "dropdown" }, [
-                    _vm._m(3),
-                    _vm._v(" "),
+          _c("ul", { staticClass: "nav navbar-nav navbar-right" }, [
+            _c("li", { staticClass: "dropdown" }, [
+              _vm._m(3),
+              _vm._v(" "),
+              _c(
+                "ul",
+                { staticClass: "dropdown-menu" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        tag: "li",
+                        to: {
+                          name: "Inicio",
+                          params: { slug: "recursos-educacionais-abertos" }
+                        }
+                      }
+                    },
+                    [_c("a", [_vm._v("Alterar minha senha")])]
+                  ),
+                  _vm._v(" "),
+                  _c("li", [
                     _c(
-                      "ul",
-                      { staticClass: "dropdown-menu" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            attrs: {
-                              tag: "li",
-                              to: {
-                                name: "Inicio",
-                                params: {
-                                  slug: "recursos-educacionais-abertos"
-                                }
-                              }
-                            }
-                          },
-                          [_c("a", [_vm._v("Alterar minha senha")])]
-                        ),
-                        _vm._v(" "),
-                        _c("li", [
-                          _c(
-                            "a",
-                            {
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.getCreateUsuario()
-                                }
-                              }
-                            },
-                            [_vm._v("Criar Usuário")]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "router-link",
-                          {
-                            attrs: {
-                              tag: "li",
-                              to: { name: "Inicio", params: { slug: "users" } }
-                            }
-                          },
-                          [_c("a", [_vm._v("Listar usuários")])]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "router-link",
-                          {
-                            attrs: {
-                              tag: "li",
-                              to: {
-                                name: "Inicio",
-                                params: { slug: "Denúncia" }
-                              }
-                            }
-                          },
-                          [_c("a", [_vm._v("Verificar denúncias")])]
-                        )
-                      ],
-                      1
+                      "a",
+                      {
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.getCreateUsuario()
+                          }
+                        }
+                      },
+                      [_vm._v("Criar Usuário")]
                     )
-                  ])
-                ])
-              ])
-            : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        tag: "li",
+                        to: { name: "Inicio", params: { slug: "users" } }
+                      }
+                    },
+                    [_c("a", [_vm._v("Listar usuários")])]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        tag: "li",
+                        to: { name: "Inicio", params: { slug: "Denúncia" } }
+                      }
+                    },
+                    [_c("a", [_vm._v("Verificar denúncias")])]
+                  )
+                ],
+                1
+              )
+            ])
+          ])
         ]
       )
     ]),
@@ -45106,28 +45092,6 @@ var render = function() {
             2
           ),
           _vm._v(" "),
-          _vm._m(12),
-          _vm._v(" "),
-          _vm._m(13),
-          _vm._v(" "),
-          _vm._m(14),
-          _vm._v(" "),
-          _vm._m(15),
-          _vm._v(" "),
-          _vm._m(16),
-          _vm._v(" "),
-          _vm._m(17),
-          _vm._v(" "),
-          _vm._m(18),
-          _vm._v(" "),
-          _vm._m(19),
-          _vm._v(" "),
-          _vm._m(20),
-          _vm._v(" "),
-          _vm._m(21),
-          _vm._v(" "),
-          _vm._m(22),
-          _vm._v(" "),
           _c("button", { staticClass: "btn btn-success" }, [_vm._v("Salvar")])
         ]
       )
@@ -45434,153 +45398,6 @@ var staticRenderFns = [
         }),
         _vm._v("\n            Feminino\n            ")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "cpf" } }, [_vm._v("CPF:")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", id: "cpf", name: "cpf" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "cpf" } }, [_vm._v("RG:")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", id: "rg", name: "rg" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "telefone" } }, [_vm._v("Telefone:")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", id: "telefone", name: "telefone" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "endereco" } }, [_vm._v("Endereço:")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", id: "endereco", name: "endereco" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "numero" } }, [_vm._v("Número:")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", id: "numero", name: "numero" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "complemento" } }, [_vm._v("complemento:")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", id: "complemento", name: "complemento " }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "estado" } }, [_vm._v("Estado:")]),
-      _vm._v(" "),
-      _c("select", {
-        staticClass: "form-control form-control-lg",
-        attrs: { id: "estado" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "municipio" } }, [_vm._v("Município:")]),
-      _vm._v(" "),
-      _c("select", {
-        staticClass: "form-control form-control-lg",
-        attrs: { id: "municipio" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "bairro" } }, [_vm._v("Bairro:")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", id: "bairro", name: "bairro" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "cep" } }, [_vm._v("CEP:")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", id: "cep", name: "cep" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "escola" } }, [_vm._v("Escola:")]),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          staticClass: "form-control form-control-lg",
-          attrs: { id: "escola" }
-        },
-        [_c("option", { attrs: { value: "" } }, [_vm._v("« SELECIONE »")])]
-      )
     ])
   }
 ]
@@ -63280,17 +63097,15 @@ function () {
     value: function () {
       var _getDataFromIdCanal = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(idCanal) {
-        var params,
-            url,
-            _args = arguments;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(params) {
+        var id, url;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                params = _args.length > 1 && _args[1] !== undefined ? _args[1] : {};
-                _context.prev = 1;
-                url = this.getUrlCanal(idCanal);
+                _context.prev = 0;
+                id = localStorage.canal_id;
+                url = this.getUrlCanal(id);
                 _context.next = 5;
                 return axios.get(url, params);
 
@@ -63299,7 +63114,7 @@ function () {
 
               case 8:
                 _context.prev = 8;
-                _context.t0 = _context["catch"](1);
+                _context.t0 = _context["catch"](0);
                 _context.next = 12;
                 return _context.t0.response;
 
@@ -63311,7 +63126,7 @@ function () {
                 return _context.stop();
             }
           }
-        }, _callee, this, [[1, 8]]);
+        }, _callee, this, [[0, 8]]);
       }));
 
       function getDataFromIdCanal(_x) {
@@ -63643,6 +63458,7 @@ function () {
           break;
 
         case id == 6:
+          //console.warn('as')
           return "".concat(this.api, "/conteudos");
           break;
 

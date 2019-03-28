@@ -9,14 +9,21 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
+    
+    const USER_VERIFIED = 'TRUE';
+    const USER_NOT_VERIFIED = 'FALSE';
 
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTICVE = 0;
+    const STATUS_BLOCKED = 2;
+    
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','verification_token','verified'
     ];
     
     /**
@@ -25,7 +32,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token','email'
+        'password', 'remember_token','email','verification_token'
     ];
     /**
      * Datas
@@ -46,9 +53,17 @@ class User extends Authenticatable implements JWTSubject
 
     protected $appends = ['is_admin'];
     
+    public function isVerified()
+    {
+        return $this->verified == App\User::USER_VERIFIED;
+    }
     public function getIsAdminAttribute()
     {
         return $this->where('options->role', 'administrador')->exists();
+    }
+    public static function newVerificationToken()
+    {
+        return str_random(40);
     }
     /**
      * Usuário tem varios conteudos

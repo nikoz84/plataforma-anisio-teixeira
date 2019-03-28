@@ -26,12 +26,18 @@ export default {
         this.getConteudos();
         
     },
+    watch: {
+        '$route' (to, from) {
+            this.getConteudos();
+        }
+    },
     methods:{
         async getConteudos(){
-            let idCanal = localStorage.canal_id;
-            let params = {  };
-            let resp = await http.getDataFromIdCanal( idCanal, params);
+            console.log(this.$route.query)
+            let params = this.$route.query;
             
+            let resp = await http.getDataFromIdCanal( params );
+            console.log(resp)
             if(resp.data.success){
                 
                 this.title = resp.data.title;

@@ -15,7 +15,6 @@
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="menu-deslizante">
-
                 <ul class="nav navbar-nav navbar-right">
 
                     <li class="dropdown">
@@ -67,7 +66,6 @@
                     </li>
                 </ul>
                 <!-- menu configurações -->
-                <li v-if="isLogged">
                 <ul class="nav navbar-nav navbar-right">
 
                     <li class="dropdown">
@@ -88,7 +86,7 @@
                         </ul>
                     </li>
                 </ul>
-                </li>
+                
                 <!--/END menu configurações -->
             </div>
         </div>

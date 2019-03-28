@@ -145,7 +145,7 @@
                         v-text="error">
                 </small>
             </div>
-            <div class="form-group">
+            <!--<div class="form-group">
                 <label for="cpf">CPF:</label>
                 <input type="text" class="form-control" id="cpf" name="cpf">
             </div>
@@ -171,12 +171,12 @@
             </div>
             <div class="form-group">
             <label for="estado">Estado:</label>
-            <select class="form-control form-control-lg" id="estado">                
+            <select class="form-control form-control-lg" id="estado">
             </select>
             </div>
             <div class="form-group">
                 <label for="municipio">Município:</label>
-                <select class="form-control form-control-lg" id="municipio">                    
+                <select class="form-control form-control-lg" id="municipio">
                 </select>
             </div>
             <div class="form-group">
@@ -192,7 +192,7 @@
                 <select class="form-control form-control-lg" id="escola">
                     <option value="">« SELECIONE »</option>
                 </select>
-            </div>
+            </div>-->
 
             <button class="btn btn-success">Salvar</button>
 
@@ -213,24 +213,19 @@ export default {
     data(){
         return {
 
-            estado: null,
-            cidade: null,
-            email: '',
+            email: null,
             name: null,
-            tipo: '',
-            login: '',
-            emailpessoal: '',
+            tipo: null,
+            login: null,
+            emailinstitucional: null,
+            emailpessoal: null,
+            nascimento: null,
             options: {},
             message: null,
-            count: 0,
             success: false,
             isError: true,
             isUpdate: false,
-            textButton: 'Criar',
             errors: {
-                name: [],
-                login: [],
-                category: [],
                 tipo:[]
             },
         }
@@ -248,18 +243,19 @@ export default {
         async createUsuario(){
 
             let form = new FormData();
-            form.append('name', this.name);
-            form.append('description',this.description);
-            form.append('category_id', this.category_id);
+            form.append('login', this.login);
+            form.append('name',this.name);
+            form.append('tipo',this.tipo);
+            form.append('nascimento',this.nascimento);
             form.append('is_featured', this.is_featured);
-            form.append('options', JSON.stringify(this.options));
+            //form.append('options', JSON.stringify(this.options));
             form.append('token', localStorage.token);
 
             let resp = await http.postData('/users/create', form);
             console.warn(resp);
 
             if(resp.data.success){
-                this.$router.push({ name: 'Listar', params: {slug: this.$route.params.slug}})
+                this.message = resp.data.message;
             }else{
                 this.isError = resp.data.success;
                 this.message = resp.data.message;

@@ -129,7 +129,8 @@ return [
         'url' => 'url',
         'category' => 'categoria',
         'category_id' => 'categoria',
-        'recaptcha' => 'código de segurança'
+        'recaptcha' => 'código de segurança',
+        'subject' => 'assunto'
     ],
     'options' => [
         'lang' => 'pt-BR',

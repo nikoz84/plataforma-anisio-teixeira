@@ -8,9 +8,10 @@ export default class Http {
      * @param {*} idCanal identificador do canal
      * @param {*} params parametros
      */
-    async getDataFromIdCanal( idCanal, params = {}){
+    async getDataFromIdCanal( params ){
         try{
-            let url = this.getUrlCanal( idCanal );
+            let id = localStorage.canal_id;
+            let url = this.getUrlCanal( id );
             return await axios.get( url, params );
         } catch (error){
             return await error.response;
@@ -100,6 +101,7 @@ export default class Http {
                 return `${this.api}/conteudos/sites`;
                 break;
             case (id == 6):
+                //console.warn('as')
                 return `${this.api}/conteudos`;
                 break;
             case (id == 9):
