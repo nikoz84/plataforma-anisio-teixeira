@@ -70,9 +70,10 @@ class UserController extends Controller
     private function validar()
     {
         $validator = Validator::make($this->request->all(), [
-            'login' => 'required',
+            'email' => 'required',
             'name' => 'required|min:2|max:255',
-            'tipo' => 'required',
+            'role' => 'required',
+            'password' => 'required|min:6',
             'nascimento' => 'required',
             'emailinstitucional' => 'required',
             'emailpessoal' => 'required'
@@ -93,18 +94,17 @@ class UserController extends Controller
         }
 
         $user = $this->user;
-        $user->login = $this->request->get('login');
+        $user->email = $this->request->get('login');
         $user->name = $this->request->get('name');
-        $user->email = $this->request->get('email');
-        $user->is_featured = $this->request->get('is_featured');
-        //$user->options = json_decode($this->request->get('options', '{}'), true);
+        $user->password = $this->request->get('password');
+        $user->options = json_decode($this->request->get('options'), true);
 
         $resp = $user->save();
         if (!$resp) {
             return response()->json([
                 'success' => false,
                 'message' => 'Usuário não registrado'
-            ]);
+            ], 200);
         }
         return response()->json([
             'success' => true,

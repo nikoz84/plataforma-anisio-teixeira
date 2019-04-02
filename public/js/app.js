@@ -5089,26 +5089,43 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var http = new _http_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'UsuarioForm',
   data: function data() {
     return {
-      email: null,
-      name: null,
-      tipo: null,
-      login: null,
-      emailinstitucional: null,
-      emailpessoal: null,
-      nascimento: null,
+      name: '',
+      email: '',
+      role: '',
+      password: '',
+      emailinstitucional: '',
+      emailpessoal: '',
+      nascimento: '',
       options: {},
       message: null,
       success: false,
       isError: true,
-      isUpdate: false,
       errors: {
-        tipo: []
+        email: [],
+        name: [],
+        role: [],
+        password: [],
+        nascimento: [],
+        emailinstitucional: [],
+        emailpessoal: []
       }
     };
   },
@@ -5132,17 +5149,20 @@ var http = new _http_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
             switch (_context.prev = _context.next) {
               case 0:
                 form = new FormData();
-                form.append('login', this.login);
+                form.append('email', this.email);
                 form.append('name', this.name);
-                form.append('tipo', this.tipo);
-                form.append('nascimento', this.nascimento);
-                form.append('is_featured', this.is_featured); //form.append('options', JSON.stringify(this.options));
-
+                form.append('role', this.role);
+                form.append('password', this.password);
+                form.append('nascimento', this.options);
+                form.append('emailinstitucional', this.options);
+                form.append('emailpessoal', this.options);
+                form.append('is_featured', this.is_featured);
+                form.append('options', JSON.stringify(this.options));
                 form.append('token', localStorage.token);
-                _context.next = 9;
-                return http.postData('/users/create', form);
+                _context.next = 13;
+                return http.postData('/auth/register', form);
 
-              case 9:
+              case 13:
                 resp = _context.sent;
                 console.warn(resp);
 
@@ -5161,7 +5181,7 @@ var http = new _http_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
                   }, 3000);
                 }
 
-              case 12:
+              case 16:
               case "end":
                 return _context.stop();
             }
@@ -44853,19 +44873,36 @@ var render = function() {
             {
               staticClass: "form-group",
               class: {
-                "has-error": _vm.errors.login && _vm.errors.login.length > 0
+                "has-error": _vm.errors.email && _vm.errors.email.length > 0
               }
             },
             [
               _c("label", { attrs: { for: "login" } }, [_vm._v("Login:*")]),
               _vm._v(" "),
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.email,
+                    expression: "email"
+                  }
+                ],
                 staticClass: "form-control",
                 attrs: {
                   type: "email",
                   id: "login",
                   "aria-describedby": "login_usuario",
                   placeholder: "Digite o login de usuário"
+                },
+                domProps: { value: _vm.email },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.email = $event.target.value
+                  }
                 }
               }),
               _vm._v(" "),
@@ -44883,10 +44920,10 @@ var render = function() {
               ),
               _c("br"),
               _vm._v(" "),
-              _vm._l(_vm.errors.login, function(error, l) {
-                return _vm.errors.login
+              _vm._l(_vm.errors.email, function(error, e) {
+                return _vm.errors.email
                   ? _c("small", {
-                      key: l,
+                      key: e,
                       staticClass: "text-danger",
                       domProps: { textContent: _vm._s(error) }
                     })
@@ -44908,11 +44945,28 @@ var render = function() {
               _c("label", { attrs: { for: "nome" } }, [_vm._v("Nome:*")]),
               _vm._v(" "),
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.name,
+                    expression: "name"
+                  }
+                ],
                 staticClass: "form-control",
                 attrs: {
                   type: "text",
                   id: "nome",
                   placeholder: "Digite o completo do usuário"
+                },
+                domProps: { value: _vm.name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.name = $event.target.value
+                  }
                 }
               }),
               _vm._v(" "),
@@ -44934,7 +44988,7 @@ var render = function() {
             {
               staticClass: "form-group",
               class: {
-                "has-error": _vm.errors.tipo && _vm.errors.tipo.length > 0
+                "has-error": _vm.errors.role && _vm.errors.role.length > 0
               }
             },
             [
@@ -44942,12 +44996,66 @@ var render = function() {
                 _vm._v("Tipo usuário:*")
               ]),
               _vm._v(" "),
-              _vm._m(1),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.role,
+                      expression: "role"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { id: "tipousuario" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.role = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "" } }, [
+                    _vm._v(" SELECIONE ")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "super administrador" } }, [
+                    _vm._v("super administrador")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "administrador" } }, [
+                    _vm._v("administrador")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "coordenador" } }, [
+                    _vm._v("coordenador")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "editor" } }, [
+                    _vm._v("editor")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "colaborador" } }, [
+                    _vm._v("colaborador")
+                  ])
+                ]
+              ),
               _vm._v(" "),
-              _vm._l(_vm.errors.tipo, function(error, t) {
-                return _vm.errors.tipo
+              _vm._l(_vm.errors.role, function(error, r) {
+                return _vm.errors.role
                   ? _c("small", {
-                      key: t,
+                      key: r,
                       staticClass: "text-danger",
                       domProps: { textContent: _vm._s(error) }
                     })
@@ -44960,6 +45068,8 @@ var render = function() {
           _c("legend", [
             _vm._v("Marque o(s) canais ao qual pertence o usuário:")
           ]),
+          _vm._v(" "),
+          _vm._m(1),
           _vm._v(" "),
           _vm._m(2),
           _vm._v(" "),
@@ -44979,8 +45089,6 @@ var render = function() {
           _vm._v(" "),
           _vm._m(10),
           _vm._v(" "),
-          _vm._m(11),
-          _vm._v(" "),
           _c(
             "div",
             {
@@ -44996,11 +45104,28 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.nascimento,
+                    expression: "nascimento"
+                  }
+                ],
                 staticClass: "form-control",
                 attrs: {
                   type: "date",
                   id: "datanascimento",
                   name: "datanascimento"
+                },
+                domProps: { value: _vm.nascimento },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.nascimento = $event.target.value
+                  }
                 }
               }),
               _vm._v(" "),
@@ -45033,11 +45158,28 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.emailinstitucional,
+                    expression: "emailinstitucional"
+                  }
+                ],
                 staticClass: "form-control",
                 attrs: {
                   type: "email",
                   id: "emailinstitucional",
                   name: "emailinstitucional"
+                },
+                domProps: { value: _vm.emailinstitucional },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.emailinstitucional = $event.target.value
+                  }
                 }
               }),
               _vm._v(" "),
@@ -45069,11 +45211,28 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.emailpessoal,
+                    expression: "emailpessoal"
+                  }
+                ],
                 staticClass: "form-control",
                 attrs: {
                   type: "email",
                   id: "emailpessoal",
                   name: "emailpessoal"
+                },
+                domProps: { value: _vm.emailpessoal },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.emailpessoal = $event.target.value
+                  }
                 }
               }),
               _vm._v(" "),
@@ -45090,8 +45249,85 @@ var render = function() {
             2
           ),
           _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "form-group",
+              class: {
+                "has-error":
+                  _vm.errors.password && _vm.errors.password.length > 0
+              }
+            },
+            [
+              _c("label", { attrs: { for: "cpf" } }, [_vm._v("Senha:*")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.password,
+                    expression: "password"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "password", id: "senha", name: "senha" },
+                domProps: { value: _vm.password },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.password = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.errors.password, function(error, pass) {
+                return _vm.errors.password
+                  ? _c("small", {
+                      key: pass,
+                      staticClass: "text-danger",
+                      domProps: { textContent: _vm._s(error) }
+                    })
+                  : _vm._e()
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "transition",
+            {
+              attrs: {
+                name: "custom-classes-transition",
+                "enter-active-class": "animated shake",
+                "leave-active-class": "animated fadeOut"
+              }
+            },
+            [
+              !_vm.isError
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "alert alert-info",
+                      attrs: { role: "alert" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.message) +
+                          "\n            "
+                      )
+                    ]
+                  )
+                : _vm._e()
+            ]
+          ),
+          _vm._v(" "),
           _c("button", { staticClass: "btn btn-success" }, [_vm._v("Salvar")])
-        ]
+        ],
+        1
       )
     ])
   ])
@@ -45102,36 +45338,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("h2", [_c("legend", [_vm._v("Adicionar Usuário")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "select",
-      { staticClass: "form-control", attrs: { id: "tipo" } },
-      [
-        _c("option", { attrs: { value: "0" } }, [_vm._v(" SELECIONE ")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "super administrador" } }, [
-          _vm._v("super administrador")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "administrador" } }, [
-          _vm._v("administrador")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "coordenador" } }, [
-          _vm._v("coordenador")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "editor" } }, [_vm._v("editor")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "colaborador" } }, [
-          _vm._v("colaborador")
-        ])
-      ]
-    )
   },
   function() {
     var _vm = this

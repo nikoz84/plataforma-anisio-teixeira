@@ -6,21 +6,21 @@
 
         <form v-on:submit.prevent="send()">
 
-            <div class="form-group" v-bind:class="{ 'has-error': errors.login && errors.login.length > 0 }">
+            <div class="form-group" v-bind:class="{ 'has-error': errors.email && errors.email.length > 0 }">
                 <label for="login">Login:*</label>
-                <input type="email" class="form-control" id="login" aria-describedby="login_usuario" placeholder="Digite o login de usuário">
+                <input type="email" class="form-control" id="login" v-model="email" aria-describedby="login_usuario" placeholder="Digite o login de usuário">
                 <small id="login_usuario" class="form-text text-muted">Pode utilizar uma conta de e-mail como login (exemplo: aew.usuario@gmail.com, aew.usuario@hotmail.com)</small><br>
                 <small class="text-danger"
-                        v-if="errors.login"
-                        v-for="(error,l) in errors.login"
-                        v-bind:key="l"
+                        v-if="errors.email"
+                        v-for="(error,e) in errors.email"
+                        v-bind:key="e"
                         v-text="error">
                 </small>
             </div>
 
             <div class="form-group" v-bind:class="{ 'has-error': errors.name && errors.name.length > 0 }">
                 <label for="nome">Nome:*</label>
-                <input type="text" class="form-control" id="nome" placeholder="Digite o completo do usuário">
+                <input type="text" class="form-control" id="nome" v-model="name" placeholder="Digite o completo do usuário">
                 <small class="text-danger"
                         v-if="errors.name"
                         v-for="(error,n) in errors.name"
@@ -29,10 +29,10 @@
                 </small>
             </div>
 
-            <div class="form-group" v-bind:class="{ 'has-error': errors.tipo && errors.tipo.length > 0 }">
+            <div class="form-group" v-bind:class="{ 'has-error': errors.role && errors.role.length > 0 }">
                 <label for="tipo">Tipo usuário:*</label>
-                <select class="form-control" id="tipo">
-                <option value="0"> SELECIONE </option>
+                <select class="form-control" id="tipousuario" v-model="role">
+                <option value=""> SELECIONE </option>
                 <option value="super administrador">super administrador</option>
                 <option value="administrador">administrador</option>
                 <option value="coordenador">coordenador</option>
@@ -40,13 +40,12 @@
                 <option value="colaborador">colaborador</option>
                 </select>
                 <small class="text-danger"
-                        v-if="errors.tipo"
-                        v-for="(error,t) in errors.tipo"
-                        v-bind:key="t"
+                        v-if="errors.role"
+                        v-for="(error,r) in errors.role"
+                        v-bind:key="r"
                         v-text="error">
                 </small>
             </div>
-
             <legend>Marque o(s) canais ao qual pertence o usuário:</legend>
             <div class="form-check">
                 <input class="form-check-input" name="usuarioperfilcanal[]" type="checkbox" value="" id="usuarioperfilcanal1">
@@ -117,7 +116,7 @@
             </div>
             <div class="form-group" v-bind:class="{ 'has-error': errors.nascimento && errors.nascimento.length > 0 }">
                 <label for="datanascimento">Data de nascimento:</label>
-                <input type="date" class="form-control" id="datanascimento" name="datanascimento">
+                <input type="date" class="form-control" id="datanascimento" name="datanascimento" v-model="nascimento">
                 <small class="text-danger"
                         v-if="errors.nascimento"
                         v-for="(error,n) in errors.nascimento"
@@ -127,7 +126,7 @@
             </div>
             <div class="form-group" v-bind:class="{ 'has-error': errors.emailinstitucional && errors.emailinstitucional.length > 0 }">
                 <label for="emailinstitucional">E-mail Institucional:*</label>
-                <input type="email" class="form-control" id="emailinstitucional" name="emailinstitucional">
+                <input type="email" class="form-control" id="emailinstitucional" name="emailinstitucional" v-model="emailinstitucional">
                 <small class="text-danger"
                         v-if="errors.emailinstitucional"
                         v-for="(error,ei) in errors.emailinstitucional"
@@ -137,7 +136,7 @@
             </div>
             <div class="form-group" v-bind:class="{ 'has-error': errors.emailpessoal && errors.emailpessoal.length > 0 }">
                 <label for="emailpessoal">E-mail Pessoal:*</label>
-                <input type="email" class="form-control" id="emailpessoal" name="emailpessoal">
+                <input type="email" class="form-control" id="emailpessoal" name="emailpessoal" v-model="emailpessoal">
                 <small class="text-danger"
                         v-if="errors.emailpessoal"
                         v-for="(error,ep) in errors.emailpessoal"
@@ -145,11 +144,17 @@
                         v-text="error">
                 </small>
             </div>
-            <!--<div class="form-group">
-                <label for="cpf">CPF:</label>
-                <input type="text" class="form-control" id="cpf" name="cpf">
+            <div class="form-group" v-bind:class="{ 'has-error': errors.password && errors.password.length > 0 }">
+                <label for="cpf">Senha:*</label>
+                <input type="password" class="form-control" id="senha" name="senha" v-model="password">
+                <small class="text-danger"
+                        v-if="errors.password"
+                        v-for="(error,pass) in errors.password"
+                        v-bind:key="pass"
+                        v-text="error">
+                </small>
             </div>
-            <div class="form-group">
+            <!--<div class="form-group">
                 <label for="cpf">RG:</label>
                 <input type="text" class="form-control" id="rg" name="rg">
             </div>
@@ -193,6 +198,13 @@
                     <option value="">« SELECIONE »</option>
                 </select>
             </div>-->
+            <transition  name="custom-classes-transition"
+                enter-active-class="animated shake"
+                leave-active-class="animated fadeOut">
+                <div v-if="!isError" class="alert alert-info" role="alert" >
+                    {{ message }}
+                </div>
+            </transition>
 
             <button class="btn btn-success">Salvar</button>
 
@@ -211,21 +223,25 @@ export default {
 
     data(){
         return {
-
-            email: null,
-            name: null,
-            tipo: null,
-            login: null,
-            emailinstitucional: null,
-            emailpessoal: null,
-            nascimento: null,
+            name: '',
+            email: '',
+            role: '',
+            password: '',
+            emailinstitucional: '',
+            emailpessoal: '',
+            nascimento: '',
             options: {},
             message: null,
             success: false,
             isError: true,
-            isUpdate: false,
             errors: {
-                tipo:[]
+                email:[],
+                name:[],
+                role:[],
+                password:[],
+                nascimento:[],
+                emailinstitucional:[],
+                emailpessoal:[]
             },
         }
 
@@ -242,15 +258,18 @@ export default {
         async createUsuario(){
 
             let form = new FormData();
-            form.append('login', this.login);
+            form.append('email', this.email);
             form.append('name',this.name);
-            form.append('tipo',this.tipo);
-            form.append('nascimento',this.nascimento);
+            form.append('role',this.role);
+            form.append('password',this.password);
+            form.append('nascimento',this.options);
+            form.append('emailinstitucional',this.options);
+            form.append('emailpessoal',this.options);
             form.append('is_featured', this.is_featured);
-            //form.append('options', JSON.stringify(this.options));
+            form.append('options', JSON.stringify(this.options));
             form.append('token', localStorage.token);
 
-            let resp = await http.postData('/users/create', form);
+            let resp = await http.postData('/auth/register', form);
             console.warn(resp);
 
             if(resp.data.success){

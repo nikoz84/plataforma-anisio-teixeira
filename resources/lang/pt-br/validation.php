@@ -126,6 +126,7 @@ return [
         'image' => 'imagem',
         'video' => 'vídeo',
         'file' => 'arquivo',
+        'role' => 'tipo',
         'url' => 'url',
         'category' => 'categoria',
         'category_id' => 'categoria',
