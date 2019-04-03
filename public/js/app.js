@@ -45741,42 +45741,46 @@ var staticRenderFns = [
       _c("div", { staticClass: "row col-lg-6 col-xs-offset-3" }, [
         _c("h2", [_c("legend", [_vm._v("Usuários")])]),
         _vm._v(" "),
-        _c("table", { staticClass: "table table-striped" }, [
-          _c("tr", [
-            _c("td", [_vm._v("Nome")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("E-mail institucional")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("Tipo de usuário")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("Ação")])
+        _c("table", { staticClass: "table table-striped table-hover" }, [
+          _c("thead", [
+            _c("tr", [
+              _c("td", [_vm._v("Nome")]),
+              _vm._v(" "),
+              _c("td", [_vm._v("E-mail institucional")]),
+              _vm._v(" "),
+              _c("td", [_vm._v("Tipo de usuário")]),
+              _vm._v(" "),
+              _c("td", [_vm._v("Ação")])
+            ])
           ]),
           _vm._v(" "),
-          _c("tr", [
-            _c("td", [_vm._v("...")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("...")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("...")]),
-            _vm._v(" "),
-            _c("td", [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-warning btn-xs",
-                  attrs: { type: "button" }
-                },
-                [_vm._v("Editar")]
-              ),
+          _c("tbody", [
+            _c("tr", [
+              _c("td", [_vm._v("...")]),
               _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-danger btn-xs",
-                  attrs: { type: "button" }
-                },
-                [_vm._v("Excluir")]
-              )
+              _c("td", [_vm._v("...")]),
+              _vm._v(" "),
+              _c("td", [_vm._v("...")]),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-warning btn-xs",
+                    attrs: { type: "button" }
+                  },
+                  [_vm._v("Editar")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger btn-xs",
+                    attrs: { type: "button" }
+                  },
+                  [_vm._v("Excluir")]
+                )
+              ])
             ])
           ])
         ])
