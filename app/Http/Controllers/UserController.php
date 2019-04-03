@@ -100,15 +100,16 @@ class UserController extends Controller
         $user->options = json_decode($this->request->get('options'), true);
 
         $resp = $user->save();
-        if (!$resp) {
+        if ($resp) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Usuário registrado com sucesso'
+                ], 200);
+        } else {
             return response()->json([
                 'success' => false,
                 'message' => 'Usuário não registrado'
-            ], 200);
+            ]);
         }
-        return response()->json([
-            'success' => true,
-            'message' => 'Usuário registrado com sucesso'
-        ]);
     }
 }

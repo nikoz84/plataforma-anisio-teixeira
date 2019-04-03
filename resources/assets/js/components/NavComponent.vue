@@ -77,16 +77,16 @@
                             <li>
                                 <a v-on:click.prevent="getCreateUsuario()">Criar Usuário</a>
                             </li>
-                            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'users'}}">
-                                <a>Listar usuários</a>
-                            </router-link>
+                            <li>
+                                <a v-on:click.prevent="getListarUsuario()">Listar Usuários</a>
+                            </li>
                             <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'Denúncia'}}">
                                 <a>Verificar denúncias</a>
                             </router-link>
                         </ul>
                     </li>
                 </ul>
-                
+
                 <!--/END menu configurações -->
             </div>
         </div>
@@ -134,6 +134,9 @@ export default {
         },
         getCreateUsuario(){
             this.$router.push('/usuario/create');
+        },
+        getListarUsuario(){
+            this.$router.push('/usuario/listar');
         }
     },
     created () {
