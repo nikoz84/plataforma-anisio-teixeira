@@ -12,6 +12,7 @@ import ListAdmin from './components/ListAdminComponent.vue';
 import DenunciaForm from './forms/DenunciaForm.vue';
 import FaleConoscoForm from './forms/FaleConoscoForm.vue';
 import UsuarioForm from './forms/UsuarioForm.vue';
+import ListarUser from './pages/ListarUser.vue';
 
 
 const routes =[
@@ -76,6 +77,11 @@ const routes =[
           path: 'create',
           name: 'Create',
           component: UsuarioForm
+        },
+        {
+          path: 'listar',
+          name: 'Listar',
+          component: ListarUser
         }
       ]
     },

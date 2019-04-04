@@ -2,31 +2,51 @@
     <div class="conteiner">
         <div class="row col-lg-6 col-xs-offset-3">
 
-        <form>
+        <h2><legend>Adicionar Usuário</legend></h2>
 
-            <div class="form-group">
+        <form v-on:submit.prevent="send()">
+
+            <div class="form-group" v-bind:class="{ 'has-error': errors.email && errors.email.length > 0 }">
                 <label for="login">Login:*</label>
-                <input type="email" class="form-control" id="login" aria-describedby="login_usuario" placeholder="Digite o login de usuário">
-                <small id="login_usuario" class="form-text text-muted">Pode utilizar uma conta de e-mail como login (exemplo: aew.usuario@gmail.com, aew.usuario@hotmail.com)</small>               
+                <input type="email" class="form-control" id="login" v-model="email" aria-describedby="login_usuario" placeholder="Digite o login de usuário">
+                <small id="login_usuario" class="form-text text-muted">Pode utilizar uma conta de e-mail como login (exemplo: aew.usuario@gmail.com, aew.usuario@hotmail.com)</small><br>
+                <small class="text-danger"
+                        v-if="errors.email"
+                        v-for="(error,e) in errors.email"
+                        v-bind:key="e"
+                        v-text="error">
+                </small>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" v-bind:class="{ 'has-error': errors.name && errors.name.length > 0 }">
                 <label for="nome">Nome:*</label>
-                <input type="text" class="form-control" id="nome" placeholder="Digite o completo do usuário">
+                <input type="text" class="form-control" id="nome" v-model="name" placeholder="Digite o completo do usuário">
+                <small class="text-danger"
+                        v-if="errors.name"
+                        v-for="(error,n) in errors.name"
+                        v-bind:key="n"
+                        v-text="error">
+                </small>
             </div>
 
-            <div class="form-group">
-                <label for="tipo_usuario">Tipo usuário:*</label>
-                <select class="form-control" id="tipo_usuario">
-                <option value="0"> SELECIONE </option>
-                <option value="1">super administrador</option>
-                <option value="2">administrador</option>
-                <option value="3">coordenador</option>
-                <option value="4">editor</option>
-                <option value="5">colaborador</option>
+            <div class="form-group" v-bind:class="{ 'has-error': errors.role && errors.role.length > 0 }">
+                <label for="tipo">Tipo usuário:*</label>
+                <select class="form-control" id="tipousuario" v-model="role">
+                <option value=""> SELECIONE </option>
+                <option value="super administrador">super administrador</option>
+                <option value="administrador">administrador</option>
+                <option value="coordenador">coordenador</option>
+                <option value="editor">editor</option>
+                <option value="colaborador">colaborador</option>
                 </select>
+                <small class="text-danger"
+                        v-if="errors.role"
+                        v-for="(error,r) in errors.role"
+                        v-bind:key="r"
+                        v-text="error">
+                </small>
             </div>
-
+            <legend>Marque o(s) canais ao qual pertence o usuário:</legend>
             <div class="form-check">
                 <input class="form-check-input" name="usuarioperfilcanal[]" type="checkbox" value="" id="usuarioperfilcanal1">
                 <label class="form-check-label" for="usuarioperfilcanal1">
@@ -94,23 +114,47 @@
                 Feminino
                 </label>
             </div>
-            <div class="form-group">
+            <div class="form-group" v-bind:class="{ 'has-error': errors.nascimento && errors.nascimento.length > 0 }">
                 <label for="datanascimento">Data de nascimento:</label>
-                <input type="date" class="form-control" id="datanascimento" name="datanascimento">
+                <input type="date" class="form-control" id="datanascimento" name="datanascimento" v-model="nascimento">
+                <small class="text-danger"
+                        v-if="errors.nascimento"
+                        v-for="(error,n) in errors.nascimento"
+                        v-bind:key="n"
+                        v-text="error">
+                </small>
             </div>
-            <div class="form-group">
+            <div class="form-group" v-bind:class="{ 'has-error': errors.emailinstitucional && errors.emailinstitucional.length > 0 }">
                 <label for="emailinstitucional">E-mail Institucional:*</label>
-                <input type="email" class="form-control" id="emailinstitucional" name="emailinstitucional">
+                <input type="email" class="form-control" id="emailinstitucional" name="emailinstitucional" v-model="emailinstitucional">
+                <small class="text-danger"
+                        v-if="errors.emailinstitucional"
+                        v-for="(error,ei) in errors.emailinstitucional"
+                        v-bind:key="ei"
+                        v-text="error">
+                </small>
             </div>
-            <div class="form-group">
+            <div class="form-group" v-bind:class="{ 'has-error': errors.emailpessoal && errors.emailpessoal.length > 0 }">
                 <label for="emailpessoal">E-mail Pessoal:*</label>
-                <input type="email" class="form-control" id="emailpessoal" name="emailpessoal">
+                <input type="email" class="form-control" id="emailpessoal" name="emailpessoal" v-model="emailpessoal">
+                <small class="text-danger"
+                        v-if="errors.emailpessoal"
+                        v-for="(error,ep) in errors.emailpessoal"
+                        v-bind:key="ep"
+                        v-text="error">
+                </small>
             </div>
-            <div class="form-group">
-                <label for="cpf">CPF:</label>
-                <input type="text" class="form-control" id="cpf" name="cpf">
+            <div class="form-group" v-bind:class="{ 'has-error': errors.password && errors.password.length > 0 }">
+                <label for="cpf">Senha:*</label>
+                <input type="password" class="form-control" id="senha" name="senha" v-model="password">
+                <small class="text-danger"
+                        v-if="errors.password"
+                        v-for="(error,pass) in errors.password"
+                        v-bind:key="pass"
+                        v-text="error">
+                </small>
             </div>
-            <div class="form-group">
+            <!--<div class="form-group">
                 <label for="cpf">RG:</label>
                 <input type="text" class="form-control" id="rg" name="rg">
             </div>
@@ -133,41 +177,11 @@
             <div class="form-group">
             <label for="estado">Estado:</label>
             <select class="form-control form-control-lg" id="estado">
-                <option value="">« SELECIONE »</option>
-                <option value="2">Não Informado</option>
-                <option value="2116">BA</option>
-                <option value="2573">AC</option>
-                <option value="2574">AL</option>
-                <option value="2575">AP</option>
-                <option value="2576">AM</option>
-                <option value="2577">CE</option>
-                <option value="2578">DF</option>
-                <option value="2579">ES</option>
-                <option value="2580">GO</option>
-                <option value="2581">MA</option>
-                <option value="2582">MT</option>
-                <option value="2583">MS</option>
-                <option value="2584">MG</option>
-                <option value="2585">PA</option>
-                <option value="2586">PB</option>
-                <option value="2587">PR</option>
-                <option value="2588">PE</option>
-                <option value="2589">PI</option>
-                <option value="2590">RJ</option>
-                <option value="2591">RN</option>
-                <option value="2592">RS</option>
-                <option value="2593">RO</option>
-                <option value="2594">RR</option>
-                <option value="2595">SC</option>
-                <option value="2596">SP</option>
-                <option value="2597">SE</option>
-                <option value="2598">TO</option>
             </select>
             </div>
             <div class="form-group">
                 <label for="municipio">Município:</label>
                 <select class="form-control form-control-lg" id="municipio">
-                    <option value="">« SELECIONE »</option>
                 </select>
             </div>
             <div class="form-group">
@@ -183,9 +197,16 @@
                 <select class="form-control form-control-lg" id="escola">
                     <option value="">« SELECIONE »</option>
                 </select>
-            </div>
+            </div>-->
+            <transition  name="custom-classes-transition"
+                enter-active-class="animated shake"
+                leave-active-class="animated fadeOut">
+                <div v-if="!isError" class="alert alert-info" role="alert" >
+                    {{ message }}
+                </div>
+            </transition>
 
-            <button class="btn btn-success">Adicionar</button>
+            <button class="btn btn-success">Salvar</button>
 
         </form>
 
@@ -195,63 +216,64 @@
 
 <script>
 import Http from '../http.js';
-import TagsForm from './TagsForm.vue';
-const http = new Http;
+const http = new Http();
 
 export default {
     name: 'UsuarioForm',
+
     data(){
         return {
-            login: null,
-            name: null,
-            email: null,
+            name: '',
+            email: '',
+            role: '',
+            password: '',
+            emailinstitucional: '',
+            emailpessoal: '',
+            nascimento: '',
             options: {},
             message: null,
-            count: 0,
             success: false,
             isError: true,
-            isUpdate: false,
-            textButton: 'Criar',
             errors: {
-                name: [],
-                url: [],
-                description: [],
-                category: []
+                email:[],
+                name:[],
+                role:[],
+                password:[],
+                nascimento:[],
+                emailinstitucional:[],
+                emailpessoal:[]
             },
         }
 
     },
-    
+
     methods:{
         send(){
             if(this.isUpdate){
-                this.editAplicativo();
+                this.editUsuario();
             }else{
-                this.createAplicativo();
+                this.createUsuario();
             }
         },
-        async createAplicativo(){
-            this.options = {
-                qt_access : 0
-            }
-            if(!this.image) return;
+        async createUsuario(){
+
             let form = new FormData();
-            form.append('name', this.name);
-            form.append('description',this.description);
-            form.append('category_id', this.category_id);
-            form.append('canal_id', localStorage.canal_id);
-            form.append('tags', this.tags);
-            form.append('url', this.url);
+            form.append('email', this.email);
+            form.append('name',this.name);
+            form.append('role',this.role);
+            form.append('password',this.password);
+            form.append('nascimento',this.options);
+            form.append('emailinstitucional',this.options);
+            form.append('emailpessoal',this.options);
             form.append('is_featured', this.is_featured);
             form.append('options', JSON.stringify(this.options));
-            form.append('image',this.image, this.image.name);
             form.append('token', localStorage.token);
 
-            let resp = await http.postData('/aplicativos/create', form);
+            let resp = await http.postData('/auth/register', form);
             console.warn(resp);
 
             if(resp.data.success){
-                this.$router.push({ name: 'Listar', params: {slug: this.$route.params.slug}})
+                this.message = resp.data.message;
             }else{
                 this.isError = resp.data.success;
                 this.message = resp.data.message;
@@ -265,46 +287,7 @@ export default {
             }
 
         },
-        async getCategories(){
-            let resp = await http.getDataFromUrl('/categories/aplicativos');
 
-            this.categories = resp.data.categories;
-        },
-        onFileChange(e){
-            this.image = e.target.files[0];
-        },
-        countCaracters(e){
-            if(e.target.value.length > 140){
-                this.success = true;
-            }
-            this.count = e.target.value.length;
-        },
-        async getAplicativo(){
-            let resp = await http.getDataFromUrl(`/aplicativos/${this.$route.params.id}`);
-            if(resp.data.success){
-                this.name = resp.data.aplicativo.name;
-                this.category_id = resp.data.aplicativo.category_id;
-                this.description = resp.data.aplicativo.description;
-                this.url = resp.data.aplicativo.url;
-                this.is_featured = resp.data.aplicativo.is_featured;
-                this.image = resp.data.aplicativo.image;
-            }
-        },
-        async editAplicativo(){
-            let params ={
-                name: this.name,
-                category_id: this.category_id,
-                canal_id: localStorage.canal_id,
-                description: this.description,
-                url: this.url,
-                is_featured: this.is_featured,
-                token: localStorage.token
-            }
-
-            let resp = await http.config('PUT',`/aplicativos/update/${this.$route.params.id}`,params);
-
-            console.log(resp)
-        }
     }
 
 }

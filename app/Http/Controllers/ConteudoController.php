@@ -113,7 +113,7 @@ class ConteudoController extends Controller
 
 
     /**
-     * Adiciona e valida um novo conteúdo.
+     * Adiciona e valida um novo conteúdo.tipo
      *
      * @return Json
      */
