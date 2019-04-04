@@ -79,8 +79,8 @@ const routes =[
           component: UsuarioForm
         },
         {
-          path: 'listar',
-          name: 'Listar',
+          path: 'lista',
+          name: 'Lista',
           component: ListarUser
         }
       ]
