@@ -56,6 +56,7 @@ class ImportData extends Command
         DB::statement("ALTER SEQUENCE licenses_id_seq RESTART WITH 14;");
         DB::statement("ALTER SEQUENCE categories_id_seq RESTART WITH 69;");
         DB::statement("ALTER SEQUENCE aplicativo_categories_id_seq RESTART WITH 16;");
+        DB::statement("ALTER SEQUENCE niveis_ensino_id_seq RESTART WITH 12;");
 
         /*
         $componentes = explode("\n", file_get_contents(storage_path('dumps/10.componentes')));

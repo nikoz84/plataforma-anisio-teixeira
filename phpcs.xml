@@ -4,7 +4,6 @@
     <rule ref="PSR2"/>
     <rule ref="PSR2.Namespaces.UseDeclaration"/>
     <file>app/</file>
-    <exclude-pattern>vendor</exclude-pattern>
     <exclude-pattern>resources</exclude-pattern>
     <exclude-pattern>database/</exclude-pattern>
     <exclude-pattern>storage/</exclude-pattern>

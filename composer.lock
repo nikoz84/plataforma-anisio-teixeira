@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5dddbdf80340dccd97e602d38cab5c4e",
+    "content-hash": "476228bff1c609ff8961bcb4f246b4b4",
     "packages": [
         {
             "name": "defuse/php-encryption",

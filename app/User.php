@@ -53,6 +53,21 @@ class User extends Authenticatable implements JWTSubject
 
     protected $appends = ['is_admin'];
     
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtolower($value);
+    }
+
+    public function getNameAttribute($value)
+    {
+        return ucwords($value);
+    }
+
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
+    }
+
     public function isVerified()
     {
         return $this->verified == App\User::USER_VERIFIED;

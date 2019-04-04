@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/
+ */
 
 /******
  *
@@ -115,15 +115,15 @@ Route::post('/auth/register', 'AuthController@register')->name('registroUsuario'
 Route::post('options/name/{name}', 'OptionsController@getByName')->name('busca.metadata.name');
 
 /******
-* Controlador: Tag
-* Métodos: getById -> Busca tag por Id
-*/
+ * Controlador: Tag
+ * Métodos: getById -> Busca tag por Id
+ */
 Route::get('/tags/{id}', 'TagController@getById')->name('buscaxTagId');
 
 /******
-* Controlador: Licenses
-* Métodos: list -> lista as licenças
-*/
+ * Controlador: Licenses
+ * Métodos: list -> lista as licenças
+ */
 Route::get('/licenses', 'LicenseController@list')->name('listaLicenca');
 
 /******
@@ -140,6 +140,7 @@ Route::post('/email/enviar', 'DenunciaController@create')->name('denuncia.create
  */
 Route::post('/faleconosco/enviar', 'FaleconoscoController@enviar')->name('faleconosco.enviar');
 
+Route::name('verify')->get('users/verify/{token}', 'UserController@verify');
 Route::get('/users', 'UserController@list')->name('usuario.listar');
 
 /**

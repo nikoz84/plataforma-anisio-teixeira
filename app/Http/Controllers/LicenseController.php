@@ -69,9 +69,6 @@ class LicenseController extends Controller
     /**
      * Atualiza uma licença específica.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Options  $options
-     * @return \Illuminate\Http\Response
      */
     public function update($id)
     {
