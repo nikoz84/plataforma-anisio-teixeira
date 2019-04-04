@@ -136,7 +136,7 @@ export default {
             this.$router.push('/usuario/create');
         },
         getListarUsuario(){
-            this.$router.push('/usuario/listar');
+            this.$router.push('/usuario/lista');
         }
     },
     created () {

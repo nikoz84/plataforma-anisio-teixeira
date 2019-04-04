@@ -2688,7 +2688,7 @@ var http = new _http_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
       this.$router.push('/usuario/create');
     },
     getListarUsuario: function getListarUsuario() {
-      this.$router.push('/usuario/listar');
+      this.$router.push('/usuario/lista');
     }
   },
   created: function created() {
