@@ -1,7 +1,7 @@
 <template>
     <div class="conteiner">
         <div class="row col-lg-6 col-xs-offset-3">
-            <h2><legend>Usuários</legend></h2>
+            <h2><legend>ListaUsuários</legend></h2>
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
@@ -24,3 +24,29 @@
         </div>
     </div>
 </template>
+
+<script>
+import Http from '../http.js';
+const http = new Http();
+
+export default {
+    name: 'ListarUser',
+
+    props: ['users'],
+
+    data(){
+        
+    },
+
+    methods:{
+        getUsuarios: function() {
+            var urlUsuarios = 'usuario.listar';
+            axios.get(urlUsuarios).then(response => {
+                this.usuarios = response.data
+            });
+        }
+        },
+
+    }
+
+</script>
