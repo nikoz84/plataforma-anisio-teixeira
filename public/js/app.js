@@ -5490,19 +5490,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var http = new _http_js__WEBPACK_IMPORTED_MODULE_0__["default"]();
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'ListarUser',
-  props: ['users'],
-  data: function data() {},
-  methods: {
-    getUsuarios: function getUsuarios() {
-      var _this = this;
-
-      var urlUsuarios = 'usuario.listar';
-      axios.get(urlUsuarios).then(function (response) {
-        _this.usuarios = response.data;
-      });
-    }
-  }
+  name: 'ListarUser'
 });
 
 /***/ }),

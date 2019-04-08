@@ -12,10 +12,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
+                    <tr v-for= "user in users">
+                        <td scope="row">{{ user.name}}</td>
+                        <td>{{ user.email}}</td>
+                        <td>{{ user.role}}</td>
                         <td><button type="button" class="btn btn-warning btn-xs">Editar</button> <button type="button" class="btn btn-danger btn-xs">Excluir</button></td>
                     </tr>
                 </tbody>
@@ -30,7 +30,25 @@ import Http from '../http.js';
 const http = new Http();
 
 export default {
-    name: 'ListarUser',
+    mounted() {
+       this.getUsers()
+    },
+
+    data(){
+        return{
+            users:[]
+        }
+    },
+
+    methods:{
+
+        getUsers(){
+            var urlUsers = "users";
+            axios.get(urlUsers).then(response=>{
+                this.users = response.data
+            });
+        },
+    }
 
 
     }
