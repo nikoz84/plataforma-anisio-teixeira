@@ -141,6 +141,7 @@ Route::post('/email/enviar', 'DenunciaController@create')->name('denuncia.create
 Route::post('/faleconosco/enviar', 'FaleconoscoController@enviar')->name('faleconosco.enviar');
 
 Route::name('verify')->get('users/verify/{token}', 'UserController@verify');
+//Route::get('/users', 'UserController@list')->name('usuario.listar');
 Route::get('/users', 'UserController@list')->name('usuario.listar');
 
 /**

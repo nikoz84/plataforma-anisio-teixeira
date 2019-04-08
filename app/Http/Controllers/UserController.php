@@ -4,16 +4,15 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+
     public function __construct(Request $request, User $user)
     {
-        $this->middleware('jwt.verify')->except(['list','create', 'delete', 'search']);
+        $this->middleware('jwt.verify')->except(['list', 'create', 'delete', 'search']);
         $this->user = $user;
         $this->request = $request;
     }
@@ -23,15 +22,14 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list()
-    {
+    function list() {
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
 
         return response()->json([
             'success' => true,
-            'users' => $this->user::all()
+            'users' => $this->user::all(),
         ]);
     }
     public function getById(Request $request, $id)
@@ -45,7 +43,7 @@ class UserController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Usuário deletado com sucesso!!'
+            'message' => 'Usuário deletado com sucesso!!',
         ]);
     }
     public function search(Request $request, $termo)
@@ -53,14 +51,14 @@ class UserController extends Controller
         $limit = ($request->has('limit')) ? $request->query('limit') : 20;
         $search = "%{$termo}%";
         $paginator = User::whereRaw('unaccent(lower(name)) ilike unaccent(lower(?))', [$search])
-                    ->paginate($limit);
+            ->paginate($limit);
 
         $paginator->setPath("/users/search/{$termo}?limit={$limit}");
 
         return response()->json([
-        'success'=> true,
-        'title' => 'Resultado da busca',
-        'paginator' => $paginator
+            'success' => true,
+            'title' => 'Resultado da busca',
+            'paginator' => $paginator,
         ]);
     }
     /**
@@ -77,7 +75,7 @@ class UserController extends Controller
             'password' => 'required|min:6',
             'nascimento' => 'required',
             'emailinstitucional' => 'required',
-            'emailpessoal' => 'required'
+            'emailpessoal' => 'required',
         ]);
 
         return $validator;
@@ -90,7 +88,7 @@ class UserController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Não foi possível salvar usuário',
-                'errors' => $validator->errors()
+                'errors' => $validator->errors(),
             ], 200);
         }
 
@@ -104,13 +102,22 @@ class UserController extends Controller
         if ($resp) {
             return response()->json([
                 'success' => true,
-                'message' => 'Usuário registrado com sucesso'
-                ], 200);
+                'message' => 'Usuário registrado com sucesso',
+            ], 200);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Usuário não registrado'
+                'message' => 'Usuário não registrado',
             ]);
         }
+    }
+
+    public function verify($token)
+    {
+        $user = $this->user::where('verification_token', $token)->firstOrFail();
+        $user->verified = $this->user::USER_NOT_VERIFIED;
+        $user->verification_token = null;
+        $user->save();
+        return $this->showOne('Conta verificada', 200);
     }
 }
