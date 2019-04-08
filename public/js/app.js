@@ -5459,7 +5459,15 @@ var http = new _http_js__WEBPACK_IMPORTED_MODULE_2__["default"]();
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _http_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../http.js */ "./resources/assets/js/http.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _http_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../http.js */ "./resources/assets/js/http.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -5488,20 +5496,51 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
-var http = new _http_js__WEBPACK_IMPORTED_MODULE_0__["default"]();
+var http = new _http_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'ListarUser',
-  props: ['users'],
-  data: function data() {},
+  name: "ListarUser",
+  data: function data() {
+    return {
+      users: []
+    };
+  },
+  mounted: function mounted() {
+    console.log("sdf");
+    this.getUsers();
+  },
   methods: {
-    getUsuarios: function getUsuarios() {
-      var _this = this;
+    getUsers: function () {
+      var _getUsers = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var token, urlUsers, resp;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                token = localStorage.token;
+                urlUsers = "/api-v1/users?token=".concat(token);
+                _context.next = 4;
+                return axios.get(urlUsers);
 
-      var urlUsuarios = 'usuario.listar';
-      axios.get(urlUsuarios).then(function (response) {
-        _this.usuarios = response.data;
-      });
-    }
+              case 4:
+                resp = _context.sent;
+                this.users = resp.data.users;
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function getUsers() {
+        return _getUsers.apply(this, arguments);
+      }
+
+      return getUsers;
+    }()
   }
 });
 
@@ -45699,61 +45738,73 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "conteiner" }, [
+    _c("div", { staticClass: "row col-lg-6 col-xs-offset-3" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("table", { staticClass: "table table-striped table-hover" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.users, function(user) {
+            return _c("tr", { key: user.id }, [
+              _c("td", { attrs: { scope: "row" } }, [
+                _vm._v(_vm._s(user.name))
+              ]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(user.email))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(user.role))]),
+              _vm._v(" "),
+              _vm._m(2, true)
+            ])
+          }),
+          0
+        )
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "conteiner" }, [
-      _c("div", { staticClass: "row col-lg-6 col-xs-offset-3" }, [
-        _c("h2", [_c("legend", [_vm._v("ListaUsuários")])]),
+    return _c("h2", [_c("legend", [_vm._v("ListaUsuários")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("td", [_vm._v("Nome")]),
         _vm._v(" "),
-        _c("table", { staticClass: "table table-striped table-hover" }, [
-          _c("thead", [
-            _c("tr", [
-              _c("td", [_vm._v("Nome")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("E-mail institucional")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("Tipo de usuário")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("Ação")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tbody", [
-            _c("tr", [
-              _c("td", [_vm._v("...")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("...")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("...")]),
-              _vm._v(" "),
-              _c("td", [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-warning btn-xs",
-                    attrs: { type: "button" }
-                  },
-                  [_vm._v("Editar")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger btn-xs",
-                    attrs: { type: "button" }
-                  },
-                  [_vm._v("Excluir")]
-                )
-              ])
-            ])
-          ])
-        ])
+        _c("td", [_vm._v("E-mail institucional")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Tipo de usuário")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Ação")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c(
+        "button",
+        { staticClass: "btn btn-warning btn-xs", attrs: { type: "button" } },
+        [_vm._v("Editar")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-danger btn-xs", attrs: { type: "button" } },
+        [_vm._v("Excluir")]
+      )
     ])
   }
 ]

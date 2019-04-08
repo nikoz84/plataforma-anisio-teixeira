@@ -12,7 +12,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                     <tr v-for= "user in users" v-bind:key="user.id">
+                    <tr v-for= "user in users">
                         <td scope="row">{{ user.name}}</td>
                         <td>{{ user.email}}</td>
                         <td>{{ user.role}}</td>
@@ -30,22 +30,22 @@ import Http from "../http.js";
 const http = new Http();
 
 export default {
-  name: "ListarUser",
+  mounted() {
+    console.log("sdf");
+    this.getUsers();
+  },
+
   data() {
     return {
       users: []
     };
   },
-  mounted() {
-    console.log("sdf");
-    this.getUsers();
-  },
+
   methods: {
     async getUsers() {
-      let token = localStorage.token;
-      let urlUsers = `/api-v1/users?token=${token}`;
+      var urlUsers = "users";
       let resp = await axios.get(urlUsers);
-      this.users = resp.data.users;
+      console.log(resp);
     }
   }
 };

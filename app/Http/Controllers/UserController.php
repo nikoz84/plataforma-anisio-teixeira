@@ -12,7 +12,7 @@ class UserController extends Controller
 
     public function __construct(Request $request, User $user)
     {
-        $this->middleware('jwt.verify')->except(['list', 'create', 'delete', 'search']);
+        $this->middleware('jwt.verify')->except([]);
         $this->user = $user;
         $this->request = $request;
     }
@@ -20,16 +20,18 @@ class UserController extends Controller
     /**
      * Lista de usuários
      *
-     * @return \Illuminate\Http\Response
+     *
      */
-    function list() {
+    public function list()
+    {
+        
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
 
         return response()->json([
             'success' => true,
-            'users' => $this->user::all(),
+            'users' => $this->user::offset(1)->limit(10)->get(),
         ]);
     }
     public function getById(Request $request, $id)
