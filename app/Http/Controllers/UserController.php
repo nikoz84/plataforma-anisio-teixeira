@@ -34,18 +34,47 @@ class UserController extends Controller
             'users' => $this->user::offset(1)->limit(10)->get(),
         ]);
     }
-    public function getById(Request $request, $id)
-    {
-    }
-    public function delete(Request $request, $id)
+    /**
+     * Buscar usuário por ID
+     *
+     * @param [integer] $id
+     * @return json
+     */
+    public function getById($id)
     {
         $user = $this->user::find($id);
-        $resp = [];
-        $user->delete();
 
+        return response()->json(['user' =>$user]);
+    }
+    public function update($id)
+    {
+        $user = $this->user::find($id);
+        $user->fill($this->request->all());
+        $user->save();
         return response()->json([
             'success' => true,
-            'message' => 'Usuário deletado com sucesso!!',
+            'data' => $user
+        ]);
+    }
+    /**
+     * Método apagar por id
+     *
+     * @param [integer] $id
+     * @return json
+     */
+    public function delete($id)
+    {
+        $resp = $this->user::where(['id'=> $id])->delete();
+
+        if (!$resp) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Não foi possível deletar usuário'
+            ]);
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Usuário deletado com sucesso!!'
         ]);
     }
     public function search(Request $request, $termo)

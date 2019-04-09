@@ -1,7 +1,7 @@
 <template>
     <div class="conteiner">
         <div class="row col-lg-6 col-xs-offset-3">
-            <h2><legend>ListaUsuários</legend></h2>
+            <h2><legend>Lista Usuários</legend></h2>
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
@@ -15,8 +15,19 @@
                      <tr v-for= "user in users" v-bind:key="user.id">
                         <td scope="row">{{ user.name}}</td>
                         <td>{{ user.email}}</td>
-                        <td>{{ user.role}}</td>
-                        <td><button type="button" class="btn btn-warning btn-xs">Editar</button> <button type="button" class="btn btn-danger btn-xs">Excluir</button></td>
+                        <td>{{ user.options.role}}</td>
+                        <td>
+                          <button type="button"
+                                  class="btn btn-warning btn-xs"
+                                  v-on:click="updateUsuario(user.id)">
+                                  Editar
+                          </button>
+                          <button type="button"
+                                  class="btn btn-danger btn-xs"
+                                  v-on:click="deleteUsuario(user.id)">
+                                  Apagar
+                          </button>
+                        </td>
                     </tr>
                 </tbody>
 
@@ -26,8 +37,7 @@
 </template>
 
 <script>
-import Http from "../http.js";
-const http = new Http();
+
 
 export default {
   name: "ListarUser",
@@ -37,7 +47,6 @@ export default {
     };
   },
   mounted() {
-    console.log("sdf");
     this.getUsers();
   },
   methods: {
@@ -46,6 +55,20 @@ export default {
       let urlUsers = `/api-v1/users?token=${token}`;
       let resp = await axios.get(urlUsers);
       this.users = resp.data.users;
+    },
+    async deleteUsuario(id){
+            let params = {
+                token: localStorage.token,
+            }
+            //let resp = await axios.delete(`/api-v1/users/delete/${id}`,{params});
+
+            //if(resp.data.success){
+                 console.warn(this.$router);
+            //}
+        },
+
+    updateUsuario(){
+        this.$router.push({ name: 'EditarUsuario', params: {slug: this.$route.params.slug, id: this.$route.params.id, update: true }})
     }
   }
 };

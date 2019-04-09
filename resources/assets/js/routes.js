@@ -81,7 +81,7 @@ const routes =[
         {
           path: 'lista',
           name: 'Lista',
-          component: ListarUser
+          component: ListarUser,
         }
       ]
     },
