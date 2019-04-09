@@ -65,12 +65,13 @@
                     <!-- DESCRICAO -->
                     <div class="form-group" v-bind:class="{ 'has-error': errors.description && errors.description.length > 0 }">
                         <label for="descricao">Descrição:*</label>
-                        <textarea class="form-control"
+                        <!--textarea class="form-control"
                                     id="descricao"
                                     rows="15"
                                     cols="50"
                                     v-model.trim="description"
-                                    style="resize: none"></textarea>
+                                    style="resize: none"></textarea-->
+                        <editor v-model="description" id="descricao" height="500px" mode="wysiwyg"/>
                         <small class="text-info">Descreva á mídia de forma <b>resumida</b> e <b>objetiva</b>.
                             Esta é a primeira apresentação da mídia e pode ser o diferencial na hora do usuário escolher se acessa ou não. 
                             Verifique outras descrições para adotar o modelo mais adequado.
@@ -214,142 +215,147 @@
 </template>
 
 <script>
-import Http from '../http.js';
-import TagsForm from './TagsForm.vue';
+import Http from "../http.js";
+import TagsForm from "./TagsForm.vue";
+import "tui-editor/dist/tui-editor.css";
+import "tui-editor/dist/tui-editor-contents.css";
+import "codemirror/lib/codemirror.css";
+import { Editor } from "@toast-ui/vue-editor";
 
 const http = new Http();
 
 export default {
-    name: 'ConteudoForm',
-    components: {TagsForm},
-    data(){
-        return {
-            title: '',
-            description: '',
-            authors: '',
-            source: '',
-            license: '',
-            image: '',
-            options: {},
-            tipo: '',
-            tipos: [],
-            tags: [],
-            canal: null,
-            terms: false,
-            is_featured: false,
-            is_site:false,
-            is_approved: false,
-            autocompleteItems: [],
-            category: '',
-            category_id: '',
-            categories:[],
-            message : '',
-            isError : true,
-            isUpdate: false,
-            errors: {
-                title: [],
-                description: [],
-                tipo: [],
-                authors: [],
-                source: [],
-                license: [],
-                terms: [],
-                is_approved: [],
-            },
-
-        }
-
-    },
-    created() {
-        this.getTipos();
-         //console.log(this.$route.params)
-        if(this.$route.params.update){
-            console.log('entrou');
-            this.getConteudo();
-            this.isUpdate = true;
-            this.textButton = 'Editar';
-        }
-    },
-    computed:{
-        isTipoSite(){
-            return (this.tipo == 8) ? true: false;
-        }
-    },
-    methods:{
-        send(){
-
-            if(this.isUpdate){
-                this.editConteudo();
-            }else{
-                this.createConteudo();
-            }
-        },
-        async createConteudo(){
-
-            let form = new FormData();
-            form.append('title', this.title);
-            form.append('tipo', this.tipo);
-            form.append('description',this.description);
-            form.append('url',this.options);
-            form.append('canal_id', localStorage.canal_id);
-            form.append('tags', this.tags);
-            form.append('category_id', this.category_id);
-            form.append('authors', this.authors);
-            form.append('source', this.source);
-            form.append('license',this.license);
-            form.append('is_featured', this.is_featured);
-            form.append('options', JSON.stringify(this.options));
-            form.append('token', localStorage.token);
-
-            let resp = await http.postData('/conteudos/create', form);
-
-            if(resp.data.success){
-                this.$router.push({ name: 'Listar', params: {slug: this.$route.params.slug}})
-            }else{
-                console.warn(resp.data);
-                this.isError = resp.data.success;
-                this.message = resp.data.message;
-                if(resp.data.errors){
-                    this.errors = resp.data.errors;
-                }
-
-                setTimeout(()=>{
-                    this.isError = true;
-                },3000)
-            }
-
-        },
-        async getTipos(){
-            let resp = await http.getDataFromUrl('/tipos/conteudos');
-            this.tipos = resp.data.tipos;
-        },
-
-        async getConteudo(){
-
-            let resp = await http.getDataFromUrl(`/conteudos/${this.$route.params.id}`);
-            console.warn(resp);
-            if(resp.data.success){
-                this.title = resp.data.conteudo.title;
-                this.description = resp.data.conteudo.description;
-                this.authors = resp.data.conteudo.authors;
-                this.source = resp.data.conteudo.source;
-                this.category = resp.data.conteudo.category_id;
-                this.is_featured = resp.data.conteudo.is_featured;
-            }
-        },
-        async editConteudo(){
-            //console.log(params)
-            let params ={
-                name: this.name,
-                description: this.description,
-                canal: localStorage.idCanal,
-                category: this.category,
-                token: localStorage.token
-            }
-            let resp = await http.config('PUT',`/conteudo/update/${this.$route.params.id}`,params);
-        }
-
+  name: "ConteudoForm",
+  components: { TagsForm, editor: Editor },
+  data() {
+    return {
+      title: "",
+      description: "",
+      authors: "",
+      source: "",
+      license: "",
+      image: "",
+      options: {},
+      tipo: "",
+      tipos: [],
+      tags: [],
+      canal: null,
+      terms: false,
+      is_featured: false,
+      is_site: false,
+      is_approved: false,
+      autocompleteItems: [],
+      category: "",
+      category_id: "",
+      categories: [],
+      message: "",
+      isError: true,
+      isUpdate: false,
+      errors: {
+        title: [],
+        description: [],
+        tipo: [],
+        authors: [],
+        source: [],
+        license: [],
+        terms: [],
+        is_approved: []
+      }
+    };
+  },
+  created() {
+    this.getTipos();
+    //console.log(this.$route.params)
+    if (this.$route.params.update) {
+      console.log("entrou");
+      this.getConteudo();
+      this.isUpdate = true;
+      this.textButton = "Editar";
     }
+  },
+  computed: {
+    isTipoSite() {
+      return this.tipo == 8 ? true : false;
+    }
+  },
+  methods: {
+    send() {
+      if (this.isUpdate) {
+        this.editConteudo();
+      } else {
+        this.createConteudo();
+      }
+    },
+    async createConteudo() {
+      let form = new FormData();
+      form.append("title", this.title);
+      form.append("tipo", this.tipo);
+      form.append("description", this.description);
+      form.append("url", this.options);
+      form.append("canal_id", localStorage.canal_id);
+      form.append("tags", this.tags);
+      form.append("category_id", this.category_id);
+      form.append("authors", this.authors);
+      form.append("source", this.source);
+      form.append("license", this.license);
+      form.append("is_featured", this.is_featured);
+      form.append("options", JSON.stringify(this.options));
+      form.append("token", localStorage.token);
 
-}
+      let resp = await http.postData("/conteudos/create", form);
+
+      if (resp.data.success) {
+        this.$router.push({
+          name: "Listar",
+          params: { slug: this.$route.params.slug }
+        });
+      } else {
+        console.warn(resp.data);
+        this.isError = resp.data.success;
+        this.message = resp.data.message;
+        if (resp.data.errors) {
+          this.errors = resp.data.errors;
+        }
+
+        setTimeout(() => {
+          this.isError = true;
+        }, 3000);
+      }
+    },
+    async getTipos() {
+      let resp = await http.getDataFromUrl("/tipos/conteudos");
+      this.tipos = resp.data.tipos;
+    },
+
+    async getConteudo() {
+      let resp = await http.getDataFromUrl(
+        `/conteudos/${this.$route.params.id}`
+      );
+      console.warn(resp);
+      if (resp.data.success) {
+        this.title = resp.data.conteudo.title;
+        this.description = resp.data.conteudo.description;
+        this.authors = resp.data.conteudo.authors;
+        this.source = resp.data.conteudo.source;
+        this.category = resp.data.conteudo.category_id;
+        this.is_featured = resp.data.conteudo.is_featured;
+      }
+    },
+    async editConteudo() {
+      //console.log(params)
+      let params = {
+        name: this.name,
+        description: this.description,
+        canal: localStorage.idCanal,
+        category: this.category,
+        token: localStorage.token
+      };
+      let resp = await http.config(
+        "PUT",
+        `/conteudo/update/${this.$route.params.id}`,
+        params
+      );
+    }
+  }
+};
 </script>
