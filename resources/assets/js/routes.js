@@ -82,6 +82,11 @@ const routes = [
         path: "listar",
         name: "Lista",
         component: ListarUser
+      },
+      {
+        path: "editar/:id",
+        name: "EditarUsuario",
+        component: UsuarioForm
       }
     ]
   },
