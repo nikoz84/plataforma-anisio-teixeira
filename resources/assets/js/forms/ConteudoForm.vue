@@ -71,7 +71,10 @@
                                     cols="50"
                                     v-model.trim="description"
                                     style="resize: none"></textarea-->
-                        <editor v-model="description" id="descricao" height="500px" mode="wysiwyg"/>
+                        <editor v-model="description" 
+                                id="descricao" 
+                                height="500px" 
+                                mode="wysiwyg"/>
                         <small class="text-info">Descreva á mídia de forma <b>resumida</b> e <b>objetiva</b>.
                             Esta é a primeira apresentação da mídia e pode ser o diferencial na hora do usuário escolher se acessa ou não. 
                             Verifique outras descrições para adotar o modelo mais adequado.

@@ -2,37 +2,37 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
-    
+
     const USER_VERIFIED = 'TRUE';
     const USER_NOT_VERIFIED = 'FALSE';
 
     const STATUS_ACTIVE = 1;
     const STATUS_INACTICVE = 0;
     const STATUS_BLOCKED = 2;
-    
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','verification_token','verified'
+        'name', 'email', 'password', 'verification_token', 'verified',
     ];
-    
+
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token','email','verification_token'
+        'password', 'remember_token', 'email', 'verification_token',
     ];
     /**
      * Datas
@@ -40,7 +40,7 @@ class User extends Authenticatable implements JWTSubject
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at'
+        'deleted_at',
     ];
     /**
      * Converte coluna jsonb a array.
@@ -52,7 +52,7 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     protected $appends = ['is_admin'];
-    
+
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = strtolower($value);
@@ -102,15 +102,17 @@ class User extends Authenticatable implements JWTSubject
         return $this->getKey();
     }
     /**
-     * Retorna campos 
+     * Retorna campos
      */
     public function getJWTCustomClaims()
     {
         return [
-            'user' => $this['name']
+            'user' => $this['name'],
+            'id' => $this['id'],
         ];
     }
-    public function role(){
+    public function role()
+    {
 
     }
 }

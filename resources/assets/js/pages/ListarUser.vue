@@ -37,8 +37,6 @@
 </template>
 
 <script>
-
-
 export default {
   name: "ListarUser",
   data() {
@@ -56,19 +54,26 @@ export default {
       let resp = await axios.get(urlUsers);
       this.users = resp.data.users;
     },
-    async deleteUsuario(id){
-            let params = {
-                token: localStorage.token,
-            }
-            //let resp = await axios.delete(`/api-v1/users/delete/${id}`,{params});
+    async deleteUsuario(id) {
+      let params = {
+        token: localStorage.token
+      };
+      //let resp = await axios.delete(`/api-v1/users/delete/${id}`,{params});
 
-            //if(resp.data.success){
-                 console.warn(this.$router);
-            //}
-        },
+      //if(resp.data.success){
+      console.warn(this.$router);
+      //}
+    },
 
-    updateUsuario(){
-        this.$router.push({ name: 'EditarUsuario', params: {slug: this.$route.params.slug, id: this.$route.params.id, update: true }})
+    updateUsuario(id) {
+      this.$router.push({
+        name: "EditarUsuario",
+        params: {
+          slug: this.$route.params.slug,
+          id: this.$route.params.id,
+          update: true
+        }
+      });
     }
   }
 };

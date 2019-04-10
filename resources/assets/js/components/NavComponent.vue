@@ -56,9 +56,9 @@
                             <router-link tag="li" to="/usuario/login" v-if="!isLogged">
                                 <a>Login</a>
                             </router-link>
-                            <li v-if="isLogged">
+                            <router-link tag="li" to="/usuario/editar" v-if="isLogged">
                                 <a v-on:click.prevent="perfil()">Editar Perfil</a>
-                            </li>
+                            </router-link>
                             <li v-if="isLogged">
                                 <a v-on:click.prevent="logout()">Sair</a>
                             </li>
@@ -71,17 +71,17 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-cog"></i> <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'recursos-educacionais-abertos'}}">
+                            <router-link tag="li" to="usuario/alterar-senha">
                                <a>Alterar minha senha</a>
                             </router-link>
-                            <li>
-                                <a v-on:click.prevent="getCreateUsuario()">Criar Usuário</a>
-                            </li>
-                            <li>
-                                <a v-on:click.prevent="getListarUsuario()">Listar Usuários</a>
-                            </li>
-                            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'Denúncia'}}">
-                                <a>Verificar denúncias</a>
+                            <router-link tag="li" to="usuario/adicionar">
+                                <a>Adicionar</a>
+                            </router-link>
+                            <router-link tag="li" to="usuario/listar">
+                                <a>Usuários</a>
+                            </router-link>
+                            <router-link tag="li" to="denuncias/listar">
+                                <a>Denúncias</a>
                             </router-link>
                         </ul>
                     </li>
@@ -97,66 +97,58 @@
 </template>
 
 <script>
-import Http from '../http.js';
-import store from '../store/index.js'
+import Http from "../http.js";
+import store from "../store/index.js";
 const http = new Http();
 
 export default {
-    name : 'nav-app',
-    data () {
-        return {
-            isLogged : store.state.isLogged
-        }
-    },
-    mounted() {
+  name: "nav-app",
+  data() {
+    return {
+      isLogged: store.state.isLogged
+    };
+  },
+  mounted() {},
+  methods: {
+    async logout() {
+      localStorage.removeItem("token");
+      let params = { token: localStorage.token };
+      let resp = await http.postData("/auth/logout", params);
 
+      if (resp.data.success) {
+        store.commit("LOGOUT_USER");
+        localStorage.removeItem("token");
+        this.$router.push("/usuario/login");
+      }
     },
-    methods: {
-        perfil(){
-            this.$router.push('/usuario/editar');
-        },
-        async logout(){
-            localStorage.removeItem('token');
-            let params = {token: localStorage.token };
-            let resp = await http.postData('/auth/logout', params);
-
-            if(resp.data.success){
-                store.commit('LOGOUT_USER');
-                localStorage.removeItem('token');
-                this.$router.push('/usuario/login');
-            }
-        },
-        handleScroll (event) {
-            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            var scrolled = (winScroll / height) * 100;
-            document.getElementById("bar").style.width = scrolled + "%";
-        },
-        getCreateUsuario(){
-            this.$router.push('/usuario/create');
-        },
-        getListarUsuario(){
-            this.$router.push('/usuario/lista');
-        }
-    },
-    created () {
-        window.addEventListener('scroll', this.handleScroll);
-    },
-    destroyed () {
-        window.removeEventListener('scroll', this.handleScroll);
+    handleScroll(event) {
+      let winScroll =
+        document.body.scrollTop || document.documentElement.scrollTop;
+      let height =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      var scrolled = (winScroll / height) * 100;
+      document.getElementById("bar").style.width = scrolled + "%";
     }
-}
+  },
+  created() {
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+};
 </script>
 <style lang="scss" scoped>
-.logo{
-    width: 30px;
-    height: 30px;
+.logo {
+  width: 30px;
+  height: 30px;
 }
-.name{
-    font-size: 20px;
-    color: #333;
-    padding-top: 5px;
-    display: block;
+.name {
+  font-size: 20px;
+  color: #333;
+  padding-top: 5px;
+  display: block;
 }
 .progress-container {
   width: 100%;
