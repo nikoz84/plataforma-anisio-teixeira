@@ -485,7 +485,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".page-header[data-v-4931cae4] {\n  margin: 0;\n}\n.page-header .page-title[data-v-4931cae4] {\n  margin-top: 0;\n  position: relative;\n  margin-bottom: 30px;\n}\n.page-header .page-title[data-v-4931cae4]:after {\n  width: 15%;\n  height: 2px;\n  content: '';\n  background: var(--color);\n  display: block;\n  position: absolute;\n  bottom: -10px;\n}\n[data-v-4931cae4]:root {\n  --background: var(--color);\n}\naside > header > h3[data-v-4931cae4] {\n  margin-top: 5px;\n  font-size: 18px;\n}\n", ""]);
+exports.push([module.i, ".page-header[data-v-4931cae4] {\n  margin: 0;\n}\n.page-header .page-title[data-v-4931cae4] {\n  margin-top: 0;\n  position: relative;\n  margin-bottom: 30px;\n}\n.page-header .page-title[data-v-4931cae4]:after {\n  width: 15%;\n  height: 2px;\n  content: \"\";\n  background: var(--color);\n  display: block;\n  position: absolute;\n  bottom: -10px;\n}\n[data-v-4931cae4]:root {\n  --background: var(--color);\n}\naside > header > h3[data-v-4931cae4] {\n  margin-top: 5px;\n  font-size: 18px;\n}", ""]);
 
 // exports
 
@@ -896,9 +896,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("label", { attrs: { for: "tipo-" + tipo.id } }, [
                     _vm._v(
-                      "\r\n                    " +
+                      "\n                    " +
                         _vm._s(tipo.name) +
-                        "\r\n                "
+                        "\n                "
                     )
                   ])
                 ]
@@ -965,9 +965,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("label", { attrs: { for: "license-" + license.id } }, [
                     _vm._v(
-                      "\r\n                    " +
+                      "\n                    " +
                         _vm._s(license.name) +
-                        "\r\n                "
+                        "\n                "
                     )
                   ])
                 ]
@@ -1002,9 +1002,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\r\n                    " +
+                        "\n                    " +
                           _vm._s(categoriaComponent.name) +
-                          " \r\n                    "
+                          " \n                    "
                       ),
                       _c("i", {
                         staticClass:
@@ -1117,7 +1117,7 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\r\n            Outras Modalidades / Níveis de Ensino\r\n        "
+                    "\n            Outras Modalidades / Níveis de Ensino\n        "
                   )
                 ]
               )
@@ -1146,9 +1146,9 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\r\n                    " +
+                                "\n                    " +
                                   _vm._s(nivel.name) +
-                                  "\r\n                    "
+                                  "\n                    "
                               ),
                               _c("i", {
                                 staticClass:
@@ -1261,7 +1261,7 @@ var staticRenderFns = [
         }
       },
       [
-        _vm._v("\r\n                   Tipos de Mídia\r\n                   "),
+        _vm._v("\n                   Tipos de Mídia\n                   "),
         _c("i", { staticClass: "glyphicon glyphicon-chevron-down pull-right" })
       ]
     )
@@ -1282,7 +1282,7 @@ var staticRenderFns = [
         }
       },
       [
-        _vm._v("\r\n                   Licenças\r\n                   "),
+        _vm._v("\n                   Licenças\n                   "),
         _c("i", { staticClass: "glyphicon glyphicon-chevron-down pull-right" })
       ]
     )

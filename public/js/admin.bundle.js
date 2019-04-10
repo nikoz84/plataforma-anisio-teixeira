@@ -263,7 +263,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".page-header > h1[data-v-7943083c] {\n  margin-top: 0px;\n}\n", ""]);
+exports.push([module.i, ".page-header > h1[data-v-7943083c] {\n  margin-top: 0px;\n}", ""]);
 
 // exports
 
