@@ -124,7 +124,7 @@
                         v-text="error">
                 </small>
             </div>
-            <div class="form-group" v-bind:class="{ 'has-error': errors.emailinstitucional && errors.emailinstitucional.length > 0 }">
+            <!--<div class="form-group" v-bind:class="{ 'has-error': errors.emailinstitucional && errors.emailinstitucional.length > 0 }">
                 <label for="emailinstitucional">E-mail Institucional:*</label>
                 <input type="email" class="form-control" id="emailinstitucional" name="emailinstitucional" v-model="emailinstitucional">
                 <small class="text-danger"
@@ -143,7 +143,7 @@
                         v-bind:key="ep"
                         v-text="error">
                 </small>
-            </div>
+            </div>-->
             <div class="form-group" v-bind:class="{ 'has-error': errors.password && errors.password.length > 0 }">
                 <label for="cpf">Senha:*</label>
                 <input type="password" class="form-control" id="senha" name="senha" v-model="password">
