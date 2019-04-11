@@ -19,7 +19,7 @@
                         <td>
                         <button type="button"
                                   class="btn btn-info btn-xs" title="Alterar senha"
-                                  v-on:click="updateUsuario(user.id)">
+                                  v-on:click="resetpassword(user.id)">
                                   <i class="glyphicon glyphicon-lock"></i>
                           </button>
                           <button type="button"
@@ -71,6 +71,11 @@ export default {
     },
 
     updateUsuario(id) {
+      this.$router.push({ name: 'EditarUsuario', params: {id: id, update:true}});
+      //console.warn(this.$route.params)
+    },
+
+    resetpassword(id) {
       this.$router.push({ name: 'UserEdit', params: {id: id, update:true}});
       //console.warn(this.$route.params)
     }
