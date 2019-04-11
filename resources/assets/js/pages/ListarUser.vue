@@ -17,6 +17,11 @@
                         <td>{{ user.email}}</td>
                         <td>{{ user.options.role}}</td>
                         <td>
+                        <button type="button"
+                                  class="btn btn-info btn-xs" title="Alterar senha"
+                                  v-on:click="updateUsuario(user.id)">
+                                  <i class="glyphicon glyphicon-lock"></i>
+                          </button>
                           <button type="button"
                                   class="btn btn-warning btn-xs"
                                   v-on:click="updateUsuario(user.id)">
@@ -58,22 +63,16 @@ export default {
       let params = {
         token: localStorage.token
       };
-      //let resp = await axios.delete(`/api-v1/users/delete/${id}`,{params});
-
-      //if(resp.data.success){
-      console.warn(this.$router);
-      //}
+      let resp = await axios.delete(`/api-v1/users/delete/${id}`,{params});
+      console.warn(resp)
+      if(resp.data.success){
+        this.$router.go({ path: 'listar' });
+      }
     },
 
     updateUsuario(id) {
-      this.$router.push({
-        name: "EditarUsuario",
-        params: {
-          slug: this.$route.params.slug,
-          id: this.$route.params.id,
-          update: true
-        }
-      });
+      this.$router.push({ name: 'UserEdit', params: {id: id, update:true}});
+      //console.warn(this.$route.params)
     }
   }
 };

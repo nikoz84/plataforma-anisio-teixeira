@@ -59,6 +59,12 @@ export default {
       isError : true
     }
   },
+  created(){
+    console.log(this.$route)
+    if(this.$route.update){
+      console.log(this.$route.update, this.$route.id)
+    }
+  },
   beforeCreate () {
     if (!store.state.isLogged) {
         this.$router.push('/usuario/editar')
@@ -67,7 +73,7 @@ export default {
   methods:{
     async alterar(){
       let data = { name: this.user.name, email: this.user.email, password: this.user.password };
-      let resp = await http.postData('/auth/editar', data);
+      let resp = await axios.post('usuario/', data);
       
       if(!resp.data.success){
         this.isError = resp.data.success;
