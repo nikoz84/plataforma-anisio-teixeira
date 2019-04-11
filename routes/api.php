@@ -176,7 +176,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::delete('/users/delete/{id}', 'UserController@delete')->name('usuario.apagar');
     Route::get('/users/{id}', 'UserController@getById')->name('user.x.id');
     Route::get('/users', 'UserController@list')->name('usuario.listar');
-    Route::post('/users', 'UserController@create')->name('criar.usuario');
     Route::put('/users/{id}', 'UserController@update');
     Route::put('/users/reset-password', 'UserController@resetPass')->name('senha.atualizar');
     Route::post('/users', 'UserController@create')->name('adicionar.usuario');

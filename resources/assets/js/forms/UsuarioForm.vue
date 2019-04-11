@@ -206,7 +206,7 @@
                 </div>
             </transition>
 
-            <button class="btn btn-success">Salvar</button>
+            <button class="btn btn-success">{{ textButton }}</button>
 
         </form>
 
@@ -226,12 +226,14 @@ export default {
             name: '',
             email: '',
             role: '',
-            password: '',            
+            password: '',
             nascimento: '',
             options: {},
             message: null,
             success: false,
             isError: true,
+            isUpdate: false,
+            textButton: 'Criar',
             errors: {
                 email:[],
                 name:[],
@@ -241,6 +243,14 @@ export default {
             },
         }
 
+    },
+
+    created(){
+        if(this.$route.params.update){
+            this.getUsuario();
+            this.isUpdate = true;
+            this.textButton = 'Editar';
+        }
     },
 
     methods:{
@@ -258,12 +268,12 @@ export default {
             form.append('name',this.name);
             form.append('role',this.role);
             form.append('password',this.password);
-            form.append('nascimento',this.options);            
+            form.append('nascimento',this.options);
             form.append('is_featured', this.is_featured);
             form.append('options', JSON.stringify(this.options));
             form.append('token', localStorage.token);
 
-            let resp = await http.postData('/auth/register', form);
+            let resp = await axios.post('/auth/register', form);
             console.warn(resp);
 
             if(resp.data.success){
@@ -281,6 +291,34 @@ export default {
             }
 
         },
+
+        async getUsuario(){
+            let params = {token: localStorage.token };
+            let resp = await axios.get(`/api-v1/users/${this.$route.params.id}`,{params});
+            //console.warn(resp.data)
+            if(resp.data.success){
+                let user = resp.data.user;
+                //console.log(user)
+                this.name = user.name;
+                this.email = user.email;
+                this.role = user.options.role;
+                this.nascimento = user.options.birthday;
+
+            }
+        },
+
+        async editUsuario(){
+
+            let params ={
+                name: this.name,
+                email: this.email,
+                token: localStorage.token
+            }
+
+            let resp = await axios.put(`/users/${this.$route.params.id}`,params);
+
+            console.log(resp)
+        }
 
     }
 

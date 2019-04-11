@@ -6,16 +6,16 @@
                 <thead>
                     <tr>
                         <td>Nome</td>
-                        <td>E-mail institucional</td>
+                        <td>E-mail</td>
                         <td>Tipo de usuário</td>
                         <td>Ação</td>
                     </tr>
                 </thead>
                 <tbody>
                      <tr v-for= "user in users" v-bind:key="user.id">
-                        <td scope="row">{{ user.name}}</td>
-                        <td>{{ user.email}}</td>
-                        <td>{{ user.options.role}}</td>
+                        <td scope="row">{{ user.name }}</td>
+                        <td scope="row">{{ user.email }}</td>
+                        <td scope="row">{{ user.options.role }}</td>
                         <td>
                         <button type="button"
                                   class="btn btn-info btn-xs" title="Alterar senha"
@@ -57,6 +57,7 @@ export default {
       let token = localStorage.token;
       let urlUsers = `/api-v1/users?token=${token}`;
       let resp = await axios.get(urlUsers);
+      console.warn(resp);
       this.users = resp.data.users;
     },
     async deleteUsuario(id) {
