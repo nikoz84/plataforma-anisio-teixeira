@@ -226,9 +226,7 @@ export default {
             name: '',
             email: '',
             role: '',
-            password: '',
-            emailinstitucional: '',
-            emailpessoal: '',
+            password: '',            
             nascimento: '',
             options: {},
             message: null,
@@ -239,9 +237,7 @@ export default {
                 name:[],
                 role:[],
                 password:[],
-                nascimento:[],
-                emailinstitucional:[],
-                emailpessoal:[]
+                nascimento:[]
             },
         }
 
@@ -262,9 +258,7 @@ export default {
             form.append('name',this.name);
             form.append('role',this.role);
             form.append('password',this.password);
-            form.append('nascimento',this.options);
-            form.append('emailinstitucional',this.options);
-            form.append('emailpessoal',this.options);
+            form.append('nascimento',this.options);            
             form.append('is_featured', this.is_featured);
             form.append('options', JSON.stringify(this.options));
             form.append('token', localStorage.token);
