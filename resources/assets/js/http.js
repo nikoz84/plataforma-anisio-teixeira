@@ -1,117 +1,112 @@
-
 export default class Http {
-    constructor(){
-        this.api = '/api-v1';
+  constructor() {
+    this.api = "/api-v1";
+  }
+  /**
+   * Retorna dados do canal
+   * @param {*} idCanal identificador do canal
+   * @param {*} params parametros
+   */
+  async getDataFromIdCanal(params) {
+    try {
+      let id = localStorage.canal_id;
+      let url = this.getUrlCanal(id);
+      return await axios.get(url, params);
+    } catch (error) {
+      return await error.response;
     }
-    /**
-     * Retorna dados do canal
-     * @param {*} idCanal identificador do canal
-     * @param {*} params parametros
-     */
-    async getDataFromIdCanal( params ){
-        try{
-            let id = localStorage.canal_id;
-            let url = this.getUrlCanal( id );
-            return await axios.get( url, params );
-        } catch (error){
-            return await error.response;
-        }
+  }
+  /**
+   * Retorna dados da url fornecida
+   * @param {*} endPoint url do recurso
+   * @param {*} params parametros
+   */
+  async getDataFromUrl(endPoint = "", params = {}) {
+    try {
+      let url = `${this.api}${endPoint}`;
+      return await axios.get(url, { params });
+    } catch (error) {
+      return await error.response;
     }
-    /**
-     * Retorna dados da url fornecida
-     * @param {*} endPoint url do recurso
-     * @param {*} params parametros
-     */
-    async getDataFromUrl(endPoint = '', params = {}){
-        try{
-            let url = `${this.api}${endPoint}`;
-            return await axios.get( url , {params});
-        }catch (error){
-            return await error.response;
-        }
+  }
+  async getDataWithTokenUrl(endPoint = "", params) {
+    try {
+      let url = `${this.api}${endPoint}`;
+      return await axios.get(url, { params });
+    } catch (error) {
+      return await error.response;
     }
-    async getDataWithTokenUrl(endPoint = '', params){
-        try{
-            let url = `${this.api}${endPoint}`;
-            console.warn(params)
-            return await axios.get( url, {params} );
-        }catch (error){
-            return await error.response;
-        }
+  }
+  /**
+   *
+   * @param {*} method
+   * @param {*} url
+   * @param {*} data
+   */
+  async config(method, url, data) {
+    return await axios({
+      method,
+      url: this.api + url,
+      params: data
+    });
+  }
+  /**
+   * Criar recurso
+   * @param {*} endPoint url do recurso
+   * @param {*} params parametros
+   */
+  async postData(endPoint = "", params = {}) {
+    try {
+      let urlPost = `${this.api}${endPoint}`;
+      return await axios.post(urlPost, params);
+    } catch (error) {
+      return await error.response;
     }
-    /**
-     * 
-     * @param {*} method 
-     * @param {*} url 
-     * @param {*} data 
-     */
-    async config(method, url, data){
-        return await axios({
-            method,
-            url:this.api + url,
-            params: data
-          })
+  }
+  /**
+   * Atualizar dados de um recurso
+   * @param {*} endPoint url do recurso
+   * @param {*} params parametros
+   */
+  async putData(endPoint = "", params = {}) {
+    try {
+      let urlUpdate = `${this.api}${endPoint}`;
+      return await axios.put(urlUpdate, { params });
+    } catch (error) {
+      return await error.response;
     }
-    /**
-     * Criar recurso
-     * @param {*} endPoint url do recurso
-     * @param {*} params parametros
-     */
-    async postData(endPoint = '', params ={}){
-        try {
-            let urlPost = `${this.api}${endPoint}`;
-            return await axios.post(urlPost, params);
-        } catch (error) {
-            return await error.response;
-        }
+  }
+  /**
+   * Apagar recurso
+   * @param {*} endPoint url do recurso
+   * @param {*} params parametros
+   */
+  async deleteData(endPoint = "", params = {}) {
+    try {
+      let urlDelete = `${this.api}${endPoint}`;
+      return await axios.delete(urlDelete, { params });
+    } catch (error) {
+      return await error.response;
     }
-    /**
-     * Atualizar dados de um recurso
-     * @param {*} endPoint url do recurso
-     * @param {*} params parametros
-     */
-    async putData(endPoint = '', params = {}){
-        try {
-            let urlUpdate = `${this.api}${endPoint}`;
-            return await axios.put( urlUpdate, {params});
-        } catch (error) {
-            return await error.response;
-        }
+  }
+  /**
+   * Retorna a url do recurso segundo o canal
+   * @param {*} id identificador unico do canal
+   */
+  getUrlCanal(id) {
+    switch (true) {
+      case id == 5:
+        return `${this.api}/conteudos/sites`;
+        break;
+      case id == 6:
+        //console.warn('as')
+        return `${this.api}/conteudos`;
+        break;
+      case id == 9:
+        return `${this.api}/aplicativos`;
+        break;
+      default:
+        return `${this.api}/conteudos?canal=${id}&site=false`;
     }
-    /**
-     * Apagar recurso
-     * @param {*} endPoint url do recurso
-     * @param {*} params parametros
-     */
-    async deleteData(endPoint = '', params = {}){
-        try {
-            let urlDelete = `${this.api}${endPoint}`;
-            return await axios.delete( urlDelete, {params});
-        } catch (error) {
-            return await error.response;
-        }
-    }
-    /**
-     * Retorna a url do recurso segundo o canal
-     * @param {*} id identificador unico do canal
-     */
-    getUrlCanal(id){
-        switch(true){
-            case (id == 5):
-                return `${this.api}/conteudos/sites`;
-                break;
-            case (id == 6):
-                //console.warn('as')
-                return `${this.api}/conteudos`;
-                break;
-            case (id == 9):
-                return `${this.api}/aplicativos`;
-                break;
-            default:
-                return `${this.api}/conteudos?canal=${id}&site=false`;
-        }
-    }
+  }
 }
-
-
-

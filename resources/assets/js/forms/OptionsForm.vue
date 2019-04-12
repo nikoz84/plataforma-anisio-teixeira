@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     async getOptions() {
-      let resp = await axios.get("/api-v1/options", { name: this.name });
+      let resp = await axios.get(`${baseURL}/options`, { name: this.name });
 
       console.warn(resp.data);
       this.options = resp.data.options;

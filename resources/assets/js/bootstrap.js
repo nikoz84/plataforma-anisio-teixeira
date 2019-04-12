@@ -20,9 +20,10 @@ try {
 
 window.axios = require("axios");
 
-axios.defaults.baseURL = "http://pat.des/api-v1";
+window.axios.defaults.baseURL = "http://pat.des/api-v1";
 
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+
 if (localStorage.token) {
   axios.defaults.headers.common["Authorization"] =
     "Bearer" + localStorage.token;

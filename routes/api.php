@@ -19,38 +19,40 @@ use Illuminate\Http\Request;
  * Métodos: getFiles -> Lista dos arquivos relacionados a um id específico
  * createFile -> Adiciona um novo arquivo para um recurso específico
  */
-Route::get('/files/{id}', 'FileController@getFiles')->name('buscaArquivo');
-Route::post('/files/{id}', 'FileController@createFile')->name('adicionaArquivo');
+Route::group(['middleware' => ['cors']], function () {
+
+    Route::get('/files/{id}', 'FileController@getFiles')->name('buscaArquivo');
+    Route::post('/files/{id}', 'FileController@createFile')->name('adicionaArquivo');
 
 /******
  *
  * Controlador: Category
  * Métodos: list -> Lista das categorias
  */
-Route::get('/categories', 'CategoryController@list')->name('listaCategorias');
-Route::get('/categories/aplicativos', 'CategoryController@getAplicativoCategories')->name('listaCategoriasAplicativos');
+    Route::get('/categories', 'CategoryController@list')->name('listaCategorias');
+    Route::get('/categories/aplicativos', 'CategoryController@getAplicativoCategories')->name('listaCategoriasAplicativos');
 
 /******
  *
  * Controlador: Tipo
  * Métodos: list -> Lista dos tipos
  */
-Route::get('/tipos/conteudos', 'TipoController@list')->name('listar.tipos');
+    Route::get('/tipos/conteudos', 'TipoController@list')->name('listar.tipos');
 
 /******
  *
  * Controlador: Denuncia
  * Métodos: adicionar -> Denúncias
  */
-Route::get('/denuncias', 'DenunciaController@list')->name('listar.denuncias');
-Route::post('/denuncias/create', 'DenunciaController@create')->name('criar.denuncias');
+    Route::get('/denuncias', 'DenunciaController@list')->name('listar.denuncias');
+    Route::post('/denuncias/create', 'DenunciaController@create')->name('criar.denuncias');
 
 /******
  *
  * Controlador: Fale Cconosco
  * Métodos: enviar -> Fale Conosco
  */
-Route::post('/faleconosco/create', 'FaleconoscoController@list')->name('criar.faleconosco');
+    Route::post('/faleconosco/create', 'FaleconoscoController@list')->name('criar.faleconosco');
 
 /******
  *
@@ -58,7 +60,7 @@ Route::post('/faleconosco/create', 'FaleconoscoController@list')->name('criar.fa
  * Métodos: getBySlug -> Dados do canal pela url amigável
  *
  */
-Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscar.canal.x.url.amigavel');
+    Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscar.canal.x.url.amigavel');
 
 /******
  *
@@ -69,12 +71,12 @@ Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscar.can
  * getByTagId -> Lista de conteúdos por Tag
  *
  */
-Route::get('/conteudos', 'ConteudoController@list')->name('lista.conteudo');
-Route::get('/conteudos/sites', 'ConteudoController@getSitesTematicos')->name('lista.sites.tematicos');
-Route::get('/conteudos/search/{term}', 'ConteudoController@search')->name('busca.conteudo');
-Route::get('/conteudos/teste', 'ConteudoController@teste');
-Route::get('/conteudos/{id}', 'ConteudoController@getById')->name('busca.x.conteudo.id');
-Route::get('/conteudos/tag/{id}', 'ConteudoController@getByTagId')->name('busca.x.tag.id');
+    Route::get('/conteudos', 'ConteudoController@list')->name('lista.conteudo');
+    Route::get('/conteudos/sites', 'ConteudoController@getSitesTematicos')->name('lista.sites.tematicos');
+    Route::get('/conteudos/search/{term}', 'ConteudoController@search')->name('busca.conteudo');
+    Route::get('/conteudos/teste', 'ConteudoController@teste');
+    Route::get('/conteudos/{id}', 'ConteudoController@getById')->name('busca.x.conteudo.id');
+    Route::get('/conteudos/tag/{id}', 'ConteudoController@getByTagId')->name('busca.x.tag.id');
 
 /******
  *
@@ -84,9 +86,9 @@ Route::get('/conteudos/tag/{id}', 'ConteudoController@getByTagId')->name('busca.
  * getById -> Dados do aplicativo por id
  *
  */
-Route::get('/aplicativos', 'AplicativoController@list')->name('lista.aplicativo');
-Route::get('/aplicativos/search/{term}', 'AplicativoController@search')->name('busca.aplicativo');
-Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('busca.x.aplicativo.id');
+    Route::get('/aplicativos', 'AplicativoController@list')->name('lista.aplicativo');
+    Route::get('/aplicativos/search/{term}', 'AplicativoController@search')->name('busca.aplicativo');
+    Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('busca.x.aplicativo.id');
 
 /******
  *
@@ -94,7 +96,7 @@ Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('busca.x.a
  * Métodos: list -> lista de categorias
  *
  */
-Route::get('/aplicativos/categories', 'AplicativoCategoryController@list')->name('lista.categorias.aplicativo');
+    Route::get('/aplicativos/categories', 'AplicativoCategoryController@list')->name('lista.categorias.aplicativo');
 
 /******
  *
@@ -103,8 +105,8 @@ Route::get('/aplicativos/categories', 'AplicativoCategoryController@list')->name
  * register -> Registro de novo usuário
  *
  */
-Route::post('/auth/login', 'AuthController@login')->name('login.usuario');
-Route::post('/auth/register', 'AuthController@register')->name('registro.usuario');
+    Route::post('/auth/login', 'AuthController@login')->name('login.usuario');
+    Route::post('/auth/register', 'AuthController@register')->name('registro.usuario');
 
 /******
  *
@@ -112,42 +114,42 @@ Route::post('/auth/register', 'AuthController@register')->name('registro.usuario
  * Métodos: getByName -> Metadados por nome
  *
  */
-Route::get('/options/{name}', 'OptionsController@getByName')->name('busca.metadata.x.nome');
-Route::get('/options', 'OptionsController@list')->name('listar.opcoes');
-Route::post('/options', 'OptionsController@create')->name('criar.opcoes');
-Route::put('/options/{name}', 'OptionsController@update')->name('atualizar.opcoes.x.nome');
-Route::delete('/options/{name}', 'OptionsController@delete')->name('apagar.opcoes.x.nome');
+    Route::get('/options/{name}', 'OptionsController@getByName')->name('busca.metadata.x.nome');
+    Route::get('/options', 'OptionsController@list')->name('listar.opcoes');
+    Route::post('/options', 'OptionsController@create')->name('criar.opcoes');
+    Route::put('/options/{name}', 'OptionsController@update')->name('atualizar.opcoes.x.nome');
+    Route::delete('/options/{name}', 'OptionsController@delete')->name('apagar.opcoes.x.nome');
 
 /******
  * Controlador: Tag
  * Métodos: getById -> Busca tag por Id
  */
-Route::get('/tags/{id}', 'TagController@getById')->name('busca.x.tag.id');
+    Route::get('/tags/{id}', 'TagController@getById')->name('busca.x.tag.id');
 
 /******
  * Controlador: Licenses
  * Métodos: list -> lista as licenças
  */
-Route::get('/licenses', 'LicenseController@list')->name('lista.Licenca');
+    Route::get('/licenses', 'LicenseController@list')->name('lista.Licenca');
 
 /******
  *
  * Controlador: Mail
  * Métodos: getSend -> enviar os emails para formulário denúncia e fale conosco
  */
-Route::post('/email/enviar', 'DenunciaController@create')->name('denuncia.create');
+    Route::post('/email/enviar', 'DenunciaController@create')->name('denuncia.create');
 
 /******
  *
  * Controlador: Fale Conosco
  * Métodos: getSend -> enviar formulário fale conosco
  */
-Route::post('/faleconosco/enviar', 'FaleconoscoController@enviar')->name('faleconosco.enviar');
+    Route::post('/faleconosco/enviar', 'FaleconoscoController@enviar')->name('faleconosco.enviar');
 
-Route::name('verify')->get('users/verify/{token}', 'UserController@verify');
-//Route::get('/users', 'UserController@list')->name('usuario.listar');
-//Route::get('/users', 'UserController@list')->name('usuario.listar');
-
+    Route::name('verify')->get('users/verify/{token}', 'UserController@verify');
+    //Route::get('/users', 'UserController@list')->name('usuario.listar');
+    //Route::get('/users', 'UserController@list')->name('usuario.listar');
+});
 /**
  *
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN
