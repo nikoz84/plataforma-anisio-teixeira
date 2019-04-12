@@ -105,9 +105,6 @@ class UserController extends Controller
         $validator = Validator::make($this->request->all(), [
             'email' => 'required',
             'name' => 'required|min:2|max:255',
-            'role' => 'required',
-            'password' => 'required|min:6',
-            'nascimento' => 'required',
         ]);
 
         return $validator;
@@ -127,8 +124,7 @@ class UserController extends Controller
         $user = $this->user;
         $user->email = $this->request->get('login');
         $user->name = $this->request->get('name');
-        $user->password = $this->request->get('password');
-        $user->options = json_decode($this->request->get('options'), true);
+        $user->options = json_decode($this->request->get('options', '{}'), true);
 
         $resp = $user->save();
         if ($resp) {

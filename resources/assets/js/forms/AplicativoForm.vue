@@ -186,7 +186,7 @@ export default {
             form.append('image',this.image, this.image.name);
             form.append('token', localStorage.token);
 
-            let resp = await http.postData('/aplicativos/create', form);
+            let resp = await axios.post('/aplicativos/create', form);
             console.warn(resp);
 
             if(resp.data.success){

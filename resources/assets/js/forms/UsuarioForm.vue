@@ -48,60 +48,60 @@
             </div>
             <legend>Marque o(s) canais ao qual pertence o usuário:</legend>
             <div class="form-check">
-                <input class="form-check-input" name="usuarioperfilcanal[]" type="checkbox" value="" id="usuarioperfilcanal1">
-                <label class="form-check-label" for="usuarioperfilcanal1">
+                <input class="form-check-input" v-model="ambiente_ensino" name="ambiente_ensino" type="checkbox" value="" id="ambiente_ensino">
+                <label class="form-check-label" for="ambiente_ensino">
                     Ambiente de Ensino a Aprendizagem Colaborativa
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" name="usuarioperfilcanal[]" type="checkbox" value="" id="usuarioperfilcanal2">
-                <label class="form-check-label" for="usuarioperfilcanal2">
+                <input class="form-check-input" name="aplicativo_educacionais" type="checkbox" value="" id="aplicativo_educacionais">
+                <label class="form-check-label" for="aplicativo_educacionais">
                     Aplicativos Educacionais
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" name="usuarioperfilcanal[]" type="checkbox" value="" id="usuarioperfilcanal3">
-                <label class="form-check-label" for="usuarioperfilcanal3">
+                <input class="form-check-input" name="blogrede" type="checkbox" value="" id="blogrede">
+                <label class="form-check-label" for="blogrede">
                     Blog da Rede
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" name="usuarioperfilcanal[]" type="checkbox" value="" id="usuarioperfilcanal4">
-                <label class="form-check-label" for="usuarioperfilcanal4">
+                <input class="form-check-input" name="emitec" type="checkbox" value="" id="emitec">
+                <label class="form-check-label" for="emitec">
                     EMITEC - Ensino Médio com Intermediação Tecnológica
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" name="usuarioperfilcanal[]" type="checkbox" value="" id="usuarioperfilcanal5">
-                <label class="form-check-label" for="usuarioperfilcanal5">
+                <input class="form-check-input" name="midias_educacionais" type="checkbox" value="" id="midias_educacionais">
+                <label class="form-check-label" for="midias_educacionais">
                     Mídias Educacionais
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" name="usuarioperfilcanal[]" type="checkbox" value="" id="usuarioperfilcanal6">
-                <label class="form-check-label" for="usuarioperfilcanal6">
+                <input class="form-check-input" name="projetos_artisticos" type="checkbox" value="" id="projetos_artisticos">
+                <label class="form-check-label" for="projetos_artisticos">
                     Projetos Artísticos
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" name="usuarioperfilcanal[]" type="checkbox" value="" id="usuarioperfilcanal7">
-                <label class="form-check-label" for="usuarioperfilcanal7">
+                <input class="form-check-input" name="radioat" type="checkbox" value="" id="radioat">
+                <label class="form-check-label" for="radioat">
                     Rádio Anísio Teixeira
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" name="usuarioperfilcanal[]" type="checkbox" value="" id="usuarioperfilcanal8">
-                <label class="form-check-label" for="usuarioperfilcanal8">
+                <input class="form-check-input" name="sites_tematicos" type="checkbox" value="" id="sites_tematicos">
+                <label class="form-check-label" for="sites_tematicos">
                     Sites Temáticos
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" name="usuarioperfilcanal[]" type="checkbox" value="" id="usuarioperfilcanal9">
-                <label class="form-check-label" for="usuarioperfilcanal9">
+                <input class="form-check-input" name="tvat" type="checkbox" value="" id="tvat">
+                <label class="form-check-label" for="tvat">
                     Tv Anísio Teixeira
                 </label>
             </div>
-            <div class="form-check">
+            <div class="form-group">
                 <label class="form-check-label" for="sexo">
                 Sexo:
                 </label>
@@ -143,7 +143,7 @@
                         v-bind:key="ep"
                         v-text="error">
                 </small>
-            </div>-->
+            </div>
             <div class="form-group" v-bind:class="{ 'has-error': errors.password && errors.password.length > 0 }">
                 <label for="cpf">Senha:*</label>
                 <input type="password" class="form-control" id="senha" name="senha" v-model="password">
@@ -154,7 +154,7 @@
                         v-text="error">
                 </small>
             </div>
-            <!--<div class="form-group">
+            <div class="form-group">
                 <label for="cpf">RG:</label>
                 <input type="text" class="form-control" id="rg" name="rg">
             </div>
@@ -226,6 +226,15 @@ export default {
             name: '',
             email: '',
             role: '',
+            ambiente_ensino: {},
+            aplicativo_educacionais: '',
+            blogrede: '',
+            emitec: '',
+            midias_educacionais: '',
+            projetos_artisticos: '',
+            radioat: '',
+            sites_tematicos: '',
+            tvat: '',
             password: '',
             nascimento: '',
             options: {},
@@ -238,8 +247,7 @@ export default {
                 email:[],
                 name:[],
                 role:[],
-                password:[],
-                nascimento:[]
+                password:[]
             },
         }
 
@@ -266,14 +274,12 @@ export default {
             let form = new FormData();
             form.append('email', this.email);
             form.append('name',this.name);
-            form.append('role',this.role);
             form.append('password',this.password);
-            form.append('nascimento',this.options);
             form.append('is_featured', this.is_featured);
             form.append('options', JSON.stringify(this.options));
             form.append('token', localStorage.token);
-
-            let resp = await axios.post('/auth/register', form);
+            
+            let resp = await axios.post(`/api-v1/users`, form);
             console.warn(resp);
 
             if(resp.data.success){
