@@ -4,18 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\User;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.verify')->except(['login','register']);
+        $this->middleware('jwt.verify')->except(['login', 'register']);
     }
     /**
      * Login Usuario.
@@ -26,8 +25,9 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
         $token = null;
+
         try {
-            if (! $token = JWTAuth::attempt($credentials)) {
+            if (!$token = JWTAuth::attempt($credentials)) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Email ou Senha inválidos',
@@ -36,13 +36,13 @@ class AuthController extends Controller
         } catch (JWTException $e) {
             return response()->json([
                 'success' => false,
-                'error' => 'Impossível criar Token de acesso'
+                'error' => 'Impossível criar Token de acesso',
             ], 500);
         }
 
         return response()->json([
             'success' => true,
-            'token' => $this->respondWithToken($token)
+            'token' => $this->respondWithToken($token),
         ]);
     }
     /**
@@ -53,27 +53,27 @@ class AuthController extends Controller
     public function getAuthUser()
     {
         try {
-            if (! $user = JWTAuth::parseToken()->authenticate()) {
-                    return response()->json([
-                        'success'=> false,
-                        'message'=> 'Usuário não encontrado',
-                        'status'=>'user_not_found'], 404);
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Usuário não encontrado',
+                    'status' => 'user_not_found'], 404);
             }
         } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-                return response()->json([
-                    'success'=> false,
-                    'message'=> 'Token Expirado',
-                    'status'=>'token_expired'], $e->getStatusCode());
+            return response()->json([
+                'success' => false,
+                'message' => 'Token Expirado',
+                'status' => 'token_expired'], $e->getStatusCode());
         } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-                return response()->json([
-                    'success'=> false,
-                    'message'=> 'Token Inválido',
-                    'status'=>'token_invalid'], $e->getStatusCode());
+            return response()->json([
+                'success' => false,
+                'message' => 'Token Inválido',
+                'status' => 'token_invalid'], $e->getStatusCode());
         } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-                return response()->json([
-                    'success'=> false,
-                    'message'=> 'Token Ausente',
-                    'status'=>'token_absent'], $e->getStatusCode());
+            return response()->json([
+                'success' => false,
+                'message' => 'Token Ausente',
+                'status' => 'token_absent'], $e->getStatusCode());
         }
 
         return response()->json(compact('user'));
@@ -90,7 +90,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Usuário Deslogado com sucesso!!',
-            'success' => true
+            'success' => true,
         ]);
     }
     /**
@@ -102,7 +102,7 @@ class AuthController extends Controller
     {
         return response()->json([
             'success' => true,
-            'token' => $this->respondWithToken(auth()->refresh())
+            'token' => $this->respondWithToken(auth()->refresh()),
         ]);
     }
 
@@ -118,7 +118,7 @@ class AuthController extends Controller
         return [
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => auth()->factory()->getTTL() * 60,
         ];
     }
     /**
@@ -138,7 +138,7 @@ class AuthController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Não foi possível completar o cadastro',
-                'errors' => $validator->errors()
+                'errors' => $validator->errors(),
             ], 200);
         }
 
@@ -151,8 +151,8 @@ class AuthController extends Controller
         $token = auth()->login($user);
 
         return response()->json([
-            'success'=> true,
-            $this->respondWithToken($token)
+            'success' => true,
+            $this->respondWithToken($token),
         ]);
     }
 }

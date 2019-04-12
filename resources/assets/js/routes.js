@@ -13,6 +13,7 @@ import DenunciaForm from "./forms/DenunciaForm.vue";
 import FaleConoscoForm from "./forms/FaleConoscoForm.vue";
 import UsuarioForm from "./forms/UsuarioForm.vue";
 import ListarUser from "./pages/ListarUser.vue";
+import OptionsForm from "./forms/OptionsForm.vue";
 
 const routes = [
   {
@@ -42,6 +43,11 @@ const routes = [
         path: "adicionar-canal",
         name: "AddCanal",
         component: CanalForm
+      },
+      {
+        path: "metadados",
+        name: "Opcoes",
+        component: OptionsForm
       }
     ]
   },

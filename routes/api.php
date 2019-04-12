@@ -103,8 +103,8 @@ Route::get('/aplicativos/categories', 'AplicativoCategoryController@list')->name
  * register -> Registro de novo usuário
  *
  */
-Route::post('/auth/login', 'AuthController@login')->name('loginUsuario');
-Route::post('/auth/register', 'AuthController@register')->name('registroUsuario');
+Route::post('/auth/login', 'AuthController@login')->name('login.usuario');
+Route::post('/auth/register', 'AuthController@register')->name('registro.usuario');
 
 /******
  *
@@ -112,19 +112,23 @@ Route::post('/auth/register', 'AuthController@register')->name('registroUsuario'
  * Métodos: getByName -> Metadados por nome
  *
  */
-Route::post('options/name/{name}', 'OptionsController@getByName')->name('busca.metadata.name');
+Route::get('/options/{name}', 'OptionsController@getByName')->name('busca.metadata.x.nome');
+Route::get('/options', 'OptionsController@list')->name('listar.opcoes');
+Route::post('/options', 'OptionsController@create')->name('criar.opcoes');
+Route::put('/options/{name}', 'OptionsController@update')->name('atualizar.opcoes.x.nome');
+Route::delete('/options/{name}', 'OptionsController@delete')->name('apagar.opcoes.x.nome');
 
 /******
  * Controlador: Tag
  * Métodos: getById -> Busca tag por Id
  */
-Route::get('/tags/{id}', 'TagController@getById')->name('buscaxTagId');
+Route::get('/tags/{id}', 'TagController@getById')->name('busca.x.tag.id');
 
 /******
  * Controlador: Licenses
  * Métodos: list -> lista as licenças
  */
-Route::get('/licenses', 'LicenseController@list')->name('listaLicenca');
+Route::get('/licenses', 'LicenseController@list')->name('lista.Licenca');
 
 /******
  *
@@ -150,7 +154,7 @@ Route::name('verify')->get('users/verify/{token}', 'UserController@verify');
  * USUÁRIO DEBE ESTAR LOGADO PARA ACESSAR ESSAS ROTAS
  *
  * */
-Route::group(['middleware' => ['jwt.verify']], function () {
+Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     /**
      *
      * Controlador: Auth
