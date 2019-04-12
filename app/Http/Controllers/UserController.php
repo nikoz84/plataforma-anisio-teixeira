@@ -31,7 +31,7 @@ class UserController extends Controller
 
         return response()->json([
             'success' => true,
-            'users' => $this->user::offset(1)->limit(10)->get(),
+            'users' => $this->user::offset(1)->limit(10)->get()->makeVisible('email')->toArray(),
         ]);
     }
     /**
@@ -42,9 +42,12 @@ class UserController extends Controller
      */
     public function getById($id)
     {
-        $user = $this->user::find($id);
+        $user = $this->user::find($id)->makeVisible('email')->toArray();
 
-        return response()->json(['user' =>$user]);
+        return response()->json([
+                        'success' => true,
+                        'user' =>$user
+                        ]);
     }
     public function update($id)
     {
@@ -102,11 +105,6 @@ class UserController extends Controller
         $validator = Validator::make($this->request->all(), [
             'email' => 'required',
             'name' => 'required|min:2|max:255',
-            'role' => 'required',
-            'password' => 'required|min:6',
-            'nascimento' => 'required',
-            'emailinstitucional' => 'required',
-            'emailpessoal' => 'required',
         ]);
 
         return $validator;
@@ -126,8 +124,7 @@ class UserController extends Controller
         $user = $this->user;
         $user->email = $this->request->get('login');
         $user->name = $this->request->get('name');
-        $user->password = $this->request->get('password');
-        $user->options = json_decode($this->request->get('options'), true);
+        $user->options = json_decode($this->request->get('options', '{}'), true);
 
         $resp = $user->save();
         if ($resp) {

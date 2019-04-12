@@ -76,7 +76,7 @@ const routes = [
       },
       {
         path: "editar/:id",
-        name: "Editar",
+        name: "UserEdit",
         component: UserEditForm
       },
       {
@@ -86,8 +86,13 @@ const routes = [
       },
       {
         path: "listar",
-        name: "Lista",
+        name: "UserList",
         component: ListarUser
+      },
+      {
+        path: "editar/:id",
+        name: "EditarUsuario",
+        component: UsuarioForm
       }
     ]
   },

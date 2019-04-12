@@ -28,7 +28,7 @@
     "HTML (Eex)"
   ],
   "css.fileExtensions": ["css", "scss", "sass"],
-  "editor.fontSize": 16,
+  "editor.fontSize": 14,
   "emmet.triggerExpansionOnTab": true,
   "emmet.includeLanguages": {
     "javascript": "javascriptreact",

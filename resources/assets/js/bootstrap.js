@@ -5,7 +5,7 @@ window._ = require("lodash");
  * for JavaScript based Bootstrap features such as modals and tabs. This
  * code may be modified to fit the specific needs of your application.
  */
-axios.defaults.baseURL = "http://pat.des/api-v1";
+
 try {
   window.$ = window.jQuery = require("jquery");
 
@@ -19,6 +19,8 @@ try {
  */
 
 window.axios = require("axios");
+
+axios.defaults.baseURL = "http://pat.des/api-v1";
 
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 if (localStorage.token) {
