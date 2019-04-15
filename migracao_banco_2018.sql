@@ -1,4 +1,4 @@
-﻿-- EXTENSÃO SEM ACENTOS
+-- EXTENSÃO SEM ACENTOS
 CREATE EXTENSION IF NOT EXISTS unaccent;
 -- DESHABILITA TRIGGERS
 ALTER TABLE conteudodigital DISABLE TRIGGER ALL;
@@ -304,6 +304,10 @@ idcomponentecurricular as componente_id
 from conteudodigitalcomponente
 ) to '/home/niko/Documentos/db/MIGRA/final/o.conteudo_curricular_component' WITH ( FORMAT TEXT, DELIMITER '*' );
 
+-- SELECIONAR SITES TEMATICOS COM CANAL 5
+update conteudos set canal_id = 5 where canal_id is null and is_site = true;
 
+-- SELECIONAR RECURSOS EDUCACIONAIS ABERTOS COM CANAL 5
+update conteudos set canal_id = 6 where canal_id is null and is_site = false;
 
 

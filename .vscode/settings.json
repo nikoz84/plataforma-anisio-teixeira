@@ -29,7 +29,6 @@
   ],
   "css.fileExtensions": ["css", "scss", "sass"],
   "editor.fontSize": 14,
-  "emmet.triggerExpansionOnTab": true,
   "emmet.includeLanguages": {
     "javascript": "javascriptreact",
     "vue-html": "html",

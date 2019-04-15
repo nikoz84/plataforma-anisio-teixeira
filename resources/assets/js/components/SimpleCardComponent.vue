@@ -24,43 +24,39 @@
     </div>
 </template>
 <script>
-
 export default {
-    name: 'SimpleCard',
-    props:{
-        item: Object
+  name: "SimpleCard",
+  props: {
+    item: Object
+  },
+  computed: {
+    title() {
+		return (this.item.name) ? this.item.name : this.item.title;
     },
-    computed:{
-        title(){
-            return (this.item.name) ? this.item.name : this.item.title;
-        },
-        slug(){
-            return this.item.canal.slug;
-        },
-        color(){
-            return this.item.canal.color;
-        },
-        getImage(){
-            return this.item.image; 
-        }
+    slug() {
+      return this.item.canal.slug;
     },
-    created(){
-        
+    color() {
+		return (this.item.canal) ? this.item.canal.color : "#faf";
+    },
+    getImage() {
+      return this.item.image;
     }
-    
-}    
+  },
+  created() {}
+};
 </script>
 <style lang="scss" scoped>
-.panel-default{
-    border-right-width: 3px;
+.panel-default {
+  border-right-width: 3px;
 }
-.panel-default .panel-heading{
-    padding: 2px 2px;
+.panel-default .panel-heading {
+  padding: 2px 2px;
 }
 .figure .img-responsive {
-    margin: 0 auto;
+  margin: 0 auto;
 }
-.img-responsive{
-    width: 100%;
+.img-responsive {
+  width: 100%;
 }
 </style>

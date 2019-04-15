@@ -100,7 +100,6 @@
 import client from "../client.js";
 import store from "../store/index.js";
 
-
 export default {
   name: "nav-app",
   data() {
@@ -113,7 +112,7 @@ export default {
     async logout() {
       localStorage.removeItem("token");
       let params = { token: localStorage.token };
-      let resp = await http.postData("/auth/logout", params);
+      let resp = await client.post("/auth/logout", params);
 
       if (resp.data.success) {
         store.commit("LOGOUT_USER");
