@@ -103,8 +103,12 @@ class UserController extends Controller
     private function validar()
     {
         $validator = Validator::make($this->request->all(), [
-            'email' => 'required',
+            'email' => 'required|unique:email',
             'name' => 'required|min:2|max:255',
+            'role' => 'required',
+            'password'=> 'required|min:6|required_with:password_confirmation|same:password_confirmation',
+            'password_confirmation' => 'min:6|same:password',
+            'birthday' => 'required|date|date_format:Y-m-d',
         ]);
 
         return $validator;
@@ -122,11 +126,14 @@ class UserController extends Controller
         }
 
         $user = $this->user;
+
         $user->email = $this->request->get('login');
         $user->name = $this->request->get('name');
+        $user->password = bcrypt($this->request->get('password'));
         $user->options = json_decode($this->request->get('options', '{}'), true);
 
         $resp = $user->save();
+
         if ($resp) {
             return response()->json([
                 'success' => true,
