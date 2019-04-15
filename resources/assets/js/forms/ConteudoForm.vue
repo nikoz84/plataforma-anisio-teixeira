@@ -218,14 +218,13 @@
 </template>
 
 <script>
-import Http from "../http.js";
+import client from "../client.js";
 import TagsForm from "./TagsForm.vue";
 import "tui-editor/dist/tui-editor.css";
 import "tui-editor/dist/tui-editor-contents.css";
 import "codemirror/lib/codemirror.css";
 import { Editor } from "@toast-ui/vue-editor";
 
-const http = new Http();
 
 export default {
   name: "ConteudoForm",
@@ -305,7 +304,7 @@ export default {
       form.append("options", JSON.stringify(this.options));
       form.append("token", localStorage.token);
 
-      let resp = await http.postData("/conteudos/create", form);
+      let resp = await client.postData("/conteudos/create", form);
 
       if (resp.data.success) {
         this.$router.push({
@@ -326,12 +325,12 @@ export default {
       }
     },
     async getTipos() {
-      let resp = await http.getDataFromUrl("/tipos/conteudos");
+      let resp = await client.getDataFromUrl("/tipos/conteudos");
       this.tipos = resp.data.tipos;
     },
 
     async getConteudo() {
-      let resp = await http.getDataFromUrl(
+      let resp = await client.getDataFromUrl(
         `/conteudos/${this.$route.params.id}`
       );
       console.warn(resp);
@@ -353,7 +352,7 @@ export default {
         category: this.category,
         token: localStorage.token
       };
-      let resp = await http.config(
+      let resp = await client.config(
         "PUT",
         `/conteudo/update/${this.$route.params.id}`,
         params

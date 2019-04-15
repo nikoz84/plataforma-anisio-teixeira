@@ -44,9 +44,7 @@
 </template>
 <script>
 import PlayerApp from '../components/PlayerComponent.vue';
-import Http from '../http.js'
-
-const http = new Http;
+import client from '../client.js';
 
 export default {
     name : 'ConteudoApp',
@@ -71,7 +69,7 @@ export default {
             let params = {
                 token: localStorage.token
             }
-            let resp = await http.deleteData(`/conteudos/delete/${this.$route.params.id}`,params);
+            let resp = await client.delete(`/conteudos/delete/${this.$route.params.id}`,params);
 
             //lista os conteúdos
             if(resp.data.success){

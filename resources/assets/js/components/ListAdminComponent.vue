@@ -5,9 +5,7 @@
 </template>
 <script>
 import List from '../components/ListComponent.vue';
-import Http from '../http.js';
-
-const http = new Http();
+import client from '../client.js';
 
 export default {
     name : 'Listar',
@@ -26,7 +24,7 @@ export default {
         async getCanais(){
             let idCanal = localStorage.canal_id;
             let params = {  };
-            let resp = await http.getDataFromIdCanal( idCanal, params);
+            let resp = await client.getDataFromIdCanal( idCanal, params);
 
             if(resp.data.success){
 

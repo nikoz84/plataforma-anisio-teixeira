@@ -235,8 +235,7 @@
 </template>
 
 <script>
-import Http from '../http.js';
-const http = new Http();
+import client from '../client.js';
 
 export default {
     name: 'UsuarioForm',
@@ -254,7 +253,7 @@ export default {
             projetos_artisticos: '',
             radioat: '',
             sites_tematicos: '',
-            tvat: '',            
+            tvat: '',
             birthday: '',
             password: '',
             password_confirmation: '',
@@ -305,7 +304,7 @@ export default {
             form.append('options', JSON.stringify(this.options));
             form.append('token', localStorage.token);
 
-            let resp = await axios.post(`/api-v1/users`, form);
+            let resp = await client.post(`/users`, form);
             console.warn(resp);
 
             if(resp.data.success){
@@ -326,7 +325,7 @@ export default {
 
         async getUsuario(){
             let params = {token: localStorage.token };
-            let resp = await axios.get(`/api-v1/users/${this.$route.params.id}`,{params});
+            let resp = await client.get(`/users/${this.$route.params.id}`,{params});
             //console.warn(resp.data)
             if(resp.data.success){
                 let user = resp.data.user;
@@ -343,11 +342,10 @@ export default {
 
             let params ={
                 name: this.name,
-                email: this.email,
-                token: localStorage.token
+                email: this.email
             }
 
-            let resp = await axios.put(`/users/${this.$route.params.id}`,params);
+            let resp = await client.put(`/users/${this.$route.params.id}`,params);
 
             console.log(resp)
         }

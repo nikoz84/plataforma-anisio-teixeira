@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Aplicativo;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use App\Helpers\UrlValidator;
-use Illuminate\Support\Facades\Storage;
 use App\Helpers\ResizeImage;
+use App\Helpers\UrlValidator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class AplicativoController extends Controller
 {
@@ -25,13 +24,12 @@ class AplicativoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list(Request $request)
-    {
+    function list(Request $request) {
         $limit = ($request->has('limit')) ? $request->query('limit') : 15;
         $page = ($request->has('page')) ? $request->query('page') : 1;
 
         $aplicativos = Aplicativo::with(['category', 'canal'])
-                                    //->select(['id','user_id','name'])
+        //->select(['id','user_id','name'])
             ->orderBy('created_at', 'desc')
             ->paginate($limit);
 
@@ -40,7 +38,7 @@ class AplicativoController extends Controller
         return response()->json([
             'success' => true,
             'title' => 'Aplicativos Educacionais',
-            'paginator' => $aplicativos
+            'paginator' => $aplicativos,
         ]);
     }
 
@@ -58,7 +56,7 @@ class AplicativoController extends Controller
             'category_id' => 'required',
             'tags' => 'required',
             'image' => 'required',
-            'is_featured' => 'required'
+            'is_featured' => 'required',
         ]);
 
         return $validator;
@@ -76,7 +74,7 @@ class AplicativoController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Não foi possível efetuar o cadastro',
-                'errors' => $validator->errors()
+                'errors' => $validator->errors(),
             ], 200);
         }
 
@@ -99,7 +97,7 @@ class AplicativoController extends Controller
             'success' => true,
             'message' => 'Aplicativo cadastrado com sucesso',
             'id' => $aplicativo->id,
-            'image' => $path
+            'image' => $path,
         ]);
     }
     private function createFile($id, $image)
@@ -131,9 +129,9 @@ class AplicativoController extends Controller
         //$this->createFile($aplicativo->id, $this->request->file('image'));
 
         return response()->json([
-                'success' => true,
-                'aplicativo'=> $aplicativo
-            ]);
+            'success' => true,
+            'aplicativo' => $aplicativo,
+        ]);
     }
     /**
      * Remove the specified resource from storage.
@@ -148,7 +146,7 @@ class AplicativoController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Aplicativo deletado com sucesso!!'
+            'message' => 'Aplicativo deletado com sucesso!!',
         ]);
     }
 
@@ -166,7 +164,7 @@ class AplicativoController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Resultados da busca',
-            'paginator' => $aplicativos
+            'paginator' => $aplicativos,
         ]);
     }
     /**
@@ -188,7 +186,7 @@ class AplicativoController extends Controller
         } else {
             return response()->json([
                 'success' => false,
-                'aplicativo' => 'Não encontrado'
+                'aplicativo' => 'Não encontrado',
             ]);
         }
     }

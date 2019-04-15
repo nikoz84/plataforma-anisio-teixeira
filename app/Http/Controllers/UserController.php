@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-
     public function __construct(Request $request, User $user)
     {
         $this->middleware('jwt.verify')->except([]);
@@ -24,14 +23,14 @@ class UserController extends Controller
      */
     public function list()
     {
-        
+
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
 
         return response()->json([
             'success' => true,
-            'users' => $this->user::offset(1)->limit(10)->get()->makeVisible('email')->toArray(),
+            'users' => $this->user::offset($page)->limit($limit)->get()->makeVisible('email')->toArray(),
         ]);
     }
     /**
@@ -45,9 +44,9 @@ class UserController extends Controller
         $user = $this->user::find($id)->makeVisible('email')->toArray();
 
         return response()->json([
-                        'success' => true,
-                        'user' =>$user
-                        ]);
+            'success' => true,
+            'user' => $user
+        ]);
     }
     public function update($id)
     {
@@ -67,7 +66,7 @@ class UserController extends Controller
      */
     public function delete($id)
     {
-        $resp = $this->user::where(['id'=> $id])->delete();
+        $resp = $this->user::where(['id' => $id])->delete();
 
         if (!$resp) {
             return response()->json([
@@ -106,7 +105,7 @@ class UserController extends Controller
             'email' => 'required|unique:email',
             'name' => 'required|min:2|max:255',
             'role' => 'required',
-            'password'=> 'required|min:6|required_with:password_confirmation|same:password_confirmation',
+            'password' => 'required|min:6|required_with:password_confirmation|same:password_confirmation',
             'password_confirmation' => 'min:6|same:password',
             'birthday' => 'required|date|date_format:Y-m-d',
         ]);

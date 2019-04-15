@@ -2,7 +2,7 @@
   
 </template>
 <script>
-import Http from '../http.js';
+import client from '../client.js';
 
 export default {
     name: 'Paginator',

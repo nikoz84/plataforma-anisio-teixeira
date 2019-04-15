@@ -4,17 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Options;
 use Illuminate\Http\Request;
+use JWTAuth;
 
 class OptionsController extends Controller
 {
+    public function __construct(Options $options)
+    {
+        $this->options = $options;
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function list()
-    {
-        //
+    public function list() 
+	{
+        $user = JWTAuth::parseToken()->toUser();
+
+        $options = $this->options::all();
+        return response()->json([
+            'success' => true,
+            'options' => $options,
+            'user' => $user,
+        ]);
     }
 
     /**
@@ -34,7 +46,7 @@ class OptionsController extends Controller
      * @param  \App\Options  $options
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Options $options)
+    public function update($name)
     {
         //
     }
@@ -45,17 +57,17 @@ class OptionsController extends Controller
      * @param  \App\Options  $options
      * @return \Illuminate\Http\Response
      */
-    public function delete(Options $options)
+    public function delete($name)
     {
         //
     }
-    public function getByName(Request $request, Options $options, $name)
+    public function getByName($name)
     {
-        $option = $options->where('nome', 'like', $name)->first();
+        $option = $this->options::where('name', 'like', $name)->first();
 
         return response()->json([
-            'success'=> true,
-            'options'=> $option
+            'success' => true,
+            'options' => $option,
         ]);
     }
 }

@@ -29,11 +29,15 @@
   ],
   "css.fileExtensions": ["css", "scss", "sass"],
   "editor.fontSize": 14,
-  "emmet.triggerExpansionOnTab": true,
   "emmet.includeLanguages": {
     "javascript": "javascriptreact",
     "vue-html": "html",
     "razor": "html",
     "plaintext": "jade"
+  },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true
   }
 }

@@ -91,10 +91,8 @@
 
 <script>
 import Loader from '../components/LoaderComponent.vue';
-import Http from '../http.js';
+import client from '../client.js';
 
-
-const http = new Http();
 export default {
     name: 'DenunciaForm',
     components: { Loader },
@@ -144,7 +142,7 @@ export default {
 
         };
 
-        let resp = await http.config('POST','/email/enviar', data);
+        let resp = await client.config('POST','/email/enviar', data);
         this.isSend = resp.data.success;
 
         if(resp.data.success){

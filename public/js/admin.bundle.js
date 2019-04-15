@@ -11,7 +11,8 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _http_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../http.js */ "./resources/assets/js/http.js");
+/* harmony import */ var _client_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../client.js */ "./resources/assets/js/client.js");
+/* harmony import */ var _client_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_client_js__WEBPACK_IMPORTED_MODULE_1__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -46,20 +47,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _get = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(endpoint) {
-        var http, params, resp;
+        var params, resp;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 this.$parent.show = false;
-                http = new _http_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
                 params = {
                   token: localStorage.token
                 };
-                _context.next = 5;
-                return http.getDataWithTokenUrl("/".concat(endpoint), params);
+                _context.next = 4;
+                return _client_js__WEBPACK_IMPORTED_MODULE_1___default.a.get("/".concat(endpoint), params);
 
-              case 5:
+              case 4:
                 resp = _context.sent;
 
                 if (resp.data.success) {
@@ -69,7 +69,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   this.$parent.show = true;
                 }
 
-              case 7:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -99,7 +99,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _http_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../http.js */ "./resources/assets/js/http.js");
+/* harmony import */ var _client_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../client.js */ "./resources/assets/js/client.js");
+/* harmony import */ var _client_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_client_js__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash/debounce */ "./node_modules/lodash/debounce.js");
 /* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash_debounce__WEBPACK_IMPORTED_MODULE_2__);
 
@@ -120,7 +121,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 
-var http = new _http_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'SearchForm',
   props: ['search'],
@@ -163,7 +163,7 @@ var http = new _http_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
                   token: localStorage.token
                 };
                 _context.next = 7;
-                return http.getDataFromUrl(url, params);
+                return _client_js__WEBPACK_IMPORTED_MODULE_1___default.a.getDataFromUrl(url, params);
 
               case 7:
                 resp = _context.sent;

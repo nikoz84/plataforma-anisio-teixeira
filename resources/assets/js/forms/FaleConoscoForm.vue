@@ -70,9 +70,9 @@
 </template>
 <script>
 import Loader from '../components/LoaderComponent.vue';
-import Http from '../http.js';
+import client from '../client.js';
 
-const http = new Http();
+
 export default {
     name: 'FaleConoscoForm',
     components: { Loader },

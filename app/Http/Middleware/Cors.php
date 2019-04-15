@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
 
 class Cors
 {
@@ -19,8 +20,8 @@ class Cors
         $origin = '*'; //env('APP_URL');
 
         return $next($request)->header('Access-Control-Allow-Origin', $origin)
-                                ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-                                ->header('Access-Control-Allow-Headers', 'Authorization')
-                                ->header('Access-Control-Allow-Credentials', 'true');
+            ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+            ->header('Access-Control-Allow-Headers', 'Authorization, X-Requested-With, Content-Type')
+            ->header('Access-Control-Allow-Credentials', "true");
     }
 }
