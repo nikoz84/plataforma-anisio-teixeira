@@ -157,9 +157,7 @@
 </div>
 </template>
 <script>
-import Http from '../http.js';
-
-const http = new Http;
+import client from '../client.js';
 
 export default {
     name : 'SidebarCanal',

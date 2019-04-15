@@ -95,7 +95,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _http_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../http.js */ "./resources/assets/js/http.js");
+/* harmony import */ var _client_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../client.js */ "./resources/assets/js/client.js");
+/* harmony import */ var _client_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_client_js__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -255,7 +256,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
-var http = new _http_js__WEBPACK_IMPORTED_MODULE_0__["default"]();
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'SidebarCanal',
   props: ['sidebar'],
@@ -322,7 +322,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_NavCanalComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/NavCanalComponent.vue */ "./resources/assets/js/components/NavCanalComponent.vue");
 /* harmony import */ var _components_SidebarCanalComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/SidebarCanalComponent.vue */ "./resources/assets/js/components/SidebarCanalComponent.vue");
-/* harmony import */ var _http_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../http.js */ "./resources/assets/js/http.js");
+/* harmony import */ var _client_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../client.js */ "./resources/assets/js/client.js");
+/* harmony import */ var _client_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_client_js__WEBPACK_IMPORTED_MODULE_3__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -357,7 +358,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-var http = new _http_js__WEBPACK_IMPORTED_MODULE_3__["default"]();
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'canal',
   components: {
@@ -398,7 +398,7 @@ var http = new _http_js__WEBPACK_IMPORTED_MODULE_3__["default"]();
               case 0:
                 url = "/canais/slug/".concat(this.$route.params.slug);
                 _context.next = 3;
-                return http.getDataFromUrl(url);
+                return _client_js__WEBPACK_IMPORTED_MODULE_3___default.a.get(url);
 
               case 3:
                 resp = _context.sent;
@@ -445,7 +445,7 @@ var http = new _http_js__WEBPACK_IMPORTED_MODULE_3__["default"]();
                   canal: this.canal_id
                 };
                 _context2.next = 3;
-                return http.getDataFromUrl('/categories', params);
+                return _client_js__WEBPACK_IMPORTED_MODULE_3___default.a.get('/categories', params);
 
               case 3:
                 resp = _context2.sent;
@@ -896,9 +896,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("label", { attrs: { for: "tipo-" + tipo.id } }, [
                     _vm._v(
-                      "\r\n                    " +
+                      "\n                    " +
                         _vm._s(tipo.name) +
-                        "\r\n                "
+                        "\n                "
                     )
                   ])
                 ]
@@ -965,9 +965,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("label", { attrs: { for: "license-" + license.id } }, [
                     _vm._v(
-                      "\r\n                    " +
+                      "\n                    " +
                         _vm._s(license.name) +
-                        "\r\n                "
+                        "\n                "
                     )
                   ])
                 ]
@@ -1002,9 +1002,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\r\n                    " +
+                        "\n                    " +
                           _vm._s(categoriaComponent.name) +
-                          " \r\n                    "
+                          " \n                    "
                       ),
                       _c("i", {
                         staticClass:
@@ -1117,7 +1117,7 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\r\n            Outras Modalidades / Níveis de Ensino\r\n        "
+                    "\n            Outras Modalidades / Níveis de Ensino\n        "
                   )
                 ]
               )
@@ -1146,9 +1146,9 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\r\n                    " +
+                                "\n                    " +
                                   _vm._s(nivel.name) +
-                                  "\r\n                    "
+                                  "\n                    "
                               ),
                               _c("i", {
                                 staticClass:
@@ -1261,7 +1261,7 @@ var staticRenderFns = [
         }
       },
       [
-        _vm._v("\r\n                   Tipos de Mídia\r\n                   "),
+        _vm._v("\n                   Tipos de Mídia\n                   "),
         _c("i", { staticClass: "glyphicon glyphicon-chevron-down pull-right" })
       ]
     )
@@ -1282,7 +1282,7 @@ var staticRenderFns = [
         }
       },
       [
-        _vm._v("\r\n                   Licenças\r\n                   "),
+        _vm._v("\n                   Licenças\n                   "),
         _c("i", { staticClass: "glyphicon glyphicon-chevron-down pull-right" })
       ]
     )

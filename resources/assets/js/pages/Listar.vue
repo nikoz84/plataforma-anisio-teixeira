@@ -8,9 +8,7 @@
 </template>
 <script>
 import List from '../components/ListComponent.vue';
-import Http from '../http.js';
-
-const http = new Http();
+import client from '../client.js';
 
 export default {
     name : 'Listar',
@@ -36,7 +34,7 @@ export default {
             console.log(this.$route.query)
             let params = this.$route.query;
             
-            let resp = await http.getDataFromIdCanal( params );
+            let resp = await client.get('/conteudos', params );
             console.log(resp)
             if(resp.data.success){
                 

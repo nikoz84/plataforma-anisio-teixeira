@@ -60,9 +60,6 @@
 </template>
 
 <script>
-import Http from '../http.js';
-
-const http = new Http();
 
 export default {
     name: 'RegisterForm',
@@ -97,7 +94,7 @@ export default {
                 email: this.email
             };
 
-            let resp = await http.postData('/auth/register', data);
+            let resp = await axios.post(`/auth/register`, data);
             
             if(resp.data.success){
                 //console.log(resp.data);

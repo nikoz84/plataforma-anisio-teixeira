@@ -9,9 +9,9 @@
     </form>
 </template>
 <script>
-import Http from '../http.js';
+import client from '../client.js';
 import debounce from 'lodash/debounce'
-const http = new Http();
+
 
 export default {
     name : 'SearchForm',
@@ -38,7 +38,7 @@ export default {
             this.$parent.show = false;
             
             let params ={ token: localStorage.token };
-            let resp = await http.getDataFromUrl(url, params);
+            let resp = await client.getDataFromUrl(url, params);
 
             if(resp.data){
                 this.$parent.paginator = resp.data.paginator;

@@ -37,9 +37,7 @@
     </article>
 </template>
 <script>
-import Http from '../http.js'
-
-const http = new Http;
+import client from '../client.js';
 
 export default {
     name : 'AplicativoApp',
@@ -56,7 +54,7 @@ export default {
             let params = {
                 token: localStorage.token
             }
-            let resp = await http.deleteData(`/aplicativos/delete/${this.$route.params.id}`,params);
+            let resp = await client.deleteData(`/aplicativos/delete/${this.$route.params.id}`,params);
             if(resp.data.success){
                 this.$router.push({ name: 'Listar', params: {slug: this.$route.params.slug}})
             }

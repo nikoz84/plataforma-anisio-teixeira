@@ -21,16 +21,16 @@ use Illuminate\Http\Request;
  */
 Route::group(['middleware' => ['cors']], function () {
 
-    Route::get('/files/{id}', 'FileController@getFiles')->name('buscaArquivo');
-    Route::post('/files/{id}', 'FileController@createFile')->name('adicionaArquivo');
+    Route::get('/files/{id}', 'FileController@getFiles')->name('busca.arquivo');
+    Route::post('/files/{id}', 'FileController@createFile')->name('adiciona.arquivo');
 
 /******
  *
  * Controlador: Category
  * Métodos: list -> Lista das categorias
  */
-    Route::get('/categories', 'CategoryController@list')->name('listaCategorias');
-    Route::get('/categories/aplicativos', 'CategoryController@getAplicativoCategories')->name('listaCategoriasAplicativos');
+    Route::get('/categories', 'CategoryController@list')->name('lista.categorias');
+    Route::get('/categories/aplicativos', 'CategoryController@getAplicativoCategories')->name('lista.categorias.aplicativos');
 
 /******
  *
@@ -166,8 +166,8 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
      *
      */
     Route::post('/auth/logout', 'AuthController@logout')->name('sair');
-    Route::post('/auth/refresh', 'AuthController@refresh')->name('refrescarToken');
-    Route::post('/auth/user', 'AuthController@getAuthUser')->name('usuarioLogado');
+    Route::post('/auth/refresh', 'AuthController@refresh')->name('refrescar.token');
+    Route::post('/auth/user', 'AuthController@getAuthUser')->name('usuario.logado');
     /**
      *
      * Controlador: User

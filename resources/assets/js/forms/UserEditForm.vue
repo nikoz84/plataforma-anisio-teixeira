@@ -42,10 +42,9 @@
     </div>
 </template>
 <script>
-import Http from '../http.js';
+import client from '../client.js';
 import store from '../store/index.js';
 
-const http = new Http();
 export default {
   name: 'LoginForm',
   data () {

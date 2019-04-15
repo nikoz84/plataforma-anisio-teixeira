@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
 
 class Cors
 {

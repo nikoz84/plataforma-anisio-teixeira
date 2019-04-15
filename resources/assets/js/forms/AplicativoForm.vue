@@ -126,9 +126,9 @@
 </template>
 
 <script>
-import Http from "../http.js";
+import client from "../client.js";
 import TagsForm from "./TagsForm.vue";
-const http = new Http();
+
 
 export default {
   name: "AplicativoForm",
@@ -192,7 +192,7 @@ export default {
       form.append("image", this.image, this.image.name);
       form.append("token", localStorage.token);
 
-      let resp = await axios.post(`${baseURL}/aplicativos/create`, form);
+      let resp = await axios.post(`/aplicativos/create`, form);
       console.warn(resp);
 
       if (resp.data.success) {
@@ -213,7 +213,7 @@ export default {
       }
     },
     async getCategories() {
-      let resp = await axios.get(`${baseURL}/categories/aplicativos`);
+      let resp = await axios.get(`/categories/aplicativos`);
 
       this.categories = resp.data.categories;
     },
@@ -228,7 +228,7 @@ export default {
     },
     async getAplicativo() {
       let resp = await axios.get(
-        `${baseURL}/aplicativos/${this.$route.params.id}`
+        `/aplicativos/${this.$route.params.id}`
       );
       if (resp.data.success) {
         this.name = resp.data.aplicativo.name;
@@ -251,7 +251,7 @@ export default {
       };
 
       let resp = await axios.put(
-        `${baseURL}/aplicativos/update/${this.$route.params.id}`,
+        `/aplicativos/update/${this.$route.params.id}`,
         params
       );
       if (resp.data.success) {

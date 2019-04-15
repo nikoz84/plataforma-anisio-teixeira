@@ -26,9 +26,6 @@
 </template>
 <script>
 import SimpleCard from '../components/SimpleCardComponent.vue';
-import Http from '../http.js';
-
-const http = new Http;
 
 export default {
     name : 'List',
@@ -51,7 +48,7 @@ export default {
             if(url){
                 let params ={ token: localStorage.token };
                 this.$parent.show = false;
-                let resp = await http.getDataFromUrl(url, params);
+                let resp = await axios.getDataFromUrl(url, params);
                 if(resp.data.success){
                     this.$parent.paginator = resp.data.paginator;
                     this.$parent.show = true;

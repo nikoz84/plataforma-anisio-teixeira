@@ -13,7 +13,7 @@
     </nav>
 </template>
 <script>
-import Http from '../http.js';
+import client from '../client.js';
 
 export default {
     name : 'Sidebar',
@@ -26,9 +26,9 @@ export default {
     methods:{
         async get(endpoint){
             this.$parent.show = false;
-            let http = new Http();
+            
             let params ={ token: localStorage.token };
-            let resp = await http.getDataWithTokenUrl(`/${endpoint}`, params);
+            let resp = await client.get(`/${endpoint}`, params);
 
             if(resp.data.success){
                 this.$parent.paginator = resp.data.paginator;

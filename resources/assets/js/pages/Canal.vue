@@ -26,9 +26,9 @@
 <script>
 import NavCanal from '../components/NavCanalComponent.vue';
 import SidebarCanal from '../components/SidebarCanalComponent.vue';
-import Http from '../http.js';
+import client from '../client.js';
 
-const http = new Http();
+
 
 export default {
     name : 'canal',
@@ -61,7 +61,7 @@ export default {
         async getCanal(){
             
             let url = `/canais/slug/${this.$route.params.slug}`; 
-            let resp = await http.getDataFromUrl( url );
+            let resp = await client.get( url );
             
             if(resp.data.success){
                 this.canal_id = resp.data.canal.id;
@@ -82,7 +82,7 @@ export default {
             let params = {
                 canal: this.canal_id
             }
-            let resp = await http.getDataFromUrl('/categories', params);
+            let resp = await client.get('/categories', params);
             if(resp.data.success){
                 this.categories = resp.data.categories;
             }

@@ -1,7 +1,7 @@
-export default class Http {
-  constructor() {
-    this.api = "/api-v1";
-  }
+const client = require('axios');
+
+export default {
+  
   /**
    * Retorna dados do canal
    * @param {*} idCanal identificador do canal
@@ -11,11 +11,11 @@ export default class Http {
     try {
       let id = localStorage.canal_id;
       let url = this.getUrlCanal(id);
-      return await axios.get(url, params);
+      return await client.get(url, params);
     } catch (error) {
       return await error.response;
     }
-  }
+  },
   /**
    * Retorna dados da url fornecida
    * @param {*} endPoint url do recurso
@@ -23,20 +23,18 @@ export default class Http {
    */
   async getDataFromUrl(endPoint = "", params = {}) {
     try {
-      let url = `${this.api}${endPoint}`;
-      return await axios.get(url, { params });
+      return await client.get(endPoint, { params });
     } catch (error) {
       return await error.response;
     }
-  }
+  },
   async getDataWithTokenUrl(endPoint = "", params) {
     try {
-      let url = `${this.api}${endPoint}`;
-      return await axios.get(url, { params });
+      return await client.get(endPoint, { params });
     } catch (error) {
       return await error.response;
     }
-  }
+  },
   /**
    *
    * @param {*} method
@@ -44,12 +42,12 @@ export default class Http {
    * @param {*} data
    */
   async config(method, url, data) {
-    return await axios({
+    return await client({
       method,
-      url: this.api + url,
+      url: url,
       params: data
     });
-  }
+  },
   /**
    * Criar recurso
    * @param {*} endPoint url do recurso
@@ -57,12 +55,11 @@ export default class Http {
    */
   async postData(endPoint = "", params = {}) {
     try {
-      let urlPost = `${this.api}${endPoint}`;
-      return await axios.post(urlPost, params);
+      return await client.post(endPoint, params);
     } catch (error) {
       return await error.response;
     }
-  }
+  },
   /**
    * Atualizar dados de um recurso
    * @param {*} endPoint url do recurso
@@ -70,12 +67,11 @@ export default class Http {
    */
   async putData(endPoint = "", params = {}) {
     try {
-      let urlUpdate = `${this.api}${endPoint}`;
-      return await axios.put(urlUpdate, { params });
+      return await client.put(endPoint, { params });
     } catch (error) {
       return await error.response;
     }
-  }
+  },
   /**
    * Apagar recurso
    * @param {*} endPoint url do recurso
@@ -83,12 +79,11 @@ export default class Http {
    */
   async deleteData(endPoint = "", params = {}) {
     try {
-      let urlDelete = `${this.api}${endPoint}`;
-      return await axios.delete(urlDelete, { params });
+      return await client.delete(endPoint, { params });
     } catch (error) {
       return await error.response;
     }
-  }
+  },
   /**
    * Retorna a url do recurso segundo o canal
    * @param {*} id identificador unico do canal
@@ -96,17 +91,17 @@ export default class Http {
   getUrlCanal(id) {
     switch (true) {
       case id == 5:
-        return `${this.api}/conteudos/sites`;
+        return `/conteudos/sites`;
         break;
       case id == 6:
         //console.warn('as')
-        return `${this.api}/conteudos`;
+        return `/conteudos`;
         break;
       case id == 9:
-        return `${this.api}/aplicativos`;
+        return `/aplicativos`;
         break;
       default:
-        return `${this.api}/conteudos?canal=${id}&site=false`;
+        return `/conteudos?canal=${id}&site=false`;
     }
   }
 }

@@ -67,6 +67,24 @@ class ConteudoController extends Controller
             'paginator'=> $conteudos
         ], 200);
     }
+    private function getConteudosByIdCanal($canal_id)
+    {
+        switch (true) {
+            case $canal_id == 5:
+              return `/conteudos/sites`;
+              break;
+            case $canal_id == 6:
+              //console.warn('as')
+              return `/conteudos`;
+              break;
+            case $canal_id == 9:
+              return `/aplicativos`;
+              break;
+            default:
+              return `/conteudos?canal=${$canal_id}&site=false`;
+        }
+    }
+
     /**
      * Lista de sites temáticos
      *

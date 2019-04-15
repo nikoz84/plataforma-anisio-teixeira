@@ -29,10 +29,9 @@
     </div>
 </template>
 <script>
-import Http from '../http.js';
+import client from '../client.js';
 import InputTag from 'vue-input-tag';
 import debounce from 'lodash/debounce'
-const http = new Http();
 
 export default {
     name: 'TagForm',
@@ -67,7 +66,7 @@ export default {
             if (this.tag.length === 0) return;
 
             let params = {token:localStorage.token};
-            let resp = await http.getDataFromUrl(`/tags/search/${this.tag}`, params);
+            let resp = await client.getDataFromUrl(`/tags/search/${this.tag}`, params);
 
             if(resp.data.success){
                 this.autocompleteItems = resp.data.paginator.data;
