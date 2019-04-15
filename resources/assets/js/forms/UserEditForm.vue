@@ -42,57 +42,64 @@
     </div>
 </template>
 <script>
-import client from '../client.js';
-import store from '../store/index.js';
+import client from "../client.js";
+import store from "../store/index.js";
 
 export default {
-  name: 'LoginForm',
-  data () {
+  name: "LoginForm",
+  data() {
     return {
       user: {
         name: null,
         email: null,
         password: null
       },
-      message : '',
-      isError : true
+      message: "",
+      isError: true
+    };
+  },
+  created() {
+    console.log(this.$route);
+    if (this.$route.update) {
+      console.log(this.$route.update, this.$route.id);
     }
   },
-  created(){
-    console.log(this.$route)
-    if(this.$route.update){
-      console.log(this.$route.update, this.$route.id)
-    }
-  },
-  beforeCreate () {
+  beforeCreate() {
     if (!store.state.isLogged) {
-        this.$router.push('/usuario/editar')
+      this.$router.push("/usuario/editar");
     }
   },
-  methods:{
-    async alterar(){
-      let data = { name: this.user.name, email: this.user.email, password: this.user.password };
-      let resp = await axios.post('usuario/', data);
-      
-      if(!resp.data.success){
+  methods: {
+    async alterar() {
+      let data = {
+        name: this.user.name,
+        email: this.user.email,
+        password: this.user.password
+      };
+      let resp = await axios.post("/usuario", data);
+
+      if (!resp.data.success) {
         this.isError = resp.data.success;
         this.message = resp.data.message;
-        this.$router.push('/usuario/editar')
-        setTimeout(()=>{
+        this.$router.push("/usuario/editar");
+        setTimeout(() => {
           this.isError = true;
-        },3000)
-      }else{
+        }, 3000);
+      } else {
         this.isError = resp.data.success;
-        if(resp.data.token.access_token){
-          localStorage.setItem('token', resp.data.token.access_token)
-          store.commit('LOGIN_USER');
-          this.$router.push('/admin');
+        if (resp.data.token.access_token) {
+          localStorage.setItem("token", resp.data.token.access_token);
+          store.commit("LOGIN_USER");
+          this.$router.push("/admin");
         }
       }
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
-form { margin-top: 30px; margin-bottom: 30px;}
+form {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
 </style>

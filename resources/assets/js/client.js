@@ -1,6 +1,6 @@
 var axios = require("axios");
 
-let auth = localStorage.token ? "Bearer " + localStorage.token : null;
+let auth = (localStorage.token) ? "Bearer " + localStorage.token : null;
 
 var axiosInstance = axios.create({
   baseURL: "http://pat.des/api-v1",
