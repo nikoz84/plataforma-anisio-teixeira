@@ -215,118 +215,112 @@
 </template>
 
 <script>
-import client from '../client.js';
-
+import client from "../client.js";
 
 export default {
-    name: 'UsuarioForm',
+  name: "UsuarioForm",
 
-    data(){
-        return {
-            name: '',
-            email: '',
-            role: '',
-            ambiente_ensino: {},
-            aplicativo_educacionais: '',
-            blogrede: '',
-            emitec: '',
-            midias_educacionais: '',
-            projetos_artisticos: '',
-            radioat: '',
-            sites_tematicos: '',
-            tvat: '',
-            password: '',
-            nascimento: '',
-            options: {},
-            message: null,
-            success: false,
-            isError: true,
-            isUpdate: false,
-            textButton: 'Criar',
-            errors: {
-                email:[],
-                name:[],
-                role:[],
-                password:[]
-            },
-        }
+  data() {
+    return {
+      name: "",
+      email: "",
+      role: "",
+      ambiente_ensino: {},
+      aplicativo_educacionais: "",
+      blogrede: "",
+      emitec: "",
+      midias_educacionais: "",
+      projetos_artisticos: "",
+      radioat: "",
+      sites_tematicos: "",
+      tvat: "",
+      password: "",
+      nascimento: "",
+      options: {},
+      message: null,
+      success: false,
+      isError: true,
+      isUpdate: false,
+      textButton: "Criar",
+      errors: {
+        email: [],
+        name: [],
+        role: [],
+        password: []
+      }
+    };
+  },
 
-    },
-
-    created(){
-        if(this.$route.params.update){
-            this.getUsuario();
-            this.isUpdate = true;
-            this.textButton = 'Editar';
-        }
-    },
-
-    methods:{
-        send(){
-            if(this.isUpdate){
-                this.editUsuario();
-            }else{
-                this.createUsuario();
-            }
-        },
-        async createUsuario(){
-
-            let form = new FormData();
-            form.append('email', this.email);
-            form.append('name',this.name);
-            form.append('password',this.password);
-            form.append('is_featured', this.is_featured);
-            form.append('options', JSON.stringify(this.options));
-            form.append('token', localStorage.token);
-            
-            let resp = await axios.post(`/api-v1/users`, form);
-            console.warn(resp);
-
-            if(resp.data.success){
-                this.message = resp.data.message;
-            }else{
-                this.isError = resp.data.success;
-                this.message = resp.data.message;
-                if(resp.data.errors){
-                    this.errors = resp.data.errors;
-                }
-
-                setTimeout(()=>{
-                    this.isError = true;
-                },3000)
-            }
-
-        },
-
-        async getUsuario(){
-            let params = {token: localStorage.token };
-            let resp = await axios.get(`/api-v1/users/${this.$route.params.id}`,{params});
-            //console.warn(resp.data)
-            if(resp.data.success){
-                let user = resp.data.user;
-                //console.log(user)
-                this.name = user.name;
-                this.email = user.email;
-                this.role = user.options.role;
-                this.nascimento = user.options.birthday;
-
-            }
-        },
-
-        async editUsuario(){
-
-            let params ={
-                name: this.name,
-                email: this.email,
-                token: localStorage.token
-            }
-
-            let resp = await axios.put(`/users/${this.$route.params.id}`,params);
-
-            console.log(resp)
-        }
-
+  created() {
+    if (this.$route.params.update) {
+      this.getUsuario();
+      this.isUpdate = true;
+      this.textButton = "Editar";
     }
+  },
 
-}
+  methods: {
+    send() {
+      if (this.isUpdate) {
+        this.editUsuario();
+      } else {
+        this.createUsuario();
+      }
+    },
+    async createUsuario() {
+      let form = new FormData();
+      form.append("email", this.email);
+      form.append("name", this.name);
+      form.append("password", this.password);
+      form.append("is_featured", this.is_featured);
+      form.append("options", JSON.stringify(this.options));
+      form.append("token", localStorage.token);
+
+      let resp = await axios.post(`/api-v1/users`, form);
+      console.warn(resp);
+
+      if (resp.data.success) {
+        this.message = resp.data.message;
+      } else {
+        this.isError = resp.data.success;
+        this.message = resp.data.message;
+        if (resp.data.errors) {
+          this.errors = resp.data.errors;
+        }
+
+        setTimeout(() => {
+          this.isError = true;
+        }, 3000);
+      }
+    },
+
+    async getUsuario() {
+      let params = { token: localStorage.token };
+      let resp = await axios.get(`/api-v1/users/${this.$route.params.id}`, {
+        params
+      });
+      //console.warn(resp.data)
+      if (resp.data.success) {
+        let user = resp.data.user;
+        //console.log(user)
+        this.name = user.name;
+        this.email = user.email;
+        this.role = user.options.role;
+        this.nascimento = user.options.birthday;
+      }
+    },
+
+    async editUsuario() {
+      let params = {
+        name: this.name,
+        email: this.email,
+        token: localStorage.token
+      };
+
+      let resp = await client.put(`/users/${this.$route.params.id}`, params);
+
+      console.log(resp);
+    }
+  }
+};
 </script>

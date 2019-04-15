@@ -76,7 +76,7 @@ export default {
         email: this.user.email,
         password: this.user.password
       };
-      let resp = await axios.post("/usuario", data);
+      let resp = await axios.put("/usuario", data);
 
       if (!resp.data.success) {
         this.isError = resp.data.success;
