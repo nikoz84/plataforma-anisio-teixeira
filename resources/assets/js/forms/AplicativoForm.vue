@@ -189,7 +189,7 @@ export default {
       form.append("image", this.image, this.image.name);
       form.append("token", localStorage.token);
 
-      let resp = await axios.post(`/aplicativos/create`, form);
+      let resp = await axios.post(`/aplicativos`, form);
       console.warn(resp);
 
       if (resp.data.success) {
@@ -246,7 +246,7 @@ export default {
       };
 
       let resp = await axios.put(
-        `/aplicativos/update/${this.$route.params.id}`,
+        `/aplicativos/${this.$route.params.id}`,
         params
       );
       if (resp.data.success) {

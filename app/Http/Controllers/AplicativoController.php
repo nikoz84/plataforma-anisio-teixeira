@@ -24,7 +24,7 @@ class AplicativoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function list(Request $request) {
+    public function list(Request $request) {
         $limit = ($request->has('limit')) ? $request->query('limit') : 15;
         $page = ($request->has('page')) ? $request->query('page') : 1;
 
