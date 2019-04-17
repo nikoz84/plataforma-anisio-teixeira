@@ -45,14 +45,14 @@ Route::group(['middleware' => ['cors']], function () {
  * Métodos: adicionar -> Denúncias
  */
     Route::get('/denuncias', 'DenunciaController@list')->name('listar.denuncias');
-    Route::post('/denuncias/create', 'DenunciaController@create')->name('criar.denuncias');
+    Route::post('/denuncias', 'DenunciaController@create')->name('criar.denuncias');
 
 /******
  *
  * Controlador: Fale Cconosco
  * Métodos: enviar -> Fale Conosco
  */
-    Route::post('/faleconosco/create', 'FaleconoscoController@list')->name('criar.faleconosco');
+    Route::post('/faleconosco', 'FaleconoscoController@list')->name('criar.faleconosco');
 
 /******
  *
