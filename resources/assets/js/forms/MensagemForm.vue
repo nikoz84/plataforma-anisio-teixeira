@@ -11,7 +11,7 @@
 </template>
 <script>
 export default {
-  name: "MensagemForm",
+  name: "mensagem",
   props: ["errors"]
 };
 </script>

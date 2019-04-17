@@ -127,11 +127,9 @@
 
 <script>
 import client from "../client.js";
-//import TagsForm from "./TagsForm.vue";
 
 export default {
   name: "AplicativoForm",
-  components: { TagsForm },
   data() {
     return {
       name: "",

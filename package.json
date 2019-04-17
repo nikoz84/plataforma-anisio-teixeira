@@ -7,35 +7,37 @@
     "watch-poll": "npm run watch -- --watch-poll",
     "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
     "prod": "npm run production",
-    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "errors": "webpack --progress --profile --colors --display-error-details --display-cached"
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/preset-env": "^7.4.3",
     "animate.css": "^3.7.0",
-    "axios": "^0.18",
-    "babel-loader": "^8.0.5",
+    "axios": "^0.17",
     "babel-plugin-dynamic-import-webpack": "^1.1.0",
-    "babel-plugin-syntax-dynamic-import": "^6.18.0",
-    "bootstrap-sass": "^3.4.1",
-    "cross-env": "^5.2",
-    "es6-promise": "^4.2.6",
-    "jquery": "^3.4",
+    "bootstrap-sass": "^3.3.7",
+    "cross-env": "^5.1",
+    "es6-promise": "^4.2.5",
+    "jquery": "^3.2",
     "laravel-mix": "^4.0.15",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.4",
     "node-sass": "^4.11.0",
-    "resolve-url-loader": "^3.1.0",
+    "resolve-url-loader": "^2.3.1",
     "sass-loader": "^7.1.0",
     "vue": "^2.6.10",
-    "vue-loader": "^15.7.0",
-    "vue-router": "^3.0.5",
+    "vue-router": "^3.0.2",
     "vue-template-compiler": "^2.6.10",
-    "vue-tiny-lazyload-img": "0.1.0",
-    "vuex": "^3.1.0",
-    "webpack": "^4.30.0"
+    "vue-tiny-lazyload-img": "0.0.3",
+    "vuex": "^3.0.1"
   },
   "dependencies": {
+    "@babel/core": "^7.4.3",
     "@toast-ui/vue-editor": "^1.1.1",
-    "vue-input-tag": "^2.0.5",
-    "vue-multiselect": "^2.1.4"
+    "babel-loader": "^8.0.0-beta.0",
+    "formvuelar": "^1.1.0",
+    "lodash": "^4.17.11",
+    "vue-input-tag": "^2.0.1",
+    "vue-loader": "^15.7.0",
+    "webpack": "^4.30.0"
   }
 }

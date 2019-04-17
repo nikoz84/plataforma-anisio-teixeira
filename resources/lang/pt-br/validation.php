@@ -131,7 +131,10 @@ return [
         'category' => 'categoria',
         'category_id' => 'categoria',
         'recaptcha' => 'código de segurança',
-        'subject' => 'assunto'
+        'subject' => 'assunto',
+        'password' => 'senha',
+        'password_confirmation'=> 'confirmação da senha',
+        'birthday'=> 'nascimento'
     ],
     'options' => [
         'lang' => 'pt-BR',

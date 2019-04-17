@@ -24,6 +24,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
+        
         $token = null;
 
         try {
@@ -39,7 +40,7 @@ class AuthController extends Controller
                 'error' => 'Impossível criar Token de acesso',
             ], 500);
         }
-
+        
         return response()->json([
             'success' => true,
             'token' => $this->respondWithToken($token),

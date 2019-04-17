@@ -167,7 +167,7 @@
                         
                     </div>
                     <div class="form-group">
-                    <multiselect class="form-control" v-model="tipo" :options="tipos" placeholder="Tipo de conteúdo"></multiselect>
+                    <!--multiselect class="form-control" v-model="tipo" :options="tipos" placeholder="Tipo de conteúdo"></multiselect-->
                     </div>
                     <!-- APROVAR CONTEÚDO -->
                     <div class="checkbox" v-bind:class="{ 'has-error': errors.is_aproved && errors.is_aproved.length > 0 }">
@@ -183,7 +183,7 @@
                         </div>
                     </div>
                 </div>
-                <MensagemForm :errors="['um','dois','tres']"></MensagemForm>
+                <mensagem :errors="['um','dois','tres']"></mensagem>
                 <!-- BOTÃO DE ENVIO -->
                 <div class="form-group">
                     <button class="btn btn-default">Salvar</button>
@@ -220,19 +220,18 @@
 
 <script>
 import client from "../client.js";
-import { MensagemForm } from "./MensagemForm.vue";
+//import { Mensagem } from "./MensagemForm";
 import "tui-editor/dist/tui-editor.css";
 import "tui-editor/dist/tui-editor-contents.css";
 import "codemirror/lib/codemirror.css";
 import { Editor } from "@toast-ui/vue-editor";
-import { Multiselect } from "vue-multiselect";
+import MensagemFormVue from "./MensagemForm.vue";
 
 export default {
   name: "ConteudoForm",
   components: {
-    MensagemForm,
-    editor: Editor,
-    multiselect: Multiselect
+    mensagem: require("./MensagemForm.vue").default,
+    editor: Editor
   },
   data() {
     return {
