@@ -358,10 +358,7 @@ export default {
         category: this.category,
         token: localStorage.token
       };
-      let resp = await client.put(
-        `/conteudo/update/${this.$route.params.id}`,
-        params
-      );
+      let resp = await client.put(`/conteudo/${this.$route.params.id}`, params);
     }
   }
 };
