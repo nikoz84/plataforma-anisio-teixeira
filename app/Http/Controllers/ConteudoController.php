@@ -4,19 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Conteudo;
 use App\Tag;
-use App\Helpers\UrlValidator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ConteudoController extends Controller
 {
     public function __construct(Conteudo $conteudo, Request $request)
     {
-        $this->middleware('jwt.verify')->except(['list','search','getById','getByTagId','getSitesTematicos']);
+        $this->middleware('jwt.verify')->except(['list', 'search', 'getById', 'getByTagId', 'getSitesTematicos']);
         $this->conteudo = $conteudo;
         $this->request = $request;
     }
@@ -25,31 +23,30 @@ class ConteudoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list()
-    {
+    function list() {
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
         $canal = $this->request->query('canal');
-        
+
         $tipos = $this->request->get('tipos');
         $licencas = $this->request->query('licencas');
         $componentes = $this->request->query('componentes');
-        $categorias =  $this->request->query('categorias');
+        $categorias = $this->request->query('categorias');
         /*
         return response()->json([
-                'tipos' => $tipos,
-                'componentes'=> $componentes,
-                'licencas' => $licencas,
-                'categorias' => $categorias
-            ]);
-        */
+        'tipos' => $tipos,
+        'componentes'=> $componentes,
+        'licencas' => $licencas,
+        'categorias' => $categorias
+        ]);
+         */
         $query = $this->conteudo::query();
         $query->when($canal, function ($q, $canal) {
             return $q->where('canal_id', $canal)
-                    ->where('is_approved', 'true');
+                ->where('is_approved', 'true');
         });
-        
+
         $query->when($tipos, function ($q, $tipos) {
             return $q->whereIn('options->tipo->id', explode(',', $tipos));
         });
@@ -57,32 +54,34 @@ class ConteudoController extends Controller
         $url .= "&tipos={$tipos}&componentes={$componentes}&categorias={$categorias}&licencas={$licencas}";
 
         $conteudos = $query->with('canal')
-                        ->orderBy($orderBy, 'desc')
-                        ->paginate($limit)
-                        ->setPath("/conteudos?{$url}");
-        
+            ->orderBy($orderBy, 'desc')
+            ->paginate($limit)
+            ->setPath("/conteudos?{$url}");
+
         return response()->json([
-            'success'=> true,
-            'title'=> 'Mídias educacionais',
-            'paginator'=> $conteudos
+            'success' => true,
+            'title' => 'Mídias educacionais',
+            'paginator' => $conteudos,
         ], 200);
     }
     private function getConteudosByIdCanal($canal_id)
     {
+        $url = null;
+
         switch (true) {
             case $canal_id == 5:
-              return `/conteudos/sites`;
-              break;
+                $url = '/conteudos/sites';
+                break;
             case $canal_id == 6:
-              //console.warn('as')
-              return `/conteudos`;
-              break;
+                $url = '/conteudos';
+                break;
             case $canal_id == 9:
-              return `/aplicativos`;
-              break;
+                $url = '/aplicativos';
+                break;
             default:
-              return `/conteudos?canal=${$canal_id}&site=false`;
+                $url = '/conteudos?canal=${$canal_id}&site=false';
         }
+        return $url;
     }
 
     /**
@@ -94,18 +93,18 @@ class ConteudoController extends Controller
     {
         $limit = $this->request->query('limit', 15);
         $orderBy = $this->request->query('order', 'created_at');
-        
+
         $sitesTematicos = $this->conteudo::with('canal')
-                        ->where('is_site', 'true')
-                        ->where('is_approved', 'true')
-                        ->orderBy($orderBy, 'desc')
-                        ->paginate($limit)
-                        ->setPath("/conteudos/sites?limit={$limit}");
-        
+            ->where('is_site', 'true')
+            ->where('is_approved', 'true')
+            ->orderBy($orderBy, 'desc')
+            ->paginate($limit)
+            ->setPath("/conteudos/sites?limit={$limit}");
+
         return response()->json([
-            'success'=> true,
-            'title'=> 'Sites Temáticos',
-            'paginator'=> $sitesTematicos
+            'success' => true,
+            'title' => 'Sites Temáticos',
+            'paginator' => $sitesTematicos,
         ], 200);
     }
     /**
@@ -123,12 +122,11 @@ class ConteudoController extends Controller
             'source' => 'required',
             'license' => 'required',
             'terms' => 'required|in:true,false',
-            'is_approved' => 'required|in:true,false'
+            'is_approved' => 'required|in:true,false',
         ]);
 
         return $validator;
     }
-
 
     /**
      * Adiciona e valida um novo conteúdo.tipo
@@ -142,8 +140,8 @@ class ConteudoController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Não foi possível efetuar o cadastro',
-                'errors' => $validator->errors()
-            ], 200);
+                'errors' => $validator->errors(),
+            ], 422);
         }
 
         $conteudo = $this->conteudo;
@@ -166,7 +164,7 @@ class ConteudoController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Conteúdo cadastrado com sucesso',
-            'id' => $conteudo->id
+            'id' => $conteudo->id,
         ]);
     }
 
@@ -186,7 +184,7 @@ class ConteudoController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $conteudo
+            'data' => $conteudo,
         ]);
     }
     public function createConteudoTags($id)
@@ -211,12 +209,12 @@ class ConteudoController extends Controller
         if (!$conteudo) {
             $resp = [
                 'menssage' => 'Não foi Possível deletar o conteúdo',
-                'success' => false
+                'success' => false,
             ];
         } else {
             $resp = [
                 'menssage' => "Conteúdo de id: {$id} foi apagado com sucesso!!",
-                'success' => $conteudo->delete()
+                'success' => $conteudo->delete(),
             ];
         }
 
@@ -234,26 +232,25 @@ class ConteudoController extends Controller
         $page = $this->request->query('page', 1);
 
         $conteudos = DB::table(DB::raw("conteudos as cd, plainto_tsquery('simple', lower(unaccent(?))) query"))
-                        ->select(['cd.id','cd.title',
-                                DB::raw('ts_rank_cd(cd.ts_documento, query) AS ranking')
-                                ])
-                        ->whereRaw('query @@ cd.ts_documento')
-                        ->whereRaw('cd.is_approved = true')
-                        ->setBindings([$termo])
-                        ->orderBy('ranking', 'desc')
-                        ->paginate($limit);
-
+            ->select(['cd.id', 'cd.title',
+                DB::raw('ts_rank_cd(cd.ts_documento, query) AS ranking'),
+            ])
+            ->whereRaw('query @@ cd.ts_documento')
+            ->whereRaw('cd.is_approved = true')
+            ->setBindings([$termo])
+            ->orderBy('ranking', 'desc')
+            ->paginate($limit);
 
         $conteudos->setPath("/conteudos/search/{$termo}?limit={$limit}");
 
         return response()->json([
-            'success'=> true,
+            'success' => true,
             'message' => 'Resultados da busca',
             'paginator' => $conteudos,
             'has_more_pages' => $conteudos->hasMorePages(),
-            'pages'=> $conteudos->count(),
-            'page'=> $conteudos->currentPage(),
-            'limit' => $conteudos->perPage()
+            'pages' => $conteudos->count(),
+            'page' => $conteudos->currentPage(),
+            'limit' => $conteudos->perPage(),
         ]);
     }
     /**
@@ -266,18 +263,18 @@ class ConteudoController extends Controller
     {
 
         $conteudo = $this->conteudo::with([
-            'user','canal','tags','license', 'componentes', 'niveis'
-            ])->find($id);
+            'user', 'canal', 'tags', 'license', 'componentes', 'niveis',
+        ])->find($id);
 
         if ($conteudo) {
             return response()->json([
                 'success' => true,
-                'conteudo' => $conteudo
+                'conteudo' => $conteudo,
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Conteudo não encontrado'
+                'message' => 'Conteudo não encontrado',
             ]);
         }
     }
@@ -285,10 +282,9 @@ class ConteudoController extends Controller
     {
         $conteudo = Conteudo::find(4);
         //$conteudo->tags()->detach([1,5]);
-        
-        
+
         return response()->json([
-            'tags' => $conteudo->tags
+            'tags' => $conteudo->tags,
         ]);
     }
     /**
@@ -300,19 +296,18 @@ class ConteudoController extends Controller
     public function getByTagId($id)
     {
         $limit = $this->request->query('limit', 15);
-        
-        $conteudos = $this->conteudo::select(['id','title'])->whereHas('tags', function ($query) use ($id) {
+
+        $conteudos = $this->conteudo::select(['id', 'title'])->whereHas('tags', function ($query) use ($id) {
             $query->where('id', '=', $id);
         })->paginate($limit);
-        
 
         $conteudos->setPath("/conteudos/tag/{$id}?limit={$limit}");
 
         DB::table('tags')->where('id', $id)->increment('searched', 1);
-        
+
         return response()->json([
             'success' => true,
-            'paginator' => $conteudos
+            'paginator' => $conteudos,
         ]);
     }
 }

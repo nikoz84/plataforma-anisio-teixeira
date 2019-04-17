@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import client from '../client.js'
+
 export default {
   name: "ListarUser",
   data() {
@@ -54,17 +56,14 @@ export default {
   },
   methods: {
     async getUsers() {
-      let token = localStorage.token;
-      let urlUsers = `/api-v1/users?token=${token}`;
-      let resp = await axios.get(urlUsers);
+      let urlUsers = `/users`;
+      let resp = await client.get(urlUsers);
       console.warn(resp);
       this.users = resp.data.users;
     },
     async deleteUsuario(id) {
-      let params = {
-        token: localStorage.token
-      };
-      let resp = await axios.delete(`/api-v1/users/delete/${id}`,{params});
+      
+      let resp = await client.delete(`/users/${id}`);
       console.warn(resp)
       if(resp.data.success){
         this.$router.go({ path: 'listar' });

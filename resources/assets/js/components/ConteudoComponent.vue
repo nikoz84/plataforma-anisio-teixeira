@@ -43,42 +43,53 @@
     </article>
 </template>
 <script>
-import PlayerApp from '../components/PlayerComponent.vue';
-import client from '../client.js';
+import PlayerApp from "../components/PlayerComponent.vue";
+import client from "../client.js";
 
 export default {
-    name : 'ConteudoApp',
-    components:{ PlayerApp },
-    props:['conteudo','message' ],
-    computed:{
-        splitAuthors(){
-            let replace = this.conteudo.authors.replace(',',';')
-            return replace.split(';');
-        },
-        backgroundColor(){
-            let color = this.conteudo.canal.color;
-            return `background-color: ${color}`;
-        }
+  name: "ConteudoApp",
+  components: { PlayerApp },
+  props: ["conteudo", "message"],
+  computed: {
+    splitAuthors() {
+      let replace = this.conteudo.authors.replace(",", ";");
+      return replace.split(";");
     },
-    methods: {
-        updateConteudo(){
-            this.$router.push({ name: 'EditarConteudo', params: {slug: this.$route.params.slug, id: this.$route.params.id, update: true }})
-
-        },
-        async deleteConteudo(){
-            let params = {
-                token: localStorage.token
-            }
-            let resp = await client.delete(`/conteudos/delete/${this.$route.params.id}`,params);
-
-            //lista os conteúdos
-            if(resp.data.success){
-                this.$router.push({ name: 'Listar', params: {slug: this.$route.params.slug}})
-            }
-        }
-
+    backgroundColor() {
+      let color = this.conteudo.canal.color;
+      return `background-color: ${color}`;
     }
-}
+  },
+  methods: {
+    updateConteudo() {
+      this.$router.push({
+        name: "EditarConteudo",
+        params: {
+          slug: this.$route.params.slug,
+          id: this.$route.params.id,
+          update: true
+        }
+      });
+    },
+    async deleteConteudo() {
+      let params = {
+        token: localStorage.token
+      };
+      let resp = await client.delete(
+        `/conteudos/${this.$route.params.id}`,
+        params
+      );
+
+      //lista os conteúdos
+      if (resp.data.success) {
+        this.$router.push({
+          name: "Listar",
+          params: { slug: this.$route.params.slug }
+        });
+      }
+    }
+  }
+};
 </script>
 <style scoped>
 i::before {

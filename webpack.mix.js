@@ -1,4 +1,4 @@
-let mix = require('laravel-mix');
+let mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -11,13 +11,22 @@ let mix = require('laravel-mix');
  |
  */
 mix.config.webpackConfig.output = {
-    chunkFilename: 'js/[name].bundle.js',
-    publicPath: '/',
+  chunkFilename: "js/[name].bundle.js",
+  publicPath: "/"
 };
 
+mix.webpackConfig({
+  resolve: {
+    extensions: [".js", ".vue", ".json"],
+    alias: {
+      vue$: "vue/dist/vue.esm.js"
+    }
+  }
+});
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css', {
-    implementation: require('node-sass')
+mix
+  .js("resources/assets/js/app.js", "public/js")
+  .sass("resources/assets/sass/app.scss", "public/css", {
+    implementation: require("node-sass")
   })
-   .version();
+  .version();

@@ -119,7 +119,7 @@
                           {{ ` ${this.file.name} -- ${this.file.size} -- ${this.file.type} `}}
                       </small>-->
                   </div>
-                  <TagsForm/>
+
             </div>
         </div>
     </div>
@@ -127,8 +127,7 @@
 
 <script>
 import client from "../client.js";
-import TagsForm from "./TagsForm.vue";
-
+//import TagsForm from "./TagsForm.vue";
 
 export default {
   name: "AplicativoForm",
@@ -227,9 +226,7 @@ export default {
       this.count = e.target.value.length;
     },
     async getAplicativo() {
-      let resp = await axios.get(
-        `/aplicativos/${this.$route.params.id}`
-      );
+      let resp = await axios.get(`/aplicativos/${this.$route.params.id}`);
       if (resp.data.success) {
         this.name = resp.data.aplicativo.name;
         this.category_id = resp.data.aplicativo.category_id;
