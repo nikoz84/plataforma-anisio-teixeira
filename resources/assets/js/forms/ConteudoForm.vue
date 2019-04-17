@@ -220,17 +220,16 @@
 
 <script>
 import client from "../client.js";
-//import { Mensagem } from "./MensagemForm";
+import mensagem from "./MensagemForm.vue";
 import "tui-editor/dist/tui-editor.css";
 import "tui-editor/dist/tui-editor-contents.css";
 import "codemirror/lib/codemirror.css";
 import { Editor } from "@toast-ui/vue-editor";
-import MensagemFormVue from "./MensagemForm.vue";
 
 export default {
   name: "ConteudoForm",
   components: {
-    mensagem: require("./MensagemForm.vue").default,
+    mensagem,
     editor: Editor
   },
   data() {
@@ -335,9 +334,8 @@ export default {
     },
     async getLicenses() {
       let resp = await client.get("/licenses");
-
+      console.log(resp);
       this.licenses = resp.data.paginator.data;
-      console.log(this.licenses);
     },
     async getConteudo() {
       let resp = await client.get(`/conteudos/${this.$route.params.id}`);

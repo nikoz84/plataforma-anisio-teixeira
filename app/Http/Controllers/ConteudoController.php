@@ -141,7 +141,7 @@ class ConteudoController extends Controller
                 'success' => false,
                 'message' => 'Não foi possível efetuar o cadastro',
                 'errors' => $validator->errors(),
-            ], 422);
+            ], 200);
         }
 
         $conteudo = $this->conteudo;
