@@ -224,11 +224,12 @@ import "tui-editor/dist/tui-editor.css";
 import "tui-editor/dist/tui-editor-contents.css";
 import "codemirror/lib/codemirror.css";
 import { Editor } from "@toast-ui/vue-editor";
+import { ShowErrors } from "../components/ShowErrorsComponent.vue"
 
 
 export default {
   name: "ConteudoForm",
-  components: { TagsForm, editor: Editor },
+  components: {ShowErrors, TagsForm, editor: Editor },
   data() {
     return {
       title: "",
