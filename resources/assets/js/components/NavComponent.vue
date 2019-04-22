@@ -56,38 +56,12 @@
                             <router-link tag="li" to="/usuario/login" v-if="!isLogged">
                                 <a>Login</a>
                             </router-link>
-                            <router-link tag="li" to="/usuario/editar" v-if="isLogged">
-                                <a v-on:click.prevent="perfil()">Editar Perfil</a>
-                            </router-link>
                             <li v-if="isLogged">
                                 <a v-on:click.prevent="logout()">Sair</a>
                             </li>
                         </ul>
                     </li>
                 </ul>
-                <!-- menu configurações -->
-                <ul class="nav navbar-nav navbar-right">
-
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-cog"></i> <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <router-link tag="li" to="usuario/alterar-senha">
-                               <a>Alterar minha senha</a>
-                            </router-link>
-                            <router-link tag="li" to="usuario/adicionar">
-                                <a>Adicionar</a>
-                            </router-link>
-                            <router-link tag="li" to="usuario/listar">
-                                <a>Usuários</a>
-                            </router-link>
-                            <router-link tag="li" to="denuncias/listar">
-                                <a>Denúncias</a>
-                            </router-link>
-                        </ul>
-                    </li>
-                </ul>
-
-                <!--/END menu configurações -->
             </div>
         </div>
         <div class="progress-container">
@@ -99,7 +73,6 @@
 <script>
 import client from "../client.js";
 import store from "../store/index.js";
-
 
 export default {
   name: "nav-app",
@@ -113,7 +86,7 @@ export default {
     async logout() {
       localStorage.removeItem("token");
       let params = { token: localStorage.token };
-      let resp = await http.postData("/auth/logout", params);
+      let resp = await client.post("/auth/logout", params);
 
       if (resp.data.success) {
         store.commit("LOGOUT_USER");

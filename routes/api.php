@@ -45,14 +45,14 @@ Route::group(['middleware' => ['cors']], function () {
  * Métodos: adicionar -> Denúncias
  */
     Route::get('/denuncias', 'DenunciaController@list')->name('listar.denuncias');
-    Route::post('/denuncias/create', 'DenunciaController@create')->name('criar.denuncias');
+    Route::post('/denuncias', 'DenunciaController@create')->name('criar.denuncias');
 
 /******
  *
  * Controlador: Fale Cconosco
  * Métodos: enviar -> Fale Conosco
  */
-    Route::post('/faleconosco/create', 'FaleconoscoController@list')->name('criar.faleconosco');
+    Route::post('/faleconosco', 'FaleconoscoController@list')->name('criar.faleconosco');
 
 /******
  *
@@ -116,9 +116,7 @@ Route::group(['middleware' => ['cors']], function () {
  */
     Route::get('/options/{name}', 'OptionsController@getByName')->name('busca.metadata.x.nome');
     Route::get('/options', 'OptionsController@list')->name('listar.opcoes');
-    Route::post('/options', 'OptionsController@create')->name('criar.opcoes');
-    Route::put('/options/{name}', 'OptionsController@update')->name('atualizar.opcoes.x.nome');
-    Route::delete('/options/{name}', 'OptionsController@delete')->name('apagar.opcoes.x.nome');
+    
 
 /******
  * Controlador: Tag
@@ -179,7 +177,7 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
      *
      */
     Route::get('/users/search/{termo}', 'UserController@search')->name('usuario.buscar');
-    Route::delete('/users/delete/{id}', 'UserController@delete')->name('usuario.apagar');
+    Route::delete('/users/{id}', 'UserController@delete')->name('usuario.apagar');
     Route::get('/users/{id}', 'UserController@getById')->name('user.x.id');
     Route::get('/users', 'UserController@list')->name('usuario.listar');
     Route::put('/users/{id}', 'UserController@update');
@@ -193,9 +191,9 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
      * delete -> Deletar aplicativo
      *
      */
-    Route::post('/aplicativos/create', 'AplicativoController@create')->name('aplicativo.adicionar');
-    Route::put('/aplicativos/update/{id}', 'AplicativoController@update')->name('aplicativo.editar');
-    Route::delete('/aplicativos/delete/{id}', 'AplicativoController@delete')->name('aplicativo.apagar');
+    Route::post('/aplicativos', 'AplicativoController@create')->name('aplicativo.adicionar');
+    Route::put('/aplicativos/{id}', 'AplicativoController@update')->name('aplicativo.editar');
+    Route::delete('/aplicativos/{id}', 'AplicativoController@delete')->name('aplicativo.apagar');
     /**
      *
      * Controllador: Tags
@@ -208,9 +206,9 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
      */
     Route::get('/tags', 'TagController@list')->name('listaTags');
     Route::get('/tags/search/{term}', 'TagController@search')->name('buscaTag');
-    Route::post('/tags/create', 'TagController@create')->name('adicionarTag');
-    Route::put('/tags/update/{id}', 'TagController@update')->name('atualizarTag');
-    Route::delete('/tags/delete/{id}', 'TagController@delete')->name('apagarTag');
+    Route::post('/tags', 'TagController@create')->name('adicionarTag');
+    Route::put('/tags/{id}', 'TagController@update')->name('atualizarTag');
+    Route::delete('/tags/{id}', 'TagController@delete')->name('apagarTag');
     /**
      *
      * Controlador: Conteudo
@@ -219,9 +217,9 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
      * delete -> Apagar conteúdo
      *
      */
-    Route::post('/conteudos/create', 'ConteudoController@create')->name('adicionar.conteudo');
-    Route::put('/conteudos/update/{id}', 'ConteudoController@update')->name('atualizar.conteudo');
-    Route::delete('/conteudos/delete/{id}', 'ConteudoController@delete')->name('apagar.conteudo');
+    Route::post('/conteudos', 'ConteudoController@create')->name('adicionar.conteudo');
+    Route::put('/conteudos/{id}', 'ConteudoController@update')->name('atualizar.conteudo');
+    Route::delete('/conteudos/{id}', 'ConteudoController@delete')->name('apagar.conteudo');
     /**
      *
      * Controlador: Canal
@@ -232,9 +230,9 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
      * search -> Buscar canal pelo nome
      *
      */
-    Route::post('/canais/create', 'CanalController@create')->name('adicionarCanal');
-    Route::put('/canais/update/{id}', 'CanalController@update')->name('atualizarCanal');
-    Route::delete('/canais/delete/{id}', 'CanalController@delete')->name('apagarCanal');
+    Route::post('/canais', 'CanalController@create')->name('adicionarCanal');
+    Route::put('/canais/{id}', 'CanalController@update')->name('atualizarCanal');
+    Route::delete('/canais/{id}', 'CanalController@delete')->name('apagarCanal');
     Route::get('/canais', 'CanalController@list')->name('listaCanal');
     Route::get('/canais/search/{term}', 'CanalController@search')->name('adicionarCanal');
     /**
@@ -248,9 +246,9 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
      */
     Route::get('/licenses', 'LicenseController@list')->name('listaLicenca');
     Route::get('/licenses/search/{term}', 'LicenseController@search')->name('buscaLicenca');
-    Route::post('/licenses/create', 'LicenseController@create')->name('adicionarLicenca');
-    Route::put('/licenses/update/{id}', 'LicenseController@update')->name('atualizarLicenca');
-    Route::delete('/licenses/delete/{id}', 'LicenseController@delete')->name('apagarLicenca');
+    Route::post('/licenses', 'LicenseController@create')->name('adicionarLicenca');
+    Route::put('/licenses/{id}', 'LicenseController@update')->name('atualizarLicenca');
+    Route::delete('/licenses/{id}', 'LicenseController@delete')->name('apagarLicenca');
     /**
      *
      * Controlador: Denúncia
@@ -258,5 +256,15 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
      * delete -> Apagar denúncias
      *
      */
-    Route::delete('/denuncias/delete/{id}', 'DenunciaController@delete')->name('apagar.denuncias');
+    Route::delete('/denuncias/{id}', 'DenunciaController@delete')->name('apagar.denuncias');
+    /**
+     * Controlador: Options
+     * Metodos :
+     * create -> Adicionar opção
+     * update -> Atualizar opção por nome
+     * delete -> Apagar opcão por nome
+     */
+    Route::post('/options', 'OptionsController@create')->name('criar.opcoes');
+    Route::put('/options/{name}', 'OptionsController@update')->name('atualizar.opcoes.x.nome');
+    Route::delete('/options/{name}', 'OptionsController@delete')->name('apagar.opcoes.x.nome');
 });

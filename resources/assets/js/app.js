@@ -10,16 +10,7 @@ import VueTinyLazyloadImg from "vue-tiny-lazyload-img";
 Vue.use(VueTinyLazyloadImg);
 Vue.use(Vuex);
 Vue.use(VueRouter);
-Vue.prototype.$formvuelar = {
-  noResultsText: "No results found!",
-  pleaseWaitText: "Please wait...",
-  addFileText: "Add File",
-  addFilesText: "Add Files",
-  filesSelectedText: "Files Selected",
-  dropFilesHereText: "Drop files here or click to upload.",
-  filesSelectedAndSizeText: "files selected with a combined size of",
-  headers: "{}"
-};
+
 require("animate.css/animate.min.css");
 require("./bootstrap");
 

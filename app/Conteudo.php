@@ -11,10 +11,14 @@ class Conteudo extends Model
     protected $fillable = [
         'title',
         'description',
+        'source',
+        'authors',
+        'is_site',
+         
         'is_featured',
         'is_approved',
-        'is_site',
-        'options'];
+        'options'
+    ];
     protected $dates = [
             'created_at',
             'updated_at',

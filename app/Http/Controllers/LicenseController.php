@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\License;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class LicenseController extends Controller
 {
     public function __construct(Request $request, License $license)
     {
-        $this->middleware('jwt.verify')->except(['list','search','create','update']);
+        $this->middleware('jwt.verify')->except(['list', 'search', 'create', 'update']);
         $this->request = $request;
         $this->license = $license;
     }
@@ -19,21 +18,21 @@ class LicenseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list()
-    {
-        $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;
+    public function list() 
+	{
+        $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 20;
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
 
-        $paginator = $this->license::with('parent')
-                                ->paginate($limit);
+        $paginator = $this->license::with('childs')
+            ->paginate($limit);
 
         $paginator->setPath("/licenses?limit={$limit}");
 
         return response()->json([
-                'success'=> true,
-                'title'=> 'Lista de Licenças',
-                'paginator' => $paginator
-            ]);
+            'success' => true,
+            'title' => 'Lista de Licenças',
+            'paginator' => $paginator,
+        ]);
     }
 
     /**
@@ -48,7 +47,7 @@ class LicenseController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Não foi possível registrar a licença',
-                'errors' => $validator->errors()
+                'errors' => $validator->errors(),
             ], 200);
         }
 
@@ -62,7 +61,7 @@ class LicenseController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Licença registrada com sucesso',
-            'id' => $license->id
+            'id' => $license->id,
         ]);
     }
 
@@ -96,14 +95,14 @@ class LicenseController extends Controller
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 20;
         $search = "%{$termo}%";
         $paginator = License::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search])
-                            ->paginate($limit);
+            ->paginate($limit);
 
         $paginator->setPath("/licenses/search/{$termo}?limit={$limit}");
 
         return response()->json([
-            'success'=> true,
-            'title'=> 'Resultado da busca',
-            'paginator' => $paginator
+            'success' => true,
+            'title' => 'Resultado da busca',
+            'paginator' => $paginator,
         ]);
     }
 }

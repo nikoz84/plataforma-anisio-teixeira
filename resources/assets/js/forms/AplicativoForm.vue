@@ -119,7 +119,7 @@
                           {{ ` ${this.file.name} -- ${this.file.size} -- ${this.file.type} `}}
                       </small>-->
                   </div>
-                  <TagsForm/>
+
             </div>
         </div>
     </div>
@@ -127,12 +127,9 @@
 
 <script>
 import client from "../client.js";
-import TagsForm from "./TagsForm.vue";
-
 
 export default {
   name: "AplicativoForm",
-  components: { TagsForm },
   data() {
     return {
       name: "",
@@ -192,7 +189,7 @@ export default {
       form.append("image", this.image, this.image.name);
       form.append("token", localStorage.token);
 
-      let resp = await axios.post(`/aplicativos/create`, form);
+      let resp = await axios.post(`/aplicativos`, form);
       console.warn(resp);
 
       if (resp.data.success) {
@@ -227,9 +224,7 @@ export default {
       this.count = e.target.value.length;
     },
     async getAplicativo() {
-      let resp = await axios.get(
-        `/aplicativos/${this.$route.params.id}`
-      );
+      let resp = await axios.get(`/aplicativos/${this.$route.params.id}`);
       if (resp.data.success) {
         this.name = resp.data.aplicativo.name;
         this.category_id = resp.data.aplicativo.category_id;
@@ -251,7 +246,7 @@ export default {
       };
 
       let resp = await axios.put(
-        `/aplicativos/update/${this.$route.params.id}`,
+        `/aplicativos/${this.$route.params.id}`,
         params
       );
       if (resp.data.success) {

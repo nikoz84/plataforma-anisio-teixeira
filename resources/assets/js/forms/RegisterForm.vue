@@ -60,6 +60,7 @@
 </template>
 
 <script>
+import client from '../client.js';
 
 export default {
     name: 'RegisterForm',
@@ -94,7 +95,7 @@ export default {
                 email: this.email
             };
 
-            let resp = await axios.post(`/auth/register`, data);
+            let resp = await client.post(`/auth/register`, data);
             
             if(resp.data.success){
                 //console.log(resp.data);

@@ -26,7 +26,7 @@ window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
 if (localStorage.token) {
   axios.defaults.headers.common["Authorization"] =
-    "Bearer" + localStorage.token;
+    "Bearer " + localStorage.token;
 } else {
   axios.defaults.headers.common["Authorization"] = null;
 }

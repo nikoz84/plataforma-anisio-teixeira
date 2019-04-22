@@ -114,16 +114,36 @@
                 Feminino
                 </label>
             </div>
-            <div class="form-group" v-bind:class="{ 'has-error': errors.nascimento && errors.nascimento.length > 0 }">
-                <label for="datanascimento">Data de nascimento:</label>
-                <input type="date" class="form-control" id="datanascimento" name="datanascimento" v-model="nascimento">
+            <div class="form-group" v-bind:class="{ 'has-error': errors.birthday && errors.birthday.length > 0 }">
+                <label for="databirthday">Data de birthday:</label>
+                <input type="date" class="form-control" id="databirthday" name="databirthday" v-model="birthday">
                 <small class="text-danger"
-                        v-if="errors.nascimento"
-                        v-for="(error,n) in errors.nascimento"
-                        v-bind:key="n"
+                        v-if="errors.birthday"
+                        v-for="(error,day) in errors.birthday"
+                        v-bind:key="day"
                         v-text="error">
                 </small>
             </div>
+            <div class="form-group" v-bind:class="{ 'has-error': errors.password && errors.password.length > 0 }">
+                <label for="senha">Senha:*</label>
+                <input type="password" class="form-control" id="senha" name="senha" v-model="password">
+                <small class="text-danger"
+                        v-if="errors.password"
+                        v-for="(error,pass) in errors.password"
+                        v-bind:key="pass"
+                        v-text="error">
+                </small>
+            </div>
+            <div class="form-group" v-bind:class="{ 'has-error': errors.password_confirmation && errors.password_confirmation.length > 0 }">
+                <label for="confirmation">Confirmar Senha:*</label>
+                <input type="password" class="form-control" id="confirmation" name="confirmation" v-model="password_confirmation">
+                <small class="text-danger"
+                        v-if="errors.password_confirmation"
+                        v-for="(error,pass_c) in errors.password_confirmation"
+                        v-bind:key="pass_c"
+                        v-text="error">
+                </small>
+            </div>    
             <!--<div class="form-group" v-bind:class="{ 'has-error': errors.emailinstitucional && errors.emailinstitucional.length > 0 }">
                 <label for="emailinstitucional">E-mail Institucional:*</label>
                 <input type="email" class="form-control" id="emailinstitucional" name="emailinstitucional" v-model="emailinstitucional">
@@ -217,7 +237,6 @@
 <script>
 import client from '../client.js';
 
-
 export default {
     name: 'UsuarioForm',
 
@@ -226,7 +245,7 @@ export default {
             name: '',
             email: '',
             role: '',
-            ambiente_ensino: {},
+            ambiente_ensino: '',
             aplicativo_educacionais: '',
             blogrede: '',
             emitec: '',
@@ -235,8 +254,9 @@ export default {
             radioat: '',
             sites_tematicos: '',
             tvat: '',
+            birthday: '',
             password: '',
-            nascimento: '',
+            password_confirmation: '',
             options: {},
             message: null,
             success: false,
@@ -247,7 +267,7 @@ export default {
                 email:[],
                 name:[],
                 role:[],
-                password:[]
+                birthday:[]
             },
         }
 
@@ -260,7 +280,6 @@ export default {
             this.textButton = 'Editar';
         }
     },
-
     methods:{
         send(){
             if(this.isUpdate){
@@ -270,16 +289,22 @@ export default {
             }
         },
         async createUsuario(){
-
+            this.options= {
+                'role': this.role,
+                'birthday': this.birthday
+            };
             let form = new FormData();
             form.append('email', this.email);
             form.append('name',this.name);
+            form.append('role',this.role);
+            form.append('birthday',this.birthday);
             form.append('password',this.password);
+            form.append('password_confirmation',this.password_confirmation);
             form.append('is_featured', this.is_featured);
             form.append('options', JSON.stringify(this.options));
             form.append('token', localStorage.token);
-            
-            let resp = await axios.post(`/api-v1/users`, form);
+
+            let resp = await client.post(`/users`, form);
             console.warn(resp);
 
             if(resp.data.success){
@@ -300,7 +325,7 @@ export default {
 
         async getUsuario(){
             let params = {token: localStorage.token };
-            let resp = await axios.get(`/api-v1/users/${this.$route.params.id}`,{params});
+            let resp = await client.get(`/users/${this.$route.params.id}`,{params});
             //console.warn(resp.data)
             if(resp.data.success){
                 let user = resp.data.user;
@@ -308,7 +333,7 @@ export default {
                 this.name = user.name;
                 this.email = user.email;
                 this.role = user.options.role;
-                this.nascimento = user.options.birthday;
+                this.birthday = user.options.birthday;
 
             }
         },
@@ -317,11 +342,10 @@ export default {
 
             let params ={
                 name: this.name,
-                email: this.email,
-                token: localStorage.token
+                email: this.email
             }
 
-            let resp = await axios.put(`/users/${this.$route.params.id}`,params);
+            let resp = await client.put(`/users/${this.$route.params.id}`,params);
 
             console.log(resp)
         }

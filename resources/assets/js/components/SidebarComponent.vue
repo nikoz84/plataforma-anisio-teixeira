@@ -4,12 +4,33 @@
             <img class="w-150" v-bind:src="'https://via.placeholder.com/300x200'" alt="Foto Usuário">
         </a>
         <p>{{ 'Benvindo ' + username }}</p>
-        <a v-on:click="get('canais')" class="list-group-item pointer">Canais</a>
-        <a v-on:click="get('users')" class="list-group-item pointer">Usuários</a>
-        <a v-on:click="get('conteudos')" class="list-group-item pointer">Mídias Educacionais</a>
-        <a v-on:click="get('aplicativos')" class="list-group-item pointer">Aplicativos Educacionais</a>
-        <a v-on:click="get('tags')" class="list-group-item pointer">Tags</a>
-        <a v-on:click="get('licenses')" class="list-group-item pointer">Licenças</a>
+        <router-link tag="li" to="admin/aplicativos/listar">
+            <a>Aplicativos</a>
+        </router-link>
+        <router-link tag="li" to="admin/conteudos/listar">
+            <a>Conteúdos</a>
+        </router-link>
+        <router-link tag="li" to="admin/canais/listar">
+            <a>Canais</a>
+        </router-link>
+        <router-link tag="li" to="admin/licencas/listar">
+            <a>Licenças</a>
+        </router-link>
+        <router-link tag="li" to="admin/tags/listar">
+            <a>Tags</a>
+        </router-link>
+        <router-link tag="li" to="admin/usuario/alterar-senha">
+            <a>Alterar senha</a>
+        </router-link>
+        <router-link tag="li" to="admin/usuario/adicionar">
+            <a>Adicionar Usuário</a>
+        </router-link>
+        <router-link tag="li" to="admin/usuario/listar">
+            <a>Usuários</a>
+        </router-link>
+        <router-link tag="li" to="admin/denuncias/listar">
+            <a>Denúncias</a>
+        </router-link>
     </nav>
 </template>
 <script>
@@ -22,6 +43,9 @@ export default {
             username: localStorage.getItem('username'),
             userId: localStorage.getItem('idUser'),
         }
+    },
+    mounted(){
+        
     },
     methods:{
         async get(endpoint){

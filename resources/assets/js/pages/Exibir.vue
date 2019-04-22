@@ -54,7 +54,7 @@ export default {
         async getData(){
             let id = this.$route.params.id;
             let slug = (this.$route.params.slug == 'aplicativos-educacionais') ? 'aplicativos': 'conteudos';
-            let resp = await client.getDataFromUrl(`/${slug}/${id}`);
+            let resp = await client.get(`/${slug}/${id}`);
             if( slug == 'aplicativos' ){
                 this.aplicativo = resp.data.aplicativo
                 this.showAplicativo = true;

@@ -6,14 +6,10 @@ import AplicativoForm from "./forms/AplicativoForm.vue";
 import LoginForm from "./forms/LoginForm.vue";
 import RecoverPassForm from "./forms/RecoverPassForm.vue";
 import RegisterForm from "./forms/RegisterForm.vue";
-import UserEditForm from "./forms/UserEditForm.vue";
-import CanalForm from "./forms/CanalForm.vue";
 import ListAdmin from "./components/ListAdminComponent.vue";
 import DenunciaForm from "./forms/DenunciaForm.vue";
 import FaleConoscoForm from "./forms/FaleConoscoForm.vue";
-import UsuarioForm from "./forms/UsuarioForm.vue";
-import ListarUser from "./pages/ListarUser.vue";
-import OptionsForm from "./forms/OptionsForm.vue";
+
 
 const routes = [
   {
@@ -35,19 +31,11 @@ const routes = [
     },
     children: [
       {
-        path: "listar/:canal",
+        path: "/:slug-admin/:action",
         name: "ListarItens",
-        component: ListAdmin
-      },
-      {
-        path: "adicionar-canal",
-        name: "AddCanal",
-        component: CanalForm
-      },
-      {
-        path: "metadados",
-        name: "Opcoes",
-        component: OptionsForm
+        component: {
+          a: ListAdmin
+        }
       }
     ]
   },
@@ -73,26 +61,6 @@ const routes = [
         path: "registro",
         name: "Register",
         component: RegisterForm
-      },
-      {
-        path: "editar/:id",
-        name: "UserEdit",
-        component: UserEditForm
-      },
-      {
-        path: "adicionar",
-        name: "Create",
-        component: UsuarioForm
-      },
-      {
-        path: "listar",
-        name: "UserList",
-        component: ListarUser
-      },
-      {
-        path: "editar/:id",
-        name: "EditarUsuario",
-        component: UsuarioForm
       }
     ]
   },

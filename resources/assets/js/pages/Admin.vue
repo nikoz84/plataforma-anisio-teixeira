@@ -6,20 +6,19 @@
             <header class="page-header">
                 <h1><small>{{ title }}</small></h1>
             </header>
-            <router-view></router-view>
+            <router-view name="a"/>
         </section>
     </div>
 </template>
 <script>
 import Sidebar from '../components/SidebarComponent.vue';
 import SearchForm from '../forms/SearchForm.vue';
-import List from '../components/ListComponent.vue';
 import store from '../store/index.js';
 
 export default {
     name : 'admin',
     components:{
-        Sidebar, SearchForm, List
+        Sidebar, SearchForm
     },
     data() {
         return {
@@ -30,6 +29,7 @@ export default {
         }
     },
     beforeCreate () {
+        
         if (!store.state.isLogged) {
             this.$router.go('/usuario/login')
         }

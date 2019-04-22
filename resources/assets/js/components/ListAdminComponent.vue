@@ -1,15 +1,13 @@
 <template>
     <div>
-        <List v-bind:paginator="paginator"></List>
+        ASDASD
     </div>
 </template>
 <script>
-import List from '../components/ListComponent.vue';
 import client from '../client.js';
 
 export default {
     name : 'Listar',
-    components:{ List },
     data() {
         return {
             paginator: {},
@@ -17,20 +15,13 @@ export default {
         }
     },
     created() {
+        
         this.getCanais();
 
     },
     methods:{
         async getCanais(){
-            let idCanal = localStorage.canal_id;
-            let params = {  };
-            let resp = await client.getDataFromIdCanal( idCanal, params);
-
-            if(resp.data.success){
-
-                this.title = resp.data.title;
-                this.paginator = resp.data.paginator;
-            }
+            console.warn('LISTADMINCOMP')
 
         }
     }
