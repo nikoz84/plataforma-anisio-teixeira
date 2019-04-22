@@ -42,7 +42,7 @@
                                 <a>Aplicativos Educacionais</a>
                             </router-link>
                             <li role="separador" class="divider" v-if="isLogged"></li>
-                            <router-link tag="li" to="/admin" v-if="isLogged">
+                            <router-link tag="li" :to=" {name:'admin', params: { slug: 'inicio', action:'estatisticas' }}" v-if="isLogged">
                                 <a>Administração</a>
                             </router-link>
                         </ul>

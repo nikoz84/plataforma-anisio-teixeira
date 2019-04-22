@@ -26,11 +26,11 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var _default = {
-  name: 'Sidebar',
+  name: "Sidebar",
   data: function data() {
     return {
-      username: localStorage.getItem('username'),
-      userId: localStorage.getItem('idUser')
+      username: localStorage.getItem("username"),
+      userId: localStorage.getItem("idUser")
     };
   },
   mounted: function mounted() {},
@@ -215,31 +215,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 //
 //
 //
+//
 var _default = {
-  name: 'admin',
+  name: "admin",
   components: {
     Sidebar: _SidebarComponent["default"],
     SearchForm: _SearchForm["default"]
   },
   data: function data() {
     return {
-      title: '',
-      search: '',
+      title: "",
+      search: "",
       show: false,
-      paginator: {}
+      paginator: {},
+      slug: "",
+      action: ""
     };
   },
   beforeCreate: function beforeCreate() {
     if (!_index["default"].state.isLogged) {
-      this.$router.go('/usuario/login');
+      this.$router.go("/usuario/login");
     }
-  },
-  watch: {
-    search: function search(novo, antigo) {
-      this.$router.push("/admin/listar/".concat(novo));
-    }
-  },
-  methods: {}
+  }
 };
 exports["default"] = _default;
 
@@ -327,48 +324,136 @@ var render = function() {
       _vm._v(" "),
       _c(
         "router-link",
-        { attrs: { tag: "li", to: "admin/aplicativos/listar" } },
+        {
+          attrs: {
+            tag: "li",
+            to: {
+              name: "admin",
+              params: { slug: "inicio", action: "estatisticas" }
+            }
+          }
+        },
+        [_c("a", [_vm._v("Inicio")])]
+      ),
+      _vm._v(" "),
+      _c(
+        "router-link",
+        {
+          attrs: {
+            tag: "li",
+            to: {
+              name: "admin",
+              params: { slug: "aplicativos", action: "listar" }
+            }
+          }
+        },
         [_c("a", [_vm._v("Aplicativos")])]
       ),
       _vm._v(" "),
       _c(
         "router-link",
-        { attrs: { tag: "li", to: "admin/conteudos/listar" } },
+        {
+          attrs: {
+            tag: "li",
+            to: {
+              name: "admin",
+              params: { slug: "conteudos", action: "listar" }
+            }
+          }
+        },
         [_c("a", [_vm._v("Conteúdos")])]
       ),
       _vm._v(" "),
-      _c("router-link", { attrs: { tag: "li", to: "admin/canais/listar" } }, [
-        _c("a", [_vm._v("Canais")])
-      ]),
-      _vm._v(" "),
-      _c("router-link", { attrs: { tag: "li", to: "admin/licencas/listar" } }, [
-        _c("a", [_vm._v("Licenças")])
-      ]),
-      _vm._v(" "),
-      _c("router-link", { attrs: { tag: "li", to: "admin/tags/listar" } }, [
-        _c("a", [_vm._v("Tags")])
-      ]),
+      _c(
+        "router-link",
+        {
+          attrs: {
+            tag: "li",
+            to: { name: "admin", params: { slug: "canais", action: "listar" } }
+          }
+        },
+        [_c("a", [_vm._v("Canais")])]
+      ),
       _vm._v(" "),
       _c(
         "router-link",
-        { attrs: { tag: "li", to: "admin/usuario/alterar-senha" } },
+        {
+          attrs: {
+            tag: "li",
+            to: {
+              name: "admin",
+              params: { slug: "licenses", action: "listar" }
+            }
+          }
+        },
+        [_c("a", [_vm._v("Licenças")])]
+      ),
+      _vm._v(" "),
+      _c(
+        "router-link",
+        {
+          attrs: {
+            tag: "li",
+            to: { name: "admin", params: { slug: "tags", action: "listar" } }
+          }
+        },
+        [_c("a", [_vm._v("Tags")])]
+      ),
+      _vm._v(" "),
+      _c(
+        "router-link",
+        {
+          attrs: {
+            tag: "li",
+            to: {
+              name: "admin",
+              params: { slug: "usuarios", action: "listar" }
+            }
+          }
+        },
+        [_c("a", [_vm._v("Usuários")])]
+      ),
+      _vm._v(" "),
+      _c(
+        "router-link",
+        {
+          attrs: {
+            tag: "li",
+            to: {
+              name: "admin",
+              params: { slug: "denuncias", action: "listar" }
+            }
+          }
+        },
+        [_c("a", [_vm._v("Denúncias")])]
+      ),
+      _vm._v(" "),
+      _c(
+        "router-link",
+        {
+          attrs: {
+            tag: "li",
+            to: {
+              name: "admin",
+              params: { slug: "usuarios", action: "alterar-senha" }
+            }
+          }
+        },
         [_c("a", [_vm._v("Alterar senha")])]
       ),
       _vm._v(" "),
       _c(
         "router-link",
-        { attrs: { tag: "li", to: "admin/usuario/adicionar" } },
+        {
+          attrs: {
+            tag: "li",
+            to: {
+              name: "admin",
+              params: { slug: "usuarios", action: "adicionar" }
+            }
+          }
+        },
         [_c("a", [_vm._v("Adicionar Usuário")])]
-      ),
-      _vm._v(" "),
-      _c("router-link", { attrs: { tag: "li", to: "admin/usuario/listar" } }, [
-        _c("a", [_vm._v("Usuários")])
-      ]),
-      _vm._v(" "),
-      _c(
-        "router-link",
-        { attrs: { tag: "li", to: "admin/denuncias/listar" } },
-        [_c("a", [_vm._v("Denúncias")])]
       )
     ],
     1
@@ -487,7 +572,7 @@ var render = function() {
             _c("h1", [_c("small", [_vm._v(_vm._s(_vm.title))])])
           ]),
           _vm._v(" "),
-          _c("router-view", { attrs: { name: "a" } })
+          _c("router-view", { attrs: { name: "admin" } })
         ],
         1
       )

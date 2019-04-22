@@ -10,7 +10,6 @@ import ListAdmin from "./components/ListAdminComponent.vue";
 import DenunciaForm from "./forms/DenunciaForm.vue";
 import FaleConoscoForm from "./forms/FaleConoscoForm.vue";
 
-
 const routes = [
   {
     path: "/",
@@ -31,10 +30,11 @@ const routes = [
     },
     children: [
       {
-        path: "/:slug-admin/:action",
-        name: "ListarItens",
-        component: {
-          a: ListAdmin
+        path: ":slug/:action",
+        name: "admin",
+        components: {
+          default: ListAdmin,
+          admin: ListAdmin
         }
       }
     ]

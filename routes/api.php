@@ -116,7 +116,6 @@ Route::group(['middleware' => ['cors']], function () {
  */
     Route::get('/options/{name}', 'OptionsController@getByName')->name('busca.metadata.x.nome');
     Route::get('/options', 'OptionsController@list')->name('listar.opcoes');
-    
 
 /******
  * Controlador: Tag
@@ -144,9 +143,9 @@ Route::group(['middleware' => ['cors']], function () {
  */
     Route::post('/faleconosco/enviar', 'FaleconoscoController@enviar')->name('faleconosco.enviar');
 
-    Route::name('verify')->get('users/verify/{token}', 'UserController@verify');
-    //Route::get('/users', 'UserController@list')->name('usuario.listar');
-    //Route::get('/users', 'UserController@list')->name('usuario.listar');
+    Route::name('verify')->get('usuarios/verify/{token}', 'UserController@verify');
+    //Route::get('/usuarios', 'UserController@list')->name('usuario.listar');
+    //Route::get('/usuarios', 'UserController@list')->name('usuario.listar');
 });
 /**
  *
@@ -176,13 +175,13 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
      * resetPass -< Resetar senha
      *
      */
-    Route::get('/users/search/{termo}', 'UserController@search')->name('usuario.buscar');
-    Route::delete('/users/{id}', 'UserController@delete')->name('usuario.apagar');
-    Route::get('/users/{id}', 'UserController@getById')->name('user.x.id');
-    Route::get('/users', 'UserController@list')->name('usuario.listar');
-    Route::put('/users/{id}', 'UserController@update');
-    Route::put('/users/reset-password', 'UserController@resetPass')->name('senha.atualizar');
-    Route::post('/users', 'UserController@create')->name('adicionar.usuario');
+    Route::get('/usuarios/search/{termo}', 'UserController@search')->name('usuario.buscar');
+    Route::delete('/usuarios/{id}', 'UserController@delete')->name('usuario.apagar');
+    Route::get('/usuarios/{id}', 'UserController@getById')->name('user.x.id');
+    Route::get('/usuarios', 'UserController@list')->name('usuario.listar');
+    Route::put('/usuarios/{id}', 'UserController@update');
+    Route::put('/usuarios/reset-password', 'UserController@resetPass')->name('senha.atualizar');
+    Route::post('/usuarios', 'UserController@create')->name('adicionar.usuario');
     /**
      *
      * Controlador: Aplicativo

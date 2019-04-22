@@ -894,9 +894,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("label", { attrs: { for: "tipo-" + tipo.id } }, [
                     _vm._v(
-                      "\n                    " +
+                      "\r\n                    " +
                         _vm._s(tipo.name) +
-                        "\n                "
+                        "\r\n                "
                     )
                   ])
                 ]
@@ -963,9 +963,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("label", { attrs: { for: "license-" + license.id } }, [
                     _vm._v(
-                      "\n                    " +
+                      "\r\n                    " +
                         _vm._s(license.name) +
-                        "\n                "
+                        "\r\n                "
                     )
                   ])
                 ]
@@ -1000,9 +1000,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                    " +
+                        "\r\n                    " +
                           _vm._s(categoriaComponent.name) +
-                          " \n                    "
+                          " \r\n                    "
                       ),
                       _c("i", {
                         staticClass:
@@ -1115,7 +1115,7 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\n            Outras Modalidades / Níveis de Ensino\n        "
+                    "\r\n            Outras Modalidades / Níveis de Ensino\r\n        "
                   )
                 ]
               )
@@ -1144,9 +1144,9 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                    " +
+                                "\r\n                    " +
                                   _vm._s(nivel.name) +
-                                  "\n                    "
+                                  "\r\n                    "
                               ),
                               _c("i", {
                                 staticClass:
@@ -1259,7 +1259,7 @@ var staticRenderFns = [
         }
       },
       [
-        _vm._v("\n                   Tipos de Mídia\n                   "),
+        _vm._v("\r\n                   Tipos de Mídia\r\n                   "),
         _c("i", { staticClass: "glyphicon glyphicon-chevron-down pull-right" })
       ]
     )
@@ -1280,7 +1280,7 @@ var staticRenderFns = [
         }
       },
       [
-        _vm._v("\n                   Licenças\n                   "),
+        _vm._v("\r\n                   Licenças\r\n                   "),
         _c("i", { staticClass: "glyphicon glyphicon-chevron-down pull-right" })
       ]
     )
