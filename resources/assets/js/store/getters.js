@@ -1,3 +1,4 @@
+import { get } from "https";
 
 
 
@@ -11,6 +12,15 @@ const getters = {
     },
     getCount: (state, getters)=>{
         return (getters.paginator) ? getters.paginator.data.length : 0;
+    },
+    getError: state => {
+        return state.error
+    },
+    getCanal: state => {
+        return state.canal
+    },
+    getSidebar: state => {
+        return state.sidebar
     }
 }
 
