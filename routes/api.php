@@ -24,6 +24,7 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/files/{id}', 'FileController@getFiles')->name('busca.arquivo');
     Route::post('/files/{id}', 'FileController@createFile')->name('adiciona.arquivo');
 
+Route::get('/links', 'HomeController@getLinks')->name('lista.links');
 /******
  *
  * Controlador: Category

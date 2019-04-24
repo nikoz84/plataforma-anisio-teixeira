@@ -220,6 +220,7 @@
 
 <script>
 import client from "../client.js";
+
 import mensagem from "./MensagemForm.vue";
 import "tui-editor/dist/tui-editor.css";
 import "tui-editor/dist/tui-editor-contents.css";
@@ -316,7 +317,6 @@ export default {
           params: { slug: this.$route.params.slug }
         });
       } else {
-        console.warn(resp.data);
         this.isError = resp.data.success;
         this.message = resp.data.message;
         if (resp.data.errors) {
@@ -334,12 +334,11 @@ export default {
     },
     async getLicenses() {
       let resp = await client.get("/licenses");
-      console.log(resp);
       this.licenses = resp.data.paginator.data;
     },
     async getConteudo() {
       let resp = await client.get(`/conteudos/${this.$route.params.id}`);
-      console.warn(resp);
+      
       if (resp.data.success) {
         this.title = resp.data.conteudo.title;
         this.description = resp.data.conteudo.description;
@@ -357,7 +356,7 @@ export default {
         canal: localStorage.idCanal,
         category: this.category
       };
-      let resp = await client.put(`/conteudo/${this.$route.params.id}`, params);
+      let resp = await client.put(`/conteudos/${this.$route.params.id}`, params);
     }
   }
 };

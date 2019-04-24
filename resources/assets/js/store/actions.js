@@ -1,14 +1,21 @@
 import client from '../client.js'
 
 const actions = {
-    async GET_PAGINATOR({commit}) {
-        let response = await client.getDataFromUrl('/conteudos/sites');
-        if(response.data.success){
-            commit('SET_PAGINATOR', { paginator: response.data.paginator });
-        }else{
-            commit('SET_MESSAGE',{ message: response.data.message });
-        }
+    async getConteudos({commit}, id) {
+        
+        let resp = await client.get(`/conteudos?canal=${id}`);
+
+        commit('SET_CONTEUDOS', resp.data.paginator)
     },
+    async createConteudo({commit}, conteudo) {
+        let resp = await client.post('/conteudos', conteudo);
+        commit('CREATE_CONTEUDO', resp.data)
+
+    },
+    async deleteConteudo({commit}, id){
+        let resp = await client.delete(`/conteudos/${id}`);
+        commit('DELETE_CONTEUDO', resp.data);
+    }
 
 };
 

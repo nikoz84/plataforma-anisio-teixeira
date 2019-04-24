@@ -46,7 +46,7 @@ export default {
   data() {
     return {
       username: localStorage.getItem("username"),
-      userId: localStorage.getItem("idUser")
+      userId: localStorage.getItem("idUser"),
     };
   },
   mounted() {},

@@ -125,12 +125,12 @@ const routes = [
         }
       },
       {
-        path: "denuncia/:url",
+        path: "denuncia",
         name: "DenunciaForm",
         component: DenunciaForm
       },
       {
-        path: "faleconosco/:url",
+        path: "faleconosco",
         name: "FaleConoscoForm",
         component: FaleConoscoForm
       }

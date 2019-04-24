@@ -21,7 +21,12 @@
 
             <div class="form-group" v-bind:class="{ 'has-error': errors.email && errors.email.length > 0 }">
                 <label for="email">E-mail:*</label>
-                <input type="email" class="form-control" id="email" v-model="email" placeholder="Digite seu e-mail">
+                <input type="email" 
+                      class="form-control" 
+                      id="email" 
+                      v-model="email" 
+                      placeholder="Digite seu e-mail"
+                      autocomplete="off">
                 <small class="text-danger"
                         v-if="errors.email"
                         v-for="(error,e) in errors.email"
@@ -128,7 +133,7 @@ export default {
   },
   computed: {
     getUrl() {
-      return this.$route.params.url;
+      return localStorage.urlDenuncia;
     }
   },
   methods: {
@@ -149,6 +154,7 @@ export default {
 
       if (resp.data.success) {
         this.isLoading = false;
+        localStorage.removeItem('urlDenuncia');
       } else {
         this.isLoading = false;
         this.isError = resp.data.success;

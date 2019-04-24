@@ -6,11 +6,15 @@ const mutations = {
     LOGOUT_USER (state) {
         state.isLogged = false
     },
-    SET_PAGINATOR: (state, { paginator }) => {
-        state.paginator = paginator
+    SET_CONTEUDOS(state, paginator) {
+            return state.paginator = paginator
     },
-    SET_MESSAGE: (state, { message }) => {
-        state.message = message
+    CREATE_CONTEUDO(state, conteudo) {
+        state.conteudo.unshift(conteudo)
+    },
+    DELETE_CONTEUDO(state, conteudo){
+        let index = state.conteudo.findIndex(item => item.id === conteudo.id)
+        state.conteudo.splice(index, 1)
     }
 };
 

@@ -70,12 +70,11 @@ var _default = {
   },
   methods: {
     getUrl: function getUrl() {
-      var url = encodeURI(location.href);
+      var url = localStorage.setItem('urlDenuncia', location.href);
       this.$router.push({
         name: 'DenunciaForm',
         params: {
-          slug: this.$route.params.slug,
-          url: url
+          slug: this.$route.params.slug
         }
       });
     },
@@ -84,8 +83,7 @@ var _default = {
       this.$router.push({
         name: 'FaleConoscoForm',
         params: {
-          slug: this.$route.params.slug,
-          url: url
+          slug: this.$route.params.slug
         }
       });
     }
@@ -894,9 +892,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("label", { attrs: { for: "tipo-" + tipo.id } }, [
                     _vm._v(
-                      "\r\n                    " +
+                      "\n                    " +
                         _vm._s(tipo.name) +
-                        "\r\n                "
+                        "\n                "
                     )
                   ])
                 ]
@@ -963,9 +961,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("label", { attrs: { for: "license-" + license.id } }, [
                     _vm._v(
-                      "\r\n                    " +
+                      "\n                    " +
                         _vm._s(license.name) +
-                        "\r\n                "
+                        "\n                "
                     )
                   ])
                 ]
@@ -1000,9 +998,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\r\n                    " +
+                        "\n                    " +
                           _vm._s(categoriaComponent.name) +
-                          " \r\n                    "
+                          " \n                    "
                       ),
                       _c("i", {
                         staticClass:
@@ -1115,7 +1113,7 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\r\n            Outras Modalidades / Níveis de Ensino\r\n        "
+                    "\n            Outras Modalidades / Níveis de Ensino\n        "
                   )
                 ]
               )
@@ -1144,9 +1142,9 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\r\n                    " +
+                                "\n                    " +
                                   _vm._s(nivel.name) +
-                                  "\r\n                    "
+                                  "\n                    "
                               ),
                               _c("i", {
                                 staticClass:
@@ -1259,7 +1257,7 @@ var staticRenderFns = [
         }
       },
       [
-        _vm._v("\r\n                   Tipos de Mídia\r\n                   "),
+        _vm._v("\n                   Tipos de Mídia\n                   "),
         _c("i", { staticClass: "glyphicon glyphicon-chevron-down pull-right" })
       ]
     )
@@ -1280,7 +1278,7 @@ var staticRenderFns = [
         }
       },
       [
-        _vm._v("\r\n                   Licenças\r\n                   "),
+        _vm._v("\n                   Licenças\n                   "),
         _c("i", { staticClass: "glyphicon glyphicon-chevron-down pull-right" })
       ]
     )
