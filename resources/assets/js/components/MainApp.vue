@@ -48,6 +48,7 @@ hr.line {
   background: #333;
   background-image: linear-gradient(to right, #ccc, #949da5, #ccc);
 }
+
 /* Hide all steps by default: 
 .tab {
   display: none;

@@ -397,7 +397,7 @@ var render = function() {
             to: { name: "admin", params: { slug: "tags", action: "listar" } }
           }
         },
-        [_c("a", [_vm._v("Tags")])]
+        [_c("a", [_vm._v("Palavras chave")])]
       ),
       _vm._v(" "),
       _c(

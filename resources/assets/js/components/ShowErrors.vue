@@ -1,13 +1,15 @@
 <template>
-    <div>
-        <ul>
-            <li>hola</li>
+    <div v-if="errors">
+        <ul class="list-unstyled">
+            <li v-for="(error,i) in errors" :key="i">
+                <small class="text-danger" v-text="error"></small>
+            </li>
         </ul>
     </div>
 </template>
 <script>
 export default {
-    name:'ShowErrors',
-    props:['errors']
-}
+  name: "ShowErrors",
+  props: ["errors"]
+};
 </script>

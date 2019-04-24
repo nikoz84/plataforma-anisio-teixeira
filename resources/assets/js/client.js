@@ -1,8 +1,8 @@
-var axios = require("axios");
+const axios = require("axios");
 
-let auth = (localStorage.token) ? "Bearer " + localStorage.token : null;
+const auth = localStorage.token ? "Bearer " + localStorage.token : null;
 
-var axiosInstance = axios.create({
+const axiosInstance = axios.create({
   baseURL: "http://pat.des/api-v1",
   /* other custom settings */
   "X-Requested-With": "XMLHttpRequest",

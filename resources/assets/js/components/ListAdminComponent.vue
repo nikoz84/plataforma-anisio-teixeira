@@ -53,7 +53,6 @@ export default {
     getAction() {
       switch (true) {
         case this.action == "listar":
-          this.error = false;
           this.getData();
           break;
         case this.action == "adicionar":
@@ -72,6 +71,8 @@ export default {
     },
     async getData() {
       this.loading = true;
+      this.error = false;
+      this.data = [];
       let resp = await client.get(`/${this.slug}`);
       this.response(resp);
     },

@@ -20,7 +20,7 @@
             <a>Licenças</a>
         </router-link>
         <router-link tag="li" :to=" {name:'admin', params: { slug: 'tags', action:'listar' }}">
-            <a>Tags</a>
+            <a>Palavras chave</a>
         </router-link>
         <router-link tag="li" :to=" {name:'admin', params: { slug: 'usuarios', action:'listar' }}">
             <a>Usuários</a>

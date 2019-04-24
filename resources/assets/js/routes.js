@@ -9,6 +9,7 @@ import RegisterForm from "./forms/RegisterForm.vue";
 import ListAdmin from "./components/ListAdminComponent.vue";
 import DenunciaForm from "./forms/DenunciaForm.vue";
 import FaleConoscoForm from "./forms/FaleConoscoForm.vue";
+import UserForm from "./forms/UsuarioForm.vue";
 
 const routes = [
   {
@@ -36,31 +37,6 @@ const routes = [
           default: ListAdmin,
           admin: ListAdmin
         }
-      }
-    ]
-  },
-  {
-    path: "/usuario",
-    name: "User",
-    component: () => import(/* webpackChunkName: "user" */ "./pages/User.vue"),
-    meta: {
-      requiresAuth: false
-    },
-    children: [
-      {
-        path: "login",
-        name: "Login",
-        component: LoginForm
-      },
-      {
-        path: "recuperar-senha",
-        name: "Recover",
-        component: RecoverPassForm
-      },
-      {
-        path: "registro",
-        name: "Register",
-        component: RegisterForm
       }
     ]
   },
@@ -133,6 +109,31 @@ const routes = [
         path: "faleconosco/:url",
         name: "FaleConoscoForm",
         component: FaleConoscoForm
+      }
+    ]
+  },
+  {
+    path: "/usuario",
+    name: "User",
+    component: () => import(/* webpackChunkName: "user" */ "./pages/User.vue"),
+    meta: {
+      requiresAuth: false
+    },
+    children: [
+      {
+        path: "login",
+        name: "Login",
+        component: LoginForm
+      },
+      {
+        path: "recuperar-senha",
+        name: "Recover",
+        component: RecoverPassForm
+      },
+      {
+        path: "registro",
+        name: "Register",
+        component: RegisterForm
       }
     ]
   }

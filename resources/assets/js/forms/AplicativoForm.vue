@@ -14,13 +14,7 @@
                                 name="nomeaplicativo"
                                 id="nomeaplicativo"
                                 v-model.trim="name">
-                        <div v-if="errors.name">
-                            <small class="text-danger"
-                                    v-for="(error,n) in errors.name"
-                                    v-bind:key="n"
-                                    v-text="error">
-                            </small>
-                        </div>
+                        <erros :errors="errors.name"></erros>
                     </div>
                     <!-- CATEGORIA -->
                     <div class="form-group" v-bind:class="{ 'has-error': errors.category_id && errors.category_id.length > 0 }">
@@ -35,25 +29,13 @@
                                     v-bind:key="i">{{category.name}}
                             </option>
                         </select>
-                        <div v-if="errors.category_id">
-                            <small class="text-danger"
-                                    v-for="(error,ca) in errors.category_id"
-                                    v-bind:key="ca"
-                                    v-text="error">
-                            </small>
-                        </div>
+                        <erros :errors="errors.category_id"></erros>
                     </div>
                     <!-- URL -->
                     <div class="form-group" v-bind:class="{ 'has-error': errors.url && errors.url.length > 0 }">
                         <label for="url">URL:*</label>
                         <input type="text" class="form-control" id="url" v-model="url" v-model.trim="url">
-                        <div v-if="errors.url">
-                            <small class="text-danger"
-                                    v-for="(error,u) in errors.url"
-                                    v-bind:key="u"
-                                    v-text="error">
-                            </small>
-                        </div>
+                        <erros :errors="errors.url"></erros>
                     </div>
                     <!-- DESCRICAO -->
                     <div class="form-group" v-bind:class="{ 'has-error': errors.description && errors.description.length > 0 }">
@@ -68,13 +50,7 @@
                         <span class="pull-right" v-bind:class="{'text-success': success }">
                             {{ count }}
                         </span>
-                        <div v-if="errors.description">
-                            <small class="text-danger"
-                                    v-for="(error,d) in errors.description"
-                                    v-bind:key="d"
-                                    v-text="error">
-                            </small>
-                        </div>
+                        <erros :errors="errors.description"></erros>
                     </div>
                     <!-- DESTAQUE -->
                     <div class="form-group">
@@ -107,14 +83,9 @@
                       <input type="file" class="form-control" id="imagem" name="imagem"
                               aria-describedby="imagem de destaque"
                               v-on:change="onFileChange($event)">
-                      <small class="form-text text-muted">Escolha uma imagem</small><br>
-                      <div v-if="errors.image">
-                          <small class="text-danger"
-                                  v-for="(error,f) in errors.image"
-                                  v-bind:key="f"
-                                  v-text="error">
-                          </small>
-                      </div>
+                      <small class="text-info">Escolha uma imagem</small><br>
+                      <erros :errors="errors.image"></erros>
+                      
                       <!--<small v-if="this.file">
                           {{ ` ${this.file.name} -- ${this.file.size} -- ${this.file.type} `}}
                       </small>-->
@@ -127,9 +98,13 @@
 
 <script>
 import client from "../client.js";
+import showErrors from "../components/ShowErrors.vue";
 
 export default {
   name: "AplicativoForm",
+  components: {
+    erros: showErrors
+  },
   data() {
     return {
       name: "",
@@ -187,10 +162,8 @@ export default {
       form.append("is_featured", this.is_featured);
       form.append("options", JSON.stringify(this.options));
       form.append("image", this.image, this.image.name);
-      form.append("token", localStorage.token);
 
-      let resp = await axios.post(`/aplicativos`, form);
-      console.warn(resp);
+      let resp = await client.post(`/aplicativos`, form);
 
       if (resp.data.success) {
         this.$router.push({
@@ -210,7 +183,7 @@ export default {
       }
     },
     async getCategories() {
-      let resp = await axios.get(`/categories/aplicativos`);
+      let resp = await client.get(`/categories/aplicativos`);
 
       this.categories = resp.data.categories;
     },
@@ -224,7 +197,7 @@ export default {
       this.count = e.target.value.length;
     },
     async getAplicativo() {
-      let resp = await axios.get(`/aplicativos/${this.$route.params.id}`);
+      let resp = await client.get(`/aplicativos/${this.$route.params.id}`);
       if (resp.data.success) {
         this.name = resp.data.aplicativo.name;
         this.category_id = resp.data.aplicativo.category_id;
@@ -245,7 +218,7 @@ export default {
         token: localStorage.token
       };
 
-      let resp = await axios.put(
+      let resp = await client.put(
         `/aplicativos/${this.$route.params.id}`,
         params
       );

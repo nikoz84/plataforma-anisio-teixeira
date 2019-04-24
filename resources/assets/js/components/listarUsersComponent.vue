@@ -1,6 +1,5 @@
 <template>
-    <div class="conteiner">
-        <div class="row col-lg-6 col-xs-offset-3">
+      <div class="row">
             <h2><legend>ListaUsuários</legend></h2>
             <table class="table table-striped table-hover">
                 <thead>
@@ -12,7 +11,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for= "user in users">
+                    <tr v-for= "(user,i) in users" :key="i">
                         <td scope="row">{{ user.name}}</td>
                         <td>{{ user.email}}</td>
                         <td>{{ user.role}}</td>
@@ -22,12 +21,10 @@
 
             </table>
         </div>
-    </div>
 </template>
 
 <script>
 import client from "../client.js";
-
 
 export default {
   mounted() {
