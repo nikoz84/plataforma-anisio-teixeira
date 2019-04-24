@@ -154,14 +154,16 @@
             </li>
         </ul>
     </nav>
+    {{sidebar}}
 </div>
 </template>
 <script>
 import client from '../client.js';
 
+
 export default {
     name : 'SidebarCanal',
-    props:['sidebar'],
+    props:[],
     data(){
         return {
             checkedTipos: [],
@@ -171,27 +173,34 @@ export default {
         }
     },
     computed:{
+        sidebar(){
+            return this.$store.state.sidebar
+        },
+        
         categoriesExists(){
-            return (this.sidebar && this.sidebar.categories) ? true : false;
+            return (this.$store.state.categories) ? true : false;
         },
         disciplinasExists(){
-            return (this.sidebar && this.sidebar.disciplinas[0]) ? true : false;
+            return (this.$store.state.disciplinas) ? true : false;
         },
         temasExists(){
-            return (this.sidebar && this.sidebar.temas[0]) ? true : false;
+            return (this.$store.state.temas) ? true : false;
         },
+        /*
         tiposExists(){
             return (this.sidebar && this.sidebar.tipos) ? true : false;
         },
         licensesExists(){
             return (this.sidebar && this.sidebar.licenses) ? true : false;
         },
+        */
         componentsExists(){
-            return (this.sidebar && this.sidebar.components) ? true : false;
+            return (this.$store.state.components[0]) ? true : false;
         },
         NiveisExists(){
-            return (this.sidebar && this.sidebar.niveis) ? true : false;
+            return (this.$store.state.niveis[0]) ? true : false;
         }
+        
     },
     methods:{
         addToQuery(){
@@ -202,6 +211,15 @@ export default {
                                 licencas: [this.checkedLicenses],
                                 componentes: [this.checkedComponents] }
                             });
+        }
+    },
+    mounted() {
+        this.$store.dispatch('getSidebar', {id:localStorage.canal_id});
+        
+    },
+    watch: {
+        '$route' (to, from) {
+            this.$store.dispatch('getSidebar', {id:localStorage.canal_id});
         }
     }
 

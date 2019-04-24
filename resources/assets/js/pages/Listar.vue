@@ -1,48 +1,39 @@
 <template>
     <div>
-        
-        <!-- keep-alive -->
-            <List v-bind:paginator="paginator"></List>
-        <!--/keep-alive -->
+        <lista></lista>
     </div>
 </template>
 <script>
-import List from '../components/ListComponent.vue';
+import Lista from '../components/ListComponent.vue';
+import {mapGetters, mapActions, mapMutations} from 'vuex';
 import client from '../client.js';
 
 export default {
     name : 'Listar',
-    components:{ List },
+    components:{ lista: Lista },
     props:['color'],
     data() {
         return {
-            paginator: {},
-            title: null
+            
         }
     },
     created() {
-        this.getConteudos();
+        this.$store.dispatch('getConteudos', localStorage.canal_id)
         
     },
     watch: {
         '$route' (to, from) {
-            this.getConteudos();
+            this.$store.getters.getByIdCanal(localStorage.canal_id);
+            console.log(this.$store.getters.getCount);
+            console.log(this.$store.getters.getError)
+            
         }
     },
     methods:{
-        async getConteudos(){
-            console.log(this.$route.query)
-            let params = this.$route.query;
-            
-            let resp = await client.get('/conteudos', params );
-            console.log(resp)
-            if(resp.data.success){
-                
-                this.title = resp.data.title;
-                this.paginator = resp.data.paginator;
-            }
-            
-        }
+        
+    },
+    computed:{
+        ...mapGetters(['paginator','getCount','getByIdCanal','getError'])
     }
 }
 </script>

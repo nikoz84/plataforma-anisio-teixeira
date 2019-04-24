@@ -171,9 +171,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import client from "../client.js";
-import { response, goTo } from "../response.js";
-import showErrors from "../components/ShowErrors.vue";
-import Alert from "../components/AlertComponent.vue";
+import mensagem from "./MensagemForm.vue";
 import "tui-editor/dist/tui-editor.css";
 import "tui-editor/dist/tui-editor-contents.css";
 import "codemirror/lib/codemirror.css";
@@ -284,12 +282,19 @@ export default {
     },
     async getLicenses() {
       let resp = await client.get("/licenses");
+<<<<<<< HEAD
 
+=======
+>>>>>>> afcf779a34efe6e65fb8b5b725b9d9b4cff685cd
       this.licenses = resp.data.paginator.data;
     },
     async getConteudo() {
       let resp = await client.get(`/conteudos/${this.$route.params.id}`);
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> afcf779a34efe6e65fb8b5b725b9d9b4cff685cd
       if (resp.data.success) {
         this.title = resp.data.conteudo.title;
         this.description = resp.data.conteudo.description;
@@ -307,7 +312,7 @@ export default {
         canal: localStorage.idCanal,
         category: this.category
       };
-      let resp = await client.put(`/conteudo/${this.$route.params.id}`, params);
+      let resp = await client.put(`/conteudos/${this.$route.params.id}`, params);
     }
   }
 };

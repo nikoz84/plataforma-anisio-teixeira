@@ -45,7 +45,7 @@ export default {
     },
     created(){
         this.getData();
-        window.addEventListener('scroll', this.goToTop);
+        //window.addEventListener('scroll', this.goToTop, {passive: true});
     },
     computed:{
 

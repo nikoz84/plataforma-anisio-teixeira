@@ -2,12 +2,12 @@
     <section class="container-fluid heigth">
         <div class="row">
             <aside class="col-sm-3">
-                <SidebarCanal :sidebar="sidebar"></SidebarCanal>
+                <sidebar></sidebar>
             </aside>
             <article class="col-sm-9">
                 <header class="page-header">
                     <h1 class="page-title" v-bind:style="`--color:${color}`">
-                        {{ title }}
+                        {{ canal.name }}
                     </h1>
                     <NavCanal></NavCanal>
                 </header>
@@ -27,12 +27,12 @@
 import NavCanal from '../components/NavCanalComponent.vue';
 import SidebarCanal from '../components/SidebarCanalComponent.vue';
 import client from '../client.js';
-
+import {mapState} from 'vuex';
 
 
 export default {
     name : 'canal',
-    components:{ NavCanal,  SidebarCanal},
+    components:{ NavCanal,  sidebar: SidebarCanal},
     data() {
         return {
             title: '',
@@ -42,52 +42,29 @@ export default {
             color: '#1e78c2',
             hasCategories: false,
             categories: null,
-            hasAbout: false,
-            sidebar: null
+            hasAbout: false
         }
     },
     created() {
         
     },
     mounted() {
-        this.getCanal();
+        this.$store.dispatch('getCanal', `${this.$route.params.slug}`);
+        
     },
     watch: {
         '$route' (to, from) {
-            this.getCanal();
+            this.$store.dispatch('getCanal', `${this.$route.params.slug}`);
         }
     },
     methods:{
-        async getCanal(){
-            
-            let url = `/canais/slug/${this.$route.params.slug}`; 
-            let resp = await client.get( url );
-            
-            if(resp.data.success){
-                this.canal_id = resp.data.canal.id;
-                this.title = resp.data.canal.name;
-                this.options = resp.data.canal.options
-                this.color = this.options.color;
-                this.hasAbout = this.options.has_about;
-                this.hasCategories = this.options.has_categories;
-                this.sidebar = resp.data.sidebar;
-                localStorage.setItem('canal_id', this.canal_id);
-                
-                if(this.hasCategories){
-                    this.getCategories();
-                }
-            } 
-        },
-        async getCategories(){
-            let params = {
-                canal: this.canal_id
-            }
-            let resp = await client.get('/categories', params);
-            if(resp.data.success){
-                this.categories = resp.data.categories;
-            }
+        
+    },
+    computed: {
+        canal(){
+            return this.$store.state.canal
         }
-    }
+    },
 }
 </script>
 <style lang="scss" scoped>

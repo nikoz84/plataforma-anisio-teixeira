@@ -1,17 +1,20 @@
 const state = {
-  isLogged: !!localStorage.token,
-  usuario: {},
-  usuarios: [],
-  showAlert: false,
-  paginator: {},
-  response: {},
-  message: "",
-  isError: false,
-  errors: {},
   conteudos: [],
+  paginator: {},
   conteudo: {},
-  aplicativos: [],
-  aplicativo: []
+  canal: {},
+  sidebar: {},
+  categories: [],
+  temas: [],
+  disciplinas: [],
+  components: [],
+  niveis: [],
+  menssage: "",
+  title: "",
+  show: false,
+  isError: false,
+  isLogged: !!localStorage.token,
+  errors: []
 };
 
 export default state;

@@ -70,12 +70,11 @@ var _default = {
   },
   methods: {
     getUrl: function getUrl() {
-      var url = encodeURI(location.href);
+      var url = localStorage.setItem('urlDenuncia', location.href);
       this.$router.push({
         name: 'DenunciaForm',
         params: {
-          slug: this.$route.params.slug,
-          url: url
+          slug: this.$route.params.slug
         }
       });
     },
@@ -84,8 +83,7 @@ var _default = {
       this.$router.push({
         name: 'FaleConoscoForm',
         params: {
-          slug: this.$route.params.slug,
-          url: url
+          slug: this.$route.params.slug
         }
       });
     }
@@ -272,9 +270,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 //
 //
 //
+//
 var _default = {
   name: 'SidebarCanal',
-  props: ['sidebar'],
+  props: [],
   data: function data() {
     return {
       checkedTipos: [],
@@ -284,26 +283,32 @@ var _default = {
     };
   },
   computed: {
+    sidebar: function sidebar() {
+      return this.$store.state.sidebar;
+    },
     categoriesExists: function categoriesExists() {
-      return this.sidebar && this.sidebar.categories ? true : false;
+      return this.$store.state.categories ? true : false;
     },
     disciplinasExists: function disciplinasExists() {
-      return this.sidebar && this.sidebar.disciplinas[0] ? true : false;
+      return this.$store.state.disciplinas ? true : false;
     },
     temasExists: function temasExists() {
-      return this.sidebar && this.sidebar.temas[0] ? true : false;
+      return this.$store.state.temas ? true : false;
     },
-    tiposExists: function tiposExists() {
-      return this.sidebar && this.sidebar.tipos ? true : false;
+
+    /*
+    tiposExists(){
+        return (this.sidebar && this.sidebar.tipos) ? true : false;
     },
-    licensesExists: function licensesExists() {
-      return this.sidebar && this.sidebar.licenses ? true : false;
+    licensesExists(){
+        return (this.sidebar && this.sidebar.licenses) ? true : false;
     },
+    */
     componentsExists: function componentsExists() {
-      return this.sidebar && this.sidebar.components ? true : false;
+      return this.$store.state.components[0] ? true : false;
     },
     NiveisExists: function NiveisExists() {
-      return this.sidebar && this.sidebar.niveis ? true : false;
+      return this.$store.state.niveis[0] ? true : false;
     }
   },
   methods: {
@@ -318,6 +323,18 @@ var _default = {
           licencas: [this.checkedLicenses],
           componentes: [this.checkedComponents]
         }
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.$store.dispatch('getSidebar', {
+      id: localStorage.canal_id
+    });
+  },
+  watch: {
+    '$route': function $route(to, from) {
+      this.$store.dispatch('getSidebar', {
+        id: localStorage.canal_id
       });
     }
   }
@@ -341,25 +358,46 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js"));
-
 var _NavCanalComponent = _interopRequireDefault(__webpack_require__(/*! ../components/NavCanalComponent.vue */ "./resources/assets/js/components/NavCanalComponent.vue"));
 
 var _SidebarCanalComponent = _interopRequireDefault(__webpack_require__(/*! ../components/SidebarCanalComponent.vue */ "./resources/assets/js/components/SidebarCanalComponent.vue"));
 
 var _client = _interopRequireDefault(__webpack_require__(/*! ../client.js */ "./resources/assets/js/client.js"));
 
+var _vuex = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   name: 'canal',
   components: {
     NavCanal: _NavCanalComponent["default"],
-    SidebarCanal: _SidebarCanalComponent["default"]
+    sidebar: _SidebarCanalComponent["default"]
   },
   data: function data() {
     return {
@@ -370,101 +408,23 @@ var _default = {
       color: '#1e78c2',
       hasCategories: false,
       categories: null,
-      hasAbout: false,
-      sidebar: null
+      hasAbout: false
     };
   },
   created: function created() {},
   mounted: function mounted() {
-    this.getCanal();
+    this.$store.dispatch('getCanal', "".concat(this.$route.params.slug));
   },
   watch: {
     '$route': function $route(to, from) {
-      this.getCanal();
+      this.$store.dispatch('getCanal', "".concat(this.$route.params.slug));
     }
   },
-  methods: {
-    getCanal: function () {
-      var _getCanal = _asyncToGenerator(
-      /*#__PURE__*/
-      _regenerator["default"].mark(function _callee() {
-        var url, resp;
-        return _regenerator["default"].wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                url = "/canais/slug/".concat(this.$route.params.slug);
-                _context.next = 3;
-                return _client["default"].get(url);
-
-              case 3:
-                resp = _context.sent;
-
-                if (resp.data.success) {
-                  this.canal_id = resp.data.canal.id;
-                  this.title = resp.data.canal.name;
-                  this.options = resp.data.canal.options;
-                  this.color = this.options.color;
-                  this.hasAbout = this.options.has_about;
-                  this.hasCategories = this.options.has_categories;
-                  this.sidebar = resp.data.sidebar;
-                  localStorage.setItem('canal_id', this.canal_id);
-
-                  if (this.hasCategories) {
-                    this.getCategories();
-                  }
-                }
-
-              case 5:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function getCanal() {
-        return _getCanal.apply(this, arguments);
-      }
-
-      return getCanal;
-    }(),
-    getCategories: function () {
-      var _getCategories = _asyncToGenerator(
-      /*#__PURE__*/
-      _regenerator["default"].mark(function _callee2() {
-        var params, resp;
-        return _regenerator["default"].wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                params = {
-                  canal: this.canal_id
-                };
-                _context2.next = 3;
-                return _client["default"].get('/categories', params);
-
-              case 3:
-                resp = _context2.sent;
-
-                if (resp.data.success) {
-                  this.categories = resp.data.categories;
-                }
-
-              case 5:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function getCategories() {
-        return _getCategories.apply(this, arguments);
-      }
-
-      return getCategories;
-    }()
+  methods: {},
+  computed: {
+    canal: function canal() {
+      return this.$store.state.canal;
+    }
   }
 };
 exports["default"] = _default;
@@ -894,9 +854,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("label", { attrs: { for: "tipo-" + tipo.id } }, [
                     _vm._v(
-                      "\r\n                    " +
+                      "\n                    " +
                         _vm._s(tipo.name) +
-                        "\r\n                "
+                        "\n                "
                     )
                   ])
                 ]
@@ -963,9 +923,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("label", { attrs: { for: "license-" + license.id } }, [
                     _vm._v(
-                      "\r\n                    " +
+                      "\n                    " +
                         _vm._s(license.name) +
-                        "\r\n                "
+                        "\n                "
                     )
                   ])
                 ]
@@ -1000,9 +960,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\r\n                    " +
+                        "\n                    " +
                           _vm._s(categoriaComponent.name) +
-                          " \r\n                    "
+                          " \n                    "
                       ),
                       _c("i", {
                         staticClass:
@@ -1115,7 +1075,7 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\r\n            Outras Modalidades / Níveis de Ensino\r\n        "
+                    "\n            Outras Modalidades / Níveis de Ensino\n        "
                   )
                 ]
               )
@@ -1144,9 +1104,9 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\r\n                    " +
+                                "\n                    " +
                                   _vm._s(nivel.name) +
-                                  "\r\n                    "
+                                  "\n                    "
                               ),
                               _c("i", {
                                 staticClass:
@@ -1239,7 +1199,8 @@ var render = function() {
               )
             : _vm._e()
         ])
-      : _vm._e()
+      : _vm._e(),
+    _vm._v("\n    " + _vm._s(_vm.sidebar) + "\n")
   ])
 }
 var staticRenderFns = [
@@ -1259,7 +1220,7 @@ var staticRenderFns = [
         }
       },
       [
-        _vm._v("\r\n                   Tipos de Mídia\r\n                   "),
+        _vm._v("\n                   Tipos de Mídia\n                   "),
         _c("i", { staticClass: "glyphicon glyphicon-chevron-down pull-right" })
       ]
     )
@@ -1280,7 +1241,7 @@ var staticRenderFns = [
         }
       },
       [
-        _vm._v("\r\n                   Licenças\r\n                   "),
+        _vm._v("\n                   Licenças\n                   "),
         _c("i", { staticClass: "glyphicon glyphicon-chevron-down pull-right" })
       ]
     )
@@ -1309,12 +1270,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("section", { staticClass: "container-fluid heigth" }, [
     _c("div", { staticClass: "row" }, [
-      _c(
-        "aside",
-        { staticClass: "col-sm-3" },
-        [_c("SidebarCanal", { attrs: { sidebar: _vm.sidebar } })],
-        1
-      ),
+      _c("aside", { staticClass: "col-sm-3" }, [_c("sidebar")], 1),
       _vm._v(" "),
       _c("article", { staticClass: "col-sm-9" }, [
         _c(
@@ -1327,7 +1283,7 @@ var render = function() {
               [
                 _vm._v(
                   "\n                    " +
-                    _vm._s(_vm.title) +
+                    _vm._s(_vm.canal.name) +
                     "\n                "
                 )
               ]

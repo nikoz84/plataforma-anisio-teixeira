@@ -1,20 +1,22 @@
-import state from "./state.js";
-
 const getters = {
-  GET_PAGINATOR(state) {
+  paginator: state => {
     return state.paginator;
   },
-  GET_MESSAGE(state) {
-    return "hola";
+  getByIdCanal: state => id => {
+    console.log(id);
+    return state.paginator.data.find(item => item.id === id);
   },
-  GET_CONTEUDOS(state) {
-    return state.response;
+  getCount: (state, getters) => {
+    return getters.paginator ? getters.paginator.data.length : 0;
   },
-  GET_CONTEUDO() {
-    return state.response;
+  getError: state => {
+    return state.error;
   },
-  GET_RESPONSE() {
-    return "asd";
+  getCanal: state => {
+    return state.canal;
+  },
+  getSidebar: state => {
+    return state.sidebar;
   }
 };
 

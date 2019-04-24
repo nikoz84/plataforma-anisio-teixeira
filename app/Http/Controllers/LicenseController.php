@@ -9,7 +9,7 @@ class LicenseController extends Controller
 {
     public function __construct(Request $request, License $license)
     {
-        $this->middleware('jwt.verify')->except(['list', 'search', 'create', 'update']);
+        $this->middleware('jwt.verify')->except(['list', 'search']);
         $this->request = $request;
         $this->license = $license;
     }
