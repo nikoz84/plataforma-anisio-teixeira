@@ -14,7 +14,8 @@ const state = {
   show: false,
   isError: false,
   isLogged: !!localStorage.token,
-  errors: []
+  errors: [],
+  canalId: 0
 };
 
 export default state;

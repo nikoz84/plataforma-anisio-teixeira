@@ -272,7 +272,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 //
 //
 var _default = {
-  name: 'SidebarCanal',
+  name: "SidebarCanal",
   props: [],
   data: function data() {
     return {
@@ -283,38 +283,28 @@ var _default = {
     };
   },
   computed: {
-    sidebar: function sidebar() {
-      return this.$store.state.sidebar;
+    sidebar: function sidebar() {//return this.$store.state.sidebar
+      //console.log(this.$store.state.sidebar);
     },
-    categoriesExists: function categoriesExists() {
-      return this.$store.state.categories ? true : false;
+    categoriesExists: function categoriesExists() {//return this.$store.state.categories ? true : false;
     },
-    disciplinasExists: function disciplinasExists() {
-      return this.$store.state.disciplinas ? true : false;
+    disciplinasExists: function disciplinasExists() {//return this.$store.state.disciplinas ? true : false;
     },
-    temasExists: function temasExists() {
-      return this.$store.state.temas ? true : false;
+    temasExists: function temasExists() {//return this.$store.state.temas ? true : false;
     },
-
-    /*
-    tiposExists(){
-        return (this.sidebar && this.sidebar.tipos) ? true : false;
+    tiposExists: function tiposExists() {//return (this.sidebar && this.sidebar.tipos) ? true : false;
     },
-    licensesExists(){
-        return (this.sidebar && this.sidebar.licenses) ? true : false;
+    licensesExists: function licensesExists() {//return (this.sidebar && this.sidebar.licenses) ? true : false;
     },
-    */
-    componentsExists: function componentsExists() {
-      return this.$store.state.components[0] ? true : false;
+    componentsExists: function componentsExists() {//return this.$store.state.components[0] ? true : false;
     },
-    NiveisExists: function NiveisExists() {
-      return this.$store.state.niveis[0] ? true : false;
+    NiveisExists: function NiveisExists() {//return this.$store.state.niveis[0] ? true : false;
     }
   },
   methods: {
     addToQuery: function addToQuery() {
       this.$router.push({
-        name: 'Listar',
+        name: "Listar",
         params: {
           slug: this.$route.params.slug
         },
@@ -326,16 +316,10 @@ var _default = {
       });
     }
   },
-  mounted: function mounted() {
-    this.$store.dispatch('getSidebar', {
-      id: localStorage.canal_id
-    });
-  },
+  mounted: function mounted() {},
   watch: {
-    '$route': function $route(to, from) {
-      this.$store.dispatch('getSidebar', {
-        id: localStorage.canal_id
-      });
+    $route: function $route(to, from) {
+      this.$store.state.sidebar;
     }
   }
 };
@@ -394,18 +378,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 //
 //
 var _default = {
-  name: 'canal',
+  name: "canal",
   components: {
     NavCanal: _NavCanalComponent["default"],
     sidebar: _SidebarCanalComponent["default"]
   },
   data: function data() {
     return {
-      title: '',
+      title: "",
       descricao: null,
       canal_id: null,
       options: null,
-      color: '#1e78c2',
+      color: "#1e78c2",
       hasCategories: false,
       categories: null,
       hasAbout: false
@@ -413,14 +397,18 @@ var _default = {
   },
   created: function created() {},
   mounted: function mounted() {
-    this.$store.dispatch('getCanal', "".concat(this.$route.params.slug));
+    this.$store.dispatch("getCanal", "".concat(this.$route.params.slug));
   },
   watch: {
-    '$route': function $route(to, from) {
-      this.$store.dispatch('getCanal', "".concat(this.$route.params.slug));
+    $route: function $route(to, from) {
+      this.getFromSlug();
     }
   },
-  methods: {},
+  methods: {
+    getFromSlug: function getFromSlug() {
+      this.$store.dispatch("getCanal", "".concat(this.$route.params.slug));
+    }
+  },
   computed: {
     canal: function canal() {
       return this.$store.state.canal;
@@ -443,7 +431,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".page-header[data-v-4931cae4] {\n  margin: 0;\n}\n.page-header .page-title[data-v-4931cae4] {\n  margin-top: 0;\n  position: relative;\n  margin-bottom: 30px;\n}\n.page-header .page-title[data-v-4931cae4]:after {\n  width: 15%;\n  height: 2px;\n  content: '';\n  background: var(--color);\n  display: block;\n  position: absolute;\n  bottom: -10px;\n}\n[data-v-4931cae4]:root {\n  --background: var(--color);\n}\naside > header > h3[data-v-4931cae4] {\n  margin-top: 5px;\n  font-size: 18px;\n}\n", ""]);
+exports.push([module.i, ".page-header[data-v-4931cae4] {\n  margin: 0;\n}\n.page-header .page-title[data-v-4931cae4] {\n  margin-top: 0;\n  position: relative;\n  margin-bottom: 30px;\n}\n.page-header .page-title[data-v-4931cae4]:after {\n  width: 15%;\n  height: 2px;\n  content: \"\";\n  background: var(--color);\n  display: block;\n  position: absolute;\n  bottom: -10px;\n}\n[data-v-4931cae4]:root {\n  --background: var(--color);\n}\naside > header > h3[data-v-4931cae4] {\n  margin-top: 5px;\n  font-size: 18px;\n}\n", ""]);
 
 // exports
 
@@ -854,9 +842,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("label", { attrs: { for: "tipo-" + tipo.id } }, [
                     _vm._v(
-                      "\n                    " +
+                      "\r\n                    " +
                         _vm._s(tipo.name) +
-                        "\n                "
+                        "\r\n                "
                     )
                   ])
                 ]
@@ -923,9 +911,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("label", { attrs: { for: "license-" + license.id } }, [
                     _vm._v(
-                      "\n                    " +
+                      "\r\n                    " +
                         _vm._s(license.name) +
-                        "\n                "
+                        "\r\n                "
                     )
                   ])
                 ]
@@ -960,9 +948,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                    " +
+                        "\r\n                    " +
                           _vm._s(categoriaComponent.name) +
-                          " \n                    "
+                          " \r\n                    "
                       ),
                       _c("i", {
                         staticClass:
@@ -1075,7 +1063,7 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\n            Outras Modalidades / Níveis de Ensino\n        "
+                    "\r\n            Outras Modalidades / Níveis de Ensino\r\n        "
                   )
                 ]
               )
@@ -1104,9 +1092,9 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                    " +
+                                "\r\n                    " +
                                   _vm._s(nivel.name) +
-                                  "\n                    "
+                                  "\r\n                    "
                               ),
                               _c("i", {
                                 staticClass:
@@ -1200,7 +1188,7 @@ var render = function() {
             : _vm._e()
         ])
       : _vm._e(),
-    _vm._v("\n    " + _vm._s(_vm.sidebar) + "\n")
+    _vm._v("\r\n    " + _vm._s(_vm.sidebar) + "\r\n")
   ])
 }
 var staticRenderFns = [
@@ -1220,7 +1208,7 @@ var staticRenderFns = [
         }
       },
       [
-        _vm._v("\n                   Tipos de Mídia\n                   "),
+        _vm._v("\r\n                   Tipos de Mídia\r\n                   "),
         _c("i", { staticClass: "glyphicon glyphicon-chevron-down pull-right" })
       ]
     )
@@ -1241,7 +1229,7 @@ var staticRenderFns = [
         }
       },
       [
-        _vm._v("\n                   Licenças\n                   "),
+        _vm._v("\r\n                   Licenças\r\n                   "),
         _c("i", { staticClass: "glyphicon glyphicon-chevron-down pull-right" })
       ]
     )
@@ -1277,17 +1265,13 @@ var render = function() {
           "header",
           { staticClass: "page-header" },
           [
-            _c(
-              "h1",
-              { staticClass: "page-title", style: "--color:" + _vm.color },
-              [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.canal.name) +
-                    "\n                "
-                )
-              ]
-            ),
+            _c("h1", { staticClass: "page-title" }, [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(_vm.canal.name) +
+                  "\n                "
+              )
+            ]),
             _vm._v(" "),
             _c("NavCanal")
           ],

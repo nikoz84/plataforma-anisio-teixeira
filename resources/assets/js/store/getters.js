@@ -2,12 +2,11 @@ const getters = {
   paginator: state => {
     return state.paginator;
   },
-  getByIdCanal: state => id => {
-    console.log(id);
-    return state.paginator.data.find(item => item.id === id);
+  getCanalById: state => {
+    return state.conteudo;
   },
-  getCount: (state, getters) => {
-    return getters.paginator ? getters.paginator.data.length : 0;
+  getConteudos: state => {
+    return state.conteudo;
   },
   getError: state => {
     return state.error;
@@ -17,6 +16,9 @@ const getters = {
   },
   getSidebar: state => {
     return state.sidebar;
+  },
+  getCanalId: state => {
+    return state.canalId;
   }
 };
 

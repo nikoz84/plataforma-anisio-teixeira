@@ -1,8 +1,10 @@
 import client from "../client.js";
 
 const actions = {
-  async getConteudos({ commit }, id) {
-    let resp = await client.get(`/conteudos?canal=${id}`);
+  async getConteudos({ commit }, payload) {
+    console.log(payload);
+    let url = payload.url ? payload.url : `/conteudos?canal=${payload.id}`;
+    let resp = await client.get(url);
     if (resp.status == 200 && resp.data.paginator) {
       commit("SET_CONTEUDOS", resp.data.paginator);
     } else {
@@ -21,6 +23,7 @@ const actions = {
     let resp = await client.get(`/canais/slug/${url}`);
 
     if (resp.status == 200 && resp.data.canal) {
+      commit("SET_CANAL_ID", resp.data.canal.id);
       commit("SET_CANAL", resp.data.canal);
       commit("SET_SIDEBAR", resp.data.sidebar);
       commit("SET_IS_ERROR", false);
@@ -30,7 +33,7 @@ const actions = {
   },
   async getEnabledCategories({ commit }, params) {
     let resp = await client.get("/categories", params);
-    console.log(resp);
+
     if (resp.status == 200 && resp.data) {
       commit("SET_CATEGORIES", resp.data.sidebar.categories);
       commit("SET_TEMAS", resp.data.sidebar.temas);

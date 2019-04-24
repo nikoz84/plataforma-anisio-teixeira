@@ -158,73 +158,68 @@
 </div>
 </template>
 <script>
-import client from '../client.js';
-
+import client from "../client.js";
 
 export default {
-    name : 'SidebarCanal',
-    props:[],
-    data(){
-        return {
-            checkedTipos: [],
-            checkedLicenses: [],
-            checkedComponents: [],
-            isVisible: false
-        }
+  name: "SidebarCanal",
+  props: [],
+  data() {
+    return {
+      checkedTipos: [],
+      checkedLicenses: [],
+      checkedComponents: [],
+      isVisible: false
+    };
+  },
+  computed: {
+    sidebar() {
+      //return this.$store.state.sidebar
+      //console.log(this.$store.state.sidebar);
     },
-    computed:{
-        sidebar(){
-            return this.$store.state.sidebar
-        },
-        
-        categoriesExists(){
-            return (this.$store.state.categories) ? true : false;
-        },
-        disciplinasExists(){
-            return (this.$store.state.disciplinas) ? true : false;
-        },
-        temasExists(){
-            return (this.$store.state.temas) ? true : false;
-        },
-        /*
-        tiposExists(){
-            return (this.sidebar && this.sidebar.tipos) ? true : false;
-        },
-        licensesExists(){
-            return (this.sidebar && this.sidebar.licenses) ? true : false;
-        },
-        */
-        componentsExists(){
-            return (this.$store.state.components[0]) ? true : false;
-        },
-        NiveisExists(){
-            return (this.$store.state.niveis[0]) ? true : false;
-        }
-        
-    },
-    methods:{
-        addToQuery(){
-            this.$router.push({ name: 'Listar', 
-                            params: { slug : this.$route.params.slug }, 
-                            query: {
-                                tipos : [this.checkedTipos],
-                                licencas: [this.checkedLicenses],
-                                componentes: [this.checkedComponents] }
-                            });
-        }
-    },
-    mounted() {
-        this.$store.dispatch('getSidebar', {id:localStorage.canal_id});
-        
-    },
-    watch: {
-        '$route' (to, from) {
-            this.$store.dispatch('getSidebar', {id:localStorage.canal_id});
-        }
-    }
 
-}
+    categoriesExists() {
+      //return this.$store.state.categories ? true : false;
+    },
+    disciplinasExists() {
+      //return this.$store.state.disciplinas ? true : false;
+    },
+    temasExists() {
+      //return this.$store.state.temas ? true : false;
+    },
+
+    tiposExists() {
+      //return (this.sidebar && this.sidebar.tipos) ? true : false;
+    },
+    licensesExists() {
+      //return (this.sidebar && this.sidebar.licenses) ? true : false;
+    },
+    componentsExists() {
+      //return this.$store.state.components[0] ? true : false;
+    },
+    NiveisExists() {
+      //return this.$store.state.niveis[0] ? true : false;
+    }
+  },
+  methods: {
+    addToQuery() {
+      this.$router.push({
+        name: "Listar",
+        params: { slug: this.$route.params.slug },
+        query: {
+          tipos: [this.checkedTipos],
+          licencas: [this.checkedLicenses],
+          componentes: [this.checkedComponents]
+        }
+      });
+    }
+  },
+  mounted() {},
+  watch: {
+    $route(to, from) {
+      this.$store.state.sidebar;
+    }
+  }
+};
 </script>
 <style lang="scss" scoped>
-
 </style>

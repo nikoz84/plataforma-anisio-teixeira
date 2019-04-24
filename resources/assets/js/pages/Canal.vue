@@ -6,7 +6,7 @@
             </aside>
             <article class="col-sm-9">
                 <header class="page-header">
-                    <h1 class="page-title" v-bind:style="`--color:${color}`">
+                    <h1 class="page-title">
                         {{ canal.name }}
                     </h1>
                     <NavCanal></NavCanal>
@@ -24,72 +24,71 @@
     </section>
 </template>
 <script>
-import NavCanal from '../components/NavCanalComponent.vue';
-import SidebarCanal from '../components/SidebarCanalComponent.vue';
-import client from '../client.js';
-import {mapState} from 'vuex';
-
+import NavCanal from "../components/NavCanalComponent.vue";
+import SidebarCanal from "../components/SidebarCanalComponent.vue";
+import client from "../client.js";
+import { mapState } from "vuex";
 
 export default {
-    name : 'canal',
-    components:{ NavCanal,  sidebar: SidebarCanal},
-    data() {
-        return {
-            title: '',
-            descricao: null,
-            canal_id: null,
-            options: null,
-            color: '#1e78c2',
-            hasCategories: false,
-            categories: null,
-            hasAbout: false
-        }
-    },
-    created() {
-        
-    },
-    mounted() {
-        this.$store.dispatch('getCanal', `${this.$route.params.slug}`);
-        
-    },
-    watch: {
-        '$route' (to, from) {
-            this.$store.dispatch('getCanal', `${this.$route.params.slug}`);
-        }
-    },
-    methods:{
-        
-    },
-    computed: {
-        canal(){
-            return this.$store.state.canal
-        }
-    },
-}
+  name: "canal",
+  components: { NavCanal, sidebar: SidebarCanal },
+  data() {
+    return {
+      title: "",
+      descricao: null,
+      canal_id: null,
+      options: null,
+      color: "#1e78c2",
+      hasCategories: false,
+      categories: null,
+      hasAbout: false
+    };
+  },
+  created() {},
+  mounted() {
+    this.$store.dispatch("getCanal", `${this.$route.params.slug}`);
+  },
+  watch: {
+    $route(to, from) {
+      this.getFromSlug();
+    }
+  },
+  methods: {
+    getFromSlug() {
+      this.$store.dispatch("getCanal", `${this.$route.params.slug}`);
+    }
+  },
+  computed: {
+    canal() {
+      return this.$store.state.canal;
+    }
+  }
+};
 </script>
 <style lang="scss" scoped>
-.page-header { margin : 0; }
+.page-header {
+  margin: 0;
+}
 
 .page-header .page-title {
-    margin-top: 0;
-    position: relative;
-    margin-bottom: 30px;
+  margin-top: 0;
+  position: relative;
+  margin-bottom: 30px;
 }
 .page-header .page-title:after {
-    width: 15%;
-    height: 2px;
-    content: '';
-    background: var(--color);
-    display: block;
-    position: absolute;
-    bottom: -10px;
+  width: 15%;
+  height: 2px;
+  content: "";
+  background: var(--color);
+  display: block;
+  position: absolute;
+  bottom: -10px;
 }
 :root {
-    --background: var(--color);
-} 
-aside > header > h3 {
-    margin-top: 5px;
-    font-size: 18px;
+  --background: var(--color);
 }
-
+aside > header > h3 {
+  margin-top: 5px;
+  font-size: 18px;
+}
 </style>

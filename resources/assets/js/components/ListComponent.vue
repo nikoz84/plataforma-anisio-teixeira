@@ -25,42 +25,28 @@
     </div>
 </template>
 <script>
-import SimpleCard from '../components/SimpleCardComponent.vue';
-import client from '../client.js'
-
+import SimpleCard from "../components/SimpleCardComponent.vue";
+import client from "../client.js";
+import { mapGetters } from "vuex";
 
 export default {
-    name : 'List',
-    components:{
-        SimpleCard
-    },
-    data(){
-        return {
-            
-        }
-    },
-    computed:{
-        
-    },
-    methods:{
-        async goTo(url) {
-            if(url){
-                this.$parent.show = false;
-                let resp = await client.get(url);
-                if(resp.data.success){
-                    this.$parent.paginator = resp.data.paginator;
-                    this.$parent.show = true;
-                }
-            }
-            
-        }
-    },
-    computed: {
-        paginator(){
-            return this.$store.state.paginator;
-        }
-    },
-}
+  name: "List",
+  components: {
+    SimpleCard
+  },
+  methods: {
+    goTo(url) {
+      if (url) {
+        this.$store.dispatch("getConteudos", { url });
+      }
+    }
+  },
+  computed: {
+    paginator() {
+      return this.$store.getters.paginator;
+    }
+  }
+};
 </script>
 <style lang="scss" scoped>
 .container-columns {

@@ -18,7 +18,9 @@
                 <ul class="nav navbar-nav navbar-right">
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mídias Educacionais <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                          Canais <span class="caret"></span>
+                        </a>
                         <ul class="dropdown-menu">
                             <router-link v-for="(link,i) in links" 
                                   :key="i" 
@@ -72,8 +74,8 @@ export default {
     this.getLinks();
   },
   methods: {
-    async getLinks(){
-      let resp = await client.get('/links');
+    async getLinks() {
+      let resp = await client.get("/links");
       this.links = resp.data.links;
     },
     async logout() {

@@ -34,6 +34,9 @@ const mutations = {
   },
   SET_DISCIPLINAS(state, disciplinas) {
     state.disciplinas = disciplinas;
+  },
+  SET_CANAL_ID(state, canalId) {
+    state.canalId = canalId;
   }
 };
 
