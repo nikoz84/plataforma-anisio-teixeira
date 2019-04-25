@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <form v-on:submit.prevent="send()">
+    <form v-on:submit.prevent="send($event)">
       <div class="panel panel-default col-md-7">
         <div class="panel-heading">
           <h2> Adicionar conteúdo digital</h2>
@@ -12,18 +12,18 @@
               <label for="titulo">Título:*</label>
               <input type="text"
                       class="form-control"
-                      name="titulo"
+                      name="title"
                       id="titulo"
                       aria-describedby="titulo"
-                      v-model.trim="title">
+                      v-model.trim="form.title">
               <small id="titulo" class="text-info">Adicione o nome original da mídia.</small><br>
               
-              <erros :errors="errors.title"></erros>
+              <erros></erros>
           </div>
           <!-- TIPO -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.tipo && errors.tipo.length > 0 }">
               <label for="tipoconteudo">Tipo de Conteúdo:*</label>
-              <select class="form-control form-control-lg" id="tipoconteudo" v-model="tipo">
+              <select class="form-control form-control-lg" name="tipo" id="tipoconteudo" v-model="form.tipo">
                   <option value="">« SELECIONE »</option>
                   <option v-for="(tipo, i) in tipos"
                           v-bind:value="tipo.id"
@@ -47,7 +47,7 @@
           <!-- CATEGORIA OPCIONAL-->
           <div class="form-group" v-if="categories.length != 0">
               <label for="estado">Categoria de Conteúdo:*</label>
-              <select class="form-control form-control-lg" id="categoria" v-model="category">
+              <select class="form-control form-control-lg" name="category" id="categoria" v-model="form.category">
                   <option value="">« SELECIONE »</option>
                   <option v-for="(item, i) in categories"
                           v-bind:value="item.name"
@@ -60,8 +60,9 @@
           <!-- DESCRICAO -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.description && errors.description.length > 0 }">
               <label for="descricao">Descrição:*</label>
-              <editor v-model="description" 
-                      id="descricao" 
+              <editor v-model="form.description" 
+                      id="descricao"
+                      name="description" 
                       height="500px" 
                       mode="wysiwyg"/>
               <small class="text-info">Descreva á mídia de forma <b>resumida</b> e <b>objetiva</b>.
@@ -74,23 +75,23 @@
           <!-- AUTORES -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.authors && errors.authors.length > 0 }">
               <label for="autores">Autores:*</label>
-              <input type="text" class="form-control" id="autores" v-model="authors">
+              <input type="text" class="form-control" name="authors" id="autores" v-model="form.authors">
               <small class="text-info">Nome dos autores ou grupo de trabalho responsável pelo desenvolvimento da mídia.</small><br>
               <erros :errors="errors.authors"></erros>
           </div>
           <!-- FONTE -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.source && errors.source.length > 0 }">
               <label for="fonte">Fonte:*</label>
-              <input type="text" class="form-control" id="fonte" v-model="source" >
+              <input type="text" class="form-control" name="source" id="fonte" v-model="form.source" >
               <small class="text-info">Indique o site ou o nome da instituição que produziu a mídia.</small><br>
               <erros :errors="errors.source"></erros>
           </div>
           <!-- LICENCA -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.license && errors.license.length > 0 }">
               <label for="licenca-conteudo">Licença de Conteúdo:*</label>
-              <select class="form-control form-control-lg" id="licenca-conteudo" v-model="license">
+              <select class="form-control form-control-lg"  name="license" id="licenca-conteudo" v-model="form.license">
                   <option value="" >« SELECIONE »</option>
-                  <option v-for="(license, i) in licenses"
+                  <!--option v-for="(license, i) in licenses"
                           v-bind:value="license.id"
                           v-bind:key="i">
                           {{license.name}}
@@ -100,7 +101,7 @@
                           v-bind:value="child.id"
                           v-bind:key="i">{{child.name}}>
                       </option>
-                  </optgroup>
+                  </optgroup-->
               </select>
               <small class="text-info">
                   Escolha a opção que mais adequada à mídia que deseja publicar, conforme opções disponíveis. 
@@ -128,7 +129,7 @@
         <!-- CONDIÇÕES DE USO -->
         <div class="checkbox" v-bind:class="{ 'has-error': errors.terms && errors.terms.length > 0 }">
             <label for="termosecondicoes">
-                <input id="termosecondicoes" type="checkbox" v-model="terms"> Li e concordo com os termos e condições de uso.
+                <input id="termosecondicoes" name="terms" type="checkbox" v-model="form.terms"> Li e concordo com os termos e condições de uso.
             </label><br>
             <erros :errors="errors.terms"></erros>
         </div>
@@ -136,9 +137,9 @@
         <!--multiselect class="form-control" v-model="tipo" :options="tipos" placeholder="Tipo de conteúdo"></multiselect-->
         </div>
         <!-- APROVAR CONTEÚDO -->
-        <div class="checkbox" v-bind:class="{ 'has-error': errors.is_aproved && errors.is_aproved.length > 0 }">
+        <div class="checkbox" v-bind:class="{ 'has-error': errors.is_approved && errors.is_approved.length > 0 }">
             <label for="aprovado">
-                <input id="aprovado" type="checkbox" v-model="is_approved"> Deseja publicar o conteúdo?
+                <input id="aprovado" name="is_approved" type="checkbox" v-model="form.is_approved"> Deseja publicar o conteúdo?
             </label><br>
             <erros :errors="errors.is_approved"></erros>
         </div>
@@ -149,7 +150,7 @@
             <button class="btn btn-default">Salvar</button>
         </div>
         <!-- RESPOSTA FORMULARIO -->
-        <alert :text="message" :isError="isError"></alert>
+        <alert></alert>
 
       </div>
 
@@ -170,8 +171,9 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import client from "../client.js";
-import ShowErrors from "../components/ShowErrors.vue";
+import { client } from "../client.js";
+import { response, goTo } from "../response.js";
+import showErrors from "../components/ShowErrors.vue";
 import Alert from "../components/AlertComponent.vue";
 import "tui-editor/dist/tui-editor.css";
 import "tui-editor/dist/tui-editor-contents.css";
@@ -182,34 +184,41 @@ import store from "../store";
 export default {
   name: "ConteudoForm",
   components: {
-    erros: ShowErrors,
+    erros: showErrors,
     editor: Editor,
     alert: Alert
   },
   data() {
     return {
-      title: "",
-      description: "",
-      authors: "",
-      source: "",
-      license: "",
+      form: {
+        title: "",
+        description: "",
+        tipo: "",
+        authors: "",
+        source: "",
+        license: "",
+        image: "",
+        terms: false,
+        tags: [],
+        canal: "",
+        category: "",
+        is_approved: false
+      },
+
       licenses: [],
-      image: "",
+
       options: {},
-      tipo: "",
+
       tipos: [],
-      tags: [],
-      canal: null,
-      terms: false,
+
       is_featured: false,
       is_site: false,
       is_approved: false,
       autocompleteItems: [],
       category: "",
-      category_id: "",
+
       categories: [],
-      message: "",
-      isError: true,
+
       isUpdate: false,
       errors: {
         title: [],
@@ -224,11 +233,10 @@ export default {
     };
   },
   created() {
-    this.getTipos();
-    this.getLicenses();
-    this.FETCH_CONTEUDOS();
+    //his.getTipos();
+    //this.getLicenses();
     if (this.$route.params.update) {
-      this.getConteudo();
+      //this.getConteudo();
       this.isUpdate = true;
       this.textButton = "Editar";
     }
@@ -239,14 +247,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["FETCH_CONTEUDOS"]),
-    send() {
-      if (this.isUpdate) {
-        this.editConteudo();
-      } else {
-        this.createConteudo();
-      }
-    },
+    send(event) {
+      this.$store.dispatch("serializeFormData", event.target);
+      const data = this.$store.getters.getFormData;
+      this.$store.dispatch("createConteudo", data);
+      console.log(this.$store.getters.getErrors);
+    }
+    /*
     async createConteudo() {
       let form = new FormData();
       form.append("title", this.title);
@@ -272,7 +279,7 @@ export default {
         this.message = resp.data.message;
         this.errors = resp.data.errors;
 
-        console.log(store.conteudos);
+        console.log(store.state.message);
 
         console.log();
       }
@@ -287,7 +294,7 @@ export default {
     },
     async getConteudo() {
       let resp = await client.get(`/conteudos/${this.$route.params.id}`);
-
+      console.warn(resp);
       if (resp.data.success) {
         this.title = resp.data.conteudo.title;
         this.description = resp.data.conteudo.description;
@@ -305,11 +312,9 @@ export default {
         canal: localStorage.idCanal,
         category: this.category
       };
-      let resp = await client.put(
-        `/conteudos/${this.$route.params.id}`,
-        params
-      );
+      let resp = await client.put(`/conteudo/${this.$route.params.id}`, params);
     }
+    */
   }
 };
 </script>

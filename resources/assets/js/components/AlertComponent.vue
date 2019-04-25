@@ -1,13 +1,20 @@
 <template>
-    <div class="alert-top alert alert-success" v-if="isError">
+    <div class="alert-top alert alert-success" v-if="showAlert">
         <!--a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a-->
-        {{ text }}
+        {{ textAlert }}
     </div>
 </template>
 <script>
 export default {
   name: "Alert",
-  props: ["isError", "text"]
+  computed: {
+    showAlert() {
+      return this.$store.state.showAlert;
+    },
+    textAlert() {
+      return this.$store.state.textAlert;
+    }
+  }
 };
 </script>
 <style scoped>

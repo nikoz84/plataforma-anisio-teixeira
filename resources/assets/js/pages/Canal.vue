@@ -16,7 +16,7 @@
                                 enter-active-class="animated fadeIn" 
                                 leave-active-class="animated fadeOut"
                                 mode="out-in">
-                        <router-view v-bind:style="`--color:${color}`"></router-view>
+                        <router-view v-bind:style="`--color:${canal.color}`"></router-view>
                     </transition>
                 </div>
             </article>
@@ -32,21 +32,8 @@ import { mapState } from "vuex";
 export default {
   name: "canal",
   components: { NavCanal, sidebar: SidebarCanal },
-  data() {
-    return {
-      title: "",
-      descricao: null,
-      canal_id: null,
-      options: null,
-      color: "#1e78c2",
-      hasCategories: false,
-      categories: null,
-      hasAbout: false
-    };
-  },
-  created() {},
   mounted() {
-    this.$store.dispatch("getCanal", `${this.$route.params.slug}`);
+    this.getFromSlug();
   },
   watch: {
     $route(to, from) {

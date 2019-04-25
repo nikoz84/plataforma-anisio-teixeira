@@ -383,21 +383,8 @@ var _default = {
     NavCanal: _NavCanalComponent["default"],
     sidebar: _SidebarCanalComponent["default"]
   },
-  data: function data() {
-    return {
-      title: "",
-      descricao: null,
-      canal_id: null,
-      options: null,
-      color: "#1e78c2",
-      hasCategories: false,
-      categories: null,
-      hasAbout: false
-    };
-  },
-  created: function created() {},
   mounted: function mounted() {
-    this.$store.dispatch("getCanal", "".concat(this.$route.params.slug));
+    this.getFromSlug();
   },
   watch: {
     $route: function $route(to, from) {
@@ -1291,7 +1278,7 @@ var render = function() {
                   mode: "out-in"
                 }
               },
-              [_c("router-view", { style: "--color:" + _vm.color })],
+              [_c("router-view", { style: "--color:" + _vm.canal.color })],
               1
             )
           ],

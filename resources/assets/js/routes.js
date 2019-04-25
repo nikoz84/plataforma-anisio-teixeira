@@ -64,8 +64,13 @@ const routes = [
         component: Listar
       },
       {
-        path: "exibir/:id",
-        name: "Exibir",
+        path: "conteudo/:id",
+        name: "ExibirConteudo",
+        component: Exibir
+      },
+      {
+        path: "aplicativo/:id",
+        name: "ExibirAplicativo",
         component: Exibir
       },
       {

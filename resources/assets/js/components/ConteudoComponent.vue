@@ -1,11 +1,6 @@
 <template>
     <article class="row">
-        <PlayerApp :tipo="conteudo.options.tipo"
-                :download="conteudo.options.download"
-                :visualizacao="conteudo.options.visualizacao"
-                :guia="conteudo.options.guia"
-                :id="conteudo.id"
-                />
+        <PlayerApp />
         <div class="panel panel-default">
             <div class="panel-body">
                 <button class="btn btn-info btn-xs" v-on:click="updateConteudo()">Editar</button>
@@ -49,15 +44,18 @@ import client from "../client.js";
 export default {
   name: "ConteudoApp",
   components: { PlayerApp },
-  props: ["conteudo", "message"],
+  props: ["message"],
   computed: {
     splitAuthors() {
-      let replace = this.conteudo.authors.replace(",", ";");
+      let replace = this.$store.state.conteudo.authors.replace(",", ";");
       return replace.split(";");
     },
     backgroundColor() {
-      let color = this.conteudo.canal.color;
+      let color = this.$store.state.conteudo.canal.color;
       return `background-color: ${color}`;
+    },
+    conteudo() {
+      return this.$store.state.conteudo;
     }
   },
   methods: {

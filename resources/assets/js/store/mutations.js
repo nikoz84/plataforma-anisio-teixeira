@@ -35,8 +35,29 @@ const mutations = {
   SET_DISCIPLINAS(state, disciplinas) {
     state.disciplinas = disciplinas;
   },
-  SET_CANAL_ID(state, canalId) {
-    state.canalId = canalId;
+  SET_CANAL_ID(state, id) {
+    state.canalId = id;
+  },
+  SET_SHOW_CONTEUDO(state, showConteudo) {
+    state.showConteudo = showConteudo;
+  },
+  SET_SHOW_APLICATIVO(state, showAplicativo) {
+    state.showAplicativo = showAplicativo;
+  },
+  SET_CONTEUDO(state, conteudo) {
+    state.conteudo = conteudo;
+  },
+  SET_ERRORS(state, errors) {
+    state.errors = errors;
+  },
+  SET_SHOW_ALERT(state, showAlert) {
+    state.showAlert = showAlert;
+  },
+  SET_TEXT_ALERT(state, textAlert) {
+    state.textAlert = textAlert;
+  },
+  SET_FORM_DATA(state, formData) {
+    state.formData = formData;
   }
 };
 

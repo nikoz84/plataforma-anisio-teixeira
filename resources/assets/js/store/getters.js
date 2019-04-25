@@ -6,10 +6,10 @@ const getters = {
     return state.conteudo;
   },
   getConteudos: state => {
-    return state.conteudo;
+    return state.conteudos;
   },
-  getError: state => {
-    return state.error;
+  getErrors: state => {
+    return state.errors;
   },
   getCanal: state => {
     return state.canal;
@@ -17,8 +17,17 @@ const getters = {
   getSidebar: state => {
     return state.sidebar;
   },
-  getCanalId: state => {
-    return state.canalId;
+  getshowConteudo: state => {
+    return state.showConteudo;
+  },
+  getshowAplicativo: state => {
+    return state.showAplicativo;
+  },
+  getFormData: state => {
+    return state.formData;
+  },
+  getConteudo: state => {
+    return state.conteudo;
   }
 };
 
