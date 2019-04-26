@@ -22,9 +22,24 @@ const actions = {
   },
   async createConteudo({ commit }, conteudo) {
     let resp = await client.post("/conteudos", conteudo);
-    commit("SET_ERRORS", resp.data.errors);
+
+    if (resp.data) {
+      commit("SET_ERRORS", resp.data.errors);
+      commit("SET_SHOW_ALERT", true);
+      commit("SET_TEXT_ALERT", resp.data.message);
+      commit("SET_IS_ERROR", true);
+    }
+
     console.log(resp);
     //commit("CREATE_CONTEUDO", resp.data);
+  },
+  async getTipos({ commit }) {
+    let resp = await client.get("/tipos/conteudos");
+    commit("SET_TIPOS", resp.data.tipos);
+  },
+  async getLicenses({ commit }) {
+    let resp = await client.get("/licenses");
+    commit("SET_LICENSES", resp.data.paginator.data);
   },
   async deleteConteudo({ commit }, id) {
     let resp = await client.delete(`/conteudos/${id}`);
@@ -65,15 +80,22 @@ const actions = {
       commit("SET_SHOW_APLICATIVO", true);
     }
   },
-  serializeFormData({ commit }, form) {
+  serializeFormData({ commit, dispatch, state }, form) {
     const formData = new FormData(form);
 
     Object.keys(form).map(key => {
       if (form.hasOwnProperty(key)) {
-        formData.append(`"${key}"`, form[key]);
+        if (key == "options") {
+          form.append(`"${key}"`, JSON.stringify(form[key]));
+        } else if (key == "image") {
+          form.append(`"${key}"`, form[key]);
+        } else {
+          formData.append(`"${key}"`, form[key]);
+        }
       }
     });
     commit("SET_FORM_DATA", formData);
+    dispatch("createConteudo", state.formData);
   }
 };
 

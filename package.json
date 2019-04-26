@@ -16,6 +16,8 @@
     "axios": "^0.17",
     "babel-plugin-dynamic-import-webpack": "^1.1.0",
     "bootstrap-sass": "^3.3.7",
+    "browser-sync": "^2.26.5",
+    "browser-sync-webpack-plugin": "^2.0.1",
     "cross-env": "^5.1",
     "es6-promise": "^4.2.5",
     "jquery": "^3.2",

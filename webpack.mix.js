@@ -10,6 +10,9 @@ let mix = require("laravel-mix");
 | file for the application as well as bundling up all the JS files.
 |
 */
+mix.browserSync({
+  proxy: "pat.des"
+});
 mix.config.webpackConfig.output = {
   chunkFilename: "js/[name].bundle.js",
   publicPath: "/"

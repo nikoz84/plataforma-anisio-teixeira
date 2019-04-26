@@ -10,10 +10,6 @@
 <script>
 export default {
   name: "ShowErrors",
-  computed: {
-    errors() {
-      return this.$store.state.erros;
-    }
-  }
+  props: ["errors"]
 };
 </script>
