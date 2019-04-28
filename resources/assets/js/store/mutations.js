@@ -49,6 +49,7 @@ const mutations = {
   },
   SET_ERRORS(state, errors) {
     state.errors = errors;
+    state.isError = true;
   },
   SET_SHOW_ALERT(state, showAlert) {
     state.showAlert = showAlert;

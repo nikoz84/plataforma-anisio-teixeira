@@ -22,9 +22,10 @@ const actions = {
   },
   async createConteudo({ commit }, conteudo) {
     let resp = await client.post("/conteudos", conteudo);
+    
     commit("SET_ERRORS", resp.data.errors);
-    console.log(resp);
-    //commit("CREATE_CONTEUDO", resp.data);
+     
+    
   },
   async deleteConteudo({ commit }, id) {
     let resp = await client.delete(`/conteudos/${id}`);

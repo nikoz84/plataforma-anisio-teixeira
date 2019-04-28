@@ -8,6 +8,7 @@ import state from "./state.js";
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
+  strict: true,
   state,
   mutations,
   actions,

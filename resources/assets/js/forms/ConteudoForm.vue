@@ -180,6 +180,9 @@ import "tui-editor/dist/tui-editor-contents.css";
 import "codemirror/lib/codemirror.css";
 import { Editor } from "@toast-ui/vue-editor";
 import store from "../store";
+import debounce from 'lodash/debounce';
+import { timeout } from 'q';
+
 
 export default {
   name: "ConteudoForm",
@@ -247,11 +250,26 @@ export default {
     }
   },
   methods: {
-    send(event) {
-      this.$store.dispatch("serializeFormData", event.target);
-      const data = this.$store.getters.getFormData;
-      this.$store.dispatch("createConteudo", data);
-      console.log(this.$store.getters.getErrors);
+    async send(event) {
+      
+      const data = await this.$store.getters.getFormData;
+      
+      const err = await this.$store.getters.getErrors
+      console.log(err)
+      let a = Promise.all([
+        this.$store.dispatch("serializeFormData", event.target),
+        this.$store.dispatch("createConteudo", this.$store.getters.getFormData)
+        ])
+        console.log(a)
+      //Promise.all([]).then(responses => {
+        //responses.map(response => console.log(response));
+      //});
+      
+      //
+      
+      
+      
+      
     }
     /*
     async createConteudo() {
