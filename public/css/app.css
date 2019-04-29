@@ -5025,7 +5025,6 @@ tbody.collapse.in {
 .nav > li {
   position: relative;
   display: block;
-  margin-bottom: 5px;
 }
 
 .nav > li > a {
@@ -5076,7 +5075,7 @@ tbody.collapse.in {
 
 .nav-tabs > li {
   float: left;
-  margin-bottom: 5px;
+  margin-bottom: -1px;
 }
 
 .nav-tabs > li > a {
@@ -5102,17 +5101,10 @@ tbody.collapse.in {
 
 .nav-pills > li {
   float: left;
-  background: #e9e8e8;
-  color: #000;
 }
 
 .nav-pills > li > a {
   border-radius: 1px;
-
-}
-
-.nav-pills > li > a:link {
-text-decoration:none;
 }
 
 .nav-pills > li + li {
@@ -5122,8 +5114,8 @@ text-decoration:none;
 .nav-pills > li.active > a,
 .nav-pills > li.active > a:hover,
 .nav-pills > li.active > a:focus {
-  color: #202020;
-  background-color: rgb(141, 138, 138);
+  color: #3b3b3b;
+  background-color: white;
 }
 
 .nav-stacked > li {

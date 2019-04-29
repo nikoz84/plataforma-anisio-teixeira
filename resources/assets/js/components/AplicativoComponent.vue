@@ -37,33 +37,46 @@
     </article>
 </template>
 <script>
-import client from '../client.js';
+import client from "../client.js";
 
 export default {
-    name : 'AplicativoApp',
-    components:{  },
-    props:['aplicativo','message' ],
-    computed:{
-        splitAuthors(){
-            let replace = this.aplicativo.authors.replace(',',';')
-            return replace.split(';');
-        }
-    },
-    methods:{
-        async deleteAplicativo(){
-            let params = {
-                token: localStorage.token
-            }
-            let resp = await client.deleteData(`/aplicativos/delete/${this.$route.params.id}`,params);
-            if(resp.data.success){
-                this.$router.push({ name: 'Listar', params: {slug: this.$route.params.slug}})
-            }
-        },
-        updateAplicativo(){
-            this.$router.push({ name: 'EditarAplicativo', params: {slug: this.$route.params.slug, id: this.$route.params.id, update: true }})
-        }
+  name: "AplicativoApp",
+  components: {},
+  props: ["aplicativo", "message"],
+  computed: {
+    splitAuthors() {
+      let replace = this.aplicativo.authors.replace(",", ";");
+      return replace.split(";");
     }
-}
+  },
+  methods: {
+    async deleteAplicativo() {
+      let params = {
+        token: localStorage.token
+      };
+      let resp = await client.delete(
+        `/aplicativos/${this.$route.params.id}`,
+        params
+      );
+      if (resp.data.success) {
+        this.$router.push({
+          name: "Listar",
+          params: { slug: this.$route.params.slug }
+        });
+      }
+    },
+    updateAplicativo() {
+      this.$router.push({
+        name: "EditarAplicativo",
+        params: {
+          slug: this.$route.params.slug,
+          id: this.$route.params.id,
+          update: true
+        }
+      });
+    }
+  }
+};
 </script>
 <style scoped>
 i::before {
@@ -71,5 +84,4 @@ i::before {
   padding-right: 5px;
   padding-left: 7px;
 }
-
 </style>

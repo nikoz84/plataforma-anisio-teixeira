@@ -13,7 +13,7 @@
                 </figure>
             </div>
             <div class="panel-body">
-                <router-link :to="{ name: 'Exibir', params: { slug: slug, id: item.id }}"
+                <router-link :to="{ name: 'ExibirConteudo', params: { slug: slug, id: item.id }}"
                             aria-label="Título" 
                             v-bind:title="'Título: ' + title">
                     <h4 class="text-center">{{ title }}</h4>
@@ -31,13 +31,13 @@ export default {
   },
   computed: {
     title() {
-		return (this.item.name) ? this.item.name : this.item.title;
+      return this.item.name ? this.item.name : this.item.title;
     },
     slug() {
       return this.item.canal.slug;
     },
     color() {
-		return (this.item.canal) ? this.item.canal.color : "#faf";
+      return this.item.canal ? this.item.canal.color : "#faf";
     },
     getImage() {
       return this.item.image;

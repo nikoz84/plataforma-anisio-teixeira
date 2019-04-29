@@ -38,49 +38,61 @@
     </div> 
 </template>
 <script>
-import client from '../client.js';
-import store from '../store/index.js';
+import client from "../client.js";
+import store from "../store/index.js";
 
 export default {
-  name: 'LoginForm',
-  data () {
+  name: "LoginForm",
+  data() {
     return {
       user: {
         email: null,
         password: null
       },
-      message : '',
-      isError : true
-    }
+      message: "",
+      isError: true
+    };
   },
-  beforeCreate () {
+  beforeCreate() {
     if (!store.state.isLogged) {
-        this.$router.push('/usuario/login')
+      this.$router.push("/usuario/login");
     }
   },
-  methods:{
-    async login(){
+  methods: {
+    async login() {
       let data = { email: this.user.email, password: this.user.password };
-      let resp = await client.post('/auth/login', data);
-      if(!resp.data.success){
+      let resp = await client.post("/auth/login", data);
+      if (!resp.data.success) {
         this.isError = resp.data.success;
         this.message = resp.data.message;
-        this.$router.push('/usuario/login')
-        setTimeout(()=>{
+        this.$router.push("/usuario/login");
+        setTimeout(() => {
           this.isError = true;
-        },3000)
-      }else{
+        }, 3000);
+      } else {
         this.isError = resp.data.success;
-        if(resp.data.token.access_token){
-          localStorage.setItem('token', resp.data.token.access_token)
-          store.commit('LOGIN_USER');
-          this.$router.push('/admin');
+        if (resp.data.token.access_token) {
+          localStorage.setItem("token", resp.data.token.access_token);
+          this.docodePayloadToken();
+          store.commit("LOGIN_USER", true);
+          this.$router.push("/admin");
         }
       }
+    },
+    docodePayloadToken() {
+      const base64Url = localStorage.token.split(".")[1];
+      const base64 = base64Url.replace("-", "+").replace("_", "/");
+      let payload = JSON.parse(window.atob(base64));
+
+      localStorage.setItem("username", payload.user.name);
+      localStorage.setItem("user_id", payload.user.id);
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
-form { margin-top: 30px; margin-bottom: 30px;}
+form {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
 </style>

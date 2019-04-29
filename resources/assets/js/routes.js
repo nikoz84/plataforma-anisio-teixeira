@@ -6,14 +6,10 @@ import AplicativoForm from "./forms/AplicativoForm.vue";
 import LoginForm from "./forms/LoginForm.vue";
 import RecoverPassForm from "./forms/RecoverPassForm.vue";
 import RegisterForm from "./forms/RegisterForm.vue";
-import UserEditForm from "./forms/UserEditForm.vue";
-import CanalForm from "./forms/CanalForm.vue";
 import ListAdmin from "./components/ListAdminComponent.vue";
 import DenunciaForm from "./forms/DenunciaForm.vue";
 import FaleConoscoForm from "./forms/FaleConoscoForm.vue";
-import UsuarioForm from "./forms/UsuarioForm.vue";
-import ListarUser from "./pages/ListarUser.vue";
-import OptionsForm from "./forms/OptionsForm.vue";
+import UserForm from "./forms/UsuarioForm.vue";
 
 const routes = [
   {
@@ -35,64 +31,12 @@ const routes = [
     },
     children: [
       {
-        path: "listar/:canal",
-        name: "ListarItens",
-        component: ListAdmin
-      },
-      {
-        path: "adicionar-canal",
-        name: "AddCanal",
-        component: CanalForm
-      },
-      {
-        path: "metadados",
-        name: "Opcoes",
-        component: OptionsForm
-      }
-    ]
-  },
-  {
-    path: "/usuario",
-    name: "User",
-    component: () => import(/* webpackChunkName: "user" */ "./pages/User.vue"),
-    meta: {
-      requiresAuth: false
-    },
-    children: [
-      {
-        path: "login",
-        name: "Login",
-        component: LoginForm
-      },
-      {
-        path: "recuperar-senha",
-        name: "Recover",
-        component: RecoverPassForm
-      },
-      {
-        path: "registro",
-        name: "Register",
-        component: RegisterForm
-      },
-      {
-        path: "editar/:id",
-        name: "UserEdit",
-        component: UserEditForm
-      },
-      {
-        path: "adicionar",
-        name: "Create",
-        component: UsuarioForm
-      },
-      {
-        path: "listar",
-        name: "UserList",
-        component: ListarUser
-      },
-      {
-        path: "editar/:id",
-        name: "EditarUsuario",
-        component: UsuarioForm
+        path: ":slug/:action",
+        name: "admin",
+        components: {
+          default: ListAdmin,
+          admin: ListAdmin
+        }
       }
     ]
   },
@@ -120,8 +64,13 @@ const routes = [
         component: Listar
       },
       {
-        path: "exibir/:id",
-        name: "Exibir",
+        path: "conteudo/:id",
+        name: "ExibirConteudo",
+        component: Exibir
+      },
+      {
+        path: "aplicativo/:id",
+        name: "ExibirAplicativo",
         component: Exibir
       },
       {
@@ -157,14 +106,39 @@ const routes = [
         }
       },
       {
-        path: "denuncia/:url",
+        path: "denuncia",
         name: "DenunciaForm",
         component: DenunciaForm
       },
       {
-        path: "faleconosco/:url",
+        path: "faleconosco",
         name: "FaleConoscoForm",
         component: FaleConoscoForm
+      }
+    ]
+  },
+  {
+    path: "/usuario",
+    name: "User",
+    component: () => import(/* webpackChunkName: "user" */ "./pages/User.vue"),
+    meta: {
+      requiresAuth: false
+    },
+    children: [
+      {
+        path: "login",
+        name: "Login",
+        component: LoginForm
+      },
+      {
+        path: "recuperar-senha",
+        name: "Recover",
+        component: RecoverPassForm
+      },
+      {
+        path: "registro",
+        name: "Register",
+        component: RegisterForm
       }
     ]
   }

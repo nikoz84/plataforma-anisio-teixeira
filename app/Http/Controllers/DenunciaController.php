@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Denuncia;
-use Illuminate\Http\Request;
-use Validator;
-use App\User;
-use Mail;
 use App\Helpers\GoogleRecaptcha;
+use App\User;
+use Illuminate\Http\Request;
+use Mail;
+use Validator;
 
 class DenunciaController extends Controller
 {
     public function __construct(Request $request, Denuncia $denuncia)
     {
-        $this->middleware('jwt.verify')->except(['list','create']);
+        $this->middleware('jwt.verify')->except(['list', 'create']);
         $this->denuncia = $denuncia;
         $this->request = $request;
     }
@@ -22,15 +22,16 @@ class DenunciaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list()
-    {
+    public function list() {
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
 
+        $paginator = $this->denuncia::paginate($limit)->setPath("/denuncias?limit={$limit}");
         return response()->json([
             'success' => true,
-            'denuncias' => $this->denuncia::all()
+            'title' => 'Lista de denuncias',
+            'paginator' => $paginator,
         ]);
     }
 
@@ -47,7 +48,7 @@ class DenunciaController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Não foi possível registrar a denúncia',
-                'errors' => $validator->errors()
+                'errors' => $validator->errors(),
             ], 200);
         }
 
@@ -68,14 +69,14 @@ class DenunciaController extends Controller
         if (!$resp) {
             return response()->json([
                 'success' => false,
-                'message' => 'Denúncia não registrada'
+                'message' => 'Denúncia não registrada',
             ]);
         }
         $this->sendToAdminUsers(); // Envio de email a usuários admin e super admin
 
         return response()->json([
             'success' => true,
-            'message' => 'Denúncia registrada com sucesso'
+            'message' => 'Denúncia registrada com sucesso',
         ]);
     }
 
@@ -104,12 +105,12 @@ class DenunciaController extends Controller
         if (!$denuncia) {
             $resp = [
                 'menssage' => 'Não foi possível deletar a denúncia',
-                'success' => false
+                'success' => false,
             ];
         } else {
             $resp = [
                 'menssage' => "Denúncia de id: {$id} foi apagado com sucesso!!",
-                'success' => $denuncia->delete()
+                'success' => $denuncia->delete(),
             ];
         }
 
@@ -129,7 +130,7 @@ class DenunciaController extends Controller
             'url' => 'required',
             'subject' => 'required',
             'message' => 'required',
-            'recaptcha' => 'required'
+            'recaptcha' => 'required',
         ]);
 
         return $validator;

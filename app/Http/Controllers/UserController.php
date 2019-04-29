@@ -21,17 +21,26 @@ class UserController extends Controller
      *
      *
      */
-    public function list()
-    {
+    public function list() {
 
         $limit = $this->request->query('limit', 15);
-        $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
+        $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'name';
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
 
+		$query = $this->user::query();
+        
+
+		$paginator = $query->orderBy('name', 'asc')
+            	->paginate($limit);
+
+        $paginator->setPath("/usuarios?limit={$limit}");
+        
         return response()->json([
             'success' => true,
-            'users' => $this->user::offset($page)->limit($limit)->get()->makeVisible('email')->toArray(),
+			'title' => 'Lista de Usuários',
+            'paginator' => $paginator
         ]);
+
     }
     /**
      * Buscar usuário por ID
@@ -45,7 +54,7 @@ class UserController extends Controller
 
         return response()->json([
             'success' => true,
-            'user' => $user
+            'user' => $user,
         ]);
     }
     public function update($id)
@@ -55,7 +64,7 @@ class UserController extends Controller
         $user->save();
         return response()->json([
             'success' => true,
-            'data' => $user
+            'data' => $user,
         ]);
     }
     /**
@@ -71,12 +80,12 @@ class UserController extends Controller
         if (!$resp) {
             return response()->json([
                 'success' => false,
-                'message' => 'Não foi possível deletar usuário'
+                'message' => 'Não foi possível deletar usuário',
             ]);
         }
         return response()->json([
             'success' => true,
-            'message' => 'Usuário deletado com sucesso!!'
+            'message' => 'Usuário deletado com sucesso!!',
         ]);
     }
     public function search(Request $request, $termo)
@@ -86,7 +95,7 @@ class UserController extends Controller
         $paginator = User::whereRaw('unaccent(lower(name)) ilike unaccent(lower(?))', [$search])
             ->paginate($limit);
 
-        $paginator->setPath("/users/search/{$termo}?limit={$limit}");
+        $paginator->setPath("/usuarios/search/{$termo}?limit={$limit}");
 
         return response()->json([
             'success' => true,

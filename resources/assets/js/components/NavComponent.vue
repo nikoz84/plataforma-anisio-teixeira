@@ -18,31 +18,19 @@
                 <ul class="nav navbar-nav navbar-right">
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mídias Educacionais <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                          Canais <span class="caret"></span>
+                        </a>
                         <ul class="dropdown-menu">
-                            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'recursos-educacionais-abertos'}}">
-                               <a>Recursos Educacionais Abertos</a>
+                            <router-link v-for="(link,i) in links" 
+                                  :key="i" 
+                                  tag="li" 
+                                  :to="{ name: 'Listar', params: {slug: link.slug}}">
+                               <a>{{link.name}}</a>
                             </router-link>
-                            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'tv-anisio-teixeira'}}">
-                               <a>Tv Anísio Teixeira</a>
-                            </router-link>
-                            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'radio-anisio-teixeira'}}">
-                                <a>Radio Anísio Teixeira</a>
-                            </router-link>
-                            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'emitec'}}">
-                                <a>Emitec</a>
-                            </router-link>
-                            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'projetos-artisticos'}}">
-                                <a>Projetos Artisticos</a>
-                            </router-link>
-                            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'sites-tematicos'}}">
-                                <a>Sites Temáticos</a>
-                            </router-link>
-                            <router-link tag="li" :to="{ name: 'Inicio', params: {slug: 'aplicativos-educacionais'}}">
-                                <a>Aplicativos Educacionais</a>
-                            </router-link>
+                            
                             <li role="separador" class="divider" v-if="isLogged"></li>
-                            <router-link tag="li" to="/admin" v-if="isLogged">
+                            <router-link tag="li" :to=" {name:'admin', params: { slug: 'inicio', action:'estatisticas' }}" v-if="isLogged">
                                 <a>Administração</a>
                             </router-link>
                         </ul>
@@ -56,38 +44,12 @@
                             <router-link tag="li" to="/usuario/login" v-if="!isLogged">
                                 <a>Login</a>
                             </router-link>
-                            <router-link tag="li" to="/usuario/editar" v-if="isLogged">
-                                <a v-on:click.prevent="perfil()">Editar Perfil</a>
-                            </router-link>
                             <li v-if="isLogged">
                                 <a v-on:click.prevent="logout()">Sair</a>
                             </li>
                         </ul>
                     </li>
                 </ul>
-                <!-- menu configurações -->
-                <ul class="nav navbar-nav navbar-right">
-
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-cog"></i> <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <router-link tag="li" to="usuario/alterar-senha">
-                               <a>Alterar minha senha</a>
-                            </router-link>
-                            <router-link tag="li" to="usuario/adicionar">
-                                <a>Adicionar</a>
-                            </router-link>
-                            <router-link tag="li" to="usuario/listar">
-                                <a>Usuários</a>
-                            </router-link>
-                            <router-link tag="li" to="denuncias/listar">
-                                <a>Denúncias</a>
-                            </router-link>
-                        </ul>
-                    </li>
-                </ul>
-
-                <!--/END menu configurações -->
             </div>
         </div>
         <div class="progress-container">
@@ -104,11 +66,18 @@ export default {
   name: "nav-app",
   data() {
     return {
-      isLogged: store.state.isLogged
+      isLogged: store.state.isLogged,
+      links: []
     };
   },
-  mounted() {},
+  mounted() {
+    this.getLinks();
+  },
   methods: {
+    async getLinks() {
+      let resp = await client.get("/links");
+      this.links = resp.data.links;
+    },
     async logout() {
       localStorage.removeItem("token");
       let params = { token: localStorage.token };
@@ -120,7 +89,7 @@ export default {
         this.$router.push("/usuario/login");
       }
     },
-    handleScroll(event) {
+    handleScroll() {
       let winScroll =
         document.body.scrollTop || document.documentElement.scrollTop;
       let height =
@@ -131,10 +100,10 @@ export default {
     }
   },
   created() {
-    window.addEventListener("scroll", this.handleScroll);
+    //window.addEventListener("scroll", this.handleScroll,{passive: true});
   },
   destroyed() {
-    window.removeEventListener("scroll", this.handleScroll);
+    //window.removeEventListener("scroll", this.handleScroll, {passive: true});
   }
 };
 </script>

@@ -21,7 +21,12 @@
 
             <div class="form-group" v-bind:class="{ 'has-error': errors.email && errors.email.length > 0 }">
                 <label for="email">E-mail:*</label>
-                <input type="email" class="form-control" id="email" v-model="email" placeholder="Digite seu e-mail">
+                <input type="email" 
+                      class="form-control" 
+                      id="email" 
+                      v-model="email" 
+                      placeholder="Digite seu e-mail"
+                      autocomplete="off">
                 <small class="text-danger"
                         v-if="errors.email"
                         v-for="(error,e) in errors.email"
@@ -90,79 +95,84 @@
 </template>
 
 <script>
-import Loader from '../components/LoaderComponent.vue';
-import client from '../client.js';
+import Loader from "../components/LoaderComponent.vue";
+import client from "../client.js";
 
 export default {
-    name: 'DenunciaForm',
-    components: { Loader },
-    data () {
-        return {
-        name: '',
-        email: '',
-        url: this.$route.params.url,
-        subject: '',
-        message: '',
-        isSend: false,
-        isLoading: false,
-        r_id: 0,
-        siteKey: '6LegZ48UAAAAAI-sKAY09kHtR-uBkiizT6XKcOli',
-        isError: true,
-        success: false,
-        errors: {
-            name: [],
-            email: [],
-            url: [],
-            subject: [],
-            message: [],
-            recaptcha: []
-        },
-        }
-    },
-  mounted(){
-      //console.log(window.grecaptcha)
-      if(window.grecaptcha){
-          let container = document.getElementsByClassName('g-recaptcha')[0];
-          this.r_id = grecaptcha.render(container, { sitekey: this.siteKey })
+  name: "DenunciaForm",
+  components: { Loader },
+  data() {
+    return {
+      name: "",
+      email: "",
+      url: this.$route.params.url,
+      subject: "",
+      message: "",
+      isSend: false,
+      isLoading: false,
+      r_id: 0,
+      siteKey: "6LegZ48UAAAAAI-sKAY09kHtR-uBkiizT6XKcOli",
+      isError: true,
+      success: false,
+      errors: {
+        name: [],
+        email: [],
+        url: [],
+        subject: [],
+        message: [],
+        recaptcha: []
       }
+    };
   },
-  computed:{
-      getUrl(){
-          return this.$route.params.url;
-      }
+  mounted() {
+    //console.log(window.grecaptcha)
+    if (window.grecaptcha) {
+      let container = document.getElementsByClassName("g-recaptcha")[0];
+      this.r_id = grecaptcha.render(container, { sitekey: this.siteKey });
+    }
   },
-  methods:{
+  computed: {
+    getUrl() {
+      return localStorage.urlDenuncia;
+    }
+  },
+  methods: {
+    async enviar() {
+      this.isLoading = true;
+      let resRecaptcha = grecaptcha.getResponse();
+      let data = {
+        name: this.name,
+        email: this.email,
+        url: this.url,
+        subject: this.subject,
+        message: this.message,
+        recaptcha: resRecaptcha
+      };
 
-    async enviar(){
-        this.isLoading = true;
-        let resRecaptcha = grecaptcha.getResponse();
-        let data = { name: this.name, email: this.email,
-                    url: this.url, subject: this.subject, message: this.message,
-                    recaptcha: resRecaptcha
+      let resp = await client.post("/email/enviar", data);
+      this.isSend = resp.data.success;
 
-        };
-
-        let resp = await client.config('POST','/email/enviar', data);
-        this.isSend = resp.data.success;
-
-        if(resp.data.success){
-            this.isLoading = false;
-        }else{
-            this.isLoading = false;
-            this.isError = resp.data.success;
-            if(resp.data.errors){
-                this.errors = resp.data.errors;
-            }
+      if (resp.data.success) {
+        this.isLoading = false;
+        localStorage.removeItem('urlDenuncia');
+      } else {
+        this.isLoading = false;
+        this.isError = resp.data.success;
+        if (resp.data.errors) {
+          this.errors = resp.data.errors;
         }
+      }
 
-        setTimeout(()=>{
-            this.isError = true;
-        },3000)
-
+      setTimeout(() => {
+        this.isError = true;
+      }, 3000);
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
-form { margin-top: 30px; margin-bottom: 30px;}
+form {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
 </style>

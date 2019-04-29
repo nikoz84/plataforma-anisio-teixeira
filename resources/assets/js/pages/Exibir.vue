@@ -1,84 +1,46 @@
 <template>
-    <div top>
-        <ConteudoApp v-bind:conteudo="conteudo" v-if="showConteudo" />
-        <AplicativoApp v-bind:aplicativo="aplicativo" v-if="showAplicativo"/>
-        <article class="jumbotron" v-if="showMessage">
-            <h3 class="text-center">{{ message }}</h3>
+    <div>
+        <conteudo v-if="showConteudo"></conteudo>
+        <aplicativo v-if="showAplicativo"></aplicativo>
+        <article class="jumbotron" v-if="notFound">
+            <h3 class="text-center"></h3>
         </article>
     </div>
 </template>
 <script>
-import client from '../client.js';
-import ConteudoApp from '../components/ConteudoComponent.vue';
-import AplicativoApp from '../components/AplicativoComponent.vue';
+import client from "../client.js";
+import ConteudoApp from "../components/ConteudoComponent.vue";
+import AplicativoApp from "../components/AplicativoComponent.vue";
 
 export default {
-    name : 'exibir',
-    components:{ ConteudoApp, AplicativoApp },
-    data() {
-        return {
-            conteudo: {
-                title: '',
-                description: '',
-                authors: '',
-                source: '',
-                createdAt: '',
-                options: {
-                    tags: [],
-                    componentes:[],
-                    tipo: '',
-                    download:'',
-                    visualizacao:'',
-                    guia:''
-                }
-            },
-            message: null,
-            showMessage: false,
-            showConteudo: false,
-            showAplicativo: false,
-            aplicativo: {
-                name: '',
-                description: '',
-                options: {},
-            }
-        }
+  name: "exibir",
+  components: { conteudo: ConteudoApp, aplicativo: AplicativoApp },
+  created() {
+    let payload = {
+        slug: this.$route.params.slug,
+        id: this.$route.params.id
+      };
+    this.$store.dispatch("getConteudo", payload);
+  },
+  computed: {
+    conteudo() {
+      return this.$store.state.conteudo;
     },
-    created(){
-        this.getData();
-        window.addEventListener('scroll', this.goToTop);
+    showConteudo() {
+      return this.$store.state.showConteudo;
     },
-    computed:{
-
+    showAplicativo() {
+      return this.$store.state.showAplicativo;
     },
-    methods: {
-        async getData(){
-            let id = this.$route.params.id;
-            let slug = (this.$route.params.slug == 'aplicativos-educacionais') ? 'aplicativos': 'conteudos';
-            let resp = await client.get(`/${slug}/${id}`);
-            if( slug == 'aplicativos' ){
-                this.aplicativo = resp.data.aplicativo
-                this.showAplicativo = true;
-            }else if( slug == 'conteudos' ){
-                this.conteudo = resp.data.conteudo;
-                this.showConteudo = true;
-            }else{
-                 this.showMessage = true;
-                 this.message = resp.data.message;
-            }
-
-        },
-        goToTop(){
-            //let top = window.pageYOffset;
-            console.log('sdf')
-
-        }
-    },
-    destroyed () {
-        window.removeEventListener('scroll', this.goToTop);
+    notFound(){
+      return this.$store.state.notFound;
     }
-
-}
+  },
+  methods: {},
+  destroyed() {
+    window.removeEventListener("scroll", this.goToTop);
+  }
+};
 </script>
 <style lang="scss" scoped>
-
 </style>

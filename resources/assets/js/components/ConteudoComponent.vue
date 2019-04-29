@@ -1,11 +1,6 @@
 <template>
     <article class="row">
-        <PlayerApp :tipo="conteudo.options.tipo"
-                :download="conteudo.options.download"
-                :visualizacao="conteudo.options.visualizacao"
-                :guia="conteudo.options.guia"
-                :id="conteudo.id"
-                />
+        <PlayerApp />
         <div class="panel panel-default">
             <div class="panel-body">
                 <button class="btn btn-info btn-xs" v-on:click="updateConteudo()">Editar</button>
@@ -43,42 +38,54 @@
     </article>
 </template>
 <script>
-import PlayerApp from '../components/PlayerComponent.vue';
-import client from '../client.js';
+import PlayerApp from "../components/PlayerComponent.vue";
+import client from "../client.js";
 
 export default {
-    name : 'ConteudoApp',
-    components:{ PlayerApp },
-    props:['conteudo','message' ],
-    computed:{
-        splitAuthors(){
-            let replace = this.conteudo.authors.replace(',',';')
-            return replace.split(';');
-        },
-        backgroundColor(){
-            let color = this.conteudo.canal.color;
-            return `background-color: ${color}`;
-        }
+  name: "ConteudoApp",
+  components: { PlayerApp },
+  props: ["message"],
+  computed: {
+    splitAuthors() {
+      let replace = this.$store.state.conteudo.authors.replace(",", ";");
+      return replace.split(";");
     },
-    methods: {
-        updateConteudo(){
-            this.$router.push({ name: 'EditarConteudo', params: {slug: this.$route.params.slug, id: this.$route.params.id, update: true }})
-
-        },
-        async deleteConteudo(){
-            let params = {
-                token: localStorage.token
-            }
-            let resp = await client.delete(`/conteudos/delete/${this.$route.params.id}`,params);
-
-            //lista os conteúdos
-            if(resp.data.success){
-                this.$router.push({ name: 'Listar', params: {slug: this.$route.params.slug}})
-            }
-        }
-
+    backgroundColor() {
+      let color = this.$store.state.conteudo.canal.color;
+      return `background-color: ${color}`;
+    },
+    conteudo() {
+      return this.$store.state.conteudo;
     }
-}
+  },
+  methods: {
+    updateConteudo() {
+      this.$router.push({
+        name: "EditarConteudo",
+        params: {
+          slug: this.$route.params.slug,
+          id: this.$route.params.id,
+          update: true
+        }
+      });
+    },
+    async deleteConteudo() {
+      
+      let resp = await client.delete(
+        `/conteudos/${this.$route.params.id}`,
+        params
+      );
+
+      //lista os conteúdos
+      if (resp.data.success) {
+        this.$router.push({
+          name: "Listar",
+          params: { slug: this.$route.params.slug }
+        });
+      }
+    }
+  }
+};
 </script>
 <style scoped>
 i::before {

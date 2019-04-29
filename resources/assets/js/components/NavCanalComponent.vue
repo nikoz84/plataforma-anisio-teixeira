@@ -52,15 +52,14 @@ export default {
     },
     methods:{
         getUrl(){
-            let url = encodeURI(location.href);
+            let url = localStorage.setItem('urlDenuncia',location.href);
             this.$router.push(
-                { name:'DenunciaForm', params: {slug: this.$route.params.slug, url}}
+                { name:'DenunciaForm', params: {slug: this.$route.params.slug}}
             )
         },
         getUrlFaleConosco(){
-            let url = encodeURI(location.href);
             this.$router.push(
-                { name:'FaleConoscoForm', params: {slug: this.$route.params.slug, url}}
+                { name:'FaleConoscoForm', params: {slug: this.$route.params.slug}}
             )
         },
     }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Canal;
-use App\Conteudo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -11,7 +10,7 @@ class CanalController extends Controller
 {
     public function __construct(Request $request)
     {
-        $this->middleware('jwt.verify')->except(['list','search','getBySlug']);
+        $this->middleware('jwt.verify')->except(['list', 'search', 'getBySlug']);
         $this->request = $request;
     }
     /**
@@ -19,32 +18,31 @@ class CanalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list()
-    {
+    function list() {
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
-        
+
         if ($this->request->has('name')) {
             $name = $this->request->query('name');
             $canais = Canal::where('name', $name)
-                        ->paginate($limit);
+                ->paginate($limit);
             $canais->setPath("/canais?name={$name}limit={$limit}");
             return response()->json([
                 'success' => true,
-                'paginator' => $canais
+                'paginator' => $canais,
             ]);
         }
         $canais = Canal::where('is_active', true)
-                        ->paginate($limit);
-        
+            ->paginate($limit);
+
         $canais->setPath("/canais?limit={$limit}");
 
         return response()->json([
-            'success'=> true,
-            'title'=> 'Lista de canais',
+            'success' => true,
+            'title' => 'Lista de canais',
             'paginator' => $canais,
-            'page'=> $canais->currentPage(),
-            'limit' => $canais->perPage()
+            'page' => $canais->currentPage(),
+            'limit' => $canais->perPage(),
         ]);
     }
 
@@ -60,12 +58,12 @@ class CanalController extends Controller
                 'name' => $this->request->get('name'),
                 'description' => $this->request->get('description'),
                 'slug' => 'teste-slug',
-                'is_active' => true
+                'is_active' => true,
             ]
         );
         return response()->json([
             'message' => 'Canal cadastrado com sucesso',
-            'id' => $id
+            'id' => $id,
         ]);
     }
 
@@ -84,11 +82,11 @@ class CanalController extends Controller
             'description' => $this->request->get('description'),
             'is_featured' => $this->request->get('is_featured'),
             'is_approved' => $this->request->get('is_approved'),
-            'options' => $this->request->get('options')
+            'options' => $this->request->get('options'),
         ];
-        
+
         $canal->save($data);
-        
+
         return response()->json($canal->toJson());
     }
 
@@ -105,12 +103,12 @@ class CanalController extends Controller
         if (is_null($canal)) {
             $resp = [
                 'menssage' => 'Canal não encontrado',
-                'is_deleted' => false
+                'is_deleted' => false,
             ];
         } else {
             $resp = [
                 'menssage' => "Canal de id: {$id} foi excluido com sucesso!!",
-                'is_deleted' => $canal->delete()
+                'is_deleted' => $canal->delete(),
             ];
         }
 
@@ -121,9 +119,9 @@ class CanalController extends Controller
         $canal = Canal::where('slug', 'ilike', $slug)->first();
 
         return response()->json([
-            'success'=> true,
+            'success' => true,
             'canal' => $canal,
-            'sidebar' => $this->getSideBar($canal->id)
+            'sidebar' => $this->getSideBar($canal->id),
         ]);
     }
     private function getSideBar($id)
@@ -133,48 +131,49 @@ class CanalController extends Controller
             case 2:
             case 3:
             case 12:
-                $categories =  \App\Category::selectRaw("id, parent_id, name, options->'is_active' as is_active")->where('canal_id', $id)
-                                            ->whereRaw('parent_id is null')
-                                            ->where('options->is_active', 'true')
-                                            ->with('subCategories')
-                                            ->orderBy('name', 'asc')
-                                            ->get();
+                $categories = \App\Category::selectRaw("id, parent_id, name, options->'is_active' as is_active")
+                    ->where('canal_id', $id)
+                    ->whereRaw('parent_id is null')
+                    ->where('options->is_active', 'true')
+                    ->with('subCategories')
+                    ->orderBy('name', 'asc')
+                    ->get();
                 $disciplinas = [];
                 if ($id == 2) {
                     $disciplinas = \App\NivelEnsino::where('id', '=', 5)->with('components')->get();
                 }
-                
+
                 return [
                     'categories' => $categories,
                     'temas' => [],
-                    'disciplinas' => $disciplinas
+                    'disciplinas' => $disciplinas,
                 ];
-            break;
+                break;
             case 5:
                 return [
                     'categories' => [],
                     'temas' => \App\CurricularComponentCategory::where('id', '=', 3)->with('components')->get(),
-                    'disciplinas' => \App\NivelEnsino::where('id', '=', 5)->with('components')->get()
+                    'disciplinas' => \App\NivelEnsino::where('id', '=', 5)->with('components')->get(),
                 ];
-            break;
+                break;
             case 6:
                 return [
-                        'categories' => [],
-                        'temas' => [],
-                        'disciplinas' => [],
-                        'tipos' => \App\Tipo::select(['id','name'])->get(),
-                        'licenses' => \App\License::select(['id','name'])->whereRaw('parent_id is null')->get(),
-                        'components' => \App\CurricularComponentCategory::with('components')->get(),
-                        'niveis' => \App\NivelEnsino::with('components')->get()
-                    ];
-            break;
+                    'categories' => [],
+                    'temas' => [],
+                    'disciplinas' => [],
+                    'tipos' => \App\Tipo::select(['id', 'name'])->get(),
+                    'licenses' => \App\License::select(['id', 'name'])->whereRaw('parent_id is null')->get(),
+                    'components' => \App\CurricularComponentCategory::with('components')->get(),
+                    'niveis' => \App\NivelEnsino::with('components')->get(),
+                ];
+                break;
             case 9:
                 return [
-                        'categories' => \App\AplicativoCategory::get(),
-                        'temas' => [],
-                        'disciplinas' => []
-                    ];
-            break;
+                    'categories' => \App\AplicativoCategory::get(),
+                    'temas' => [],
+                    'disciplinas' => [],
+                ];
+                break;
         }
     }
     public function search(Request $request, $termo)
@@ -183,14 +182,14 @@ class CanalController extends Controller
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
         $search = "%{$termo}%";
         $canais = Canal::whereRaw("unaccent(lower(name)) LIKE unaccent(lower(?))")
-                    ->setBindings([$search])
-                    ->paginate($limit);
-        
+            ->setBindings([$search])
+            ->paginate($limit);
+
         $canais->setPath("/canais/search/{$termo}?limit={$limit}");
 
         return response()->json([
-            'success'=> true,
-            'paginator' => $canais
+            'success' => true,
+            'paginator' => $canais,
         ]);
     }
 }

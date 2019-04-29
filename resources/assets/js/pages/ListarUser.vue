@@ -51,16 +51,16 @@
 </template>
 
 <script>
-import client from '../client.js';
-import modal from '../components/ModalComponent.vue';
+import client from "../client.js";
+import modal from "../components/ModalComponent.vue";
 export default {
   name: "ListarUser",
   components: { modal },
   data() {
     return {
       users: [],
-      termo: '',
-      user:{}
+      termo: "",
+      user: {}
     };
   },
   mounted() {
@@ -68,40 +68,42 @@ export default {
   },
   methods: {
     async getUsers() {
-      let resp = await client.get('/users');
+      let resp = await client.get("/users");
       console.warn(resp);
       this.users = resp.data.users;
     },
-    getDataFromUser(user){
+    getDataFromUser(user) {
       this.user = user;
     },
     async deleteUsuario(id) {
-      let resp = await client.delete(`/users/delete/${id}`);
-      console.warn(resp)
-      if(resp.data.success){
-        this.$router.go({ path: 'listar' });
+      let resp = await client.delete(`/users/${id}`);
+      console.warn(resp);
+      if (resp.data.success) {
+        this.$router.go({ path: "listar" });
       }
     },
-    async searchUsers(){
-            if(!this.termo) return;
-            let url = `/users/search/${this.termo}`;
-            this.$parent.show = false;
-            let resp = await client.get(url);
-            console.log(resp)
-            this.users= resp.data.paginator.data;
-            if(resp.data){
-                this.$parent.paginator = resp.data.paginator;
-                this.$parent.show = true;
-            }
-
+    async searchUsers() {
+      if (!this.termo) return;
+      let url = `/users/search/${this.termo}`;
+      this.$parent.show = false;
+      let resp = await client.get(url);
+      console.log(resp);
+      this.users = resp.data.paginator.data;
+      if (resp.data) {
+        this.$parent.paginator = resp.data.paginator;
+        this.$parent.show = true;
+      }
     },
     updateUsuario(id) {
-      this.$router.push({ name: 'EditarUsuario', params: {id: id, update:true}});
+      this.$router.push({
+        name: "EditarUsuario",
+        params: { id: id, update: true }
+      });
       //console.warn(this.$route.params)
     },
 
     resetpassword(id) {
-      this.$router.push({ name: 'UserEdit', params: {id: id, update:true}});
+      this.$router.push({ name: "UserEdit", params: { id: id, update: true } });
       //console.warn(this.$route.params)
     }
   }

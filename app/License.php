@@ -12,7 +12,7 @@ class License extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'site', 'parent_id'
+        'name', 'description', 'site', 'parent_id',
     ];
 
     public function conteudo()
@@ -20,7 +20,7 @@ class License extends Model
         return $this->belongsTo(\App\Conteudo::class, 'license_id');
     }
 
-    public function parent()
+    public function childs()
     {
         return $this->hasMany(\App\License::class, 'parent_id', 'id');
     }
