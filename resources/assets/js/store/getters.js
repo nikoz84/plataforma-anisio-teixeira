@@ -34,6 +34,9 @@ const getters = {
   },
   getConteudo: state => {
     return state.conteudo;
+  },
+  getButtonText: state => {
+    return state.buttonText;
   }
 };
 

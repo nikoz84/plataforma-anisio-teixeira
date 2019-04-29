@@ -5,7 +5,6 @@
 </template>
 <script>
 import Lista from "../components/ListComponent.vue";
-import client from "../client.js";
 
 export default {
   name: "Listar",

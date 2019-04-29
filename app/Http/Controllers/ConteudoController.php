@@ -23,7 +23,7 @@ class ConteudoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function list() {
+    public function list() {
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
@@ -64,6 +64,7 @@ class ConteudoController extends Controller
             'paginator' => $conteudos,
         ], 200);
     }
+
     private function getConteudosByIdCanal($canal_id)
     {
         $url = null;
@@ -178,7 +179,7 @@ class ConteudoController extends Controller
     {
         //dd($id);
         $conteudo = $this->conteudo::find($id);
-        //print_r($this->request->all());    
+        //print_r($this->request->all());
         //die();
         $conteudo->fill($this->request->all());
 

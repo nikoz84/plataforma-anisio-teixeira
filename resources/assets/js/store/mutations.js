@@ -1,5 +1,3 @@
-import state from "./state.js";
-
 const mutations = {
   LOGIN_USER(state) {
     state.isLogged = true;
@@ -19,6 +17,9 @@ const mutations = {
   },
   SET_IS_ERROR(state, error) {
     state.error = error;
+  },
+  SET_BUTTON_TEXT(state, buttonText) {
+    state.buttonText = buttonText;
   },
   SET_CANAL(state, canal) {
     state.canal = canal;

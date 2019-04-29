@@ -23,10 +23,10 @@
           <!-- TIPO -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.tipo && errors.tipo.length > 0 }">
               <label for="tipoconteudo">Tipo de Conteúdo:*</label>
-              <select class="form-control form-control-lg" name="tipo" id="tipoconteudo" :value="conteudo.tipo">
+              <select class="form-control form-control-lg" name="tipo" id="tipoconteudo" :value="conteudo.options.tipo">
                   <option value="">« SELECIONE »</option>
                   <option v-for="(tipo, i) in tipos"
-                          v-bind:value="tipo.id"
+                          v-bind:value="conteudo.tipo"
                           v-bind:key="i">{{tipo.name}}
                   </option>
               </select>
@@ -113,7 +113,7 @@
                   Se precisar de ajuda clique aqui
               </small><br>
               <!-- ERRORS -->
-              <erros :errors="errors.license"></erros>
+              <erros :errors="errors.licenses"></erros>
           </div>
                       
                     <!--<div class="form-group" v-bind:class="{ 'has-error': errors.image && errors.image.length > 0 }">
@@ -151,11 +151,9 @@
             <!-- ERRORS -->
             <erros :errors="errors.is_approved"></erros>
         </div>
-      
-                
-        <!-- BOTÃO DE ENVIO -->
+        <!-- BOTAO DE ENVIO -->
         <div class="form-group">
-            <button class="btn btn-default">Salvar</button>
+          <button class="btn btn-default">Salvar</button>
         </div>
         <!-- RESPOSTA FORMULARIO -->
         <alert></alert>
@@ -188,9 +186,7 @@ import "tui-editor/dist/tui-editor-contents.css";
 import "codemirror/lib/codemirror.css";
 import { Editor } from "@toast-ui/vue-editor";
 import store from "../store";
-import debounce from 'lodash/debounce';
-import { timeout } from 'q';
-
+import debounce from "lodash/debounce";
 
 export default {
   name: "ConteudoForm",
@@ -208,25 +204,16 @@ export default {
   created() {
     this.$store.dispatch("getTipos");
     this.$store.dispatch("getLicenses");
-    
-    if (this.$route.params.update) {
-      let payload = {
-        slug: this.$route.params.slug,
-        id: this.$route.params.id
-      }
-       
-      this.$store.dispatch("getConteudo",payload);
-      this.isUpdate = this.$route.params.update;
-      this.textButton = "Editar";
-    }else{
-      this.$store.state.conteudo;
+    const payload = {
+      slug: this.$route.params.slug,
+      id: this.$route.params.id
+    };
+    if (this.$route.params.id) {
+      this.$store.dispatch("getConteudo", payload);
     }
   },
   computed: {
-    id(id) {
-      return id;
-    },
-    conteudo(){
+    conteudo() {
       return this.$store.state.conteudo;
     },
     isTipoSite() {
@@ -258,10 +245,11 @@ export default {
     }
   },
   methods: {
-    send(event) {
-      if(this.$route.params.update){
+    send() {
+      if (this.$route.params.id) {
+        let conteudo = this.$store.state.conteudo;
         this.$store.dispatch("updateConteudo", this.$store.state.conteudo);
-      }else{
+      } else {
         this.$store.dispatch("createConteudo", this.$store.state.conteudo);
       }
 

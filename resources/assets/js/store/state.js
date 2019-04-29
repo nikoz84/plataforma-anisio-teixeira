@@ -4,11 +4,11 @@ const state = {
   conteudo: {
     title: "",
     description: "",
-    tipo: "",
     authors: "",
     source: "",
     license: "",
     image: "",
+    tipo: "",
     terms: false,
     tags: [],
     canal: "",
@@ -16,7 +16,12 @@ const state = {
     is_approved: false,
     is_featured: false,
     is_site: false,
-    options: {}
+    options: {
+      tipo: {
+        id: null,
+        name: ""
+      }
+    }
   },
   aplicativos: [],
   aplicativo: {},
@@ -44,6 +49,7 @@ const state = {
   showConteudo: false,
   showApllicativo: false,
   formData: {},
+  buttonText: "Salvar",
   notFound: false,
   isUpdate: false,
   isDelete: false,
