@@ -58,7 +58,6 @@ export default {
             )
         },
         getUrlFaleConosco(){
-            let url = encodeURI(location.href);
             this.$router.push(
                 { name:'FaleConoscoForm', params: {slug: this.$route.params.slug}}
             )

@@ -74,7 +74,7 @@ export default {
         if (resp.data.token.access_token) {
           localStorage.setItem("token", resp.data.token.access_token);
           this.docodePayloadToken();
-          store.commit("LOGIN_USER");
+          store.commit("LOGIN_USER", true);
           this.$router.push("/admin");
         }
       }

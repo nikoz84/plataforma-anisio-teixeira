@@ -178,6 +178,8 @@ class ConteudoController extends Controller
     {
         //dd($id);
         $conteudo = $this->conteudo::find($id);
+        //print_r($this->request->all());    
+        //die();
         $conteudo->fill($this->request->all());
 
         $conteudo->save();

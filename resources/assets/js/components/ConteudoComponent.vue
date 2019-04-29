@@ -70,9 +70,7 @@ export default {
       });
     },
     async deleteConteudo() {
-      let params = {
-        token: localStorage.token
-      };
+      
       let resp = await client.delete(
         `/conteudos/${this.$route.params.id}`,
         params

@@ -79,7 +79,6 @@ var _default = {
       });
     },
     getUrlFaleConosco: function getUrlFaleConosco() {
-      var url = encodeURI(location.href);
       this.$router.push({
         name: 'FaleConoscoForm',
         params: {

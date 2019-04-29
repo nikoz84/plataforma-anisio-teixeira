@@ -18,12 +18,11 @@ class LicenseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list() 
-	{
+    public function list() {
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 20;
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
 
-        $paginator = $this->license::with('childs')
+        $paginator = $this->license::with('childs')->whereNull('parent_id')
             ->paginate($limit);
 
         $paginator->setPath("/licenses?limit={$limit}");

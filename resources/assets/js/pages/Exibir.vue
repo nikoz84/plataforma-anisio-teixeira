@@ -2,7 +2,7 @@
     <div>
         <conteudo v-if="showConteudo"></conteudo>
         <aplicativo v-if="showAplicativo"></aplicativo>
-        <article class="jumbotron" >
+        <article class="jumbotron" v-if="notFound">
             <h3 class="text-center"></h3>
         </article>
     </div>
@@ -16,23 +16,24 @@ export default {
   name: "exibir",
   components: { conteudo: ConteudoApp, aplicativo: AplicativoApp },
   created() {
-    //console.log(this.$store.state.contudo);
-  },
-  computed: {
-    conteudo() {
-      let payload = {
+    let payload = {
         slug: this.$route.params.slug,
         id: this.$route.params.id
       };
-      this.$store.dispatch("getConteudo", payload);
-
-      //return this.$store.state.conteudo;
+    this.$store.dispatch("getConteudo", payload);
+  },
+  computed: {
+    conteudo() {
+      return this.$store.state.conteudo;
     },
     showConteudo() {
       return this.$store.state.showConteudo;
     },
     showAplicativo() {
       return this.$store.state.showAplicativo;
+    },
+    notFound(){
+      return this.$store.state.notFound;
     }
   },
   methods: {},

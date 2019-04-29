@@ -15,15 +15,15 @@
                       name="title"
                       id="titulo"
                       aria-describedby="titulo"
-                      v-model.trim="form.title">
+                      :value="conteudo.title">
               <small id="titulo" class="text-info">Adicione o nome original da mídia.</small><br>
-              
-              <erros></erros>
+              <!-- ERRORS -->
+              <erros :errors="errors.title"></erros>
           </div>
           <!-- TIPO -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.tipo && errors.tipo.length > 0 }">
               <label for="tipoconteudo">Tipo de Conteúdo:*</label>
-              <select class="form-control form-control-lg" name="tipo" id="tipoconteudo" v-model="form.tipo">
+              <select class="form-control form-control-lg" name="tipo" id="tipoconteudo" :value="conteudo.tipo">
                   <option value="">« SELECIONE »</option>
                   <option v-for="(tipo, i) in tipos"
                           v-bind:value="tipo.id"
@@ -31,6 +31,7 @@
                   </option>
               </select>
               <small class="text-info">Escolha a opção mais adequada à mídia que deseja publicar, conforme tipos disponíveis.</small><br>
+              <!-- ERRORS -->
               <erros :errors="errors.tipo"></erros>
               </div>
           </div>
@@ -47,20 +48,21 @@
           <!-- CATEGORIA OPCIONAL-->
           <div class="form-group" v-if="categories.length != 0">
               <label for="estado">Categoria de Conteúdo:*</label>
-              <select class="form-control form-control-lg" name="category" id="categoria" v-model="form.category">
+              <select class="form-control form-control-lg" name="category" id="categoria" :value="conteudo.category">
                   <option value="">« SELECIONE »</option>
                   <option v-for="(item, i) in categories"
                           v-bind:value="item.name"
                           v-bind:key="i">{{item.name}}
                   </option>
               </select>
+              <!-- ERRORS -->
               <erros :errors="errors.categories"></erros>
           </div>
                     
           <!-- DESCRICAO -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.description && errors.description.length > 0 }">
               <label for="descricao">Descrição:*</label>
-              <editor v-model="form.description" 
+              <editor :value="conteudo.description" 
                       id="descricao"
                       name="description" 
                       height="500px" 
@@ -69,44 +71,48 @@
                   Esta é a primeira apresentação da mídia e pode ser o diferencial na hora do usuário escolher se acessa ou não. 
                   Verifique outras descrições para adotar o modelo mais adequado.
               </small><br>
+              <!-- ERRORS -->
               <erros :errors="errors.description"></erros>
           </div>
                     
           <!-- AUTORES -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.authors && errors.authors.length > 0 }">
               <label for="autores">Autores:*</label>
-              <input type="text" class="form-control" name="authors" id="autores" v-model="form.authors">
+              <input type="text" class="form-control" name="authors" id="autores" :value="conteudo.authors">
               <small class="text-info">Nome dos autores ou grupo de trabalho responsável pelo desenvolvimento da mídia.</small><br>
+              <!-- ERRORS -->
               <erros :errors="errors.authors"></erros>
           </div>
           <!-- FONTE -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.source && errors.source.length > 0 }">
               <label for="fonte">Fonte:*</label>
-              <input type="text" class="form-control" name="source" id="fonte" v-model="form.source" >
+              <input type="text" class="form-control" name="source" id="fonte" :value="conteudo.source" >
               <small class="text-info">Indique o site ou o nome da instituição que produziu a mídia.</small><br>
+              <!-- ERRORS -->
               <erros :errors="errors.source"></erros>
           </div>
           <!-- LICENCA -->
-          <div class="form-group" v-bind:class="{ 'has-error': errors.license && errors.license.length > 0 }">
+          <div class="form-group" v-bind:class="{ 'has-error': errors.licenses && errors.licenses.length > 0 }">
               <label for="licenca-conteudo">Licença de Conteúdo:*</label>
-              <select class="form-control form-control-lg"  name="license" id="licenca-conteudo" v-model="form.license">
+              <select class="form-control form-control-lg"  name="license" id="licenca-conteudo" :value="conteudo.license">
                   <option value="" >« SELECIONE »</option>
-                  <!--option v-for="(license, i) in licenses"
-                          v-bind:value="license.id"
-                          v-bind:key="i">
-                          {{license.name}}
+                  <optgroup label="Creative Commonds">
+                    <option v-for="(child,i) in childsLicenses" :key="i" >
+                      {{child}}
+                    </option>
+                  </optgroup>
+                  <option v-for="(license, i) in licensesFilter" :key="i" :value="license.id">
+                    {{license.name}}  
                   </option>
-                  <optgroup  v-if="license.childs != null" >
-                      <option v-for="(child, i) in childs"
-                          v-bind:value="child.id"
-                          v-bind:key="i">{{child.name}}>
-                      </option>
-                  </optgroup-->
-              </select>
+                  
+                  
+              </select>    
+                  
               <small class="text-info">
                   Escolha a opção que mais adequada à mídia que deseja publicar, conforme opções disponíveis. 
                   Se precisar de ajuda clique aqui
               </small><br>
+              <!-- ERRORS -->
               <erros :errors="errors.license"></erros>
           </div>
                       
@@ -129,18 +135,20 @@
         <!-- CONDIÇÕES DE USO -->
         <div class="checkbox" v-bind:class="{ 'has-error': errors.terms && errors.terms.length > 0 }">
             <label for="termosecondicoes">
-                <input id="termosecondicoes" name="terms" type="checkbox" v-model="form.terms"> Li e concordo com os termos e condições de uso.
+                <input id="termosecondicoes" name="terms" type="checkbox" :value="conteudo.terms"> Li e concordo com os termos e condições de uso.
             </label><br>
+            <!-- ERRORS -->
             <erros :errors="errors.terms"></erros>
         </div>
         <div class="form-group">
-        <!--multiselect class="form-control" v-model="tipo" :options="tipos" placeholder="Tipo de conteúdo"></multiselect-->
+        <!--multiselect class="form-control" :value="tipo" :options="tipos" placeholder="Tipo de conteúdo"></multiselect-->
         </div>
         <!-- APROVAR CONTEÚDO -->
         <div class="checkbox" v-bind:class="{ 'has-error': errors.is_approved && errors.is_approved.length > 0 }">
             <label for="aprovado">
-                <input id="aprovado" name="is_approved" type="checkbox" v-model="form.is_approved"> Deseja publicar o conteúdo?
+                <input id="aprovado" name="is_approved" type="checkbox" :value="conteudo.is_approved"> Deseja publicar o conteúdo?
             </label><br>
+            <!-- ERRORS -->
             <erros :errors="errors.is_approved"></erros>
         </div>
       
@@ -193,146 +201,75 @@ export default {
   },
   data() {
     return {
-      form: {
-        title: "",
-        description: "",
-        tipo: "",
-        authors: "",
-        source: "",
-        license: "",
-        image: "",
-        terms: false,
-        tags: [],
-        canal: "",
-        category: "",
-        is_approved: false
-      },
-
-      licenses: [],
-
-      options: {},
-
-      tipos: [],
-
-      is_featured: false,
-      is_site: false,
-      is_approved: false,
       autocompleteItems: [],
-      category: "",
-
-      categories: [],
-
-      isUpdate: false,
-      errors: {
-        title: [],
-        description: [],
-        tipo: [],
-        authors: [],
-        source: [],
-        license: [],
-        terms: [],
-        is_approved: []
-      }
+      categories: []
     };
   },
   created() {
-    //his.getTipos();
-    //this.getLicenses();
+    this.$store.dispatch("getTipos");
+    this.$store.dispatch("getLicenses");
+    
     if (this.$route.params.update) {
-      //this.getConteudo();
-      this.isUpdate = true;
+      let payload = {
+        slug: this.$route.params.slug,
+        id: this.$route.params.id
+      }
+       
+      this.$store.dispatch("getConteudo",payload);
+      this.isUpdate = this.$route.params.update;
       this.textButton = "Editar";
+    }else{
+      this.$store.state.conteudo;
     }
   },
   computed: {
+    id(id) {
+      return id;
+    },
+    conteudo(){
+      return this.$store.state.conteudo;
+    },
     isTipoSite() {
       return this.tipo == 8 ? true : false;
+    },
+    errors() {
+      return this.$store.state.errors;
+    },
+    licensesFilter() {
+      const licenses = this.$store.state.licenses;
+      return licenses.filter(function(item) {
+        return item.id != 2;
+      });
+    },
+    childsLicenses() {
+      const items = this.$store.state.licenses;
+      let a = items.filter(function(item) {
+        if (item.id == 2) {
+          return item;
+        }
+      });
+
+      //let ret = a[0];
+      //console.log(ret);
+      //return ret;
+    },
+    tipos() {
+      return this.$store.state.tipos;
     }
   },
   methods: {
-    async send(event) {
-      
-      const data = await this.$store.getters.getFormData;
-      
-      const err = await this.$store.getters.getErrors
-      console.log(err)
-      let a = Promise.all([
-        this.$store.dispatch("serializeFormData", event.target),
-        this.$store.dispatch("createConteudo", this.$store.getters.getFormData)
-        ])
-        console.log(a)
-      //Promise.all([]).then(responses => {
-        //responses.map(response => console.log(response));
-      //});
-      
-      //
-      
-      
-      
-      
-    }
-    /*
-    async createConteudo() {
-      let form = new FormData();
-      form.append("title", this.title);
-      form.append("tipo", this.tipo);
-      form.append("description", this.description);
-      form.append("url", this.options);
-      form.append("canal_id", localStorage.canal_id);
-      form.append("tags", this.tags);
-      form.append("category_id", this.category_id);
-      form.append("authors", this.authors);
-      form.append("source", this.source);
-      form.append("license", this.license);
-      form.append("is_featured", this.is_featured);
-      form.append("options", JSON.stringify(this.options));
-
-      let resp = await client.post("/conteudos", form);
-
-      if (response(resp)) {
-        console.log("editado");
-        goTo("Listar", this.$route.params.slug);
-      } else {
-        this.isError = resp.data.success;
-        this.message = resp.data.message;
-        this.errors = resp.data.errors;
-
-        console.log(store.state.message);
-
-        console.log();
+    send(event) {
+      if(this.$route.params.update){
+        this.$store.dispatch("updateConteudo", this.$store.state.conteudo);
+      }else{
+        this.$store.dispatch("createConteudo", this.$store.state.conteudo);
       }
-    },
-    async getTipos() {
-      let resp = await client.get("/tipos/conteudos");
-      this.tipos = resp.data.tipos;
-    },
-    async getLicenses() {
-      let resp = await client.get("/licenses");
-      this.licenses = resp.data.paginator.data;
-    },
-    async getConteudo() {
-      let resp = await client.get(`/conteudos/${this.$route.params.id}`);
-      console.warn(resp);
-      if (resp.data.success) {
-        this.title = resp.data.conteudo.title;
-        this.description = resp.data.conteudo.description;
-        this.authors = resp.data.conteudo.authors;
-        this.source = resp.data.conteudo.source;
-        this.category = resp.data.conteudo.category_id;
-        this.is_featured = resp.data.conteudo.is_featured;
-      }
-    },
-    async editConteudo() {
-      //console.log(params)
-      let params = {
-        name: this.name,
-        description: this.description,
-        canal: localStorage.idCanal,
-        category: this.category
-      };
-      let resp = await client.put(`/conteudo/${this.$route.params.id}`, params);
+
+      setTimeout(() => {
+        this.$store.commit("SET_SHOW_ALERT", false);
+        this.$store.commit("SET_IS_ERROR", false);
+      }, 2000);
     }
-    */
   }
 };
 </script>

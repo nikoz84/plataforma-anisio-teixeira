@@ -23,6 +23,12 @@ const getters = {
   getshowAplicativo: state => {
     return state.showAplicativo;
   },
+  getTipos: state => {
+    return state.tipos;
+  },
+  getshowLicenses: state => {
+    return state.licenses;
+  },
   getFormData: state => {
     return state.formData;
   },

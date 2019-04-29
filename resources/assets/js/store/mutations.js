@@ -38,6 +38,9 @@ const mutations = {
   SET_CANAL_ID(state, id) {
     state.canalId = id;
   },
+  SET_NOT_FOUND(state, notFound) {
+    state.notFound = notFound;
+  },
   SET_SHOW_CONTEUDO(state, showConteudo) {
     state.showConteudo = showConteudo;
   },
@@ -56,6 +59,12 @@ const mutations = {
   },
   SET_TEXT_ALERT(state, textAlert) {
     state.textAlert = textAlert;
+  },
+  SET_LICENSES(state, licenses) {
+    state.licenses = licenses;
+  },
+  SET_TIPOS(state, tipos) {
+    state.tipos = tipos;
   },
   SET_FORM_DATA(state, formData) {
     state.formData = formData;

@@ -1,7 +1,23 @@
 const state = {
   conteudos: [],
   paginator: {},
-  conteudo: {},
+  conteudo: {
+    title: "",
+    description: "",
+    tipo: "",
+    authors: "",
+    source: "",
+    license: "",
+    image: "",
+    terms: false,
+    tags: [],
+    canal: "",
+    category: "",
+    is_approved: false,
+    is_featured: false,
+    is_site: false,
+    options: {}
+  },
   aplicativos: [],
   aplicativo: {},
   canal: {},
@@ -10,6 +26,10 @@ const state = {
   temas: [],
   disciplinas: [],
   components: [],
+  licenses: [],
+  tipos: [],
+  license: "",
+  tipo: "",
   showErrors: false,
   isTipoSite: false,
   niveis: [],
@@ -23,7 +43,11 @@ const state = {
   showAlert: false,
   showConteudo: false,
   showApllicativo: false,
-  formData: {}
+  formData: {},
+  notFound: false,
+  isUpdate: false,
+  isDelete: false,
+  isCreate: true
 };
 
 export default state;
