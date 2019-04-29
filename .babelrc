@@ -1,8 +1,4 @@
 {
-<<<<<<< HEAD
-  "plugins": ["syntax-dynamic-import"]
-}
-=======
   "presets": ["@babel/preset-env"],
   "plugins": [
     "@babel/plugin-syntax-dynamic-import", 
@@ -10,4 +6,3 @@
   ],
   "comments": false
 }
->>>>>>> 12d98f75aebbf98a44d5d05ad4415d5e50a6a844

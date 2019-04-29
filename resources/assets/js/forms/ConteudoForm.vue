@@ -180,7 +180,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import { client } from "../client.js";
-import { response, goTo } from "../response.js";
+//import { response, goTo } from "../response.js";
 import showErrors from "../components/ShowErrors.vue";
 import Alert from "../components/AlertComponent.vue";
 import "tui-editor/dist/tui-editor.css";
