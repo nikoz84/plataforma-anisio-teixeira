@@ -1,6 +1,6 @@
 <template>
     <div>
-        <article class="panel panel-default" v-bind:id="item.id" v-bind:style="'border-bottom-color:' + color">
+        <article class="panel panel-default" v-bind:id="item.id" v-bind:style="'border-top-color:' + color">
             <div class="panel-heading">
                 <figure class="figure">
                     <img class="img-responsive" 
@@ -48,7 +48,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .panel-default {
-  border-right-width: 3px;
+  border-right-width: 1px;
+  border-top-width: 7px;
 }
 .panel-default .panel-heading {
   padding: 2px 2px;

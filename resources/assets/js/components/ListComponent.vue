@@ -12,12 +12,14 @@
                 <ul class="pager">
                     <li class="previous">
                         <a class="pointer" v-on:click="goTo(paginator.prev_page_url)">
-                        <span aria-hidden="true">&larr;</span> Anterior
+                        <span class="glyphicon glyphicon-backward
+"></span> Anterior
                         </a>
                     </li>
                     <li class="next">
                         <a class="pointer" v-on:click="goTo(paginator.next_page_url)">
-                        Próximo <span aria-hidden="true">&rarr;</span>
+                        Próximo <span class="glyphicon glyphicon-forward
+"></span> 
                         </a>
                     </li>
                 </ul>

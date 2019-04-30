@@ -8,7 +8,7 @@
                 aperfeiçoamento.</p>
 
             <div class="form-group" v-bind:class="{ 'has-error': errors.name && errors.name.length > 0 }">
-                <label for="nome">Nome:*</label>
+                <label for="nome">Nome:<span class="glyphicon-asterisk"></span></label>
                 <input type="text" class="form-control" id="nome" v-model="name" placeholder="Digite seu nome">
                 <small class="text-danger"
                         v-if="errors.name"
@@ -19,17 +19,17 @@
             </div>
 
             <div class="form-group">
-                <label for="email">E-mail:*</label>
+                <label for="email">E-mail:<span class="glyphicon-asterisk"></span></label>
                 <input type="email" class="form-control" id="email" v-model="email" placeholder="Digite seu e-mail">
             </div>
 
             <div class="form-group">
-                <label for="assunto">Assunto:*</label>
+                <label for="assunto">Assunto:<span class="glyphicon-asterisk"></span></label>
                 <input type="text" class="form-control" id="assunto" v-model="subject" placeholder="Qual é o assunto do contato">
             </div>
 
             <div class="form-group">
-                <label for="mensagem">Mensagem:*</label>
+                <label for="mensagem">Mensagem:<span class="glyphicon-asterisk"></span></label>
                 <textarea class="form-control" id="mensagem" v-model="message" placeholder="Digite aqui sua mensagem"></textarea>
             </div>
 
@@ -44,7 +44,7 @@
                 aperfeiçoamento.</p>
 
             <div class="form-group">
-                <label for="mensagem">Código de segurança:*</label>
+                <label for="mensagem">Código de segurança:<span class="glyphicon-asterisk"></span></label>
                 <div class="form-group row">
                     <div class="col-md-6 offset-md-4">
                        <div class="g-recaptcha" :data-sitekey="siteKey"></div>
@@ -142,4 +142,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 form { margin-top: 30px; margin-bottom: 30px;}
+
+textarea {
+  height: 170px;
+  resize: none;
+}
 </style>

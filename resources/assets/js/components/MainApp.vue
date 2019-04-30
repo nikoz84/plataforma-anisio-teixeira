@@ -49,6 +49,16 @@ hr.line {
   background-image: linear-gradient(to right, #ccc, #949da5, #ccc);
 }
 
+.glyphicon-asterisk{
+  color: rgb(128, 3, 3);
+  font-size: 19px;
+  margin-left: 5px;
+}
+
+small{
+  font-size: 90%;
+}
+
 /* Hide all steps by default: 
 .tab {
   display: none;
@@ -75,5 +85,78 @@ hr.line {
 /* Mark the steps that are finished and valid: */
 .step.finish {
   background-color: #4caf50;
+}
+
+/* checkbox */
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 17px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+}
+
+.container .container-text{
+  margin-left: 10px;
+}
+
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  text-align:left;
+}
+
+
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+
+.container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 </style>

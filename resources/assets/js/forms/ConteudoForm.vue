@@ -15,7 +15,7 @@
                       name="title"
                       id="titulo"
                       aria-describedby="titulo"
-                      v-model="$store.state.conteudo.title">
+                      v-model="conteudo.title">
               <small id="titulo" class="text-info">Adicione o nome original da mídia.</small><br>
               <!-- ERRORS -->
               <erros :errors="errors.title"></erros>
@@ -23,7 +23,7 @@
           <!-- TIPO -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.tipo && errors.tipo.length > 0 }">
               <label for="tipoconteudo">Tipo de Conteúdo:*</label>
-              <!--select class="form-control form-control-lg" name="tipo" id="tipoconteudo" v-model="$store.state.conteudo.options.id.tipo">
+              <!--select class="form-control form-control-lg" name="tipo" id="tipoconteudo" v-model="conteudo.options.id.tipo">
                   <option value="" disabled selected>« SELECIONE »</option>
                   <option v-for="(tipo, i) in tipos"
                           v-bindv-model="tipo.id"
@@ -48,7 +48,7 @@
           <!-- CATEGORIA OPCIONAL-->
           <div class="form-group" v-if="categories.length != 0">
               <label for="estado">Categoria de Conteúdo:*</label>
-              <select class="form-control form-control-lg" name="category" id="categoria" v-model="$store.state.conteudo.category">
+              <select class="form-control form-control-lg" name="category" id="categoria" v-model="conteudo.category">
                   <option value="" disabled selected>« SELECIONE »</option>
                   <option v-for="(item, i) in categories"
                           v-bindv-model="item.name"
@@ -62,7 +62,7 @@
           <!-- DESCRICAO -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.description && errors.description.length > 0 }">
               <label for="descricao">Descrição:*</label>
-              <editor v-model="$store.state.conteudo.description" 
+              <editor v-model="conteudo.description" 
                       id="descricao"
                       name="description" 
                       height="500px" 
@@ -78,7 +78,7 @@
           <!-- AUTORES -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.authors && errors.authors.length > 0 }">
               <label for="autores">Autores:*</label>
-              <input type="text" class="form-control" name="authors" id="autores" v-model="$store.state.conteudo.authors">
+              <input type="text" class="form-control" name="authors" id="autores" v-model="conteudo.authors">
               <small class="text-info">Nome dos autores ou grupo de trabalho responsável pelo desenvolvimento da mídia.</small><br>
               <!-- ERRORS -->
               <erros :errors="errors.authors"></erros>
@@ -86,7 +86,7 @@
           <!-- FONTE -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.source && errors.source.length > 0 }">
               <label for="fonte">Fonte:*</label>
-              <input type="text" class="form-control" name="source" id="fonte" v-model="$store.state.conteudo.source" >
+              <input type="text" class="form-control" name="source" id="fonte" v-model="conteudo.source" >
               <small class="text-info">Indique o site ou o nome da instituição que produziu a mídia.</small><br>
               <!-- ERRORS -->
               <erros :errors="errors.source"></erros>
@@ -94,14 +94,14 @@
           <!-- LICENCA -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.licenses && errors.licenses.length > 0 }">
               <label for="licenca-conteudo">Licença de Conteúdo:*</label>
-              <select class="form-control form-control-lg"  name="license" id="licenca-conteudo" v-model="$store.state.conteudo.license_id">
+              <select class="form-control form-control-lg"  name="license" id="licenca-conteudo" v-model="conteudo.license_id">
                   <option value="" disabled selected>« SELECIONE »</option>
                   <optgroup v-if="childsLicenses" :label="childsLicenses.name">
-                    <option v-for="(child, i) in childsLicenses.childs" :key="i" v-model="child.id">
+                    <option v-for="(child, i) in childsLicenses.childs" :key="i">
                       {{child.name}}
                     </option>
                   </optgroup>
-                  <option v-for="(license, i) in licensesFilter" :key="i" v-model="license.id">
+                  <option v-for="(license, i) in licensesFilter" :key="i">
                       {{license.name}}
                   </option>
                   
@@ -135,7 +135,7 @@
         <!-- CONDIÇÕES DE USO -->
         <div class="checkbox" v-bind:class="{ 'has-error': errors.terms && errors.terms.length > 0 }">
             <label for="termosecondicoes">
-                <input id="termosecondicoes" name="terms" type="checkbox" v-model="$store.state.conteudo.terms"> Li e concordo com os termos e condições de uso.
+                <input id="termosecondicoes" name="terms" type="checkbox" v-model="conteudo.terms"> Li e concordo com os termos e condições de uso.
             </label><br>
             <!-- ERRORS -->
             <erros :errors="errors.terms"></erros>
@@ -146,7 +146,7 @@
         <!-- APROVAR CONTEÚDO -->
         <div class="checkbox" v-bind:class="{ 'has-error': errors.is_approved && errors.is_approved.length > 0 }">
             <label for="aprovado">
-                <input id="aprovado" name="is_approved" type="checkbox" v-model="$store.state.conteudo.is_approved"> Deseja publicar o conteúdo?
+                <input id="aprovado" name="is_approved" type="checkbox" v-model="conteudo.is_approved"> Deseja publicar o conteúdo?
             </label><br>
             <!-- ERRORS -->
             <erros :errors="errors.is_approved"></erros>
