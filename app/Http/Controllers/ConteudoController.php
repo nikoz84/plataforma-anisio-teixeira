@@ -23,7 +23,7 @@ class ConteudoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list() {
+    function list() {
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
@@ -115,13 +115,15 @@ class ConteudoController extends Controller
      */
     private function validar()
     {
+
         $validator = Validator::make($this->request->all(), [
             'title' => 'required|min:10|max:255',
             'description' => 'required|min:140',
-            'tipo' => 'required',
+            'options.tipo.id' => 'required',
             'authors' => 'required',
             'source' => 'required',
-            'license' => 'required',
+            'license_id' => 'required',
+            'canal_id' => 'required',
             'terms' => 'required|in:true,false',
             'is_approved' => 'required|in:true,false',
         ]);

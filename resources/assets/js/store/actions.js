@@ -20,20 +20,23 @@ const actions = {
     }
   },
   async getConteudo({ commit }, { slug, id }) {
-    let resp = await client.get(`/conteudos/${id}`);
-    console.warn(resp.data);
-    if (resp.status == 200) {
-      commit("SET_CONTEUDO", resp.data.conteudo);
-      commit("SET_SHOW_CONTEUDO", true);
-      commit("SET_SHOW_APLICATIVO", false);
-      commit("SET_NOT_FOUND", false);
-    } else {
-      commit("SET_SHOW_CONTEUDO", false);
-      commit("SET_SHOW_APLICATIVO", false);
-      commit("SET_NOT_FOUND", true);
+    if (id) {
+      let resp = await client.get(`/conteudos/${id}`);
+      if (resp.status == 200 && resp.data.success) {
+        commit("SET_CONTEUDO", resp.data.conteudo);
+        commit("SET_SHOW_CONTEUDO", true);
+        commit("SET_SHOW_APLICATIVO", false);
+        commit("SET_NOT_FOUND", false);
+      } else {
+        commit("SET_SHOW_CONTEUDO", false);
+        commit("SET_SHOW_APLICATIVO", false);
+        commit("SET_NOT_FOUND", true);
+      }
     }
   },
-  async createConteudo({ commit }, conteudo) {
+  async createConteudo({ commit, state }, conteudo) {
+    console.log("parametro", conteudo);
+    console.log("state", state.conteudo);
     let resp = await client.post("/conteudos", conteudo);
 
     if (resp.data.status == 200 && resp.data.success == false) {
@@ -42,13 +45,11 @@ const actions = {
       commit("SET_TEXT_ALERT", resp.data.message);
       commit("SET_IS_ERROR", true);
     } else if (resp.data.status == 200 && resp.data.success == true) {
+      commit("SET_CONTEUDO", resp.data);
       commit("SET_SHOW_ALERT", true);
       commit("SET_TEXT_ALERT", resp.data.message);
       commit("SET_IS_ERROR", false);
     }
-
-    console.log(resp);
-    //commit("CREATE_CONTEUDO", resp.data);
   },
   async updateConteudo({ commit }, conteudo) {
     let resp = await client.put(`/conteudos/${conteudo.id}`, conteudo);
@@ -74,7 +75,6 @@ const actions = {
   /** LICENÇAS */
   async getLicenses({ commit }) {
     let resp = await client.get("/licenses");
-    console.log(resp.data);
     commit("SET_LICENSES", resp.data.licenses);
   },
   /** CANAL */

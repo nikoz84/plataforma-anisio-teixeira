@@ -1,28 +1,9 @@
+import conteudo from "./models/conteudo.js";
+
 const state = {
   conteudos: [],
   paginator: {},
-  conteudo: {
-    title: "",
-    description: "",
-    authors: "",
-    source: "",
-    license: "",
-    image: "",
-    tipo: "",
-    terms: false,
-    tags: [],
-    canal: "",
-    category: "",
-    is_approved: false,
-    is_featured: false,
-    is_site: false,
-    options: {
-      tipo: {
-        id: null,
-        name: ""
-      }
-    }
-  },
+  conteudo,
   aplicativos: [],
   aplicativo: {},
   canal: {},

@@ -20,8 +20,7 @@ class LicenseController extends Controller
      */
     public function list() {
 
-        $licenses = $this->license::with('childs')->whereNull('parent_id')
-            ->get();
+        $licenses = $this->license::with('childs')->get();
 
         return response()->json([
             'success' => true,

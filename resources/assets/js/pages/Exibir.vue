@@ -1,9 +1,9 @@
 <template>
     <div>
-        <conteudo v-if="showConteudo"></conteudo>
+        <conteudo v-if="showConteudo" :conteudo="conteudo"></conteudo>
         <aplicativo v-if="showAplicativo"></aplicativo>
         <article class="jumbotron" v-if="notFound">
-            <h3 class="text-center"></h3>
+            <h3 class="text-center">Não Encontrado</h3>
         </article>
     </div>
 </template>
@@ -17,23 +17,23 @@ export default {
   components: { conteudo: ConteudoApp, aplicativo: AplicativoApp },
   created() {
     let payload = {
-        slug: this.$route.params.slug,
-        id: this.$route.params.id
-      };
+      slug: this.$route.params.slug,
+      id: this.$route.params.id
+    };
     this.$store.dispatch("getConteudo", payload);
   },
   computed: {
-    conteudo() {
-      return this.$store.state.conteudo;
-    },
     showConteudo() {
       return this.$store.state.showConteudo;
     },
     showAplicativo() {
       return this.$store.state.showAplicativo;
     },
-    notFound(){
+    notFound() {
       return this.$store.state.notFound;
+    },
+    conteudo() {
+      return this.$store.state.conteudo;
     }
   },
   methods: {},

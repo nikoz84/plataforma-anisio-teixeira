@@ -8,8 +8,11 @@ const mutations = {
   SET_CONTEUDOS(state, paginator) {
     state.paginator = paginator;
   },
+  SET_CONTEUDO(state, newConteudo) {
+    state.conteudo = newConteudo;
+  },
   CREATE_CONTEUDO(state, conteudo) {
-    state.conteudo.unshift(conteudo);
+    state.conteudo;
   },
   DELETE_CONTEUDO(state, conteudo) {
     let index = state.conteudo.findIndex(item => item.id === conteudo.id);
@@ -47,9 +50,6 @@ const mutations = {
   },
   SET_SHOW_APLICATIVO(state, showAplicativo) {
     state.showAplicativo = showAplicativo;
-  },
-  SET_CONTEUDO(state, conteudo) {
-    state.conteudo = conteudo;
   },
   SET_ERRORS(state, errors) {
     state.errors = errors;
