@@ -65,7 +65,7 @@
               <editor :value="conteudo.description" 
                       id="descricao"
                       name="description" 
-                      height="500px" 
+                      height="500px"
                       mode="wysiwyg"/>
               <small class="text-info">Descreva á mídia de forma <b>resumida</b> e <b>objetiva</b>.
                   Esta é a primeira apresentação da mídia e pode ser o diferencial na hora do usuário escolher se acessa ou não. 
