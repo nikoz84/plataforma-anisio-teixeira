@@ -9,7 +9,7 @@
                     
           <!-- TITULO -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.title && errors.title.length > 0 }">
-              <label for="titulo">Título:*</label>
+              <label for="titulo">Título:<span class="glyphicon-asterisk"></span></label>
               <input type="text"
                       class="form-control"
                       name="title"
@@ -22,7 +22,7 @@
           </div>
           <!-- TIPO -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.tipo && errors.tipo.length > 0 }">
-              <label for="tipoconteudo">Tipo de Conteúdo:*</label>
+              <label for="tipoconteudo">Tipo de Conteúdo:<span class="glyphicon-asterisk"></span></label>
               <select class="form-control form-control-lg" name="tipo" id="tipoconteudo" :value="conteudo.tipo">
                   <option value="">« SELECIONE »</option>
                   <option v-for="(tipo, i) in tipos"
@@ -47,7 +47,7 @@
           </div>
           <!-- CATEGORIA OPCIONAL-->
           <div class="form-group" v-if="categories.length != 0">
-              <label for="estado">Categoria de Conteúdo:*</label>
+              <label for="estado">Categoria de Conteúdo:<span class="glyphicon-asterisk"></span></label>
               <select class="form-control form-control-lg" name="category" id="categoria" :value="conteudo.category">
                   <option value="">« SELECIONE »</option>
                   <option v-for="(item, i) in categories"
@@ -61,7 +61,7 @@
                     
           <!-- DESCRICAO -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.description && errors.description.length > 0 }">
-              <label for="descricao">Descrição:*</label>
+              <label for="descricao">Descrição:<span class="glyphicon-asterisk"></span></label>
               <editor :value="conteudo.description" 
                       id="descricao"
                       name="description" 
@@ -77,7 +77,7 @@
                     
           <!-- AUTORES -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.authors && errors.authors.length > 0 }">
-              <label for="autores">Autores:*</label>
+              <label for="autores">Autores:<span class="glyphicon-asterisk"></span></label>
               <input type="text" class="form-control" name="authors" id="autores" :value="conteudo.authors">
               <small class="text-info">Nome dos autores ou grupo de trabalho responsável pelo desenvolvimento da mídia.</small><br>
               <!-- ERRORS -->
@@ -85,7 +85,7 @@
           </div>
           <!-- FONTE -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.source && errors.source.length > 0 }">
-              <label for="fonte">Fonte:*</label>
+              <label for="fonte">Fonte:<span class="glyphicon-asterisk"></span></label>
               <input type="text" class="form-control" name="source" id="fonte" :value="conteudo.source" >
               <small class="text-info">Indique o site ou o nome da instituição que produziu a mídia.</small><br>
               <!-- ERRORS -->
@@ -93,7 +93,7 @@
           </div>
           <!-- LICENCA -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.licenses && errors.licenses.length > 0 }">
-              <label for="licenca-conteudo">Licença de Conteúdo:*</label>
+              <label for="licenca-conteudo">Licença de Conteúdo:<span class="glyphicon-asterisk"></span></label>
               <select class="form-control form-control-lg"  name="license" id="licenca-conteudo" :value="conteudo.license">
                   <option value="" >« SELECIONE »</option>
                   <optgroup label="Creative Commonds">
@@ -134,8 +134,9 @@
                 </div>-->
         <!-- CONDIÇÕES DE USO -->
         <div class="checkbox" v-bind:class="{ 'has-error': errors.terms && errors.terms.length > 0 }">
-            <label for="termosecondicoes">
-                <input id="termosecondicoes" name="terms" type="checkbox" :value="conteudo.terms"> Li e concordo com os termos e condições de uso.
+            <label class="container" for="termosecondicoes">
+                <input id="termosecondicoes" name="terms" type="checkbox" :value="conteudo.terms"><span class="container-text">Li e concordo com os termos e condições de uso.</span>
+                <span class="checkmark"></span>
             </label><br>
             <!-- ERRORS -->
             <erros :errors="errors.terms"></erros>
@@ -145,8 +146,9 @@
         </div>
         <!-- APROVAR CONTEÚDO -->
         <div class="checkbox" v-bind:class="{ 'has-error': errors.is_approved && errors.is_approved.length > 0 }">
-            <label for="aprovado">
-                <input id="aprovado" name="is_approved" type="checkbox" :value="conteudo.is_approved"> Deseja publicar o conteúdo?
+            <label for="aprovado" class="container">
+                <input id="aprovado" name="is_approved" type="checkbox" :value="conteudo.is_approved"> <span class="container-text">Deseja publicar o conteúdo?</span>
+                <span class="checkmark"></span>
             </label><br>
             <!-- ERRORS -->
             <erros :errors="errors.is_approved"></erros>

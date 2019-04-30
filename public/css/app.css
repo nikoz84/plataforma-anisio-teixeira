@@ -18,16 +18,6 @@ body {
   margin: 0;
 }
 
-li{
-  list-style-type: none;
-  margin-bottom: 7px;
-  color: #000;
-}
-
-li > a{
-  color: #000;
-}
-
 article,
 aside,
 details,
@@ -4636,7 +4626,6 @@ tbody.collapse.in {
   top: auto;
   bottom: 100%;
   margin-bottom: 2px;
-  background: #fff;
 }
 
 @media (min-width: 768px) {
@@ -5074,10 +5063,6 @@ tbody.collapse.in {
   margin: 11.5px 0;
   overflow: hidden;
   background-color: #e5e5e5;
-}
-
-.nav > li > a {
-  list-style-type: none;
 }
 
 .nav > li > a > img {
@@ -6198,7 +6183,6 @@ a.label:focus {
 
 .list-group-item > .badge {
   float: right;
-  list-style-type: none;
 }
 
 .list-group-item > .badge + .badge {
