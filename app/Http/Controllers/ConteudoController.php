@@ -186,7 +186,7 @@ class ConteudoController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $conteudo,
+            'conteudo' => $conteudo,
         ]);
     }
     public function createConteudoTags($id)
