@@ -3,7 +3,7 @@ const getters = {
     return state.paginator;
   },
   getCanalById: state => {
-    return state.conteudo;
+    return state.canal;
   },
   getConteudos: state => {
     return state.conteudos;
@@ -34,6 +34,9 @@ const getters = {
   },
   getConteudo: state => {
     return state.conteudo;
+  },
+  getButtonText: state => {
+    return state.buttonText;
   }
 };
 

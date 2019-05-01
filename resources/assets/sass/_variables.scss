@@ -1,12 +1,10 @@
-
 // Body
-$body-bg: #eff3f7;
-$gray: #333333;
+$body-bg: #ffffff;
+$gray: #888787;
 
 // Borders
 $laravel-border-color: darken($body-bg, 10%);
-$list-group-border: $laravel-border-color;
-$navbar-default-border: $laravel-border-color;
+$navbar-default-border: #636363;;
 $panel-default-border: $laravel-border-color;
 $panel-inner-border: $laravel-border-color;
 
@@ -20,22 +18,36 @@ $brand-danger: #d85e2e;
 // Typography
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 $font-family-sans-serif: "Raleway", sans-serif;
-$font-size-base: 14px;
+$font-size-base: 16px;
 $line-height-base: 1.6;
-$text-color: #333333;
 
 // link color
 $link-color: #316ca3;
 $link-hover-color: darken($link-color, 50%);
+
 // Navbar
 $navbar-default-bg: #fff;
+$navbar-margin-bottom: #fff;
+$navbar-height: 50px;
+
+//input
+$text-color: #757373;
+$text-button:#504d4d;
+$text-input-border: #807e7e;
+$text-color-button: #fff;
+
+$input-border: $text-input-border;
+$btn-default-color: $text-color-button;
+$btn-primary-color: $text-color-button;
 
 // Buttons
-$btn-default-color: $text-color;
+$btn-default-color: #fff;
+$btn-default-bg: $text-button;
+
 
 // Inputs
-$input-border: lighten($text-color, 40%);
-$input-border-focus: lighten($brand-primary, 25%);
+$input-border: lighten($text-color, 20%);
+$input-border-focus: lighten($brand-primary, 5%);
 $input-color-placeholder: lighten($text-color, 30%);
 
 // Panels
@@ -46,7 +58,7 @@ $border-radius-large:            2px;
 $border-radius-small:            1.5px;
 
 // Shared Nav
-$nav-link-padding: 5px 15px;
+$nav-link-padding: 10px 20px;
 $nav-link-hover-bg: adjust-color($gray, $lightness: 20%);
 $nav-disabled-link-color: adjust-color($gray, $lightness: 10%) ;
 $nav-disabled-link-hover-color: adjust-color($gray, $lightness: -40%);
@@ -66,7 +78,6 @@ $nav-tabs-justified-active-link-border-color: $body-bg;
 
 
 // Fontes
-
 $font-size-base: 16px;
 $font-size-large: ceil(($font-size-base * 1.25));
 $font-size-small: ceil(($font-size-base * 1));
@@ -76,3 +87,11 @@ $font-size-h3: floor(($font-size-base * 1.4));
 $font-size-h4: floor(($font-size-base * 1.2));
 $font-size-h5: floor(($font-size-base * 1.1));
 $font-size-h6: floor(($font-size-base * 1));
+
+//List Group
+$laravel-list-border-color: #dddde0;  //dddde0
+
+$list-group-border: $laravel-border-color;
+$list-group-bg: $laravel-list-border-color;
+$list-group-hover-bg: rgb(158, 157, 157);
+$component-active-color: $laravel-border-color;
