@@ -74,7 +74,7 @@ const routes = [
         component: Exibir
       },
       {
-        path: "editar-conteudo/:id",
+        path: "editar-conteudo/:id/:update?",
         name: "EditarConteudo",
         component: ConteudoForm,
         meta: {
