@@ -15,7 +15,6 @@ mix.browserSync({
   proxy: "pat.des"
 });
 */
-
 mix.config.webpackConfig.output = {
   chunkFilename: "js/[name].bundle.js",
   publicPath: "/"

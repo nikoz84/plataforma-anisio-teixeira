@@ -64,6 +64,7 @@ class ConteudoController extends Controller
             'paginator' => $conteudos,
         ], 200);
     }
+
     private function getConteudosByIdCanal($canal_id)
     {
         $url = null;
@@ -114,13 +115,15 @@ class ConteudoController extends Controller
      */
     private function validar()
     {
+
         $validator = Validator::make($this->request->all(), [
             'title' => 'required|min:10|max:255',
             'description' => 'required|min:140',
-            'tipo' => 'required',
+            'options.tipo.id' => 'required',
             'authors' => 'required',
             'source' => 'required',
-            'license' => 'required',
+            'license_id' => 'required',
+            'canal_id' => 'required',
             'terms' => 'required|in:true,false',
             'is_approved' => 'required|in:true,false',
         ]);
@@ -178,7 +181,7 @@ class ConteudoController extends Controller
     {
         //dd($id);
         $conteudo = $this->conteudo::find($id);
-        //print_r($this->request->all());    
+        //print_r($this->request->all());
         //die();
         $conteudo->fill($this->request->all());
 

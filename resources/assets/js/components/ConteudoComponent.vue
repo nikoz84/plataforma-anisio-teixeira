@@ -1,10 +1,11 @@
 <template>
     <article class="row">
         <PlayerApp />
-        <div class="panel panel-default">
+        <div class="panel panel-default" v-if="conteudo">
             <div class="panel-body">
                 <button class="btn btn-info btn-xs" v-on:click="updateConteudo()">Editar</button>
                 <button class="btn btn-danger btn-xs" v-on:click="deleteConteudo()">Apagar</button>
+                
                 <h2 v-text="conteudo.title"></h2>
                 <small></small>
                 <div class="break-word" v-html="conteudo.description"></div>
@@ -23,7 +24,7 @@
                     ></i>
                 <hr class="line">
                 <span class="label label-default" v-bind:style="backgroundColor"> Licença: </span>
-                <i class="i-list break-word" v-text="conteudo.license.name"></i>
+                <i class="i-list break-word" v-if="conteudo.license" v-text="conteudo.license.name"></i>
             </div>
             <div class="panel-footer">
                 <h5>Tags: </h5>
@@ -44,18 +45,16 @@ import client from "../client.js";
 export default {
   name: "ConteudoApp",
   components: { PlayerApp },
-  props: ["message"],
+  props: ["conteudo"],
+  created() {},
   computed: {
     splitAuthors() {
-      let replace = this.$store.state.conteudo.authors.replace(",", ";");
+      let replace = this.conteudo.authors.replace(",", ";");
       return replace.split(";");
     },
     backgroundColor() {
-      let color = this.$store.state.conteudo.canal.color;
+      let color = this.conteudo.canal.color;
       return `background-color: ${color}`;
-    },
-    conteudo() {
-      return this.$store.state.conteudo;
     }
   },
   methods: {
@@ -70,7 +69,6 @@ export default {
       });
     },
     async deleteConteudo() {
-      
       let resp = await client.delete(
         `/conteudos/${this.$route.params.id}`,
         params

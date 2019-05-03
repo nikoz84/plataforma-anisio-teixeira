@@ -20,34 +20,40 @@ const actions = {
     }
   },
   async getConteudo({ commit }, { slug, id }) {
-    let resp = await client.get(`/conteudos/${id}`);
-    if(resp.status == 200){
+    if (id) {
+      let resp = await client.get(`/conteudos/${id}`);
+      if (resp.status == 200 && resp.data.success) {
         commit("SET_CONTEUDO", resp.data.conteudo);
         commit("SET_SHOW_CONTEUDO", true);
         commit("SET_SHOW_APLICATIVO", false);
         commit("SET_NOT_FOUND", false);
-    }else{
+      } else {
         commit("SET_SHOW_CONTEUDO", false);
         commit("SET_SHOW_APLICATIVO", false);
         commit("SET_NOT_FOUND", true);
+      }
     }
   },
-  async createConteudo({ commit }, conteudo) {
+  async createConteudo({ commit, state }, conteudo) {
+    console.log("parametro", conteudo);
+    console.log("state", state.conteudo);
     let resp = await client.post("/conteudos", conteudo);
 
-    if (resp.data) {
+    if (resp.data.status == 200 && resp.data.success == false) {
       commit("SET_ERRORS", resp.data.errors);
       commit("SET_SHOW_ALERT", true);
       commit("SET_TEXT_ALERT", resp.data.message);
       commit("SET_IS_ERROR", true);
+    } else if (resp.data.status == 200 && resp.data.success == true) {
+      commit("SET_CONTEUDO", resp.data);
+      commit("SET_SHOW_ALERT", true);
+      commit("SET_TEXT_ALERT", resp.data.message);
+      commit("SET_IS_ERROR", false);
     }
-
-    console.log(resp);
-    //commit("CREATE_CONTEUDO", resp.data);
   },
   async updateConteudo({ commit }, conteudo) {
     let resp = await client.put(`/conteudos/${conteudo.id}`, conteudo);
-    console.log(resp)
+    console.log(resp);
     if (resp.status == 200 && resp.data.success == true) {
       commit("SET_ERRORS", resp.data.errors);
       commit("SET_SHOW_ALERT", true);
@@ -56,21 +62,22 @@ const actions = {
     }
 
     console.log(resp);
-    
   },
   async deleteConteudo({ commit }, id) {
     let resp = await client.delete(`/conteudos/${id}`);
     commit("DELETE_CONTEUDO", resp.data);
   },
+  /** TIPO DE CONTEUDOS */
   async getTipos({ commit }) {
     let resp = await client.get("/tipos/conteudos");
     commit("SET_TIPOS", resp.data.tipos);
   },
+  /** LICENÇAS */
   async getLicenses({ commit }) {
     let resp = await client.get("/licenses");
-    //console.log(resp.data)
-    commit("SET_LICENSES", resp.data.paginator.data);
+    commit("SET_LICENSES", resp.data.licenses);
   },
+  /** CANAL */
   async getCanal({ commit, dispatch }, slug) {
     let resp = await client.get(`/canais/slug/${slug}`);
 

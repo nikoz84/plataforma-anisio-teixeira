@@ -1,23 +1,9 @@
+import conteudo from "./models/conteudo.js";
+
 const state = {
   conteudos: [],
   paginator: {},
-  conteudo: {
-    title: "",
-    description: "",
-    tipo: "",
-    authors: "",
-    source: "",
-    license: "",
-    image: "",
-    terms: false,
-    tags: [],
-    canal: "",
-    category: "",
-    is_approved: false,
-    is_featured: false,
-    is_site: false,
-    options: {}
-  },
+  conteudo,
   aplicativos: [],
   aplicativo: {},
   canal: {},
@@ -44,6 +30,7 @@ const state = {
   showConteudo: false,
   showApllicativo: false,
   formData: {},
+  buttonText: "Salvar",
   notFound: false,
   isUpdate: false,
   isDelete: false,
