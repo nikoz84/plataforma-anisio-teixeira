@@ -23,7 +23,8 @@ class ConteudoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function list() {
+    function list()
+    {
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
@@ -122,7 +123,7 @@ class ConteudoController extends Controller
             'category_id' => '',
             'title' => 'required|min:10|max:255',
             'description' => 'required|min:140',
-            'tipo_id' => 'required',
+            'options.tipo.id' => 'required',
             'authors' => 'required',
             'source' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -239,7 +240,8 @@ class ConteudoController extends Controller
         $page = $this->request->query('page', 1);
 
         $conteudos = DB::table(DB::raw("conteudos as cd, plainto_tsquery('simple', lower(unaccent(?))) query"))
-            ->select(['cd.id', 'cd.title',
+            ->select([
+                'cd.id', 'cd.title',
                 DB::raw('ts_rank_cd(cd.ts_documento, query) AS ranking'),
             ])
             ->whereRaw('query @@ cd.ts_documento')

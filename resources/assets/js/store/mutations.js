@@ -1,4 +1,7 @@
+import { updateField } from 'vuex-map-fields';
+
 const mutations = {
+  updateField,
   LOGIN_USER(state) {
     state.isLogged = true;
   },
@@ -47,6 +50,20 @@ const mutations = {
   },
   SET_SHOW_CONTEUDO(state, showConteudo) {
     state.showConteudo = showConteudo;
+  },
+  RESET_OBJECT({ commit , state}, data) {
+    const { obj, model, set }  = data;
+    Object.keys(obj).map(key => {
+      if (model.hasOwnProperty(key)) {
+        //let sp = key.split('is_', 1);
+        //console.warn(sp)
+        if(key == 'options'){
+          obj[key] = Object.assign({}, model[key]);
+        }else {
+          obj[key] = model[key];
+        }
+      }
+    });
   },
   SET_SHOW_APLICATIVO(state, showAplicativo) {
     state.showAplicativo = showAplicativo;

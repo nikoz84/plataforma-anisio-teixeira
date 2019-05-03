@@ -7,18 +7,15 @@
             <router-link tag="li" :to="{ name: 'Listar', params: {slug: $route.params.slug}}">
                 <a>Listar</a>
             </router-link>
-            <router-link tag="li" :to="{ name: 'AdicionarConteudo', params: {slug: $route.params.slug}}" v-if="showAdicionarConteudo">
+            <router-link tag="li" :to="goTo">
                 <a>Adicionar</a>
-            </router-link>
-            <router-link tag="li" :to="{ name: 'AdicionarAplicativo', params: {slug: $route.params.slug}}" v-if="showAdicionarAplicativo" exact>
-                <a>Adicionar</a>
-            </router-link>
-            <li>
-                <a  v-on:click.prevent="getUrl">Denúnciar</a>
-            </li>
-            <li>
-                <a  v-on:click.prevent="getUrlFaleConosco">Fale Conosco</a>
-            </li>
+            </router-link> 
+            <router-link tag="li" :to="setUrlDenuncia">
+                <a>Denúnciar</a>
+            </router-link> 
+            <router-link tag="li" :to="getUrlFaleConosco">
+                <a>Fale Conosco</a>
+            </router-link> 
         </ul>
     </nav>
 </template>
@@ -37,31 +34,26 @@ export default {
 
     },
     computed:{
-        showAdicionarConteudo (){
-            if(this.isLogged && this.$route.params.slug != 'aplicativos-educacionais'){
-                return true;
-            }
-            return false;
-        },
         showAdicionarAplicativo (){
             if(this.isLogged && this.$route.params.slug == 'aplicativos-educacionais'){
                 return true;
             }
             return false;
-        }
-    },
-    methods:{
-        getUrl(){
-            let url = localStorage.setItem('urlDenuncia',location.href);
-            this.$router.push(
-                { name:'DenunciaForm', params: {slug: this.$route.params.slug}}
-            )
+        },
+        goTo(){
+            if(this.$route.params.slug == 'aplicativos-educacionais'){
+                return { name:'AdicionarAplicativo', params: {slug: this.$route.params.slug}}; 
+            }else{
+                return { name:'AdicionarConteudo', params: {slug: this.$route.params.slug}};
+            }
+        },
+        setUrlDenuncia(){
+            localStorage.setItem('urlDenuncia',location.href);
+            return { name:'DenunciaForm', params: {slug: this.$route.params.slug}}
         },
         getUrlFaleConosco(){
-            this.$router.push(
-                { name:'FaleConoscoForm', params: {slug: this.$route.params.slug}}
-            )
-        },
+            return { name:'FaleConoscoForm', params: {slug: this.$route.params.slug}};
+        }
     }
 }
 </script>

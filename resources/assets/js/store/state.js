@@ -1,7 +1,9 @@
+import conteudo from './models/conteudo';
+
 const state = {
   conteudos: [],
   paginator: {},
-  conteudo: {},
+  conteudo,
   aplicativos: [],
   aplicativo: {},
   canal: {},
@@ -18,7 +20,7 @@ const state = {
   isTipoSite: false,
   niveis: [],
   menssage: "",
-  title: "",
+  //title: "",
   show: false,
   isError: false,
   isLogged: !!localStorage.token,
