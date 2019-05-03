@@ -19,9 +19,10 @@ const actions = {
       commit("SET_IS_ERROR", true);
     }
   },
-  async getConteudo({ commit }, { slug, id }) {
+  async getConteudo({ commit, dispatch }, { id, update }) {
+    let resp = await client.get(`/conteudos/${id}`);
+
     if (id) {
-      let resp = await client.get(`/conteudos/${id}`);
       if (resp.status == 200 && resp.data.success) {
         commit("SET_CONTEUDO", resp.data.conteudo);
         commit("SET_SHOW_CONTEUDO", true);
@@ -33,22 +34,28 @@ const actions = {
         commit("SET_NOT_FOUND", true);
       }
     }
+    if (update) {
+    }
   },
-  async createConteudo({ commit, state }, conteudo) {
-    console.log("parametro", conteudo);
-    console.log("state", state.conteudo);
+  async createConteudo({ commit, dispatch }, conteudo) {
     let resp = await client.post("/conteudos", conteudo);
 
-    if (resp.data.status == 200 && resp.data.success == false) {
+    console.log(resp);
+
+    if (resp.status == 200 && resp.data.success == false) {
       commit("SET_ERRORS", resp.data.errors);
       commit("SET_SHOW_ALERT", true);
       commit("SET_TEXT_ALERT", resp.data.message);
       commit("SET_IS_ERROR", true);
-    } else if (resp.data.status == 200 && resp.data.success == true) {
+      //dispatch("clearFormData");
+    } else if (resp.status == 200 && resp.data.success == true) {
       commit("SET_CONTEUDO", resp.data);
       commit("SET_SHOW_ALERT", true);
       commit("SET_TEXT_ALERT", resp.data.message);
       commit("SET_IS_ERROR", false);
+      dispatch("clearFormData");
+    } else {
+      console.log("erro");
     }
   },
   async updateConteudo({ commit }, conteudo) {
@@ -59,9 +66,10 @@ const actions = {
       commit("SET_SHOW_ALERT", true);
       commit("SET_TEXT_ALERT", resp.data.message);
       commit("SET_IS_ERROR", false);
+      dispatch("clearFormData");
     }
 
-    console.log(resp);
+    //console.log(resp);
   },
   async deleteConteudo({ commit }, id) {
     let resp = await client.delete(`/conteudos/${id}`);
@@ -113,22 +121,35 @@ const actions = {
       commit("SET_SHOW_APLICATIVO", true);
     }
   },
+  clearFormData({ commit }, form) {
+    Object.keys(form).map(key => {
+      if (form.hasOwnProperty(key)) {
+        console.log(form[key]);
+      }
+    });
+  },
   serializeFormData({ commit, dispatch, state }, form) {
-    const formData = new FormData(form);
+    //const formData = new FormData(form);
 
+    Object.keys(form).map(key => {
+      console.log(form[key]);
+    });
+    /*
     Object.keys(form).map(key => {
       if (form.hasOwnProperty(key)) {
         if (key == "options") {
           form.append(`"${key}"`, JSON.stringify(form[key]));
         } else if (key == "image") {
-          form.append(`"${key}"`, form[key]);
+          form.append(`"${key}"`, form[key], "image");
+        } else if (key == "file") {
+          form.append(`"${key}"`, form[key], "arquivo");
         } else {
           formData.append(`"${key}"`, form[key]);
         }
       }
-    });
-    commit("SET_FORM_DATA", formData);
-    dispatch("createConteudo", state.formData);
+    }*/
+    //commit("SET_FORM_DATA", formData);
+    //dispatch("createConteudo", state.formData);
   }
 };
 

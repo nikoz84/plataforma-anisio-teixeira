@@ -1,9 +1,7 @@
-import conteudo from "./models/conteudo.js";
-
 const state = {
   conteudos: [],
   paginator: {},
-  conteudo,
+  conteudo: {},
   aplicativos: [],
   aplicativo: {},
   canal: {},
