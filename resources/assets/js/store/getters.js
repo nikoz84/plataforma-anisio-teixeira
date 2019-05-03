@@ -40,6 +40,9 @@ const getters = {
   //},
   getButtonText: state => {
     return state.buttonText;
+  },
+  getAction: state => {
+    return state.action;
   }
 };
 

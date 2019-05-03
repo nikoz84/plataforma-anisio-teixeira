@@ -16,11 +16,8 @@ export default {
   name: "exibir",
   components: { conteudo: ConteudoApp, aplicativo: AplicativoApp },
   created() {
-    let payload = {
-      slug: this.$route.params.slug,
-      id: this.$route.params.id
-    };
-    this.$store.dispatch("getConteudo", payload);
+    
+    this.$store.dispatch("getConteudo", this.$route.params);
   },
   computed: {
     showConteudo() {

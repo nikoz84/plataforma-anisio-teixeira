@@ -32,9 +32,7 @@ const state = {
   formData: {},
   buttonText: "Salvar",
   notFound: false,
-  isUpdate: false,
-  isDelete: false,
-  isCreate: true
+  action: '',
 };
 
 export default state;

@@ -1,23 +1,22 @@
 <template>
     <div>
-        <div>
-            <h2>{{title}}</h2>
-        </div>
-        <div class="loading" v-if="loading">
-            <loader></loader>
-        </div>
+      <div>
+          <h2>{{title}}</h2>
+      </div>
+      <div class="loading" v-if="loading">
+          <loader></loader>
+      </div>
 
-        <div v-if="error" class="error">
-            impossível recuperar dados
+      <div v-if="error" class="error">
+          impossível recuperar dados
+      </div>
+      <div v-if="data" class="content"> 
+        <div class="media" v-for="(item, i) in data" :key="i">
+          <div class="media-body">
+            <h4 class="media-heading">{{ item.name ? item.name : item.title }}</h4>
+          </div> 
         </div>
-
-        <div v-if="data" class="content">
-            <ul>
-                <li v-for="(item, i) in data" :key="i">
-                    {{ (item.name) ? item.name : item.title }}  
-                </li>
-            </ul>
-        </div>
+      </div>
     </div>
 </template>
 <script>

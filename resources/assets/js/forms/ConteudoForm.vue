@@ -196,7 +196,10 @@ export default {
     this.fetchConteudos(this.$route.params);
   },
   computed: {
-    ...mapState({ errors: "errors" }),
+    ...mapState({ 
+        errors: "errors",
+        tipos : "tipos",
+        isError: "isError" }),
     ...mapFields(
       { license_id: "conteudo.license_id",
         canal_id: "conteudo.canal_id",
@@ -225,17 +228,14 @@ export default {
     childsLicenses() {
       const licenses = this.$store.state.licenses;
       if (licenses && licenses.length != 0) {
-        let cCommons = {};
+        let cCommonsChilds = {};
         licenses.forEach(element => {
           if (element.id == 2) {
-            cCommons = element;
+            cCommonsChilds = element;
           }
         });
-        return cCommons;
+        return cCommonsChilds;
       }
-    },
-    tipos() {
-      return this.$store.state.tipos;
     }
   },
   methods: {
@@ -247,17 +247,21 @@ export default {
       updateConteudo: "updateConteudo"
     }),
     send() {
-      let resp = false;
+      
       if (this.$route.params.id) {
-        resp = this.updateConteudo(this.$store.state.conteudo);
+        this.updateConteudo(this.$store.state.conteudo);
+        
       } else {
-        resp = this.createConteudo(this.$store.state.conteudo);
+        this.createConteudo(this.$store.state.conteudo);
+        
       }
-
-      if(resp){
+      if(this.isError) return; 
+      
+        /*
+      if(!this.isError){
         this.$router.push({ name:'ExibirConteudo', params: {slug: this.$route.params.slug, id: this.$store.state.conteudo.id}})
       }
-
+      */
       setTimeout(() => {
         this.$store.commit("SET_SHOW_ALERT", false);
         this.$store.commit("SET_IS_ERROR", false);

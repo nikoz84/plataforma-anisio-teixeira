@@ -64,7 +64,7 @@ const routes = [
         component: Listar
       },
       {
-        path: "conteudo/:id",
+        path: "conteudo-exibir/:id",
         name: "ExibirConteudo",
         component: Exibir
       },
@@ -73,16 +73,9 @@ const routes = [
         name: "ExibirAplicativo",
         component: Exibir
       },
+      
       {
-        path: "editar-conteudo/:id/:update?",
-        name: "EditarConteudo",
-        component: ConteudoForm,
-        meta: {
-          requiresAuth: true
-        }
-      },
-      {
-        path: "adicionar-conteudo",
+        path: "conteudo-adicionar",
         name: "AdicionarConteudo",
         component: ConteudoForm,
         meta: {
@@ -90,7 +83,15 @@ const routes = [
         }
       },
       {
-        path: "editar-aplicativo/:id",
+        path: "conteudo-editar/:id",
+        name: "EditarConteudo",
+        component: ConteudoForm,
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: "aplicativo-editar/:id",
         name: "EditarAplicativo",
         component: AplicativoForm,
         meta: {
@@ -98,8 +99,8 @@ const routes = [
         }
       },
       {
-        path: "adicionar-aplicativo",
-        name: "AdicionarAplicativo",
+        path: "aplicativo-adicionar",
+        name: "adicionarAplicativo",
         component: AplicativoForm,
         meta: {
           requiresAuth: true

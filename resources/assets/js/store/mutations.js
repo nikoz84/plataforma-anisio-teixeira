@@ -53,6 +53,7 @@ const mutations = {
   },
   RESET_OBJECT({ commit , state}, data) {
     const { obj, model, set }  = data;
+    console.log(data)
     Object.keys(obj).map(key => {
       if (model.hasOwnProperty(key)) {
         //let sp = key.split('is_', 1);
@@ -86,6 +87,9 @@ const mutations = {
   },
   SET_FORM_DATA(state, formData) {
     state.formData = formData;
+  },
+  SET_ACTION(state, action){
+    state.action = action;
   }
 };
 
