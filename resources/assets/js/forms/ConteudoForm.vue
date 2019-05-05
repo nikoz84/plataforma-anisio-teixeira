@@ -187,6 +187,7 @@ import "codemirror/lib/codemirror.css";
 import { Editor } from "@toast-ui/vue-editor";
 import store from "../store";
 import debounce from "lodash/debounce";
+import CONTEUDO from '../store/models/conteudo.js'
 
 export default {
   name: "ConteudoForm",
@@ -197,6 +198,7 @@ export default {
   },
   data() {
     return {
+      form:{},
       autocompleteItems: [],
       categories: []
     };
@@ -249,9 +251,9 @@ export default {
       if (this.$route.params.id) {
         this.$store.dispatch("updateConteudo", this.$store.state.conteudo);
       } else {
-        this.form = this.conteudo;
-        this.$store.commit("SET_CONTEUDO", this.form);
-        this.$store.dispatch("createConteudo", this.form);
+        
+        //this.$store.commit("SET_CONTEUDO", this.form);
+        //this.$store.dispatch("createConteudo", this.form);
 
         //this.$store.commit("SET_CONTEUDO", this.form);
         //console.log(this.$store.state.conteudo);
