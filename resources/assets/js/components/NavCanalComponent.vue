@@ -7,18 +7,15 @@
             <router-link tag="li" :to="{ name: 'Listar', params: {slug: $route.params.slug}}">
                 <a>Listar</a>
             </router-link>
-            <router-link tag="li" :to="{ name: 'AdicionarConteudo', params: {slug: $route.params.slug}}" v-if="showAdicionarConteudo">
+            <router-link tag="li" :to="setUrlAdicionar">
                 <a>Adicionar</a>
-            </router-link>
-            <router-link tag="li" :to="{ name: 'AdicionarAplicativo', params: {slug: $route.params.slug}}" v-if="showAdicionarAplicativo" exact>
-                <a>Adicionar</a>
-            </router-link>
-            <li>
-                <a  v-on:click.prevent="getUrl">Denúnciar</a>
-            </li>
-            <li>
-                <a  v-on:click.prevent="getUrlFaleConosco">Fale Conosco</a>
-            </li>
+            </router-link> 
+            <router-link tag="li" :to="setUrlDenuncia">
+                <a>Denúnciar</a>
+            </router-link> 
+            <router-link tag="li" :to="setUrlFaleConosco">
+                <a>Fale Conosco</a>
+            </router-link> 
         </ul>
     </nav>
 </template>
@@ -37,31 +34,33 @@ export default {
 
     },
     computed:{
-        showAdicionarConteudo (){
-            if(this.isLogged && this.$route.params.slug != 'aplicativos-educacionais'){
-                return true;
+        setUrlAdicionar(){
+            if(this.$route.params.slug == 'aplicativos-educacionais'){
+                return {
+                    name: "EditarAplicativo",
+                    params: {
+                    slug: this.$route.params.slug,
+                    id: this.$route.params.id,
+                    action: 'adicionar'
+                    }
+                }
+            }else {
+                return {
+                    name: "AdicionarConteudo",
+                    params: {
+                    slug: this.$route.params.slug,
+                    action: 'adicionar'
+                    }
+                }
             }
-            return false;
         },
-        showAdicionarAplicativo (){
-            if(this.isLogged && this.$route.params.slug == 'aplicativos-educacionais'){
-                return true;
-            }
-            return false;
+        setUrlDenuncia(){
+            localStorage.setItem('urlDenuncia',location.href);
+            return { name:'DenunciaForm', params: {slug: this.$route.params.slug}}
+        },
+        setUrlFaleConosco(){
+            return { name:'FaleConoscoForm', params: {slug: this.$route.params.slug}};
         }
-    },
-    methods:{
-        getUrl(){
-            let url = localStorage.setItem('urlDenuncia',location.href);
-            this.$router.push(
-                { name:'DenunciaForm', params: {slug: this.$route.params.slug}}
-            )
-        },
-        getUrlFaleConosco(){
-            this.$router.push(
-                { name:'FaleConoscoForm', params: {slug: this.$route.params.slug}}
-            )
-        },
     }
 }
 </script>

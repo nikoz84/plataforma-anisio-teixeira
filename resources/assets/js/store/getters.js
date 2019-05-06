@@ -1,4 +1,7 @@
+import { getField } from 'vuex-map-fields';
+
 const getters = {
+  getField,
   paginator: state => {
     return state.paginator;
   },
@@ -32,11 +35,14 @@ const getters = {
   getFormData: state => {
     return state.formData;
   },
-  getConteudo: state => {
-    return state.conteudo;
-  },
+  //getConteudo: state => {
+    //return state.conteudo;
+  //},
   getButtonText: state => {
     return state.buttonText;
+  },
+  getAction: state => {
+    return state.action;
   }
 };
 

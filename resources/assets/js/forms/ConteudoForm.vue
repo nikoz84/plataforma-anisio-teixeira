@@ -12,10 +12,10 @@
               <label for="titulo">Título:*</label>
               <input type="text"
                       class="form-control"
-                      name="title"
+                      name="titulo"
                       id="titulo"
                       aria-describedby="titulo"
-                      v-model="form.title">
+                      v-model="title">
               <small id="titulo" class="text-info">Adicione o nome original da mídia.</small><br>
               <!-- ERRORS -->
               <erros :errors="errors.title"></erros>
@@ -23,7 +23,7 @@
           <!-- TIPO -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.tipo && errors.tipo.length > 0 }">
               <label for="tipoconteudo">Tipo de Conteúdo:*</label>
-              <select class="form-control form-control-lg" name="tipo" id="tipoconteudo" v-model="form.tipo_id">
+              <select class="form-control form-control-lg" name="tipo" id="tipoconteudo" v-model="tipo_id">
                   <option value="" disabled selected>« SELECIONE »</option>
                   <option v-for="(tipo, i) in tipos"
                           v-bind:value="tipo.id"
@@ -48,7 +48,7 @@
           <!-- CATEGORIA OPCIONAL-->
           <div class="form-group" v-if="categories.length != 0">
               <label for="estado">Categoria de Conteúdo:*</label>
-              <select class="form-control form-control-lg" name="category" id="categoria" v-model="form.category_id">
+              <select class="form-control form-control-lg" name="category" id="categoria" v-model="category_id">
                   <option value="" disabled selected>« SELECIONE »</option>
                   <option v-for="(item, i) in categories"
                           v-bind="item.name"
@@ -62,7 +62,7 @@
           <!-- DESCRICAO -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.description && errors.description.length > 0 }">
               <label for="descricao">Descrição:*</label>
-              <editor v-model="form.description" 
+              <editor v-model="description" 
                       id="descricao"
                       name="description" 
                       height="500px" 
@@ -78,7 +78,7 @@
           <!-- AUTORES -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.authors && errors.authors.length > 0 }">
               <label for="autores">Autores:*</label>
-              <input type="text" class="form-control" name="authors" id="autores" v-model="form.authors">
+              <input type="text" class="form-control" name="authors" id="autores" v-model="authors">
               <small class="text-info">Nome dos autores ou grupo de trabalho responsável pelo desenvolvimento da mídia.</small><br>
               <!-- ERRORS -->
               <erros :errors="errors.authors"></erros>
@@ -86,7 +86,7 @@
           <!-- FONTE -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.source && errors.source.length > 0 }">
               <label for="fonte">Fonte:*</label>
-              <input type="text" class="form-control" name="source" id="fonte" v-model="form.source" >
+              <input type="text" class="form-control" name="source" id="fonte" v-model="source" >
               <small class="text-info">Indique o site ou o nome da instituição que produziu a mídia.</small><br>
               <!-- ERRORS -->
               <erros :errors="errors.source"></erros>
@@ -94,14 +94,14 @@
           <!-- LICENCA -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.licenses && errors.licenses.length > 0 }">
               <label for="licenca-conteudo">Licença de Conteúdo:*</label>
-              <select class="form-control form-control-lg"  name="license" id="licenca-conteudo" v-model="form.license_id">
+              <select class="form-control form-control-lg"  name="license" id="licenca-conteudo" v-model="license_id">
                   <option value="" disabled selected>« SELECIONE »</option>
                   <optgroup v-if="childsLicenses" :label="childsLicenses.name">
-                    <option v-for="(child, i) in childsLicenses.childs" :key="i">
+                    <option v-for="(child, i) in childsLicenses.childs" :key="i" :value="child.id">
                       {{child.name}}
                     </option>
                   </optgroup>
-                  <option v-for="(license, i) in licensesFilter" :key="i">
+                  <option v-for="(license, i) in licensesFilter" :key="i" :value="license.id">
                       {{license.name}}
                   </option>
                   
@@ -125,7 +125,7 @@
           <!-- CONDIÇÕES DE USO -->
           <div class="checkbox" v-bind:class="{ 'has-error': errors.terms && errors.terms.length > 0 }">
               <label for="termosecondicoes">
-                  <input id="termosecondicoes" name="terms" type="checkbox" v-model="form.terms"> Li e concordo com os termos e condições de uso.
+                  <input id="termosecondicoes" name="terms" type="checkbox" v-model="terms"> Li e concordo com os termos e condições de uso.
               </label><br>
               <!-- ERRORS -->
               <erros :errors="errors.terms"></erros>
@@ -136,7 +136,7 @@
           <!-- APROVAR CONTEÚDO -->
           <div class="checkbox" v-bind:class="{ 'has-error': errors.is_approved && errors.is_approved.length > 0 }">
               <label for="aprovado">
-                  <input id="aprovado" name="is_approved" type="checkbox" v-model="form.is_approved"> Deseja publicar o conteúdo?
+                  <input id="aprovado" name="is_approved" type="checkbox" v-model="is_approved"> Deseja publicar o conteúdo?
               </label><br>
               <!-- ERRORS -->
               <erros :errors="errors.is_approved"></erros>
@@ -156,7 +156,7 @@
                 Selecione o(s) componente(s) curricular(es) ou disciplina(s) que mais se adequem ao contéudo:
             </div>
             <div class="panel-body">
-                {{form}}
+                {{$store.state.conteudo}}
             </div>
         </div>
       </form>
@@ -165,6 +165,7 @@
 
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
+import { mapFields } from 'vuex-map-fields';
 import { client } from "../client.js";
 //import { response, goTo } from "../response.js";
 import showErrors from "../components/ShowErrors.vue";
@@ -173,9 +174,8 @@ import "tui-editor/dist/tui-editor.css";
 import "tui-editor/dist/tui-editor-contents.css";
 import "codemirror/lib/codemirror.css";
 import { Editor } from "@toast-ui/vue-editor";
-import store from "../store";
 import debounce from "lodash/debounce";
-import conteudoModel from "../store/models/conteudo.js";
+
 
 export default {
   name: "ConteudoForm",
@@ -186,22 +186,37 @@ export default {
   },
   data() {
     return {
-      form: conteudoModel,
       autocompleteItems: [],
       categories: []
     };
   },
-  created() {
+  mounted() {
     this.fetchTipos();
     this.fetchLicenses();
     this.fetchConteudos(this.$route.params);
   },
-  mounted() {
-    this.clearForm();
-  },
   computed: {
-    ...mapState({ errors: "errors" }),
-
+    ...mapState({ 
+        errors: "errors",
+        tipos : "tipos",
+        isError: "isError" }),
+    ...mapFields(
+      { license_id: "conteudo.license_id",
+        canal_id: "conteudo.canal_id",
+        category_id: "conteudo.category_id",
+        tipo_id: "conteudo.options.tipo.id",
+        title: "conteudo.title",
+        description: "conteudo.description",
+        authors: "conteudo.authors",
+        source: "conteudo.source",
+        image: "conteudo.image",
+        terms: "conteudo.terms",
+        tags: "conteudo.tags",
+        components: "conteudo.components",
+        is_approved: "conteudo.is_approved",
+        is_featured: "conteudo.is_featured",
+        is_site: "conteudo.is_site"}
+      ),
     licensesFilter() {
       const licenses = this.$store.state.licenses;
       if (licenses && licenses.length != 0) {
@@ -213,42 +228,40 @@ export default {
     childsLicenses() {
       const licenses = this.$store.state.licenses;
       if (licenses && licenses.length != 0) {
-        let cCommons = {};
+        let cCommonsChilds = {};
         licenses.forEach(element => {
           if (element.id == 2) {
-            cCommons = element;
+            cCommonsChilds = element;
           }
         });
-        return cCommons;
+        return cCommonsChilds;
       }
-    },
-    tipos() {
-      return this.$store.state.tipos;
     }
   },
   methods: {
     ...mapActions({
       fetchConteudos: "getConteudo",
       fetchTipos: "getTipos",
-      fetchLicenses: "getLicenses"
+      fetchLicenses: "getLicenses",
+      createConteudo: "createConteudo",
+      updateConteudo: "updateConteudo"
     }),
-    clearForm() {
-      console.log();
-      //this.$store.dispatch("serializeFormData", this.form);
-
-      //this.form = Object.assign({}, );
-    },
     send() {
+      
       if (this.$route.params.id) {
-        this.$store.dispatch("updateConteudo", this.$store.state.conteudo);
+        this.updateConteudo(this.$store.state.conteudo);
+        
       } else {
-        this.$store.dispatch("createConteudo", this.form);
-
-        //this.$store.commit("SET_CONTEUDO", this.form);
-        //console.log(this.$store.state.conteudo);
-        //this.$store.dispatch("createConteudo", this.$store.getters.conteudo);
+        this.createConteudo(this.$store.state.conteudo);
+        
       }
-
+      if(this.isError) return; 
+      
+        /*
+      if(!this.isError){
+        this.$router.push({ name:'ExibirConteudo', params: {slug: this.$route.params.slug, id: this.$store.state.conteudo.id}})
+      }
+      */
       setTimeout(() => {
         this.$store.commit("SET_SHOW_ALERT", false);
         this.$store.commit("SET_IS_ERROR", false);

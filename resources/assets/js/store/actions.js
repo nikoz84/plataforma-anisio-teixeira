@@ -1,4 +1,5 @@
 import client from "../client.js";
+import conteudoModel from "./models/conteudo";
 
 const actions = {
   /** APLICATIVOS */
@@ -19,10 +20,15 @@ const actions = {
       commit("SET_IS_ERROR", true);
     }
   },
-  async getConteudo({ commit, dispatch }, { id, update }) {
-    let resp = await client.get(`/conteudos/${id}`);
-
-    if (id) {
+  async getConteudo({ commit, dispatch, state, getters }, payload) {
+    
+    let { id, action } = payload;
+    
+    localStorage.setItem('action', action);
+    
+    if(localStorage.action == 'adicionar' || localStorage.action == 'exibir'){
+      console.log('get')
+      let resp = await client.get(`/conteudos/${id}`);
       if (resp.status == 200 && resp.data.success) {
         commit("SET_CONTEUDO", resp.data.conteudo);
         commit("SET_SHOW_CONTEUDO", true);
@@ -33,40 +39,41 @@ const actions = {
         commit("SET_SHOW_APLICATIVO", false);
         commit("SET_NOT_FOUND", true);
       }
+    }else if(localStorage.action == 'adicionar'){
+      console.log('add')
+      commit("RESET_OBJECT", {
+              obj :state.conteudo, 
+              model: conteudoModel,
+              set: "SET_CONTEUDO"});
     }
-    if (update) {
-    }
+    console.log(action, id) 
   },
   async createConteudo({ commit, dispatch }, conteudo) {
     let resp = await client.post("/conteudos", conteudo);
-
-    console.log(resp);
 
     if (resp.status == 200 && resp.data.success == false) {
       commit("SET_ERRORS", resp.data.errors);
       commit("SET_SHOW_ALERT", true);
       commit("SET_TEXT_ALERT", resp.data.message);
       commit("SET_IS_ERROR", true);
-      //dispatch("clearFormData");
     } else if (resp.status == 200 && resp.data.success == true) {
       commit("SET_CONTEUDO", resp.data);
       commit("SET_SHOW_ALERT", true);
       commit("SET_TEXT_ALERT", resp.data.message);
       commit("SET_IS_ERROR", false);
-      dispatch("clearFormData");
     } else {
       console.log("erro");
     }
   },
   async updateConteudo({ commit }, conteudo) {
     let resp = await client.put(`/conteudos/${conteudo.id}`, conteudo);
-    console.log(resp);
+    
     if (resp.status == 200 && resp.data.success == true) {
       commit("SET_ERRORS", resp.data.errors);
       commit("SET_SHOW_ALERT", true);
       commit("SET_TEXT_ALERT", resp.data.message);
       commit("SET_IS_ERROR", false);
-      dispatch("clearFormData");
+      
     }
 
     //console.log(resp);
@@ -120,13 +127,6 @@ const actions = {
       commit("SET_SHOW_CONTEUDO", false);
       commit("SET_SHOW_APLICATIVO", true);
     }
-  },
-  clearFormData({ commit }, form) {
-    Object.keys(form).map(key => {
-      if (form.hasOwnProperty(key)) {
-        console.log(form[key]);
-      }
-    });
   },
   serializeFormData({ commit, dispatch, state }, form) {
     //const formData = new FormData(form);

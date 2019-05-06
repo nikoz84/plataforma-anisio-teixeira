@@ -63,8 +63,8 @@ export default {
         name: "EditarConteudo",
         params: {
           slug: this.$route.params.slug,
+          action: 'editar',
           id: this.$route.params.id,
-          update: true
         }
       });
     },

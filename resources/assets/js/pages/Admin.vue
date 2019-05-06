@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      title: "",
+      title: "Administração da Plataforma",
       search: "",
       show: false,
       paginator: {},
