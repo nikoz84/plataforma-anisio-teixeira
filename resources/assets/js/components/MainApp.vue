@@ -59,6 +59,17 @@ small{
   font-size: 90%;
 }
 
+.menu_admin{
+  list-style-type: none;
+  background: rgb(243, 243, 243);
+  margin-bottom: 5px;
+  padding: 5px;
+}
+
+.menu_admin a:link, a:visited {
+	text-decoration: none
+	}
+
 /* Hide all steps by default: 
 .tab {
   display: none;

@@ -20,7 +20,8 @@ class CreateLicensesTable extends Migration
             $table->string('name', 255)->comment('Nome da licenca');
             $table->text('description')->comment('Descrição da Licença');
             $table->string('site', 255)->nullable()->comment('Url da licença');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 

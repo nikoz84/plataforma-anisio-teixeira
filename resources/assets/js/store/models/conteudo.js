@@ -1,25 +1,22 @@
-let conteudo = {
-  title: "",
-  description: "",
-  authors: "",
-  source: "",
+export default {
   license_id: "",
   canal_id: "",
-  image: "",
-  terms: false,
-  tags: [],
-  components: [],
-  canal: "",
-  category: "",
-  is_approved: false,
-  is_featured: false,
-  is_site: false,
-  options: {
+  category_id: "",
+  options:{
     tipo: {
       id: "",
       name: ""
     }
-  }
+  },
+  title: "",
+  description: "",
+  authors: "",
+  source: "",
+  image: "",
+  terms: false,
+  tags: [],
+  components: [],
+  is_approved: false,
+  is_featured: false,
+  is_site: false
 };
-
-export default conteudo;
