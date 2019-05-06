@@ -2,7 +2,7 @@ export default {
   license_id: "",
   canal_id: "",
   category_id: "",
-  options:{
+  options: {
     tipo: {
       id: "",
       name: ""
@@ -13,9 +13,11 @@ export default {
   authors: "",
   source: "",
   image: "",
-  terms: false,
+  site: "",
   tags: [],
+  niveis: [],
   components: [],
+  terms: false,
   is_approved: false,
   is_featured: false,
   is_site: false

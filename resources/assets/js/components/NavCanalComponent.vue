@@ -20,50 +20,34 @@
     </nav>
 </template>
 <script>
-import store from '../store/index.js'
-
 export default {
-    name : 'NavCanal',
-    props: ['hasAbout'],
-    data(){
-        return {
-            isLogged: store.state.isLogged
-        }
+  name: "NavCanal",
+  props: ["hasAbout"],
+  data() {
+    return {
+      isLogged: this.$store.state.isLogged
+    };
+  },
+  beforeCreate() {},
+  computed: {
+    setUrlAdicionar() {
+      return `/${this.$route.params.slug}/adicionar`;
     },
-    beforeCreate() {
-
+    setUrlDenuncia() {
+      localStorage.setItem("urlDenuncia", location.href);
+      return {
+        name: "DenunciaForm",
+        params: { slug: this.$route.params.slug }
+      };
     },
-    computed:{
-        setUrlAdicionar(){
-            if(this.$route.params.slug == 'aplicativos-educacionais'){
-                return {
-                    name: "EditarAplicativo",
-                    params: {
-                    slug: this.$route.params.slug,
-                    id: this.$route.params.id,
-                    action: 'adicionar'
-                    }
-                }
-            }else {
-                return {
-                    name: "AdicionarConteudo",
-                    params: {
-                    slug: this.$route.params.slug,
-                    action: 'adicionar'
-                    }
-                }
-            }
-        },
-        setUrlDenuncia(){
-            localStorage.setItem('urlDenuncia',location.href);
-            return { name:'DenunciaForm', params: {slug: this.$route.params.slug}}
-        },
-        setUrlFaleConosco(){
-            return { name:'FaleConoscoForm', params: {slug: this.$route.params.slug}};
-        }
+    setUrlFaleConosco() {
+      return {
+        name: "FaleConoscoForm",
+        params: { slug: this.$route.params.slug }
+      };
     }
-}
+  }
+};
 </script>
 <style lang="scss" scoped>
-
 </style>

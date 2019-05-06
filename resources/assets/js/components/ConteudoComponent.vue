@@ -3,8 +3,14 @@
         <PlayerApp />
         <div class="panel panel-default" v-if="conteudo">
             <div class="panel-body">
-                <button class="btn btn-info btn-xs" v-on:click="updateConteudo()">Editar</button>
-                <button class="btn btn-danger btn-xs" v-on:click="deleteConteudo()">Apagar</button>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <router-link :to="updateConteudo">
+                    <a class="btn btn-default btn-xs">Editar</a>  
+                  </router-link> 
+                  <router-link :to="deleteConteudo">
+                    <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal">Apagar</a>  
+                  </router-link> 
+                </div>
                 
                 <h2 v-text="conteudo.title"></h2>
                 <small></small>
@@ -55,25 +61,14 @@ export default {
     backgroundColor() {
       let color = this.conteudo.canal.color;
       return `background-color: ${color}`;
-    }
-  },
-  methods: {
-    updateConteudo() {
-      this.$router.push({
-        name: "EditarConteudo",
-        params: {
-          slug: this.$route.params.slug,
-          action: 'editar',
-          id: this.$route.params.id,
-        }
-      });
     },
-    async deleteConteudo() {
-      let resp = await client.delete(
-        `/conteudos/${this.$route.params.id}`,
-        params
-      );
-
+    updateConteudo() {
+      return `/${this.$route.params.slug}/editar/${this.$route.params.id}`;
+    },
+    deleteConteudo() {
+      console.log();
+      return "";
+      /*
       //lista os conteúdos
       if (resp.data.success) {
         this.$router.push({
@@ -81,8 +76,10 @@ export default {
           params: { slug: this.$route.params.slug }
         });
       }
+      */
     }
-  }
+  },
+  methods: {}
 };
 </script>
 <style scoped>

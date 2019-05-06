@@ -21,34 +21,21 @@ const router = new VueRouter({
   linkExactActiveClass: "active"
 });
 
-/*
 router.beforeEach((to, from, next) => {
-    if(to.matched.some(record => record.meta.requiresAuth)) {
+  document.title = `Plataforma Anísio Texeira - ${to.meta.title}`;
+  next();
+});
 
-        if ( localStorage.getItem('token') == null) {
-            next({
-                path: '/login',
-                params: { nextUrl: to.fullPath }
-            })
-        } else {
-            next()
-        }
-    } else if(to.matched.some(record => record.meta.guest)) {
-        if(localStorage.getItem('token') == null){
-            next({
-                path: '/login',
-                params: { nextUrl: to.fullPath }
-            })
-        }
-        else{
-            next({ name: 'Admin'})
-        }
-    }else {
-        next();
-    }
-  });
+/*
+Router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // You can use store variable here to access globalError or commit mutation
+    next("/Login");
+  } else {
+    next();
+  }
+});
 */
-
 new Vue({
   router,
   store,

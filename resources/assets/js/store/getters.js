@@ -1,4 +1,4 @@
-import { getField } from 'vuex-map-fields';
+import { getField } from "vuex-map-fields";
 
 const getters = {
   getField,
@@ -10,6 +10,9 @@ const getters = {
   },
   getConteudos: state => {
     return state.conteudos;
+  },
+  getConteudo: state => {
+    return state.conteudo;
   },
   getErrors: state => {
     return state.errors;
@@ -36,7 +39,7 @@ const getters = {
     return state.formData;
   },
   //getConteudo: state => {
-    //return state.conteudo;
+  //return state.conteudo;
   //},
   getButtonText: state => {
     return state.buttonText;

@@ -20,14 +20,10 @@ const actions = {
       commit("SET_IS_ERROR", true);
     }
   },
-  async getConteudo({ commit, dispatch, state, getters }, payload) {
-    
-    let { id, action } = payload;
-    
-    localStorage.setItem('action', action);
-    
-    if(localStorage.action == 'adicionar' || localStorage.action == 'exibir'){
-      console.log('get')
+  async getConteudo({ commit, state }, payload) {
+    let { id } = payload;
+
+    if (id && id != undefined && id != null) {
       let resp = await client.get(`/conteudos/${id}`);
       if (resp.status == 200 && resp.data.success) {
         commit("SET_CONTEUDO", resp.data.conteudo);
@@ -39,14 +35,10 @@ const actions = {
         commit("SET_SHOW_APLICATIVO", false);
         commit("SET_NOT_FOUND", true);
       }
-    }else if(localStorage.action == 'adicionar'){
-      console.log('add')
-      commit("RESET_OBJECT", {
-              obj :state.conteudo, 
-              model: conteudoModel,
-              set: "SET_CONTEUDO"});
+    } else {
+      console.log("reset");
+      commit("RESET_OBJECT", { model: conteudoModel, init: "conteudo" });
     }
-    console.log(action, id) 
   },
   async createConteudo({ commit, dispatch }, conteudo) {
     let resp = await client.post("/conteudos", conteudo);
@@ -67,13 +59,12 @@ const actions = {
   },
   async updateConteudo({ commit }, conteudo) {
     let resp = await client.put(`/conteudos/${conteudo.id}`, conteudo);
-    
+
     if (resp.status == 200 && resp.data.success == true) {
       commit("SET_ERRORS", resp.data.errors);
       commit("SET_SHOW_ALERT", true);
       commit("SET_TEXT_ALERT", resp.data.message);
       commit("SET_IS_ERROR", false);
-      
     }
 
     //console.log(resp);
@@ -150,6 +141,19 @@ const actions = {
     }*/
     //commit("SET_FORM_DATA", formData);
     //dispatch("createConteudo", state.formData);
+  },
+  resetObject(data) {
+    const { obj, model } = data;
+    console.log(obj, model);
+    Object.keys(obj).map(key => {
+      if (model.hasOwnProperty(key)) {
+        if (key == "options") {
+          obj[key] = Object.assign({}, model[key]);
+        } else {
+          obj[key] = model[key];
+        }
+      }
+    });
   }
 };
 

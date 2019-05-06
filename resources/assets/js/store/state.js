@@ -1,4 +1,4 @@
-import conteudo from './models/conteudo';
+import conteudo from "./models/conteudo";
 
 const state = {
   conteudos: [],
@@ -32,7 +32,7 @@ const state = {
   formData: {},
   buttonText: "Salvar",
   notFound: false,
-  action: '',
+  action: ""
 };
 
 export default state;
