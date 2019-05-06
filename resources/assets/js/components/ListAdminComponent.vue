@@ -7,24 +7,13 @@
           <loader></loader>
       </div>
 
-<<<<<<< HEAD
         <div v-if="data" class="content">
             <ul>
                 <li v-for="(item, i) in data" :key="i" class="grid">
-                  <div class="col-md-7 table-hover">- {{ (item.name) ? item.name : item.title }}</div>
+                  <div class="col-md-7 table-hover">{{ (item.registre) ? item.registre : item.id }} - {{ (item.name) ? item.name : item.title }}</div>
                   <div class="col-md-2"><button class="btn btn-success btn-xs">Editar</button> <button class="btn btn-danger btn-xs">Excluir</button></div>
                 </li>
             </ul>
-=======
-      <div v-if="error" class="error">
-          impossível recuperar dados
-      </div>
-      <div v-if="data" class="content"> 
-        <div class="media" v-for="(item, i) in data" :key="i">
-          <div class="media-body">
-            <h4 class="media-heading">{{ item.name ? item.name : item.title }}</h4>
-          </div> 
->>>>>>> b28d568dc3a9b19b448d558b02609a3cd78bbef3
         </div>
       </div>
     </div>
