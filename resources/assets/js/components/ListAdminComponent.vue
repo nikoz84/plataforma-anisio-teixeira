@@ -1,4 +1,4 @@
-<template>
+                                <template>
     <div>
         <div>
             <h2>{{title}}</h2>
@@ -13,8 +13,9 @@
 
         <div v-if="data" class="content">
             <ul>
-                <li v-for="(item, i) in data" :key="i">
-                    {{ (item.name) ? item.name : item.title }}  
+                <li v-for="(item, i) in data" :key="i" class="grid">
+                  <div class="col-md-7 table-hover">- {{ (item.name) ? item.name : item.title }}</div>
+                  <div class="col-md-2"><button class="btn btn-success btn-xs">Editar</button> <button class="btn btn-danger btn-xs">Excluir</button></div>
                 </li>
             </ul>
         </div>
@@ -108,4 +109,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+
+.grid{
+  list-style-type: none;
+  margin-bottom: 10px;
+
+}
+
 </style>
