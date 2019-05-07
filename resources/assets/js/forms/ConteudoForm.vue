@@ -3,7 +3,7 @@
     <form v-on:submit.prevent="send($event)" >
       <div class="panel panel-default col-md-7">
         <div class="panel-heading">
-          <h2> Adicionar conteúdo digital</h2>
+          <h2> {{ capitalize(this.$store.state.action)}} conteúdo digital</h2>
         </div>
         <div class="panel-body">
                     
@@ -125,7 +125,12 @@
           <!-- CONDIÇÕES DE USO -->
           <div class="checkbox" v-bind:class="{ 'has-error': errors.terms && errors.terms.length > 0 }">
               <label for="termosecondicoes">
-                  <input id="termosecondicoes" name="terms" type="checkbox" v-model="terms"> Li e concordo com os termos e condições de uso.
+                  <input id="termosecondicoes" 
+                        name="terms" 
+                        type="radio" 
+                        v-model="terms"
+                  > 
+                  Li e concordo com os termos e condições de uso.
               </label><br>
               <!-- ERRORS -->
               <erros :errors="errors.terms"></erros>
@@ -164,8 +169,8 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from "vuex";
-import { mapFields } from 'vuex-map-fields';
+import { mapGetters, mapActions, mapState, mapMutations } from "vuex";
+import { mapFields } from "vuex-map-fields";
 import { client } from "../client.js";
 //import { response, goTo } from "../response.js";
 import showErrors from "../components/ShowErrors.vue";
@@ -175,8 +180,6 @@ import "tui-editor/dist/tui-editor-contents.css";
 import "codemirror/lib/codemirror.css";
 import { Editor } from "@toast-ui/vue-editor";
 import debounce from "lodash/debounce";
-import CONTEUDO from '../store/models/conteudo.js'
-
 
 export default {
   name: "ConteudoForm",
@@ -192,33 +195,38 @@ export default {
       categories: []
     };
   },
-  mounted() {
+  created() {
     this.fetchTipos();
     this.fetchLicenses();
-    this.fetchConteudos(this.$route.params);
+    this.fetchConteudo(this.$route.params);
+  },
+  mounted() {
+    
   },
   computed: {
-    ...mapState({ 
-        errors: "errors",
-        tipos : "tipos",
-        isError: "isError" }),
-    ...mapFields(
-      { license_id: "conteudo.license_id",
-        canal_id: "conteudo.canal_id",
-        category_id: "conteudo.category_id",
-        tipo_id: "conteudo.options.tipo.id",
-        title: "conteudo.title",
-        description: "conteudo.description",
-        authors: "conteudo.authors",
-        source: "conteudo.source",
-        image: "conteudo.image",
-        terms: "conteudo.terms",
-        tags: "conteudo.tags",
-        components: "conteudo.components",
-        is_approved: "conteudo.is_approved",
-        is_featured: "conteudo.is_featured",
-        is_site: "conteudo.is_site"}
-      ),
+    ...mapState({
+      errors: "errors",
+      tipos: "tipos",
+      isError: "isError",
+      conteudo: 'conteudo'
+    }),
+    ...mapFields({
+      license_id: "conteudo.license_id",
+      canal_id: "conteudo.canal_id",
+      category_id: "conteudo.category_id",
+      tipo_id: "conteudo.options.tipo.id",
+      title: "conteudo.title",
+      description: "conteudo.description",
+      authors: "conteudo.authors",
+      source: "conteudo.source",
+      image: "conteudo.image",
+      tags: "conteudo.tags",
+      components: "conteudo.components",
+      terms: "conteudo.terms",
+      is_approved: "conteudo.is_approved",
+      is_featured: "conteudo.is_featured",
+      is_site: "conteudo.is_site"
+    }),
     licensesFilter() {
       const licenses = this.$store.state.licenses;
       if (licenses && licenses.length != 0) {
@@ -241,33 +249,44 @@ export default {
     }
   },
   methods: {
-    ...mapActions({
-      fetchConteudos: "getConteudo",
-      fetchTipos: "getTipos",
-      fetchLicenses: "getLicenses",
-      createConteudo: "createConteudo",
-      updateConteudo: "updateConteudo"
-    }),
-    send() {
-      
+    ...mapActions(["fetchConteudo",
+      "fetchTipos",
+      "fetchLicenses",
+      "createConteudo",
+      "updateConteudo",
+      "hideAlert"
+    ]),
+    async send() {
       if (this.$route.params.id) {
-        this.updateConteudo(this.$store.state.conteudo);
-        
+        await this.updateConteudo(this.conteudo);
       } else {
-        this.createConteudo(this.$store.state.conteudo);
+        await this.createConteudo(this.conteudo);
+      }
+      this.hideAlert();
+      if (this.isError){
         
+        console.warn('erro')
+      } else{
+        console.log('ok')
       }
-      if(this.isError) return; 
-      
-        /*
-      if(!this.isError){
-        this.$router.push({ name:'ExibirConteudo', params: {slug: this.$route.params.slug, id: this.$store.state.conteudo.id}})
-      }
+      /*
+        this.$router.push({
+        name: "ExibirConteudo",
+        params:{
+            id: this.conteudo.id,
+            action: 'exibir', 
+            slug: this.$route.params.slug
+          }
+        })
       */
-      setTimeout(() => {
-        this.$store.commit("SET_SHOW_ALERT", false);
-        this.$store.commit("SET_IS_ERROR", false);
-      }, 2000);
+      
+      
+      
+    },
+    capitalize(value) {
+      if (!value) return "";
+      value = value.toString();
+      return value.charAt(0).toUpperCase() + value.slice(1);
     }
   }
 };

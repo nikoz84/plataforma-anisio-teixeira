@@ -1,9 +1,9 @@
-import conteudo from './models/conteudo';
+import conteudo from "./models/conteudo";
 
 const state = {
   conteudos: [],
   paginator: {},
-  conteudo: {},
+  conteudo,
   aplicativos: [],
   aplicativo: {},
   canal: {},
@@ -15,7 +15,6 @@ const state = {
   licenses: [],
   tipos: [],
   license: "",
-  tipo: "",
   showErrors: false,
   isTipoSite: false,
   niveis: [],
@@ -32,7 +31,7 @@ const state = {
   formData: {},
   buttonText: "Salvar",
   notFound: false,
-  action: '',
+  action: ""
 };
 
 export default state;

@@ -3,7 +3,7 @@ import conteudoModel from "./models/conteudo";
 
 const actions = {
   /** APLICATIVOS */
-  async getAplicativo({ commit }) {
+  async fetchAplicativo({ commit }) {
     let resp = await client.get(`aplicativos/${id}`);
     commit("SET_APLICATIVO", resp.data.aplicativo);
     commit("SET_SHOW_APLICATIVO", true);
@@ -11,7 +11,7 @@ const actions = {
     commit("SET_NOT_FOUND", false);
   },
   /** CONTEUDOS */
-  async getConteudos({ commit }, payload) {
+  async fetchConteudos({ commit }, payload) {
     let url = payload.url ? payload.url : `/conteudos?canal=${payload.id}`;
     let resp = await client.get(url);
     if (resp.status == 200 && resp.data.paginator) {
@@ -20,14 +20,10 @@ const actions = {
       commit("SET_IS_ERROR", true);
     }
   },
-  async getConteudo({ commit, dispatch, state, getters }, payload) {
-    
-    let { id, action } = payload;
-    
-    localStorage.setItem('action', action);
-    
-    if(localStorage.action == 'adicionar' || localStorage.action == 'exibir'){
-      console.log('get')
+  async fetchConteudo({ commit, state }, payload) {
+    let { id } = payload;
+
+    if (id && id != undefined && id != null) {
       let resp = await client.get(`/conteudos/${id}`);
       if (resp.status == 200 && resp.data.success) {
         commit("SET_CONTEUDO", resp.data.conteudo);
@@ -39,56 +35,63 @@ const actions = {
         commit("SET_SHOW_APLICATIVO", false);
         commit("SET_NOT_FOUND", true);
       }
-    }else if(localStorage.action == 'adicionar'){
-      console.log('add')
-      commit("RESET_OBJECT", {
-              obj :state.conteudo, 
-              model: conteudoModel,
-              set: "SET_CONTEUDO"});
-    }
-    console.log(action, id) 
-  },
-  async createConteudo({ commit, dispatch }, conteudo) {
-    let resp = await client.post("/conteudos", conteudo);
-
-    if (resp.status == 200 && resp.data.success == false) {
-      commit("SET_ERRORS", resp.data.errors);
-      commit("SET_SHOW_ALERT", true);
-      commit("SET_TEXT_ALERT", resp.data.message);
-      commit("SET_IS_ERROR", true);
-    } else if (resp.status == 200 && resp.data.success == true) {
-      commit("SET_CONTEUDO", resp.data);
-      commit("SET_SHOW_ALERT", true);
-      commit("SET_TEXT_ALERT", resp.data.message);
-      commit("SET_IS_ERROR", false);
     } else {
-      console.log("erro");
+      console.log("reset");
+      commit("RESET_OBJECT", { model: conteudoModel, init: "conteudo" });
     }
   },
-  async updateConteudo({ commit }, conteudo) {
-    let resp = await client.put(`/conteudos/${conteudo.id}`, conteudo);
+  async createConteudo({ commit, dispatch, getters }, conteudo) {
+    let resp = await client.post("/conteudos", conteudo);
+    dispatch("showResponse", resp);
     
-    if (resp.status == 200 && resp.data.success == true) {
-      commit("SET_ERRORS", resp.data.errors);
-      commit("SET_SHOW_ALERT", true);
-      commit("SET_TEXT_ALERT", resp.data.message);
-      commit("SET_IS_ERROR", false);
-      
-    }
-
-    //console.log(resp);
+    commit("SET_CONTEUDO", resp.data.conteudo);
+    
+  },
+  async updateConteudo({ commit,dispatch, getters }, conteudo) {
+    let resp = await client.put(`/conteudos/${conteudo.id}`, conteudo);
+    await dispatch("showResponse", resp);
+    
+    commit("SET_CONTEUDO", resp.data.conteudo);
+    
   },
   async deleteConteudo({ commit }, id) {
     let resp = await client.delete(`/conteudos/${id}`);
     commit("DELETE_CONTEUDO", resp.data);
   },
+  showResponse({commit, dispatch}, response){
+    
+    if(response.status == 200 ){
+      let error = !response.data.success;
+      let errors = (response.data.errors) ? response.data.errors : [];
+      commit("SET_ERRORS", errors);
+      commit("SET_SHOW_ALERT", response.data.success);
+      commit("SET_SHOW_MESSAGE", response.data.message);
+      commit("SET_IS_ERROR", error);
+    }else{
+      commit("SET_ERRORS", []);
+      commit("SET_SHOW_ALERT", true);
+      commit("SET_SHOW_MESSAGE", `Erro Desconhecido  Status: ${response.statusCode}`);
+      commit("SET_IS_ERROR", true);
+    }
+  },
+  async hideAlert({commit}){
+     
+    setTimeout(()=>{
+       console.log('hide')
+       commit("SET_SHOW_ALERT", false);
+       commit("SET_SHOW_MESSAGE", '');
+       commit("SET_IS_ERROR", false);
+
+    },2000)
+     
+  },
   /** TIPO DE CONTEUDOS */
-  async getTipos({ commit }) {
+  async fetchTipos({ commit }) {
     let resp = await client.get("/tipos/conteudos");
     commit("SET_TIPOS", resp.data.tipos);
   },
   /** LICENÇAS */
-  async getLicenses({ commit }) {
+  async fetchLicenses({ commit }) {
     let resp = await client.get("/licenses");
     commit("SET_LICENSES", resp.data.licenses);
   },
@@ -100,13 +103,12 @@ const actions = {
       commit("SET_CANAL", resp.data.canal);
       commit("SET_CANAL_ID", resp.data.canal.id);
       commit("SET_SIDEBAR", resp.data.sidebar);
-      commit("SET_IS_ERROR", false);
-      await dispatch("getConteudos", { id: resp.data.canal.id });
+      await dispatch("fetchConteudos", { id: resp.data.canal.id });
     } else {
       commit("SET_IS_ERROR", true);
     }
   },
-  async getEnabledCategories({ commit }, params) {
+  async fetchEnabledCategories({ commit }, params) {
     let resp = await client.get("/categories", params);
 
     if (resp.status == 200 && resp.data) {

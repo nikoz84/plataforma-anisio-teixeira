@@ -126,7 +126,7 @@ class ConteudoController extends Controller
             'options.tipo.id' => 'required',
             'authors' => 'required',
             'source' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            //'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'terms' => 'required|in:true,false',
             'is_approved' => 'required|in:true,false',
         ]);
@@ -154,12 +154,12 @@ class ConteudoController extends Controller
 
         $conteudo->user_id = Auth::user()->id;
         $conteudo->approving_user_id = Auth::user()->id;
+        $conteudo->license_id = $this->request->get('license_id');
         $conteudo->canal_id = $this->request->get('canal_id', '');
         $conteudo->title = $this->request->get('title');
         $conteudo->description = $this->request->get('description');
         $conteudo->authors = $this->request->get('authors');
         $conteudo->source = $this->request->get('source');
-        $conteudo->license_id = $this->request->get('license_id');
         $conteudo->is_featured = $this->request->get('is_featured');
         $conteudo->is_approved = $this->request->get('is_approved');
         $conteudo->is_site = $this->request->get('is_site');
@@ -167,10 +167,14 @@ class ConteudoController extends Controller
 
         $conteudo->save();
 
+        $conteudo::with([
+            'user', 'canal', 'tags', 'license', 'componentes', 'niveis',
+        ]);
+
         return response()->json([
             'success' => true,
             'message' => 'Conteúdo cadastrado com sucesso',
-            'id' => $conteudo->id,
+            'conteudo' => $conteudo,
         ]);
     }
 
@@ -182,16 +186,18 @@ class ConteudoController extends Controller
      */
     public function update($id)
     {
-        //dd($id);
-        $conteudo = $this->conteudo::find($id);
-        //print_r($this->request->all());
-        //die();
+        $conteudo = $this->conteudo::with([
+            'user', 'canal', 'tags', 'license', 'componentes', 'niveis',
+        ])->find($id);
+        
         $conteudo->fill($this->request->all());
 
         $conteudo->save();
 
+        
         return response()->json([
             'success' => true,
+            'message' => 'Conteúdo editado com sucesso!!',
             'conteudo' => $conteudo,
         ]);
     }
