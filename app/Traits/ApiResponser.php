@@ -5,31 +5,42 @@ namespace App\Traits;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
-use Illuminate\Http\Response;
 
 trait ApiResponser
 {
-    protected function successResponse($data, $code)
+    protected function successResponse($data, $message, $code)
     {
-        return response()->json($data, $code);
+        return response()->json([
+            'metadata' => $data,
+            'message' => $message,
+            'success' => true
+        ], $code);
     }
 
-    protected function errorResponse($data, $code)
+    protected function errorResponse($errors, $message, $code)
     {
-        return response()->json([$data], $code);
+        return response()->json([
+            'errors'=> $errors,
+            'message' => $message,
+            'success' => false
+        ], $code);
     }
 
-    protected function showAll(Collection $collection, $code = 200)
+    protected function showAll(Collection $collection, $message = '', $code = 200)
     {
-        return $this->successResponse($collection, $code);
+        return $this->successResponse($collection, $message, $code);
     }
-    protected function showAsPaginator(Paginator $paginator, $code = 200)
+    protected function showAsPaginator(Paginator $paginator, $message = '', $code = 200)
     {
-        return $this->successResponse(['paginator' => $paginator], $code);
+        return response()->json([
+            'paginator' => $paginator,
+            'message' => $message,
+            'success' => true
+        ], $code);
     }
 
-    protected function showOne(Model $instance, $code = 200)
+    protected function showOne(Model $instance, $message = '', $code = 200)
     {
-        return $this->successResponse($instance, $code);
+        return $this->successResponse($instance, $message, $code);
     }
 }

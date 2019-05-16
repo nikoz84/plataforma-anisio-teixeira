@@ -32,50 +32,34 @@ class LicenseController extends ApiController
      */
     public function create()
     {
-        $validator = $this->validar($this->request->all());
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Não foi possível registrar a licença',
-                'errors' => $validator->errors(),
-            ], 200);
-        }
+        $this->validar($this->request, config("form.license"));
+        
 
         $license = $this->license;
-        $license->name = $this->request->get('name', '');
-        $license->description = $this->request->get('description');
-        $license->site = $this->request->get('site');
 
+        $license->fill($this->request->all());
+        
         $license->save();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Licença registrada com sucesso',
-            'id' => $license->id,
-        ]);
+        return $this->showOne($license, 'Licença registrada com sucesso!!', 200);
+            
     }
-    /**
-     * Valida a criação da licença
-     *
-     * @return
-     */
-    private function validar()
-    {
-
-        $validator = Validator::make($this->request->all(), [
-            'name' => 'required',
-            'description' => 'required',
-            'site' => '',
-        ]);
-
-        return $validator;
-    }
+    
     /**
      * Atualiza uma licença específica.
      *
      */
     public function update($id)
     {
-        //
+        $this->validar($this->request, config('form.license'));
+        $license = $this->license::find($id);
+
+        $license->fill($this->request->all());
+        
+        $license->save();
+
+        return $this->showOne($license, 'Licença atualizada com Sucesso!!', 200);
+
     }
 
     /**
@@ -103,10 +87,6 @@ class LicenseController extends ApiController
 
         $paginator->setPath("/licenses/search/{$termo}?limit={$limit}");
 
-        return response()->json([
-            'success' => true,
-            'title' => 'Resultado da busca',
-            'paginator' => $paginator,
-        ]);
+        return $this->showAsPaginator($paginator, 'Resultado da busca...', 200);
     }
 }

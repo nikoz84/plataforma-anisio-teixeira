@@ -93,7 +93,7 @@ const actions = {
   /** LICENÇAS */
   async fetchLicenses({ commit }) {
     let resp = await client.get("/licenses");
-    console.log(resp)
+    
     commit("SET_LICENSES", resp.data);
   },
   /** CANAL */

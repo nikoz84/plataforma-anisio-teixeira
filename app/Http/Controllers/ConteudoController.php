@@ -102,46 +102,16 @@ class ConteudoController extends ApiController
 
         return $this->showAsPaginator($sitesTematicos);
     }
-    /**
-     * Valida a criação do conteúdo
-     *
-     * @return
-     */
-    private function validar()
-    {
-
-        $validator = Validator::make($this->request->all(), [
-            'license_id' => 'required',
-            'canal_id' => 'required',
-            'category_id' => '',
-            'title' => 'required|min:10|max:255',
-            'description' => 'required|min:140',
-            'options.tipo.id' => 'required',
-            'authors' => 'required',
-            'source' => 'required',
-            //'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'terms' => 'required|in:true,false',
-            'is_approved' => 'required|in:true,false',
-        ]);
-
-        return $validator;
-    }
 
     /**
-     * Adiciona e valida um novo conteúdo.tipo
+     * Adiciona e valida novo conteúdo
      *
      * @return Json
      */
     public function create()
     {
-        $validator = $this->validar($this->request);
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Não foi possível efetuar o cadastro',
-                'errors' => $validator->errors(),
-            ], 200);
-        }
+        $this->validar($this->request, config('form.conteudo'));
+        
 
         $conteudo = $this->conteudo;
 
