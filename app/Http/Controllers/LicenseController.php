@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\License;
 use Illuminate\Http\Request;
-
-class LicenseController extends Controller
+use App\Http\Controllers\ApiController;
+class LicenseController extends ApiController
 {
     public function __construct(Request $request, License $license)
     {
@@ -22,11 +22,7 @@ class LicenseController extends Controller
 
         $licenses = $this->license::with('childs')->get();
 
-        return response()->json([
-            'success' => true,
-            'title' => 'Lista de Licenças',
-            'licenses' => $licenses,
-        ]);
+        return $this->showAll($licenses);
     }
 
     /**
@@ -39,7 +35,6 @@ class LicenseController extends Controller
         $validator = $this->validar($this->request->all());
         if ($validator->fails()) {
             return response()->json([
-                'success' => false,
                 'message' => 'Não foi possível registrar a licença',
                 'errors' => $validator->errors(),
             ], 200);
@@ -58,7 +53,22 @@ class LicenseController extends Controller
             'id' => $license->id,
         ]);
     }
+    /**
+     * Valida a criação da licença
+     *
+     * @return
+     */
+    private function validar()
+    {
 
+        $validator = Validator::make($this->request->all(), [
+            'name' => 'required',
+            'description' => 'required',
+            'site' => '',
+        ]);
+
+        return $validator;
+    }
     /**
      * Atualiza uma licença específica.
      *

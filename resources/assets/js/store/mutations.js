@@ -55,7 +55,7 @@ const mutations = {
     const { model, init } = data;
 
     let obj = state[init];
-    if (obj && obj != "undefined") {
+    if (obj && obj != "undefined" && obj != null) {
       Object.keys(obj).map(key => {
         if (model.hasOwnProperty(key)) {
           if (key == "options") {

@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Conteudo;
 use App\Tag;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use App\Http\Controllers\ApiController;
 
-class ConteudoController extends Controller
+class ConteudoController extends ApiController
 {
     public function __construct(Conteudo $conteudo, Request $request)
     {
@@ -59,11 +60,7 @@ class ConteudoController extends Controller
             ->paginate($limit)
             ->setPath("/conteudos?{$url}");
 
-        return response()->json([
-            'success' => true,
-            'title' => 'Mídias educacionais',
-            'paginator' => $conteudos,
-        ], 200);
+        return $this->showAsPaginator($conteudos);
     }
 
     private function getConteudosByIdCanal($canal_id)
@@ -103,11 +100,7 @@ class ConteudoController extends Controller
             ->paginate($limit)
             ->setPath("/conteudos/sites?limit={$limit}");
 
-        return response()->json([
-            'success' => true,
-            'title' => 'Sites Temáticos',
-            'paginator' => $sitesTematicos,
-        ], 200);
+        return $this->showAsPaginator($sitesTematicos);
     }
     /**
      * Valida a criação do conteúdo
@@ -257,16 +250,9 @@ class ConteudoController extends Controller
             ->paginate($limit);
 
         $conteudos->setPath("/conteudos/search/{$termo}?limit={$limit}");
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Resultados da busca',
-            'paginator' => $conteudos,
-            'has_more_pages' => $conteudos->hasMorePages(),
-            'pages' => $conteudos->count(),
-            'page' => $conteudos->currentPage(),
-            'limit' => $conteudos->perPage(),
-        ]);
+        //$conteudos->hasMorePages();
+        
+        return $this->showAsPaginator($conteudos);
     }
     /**
      * Procura um conteúdo por id
@@ -281,17 +267,7 @@ class ConteudoController extends Controller
             'user', 'canal', 'tags', 'license', 'componentes', 'niveis',
         ])->find($id);
 
-        if ($conteudo) {
-            return response()->json([
-                'success' => true,
-                'conteudo' => $conteudo,
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Conteudo não encontrado',
-            ]);
-        }
+        return $this->showOne($conteudo);
     }
     public function teste()
     {
@@ -320,9 +296,6 @@ class ConteudoController extends Controller
 
         DB::table('tags')->where('id', $id)->increment('searched', 1);
 
-        return response()->json([
-            'success' => true,
-            'paginator' => $conteudos,
-        ]);
+        return $this->showAsPaginator($conteudos);
     }
 }

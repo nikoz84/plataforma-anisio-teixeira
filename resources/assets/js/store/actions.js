@@ -25,8 +25,8 @@ const actions = {
 
     if (id && id != undefined && id != null) {
       let resp = await client.get(`/conteudos/${id}`);
-      if (resp.status == 200 && resp.data.success) {
-        commit("SET_CONTEUDO", resp.data.conteudo);
+      if ( resp.status == 200 && resp.data ) {
+        commit("SET_CONTEUDO", resp.data);
         commit("SET_SHOW_CONTEUDO", true);
         commit("SET_SHOW_APLICATIVO", false);
         commit("SET_NOT_FOUND", false);
@@ -40,14 +40,14 @@ const actions = {
       commit("RESET_OBJECT", { model: conteudoModel, init: "conteudo" });
     }
   },
-  async createConteudo({ commit, dispatch, getters }, conteudo) {
+  async createConteudo({ commit, dispatch }, conteudo) {
     let resp = await client.post("/conteudos", conteudo);
     dispatch("showResponse", resp);
     
-    commit("SET_CONTEUDO", resp.data.conteudo);
+    commit("SET_CONTEUDO", resp.data);
     
   },
-  async updateConteudo({ commit,dispatch, getters }, conteudo) {
+  async updateConteudo({ commit, dispatch }, conteudo) {
     let resp = await client.put(`/conteudos/${conteudo.id}`, conteudo);
     await dispatch("showResponse", resp);
     
@@ -70,7 +70,7 @@ const actions = {
     }else{
       commit("SET_ERRORS", []);
       commit("SET_SHOW_ALERT", true);
-      commit("SET_SHOW_MESSAGE", `Erro Desconhecido  Status: ${response.statusCode}`);
+      commit("SET_SHOW_MESSAGE", `Erro desconhecido status: ${response.statusCode}`);
       commit("SET_IS_ERROR", true);
     }
   },
@@ -93,7 +93,8 @@ const actions = {
   /** LICENÇAS */
   async fetchLicenses({ commit }) {
     let resp = await client.get("/licenses");
-    commit("SET_LICENSES", resp.data.licenses);
+    console.log(resp)
+    commit("SET_LICENSES", resp.data);
   },
   /** CANAL */
   async getCanal({ commit, dispatch }, slug) {
