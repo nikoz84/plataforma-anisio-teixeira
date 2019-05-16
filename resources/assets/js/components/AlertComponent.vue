@@ -7,20 +7,14 @@
     </div>
 </template>
 <script>
-import {mapGetters, mapState} from 'vuex';
+import { mapState } from "vuex";
 
 export default {
   name: "Alert",
   computed: {
-    ...mapGetters({
-      textAlert: 'getTextAlert',
-      isError: 'getIsError'
-    }),
-    ...mapState([
-      'showAlert'
-    ]),
-    classAlert(){
-      return (this.isError) ? 'alert-warning': 'alert-success';
+    ...mapState(["showAlert", "textAlert", "isError"]),
+    classAlert() {
+      return this.isError ? "alert-success" : "alert-danger";
     }
   }
 };
@@ -29,9 +23,9 @@ export default {
 .alert-bottom {
   position: fixed;
   z-index: 1300;
-  bottom: 5px;
-  left: 2%;
-  width: 96%;
+  bottom: 60px;
+  left: 20%;
+  width: 50%;
 }
 .alert-top {
   position: fixed;

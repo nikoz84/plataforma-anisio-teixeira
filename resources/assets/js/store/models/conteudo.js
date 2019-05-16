@@ -2,13 +2,8 @@ export default {
   license_id: "",
   canal_id: "",
   category_id: "",
-  options: {
-    tipo: {
-      id: "",
-      name: ""
-    },
-    site:""
-  },
+  tipo_id: "",
+  site: "",
   title: "",
   description: "",
   authors: "",

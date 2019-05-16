@@ -7,13 +7,8 @@ const state = {
     license_id: "",
     canal_id: "",
     category_id: "",
-    options: {
-      tipo: {
-        id: "",
-        name: ""
-      },
-      site: ""
-    },
+    tipo_id: "",
+    site: "",
     title: "",
     description: "",
     authors: "",
@@ -37,8 +32,8 @@ const state = {
   disciplinas: [],
   components: [],
   licenses: [],
+  childsLicenses: [],
   tipos: [],
-  license: "",
   showErrors: false,
   isTipoSite: false,
   niveis: [],

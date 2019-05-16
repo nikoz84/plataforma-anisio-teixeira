@@ -83,8 +83,9 @@ const mutations = {
   SET_SHOW_ALERT(state, showAlert) {
     state.showAlert = showAlert;
   },
-  SET_LICENSES(state, licenses) {
+  SET_LICENSES(state, { licenses, childs }) {
     state.licenses = licenses;
+    state.childsLicenses = childs[0].childs;
   },
   SET_TIPOS(state, tipos) {
     state.tipos = tipos;

@@ -23,11 +23,11 @@
           <!-- TIPO -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.tipo && errors.tipo.length > 0 }">
               <label for="tipo-conteudo">Tipo de Conteúdo:*</label>
-              <select class="form-control form-control-lg" name="tipo" id="tipo-conteudo" v-model.lazy="tipo_id">
+              <select class="form-control form-control-lg" name="tipo" id="tipo-conteudo" v-model="tipo_id">
                   <option value="" disabled selected>« SELECIONE »</option>
                   <option v-for="(tipo, i) in tipos"
-                          v-bind:value="tipo.id"
-                          v-bind:key="i">{{tipo.name}}
+                          :value="tipo.id"
+                          :key="i">{{tipo.name}}
                   </option>
               </select>
               <small class="text-info">Escolha a opção mais adequada à mídia que deseja publicar, conforme tipos disponíveis.</small><br>
@@ -76,7 +76,7 @@
           <!-- DESCRICAO -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.description && errors.description.length > 0 }">
               <label for="descricao">Descrição:*</label>
-              <editor v-model="description" 
+              <editor v-model.trim="description" 
                       id="descricao"
                       name="description" 
                       height="500px" 
@@ -92,7 +92,7 @@
           <!-- AUTORES -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.authors && errors.authors.length > 0 }">
               <label for="autores">Autores:*</label>
-              <input type="text" class="form-control" name="authors" id="autores" v-model="authors">
+              <input type="text" class="form-control" name="authors" id="autores" v-model.trim="authors">
               <small class="text-info">Nome dos autores ou grupo de trabalho responsável pelo desenvolvimento da mídia.</small><br>
               <!-- ERRORS -->
               <erros :errors="errors.authors"></erros>
@@ -100,34 +100,36 @@
           <!-- FONTE -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.source && errors.source.length > 0 }">
               <label for="fonte">Fonte:*</label>
-              <input type="text" class="form-control" name="source" id="fonte" v-model="source" >
+              <input type="text" class="form-control" name="source" id="fonte" v-model.trim="source" >
               <small class="text-info">Indique o site ou o nome da instituição que produziu a mídia.</small><br>
               <!-- ERRORS -->
               <erros :errors="errors.source"></erros>
           </div>
           <!-- LICENCA -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.licenses && errors.licenses.length > 0 }">
-              <label for="licenca-conteudo">Licença de Conteúdo:*</label>
+              <label for="licenca-conteudo">Licença do Conteúdo:*</label>
               <select class="form-control form-control-lg"  
                       name="license" 
                       id="licenca-conteudo" 
                       v-model="license_id">
                   <option value="" disabled selected>« SELECIONE »</option>
-                  <optgroup v-for="(license, i) in licenses"  :key="i">
-                    
-                      <option v-if="license.id == 2 && license.parent_id">
-                        {{ license.name }}
-                      </option>
-                    
+                  <optgroup label="Creative Commons">
+                    <option v-for="(child, i) in childsLicenses"  :key="i" 
+                            :value="child.id"
+                            v-text="child.name">
+                    </option>
                   </optgroup>
-                  
-                  
+                  <option v-for="(license, i) in licenses"  
+                        :key="i" 
+                        :value="license.id"
+                        v-text="license.name">
+                  </option>
               </select>    
                   
               <small class="text-info">
                   Escolha a opção que mais adequada à mídia que deseja publicar, conforme opções disponíveis. 
                   Se precisar de ajuda clique aqui
-              </small><br>
+              </small>
               <!-- ERRORS -->
               <erros :errors="errors.licenses"></erros>
           </div>
@@ -206,11 +208,6 @@ export default {
     };
   },
   mounted() {
-    /*
-    if (this.$route.params.id) {
-      this.fetchConteudo(this.$route.params);
-    }
-    */
     this.fetchConteudo(this.$route.params);
     this.fetchTipos();
     this.fetchLicenses();
@@ -221,14 +218,14 @@ export default {
       errors: "errors",
       tipos: "tipos",
       licenses: "licenses",
-      isError: "isError",
+      childsLicenses: "childsLicenses",
       canais: "canais"
     }),
     ...mapFields({
       license_id: "conteudo.license_id",
       canal_id: "conteudo.canal_id",
       category_id: "conteudo.category_id",
-      tipo_id: "conteudo.options.tipo.id",
+      tipo_id: "conteudo.tipo_id",
       title: "conteudo.title",
       description: "conteudo.description",
       authors: "conteudo.authors",
@@ -249,8 +246,7 @@ export default {
       "fetchLicenses",
       "fetchCanaisForSelect",
       "createConteudo",
-      "updateConteudo",
-      "hideAlert"
+      "updateConteudo"
     ]),
     async send() {
       if (this.$route.params.id) {
