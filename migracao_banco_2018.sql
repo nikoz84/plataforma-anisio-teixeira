@@ -15,6 +15,17 @@ having count(*) > 1
   join emails as e on e.email = u.email
 
 --
+
+update conteudos set canal_id = 6 where is_site = false and canal_id is null;
+update conteudos set canal_id = 5 where is_site = true and canal_id is null;
+update canais set is_active = false where id = 15;
+update canais set is_active = false where id = 11;
+update canais set is_active = false where id = 10;
+update canais set is_active = false where id = 14;
+update canais set is_active = false where id = 13;
+update canais set is_active = false where id = 4;
+
+
 update usuario set email = (concat('deletar_',email)) where idusuario = 115;
 update usuario set email = (concat('deletar_',email)) where idusuario = 65;
 update usuario set email = (concat('deletar_',email)) where idusuario = 1237;
