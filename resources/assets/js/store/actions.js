@@ -25,12 +25,13 @@ const actions = {
 
     if (id && id != undefined && id != null) {
       let resp = await client.get(`/conteudos/${id}`);
-      if (resp.status == 200 && resp.data.success) {
-        commit("SET_CONTEUDO", resp.data.conteudo);
+      if (resp.status == 200 && resp.data) {
+        commit("SET_CONTEUDO", resp.data.metadata);
         commit("SET_SHOW_CONTEUDO", true);
         commit("SET_SHOW_APLICATIVO", false);
         commit("SET_NOT_FOUND", false);
       } else {
+        //commit("SET_CONTEUDO", {});
         commit("SET_SHOW_CONTEUDO", false);
         commit("SET_SHOW_APLICATIVO", false);
         commit("SET_NOT_FOUND", true);
@@ -40,13 +41,14 @@ const actions = {
       commit("RESET_OBJECT", { model: conteudoModel, init: "conteudo" });
     }
   },
-  async createConteudo({ commit, dispatch, getters }, conteudo) {
+  async createConteudo({ commit, dispatch }, conteudo) {
     let resp = await client.post("/conteudos", conteudo);
+    console.warn(resp);
     dispatch("showResponse", resp);
 
-    commit("SET_CONTEUDO", resp.data.conteudo);
+    commit("SET_CONTEUDO", resp.data);
   },
-  async updateConteudo({ commit, dispatch, getters }, conteudo) {
+  async updateConteudo({ commit, dispatch }, conteudo) {
     let resp = await client.put(`/conteudos/${conteudo.id}`, conteudo);
     await dispatch("showResponse", resp);
 
@@ -69,7 +71,7 @@ const actions = {
       commit("SET_SHOW_ALERT", true);
       commit(
         "SET_SHOW_MESSAGE",
-        `Erro Desconhecido  Status: ${response.statusCode}`
+        `Erro desconhecido status: ${response.statusCode}`
       );
       commit("SET_IS_ERROR", true);
     }
@@ -82,6 +84,12 @@ const actions = {
       commit("SET_IS_ERROR", false);
     }, 2000);
   },
+  /** CANAIS */
+  async fetchCanaisForSelect({ commit }) {
+    let resp = await client.get("/canais?select");
+    console.log(resp);
+    commit("SET_CANAIS", resp.data.metadata);
+  },
   /** TIPO DE CONTEUDOS */
   async fetchTipos({ commit }) {
     let resp = await client.get("/tipos/conteudos");
@@ -90,7 +98,8 @@ const actions = {
   /** LICENÇAS */
   async fetchLicenses({ commit }) {
     let resp = await client.get("/licenses");
-    commit("SET_LICENSES", resp.data.licenses);
+
+    commit("SET_LICENSES", resp.data);
   },
   /** CANAL */
   async getCanal({ commit, dispatch }, slug) {

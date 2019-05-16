@@ -27,6 +27,7 @@ class HomeController extends Controller
     public function getLinks()
     {
         $links = DB::select('select name, slug from canais where is_active = ? order by id asc', [true]);
+
         return response()->json([
             'links' => $links,
         ]);

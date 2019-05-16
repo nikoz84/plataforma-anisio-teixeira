@@ -20,6 +20,9 @@ const getters = {
   getCanal: state => {
     return state.canal;
   },
+  getCanais: state => {
+    return state.canais;
+  },
   getSidebar: state => {
     return state.sidebar;
   },
@@ -32,14 +35,14 @@ const getters = {
   getTipos: state => {
     return state.tipos;
   },
-  getIsError:state => {
+  getIsError: state => {
     return state.isError;
   },
-  getTextAlert: state =>{
-    return state.textAlert
+  getTextAlert: state => {
+    return state.textAlert;
   },
-  getShowAlert: state =>{
-    return state.showAlert
+  getShowAlert: state => {
+    return state.showAlert;
   },
   getshowLicenses: state => {
     return state.licenses;

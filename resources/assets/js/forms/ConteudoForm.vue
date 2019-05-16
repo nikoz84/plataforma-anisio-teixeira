@@ -22,8 +22,8 @@
           </div>
           <!-- TIPO -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.tipo && errors.tipo.length > 0 }">
-              <label for="tipoconteudo">Tipo de Conteúdo:*</label>
-              <select class="form-control form-control-lg" name="tipo" id="tipoconteudo" v-model="tipo_id">
+              <label for="tipo-conteudo">Tipo de Conteúdo:*</label>
+              <select class="form-control form-control-lg" name="tipo" id="tipo-conteudo" v-model.lazy="tipo_id">
                   <option value="" disabled selected>« SELECIONE »</option>
                   <option v-for="(tipo, i) in tipos"
                           v-bind:value="tipo.id"
@@ -33,7 +33,21 @@
               <small class="text-info">Escolha a opção mais adequada à mídia que deseja publicar, conforme tipos disponíveis.</small><br>
               <!-- ERRORS -->
               <erros :errors="errors.tipo"></erros>
-              </div>
+              
+          </div>
+          <!-- CANAL -->
+          <div class="form-group" v-bind:class="{ 'has-error': errors.canal_id && errors.canal_id.length > 0 }">
+              <label for="canal-id">Canal:*</label>
+              <select class="form-control form-control-lg" name="tipo" id="canal-id" v-model="canal_id">
+                  <option value="" disabled selected>« SELECIONE »</option>
+                  <option v-for="(canal, i) in canais"
+                          v-bind:value="canal.id"
+                          v-bind:key="i">{{canal.name}}
+                  </option>
+              </select>
+              <small class="text-info">Escolha um Canal.</small><br>
+              <!-- ERRORS -->
+              <erros :errors="errors.canal_id"></erros>
           </div>
                     
           <!-- CAMPO URL-->
@@ -94,16 +108,18 @@
           <!-- LICENCA -->
           <div class="form-group" v-bind:class="{ 'has-error': errors.licenses && errors.licenses.length > 0 }">
               <label for="licenca-conteudo">Licença de Conteúdo:*</label>
-              <select class="form-control form-control-lg"  name="license" id="licenca-conteudo" v-model="license_id">
+              <select class="form-control form-control-lg"  
+                      name="license" 
+                      id="licenca-conteudo" 
+                      v-model="license_id">
                   <option value="" disabled selected>« SELECIONE »</option>
-                  <optgroup v-if="childsLicenses" :label="childsLicenses.name">
-                    <option v-for="(child, i) in childsLicenses.childs" :key="i" :value="child.id">
-                      {{child.name}}
-                    </option>
+                  <optgroup v-for="(license, i) in licenses"  :key="i">
+                    
+                      <option v-if="license.id == 2 && license.parent_id">
+                        {{ license.name }}
+                      </option>
+                    
                   </optgroup>
-                  <option v-for="(license, i) in licensesFilter" :key="i" :value="license.id">
-                      {{license.name}}
-                  </option>
                   
                   
               </select>    
@@ -125,11 +141,7 @@
           <!-- CONDIÇÕES DE USO -->
           <div class="checkbox" v-bind:class="{ 'has-error': errors.terms && errors.terms.length > 0 }">
               <label for="termosecondicoes">
-                  <input id="termosecondicoes" 
-                        name="terms" 
-                        type="radio" 
-                        v-model="terms"
-                  > 
+                  <input id="aprovado" name="termosecondicoes" type="checkbox" v-model="terms">
                   Li e concordo com os termos e condições de uso.
               </label><br>
               <!-- ERRORS -->
@@ -152,8 +164,8 @@
           </div>
           <!-- RESPOSTA FORMULARIO -->
           <alert></alert>
-
         </div>
+      </div>
 
         <!-- COMPONENTES E NIVEIS DE ENSINO -->
         <div class="panel panel-default col-md-5">
@@ -181,6 +193,7 @@ import { Editor } from "@toast-ui/vue-editor";
 
 export default {
   name: "ConteudoForm",
+  delay: 2000,
   components: {
     erros: showErrors,
     editor: Editor,
@@ -188,31 +201,28 @@ export default {
   },
   data() {
     return {
-      form: {},
       autocompleteItems: [],
       categories: []
     };
   },
-  beforeRouteEnter(to, from, next) {
-    // react to route changes...
-    Store.dispatch("fetchTipos");
-    Store.dispatch("fetchLicenses");
-    next();
-  },
-  created() {
-    console.log("created");
-  },
   mounted() {
-    if (this.$router.params.id) {
-      this.fetchConteudo(this.$router.params);
+    /*
+    if (this.$route.params.id) {
+      this.fetchConteudo(this.$route.params);
     }
-    console.log("mounted");
+    */
+    this.fetchConteudo(this.$route.params);
+    this.fetchTipos();
+    this.fetchLicenses();
+    this.fetchCanaisForSelect();
   },
   computed: {
     ...mapState({
       errors: "errors",
       tipos: "tipos",
-      isError: "isError"
+      licenses: "licenses",
+      isError: "isError",
+      canais: "canais"
     }),
     ...mapFields({
       license_id: "conteudo.license_id",
@@ -230,33 +240,14 @@ export default {
       is_approved: "conteudo.is_approved",
       is_featured: "conteudo.is_featured",
       is_site: "conteudo.is_site"
-    }),
-    licensesFilter() {
-      const licenses = this.$store.state.licenses;
-      if (licenses && licenses.length != 0) {
-        return licenses.filter(function(item) {
-          return item.id != 2 && !item.parent_id ? item : null;
-        });
-      }
-    },
-    childsLicenses() {
-      const licenses = this.$store.state.licenses;
-      if (licenses && licenses.length != 0) {
-        let cCommonsChilds = {};
-        licenses.forEach(element => {
-          if (element.id == 2) {
-            cCommonsChilds = element;
-          }
-        });
-        return cCommonsChilds;
-      }
-    }
+    })
   },
   methods: {
     ...mapActions([
       "fetchConteudo",
       "fetchTipos",
       "fetchLicenses",
+      "fetchCanaisForSelect",
       "createConteudo",
       "updateConteudo",
       "hideAlert"
@@ -267,27 +258,6 @@ export default {
       } else {
         await this.createConteudo(this.conteudo);
       }
-      this.hideAlert();
-      if (this.isError) {
-        console.warn("erro");
-      } else {
-        console.log("ok");
-      }
-      /*
-        this.$router.push({
-        name: "ExibirConteudo",
-        params:{
-            id: this.conteudo.id,
-            action: 'exibir', 
-            slug: this.$route.params.slug
-          }
-        })
-      */
-    },
-    capitalize(value) {
-      if (!value) return "";
-      value = value.toString();
-      return value.charAt(0).toUpperCase() + value.slice(1);
     }
   }
 };

@@ -128,7 +128,7 @@ Route::group(['middleware' => ['cors']], function () {
  * Controlador: Licenses
  * Métodos: list -> lista as licenças
  */
-    Route::get('/licenses', 'LicenseController@list')->name('lista.Licenca');
+    Route::get('/licenses', 'LicenseController@list')->name('listar.licencas');
 
 /******
  *
@@ -230,11 +230,11 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
      * search -> Buscar canal pelo nome
      *
      */
-    Route::post('/canais', 'CanalController@create')->name('adicionarCanal');
-    Route::put('/canais/{id}', 'CanalController@update')->name('atualizarCanal');
-    Route::delete('/canais/{id}', 'CanalController@delete')->name('apagarCanal');
-    Route::get('/canais', 'CanalController@list')->name('listaCanal');
-    Route::get('/canais/search/{term}', 'CanalController@search')->name('adicionarCanal');
+    Route::post('/canais', 'CanalController@create')->name('adicionar.canal');
+    Route::put('/canais/{id}', 'CanalController@update')->name('atualizar.canal');
+    Route::delete('/canais/{id}', 'CanalController@delete')->name('apagar.canal');
+    Route::get('/canais', 'CanalController@list')->name('listar.canais');
+    Route::get('/canais/search/{term}', 'CanalController@search')->name('buscar.canal');
     /**
      *
      * Controlador: License
@@ -244,11 +244,10 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
      * delete -> Apagar licença
      *
      */
-    Route::get('/licenses', 'LicenseController@list')->name('listaLicenca');
-    Route::get('/licenses/search/{term}', 'LicenseController@search')->name('buscaLicenca');
-    Route::post('/licenses', 'LicenseController@create')->name('adicionarLicenca');
-    Route::put('/licenses/{id}', 'LicenseController@update')->name('atualizarLicenca');
-    Route::delete('/licenses/{id}', 'LicenseController@delete')->name('apagarLicenca');
+    Route::get('/licenses/search/{term}', 'LicenseController@search')->name('buscar.licenca');
+    Route::post('/licenses', 'LicenseController@create')->name('adicionar.licenca');
+    Route::put('/licenses/{id}', 'LicenseController@update')->name('atualizar.licenca');
+    Route::delete('/licenses/{id}', 'LicenseController@delete')->name('apagar.licenca');
     /**
      *
      * Controlador: Denúncia

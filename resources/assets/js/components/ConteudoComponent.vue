@@ -47,14 +47,14 @@
 <script>
 import PlayerApp from "../components/PlayerComponent.vue";
 import client from "../client.js";
-import {mapState} from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "ConteudoApp",
   components: { PlayerApp },
   created() {},
   computed: {
-    ...mapState(['conteudo']),
+    ...mapState(["conteudo"]),
     splitAuthors() {
       let replace = this.conteudo.authors.replace(",", ";");
       return replace.split(";");

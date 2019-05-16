@@ -55,7 +55,7 @@ const mutations = {
     const { model, init } = data;
 
     let obj = state[init];
-    if (obj && obj != "undefined") {
+    if (obj && obj != "undefined" && obj != null) {
       Object.keys(obj).map(key => {
         if (model.hasOwnProperty(key)) {
           if (key == "options") {
@@ -92,8 +92,8 @@ const mutations = {
   SET_FORM_DATA(state, formData) {
     state.formData = formData;
   },
-  SET_ACTION(state, action) {
-    state.action = action;
+  SET_CANAIS(state, canais) {
+    state.canais = canais;
   }
 };
 

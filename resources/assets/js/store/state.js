@@ -3,9 +3,33 @@ import conteudo from "./models/conteudo";
 const state = {
   conteudos: [],
   paginator: {},
-  conteudo,
+  conteudo: {
+    license_id: "",
+    canal_id: "",
+    category_id: "",
+    options: {
+      tipo: {
+        id: "",
+        name: ""
+      },
+      site: ""
+    },
+    title: "",
+    description: "",
+    authors: "",
+    source: "",
+    image: "",
+    tags: [],
+    niveis: [],
+    components: [],
+    terms: false,
+    is_approved: false,
+    is_featured: false,
+    is_site: false
+  },
   aplicativos: [],
   aplicativo: {},
+  canais: [],
   canal: {},
   sidebar: {},
   categories: [],
@@ -18,7 +42,7 @@ const state = {
   showErrors: false,
   isTipoSite: false,
   niveis: [],
-  menssage: "",
+  message: "",
   //title: "",
   show: false,
   isError: false,
