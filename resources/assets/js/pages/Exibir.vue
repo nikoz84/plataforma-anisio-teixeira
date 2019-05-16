@@ -1,8 +1,8 @@
 <template>
     <div>
-        <conteudo v-if="showConteudo" :conteudo="conteudo"></conteudo>
-        <aplicativo v-if="showAplicativo"></aplicativo>
-        <article class="jumbotron" v-if="notFound">
+        <conteudo v-if="this.showConteudo" ></conteudo>
+        <aplicativo v-if="this.showAplicativo"></aplicativo>
+        <article class="jumbotron" v-if="this.notFound">
             <h3 class="text-center">Não Encontrado</h3>
         </article>
     </div>
@@ -11,31 +11,28 @@
 import client from "../client.js";
 import ConteudoApp from "../components/ConteudoComponent.vue";
 import AplicativoApp from "../components/AplicativoComponent.vue";
+import {mapState, mapActions} from 'vuex'
 
 export default {
   name: "exibir",
   components: { conteudo: ConteudoApp, aplicativo: AplicativoApp },
   created() {
     
-    this.$store.dispatch("getConteudo", this.$route.params);
+    this.fetchConteudo(this.$route.params);
   },
+
   computed: {
-    showConteudo() {
-      return this.$store.state.showConteudo;
-    },
-    showAplicativo() {
-      return this.$store.state.showAplicativo;
-    },
-    notFound() {
-      return this.$store.state.notFound;
-    },
-    conteudo() {
-      return this.$store.state.conteudo;
-    }
+    ...mapState([
+      'showConteudo',
+      'showAplicativo',
+      'notFound'
+    ])
   },
-  methods: {},
+  methods: {
+    ...mapActions(['fetchConteudo'])
+  },
   destroyed() {
-    window.removeEventListener("scroll", this.goToTop);
+    //window.removeEventListener("scroll", this.goToTop);
   }
 };
 </script>

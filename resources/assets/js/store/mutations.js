@@ -1,4 +1,4 @@
-import { updateField } from 'vuex-map-fields';
+import { updateField } from "vuex-map-fields";
 
 const mutations = {
   updateField,
@@ -14,12 +14,12 @@ const mutations = {
   SET_CONTEUDO(state, newConteudo) {
     state.conteudo = newConteudo;
   },
-  CREATE_CONTEUDO(state, conteudo) {
-    state.conteudo;
+  CREATE_CONTEUDO(state, newConteudo) {
+    state.conteudo = newConteudo;
   },
   DELETE_CONTEUDO(state, conteudo) {
-    let index = state.conteudo.findIndex(item => item.id === conteudo.id);
-    state.conteudo.splice(index, 1);
+    //let index = state.conteudo.findIndex(item => item.id === conteudo.id);
+    //state.conteudo.splice(index, 1);
   },
   SET_IS_ERROR(state, error) {
     state.error = error;
@@ -51,33 +51,37 @@ const mutations = {
   SET_SHOW_CONTEUDO(state, showConteudo) {
     state.showConteudo = showConteudo;
   },
-  RESET_OBJECT({ commit , state}, data) {
-    const { obj, model, set }  = data;
-    console.log(data)
-    Object.keys(obj).map(key => {
-      if (model.hasOwnProperty(key)) {
-        //let sp = key.split('is_', 1);
-        //console.warn(sp)
-        if(key == 'options'){
-          obj[key] = Object.assign({}, model[key]);
-        }else {
-          obj[key] = model[key];
+  RESET_OBJECT(state, data) {
+    const { model, init } = data;
+
+    let obj = state[init];
+    if (obj && obj != "undefined" && obj != null) {
+      Object.keys(obj).map(key => {
+        if (model.hasOwnProperty(key)) {
+          if (key == "options") {
+            obj[key] = Object.assign({}, model[key]);
+          } else {
+            obj[key] = model[key];
+          }
+        } else {
+          delete obj[key];
         }
-      }
-    });
+      });
+    }
+
+    state[init] = Object.assign({}, obj);
   },
   SET_SHOW_APLICATIVO(state, showAplicativo) {
     state.showAplicativo = showAplicativo;
   },
   SET_ERRORS(state, errors) {
     state.errors = errors;
-    state.isError = true;
+  },
+  SET_SHOW_MESSAGE(state, textAlert) {
+    state.textAlert = textAlert;
   },
   SET_SHOW_ALERT(state, showAlert) {
     state.showAlert = showAlert;
-  },
-  SET_TEXT_ALERT(state, textAlert) {
-    state.textAlert = textAlert;
   },
   SET_LICENSES(state, licenses) {
     state.licenses = licenses;
@@ -88,8 +92,8 @@ const mutations = {
   SET_FORM_DATA(state, formData) {
     state.formData = formData;
   },
-  SET_ACTION(state, action){
-    state.action = action;
+  SET_CANAIS(state, canais) {
+    state.canais = canais;
   }
 };
 

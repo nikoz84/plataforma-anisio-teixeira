@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Conteudo;
 use App\Tag;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use App\Http\Controllers\ApiController;
 
-class ConteudoController extends Controller
+class ConteudoController extends ApiController
 {
     public function __construct(Conteudo $conteudo, Request $request)
     {
@@ -23,7 +24,7 @@ class ConteudoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function list()
+    public function list()
     {
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
@@ -59,11 +60,7 @@ class ConteudoController extends Controller
             ->paginate($limit)
             ->setPath("/conteudos?{$url}");
 
-        return response()->json([
-            'success' => true,
-            'title' => 'Mídias educacionais',
-            'paginator' => $conteudos,
-        ], 200);
+        return $this->showAsPaginator($conteudos);
     }
 
     private function getConteudosByIdCanal($canal_id)
@@ -103,63 +100,32 @@ class ConteudoController extends Controller
             ->paginate($limit)
             ->setPath("/conteudos/sites?limit={$limit}");
 
-        return response()->json([
-            'success' => true,
-            'title' => 'Sites Temáticos',
-            'paginator' => $sitesTematicos,
-        ], 200);
-    }
-    /**
-     * Valida a criação do conteúdo
-     *
-     * @return
-     */
-    private function validar()
-    {
-
-        $validator = Validator::make($this->request->all(), [
-            'license_id' => 'required',
-            'canal_id' => 'required',
-            'category_id' => '',
-            'title' => 'required|min:10|max:255',
-            'description' => 'required|min:140',
-            'options.tipo.id' => 'required',
-            'authors' => 'required',
-            'source' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'terms' => 'required|in:true,false',
-            'is_approved' => 'required|in:true,false',
-        ]);
-
-        return $validator;
+        return $this->showAsPaginator($sitesTematicos);
     }
 
     /**
-     * Adiciona e valida um novo conteúdo.tipo
+     * Adiciona e valida novo conteúdo
      *
      * @return Json
      */
     public function create()
     {
-        $validator = $this->validar($this->request);
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Não foi possível efetuar o cadastro',
-                'errors' => $validator->errors(),
-            ], 200);
+        $validar = $this->validar($this->request, config('form.conteudo'));
+
+        if (!$validar->error) {
+            return $this->errorResponse($validar->errors, "Não foi possível cadastrar o conteúdo", 201);
         }
 
         $conteudo = $this->conteudo;
 
         $conteudo->user_id = Auth::user()->id;
         $conteudo->approving_user_id = Auth::user()->id;
+        $conteudo->license_id = $this->request->get('license_id');
         $conteudo->canal_id = $this->request->get('canal_id', '');
         $conteudo->title = $this->request->get('title');
         $conteudo->description = $this->request->get('description');
         $conteudo->authors = $this->request->get('authors');
         $conteudo->source = $this->request->get('source');
-        $conteudo->license_id = $this->request->get('license_id');
         $conteudo->is_featured = $this->request->get('is_featured');
         $conteudo->is_approved = $this->request->get('is_approved');
         $conteudo->is_site = $this->request->get('is_site');
@@ -167,11 +133,11 @@ class ConteudoController extends Controller
 
         $conteudo->save();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Conteúdo cadastrado com sucesso',
-            'id' => $conteudo->id,
+        $conteudo::with([
+            'user', 'canal', 'tags', 'license', 'componentes', 'niveis',
         ]);
+
+        return $this->showOne($conteudo, 'Conteúdo cadastrado com sucesso!!', 200);
     }
 
     /**
@@ -182,18 +148,22 @@ class ConteudoController extends Controller
      */
     public function update($id)
     {
-        //dd($id);
-        $conteudo = $this->conteudo::find($id);
-        //print_r($this->request->all());
-        //die();
+        $validar = $this->validar($this->request, config('form.conteudo'));
+
+        if ($validar->error) {
+            return $this->errorResponse($validar->errors, "Não foi possível atualizar o conteúdo", 201);
+        }
+
+        $conteudo = $this->conteudo::with([
+            'user', 'canal', 'tags', 'license', 'componentes', 'niveis',
+        ])->find($id);
+
         $conteudo->fill($this->request->all());
 
         $conteudo->save();
 
-        return response()->json([
-            'success' => true,
-            'data' => $conteudo,
-        ]);
+
+        return $this->showOne($conteudo, 'Conteúdo editado com sucesso!!', 200);
     }
     public function createConteudoTags($id)
     {
@@ -214,19 +184,12 @@ class ConteudoController extends Controller
         $conteudo->niveis()->detach();
 
         $resp = [];
-        if (!$conteudo) {
-            $resp = [
-                'menssage' => 'Não foi Possível deletar o conteúdo',
-                'success' => false,
-            ];
-        } else {
-            $resp = [
-                'menssage' => "Conteúdo de id: {$id} foi apagado com sucesso!!",
-                'success' => $conteudo->delete(),
-            ];
-        }
 
-        return response()->json($resp);
+        if (!$conteudo) {
+            return $this->errorResponse([], 'Não foi Possível deletar o conteúdo', 201);
+        } else {
+            return $this->showOne($conteudo->delete(), "Conteúdo de id: {$id} foi apagado com sucesso!!", 200);
+        }
     }
     /**
      * Procura conteudos por full text search.
@@ -251,16 +214,9 @@ class ConteudoController extends Controller
             ->paginate($limit);
 
         $conteudos->setPath("/conteudos/search/{$termo}?limit={$limit}");
+        //$conteudos->hasMorePages();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Resultados da busca',
-            'paginator' => $conteudos,
-            'has_more_pages' => $conteudos->hasMorePages(),
-            'pages' => $conteudos->count(),
-            'page' => $conteudos->currentPage(),
-            'limit' => $conteudos->perPage(),
-        ]);
+        return $this->showAsPaginator($conteudos);
     }
     /**
      * Procura um conteúdo por id
@@ -275,17 +231,7 @@ class ConteudoController extends Controller
             'user', 'canal', 'tags', 'license', 'componentes', 'niveis',
         ])->find($id);
 
-        if ($conteudo) {
-            return response()->json([
-                'success' => true,
-                'conteudo' => $conteudo,
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Conteudo não encontrado',
-            ]);
-        }
+        return $this->showOne($conteudo);
     }
     public function teste()
     {
@@ -314,9 +260,6 @@ class ConteudoController extends Controller
 
         DB::table('tags')->where('id', $id)->increment('searched', 1);
 
-        return response()->json([
-            'success' => true,
-            'paginator' => $conteudos,
-        ]);
+        return $this->showAsPaginator($conteudos);
     }
 }

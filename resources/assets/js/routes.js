@@ -45,76 +45,109 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "canal" */ "./pages/Canal.vue"),
     meta: {
-      requiresAuth: false
+      requiresAuth: false,
+      title: "Canal"
     },
     children: [
       {
         path: "/",
         name: "Inicio",
-        component: HomeCanal
+        component: HomeCanal,
+        meta: {
+          requiresAuth: false,
+          title: "Home"
+        }
       },
       {
         path: "listar",
         name: "Listar",
-        component: Listar
+        component: Listar,
+        meta: {
+          requiresAuth: false,
+          title: "Listar Conteúdos"
+        }
       },
       {
         path: "listar/tag/:id",
         name: "listarTagId",
-        component: Listar
+        component: Listar,
+        meta: {
+          requiresAuth: false,
+          title: "Lista de conteúdos por tag"
+        }
       },
       {
-        path: "conteudo-exibir/:id",
+        path: "conteudo/:action/:id",
         name: "ExibirConteudo",
-        component: Exibir
+        component: Exibir,
+        meta: {
+          requiresAuth: false,
+          title: "Exibir conteúdo digital"
+        }
       },
       {
         path: "aplicativo/:id",
         name: "ExibirAplicativo",
-        component: Exibir
+        component: Exibir,
+        meta: {
+          requiresAuth: false,
+          title: "Exibir aplicativo educacional"
+        }
       },
-      
+
       {
-        path: "conteudo-adicionar",
+        path: "adicionar",
         name: "AdicionarConteudo",
         component: ConteudoForm,
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          title: "Adicionar conteúdo"
         }
       },
       {
-        path: "conteudo-editar/:id",
+        path: "editar/:id",
         name: "EditarConteudo",
         component: ConteudoForm,
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          title: "Editar conteúdo"
         }
       },
       {
-        path: "aplicativo-editar/:id",
+        path: "aplicativo/editar/:id",
         name: "EditarAplicativo",
         component: AplicativoForm,
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          title: "Editar aplicativo"
         }
       },
       {
-        path: "aplicativo-adicionar",
-        name: "adicionarAplicativo",
+        path: "aplicativo/adicionar",
+        name: "AdicionarAplicativo",
         component: AplicativoForm,
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          title: "Adicionar aplicativo"
         }
       },
       {
         path: "denuncia",
         name: "DenunciaForm",
-        component: DenunciaForm
+        component: DenunciaForm,
+        meta: {
+          requiresAuth: false,
+          title: "Enviar denúncia"
+        }
       },
       {
         path: "faleconosco",
         name: "FaleConoscoForm",
-        component: FaleConoscoForm
+        component: FaleConoscoForm,
+        meta: {
+          requiresAuth: false,
+          title: "Fale conosco"
+        }
       }
     ]
   },

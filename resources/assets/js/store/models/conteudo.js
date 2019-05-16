@@ -2,20 +2,22 @@ export default {
   license_id: "",
   canal_id: "",
   category_id: "",
-  options:{
+  options: {
     tipo: {
       id: "",
       name: ""
-    }
+    },
+    site:""
   },
   title: "",
   description: "",
   authors: "",
   source: "",
   image: "",
-  terms: false,
   tags: [],
+  niveis: [],
   components: [],
+  terms: false,
   is_approved: false,
   is_featured: false,
   is_site: false

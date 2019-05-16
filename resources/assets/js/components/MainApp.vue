@@ -170,4 +170,22 @@ small{
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+.destaque{
+  color: #ccc;
+}
+
+.destaque img{
+  width: 100%;
+  height: 100%;
+}
+
+.destaque img:hover {
+	-webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
 </style>

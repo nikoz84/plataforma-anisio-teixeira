@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Tipo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class TipoController extends Controller
 {

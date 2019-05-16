@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Canal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\ApiController;
 
-class CanalController extends Controller
+class CanalController extends ApiController
 {
     public function __construct(Request $request)
     {
@@ -18,34 +19,24 @@ class CanalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function list() {
+    public function list()
+    {
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
 
-        if ($this->request->has('name')) {
-            $name = $this->request->query('name');
-            $canais = Canal::where('name', $name)
-                ->paginate($limit);
-            $canais->setPath("/canais?name={$name}limit={$limit}");
-            return response()->json([
-                'success' => true,
-                'paginator' => $canais,
-            ]);
+        if ($this->request->has('select')) {
+            $canaisForSelect = Canal::whereRaw('is_active = true AND id <> 9')->get(['id', 'name']);
+            return $this->showAll($canaisForSelect, 'Select', 200);
         }
+
+
         $canais = Canal::where('is_active', true)
             ->paginate($limit);
 
         $canais->setPath("/canais?limit={$limit}");
 
-        return response()->json([
-            'success' => true,
-            'title' => 'Lista de canais',
-            'paginator' => $canais,
-            'page' => $canais->currentPage(),
-            'limit' => $canais->perPage(),
-        ]);
+        return $this->showAsPaginator($canais, 'Lista de Canais', 200);
     }
-
     /**
      * Show the form for creating a new resource.
      *

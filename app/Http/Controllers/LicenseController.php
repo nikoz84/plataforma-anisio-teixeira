@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\License;
 use Illuminate\Http\Request;
+use App\Http\Controllers\ApiController;
 
-class LicenseController extends Controller
+class LicenseController extends ApiController
 {
     public function __construct(Request $request, License $license)
     {
@@ -18,15 +19,17 @@ class LicenseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list() {
+    public function list()
+    {
 
-        $licenses = $this->license::with('childs')->get();
+        $licenses = $this->license::with(['childs' => function ($q) {
+            $q->select('id', 'parent_id', 'name');
+        }])
+            ->whereRaw('parent_id IS NULL')
+            ->get(['id', 'parent_id', 'name']);
 
-        return response()->json([
-            'success' => true,
-            'title' => 'Lista de Licenças',
-            'licenses' => $licenses,
-        ]);
+
+        return $this->showAll($licenses);
     }
 
     /**
@@ -36,27 +39,19 @@ class LicenseController extends Controller
      */
     public function create()
     {
-        $validator = $this->validar($this->request->all());
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Não foi possível registrar a licença',
-                'errors' => $validator->errors(),
-            ], 200);
+        $validar = $this->validar($this->request, config("form.license"));
+
+        if ($validar->error) {
+            return $this->errorResponse($validar->errors, "Não foi possível adicionar a licença", 201);
         }
 
         $license = $this->license;
-        $license->name = $this->request->get('name', '');
-        $license->description = $this->request->get('description');
-        $license->site = $this->request->get('site');
+
+        $license->fill($this->request->all());
 
         $license->save();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Licença registrada com sucesso',
-            'id' => $license->id,
-        ]);
+        return $this->showOne($license, 'Licença registrada com sucesso!!', 200);
     }
 
     /**
@@ -65,7 +60,14 @@ class LicenseController extends Controller
      */
     public function update($id)
     {
-        //
+        $this->validar($this->request, config('form.license'));
+        $license = $this->license::find($id);
+
+        $license->fill($this->request->all());
+
+        $license->save();
+
+        return $this->showOne($license, 'Licença atualizada com Sucesso!!', 200);
     }
 
     /**
@@ -93,10 +95,6 @@ class LicenseController extends Controller
 
         $paginator->setPath("/licenses/search/{$termo}?limit={$limit}");
 
-        return response()->json([
-            'success' => true,
-            'title' => 'Resultado da busca',
-            'paginator' => $paginator,
-        ]);
+        return $this->showAsPaginator($paginator, 'Resultado da busca...', 200);
     }
 }
