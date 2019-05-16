@@ -20,7 +20,7 @@ const actions = {
       commit("SET_IS_ERROR", true);
     }
   },
-  async fetchConteudo({ commit, state }, payload) {
+  async fetchConteudo({ commit }, payload) {
     let { id } = payload;
 
     if (id && id != undefined && id != null) {
@@ -43,47 +43,44 @@ const actions = {
   async createConteudo({ commit, dispatch, getters }, conteudo) {
     let resp = await client.post("/conteudos", conteudo);
     dispatch("showResponse", resp);
-    
+
     commit("SET_CONTEUDO", resp.data.conteudo);
-    
   },
-  async updateConteudo({ commit,dispatch, getters }, conteudo) {
+  async updateConteudo({ commit, dispatch, getters }, conteudo) {
     let resp = await client.put(`/conteudos/${conteudo.id}`, conteudo);
     await dispatch("showResponse", resp);
-    
+
     commit("SET_CONTEUDO", resp.data.conteudo);
-    
   },
   async deleteConteudo({ commit }, id) {
     let resp = await client.delete(`/conteudos/${id}`);
     commit("DELETE_CONTEUDO", resp.data);
   },
-  showResponse({commit, dispatch}, response){
-    
-    if(response.status == 200 ){
+  async showResponse({ commit, dispatch }, response) {
+    if (response.status == 200) {
       let error = !response.data.success;
-      let errors = (response.data.errors) ? response.data.errors : [];
+      let errors = response.data.errors ? response.data.errors : [];
       commit("SET_ERRORS", errors);
       commit("SET_SHOW_ALERT", response.data.success);
       commit("SET_SHOW_MESSAGE", response.data.message);
       commit("SET_IS_ERROR", error);
-    }else{
+    } else {
       commit("SET_ERRORS", []);
       commit("SET_SHOW_ALERT", true);
-      commit("SET_SHOW_MESSAGE", `Erro Desconhecido  Status: ${response.statusCode}`);
+      commit(
+        "SET_SHOW_MESSAGE",
+        `Erro Desconhecido  Status: ${response.statusCode}`
+      );
       commit("SET_IS_ERROR", true);
     }
   },
-  async hideAlert({commit}){
-     
-    setTimeout(()=>{
-       console.log('hide')
-       commit("SET_SHOW_ALERT", false);
-       commit("SET_SHOW_MESSAGE", '');
-       commit("SET_IS_ERROR", false);
-
-    },2000)
-     
+  async hideAlert({ commit }) {
+    setTimeout(() => {
+      console.log("hide");
+      commit("SET_SHOW_ALERT", false);
+      commit("SET_SHOW_MESSAGE", "");
+      commit("SET_IS_ERROR", false);
+    }, 2000);
   },
   /** TIPO DE CONTEUDOS */
   async fetchTipos({ commit }) {

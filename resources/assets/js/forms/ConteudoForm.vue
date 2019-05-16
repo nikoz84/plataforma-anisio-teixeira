@@ -3,7 +3,7 @@
     <form v-on:submit.prevent="send($event)" >
       <div class="panel panel-default col-md-7">
         <div class="panel-heading">
-          <h2> {{ capitalize(this.$store.state.action)}} conteúdo digital</h2>
+          <h2> Editar conteúdo digital</h2>
         </div>
         <div class="panel-body">
                     
@@ -15,7 +15,7 @@
                       name="titulo"
                       id="titulo"
                       aria-describedby="titulo"
-                      v-model="title">
+                      v-model.trim="title">
               <small id="titulo" class="text-info">Adicione o nome original da mídia.</small><br>
               <!-- ERRORS -->
               <erros :errors="errors.title"></erros>
@@ -171,7 +171,6 @@
 <script>
 import { mapGetters, mapActions, mapState, mapMutations } from "vuex";
 import { mapFields } from "vuex-map-fields";
-import { client } from "../client.js";
 //import { response, goTo } from "../response.js";
 import showErrors from "../components/ShowErrors.vue";
 import Alert from "../components/AlertComponent.vue";
@@ -179,7 +178,6 @@ import "tui-editor/dist/tui-editor.css";
 import "tui-editor/dist/tui-editor-contents.css";
 import "codemirror/lib/codemirror.css";
 import { Editor } from "@toast-ui/vue-editor";
-import debounce from "lodash/debounce";
 
 export default {
   name: "ConteudoForm",
@@ -190,25 +188,31 @@ export default {
   },
   data() {
     return {
-      form:{},
+      form: {},
       autocompleteItems: [],
       categories: []
     };
   },
+  beforeRouteEnter(to, from, next) {
+    // react to route changes...
+    Store.dispatch("fetchTipos");
+    Store.dispatch("fetchLicenses");
+    next();
+  },
   created() {
-    this.fetchTipos();
-    this.fetchLicenses();
-    this.fetchConteudo(this.$route.params);
+    console.log("created");
   },
   mounted() {
-    
+    if (this.$router.params.id) {
+      this.fetchConteudo(this.$router.params);
+    }
+    console.log("mounted");
   },
   computed: {
     ...mapState({
       errors: "errors",
       tipos: "tipos",
-      isError: "isError",
-      conteudo: 'conteudo'
+      isError: "isError"
     }),
     ...mapFields({
       license_id: "conteudo.license_id",
@@ -249,7 +253,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["fetchConteudo",
+    ...mapActions([
+      "fetchConteudo",
       "fetchTipos",
       "fetchLicenses",
       "createConteudo",
@@ -263,11 +268,10 @@ export default {
         await this.createConteudo(this.conteudo);
       }
       this.hideAlert();
-      if (this.isError){
-        
-        console.warn('erro')
-      } else{
-        console.log('ok')
+      if (this.isError) {
+        console.warn("erro");
+      } else {
+        console.log("ok");
       }
       /*
         this.$router.push({
@@ -279,9 +283,6 @@ export default {
           }
         })
       */
-      
-      
-      
     },
     capitalize(value) {
       if (!value) return "";

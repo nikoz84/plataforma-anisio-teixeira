@@ -15,11 +15,11 @@ const mutations = {
     state.conteudo = newConteudo;
   },
   CREATE_CONTEUDO(state, newConteudo) {
-    state.conteudo= newConteudo;
+    state.conteudo = newConteudo;
   },
   DELETE_CONTEUDO(state, conteudo) {
-    let index = state.conteudo.findIndex(item => item.id === conteudo.id);
-    state.conteudo.splice(index, 1);
+    //let index = state.conteudo.findIndex(item => item.id === conteudo.id);
+    //state.conteudo.splice(index, 1);
   },
   SET_IS_ERROR(state, error) {
     state.error = error;

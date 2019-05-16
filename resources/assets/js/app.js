@@ -26,6 +26,7 @@ router.beforeEach((to, from, next) => {
   next();
 });
 
+window.Store = store;
 /*
 Router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {

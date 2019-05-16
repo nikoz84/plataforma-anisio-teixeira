@@ -24,4 +24,8 @@ class License extends Model
     {
         return $this->hasMany(\App\License::class, 'parent_id', 'id');
     }
+    public function parent()
+    {
+        return $this->hasOne(\App\License::class, 'id', 'parent_id');
+    }
 }

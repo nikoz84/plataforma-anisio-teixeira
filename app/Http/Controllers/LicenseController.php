@@ -18,9 +18,15 @@ class LicenseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list() {
+    public function list()
+    {
 
-        $licenses = $this->license::with('childs')->get();
+        $licenses = $this->license::with(['childs' => function ($q) {
+            $q->select('id', 'parent_id', 'name');
+        }])
+            ->whereRaw('parent_id IS NULL')
+            ->get(['id', 'parent_id', 'name']);
+
 
         return response()->json([
             'success' => true,
