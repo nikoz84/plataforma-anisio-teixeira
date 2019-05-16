@@ -10,7 +10,7 @@
         <div v-if="data" class="content">
             <ul>
                 <li v-for="(item, i) in data" :key="i" class="grid">
-                  <div class="col-md-7 table-hover">{{ (item.registre) ? item.registre : item.id }} - {{ (item.name) ? item.name : item.title }}</div>
+                  <div class="col-md-7 table-hover">{{ (item.record) ? item.record : item.id }} - {{ (item.name) ? item.name : item.title }}</div>
                   <div class="col-md-2"><button class="btn btn-success btn-xs">Editar</button> <button class="btn btn-danger btn-xs">Excluir</button></div>
                 </li>
             </ul>
@@ -110,6 +110,7 @@ export default {
 .grid{
   list-style-type: none;
   margin-bottom: 10px;
+  padding: 15px;
 
 }
 

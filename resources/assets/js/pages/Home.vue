@@ -6,11 +6,20 @@
                     <input type="text">
                 </form>
             </div>
-            <div class="col-lg-4">
-                <div class="jumbotron">
+            <div class="col-lg-5">
+                <div class="destaque">
+                    <img src="http://pat.educacao.ba.gov.br/assets/img/slider/banner-blog.jpg">
                     <h1>Hello, world!</h1>
                     <p>...</p>
-                    <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+                    <p></p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="destaque">
+                    <img src="http://pat.educacao.ba.gov.br/assets/img/slider/banner-aplicativos-educacionais.jpg">
+                    <h1>Hello, world!</h1>
+                    <p>...</p>
+                    <p></p>
                 </div>
             </div>
         </div>
