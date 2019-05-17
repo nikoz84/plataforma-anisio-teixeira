@@ -6,7 +6,7 @@
                     <input type="text">
                 </form>
             </div>
-            <div class="col-md-4 destaque">
+            <div class="col-md-5 destaque">
                                
                     <img src="http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/55476/course/overviewfiles/destaque-home-plataforma.jpg">
                     <div class="retina">
@@ -19,13 +19,24 @@
                     </div>
                 
             </div>
-            <div class="col-md-4 destaque">
+            <div class="col-md-3 destaque2">
                 <img src="http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/68435/course/overviewfiles/destaque-home-plataforma.jpg">
                 <div class="retina">
                     <div class="texto">
                         <ul>
                             <li><h1>Aplicativos Educacionais</h1></li>
                             <li><p>Softwares livres, aplicativos móveis e ambientes digitais de apoio a produção e a colaboração nos processos de ensino e de aprendizagem.</p></p></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 destaque2">
+                <img src="http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/46944/course/overviewfiles/destaque-home-plataforma.jpg">
+                <div class="retina">
+                    <div class="texto">
+                        <ul>
+                            <li><h1>AVT Polos UAB - Bahia</h1></li>
+                            <li><p>Espaço destinado ao propósito de manter a interação e a comunicação das atividades diárias dos Polos UAB e seu trabalho.</p></p></li>
                         </ul>
                     </div>
                 </div>
