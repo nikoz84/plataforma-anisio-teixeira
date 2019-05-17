@@ -3,7 +3,14 @@
         <div class="row">
             <div class="col-lg-2">
                 <form >
-                    <input type="search" placeholder="Busca">
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control">
+                            <span class="input-group-addon">
+                            <button class="fa fa-search" style="background:transparent;border:none"></button>
+                            </span>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="col-md-5 destaque">
@@ -42,14 +49,53 @@
                 </div>
             </div>
 
-            <div class="col-md-9">
-                <div class="col-md-3">
-                    <img src="http://pat.educacao.ba.gov.br/conteudos/aplicativos-educacionais/imagem-associada/33.jpg">
-                </div>
-                <div class="col-md-7">
-                    <h2>Linux Educacional 6.0</h2>
-                    <p>O ProInfo é um projeto que visa promover o uso pedagógico de tecnologias da informação relacionadas a conteúdos... </p>
-                    <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
+            <div class="container">
+                <div class="row">
+                    
+                    <div class="col-md-12 destaque">
+                        <div class="col-md-4">
+                            <img src="http://pat.educacao.ba.gov.br/conteudos/aplicativos-educacionais/imagem-associada/33.jpg">
+                        </div>
+                        <div class="col-md-7">
+                            <h2>Linux Educacional 6.0</h2>
+                            <p>O ProInfo é um projeto que visa promover o uso pedagógico de tecnologias da informação relacionadas a conteúdos educacionais nas escolas públicas de todo o Brasil. Nesse contexto... </p>
+                            <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 destaque">
+                        <div class="col-md-4">
+                            <img src="http://pat.educacao.ba.gov.br/conteudos/aplicativos-educacionais/imagem-associada/27.jpg">
+                        </div>
+                        <div class="col-md-7">
+                            <h2>GIMP</h2>
+                            <p>O Gimp (GNU Image Manipulation Program) é um programa de manipulação de imagens. Obs.: Disponível para plataformas Linux, Windows e Mac... </p>
+                            <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 destaque">
+                        <div class="col-md-4">
+                            <img src="http://pat.educacao.ba.gov.br/conteudos/aplicativos-educacionais/imagem-associada/17.jpg">
+                        </div>
+                        <div class="col-md-7">
+                            <h2>LibreOffice</h2>
+                            <p>Suite (conjunto de programas) mais utilizada em escritórios, mas que pode ser adaptada ao contexto educativo. Vem com o Writer (Editor de Texto), Calc (Planilha), Impress (apresentação)... </p>
+                            <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 destaque">
+                        <div class="col-md-4">
+                            <img src="http://pat.educacao.ba.gov.br/conteudos/aplicativos-educacionais/imagem-associada/110.jpg">
+                        </div>
+                        <div class="col-md-7">
+                            <h2>Mozilla Firefox</h2>
+                            <p>O Firefox é um navegador web livre desenvolvido pela Mozilla Foundation. A intenção da fundação foi desenvolver um navegador leve, seguro, intuitivo e altamente extensível. Baseado... </p>
+                            <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
