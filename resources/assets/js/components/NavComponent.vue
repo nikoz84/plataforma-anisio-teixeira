@@ -35,10 +35,9 @@
                             </router-link>
                         </ul>
                     </li>
-                    <li class="dropdown">
+                    <li class="dropdown pading-rigth-30">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <i class="glyphicon glyphicon-user"></i>
-                            <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <router-link tag="li" to="/usuario/login" v-if="!isLogged">
@@ -60,18 +59,20 @@
 
 <script>
 import client from "../client.js";
-import store from "../store/index.js";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "nav-app",
   data() {
     return {
-      isLogged: store.state.isLogged,
       links: []
     };
   },
   mounted() {
     this.getLinks();
+  },
+  computed: {
+    ...mapState(["isLogged"])
   },
   methods: {
     async getLinks() {
@@ -79,14 +80,15 @@ export default {
       this.links = resp.data.links;
     },
     async logout() {
+      let resp = await client.post("/auth/logout", params);
+      console.log(resp);
       localStorage.removeItem("token");
       let params = { token: localStorage.token };
-      let resp = await client.post("/auth/logout", params);
 
       if (resp.data.success) {
         store.commit("LOGOUT_USER");
         localStorage.removeItem("token");
-        this.$router.push("/usuario/login");
+        this.$router.push("/");
       }
     },
     handleScroll() {
@@ -95,7 +97,7 @@ export default {
       let height =
         document.documentElement.scrollHeight -
         document.documentElement.clientHeight;
-      var scrolled = (winScroll / height) * 100;
+      var scrolled = winScroll / height * 100;
       document.getElementById("bar").style.width = scrolled + "%";
     }
   },
@@ -127,5 +129,8 @@ export default {
   height: 2px;
   background: #1e78c2;
   width: 0%;
+}
+.pading-rigth-30 {
+  margin-right: 20px;
 }
 </style>

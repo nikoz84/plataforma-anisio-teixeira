@@ -18,10 +18,9 @@ class CreateAplicativosTable extends Migration
             $table->integer('user_id')->comment('Chave foranea do usuário publicador');
             $table->integer('category_id')->comment('Chave foranea da categoria');
             $table->integer('canal_id')->comment('Chave foranea do canal');
-            $table->string('name',200)->comment('Nome do aplicativo');
+            $table->string('name', 150)->comment('Nome do aplicativo');
             $table->text('description')->comment('Descrição do aplicativo');
-            $table->string('url',250)->comment('Url do projeto');
-            $table->boolean('is_featured')->comment('Se o aplicativo é destaque');
+            $table->string('url', 150)->comment('Url do projeto');
             $table->jsonb('options')->default('{}')->nullable()->comment('Meta data do aplicativo');
             // campos created_at e updated_at
             $table->timestamps();
@@ -41,9 +40,8 @@ class CreateAplicativosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('aplicativos', function(Blueprint $table){
+        Schema::dropIfExists('aplicativos', function (Blueprint $table) {
             $table->dropIndex('aplicativos_id_index');
         });
-        
     }
 }

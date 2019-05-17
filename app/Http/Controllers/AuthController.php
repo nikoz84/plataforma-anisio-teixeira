@@ -24,7 +24,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-        
+
         $token = null;
 
         try {
@@ -32,7 +32,7 @@ class AuthController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => 'Email ou Senha inválidos',
-                ]);
+                ], 201);
             }
         } catch (JWTException $e) {
             return response()->json([
@@ -40,7 +40,7 @@ class AuthController extends Controller
                 'error' => 'Impossível criar Token de acesso',
             ], 500);
         }
-        
+
         return response()->json([
             'success' => true,
             'token' => $this->respondWithToken($token),
@@ -58,23 +58,27 @@ class AuthController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => 'Usuário não encontrado',
-                    'status' => 'user_not_found'], 404);
+                    'status' => 'user_not_found'
+                ], 404);
             }
         } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Token Expirado',
-                'status' => 'token_expired'], $e->getStatusCode());
+                'status' => 'token_expired'
+            ], $e->getStatusCode());
         } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Token Inválido',
-                'status' => 'token_invalid'], $e->getStatusCode());
+                'status' => 'token_invalid'
+            ], $e->getStatusCode());
         } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Token Ausente',
-                'status' => 'token_absent'], $e->getStatusCode());
+                'status' => 'token_absent'
+            ], $e->getStatusCode());
         }
 
         return response()->json(compact('user'));
@@ -85,14 +89,14 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
 
-    public function logout(Request $request)
+    public function logout()
     {
         auth()->logout();
 
         return response()->json([
             'message' => 'Usuário Deslogado com sucesso!!',
             'success' => true,
-        ]);
+        ], 200);
     }
     /**
      * Refresh a token.
@@ -129,18 +133,14 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255|min:4',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
-        ]);
+        $validator = Validator::make($request->all(), config('form.registro'));
 
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
                 'message' => 'Não foi possível completar o cadastro',
                 'errors' => $validator->errors(),
-            ], 200);
+            ], 201);
         }
 
         $user = new User();
@@ -149,11 +149,15 @@ class AuthController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
-        $token = auth()->login($user);
+        //$this->confirmationEmail();
 
         return response()->json([
             'success' => true,
-            $this->respondWithToken($token),
-        ]);
+            'message' => "Verifique seu email para confirmar o cadastro"
+        ], 200);
+    }
+    private function confirmationEmail()
+    {
+        //
     }
 }

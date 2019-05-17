@@ -39,15 +39,15 @@ class ImportData extends Command
      */
     public function handle()
     {
-         
+
         $files = array_sort(File::files(storage_path('dumps')), function ($file) {
-                    return $file->getFilename();
+            return $file->getFilename();
         });
-         
+
         foreach ($files as $file) {
             DB::statement("COPY {$file->getExtension()} FROM '{$file->getPathname()}' DELIMITER '*';");
         }
-        
+
         DB::statement("ALTER SEQUENCE users_id_seq RESTART WITH 2669;");
         DB::statement("ALTER SEQUENCE canais_id_seq RESTART WITH 15;");
         DB::statement("ALTER SEQUENCE tags_id_seq RESTART WITH 13877;");
@@ -57,13 +57,6 @@ class ImportData extends Command
         DB::statement("ALTER SEQUENCE categories_id_seq RESTART WITH 69;");
         DB::statement("ALTER SEQUENCE aplicativo_categories_id_seq RESTART WITH 16;");
         DB::statement("ALTER SEQUENCE niveis_ensino_id_seq RESTART WITH 12;");
-
-        /*
-        $componentes = explode("\n", file_get_contents(storage_path('dumps/10.componentes')));
-        $niveis = explode("\n", file_get_contents(storage_path('dumps/11.niveis')));
-        $this->importToOptions($componentes);
-        $this->importToOptions($niveis);
-        */
     }
 
     private function importToOptions($meta_data)

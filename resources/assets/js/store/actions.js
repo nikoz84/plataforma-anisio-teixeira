@@ -95,18 +95,17 @@ const actions = {
   },
   async login({ commit, dispatch }, user) {
     let resp = await client.post("/auth/login", user);
-    console.log(resp);
     if (resp.status == 200 && resp.data.success) {
       localStorage.setItem("token", resp.data.token.access_token);
-
       commit("SET_LOGIN_USER", true);
-      return true;
     } else {
-      commit("SET_SHOW_MESSAGE", resp.data.message);
-      commit("SET_IS_ERROR", true);
-      commit("SET_LOGIN_USER", false);
-      dispatch("hideAlert");
+      dispatch("showResponse", resp);
     }
+  },
+  async registerUser({ commit, dispatch }, user) {
+    let resp = await client.post(`/auth/register`, user);
+
+    dispatch("showResponse", resp);
   },
   /** CANAIS FOR SELECT */
   async fetchCanaisForSelect({ commit }) {

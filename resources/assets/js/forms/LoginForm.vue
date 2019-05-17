@@ -6,7 +6,7 @@
                 Faça seu Login
             </div>
             <div class="panel-body">  
-                <form v-on:submit.prevent="login(user)">
+                <form v-on:submit.prevent="entrar()">
                     <div class="form-group">
                         <label for="email">E-mail</label>
                         <input class="form-control" v-model="user.email" id="email" type="text">
@@ -17,18 +17,13 @@
                     </div>
                     <button type="submit" class="btn btn-default">Login</button>
                 </form>
+                <AlertShake></AlertShake>
                 <router-link to="/usuario/recuperar-senha">
                     Recuperar senha
                 </router-link> | 
                 <router-link to="/usuario/registro">
                     Cadastrese 
                 </router-link>
-        
-                <transition  name="custom-classes-transition" 
-                            enter-active-class="animated shake" 
-                            leave-active-class="animated fadeOut">
-                <div v-if="isError" class="alert alert-info" role="alert" v-text="textAlert"></div>
-                </transition>
             </div>
         </div>    
       </div>
@@ -36,9 +31,13 @@
 </template>
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
+import AlertShake from "../components/AlertShakeComponent.vue";
 
 export default {
   name: "LoginForm",
+  components: {
+    AlertShake
+  },
   data() {
     return {
       user: {
@@ -53,18 +52,23 @@ export default {
     }
   },
   computed: {
-    ...mapState(["isError", "isLogged", "textAlert"])
+    ...mapState(["isError", "isLogged"])
   },
   methods: {
     ...mapActions(["login"]),
     ...mapMutations(["SET_IS_ERROR", "SET_LOGIN_USER"]),
-    showMessage() {
+    entrar() {
+      this.login(this.user).then(() => {
+        if (isLogged) {
+          this.docodePayloadToken();
+          this.$router.push("/admin/inicio/estatisticas");
+        }
+      });
+
       if (this.isError) {
         //this.$router.push("/usuario/login");
       } else {
-        this.docodePayloadToken();
         this.SET_LOGIN_USER(true);
-        this.$router.push("/admin");
       }
     },
     docodePayloadToken() {
