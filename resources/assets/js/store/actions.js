@@ -59,35 +59,35 @@ const actions = {
     commit("DELETE_CONTEUDO", resp.data);
   },
   async showResponse({ commit, dispatch }, response) {
-    if (response.status == 200) {
-      let error = !response.data.success;
+    if (response.status == 201) {
       let errors = response.data.errors ? response.data.errors : [];
       commit("SET_ERRORS", errors);
-      commit("SET_SHOW_ALERT", response.data.success);
+      commit("SET_SHOW_ALERT", true);
       commit("SET_SHOW_MESSAGE", response.data.message);
-      commit("SET_IS_ERROR", error);
-    } else {
+      commit("SET_IS_ERROR", true);
+    } else if (response.status == 200) {
       commit("SET_ERRORS", []);
       commit("SET_SHOW_ALERT", true);
-      commit(
-        "SET_SHOW_MESSAGE",
-        `Erro desconhecido status: ${response.statusCode}`
-      );
+      commit("SET_SHOW_MESSAGE", response.data.message);
+    } else {
+      let message = `Erro desconhecido status: ${response.statusText}`;
+      commit("SET_SHOW_MESSAGE", message);
+      commit("SET_SHOW_ALERT", true);
       commit("SET_IS_ERROR", true);
     }
+
+    dispatch("hideAlert");
   },
   async hideAlert({ commit }) {
     setTimeout(() => {
-      console.log("hide");
       commit("SET_SHOW_ALERT", false);
       commit("SET_SHOW_MESSAGE", "");
       commit("SET_IS_ERROR", false);
-    }, 2000);
+    }, 2500);
   },
-  /** CANAIS */
+  /** CANAIS FOR SELECT */
   async fetchCanaisForSelect({ commit }) {
     let resp = await client.get("/canais?select");
-    console.log(resp);
     commit("SET_CANAIS", resp.data.metadata);
   },
   /** TIPO DE CONTEUDOS */
@@ -98,8 +98,14 @@ const actions = {
   /** LICENÇAS */
   async fetchLicenses({ commit }) {
     let resp = await client.get("/licenses");
-
-    commit("SET_LICENSES", resp.data);
+    const data = resp.data.metadata;
+    let licenses = data.filter(key => {
+      return key.id != 2;
+    });
+    let childs = data.filter(key => {
+      return key.id === 2;
+    });
+    commit("SET_LICENSES", { licenses, childs });
   },
   /** CANAL */
   async getCanal({ commit, dispatch }, slug) {

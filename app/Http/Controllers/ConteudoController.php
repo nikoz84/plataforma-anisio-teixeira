@@ -112,7 +112,7 @@ class ConteudoController extends ApiController
     {
         $validar = $this->validar($this->request, config('form.conteudo'));
 
-        if (!$validar->error) {
+        if ($validar->error) {
             return $this->errorResponse($validar->errors, "Não foi possível cadastrar o conteúdo", 201);
         }
 
