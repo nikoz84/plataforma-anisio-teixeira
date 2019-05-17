@@ -3,14 +3,10 @@
         <div class="row">
             <div class="col-lg-2">
                 <form >
-                    <div class="col-lg-6">
-                        <div class="input-group">
-                            <input type="text" class="form-control">
-                            <span class="input-group-addon">
-                            <button class="fa fa-search" style="background:transparent;border:none"></button>
-                            </span>
-                        </div>
-                    </div>
+                    
+                            <input type="search" class="form-control" placeholder="Busca" >
+                            
+                        
                 </form>
             </div>
             <div class="col-md-5 destaque">
