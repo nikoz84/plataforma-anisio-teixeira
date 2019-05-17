@@ -2,12 +2,12 @@
     <section class="container-fluid heigth">
         <div class="row">
             <div class="col-lg-2">
-                <form >
-                    
-                            <input type="search" class="form-control" placeholder="Busca" >
-                            
-                        
-                </form>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default glyphicon glyphicon-search" type="button" ></button>
+                    </span>
+                </div>
             </div>
             <div class="col-md-5 destaque">
                                
