@@ -10,7 +10,15 @@
 
 - Para ver o estado do repositorio `git checkout v1.4`
 
-- Para deletar tags`git tag -d v1`
+- Para deletar tags `git tag -d v1`
+
+## GIT CONFIG
+
+`git config --global core.editor nano`
+
+- Adiciona repositório remoto `git remote add origin`
+- Url do respositório `git remote -v`
+- Modificar url do repositório remoto `git remote set-url origin <url>`
 
 ## CONTRIBUTORS
 
