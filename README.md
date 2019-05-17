@@ -59,7 +59,7 @@ Agora podemos arrancar o servidor embutido do framework:
 
 `$ php artisan serve`
 
-[a Versionamento](https://github.com/nikoz84/plataforma-anisio-teixeira/blob/master/TAGS.md)
+[Versões](https://github.com/nikoz84/plataforma-anisio-teixeira/blob/master/TAGS.md)
 
 ## CONTRIBUTORS
 
