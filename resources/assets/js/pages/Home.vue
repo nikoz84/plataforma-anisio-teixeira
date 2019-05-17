@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-2">
                 <form >
-                    <input type="text">
+                    <input type="search" placeholder="Busca">
                 </form>
             </div>
             <div class="col-md-5 destaque">
@@ -41,8 +41,22 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-9">
+                <div class="col-md-3">
+                    <img src="http://pat.educacao.ba.gov.br/conteudos/aplicativos-educacionais/imagem-associada/33.jpg">
+                </div>
+                <div class="col-md-7">
+                    <h2>Linux Educacional 6.0</h2>
+                    <p>O ProInfo é um projeto que visa promover o uso pedagógico de tecnologias da informação relacionadas a conteúdos... </p>
+                    <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
+                </div>
+            </div>
+
         </div>
+
     </section>
+
 </template>
 <script>
 export default {
