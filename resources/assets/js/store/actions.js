@@ -85,6 +85,14 @@ const actions = {
       commit("SET_IS_ERROR", false);
     }, 2500);
   },
+  async goToPage({ commit }, url) {
+    console.log(url);
+    //if (url) {
+    //let resp = await client.get(url);
+    //console.log(resp);
+    //commit("SET_CONTEUDOS", resp.data);
+    //}
+  },
   /** CANAIS FOR SELECT */
   async fetchCanaisForSelect({ commit }) {
     let resp = await client.get("/canais?select");

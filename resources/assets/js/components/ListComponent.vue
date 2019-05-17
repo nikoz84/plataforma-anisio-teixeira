@@ -1,52 +1,44 @@
 <template>
     <div>
-        <div class="container-columns" v-if="paginator.data">
-            <!-- LISTA -->
-            <div class="column" v-for="(item, i) in paginator.data" :key="i">
-                    <SimpleCard v-bind:item="item"></SimpleCard>
-            </div>
-        </div>
-        <!-- PAGINATOR -->
-            <nav aria-label="paginador de resultados">
-                <p class="text-center">{{ (paginator.total) ? `Total: ${paginator.total}` : `Sem Resultados` }}</p>
-                <ul class="pager">
-                    <li class="previous">
-                        <a class="pointer" v-on:click="goTo(paginator.prev_page_url)">
-                        <span class="glyphicon glyphicon-backward
-"></span> Anterior
-                        </a>
-                    </li>
-                    <li class="next">
-                        <a class="pointer" v-on:click="goTo(paginator.next_page_url)">
-                        Próximo <span class="glyphicon glyphicon-forward
-"></span> 
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-    </div>
+      <div class="container-columns" v-if="paginator">
+          <!-- LISTA -->
+          <div class="column" v-for="(item, i) in paginator.data" :key="i">
+                  <SimpleCard v-bind:item="item"></SimpleCard>
+          </div>
+      </div>
+      <!-- PAGINATOR LINKS -->
+      <nav aria-label="paginador de resultados" >
+          <p class="text-center">{{ (paginator.total) ? `Total: ${paginator.total}` : `Sem Resultados` }}</p>
+          <ul class="pager">
+              <li class="previous">
+                  <a class="pointer" v-on:click="goToPage(paginator.prev_page_url)">
+                  <span class="glyphicon glyphicon-backward"></span> Anterior
+                  </a>
+              </li>
+              <li class="next">
+                  <a class="pointer" v-on:click="goToPage(paginator.next_page_url)">
+                  Próximo <span class="glyphicon glyphicon-forward"></span> 
+                  </a>
+              </li>
+          </ul>
+      </nav>
+      </div>
 </template>
 <script>
 import SimpleCard from "../components/SimpleCardComponent.vue";
-import client from "../client.js";
-import { mapGetters } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "List",
   components: {
     SimpleCard
   },
+  created() {},
   methods: {
-    goTo(url) {
-      if (url) {
-        this.$store.dispatch("getConteudos", { url });
-      }
-    }
+    ...mapActions(["goToPage"])
   },
   computed: {
-    paginator() {
-      return this.$store.getters.paginator;
-    }
+    ...mapState(["paginator"])
   }
 };
 </script>
