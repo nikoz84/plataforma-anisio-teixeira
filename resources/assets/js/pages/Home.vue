@@ -36,7 +36,7 @@
 
             </div>
             <div class="col-md-5 destaque">
-                               
+
                     <img src="http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/55476/course/overviewfiles/destaque-home-plataforma.jpg">
                     <div class="retina">
                         <div class="texto">
@@ -46,7 +46,7 @@
                             </ul>
                         </div>
                     </div>
-                
+
             </div>
             <div class="col-md-3 destaque2">
                 <img src="http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/68435/course/overviewfiles/destaque-home-plataforma.jpg">
@@ -73,7 +73,7 @@
 
             <div class="container">
                 <div class="row">
-                    
+
                     <div class="col-md-12 destaque">
                         <div class="col-md-4">
                             <img src="http://pat.educacao.ba.gov.br/conteudos/aplicativos-educacionais/imagem-associada/33.jpg">
