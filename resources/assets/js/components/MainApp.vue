@@ -218,7 +218,7 @@ small{
     box-shadow: inset 0 0 100px 50px rgba(0,0,0,.5);
     
 }
-.destaque .retina p, h1 {
+.destaque .retina p {
 	color: #fff;
 }
 
