@@ -158,7 +158,6 @@ small{
   display: block;
 }
 
-
 .container .checkmark:after {
   left: 9px;
   top: 5px;
@@ -171,21 +170,70 @@ small{
   transform: rotate(45deg);
 }
 
-.destaque{
-  color: #ccc;
+.destaque {
+	position: relative;
+  overflow: hidden;
+  border-radius: 5px;
 }
 
-.destaque img{
+.destaque ul{
+  list-style-type: none;
+}
+
+.destaque > img {
+  width: 100%;
+  height: 500px;
+	-webkit-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
+  -moz-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
+  -ms-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
+  -o-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
+  transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
+}
+.destaque:hover > img {
+	-webkit-transform: scale(1.5);
+  -moz-transform: scale(1.5);
+  -ms-transform: scale(1.5);
+  -o-transform: scale(1.5);
+  transform: scale(1.5);
+}
+.destaque .retina{
+	position: absolute;
   width: 100%;
   height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);    
+  border-radius: 2px;
+  text-align:left;
+  padding: 10px;
+
+  -webkit-transition:	 all .8s cubic-bezier(.190, 1.000, .220, 1.000);
+  -moz-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
+  -ms-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
+  -o-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
+  transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000); 
+}
+.destaque:hover .retina {
+    opacity: 1;
+    box-shadow: inset 0 0 100px 50px rgba(0,0,0,.5);
+    
+}
+.destaque .retina p, h1 {
+	color: #fff;
 }
 
-.destaque img:hover {
-	-webkit-transform: scale(1.1);
-  -moz-transform: scale(1.1);
-  -o-transform: scale(1.1);
-  -ms-transform: scale(1.1);
-  transform: scale(1.1);
+.destaque .retina a {
+	display: block;
+	width: 150px;
+	background: #6fc5e9;
+	border: 1px solid #59afd4;
+	border-radius: 4px;
+	color: #fff;
+	text-decoration: none;
+	text-align: center;
+	padding: 10px 15px;
+	margin: 16px auto 0;
 }
 
 </style>

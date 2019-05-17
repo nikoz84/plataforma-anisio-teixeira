@@ -6,20 +6,24 @@
                     <input type="text">
                 </form>
             </div>
-            <div class="col-lg-5">
-                <div class="destaque">
-                    <img src="http://pat.educacao.ba.gov.br/assets/img/slider/banner-blog.jpg">
-                    <h1>Hello, world!</h1>
-                    <p>...</p>
-                    <p></p>
-                </div>
+            <div class="col-md-4 destaque">
+                               
+                    <img src="http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/55476/course/overviewfiles/destaque-home-plataforma.jpg">
+                    <div class="retina">
+                        <ul>
+                            <li><h1>Centros Juvenis de Ciência e Cultura</h1></li>
+                            <li><p>Projeto que trabalha com ensino complementar e oferece atividades interdisciplinares em que alunos têm acesso a conhecimentos científicos, cursos e oficinas.</p></li>
+                        </ul>                    
+                    </div>
+                
             </div>
-            <div class="col-lg-4">
-                <div class="destaque">
-                    <img src="http://pat.educacao.ba.gov.br/assets/img/slider/banner-aplicativos-educacionais.jpg">
-                    <h1>Hello, world!</h1>
-                    <p>...</p>
-                    <p></p>
+            <div class="col-md-4 destaque">
+                <img src="http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/68435/course/overviewfiles/destaque-home-plataforma.jpg">
+                <div class="retina">
+                    <ul>
+                        <li><h1>Aplicativos Educacionais</h1></li>
+                        <li><p>Softwares livres, aplicativos móveis e ambientes digitais de apoio a produção e a colaboração nos processos de ensino e de aprendizagem.</p></p></li>
+                    </ul>
                 </div>
             </div>
         </div>
