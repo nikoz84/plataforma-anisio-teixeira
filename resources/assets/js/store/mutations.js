@@ -2,10 +2,10 @@ import { updateField } from "vuex-map-fields";
 
 const mutations = {
   updateField,
-  LOGIN_USER(state) {
+  SET_LOGIN_USER(state) {
     state.isLogged = true;
   },
-  LOGOUT_USER(state) {
+  SET_LOGOUT_USER(state) {
     state.isLogged = false;
   },
   SET_CONTEUDOS(state, paginator) {
@@ -21,8 +21,9 @@ const mutations = {
     //let index = state.conteudo.findIndex(item => item.id === conteudo.id);
     //state.conteudo.splice(index, 1);
   },
-  SET_IS_ERROR(state, error) {
-    state.error = error;
+  SET_IS_ERROR(state, isError) {
+    console.warn("erro");
+    state.isError = isError;
   },
   SET_BUTTON_TEXT(state, buttonText) {
     state.buttonText = buttonText;

@@ -28,36 +28,38 @@ Faça uma copia do arquivo .env.example, e renomee para .env, em este arquivo vo
 - Também será adicionado um link simbólico da pasta public na pasta storage/app/public: `$ php artisan storage:link`
 - Lembre dar as permissões para o usuário apache para a pasta storage, em UBUNTU seria:
 
-``$ sudo chgrp -R www-data storage bootstrap/cache``
-``$ sudo chmod -R ug+rwx storage bootstrap/cache``
+`$ sudo chgrp -R www-data storage bootstrap/cache`
+`$ sudo chmod -R ug+rwx storage bootstrap/cache`
 
 Instalar as dependências do laravel com composer:
 
-``$ composer install``
+`$ composer install`
 
 Se tiver problemas com a instalação das dependencias verifique as extensões de PHP
 
-``$ sudo apt install php7.*-tokenizer php7.*-dom php7.*-mbstring``
+`$ sudo apt install php7.*-tokenizer php7.*-dom php7.*-mbstring`
 
 Instalar as dependências do Vuejs com npm, lembre ter instalado o NODEJS:
 
-``$ npm install``
+`$ npm install`
 
 ### node-sass
 
-> Nota: Se tiver algum problema com instalar o modulo node-sass pode forçar a instalação com: ``$ npm i node-sass --unsafe-perm=true``
+> Nota: Se tiver algum problema com instalar o modulo node-sass pode forçar a instalação com: `$ npm i node-sass --unsafe-perm=true`
 
 ### crlf
 
-> Nota: Se trabalhar com windows ou linux o git pode ter uma incosistência para converter como terminam as linhas de um arquivo de texto, para evitar esse comportamento adicione nas configurações gerais do git ``$ git config core.autocrlf true``
+> Nota: Se trabalhar com windows ou linux o git pode ter uma incosistência para converter como terminam as linhas de um arquivo de texto, para evitar esse comportamento adicione nas configurações gerais do git `$ git config core.autocrlf true`
 
 Crie o esquema do banco de dados no Postgresql com o comando:
 
-``$ php arstisan migrate``
+`$ php arstisan migrate`
 
 Agora podemos arrancar o servidor embutido do framework:
 
-``$ php artisan serve``
+`$ php artisan serve`
+
+[Versões](https://github.com/nikoz84/plataforma-anisio-teixeira/blob/master/TAGS.md)
 
 ## CONTRIBUTORS
 
