@@ -178,7 +178,7 @@ small{
   background: #fff;
 }
 
-.destaque ul{
+ul{
   list-style-type: none;
 }
 
@@ -280,6 +280,10 @@ small{
   z-index:2;
   margin-top: 20%;
   color: #fff;
+}
+
+.lista-tags{
+  font-size: 16px;
 }
 
 </style>

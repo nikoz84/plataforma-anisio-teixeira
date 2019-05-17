@@ -3,11 +3,37 @@
         <div class="row">
             <div class="col-lg-2">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
+                    <input type="text" class="form-control" placeholder="Busca...">
                     <span class="input-group-btn">
                         <button class="btn btn-default glyphicon glyphicon-search" type="button" ></button>
                     </span>
                 </div>
+
+                <!-- lista Tags -->
+                <ul class="lista-tags">
+                    <li><a href="#">2 de julho</a></li>
+                    <li><a href="#">biologia</a></li>
+                    <li><a href="#">conceito digital</a></li>
+                    <li><a href="#">matemática</a></li>
+                    <li><a href="#">preconceito racial</a></li>
+                    <li><a href="#">probabilidade</a></li>
+                    <li><a href="#">brasil</a></li>
+                    <li><a href="#">química</a></li>
+                    <li><a href="#">emitec</a></li>
+                    <li><a href="#">npúmeros</a></li>
+                    <li><a href="#">origem</a></li>
+                    <li><a href="#">energia</a></li>
+                    <li><a href="#">equação</a></li>
+                    <li><a href="#">filosofia</a></li>
+                    <li><a href="#">função</a></li>
+                    <li><a href="#">movimento</a></li>
+                    <li><a href="#">navegações</a></li>
+                    <li><a href="#">sistema</a></li>
+                    <li><a href="#">física</a></li>
+                    <li><a href="#">geometria</a></li>
+
+                </ul>
+
             </div>
             <div class="col-md-5 destaque">
                                
