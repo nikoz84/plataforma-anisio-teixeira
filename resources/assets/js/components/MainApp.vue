@@ -202,11 +202,11 @@ small{
   height: 100%;
   top: 0;
   left: 0;
-  opacity: 0;
   background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);    
   border-radius: 2px;
   text-align:left;
   padding: 10px;
+  z-index:1;
 
   -webkit-transition:	 all .8s cubic-bezier(.190, 1.000, .220, 1.000);
   -moz-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
@@ -215,7 +215,6 @@ small{
   transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000); 
 }
 .destaque:hover .retina {
-    opacity: 1;
     box-shadow: inset 0 0 100px 50px rgba(0,0,0,.5);
     
 }
@@ -234,6 +233,12 @@ small{
 	text-align: center;
 	padding: 10px 15px;
 	margin: 16px auto 0;
+}
+
+.texto {
+  position:absolute;
+  z-index:2;
+  margin-top: 55%;
 }
 
 </style>
