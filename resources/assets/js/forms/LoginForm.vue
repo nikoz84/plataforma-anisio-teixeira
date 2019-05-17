@@ -6,7 +6,7 @@
                 Faça seu Login
             </div>
             <div class="panel-body">  
-                <form v-on:submit.prevent="login()">
+                <form v-on:submit.prevent="login(user)">
                     <div class="form-group">
                         <label for="email">E-mail</label>
                         <input class="form-control" v-model="user.email" id="email" type="text">
@@ -16,21 +16,18 @@
                         <input class="form-control" v-model="user.password" id="senha" type="password">
                     </div>
                     <button type="submit" class="btn btn-default">Login</button>
-                    
-                    <router-link to="/usuario/recuperar-senha">
-                        Recuperar senha
-                    </router-link>
-                    <router-link to="/usuario/registro">
-                        Cadastrese 
-                    </router-link>
                 </form>
+                <router-link to="/usuario/recuperar-senha">
+                    Recuperar senha
+                </router-link> | 
+                <router-link to="/usuario/registro">
+                    Cadastrese 
+                </router-link>
         
                 <transition  name="custom-classes-transition" 
                             enter-active-class="animated shake" 
                             leave-active-class="animated fadeOut">
-                <div v-if="!isError" class="alert alert-info" role="alert" >
-                    {{ message }}
-                </div>
+                <div v-if="isError" class="alert alert-info" role="alert" v-text="textAlert"></div>
                 </transition>
             </div>
         </div>    
@@ -38,8 +35,7 @@
     </div> 
 </template>
 <script>
-import client from "../client.js";
-import store from "../store/index.js";
+import { mapActions, mapState, mapMutations } from "vuex";
 
 export default {
   name: "LoginForm",
@@ -48,35 +44,27 @@ export default {
       user: {
         email: null,
         password: null
-      },
-      message: "",
-      isError: true
+      }
     };
   },
   beforeCreate() {
-    if (!store.state.isLogged) {
+    if (!this.isLogged) {
       this.$router.push("/usuario/login");
     }
   },
+  computed: {
+    ...mapState(["isError", "isLogged", "textAlert"])
+  },
   methods: {
-    async login() {
-      let data = { email: this.user.email, password: this.user.password };
-      let resp = await client.post("/auth/login", data);
-      if (!resp.data.success) {
-        this.isError = resp.data.success;
-        this.message = resp.data.message;
-        this.$router.push("/usuario/login");
-        setTimeout(() => {
-          this.isError = true;
-        }, 3000);
+    ...mapActions(["login"]),
+    ...mapMutations(["SET_IS_ERROR", "SET_LOGIN_USER"]),
+    showMessage() {
+      if (this.isError) {
+        //this.$router.push("/usuario/login");
       } else {
-        this.isError = resp.data.success;
-        if (resp.data.token.access_token) {
-          localStorage.setItem("token", resp.data.token.access_token);
-          this.docodePayloadToken();
-          store.commit("LOGIN_USER", true);
-          this.$router.push("/admin");
-        }
+        this.docodePayloadToken();
+        this.SET_LOGIN_USER(true);
+        this.$router.push("/admin");
       }
     },
     docodePayloadToken() {
