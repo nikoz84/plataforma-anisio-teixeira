@@ -54,8 +54,7 @@ const routes = [
         name: "Inicio",
         component: HomeCanal,
         meta: {
-          requiresAuth: false,
-          title: "Home"
+          requiresAuth: false
         }
       },
       {
