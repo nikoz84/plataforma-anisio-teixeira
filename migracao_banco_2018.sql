@@ -207,7 +207,7 @@ select sc.idconteudodigitalcategoria AS id,
       sc.datacriacao as created_at,
       null as updated_at
 from conteudodigitalcategoria AS sc
-) to '/home/niko/Documentos/db/MIGRA/final/h.categories' WITH ( FORMAT TEXT, DELIMITER '*' );
+) TO '/home/niko/Documentos/db/MIGRA/final/h.categories' WITH ( FORMAT TEXT, DELIMITER '*' );
 
 
 -- EXPORTAR TIPOS

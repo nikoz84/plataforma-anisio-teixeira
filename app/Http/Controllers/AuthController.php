@@ -2,49 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use App\Helpers\FormValidation;
 
-class AuthController extends Controller
+class AuthController extends ApiController
 {
-    public function __construct()
+    public function __construct(Request $request)
     {
         $this->middleware('jwt.verify')->except(['login', 'register']);
+        $this->request = $request;
     }
     /**
      * Login Usuario.
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
+    public function login()
     {
-        $credentials = $request->only('email', 'password');
+        $validator = Validator::make($this->request->all(), config("rules.login"));
+
+        if($validator->fails()){
+            return $this->errorResponse($validator->errors(), "Usuário ou senha inválidos", 201);
+        }
+
+        $credentials = $this->request->only('email', 'password');
 
         $token = null;
 
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Email ou Senha inválidos',
-                ], 201);
+                return $this->errorResponse([], 'Email ou Senha inválidos', 201);
             }
         } catch (JWTException $e) {
-            return response()->json([
-                'success' => false,
-                'error' => 'Impossível criar Token de acesso',
-            ], 500);
+            return $this->errorResponse([], 'Impossível criar Token de acesso',201);
         }
+        $data =['token' => $this->respondWithToken($token)];
 
-        return response()->json([
-            'success' => true,
-            'token' => $this->respondWithToken($token),
-        ]);
+        return $this->successResponse($data, "Bemvindo!!", 200);
     }
     /**
      * Get the authenticated User.
@@ -55,33 +55,17 @@ class AuthController extends Controller
     {
         try {
             if (!$user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Usuário não encontrado',
-                    'status' => 'user_not_found'
-                ], 404);
+                return $this->errorResponse([], 'Usuário não encontrado', 404);
             }
         } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Token Expirado',
-                'status' => 'token_expired'
-            ], $e->getStatusCode());
+            return $this->errorResponse([], 'Token Expirado', 404);
         } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Token Inválido',
-                'status' => 'token_invalid'
-            ], $e->getStatusCode());
+            return $this->errorResponse([], 'Token Inválido', 404);
         } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Token Ausente',
-                'status' => 'token_absent'
-            ], $e->getStatusCode());
+            return $this->errorResponse([], 'Token Ausente', 404);
         }
 
-        return response()->json(compact('user'));
+        return $this->successResponse(['user'=> compact('user')],'', 200);
     }
     /**
      * Log the user out (Invalidate the token).
@@ -93,10 +77,7 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return response()->json([
-            'message' => 'Usuário Deslogado com sucesso!!',
-            'success' => true,
-        ], 200);
+        return $this->successResponse([],'Volte pronto', 200);
     }
     /**
      * Refresh a token.
@@ -104,11 +85,10 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function refresh()
-    {
-        return response()->json([
-            'success' => true,
-            'token' => $this->respondWithToken(auth()->refresh()),
-        ]);
+    {   
+        $data = ['token' => $this->respondWithToken(auth()->refresh())];
+        
+        return $this->successResponse($data,"Token renovado", 200);
     }
 
     /**
@@ -131,32 +111,29 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function register(Request $request)
+    public function register()
     {
-        $validator = Validator::make($request->all(), config('form.registro'));
+        $validator = Validator::make($this->request->all(), config("rules.register"));
 
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Não foi possível completar o cadastro',
-                'errors' => $validator->errors(),
-            ], 201);
+        if($validator->fails()){
+            return $this->errorResponse($validator->errors(), "Verifique os dados fornecidos", 201);
         }
+        
 
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
+        $user = new User;
+        $user->name = $this->request->name;
+        $user->email = $this->request->email;
+        $user->password = bcrypt($this->request->password);
+        $user->verified = User::USER_NOT_VERIFIED;
+        $user->verification_token = User::createVerificationToken();
+        
         $user->save();
 
-        //$this->confirmationEmail();
+        //$this->sendConfirmationEmail();
 
-        return response()->json([
-            'success' => true,
-            'message' => "Verifique seu email para confirmar o cadastro"
-        ], 200);
+        return $this->successResponse([],"Espere um email de confirmação na conta", 200);
     }
-    private function confirmationEmail()
+    private function sendConfirmationEmail()
     {
         //
     }

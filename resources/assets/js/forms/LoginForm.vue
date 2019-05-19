@@ -52,30 +52,22 @@ export default {
     }
   },
   computed: {
-    ...mapState(["isError", "isLogged"])
+    ...mapState(["isLogged"])
   },
   methods: {
     ...mapActions(["login"]),
-    ...mapMutations(["SET_IS_ERROR", "SET_LOGIN_USER"]),
     entrar() {
       this.login(this.user).then(() => {
-        if (isLogged) {
+        if (this.isLogged) {
           this.docodePayloadToken();
           this.$router.push("/admin/inicio/estatisticas");
         }
       });
-
-      if (this.isError) {
-        //this.$router.push("/usuario/login");
-      } else {
-        this.SET_LOGIN_USER(true);
-      }
     },
     docodePayloadToken() {
       const base64Url = localStorage.token.split(".")[1];
       const base64 = base64Url.replace("-", "+").replace("_", "/");
       let payload = JSON.parse(window.atob(base64));
-
       localStorage.setItem("username", payload.user.name);
       localStorage.setItem("user_id", payload.user.id);
     }

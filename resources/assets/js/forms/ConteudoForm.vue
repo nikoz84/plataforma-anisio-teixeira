@@ -36,7 +36,7 @@
               
           </div>
           <!-- CANAL -->
-          <div class="form-group" v-bind:class="{ 'has-error': errors.canal_id && errors.canal_id.length > 0 }">
+          <div class="form-group" v-bind:class="showErrors('canal_id')">
               <label for="canal-id">Canal:*</label>
               <select class="form-control form-control-lg" name="tipo" id="canal-id" v-model="canal_id">
                   <option value="" disabled selected>« SELECIONE »</option>
@@ -50,15 +50,16 @@
               <erros :errors="errors.canal_id"></erros>
           </div>
                     
-          <!-- CAMPO URL-->
-          <!--div class="form-group" v-if="isTipoSite">
-              <label for="url">URL:</label>
+          
+          <div class="form-group" v-if="is_site">
+              <label for="url">URL do site:</label>
               <input type="text"
                       class="form-control"
                       name="url"
+                      v-model="site"
                       id="url">
-              
-          </div-->
+              <small class="text-info">Adicione a URL ou link do site.</small><br>
+          </div>
           <!-- CATEGORIA OPCIONAL-->
           <div class="form-group" v-if="categories.length != 0">
               <label for="estado">Categoria de Conteúdo:*</label>
@@ -237,9 +238,13 @@ export default {
       is_approved: "conteudo.is_approved",
       is_featured: "conteudo.is_featured",
       is_site: "conteudo.is_site"
-    })
+    }),
+    
   },
   methods: {
+    showErrors(attr){
+      return { 'has-error': this.errors[attr] && this.errors[attr].length > 0 }
+    },
     ...mapActions([
       "fetchConteudo",
       "fetchTipos",
@@ -248,11 +253,11 @@ export default {
       "createConteudo",
       "updateConteudo"
     ]),
-    async send() {
+    send() {
       if (this.$route.params.id) {
-        await this.updateConteudo(this.conteudo);
+        this.updateConteudo(this.conteudo);
       } else {
-        await this.createConteudo(this.conteudo);
+        this.createConteudo(this.conteudo);
       }
     }
   }

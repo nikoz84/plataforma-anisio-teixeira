@@ -4,14 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Tipo;
 use Illuminate\Http\Request;
-
-class TipoController extends Controller
+use App\Http\Controllers\ApiController;
+class TipoController extends ApiController
 {
     public function __construct(Tipo $tipo, Request $request)
     {
-        $this->middleware('jwt.verify')->except([
-            'list'
-        ]);
+        $this->middleware('jwt.verify')->except(['list']);
         $this->tipo = $tipo;
         $this->request = $request;
     }
@@ -19,9 +17,8 @@ class TipoController extends Controller
     public function list()
     {
         $tipos = $this->tipo::all();
-        return response()->json([
-            'success' => true,
-            'tipos' => $tipos,
-        ]);
+
+        return $this->showAll($tipos,'', 200);
+        
     }
 }
