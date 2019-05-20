@@ -95,18 +95,17 @@ const actions = {
   },
   async login({ commit, dispatch }, user) {
     let resp = await client.post("/auth/login", user);
-    console.log(resp);
     if (resp.status == 200 && resp.data.success) {
-      localStorage.setItem("token", resp.data.token.access_token);
-
+      localStorage.setItem("token", resp.data.metadata.token.access_token);
       commit("SET_LOGIN_USER", true);
-      return true;
     } else {
-      commit("SET_SHOW_MESSAGE", resp.data.message);
-      commit("SET_IS_ERROR", true);
-      commit("SET_LOGIN_USER", false);
-      dispatch("hideAlert");
+      dispatch("showResponse", resp);
     }
+  },
+  async registerUser({ commit, dispatch }, user) {
+    let resp = await client.post(`/auth/register`, user);
+
+    dispatch("showResponse", resp);
   },
   /** CANAIS FOR SELECT */
   async fetchCanaisForSelect({ commit }) {
@@ -115,12 +114,12 @@ const actions = {
   },
   /** TIPO DE CONTEUDOS */
   async fetchTipos({ commit }) {
-    let resp = await client.get("/tipos/conteudos");
-    commit("SET_TIPOS", resp.data.tipos);
+    let resp = await client.get("/tipos");
+    commit("SET_TIPOS", resp.data.metadata.tipos);
   },
   /** LICENÇAS */
   async fetchLicenses({ commit }) {
-    let resp = await client.get("/licenses");
+    let resp = await client.get("/licenses?select");
     const data = resp.data.metadata;
     let licenses = data.filter(key => {
       return key.id != 2;
@@ -164,29 +163,6 @@ const actions = {
       commit("SET_SHOW_CONTEUDO", false);
       commit("SET_SHOW_APLICATIVO", true);
     }
-  },
-  serializeFormData({ commit, dispatch, state }, form) {
-    //const formData = new FormData(form);
-
-    Object.keys(form).map(key => {
-      console.log(form[key]);
-    });
-    /*
-    Object.keys(form).map(key => {
-      if (form.hasOwnProperty(key)) {
-        if (key == "options") {
-          form.append(`"${key}"`, JSON.stringify(form[key]));
-        } else if (key == "image") {
-          form.append(`"${key}"`, form[key], "image");
-        } else if (key == "file") {
-          form.append(`"${key}"`, form[key], "arquivo");
-        } else {
-          formData.append(`"${key}"`, form[key]);
-        }
-      }
-    }*/
-    //commit("SET_FORM_DATA", formData);
-    //dispatch("createConteudo", state.formData);
   }
 };
 

@@ -50,7 +50,7 @@ const state = {
   formData: {},
   buttonText: "Salvar",
   notFound: false,
-  action: ""
+  redirect: ""
 };
 
 export default state;

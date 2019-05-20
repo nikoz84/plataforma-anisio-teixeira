@@ -110,34 +110,92 @@ class ConteudoController extends ApiController
      */
     public function create()
     {
-        $validar = $this->validar($this->request, config('form.conteudo'));
+        $validator = Validator::make($this->request->all(), config("rules.conteudo"));
 
-        if ($validar->error) {
-            return $this->errorResponse($validar->errors, "Não foi possível cadastrar o conteúdo", 201);
+        if($validator->fails()){
+            return $this->errorResponse($validator->errors(), "Não foi possível criar o conteúdo", 201);
         }
 
         $conteudo = $this->conteudo;
 
         $conteudo->user_id = Auth::user()->id;
         $conteudo->approving_user_id = Auth::user()->id;
-        $conteudo->license_id = $this->request->get('license_id');
-        $conteudo->canal_id = $this->request->get('canal_id', '');
-        $conteudo->title = $this->request->get('title');
-        $conteudo->description = $this->request->get('description');
-        $conteudo->authors = $this->request->get('authors');
-        $conteudo->source = $this->request->get('source');
-        $conteudo->is_featured = $this->request->get('is_featured');
-        $conteudo->is_approved = $this->request->get('is_approved');
-        $conteudo->is_site = $this->request->get('is_site');
-        $conteudo->options = json_decode($this->request->get('options'), true);
+        $conteudo->license_id = $this->request->license_id;
+        $conteudo->canal_id = $this->request->canal_id;
+        $conteudo->category_id = $this->request->category_id;
+        $conteudo->title = $this->request->title;
+        $conteudo->description = $this->request->description;
+        $conteudo->authors = $this->request->authors;
+        $conteudo->source = $this->request->source;
+        $conteudo->is_featured = $this->request->is_featured;
+        $conteudo->is_approved = $this->request->is_approved;
+        $conteudo->is_site = $this->request->is_site;
+        $conteudo->qt_downloads = $this->conteudo::INIT_COUNT;
+        $conteudo->qt_access = $this->conteudo::INIT_COUNT;
+        
+        $conteudo->tags()->attach($this->request->tags);
+        $conteudo->componentes()->attach($this->request->componentes);
 
         $conteudo->save();
+
+        $this->saveOptions($conteudo->id);
 
         $conteudo::with([
             'user', 'canal', 'tags', 'license', 'componentes', 'niveis',
         ]);
 
         return $this->showOne($conteudo, 'Conteúdo cadastrado com sucesso!!', 200);
+    }
+
+    private function saveOptions($conteudo_id)
+    {
+        $tipo = DB::select('select * from tipos where id = ?', [$this->request->tipo_id]);
+        
+        $options = [
+            'tipo' => [
+                'id' => $tipo->id,
+                'name' => $tipo->name
+            ],
+            'componentes' => [$this->request->componentes],
+            'tags' => [$this->request->tags],
+            'site'=> $this->request->site,
+            'guia'=> $this->request->guia,
+            'download' => null,
+            'visualizacao' => null
+        ];
+        $conteudo = DB::select('select * from users where id = ?', [$conteudo_id]);
+        
+        $conteudo->options = $options;
+
+        $conteudo->save();
+        
+    }
+
+    public function saveFullTextSearch($conteudo_id)
+    {
+        $tags = $this->conteudo::with('tags')->whereRaw('id = ?', [$conteudo_id]);
+        $componentes = $this->conteudo::with('componentes')->whereRaw('id = ?', [$conteudo_id]);
+        $authorsSourceTitle = DB::select("select authors,source,title from conteudos")->whereRaw('id = ?', [$conteudo_id]);
+        
+        dd($tags);
+
+        $sql ="
+        setweight( to_tsvector( 'simple', (SELECT string_agg(lower(COALESCE(unaccent(t.nometag),'')), ' ' ) FROM conteudodigitaltag AS ct INNER JOIN tag t ON t.idtag = ct.idtag WHERE ct.idconteudodigital = cd.idconteudodigital)), 'A') ||
+        setweight( to_tsvector( 'simple', lower( COALESCE( unaccent(cd.titulo), '') ) ), 'B' ) ||
+        setweight( to_tsvector( 'portuguese', unaccent( lower( COALESCE( cd.fonte, '') ) ) ), 'C' ) ||
+        setweight( to_tsvector( 'portuguese', unaccent( lower( COALESCE( cd.autores, '') ) ) ), 'C' ) ||
+        setweight( to_tsvector( 'portuguese', unaccent(lower(
+               regexp_replace(
+               regexp_replace(
+               regexp_replace( cd.descricao 
+               , E'<.*?>', '', 'g')
+               , E'&nbsp;', ' ', 'g')
+               , E'[\\n\\r]+', ' ', 'g')
+           ))),'D') AS ts_documento";
+        $fullTextSearch = "";
+        $conteudo->ts_documento = $fullTextSearch;
+
+        $conteudo->save();
     }
 
     /**
@@ -148,10 +206,10 @@ class ConteudoController extends ApiController
      */
     public function update($id)
     {
-        $validar = $this->validar($this->request, config('form.conteudo'));
+        $validator = Validator::make($this->request->all(), config("rules.conteudo"));
 
-        if ($validar->error) {
-            return $this->errorResponse($validar->errors, "Não foi possível atualizar o conteúdo", 201);
+        if($validator->fails()){
+            return $this->errorResponse($validator->errors(), "Não foi possível atualizar o conteúdo", 201);
         }
 
         $conteudo = $this->conteudo::with([

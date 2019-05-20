@@ -38,7 +38,7 @@ Route::group(['middleware' => ['cors']], function () {
  * Controlador: Tipo
  * Métodos: list -> Lista dos tipos
  */
-    Route::get('/tipos/conteudos', 'TipoController@list')->name('listar.tipos');
+    Route::get('/tipos', 'TipoController@list')->name('listar.tipos');
 
 /******
  *

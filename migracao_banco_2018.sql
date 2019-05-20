@@ -1,4 +1,4 @@
--- EXTENSÃO SEM ACENTOS
+﻿-- EXTENSÃO SEM ACENTOS
 CREATE EXTENSION IF NOT EXISTS unaccent;
 -- DESHABILITA TRIGGERS
 ALTER TABLE conteudodigital DISABLE TRIGGER ALL;
@@ -14,16 +14,6 @@ having count(*) > 1
 ) select u.idusuario, u.username, u.nomeusuario, u.email from usuario as u 
   join emails as e on e.email = u.email
 
---
-
-update conteudos set canal_id = 6 where is_site = false and canal_id is null;
-update conteudos set canal_id = 5 where is_site = true and canal_id is null;
-update canais set is_active = false where id = 15;
-update canais set is_active = false where id = 11;
-update canais set is_active = false where id = 10;
-update canais set is_active = false where id = 14;
-update canais set is_active = false where id = 13;
-update canais set is_active = false where id = 4;
 
 
 update usuario set email = (concat('deletar_',email)) where idusuario = 115;
@@ -46,6 +36,7 @@ update usuario set email = (concat('deletar',email)) where idusuario = 94;
 update usuario set email = (concat('deletar',email)) where idusuario = 712;
 update usuario set email = (concat('deletar',email)) where idusuario = 527;
 update usuario set email = (concat('deletar',email)) where idusuario = 1692;
+update usuario set email = (concat('deletar',email)) where idusuario = 2668;
 
 -- LIMPA TAGS
 
@@ -57,7 +48,7 @@ select nometag,
 from tag
 group by nometag
 having count(*) > 1
-) select t.idtag, t.nometag from tag as t join tags as tgs on tgs.nometag = t.nometag
+) select t.idtag, t.nometag from tag as t join tags as tgs on tgs.nometag = t.nometag order by idtag
 
 --
 update tag set nometag = (concat('deletar_',nometag)) where idtag = 3438;
@@ -86,7 +77,9 @@ update tag set nometag = (concat('deletar_',nometag)) where idtag = 13746;
 update tag set nometag = (concat('deletar_',nometag)) where idtag = 11481;
 update tag set nometag = (concat('deletar_',nometag)) where idtag = 8716;
 update tag set nometag = (concat('deletar_',nometag)) where idtag = 7220;
-update tag set nometag = (concat('deletar_',nometag)) where idtag = 7520;
+update tag set nometag = (concat('deletar_',nometag)) where idtag = 2475;
+update tag set nometag = (concat('deletar_',nometag)) where idtag = 10689;
+update tag set nometag = (concat('deletar_',nometag)) where idtag = 14430;
 
 -- EXPORTAR USUARIOS
 COPY (
@@ -110,9 +103,10 @@ COPY (
 ) TO '/home/niko/Documentos/db/MIGRA/final/a.users' WITH (FORMAT text, DELIMITER '*');
 
 -- EXPORTAR CANAIS
+select * from canal
 copy (
   select idcanal as id,
-        nomecanal as name,
+        titulomenucanal as name,
 	descricaocanal as description,
 	case when idcanal = 6 then 'recursos-educacionais-abertos' 
 	    when idcanal = 4 then 'midias-educacionais'
@@ -125,7 +119,9 @@ copy (
 		'has_about', flpossuisobre,
 		'tipo_conteudo', conteudotipocanal,
 		'color', corcanal,
-		'title', titulomenucanal,
+		'has_home', flvisualizarhomepage,
+		'has_about', flpossuisobre,	
+		'extend_name', nomecanal,
 		'quick_access', flacessorapido,
 		'has_categories', flcategoria,
 		'complement_description', jsonb_build_object('que',descricaooquecanal,'porque',descricaoporquecanal,'como',descricaocomocanal)	
@@ -165,9 +161,9 @@ SELECT aa.idambientedeapoio as id,
 		aa.titulo as name, 
 		aa.descricao as description,
 		aa.url AS url,
-		aa.fldestaque AS is_featured, 
 		jsonb_build_object(
-			'qt_access', aa.acessos
+			'qt_access', aa.acessos,
+			'is_featured', aa.fldestaque
 		) as options, 		
 		now()::timestamp as created_at,
 		null as updated_at
@@ -187,7 +183,13 @@ select idambientedeapoio as aplicativo_id, idtag as tag_id from ambientedeapoiot
 
 -- EXPORTAR LICENSES 
 COPY(
-select idconteudolicenca as id,idconteudolicencapai as parent_id, nomeconteudolicenca as name, descricaoconteudolicenca as description, siteconteudolicenca as site 
+select idconteudolicenca as id,
+      idconteudolicencapai as parent_id, 
+      nomeconteudolicenca as name, 
+      descricaoconteudolicenca as description, 
+      siteconteudolicenca as site,
+      now() as created_at,
+      now() as updated_at 
 from conteudolicenca	
 ) to '/home/niko/Documentos/db/MIGRA/final/g.licenses' WITH ( FORMAT TEXT, DELIMITER '*' );
 
@@ -205,7 +207,7 @@ select sc.idconteudodigitalcategoria AS id,
       sc.datacriacao as created_at,
       null as updated_at
 from conteudodigitalcategoria AS sc
-) to '/home/niko/Documentos/db/MIGRA/final/h.categories' WITH ( FORMAT TEXT, DELIMITER '*' );
+) TO '/home/niko/Documentos/db/MIGRA/final/h.categories' WITH ( FORMAT TEXT, DELIMITER '*' );
 
 
 -- EXPORTAR TIPOS
@@ -247,9 +249,9 @@ SELECT 	 cd.idconteudodigital as id,
 	 null as updated_at,
 	 null as deleted_at,
 	  cd.site
-	 ,(SELECT jsonb_build_object('id', ct.idconteudotipo, 'name',ct.nomeconteudotipo) FROM conteudotipo AS ct JOIN formato AS f ON f.idformato = cd.idformato AND ct.idconteudotipo = f.idconteudotipo) as tipo
-	 --,(SELECT jsonb_agg(jsonb_build_object('id',tag.idtag, 'name', tag.nometag)) FROM conteudodigitaltag INNER JOIN tag ON tag.idtag = conteudodigitaltag.idtag WHERE conteudodigitaltag.idconteudodigital = cd.idconteudodigital) as tags
-	 --,(SELECT jsonb_agg(jsonb_build_object('id',cc.idcomponentecurricular, 'name', cc.nomecomponentecurricular)) FROM conteudodigitalcomponente as cdc INNER JOIN componentecurricular as cc on cc.idcomponentecurricular = cdc.idcomponentecurricular WHERE cdc.idconteudodigital = cd.idconteudodigital) as componentes	
+	 ,(SELECT ct.idconteudotipo FROM conteudotipo AS ct JOIN formato AS f ON f.idformato = cd.idformato AND ct.idconteudotipo = f.idconteudotipo) as tipo
+	 ,(SELECT jsonb_agg(tag.idtag) FROM conteudodigitaltag INNER JOIN tag ON tag.idtag = conteudodigitaltag.idtag WHERE conteudodigitaltag.idconteudodigital = cd.idconteudodigital) as tags
+	 ,(SELECT jsonb_agg(cc.idcomponentecurricular) FROM conteudodigitalcomponente as cdc INNER JOIN componentecurricular as cc on cc.idcomponentecurricular = cdc.idcomponentecurricular WHERE cdc.idconteudodigital = cd.idconteudodigital) as componentes	
 	,(SELECT case when fv.nomeformato = 'link' then cd.site when fv.nomeformato is not null then concat(cd.idconteudodigital,'.',fv.nomeformato) else '' end from formato as fv where fv.idformato = cd.idformato) AS visualizacao
 	,(SELECT case when fd.nomeformato = 'link' then cd.site when fd.nomeformato is not null then concat(cd.idconteudodigital,'.',fd.nomeformato) else '' end from formato as fd where fd.idformato = cd.idformatodownload) AS download
 	,(SELECT case when fg.nomeformato is not null then concat(cd.idconteudodigital,'.',fg.nomeformato) else '' end from formato as fg where fg.idformato = cd.idformatoguiapedagogico) AS guia_pedagogica
@@ -272,6 +274,8 @@ INNER JOIN usuario ON usuario.idusuario = cd.idusuariopublicador
         qt_downloads, qt_access,
         jsonb_build_object('tipo',tipo,
                         'site', site,
+                        'componentes', componentes,
+                        'tags', tags,
                         'download', download,
                         'visualizacao', visualizacao,
                         'guia', guia_pedagogica
@@ -285,6 +289,7 @@ from conteudos ) to '/home/niko/Documentos/db/MIGRA/final/j.conteudos' WITH ( FO
 COPY(
 select idconteudodigital as conteudo_id, idtag as tag_id from conteudodigitaltag
 ) to '/home/niko/Documentos/db/MIGRA/final/k.conteudo_tag' WITH ( FORMAT TEXT, DELIMITER '*' );
+
 
 -- EXPORTAR NIVEIS DE ENSINO
 COPY(
@@ -315,10 +320,18 @@ idcomponentecurricular as componente_id
 from conteudodigitalcomponente
 ) to '/home/niko/Documentos/db/MIGRA/final/o.conteudo_curricular_component' WITH ( FORMAT TEXT, DELIMITER '*' );
 
--- SELECIONAR SITES TEMATICOS COM CANAL 5
-update conteudos set canal_id = 5 where canal_id is null and is_site = true;
 
--- SELECIONAR RECURSOS EDUCACIONAIS ABERTOS COM CANAL 5
-update conteudos set canal_id = 6 where canal_id is null and is_site = false;
+
+-- EM BANCO MIGRADO
+
+
+update conteudos set canal_id = 6 where is_site = false and canal_id is null;
+update conteudos set canal_id = 5 where is_site = true and canal_id is null;
+update canais set is_active = false where id = 15;
+update canais set is_active = false where id = 11;
+update canais set is_active = false where id = 10;
+update canais set is_active = false where id = 14;
+update canais set is_active = false where id = 13;
+update canais set is_active = false where id = 4;
 
 

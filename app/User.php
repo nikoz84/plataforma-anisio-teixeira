@@ -23,7 +23,11 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'verification_token', 'verified',
+        'name', 
+        'email', 
+        'password', 
+        'verification_token', 
+        'verified',
     ];
 
     /**
@@ -76,7 +80,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->where('options->role', 'administrador')->exists();
     }
-    public static function newVerificationToken()
+    public static function createVerificationToken()
     {
         return str_random(40);
     }

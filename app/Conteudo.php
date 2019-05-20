@@ -8,13 +8,21 @@ use Illuminate\Support\Facades\Storage;
 class Conteudo extends Model
 {
     protected $id = 'id';
+    const IS_SITE = 'false';
+    const IS_APPROVED = 'false';
+    const IS_FEATURED = 'false';
+    const INIT_COUNT = 0;
+    
     protected $fillable = [
+        'approving_user_id',
+        'canal_id',
+        'license_id',
+        'category_id',
         'title',
         'description',
         'source',
         'authors',
         'is_site',
-
         'is_featured',
         'is_approved',
         'options',

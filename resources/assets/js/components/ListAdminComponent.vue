@@ -1,22 +1,30 @@
-                                <template>
+<template>
+  <div>
     <div>
-      <div>
-          <h2>{{title}}</h2>
-      </div>
-      <div class="loading" v-if="loading">
-          <loader></loader>
-      </div>
-
-        <div v-if="data" class="content">
-            <ul>
-                <li v-for="(item, i) in data" :key="i" class="grid">
-                  <div class="col-md-7 table-hover">{{ (item.record) ? item.record : item.id }} - {{ (item.name) ? item.name : item.title }}</div>
-                  <div class="col-md-2"><button class="btn btn-success btn-xs">Editar</button> <button class="btn btn-danger btn-xs">Excluir</button></div>
-                </li>
-            </ul>
-        </div>
-      </div>
+        <h2>{{title}}</h2>
     </div>
+    <div class="loading" v-if="loading">
+        <loader></loader>
+    </div>
+
+      <div v-if="data" class="content">
+        <table class="table table-striped" is="custom-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>nome/titulo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, i) in data" :key="i">
+              <td>{{ (item.record) ? item.record : item.id }}</td>
+              <td>{{ (item.name) ? item.name : item.title }}</td>
+            </tr>
+            <post-row is='row'></post-row>
+          </tbody>  
+        </table>
+      </div>
+  </div>
 </template>
 <script>
 import client from "../client.js";

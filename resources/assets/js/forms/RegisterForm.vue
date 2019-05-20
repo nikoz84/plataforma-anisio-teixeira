@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-md-6 col-md-offset-4 col-xs-10 col-xs-offset-1 center-xs">
-            <form v-on:submit.prevent="registerUser()">
+            <form v-on:submit.prevent="register()">
                 
                 <div class="panel panel-default col-md-7">
                     <div class="panel-heading">
@@ -9,111 +9,78 @@
                     </div>
                     <div class="panel-body">
                         
-                        <div class="form-group" v-bind:class="{ 'has-error': errors.name && errors.name.length > 0 }">
+                        <div class="form-group">
                             <label for="name">Nome</label>
-                            <input type="text" class="form-control" id="name" aria-describedby="nome do usuário" v-model="name">
-                            <small class="form-text text-muted">Escreva seu nome</small>
-                            <small class="text-danger"
-                                v-if="errors.name"
-                                v-for="(error,n) in errors.name"
-                                v-bind:key="n"
-                                v-text="error">
-                            </small>
+                            <input type="text" class="form-control" id="name" aria-describedby="nome do usuário" v-model="user.name">
+                            <small class="text-info">Escreva seu nome</small>
                         </div>
-                        <div class="form-group" v-bind:class="{ 'has-error': errors.email && errors.email.length > 0 }">
+                        <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="text" class="form-control" id="email" aria-describedby="seu email" v-model="email">
-                            <small class="form-text text-muted">Escreva seu e-mail</small>
-                            <small class="text-danger"
-                                v-if="errors.email"
-                                v-for="(error,e) in errors.email"
-                                v-bind:key="e"
-                                v-text="error">
-                            </small>
+                            <input type="text" class="form-control" id="email" aria-describedby="seu email" v-model="user.email">
+                            <small class="text-info">Escreva seu e-mail</small>
                         </div>
                         <!-- Nova senha -->
                         <div class="form-group">
                             <label for="senha">Senha</label>
-                            <input type="password" class="form-control" id="senha" aria-describedby="senha" v-model="password">
-                            <small class="form-text text-muted">Escreva uma senha</small>
+                            <input type="password" class="form-control" id="senha" aria-describedby="senha" v-model="user.password">
+                            <small class="text-info">Escreva uma senha</small>
                         </div>
                         <div class="form-group">
                             <label for="confirmasenha">Repita a Senha</label>
-                            <input type="password" class="form-control" id="confirmasenha" aria-describedby="confirmar senha" v-model="confirmPassword">
-                            <small class="form-text text-muted">Confirmar senha</small>
+                            <input type="password" class="form-control" id="confirmasenha" aria-describedby="confirmar senha" v-model="user.password_confirmation">
+                            <small class="text-info">Confirme sua senha</small>
                         </div>
-                        <transition  name="custom-classes-transition" 
-                            enter-active-class="animated shake" 
-                            leave-active-class="animated fadeOut">
-                            <div v-if="!isError" class="alert alert-info" role="alert" >
-                                {{ message }}
-                            </div>
-                        </transition>
+                        <AlertShake></AlertShake>
                     </div>
                     <div class="form-group">
                         <button class="btn btn-default">Enviar</button>
                     </div>
+                    <router-link to="/usuario/login">
+                        Login
+                    </router-link> | 
+                    <router-link to="/usuario/recuperar-senha">
+                        Recuperar Senha
+                    </router-link>
                 </div>
+                
             </form>
+            
         </div>
     </div>
 </template>
 
 <script>
-import client from '../client.js';
+import { mapActions, mapState } from "vuex";
+import AlertShake from "../components/AlertShakeComponent.vue";
 
 export default {
-    name: 'RegisterForm',
-    components: {},
-    data(){
-        return {
-            name: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-            isError: true,
-            message: '',
-            errors: {
-                email: [],
-                name: [],
-                password: []
-            }    
+  name: "RegisterForm",
+  components: { AlertShake },
+  data() {
+    return {
+      user: {
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: ""
+      }
+    };
+  },
+  computed: {
+    ...mapState(["isError"])
+  },
+  mounted() {
+    //
+  },
+  methods: {
+    ...mapActions(["registerUser"]),
+    register() {
+      this.registerUser(this.user).then(() => {
+        if (!this.isError) {
+          this.$router.push("/usuario/login");
         }
-
-    },
-    computed:{
-        //
-    },
-    mounted(){
-        //
-    },
-    methods:{
-        async registerUser(){
-            let data = {
-                password: this.password,
-                name: this.name,
-                email: this.email
-            };
-
-            let resp = await client.post(`/auth/register`, data);
-            
-            if(resp.data.success){
-                //console.log(resp.data);
-                //this.$router.push('listar')
-            }else{
-                console.warn(resp.data);
-                this.isError = resp.data.success;
-                this.message = resp.data.message;
-                if(resp.data.errors){
-                    this.errors = resp.data.errors;
-                }
-                setTimeout(()=>{
-                    this.isError = true;
-                },3000)
-            }
-            
-        }
+      });
     }
-
-}
+  }
+};
 </script>

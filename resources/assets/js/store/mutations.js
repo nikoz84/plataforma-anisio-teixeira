@@ -22,8 +22,10 @@ const mutations = {
     //state.conteudo.splice(index, 1);
   },
   SET_IS_ERROR(state, isError) {
-    console.warn("erro");
     state.isError = isError;
+  },
+  SET_REDIRECT(state, redirect) {
+    state.redirect = redirect;
   },
   SET_BUTTON_TEXT(state, buttonText) {
     state.buttonText = buttonText;

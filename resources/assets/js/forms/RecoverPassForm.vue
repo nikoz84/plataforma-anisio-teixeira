@@ -15,16 +15,13 @@
                             <small class="form-text text-muted">Escreva uma nova senha</small>
                         </div>
                         <div class="form-group">
-                            <label for="confirmasenha">Repita a Senha</label>
+                            <label for="confirmasenha">Confirme a Senha</label>
                             <input type="password" class="form-control" id="confirmasenha" aria-describedby="confirmar senha" v-model="confirmPassword">
                         </div>
                     </div>
                     <div class="form-group">
                         <button class="btn btn-default">Enviar</button>
                     </div>
-                    <router-link to="/usuario/login">
-                        Login 
-                    </router-link>
                 </div>
             </form>
         </div>
@@ -32,39 +29,30 @@
 </template>
 
 <script>
-import client from '../client.js';
-
+import client from "../client.js";
 
 export default {
-    name: 'RecoverForm',
-    components: {},
-    data(){
-        return {
-            password: '',
-            confirmPassword: '',
-            verificationCode: ''
-        }
-
+  name: "RecoverForm",
+  components: {},
+  data() {
+    return {
+      password: "",
+      confirmPassword: "",
+      verificationCode: ""
+    };
+  },
+  created() {},
+  methods: {
+    async recoverPass() {
+      let data = {
+        password: this.password,
+        code: this.verificationCode
+      };
+      console.warn(data);
+      //let http = new Http();
+      //let resp = await http.postData('/conteudos/', data);
     },
-    created(){
-        
-    },
-    methods:{
-        async recoverPass(){
-            
-            let data = {
-                password: this.password,
-                code: this.verificationCode
-            };
-            console.warn(data);
-            //let http = new Http();
-            //let resp = await http.postData('/conteudos/', data);
-
-        },
-        verificationPass(){
-            
-        }
-    }
-
-}
+    verificationPass() {}
+  }
+};
 </script>
