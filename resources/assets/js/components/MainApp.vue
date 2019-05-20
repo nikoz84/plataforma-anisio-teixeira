@@ -49,6 +49,10 @@ hr.line {
   background-image: linear-gradient(to right, #ccc, #949da5, #ccc);
 }
 
+hr{
+  border: 1px solid rgb(235, 234, 234);
+}
+
 .glyphicon-asterisk{
   color: rgb(128, 3, 3);
   font-size: 19px;

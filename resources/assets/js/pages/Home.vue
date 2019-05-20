@@ -84,6 +84,7 @@
                             <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
                         </div>
                     </div>
+                    <hr>
 
                     <div class="col-md-12 destaque">
                         <div class="col-md-4">
@@ -95,6 +96,8 @@
                             <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
                         </div>
                     </div>
+                    <hr>
+
 
                     <div class="col-md-12 destaque">
                         <div class="col-md-4">
@@ -106,6 +109,8 @@
                             <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
                         </div>
                     </div>
+                    <hr>
+
 
                     <div class="col-md-12 destaque">
                         <div class="col-md-4">
@@ -117,6 +122,7 @@
                             <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
                         </div>
                     </div>
+                    
 
                 </div>
             </div>
