@@ -220,7 +220,7 @@ ul{
 }
 .destaque:hover .retina {
     box-shadow: inset 0 0 100px 50px rgba(0,0,0,.5);
-    
+
 }
 
 .destaque2 {
@@ -288,6 +288,17 @@ ul{
 
 .lista-tags{
   font-size: 16px;
+  margin: 0px;
 }
+
+.lista-tags li{
+  margin: 5px;
+  border-right: none;
+  float:left;
+	display:inline;
+  background: rgb(233, 232, 232);
+  padding: 5px;
+}
+
 
 </style>

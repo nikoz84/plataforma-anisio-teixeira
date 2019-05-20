@@ -20,7 +20,7 @@
                     <li><a href="#">brasil</a></li>
                     <li><a href="#">química</a></li>
                     <li><a href="#">emitec</a></li>
-                    <li><a href="#">npúmeros</a></li>
+                    <li><a href="#">números</a></li>
                     <li><a href="#">origem</a></li>
                     <li><a href="#">energia</a></li>
                     <li><a href="#">equação</a></li>
@@ -35,7 +35,7 @@
                 </ul>
 
             </div>
-            <div class="col-md-5 destaque">
+            <a href="#"><div class="col-md-5 destaque">
 
                     <img src="http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/55476/course/overviewfiles/destaque-home-plataforma.jpg">
                     <div class="retina">
@@ -47,8 +47,9 @@
                         </div>
                     </div>
 
-            </div>
-            <div class="col-md-3 destaque2">
+            </div></a>
+
+            <a href="#"><div class="col-md-3 destaque2">
                 <img src="http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/68435/course/overviewfiles/destaque-home-plataforma.jpg">
                 <div class="retina">
                     <div class="texto">
@@ -58,8 +59,9 @@
                         </ul>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3 destaque2">
+            </div></a>
+
+            <a href="#"><div class="col-md-3 destaque2">
                 <img src="http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/46944/course/overviewfiles/destaque-home-plataforma.jpg">
                 <div class="retina">
                     <div class="texto">
@@ -69,7 +71,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div></a>
 
             <div class="container">
                 <div class="row">
@@ -122,7 +124,7 @@
                             <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
                         </div>
                     </div>
-                    
+
 
                 </div>
             </div>
