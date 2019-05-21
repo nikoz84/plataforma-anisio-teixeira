@@ -4,22 +4,35 @@ namespace App\Helpers;
 
 class GoogleRecaptcha
 {
-    public function __construct($request)
-    {
-        $this->ip = $request->getClientIp();
-        $this->recaptcha =  $request->get('recaptcha');
-    }
-
     /**
      * Validaçao codigo de segurança do recaptcha do Google
      * @param $response String cadeia de carecteres
      * @return array uma resposta em formato json
      */
-    public function validateRecaptcha()
+    public function validate($recaptcha)
     {
-        $secret = env('CAPTCHA_SECRET_KEY');
+        $secret = config('recaptcha.PRIVATE_KEY');
         $url = "https://www.google.com/recaptcha/api/siteverify";
-        $url .= "?secret={$secret}&response={$this->recaptcha}&ip={$this->ip}";
-        return file_get_contents($url, false);
+
+        $data = [
+            'secret' => $secret,
+            'response' => $recaptcha
+        ];
+        $dataQuery = http_build_query($data);
+        $length = strlen($dataQuery);
+
+        $options = [
+            'http' => [
+                'method' => 'POST',
+                'header' => "Content-Type: application/x-www-form-urlencoded\r\n" .
+                    "Content-Length: {$length}",
+                'content' => $dataQuery
+            ]
+        ];
+        $context  = stream_context_create($options);
+        $response = file_get_contents($url, false, $context);
+        $responseDecode = json_decode($response);
+
+        return $responseDecode->success;
     }
 }

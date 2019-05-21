@@ -9,44 +9,43 @@
                     </span>
                 </div>
 
-                <!-- lista Tags -->
+                <h4>Tags mais pesquisadas</h4>
+                <ul class="lista-tags">
+                    
+                    <li><a href="#">2 de julho</a></li>
+                    <li><a href="#">biologia</a></li>
+                    <li><a href="#">conceito digital</a></li>
+                    <li><a href="#">matemática</a></li>
+                    <li><a href="#">preconceito racial</a></li>
+                </ul>
+                <h4>Mais Buscados</h4>
                 <ul class="lista-tags">
                     <li><a href="#">2 de julho</a></li>
                     <li><a href="#">biologia</a></li>
                     <li><a href="#">conceito digital</a></li>
                     <li><a href="#">matemática</a></li>
                     <li><a href="#">preconceito racial</a></li>
-                    <li><a href="#">probabilidade</a></li>
-                    <li><a href="#">brasil</a></li>
-                    <li><a href="#">química</a></li>
-                    <li><a href="#">emitec</a></li>
-                    <li><a href="#">npúmeros</a></li>
-                    <li><a href="#">origem</a></li>
-                    <li><a href="#">energia</a></li>
-                    <li><a href="#">equação</a></li>
-                    <li><a href="#">filosofia</a></li>
-                    <li><a href="#">função</a></li>
-                    <li><a href="#">movimento</a></li>
-                    <li><a href="#">navegações</a></li>
-                    <li><a href="#">sistema</a></li>
-                    <li><a href="#">física</a></li>
-                    <li><a href="#">geometria</a></li>
-
+                </ul>
+                <h4>Mais Baixados</h4>
+                <ul class="lista-tags">
+                    <li><a href="#">2 de julho</a></li>
+                    <li><a href="#">biologia</a></li>
+                    <li><a href="#">conceito digital</a></li>
+                    <li><a href="#">matemática</a></li>
+                    <li><a href="#">preconceito racial</a></li>
                 </ul>
 
             </div>
             <div class="col-md-5 destaque">
-
-                    <img src="http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/55476/course/overviewfiles/destaque-home-plataforma.jpg">
-                    <div class="retina">
-                        <div class="texto">
-                            <ul>
-                                <li><h1>Centros Juvenis de Ciência e Cultura</h1></li>
-                                <li><p>Projeto que trabalha com ensino complementar e oferece atividades interdisciplinares em que alunos têm acesso a conhecimentos científicos, cursos e oficinas.</p></li>
-                            </ul>
-                        </div>
+                <img src="http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/55476/course/overviewfiles/destaque-home-plataforma.jpg">
+                <div class="retina">
+                   <div class="texto">
+                        <ul>
+                            <li><h1>Centros Juvenis de Ciência e Cultura</h1></li>
+                            <li><p>Projeto que trabalha com ensino complementar e oferece atividades interdisciplinares em que alunos têm acesso a conhecimentos científicos, cursos e oficinas.</p></li>
+                        </ul>
                     </div>
-
+                </div>
             </div>
             <div class="col-md-3 destaque2">
                 <img src="http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/68435/course/overviewfiles/destaque-home-plataforma.jpg">
@@ -140,6 +139,5 @@ export default {
   }
 };
 </script>
-<style lang="sass" scoped>
-
+<style lang="scss" scoped>
 </style>
