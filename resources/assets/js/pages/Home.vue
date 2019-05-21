@@ -10,12 +10,17 @@
                 </div>
 
                 <!-- lista Tags -->
+                <h4>Tags mais pesquisadas</h4>
                 <ul class="lista-tags">
                     <li><a href="#">2 de julho</a></li>
                     <li><a href="#">biologia</a></li>
                     <li><a href="#">conceito digital</a></li>
                     <li><a href="#">matemática</a></li>
                     <li><a href="#">preconceito racial</a></li>
+                </ul>
+
+                <h4>Tags mais pesquisadas</h4>
+                <ul class="lista-tags">
                     <li><a href="#">probabilidade</a></li>
                     <li><a href="#">brasil</a></li>
                     <li><a href="#">química</a></li>
