@@ -216,11 +216,11 @@ ul{
   -moz-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
   -ms-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
   -o-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
-  transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000); 
+  transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
 }
 .destaque:hover .retina {
     box-shadow: inset 0 0 100px 50px rgba(0,0,0,.5);
-    
+
 }
 
 .destaque2 {
@@ -265,11 +265,10 @@ ul{
   -moz-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
   -ms-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
   -o-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
-  transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000); 
+  transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
 }
 .destaque2:hover .retina {
     box-shadow: inset 0 0 100px 50px rgba(0,0,0,.5);
-    
 }
 
 .destaque .texto {
@@ -287,7 +286,17 @@ ul{
 }
 
 .lista-tags{
-  font-size: 16px;
+  font-size: 12px;
+  margin: 0px;
+}
+
+.lista-tags li{
+  margin: 5px;
+  border-right: none;
+  float:left;
+	display:inline;
+  background: rgb(233, 232, 232);
+  padding: 5px;
 }
 
 </style>
