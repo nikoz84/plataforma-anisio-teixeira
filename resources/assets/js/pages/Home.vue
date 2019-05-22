@@ -9,9 +9,8 @@
                     </span>
                 </div>
 
-<<<<<<< HEAD
                 <h4>Tags mais pesquisadas</h4>
-                <ul class="lista-tags">
+                <ul>
                     
                     <li><a href="#">2 de julho</a></li>
                     <li><a href="#">biologia</a></li>
@@ -20,7 +19,7 @@
                     <li><a href="#">preconceito racial</a></li>
                 </ul>
                 <h4>Mais Buscados</h4>
-                <ul class="lista-tags">
+                <ul>
                     <li><a href="#">2 de julho</a></li>
                     <li><a href="#">biologia</a></li>
                     <li><a href="#">conceito digital</a></li>
@@ -28,36 +27,15 @@
                     <li><a href="#">preconceito racial</a></li>
                 </ul>
                 <h4>Mais Baixados</h4>
-=======
-                <!-- lista Tags -->
-                
->>>>>>> 5b9efd6b1145c98aa413bcd1d69b33e217fa78b6
-                <ul class="lista-tags">
+                <ul>
                     <li><a href="#">2 de julho</a></li>
                     <li><a href="#">biologia</a></li>
                     <li><a href="#">conceito digital</a></li>
                     <li><a href="#">matemática</a></li>
                     <li><a href="#">preconceito racial</a></li>
-<<<<<<< HEAD
                 </ul>
 
-            </div>
-            <div class="col-md-5 destaque">
-                <img src="http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/55476/course/overviewfiles/destaque-home-plataforma.jpg">
-                <div class="retina">
-                   <div class="texto">
-                        <ul>
-                            <li><h1>Centros Juvenis de Ciência e Cultura</h1></li>
-                            <li><p>Projeto que trabalha com ensino complementar e oferece atividades interdisciplinares em que alunos têm acesso a conhecimentos científicos, cursos e oficinas.</p></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 destaque2">
-=======
-                </ul>
-
-                
+                <h4>Palavras chave:</h4>
                 <ul class="lista-tags">
                     <li><a href="#">probabilidade</a></li>
                     <li><a href="#">brasil</a></li>
@@ -93,7 +71,6 @@
             </div></a>
 
             <a href="#"><div class="col-md-3 destaque2">
->>>>>>> 5b9efd6b1145c98aa413bcd1d69b33e217fa78b6
                 <img src="http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/68435/course/overviewfiles/destaque-home-plataforma.jpg">
                 <div class="retina">
                     <div class="texto">

@@ -267,15 +267,13 @@ ul.sidebar li a h1,ul.sidebar li a h2,ul.sidebar li a h3,ul.sidebar li a h4,ul.s
 	<tr>
 		<td></td>
 		<td class="header container">
-
-				<div class="content">
-					<table bgcolor="#668cff">
-                        <tr class="titulo">
-                            <center>Fale Conosco</center>
-                        </tr>
-				    </table>
-				</div>
-
+			<div class="content">
+				<table bgcolor="#668cff">
+					<tr class="titulo">
+						<center>Fale Conosco</center>
+					</tr>
+				</table>
+			</div>
 		</td>
 		<td></td>
 	</tr>
@@ -287,33 +285,23 @@ ul.sidebar li a h1,ul.sidebar li a h2,ul.sidebar li a h3,ul.sidebar li a h4,ul.s
 	<tr>
 		<td></td>
 		<td class="container" bgcolor="#FFFFFF">
-
 			<div class="content">
-			<table>
 				<tr>
 					<td>
-
-						<h3>O usuário {{name}}  entrou em contato através do Fale Conosco.</h3>
-						<p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et.</p>
-
-						<h3>Title Ipsum <small>This is a note.</small></h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-						<br/>
-						<br/>
-						<!-- social & contact -->
 						<table class="social" width="100%">
 							<tr>
 								<td>
+									<h3>O usuário {{ name }} enviou uma denúncia.</h3>
 									<span class="clear"></span>
 								</td>
+								<td><h3>Assunto: <small>{{ subject }}</small></h3></td>
+								<td><h3>Url: <small>{{ url }}</small></h3></td>
+								<td><p>{{ message }}</p></td>
 							</tr>
 						</table><!-- /social & contact -->
 					</td>
 				</tr>
-			</table>
 			</div>
-
 		</td>
 		<td></td>
 	</tr>
@@ -324,20 +312,20 @@ ul.sidebar li a h1,ul.sidebar li a h2,ul.sidebar li a h3,ul.sidebar li a h4,ul.s
 	<tr>
 		<td></td>
 		<td class="container">
-			
-				<!-- content -->
-				<div class="content" bgcolor="#999999>
+			<!-- content -->
+			<div class="content" bgcolor="#999999">
 				<table>
-				<tr>
-					<td align="center">
-						<p>
-							<center><img src="http://pat.educacao.ba.gov.br/assets/img/email/img_rodape_email.png"></center>
-						</p>
-					</td>
-				</tr>
-			</table>
-				</div><!-- /content -->
-				
+					<tr>
+						<td align="center">
+							<p>
+								<center>
+									<img src="http://pat.educacao.ba.gov.br/assets/img/email/img_rodape_email.png">
+								</center>
+							</p>
+						</td>
+					</tr>
+				</table>
+			</div><!-- /content -->
 		</td>
 		<td></td>
 	</tr>
