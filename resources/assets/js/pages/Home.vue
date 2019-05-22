@@ -9,15 +9,6 @@
                     </span>
                 </div>
 
-                <h4>Tags mais pesquisadas</h4>
-                <ul>
-                    
-                    <li><a href="#">2 de julho</a></li>
-                    <li><a href="#">biologia</a></li>
-                    <li><a href="#">conceito digital</a></li>
-                    <li><a href="#">matemática</a></li>
-                    <li><a href="#">preconceito racial</a></li>
-                </ul>
                 <h4>Mais Buscados</h4>
                 <ul>
                     <li><a href="#">2 de julho</a></li>

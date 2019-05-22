@@ -10,4 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/email', function () {
+    return new App\Mail\Newslatter();
+});
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');

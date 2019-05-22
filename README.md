@@ -26,6 +26,7 @@ Faça uma copia do arquivo .env.example, e renomee para .env, em este arquivo vo
 - APP_KEY: variavel global de verificação da aplicação em base 64: `$ php artisan key:generate;`
 - JWT_SECRET: chave para a autenticação com Json Web Token: `$ php artisan jwt:secret;`
 - Também será adicionado um link simbólico da pasta public na pasta storage/app/public: `$ php artisan storage:link`
+- Para editar os componentes do Laravel mail que criará uma pasta em /resources/views/vendor/mail `php artisan vendor:publish --tag=laravel-mail`
 - Lembre dar as permissões para o usuário apache para a pasta storage, em UBUNTU seria:
 
 `$ sudo chgrp -R www-data storage bootstrap/cache`
