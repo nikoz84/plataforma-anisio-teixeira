@@ -25,7 +25,7 @@ class ValidUrl implements Rule
      */
     public function passes($attribute, $value)
     {
-        //
+        return filter_var($value, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED);
     }
 
     /**
@@ -35,6 +35,6 @@ class ValidUrl implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+        return ':attribute inválida.';
     }
 }

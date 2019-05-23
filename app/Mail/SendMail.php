@@ -10,7 +10,7 @@ class SendMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $data;
+    protected $data;
 
     /**
      * Create a new message instance.
@@ -19,8 +19,6 @@ class SendMail extends Mailable
      */
     public function __construct($data)
     {
-        print_r($data);
-        die();
         $this->data = (Object)$data;
     }
 
