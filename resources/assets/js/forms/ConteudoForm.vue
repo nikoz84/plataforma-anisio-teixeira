@@ -78,10 +78,9 @@
           <div class="form-group" v-bind:class="{ 'has-error': errors.description && errors.description.length > 0 }">
               <label for="descricao">Descrição:*</label>
               <editor v-model.trim="description" 
-                      id="descricao"
+                      id="description"
                       name="description" 
-                      height="500px" 
-                      mode="wysiwyg"/>
+                      />
               <small class="text-info">Descreva á mídia de forma <b>resumida</b> e <b>objetiva</b>.
                   Esta é a primeira apresentação da mídia e pode ser o diferencial na hora do usuário escolher se acessa ou não. 
                   Verifique outras descrições para adotar o modelo mais adequado.
@@ -186,7 +185,6 @@
 <script>
 import { mapGetters, mapActions, mapState, mapMutations } from "vuex";
 import { mapFields } from "vuex-map-fields";
-//import { response, goTo } from "../response.js";
 import showErrors from "../components/ShowErrors.vue";
 import Alert from "../components/AlertComponent.vue";
 import "tui-editor/dist/tui-editor.css";
@@ -194,12 +192,19 @@ import "tui-editor/dist/tui-editor-contents.css";
 import "codemirror/lib/codemirror.css";
 import { Editor } from "@toast-ui/vue-editor";
 
+const editor = new Editor({
+  initialEditType: "wysiwyg",
+  previewStyle: "vertical",
+  heigth: "450px",
+  usageStatistic: false
+});
+
 export default {
   name: "ConteudoForm",
   delay: 2000,
   components: {
     erros: showErrors,
-    editor: Editor,
+    editor,
     alert: Alert
   },
   data() {
@@ -238,12 +243,11 @@ export default {
       is_approved: "conteudo.is_approved",
       is_featured: "conteudo.is_featured",
       is_site: "conteudo.is_site"
-    }),
-    
+    })
   },
   methods: {
-    showErrors(attr){
-      return { 'has-error': this.errors[attr] && this.errors[attr].length > 0 }
+    showErrors(attr) {
+      return { "has-error": this.errors[attr] && this.errors[attr].length > 0 };
     },
     ...mapActions([
       "fetchConteudo",
