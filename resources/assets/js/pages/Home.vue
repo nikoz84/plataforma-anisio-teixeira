@@ -1,158 +1,193 @@
 <template>
-    <section class="container-fluid heigth">
-        <div class="row">
-            <div class="col-lg-2">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Busca...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default glyphicon glyphicon-search" type="button" ></button>
-                    </span>
-                </div>
+    <div class="container-fluid heigth">
+        <aside class="sidebar" id="sidebar-home">
+            
+            <a class="closebtn" @click.prevent="closeSidebar()">&times;</a>
 
-                <h4>Mais Buscados</h4>
-                <ul>
-                    <li><a href="#">2 de julho</a></li>
-                    <li><a href="#">biologia</a></li>
-                    <li><a href="#">conceito digital</a></li>
-                    <li><a href="#">matemática</a></li>
-                    <li><a href="#">preconceito racial</a></li>
-                </ul>
-                <h4>Mais Baixados</h4>
-                <ul>
-                    <li><a href="#">2 de julho</a></li>
-                    <li><a href="#">biologia</a></li>
-                    <li><a href="#">conceito digital</a></li>
-                    <li><a href="#">matemática</a></li>
-                    <li><a href="#">preconceito racial</a></li>
-                </ul>
-
-                <h4>Palavras chave:</h4>
-                <ul class="lista-tags">
-                    <li><a href="#">probabilidade</a></li>
-                    <li><a href="#">brasil</a></li>
-                    <li><a href="#">química</a></li>
-                    <li><a href="#">emitec</a></li>
-                    <li><a href="#">números</a></li>
-                    <li><a href="#">origem</a></li>
-                    <li><a href="#">energia</a></li>
-                    <li><a href="#">equação</a></li>
-                    <li><a href="#">filosofia</a></li>
-                    <li><a href="#">função</a></li>
-                    <li><a href="#">movimento</a></li>
-                    <li><a href="#">navegações</a></li>
-                    <li><a href="#">sistema</a></li>
-                    <li><a href="#">física</a></li>
-                    <li><a href="#">geometria</a></li>
-
-                </ul>
-
+            <div class="input-group" style="padding-top:60px;">
+                <input type="text" class="form-control" placeholder="Busca...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default glyphicon glyphicon-search" type="button" ></button>
+                </span>
             </div>
-            <a href="#"><div class="col-md-5 destaque">
 
-                    <img src="http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/55476/course/overviewfiles/destaque-home-plataforma.jpg">
-                    <div class="retina">
-                        <div class="texto">
-                            <ul>
-                                <li><h1>Centros Juvenis de Ciência e Cultura</h1></li>
-                                <li><p>Projeto que trabalha com ensino complementar e oferece atividades interdisciplinares em que alunos têm acesso a conhecimentos científicos, cursos e oficinas.</p></li>
-                            </ul>
-                        </div>
-                    </div>
+            
+            <h4 class="text-center">Mais Recentes</h4>
+            <ul>
+                <li v-for="(recente, r) in recentes" :key="'r'+r">
+                    <a class="link" href="#">{{ recente.name }}</a>
+                </li>
+            </ul>
 
-            </div></a>
-
-            <a href="#"><div class="col-md-3 destaque2">
-                <img src="http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/68435/course/overviewfiles/destaque-home-plataforma.jpg">
+            <h4 class="text-center">Palavras Chave</h4>
+            <ul class="list-inline">
+                <li v-for="(tag, t) in tags" :key="'t'+t">
+                    <a class="badge" href="#" > {{ tag.name }}</a>
+                </li>
+            </ul>
+        </aside>
+        
+        <section class="main" id="main-home">
+            
+            
+            <article class="destaque" v-for="(destaque, i) in plataforma" :key="'i'+i">
+                <img :src="destaque.img">
                 <div class="retina">
-                    <div class="texto">
+                <div class="texto">
                         <ul>
-                            <li><h1>Aplicativos Educacionais</h1></li>
-                            <li><p>Softwares livres, aplicativos móveis e ambientes digitais de apoio a produção e a colaboração nos processos de ensino e de aprendizagem.</p></p></li>
+                            <li>
+                                <h1>
+                                    {{ destaque.name }}
+                                </h1>
+                            </li>
+                            <li>
+                                <p>
+                                    {{ destaque.description }}
+                                </p>
+                            </li>
                         </ul>
                     </div>
                 </div>
-            </div></a>
+            </article>
+           
+            
 
-            <a href="#"><div class="col-md-3 destaque2">
-                <img src="http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/46944/course/overviewfiles/destaque-home-plataforma.jpg">
-                <div class="retina">
-                    <div class="texto">
-                        <ul>
-                            <li><h1>AVT Polos UAB - Bahia</h1></li>
-                            <li><p>Espaço destinado ao propósito de manter a interação e a comunicação das atividades diárias dos Polos UAB e seu trabalho.</p></p></li>
-                        </ul>
-                    </div>
+            
+            
+            <article v-for="(aplicativo, a) in aplicativos" :key="'a'+a">
+                <div class="">
+                    <img :src="aplicativo.img">
                 </div>
-            </div></a>
-
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-md-12 destaque">
-                        <div class="col-md-4">
-                            <img src="http://pat.educacao.ba.gov.br/conteudos/aplicativos-educacionais/imagem-associada/33.jpg">
-                        </div>
-                        <div class="col-md-7">
-                            <h2>Linux Educacional 6.0</h2>
-                            <p>O ProInfo é um projeto que visa promover o uso pedagógico de tecnologias da informação relacionadas a conteúdos educacionais nas escolas públicas de todo o Brasil. Nesse contexto... </p>
-                            <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
-                        </div>
-                    </div>
-                    <hr>
-
-                    <div class="col-md-12 destaque">
-                        <div class="col-md-4">
-                            <img src="http://pat.educacao.ba.gov.br/conteudos/aplicativos-educacionais/imagem-associada/27.jpg">
-                        </div>
-                        <div class="col-md-7">
-                            <h2>GIMP</h2>
-                            <p>O Gimp (GNU Image Manipulation Program) é um programa de manipulação de imagens. Obs.: Disponível para plataformas Linux, Windows e Mac... </p>
-                            <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
-                        </div>
-                    </div>
-                    <hr>
-
-
-                    <div class="col-md-12 destaque">
-                        <div class="col-md-4">
-                            <img src="http://pat.educacao.ba.gov.br/conteudos/aplicativos-educacionais/imagem-associada/17.jpg">
-                        </div>
-                        <div class="col-md-7">
-                            <h2>LibreOffice</h2>
-                            <p>Suite (conjunto de programas) mais utilizada em escritórios, mas que pode ser adaptada ao contexto educativo. Vem com o Writer (Editor de Texto), Calc (Planilha), Impress (apresentação)... </p>
-                            <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
-                        </div>
-                    </div>
-                    <hr>
-
-
-                    <div class="col-md-12 destaque">
-                        <div class="col-md-4">
-                            <img src="http://pat.educacao.ba.gov.br/conteudos/aplicativos-educacionais/imagem-associada/110.jpg">
-                        </div>
-                        <div class="col-md-7">
-                            <h2>Mozilla Firefox</h2>
-                            <p>O Firefox é um navegador web livre desenvolvido pela Mozilla Foundation. A intenção da fundação foi desenvolver um navegador leve, seguro, intuitivo e altamente extensível. Baseado... </p>
-                            <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
-                        </div>
-                    </div>
-
-
+                <div class="">
+                    <h2>{{ aplicativo.name }}</h2>
+                    <p>{{ aplicativo.description }}</p>
+                    <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
                 </div>
-            </div>
-
-        </div>
-
-    </section>
-
+            </article>
+        </section>
+        <span @click="openSidebar()" class="afix" data-spy="affix" data-offset-bottom="50%">Abrir</span>
+    </div>    
 </template>
 <script>
 export default {
   name: "Home",
   data() {
-    return {};
+    return {
+        aplicativos: [
+            {
+                name: 'Mozilla Firefox',
+                description: 'O Firefox é um navegador web livre desenvolvido pela Mozilla Foundation. A intenção da fundação foi desenvolver um navegador leve, seguro, intuitivo e altamente extensível. Baseado...',
+                img: 'http://pat.educacao.ba.gov.br/conteudos/aplicativos-educacionais/imagem-associada/110.jpg'
+            },
+            {
+                name: 'LibreOffice',
+                description: 'Suite (conjunto de programas) mais utilizada em escritórios, mas que pode ser adaptada ao contexto educativo. Vem com o Writer (Editor de Texto), Calc (Planilha), Impress (apresentação)...',
+                img: 'http://pat.educacao.ba.gov.br/conteudos/aplicativos-educacionais/imagem-associada/17.jpg'
+            },
+            {
+                name: 'Linux Educacional 6.0',
+                description: 'O ProInfo é um projeto que visa promover o uso pedagógico de tecnologias da informação relacionadas a conteúdos educacionais nas escolas públicas de todo o Brasil. Nesse contexto...',
+                img: 'http://pat.educacao.ba.gov.br/conteudos/aplicativos-educacionais/imagem-associada/33.jpg'
+            },
+            {
+                name: 'GIMP',
+                description: 'O Firefox é um navegador web livre desenvolvido pela Mozilla Foundation. A intenção da fundação foi desenvolver um navegador leve, seguro, intuitivo e altamente extensível. Baseado...',
+                img: 'http://pat.educacao.ba.gov.br/conteudos/aplicativos-educacionais/imagem-associada/110.jpg'
+            }
+        ],
+        plataforma:[
+            {
+                name: 'Centros Juvenis de Ciência e Cultura',
+                description: 'Projeto que trabalha com ensino complementar e oferece atividades interdisciplinares em que alunos têm acesso a conhecimentos científicos, cursos e oficinas.',
+                img: 'http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/68435/course/overviewfiles/destaque-home-plataforma.jpg'
+            },
+            {
+                name: 'Aplicativos Educacionais',
+                description: 'Softwares livres, aplicativos móveis e ambientes digitais de apoio a produção e a colaboração nos processos de ensino e de aprendizagem.',
+                img: 'http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/68435/course/overviewfiles/destaque-home-plataforma.jpg'
+            },
+            {
+                name: 'AVT Polos UAB - Bahia',
+                description: 'Espaço destinado ao propósito de manter a interação e a comunicação das atividades diárias dos Polos UAB e seu trabalho.',
+                img: 'http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/46944/course/overviewfiles/destaque-home-plataforma.jpg'
+            }
+            
+        ],
+        recentes:[
+            {name: 'Fica a Dica Enem - Como Tirar Nota 1.000 na Redação?'},
+            {name: 'O Que Mais Cai em Filosofia e Sociologia no ENEM? Plantão'},
+            {name: 'Fica a Dica Enem - Como Tirar Nota 1.000 na Redação?'}
+        ],
+        tags:[
+            {name: 'biologia'},
+            {name: 'conceito digital'},
+            {name: 'matemática'},
+            {name: 'preconceito racial'}
+        ]
+    };
+  },
+  methods:{
+    openSidebar(){
+        document.getElementById("sidebar-home").style.width = "50%";
+    },
+    closeSidebar(){
+        document.getElementById("sidebar-home").style.width = "0";
+    }
   }
 };
 </script>
 <style lang="scss" scoped>
+
+.sidebar {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1500; /* Stay on top */
+  top: 0;
+  left: 0;
+  background-color: #ffffff; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+.sidebar a.link {
+  //padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 16px;
+  color: #1c7eb7;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: #0e9298;
+}
+
+/* Position and style the close button (top right corner) */
+.sidebar .closebtn {
+  position: absolute;
+  bottom: 150px;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+  text-decoration: none;
+}
+.affix {
+    bottom: 100px;
+    right: 20px;
+    z-index: 9999 !important;
+}
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main-home {
+  transition: margin-left .5s;
+  padding: 20px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+
 </style>
