@@ -174,7 +174,7 @@ small{
   transform: rotate(45deg);
 }
 
-.destaque {
+.destaque-principal {
   overflow: hidden;
   float: left;
   margin: 0;
@@ -184,7 +184,7 @@ ul{
   list-style-type: none;
 }
 
-.destaque > img {
+.destaque-principal > img {
   height: 500px;
   width: 100%;
   border-radius: 5px;
@@ -194,7 +194,7 @@ ul{
   -o-transition: all .8s;
   transition: all .8s;
 }
-.destaque:hover > img {
+.destaque-principal:hover > img {
 	-webkit-transform: scale(1.5);
   -moz-transform: scale(1.5);
   -ms-transform: scale(1.5);
@@ -202,7 +202,7 @@ ul{
   transform: scale(1.5);
 }
 
-.destaque .retina{
+.destaque-principal .retina{
 	position: absolute;
   width: 100%;
   height: 100%;
@@ -213,7 +213,7 @@ ul{
   z-index:1;
 }
 
-.destaque2 {
+.destaque-secudario {
 	position: relative;
   overflow: hidden;
   border-radius: 5px;
@@ -222,11 +222,11 @@ ul{
   float: left;
 }
 
-.destaque2 ul{
+.destaque-secudario ul{
   list-style-type: none;
 }
 
-.destaque2 > img {
+.destaque-secudario > img {
   width: 100%;
   height: 240px;
   border-radius: 5px;
@@ -236,14 +236,14 @@ ul{
   -o-transition: all .8s;
   transition: all .8s;
 }
-.destaque2:hover > img {
+.destaque-secudario:hover > img {
 	-webkit-transform: scale(1.5);
   -moz-transform: scale(1.5);
   -ms-transform: scale(1.5);
   -o-transform: scale(1.5);
   transform: scale(1.5);
 }
-.destaque2 .retina{
+.destaque-secudario .retina{
 	position: absolute;
   width: 100%;
   height: 100%;
@@ -258,7 +258,7 @@ ul{
   -o-transition: all .8s;
   transition: all .8s;
 }
-.destaque2:hover .retina {
+.destaque-secudario:hover .retina {
     box-shadow: inset 0 0 100px 50px rgba(0,0,0,.5);
 }
 

@@ -2,6 +2,10 @@ import { getField } from "vuex-map-fields";
 
 const getters = {
   getField,
+  getLayout: state =>{
+    return state.layout;
+  },
+
   paginator: state => {
     return state.paginator;
   },

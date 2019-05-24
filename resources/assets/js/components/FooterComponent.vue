@@ -17,7 +17,7 @@
         <section class="container text-center text-md-left mt-5">
                 <div class="row">
                 <!-- Plataforma -->
-                <div class="col-md-3 col-lg-4">
+                <div class="col-md-3 col-lg-3">
                     <h6 class="text-uppercase font-weight-bold" style="color:#FFFFFF">Plataforma Anísio Teixeira</h6>
                     <hr class="teal accent-3 " style="width: 60px;">
                     <p>Here you can use rows and columns here to organize your footer content. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
@@ -31,15 +31,16 @@
                     <p><a href="/radio-anisio-teixeira/inicio">Radio Anísio Teixeira</a></p>
                 </div>
                 <!-- Secretária -->
-                <div class="col-md-3 col-lg-2">
+                <div class="col-md-3 col-lg-3">
                     <h6 class="text-uppercase font-weight-bold" style="color:#FFFFFF">Secretaría da Educação</h6>
                     <hr class="teal accent-3 " style="width: 60px;">
-                    <p><a class="dark-grey-text" href="http://escolas.educacao.ba.gov.br/">Escolas</a></p>
-                    <p><a class="dark-grey-text" href="http://estudantes.educacao.ba.gov.br/">Estudantes</a></p>
-                    <p><a class="dark-grey-text" href="http://educadores.educacao.ba.gov.br/">Educadores</a></p>
-                    <p><a class="dark-grey-text" href="http://institucional.educacao.ba.gov.br/">Institucional</a></p>
-                    <p><a class="dark-grey-text" href="http://municipios.educacao.ba.gov.br/">Municípios</a></p>
+                    <a v-for="(item, i) in layout.secretaria" :key="i"
+                        :style="{color:item.color}"
+                        :href="item.url">
+                        {{item.title}}
+                    </a>
                 </div>
+               
                 <!-- Contato -->
                 <div class="col-md-4 col-lg-3">
                     <h6 class="text-uppercase font-weight-bold" style="color:#FFFFFF">Contato</h6>
@@ -50,7 +51,7 @@
                     <p><i class="fa fa-phone mr-3"></i> +55 71 3115 9061</p>
                 </div>
                 <div class="col-md-12">
-                    <img class="img-responsive" src="http://pat.educacao.ba.gov.br/assets/img/img-logomarca-rodape.png"> <i class="fa fa-envelope-square"></i>
+                    <img class="img-responsive" src="">
                 </div>
             </div>
         </section>
@@ -72,23 +73,30 @@
 </template>
 
 <script>
-    export default {
-        name : 'footer-app',
-        mounted() {
-            this.getYear();
-        },
-        data(){
-            return {
-                year: null
-            }
-        },
-        methods:{
-            getYear(){
-                let date = new Date();
-                this.year = date.getFullYear(); 
-            }
-        }    
+import { mapState } from 'vuex';
+
+export default {
+    name : 'footer-app',
+    mounted() {
+        this.getYear();
+    },
+    data(){
+        return {
+            year: null
+        }
+    },
+    computed: {
+        ...mapState([
+            "layout",
+        ])
+    },
+    methods:{
+        getYear(){
+            let date = new Date();
+            this.year = date.getFullYear();
+        }
     }
+}
 </script>
 <style lang="scss" scoped>
 .page-footer { margin-top: 5vh; }

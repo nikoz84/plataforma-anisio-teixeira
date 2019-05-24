@@ -2,6 +2,12 @@ import { updateField } from "vuex-map-fields";
 
 const mutations = {
   updateField,
+  SET_LAYOUT(state, layout) {
+    state.layout = layout;
+  },
+  SET_LINKS(state, links) {
+    state.links = links;
+  },
   SET_LOGIN_USER(state) {
     state.isLogged = true;
   },

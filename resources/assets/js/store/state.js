@@ -1,6 +1,7 @@
-import conteudo from "./models/conteudo";
-
 const state = {
+  layout: {
+  },
+  links: [],
   conteudos: [],
   paginator: {},
   conteudo: {

@@ -79,7 +79,9 @@
               <label for="descricao">Descrição:*</label>
               <editor v-model.trim="description" 
                       id="description"
-                      name="description" 
+                      name="description"
+                      :options="editorOptions"
+                      mode="wysiwyg" 
                       />
               <small class="text-info">Descreva á mídia de forma <b>resumida</b> e <b>objetiva</b>.
                   Esta é a primeira apresentação da mídia e pode ser o diferencial na hora do usuário escolher se acessa ou não. 
@@ -191,26 +193,21 @@ import "tui-editor/dist/tui-editor.css";
 import "tui-editor/dist/tui-editor-contents.css";
 import "codemirror/lib/codemirror.css";
 import { Editor } from "@toast-ui/vue-editor";
-
-const editor = new Editor({
-  initialEditType: "wysiwyg",
-  previewStyle: "vertical",
-  heigth: "450px",
-  usageStatistic: false
-});
+import configEditor from "../editorConfig.js";
 
 export default {
   name: "ConteudoForm",
   delay: 2000,
   components: {
     erros: showErrors,
-    editor,
+    editor: Editor,
     alert: Alert
   },
   data() {
     return {
       autocompleteItems: [],
-      categories: []
+      categories: [],
+      editorOptions: configEditor
     };
   },
   mounted() {

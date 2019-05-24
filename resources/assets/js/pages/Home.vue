@@ -1,7 +1,6 @@
 <template>
     <div class="container-fluid heigth">
         <aside class="sidebar" id="sidebar-home">
-            
             <a class="closebtn" @click.prevent="closeSidebar()">&times;</a>
 
             <div class="input-group" style="padding-top:60px;">
@@ -10,8 +9,6 @@
                     <button class="btn btn-default glyphicon glyphicon-search" type="button" ></button>
                 </span>
             </div>
-
-            
             <h4 class="text-center">Mais Recentes</h4>
             <ul>
                 <li v-for="(recente, r) in recentes" :key="'r'+r">
@@ -30,30 +27,28 @@
         <section class="main" id="main-home">
             
             
-            <article class="destaque" v-for="(destaque, i) in plataforma" :key="'i'+i">
-                <img :src="destaque.img">
-                <div class="retina">
-                <div class="texto">
-                        <ul>
-                            <li>
-                                <h1>
-                                    {{ destaque.name }}
-                                </h1>
-                            </li>
-                            <li>
-                                <p>
-                                    {{ destaque.description }}
-                                </p>
-                            </li>
-                        </ul>
+            <article v-for="(destaque, i) in plataforma" :key="'i'+i">
+                <div class="destaque" :class="(destaque.is_principal) ? 'destaque-principal': 'destaque-secundario'">
+                    <img :src="destaque.img">
+                    <div class="retina">
+                    <div class="texto">
+                            <ul>
+                                <li>
+                                    <h1>
+                                        {{ destaque.name }}
+                                    </h1>
+                                </li>
+                                <li>
+                                    <p>
+                                        {{ destaque.description }}
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </article>
-           
-            
 
-            
-            
             <article v-for="(aplicativo, a) in aplicativos" :key="'a'+a">
                 <div class="">
                     <img :src="aplicativo.img">
@@ -64,9 +59,14 @@
                     <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
                 </div>
             </article>
+            <article>
+                {{this.$store.state.layout}}
+            </article>
         </section>
-        <span @click="openSidebar()" class="afix" data-spy="affix" data-offset-bottom="50%">Abrir</span>
-    </div>    
+        <div>
+            <span @click="openSidebar()" class="btn btn-default afix" data-spy="affix" data-offset-bottom="50%">Abrir</span>
+        </div>
+    </div>
 </template>
 <script>
 export default {
@@ -99,17 +99,20 @@ export default {
             {
                 name: 'Centros Juvenis de Ciência e Cultura',
                 description: 'Projeto que trabalha com ensino complementar e oferece atividades interdisciplinares em que alunos têm acesso a conhecimentos científicos, cursos e oficinas.',
-                img: 'http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/68435/course/overviewfiles/destaque-home-plataforma.jpg'
+                img: 'http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/68435/course/overviewfiles/destaque-home-plataforma.jpg',
+                is_principal: true
             },
             {
                 name: 'Aplicativos Educacionais',
                 description: 'Softwares livres, aplicativos móveis e ambientes digitais de apoio a produção e a colaboração nos processos de ensino e de aprendizagem.',
-                img: 'http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/68435/course/overviewfiles/destaque-home-plataforma.jpg'
+                img: 'http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/68435/course/overviewfiles/destaque-home-plataforma.jpg',
+                is_principal: false
             },
             {
                 name: 'AVT Polos UAB - Bahia',
                 description: 'Espaço destinado ao propósito de manter a interação e a comunicação das atividades diárias dos Polos UAB e seu trabalho.',
-                img: 'http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/46944/course/overviewfiles/destaque-home-plataforma.jpg'
+                img: 'http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/46944/course/overviewfiles/destaque-home-plataforma.jpg',
+                is_principal: false
             }
             
         ],
