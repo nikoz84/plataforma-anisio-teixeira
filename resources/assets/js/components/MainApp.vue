@@ -262,14 +262,14 @@ ul{
     box-shadow: inset 0 0 100px 50px rgba(0,0,0,.5);
 }
 
-.destaque .texto {
+.destaque-principal .texto {
   position:absolute;
   z-index:2;
   margin-top: 45%;
   color: #fff;
 }
 
-.destaque2 .texto {
+.destaque-secudario .texto {
   position:absolute;
   z-index:2;
   margin-top: 20%;
