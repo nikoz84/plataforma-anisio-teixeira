@@ -175,11 +175,9 @@ small{
 }
 
 .destaque {
-	position: relative;
   overflow: hidden;
-  border-radius: 5px;
-  margin: 10px;
-  background: #fff;
+  float: left;
+  margin: 0;
 }
 
 ul{
@@ -187,14 +185,14 @@ ul{
 }
 
 .destaque > img {
-  width: 100%;
   height: 500px;
+  width: 100%;
   border-radius: 5px;
-	-webkit-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
-  -moz-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
-  -ms-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
-  -o-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
-  transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
+	-webkit-transition: all .8s;
+  -moz-transition: all .8s;
+  -ms-transition: all .8s;
+  -o-transition: all .8s;
+  transition: all .8s;
 }
 .destaque:hover > img {
 	-webkit-transform: scale(1.5);
@@ -203,24 +201,16 @@ ul{
   -o-transform: scale(1.5);
   transform: scale(1.5);
 }
+
 .destaque .retina{
 	position: absolute;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
-  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
+  background: none repeat scroll 0 0 rgba(29, 29, 29, 0.5);
   text-align:left;
   z-index:1;
-  -webkit-transition:	 all .8s cubic-bezier(.190, 1.000, .220, 1.000);
-  -moz-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
-  -ms-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
-  -o-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
-  transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
-}
-.destaque:hover .retina {
-    box-shadow: inset 0 0 100px 50px rgba(0,0,0,.5);
-
 }
 
 .destaque2 {
@@ -229,6 +219,7 @@ ul{
   border-radius: 5px;
   margin: 10px;
   background: #fff;
+  float: left;
 }
 
 .destaque2 ul{
@@ -239,11 +230,11 @@ ul{
   width: 100%;
   height: 240px;
   border-radius: 5px;
-	-webkit-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
-  -moz-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
-  -ms-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
-  -o-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
-  transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
+	-webkit-transition: all .8s;
+  -moz-transition: all .8s;
+  -ms-transition: all .8s;
+  -o-transition: all .8s;
+  transition: all .8s;
 }
 .destaque2:hover > img {
 	-webkit-transform: scale(1.5);
@@ -261,11 +252,11 @@ ul{
   background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
   text-align:left;
   z-index:1;
-  -webkit-transition:	 all .8s cubic-bezier(.190, 1.000, .220, 1.000);
-  -moz-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
-  -ms-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
-  -o-transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
-  transition: all .8s cubic-bezier(.190, 1.000, .220, 1.000);
+  -webkit-transition:	 all .8s;
+  -moz-transition: all .8s;
+  -ms-transition: all .8s;
+  -o-transition: all .8s;
+  transition: all .8s;
 }
 .destaque2:hover .retina {
     box-shadow: inset 0 0 100px 50px rgba(0,0,0,.5);
@@ -285,18 +276,10 @@ ul{
   color: #fff;
 }
 
-.lista-tags{
-  font-size: 12px;
-  margin: 0px;
+.col-md-5, col-md-3{
+  padding-right: 0px;
+  padding-left: 0px;
 }
 
-.lista-tags li{
-  margin: 5px;
-  border-right: none;
-  float:left;
-	display:inline;
-  background: rgb(233, 232, 232);
-  padding: 5px;
-}
 
 </style>
