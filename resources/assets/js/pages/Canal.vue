@@ -17,7 +17,7 @@
                                 enter-active-class="animated fadeIn" 
                                 leave-active-class="animated fadeOut"
                                 mode="out-in">
-                        <router-view v-bind:style="`--color:${canal.color}`"></router-view>
+                        <router-view></router-view>
                     </transition>
                 </div>
             </article>
@@ -73,9 +73,7 @@ export default {
   position: absolute;
   bottom: -10px;
 }
-:root {
-  --background: var(--color);
-}
+
 aside > header > h3 {
   margin-top: 5px;
   font-size: 18px;

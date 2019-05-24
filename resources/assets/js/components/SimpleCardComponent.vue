@@ -4,10 +4,7 @@
             <div class="panel-heading">
                 <figure class="figure">
                     <img class="img-responsive" 
-                        v-lazyload
-                        src="/img/fundo-padrao.svg" 
-                        v-bind:data-src="getImage"
-                        data-err="/img/fundo-padrao.svg"
+                        v-lazy="getImage"
                         alt="imagem destacada"
                         srcset="">
                 </figure>

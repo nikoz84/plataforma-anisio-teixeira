@@ -5,9 +5,16 @@ import MainApp from "./components/MainApp";
 import Vuex from "vuex";
 //import 'es6-promise/auto';
 import store from "./store/index.js";
-import VueTinyLazyloadImg from "vue-tiny-lazyload-img";
+import VueLazyload from "vue-lazyload";
 
-Vue.use(VueTinyLazyloadImg);
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  error: "/img/fundo-padrao.svg",
+  //loading: "dist/loading.gif",
+  attempt: 1,
+  // the default is ['scroll', 'wheel', 'mousewheel', 'resize', 'animationend', 'transitionend']
+  listenEvents: ["scroll"]
+});
 Vue.use(Vuex);
 Vue.use(VueRouter);
 
