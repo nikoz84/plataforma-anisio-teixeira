@@ -1,5 +1,7 @@
 <?php
 
+
+
 return [
     "conteudo" => [
         'license_id' => 'required',
@@ -37,5 +39,13 @@ return [
     'login' => [
         'email' => 'required|string|email|max:255',
         'password' => 'required|string|min:6',
+    ],
+    'denuncia' => [
+        'name' => 'required|min:5',
+        'email' => 'required',
+        'url' => 'required',
+        'subject' => 'required',
+        'message' => 'required|min:30|max:170',
+        'recaptcha' => ['required', new \App\Rules\ValidRecaptcha],
     ]
 ];

@@ -1,7 +1,7 @@
 <template>
     <div class="conteiner">
         <div class="row col-md-7">
-        <form v-on:submit.prevent="enviar()" v-if="!isSend">
+        <form v-on:submit.prevent="send()" v-if="!isSend">
             <p>Este espaço serve para você denunciar qualquer coisa que você considere imprópria,
                basta fornecer o endereço da página onde esse conteúdo se localiza e uma mensagem
                descrevendo do que se trata e por que você acha que essa página merece a denuncia.
@@ -128,7 +128,11 @@ export default {
     //console.log(window.grecaptcha)
     if (window.grecaptcha) {
       let container = document.getElementsByClassName("g-recaptcha")[0];
-      this.r_id = grecaptcha.render(container, { sitekey: this.siteKey });
+      if (typeof grecaptcha.render === "function") {
+        this.r_id = grecaptcha.render(container, {
+          sitekey: this.siteKey
+        });
+      }
     }
   },
   computed: {
@@ -137,24 +141,25 @@ export default {
     }
   },
   methods: {
-    async enviar() {
+    async send() {
       this.isLoading = true;
       let resRecaptcha = grecaptcha.getResponse();
       let data = {
         name: this.name,
         email: this.email,
-        url: this.url,
+        url: localStorage.urlDenuncia,
         subject: this.subject,
         message: this.message,
+        action: location.href,
         recaptcha: resRecaptcha
       };
 
-      let resp = await client.post("/email/enviar", data);
+      let resp = await client.post("/denuncias", data);
       this.isSend = resp.data.success;
 
       if (resp.data.success) {
         this.isLoading = false;
-        localStorage.removeItem('urlDenuncia');
+        localStorage.removeItem("urlDenuncia");
       } else {
         this.isLoading = false;
         this.isError = resp.data.success;

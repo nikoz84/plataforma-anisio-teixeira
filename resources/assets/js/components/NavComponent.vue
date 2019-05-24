@@ -81,7 +81,7 @@ export default {
     },
     async logout() {
       let resp = await client.post("/auth/logout", params);
-      console.log(resp);
+
       localStorage.removeItem("token");
       let params = { token: localStorage.token };
 

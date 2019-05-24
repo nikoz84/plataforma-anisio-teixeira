@@ -8,19 +8,24 @@
     </div>
 
       <div v-if="data" class="content">
-        <table class="table table-striped" is="custom-table">
+        <table class="table table-striped">
           <thead>
             <tr>
               <th>ID</th>
               <th>nome/titulo</th>
+              <th>ações</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(item, i) in data" :key="i">
-              <td>{{ (item.record) ? item.record : item.id }}</td>
-              <td>{{ (item.name) ? item.name : item.title }}</td>
+              <td v-text="item.id"></td>
+              <td v-text="(item.name) ? item.name : item.title"></td>
+              <td>
+                <a class="btn btn-default btn-sm">Editar</a> | 
+                <a class="btn btn-danger btn-sm">Deletar</a>
+              </td>
             </tr>
-            <post-row is='row'></post-row>
+            
           </tbody>  
         </table>
       </div>
@@ -55,6 +60,7 @@ export default {
   created() {
     this.getAction();
   },
+  computed: {},
   methods: {
     getAction() {
       switch (true) {
@@ -114,12 +120,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-
-.grid{
+.grid {
   list-style-type: none;
   margin-bottom: 10px;
   padding: 15px;
-
 }
-
 </style>
