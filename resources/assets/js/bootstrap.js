@@ -21,12 +21,14 @@ try {
 window.axios = require("axios");
 
 //window.axios.defaults.baseURL = "http://laravel.pat/api-v1";
+window.axios.defaults.baseURL = "http://pat.des/api-v1";
 
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
+const AUTH_TOKEN = "Bearer " + localStorage.token;
+
 if (localStorage.token) {
-  axios.defaults.headers.common["Authorization"] =
-    "Bearer " + localStorage.token;
+  axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
 } else {
   axios.defaults.headers.common["Authorization"] = null;
 }
@@ -36,15 +38,17 @@ if (localStorage.token) {
  * all outgoing HTTP requests automatically have it attached. This is just
  * a simple convenience so we don't have to attach every token manually.
  */
-/*
+
 let token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+  window.axios.defaults.headers.common["X-CSRF-TOKEN"] = token.content;
 } else {
-    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+  console.error(
+    "CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token"
+  );
 }
-*/
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

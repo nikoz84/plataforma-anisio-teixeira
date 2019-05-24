@@ -103,26 +103,32 @@ COPY (
 ) TO '/home/niko/Documentos/db/MIGRA/final/a.users' WITH (FORMAT text, DELIMITER '*');
 
 -- EXPORTAR CANAIS
-select * from canal
+
 copy (
   select idcanal as id,
         titulomenucanal as name,
 	descricaocanal as description,
-	case when idcanal = 6 then 'recursos-educacionais-abertos' 
+	case when idcanal = 6 then 'recursos-educacionais' 
 	    when idcanal = 4 then 'midias-educacionais'
 	    when idcanal = 15 then 'central-de-midias' 
 	    else nomemodulocanal 
 	end as slug,
 	flativo as is_active,
 	case when idcanal = 8 then tokencanal else null end AS token,
-	jsonb_build_object('url', case when idcanal = 7 then urlcanal when idcanal =8 then urlcanal else null end,
-		'has_about', flpossuisobre,
+	jsonb_build_object(
+		'back_url', case 
+				when idcanal = 5 then 'sites-tematicos' 
+				when idcanal = 9 then 'aplicativos' 
+				when idcanal = 7 then urlcanal 
+				when idcanal =8 then urlcanal 
+				else 'conteudos' end,
 		'tipo_conteudo', conteudotipocanal,
 		'color', corcanal,
-		'has_home', flvisualizarhomepage,
-		'has_about', flpossuisobre,	
+		'order_menu', posicaomenucanal,
 		'extend_name', nomecanal,
-		'quick_access', flacessorapido,
+		'has_home', flvisualizarhomepage,
+		'has_about', flpossuisobre,			
+		'has_quick_access', flacessorapido,
 		'has_categories', flcategoria,
 		'complement_description', jsonb_build_object('que',descricaooquecanal,'porque',descricaoporquecanal,'como',descricaocomocanal)	
 	) AS options,

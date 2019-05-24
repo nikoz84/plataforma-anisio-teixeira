@@ -58,28 +58,19 @@
 </template>
 
 <script>
-import client from "../client.js";
 import { mapActions, mapState } from "vuex";
 
 export default {
   name: "nav-app",
-  data() {
-    return {
-      links: []
-    };
-  },
   mounted() {
-    this.getLinks();
+    this.getLayout();
   },
   computed: {
-    ...mapState(["isLogged"])
+    ...mapState(["isLogged", "links"])
   },
   methods: {
-    async getLinks() {
-      let resp = await client.get("/links");
-      this.links = resp.data.links;
-    },
-    async logout() {
+    ...mapActions(["getLayout", "logout"]),
+    /*async logout() {
       let resp = await client.post("/auth/logout", params);
 
       localStorage.removeItem("token");
@@ -90,7 +81,7 @@ export default {
         localStorage.removeItem("token");
         this.$router.push("/");
       }
-    },
+    },*/
     handleScroll() {
       let winScroll =
         document.body.scrollTop || document.documentElement.scrollTop;

@@ -45,7 +45,13 @@ class ImportData extends Command
         });
 
         foreach ($files as $file) {
-            DB::statement("COPY {$file->getExtension()} FROM '{$file->getPathname()}' DELIMITER '*';");
+            if ($file->getExtension() == 'json') {
+                $filename = pathinfo($file, PATHINFO_FILENAME);
+                $data = file_get_contents($file);
+                DB::statement("insert into options (name, meta_data) values ('$filename','$data')");
+            } else {
+                DB::statement("COPY {$file->getExtension()} FROM '{$file->getPathname()}' DELIMITER '*';");
+            }
         }
 
         DB::statement("ALTER SEQUENCE users_id_seq RESTART WITH 2669;");
@@ -57,13 +63,5 @@ class ImportData extends Command
         DB::statement("ALTER SEQUENCE categories_id_seq RESTART WITH 69;");
         DB::statement("ALTER SEQUENCE aplicativo_categories_id_seq RESTART WITH 16;");
         DB::statement("ALTER SEQUENCE niveis_ensino_id_seq RESTART WITH 12;");
-    }
-
-    private function importToOptions($meta_data)
-    {
-        foreach ($meta_data as $key => $value) {
-            $data = explode("*", $value);
-            DB::statement("insert into options (name, meta_data) values ('{$data[0]}','{$data[1]}')");
-        }
     }
 }

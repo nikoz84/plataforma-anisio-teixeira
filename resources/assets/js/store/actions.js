@@ -1,10 +1,16 @@
-import client from "../client.js";
 import conteudoModel from "./models/conteudo";
+import { longStackSupport } from "q";
 
 const actions = {
+  async getLayout({ commit }) {
+    let resp = await axios("/layout");
+
+    commit("SET_LAYOUT", resp.data.layout.meta_data);
+    commit("SET_LINKS", resp.data.links);
+  },
   /** APLICATIVOS */
   async fetchAplicativo({ commit }) {
-    let resp = await client.get(`aplicativos/${id}`);
+    let resp = await axios.get(`aplicativos/${id}`);
     commit("SET_APLICATIVO", resp.data.aplicativo);
     commit("SET_SHOW_APLICATIVO", true);
     commit("SET_SHOW_CONTEUDO", false);
@@ -13,7 +19,7 @@ const actions = {
   /** CONTEUDOS */
   async fetchConteudos({ commit }, payload) {
     let url = payload.url ? payload.url : `/conteudos?canal=${payload.id}`;
-    let resp = await client.get(url);
+    let resp = await axios.get(url);
     if (resp.status == 200 && resp.data.paginator) {
       commit("SET_CONTEUDOS", resp.data.paginator);
     } else {
@@ -24,7 +30,7 @@ const actions = {
     let { id } = payload;
 
     if (id && id != undefined && id != null) {
-      let resp = await client.get(`/conteudos/${id}`);
+      let resp = await axios.get(`/conteudos/${id}`);
       if (resp.status == 200 && resp.data) {
         commit("SET_CONTEUDO", resp.data.metadata);
         commit("SET_SHOW_CONTEUDO", true);
@@ -42,20 +48,20 @@ const actions = {
     }
   },
   async createConteudo({ commit, dispatch }, conteudo) {
-    let resp = await client.post("/conteudos", conteudo);
+    let resp = await axios.post("/conteudos", conteudo);
     console.warn(resp);
     dispatch("showResponse", resp);
 
     commit("SET_CONTEUDO", resp.data);
   },
   async updateConteudo({ commit, dispatch }, conteudo) {
-    let resp = await client.put(`/conteudos/${conteudo.id}`, conteudo);
+    let resp = await axios.put(`/conteudos/${conteudo.id}`, conteudo);
     await dispatch("showResponse", resp);
 
     commit("SET_CONTEUDO", resp.data.conteudo);
   },
   async deleteConteudo({ commit }, id) {
-    let resp = await client.delete(`/conteudos/${id}`);
+    let resp = await axios.delete(`/conteudos/${id}`);
     commit("DELETE_CONTEUDO", resp.data);
   },
   async showResponse({ commit, dispatch }, response) {
@@ -88,13 +94,13 @@ const actions = {
   async goToPage({ commit }, url) {
     console.log(url);
     //if (url) {
-    //let resp = await client.get(url);
+    //let resp = await axios.get(url);
     //console.log(resp);
     //commit("SET_CONTEUDOS", resp.data);
     //}
   },
   async login({ commit, dispatch }, user) {
-    let resp = await client.post("/auth/login", user);
+    let resp = await axios.post("/auth/login", user);
     if (resp.status == 200 && resp.data.success) {
       localStorage.setItem("token", resp.data.metadata.token.access_token);
       commit("SET_LOGIN_USER", true);
@@ -102,24 +108,34 @@ const actions = {
       dispatch("showResponse", resp);
     }
   },
+  async logout() {
+    let resp = await axios.post("/auth/logout", {
+      token: localStorage.token
+    });
+    console.log(resp);
+
+    //store.commit("LOGOUT_USER");
+    //localStorage.removeItem("token");
+    //localStorage.removeItem("token");
+  },
   async registerUser({ commit, dispatch }, user) {
-    let resp = await client.post(`/auth/register`, user);
+    let resp = await axios.post(`/auth/register`, user);
 
     dispatch("showResponse", resp);
   },
   /** CANAIS FOR SELECT */
   async fetchCanaisForSelect({ commit }) {
-    let resp = await client.get("/canais?select");
+    let resp = await axios.get("/canais?select");
     commit("SET_CANAIS", resp.data.metadata);
   },
   /** TIPO DE CONTEUDOS */
   async fetchTipos({ commit }) {
-    let resp = await client.get("/tipos");
+    let resp = await axios.get("/tipos");
     commit("SET_TIPOS", resp.data.metadata.tipos);
   },
   /** LICENÇAS */
   async fetchLicenses({ commit }) {
-    let resp = await client.get("/licenses?select");
+    let resp = await axios.get("/licenses?select");
     const data = resp.data.metadata;
     let licenses = data.filter(key => {
       return key.id != 2;
@@ -131,7 +147,7 @@ const actions = {
   },
   /** CANAL */
   async getCanal({ commit, dispatch }, slug) {
-    let resp = await client.get(`/canais/slug/${slug}`);
+    let resp = await axios.get(`/canais/slug/${slug}`);
 
     if (resp.status == 200 && resp.data.canal) {
       commit("SET_CANAL", resp.data.canal);
@@ -143,7 +159,7 @@ const actions = {
     }
   },
   async fetchEnabledCategories({ commit }, params) {
-    let resp = await client.get("/categories", params);
+    let resp = await axios.get("/categories", params);
 
     if (resp.status == 200 && resp.data) {
       commit("SET_CATEGORIES", resp.data.sidebar.categories);
