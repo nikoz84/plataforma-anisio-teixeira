@@ -23,12 +23,12 @@
                 </li>
             </ul>
         </aside>
-        
+
         <section class="main" id="main-home">
-            
-            
+
+
             <article v-for="(destaque, i) in plataforma" :key="'i'+i">
-                <div class="destaque" :class="(destaque.is_principal) ? 'destaque-principal': 'destaque-secundario'">
+                <div :class="(destaque.is_principal) ? 'col-md-5 destaque-principal': 'col-md-3 destaque-secundario'">
                     <img :src="destaque.img">
                     <div class="retina">
                     <div class="texto">
