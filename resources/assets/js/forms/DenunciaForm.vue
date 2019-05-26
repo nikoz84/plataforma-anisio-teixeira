@@ -95,8 +95,7 @@
 </template>
 
 <script>
-import Loader from "../components/LoaderComponent.vue";
-import client from "../client.js";
+import Loader from "../components/Loader.vue";
 
 export default {
   name: "DenunciaForm",
@@ -154,7 +153,7 @@ export default {
         recaptcha: resRecaptcha
       };
 
-      let resp = await client.post("/denuncias", data);
+      let resp = await axios.post("/denuncias", data);
       this.isSend = resp.data.success;
 
       if (resp.data.success) {

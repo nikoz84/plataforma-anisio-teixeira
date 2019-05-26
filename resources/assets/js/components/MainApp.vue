@@ -1,20 +1,20 @@
 <template>
     <main>
-        <nav-app></nav-app>
+        <nav-principal></nav-principal>
         <router-view></router-view>
         <footer-app></footer-app>
     </main>
 </template>
 
 <script>
-import NavApp from "./NavComponent.vue";
-import FooterApp from "./FooterComponent.vue";
+import NavPrincipal from "./NavPrincipal.vue";
+import FooterApp from "./FooterApp.vue";
 
 export default {
   name: "main-app",
   components: {
-    NavApp,
-    FooterApp
+    "nav-principal":NavPrincipal,
+    "footer-app":FooterApp
   },
   methods: {}
 };

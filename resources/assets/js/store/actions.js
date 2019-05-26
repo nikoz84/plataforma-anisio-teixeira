@@ -18,11 +18,23 @@ const actions = {
   },
   /** CONTEUDOS */
   async fetchConteudos({ commit }, payload) {
+    commit("SET_IS_LOADING", true);
     let url = payload.url ? payload.url : `/conteudos?canal=${payload.id}`;
     let resp = await axios.get(url);
+    commit("SET_COMPONENT_ID", "");
     if (resp.status == 200 && resp.data.paginator) {
-      commit("SET_CONTEUDOS", resp.data.paginator);
-    } else {
+      console.log(resp.data)
+      commit("SET_COMPONENT_ID", "Paginator");
+      commit("SET_IS_LOADING", false);
+      commit("SET_PAGINATOR", resp.data.paginator);
+      
+    } else if(resp.status == 200 && resp.data.metadata){
+      console.log(resp.data)
+      commit("SET_COMPONENT_ID", "Posts");
+      commit("SET_IS_LOADING", false);
+      commit("SET_POSTS",resp.data.metadata.blog_posts);
+    } 
+    else {
       commit("SET_IS_ERROR", true);
     }
   },
@@ -32,16 +44,13 @@ const actions = {
     if (id && id != undefined && id != null) {
       let resp = await axios.get(`/conteudos/${id}`);
       if (resp.status == 200 && resp.data) {
+        commit("SET_EXIBIR_ID","conteudo");
         commit("SET_CONTEUDO", resp.data.metadata);
-        commit("SET_SHOW_CONTEUDO", true);
-        commit("SET_SHOW_APLICATIVO", false);
-        commit("SET_NOT_FOUND", false);
       } else {
-        //commit("SET_CONTEUDO", {});
-        commit("SET_SHOW_CONTEUDO", false);
-        commit("SET_SHOW_APLICATIVO", false);
-        commit("SET_NOT_FOUND", true);
+        commit("SET_EXIBIR_ID","aplicativo");
+        commit("SET_APLICATIVO", resp.data.metadata);
       }
+      //commit("SET_EXIBIR_ID","notfound");
     } else {
       console.log("reset");
       commit("RESET_OBJECT", { model: conteudoModel, init: "conteudo" });

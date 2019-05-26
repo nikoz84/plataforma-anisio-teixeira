@@ -23,7 +23,7 @@ Route::group(['middleware' => ['cors']], function () {
 
     Route::get('/files/{id}', 'FileController@getFiles')->name('busca.arquivo');
     Route::post('/files/{id}', 'FileController@createFile')->name('adiciona.arquivo');
-
+    Route::get('/destaques', 'HomeController@getHomeData')->name('dados.home');
     Route::get('/layout', 'HomeController@getLayout')->name('lista.links');
     /******
      *

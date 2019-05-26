@@ -66,9 +66,11 @@ class ImportData extends Command
         DB::statement("ALTER SEQUENCE aplicativo_categories_id_seq RESTART WITH 16;");
         DB::statement("ALTER SEQUENCE niveis_ensino_id_seq RESTART WITH 12;");
 
+
         // update de canais
         DB::statement("UPDATE conteudos set canal_id = 6 where is_site = false and canal_id is null;");
         DB::statement("UPDATE conteudos set canal_id = 5 where is_site = true and canal_id is null;");
         DB::statement("UPDATE canais set is_active = false where  id  IN (4,10,11,13,14,15);");
+        DB::statement("UPDATE canais set name = 'Recursos Educacionais' where id = 6;");
     }
 }

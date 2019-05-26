@@ -25,10 +25,9 @@
     </section>
 </template>
 <script>
-import NavCanal from "../components/NavCanalComponent.vue";
-import SidebarCanal from "../components/SidebarCanalComponent.vue";
-import Breadcrum from "../components/BreadcrumComponent.vue";
-import client from "../client.js";
+import NavCanal from "../components/NavCanal.vue";
+import SidebarCanal from "../components/SidebarCanal.vue";
+import Breadcrum from "../components/Breadcrum.vue";
 import { mapState } from "vuex";
 
 export default {

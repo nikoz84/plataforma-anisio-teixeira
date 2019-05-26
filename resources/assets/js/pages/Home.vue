@@ -1,148 +1,78 @@
 <template>
-    <div class="container-fluid heigth">
-        <aside class="sidebar" id="sidebar-home">
-            <a class="closebtn" @click.prevent="closeSidebar()">&times;</a>
+  <section class="container-fluid heigth">
+    <aside class="sidebar" id="sidebar-home">
+        <a class="closebtn" @click.prevent="closeSidebar()">&times;</a>
 
-            <div class="input-group" style="padding-top:60px;">
-                <input type="text" class="form-control" placeholder="Busca...">
-                <span class="input-group-btn">
-                    <button class="btn btn-default glyphicon glyphicon-search" type="button" ></button>
-                </span>
-            </div>
-            <h4 class="text-center">Mais Recentes</h4>
-            <ul>
-                <li v-for="(recente, r) in recentes" :key="'r'+r">
-                    <a class="link" href="#">{{ recente.name }}</a>
-                </li>
-            </ul>
+        <div class="input-group" style="padding-top:60px;">
+            <input type="text" class="form-control" placeholder="Busca...">
+            <span class="input-group-btn">
+                <button class="btn btn-default glyphicon glyphicon-search" type="button" ></button>
+            </span>
+        </div>
+        
+    </aside>
 
-            <h4 class="text-center">Palavras Chave</h4>
-            <ul class="list-inline">
-                <li v-for="(tag, t) in tags" :key="'t'+t">
-                    <a class="badge" href="#" > {{ tag.name }}</a>
-                </li>
-            </ul>
-        </aside>
-
-        <section class="main" id="main-home">
-
-
-            <article v-for="(destaque, i) in plataforma" :key="'i'+i">
-                <div :class="(destaque.is_principal) ? 'col-md-5 destaque-principal': 'col-md-3 destaque-secundario'">
-                    <img v-lazy="destaque.img" class="img-responsive">
-                    <div class="retina">
-                    <div class="texto">
-                            <ul>
-                                <li>
-                                    <h1>
-                                        {{ destaque.name }}
-                                    </h1>
-                                </li>
-                                <li>
-                                    <p>
-                                        {{ destaque.description }}
-                                    </p>
-                                </li>
-                            </ul>
-                        </div>
+    <section class="main" id="main-home">
+      <!--article v-for="(destaque, i) in plataforma" :key="'i'+i">
+            <div :class="(destaque.is_principal) ? 'col-md-5 destaque-principal': 'col-md-3 destaque-secundario'">
+                <img v-lazy="destaque.img" class="img-responsive">
+                <div class="retina">
+                <div class="texto">
+                        <ul>
+                            <li>
+                                <h1>
+                                    {{ destaque.name }}
+                                </h1>
+                            </li>
+                            <li>
+                                <p>
+                                    {{ destaque.description }}
+                                </p>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </article>
+            </div>
+        </article-->
 
-            <article v-for="(aplicativo, a) in aplicativos" :key="'a'+a">
-                <div class="">
-                    <img :src="aplicativo.img">
-                </div>
-                <div class="">
-                    <h2>{{ aplicativo.name }}</h2>
-                    <p>{{ aplicativo.description }}</p>
-                    <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
-                </div>
-            </article>
-            <article>
-                {{this.$store.state.layout}}
-            </article>
-        </section>
-        <div>
-            <span @click="openSidebar()" class="btn btn-default afix" data-spy="affix" data-offset-bottom="50%">Abrir</span>
-        </div>
+        <!--article v-for="(aplicativo, a) in aplicativos" :key="'a'+a">
+            <div class="">
+                <img :src="aplicativo.img">
+            </div>
+            <div class="">
+                <h2>{{ aplicativo.name }}</h2>
+                <p>{{ aplicativo.description }}</p>
+                <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
+            </div>
+        </article-->
+        <article>
+            {{this.$store.state.layout}}
+        </article>
+    </section>
+    <div>
+        <span @click="openSidebar()" class="btn btn-default afix" data-spy="affix" data-offset-bottom="50%">Abrir</span>
     </div>
+  </section>
 </template>
 <script>
+import { mapState, mapMutations } from 'vuex';
+
 export default {
   name: "Home",
   data() {
     return {
-      aplicativos: [
-        {
-          name: "Mozilla Firefox",
-          description:
-            "O Firefox é um navegador web livre desenvolvido pela Mozilla Foundation. A intenção da fundação foi desenvolver um navegador leve, seguro, intuitivo e altamente extensível. Baseado...",
-          img:
-            "http://pat.educacao.ba.gov.br/conteudos/aplicativos-educacionais/imagem-associada/110.jpg"
-        },
-        {
-          name: "LibreOffice",
-          description:
-            "Suite (conjunto de programas) mais utilizada em escritórios, mas que pode ser adaptada ao contexto educativo. Vem com o Writer (Editor de Texto), Calc (Planilha), Impress (apresentação)...",
-          img:
-            "http://pat.educacao.ba.gov.br/conteudos/aplicativos-educacionais/imagem-associada/17.jpg"
-        },
-        {
-          name: "Linux Educacional 6.0",
-          description:
-            "O ProInfo é um projeto que visa promover o uso pedagógico de tecnologias da informação relacionadas a conteúdos educacionais nas escolas públicas de todo o Brasil. Nesse contexto...",
-          img:
-            "http://pat.educacao.ba.gov.br/conteudos/aplicativos-educacionais/imagem-associada/33.jpg"
-        },
-        {
-          name: "GIMP",
-          description:
-            "O Firefox é um navegador web livre desenvolvido pela Mozilla Foundation. A intenção da fundação foi desenvolver um navegador leve, seguro, intuitivo e altamente extensível. Baseado...",
-          img:
-            "http://pat.educacao.ba.gov.br/conteudos/aplicativos-educacionais/imagem-associada/110.jpg"
-        }
-      ],
-      plataforma: [
-        {
-          name: "Centros Juvenis de Ciência e Cultura",
-          description:
-            "Projeto que trabalha com ensino complementar e oferece atividades interdisciplinares em que alunos têm acesso a conhecimentos científicos, cursos e oficinas.",
-          img:
-            "http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/68435/course/overviewfiles/destaque-home-plataforma.jpg",
-          is_principal: true
-        },
-        {
-          name: "Aplicativos Educacionais",
-          description:
-            "Softwares livres, aplicativos móveis e ambientes digitais de apoio a produção e a colaboração nos processos de ensino e de aprendizagem.",
-          img:
-            "http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/68435/course/overviewfiles/destaque-home-plataforma.jpg",
-          is_principal: false
-        },
-        {
-          name: "AVT Polos UAB - Bahia",
-          description:
-            "Espaço destinado ao propósito de manter a interação e a comunicação das atividades diárias dos Polos UAB e seu trabalho.",
-          img:
-            "http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/46944/course/overviewfiles/destaque-home-plataforma.jpg",
-          is_principal: false
-        }
-      ],
-      recentes: [
-        { name: "Fica a Dica Enem - Como Tirar Nota 1.000 na Redação?" },
-        { name: "O Que Mais Cai em Filosofia e Sociologia no ENEM? Plantão" },
-        { name: "Fica a Dica Enem - Como Tirar Nota 1.000 na Redação?" }
-      ],
-      tags: [
-        { name: "biologia" },
-        { name: "conceito digital" },
-        { name: "matemática" },
-        { name: "preconceito racial" }
-      ]
+      destaques:{}
     };
   },
+  mounted() {
+    this.getData()
+  },
   methods: {
+    async getData(){
+      let resp = await axios.get('/destaques');
+      console.log(resp);
+      this.destaques = resp.data;
+    },
     openSidebar() {
       document.getElementById("sidebar-home").style.width = "50%";
     },
@@ -197,6 +127,7 @@ export default {
 #main-home {
   transition: margin-left 0.5s;
   padding: 20px;
+  min-height: 90vh;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */

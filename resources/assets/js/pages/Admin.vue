@@ -1,26 +1,22 @@
 <template>
     <div class="container-fluid heigth">
-        <Sidebar class="col-sm-3" ></Sidebar>
+        <sidebar-admin class="col-sm-3" ></sidebar-admin>
         <section class="col-sm-9">
-            <SearchForm v-bind:search="search"></SearchForm>
             <header class="page-header">
                 <h1><small>{{ title }}</small></h1>
             </header>
-
             <router-view name="admin"></router-view>
         </section>
     </div>
 </template>
 <script>
-import Sidebar from "../components/SidebarComponent.vue";
-import SearchForm from "../forms/SearchForm.vue";
-import store from "../store/index.js";
+import SidebarAdmin from "../components/SidebarAdmin.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "admin",
   components: {
-    Sidebar,
-    SearchForm
+    "sidebar-admin":SidebarAdmin
   },
   data() {
     return {
@@ -32,11 +28,9 @@ export default {
       action: ""
     };
   },
-  beforeCreate() {
-    if (!store.state.isLogged) {
-      this.$router.go("/usuario/login");
-    }
-  }
+  computed: {
+    ...mapState(["isLogged"])
+  },
 };
 </script>
 <style lang="scss" scoped>

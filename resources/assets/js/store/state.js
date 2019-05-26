@@ -1,6 +1,6 @@
 const state = {
-  layout: {
-  },
+  layout: {},
+  homeData:{},
   links: [],
   conteudos: [],
   paginator: {},
@@ -25,6 +25,7 @@ const state = {
   },
   aplicativos: [],
   aplicativo: {},
+  posts:[],
   canais: [],
   canal: {},
   sidebar: {},
@@ -43,14 +44,14 @@ const state = {
   show: false,
   isError: false,
   isLogged: !!localStorage.token,
+  isLoading: false,
+  componentId: "",
+  exibirId:"",
   errors: {},
   alertText: "",
   showAlert: false,
-  showConteudo: false,
-  showApllicativo: false,
   formData: {},
   buttonText: "Salvar",
-  notFound: false,
   redirect: ""
 };
 

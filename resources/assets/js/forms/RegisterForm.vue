@@ -51,7 +51,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-import AlertShake from "../components/AlertShakeComponent.vue";
+import AlertShake from "../components/AlertShake.vue";
 
 export default {
   name: "RegisterForm",
@@ -79,6 +79,8 @@ export default {
         if (!this.isError) {
           this.$router.push("/usuario/login");
         }
+      }).catch(error => {
+        console.log(error)
       });
     }
   }

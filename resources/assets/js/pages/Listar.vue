@@ -1,14 +1,21 @@
 <template>
     <div>
-        <lista></lista>
+        <component :is="componentId" v-if="!isLoading"></component>
+        <Loader v-else></Loader>
     </div>
 </template>
 <script>
-import Lista from "../components/ListComponent.vue";
+import Loader from '../components/Loader.vue';
+import Paginator from "../components/Paginator.vue";
+import Posts from "../components/Posts.vue"
+import { mapState } from 'vuex';
 
 export default {
   name: "Listar",
-  components: { lista: Lista }
+  components: { Paginator, Posts, Loader },
+  computed: {
+    ...mapState(["componentId", "isLoading"])
+  },
 };
 </script>
 <style lang="sass" scoped>

@@ -188,7 +188,7 @@
 import { mapGetters, mapActions, mapState, mapMutations } from "vuex";
 import { mapFields } from "vuex-map-fields";
 import showErrors from "../components/ShowErrors.vue";
-import Alert from "../components/AlertComponent.vue";
+import Alert from "../components/Alert.vue";
 import "tui-editor/dist/tui-editor.css";
 import "tui-editor/dist/tui-editor-contents.css";
 import "codemirror/lib/codemirror.css";
