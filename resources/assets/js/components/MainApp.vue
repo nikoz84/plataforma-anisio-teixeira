@@ -25,7 +25,7 @@ export default {
     "side-bar": SideBar,
     "open-side-bar": OpenSideBar
   },
-  mount() {
+  created() {
     this.getLayout();
   },
   computed: {
@@ -120,13 +120,12 @@ a:visited {
   background-color: #4caf50;
 }
 
-/* checkbox */
+/* checkbox 
 .container {
   display: block;
   position: relative;
   padding-left: 35px;
   margin-bottom: 12px;
-  cursor: pointer;
   font-size: 17px;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -185,4 +184,5 @@ a:visited {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+*/
 </style>

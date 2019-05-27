@@ -67,18 +67,6 @@ export default {
   },
   methods: {
     ...mapActions(["logout"]),
-    /*async logout() {
-      let resp = await client.post("/auth/logout", params);
-
-      localStorage.removeItem("token");
-      let params = { token: localStorage.token };
-
-      if (resp.data.success) {
-        store.commit("LOGOUT_USER");
-        localStorage.removeItem("token");
-        this.$router.push("/");
-      }
-    },*/
     handleScroll() {
       let winScroll =
         document.body.scrollTop || document.documentElement.scrollTop;
