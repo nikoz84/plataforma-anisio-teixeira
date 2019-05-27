@@ -2,7 +2,7 @@
     <main>
         <nav-principal></nav-principal>
         <menu-side-bar></menu-side-bar>
-        <router-view></router-view>        
+        <router-view></router-view>
         <footer-app></footer-app>
         <side-bar></side-bar>
         <back-to-top></back-to-top>
