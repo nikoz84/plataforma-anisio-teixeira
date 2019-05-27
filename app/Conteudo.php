@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
-use \Illuminate\Support\Str;
+use Illuminate\Support\Str;
 
 class Conteudo extends Model
 {
@@ -83,8 +83,8 @@ class Conteudo extends Model
             //            ->url($image);
 
         } elseif ($this['canal_id'] == 2) {
-
-            return 'emitec';
+            $tipo = $this['options']['tipo']['id'];
+            return "emitec.{$tipo}";
         } else {
             return '';
         }

@@ -59,6 +59,9 @@ class Handler extends ExceptionHandler
         } elseif ($exception instanceof JWTException) {
             return Response::json([$exception->getMessage()], 404);
         }
+        if ($exception instanceof ModelNotFoundException) {
+            return Response::json(['modelo não encontrado'], 404);
+        }
 
         return parent::render($request, $exception);
     }

@@ -3,8 +3,9 @@
         <nav-principal></nav-principal>
         <router-view></router-view>
         <footer-app></footer-app>
+        <side-bar></side-bar>
         <back-to-top></back-to-top>
-        
+        <open-side-bar></open-side-bar>
     </main>
 </template>
 
@@ -12,6 +13,8 @@
 import NavPrincipal from "./NavPrincipal.vue";
 import FooterApp from "./FooterApp.vue";
 import BackToTop from "./BackToTop.vue";
+import OpenSideBar from "./OpenSideBar.vue";
+import SideBar from "./SideBar.vue";
 
 export default {
   name: "main-app",
@@ -19,6 +22,8 @@ export default {
     "nav-principal":NavPrincipal,
     "footer-app":FooterApp,
     "back-to-top": BackToTop,
+    "side-bar": SideBar,
+    "open-side-bar": OpenSideBar
   },
   methods: {}
 };
@@ -182,6 +187,7 @@ small{
   overflow: hidden;
   float: left;
   margin: 0;
+  border-radius: 5px;
 }
 
 ul{
@@ -189,8 +195,8 @@ ul{
 }
 
 .destaque-principal > img {
-  height: 500px;
   width: 100%;
+  height: 500px;  
   border-radius: 5px;
 	-webkit-transition: all .8s;
   -moz-transition: all .8s;

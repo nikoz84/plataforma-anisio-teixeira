@@ -5,7 +5,7 @@
             <div class="panel-heading">
                 Faça seu Login
             </div>
-            <div class="panel-body">  
+            <div class="panel-body">
                 <form v-on:submit.prevent="entrar()">
                     <div class="form-group">
                         <label for="email">E-mail</label>
@@ -20,14 +20,14 @@
                 <AlertShake></AlertShake>
                 <router-link to="/usuario/recuperar-senha">
                     Recuperar senha
-                </router-link> | 
+                </router-link> |
                 <router-link to="/usuario/registro">
-                    Cadastrese 
+                    Cadastrese
                 </router-link>
             </div>
-        </div>    
+        </div>
       </div>
-    </div> 
+    </div>
 </template>
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";

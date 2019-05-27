@@ -14,5 +14,15 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-    
+.affix {
+  background-color: rgb(1,14,27);
+  background-color: rgba(1, 14, 27, .7);
+  opacity: .8;
+  border:none;
+  width: 45px;
+  height: 45px;
+  right: 10px;
+  bottom: 60px;
+  z-index: 100 !important;
+}
 </style>
