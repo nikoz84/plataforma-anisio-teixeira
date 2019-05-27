@@ -1,6 +1,6 @@
 <template>
     <article class="row">
-        <PlayerApp />
+        <Player></Player>
         <div class="panel panel-default" v-if="this.conteudo">
             <div class="panel-body">
                 <div class="btn-group" role="group" aria-label="Basic example">

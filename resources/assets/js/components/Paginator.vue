@@ -1,11 +1,8 @@
 <template>
   <div v-if="paginator">
-    <div class="container-columns" >
-        <!-- LISTA -->
-        <div class="column" v-for="(item, i) in paginator.data" :key="i">
-                <SimpleCard v-bind:item="item"></SimpleCard>
-        </div>
-    </div>
+    <section v-for="(item, i) in paginator.data" :key="i">
+            <SimpleCard v-bind:item="item"></SimpleCard>
+    </section>
     <nav aria-label="paginador de resultados">
           <p class="text-center">{{ (paginator.total) ? `Total: ${paginator.total}` : `Sem Resultados` }}</p>
           <ul class="pager">
@@ -32,10 +29,6 @@ export default {
     components:{SimpleCard},
     computed:{
       ...mapState(["paginator"]),
-      async goToPage(page){
-        let resp = await axios.get(page);
-        this.SET_PAGINATOR(resp.data.paginator);
-      },
       total(){
         return this.paginator.total;
       }
@@ -43,7 +36,11 @@ export default {
     methods: {
       ...mapMutations([
         "SET_PAGINATOR"
-      ])
+      ]),
+      async goToPage(page){
+        let resp = await axios.get(page);
+        this.SET_PAGINATOR(resp.data.paginator);
+      },
     }
 
   }

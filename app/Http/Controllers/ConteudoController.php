@@ -47,7 +47,7 @@ class ConteudoController extends ApiController
         if($canal == 7){
             $wordpress = new WordpressService;
             return $this->successResponse([
-                    'blog_posts' =>  $wordpress->getPosts(5)
+                    'blog_posts' =>  $wordpress->getPosts(3)
             ],'', 200);
         }
         $query = $this->conteudo::query();
@@ -63,7 +63,7 @@ class ConteudoController extends ApiController
         $url = "limit={$limit}&canal={$canal}";
         $url .= "&tipos={$tipos}&componentes={$componentes}&categorias={$categorias}&licencas={$licencas}";
 
-        $conteudos = $query->with('canal')
+        $conteudos = $query->with(['canal'])
             ->orderBy($orderBy, 'desc')
             ->paginate($limit)
             ->setPath("/conteudos?{$url}");

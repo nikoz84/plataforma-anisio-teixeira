@@ -17,13 +17,13 @@
         <section class="container text-center">
                 <div class="row mt-4">
                 <!-- Plataforma -->
-                <div class="col-md-4 col-lg-4">
+                <div class="col-md-4 col-lg-4 mb-4">
                     <h6 class="text-uppercase font-weight-bold">Plataforma Anísio Teixeira</h6>
                     <hr style="width: 80px;">
                     <p>Here you can use rows and columns here to organize your footer content. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                 </div>
                 <!-- Secretária -->
-                <div class="col-md-4 col-lg-4">
+                <div class="col-md-4 col-lg-4 mb-4">
                     <h6 class="text-uppercase font-weight-bold">Secretaría da Educação</h6>
                     <hr style="width: 80px;">
                     <p v-for="(item, i) in layout.secretaria" :key="i">
@@ -35,7 +35,7 @@
                 </div>
                
                 <!-- Contato -->
-                <div class="col-md-4 col-lg-4">
+                <div class="col-md-4 col-lg-4 mb-4">
                     <h6 class="text-uppercase font-weight-bold">Contato</h6>
                     <hr style="width: 80px;">
                     <a href="#">Fale conosco</a>
@@ -130,6 +130,9 @@ export default {
 }
 .mt-4 { 
     margin-top: 40px;
+}
+.mb-4 { 
+    margin-bottom: 40px;
 }
 .footer-copyleft { margin-top: 5vh; background-color: #D8D8D8;}
 .copyleft{

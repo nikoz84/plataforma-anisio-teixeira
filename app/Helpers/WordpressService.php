@@ -7,12 +7,12 @@ use OAuth2\Client;
 class WordpressService
 {
     protected $api;
-    const CLIENT_ID     = '7K4OyODpVRGHb64R6tw8kepsVKx1IU';
-    const CLIENT_SECRET = 'OPFSEeHhDC9kkkrpbySHGdW6GRQdTz';
+    const CLIENT_ID     = '';
+    const CLIENT_SECRET = '';
 
-    const REDIRECT_URI           =   'http://pat.des/teste';
-    const AUTHORIZATION_ENDPOINT = 'http://blog.pat.educacao.ba.gov.br/oauth/authorize/';
-    const TOKEN_ENDPOINT         = 'http://blog.pat.educacao.ba.gov.br/oauth/token/';
+    const REDIRECT_URI           =   'http://url/teste';
+    const AUTHORIZATION_ENDPOINT = 'http://url/oauth/authorize/';
+    const TOKEN_ENDPOINT         = 'http://url/oauth/token/';
     public function __construct()
     {
         $canal = $canal = Canal::find(7);
@@ -50,20 +50,19 @@ class WordpressService
     // Extrai o arquivo json e transforma em objeto de PHP
     private function getData($data, $end_point){
         
-        $dataQuery = http_build_query($data, $end_point);
-        $length = strlen($dataQuery);
+        $data_query = http_build_query($data, $end_point);
+        $length = strlen($data_query);
 
         $options = [
             'http' => [
                 'method' => 'GET',
                 'header' => "Content-Type: application/json\r\n" .
                     "Content-Length: {$length}",
-                'content' => $dataQuery
+                'content' => $data_query
             ]
         ];
         $context  = stream_context_create($options);
         $request = file_get_contents($this->api . $end_point, false, $context);
-        
         $data = json_decode($request, false);
         
         return $data;

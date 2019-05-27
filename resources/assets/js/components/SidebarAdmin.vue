@@ -4,7 +4,7 @@
             <img class="w-150" v-bind:src="'https://via.placeholder.com/300x200'" alt="Foto Usuário">
         </a>
         <p>{{ 'Benvindo ' + username }}</p>
-        <router-link tag="li" :to=" { name:'admin', params: { slug: 'inicio', action:'estatisticas' }}" class="menu_admin">
+        <router-link tag="li" :to=" { name:'admin', params: { slug: 'inicio' }}" class="menu_admin">
             <a>Inicio</a>
         </router-link>
         <router-link tag="li" :to=" { name:'admin', params: { slug: 'aplicativos', action:'listar' }}" class="menu_admin">

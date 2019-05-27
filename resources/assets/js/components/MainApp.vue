@@ -3,18 +3,22 @@
         <nav-principal></nav-principal>
         <router-view></router-view>
         <footer-app></footer-app>
+        <back-to-top></back-to-top>
+        
     </main>
 </template>
 
 <script>
 import NavPrincipal from "./NavPrincipal.vue";
 import FooterApp from "./FooterApp.vue";
+import BackToTop from "./BackToTop.vue";
 
 export default {
   name: "main-app",
   components: {
     "nav-principal":NavPrincipal,
-    "footer-app":FooterApp
+    "footer-app":FooterApp,
+    "back-to-top": BackToTop,
   },
   methods: {}
 };

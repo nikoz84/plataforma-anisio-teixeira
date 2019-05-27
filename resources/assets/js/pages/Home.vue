@@ -50,15 +50,20 @@
         </article>
     </section>
     <div>
-        <span @click="openSidebar()" class="btn btn-default afix" data-spy="affix" data-offset-bottom="50%">Abrir</span>
+        <open-side-bar></open-side-bar>
+        
     </div>
   </section>
 </template>
 <script>
 import { mapState, mapMutations } from 'vuex';
+import OpenSideBar from "../components/OpenSideBar.vue";
 
 export default {
   name: "Home",
+  components: {
+    "open-side-bar": OpenSideBar
+  },
   data() {
     return {
       destaques:{}
@@ -73,9 +78,6 @@ export default {
       console.log(resp);
       this.destaques = resp.data;
     },
-    openSidebar() {
-      document.getElementById("sidebar-home").style.width = "50%";
-    },
     closeSidebar() {
       document.getElementById("sidebar-home").style.width = "0";
     }
@@ -87,7 +89,7 @@ export default {
   height: 100%; /* 100% Full-height */
   width: 0; /* 0 width - change this with JavaScript */
   position: fixed; /* Stay in place */
-  z-index: 1500; /* Stay on top */
+  z-index: 900; /* Stay on top */
   top: 0;
   left: 0;
   background-color: #ffffff; /* Black*/

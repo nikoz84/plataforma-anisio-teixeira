@@ -20,7 +20,7 @@
             <tbody>
                 <tr v-for="(item, i) in paginator.data" :key="i">
                     <td v-text="item.id"></td>
-                    <td v-text="(item.name) ? item.name : item.title"></td>
+                    <td class="text-truncate" v-text="(item.name) ? item.name : item.title"></td>
                     <td>
                         <div>
                             <a class="btn btn-default btn-xs" 

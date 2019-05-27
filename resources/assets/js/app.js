@@ -25,7 +25,11 @@ const router = new VueRouter({
   mode: "history",
   routes,
   //linkActiveClass: "active",
-  linkExactActiveClass: "active"
+  linkExactActiveClass: "active",
+  scrollBehavior (to, from, savedPosition) {
+    // page scroll to top for all route navigations
+    return { x: 0, y: 0 }
+  }
 });
 
 router.beforeEach((to, from, next) => {
