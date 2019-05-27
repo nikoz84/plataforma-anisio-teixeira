@@ -23,6 +23,12 @@
             </div>
         </article-->
 
+        <article v-for="(menu, i) in menu" :key="'i'+i">
+            <div>
+
+            </div>
+        </article>
+
         <article v-for="(aplicativo, a) in data.aplicativos_recentes" :key="'a'+a">
             <div class="">
                 <img  v-lazy="aplicativo.img" class="img-responsive">
@@ -41,7 +47,6 @@
 </template>
 <script>
 import { mapState, mapMutations } from 'vuex';
-
 
 export default {
   name: "Home",
