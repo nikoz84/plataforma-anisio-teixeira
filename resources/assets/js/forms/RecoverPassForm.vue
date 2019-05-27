@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import client from "../client.js";
 
 export default {
   name: "RecoverForm",
@@ -49,8 +48,7 @@ export default {
         code: this.verificationCode
       };
       console.warn(data);
-      //let http = new Http();
-      //let resp = await http.postData('/conteudos/', data);
+      
     },
     verificationPass() {}
   }

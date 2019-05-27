@@ -69,9 +69,7 @@
     </div>
 </template>
 <script>
-import Loader from '../components/LoaderComponent.vue';
-import client from '../client.js';
-
+import Loader from '../components/Loader.vue';
 
 export default {
     name: 'FaleConoscoForm',

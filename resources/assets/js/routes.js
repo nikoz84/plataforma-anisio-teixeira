@@ -6,10 +6,10 @@ import AplicativoForm from "./forms/AplicativoForm.vue";
 import LoginForm from "./forms/LoginForm.vue";
 import RecoverPassForm from "./forms/RecoverPassForm.vue";
 import RegisterForm from "./forms/RegisterForm.vue";
-import ListAdmin from "./components/ListAdminComponent.vue";
+import ListAdmin from "./components/ListAdmin.vue";
 import DenunciaForm from "./forms/DenunciaForm.vue";
 import FaleConoscoForm from "./forms/FaleConoscoForm.vue";
-import UserForm from "./forms/UsuarioForm.vue";
+
 
 const routes = [
   {

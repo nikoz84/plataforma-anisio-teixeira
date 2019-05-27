@@ -31,7 +31,7 @@
 </template>
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
-import AlertShake from "../components/AlertShakeComponent.vue";
+import AlertShake from "../components/AlertShake.vue";
 
 export default {
   name: "LoginForm",

@@ -5,8 +5,7 @@ const getters = {
   getLayout: state =>{
     return state.layout;
   },
-
-  paginator: state => {
+  getPaginator: state => {
     return state.paginator;
   },
   getCanalById: state => {

@@ -235,7 +235,6 @@
 </template>
 
 <script>
-import client from '../client.js';
 
 export default {
     name: 'UsuarioForm',
@@ -304,7 +303,7 @@ export default {
             form.append('options', JSON.stringify(this.options));
             form.append('token', localStorage.token);
 
-            let resp = await client.post(`/users`, form);
+            let resp = await axios.post(`/users`, form);
             console.warn(resp);
 
             if(resp.data.success){
@@ -325,7 +324,7 @@ export default {
 
         async getUsuario(){
             let params = {token: localStorage.token };
-            let resp = await client.get(`/users/${this.$route.params.id}`,{params});
+            let resp = await axios.get(`/users/${this.$route.params.id}`,{params});
             //console.warn(resp.data)
             if(resp.data.success){
                 let user = resp.data.user;
@@ -345,7 +344,7 @@ export default {
                 email: this.email
             }
 
-            let resp = await client.put(`/users/${this.$route.params.id}`,params);
+            let resp = await axios.put(`/users/${this.$route.params.id}`,params);
 
             console.log(resp)
         }

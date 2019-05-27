@@ -14,8 +14,26 @@ const mutations = {
   SET_LOGOUT_USER(state) {
     state.isLogged = false;
   },
-  SET_CONTEUDOS(state, paginator) {
+  SET_POSTS(state, posts) {
+    state.posts = posts;
+  },
+  SET_COMPONENT_ID(state,componentId){
+    state.componentId = componentId;
+  },
+  SET_EXIBIR_ID(state,exibirId){
+    state.exibirId = exibirId;
+  },
+  SET_IS_LOADING(state, isLoading){
+    state.isLoading = isLoading
+  },
+  SET_HOME_DATA(state, homeData){
+    state.homeData = homeData;
+  },
+  SET_PAGINATOR(state, paginator){
     state.paginator = paginator;
+  },
+  SET_CONTEUDOS(state, conteudos) {
+    state.conteudos = conteudos;
   },
   SET_CONTEUDO(state, newConteudo) {
     state.conteudo = newConteudo;
@@ -54,12 +72,6 @@ const mutations = {
   SET_CANAL_ID(state, id) {
     state.canalId = id;
   },
-  SET_NOT_FOUND(state, notFound) {
-    state.notFound = notFound;
-  },
-  SET_SHOW_CONTEUDO(state, showConteudo) {
-    state.showConteudo = showConteudo;
-  },
   RESET_OBJECT(state, data) {
     const { model, init } = data;
 
@@ -79,9 +91,6 @@ const mutations = {
     }
 
     state[init] = Object.assign({}, obj);
-  },
-  SET_SHOW_APLICATIVO(state, showAplicativo) {
-    state.showAplicativo = showAplicativo;
   },
   SET_ERRORS(state, errors) {
     state.errors = errors;

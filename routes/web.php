@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,5 +12,9 @@
 */
 Route::get('/email', function () {
     return new App\Mail\Newslatter();
+});
+Route::get('/teste', function (Request $request) {
+    $wordpres_auth = new App\Helpers\WordpressService();
+    return $wordpres_auth->authorization($request->code);
 });
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');

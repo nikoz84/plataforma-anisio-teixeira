@@ -1,21 +1,17 @@
 <template>
     <div>
-        <conteudo v-if="this.showConteudo" ></conteudo>
-        <aplicativo v-if="this.showAplicativo"></aplicativo>
-        <article class="jumbotron" v-if="this.notFound">
-            <h3 class="text-center">Não Encontrado</h3>
-        </article>
+        <component :is="exibirId"></component>
     </div>
 </template>
 <script>
-import client from "../client.js";
-import ConteudoApp from "../components/ConteudoComponent.vue";
-import AplicativoApp from "../components/AplicativoComponent.vue";
+import Conteudo from "../components/Conteudo.vue";
+import Aplicativo from "../components/Aplicativo.vue";
+import NotFound from "../components/NotFound.vue";
 import {mapState, mapActions} from 'vuex'
 
 export default {
   name: "exibir",
-  components: { conteudo: ConteudoApp, aplicativo: AplicativoApp },
+  components: { conteudo: Conteudo, aplicativo: Aplicativo, notfound:NotFound },
   created() {
     
     this.fetchConteudo(this.$route.params);
@@ -23,9 +19,7 @@ export default {
 
   computed: {
     ...mapState([
-      'showConteudo',
-      'showAplicativo',
-      'notFound'
+      'exibirId'
     ])
   },
   methods: {

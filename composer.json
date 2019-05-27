@@ -17,7 +17,8 @@
     "laravel/passport": "~4.0.3",
     "laravel/tinker": "~1.0",
     "php-ai/php-ml": "^0.7.0",
-    "tymon/jwt-auth": "dev-develop"
+    "tymon/jwt-auth": "dev-develop",
+    "adoy/oauth2": "*"
   },
   "require-dev": {
     "filp/whoops": "~2.0",

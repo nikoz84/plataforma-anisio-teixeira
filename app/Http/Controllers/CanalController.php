@@ -140,6 +140,11 @@ class CanalController extends ApiController
                     'disciplinas' => $disciplinas,
                 ];
                 break;
+            case 7:
+                return [
+
+                ];
+                break;
             case 5:
                 return [
                     'categories' => [],

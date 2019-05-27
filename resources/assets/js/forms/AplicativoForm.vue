@@ -97,7 +97,6 @@
 </template>
 
 <script>
-import client from "../client.js";
 import showErrors from "../components/ShowErrors.vue";
 
 export default {
@@ -163,7 +162,7 @@ export default {
       form.append("options", JSON.stringify(this.options));
       form.append("image", this.image, this.image.name);
 
-      let resp = await client.post(`/aplicativos`, form);
+      let resp = await axios.post(`/aplicativos`, form);
 
       if (resp.data.success) {
         this.$router.push({
@@ -183,7 +182,7 @@ export default {
       }
     },
     async getCategories() {
-      let resp = await client.get(`/categories/aplicativos`);
+      let resp = await axios.get(`/categories/aplicativos`);
 
       this.categories = resp.data.categories;
     },
@@ -197,7 +196,7 @@ export default {
       this.count = e.target.value.length;
     },
     async getAplicativo() {
-      let resp = await client.get(`/aplicativos/${this.$route.params.id}`);
+      let resp = await axios.get(`/aplicativos/${this.$route.params.id}`);
       if (resp.data.success) {
         this.name = resp.data.aplicativo.name;
         this.category_id = resp.data.aplicativo.category_id;
@@ -218,7 +217,7 @@ export default {
         token: localStorage.token
       };
 
-      let resp = await client.put(
+      let resp = await axios.put(
         `/aplicativos/${this.$route.params.id}`,
         params
       );

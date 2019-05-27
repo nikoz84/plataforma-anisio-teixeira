@@ -333,12 +333,7 @@ from conteudodigitalcomponente
 
 update conteudos set canal_id = 6 where is_site = false and canal_id is null;
 update conteudos set canal_id = 5 where is_site = true and canal_id is null;
-update canais set is_active = false where id = 15;
-update canais set is_active = false where id = 11;
-update canais set is_active = false where id = 10;
-update canais set is_active = false where id = 14;
-update canais set is_active = false where id = 13;
-update canais set is_active = false where id = 4;
+update canais set is_active = false where id IN (4,10,11,13,14,15);
 
 
 

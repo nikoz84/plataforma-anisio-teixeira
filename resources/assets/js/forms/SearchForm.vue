@@ -1,25 +1,26 @@
 <template>
-    <form class="search" v-on:submit.prevent="onSearch()" >
+    <form class="search pull-right" v-on:submit.prevent="onSearch()" style="max-width:350px;">
         <div class="input-group">
-            <input type="text" id="termo" class="form-control" v-model="termo" :placeholder="placeholder">
+            <input type="text" 
+                    id="termo" 
+                    class="form-control input-sm" 
+                    v-model="termo" 
+                    placeholder="Pesquisar...">
             <span class="input-group-btn">
-                <button class="btn btn-default" type="submit">Pesquisa</button>
+                <button class="btn btn-default btn-sm" type="submit">Pesquisa</button>
             </span>
         </div>
     </form>
 </template>
 <script>
-import client from '../client.js';
-import debounce from 'lodash/debounce'
-
+import debounce from 'lodash/debounce';
+import { mapMutations} from 'vuex';
 
 export default {
     name : 'SearchForm',
-    props: ['search'],
     data() {
         return {
-            placeholder: 'Pesquise...',
-            termo: ''
+            termo: '',
         }
     },
     created(){
@@ -27,24 +28,22 @@ export default {
     },
     watch:{
         termo(novo, antigo){
-            this.placeholder = 'Esperando...';
             this.delayFunction();
         }
     },
     methods:{
+        ...mapMutations(["SET_PAGINATOR", "SET_IS_LOADING"]),
         async onSearch(){
             if(!this.termo) return;
-            let url = `/${this.search}/search/${this.termo}`;
-            this.$parent.show = false;
             
-            let params ={ token: localStorage.token };
-            let resp = await client.getDataFromUrl(url, params);
+            let url = `/${this.$route.params.slug}/search/${this.termo}`;
+            //this.SET_IS_LOADING(true);
+            let resp = await axios.get(url);
 
             if(resp.data){
-                this.$parent.paginator = resp.data.paginator;
-                this.$parent.show = true;
+                //this.SET_IS_LOADING(false);
+                this.SET_PAGINATOR(resp.data.paginator);
             }
-
         }
     }
 }

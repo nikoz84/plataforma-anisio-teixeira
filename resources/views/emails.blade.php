@@ -295,8 +295,8 @@ ul.sidebar li a h1,ul.sidebar li a h2,ul.sidebar li a h3,ul.sidebar li a h4,ul.s
 									<span class="clear"></span>
 								</td>
 								<td><h3>Assunto: <small>{{ $subject }}</small></h3></td>
-								<td><h3>Email: <small>{{!! $email !!}}</small></h3></td>
-								<td><h3>Url: <small>{{!! $url !!}}</small></h3></td>
+								<td><h3>Email: <small>{{!! html_entity_decode($email) !!}}</small></h3></td>
+								<td><h3>Url: <small>{{!! html_entity_decode($url) !!}}</small></h3></td>
 								<td><p>{{ $message }}</p></td>
 							</tr>
 						</table><!-- /social & contact -->

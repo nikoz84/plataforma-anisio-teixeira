@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
     <div class="container-fluid heigth">
         <aside class="sidebar" id="sidebar-home">
             <a class="closebtn" @click.prevent="closeSidebar()">&times;</a>
@@ -34,29 +35,45 @@
                     </ul>
                 </div>
             </article>
+=======
+  <section class="container-fluid heigth">
+    <aside class="sidebar" id="sidebar-home">
+        <a class="closebtn" @click.prevent="closeSidebar()">&times;</a>
 
-            <article v-for="(destaque, i) in plataforma" :key="'i'+i">
-                <div :class="(destaque.is_principal) ? 'col-md-5 destaque-principal': 'col-md-3 destaque-secundario'">
-                    <img :src="destaque.img">
-                    <div class="retina">
-                    <div class="texto">
-                            <ul>
-                                <li>
-                                    <h1>
-                                        {{ destaque.name }}
-                                    </h1>
-                                </li>
-                                <li>
-                                    <p>
-                                        {{ destaque.description }}
-                                    </p>
-                                </li>
-                            </ul>
-                        </div>
+        <div class="input-group" style="padding-top:60px;">
+            <input type="text" class="form-control" placeholder="Busca...">
+            <span class="input-group-btn">
+                <button class="btn btn-default glyphicon glyphicon-search" type="button" ></button>
+            </span>
+        </div>
+        
+    </aside>
+>>>>>>> f6707866e9c904c7fdccd1c5abc96af4d8d069a2
+
+    <section class="main" id="main-home">
+      <!--article v-for="(destaque, i) in plataforma" :key="'i'+i">
+            <div :class="(destaque.is_principal) ? 'col-md-5 destaque-principal': 'col-md-3 destaque-secundario'">
+                <img v-lazy="destaque.img" class="img-responsive">
+                <div class="retina">
+                <div class="texto">
+                        <ul>
+                            <li>
+                                <h1>
+                                    {{ destaque.name }}
+                                </h1>
+                            </li>
+                            <li>
+                                <p>
+                                    {{ destaque.description }}
+                                </p>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </article>
+            </div>
+        </article-->
 
+<<<<<<< HEAD
             <article v-for="(aplicativo, a) in aplicativos" :key="'a'+a">
                 <div class="">
                     <img :src="aplicativo.img">
@@ -74,13 +91,40 @@
         <div class="btn-flutuante">
             <span @click="openSidebar()" class="btn btn-default afix" data-spy="affix" data-offset-bottom="50%">Pesquisar</span>
         </div>
+=======
+        <!--article v-for="(aplicativo, a) in aplicativos" :key="'a'+a">
+            <div class="">
+                <img :src="aplicativo.img">
+            </div>
+            <div class="">
+                <h2>{{ aplicativo.name }}</h2>
+                <p>{{ aplicativo.description }}</p>
+                <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
+            </div>
+        </article-->
+        <article>
+            {{this.$store.state.layout}}
+        </article>
+    </section>
+    <div>
+        <open-side-bar></open-side-bar>
+        
+>>>>>>> f6707866e9c904c7fdccd1c5abc96af4d8d069a2
     </div>
+  </section>
 </template>
 <script>
+import { mapState, mapMutations } from 'vuex';
+import OpenSideBar from "../components/OpenSideBar.vue";
+
 export default {
   name: "Home",
+  components: {
+    "open-side-bar": OpenSideBar
+  },
   data() {
     return {
+<<<<<<< HEAD
         aplicativos: [
             {
                 name: 'Mozilla Firefox',
@@ -142,25 +186,32 @@ export default {
             {name: 'Projetos Artísticos'},
             {name: 'Sites Temáticos'}
         ]
+=======
+      destaques:{}
+>>>>>>> f6707866e9c904c7fdccd1c5abc96af4d8d069a2
     };
   },
-  methods:{
-    openSidebar(){
-        document.getElementById("sidebar-home").style.width = "50%";
+  mounted() {
+    this.getData()
+  },
+  methods: {
+    async getData(){
+      let resp = await axios.get('/destaques');
+      console.log(resp);
+      this.destaques = resp.data;
     },
-    closeSidebar(){
-        document.getElementById("sidebar-home").style.width = "0";
+    closeSidebar() {
+      document.getElementById("sidebar-home").style.width = "0";
     }
   }
 };
 </script>
 <style lang="scss" scoped>
-
 .sidebar {
   height: 100%; /* 100% Full-height */
   width: 0; /* 0 width - change this with JavaScript */
   position: fixed; /* Stay in place */
-  z-index: 1500; /* Stay on top */
+  z-index: 900; /* Stay on top */
   top: 0;
   left: 0;
   background-color: #ffffff; /* Black*/
@@ -210,14 +261,15 @@ export default {
 
 
 .affix {
-    bottom: 100px;
-    right: 20px;
-    z-index: 9999 !important;
+  bottom: 100px;
+  right: 20px;
+  z-index: 9999 !important;
 }
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main-home {
-  transition: margin-left .5s;
+  transition: margin-left 0.5s;
   padding: 20px;
+  min-height: 90vh;
 }
 
 .container-fluid .btn-flutuante{
@@ -228,8 +280,11 @@ export default {
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
-  .sidebar {padding-top: 15px;}
-  .sidebar a {font-size: 18px;}
+  .sidebar {
+    padding-top: 15px;
+  }
+  .sidebar a {
+    font-size: 18px;
+  }
 }
-
 </style>

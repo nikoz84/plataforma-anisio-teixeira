@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use \Illuminate\Support\Str;
 
 class Conteudo extends Model
 {
@@ -32,7 +33,7 @@ class Conteudo extends Model
         'updated_at',
         'deleted_at',
     ];
-    protected $appends = ['image'];
+    protected $appends = ['image','excerpt'];
     protected $casts = [
         'options' => 'array',
     ];
@@ -70,7 +71,10 @@ class Conteudo extends Model
     {
         return $this->hasOne(\App\License::class, 'id', 'license_id');
     }
-
+    public function getExcerptAttribute()
+    {
+        return strip_tags(Str::words($this['description'],30));
+    }
     public function getImageAttribute()
     {
         $image = "{$this['id']}.jpg";

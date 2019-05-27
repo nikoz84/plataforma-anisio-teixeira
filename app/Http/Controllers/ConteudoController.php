@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
+use App\Helpers\WordpressService;
 
 class ConteudoController extends ApiController
 {
@@ -43,7 +44,14 @@ class ConteudoController extends ApiController
         'categorias' => $categorias
         ]);
          */
+        if($canal == 7){
+            $wordpress = new WordpressService;
+            return $this->successResponse([
+                    'blog_posts' =>  $wordpress->getPosts(3)
+            ],'', 200);
+        }
         $query = $this->conteudo::query();
+        
         $query->when($canal, function ($q, $canal) {
             return $q->where('canal_id', $canal)
                 ->where('is_approved', 'true');
@@ -55,7 +63,7 @@ class ConteudoController extends ApiController
         $url = "limit={$limit}&canal={$canal}";
         $url .= "&tipos={$tipos}&componentes={$componentes}&categorias={$categorias}&licencas={$licencas}";
 
-        $conteudos = $query->with('canal')
+        $conteudos = $query->with(['canal'])
             ->orderBy($orderBy, 'desc')
             ->paginate($limit)
             ->setPath("/conteudos?{$url}");

@@ -17,7 +17,7 @@
                                 enter-active-class="animated fadeIn" 
                                 leave-active-class="animated fadeOut"
                                 mode="out-in">
-                        <router-view v-bind:style="`--color:${canal.color}`"></router-view>
+                        <router-view></router-view>
                     </transition>
                 </div>
             </article>
@@ -25,10 +25,9 @@
     </section>
 </template>
 <script>
-import NavCanal from "../components/NavCanalComponent.vue";
-import SidebarCanal from "../components/SidebarCanalComponent.vue";
-import Breadcrum from "../components/BreadcrumComponent.vue";
-import client from "../client.js";
+import NavCanal from "../components/NavCanal.vue";
+import SidebarCanal from "../components/SidebarCanal.vue";
+import Breadcrum from "../components/Breadcrum.vue";
 import { mapState } from "vuex";
 
 export default {
@@ -73,9 +72,7 @@ export default {
   position: absolute;
   bottom: -10px;
 }
-:root {
-  --background: var(--color);
-}
+
 aside > header > h3 {
   margin-top: 5px;
   font-size: 18px;

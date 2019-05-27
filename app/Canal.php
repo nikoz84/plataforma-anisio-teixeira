@@ -9,7 +9,7 @@ class Canal extends Model
     protected $table = 'canais';
     protected $id = 'id';
     /**
-     * $fillable São todos os atributos que podem ser asignables
+     * $fillable São todos os atributos que podem ser asignavéis
      */
     protected $fillable = [
         'name',
