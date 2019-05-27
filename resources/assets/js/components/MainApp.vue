@@ -1,6 +1,7 @@
 <template>
     <main>
         <nav-principal></nav-principal>
+        <menu-side-bar></menu-side-bar>
         <router-view></router-view>
         <footer-app></footer-app>
         <side-bar></side-bar>
@@ -16,6 +17,7 @@ import BackToTop from "./BackToTop.vue";
 import OpenSideBar from "./OpenSideBar.vue";
 import SideBar from "./SideBar.vue";
 import { mapActions, mapState } from "vuex";
+import MenuSideBar from "./MenuSideBar.vue";
 
 export default {
   name: "main-app",
@@ -24,7 +26,8 @@ export default {
     "footer-app": FooterApp,
     "back-to-top": BackToTop,
     "side-bar": SideBar,
-    "open-side-bar": OpenSideBar
+    "open-side-bar": OpenSideBar,
+    "menu-side-bar": MenuSideBar
   },
   mount() {
     this.getLayout();
