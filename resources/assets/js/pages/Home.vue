@@ -2,40 +2,13 @@
 
   <section class="container-fluid heigth">
     <section class="main" id="main-home">
-      <menu-side-bar></menu-side-bar>
-      <!--article v-for="(destaque, i) in plataforma" :key="'i'+i">
-            <div :class="(destaque.is_principal) ? 'col-md-5 destaque-principal': 'col-md-3 destaque-secundario'">
-                <img v-lazy="destaque.img" class="img-responsive">
-                <div class="retina">
-                <div class="texto">
-                        <ul>
-                            <li>
-                                <h1>
-                                    {{ destaque.name }}
-                                </h1>
-                            </li>
-                            <li>
-                                <p>
-                                    {{ destaque.description }}
-                                </p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </article-->
-
-        <!--article v-for="(menu, i) in menu" :key="'i'+i">
-            <div>
-
-            </div>
-        </article-->
-      
-      
-      <CardHome :title="'Conteúdos Mais Baixados'" :items="data.conteudos_baixados"></CardHome>
-      <CardHome :title="'Conteúdos Mais Acessados'" :items="data.conteudos_acessados"></CardHome>
-      <CardHome :title="'Aplicativos Destacados'" :items="data.aplicativos_destaque"></CardHome>
-      </section>
+      <menu-side-bar class="col-sm-3"></menu-side-bar>
+      <div class="col-sm-9">
+        <CardHome :title="'Conteúdos Mais Baixados'" :items="data.conteudos_baixados"></CardHome>
+        <CardHome :title="'Conteúdos Mais Acessados'" :items="data.conteudos_acessados"></CardHome>
+        <CardHome :title="'Aplicativos Destacados'" :items="data.aplicativos_destaque"></CardHome>
+      </div>
+    </section>
   </section>
 </template>
 <script>
@@ -45,10 +18,11 @@ import MenuSideBar from "../components/MenuSideBar.vue";
 
 export default {
   name: "Home",
-  components: { CardHome,
-  "menu-side-bar": MenuSideBar
+  components: {
+    CardHome,
+    "menu-side-bar": MenuSideBar
   },
-  
+
   data() {
     return {
       data: {}
