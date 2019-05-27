@@ -45,9 +45,6 @@
                 <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
             </div>
         </article-->
-        <article>
-            {{this.$store.state.layout}}
-        </article>
     </section>
     <div>
         <open-side-bar></open-side-bar>
@@ -56,7 +53,7 @@
   </section>
 </template>
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations } from "vuex";
 import OpenSideBar from "../components/OpenSideBar.vue";
 
 export default {
@@ -66,15 +63,15 @@ export default {
   },
   data() {
     return {
-      destaques:{}
+      destaques: {}
     };
   },
   mounted() {
-    this.getData()
+    this.getData();
   },
   methods: {
-    async getData(){
-      let resp = await axios.get('/destaques');
+    async getData() {
+      let resp = await axios.get("/destaques");
       console.log(resp);
       this.destaques = resp.data;
     },

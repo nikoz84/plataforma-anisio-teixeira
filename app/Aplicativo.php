@@ -17,12 +17,12 @@ class Aplicativo extends Model
         'url',
         'is_featured',
         'options'
-        ];
-    protected $appends = ['image'];
+    ];
+    protected $appends = ['image', 'excerpt'];
     protected $dates = [
-            'created_at',
-            'updated_at',
-            'deleted_at'
+        'created_at',
+        'updated_at',
+        'deleted_at'
     ];
     protected $casts = [
         'options' => 'array',
@@ -30,28 +30,31 @@ class Aplicativo extends Model
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id')
-                    ->select(['id','name']);
+            ->select(['id', 'name']);
     }
     public function tags()
     {
         return $this->belongsToMany('App\Tag', 'aplicativo_tag', 'aplicativo_id', 'tag_id')
-                    ->select(['id', 'name']);
+            ->select(['id', 'name']);
     }
     public function category()
     {
         return $this->hasOne('App\AplicativoCategory', 'id', 'category_id')
-                    ->select(['id', 'name']);
+            ->select(['id', 'name']);
     }
     public function canal()
     {
         return $this->belongsTo('App\Canal', 'canal_id')
-                    ->selectRaw("id, name, slug, options->>'color' as color ");
+            ->selectRaw("id, name, slug, options->>'color' as color ");
     }
-
+    public function getExcerptAttribute()
+    {
+        return strip_tags(Str::words($this['description'], 30));
+    }
     public function getImageAttribute()
     {
         $image = "{$this['id']}.jpg";
         return Storage::disk('aplicativos-educacionais')
-                        ->url("imagem-associada/{$image}");
+            ->url("imagem-associada/{$image}");
     }
 }

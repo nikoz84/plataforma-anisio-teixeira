@@ -13,7 +13,7 @@ class Conteudo extends Model
     const IS_APPROVED = 'false';
     const IS_FEATURED = 'false';
     const INIT_COUNT = 0;
-    
+
     protected $fillable = [
         'approving_user_id',
         'canal_id',
@@ -33,7 +33,7 @@ class Conteudo extends Model
         'updated_at',
         'deleted_at',
     ];
-    protected $appends = ['image','excerpt'];
+    protected $appends = ['image', 'excerpt'];
     protected $casts = [
         'options' => 'array',
     ];
@@ -73,7 +73,7 @@ class Conteudo extends Model
     }
     public function getExcerptAttribute()
     {
-        return strip_tags(Str::words($this['description'],30));
+        return strip_tags(Str::words($this['description'], 30));
     }
     public function getImageAttribute()
     {
