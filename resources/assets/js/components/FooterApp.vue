@@ -39,9 +39,9 @@
                     <h6 class="text-uppercase font-weight-bold">Contato</h6>
                     <hr style="width: 80px;">
                     <a href="fale-conosco">Fale conosco</a>
-                    <p><i class="glyphicon glyphicon-home mr-3"></i> {{ layout.contact.city }}</p>
-                    <p><i class="glyphicon glyphicon-envelope mr-3"></i> {{layout.contact.email}}</p>
-                    <p><i class="glyphicon glyphicon-phone-alt mr-3"></i> {{layout.contact.phone}}</p>
+                    <p><i class="glyphicon glyphicon-home mr-3"></i> {{  }}</p>
+                    <p><i class="glyphicon glyphicon-envelope mr-3"></i> {{}}</p>
+                    <p><i class="glyphicon glyphicon-phone-alt mr-3"></i> {{}}</p>
                 </div>
                 <!-- Canais -->
                 <div class="col-md-12 mt-4">
