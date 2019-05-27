@@ -1,6 +1,6 @@
 <template>
     <span @click="openSidebar()" class="btn btn-default afix" data-spy="affix" data-offset-bottom="50%">
-        <i class="glyphicon glyphicon-option-vertical"></i>
+        <i class="glyphicon glyphicon-search"></i>
     </span>
 </template>
 <script>
@@ -21,8 +21,13 @@ export default {
   border:none;
   width: 45px;
   height: 45px;
-  right: 10px;
-  bottom: 60px;
+  left: 10px;
+  bottom: 80%;
+  border-radius: 2px;
   z-index: 100 !important;
+  .glyphicon {
+    color: white;
+    font-size: 20px;
+  }
 }
 </style>

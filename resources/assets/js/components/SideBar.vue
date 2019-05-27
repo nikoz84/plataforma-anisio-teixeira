@@ -1,7 +1,7 @@
 <template>
     <aside class="sidebar" id="sidebar-home">
-        <a class="closebtn" @click.prevent="closeSidebar()">&times;</a>
-
+      <span class="label label-primary btn-close" @click.prevent="closeSidebar()"><i class="glyphicon glyphicon-remove"></i> Fechar</span>
+        
         <div class="input-group" style="padding-top:60px;">
             <input type="text" class="form-control" placeholder="Busca...">
             <span class="input-group-btn">
@@ -55,6 +55,11 @@ export default {
   font-size: 36px;
   margin-left: 50px;
   text-decoration: none;
+}
+
+.btn-close{
+  cursor: pointer;
+  float: right;
 }
 </style>
 

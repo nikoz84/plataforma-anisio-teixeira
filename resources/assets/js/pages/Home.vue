@@ -28,78 +28,20 @@
 
             </div>
         </article-->
-      <div class="row">
-        <h2>Conteúdos Destacados</h2>
-        <article class="col-sm-3 no-padding" v-for="(conteudo, d) in data.conteudos_destaque" :key="`${d}d`">
-            <div class="">
-                <img  v-lazy="conteudo.image" class="img-responsive">
-            </div>
-            <div>
-                <h3>{{ conteudo.title }}</h3>
-                
-                <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
-            </div>
-        </article>
-      </div>
-      <div class="row">
-        <h2>Conteúdos mais Recentes</h2>
-        <article class="col-sm-3 no-padding" v-for="(conteudo, c) in data.conteudos_recentes" :key="`${c}c`">
-            <div class="">
-                <img  v-lazy="conteudo.image" class="img-responsive">
-            </div>
-            <div>
-                <h3>{{ conteudo.title }}</h3>
-                
-                <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
-            </div>
-        </article>
-      </div>
-      <div class="row">
-        <h2>Conteúdos mais Baixados</h2>
-        <article class="col-sm-3 no-padding" v-for="(conteudo, b) in data.conteudos_baixados" :key="`${b}b`">
-            <div class="">
-                <img  v-lazy="conteudo.image" class="img-responsive">
-            </div>
-            <div>
-                <h3>{{ conteudo.title }}</h3>
-                <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
-            </div>
-        </article>
-      </div>
       
-      <div class="row">
-        <h2>Conteúdos mais Acessados</h2>
-        <article class="col-sm-3 no-padding" v-for="(conteudo, a) in data.conteudos_acessados" :key="`${a}a`">
-            <div class="">
-                <img  v-lazy="conteudo.image" class="img-responsive">
-            </div>
-            <div>
-                <h3>{{ conteudo.title }}</h3>
-                
-                <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
-            </div>
-        </article>
-      </div>
-      <div class="row">
-        <h2>Aplicativos Destacados</h2>
-        <article class="col-sm-3 no-padding" v-for="(aplicativo, a) in data.aplicativos_destaque" :key="'a'+a">
-            <div class="">
-                <img  v-lazy="aplicativo.image" class="img-responsive">
-            </div>
-            <div>
-                <h3>{{ aplicativo.name }}</h3>
-                <p><a class="btn btn-primary" href="#" role="button">Saiba mais »</a></p>
-            </div>
-        </article>
-      </div>
-    </section>
+      <CardHome :title="'Conteúdos Mais Baixados'" :items="data.conteudos_baixados"></CardHome>
+      <CardHome :title="'Conteúdos Mais Acessados'" :items="data.conteudos_acessados"></CardHome>
+      <CardHome :title="'Aplicativos Destacados'" :items="data.aplicativos_destaque"></CardHome>
+      </section>
   </section>
 </template>
 <script>
 import { mapState, mapMutations } from "vuex";
+import CardHome from "../components/CardHome.vue";
 
 export default {
   name: "Home",
+  components: { CardHome },
   data() {
     return {
       data: {}

@@ -19,8 +19,8 @@ import SideBar from "./SideBar.vue";
 export default {
   name: "main-app",
   components: {
-    "nav-principal":NavPrincipal,
-    "footer-app":FooterApp,
+    "nav-principal": NavPrincipal,
+    "footer-app": FooterApp,
     "back-to-top": BackToTop,
     "side-bar": SideBar,
     "open-side-bar": OpenSideBar
@@ -58,30 +58,31 @@ hr.line {
   background-image: linear-gradient(to right, #ccc, #949da5, #ccc);
 }
 
-hr{
+hr {
   border: 1px solid rgb(235, 234, 234);
 }
 
-.glyphicon-asterisk{
+.glyphicon-asterisk {
   color: rgb(128, 3, 3);
   font-size: 19px;
   margin-left: 5px;
 }
 
-small{
+small {
   font-size: 90%;
 }
 
-.menu_admin{
+.menu_admin {
   list-style-type: none;
   background: rgb(243, 243, 243);
   margin-bottom: 5px;
   padding: 5px;
 }
 
-.menu_admin a:link, a:visited {
-	text-decoration: none
-	}
+.menu_admin a:link,
+a:visited {
+  text-decoration: none;
+}
 
 /* Hide all steps by default: 
 .tab {
@@ -123,13 +124,11 @@ small{
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-
 }
 
-.container .container-text{
+.container .container-text {
   margin-left: 10px;
 }
-
 
 .container input {
   position: absolute;
@@ -146,26 +145,22 @@ small{
   height: 25px;
   width: 25px;
   background-color: #eee;
-  text-align:left;
+  text-align: left;
 }
-
 
 .container:hover input ~ .checkmark {
   background-color: #ccc;
 }
 
-
 .container input:checked ~ .checkmark {
-  background-color: #2196F3;
+  background-color: #2196f3;
 }
-
 
 .checkmark:after {
   content: "";
   position: absolute;
   display: none;
 }
-
 
 .container input:checked ~ .checkmark:after {
   display: block;
@@ -182,114 +177,4 @@ small{
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-
-.destaque-principal {
-  overflow: hidden;
-  float: left;
-  margin: 0;
-  border-radius: 5px;
-}
-
-ul{
-  list-style-type: none;
-}
-
-.destaque-principal > img {
-  width: 100%;
-  height: 500px;  
-  border-radius: 5px;
-	-webkit-transition: all .8s;
-  -moz-transition: all .8s;
-  -ms-transition: all .8s;
-  -o-transition: all .8s;
-  transition: all .8s;
-}
-.destaque-principal:hover > img {
-	-webkit-transform: scale(1.5);
-  -moz-transform: scale(1.5);
-  -ms-transform: scale(1.5);
-  -o-transform: scale(1.5);
-  transform: scale(1.5);
-}
-
-.destaque-principal .retina{
-	position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: none repeat scroll 0 0 rgba(29, 29, 29, 0.5);
-  text-align:left;
-  z-index:1;
-}
-
-.destaque-secudario {
-	position: relative;
-  overflow: hidden;
-  border-radius: 5px;
-  margin: 10px;
-  background: #fff;
-  float: left;
-}
-
-.destaque-secudario ul{
-  list-style-type: none;
-}
-
-.destaque-secudario > img {
-  width: 100%;
-  height: 240px;
-  border-radius: 5px;
-	-webkit-transition: all .8s;
-  -moz-transition: all .8s;
-  -ms-transition: all .8s;
-  -o-transition: all .8s;
-  transition: all .8s;
-}
-.destaque-secudario:hover > img {
-	-webkit-transform: scale(1.5);
-  -moz-transform: scale(1.5);
-  -ms-transform: scale(1.5);
-  -o-transform: scale(1.5);
-  transform: scale(1.5);
-}
-.destaque-secudario .retina{
-	position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
-  text-align:left;
-  z-index:1;
-  -webkit-transition:	 all .8s;
-  -moz-transition: all .8s;
-  -ms-transition: all .8s;
-  -o-transition: all .8s;
-  transition: all .8s;
-}
-.destaque-secudario:hover .retina {
-    box-shadow: inset 0 0 100px 50px rgba(0,0,0,.5);
-}
-
-.destaque-principal .texto {
-  position:absolute;
-  z-index:2;
-  margin-top: 45%;
-  color: #fff;
-}
-
-.destaque-secudario .texto {
-  position:absolute;
-  z-index:2;
-  margin-top: 20%;
-  color: #fff;
-}
-
-.col-md-5, col-md-3{
-  padding-right: 0px;
-  padding-left: 0px;
-}
-
-
 </style>
