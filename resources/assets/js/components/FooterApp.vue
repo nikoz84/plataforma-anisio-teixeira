@@ -1,6 +1,6 @@
 <template>
-    <footer class="page-footer mt-4">
-        <section class="container-fluid" style="background-color: #172b4e;">
+    <footer class="page-footer mt-4" style="background-color: #082250;">
+        <section class="container-fluid" style="background-color: #082250;">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-lg-5">
