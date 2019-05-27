@@ -15,7 +15,7 @@ import FooterApp from "./FooterApp.vue";
 import BackToTop from "./BackToTop.vue";
 import OpenSideBar from "./OpenSideBar.vue";
 import SideBar from "./SideBar.vue";
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions} from "vuex";
 
 export default {
   name: "main-app",

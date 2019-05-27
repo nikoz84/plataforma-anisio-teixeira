@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use DB;
 
 class Conteudo extends Model
 {
@@ -78,13 +79,22 @@ class Conteudo extends Model
     public function getImageAttribute()
     {
         $image = "{$this['id']}.jpg";
+        $id = $this['id'];
+        $canal = $this['canal_id'];
+
         if (Storage::disk('sinopse')->exists($image)) {
             //return Storage::disk('sinopse')
             //            ->url($image);
-
-        } elseif ($this['canal_id'] == 2) {
-            $tipo = $this['options']['tipo']['id'];
-            return "emitec.{$tipo}";
+        } elseif ($canal == 2) {
+            $conteudo = $this->whereId($id)->get();
+            //$cmp_array = (object)$cmp_array->toArray();
+            //dd($conteudo);
+            //$nivel = DB::table('curricular_components')->where('id', 5)->whereIn('id', $componentes)->toSql();
+            //imagem-associada/img-emitec_disciplina29.png
+            //dd($nivel);
+            //dd($nivel);
+            //die();
+            return "emitec";
         } else {
             return '';
         }

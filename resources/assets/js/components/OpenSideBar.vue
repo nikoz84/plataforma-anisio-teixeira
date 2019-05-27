@@ -21,8 +21,8 @@ export default {
   border:none;
   width: 45px;
   height: 45px;
-  left: 10px;
-  bottom: 80%;
+  top: 14vh;
+  right: 10px;
   border-radius: 2px;
   z-index: 100 !important;
   .glyphicon {
