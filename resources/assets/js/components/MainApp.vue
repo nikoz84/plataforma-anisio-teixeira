@@ -25,7 +25,15 @@ export default {
     "side-bar": SideBar,
     "open-side-bar": OpenSideBar
   },
-  methods: {}
+  mount() {
+    this.getLayout();
+  },
+  computed: {
+    ...mapState(["layout"])
+  },
+  methods: {
+    ...mapActions(["getLayout"])
+  }
 };
 </script>
 <style lang="scss" >

@@ -38,10 +38,10 @@
                 <div class="col-md-4 col-lg-4 mb-4">
                     <h6 class="text-uppercase font-weight-bold">Contato</h6>
                     <hr style="width: 80px;">
-                    <a href="#">Fale conosco</a>
-                    <p><i class="fa fa-home mr-3"></i> Salvador, Bahia, Brasil</p>
-                    <p><i class="fa fa-envelope mr-3"></i> info@example.com</p>
-                    <p><i class="fa fa-phone mr-3"></i> +55 71 3115 9061</p>
+                    <a href="fale-conosco">Fale conosco</a>
+                    <p><i class="glyphicon glyphicon-home mr-3"></i> {{  }}</p>
+                    <p><i class="glyphicon glyphicon-envelope mr-3"></i> {{}}</p>
+                    <p><i class="glyphicon glyphicon-phone-alt mr-3"></i> {{}}</p>
                 </div>
                 <!-- Canais -->
                 <div class="col-md-12 mt-4">
@@ -85,71 +85,74 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 
 export default {
-    name : 'FooterApp',
-    mounted() {
-        this.getYear();
+  name: "FooterApp",
+  mounted() {
+    this.getYear();
+  },
+  data() {
+    return {
+      year: null
+    };
+  },
+  computed: {
+    ...mapState(["links", "layout"])
+  },
+  methods: {
+    getYear() {
+      let date = new Date();
+      this.year = date.getFullYear();
     },
-    data(){
-        return {
-            year: null
-        }
-    },
-    computed: {
-        ...mapState([
-            "layout",
-            "links"
-        ])
-    },
-    methods:{
-        getYear(){
-            let date = new Date();
-            this.year = date.getFullYear();
-        }
+    renderData(data) {
+      return data ? data : "";
     }
-}
+  }
+};
 </script>
 <style lang="scss" scoped>
-.page-footer { margin-top: 5vh; }
-.font-weight-bold { 
-    font-weight: bold; 
-    color:#FFFFFF;
+.page-footer {
+  margin-top: 5vh;
+}
+.font-weight-bold {
+  font-weight: bold;
+  color: #ffffff;
 }
 .footer-cc {
-    margin-top: 50px;
-    margin-bottom: 50px;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 .img-cc {
-    
 }
 .p-cc {
-    
-    color: #0d2626;
+  color: #0d2626;
 }
-.mt-4 { 
-    margin-top: 40px;
+.mt-4 {
+  margin-top: 40px;
 }
-.mb-4 { 
-    margin-bottom: 40px;
+.mb-4 {
+  margin-bottom: 40px;
 }
-.footer-copyleft { margin-top: 5vh; background-color: #D8D8D8;}
-.copyleft{
-    display:inline-block;
-    -moz-transform: rotate(180deg);
-    -o-transform: rotate(180deg);
-    -ms-transform: rotate(180deg);
-    -webkit-transform: rotate(180deg);
-    transform: rotate(180deg);
+.footer-copyleft {
+  margin-top: 5vh;
+  background-color: #d8d8d8;
 }
-hr{
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    border: 0;
-    border-top: 1px solid #1e78c2;
+.copyleft {
+  display: inline-block;
+  -moz-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
-p{
-    color: #e6e6e6;
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid #1e78c2;
+}
+p {
+  color: #e6e6e6;
 }
 </style>

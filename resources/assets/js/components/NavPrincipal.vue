@@ -62,14 +62,11 @@ import { mapActions, mapState } from "vuex";
 
 export default {
   name: "NavPricipal",
-  mounted() {
-    this.getLayout();
-  },
   computed: {
     ...mapState(["isLogged", "links"])
   },
   methods: {
-    ...mapActions(["getLayout", "logout"]),
+    ...mapActions(["logout"]),
     /*async logout() {
       let resp = await client.post("/auth/logout", params);
 
