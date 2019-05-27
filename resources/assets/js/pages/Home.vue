@@ -1,6 +1,8 @@
 <template>
+
   <section class="container-fluid heigth">
     <section class="main" id="main-home">
+      <menu-side-bar></menu-side-bar>
       <!--article v-for="(destaque, i) in plataforma" :key="'i'+i">
             <div :class="(destaque.is_principal) ? 'col-md-5 destaque-principal': 'col-md-3 destaque-secundario'">
                 <img v-lazy="destaque.img" class="img-responsive">
@@ -29,6 +31,7 @@
             </div>
         </article-->
       
+      
       <CardHome :title="'Conteúdos Mais Baixados'" :items="data.conteudos_baixados"></CardHome>
       <CardHome :title="'Conteúdos Mais Acessados'" :items="data.conteudos_acessados"></CardHome>
       <CardHome :title="'Aplicativos Destacados'" :items="data.aplicativos_destaque"></CardHome>
@@ -38,10 +41,14 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import CardHome from "../components/CardHome.vue";
+import MenuSideBar from "../components/MenuSideBar.vue";
 
 export default {
   name: "Home",
-  components: { CardHome },
+  components: { CardHome,
+  "menu-side-bar": MenuSideBar
+  },
+  
   data() {
     return {
       data: {}
