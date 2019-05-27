@@ -25,7 +25,15 @@
         </aside>
 
         <section class="main" id="main-home">
-
+            <article v-for="(listagem, m) in menu" :key="'m'+m">
+                <div class="col-md-3">
+                    <ul>
+                        <li>
+                            {{ menu.name }}
+                        </li>
+                    </ul>
+                </div>
+            </article>
 
             <article v-for="(destaque, i) in plataforma" :key="'i'+i">
                 <div :class="(destaque.is_principal) ? 'col-md-5 destaque-principal': 'col-md-3 destaque-secundario'">
@@ -63,8 +71,8 @@
                 {{this.$store.state.layout}}
             </article>
         </section>
-        <div>
-            <span @click="openSidebar()" class="btn btn-default afix" data-spy="affix" data-offset-bottom="50%">Abrir</span>
+        <div class="btn-flutuante">
+            <span @click="openSidebar()" class="btn btn-default afix" data-spy="affix" data-offset-bottom="50%">Pesquisar</span>
         </div>
     </div>
 </template>
@@ -97,9 +105,9 @@ export default {
         ],
         plataforma:[
             {
-                name: 'Centros Juvenis de Ciência e Cultura',
-                description: 'Projeto que trabalha com ensino complementar e oferece atividades interdisciplinares em que alunos têm acesso a conhecimentos científicos, cursos e oficinas.',
-                img: 'http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/68435/course/overviewfiles/destaque-home-plataforma.jpg',
+                name: 'EMITEC',
+                description: 'Com as aulas do Ensino Médio com Intermediação Tecnológica (Emitec), você terá acesso aos conteúdos prioritários do Ensino Médio. Aqui você pode pesquisar as aulas por disciplina, ano de ensino e unidade, além de poder visualizar, de forma fácil, os vídeos mais recentes, mais vistos e os mais baixados.',
+                img: 'http://pat.educacao.ba.gov.br/assets/img/slider/banner-emitec.jpg',
                 is_principal: true
             },
             {
@@ -114,7 +122,7 @@ export default {
                 img: 'http://colaborativus.pat.educacao.ba.gov.br/pluginfile.php/46944/course/overviewfiles/destaque-home-plataforma.jpg',
                 is_principal: false
             }
-            
+
         ],
         recentes:[
             {name: 'Fica a Dica Enem - Como Tirar Nota 1.000 na Redação?'},
@@ -126,6 +134,13 @@ export default {
             {name: 'conceito digital'},
             {name: 'matemática'},
             {name: 'preconceito racial'}
+        ],
+        menu:[
+            {name: 'TV Anísio Teixeira'},
+            {name: 'Rádio Anísio Teixeira'},
+            {name: 'Emitec'},
+            {name: 'Projetos Artísticos'},
+            {name: 'Sites Temáticos'}
         ]
     };
   },
@@ -176,6 +191,24 @@ export default {
   margin-left: 50px;
   text-decoration: none;
 }
+.texto h1{
+    color: #ffffff;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.texto p{
+    color: #ffffff;
+    font-size: 15px;
+    text-align: justify;
+    margin: 10px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.texto ul{
+    margin: 5px;
+}
+
+
 .affix {
     bottom: 100px;
     right: 20px;
@@ -185,6 +218,12 @@ export default {
 #main-home {
   transition: margin-left .5s;
   padding: 20px;
+}
+
+.container-fluid .btn-flutuante{
+   position: fixed;
+    left: 1rem;
+    top: 1rem;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */

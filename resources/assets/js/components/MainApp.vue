@@ -178,6 +178,7 @@ small{
   overflow: hidden;
   float: left;
   margin: 0;
+  border-radius: 5px;
 }
 
 ul{
@@ -185,8 +186,8 @@ ul{
 }
 
 .destaque-principal > img {
-  height: 500px;
   width: 100%;
+  height: 500px;  
   border-radius: 5px;
 	-webkit-transition: all .8s;
   -moz-transition: all .8s;
