@@ -28,11 +28,11 @@ class HomeController extends ApiController
     }
     public function getLayout()
     {
-        $links = DB::select(DB::raw("SELECT name, 
-                                    slug, 
+        $links = DB::select(DB::raw("SELECT name,
+                                    slug,
                                     options->'order_menu' AS order,
-                                    options->'back_url' AS url 
-                                    FROM canais 
+                                    options->'back_url' AS url
+                                    FROM canais
                                     WHERE is_active = ?
                                     ORDER BY options->'order_menu';"), [true]);
 
@@ -43,68 +43,71 @@ class HomeController extends ApiController
         ];
         return response()->json($data, 200);
     }
-    public function getHomeData(){
+    public function getHomeData()
+    {
         $data = [
             'conteudos_recentes'=> $this->getConteudosMaisRecentes(),
             'conteudos_baixados' => $this->getMaisBaixados(),
             'conteudos_acessados' => $this->getMaisAcessados(),
             'conteudos_destaque' => $this->getAplicativosDestaques(),
-            'aplicativos_recentes' => $this->getAplicativosMaisRecentes(), 
+            'aplicativos_recentes' => $this->getAplicativosMaisRecentes(),
             'aplicativos_destaque' => $this->getAplicativosDestaques(),
         ];
 
-        return response()->json($data,200);
+        return response()->json($data, 200);
     }
-    protected function getConteudosMaisRecentes(){
-        
-        $mais_recentes = DB::select('SELECT id, title 
-                                    from conteudos 
-                                    order by created_at desc  
-                                    limit 4');
-        
-        return $mais_recentes;
-    }
-    protected function getAplicativosMaisRecentes(){
-        
-        $mais_recentes = DB::select('SELECT id, name 
-                                    from aplicativos 
+    protected function getConteudosMaisRecentes()
+    {
+        $mais_recentes = DB::select('SELECT id, title
+                                    from conteudos
                                     order by created_at desc
                                     limit 4');
-        
         return $mais_recentes;
     }
-    protected function getMaisBaixados(){
-        $mais_baixados = DB::select('SELECT id, title, qt_downloads 
-                                    from conteudos 
+    protected function getAplicativosMaisRecentes()
+    {
+        $mais_recentes = DB::select('SELECT id, name
+                                    from aplicativos
+                                    order by created_at desc
+                                    limit 4');
+
+        return $mais_recentes;
+    }
+    protected function getMaisBaixados()
+    {
+        $mais_baixados = DB::select('SELECT id, title, qt_downloads
+                                    from conteudos
                                     order by qt_downloads desc
                                     limit 4');
-        
+
         return $mais_baixados;
     }
-    protected function getMaisAcessados(){
-        $mais_acessados = DB::select('SELECT id, title, qt_access 
-                                    from conteudos 
+    protected function getMaisAcessados()
+    {
+        $mais_acessados = DB::select('SELECT id, title, qt_access
+                                    from conteudos
                                     order by qt_access desc
                                     limit 4
                                     ');
-        
+
         return $mais_acessados;
     }
-    protected function getAplicativosDestaques(){
-        $destaques = DB::select(DB::raw("SELECT id, name 
-                                    from aplicativos 
+    protected function getAplicativosDestaques()
+    {
+        $destaques = DB::select(DB::raw("SELECT id, name
+                                    from aplicativos
                                     where options->>'is_featured' = 'true'
                                     limit 4"));
-        
+
         return $destaques;
     }
-    protected function getConteudosDestaques(){
-        $destaques = DB::select(DB::raw("SELECT id, title 
-                                        from conteudos 
+    protected function getConteudosDestaques()
+    {
+        $destaques = DB::select(DB::raw("SELECT id, title
+                                        from conteudos
                                         where is_featured = true
                                         limit 4"));
-        
+
         return $destaques;
     }
-    
 }

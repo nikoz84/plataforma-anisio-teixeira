@@ -73,7 +73,7 @@ class Conteudo extends Model
     }
     public function getExcerptAttribute()
     {
-        return strip_tags(Str::words($this['description'],30));
+        return strip_tags(Str::words($this['description'], 30));
     }
     public function getImageAttribute()
     {

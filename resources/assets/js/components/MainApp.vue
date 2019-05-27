@@ -3,8 +3,9 @@
         <nav-principal></nav-principal>
         <router-view></router-view>
         <footer-app></footer-app>
+        <side-bar></side-bar>
         <back-to-top></back-to-top>
-        
+        <open-side-bar></open-side-bar>
     </main>
 </template>
 
@@ -12,6 +13,8 @@
 import NavPrincipal from "./NavPrincipal.vue";
 import FooterApp from "./FooterApp.vue";
 import BackToTop from "./BackToTop.vue";
+import OpenSideBar from "./OpenSideBar.vue";
+import SideBar from "./SideBar.vue";
 
 export default {
   name: "main-app",
@@ -19,6 +22,8 @@ export default {
     "nav-principal":NavPrincipal,
     "footer-app":FooterApp,
     "back-to-top": BackToTop,
+    "side-bar": SideBar,
+    "open-side-bar": OpenSideBar
   },
   methods: {}
 };
