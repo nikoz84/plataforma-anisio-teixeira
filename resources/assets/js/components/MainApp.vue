@@ -15,6 +15,7 @@ import FooterApp from "./FooterApp.vue";
 import BackToTop from "./BackToTop.vue";
 import OpenSideBar from "./OpenSideBar.vue";
 import SideBar from "./SideBar.vue";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "main-app",
@@ -25,7 +26,15 @@ export default {
     "side-bar": SideBar,
     "open-side-bar": OpenSideBar
   },
-  methods: {}
+  mount() {
+    this.getLayout();
+  },
+  computed: {
+    ...mapState(["layout"])
+  },
+  methods: {
+    ...mapActions(["getLayout"])
+  }
 };
 </script>
 <style lang="scss" >
