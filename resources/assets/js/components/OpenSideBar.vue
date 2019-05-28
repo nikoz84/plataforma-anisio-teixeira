@@ -28,6 +28,7 @@ export default {
   .glyphicon {
     color: white;
     font-size: 20px;
+    margin-top: 5px;
   }
 }
 </style>

@@ -12,7 +12,7 @@
                       <img v-lazy="getImage"
                           alt="imagem destacada" 
                           class="card-img-show" 
-                          src="http://lorempixel.com/300/200/?random=123">
+                          :src="getImage">
                     </router-link>
                   </div>
                   <div class="col-md-8">

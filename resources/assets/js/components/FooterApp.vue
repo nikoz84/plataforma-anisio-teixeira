@@ -39,7 +39,7 @@
                     <p><i class="glyphicon glyphicon-home mr-3"></i> {{ layout.contact.city }}</p>
                     <p><i class="glyphicon glyphicon-envelope mr-3"></i> {{ layout.contact.email }}</p>
                     <p><i class="glyphicon glyphicon-phone-alt mr-3"></i> {{ layout.contact.phone }}</p>
-                    <router-link tag="p" :to="{ name: 'FaleConoscoForm', path: '/faleconosco'}">
+                    <router-link tag="p" :to="{ name: 'FaleConoscoForm', path: 'faleconosco'}">
                           Ou <a style="color: #1e78c2;"> Fale Conosco</a>
                     </router-link>
                 </div>
