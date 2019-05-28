@@ -7,11 +7,7 @@
                     <img v-lazy="item.image" class="img-responsive">
                     <div class="retina">
                         <div class="texto">
-                             <ul>
-                                <li>
-                                    {{ (item.title) ? item.title : item.name }}                                    
-                                </li>
-                             </ul>
+                          {{ (item.title) ? item.title : item.name }}
                         </div>
                     </div>
                 </div>
