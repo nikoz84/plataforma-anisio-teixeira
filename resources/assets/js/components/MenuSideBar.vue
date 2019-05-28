@@ -21,3 +21,14 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+ul {
+  margin: 5px;
+}
+
+li{
+  border: 1px solid rgb(231, 230, 230);
+  background-color: rgb(233, 233, 233);
+}
+
+</style>
