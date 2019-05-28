@@ -28,8 +28,8 @@ export default {
   methods: {
     isDestaque(index) {
       return index == 0
-        ? "col-md-4 destaque-principal"
-        : "col-md-2 destaque-secundario ml-30";
+        ? "col-md-5 destaque-principal"
+        : "col-md-3 destaque-secundario ml-30";
     }
   }
 };
@@ -74,7 +74,7 @@ ul {
   z-index: 1;
 }
 
-.destaque-secudario {
+.destaque-secundario {
   position: relative;
   overflow: hidden;
   border-radius: 5px;
@@ -83,11 +83,11 @@ ul {
   float: left;
 }
 
-.destaque-secudario ul {
+.destaque-secundario ul {
   list-style-type: none;
 }
 
-.destaque-secudario > img {
+.destaque-secundario > img {
   width: 100%;
   height: 240px;
   border-radius: 5px;
@@ -97,14 +97,14 @@ ul {
   -o-transition: all 0.8s;
   transition: all 0.8s;
 }
-.destaque-secudario:hover > img {
+.destaque-secundario:hover > img {
   -webkit-transform: scale(1.5);
   -moz-transform: scale(1.5);
   -ms-transform: scale(1.5);
   -o-transform: scale(1.5);
   transform: scale(1.5);
 }
-.destaque-secudario .retina {
+.destaque-secundario .retina {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -119,7 +119,7 @@ ul {
   -o-transition: all 0.8s;
   transition: all 0.8s;
 }
-.destaque-secudario:hover .retina {
+.destaque-secundario:hover .retina {
   box-shadow: inset 0 0 100px 50px rgba(0, 0, 0, 0.5);
 }
 
@@ -130,7 +130,7 @@ ul {
   color: #fff;
 }
 
-.destaque-secudario .texto {
+.destaque-secundario .texto {
   position: absolute;
   z-index: 2;
   margin-top: 20%;
