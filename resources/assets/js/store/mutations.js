@@ -63,6 +63,12 @@ const mutations = {
   SET_CATEGORIES(state, categories) {
     state.categories = categories;
   },
+  SET_COMPONENTS(state, components) {
+    state.components = components;
+  },
+  SET_NIVEIS(state, niveis) {
+    state.niveis = niveis;
+  },
   SET_TEMAS(state, temas) {
     state.temas = temas;
   },

@@ -23,13 +23,11 @@ const actions = {
     let resp = await axios.get(url);
     commit("SET_COMPONENT_ID", "");
     if (resp.status == 200 && resp.data.paginator) {
-      console.log(resp.data)
       commit("SET_COMPONENT_ID", "Paginator");
       commit("SET_IS_LOADING", false);
       commit("SET_PAGINATOR", resp.data.paginator);
       
     } else if(resp.status == 200 && resp.data.metadata){
-      console.log(resp.data)
       commit("SET_COMPONENT_ID", "Posts");
       commit("SET_IS_LOADING", false);
       commit("SET_POSTS",resp.data.metadata.blog_posts);
@@ -100,14 +98,6 @@ const actions = {
       commit("SET_IS_ERROR", false);
     }, 2500);
   },
-  async goToPage({ commit }, url) {
-    console.log(url);
-    //if (url) {
-    //let resp = await axios.get(url);
-    //console.log(resp);
-    //commit("SET_CONTEUDOS", resp.data);
-    //}
-  },
   async login({ commit, dispatch }, user) {
     let resp = await axios.post("/auth/login", user);
     if (resp.status == 200 && resp.data.success) {
@@ -155,17 +145,35 @@ const actions = {
     commit("SET_LICENSES", { licenses, childs });
   },
   /** CANAL */
-  async getCanal({ commit, dispatch }, slug) {
+  async getCanalBySlug({ commit, dispatch }, slug) {
     let resp = await axios.get(`/canais/slug/${slug}`);
 
     if (resp.status == 200 && resp.data.canal) {
+      console.log(resp.data)
       commit("SET_CANAL", resp.data.canal);
       commit("SET_CANAL_ID", resp.data.canal.id);
       commit("SET_SIDEBAR", resp.data.sidebar);
+      dispatch("sideBarSet", resp.data.sidebar);
       await dispatch("fetchConteudos", { id: resp.data.canal.id });
     } else {
       commit("SET_IS_ERROR", true);
     }
+  },
+  sideBarSet({commit},sidebar){
+    let categories = (sidebar.categories) ? sidebar.categories: null;
+      commit("SET_CATEGORIES",categories);
+      let temas = (sidebar.temas) ? sidebar.temas : null;
+      commit("SET_TEMAS",temas);
+      let disciplinas = (sidebar.disciplinas) ? sidebar.disciplinas : null;
+      commit("SET_DISCIPLINAS",disciplinas);
+      let components = (sidebar.components) ? sidebar.components : null;
+      commit("SET_COMPONENTS",components);
+      let niveis = (sidebar.niveis) ? sidebar.niveis : null;
+      commit("SET_NIVEIS",niveis);
+      let tipos = (sidebar.tipos) ? sidebar.tipos : null;
+      commit("SET_TIPOS",tipos);
+      //let licenses = (sidebar.licenses) ? sidebar.licenses : null;
+      //commit("SET_LICENSES",licenses)
   },
   async fetchEnabledCategories({ commit }, params) {
     let resp = await axios.get("/categories", params);

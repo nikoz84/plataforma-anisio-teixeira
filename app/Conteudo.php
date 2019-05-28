@@ -3,11 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Traits\FileSystemLogic;
 
 class Conteudo extends Model
 {
+    use FileSystemLogic;
+
     protected $id = 'id';
     const IS_SITE = 'false';
     const IS_APPROVED = 'false';
@@ -78,15 +80,16 @@ class Conteudo extends Model
     public function getImageAttribute()
     {
         $image = "{$this['id']}.jpg";
-        if (Storage::disk('sinopse')->exists($image)) {
+        $id = $this['id'];
+        $canal = $this['canal_id'];
+
+        //if (Storage::disk('sinopse')->exists($image)) {
             //return Storage::disk('sinopse')
             //            ->url($image);
-
-        } elseif ($this['canal_id'] == 2) {
-            $tipo = $this['options']['tipo']['id'];
-            return "emitec.{$tipo}";
-        } else {
-            return '';
-        }
+        //} 
+        if ($canal == 2) {
+            $components = $this['options']['componentes'];
+            return $this::getEmitecImage($components);
+        } 
     }
 }

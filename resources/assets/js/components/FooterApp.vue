@@ -1,6 +1,6 @@
 <template>
-    <footer class="page-footer mt-4">
-        <section class="container-fluid" style="background-color: #172b4e;">
+    <footer class="page-footer mt-4" style="background-color: #082250;">
+        <section class="container-fluid" style="background-color: #082250;">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-lg-5">
@@ -69,7 +69,7 @@
             <div class="container">
                 <div class="footer-cc row">
                     <div class="col-lg-2">
-                        <img class="image-cc" src="http://pat.educacao.ba.gov.br/assets/img/creative_commons.png">
+                        <img class="image-cc" src="/img/creative_commons.png">
                     </div>
                     <div class="col-lg-10">
                         <p class="p-cc">

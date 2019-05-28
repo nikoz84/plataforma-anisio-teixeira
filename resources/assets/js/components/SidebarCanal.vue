@@ -1,60 +1,11 @@
 <template>
 <div>
-    <nav role="menu categorias" v-if="categoriesExists">
-        <ul class="nav nav-pills nav-stacked">
-            <router-link tag="li" :to="{ name: 'Listar', params: { slug : $route.params.slug }}">
-                <a>Todos</a>
-            </router-link>
-            <!-- CATEGORIAS -->
-            <li v-for="(category, c) in sidebar.categories" v-bind:key="c">
-                <router-link :to="{ name: 'Listar', 
-                            params: { slug : $route.params.slug }, 
-                            query: { categoria: category.id }}" exact>
-                <a>{{ category.name }}</a>
-                </router-link>
-                <!-- SUBCATEGORIAS -->
-                <ul v-if="category.sub_categories && category.sub_categories.length > 0">
-                    <li v-for="(subcategory, s) in category.sub_categories" v-bind:key="s" >
-                        <router-link :to="{ name: 'Listar', 
-                            params: { slug : $route.params.slug }, 
-                            query: { categoria: subcategory.id }}" exact>
-                        <a>{{ subcategory.name }}</a>
-                        </router-link>
-                    </li>
-                </ul>
-            </li>
-        </ul> 
-    </nav>
-    <nav role="menu disciplinas ensino medio" 
-         v-if="disciplinasExists" 
-         :style="'margin-top:30px;'">
-        <h5 class="text-center">Disciplinas</h5>
-        <ul class="nav nav-pills nav-stacked">
-            <li  v-for="(disciplina, d) in sidebar.disciplinas[0].components" :key="d">
-                <router-link :to="{ name: 'Listar', 
-                            params: { slug : $route.params.slug }, 
-                            query: { categoria: $route.query.categoria, disciplina: disciplina.id }}" exact>
-                <a>{{ disciplina.name }}</a>
-                </router-link>
-            </li>
-        </ul>
-    </nav>
-    <nav role="menu temas transversáis" 
-         v-if="temasExists"
-         :style="'margin-top: 30px;'">
-        <h5 class="text-center"
-            :style="'margin-bottom: 20px;'">Temas Transversáis</h5>
-        <ul class="nav nav-pills nav-stacked">
-            <li  v-for="(tema, t) in sidebar.temas[0].components" :key="t">
-                <router-link :to="{ name: 'Listar', 
-                            params: { slug : $route.params.slug }, 
-                            query: { categoria: $route.query.categoria, tema: tema.id }}" exact>
-                <a>{{ tema.name }}</a>
-                </router-link>
-            </li>
-        </ul>
-    </nav>
-    <nav role="menu tipos de mídias" v-if="tiposExists">
+    <Categories></Categories>
+    <Temas></Temas> 
+    <Disciplinas></Disciplinas>
+    
+    
+    <nav role="menu tipos de mídias" v-if="false">
         <h5 data-toggle="collapse"
                     class="pointer" 
                    data-target="#collapse-tipos"
@@ -154,14 +105,17 @@
             </li>
         </ul>
     </nav>
-    {{sidebar}}
 </div>
 </template>
 <script>
+import { mapState } from "vuex";
+import Categories from "./Categories.vue";
+import Temas from "./Temas.vue";
+import Disciplinas from "./Disciplinas.vue";
 
 export default {
   name: "SidebarCanal",
-  props: [],
+  components:{Categories,Temas, Disciplinas},
   data() {
     return {
       checkedTipos: [],
@@ -170,34 +124,11 @@ export default {
       isVisible: false
     };
   },
+  created() {
+    
+  },
   computed: {
-    sidebar() {
-      //return this.$store.state.sidebar
-      //console.log(this.$store.state.sidebar);
-    },
-
-    categoriesExists() {
-      //return this.$store.state.categories ? true : false;
-    },
-    disciplinasExists() {
-      //return this.$store.state.disciplinas ? true : false;
-    },
-    temasExists() {
-      //return this.$store.state.temas ? true : false;
-    },
-
-    tiposExists() {
-      //return (this.sidebar && this.sidebar.tipos) ? true : false;
-    },
-    licensesExists() {
-      //return (this.sidebar && this.sidebar.licenses) ? true : false;
-    },
-    componentsExists() {
-      //return this.$store.state.components[0] ? true : false;
-    },
-    NiveisExists() {
-      //return this.$store.state.niveis[0] ? true : false;
-    }
+    ...mapState(["sidebar"]),
   },
   methods: {
     addToQuery() {
