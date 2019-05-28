@@ -31,4 +31,11 @@ li{
   background-color: rgb(233, 233, 233);
 }
 
+.active{
+  background-color: rgb(131, 133, 134);
+  color:rgb(255, 255, 255);
+  padding: 10px;
+  font-weight: bold;
+}
+
 </style>
