@@ -3,12 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use DB;
+use App\Traits\FileSystemLogic;
 
 class Conteudo extends Model
 {
+    use FileSystemLogic;
+
     protected $id = 'id';
     const IS_SITE = 'false';
     const IS_APPROVED = 'false';
@@ -82,21 +83,13 @@ class Conteudo extends Model
         $id = $this['id'];
         $canal = $this['canal_id'];
 
-        if (Storage::disk('sinopse')->exists($image)) {
+        //if (Storage::disk('sinopse')->exists($image)) {
             //return Storage::disk('sinopse')
             //            ->url($image);
-        } elseif ($canal == 2) {
-            $conteudo = $this->whereId($id)->get();
-            //$cmp_array = (object)$cmp_array->toArray();
-            //dd($conteudo);
-            //$nivel = DB::table('curricular_components')->where('id', 5)->whereIn('id', $componentes)->toSql();
-            //imagem-associada/img-emitec_disciplina29.png
-            //dd($nivel);
-            //dd($nivel);
-            //die();
-            return "emitec";
-        } else {
-            return '';
-        }
+        //} 
+        if ($canal == 2) {
+            $components = $this['options']['componentes'];
+            return $this::getEmitecImage($components);
+        } 
     }
 }

@@ -69,7 +69,7 @@
             <div class="container">
                 <div class="footer-cc row">
                     <div class="col-lg-2">
-                        <img class="image-cc" src="http://pat.educacao.ba.gov.br/assets/img/creative_commons.png">
+                        <img class="image-cc" src="/img/creative_commons.png">
                     </div>
                     <div class="col-lg-10">
                         <p class="p-cc">

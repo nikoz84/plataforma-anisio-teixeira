@@ -5,7 +5,7 @@
                 <sidebar></sidebar>
             </aside>
             <article class="col-sm-9">
-                <Breadcrum></Breadcrum>
+                <!--Breadcrum></Breadcrum-->
                 <header class="page-header">
                     <h1 class="page-title">
                         {{ canal.name }}
@@ -27,29 +27,25 @@
 <script>
 import NavCanal from "../components/NavCanal.vue";
 import SidebarCanal from "../components/SidebarCanal.vue";
-import Breadcrum from "../components/Breadcrum.vue";
-import { mapState } from "vuex";
+//import Breadcrum from "../components/Breadcrum.vue";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "canal",
-  components: { NavCanal, sidebar: SidebarCanal, Breadcrum },
+  components: { NavCanal, sidebar: SidebarCanal },
   mounted() {
-    this.getFromSlug();
+    this.getCanalBySlug(this.$route.params.slug);
   },
   watch: {
     $route(to, from) {
-      this.getFromSlug();
+      this.getCanalBySlug(this.$route.params.slug);
     }
   },
   methods: {
-    getFromSlug() {
-      this.$store.dispatch("getCanal", `${this.$route.params.slug}`);
-    }
+    ...mapActions(["getCanalBySlug"]),
   },
   computed: {
-    canal() {
-      return this.$store.state.canal;
-    }
+    ...mapState(["canal"])
   }
 };
 </script>

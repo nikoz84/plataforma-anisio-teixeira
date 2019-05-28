@@ -122,23 +122,7 @@ class CanalController extends ApiController
             case 2:
             case 3:
             case 12:
-                $categories = \App\Category::selectRaw("id, parent_id, name, options->'is_active' as is_active")
-                    ->where('canal_id', $id)
-                    ->whereRaw('parent_id is null')
-                    ->where('options->is_active', 'true')
-                    ->with('subCategories')
-                    ->orderBy('name', 'asc')
-                    ->get();
-                $disciplinas = [];
-                if ($id == 2) {
-                    $disciplinas = \App\NivelEnsino::where('id', '=', 5)->with('components')->get();
-                }
-
-                return [
-                    'categories' => $categories,
-                    'temas' => [],
-                    'disciplinas' => $disciplinas,
-                ];
+                return $this->getSideBarCategories($id);
                 break;
             case 7:
                 return [
@@ -146,31 +130,60 @@ class CanalController extends ApiController
                 ];
                 break;
             case 5:
-                return [
-                    'categories' => [],
-                    'temas' => \App\CurricularComponentCategory::where('id', '=', 3)->with('components')->get(),
-                    'disciplinas' => \App\NivelEnsino::where('id', '=', 5)->with('components')->get(),
-                ];
+                return $this->getSidebarSitesTematicos();
                 break;
             case 6:
-                return [
-                    'categories' => [],
-                    'temas' => [],
-                    'disciplinas' => [],
-                    'tipos' => \App\Tipo::select(['id', 'name'])->get(),
-                    'licenses' => \App\License::select(['id', 'name'])->whereRaw('parent_id is null')->get(),
-                    'components' => \App\CurricularComponentCategory::with('components')->get(),
-                    'niveis' => \App\NivelEnsino::with('components')->get(),
-                ];
+                return $this->getSideBarAdvancedFilter();
                 break;
             case 9:
-                return [
-                    'categories' => \App\AplicativoCategory::get(),
-                    'temas' => [],
-                    'disciplinas' => [],
-                ];
+                return ['categories' => \App\AplicativoCategory::get()];
                 break;
         }
+    }
+    private function getSideBarAdvancedFilter()
+    {
+        $componentes = \App\CurricularComponentCategory::with('components')->get()->first();
+        $tipos = \App\Tipo::select(['id', 'name'])->get();
+        $licencas = \App\License::select(['id', 'name'])->whereRaw('parent_id is null')->get();
+        $niveis = \App\NivelEnsino::with('components')->get()->first();
+        
+        return [
+            'components' => $componentes,
+            'tipos' => $tipos,
+            'licenses' => $licencas,
+            'niveis' => $niveis[0]
+        ];
+    }
+    private function getSideBarCategories($id)
+    {
+        $categories = \App\Category::selectRaw("id, parent_id, name, options->'is_active' as is_active")
+                    ->where('canal_id', $id)
+                    ->whereRaw('parent_id is null')
+                    ->where('options->is_active', 'true')
+                    ->with('subCategories')
+                    ->orderBy('created_at', 'asc')
+                    ->get();
+        $disciplinas= [];
+        if ($id == 2) {
+            $disciplinas = \App\NivelEnsino::where('id', '=', 5)->with('components')->get()->first();
+            return [
+                'categories' => $categories,
+                'disciplinas' => $disciplinas
+            ];
+        }
+
+        return ['categories' => $categories];
+    }
+    private function getSidebarSitesTematicos()
+    {
+        $temas = \App\CurricularComponentCategory::where('id', '=', 3)->with('components')->get()->first();
+        $componentes = \App\NivelEnsino::where('id', '=', 5)->with('components')->get()->first();
+
+        return [
+            "temas" => $temas,
+            "componentes" => $componentes
+        ];
+                
     }
     public function search(Request $request, $termo)
     {
