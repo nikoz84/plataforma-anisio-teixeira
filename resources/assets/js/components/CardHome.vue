@@ -9,9 +9,7 @@
                         <div class="texto">
                              <ul>
                                 <li>
-                                    <h1>
-                                        <h3>{{ (item.title) ? item.title : item.name }}</h3>
-                                    </h1>
+                                    {{ (item.title) ? item.title : item.name }}                                    
                                 </li>
                              </ul>
                         </div>
@@ -135,6 +133,9 @@ ul {
   z-index: 2;
   margin-top: 20%;
   color: #fff;
+  font-size: 14px;
+  text-align: justify;
+  margin-left: 2px;
 }
 
 .col-md-7,
