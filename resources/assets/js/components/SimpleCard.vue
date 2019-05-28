@@ -60,62 +60,62 @@ export default {
 </script>
 <style lang="scss" scoped>
 .card-panel {
-    margin-bottom: 20Px;
+  margin-bottom: 20px;
 }
 .card-panel img {
-    width: 100%;
-    background-color: transparent;
+  width: 100%;
+  max-height: 35vh;
+  background-color: transparent;
 }
 
 .card-panel .row,
 .card-panel .col-md-4 {
-    padding: 0;
-    background-color: #FFFFFF;
+  padding: 0;
+  background-color: #ffffff;
 }
 
-
 .card-panel .card-row {
-    padding: 0 20px 0 20px;
+  padding: 0 20px 0 20px;
 }
 
 .card-panel .card-row.card-header {
-    background-color: #FFFFFF;
-    font-size: 20px;
-    padding: 10px 20px 0 20px;
+  background-color: #ffffff;
+  font-size: 20px;
+  padding: 10px 20px 0 20px;
 }
 .card-row .card-header.car-title {
   font-size: 20px;
 }
 .card-panel .card-row.card-header .card-header-seperator {
-    height: 4px;
-    width: 35%;
-    background-color: #d9d9d9;
-    margin: 7px 0 7px 0;
+  height: 4px;
+  width: 35%;
+  background-color: #d9d9d9;
+  margin: 7px 0 7px 0;
 }
 
 .card-panel .card-row.card-desc {
-    position: relative;
-    height: 100%;
-    display: block;
-    font-size: 16px;
+  position: relative;
+  height: 100%;
+  display: block;
+  font-size: 16px;
 }
-.card-panel .card-row.card-desc a{
-    position: absolute;
-    width: 100%;
-    bottom: 10px;
-    left: 20px;
+.card-panel .card-row.card-desc a {
+  position: absolute;
+  width: 100%;
+  bottom: 10px;
+  left: 20px;
 }
 
 .row-margin-bottom {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .box-shadow {
-    -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,.10);
-    box-shadow: 0 0 10px 0 rgba(0,0,0,.10);
+  -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .no-padding {
-    padding: 0;
+  padding: 0;
 }
 </style>

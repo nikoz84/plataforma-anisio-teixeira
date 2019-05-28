@@ -37,7 +37,7 @@ export default {
       localStorage.setItem("urlDenuncia", location.href);
       return {
         name: "DenunciaForm",
-        params: { slug: this.$route.params.slug }
+        path: "denuncia"
       };
     },
     setUrlFaleConosco() {

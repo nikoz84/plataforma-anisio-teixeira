@@ -32,25 +32,22 @@ trait FileSystemLogic
 
         $filesystem = new Filesystem;
         $files = [];
+        $img_assoc = $path_assoc . "/{$id}.*";
+        $file = $filesystem->glob($img_assoc);
+        $img_sinopse = $path_assoc . "/sinopse/{$id}.*.*";
+        $files = $filesystem->glob($img_sinopse);
 
-        $file = ($tipo == 5) ? $path_assoc . "/sinopse/{$id}.*.*" : $path_assoc . "/{$id}.*";
-
-        $files = $filesystem->glob($file);
-
-        if (count($files)) {
-            $image = $files[array_rand($files)];
-            if ($filesystem->exists($image)) {
-                $replace_full_path = str_replace($path_assoc, "", $image);
-                return Storage::disk('conteudos-digitais')->url("imagem-associada" . $replace_full_path);
-            }
+        if (count($file) > 0) {
+            $img_assoc = array_values($file)[0];
+            $img_assoc = str_replace($path_assoc, "", $img_assoc);
+            return Storage::disk('conteudos-digitais')->url("imagem-associada" . $img_assoc);
+        } elseif ($tipo == 5 && count($files) > 0) {
+            $index = array_rand($files);
+            $img_sinopse = $files[$index];
+            $img_sinopse = str_replace($path_assoc, "", $img_sinopse);
+            return Storage::disk('conteudos-digitais')->url("imagem-associada" . $img_sinopse);
+        } else {
+            return Storage::disk('conteudos-digitais')->url("imagem-associada/tipo-conteudo/{$tipo}.png");
         }
-
-
-
-
-        //$exist = Storage::disk('conteudos-digitais')->exists($image);
-
-        //return array_rand($files, 1);
-
     }
 }
