@@ -79,17 +79,15 @@ class Conteudo extends Model
     }
     public function getImageAttribute()
     {
-        $image = "{$this['id']}.jpg";
         $id = $this['id'];
         $canal = $this['canal_id'];
+        $tipo = $this['options']['tipo'];
+        $components = $this['options']['componentes'];
 
-        //if (Storage::disk('sinopse')->exists($image)) {
-            //return Storage::disk('sinopse')
-            //            ->url($image);
-        //} 
         if ($canal == 2) {
-            $components = $this['options']['componentes'];
             return $this::getEmitecImage($components);
-        } 
+        } else {
+            return $this::getImageFromTipo($tipo, $id);
+        }
     }
 }

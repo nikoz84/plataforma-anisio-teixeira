@@ -10,7 +10,7 @@ import VueLazyload from "vue-lazyload";
 Vue.use(VueLazyload, {
   preLoad: 1.3,
   error: "/img/fundo-padrao.svg",
-  //loading: "dist/loading.gif",
+  //loading: "/img/loader.svg",
   attempt: 1,
   // the default is ['scroll', 'wheel', 'mousewheel', 'resize', 'animationend', 'transitionend']
   listenEvents: ["scroll"]
@@ -26,9 +26,9 @@ const router = new VueRouter({
   routes,
   //linkActiveClass: "active",
   linkExactActiveClass: "active",
-  scrollBehavior (to, from, savedPosition) {
+  scrollBehavior(to, from, savedPosition) {
     // page scroll to top for all route navigations
-    return { x: 0, y: 0 }
+    return { x: 0, y: 0 };
   }
 });
 
