@@ -63,22 +63,24 @@ ul {
   height: 100%;
   top: 0;
   left: 0;
-  background: none repeat scroll 0 0 rgba(29, 29, 29, 0.5);
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
   text-align: left;
   z-index: 1;
+  -webkit-transition: all 0.8s;
+  -moz-transition: all 0.8s;
+  -ms-transition: all 0.8s;
+  -o-transition: all 0.8s;
+  transition: all 0.8s;
 }
 
 .destaque-secundario {
   position: relative;
   overflow: hidden;
   border-radius: 5px;
-  margin: 10px;
   background: #fff;
   float: left;
-}
-
-.destaque-secundario ul {
-  list-style-type: none;
+  margin-left: 20px;
+  margin-bottom: 20px;
 }
 
 .destaque-secundario > img {
@@ -120,22 +122,27 @@ ul {
 .destaque-principal .texto {
   position: absolute;
   z-index: 2;
-  margin-top: 45%;
+  margin-top: 75%;
   color: #fff;
+  font-size: 16px;
+  text-align: left;
+  margin-left: 5px;
+  padding: 10px;
 }
 
 .destaque-secundario .texto {
   position: absolute;
   z-index: 2;
-  margin-top: 20%;
+  margin-top: 35%;
   color: #fff;
-  font-size: 14px;
-  text-align: justify;
-  margin-left: 2px;
+  font-size: 16px;
+  text-align: left;
+  margin-left: 5px;
+  padding: 10px;
 }
 
-.col-md-7,
-.col-md-4 {
+.col-md-5,
+.col-md-3 {
   padding-right: 0px;
   padding-left: 0px;
 }
