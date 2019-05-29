@@ -2,8 +2,8 @@
 
   <section class="container-fluid heigth">
     <section class="main" id="main-home">
-      <menu-side-bar class="col-sm-3 "></menu-side-bar>
-      <div class="col-sm-9">
+      <menu-side-bar class="col-sm-3"></menu-side-bar>
+      <div class="col-sm-8 separador">
         <CardHome :title="'Conteúdos Mais Baixados'" :items="data.conteudos_baixados"></CardHome>
         <CardHome :title="'Conteúdos Mais Acessados'" :items="data.conteudos_acessados"></CardHome>
         <CardHome :title="'Aplicativos Destacados'" :items="data.aplicativos_destaque"></CardHome>
@@ -78,6 +78,12 @@ export default {
   left: 1rem;
   top: 1rem;
 }
+
+.separador{
+  border-left: 2px solid rgb(209, 208, 208);
+  margin-left: 1px;
+}
+
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {

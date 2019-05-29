@@ -35,6 +35,7 @@ export default {
   float: left;
   margin: 0;
   border-radius: 5px;
+  margin-bottom: 20px;
 }
 
 ul {
@@ -42,7 +43,6 @@ ul {
 }
 .destaque-principal > img {
   width: 100%;
-  height: 500px;
   border-radius: 5px;
   -webkit-transition: all 0.8s;
   -moz-transition: all 0.8s;
@@ -86,7 +86,6 @@ ul {
 
 .destaque-secundario > img {
   width: 100%;
-  height: 240px;
   border-radius: 5px;
   -webkit-transition: all 0.8s;
   -moz-transition: all 0.8s;
@@ -123,11 +122,11 @@ ul {
 .destaque-principal .texto {
   position: absolute;
   z-index: 2;
-  margin-top: 75%;
+  margin-top: 50%;
+  width: 100%;
   color: #fff;
-  font-size: 16px;
+  font-size: 14px;
   text-align: left;
-  margin-left: 5px;
   padding: 10px;
   font-weight: bold;
   background-color: rgba(59, 9, 103, 0.7);
@@ -135,12 +134,12 @@ ul {
 
 .destaque-secundario .texto {
   position: absolute;
+  width: 100%;
   z-index: 2;
   margin-top: 35%;
   color: #fff;
-  font-size: 16px;
+  font-size: 14px;
   text-align: left;
-  margin-left: 5px;
   padding: 10px;
   font-weight: bold;
   background-color: rgba(9, 67, 103, 0.7);
