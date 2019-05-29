@@ -125,9 +125,7 @@ class CanalController extends ApiController
                 return $this->getSideBarCategories($id);
                 break;
             case 7:
-                return [
-
-                ];
+                return [];
                 break;
             case 5:
                 return $this->getSidebarSitesTematicos();
@@ -146,7 +144,7 @@ class CanalController extends ApiController
         $tipos = \App\Tipo::select(['id', 'name'])->get();
         $licencas = \App\License::select(['id', 'name'])->whereRaw('parent_id is null')->get();
         $niveis = \App\NivelEnsino::with('components')->get()->first();
-        
+
         return [
             'components' => $componentes,
             'tipos' => $tipos,
@@ -157,13 +155,13 @@ class CanalController extends ApiController
     private function getSideBarCategories($id)
     {
         $categories = \App\Category::selectRaw("id, parent_id, name, options->'is_active' as is_active")
-                    ->where('canal_id', $id)
-                    ->whereRaw('parent_id is null')
-                    ->where('options->is_active', 'true')
-                    ->with('subCategories')
-                    ->orderBy('created_at', 'asc')
-                    ->get();
-        $disciplinas= [];
+            ->where('canal_id', $id)
+            ->whereRaw('parent_id is null')
+            ->where('options->is_active', 'true')
+            ->with('subCategories')
+            ->orderBy('created_at', 'asc')
+            ->get();
+        $disciplinas = [];
         if ($id == 2) {
             $disciplinas = \App\NivelEnsino::where('id', '=', 5)->with('components')->get()->first();
             return [
@@ -183,7 +181,6 @@ class CanalController extends ApiController
             "temas" => $temas,
             "disciplinas" => $disciplinas
         ];
-                
     }
     public function search(Request $request, $termo)
     {

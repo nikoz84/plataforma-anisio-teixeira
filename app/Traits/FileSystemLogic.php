@@ -17,6 +17,7 @@ trait FileSystemLogic
             ->whereIn('cc.id', $components)
             ->get()
             ->first();
+
         $image = "/imagem-associada/emitec/img-emitec_disciplina{$disciplina->id}.png";
         $exist = Storage::disk('conteudos-digitais')->exists($image);
 

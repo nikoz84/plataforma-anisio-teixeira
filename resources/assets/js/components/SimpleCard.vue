@@ -65,7 +65,7 @@ export default {
 .card-panel img {
   width: 100%;
   max-height: 35vh;
-  background-color: transparent;
+  background-color: #a7a9ad;
 }
 
 .card-panel .row,
