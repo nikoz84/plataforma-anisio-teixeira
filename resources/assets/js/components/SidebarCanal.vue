@@ -125,7 +125,7 @@ export default {
     };
   },
   created() {
-    
+
   },
   computed: {
     ...mapState(["sidebar"]),

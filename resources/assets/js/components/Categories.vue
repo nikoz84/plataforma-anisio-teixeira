@@ -1,4 +1,3 @@
-import { mapState } from 'vuex';
 <template>
     <nav role="menu categorias" v-if="categories">
         <ul class="nav nav-pills nav-stacked">

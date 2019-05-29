@@ -2,6 +2,7 @@
     <div class="row">
         <div class="">
             <h2>{{ title }}</h2>
+            <div class="card-header-seperator"></div>
             <article v-for="(item, i) in items" :key="i">
                 <div :class="isDestaque(i)">
                     <img v-lazy="item.image" class="img-responsive">
@@ -143,6 +144,13 @@ ul {
   padding: 10px;
   font-weight: bold;
   background-color: rgba(9, 67, 103, 0.7);
+}
+
+.card-header-seperator{
+  height: 4px;
+  width: 35%;
+  background-color: rgb(0, 113, 188);
+  margin: 7px 0 7px 0;
 }
 
 .col-md-5,
