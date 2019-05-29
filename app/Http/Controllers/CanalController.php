@@ -177,11 +177,11 @@ class CanalController extends ApiController
     private function getSidebarSitesTematicos()
     {
         $temas = \App\CurricularComponentCategory::where('id', '=', 3)->with('components')->get()->first();
-        $componentes = \App\NivelEnsino::where('id', '=', 5)->with('components')->get()->first();
+        $disciplinas = \App\NivelEnsino::where('id', '=', 5)->with('components')->get()->first();
 
         return [
             "temas" => $temas,
-            "componentes" => $componentes
+            "disciplinas" => $disciplinas
         ];
                 
     }

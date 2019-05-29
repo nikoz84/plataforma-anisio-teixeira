@@ -10,7 +10,6 @@ import ListAdmin from "./components/ListAdmin.vue";
 import DenunciaForm from "./forms/DenunciaForm.vue";
 import FaleConoscoForm from "./forms/FaleConoscoForm.vue";
 
-
 const routes = [
   {
     path: "/",
@@ -129,24 +128,6 @@ const routes = [
           requiresAuth: true,
           title: "Adicionar aplicativo"
         }
-      },
-      {
-        path: "denuncia",
-        name: "DenunciaForm",
-        component: DenunciaForm,
-        meta: {
-          requiresAuth: false,
-          title: "Enviar denúncia"
-        }
-      },
-      {
-        path: "faleconosco",
-        name: "FaleConoscoForm",
-        component: FaleConoscoForm,
-        meta: {
-          requiresAuth: false,
-          title: "Fale conosco"
-        }
       }
     ]
   },
@@ -172,6 +153,24 @@ const routes = [
         path: "registro",
         name: "Register",
         component: RegisterForm
+      },
+      {
+        path: "denuncia",
+        name: "DenunciaForm",
+        component: DenunciaForm,
+        meta: {
+          requiresAuth: false,
+          title: "Enviar denúncia"
+        }
+      },
+      {
+        path: "faleconosco",
+        name: "FaleConoscoForm",
+        component: FaleConoscoForm,
+        meta: {
+          requiresAuth: false,
+          title: "Fale conosco"
+        }
       }
     ]
   }

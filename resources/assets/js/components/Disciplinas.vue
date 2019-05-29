@@ -1,7 +1,5 @@
 <template>
-    <nav role="menu disciplinas ensino medio" 
-         v-if="disciplinas" 
-         :style="'margin-top:30px;'">
+    <nav role="menu disciplinas ensino medio" v-if="disciplinas" style="margin-top:30px;">
         <h5 class="text-center">{{ disciplinas.name }}</h5>
         <ul class="nav nav-pills nav-stacked">
             <li  v-for="(disciplina, d) in disciplinas.components" :key="d">
@@ -12,7 +10,6 @@
                 </router-link>
             </li>
         </ul>
-        {{ disciplinas }}
     </nav>
 </template>
 <script>

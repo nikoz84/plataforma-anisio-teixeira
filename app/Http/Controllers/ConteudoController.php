@@ -35,7 +35,8 @@ class ConteudoController extends ApiController
         $tipos = $this->request->get('tipos');
         $licencas = $this->request->query('licencas');
         $componentes = $this->request->query('componentes');
-        $categorias = $this->request->query('categorias');
+        $categoria = $this->request->query('categoria');
+        
         /*
         return response()->json([
         'tipos' => $tipos,
@@ -56,12 +57,14 @@ class ConteudoController extends ApiController
             return $q->where('canal_id', $canal)
                 ->where('is_approved', 'true');
         });
-
+        $query->when($categoria, function ($q, $categoria) {
+            return $q->where('category_id', $categoria);
+        });
         $query->when($tipos, function ($q, $tipos) {
             return $q->whereIn('options->tipo->id', explode(',', $tipos));
         });
         $url = "limit={$limit}&canal={$canal}";
-        $url .= "&tipos={$tipos}&componentes={$componentes}&categorias={$categorias}&licencas={$licencas}";
+        $url .= "&tipos={$tipos}&componentes={$componentes}&categoria={$categoria}&licencas={$licencas}";
 
         $conteudos = $query->with(['canal'])
             ->orderBy($orderBy, 'desc')

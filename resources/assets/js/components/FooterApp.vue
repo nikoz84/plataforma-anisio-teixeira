@@ -3,10 +3,10 @@
         <section class="container-fluid" style="background-color: #082250;">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-6 col-lg-5">
-                        <h6 class="mb-0">Redes Sociais</h6>
+                    <div class="col-md-6" v-if="layout.marcas">
+                      <img :src="layout.marcas.url" alt="marcas" v-if="layout.marcas.is_active">
                     </div>
-                    <div class="col-md-6 col-lg-7 text-center">
+                    <div class="col-md-6">
                         <a class="fb-ic"><i class="fa fa-facebook white-text"> </i></a>
                     </div>
                 </div>
@@ -39,7 +39,8 @@
                     <p><i class="glyphicon glyphicon-home mr-3"></i> {{ layout.contact.city }}</p>
                     <p><i class="glyphicon glyphicon-envelope mr-3"></i> {{ layout.contact.email }}</p>
                     <p><i class="glyphicon glyphicon-phone-alt mr-3"></i> {{ layout.contact.phone }}</p>
-                    <router-link tag="p" :to="{ name: 'FaleConoscoForm', path: 'faleconosco'}">
+                    <router-link tag="p" 
+                              :to="{ name: 'FaleConoscoForm', path: 'faleconosco' }">
                           Ou <a style="color: #1e78c2;"> Fale Conosco</a>
                     </router-link>
                 </div>
