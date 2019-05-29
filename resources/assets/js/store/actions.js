@@ -154,7 +154,7 @@ const actions = {
       commit("SET_CANAL_ID", resp.data.canal.id);
       commit("SET_SIDEBAR", resp.data.sidebar);
       dispatch("sideBarSet", resp.data.sidebar);
-      await dispatch("fetchConteudos", { id: resp.data.canal.id });
+      dispatch("fetchConteudos", { id: resp.data.canal.id });
     } else {
       commit("SET_IS_ERROR", true);
     }

@@ -142,7 +142,7 @@ export default {
   methods: {
     async send() {
       this.isLoading = true;
-      let resRecaptcha = grecaptcha.getResponse();
+      
       let data = {
         name: this.name,
         email: this.email,
@@ -150,7 +150,7 @@ export default {
         subject: this.subject,
         message: this.message,
         action: location.href,
-        recaptcha: resRecaptcha
+        recaptcha: grecaptcha.getResponse()
       };
 
       let resp = await axios.post("/denuncias", data);

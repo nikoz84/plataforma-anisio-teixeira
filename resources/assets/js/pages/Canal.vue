@@ -38,7 +38,11 @@ export default {
   },
   watch: {
     $route(to, from) {
-      this.getCanalBySlug(this.$route.params.slug);
+     
+     if(to.fullPath != from.fullPath){
+       this.getCanalBySlug(this.$route.params.slug);
+     }
+     //
     }
   },
   methods: {

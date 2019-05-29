@@ -143,12 +143,6 @@ export default {
       });
     }
   },
-  mounted() {},
-  watch: {
-    $route(to, from) {
-      this.$store.state.sidebar;
-    }
-  }
 };
 </script>
 <style lang="scss" scoped>
