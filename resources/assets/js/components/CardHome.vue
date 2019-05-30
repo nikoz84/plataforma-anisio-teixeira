@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="">
+        <div>
             <h2>{{ title }}</h2>
             <div class="card-header-seperator"></div>
             <article v-for="(item, i) in items" :key="i">
@@ -36,6 +36,9 @@ export default {
   margin: 0;
   border-radius: 5px;
   margin-bottom: 20px;
+  -webkit-box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
+  -moz-box-shadow:    -4px 7px 5px rgba(50, 50, 50, 0.77);
+  box-shadow:         -4px 7px 5px rgba(50, 50, 50, 0.77);
 }
 
 ul {
@@ -83,6 +86,9 @@ ul {
   float: left;
   margin-left: 20px;
   margin-bottom: 20px;
+  -webkit-box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
+  -moz-box-shadow:    -4px 7px 5px rgba(50, 50, 50, 0.77);
+  box-shadow:         -4px 7px 5px rgba(50, 50, 50, 0.77);
 }
 
 .destaque-secundario > img {
