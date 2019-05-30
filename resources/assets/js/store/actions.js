@@ -9,49 +9,47 @@ const actions = {
     commit("SET_LINKS", resp.data.links);
   },
   /** APLICATIVOS */
-  async fetchAplicativo({ commit }) {
-    let resp = await axios.get(`aplicativos/${id}`);
-    commit("SET_APLICATIVO", resp.data.aplicativo);
-    commit("SET_SHOW_APLICATIVO", true);
-    commit("SET_SHOW_CONTEUDO", false);
-    commit("SET_NOT_FOUND", false);
-  },
-  /** CONTEUDOS */
-  async fetchConteudos({ commit }, payload) {
+  async fetchAplicativo({ commit }, id) {
     commit("SET_IS_LOADING", true);
-    let url = payload.url ? payload.url : `/conteudos?canal=${payload.id}`;
-    let resp = await axios.get(url);
-    commit("SET_COMPONENT_ID", "");
-    if (resp.status == 200 && resp.data.paginator) {
-      commit("SET_COMPONENT_ID", "Paginator");
-      commit("SET_IS_LOADING", false);
-      commit("SET_PAGINATOR", resp.data.paginator);
-      
-    } else if(resp.status == 200 && resp.data.metadata){
-      commit("SET_COMPONENT_ID", "Posts");
-      commit("SET_IS_LOADING", false);
-      commit("SET_POSTS",resp.data.metadata.blog_posts);
-    } 
-    else {
-      commit("SET_IS_ERROR", true);
+    try {
+      await axios.get(`aplicativos/${id}`).then(resp => {
+        commit("SET_EXIBIR_ID", "Aplicativo");
+        commit("SET_APLICATIVO", resp.data.metadata);
+        commit("SET_IS_LOADING", false);
+      });
+    } catch (e) {
+      console.log(e);
     }
   },
-  async fetchConteudo({ commit }, payload) {
-    let { id } = payload;
-
-    if (id && id != undefined && id != null) {
-      let resp = await axios.get(`/conteudos/${id}`);
-      if (resp.status == 200 && resp.data) {
-        commit("SET_EXIBIR_ID","conteudo");
+  /** CONTEUDOS */
+  async fetchConteudos({ commit }, id) {
+    commit("SET_IS_LOADING", true);
+    let url = `/conteudos?canal=${id}`;
+    try {
+      await axios.get(url).then(resp => {
+        commit("SET_COMPONENT_ID", "");
+        if (resp.status == 200 && resp.data.paginator) {
+          commit("SET_COMPONENT_ID", "Paginator");
+          commit("SET_IS_LOADING", false);
+          commit("SET_PAGINATOR", resp.data.paginator);
+        } else if (resp.status == 200 && resp.data.metadata) {
+          commit("SET_COMPONENT_ID", "Posts");
+          commit("SET_IS_LOADING", false);
+          commit("SET_POSTS", resp.data.metadata.blog_posts);
+        }
+      });
+    } catch (e) {
+      commit("SET_ERROR", true);
+    }
+  },
+  async fetchConteudo({ commit }, id) {
+    try {
+      await axios.get(`/conteudos/${id}`).then(resp => {
+        commit("SET_EXIBIR_ID", "Conteudo");
         commit("SET_CONTEUDO", resp.data.metadata);
-      } else {
-        commit("SET_EXIBIR_ID","aplicativo");
-        commit("SET_APLICATIVO", resp.data.metadata);
-      }
-      //commit("SET_EXIBIR_ID","notfound");
-    } else {
-      console.log("reset");
-      commit("RESET_OBJECT", { model: conteudoModel, init: "conteudo" });
+      });
+    } catch (e) {
+      commit("SET_EXIBIR_ID", "NotFound");
     }
   },
   async createConteudo({ commit, dispatch }, conteudo) {
@@ -146,34 +144,33 @@ const actions = {
   },
   /** CANAL */
   async getCanalBySlug({ commit, dispatch }, slug) {
-    let resp = await axios.get(`/canais/slug/${slug}`);
-
-    if (resp.status == 200 && resp.data.canal) {
-      console.log(resp.data)
-      commit("SET_CANAL", resp.data.canal);
-      commit("SET_CANAL_ID", resp.data.canal.id);
-      commit("SET_SIDEBAR", resp.data.sidebar);
-      dispatch("sideBarSet", resp.data.sidebar);
-      dispatch("fetchConteudos", { id: resp.data.canal.id });
-    } else {
+    try {
+      await axios.get(`/canais/slug/${slug}`).then(resp => {
+        commit("SET_CANAL", resp.data.canal);
+        commit("SET_CANAL_ID", resp.data.canal.id);
+        commit("SET_SIDEBAR", resp.data.sidebar);
+        dispatch("sideBarSet", resp.data.sidebar);
+        dispatch("fetchConteudos", resp.data.canal.id);
+      });
+    } catch (e) {
       commit("SET_IS_ERROR", true);
     }
   },
-  sideBarSet({commit},sidebar){
-    let categories = (sidebar.categories) ? sidebar.categories: null;
-      commit("SET_CATEGORIES",categories);
-      let temas = (sidebar.temas) ? sidebar.temas : null;
-      commit("SET_TEMAS",temas);
-      let disciplinas = (sidebar.disciplinas) ? sidebar.disciplinas : null;
-      commit("SET_DISCIPLINAS",disciplinas);
-      let components = (sidebar.components) ? sidebar.components : null;
-      commit("SET_COMPONENTS",components);
-      let niveis = (sidebar.niveis) ? sidebar.niveis : null;
-      commit("SET_NIVEIS",niveis);
-      let tipos = (sidebar.tipos) ? sidebar.tipos : null;
-      commit("SET_TIPOS",tipos);
-      //let licenses = (sidebar.licenses) ? sidebar.licenses : null;
-      //commit("SET_LICENSES",licenses)
+  sideBarSet({ commit }, sidebar) {
+    let categories = sidebar.categories ? sidebar.categories : null;
+    commit("SET_CATEGORIES", categories);
+    let temas = sidebar.temas ? sidebar.temas : null;
+    commit("SET_TEMAS", temas);
+    let disciplinas = sidebar.disciplinas ? sidebar.disciplinas : null;
+    commit("SET_DISCIPLINAS", disciplinas);
+    let components = sidebar.components ? sidebar.components : null;
+    commit("SET_COMPONENTS", components);
+    let niveis = sidebar.niveis ? sidebar.niveis : null;
+    commit("SET_NIVEIS", niveis);
+    let tipos = sidebar.tipos ? sidebar.tipos : null;
+    commit("SET_TIPOS", tipos);
+    //let licenses = (sidebar.licenses) ? sidebar.licenses : null;
+    //commit("SET_LICENSES",licenses)
   },
   async fetchEnabledCategories({ commit }, params) {
     let resp = await axios.get("/categories", params);

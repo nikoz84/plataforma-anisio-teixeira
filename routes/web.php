@@ -16,6 +16,6 @@ Route::get('/email', function (Request $request) {
 });
 Route::get('/teste', function (Request $request) {
     $wordpres_auth = new App\Helpers\WordpressService();
-    return $wordpres_auth->authorization($request->code);
+    return $wordpres_auth->getPosts(2);
 });
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');
