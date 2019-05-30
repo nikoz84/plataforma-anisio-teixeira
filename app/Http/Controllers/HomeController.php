@@ -33,14 +33,14 @@ class HomeController extends ApiController
         $links = DB::select(DB::raw("SELECT name,
                                     slug,
                                     options->'order_menu' AS order,
-                                    options->'back_url' AS url
+                                    options->'back_url_exibir' AS url_exibir
                                     FROM canais
                                     WHERE is_active = ?
                                     ORDER BY options->'order_menu';"), [true]);
 
-        $layout = Options::select("meta_data")->where("name", "like", "layout")->get();
+        $layout = Options::select("meta_data")->where("name", "like", "layout")->get()->first();
         $data = [
-            "layout" => (object)$layout[0],
+            "layout" => (object)$layout,
             "links" => $links
         ];
         return response()->json($data, 200);
@@ -66,7 +66,7 @@ class HomeController extends ApiController
             ->get();
 
         return $conteudos->map(function ($conteudo) {
-            return $conteudo->only(['id', 'title', 'image']);
+            return $conteudo->only(['id', 'title', 'image', 'url_exibir']);
         });
     }
 
@@ -75,7 +75,7 @@ class HomeController extends ApiController
         $conteudos = Conteudo::orderBy('qt_downloads', 'desc')->limit(4)->get();
 
         return $conteudos->map(function ($conteudo) {
-            return $conteudo->only(['id', 'title', 'image', 'qt_downloads']);
+            return $conteudo->only(['id', 'title', 'image', 'qt_downloads', 'url_exibir']);
         });
     }
     protected function getConteudosMaisAcessados()
@@ -83,7 +83,7 @@ class HomeController extends ApiController
         $conteudos = Conteudo::orderBy('qt_access', 'desc')->limit(4)->get();
 
         return $conteudos->map(function ($conteudo) {
-            return $conteudo->only(['id', 'title', 'image', 'qt_access']);
+            return $conteudo->only(['id', 'title', 'image', 'qt_access', 'url_exibir']);
         });
     }
 
@@ -92,7 +92,7 @@ class HomeController extends ApiController
         $conteudos = Conteudo::where("is_featured", true)->limit(4)->get();
 
         return $conteudos->map(function ($conteudo) {
-            return $conteudo->only(['id', 'title', 'image']);
+            return $conteudo->only(['id', 'title', 'image', 'url_exibir']);
         });
     }
     // APLICATIVOS
@@ -102,7 +102,7 @@ class HomeController extends ApiController
             ->limit(4)->get();
 
         return $aplicativos->map(function ($aplicativo) {
-            return $aplicativo->only(['id', 'name', 'image']);
+            return $aplicativo->only(['id', 'name', 'image', 'url_exibir']);
         });
     }
     protected function getAplicativosMaisRecentes()
@@ -110,7 +110,7 @@ class HomeController extends ApiController
         $aplicativos = Aplicativo::orderBy('created_at', 'desc')->limit(4)->get();
 
         return $aplicativos->map(function ($aplicativo) {
-            return $aplicativo->only(['id', 'name', 'image']);
+            return $aplicativo->only(['id', 'name', 'image', 'url_exibir']);
         });
     }
 }

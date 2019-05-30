@@ -5,21 +5,29 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Http\Request;
 
 class SendMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $data;
-
+    public $name;
+    public $subject;
+    public $email;
+    public $url;
+    public $message;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct(Request $request)
     {
-        $this->data = (Object)$data;
+        $this->name = $request->name;
+        $this->subject = $request->subject;
+        $this->email = $request->email;
+        $this->url = $request->url;
+        $this->message = $request->message;
     }
 
     /**
@@ -32,11 +40,11 @@ class SendMail extends Mailable
         return $this->from('plataforma-f0d1bd@inbox.mailtrap.io')
             ->view('emails')
             ->with([
-                'name' => $this->data->name,
-                'email' => $this->data->email,
-                'url' => $this->data->url,
-                'subject' => $this->data->subject,
-                'message' => $this->data->message,
+                'name' => 'niko',
+                'subject' => 'tete',
+                'email' => "anikocom",
+                'url' => "as",
+                'message' => "menssagem"
             ]);
     }
 }
