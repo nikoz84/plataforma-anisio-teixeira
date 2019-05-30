@@ -23,7 +23,7 @@ export default {
   methods: {
     isDestaque(index) {
       return index == 0
-        ? "col-md-5 destaque-principal"
+        ? "col-md-5 destaque-principal ml-50"
         : "col-md-3 destaque-secundario ml-30";
     }
   }
@@ -43,6 +43,7 @@ ul {
 }
 .destaque-principal > img {
   width: 100%;
+  height: 100%;
   border-radius: 5px;
   -webkit-transition: all 0.8s;
   -moz-transition: all 0.8s;

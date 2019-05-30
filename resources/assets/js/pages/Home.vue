@@ -81,7 +81,7 @@ export default {
 
 .separador-vertical{
   border-left: 1px solid rgb(209, 208, 208);
-  padding: 40px;
+  padding: 0px 40px;
   
 }
 
