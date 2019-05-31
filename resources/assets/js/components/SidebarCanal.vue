@@ -1,15 +1,14 @@
 <template>
 <div>
     <Categories></Categories>
-    <Temas></Temas> 
+    <Temas></Temas>
     <Disciplinas></Disciplinas>
-    
-    
+
     <nav role="menu tipos de mídias" v-if="false">
         <h5 data-toggle="collapse"
-                    class="pointer" 
+                    class="pointer"
                    data-target="#collapse-tipos"
-                   aria-expanded="false" 
+                   aria-expanded="false"
                    aria-controls="#collapse-tipos">
                    Tipos de Mídia
                    <i class="glyphicon glyphicon-chevron-down pull-right" ></i>
@@ -146,4 +145,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+
 </style>
