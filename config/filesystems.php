@@ -45,55 +45,55 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app') ,
+            'root' => storage_path('app'),
         ],
 
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],
 
         'conteudos-blog' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/conteudos/conteudos-blog'),
-            'url' => env('APP_URL').'/storage/conteudos/conteudos-blog',
+            'root' => storage_path('app/public/conteudos/conteudos-blog/uploads'),
+            'url' => env('APP_URL') . '/storage/conteudos/conteudos-blog/uploads',
             'visibility' => 'public',
         ],
 
-        'conteudos-digitais' =>[
-            'driver'=> 'local',
+        'conteudos-digitais' => [
+            'driver' => 'local',
             'root' => storage_path('app/public/conteudos/conteudos-digitais'),
-            'url' => env('APP_URL').'/storage/conteudos/conteudos-digitais',
+            'url' => env('APP_URL') . '/storage/conteudos/conteudos-digitais',
             'visibility' => 'public',
         ],
 
-        'aplicativos-educacionais' =>[
-            'driver'=> 'local',
+        'aplicativos-educacionais' => [
+            'driver' => 'local',
             'root' => storage_path('app/public/conteudos/aplicativos-educacionais/'),
-            'url' => env('APP_URL').'/storage/conteudos/aplicativos-educacionais/',
+            'url' => env('APP_URL') . '/storage/conteudos/aplicativos-educacionais/',
             'visibility' => 'public'
         ],
 
-        'download' =>[
-            'driver'=> 'local',
+        'download' => [
+            'driver' => 'local',
             'root' => storage_path('app/public/conteudos/conteudos-digitais/download'),
-            'url' => env('APP_URL').'/storage/conteudos/conteudos-digitais/download',
+            'url' => env('APP_URL') . '/storage/conteudos/conteudos-digitais/download',
             'visibility' => 'public',
         ],
 
-        'visualizacao' =>[
-            'driver'=> 'local',
+        'visualizacao' => [
+            'driver' => 'local',
             'root' => storage_path('app/public/conteudos/conteudos-digitais/visualizacao'),
-            'url' => env('APP_URL').'/storage/conteudos/conteudos-digitais/visualizacao',
+            'url' => env('APP_URL') . '/storage/conteudos/conteudos-digitais/visualizacao',
             'visibility' => 'public',
         ],
 
-        'sinopse' =>[
-            'driver'=> 'local',
+        'sinopse' => [
+            'driver' => 'local',
             'root' => storage_path('app/public/conteudos/conteudos-digitais/imagem-associada/sinopse'),
-            'url' => env('APP_URL').'/storage/conteudos/conteudos-digitais/imagem-associada/sinopse',
+            'url' => env('APP_URL') . '/storage/conteudos/conteudos-digitais/imagem-associada/sinopse',
             'visibility' => 'public',
         ],
 

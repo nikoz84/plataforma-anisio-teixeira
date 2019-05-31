@@ -1,16 +1,19 @@
 <template>
     <div class="row">
         <div>
-            <h2>{{ title }}</h2>
-            <div class="card-header-seperator"></div>
+          <header class="title-heading-bottom ">
+            <h2 class="title-heading-inner">{{ title }}</h2>
+          </header>
             <article v-for="(item, i) in items" :key="i">
                 <div :class="isDestaque(i)">
+                   <a :href="item.url_exibir">
                     <img v-lazy="item.image" class="img-responsive">
                     <div class="retina">
                         <div class="texto">
                           {{ (item.title) ? item.title : item.name }}
                         </div>
                     </div>
+                  </a>
                 </div>
             </article>
         </div>
@@ -37,8 +40,8 @@ export default {
   border-radius: 5px;
   margin-bottom: 20px;
   -webkit-box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
-  -moz-box-shadow:    -4px 7px 5px rgba(50, 50, 50, 0.77);
-  box-shadow:         -4px 7px 5px rgba(50, 50, 50, 0.77);
+  -moz-box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
+  box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
 }
 
 ul {
@@ -86,8 +89,8 @@ ul {
   margin-left: 20px;
   margin-bottom: 20px;
   -webkit-box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
-  -moz-box-shadow:    -4px 7px 5px rgba(50, 50, 50, 0.77);
-  box-shadow:         -4px 7px 5px rgba(50, 50, 50, 0.77);
+  -moz-box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
+  box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
 }
 
 .destaque-secundario > img {
@@ -151,11 +154,18 @@ ul {
   background-color: rgba(9, 67, 103, 0.7);
 }
 
-.card-header-seperator{
-  height: 4px;
-  width: 35%;
-  background-color: rgb(0, 113, 188);
-  margin: 7px 0 7px 0;
+.title-heading-bottom .title-heading-inner {
+  margin-top: 60px;
+  margin-bottom: 30px;
+  font-weight: bolder;
+  padding-bottom: 6px;
+  border-bottom: 2px solid rgba(9, 67, 103, 0.7);
+  position: relative;
+  bottom: -1px;
+}
+
+.title-heading-inner {
+  display: inline-block;
 }
 
 .col-md-5,

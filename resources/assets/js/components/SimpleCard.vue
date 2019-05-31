@@ -16,15 +16,14 @@
                     </router-link>
                   </div>
                   <div class="col-md-8">
-                      <div class="card-row card-header">
-                        <h3 class="card-title">
+                      <div class="card-row card-header card-heading-bottom">
+                        <h3 class="card-title card-heading-inner" :style="`border-bottom: 2px solid ${color}`">
                           <router-link  :to="{ name: 'ExibirConteudo', params: { slug: slug, id: item.id, action: 'exibir'}}"
                             aria-label="Título" 
                             v-bind:title="'Título: ' + title">
                             {{ title }}
                           </router-link>
                         </h3>
-                        <div class="card-header-seperator" v-bind:style="`background-color: ${color}`"></div>
                       </div>
                       <div class="card-row card-desc">
                         <p v-html="item.excerpt"></p>
@@ -91,6 +90,16 @@ export default {
   width: 35%;
   background-color: #d9d9d9;
   margin: 7px 0 7px 0;
+}
+.card-heading-bottom .card-heading-inner {
+  padding-bottom: 6px;
+  border-bottom: 2px solid #2c87f0;
+  position: relative;
+  bottom: -1px;
+}
+
+.card-heading-inner {
+  display: inline-block;
 }
 
 .card-panel .card-row.card-desc {
