@@ -39,7 +39,7 @@ const actions = {
         }
       });
     } catch (e) {
-      commit("SET_ERROR", true);
+      commit("SET_IS_ERROR", true);
     }
   },
   async fetchConteudo({ commit }, id) {

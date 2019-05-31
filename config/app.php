@@ -175,6 +175,7 @@ return [
          * Package Service Providers...
          */
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        Ixudra\Curl\CurlServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -235,6 +236,7 @@ return [
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
+        'Curl' => Ixudra\Curl\Facades\Curl::class,
     ],
 
 ];
