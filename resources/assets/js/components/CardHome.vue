@@ -79,7 +79,6 @@ ul {
 }
 
 .destaque-secundario {
-  position: relative;
   overflow: hidden;
   border-radius: 5px;
   background: #fff;
@@ -131,11 +130,10 @@ ul {
   z-index: 2;
   bottom: 0;
   width: 100%;
-  height: 70px;
   color: #fff;
   font-size: 14px;
   text-align: left;
-  padding: 10px 0;
+  padding: 10px;
   font-weight: bold;
   background-color: rgba(59, 9, 103, 0.7);
 }
@@ -143,8 +141,8 @@ ul {
 .destaque-secundario .texto {
   position: absolute;
   width: 100%;
+  bottom: 0;
   z-index: 2;
-  margin-top: 35%;
   color: #fff;
   font-size: 14px;
   text-align: left;
