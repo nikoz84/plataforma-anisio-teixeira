@@ -46,7 +46,7 @@ ul {
 }
 .destaque-principal > img {
   width: 100%;
-  height: 100%;
+  height: 380px;
   border-radius: 5px;
   -webkit-transition: all 0.8s;
   -moz-transition: all 0.8s;

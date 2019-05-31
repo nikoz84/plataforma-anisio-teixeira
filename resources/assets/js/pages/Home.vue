@@ -3,7 +3,7 @@
   <section class="container-fluid heigth">
     <section class="main" id="main-home">
       <menu-side-bar class="col-sm-3"></menu-side-bar>
-      <div class="col-sm-7 separador-vertical">
+      <div class="col-sm-9 separador-vertical">
         <CardHome :title="'Conteúdos Mais Baixados'" :items="data.conteudos_baixados"></CardHome>
         <CardHome :title="'Conteúdos Mais Acessados'" :items="data.conteudos_acessados"></CardHome>
         <CardHome :title="'Aplicativos Destacados'" :items="data.aplicativos_destaque"></CardHome>
