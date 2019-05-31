@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use App\Traits\FileSystemLogic;
+use Illuminate\Support\Facades\DB;
 
 class Conteudo extends Model
 {
@@ -35,7 +36,7 @@ class Conteudo extends Model
         'updated_at',
         'deleted_at',
     ];
-    protected $appends = ['image', 'excerpt'];
+    protected $appends = ['image', 'excerpt', 'url_exibir'];
     protected $casts = [
         'options' => 'array',
     ];
@@ -89,5 +90,11 @@ class Conteudo extends Model
         } else {
             return $this::getImageFromTipo($tipo, $id);
         }
+    }
+    public function getUrlExibirAttribute()
+    {
+        $slug = $this->canal()->pluck('slug')->first();
+
+        return "/{$slug}/conteudo/exibir/" . $this['id'];
     }
 }

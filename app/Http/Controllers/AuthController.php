@@ -27,7 +27,7 @@ class AuthController extends ApiController
     {
         $validator = Validator::make($this->request->all(), config("rules.login"));
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Usuário ou senha inválidos", 201);
         }
 
@@ -40,9 +40,9 @@ class AuthController extends ApiController
                 return $this->errorResponse([], 'Email ou Senha inválidos', 201);
             }
         } catch (JWTException $e) {
-            return $this->errorResponse([], 'Impossível criar Token de acesso',201);
+            return $this->errorResponse([], 'Impossível criar Token de acesso', 201);
         }
-        $data =['token' => $this->respondWithToken($token)];
+        $data = ['token' => $this->respondWithToken($token)];
 
         return $this->successResponse($data, "Bemvindo!!", 200);
     }
@@ -65,7 +65,7 @@ class AuthController extends ApiController
             return $this->errorResponse([], 'Token Ausente', 404);
         }
 
-        return $this->successResponse(['user'=> compact('user')],'', 200);
+        return $this->successResponse(['user' => compact('user')], '', 200);
     }
     /**
      * Log the user out (Invalidate the token).
@@ -77,7 +77,7 @@ class AuthController extends ApiController
     {
         auth()->logout();
 
-        return $this->successResponse([],'Volte pronto', 200);
+        return $this->successResponse([], 'Volte pronto', 200);
     }
     /**
      * Refresh a token.
@@ -85,10 +85,10 @@ class AuthController extends ApiController
      * @return \Illuminate\Http\JsonResponse
      */
     public function refresh()
-    {   
+    {
         $data = ['token' => $this->respondWithToken(auth()->refresh())];
-        
-        return $this->successResponse($data,"Token renovado", 200);
+
+        return $this->successResponse($data, "Token renovado", 200);
     }
 
     /**
@@ -115,10 +115,10 @@ class AuthController extends ApiController
     {
         $validator = Validator::make($this->request->all(), config("rules.register"));
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Verifique os dados fornecidos", 201);
         }
-        
+
 
         $user = new User;
         $user->name = $this->request->name;
@@ -126,12 +126,12 @@ class AuthController extends ApiController
         $user->password = bcrypt($this->request->password);
         $user->verified = User::USER_NOT_VERIFIED;
         $user->verification_token = User::createVerificationToken();
-        
+
         $user->save();
 
         //$this->sendConfirmationEmail();
 
-        return $this->successResponse([],"Espere um email de confirmação na conta", 200);
+        return $this->successResponse([], "Espere um email de confirmação na conta", 200);
     }
     private function sendConfirmationEmail()
     {

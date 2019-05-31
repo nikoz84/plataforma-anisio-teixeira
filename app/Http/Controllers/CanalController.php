@@ -152,6 +152,7 @@ class CanalController extends ApiController
             'niveis' => $niveis[0]
         ];
     }
+    // /root/.ssh/id_rsa
     private function getSideBarCategories($id)
     {
         $categories = \App\Category::selectRaw("id, parent_id, name, options->'is_active' as is_active")

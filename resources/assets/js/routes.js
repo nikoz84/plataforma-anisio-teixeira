@@ -75,7 +75,7 @@ const routes = [
         }
       },
       {
-        path: "conteudo/:action/:id",
+        path: "conteudo/exibir/:id",
         name: "ExibirConteudo",
         component: Exibir,
         meta: {
@@ -84,7 +84,7 @@ const routes = [
         }
       },
       {
-        path: "aplicativo/:id",
+        path: "aplicativo/exibir/:id",
         name: "ExibirAplicativo",
         component: Exibir,
         meta: {

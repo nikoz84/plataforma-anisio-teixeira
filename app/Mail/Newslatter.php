@@ -31,9 +31,9 @@ class Newslatter extends Mailable
     {
         $data = [
             'name' => 'Fabiano',
-            'email' => 'niko@gmail.com',
+            'email' => 'nikogmail.com',
             'subject' => 'denuncia',
-            'url' => 'http://pat.des',
+            'url' => 'patdes',
             'message' => 'Mensagem importante'
         ];
         //return $this->markdown('emails.newslatter');

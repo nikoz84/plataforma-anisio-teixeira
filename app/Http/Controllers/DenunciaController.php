@@ -74,7 +74,7 @@ class DenunciaController extends ApiController
             ->get();
 
         foreach ($users as $user) {
-            Mail::send('emails', [], new SendMail($this->request->all()), function ($message) use ($user) {
+            Mail::send('emails', [], new SendMail($this->request), function ($message) use ($user) {
                 $message->from('plataforma-b532cb@inbox.mailtrap.io', 'IAT - Instituto Anísio Teixeira');
                 $message->to($user->email)->subject($this->request->subject);
             });

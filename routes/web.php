@@ -10,11 +10,12 @@ use Illuminate\Http\Request;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/email', function () {
-    return new App\Mail\Newslatter();
+
+Route::get('/email', function (Request $request) {
+    return new App\Mail\SendMail($request);
 });
 Route::get('/teste', function (Request $request) {
     $wordpres_auth = new App\Helpers\WordpressService();
-    return $wordpres_auth->authorization($request->code);
+    return $wordpres_auth->getPosts(2);
 });
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');

@@ -32,7 +32,7 @@ return [
     ],
     'register' => [
         'name' => 'required|string|max:255|min:4',
-        'email' => 'required|string|email|max:255|unique:users,email',
+        'email' => 'required|string|email|max:100|unique:users,email',
         'password' => 'required|string|min:6|required_with:password_confirmation|same:password_confirmation',
         'password_confirmation' => 'required'
     ],

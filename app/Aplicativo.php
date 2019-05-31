@@ -19,7 +19,7 @@ class Aplicativo extends Model
         'is_featured',
         'options'
     ];
-    protected $appends = ['image', 'excerpt'];
+    protected $appends = ['image', 'excerpt', 'url_exibir'];
     protected $dates = [
         'created_at',
         'updated_at',
@@ -57,5 +57,11 @@ class Aplicativo extends Model
         $image = "{$this['id']}.jpg";
         return Storage::disk('aplicativos-educacionais')
             ->url("imagem-associada/{$image}");
+    }
+    public function getUrlExibirAttribute()
+    {
+        $slug = $this->canal()->pluck('slug')->first();
+
+        return "/{$slug}/aplicativo/exibir/" . $this['id'];
     }
 }
