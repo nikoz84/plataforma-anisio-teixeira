@@ -9,12 +9,13 @@ use Illuminate\Support\Str;
 class WordpressService
 {
     protected $api;
+    protected $slug;
 
     public function __construct()
     {
         $canal = $canal = Canal::find(7);
         $canalUrl = $canal->options['back_url'];
-
+        $this->slug = $canal->slug;
         $this->api =  $canalUrl . "/wp-json/wp/v2/";
     }
 
@@ -68,7 +69,7 @@ class WordpressService
                     'exerpt' => strip_tags(Str::words($post->excerpt->rendered, 30)),
                     'link' => $post->link,
                     'author' => $post->_embedded->author[0]->name,
-                    'slug' => null, //$post->slug,
+                    'slug' => $this->slug,
                     'image' => $this->getFeaturedMedia($post->featured_media, $linkMedia)
                 ];
             }

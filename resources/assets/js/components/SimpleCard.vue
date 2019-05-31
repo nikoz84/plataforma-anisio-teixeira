@@ -46,7 +46,7 @@ export default {
       return this.item.name ? this.item.name : this.item.title;
     },
     slug() {
-      return this.item.canal.slug;
+      return this.item.canal ? this.item.canal.slug : this.item.slug;
     },
     color() {
       return this.item.canal ? this.item.canal.color : "#faf";

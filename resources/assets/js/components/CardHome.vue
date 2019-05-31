@@ -5,14 +5,12 @@
             <div class="card-header-seperator"></div>
             <article v-for="(item, i) in items" :key="i">
                 <div :class="isDestaque(i)">
-                    <router-link :to="item.url_exibir">
                     <img v-lazy="item.image" class="img-responsive">
-                      <div class="retina">
-                          <div class="texto">
-                            {{ (item.title) ? item.title : item.name }}
-                          </div>
-                      </div>
-                    </router-link>
+                    <div class="retina">
+                        <div class="texto">
+                          {{ (item.title) ? item.title : item.name }}
+                        </div>
+                    </div>
                 </div>
             </article>
         </div>
@@ -39,8 +37,8 @@ export default {
   border-radius: 5px;
   margin-bottom: 20px;
   -webkit-box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
-  -moz-box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
-  box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
+  -moz-box-shadow:    -4px 7px 5px rgba(50, 50, 50, 0.77);
+  box-shadow:         -4px 7px 5px rgba(50, 50, 50, 0.77);
 }
 
 ul {
@@ -48,7 +46,7 @@ ul {
 }
 .destaque-principal > img {
   width: 100%;
-  height: 100%;
+  height: 380px;
   border-radius: 5px;
   -webkit-transition: all 0.8s;
   -moz-transition: all 0.8s;
@@ -81,7 +79,6 @@ ul {
 }
 
 .destaque-secundario {
-  position: relative;
   overflow: hidden;
   border-radius: 5px;
   background: #fff;
@@ -89,8 +86,8 @@ ul {
   margin-left: 20px;
   margin-bottom: 20px;
   -webkit-box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
-  -moz-box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
-  box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
+  -moz-box-shadow:    -4px 7px 5px rgba(50, 50, 50, 0.77);
+  box-shadow:         -4px 7px 5px rgba(50, 50, 50, 0.77);
 }
 
 .destaque-secundario > img {
@@ -131,7 +128,7 @@ ul {
 .destaque-principal .texto {
   position: absolute;
   z-index: 2;
-  margin-top: 50%;
+  bottom: 0;
   width: 100%;
   color: #fff;
   font-size: 14px;
@@ -144,8 +141,8 @@ ul {
 .destaque-secundario .texto {
   position: absolute;
   width: 100%;
+  bottom: 0;
   z-index: 2;
-  margin-top: 35%;
   color: #fff;
   font-size: 14px;
   text-align: left;
@@ -154,7 +151,7 @@ ul {
   background-color: rgba(9, 67, 103, 0.7);
 }
 
-.card-header-seperator {
+.card-header-seperator{
   height: 4px;
   width: 35%;
   background-color: rgb(0, 113, 188);
