@@ -129,12 +129,13 @@ ul {
 .destaque-principal .texto {
   position: absolute;
   z-index: 2;
-  margin-top: 50%;
+  bottom: 0;
   width: 100%;
+  height: 70px;
   color: #fff;
   font-size: 14px;
   text-align: left;
-  padding: 10px;
+  padding: 10px 0;
   font-weight: bold;
   background-color: rgba(59, 9, 103, 0.7);
 }
