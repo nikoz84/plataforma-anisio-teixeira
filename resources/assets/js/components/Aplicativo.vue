@@ -1,5 +1,5 @@
 <template>
-    <article class="panel panel-default">
+    <article class="panel panel-default" v-if="this.aplicativo">
         <div class="panel-body">
             <h2 v-text="aplicativo.name"></h2>
             <button class="btn btn-info btn-xs" v-on:click="updateAplicativo()">Editar</button>
@@ -7,10 +7,7 @@
             <div class="row">
                 <div class="col-sm-8 break-word" v-html="aplicativo.description"></div>
                 <figure class="col-sm-4">
-                    <img v-lazyload
-                        src="/img/fundo-padrao.svg"
-                        v-bind:data-src="aplicativo.image"
-                        data-err="/img/fundo-padrao.svg"
+                    <img v-lazy="aplicativo.image"
                         class="img-responsive thumbnail"
                         v-bind:style="`border-color:${aplicativo.canal.color};margin: 0 auto;`"
                         alt="Imagem de destaque">
@@ -37,12 +34,13 @@
     </article>
 </template>
 <script>
+import {mapState} from 'vuex';
 
 export default {
   name: "Aplicativo",
   components: {},
-  props: ["aplicativo", "message"],
   computed: {
+    ...mapState(["aplicativo"]),
     splitAuthors() {
       let replace = this.aplicativo.authors.replace(",", ";");
       return replace.split(";");

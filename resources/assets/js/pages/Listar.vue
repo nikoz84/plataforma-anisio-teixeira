@@ -9,14 +9,15 @@
 import Loader from '../components/Loader.vue';
 import Paginator from "../components/Paginator.vue";
 import Posts from "../components/Posts.vue";
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: "Listar",
   components: { Paginator, Posts, Loader},
   computed: {
-    ...mapState(["componentId", "isLoading"])
+    ...mapState(["componentId", "isLoading", "canal"])
   },
+  methods: {},
 };
 </script>
 <style lang="sass" scoped>

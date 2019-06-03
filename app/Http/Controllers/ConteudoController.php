@@ -36,7 +36,7 @@ class ConteudoController extends ApiController
         $licencas = $this->request->query('licencas');
         $componentes = $this->request->query('componentes');
         $categoria = $this->request->query('categoria');
-        
+
         /*
         return response()->json([
         'tipos' => $tipos,
@@ -45,14 +45,14 @@ class ConteudoController extends ApiController
         'categorias' => $categorias
         ]);
          */
-        if($canal == 7){
+        if ($canal == 7) {
             $wordpress = new WordpressService;
             return $this->successResponse([
-                    'blog_posts' =>  $wordpress->getPosts(3)
-            ],'', 200);
+                'blog_posts' =>  $wordpress->getPosts()
+            ], '', 200);
         }
         $query = $this->conteudo::query();
-        
+
         $query->when($canal, function ($q, $canal) {
             return $q->where('canal_id', $canal)
                 ->where('is_approved', 'true');
@@ -123,7 +123,7 @@ class ConteudoController extends ApiController
     {
         $validator = Validator::make($this->request->all(), config("rules.conteudo"));
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar o conteúdo", 201);
         }
 
@@ -143,7 +143,7 @@ class ConteudoController extends ApiController
         $conteudo->is_site = $this->request->is_site;
         $conteudo->qt_downloads = $this->conteudo::INIT_COUNT;
         $conteudo->qt_access = $this->conteudo::INIT_COUNT;
-        
+
         $conteudo->tags()->attach($this->request->tags);
         $conteudo->componentes()->attach($this->request->componentes);
 
@@ -161,7 +161,7 @@ class ConteudoController extends ApiController
     private function saveOptions($conteudo_id)
     {
         $tipo = DB::select('select * from tipos where id = ?', [$this->request->tipo_id]);
-        
+
         $options = [
             'tipo' => [
                 'id' => $tipo->id,
@@ -169,17 +169,16 @@ class ConteudoController extends ApiController
             ],
             'componentes' => [$this->request->componentes],
             'tags' => [$this->request->tags],
-            'site'=> $this->request->site,
-            'guia'=> $this->request->guia,
+            'site' => $this->request->site,
+            'guia' => $this->request->guia,
             'download' => null,
             'visualizacao' => null
         ];
         $conteudo = DB::select('select * from users where id = ?', [$conteudo_id]);
-        
+
         $conteudo->options = $options;
 
         $conteudo->save();
-        
     }
 
     public function saveFullTextSearch($conteudo_id)
@@ -187,10 +186,10 @@ class ConteudoController extends ApiController
         $tags = $this->conteudo::with('tags')->whereRaw('id = ?', [$conteudo_id]);
         $componentes = $this->conteudo::with('componentes')->whereRaw('id = ?', [$conteudo_id]);
         $authorsSourceTitle = DB::select("select authors,source,title from conteudos")->whereRaw('id = ?', [$conteudo_id]);
-        
+
         dd($tags);
 
-        $sql ="
+        $sql = "
         setweight( to_tsvector( 'simple', (SELECT string_agg(lower(COALESCE(unaccent(t.nometag),'')), ' ' ) FROM conteudodigitaltag AS ct INNER JOIN tag t ON t.idtag = ct.idtag WHERE ct.idconteudodigital = cd.idconteudodigital)), 'A') ||
         setweight( to_tsvector( 'simple', lower( COALESCE( unaccent(cd.titulo), '') ) ), 'B' ) ||
         setweight( to_tsvector( 'portuguese', unaccent( lower( COALESCE( cd.fonte, '') ) ) ), 'C' ) ||
@@ -219,7 +218,7 @@ class ConteudoController extends ApiController
     {
         $validator = Validator::make($this->request->all(), config("rules.conteudo"));
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível atualizar o conteúdo", 201);
         }
 

@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Aplicativo;
 use App\Helpers\ResizeImage;
-use App\Helpers\UrlValidator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\ApiController;
 
-class AplicativoController extends Controller
+class AplicativoController extends ApiController
 {
     public function __construct(Aplicativo $aplicativo, Request $request, Storage $storage)
     {
@@ -35,32 +34,10 @@ class AplicativoController extends Controller
 
         $aplicativos->setPath("/aplicativos?limit={$limit}");
 
-        return response()->json([
-            'success' => true,
-            'title' => 'Aplicativos Educacionais',
-            'paginator' => $aplicativos,
-        ]);
+        return $this->showAsPaginator($aplicativos, 'Aplicativos Educacionais', 200);
     }
 
-    /**
-     * Valida a criação do Aplicativo
-     *
-     * @return
-     */
-    private function validar()
-    {
-        $validator = Validator::make($this->request->all(), [
-            'name' => 'required|min:2|max:255',
-            'description' => 'required|min:140',
-            'url' => ['required', new UrlValidator],
-            'category_id' => 'required',
-            'tags' => 'required',
-            'image' => 'required',
-            'is_featured' => 'required',
-        ]);
-
-        return $validator;
-    }
+    
 
     /**
      * Cria um novo aplicativo.
@@ -69,14 +46,12 @@ class AplicativoController extends Controller
      */
     public function create()
     {
-        $validator = $this->validar($this->request);
+        $validator = Validator::make($this->request->all(), config("rules.aplicativo"));
+
         if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Não foi possível efetuar o cadastro',
-                'errors' => $validator->errors(),
-            ], 200);
+            return $this->errorResponse($validator->errors(), "Não foi possível criar o conteúdo", 201);
         }
+        
 
         $aplicativo = $this->aplicativo;
 
@@ -119,6 +94,11 @@ class AplicativoController extends Controller
      */
     public function update($id)
     {
+        $validator = Validator::make($this->request->all(), config("rules.aplicativo"));
+
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors(), "Não foi possível criar o conteúdo", 201);
+        }
 
         $aplicativo = Aplicativo::find($id);
         $aplicativo->fill($this->request->all());
@@ -128,10 +108,7 @@ class AplicativoController extends Controller
 
         //$this->createFile($aplicativo->id, $this->request->file('image'));
 
-        return response()->json([
-            'success' => true,
-            'aplicativo' => $aplicativo,
-        ]);
+        return $this->successResponse($aplicativo, "salvado com sucesso", 200);
     }
     /**
      * Remove the specified resource from storage.
@@ -161,11 +138,8 @@ class AplicativoController extends Controller
 
         $aplicativos->setPath("/aplicativos/search/{$termo}?limit={$limit}");
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Resultados da busca',
-            'paginator' => $aplicativos,
-        ]);
+        return $this->showAsPaginator($aplicativos, 
+                                "resultados da busca pelo termo {$termo}", 200); 
     }
     /**
      * Seleciona um recurso por id
@@ -178,16 +152,11 @@ class AplicativoController extends Controller
         $aplicativo = $this->aplicativo::with(['tags', 'category', 'user', 'canal'])
             ->find($id);
 
+        
         if ($aplicativo) {
-            return response()->json([
-                'success' => true,
-                'aplicativo' => $aplicativo,
-            ]);
+            return $this->showOne($aplicativo, '', 200);
         } else {
-            return response()->json([
-                'success' => false,
-                'aplicativo' => 'Não encontrado',
-            ]);
+            return $this->errorResponse([], 'Não encontrado', 404);
         }
     }
 }

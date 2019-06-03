@@ -17,6 +17,9 @@ const mutations = {
   SET_POSTS(state, posts) {
     state.posts = posts;
   },
+  SET_APLICATIVO(state,aplicativo){
+    state.aplicativo = aplicativo;
+  },
   SET_COMPONENT_ID(state,componentId){
     state.componentId = componentId;
   },

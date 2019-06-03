@@ -24,6 +24,15 @@ return [
         'is_approved' => 'required|in:true,false',
         'is_site' => 'nullable|in:true,false'
     ],
+    "aplicativo"=>[
+        'name' => 'required|min:2|max:255',
+        'description' => 'required|min:140',
+        'url' => ['required', new \App\Rules\ValidUrl],
+        'category_id' => 'required',
+        'tags' => 'required',
+        'image' => 'required',
+        'is_featured' => 'required',
+    ],
     "license" => [
         'parent_id' => 'nullable',
         'name' => 'required',

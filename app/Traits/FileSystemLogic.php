@@ -5,7 +5,8 @@ namespace App\Traits;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Filesystem\Filesystem;
-
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 trait FileSystemLogic
 {
     // conteudos/conteudos-digitais/imagem-associada/emitec/img-emitec_disciplina29.png
@@ -49,6 +50,36 @@ trait FileSystemLogic
             return Storage::disk('conteudos-digitais')->url("imagem-associada" . $img_sinopse);
         } else {
             return Storage::disk('conteudos-digitais')->url("imagem-associada/tipo-conteudo/{$tipo}.png");
+        }
+    }
+    //http://pat.des/storage/conteudos/conteudos-blog/uploads/2019/05/Estudos-595x459.png
+    public function getBlogImage($media)
+    {
+        // $media[0]->media_details->sizes->{"featured-blog-medium"}->source_url;
+        ///img/img-fundo-padrao.svg;
+        //$media->media_details->sizes->medium
+        //$this->getImage();
+        $collection = collect((array)$media);
+        
+        
+        dd($collection);        
+
+        
+    }
+    public function getImage($collection)
+    {
+        $collection->pluck(["media_details"]);
+
+        $search_img = $media->media_details->sizes->medium->file;
+        $file = $media->media_details->file;
+        $path = explode('/', $file);
+        array_pop($path);
+        $path = implode('/', $path) . '/' . $search_img;
+        
+        if ((Storage::disk('conteudos-blog')->exists($path))) {
+            return Storage::disk('conteudos-blog')->url($path);
+        } else {
+            return '/img/img-fundo-padrao.svg';
         }
     }
 }

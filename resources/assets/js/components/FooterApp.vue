@@ -1,22 +1,19 @@
 <template>
-    <footer class="page-footer mt-4" style="background-color: #082250;">
-        <section class="container-fluid" style="background-color: #082250;">
+    <footer>
+        <section class="footer-area section-gap pd-4">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-6" v-if="layout.marcas">
-                      <img :src="layout.marcas.url" alt="marcas" v-if="layout.marcas.is_active">
-                    </div>
-                    <div class="col-md-6">
-                        <a class="fb-ic"><i class="fa fa-facebook white-text"> </i></a>
+                    <div class="col-md-offset-2 col-md-8" v-if="layout.marcas">
+                      <img class="marcas img-responsive" :src="layout.marcas.url" alt="marcas" v-if="layout.marcas.is_active">
                     </div>
                 </div>
             </div>
         </section>
-        <section class="container-fluid" style="background-color: #08275E;">
+        <section class="pd-4" style="background-color: #08275E;">
             <section class="container text-center">
-                <div class="row mt-4">
+                <div class="row">
                  <!-- Secretária -->
-                <div class="col-md-12 mb-4" v-if="layout.secretaria">
+                <div class="col-md-12" v-if="layout.secretaria">
                         <h6 class="text-uppercase font-weight-bold">Secretaría da Educação</h6>
                         <hr style="width: 80px;">
                         <ul class="list-inline">
@@ -30,10 +27,10 @@
                 </div>
             </section>
         </section>
-        <section class="container-fluid" style="background-color: #172b4e;">
-            <section class="container text-center mt-4">
+        <section class="pd-4" style="background-color: #04091e;">
+            <section class="container text-center">
                 <!-- Contato -->
-                <div class="col-md-3 col-lg-3 mb-4" v-if="layout.contact">
+                <div class="col-md-3 col-lg-3 pb-4" v-if="layout.contact">
                     <h6 class="text-uppercase font-weight-bold">Contato</h6>
                     <hr style="width: 80px;">
                     <p><i class="glyphicon glyphicon-home mr-3"></i> {{ layout.contact.city }}</p>
@@ -45,13 +42,13 @@
                     </router-link>
                 </div>
                 <!-- Plataforma -->
-                <div class="col-md-9 col-lg-9 mb-4" v-if="layout.description_footer">
+                <div class="col-md-9 col-lg-9 pb-4" v-if="layout.description_footer">
                     <h6 class="text-uppercase font-weight-bold">Plataforma Anísio Teixeira</h6>
                     <hr style="width: 80px;">
                     <p v-text="layout.description_footer"></p>
                 </div>
                 <!-- Canais -->
-                <div class="col-md-12 mt-4 mb-4" v-if="links">
+                <div class="col-md-12 mt-4 pb-4" v-if="links">
                     <h6 class="text-uppercase font-weight-bold">Canais</h6>
                     <hr style="width: 80px;">
                     <ul class="list-inline">
@@ -66,7 +63,7 @@
             </section>
         </section>
         <!--  -->
-        <section class="footer-copyleft">
+        <section class="pd-4">
             <div class="container">
                 <div class="footer-cc row">
                     <div class="col-lg-2">
@@ -124,7 +121,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .page-footer {
-  margin-top: 5vh;
+  margin-top:100px;
 }
 .font-weight-bold {
   font-weight: bold;
@@ -134,20 +131,21 @@ export default {
   margin-top: 50px;
   margin-bottom: 50px;
 }
-
+.marcas{
+  padding-left: 30px;
+}
 .p-cc {
   color: #0d2626;
 }
-.mt-4 {
-  margin-top: 40px;
+.pb-4{
+ padding-bottom: 50px;
 }
-.mb-4 {
-  margin-bottom: 40px;
+
+.pd-4 {
+  padding-top:40px;
+  padding-bottom:40px;
 }
-.footer-copyleft {
-  margin-top: 5vh;
-  background-color: #d8d8d8;
-}
+
 .copyleft {
   display: inline-block;
   -moz-transform: rotate(180deg);
@@ -175,5 +173,13 @@ p {
 .a-sec {
   color: #e6e6e6;
   text-decoration: none;
+}
+.footer-area {
+    padding: 120px 0px 120px;
+    background: url(/img/footer-bg.png) no-repeat center;
+}
+
+.section-gap {
+    padding: 338px 0px 0px 0px;
 }
 </style>
