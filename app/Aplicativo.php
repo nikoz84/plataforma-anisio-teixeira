@@ -2,13 +2,14 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Conteudo;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class Aplicativo extends Model
+class Aplicativo extends Conteudo
 {
-    protected $id = 'id';
+    protected $table = 'aplicativos';
+
     protected $fillable = [
         'name',
         'user_id',
@@ -28,11 +29,15 @@ class Aplicativo extends Model
     protected $casts = [
         'options' => 'array',
     ];
-    public function user()
+    public static function boot()
     {
-        return $this->belongsTo('App\User', 'user_id')
-            ->select(['id', 'name']);
+        parent::boot();
+
+        static::addGlobalScope(function ($query) {
+            $query->where('canal_id', 9);
+        });
     }
+    
     public function tags()
     {
         return $this->belongsToMany('App\Tag', 'aplicativo_tag', 'aplicativo_id', 'tag_id')
@@ -43,11 +48,7 @@ class Aplicativo extends Model
         return $this->hasOne('App\AplicativoCategory', 'id', 'category_id')
             ->select(['id', 'name']);
     }
-    public function canal()
-    {
-        return $this->belongsTo('App\Canal', 'canal_id')
-            ->selectRaw("id, name, slug, options->>'color' as color ");
-    }
+    
     public function getExcerptAttribute()
     {
         return strip_tags(Str::words($this['description'], 30));

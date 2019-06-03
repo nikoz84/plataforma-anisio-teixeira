@@ -28,7 +28,7 @@ export default {
     ...mapState(["exibirId"])
   },
   methods: {
-    ...mapActions(["fetchConteudo"])
+    ...mapActions(["fetchConteudo", "fetchAplicativo"])
   }
 };
 </script>

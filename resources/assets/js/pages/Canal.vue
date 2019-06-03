@@ -28,6 +28,7 @@
 import NavCanal from "../components/NavCanal.vue";
 import SidebarCanal from "../components/SidebarCanal.vue";
 //import Breadcrum from "../components/Breadcrum.vue";
+import debounce from "lodash/debounce"
 import { mapState, mapActions } from "vuex";
 
 export default {
@@ -37,12 +38,14 @@ export default {
     this.getCanalBySlug(this.$route.params.slug);
   },
   watch: {
-    $route(to, from) {
-     
+    '$route'(to, from) {
+      localStorage.canal
      if(to.fullPath != from.fullPath){
-       this.getCanalBySlug(this.$route.params.slug);
+       this.getCanalBySlug(this.$route.params.slug)
+       .then(()=>{
+        console.log(localStorage)
+       });
      }
-     //
     }
   },
   methods: {

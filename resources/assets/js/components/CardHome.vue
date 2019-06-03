@@ -32,7 +32,7 @@ export default {
   }
 };
 </script>
-<style>
+<style lang="scss" scoped>
 .destaque-principal {
   overflow: hidden;
   float: left;
@@ -173,4 +173,5 @@ ul {
   padding-right: 0px;
   padding-left: 0px;
 }
+
 </style>

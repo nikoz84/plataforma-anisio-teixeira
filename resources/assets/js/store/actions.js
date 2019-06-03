@@ -13,6 +13,7 @@ const actions = {
     commit("SET_IS_LOADING", true);
     try {
       await axios.get(`aplicativos/${id}`).then(resp => {
+        console.log(resp)
         commit("SET_EXIBIR_ID", "Aplicativo");
         commit("SET_APLICATIVO", resp.data.metadata);
         commit("SET_IS_LOADING", false);
@@ -148,9 +149,9 @@ const actions = {
       await axios.get(`/canais/slug/${slug}`).then(resp => {
         commit("SET_CANAL", resp.data.canal);
         commit("SET_CANAL_ID", resp.data.canal.id);
+        localStorage.setItem("canal",resp.data.canal.id);
         commit("SET_SIDEBAR", resp.data.sidebar);
         dispatch("sideBarSet", resp.data.sidebar);
-        dispatch("fetchConteudos", resp.data.canal.id);
       });
     } catch (e) {
       commit("SET_IS_ERROR", true);

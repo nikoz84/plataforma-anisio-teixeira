@@ -1,12 +1,15 @@
 <template>
     <aside class="sidebar" id="sidebar-home">
-      <span class="label label-primary btn-close" @click.prevent="closeSidebar()"><i class="glyphicon glyphicon-remove"></i> Fechar</span>
-        
-        <div class="input-group" style="padding-top:60px;">
-            <input type="text" class="form-control" placeholder="Busca...">
-            <span class="input-group-btn">
-                <button class="btn btn-default glyphicon glyphicon-search" type="button" ></button>
-            </span>
+      <div class="row">
+          <span class="label label-primary btn-close" @click.prevent="closeSidebar()"><i class="glyphicon glyphicon-remove"></i> Fechar</span>
+           
+           <div class="input-group" style="padding-top:30px;">
+              
+              <span class="input-group-btn">
+                  <button class="btn btn-default glyphicon glyphicon-search" type="button" ></button>
+              </span>
+              <input type="text" class="form-control" placeholder="Busca...">
+          </div>
         </div>
     </aside>
 </template>
@@ -28,12 +31,16 @@ export default {
   z-index: 900; /* Stay on top */
   top: 0;
   left: 0;
-  background-color: #ffffff; /* Black*/
+  background-color: rgb(255, 255, 255);
+  
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 60px; /* Place content 60px from the top */
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
-
+.sidebar .row{
+ margin-left: 15px;
+ margin-right: 15px;
+}
 .sidebar a.link {
   //padding: 8px 8px 8px 32px;
   text-decoration: none;
@@ -44,7 +51,7 @@ export default {
 }
 
 .sidebar a:hover {
-  color: #0e9298;
+  color: #2d5e9e;
 }
 
 /* Position and style the close button (top right corner) */
