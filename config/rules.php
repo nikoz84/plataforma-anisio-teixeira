@@ -28,7 +28,7 @@ return [
         'parent_id' => 'nullable',
         'name' => 'required',
         'description' => 'required',
-        'site' => 'nullable',
+        'site' => ['nullable', new \App\Rules\ValidUrl],
     ],
     'register' => [
         'name' => 'required|string|max:255|min:4',

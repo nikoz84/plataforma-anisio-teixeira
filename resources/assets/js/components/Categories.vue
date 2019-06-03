@@ -9,7 +9,7 @@
                 <router-link :to="{ name: 'Listar', 
                             params: { slug : $route.params.slug }, 
                             query: { categoria: category.id }}" exact class="categoria">
-                <a>{{ category.name }}</a>
+                <a class="link">{{ category.name }}</a>
                 </router-link>
                 <!-- SUBCATEGORIAS -->
                 <ul v-if="category.sub_categories && category.sub_categories.length > 0">
@@ -22,7 +22,7 @@
                     </li>
                 </ul>
             </li>
-        </ul> 
+        </ul>
     </nav>
 </template>
 <script>
@@ -40,16 +40,19 @@ export default {
 .categoria{
   border: 1px solid rgb(231, 230, 230);
   background-color: rgb(233, 233, 233);
+  margin-bottom: 2px;
 }
 
 .sub-categoria{
   border: 1px solid rgb(231, 230, 230);
   background-color: rgb(243, 242, 242);
-  padding: 2px;
+  padding: 10px 5px 5px;
+  margin-bottom: 2px;
+
 }
 
 .active{
-  background-color: rgb(131, 133, 134);
+  background-color: rgb(131, 133, 134) !important;
   color: #fff;
   padding: 10px;
   font-weight: bold;

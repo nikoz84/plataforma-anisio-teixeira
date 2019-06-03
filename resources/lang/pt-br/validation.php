@@ -137,6 +137,7 @@ return [
         'password' => 'senha',
         'password_confirmation' => 'confirmação da senha',
         'birthday' => 'nascimento',
+        'delete_confirmation' => 'confirmação'
     ],
     'options' => [
         'lang' => 'pt-BR',
