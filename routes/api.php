@@ -78,7 +78,7 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/conteudos/teste', 'ConteudoController@teste');
     Route::get('/conteudos/{id}', 'ConteudoController@getById')->name('busca.x.conteudo.id');
     Route::get('/conteudos/tag/{id}', 'ConteudoController@getByTagId')->name('busca.x.tag.id');
-
+    Route::get('/posts', 'WordpressController@list')->name('lista.postagens');
     /******
      *
      * Controlador: Aplicativo

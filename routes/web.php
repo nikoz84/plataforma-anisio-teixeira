@@ -17,10 +17,9 @@ Route::get('/email', function (Request $request) {
 });
 
 Route::get('/teste', function (Request $request) {
-    $wordpres = new App\Helpers\WordpressService();
+    $wordpres = new App\Helpers\WordpressService($request->limit, $request->page);
 
-    return $wordpres->getPosts($request);
-    //return $wordpres->getPost($request);
+    return $wordpres->getPosts();
 });
 
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');

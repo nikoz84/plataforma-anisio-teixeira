@@ -11,21 +11,23 @@
                             v-bind:title="'Título: ' + title"-->
                       <img v-lazy="getImage"
                           alt="imagem destacada" 
-                          class="card-img-show" 
+                          class="img-responsive card-img-show" 
+                          style="min-height: 35vh;"
                           :src="getImage">
-                      <a class="tipo-btn"> link</a>
+                      <a class="tipo-btn"> {{ getTipo }}</a>
 
                     <!--/router-link-->
                   </div>
                   <div class="col-md-8">
                       <div class="card-row card-header card-heading-bottom">
-                        <h3 class="card-title card-heading-inner" :style="`border-bottom: 2px solid ${color}`">
-                          <router-link  :to="{ name: 'ExibirConteudo', params: { slug: slug, id: item.id, action: 'exibir'}}"
-                            aria-label="Título" 
-                            v-bind:title="'Título: ' + title">
-                            {{ title }}
-                          </router-link>
-                        </h3>
+                        <router-link  :to="{ name: 'ExibirConteudo', params: { slug: slug, id: item.id, action: 'exibir'}}"
+                          aria-label="Título" 
+                          v-bind:title="'Título: ' + title">
+                          <h3 class="card-title card-heading-inner" 
+                            :style="`border-bottom: 2px solid ${color}`"
+                            v-html="title">
+                          </h3>
+                        </router-link>
                       </div>
                       <div class="card-row card-desc">
                         <p v-html="item.excerpt"></p>
@@ -54,6 +56,9 @@ export default {
     },
     getImage() {
       return this.item.image;
+    },
+    getTipo() {
+      return this.item.tipo ? this.item.tipo.name : this.item.category.name;
     }
   },
   created() {}
@@ -86,6 +91,9 @@ export default {
 }
 .card-row .card-header.car-title {
   font-size: 20px;
+}
+.card-link {
+  text-decoration: none;
 }
 .card-panel .card-row.card-header .card-header-seperator {
   height: 4px;
@@ -130,16 +138,20 @@ export default {
   padding: 0;
 }
 
-.tipo-btn{
-    position: absolute;
-    bottom: -5px;
-    border-top-right-radius: 10px;
-    padding: 15px 30px;
-    background-color: #fff;
-    color: #ef1313;
-    text-transform: uppercase;
-    font-size: 11px;
-    font-weight: 600;
-    display: inline-block;
+.tipo-btn {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  border-top-left-radius: 10px;
+  padding: 15px 30px;
+  background-color: #fff;
+  -webkit-box-shadow: -19px -15px 17px -11px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: -19px -15px 17px -11px rgba(0, 0, 0, 0.4);
+  box-shadow: -19px -15px 17px -11px rgba(0, 0, 0, 0.4);
+  color: rgb(4, 9, 30);
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: bolder;
+  display: inline-block;
 }
 </style>

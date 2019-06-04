@@ -13,13 +13,44 @@ const actions = {
     commit("SET_IS_LOADING", true);
     try {
       await axios.get(`aplicativos/${id}`).then(resp => {
-        console.log(resp)
+        console.log(resp);
         commit("SET_EXIBIR_ID", "Aplicativo");
         commit("SET_APLICATIVO", resp.data.metadata);
         commit("SET_IS_LOADING", false);
       });
     } catch (e) {
       console.log(e);
+    }
+  },
+  async fetchAplicativos({ commit }, payload) {
+    commit("SET_IS_LOADING", true);
+    try {
+      await axios.get(`aplicativos`).then(resp => {
+        if (resp.status == 200 && resp.data.paginator) {
+          commit("SET_COMPONENT_ID", "Paginator");
+          commit("SET_IS_LOADING", false);
+          commit("SET_PAGINATOR", resp.data.paginator);
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  },
+  /** WORDPRESS*/
+  async fetchPosts({ commit }, payload) {
+    commit("SET_IS_LOADING", true);
+    let url = `/conteudos?canal=7`;
+    try {
+      await axios.get(url).then(resp => {
+        commit("SET_COMPONENT_ID", "");
+        if (resp.status == 200 && resp.data.paginator) {
+          commit("SET_COMPONENT_ID", "Paginator");
+          commit("SET_IS_LOADING", false);
+          commit("SET_PAGINATOR", resp.data.paginator);
+        }
+      });
+    } catch (e) {
+      commit("SET_IS_ERROR", true);
     }
   },
   /** CONTEUDOS */
@@ -33,10 +64,6 @@ const actions = {
           commit("SET_COMPONENT_ID", "Paginator");
           commit("SET_IS_LOADING", false);
           commit("SET_PAGINATOR", resp.data.paginator);
-        } else if (resp.status == 200 && resp.data.metadata) {
-          commit("SET_COMPONENT_ID", "Posts");
-          commit("SET_IS_LOADING", false);
-          commit("SET_POSTS", resp.data.metadata.blog_posts);
         }
       });
     } catch (e) {
@@ -149,7 +176,7 @@ const actions = {
       await axios.get(`/canais/slug/${slug}`).then(resp => {
         commit("SET_CANAL", resp.data.canal);
         commit("SET_CANAL_ID", resp.data.canal.id);
-        localStorage.setItem("canal",resp.data.canal.id);
+        localStorage.setItem("canal", resp.data.canal.id);
         commit("SET_SIDEBAR", resp.data.sidebar);
         dispatch("sideBarSet", resp.data.sidebar);
       });

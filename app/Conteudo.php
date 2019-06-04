@@ -36,7 +36,7 @@ class Conteudo extends Model
         'updated_at',
         'deleted_at',
     ];
-    protected $appends = ['image', 'excerpt', 'url_exibir'];
+    protected $appends = ['image', 'excerpt', 'url_exibir', 'tipo'];
     protected $casts = [
         'options' => 'array',
     ];
@@ -47,6 +47,7 @@ class Conteudo extends Model
         return $this->belongsTo(\App\Canal::class, 'canal_id')
             ->selectRaw("id, name, slug, options->>'color' as color");
     }
+
     public function user()
     {
         return $this->belongsTo(\App\User::class, 'user_id')
@@ -96,5 +97,9 @@ class Conteudo extends Model
         $slug = $this->canal()->pluck('slug')->first();
 
         return "/{$slug}/conteudo/exibir/" . $this['id'];
+    }
+    public function getTipoAttribute()
+    {
+        return DB::table('tipos')->where('id', $this['options']['tipo'])->get(['name'])->first();
     }
 }

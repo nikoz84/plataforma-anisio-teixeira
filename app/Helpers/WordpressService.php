@@ -4,8 +4,7 @@ namespace App\Helpers;
 
 use App\Canal;
 use Ixudra\Curl\Facades\Curl;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use App\Traits\FileSystemLogic;
 
 class WordpressService
@@ -14,27 +13,43 @@ class WordpressService
 
     protected $api;
     protected $slug;
+    protected $id_canal;
+    protected $limit;
+    protected $post;
 
-    public function __construct()
+    public function __construct($limit = 15, $page = 1)
     {
         $canal = $canal = Canal::find(7);
-        $canalUrl = $canal->options['back_url'];
-        
-        $this->api =  $canalUrl . "wp-json/pat/v1/";
+        $canal_url = $canal->options['back_url'];
+        $this->limit = $limit;
+        $this->page = $page;
+        $this->api =  $canal_url . "/wp-json/pat/v1/";
     }
 
-    public function getPosts($limit = 5)
+    public function getPosts()
     {
-        $data = [
-            'per_page' => $limit,
-            'offset' => 1
-        ];
-        $url = $this->api . 'posts';
-        
-        return Curl::to($url)
-        ->withData($data)
-        ->asJsonResponse()
-        ->get();
+        $url = $this->api . "posts";
+
+        $response = Curl::to($url)
+            ->withData([
+                'limit' => $this->limit,
+                'page' => $this->page
+            ])->asJsonResponse()
+            ->get();
+
+        if ($response) {
+            return $this->getPaginator($response);
+        }
     }
-    
+
+    protected function getPaginator($data)
+    {
+
+        $itemsCollection = collect($data->posts);
+        $paginatedItems = new Paginator($itemsCollection, $data->total, $this->limit, $this->page);
+        //$paginatedItems::resolveCurrentPage($this->page);
+        $paginatedItems->setPath("/conteudos?canal=7&limit={$this->limit}");
+
+        return $paginatedItems;
+    }
 }

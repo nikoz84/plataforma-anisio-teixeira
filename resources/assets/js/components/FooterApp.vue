@@ -121,7 +121,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .page-footer {
-  margin-top:100px;
+  margin-top: 100px;
 }
 .font-weight-bold {
   font-weight: bold;
@@ -131,19 +131,19 @@ export default {
   margin-top: 50px;
   margin-bottom: 50px;
 }
-.marcas{
+.marcas {
   padding-left: 30px;
 }
 .p-cc {
   color: #0d2626;
 }
-.pb-4{
- padding-bottom: 50px;
+.pb-4 {
+  padding-bottom: 50px;
 }
 
 .pd-4 {
-  padding-top:40px;
-  padding-bottom:40px;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
 
 .copyleft {
@@ -175,11 +175,11 @@ p {
   text-decoration: none;
 }
 .footer-area {
-    padding: 120px 0px 120px;
-    background: url(/img/footer-bg.png) no-repeat center;
+  padding: 120px 0px 120px;
+  background: url(/img/footer-bg.png) no-repeat center;
 }
 
 .section-gap {
-    padding: 338px 0px 0px 0px;
+  padding: 330px 0px 0px 0px;
 }
 </style>

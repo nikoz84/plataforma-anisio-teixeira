@@ -29,7 +29,6 @@ class ConteudoController extends ApiController
     {
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
-        $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
         $canal = $this->request->query('canal');
 
         $tipos = $this->request->get('tipos');
@@ -45,12 +44,7 @@ class ConteudoController extends ApiController
         'categorias' => $categorias
         ]);
          */
-        if ($canal == 7) {
-            $wordpress = new WordpressService;
-            return $this->successResponse([
-                'blog_posts' =>  $wordpress->getPosts()
-            ], '', 200);
-        }
+
         $query = $this->conteudo::query();
 
         $query->when($canal, function ($q, $canal) {
