@@ -7,11 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ApiController;
 
-class AplicativoController extends ApiController
+class WordpressController extends ApiController
 {
     public function __construct(Request $request, Storage $storage)
     {
-        $this->middleware('jwt.verify')->except(['list', 'search', 'getById']);
+        $this->middleware('jwt.verify')->except(['list', 'search', 'getById', 'getEstatisticas']);
         $this->request = $request;
         $this->storage = $storage;
     }
@@ -20,12 +20,10 @@ class AplicativoController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function list(Request $request)
+    public function list()
     {
-        $limit = ($request->has('limit')) ? $request->query('limit') : 15;
-        $page = ($request->has('page')) ? $request->query('page') : 1;
 
-        $wordpress = new WordpressService($limit, $page);
+        $wordpress = new WordpressService($this->request);
 
         return $this->showAsPaginator($wordpress->getPosts(), 'Conteúdos blog', 200);
     }
@@ -49,5 +47,12 @@ class AplicativoController extends ApiController
     public function getById($id)
     {
         //
+    }
+
+    public function getEstatisticas()
+    {
+        $wordpress = new WordpressService($this->request);
+
+        $wordpress->getCatalogacao();
     }
 }

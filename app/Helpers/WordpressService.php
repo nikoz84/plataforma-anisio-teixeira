@@ -6,6 +6,7 @@ use App\Canal;
 use Ixudra\Curl\Facades\Curl;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use App\Traits\FileSystemLogic;
+use Illuminate\Http\Request;
 
 class WordpressService
 {
@@ -17,12 +18,14 @@ class WordpressService
     protected $limit;
     protected $post;
 
-    public function __construct($limit = 15, $page = 1)
+    public function __construct(Request $request)
     {
+        $this->limit = $request->query('limit', 15);
+        $this->page = $request->query('page', 1);
+
         $canal = $canal = Canal::find(7);
         $canal_url = $canal->options['back_url'];
-        $this->limit = $limit;
-        $this->page = $page;
+
         $this->api =  $canal_url . "/wp-json/pat/v1/";
     }
 
@@ -47,9 +50,25 @@ class WordpressService
 
         $itemsCollection = collect($data->posts);
         $paginatedItems = new Paginator($itemsCollection, $data->total, $this->limit, $this->page);
-        //$paginatedItems::resolveCurrentPage($this->page);
-        $paginatedItems->setPath("/conteudos?canal=7&limit={$this->limit}");
+
+        $paginatedItems->setPath("/posts?limit={$this->limit}");
 
         return $paginatedItems;
+    }
+
+    public function getCatalogacao()
+    {
+        $url = $this->api . "posts/catalogacao";
+
+        $response = Curl::to($url)
+            ->asJsonResponse()
+            ->get();
+
+        if ($response) {
+            $posts = collect($response->posts);
+            $users = collect($response->users);
+            dd($users->search());
+            die();
+        }
     }
 }

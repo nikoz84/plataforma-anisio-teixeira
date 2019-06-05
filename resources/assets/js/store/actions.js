@@ -39,7 +39,7 @@ const actions = {
   /** WORDPRESS*/
   async fetchPosts({ commit }, payload) {
     commit("SET_IS_LOADING", true);
-    let url = `/conteudos?canal=7`;
+    let url = `/posts`;
     try {
       await axios.get(url).then(resp => {
         commit("SET_COMPONENT_ID", "");
