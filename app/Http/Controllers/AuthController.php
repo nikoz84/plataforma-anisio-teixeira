@@ -131,7 +131,7 @@ class AuthController extends ApiController
 
         //$this->sendConfirmationEmail();
 
-        return $this->successResponse([], "Espere um email de confirmação na conta", 200);
+        return $this->successResponse([], "Espere a confirmação na sua conta de email", 200);
     }
     private function sendConfirmationEmail()
     {

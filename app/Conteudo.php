@@ -100,6 +100,6 @@ class Conteudo extends Model
     }
     public function getTipoAttribute()
     {
-        return DB::table('tipos')->where('id', $this['options']['tipo'])->get(['name'])->first();
+        return DB::table('tipos')->where('id', $this['options']['tipo'])->get(['id', 'name'])->first();
     }
 }

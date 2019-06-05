@@ -9,10 +9,10 @@ const actions = {
     commit("SET_LINKS", resp.data.links);
   },
   /** APLICATIVOS */
-  async fetchAplicativo({ commit }, id) {
+  async fetchAplicativo({ commit }, payload) {
     commit("SET_IS_LOADING", true);
     try {
-      await axios.get(`aplicativos/${id}`).then(resp => {
+      await axios.get(`aplicativos/${payload.id}`).then(resp => {
         console.log(resp);
         commit("SET_EXIBIR_ID", "Aplicativo");
         commit("SET_APLICATIVO", resp.data.metadata);
@@ -70,9 +70,9 @@ const actions = {
       commit("SET_IS_ERROR", true);
     }
   },
-  async fetchConteudo({ commit }, id) {
+  async fetchConteudo({ commit }, payload) {
     try {
-      await axios.get(`/conteudos/${id}`).then(resp => {
+      await axios.get(`/conteudos/${payload.id}`).then(resp => {
         commit("SET_EXIBIR_ID", "Conteudo");
         commit("SET_CONTEUDO", resp.data.metadata);
       });
@@ -88,6 +88,7 @@ const actions = {
     commit("SET_CONTEUDO", resp.data);
   },
   async updateConteudo({ commit, dispatch }, conteudo) {
+    console.log(conteudo);
     let resp = await axios.put(`/conteudos/${conteudo.id}`, conteudo);
     await dispatch("showResponse", resp);
 
@@ -99,6 +100,7 @@ const actions = {
   },
   async showResponse({ commit, dispatch }, response) {
     if (response.status == 201) {
+      console.log(response.data);
       let errors = response.data.errors ? response.data.errors : [];
       commit("SET_ERRORS", errors);
       commit("SET_SHOW_ALERT", true);
@@ -124,8 +126,9 @@ const actions = {
       commit("SET_IS_ERROR", false);
     }, 2500);
   },
-  async login({ commit, dispatch }, user) {
-    let resp = await axios.post("/auth/login", user);
+  async login({ commit, dispatch }, payload) {
+    let resp = await axios.post("/auth/login", payload);
+
     if (resp.status == 200 && resp.data.success) {
       localStorage.setItem("token", resp.data.metadata.token.access_token);
       commit("SET_LOGIN_USER", true);
@@ -133,20 +136,25 @@ const actions = {
       dispatch("showResponse", resp);
     }
   },
-  async logout() {
-    let resp = await axios.post("/auth/logout", {
-      token: localStorage.token
-    });
-    console.log(resp);
-
-    //store.commit("LOGOUT_USER");
-    //localStorage.removeItem("token");
-    //localStorage.removeItem("token");
+  async logout({ commit }) {
+    if (localStorage.token) {
+      await axios.post("/auth/logout", {
+        token: localStorage.token
+      });
+      commit("SET_LOGOUT_USER");
+      localStorage.removeItem("token");
+    } else {
+      commit("SET_LOGOUT_USER");
+      localStorage.removeItem("token");
+    }
   },
   async registerUser({ commit, dispatch }, user) {
     let resp = await axios.post(`/auth/register`, user);
-
-    dispatch("showResponse", resp);
+    if (resp.status == 200 && resp.data.success) {
+      commit("SET_IS_ERROR", false);
+    } else {
+      dispatch("showResponse", resp);
+    }
   },
   /** CANAIS FOR SELECT */
   async fetchCanaisForSelect({ commit }) {
@@ -154,9 +162,12 @@ const actions = {
     commit("SET_CANAIS", resp.data.metadata);
   },
   /** TIPO DE CONTEUDOS */
-  async fetchTipos({ commit }) {
+  async fetchTiposForm({ commit }) {
     let resp = await axios.get("/tipos");
-    commit("SET_TIPOS", resp.data.metadata.tipos);
+
+    if (resp.status == 200 && resp.data.success == true) {
+      commit("SET_TIPOS_FORM", resp.data.metadata);
+    }
   },
   /** LICENÇAS */
   async fetchLicenses({ commit }) {

@@ -7,13 +7,15 @@
             </div>
             <div class="panel-body">
                 <form v-on:submit.prevent="entrar()">
-                    <div class="form-group">
+                    <div class="form-group" v-bind:class="showErrors('email')">
                         <label for="email">E-mail</label>
-                        <input class="form-control" v-model="user.email" id="email" type="text">
+                        <input class="form-control" v-model="email" id="email" type="text">
+                        <erros :errors="errors.email"></erros>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" v-bind:class="showErrors('password')">
                         <label for="senha">Senha</label>
-                        <input class="form-control" v-model="user.password" id="senha" type="password">
+                        <input class="form-control" v-model="password" id="senha" type="password">
+                        <erros :errors="errors.password"></erros>
                     </div>
                     <button type="submit" class="btn btn-default">Login</button>
                 </form>
@@ -32,18 +34,19 @@
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
 import AlertShake from "../components/AlertShake.vue";
+import showErrors from "../components/ShowErrors.vue";
+import { getInputError } from "../functions.js";
 
 export default {
   name: "LoginForm",
   components: {
-    AlertShake
+    AlertShake,
+    erros: showErrors
   },
   data() {
     return {
-      user: {
-        email: null,
-        password: null
-      }
+      email: null,
+      password: null
     };
   },
   beforeCreate() {
@@ -52,17 +55,22 @@ export default {
     }
   },
   computed: {
-    ...mapState(["isLogged"])
+    ...mapState(["isLogged", "errors"])
   },
   methods: {
     ...mapActions(["login"]),
     entrar() {
-      this.login(this.user).then(() => {
+      let data = { email: this.email, password: this.password };
+
+      this.login(data).then(() => {
         if (this.isLogged) {
           this.docodePayloadToken();
           this.$router.push("/admin/inicio/estatisticas");
         }
       });
+    },
+    showErrors(attr) {
+      return getInputError(this.errors, attr);
     },
     docodePayloadToken() {
       const base64Url = localStorage.token.split(".")[1];

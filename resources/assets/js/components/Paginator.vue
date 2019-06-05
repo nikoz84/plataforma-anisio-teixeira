@@ -37,7 +37,6 @@ export default {
     ...mapMutations(["SET_PAGINATOR"]),
     async goToPage(page) {
       let resp = await axios.get(page);
-      console.log(resp.data.paginator);
       await this.SET_PAGINATOR(resp.data.paginator);
     }
   }
