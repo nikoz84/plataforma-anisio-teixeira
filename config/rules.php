@@ -24,7 +24,7 @@ return [
         'is_approved' => 'required|in:true,false',
         'is_site' => 'nullable|in:true,false'
     ],
-    "aplicativo"=>[
+    "aplicativo" => [
         'name' => 'required|min:2|max:255',
         'description' => 'required|min:140',
         'url' => ['required', new \App\Rules\ValidUrl],
@@ -41,13 +41,13 @@ return [
     ],
     'register' => [
         'name' => 'required|string|max:255|min:4',
-        'email' => 'required|string|email|max:100|unique:users,email',
-        'password' => 'required|string|min:6|required_with:password_confirmation|same:password_confirmation',
-        'password_confirmation' => 'required'
+        'email' => 'required|string|max:100|unique:users,email',
+        'password' => 'required|string|min:6|required_with:confirmation|same:confirmation',
+        'confirmation' => 'required'
     ],
     'login' => [
-        'email' => 'required|string|email|max:255',
-        'password' => 'required|string|min:6',
+        'email' => 'required|string|max:150',
+        'password' => 'required|min:6',
     ],
     'denuncia' => [
         'name' => 'required|min:5',

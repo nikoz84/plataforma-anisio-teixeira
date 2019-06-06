@@ -9,26 +9,33 @@
                     </div>
                     <div class="panel-body">
                         
-                        <div class="form-group">
+                        <div class="form-group" :class="showErrors('name')">
                             <label for="name">Nome</label>
-                            <input type="text" class="form-control" id="name" aria-describedby="nome do usuário" v-model="user.name">
+                            <input type="text" class="form-control" id="name" 
+                                    aria-describedby="nome do usuário" v-model="name">
                             <small class="text-info">Escreva seu nome</small>
+                            <erros :errors="errors.name"></erros>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" :class="showErrors('email')">
                             <label for="email">Email</label>
-                            <input type="text" class="form-control" id="email" aria-describedby="seu email" v-model="user.email">
+                            <input type="text" class="form-control" id="email" aria-describedby="seu email" v-model="email">
                             <small class="text-info">Escreva seu e-mail</small>
+                            <erros :errors="errors.email"></erros>
                         </div>
                         <!-- Nova senha -->
-                        <div class="form-group">
+                        <div class="form-group" :class="showErrors('password')">
                             <label for="senha">Senha</label>
-                            <input type="password" class="form-control" id="senha" aria-describedby="senha" v-model="user.password">
+                            <input type="password" class="form-control" id="senha" aria-describedby="senha" v-model="password">
                             <small class="text-info">Escreva uma senha</small>
+                            <erros :errors="errors.password"></erros>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" :class="showErrors('confirmation')">
                             <label for="confirmasenha">Repita a Senha</label>
-                            <input type="password" class="form-control" id="confirmasenha" aria-describedby="confirmar senha" v-model="user.password_confirmation">
+                            <input type="password" class="form-control" 
+                                id="confirmasenha" aria-describedby="confirmar senha" 
+                                v-model="confirmation">
                             <small class="text-info">Confirme sua senha</small>
+                            <erros :errors="errors.confirmation"></erros>
                         </div>
                         <AlertShake></AlertShake>
                     </div>
@@ -50,38 +57,49 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 import AlertShake from "../components/AlertShake.vue";
+import showErrors from "../components/ShowErrors.vue";
+import { getInputError } from "../functions.js";
 
 export default {
   name: "RegisterForm",
-  components: { AlertShake },
+  components: { AlertShake, erros: showErrors },
   data() {
     return {
-      user: {
-        name: "",
-        email: "",
-        password: "",
-        password_confirmation: ""
-      }
+      name: "",
+      email: "",
+      password: "",
+      confirmation: ""
     };
   },
   computed: {
-    ...mapState(["isError"])
+    ...mapState(["isError", "errors"])
   },
   mounted() {
     //
   },
   methods: {
     ...mapActions(["registerUser"]),
+    ...mapMutations(["SET_ERRORS", "SET_IS_ERROR"]),
     register() {
-      this.registerUser(this.user).then(() => {
+      let data = {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        confirmation: this.confirmation
+      };
+
+      this.registerUser(data).then(() => {
         if (!this.isError) {
+          this.SET_ERRORS({});
+          this.SET_IS_ERROR(false);
           this.$router.push("/usuario/login");
         }
-      }).catch(error => {
-        console.log(error)
       });
+    },
+    showErrors(attr) {
+      return getInputError(this.errors, attr);
     }
   }
 };

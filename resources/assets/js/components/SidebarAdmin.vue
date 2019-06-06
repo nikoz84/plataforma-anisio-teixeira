@@ -39,26 +39,16 @@
     </nav>
 </template>
 <script>
-
 export default {
   name: "SidebarAdmin",
   data() {
     return {
       username: localStorage.getItem("username"),
-      userId: localStorage.getItem("idUser"),
+      userId: localStorage.getItem("idUser")
     };
   },
   mounted() {},
-  methods: {
-    async get(endpoint) {
-      let resp = await axios.get(`/${endpoint}`);
-
-      if (resp.data.success) {
-        //this.$parent.paginator = resp.data.paginator;
-        
-      }
-    }
-  }
+  methods: {}
 };
 </script>
 <style lang="sass" scoped>

@@ -28,28 +28,46 @@
 import NavCanal from "../components/NavCanal.vue";
 import SidebarCanal from "../components/SidebarCanal.vue";
 //import Breadcrum from "../components/Breadcrum.vue";
-import debounce from "lodash/debounce"
+import debounce from "lodash/debounce";
 import { mapState, mapActions } from "vuex";
 
 export default {
   name: "canal",
   components: { NavCanal, sidebar: SidebarCanal },
   mounted() {
-    this.getCanalBySlug(this.$route.params.slug);
+    this.getCanalBySlug(this.$route.params.slug).then(() => {
+      this.fetchData();
+    });
   },
   watch: {
-    '$route'(to, from) {
-      localStorage.canal
-     if(to.fullPath != from.fullPath){
-       this.getCanalBySlug(this.$route.params.slug)
-       .then(()=>{
-        console.log(localStorage)
-       });
-     }
+    $route(to, from) {
+      if (to.fullPath != from.fullPath) {
+        this.getCanalBySlug(this.$route.params.slug).then(() => {
+          this.fetchData();
+        });
+      }
     }
   },
   methods: {
-    ...mapActions(["getCanalBySlug"]),
+    ...mapActions([
+      "getCanalBySlug",
+      "fetchConteudos",
+      "fetchAplicativos",
+      "fetchPosts"
+    ]),
+    fetchData() {
+      switch (true) {
+        case localStorage.canal == 9:
+          return this.fetchAplicativos();
+          break;
+        case localStorage.canal == 7:
+          return this.fetchPosts();
+          break;
+        default:
+          return this.fetchConteudos(localStorage.canal);
+          break;
+      }
+    }
   },
   computed: {
     ...mapState(["canal"])

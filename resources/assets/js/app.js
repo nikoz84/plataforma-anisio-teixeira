@@ -32,22 +32,22 @@ const router = new VueRouter({
   }
 });
 
+window.Store = store;
+
 router.beforeEach((to, from, next) => {
   document.title = `Plataforma Anísio Texeira - ${to.meta.title}`;
-  next();
-});
-
-window.Store = store;
-/*
-Router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // You can use store variable here to access globalError or commit mutation
-    next("/Login");
+    if (store.state.isLogged) {
+      next();
+    } else {
+      next("/usuario/login");
+    }
   } else {
     next();
   }
 });
-*/
+
 new Vue({
   router,
   store,

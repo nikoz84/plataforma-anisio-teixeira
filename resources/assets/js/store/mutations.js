@@ -17,22 +17,22 @@ const mutations = {
   SET_POSTS(state, posts) {
     state.posts = posts;
   },
-  SET_APLICATIVO(state,aplicativo){
+  SET_APLICATIVO(state, aplicativo) {
     state.aplicativo = aplicativo;
   },
-  SET_COMPONENT_ID(state,componentId){
+  SET_COMPONENT_ID(state, componentId) {
     state.componentId = componentId;
   },
-  SET_EXIBIR_ID(state,exibirId){
+  SET_EXIBIR_ID(state, exibirId) {
     state.exibirId = exibirId;
   },
-  SET_IS_LOADING(state, isLoading){
-    state.isLoading = isLoading
+  SET_IS_LOADING(state, isLoading) {
+    state.isLoading = isLoading;
   },
-  SET_HOME_DATA(state, homeData){
+  SET_HOME_DATA(state, homeData) {
     state.homeData = homeData;
   },
-  SET_PAGINATOR(state, paginator){
+  SET_PAGINATOR(state, paginator) {
     state.paginator = paginator;
   },
   SET_CONTEUDOS(state, conteudos) {
@@ -116,6 +116,9 @@ const mutations = {
   },
   SET_TIPOS(state, tipos) {
     state.tipos = tipos;
+  },
+  SET_TIPOS_FORM(state, tipos) {
+    state.tiposForm = tipos;
   },
   SET_FORM_DATA(state, formData) {
     state.formData = formData;

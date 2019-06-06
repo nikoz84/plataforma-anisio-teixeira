@@ -18,9 +18,9 @@ export default {
   },
   created() {
     if (this.$route.params.slug == "aplicativos-educacionais") {
-      this.fetchAplicativo(this.$route.params.id);
+      this.fetchAplicativo(this.$route.params);
     } else {
-      this.fetchConteudo(this.$route.params.id);
+      this.fetchConteudo(this.$route.params);
     }
   },
 

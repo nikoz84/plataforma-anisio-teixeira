@@ -46,7 +46,6 @@
 </template>
 <script>
 import Player from "../components/Player.vue";
-import client from "../client.js";
 import { mapState } from "vuex";
 
 export default {

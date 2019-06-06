@@ -44,7 +44,7 @@
                                 <a>Login</a>
                             </router-link>
                             <li v-if="isLogged">
-                                <a v-on:click.prevent="logout()">Sair</a>
+                                <a class="pointer" v-on:click.prevent="sair()">Sair</a>
                             </li>
                         </ul>
                     </li>
@@ -67,6 +67,13 @@ export default {
   },
   methods: {
     ...mapActions(["logout"]),
+    sair() {
+      this.logout().then(() => {
+        if (!this.isLogged) {
+          this.$router.push("/");
+        }
+      });
+    },
     handleScroll() {
       let winScroll =
         document.body.scrollTop || document.documentElement.scrollTop;

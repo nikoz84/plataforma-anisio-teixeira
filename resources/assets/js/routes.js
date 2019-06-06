@@ -16,7 +16,8 @@ const routes = [
     name: "Home",
     component: () => import(/* webpackChunkName: "home" */ "./pages/Home.vue"),
     meta: {
-      requiresAuth: false
+      requiresAuth: false,
+      title: "Inicio"
     }
   },
   {
@@ -35,6 +36,10 @@ const routes = [
         components: {
           default: ListAdmin,
           admin: ListAdmin
+        },
+        meta: {
+          requiresAuth: true,
+          title: "Administração"
         }
       }
     ]
@@ -53,7 +58,8 @@ const routes = [
         name: "Inicio",
         component: HomeCanal,
         meta: {
-          requiresAuth: false
+          requiresAuth: false,
+          title: "Inicio"
         }
       },
       {
@@ -142,17 +148,29 @@ const routes = [
       {
         path: "login",
         name: "Login",
-        component: LoginForm
+        component: LoginForm,
+        meta: {
+          requiresAuth: false,
+          title: "faça seu login"
+        }
       },
       {
         path: "recuperar-senha",
         name: "Recover",
-        component: RecoverPassForm
+        component: RecoverPassForm,
+        meta: {
+          requiresAuth: false,
+          title: "recuperar senha"
+        }
       },
       {
         path: "registro",
         name: "Register",
-        component: RegisterForm
+        component: RegisterForm,
+        meta: {
+          requiresAuth: false,
+          title: "faça seu registro"
+        }
       },
       {
         path: "denuncia",

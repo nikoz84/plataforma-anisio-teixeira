@@ -16,21 +16,18 @@ import { mapState } from "vuex";
 export default {
   name: "admin",
   components: {
-    "sidebar-admin":SidebarAdmin
+    "sidebar-admin": SidebarAdmin
   },
   data() {
     return {
       title: "Administração da Plataforma",
       search: "",
       show: false,
-      paginator: {},
       slug: "",
       action: ""
     };
   },
-  computed: {
-    ...mapState(["isLogged"])
-  },
+  computed: {}
 };
 </script>
 <style lang="scss" scoped>

@@ -346,3 +346,6 @@ update options
 set meta_data = jsonb_set(meta_data, '{"marcas", "is_active"}', '"false"'::jsonb) 
 where name like '%layout%'
 
+update canais
+set options = jsonb_set(options, '{"back_url"}', '"http://colaborativus.pat.educacao.ba.gov.br/"'::jsonb) 
+where id = 8

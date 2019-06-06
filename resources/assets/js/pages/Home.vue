@@ -34,8 +34,9 @@ export default {
   methods: {
     async getData() {
       let resp = await axios.get("/destaques");
-      console.log(resp);
-      this.data = resp.data;
+      if (resp.status == 200 && resp.data) {
+        this.data = resp.data;
+      }
     }
   }
 };
@@ -79,12 +80,10 @@ export default {
   top: 1rem;
 }
 
-.separador-vertical{
+.separador-vertical {
   border-left: 1px solid rgb(209, 208, 208);
   padding: 0px 40px;
-  
 }
-
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {

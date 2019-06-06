@@ -4,9 +4,9 @@ namespace App\Helpers;
 
 use App\Canal;
 use Ixudra\Curl\Facades\Curl;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use App\Traits\FileSystemLogic;
+use Illuminate\Http\Request;
 
 class WordpressService
 {
@@ -14,81 +14,61 @@ class WordpressService
 
     protected $api;
     protected $slug;
+    protected $id_canal;
+    protected $limit;
+    protected $post;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
+        $this->limit = $request->query('limit', 15);
+        $this->page = $request->query('page', 1);
+
         $canal = $canal = Canal::find(7);
-        $canalUrl = $canal->options['back_url'];
-        $this->slug = $canal->slug;
-        $this->api =  $canalUrl . "/wp-json/wp/v2/";
+        $canal_url = $canal->options['back_url'];
+
+        $this->api =  $canal_url . "/wp-json/pat/v1/";
     }
 
-    public function getPosts($limit = 5)
+    public function getPosts()
     {
-        $data = [
-            'per_page' => $limit,
-            '_embed' => true
-        ];
-        $url = $this->api . 'posts';
+        $url = $this->api . "posts";
 
-        return $this->createArray($this->getData($url, $data));
-    }
-    public function getPost($request)
-    {
-        $url = $this->api . "posts/{$request->id}&_embed=true";
-
-        return Curl::to($url)
-            ->asJsonResponse()
+        $response = Curl::to($url)
+            ->withData([
+                'limit' => $this->limit,
+                'page' => $this->page
+            ])->asJsonResponse()
             ->get();
-    }
-    public function getData($url = '', $data = null)
-    {
-        return Curl::to($url)
-            ->withData($data)
-            ->asJsonResponse()
-            ->get();
-    }
-    private function createArray($posts)
-    {
-        $data = []; // posts
 
-        if (!$posts) {
-            return;
+        if ($response) {
+            return $this->getPaginator($response);
         }
-        $count = 0;
-
-        foreach ($posts as $post) {
-            if ($post->status == 'publish') {
-                $date = date_create($post->date);
-                $data_publicacao = ($date) ? date_format($date, 'd/m/y H:m:s') : date('d/m/y H:m:s');
-
-                $data[$count] = [
-                    'id' => $post->id,
-                    'created_at' => $data_publicacao,
-                    'title' => $post->title->rendered,
-                    'excerpt' => strip_tags(Str::words($post->excerpt->rendered, 40)),
-                    'link' => $post->link,
-                    'author' => $post->_embedded->author[0]->name,
-                    'slug' => $this->slug,
-                    'image' => $this->getFeaturedMedia($post)
-                ];
-            }
-
-            $count++;
-        }
-        return $data;
     }
 
-    // Extrai imagem de destaque ou busca dentro das imagens dentro do post
-    private function getFeaturedMedia($post)
+    protected function getPaginator($data)
     {
-        $linkMedia = ($post->featured_media) ?
-            $post->_links->{"wp:featuredmedia"}[0]->href : $post->_links->{"wp:attachment"}[0]->href;
 
-        $media = Curl::to($linkMedia)
+        $itemsCollection = collect($data->posts);
+        $paginatedItems = new Paginator($itemsCollection, $data->total, $this->limit, $this->page);
+
+        $paginatedItems->setPath("/posts?limit={$this->limit}");
+
+        return $paginatedItems;
+    }
+
+    public function getCatalogacao()
+    {
+        $url = $this->api . "posts/catalogacao";
+
+        $response = Curl::to($url)
             ->asJsonResponse()
             ->get();
 
-        return $this->getBlogImage($media);
+        if ($response) {
+            $posts = collect($response->posts);
+            $users = collect($response->users);
+            dd($users->search());
+            die();
+        }
     }
 }

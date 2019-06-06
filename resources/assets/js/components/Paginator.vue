@@ -21,29 +21,26 @@
   </div>
 </template>
 <script>
-import { mapState, mapMutations } from 'vuex';
-import SimpleCard from './SimpleCard.vue';
+import { mapState, mapMutations } from "vuex";
+import SimpleCard from "./SimpleCard.vue";
 
 export default {
-    name: 'Paginator',
-    components:{SimpleCard},
-    computed:{
-      ...mapState(["paginator"]),
-      total(){
-        return this.paginator.total;
-      }
-    },
-    methods: {
-      ...mapMutations([
-        "SET_PAGINATOR"
-      ]),
-      async goToPage(page){
-        let resp = await axios.get(page);
-        this.SET_PAGINATOR(resp.data.paginator);
-      },
+  name: "Paginator",
+  components: { SimpleCard },
+  computed: {
+    ...mapState(["paginator"]),
+    total() {
+      return this.paginator.total;
     }
-
+  },
+  methods: {
+    ...mapMutations(["SET_PAGINATOR"]),
+    async goToPage(page) {
+      let resp = await axios.get(page);
+      await this.SET_PAGINATOR(resp.data.paginator);
+    }
   }
+};
 </script>
 <style lang="sass" scoped>
 
