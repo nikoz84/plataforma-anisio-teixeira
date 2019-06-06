@@ -7,8 +7,8 @@ use App\User;
 use Illuminate\Http\Request;
 use Mail;
 use App\Mail\SendMail;
-use Validator;
 use App\Http\Controllers\ApiController;
+use Illuminate\Support\Facades\Validator;
 
 class DenunciaController extends ApiController
 {
@@ -90,20 +90,22 @@ class DenunciaController extends ApiController
      */
     public function delete($id)
     {
-        $denuncia = Denuncia::find($id);
-        $resp = [];
-        if (!$denuncia) {
-            $resp = [
-                'menssage' => 'Não foi possível deletar a denúncia',
-                'success' => false,
-            ];
-        } else {
-            $resp = [
-                'menssage' => "Denúncia de id: {$id} foi apagado com sucesso!!",
-                'success' => $denuncia->delete(),
-            ];
+
+        $validator = Validator::make($this->request->all(), [
+            'delete_confirmation' => ['required', new \App\Rules\ValidBoolean]
+        ]);
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors(), "Não foi possível deletar a licença", 201);
         }
 
-        return response()->json($resp);
+        $denuncia = $this->denuncia::find($id);
+        $denuncia->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Licença deletada com sucesso!',
+        ]);
+
+        return true;
     }
 }
