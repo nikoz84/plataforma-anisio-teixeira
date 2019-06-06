@@ -28,7 +28,7 @@ class ValidRecaptcha implements Rule
      */
     public function passes($attribute, $value)
     {
-        return $this->recaptcha()->validate($value);
+        return $this->recaptcha->validate($value);
     }
 
     /**

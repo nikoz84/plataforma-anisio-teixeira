@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
  * Controlador: File
  * Métodos: getFiles -> Lista dos arquivos relacionados a um id específico
  * createFile -> Adiciona um novo arquivo para um recurso específico
- */
+*/
 Route::group(['middleware' => ['cors']], function () {
 
     Route::get('/files/{id}', 'FileController@getFiles')->name('busca.arquivo');

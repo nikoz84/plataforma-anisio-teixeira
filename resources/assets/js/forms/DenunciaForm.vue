@@ -1,7 +1,13 @@
 <template>
-    <div class="conteiner">
-        <div class="row col-md-7">
+      <div class="row">
+        <article class="col-md-offset-2 col-md-8">    
+          <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title text-center">Denúncia</h4>
+            </div>
+            <div class="panel-body">
         <form v-on:submit.prevent="send()" v-if="!isSend">
+          <div class="col-md-6">
             <p>Este espaço serve para você denunciar qualquer coisa que você considere imprópria,
                basta fornecer o endereço da página onde esse conteúdo se localiza e uma mensagem
                descrevendo do que se trata e por que você acha que essa página merece a denuncia.
@@ -50,7 +56,8 @@
                         v-text="error">
                 </small>
             </div>
-
+            </div>
+            <div class="col-md-6">
             <div class="form-group" v-bind:class="{ 'has-error': errors.message && errors.message.length > 0 }">
                 <label for="mensagem">Mensagem:<span class="glyphicon-asterisk"></span></label>
                 <textarea class="form-control" id="mensagem" v-model="message" placeholder="Digite aqui sua mensagem"></textarea>
@@ -81,6 +88,7 @@
             <div class="form-group">
                 <button class="btn btn-default" v-if="!isLoading">Enviar</button>
             </div>
+          </div>
 
         </form>
         <div v-else-if="isSend">
@@ -90,8 +98,10 @@
             <div class="col-md-1"><Loader></Loader></div>
             <div class="col-md-4">enviando denúncia...</div>
         </div>
-        </div>
-    </div>
+              </div>
+            </div>
+        </article>
+      </div>   
 </template>
 
 <script>
