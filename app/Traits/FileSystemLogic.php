@@ -5,8 +5,7 @@ namespace App\Traits;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\File;
 
 trait FileSystemLogic
 {
@@ -52,5 +51,15 @@ trait FileSystemLogic
         } else {
             return Storage::disk('conteudos-digitais')->url("imagem-associada/tipo-conteudo/{$tipo}.png");
         }
+    }
+    public function getImagesGallery()
+    {
+        $path = $this->storage::disk('conteudos-digitais')->path('galeria');
+
+        $files = File::allFiles($path);
+
+        return collect($files)->map(function ($file) {
+            return Storage::disk('conteudos-digitais')->url("galeria/{$file->getFilename()}");
+        });
     }
 }

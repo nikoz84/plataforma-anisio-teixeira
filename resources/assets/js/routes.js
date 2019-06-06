@@ -9,6 +9,7 @@ import RegisterForm from "./forms/RegisterForm.vue";
 import ListAdmin from "./components/ListAdmin.vue";
 import DenunciaForm from "./forms/DenunciaForm.vue";
 import FaleConoscoForm from "./forms/FaleConoscoForm.vue";
+import Gallery from "./components/Gallery.vue";
 
 const routes = [
   {
@@ -18,6 +19,15 @@ const routes = [
     meta: {
       requiresAuth: false,
       title: "Inicio"
+    }
+  },
+  {
+    path: "/galeria",
+    name: "Galeria",
+    component: Gallery,
+    meta: {
+      requiresAuth: false,
+      title: "Galeria de Imagens"
     }
   },
   {

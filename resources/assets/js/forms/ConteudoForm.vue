@@ -247,7 +247,8 @@ export default {
       "licenses",
       "childsLicenses",
       "canais"
-    ])
+    ]),
+    ...mapFields([])
   },
   methods: {
     showError(attr) {

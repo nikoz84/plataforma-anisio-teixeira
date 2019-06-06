@@ -5,7 +5,7 @@
         <footer-app></footer-app>
         <side-bar></side-bar>
         <back-to-top></back-to-top>
-        <open-side-bar></open-side-bar>
+        <icon-bar></icon-bar>
     </main>
 </template>
 
@@ -13,9 +13,9 @@
 import NavPrincipal from "./NavPrincipal.vue";
 import FooterApp from "./FooterApp.vue";
 import BackToTop from "./BackToTop.vue";
-import OpenSideBar from "./OpenSideBar.vue";
+import IconBar from "./IconBar.vue";
 import SideBar from "./SideBar.vue";
-import { mapState, mapActions} from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "main-app",
@@ -24,7 +24,7 @@ export default {
     "footer-app": FooterApp,
     "back-to-top": BackToTop,
     "side-bar": SideBar,
-    "open-side-bar": OpenSideBar
+    "icon-bar": IconBar
   },
   created() {
     this.getLayout();
@@ -120,6 +120,4 @@ a:visited {
 .step.finish {
   background-color: #4caf50;
 }
-
-
 </style>

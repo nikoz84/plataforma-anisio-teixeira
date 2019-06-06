@@ -1,27 +1,31 @@
 <template>
     <aside class="sidebar" id="sidebar-home">
       <div class="row">
-          <span class="label label-primary btn-close" @click.prevent="closeSidebar()"><i class="glyphicon glyphicon-remove"></i> Fechar</span>
-           
-           <div class="input-group" style="padding-top:30px;">
-              
-              <span class="input-group-btn">
-                  <button class="btn btn-default glyphicon glyphicon-search" type="button" ></button>
-              </span>
-              <input type="text" class="form-control" placeholder="Busca...">
-          </div>
+          <a class="btn-close" 
+            @click.prevent="closeSidebar()">
+            <i class="glyphicon glyphicon-remove"></i> 
+            
+          </a>
+           <div class="col-sm-12">
+            <form class="search">
+              <input type="text" placeholder="Pesquise.." name="search">
+              <button type="submit">
+                <i class="glyphicon glyphicon-search"></i>
+              </button>
+            </form>
+           </div>
         </div>
     </aside>
 </template>
 <script>
 export default {
-    name: "SideBar",
-    methods: {
-      closeSidebar() {
-        document.getElementById("sidebar-home").style.width = "0";
-      }
-    },
-}
+  name: "SideBar",
+  methods: {
+    closeSidebar() {
+      document.getElementById("sidebar-home").style.width = "0";
+    }
+  }
+};
 </script>
 <style lang="scss" scoped>
 .sidebar {
@@ -32,14 +36,14 @@ export default {
   top: 0;
   left: 0;
   background-color: rgb(255, 255, 255);
-  
+
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 60px; /* Place content 60px from the top */
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
-.sidebar .row{
- margin-left: 15px;
- margin-right: 15px;
+.sidebar .row {
+  margin-left: 15px;
+  margin-right: 15px;
 }
 .sidebar a.link {
   //padding: 8px 8px 8px 32px;
@@ -61,12 +65,58 @@ export default {
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
-  text-decoration: none;
+  width: 45px;
+  height: 45px;
 }
 
-.btn-close{
+.btn-close {
   cursor: pointer;
-  float: right;
+  //float: left;
+  background-color: rgba(1, 14, 27, 0.7);
+  opacity: 0.8;
+  border: none;
+
+  border-radius: 2px;
+  z-index: 100 !important;
+  .glyphicon {
+    color: white;
+    font-size: 20px;
+    margin-top: 5px;
+  }
+}
+
+/* Style the search field */
+form.search input[type="text"] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+}
+
+/* Style the submit button */
+form.search button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: #2196f3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+}
+
+form.search button:hover {
+  background: #0b7dda;
+}
+
+/* Clear floats */
+form.search::after {
+  content: "";
+  clear: both;
+  display: table;
 }
 </style>
 
