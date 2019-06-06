@@ -1,6 +1,7 @@
 <template>
+<div class="bg-img">
       <div class="row">
-        <article class="col-md-offset-2 col-md-8">    
+        <article class="col-md-offset-2 col-md-8">
           <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title text-center">Denúncia</h4>
@@ -101,7 +102,8 @@
               </div>
             </div>
         </article>
-      </div>   
+      </div>
+</div>
 </template>
 
 <script>
@@ -194,4 +196,19 @@ textarea {
   height: 170px;
   resize: none;
 }
+
+.bg-img {
+  /* The image used */
+  background-image: url("../../../../public/img/1.jpg");
+
+  /* Control the height of the image */
+  min-height: 380px;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
 </style>
