@@ -1,8 +1,8 @@
 <template>
 <div class="bg-img">
       <div class="row">
-        <div class="col-md-6">
-          <img class="img-responsive" src="/storage/conteudos/conteudos-digitais/galeria/10.jpg" alt="">
+        <div class="col-md-6 foto">
+          <!--<img class="img-responsive" src="/storage/conteudos/conteudos-digitais/galeria/10.jpg" alt="">-->
         </div>
         <article class="col-md-6">
           <div class="panel panel-default">
@@ -200,12 +200,19 @@ textarea {
   resize: none;
 }
 
-bg-img {
-  background-image: url("/storage/conteudos/conteudos-digitais/galeria/10.jpg");
-  min-height: 380px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
+.foto {
+  overflow: hidden;
+  background: url("/storage/conteudos/conteudos-digitais/galeria/10.jpg");
+  height: 615px;
 }
+
+@media only screen and (max-width: 200px){ //some value
+
+  .foto {
+  width: auto;
+  background: url("/storage/conteudos/conteudos-digitais/galeria/10.jpg");
+  }
+
+}
+
 </style>
