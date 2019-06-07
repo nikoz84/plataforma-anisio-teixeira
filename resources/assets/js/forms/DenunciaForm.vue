@@ -1,17 +1,26 @@
 <template>
 <div class="bg-img">
       <div class="row">
-        <div class="col-md-6">
-          <img class="img-responsive" src="/storage/conteudos/conteudos-digitais/galeria/10.jpg" alt="">
+        <div class="col-md-6 foto">
+          <a href="/galeria" class="gallery-link">Visite nossa galeria de fotos</a>
         </div>
+        <form v-on:submit.prevent="send()">
         <article class="col-md-6">
           <div class="panel panel-default">
             <div class="panel-heading">
-                <h4 class="panel-title text-center">Denúncia</h4>
+              
+              <button class="btn btn-default" v-if="!isLoading">Enviar</button>
+              <div v-else>
+                <Loader></Loader>
+              </div>
+              <div class="clearfix"></div>
             </div>
             <div class="panel-body">
-        <form v-on:submit.prevent="send()" v-if="!isSend">
+        
           <div class="col-md-6">
+            <h4 class="text-center">
+              Denuncie
+            </h4>
             <p>Este espaço serve para você denunciar qualquer coisa que você considere imprópria,
                basta fornecer o endereço da página onde esse conteúdo se localiza e uma mensagem
                descrevendo do que se trata e por que você acha que essa página merece a denuncia.
@@ -21,12 +30,7 @@
             <div class="form-group" v-bind:class="{ 'has-error': errors.name && errors.name.length > 0 }">
                 <label for="nome">Nome:<span class="glyphicon-asterisk"></span></label>
                 <input type="text" class="form-control" id="nome" v-model="name" placeholder="Digite seu nome">
-                <small class="text-danger"
-                        v-if="errors.name"
-                        v-for="(error,n) in errors.name"
-                        v-bind:key="n"
-                        v-text="error">
-                </small>
+                <ShowErrors :errors="errors.name"></ShowErrors>
             </div>
 
             <div class="form-group" v-bind:class="{ 'has-error': errors.email && errors.email.length > 0 }">
@@ -37,40 +41,24 @@
                       v-model="email" 
                       placeholder="Digite seu e-mail"
                       autocomplete="off">
-                <small class="text-danger"
-                        v-if="errors.email"
-                        v-for="(error,e) in errors.email"
-                        v-bind:key="e"
-                        v-text="error">
-                </small>
+                <ShowErrors :errors="errors.email"></ShowErrors>
             </div>
 
             <div class="form-group">
                 <label for="assunto">URL:</label>
                 <input type="text" class="form-control" id="url" v-model="getUrl" disabled>
             </div>
-
+          </div>
+          <div class="col-md-6">
             <div class="form-group" v-bind:class="{ 'has-error': errors.subject && errors.subject.length > 0 }">
                 <label for="assunto">Assunto:<span class="glyphicon-asterisk"></span></label>
                 <input type="text" class="form-control" id="assunto" v-model="subject" placeholder="Qual é o assunto do contato">
-                <small class="text-danger"
-                        v-if="errors.subject"
-                        v-for="(error,s) in errors.subject"
-                        v-bind:key="s"
-                        v-text="error">
-                </small>
+                <ShowErrors :errors="errors.subject"></ShowErrors>
             </div>
-            </div>
-            <div class="col-md-6">
             <div class="form-group" v-bind:class="{ 'has-error': errors.message && errors.message.length > 0 }">
                 <label for="mensagem">Mensagem:<span class="glyphicon-asterisk"></span></label>
                 <textarea class="form-control" id="mensagem" v-model="message" placeholder="Digite aqui sua mensagem"></textarea>
-                <small class="text-danger"
-                        v-if="errors.message"
-                        v-for="(error,m) in errors.message"
-                        v-bind:key="m"
-                        v-text="error">
-                </small>
+                <ShowErrors :errors="errors.message"></ShowErrors>
             </div>
 
             <div class="form-group" v-bind:class="{ 'has-error': errors.recaptcha && errors.recaptcha.length > 0 }">
@@ -84,37 +72,27 @@
                             v-bind:key="r"
                             v-text="error">
                         </small>
+                        <ShowErrors :errors="errors.recaptcha"></ShowErrors>
                     </div>
                 </div>
-
-            </div>
-
-            <div class="form-group">
-                <button class="btn btn-default" v-if="!isLoading">Enviar</button>
-            </div>
-          </div>
-
-        </form>
-        <div v-else-if="isSend">
-            Denúncia enviada com sucesso!!
-        </div>
-        <div class="col-md-12" v-if="isLoading">
-            <div class="col-md-1"><Loader></Loader></div>
-            <div class="col-md-4">enviando denúncia...</div>
-        </div>
               </div>
             </div>
-        </article>
-      </div>
+          </div>
+        </div>
+      </article>
+    </form>
+  </div>
 </div>
 </template>
 
 <script>
 import Loader from "../components/Loader.vue";
+import ShowErrors from "../components/ShowErrors.vue";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   name: "DenunciaForm",
-  components: { Loader },
+  components: { Loader, ShowErrors },
   data() {
     return {
       name: "",
@@ -122,20 +100,8 @@ export default {
       url: this.$route.params.url,
       subject: "",
       message: "",
-      isSend: false,
-      isLoading: false,
       r_id: 0,
-      siteKey: "6LegZ48UAAAAAI-sKAY09kHtR-uBkiizT6XKcOli",
-      isError: true,
-      success: false,
-      errors: {
-        name: [],
-        email: [],
-        url: [],
-        subject: [],
-        message: [],
-        recaptcha: []
-      }
+      siteKey: "6LegZ48UAAAAAI-sKAY09kHtR-uBkiizT6XKcOli"
     };
   },
   mounted() {
@@ -150,13 +116,16 @@ export default {
     }
   },
   computed: {
+    ...mapState(["errors", "isLoading", "isError"]),
+
     getUrl() {
       return localStorage.urlDenuncia;
     }
   },
   methods: {
+    ...mapMutations(["SET_IS_LOADING", "SET_ERRORS", "SET_IS_ERROR"]),
     async send() {
-      this.isLoading = true;
+      this.SET_IS_LOADING(true);
 
       let data = {
         name: this.name,
@@ -169,17 +138,14 @@ export default {
       };
 
       let resp = await axios.post("/denuncias", data);
-      this.isSend = resp.data.success;
 
-      if (resp.data.success) {
-        this.isLoading = false;
+      if (resp.data.success && res.status == 200) {
+        this.SET_IS_LOADING(false);
         localStorage.removeItem("urlDenuncia");
       } else {
-        this.isLoading = false;
-        this.isError = resp.data.success;
-        if (resp.data.errors) {
-          this.errors = resp.data.errors;
-        }
+        this.SET_ERRORS(resp.data.errors);
+        this.SET_IS_ERROR(true);
+        this.SET_IS_LOADING(false);
       }
 
       setTimeout(() => {
@@ -190,9 +156,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-form {
-  margin-top: 30px;
-  margin-bottom: 30px;
+.panel {
+  padding-bottom: 60px;
 }
 
 textarea {
@@ -200,12 +165,33 @@ textarea {
   resize: none;
 }
 
-bg-img {
-  background-image: url("/storage/conteudos/conteudos-digitais/galeria/10.jpg");
-  min-height: 380px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
+.foto {
+  overflow: hidden;
+  background: url("/storage/conteudos/conteudos-digitais/galeria/10.jpg");
+  height: 615px;
+  opacity: 0.9;
+}
+
+@media only screen and (max-width: 200px) {
+  .foto {
+    width: auto;
+    background: url("/storage/conteudos/conteudos-digitais/galeria/10.jpg");
+  }
+}
+.gallery-link {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  border-top-left-radius: 10px;
+  padding: 15px 30px;
+  background-color: #fff;
+  -webkit-box-shadow: -19px -15px 17px -11px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: -19px -15px 17px -11px rgba(0, 0, 0, 0.4);
+  box-shadow: -19px -15px 17px -11px rgba(0, 0, 0, 0.4);
+  color: rgb(4, 9, 30);
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: bolder;
+  display: inline-block;
 }
 </style>

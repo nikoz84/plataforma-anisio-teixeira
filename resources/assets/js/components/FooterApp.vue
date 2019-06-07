@@ -176,7 +176,7 @@ p {
 }
 .footer-area {
   padding: 120px 0px 120px;
-  background: url(/img/footer-bg.png) no-repeat center;
+  background: url(/img/footer-bg.png) no-repeat center;  
 }
 
 .section-gap {
