@@ -127,7 +127,7 @@ textarea {
 
 .foto {
   overflow: hidden;
-  background: url("/storage/conteudos/conteudos-digitais/galeria/11.jpg");
+  background: url("/storage/conteudos/conteudos-digitais/galeria/4.jpg");
   height: 615px;
 }
 
@@ -135,7 +135,7 @@ textarea {
 
   .foto {
   width: auto;
-  background: url("/storage/conteudos/conteudos-digitais/galeria/11.jpg");
+  background: url("/storage/conteudos/conteudos-digitais/galeria/4.jpg");
   }
 
 }
