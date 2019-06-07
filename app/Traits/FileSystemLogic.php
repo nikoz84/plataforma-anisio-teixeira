@@ -3,9 +3,9 @@
 namespace App\Traits;
 
 use DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 trait FileSystemLogic
 {
@@ -30,7 +30,6 @@ trait FileSystemLogic
     public static function getImageFromTipo($tipo, $id)
     {
         $path_assoc = Storage::disk('conteudos-digitais')->path("imagem-associada");
-
 
         $filesystem = new Filesystem;
         $files = [];
@@ -62,4 +61,5 @@ trait FileSystemLogic
             return Storage::disk('conteudos-digitais')->url("galeria/{$file->getFilename()}");
         });
     }
+
 }

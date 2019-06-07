@@ -41,6 +41,7 @@ export default {
 body {
   padding-top: 60px;
 }
+
 .heigth {
   min-height: 80vh;
 }
