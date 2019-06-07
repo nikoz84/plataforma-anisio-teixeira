@@ -18,10 +18,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .icon-bar {
-  width: 70px;
+  width: 50px;
   background-color: #010e1b;
   background-color: rgba(1, 14, 27, 0.7);
   opacity: 0.8;
+  z-index: 200 !important;
 }
 
 .icon-bar a {
@@ -31,8 +32,7 @@ export default {
   padding: 5px;
   transition: all 0.3s ease;
   color: white;
-  font-size: 36px;
-  z-index: 100 !important;
+  font-size: 24px;
   .glyphicon {
     color: white;
     font-size: 20px;

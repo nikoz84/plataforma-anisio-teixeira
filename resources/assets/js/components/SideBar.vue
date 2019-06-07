@@ -1,12 +1,14 @@
 <template>
     <aside class="sidebar" id="sidebar-home">
       <div class="row">
-          <a class="btn-close" 
+          <div class="col-sm-12">
+            <a class="btn btn-circle btn-close" 
             @click.prevent="closeSidebar()">
             <i class="glyphicon glyphicon-remove"></i> 
-            
-          </a>
-           <div class="col-sm-12">
+            Fechar
+            </a>
+          </div>
+          <div class="col-sm-12">
             <form class="search">
               <input type="text" placeholder="Pesquise.." name="search">
               <button type="submit">
@@ -49,7 +51,7 @@ export default {
   //padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 16px;
-  color: #1c7eb7;
+  color: #fcfcfc;
   display: block;
   transition: 0.3s;
 }
@@ -70,19 +72,9 @@ export default {
 }
 
 .btn-close {
-  cursor: pointer;
-  //float: left;
-  background-color: rgba(1, 14, 27, 0.7);
-  opacity: 0.8;
-  border: none;
-
-  border-radius: 2px;
-  z-index: 100 !important;
-  .glyphicon {
-    color: white;
-    font-size: 20px;
-    margin-top: 5px;
-  }
+  float: right;
+  background-color: rgba(236, 241, 243, 0.7);
+  margin-bottom: 20px;
 }
 
 /* Style the search field */
