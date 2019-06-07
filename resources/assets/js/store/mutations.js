@@ -125,6 +125,9 @@ const mutations = {
   },
   SET_CANAIS(state, canais) {
     state.canais = canais;
+  },
+  SET_VIEWPORT(state, viewport) {
+    state.viewport = viewport;
   }
 };
 

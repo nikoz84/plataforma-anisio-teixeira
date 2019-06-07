@@ -1,74 +1,139 @@
 <template>
+<div>
+  <header class="row justify-content-center heading-section" 
+         style="padding-bottom: 1rem !important;margin-bottom: 3rem !important;">
+    <h2 class="text-center" style="margin-bottom: 1.5rem !important;"
+        v-text="title"></h2>
+  </header>
     <div class="row">
-        <div>
-          <header class="title-heading-bottom ">
-            <h2 class="title-heading-inner">{{ title }}</h2>
-          </header>
-            <article v-for="(item, i) in items" :key="i">
-                <div :class="isDestaque(i)">
-                   <a :href="item.url_exibir">
-                    <img v-lazy="item.image" class="img-responsive">
-                    <div class="retina">
-                        <div class="texto">
-                          {{ (item.title) ? item.title : item.name }}
-                        </div>
-                    </div>
-                  </a>
-                </div>
-            </article>
-        </div>
+      <article class="col-sm col-md-6 col-lg-4" v-for="(item, i) in items" :key="i">
+        <figure class="card-container retina">
+          <img v-lazy="item.image" class="img-responsive">
+          <caption class="card-content" :style="isDestaque(i)">
+            <a :href="item.url_exibir">
+              <h2>{{ item.title ? item.title : item.name }}</h2>
+            </a>
+          </caption>
+        </figure>
+      </article>
     </div>
+  </div>
 </template>
 <script>
 export default {
   name: "CardHome",
   props: ["title", "items"],
   methods: {
-    isDestaque(index) {
-      return index == 0
-        ? "col-md-5 destaque-principal ml-50"
-        : "col-md-3 destaque-secundario ml-30";
-    }
+    isDestaque(index) {}
   }
 };
 </script>
 <style lang="scss" scoped>
-.destaque-principal {
-  overflow: hidden;
-  float: left;
-  margin: 0;
-  border-radius: 5px;
-  margin-bottom: 20px;
+$primary: rgba(59, 9, 103, 0.7);
+$white: rgba(255, 255, 130, 1);
+// HEADING HOME
+.heading-section {
+  .subheading {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 10px;
+  }
+  h2 {
+    font-size: 38px;
+    font-weight: 400;
+    position: relative;
+    strong {
+      font-weight: 700;
+    }
+    @media only screen and (max-width: 700px) {
+      font-size: 25px;
+    }
+    &:after,
+    &:before {
+      width: 100px;
+      height: 2px;
+      position: absolute;
+      bottom: -15px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      background: $primary;
+      content: "";
+    }
+    &:before {
+      width: 80px;
+      height: 2px;
+      bottom: -19px;
+    }
+  }
+  &.heading-section-white {
+    .subheading {
+      color: rgba(255, 255, 255, 0.9);
+    }
+    h2 {
+      font-size: 38px;
+      color: $white;
+      &:after,
+      &:before {
+        display: none;
+      }
+    }
+    p {
+      color: rgba(255, 255, 255, 0.9);
+    }
+  }
+  &.heading-section-wo-line {
+    h2 {
+      &:after,
+      &:before {
+        display: none;
+      }
+    }
+  }
+}
+.card-container {
+  position: relative;
+  display: table;
+  margin: 0 auto;
   -webkit-box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
   -moz-box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
   box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
+  max-height: 50vh;
+  overflow: hidden;
 }
 
-ul {
-  list-style-type: none;
-}
-.destaque-principal > img {
+.card-container > .card-content {
+  position: absolute;
+  bottom: 0;
+  background: rgb(0, 0, 0);
+  background-color: rgba(59, 9, 103, 0.7);
   width: 100%;
-  height: 380px;
-  border-radius: 5px;
+  padding: 10px;
+  a {
+    text-decoration: none;
+    z-index: 2;
+  }
+  > a h2 {
+    font-size: 3vh;
+    color: #fff;
+  }
+}
+img {
   -webkit-transition: all 0.8s;
   -moz-transition: all 0.8s;
   -ms-transition: all 0.8s;
   -o-transition: all 0.8s;
   transition: all 0.8s;
 }
-.destaque-principal:hover > img {
+.card-container:hover > img {
   -webkit-transform: scale(1.5);
   -moz-transform: scale(1.5);
   -ms-transform: scale(1.5);
   -o-transform: scale(1.5);
   transform: scale(1.5);
 }
-
-.destaque-principal .retina {
+.card-container .retina {
   position: absolute;
-  width: 100%;
-  height: 100%;
   top: 0;
   left: 0;
   background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
@@ -80,98 +145,7 @@ ul {
   -o-transition: all 0.8s;
   transition: all 0.8s;
 }
-
-.destaque-secundario {
-  overflow: hidden;
-  border-radius: 5px;
-  background: #fff;
-  float: left;
-  margin-left: 20px;
-  margin-bottom: 20px;
-  -webkit-box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
-  -moz-box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
-  box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
-}
-
-.destaque-secundario > img {
-  width: 100%;
-  border-radius: 5px;
-  -webkit-transition: all 0.8s;
-  -moz-transition: all 0.8s;
-  -ms-transition: all 0.8s;
-  -o-transition: all 0.8s;
-  transition: all 0.8s;
-}
-.destaque-secundario:hover > img {
-  -webkit-transform: scale(1.5);
-  -moz-transform: scale(1.5);
-  -ms-transform: scale(1.5);
-  -o-transform: scale(1.5);
-  transform: scale(1.5);
-}
-.destaque-secundario .retina {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
-  text-align: left;
-  z-index: 1;
-  -webkit-transition: all 0.8s;
-  -moz-transition: all 0.8s;
-  -ms-transition: all 0.8s;
-  -o-transition: all 0.8s;
-  transition: all 0.8s;
-}
-.destaque-secundario:hover .retina {
+.card-container:hover .retina {
   box-shadow: inset 0 0 100px 50px rgba(0, 0, 0, 0.5);
 }
-
-.destaque-principal .texto {
-  position: absolute;
-  z-index: 2;
-  bottom: 0;
-  width: 100%;
-  color: #fff;
-  font-size: 14px;
-  text-align: left;
-  padding: 10px;
-  font-weight: bold;
-  background-color: rgba(59, 9, 103, 0.7);
-}
-
-.destaque-secundario .texto {
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  z-index: 2;
-  color: #fff;
-  font-size: 14px;
-  text-align: left;
-  padding: 10px;
-  font-weight: bold;
-  background-color: rgba(9, 67, 103, 0.7);
-}
-
-.title-heading-bottom .title-heading-inner {
-  margin-top: 60px;
-  margin-bottom: 30px;
-  font-weight: bolder;
-  padding-bottom: 6px;
-  border-bottom: 2px solid rgba(9, 67, 103, 0.7);
-  position: relative;
-  bottom: -1px;
-}
-
-.title-heading-inner {
-  display: inline-block;
-}
-
-.col-md-5,
-.col-md-3 {
-  padding-right: 0px;
-  padding-left: 0px;
-}
-
 </style>

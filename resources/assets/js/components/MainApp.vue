@@ -1,6 +1,7 @@
 <template>
     <main>
         <nav-principal></nav-principal>
+        {{window}}
         <router-view></router-view>
         <footer-app></footer-app>
         <side-bar></side-bar>
@@ -15,7 +16,7 @@ import FooterApp from "./FooterApp.vue";
 import BackToTop from "./BackToTop.vue";
 import IconBar from "./IconBar.vue";
 import SideBar from "./SideBar.vue";
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 
 export default {
   name: "main-app",
@@ -26,25 +27,61 @@ export default {
     "side-bar": SideBar,
     "icon-bar": IconBar
   },
+  mounted() {},
   created() {
+    window.addEventListener("resize", this.handleResize);
+
+    this.handleResize();
     this.getLayout();
   },
   computed: {
-    ...mapState(["layout"])
+    ...mapState(["layout", "window"])
   },
   methods: {
-    ...mapActions(["getLayout"])
+    ...mapActions(["getLayout"]),
+    ...mapMutations(["SET_VIEWPORT"]),
+    handleResize() {
+      let width = window.innerWidth,
+        heigth = window.innerHeight;
+
+      this.SET_VIEWPORT({ width, heigth });
+    }
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
   }
 };
 </script>
 <style lang="scss" >
+$black: #000;
+$white: #fff;
+$primary: #fff;
+
 body {
   padding-top: 60px;
 }
 
 .heigth {
-  min-height: 80vh;
+  min-height: 100vh;
 }
+.tag-cloud {
+  a {
+    text-transform: uppercase;
+    display: inline-block;
+    padding: 4px 10px;
+    margin-bottom: 7px;
+    margin-right: 4px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: $black;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    &:hover {
+      border: 1px solid $black;
+    }
+  }
+}
+
 .pointer {
   cursor: pointer;
 }
@@ -71,15 +108,10 @@ hr.line {
 hr {
   border: 1px solid rgb(235, 234, 234);
 }
-
-.glyphicon-asterisk {
-  color: rgb(128, 3, 3);
-  font-size: 19px;
-  margin-left: 5px;
-}
-
-small {
-  font-size: 90%;
+.justify-content-center {
+  -webkit-box-pack: center !important;
+  -ms-flex-pack: center !important;
+  justify-content: center !important;
 }
 
 .menu_admin {

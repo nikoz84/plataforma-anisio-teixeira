@@ -2,7 +2,7 @@ import { getField } from "vuex-map-fields";
 
 const getters = {
   getField,
-  getLayout: state =>{
+  getLayout: state => {
     return state.layout;
   },
   getPaginator: state => {
@@ -61,6 +61,9 @@ const getters = {
   },
   getAction: state => {
     return state.action;
+  },
+  getWindow: state => {
+    return state.viewport;
   }
 };
 

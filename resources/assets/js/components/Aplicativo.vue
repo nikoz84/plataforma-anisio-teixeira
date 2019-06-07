@@ -23,9 +23,9 @@
             <span class="label label-default" v-bind:style="'background-color:' + aplicativo.canal.color"> Acessos: </span>
             <i class="i-list break-word" v-text="aplicativo.options.qt_access"></i>
         </div>
-        <div class="panel-footer">
+        <div class="panel-footer tag-cloud">
             <h5> Tags: </h5>
-            <a class="btn btn-default tag" href=""
+            <a href=""
                 v-for="tag in aplicativo.tags"
                 v-bind:key="tag.id"
                 v-text="tag.name">
@@ -34,7 +34,7 @@
     </article>
 </template>
 <script>
-import {mapState} from 'vuex';
+import { mapState } from "vuex";
 
 export default {
   name: "Aplicativo",

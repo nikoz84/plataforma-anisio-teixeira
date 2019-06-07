@@ -18,7 +18,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .icon-bar {
-  width: 50px;
+  width: 42px;
   background-color: #010e1b;
   background-color: rgba(1, 14, 27, 0.7);
   opacity: 0.8;
@@ -32,7 +32,7 @@ export default {
   padding: 5px;
   transition: all 0.3s ease;
   color: white;
-  font-size: 24px;
+  font-size: 20px;
   .glyphicon {
     color: white;
     font-size: 20px;

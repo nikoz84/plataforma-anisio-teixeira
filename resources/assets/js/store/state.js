@@ -33,7 +33,11 @@ const state = {
   showAlert: false,
   formData: {},
   buttonText: "Salvar",
-  redirect: ""
+  viewport: {
+    width: 0,
+    heigth: 0
+  }
+
 };
 
 export default state;

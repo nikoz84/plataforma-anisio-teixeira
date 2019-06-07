@@ -32,9 +32,9 @@
                 <span class="label label-default" v-bind:style="backgroundColor"> Licença: </span>
                 <i class="i-list break-word" v-if="this.conteudo.license" v-text="this.conteudo.license.name"></i>
             </div>
-            <div class="panel-footer">
+            <div class="panel-footer tag-cloud">
                 <h5>Tags: </h5>
-                <a class="btn btn-default tag"
+                <a class=""
                     v-for="tag in this.conteudo.tags"
                     v-bind:key="tag.id"
                     v-bind:href="'/recursos-educacionais-abertos/listar/tag/'+ tag.id"

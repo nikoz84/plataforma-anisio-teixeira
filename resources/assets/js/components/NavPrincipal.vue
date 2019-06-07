@@ -52,7 +52,7 @@
             </div>
         </div>
         <div class="progress-container">
-            <div class="progress-bar" id="bar"></div>
+            <div class="progress-bar" id="bar" :style="color"></div>
         </div>
     </nav>
 </template>
@@ -63,7 +63,12 @@ import { mapActions, mapState } from "vuex";
 export default {
   name: "NavPricipal",
   computed: {
-    ...mapState(["isLogged", "links"])
+    ...mapState(["isLogged", "links", "canal"]),
+    color() {
+      return this.canal.hasOwnProperty("options")
+        ? `background:${this.canal.options.color}!important;`
+        : "background: #1e78c2;";
+    }
   },
   methods: {
     ...mapActions(["logout"]),
@@ -85,10 +90,10 @@ export default {
     }
   },
   created() {
-    //window.addEventListener("scroll", this.handleScroll,{passive: true});
+    window.addEventListener("scroll", this.handleScroll, { passive: true });
   },
   destroyed() {
-    //window.removeEventListener("scroll", this.handleScroll, {passive: true});
+    window.removeEventListener("scroll", this.handleScroll, { passive: true });
   }
 };
 </script>
