@@ -1,7 +1,10 @@
 <template>
     
   <div class="row">
-      <article class="col-md-offset-2 col-md-8">
+      <div class="col-md-6 foto">
+          <!--<img class="img-responsive" src="/storage/conteudos/conteudos-digitais/galeria/10.jpg" alt="">-->
+      </div>
+      <article class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title text-center">Fale Conosco</h4>
@@ -120,5 +123,20 @@ form {
 textarea {
   height: 170px;
   resize: none;
+}
+
+.foto {
+  overflow: hidden;
+  background: url("/storage/conteudos/conteudos-digitais/galeria/11.jpg");
+  height: 615px;
+}
+
+@media only screen and (max-width: 200px){
+
+  .foto {
+  width: auto;
+  background: url("/storage/conteudos/conteudos-digitais/galeria/11.jpg");
+  }
+
 }
 </style>

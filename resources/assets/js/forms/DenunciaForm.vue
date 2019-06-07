@@ -206,7 +206,7 @@ textarea {
   height: 615px;
 }
 
-@media only screen and (max-width: 200px){ 
+@media only screen and (max-width: 200px){
 
   .foto {
   width: auto;
