@@ -1,7 +1,7 @@
 <template>
     <main>
         <nav-principal></nav-principal>
-        {{window}}
+        {{viewport}}
         <router-view></router-view>
         <footer-app></footer-app>
         <side-bar></side-bar>
@@ -35,7 +35,7 @@ export default {
     this.getLayout();
   },
   computed: {
-    ...mapState(["layout", "window"])
+    ...mapState(["layout", "viewport"])
   },
   methods: {
     ...mapActions(["getLayout"]),
