@@ -8,7 +8,6 @@
         <article class="col-md-6">
           <div class="panel panel-default">
             <div class="panel-heading">
-              
               <button class="btn btn-default col-md-6" v-if="!isLoading">Enviar</button>
               <div v-else>
                 <Loader></Loader>
