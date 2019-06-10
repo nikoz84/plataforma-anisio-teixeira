@@ -68,11 +68,11 @@ export default {
   components: { Loader },
   data() {
     return {
-      data:{ 
+      data: {
         name: "",
         email: "",
         subject: "",
-        message: "",
+        message: ""
       },
       r_id: 0,
       siteKey: "6LegZ48UAAAAAI-sKAY09kHtR-uBkiizT6XKcOli",
@@ -97,7 +97,6 @@ export default {
   },
   methods: {
     async enviar() {
-      
       let data = {
         name: this.name,
         email: this.email,
@@ -106,10 +105,7 @@ export default {
         recaptcha: grecaptcha.getResponse()
       };
 
-      let resp = await axios.config("POST", "/faleconosco", data);
-      
-      console.log(resp);
-      
+      let resp = await axios.post("/faleconosco", data);
     }
   }
 };
@@ -131,12 +127,10 @@ textarea {
   height: 615px;
 }
 
-@media only screen and (max-width: 200px){
-
+@media only screen and (max-width: 200px) {
   .foto {
-  width: auto;
-  background: url("/storage/conteudos/conteudos-digitais/galeria/4.jpg");
+    width: auto;
+    background: url("/storage/conteudos/conteudos-digitais/galeria/4.jpg");
   }
-
 }
 </style>

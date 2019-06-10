@@ -51,15 +51,19 @@ trait FileSystemLogic
             return Storage::disk('conteudos-digitais')->url("imagem-associada/tipo-conteudo/{$tipo}.png");
         }
     }
-    public function getImagesGallery()
+    public function getImagesGallery($rand = false)
     {
         $path = $this->storage::disk('conteudos-digitais')->path('galeria');
-
         $files = File::allFiles($path);
+
+        if (!$rand) {
+            return collect($files)->map(function ($file) {
+                return Storage::disk('conteudos-digitais')->url("galeria/{$file->getFilename()}");
+            });
+        }
 
         return collect($files)->map(function ($file) {
             return Storage::disk('conteudos-digitais')->url("galeria/{$file->getFilename()}");
-        });
+        })->inRandomOrder()->first();
     }
-
 }

@@ -3,9 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\ApiController;
+use Illuminate\Support\Facades\Validator;
 
-class FaleconoscoController extends Controller
+class FaleconoscoController extends ApiController
 {
+    protected $request;
+
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
     /**
      * Adiciona novas denúncias
      *
@@ -14,27 +22,18 @@ class FaleconoscoController extends Controller
     public function create()
     {
 
-        $validator = $this->validar($this->request->all());
+        $validator = Validator::make($this->request->all(), config('rules.faleconosco'));
         if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Não foi possível registrar a denúncia',
-                'errors' => $validator->errors()
-            ], 200);
+            return $this->errorResponse($validator->errors(), 'Não foi possível enviar a mensagem', 201);
         }
+        die();
 
-        $google_recap = new GoogleRecaptcha($this->request);
-        $resp_recaptcha = $google_recap->validateRecaptcha();
-        if (!$resp_recaptcha) {
-            return response()->json($resp_recaptcha);
-        }
 
-        $faleconosco = $this->faleconosco;
-        $faleconosco->name = $this->request->get('name', '');
-        $faleconosco->email = $this->request->get('email');
-        $faleconosco->url = $this->request->get('url');
-        $faleconosco->subject = $this->request->get('subject');
-        $faleconosco->message = $this->request->get('message');
+        $denuncia->name = $this->request->get('name');
+        $denuncia->email = $this->request->get('email');
+        $denuncia->url = $this->request->get('url');
+        $denuncia->subject = $this->request->get('subject');
+        $denuncia->message = $this->request->get('message');
 
         $this->sendToAdminUsers();
 
@@ -75,5 +74,3 @@ class FaleconoscoController extends Controller
         return $validator;
     }
 }
-
-
