@@ -11,13 +11,13 @@
 </template>
 <script>
 import Loader from "./Loader.vue";
-import Table from './Table.vue';
-import {mapMutations, mapState} from 'vuex';
+import Table from "./Table.vue";
+import { mapMutations, mapState } from "vuex";
 
 export default {
   name: "Listar",
   components: {
-    "loader":Loader,
+    loader: Loader,
     "table-app": Table
   },
   data() {
@@ -25,7 +25,7 @@ export default {
       title: null,
       id: null,
       slug: "inicio",
-      action: "",
+      action: ""
     };
   },
   beforeRouteUpdate(to, from, next) {
@@ -62,11 +62,15 @@ export default {
     },
     async getData() {
       this.SET_IS_LOADING(true);
-      let resp = await axios.get(`/${this.slug}`);
+      if (this.slug != "inicio") {
+        let resp = await axios.get(`/${this.slug}`);
 
-      if(resp.data.success){
-        this.SET_IS_LOADING(false);
-        this.SET_PAGINATOR(resp.data.paginator);
+        if (resp.data.success) {
+          this.SET_IS_LOADING(false);
+          this.SET_PAGINATOR(resp.data.paginator);
+        }
+      } else {
+        console.log("hola");
       }
     },
     async getOne() {
@@ -82,7 +86,7 @@ export default {
     },
     async delete() {
       console.log("delete");
-    },
+    }
   },
   watch: {
     $route(to, from) {
@@ -92,9 +96,4 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.grid {
-  list-style-type: none;
-  margin-bottom: 10px;
-  padding: 15px;
-}
 </style>

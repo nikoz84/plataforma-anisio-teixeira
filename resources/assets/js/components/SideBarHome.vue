@@ -6,7 +6,7 @@
               :key="i"
               tag="li"
               class="swipable"
-              :to="{ name: 'Listar', params: {slug: link.slug}}">
+              :to="{ name: 'Listar', params: { slug: link.slug}}">
           <a>{{link.name}}</a>
       </router-link>
     </ul>
@@ -23,7 +23,7 @@ export default {
       console.log(this.viewport.width);
       return this.viewport.width > 1024
         ? "nav nav-pills nav-stacked"
-        : "list-inline scrollmenu";
+        : "scrollmenu list-inline";
     },
     setVerticalClass() {}
   },
@@ -50,9 +50,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .scrollmenu {
+  overflow: auto;
   white-space: nowrap;
   display: flex;
-  overflow-x: auto;
+  overflow-x: scroll;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;

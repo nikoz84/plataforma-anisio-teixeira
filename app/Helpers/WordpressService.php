@@ -22,6 +22,7 @@ class WordpressService
     {
         $this->limit = $request->query('limit', 15);
         $this->page = $request->query('page', 1);
+        $this->id = $request->query('id', 0);
 
         $canal = $canal = Canal::find(7);
         $canal_url = $canal->options['back_url'];
@@ -65,10 +66,16 @@ class WordpressService
             ->get();
 
         if ($response) {
-            $posts = collect($response->posts);
-            $users = collect($response->users);
-            dd($users->search());
+            //$posts = collect($response->posts);
+            //$users = collect($response->users);
+            //dd($users->search());
             die();
         }
+    }
+    public function getOne()
+    {
+        $url = $this->api . "posts/{$this->id}";
+
+        dd($url);
     }
 }
