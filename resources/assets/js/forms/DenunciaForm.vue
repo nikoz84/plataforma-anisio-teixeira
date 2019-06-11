@@ -187,5 +187,6 @@ textarea {
   font-size: 11px;
   font-weight: bolder;
   display: inline-block;
+  opacity: 0.7;
 }
 </style>

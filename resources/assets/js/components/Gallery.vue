@@ -1,7 +1,8 @@
 <template>
     <section>
         <header>
-            <h2 class="text-capitalize text-center">
+            
+            <h2 class="text-capitalize text-center" style="margin-bottom: 1.5rem !important;">
                 {{title}}
             </h2>
         </header>
