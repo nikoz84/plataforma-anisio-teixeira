@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-      <div class="col-md-6 col-md-offset-4 col-xs-10 col-xs-offset-1 center-xs">
+      <div class="col-md-6 col-md-offset-4 col-xs-10 col-xs-offset-1 center-xs" style="margin-top: 20px;">
         <div class="panel panel-default col-md-7">
             <div class="panel-heading">
                 Faça seu Login
@@ -83,6 +83,20 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+
+.row{
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    background: url("/storage/conteudos/conteudos-digitais/galeria/2.jpg") no-repeat bottom center scroll;    
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    
+}
+
 form {
   margin-top: 30px;
   margin-bottom: 30px;
