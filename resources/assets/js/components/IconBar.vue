@@ -1,10 +1,15 @@
 <template>
-  <div class="icon-bar afix" data-spy="affix" data-offset-bottom="50%">
+  <div class="icon-bar afix" data-spy="affix" data-offset-bottom="50%">    
     <a @click.prevent="openSidebar()" 
       class="">
         <i class="glyphicon glyphicon-search"></i>
     </a>
+    <a @click.prevent="openSidebar()" 
+      class="">
+        <i class="glyphicon glyphicon-home"></i>
+    </a>
   </div>
+  
 </template>
 <script>
 export default {
