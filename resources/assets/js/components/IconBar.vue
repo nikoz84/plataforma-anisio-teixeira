@@ -10,10 +10,10 @@ import { mapState } from 'vuex';
     <a @click.prevent="add()" v-if="isLogged">
       <i class="glyphicon glyphicon-plus"></i>
     </a>
-    <a @click.prevent="update()" v-if="isLogged">
+    <a @click.prevent="update()" v-if="isLogged && $route.params.id">
       <i class="glyphicon glyphicon-edit"></i>
     </a>  
-    <a @click.prevent="remove()" v-if="isLogged">
+    <a @click.prevent="remove()" v-if="isLogged && $route.params.id">
       <i class="glyphicon glyphicon-trash"></i>
     </a>
     
@@ -25,8 +25,14 @@ import { mapState } from "vuex";
 
 export default {
   name: "OpenSideBar",
+  watch: {
+    $route(to, from) {
+      console.log(to);
+      console.log(this.action);
+    }
+  },
   computed: {
-    ...mapState(["isLogged"])
+    ...mapState(["isLogged", "action"])
   },
   methods: {
     openSidebar() {
@@ -34,14 +40,15 @@ export default {
     },
     add() {
       let url = `/${this.$route.params.slug}/adicionar`;
-      console.log("add");
+      console.log(url);
     },
     update() {
-      //return `/${this.$route.params.slug}/editar/${this.$route.params.id}`;
-      console.log("update");
+      let url = `/${this.$route.params.slug}/editar/${this.$route.params.id}`;
+      console.log(url);
     },
     remove() {
-      console.log("delete");
+      let url = `/${this.$route.params.slug}/deletar/${this.$route.params.id}`;
+      console.log(url);
 
       /*
       //lista os conteúdos

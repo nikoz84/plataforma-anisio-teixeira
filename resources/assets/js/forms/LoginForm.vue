@@ -1,47 +1,51 @@
 <template>
-    <div class="row">
-      <div class="col-md-6 col-md-offset-4 col-xs-10 col-xs-offset-1 center-xs" style="margin-top: 20px;">
-        <div class="panel panel-default col-md-7">
+  <section class="row">
+    <div class="form-image">
+      <div class="bottom-0">
+        <div class="panel panel-default">
             <div class="panel-heading">
-                Faça seu Login
+                <h4 class="panel-title text-center">Faça seu Login</h4>
             </div>
             <div class="panel-body">
                 <form v-on:submit.prevent="entrar()">
-                    <div class="form-group" v-bind:class="showErrors('email')">
+                    <div class="form-group" v-bind:class="inputErrors('email')">
                         <label for="email">E-mail</label>
                         <input class="form-control" v-model="email" id="email" type="text">
-                        <erros :errors="errors.email"></erros>
+                        <ShowErrors :errors="errors.email"></ShowErrors>
                     </div>
-                    <div class="form-group" v-bind:class="showErrors('password')">
+                    <div class="form-group" v-bind:class="inputErrors('password')">
                         <label for="senha">Senha</label>
                         <input class="form-control" v-model="password" id="senha" type="password">
-                        <erros :errors="errors.password"></erros>
+                        <ShowErrors :errors="errors.password"></ShowErrors>
                     </div>
-                    <button type="submit" class="btn btn-default">Login</button>
+                    <button type="submit" class="btn btn-default btn-block">Login</button>
                 </form>
                 <AlertShake></AlertShake>
-                <router-link to="/usuario/recuperar-senha">
+                <div class="text-center links">
+                  <router-link to="/usuario/recuperar-senha">
                     Recuperar senha
-                </router-link> |
-                <router-link to="/usuario/registro">
-                    Cadastrese
-                </router-link>
+                  </router-link> |
+                  <router-link to="/usuario/registro">
+                      Cadastre-se
+                  </router-link>
+                </div>
             </div>
         </div>
       </div>
     </div>
+  </section>
 </template>
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
 import AlertShake from "../components/AlertShake.vue";
-import showErrors from "../components/ShowErrors.vue";
+import ShowErrors from "../components/ShowErrors.vue";
 import { getInputError } from "../functions.js";
 
 export default {
   name: "LoginForm",
   components: {
     AlertShake,
-    erros: showErrors
+    ShowErrors
   },
   data() {
     return {
@@ -69,7 +73,7 @@ export default {
         }
       });
     },
-    showErrors(attr) {
+    inputErrors(attr) {
       return getInputError(this.errors, attr);
     },
     docodePayloadToken() {
@@ -83,22 +87,47 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+$break-small: 780px;
+$break-large: 781px;
+$break-extra-large: 1200px;
 
-.row{
-    display: block;
-    width: 100vw;
-    height: 100vh;
-    padding: 0;
-    background: url("/storage/conteudos/conteudos-digitais/galeria/2.jpg") no-repeat bottom center scroll;    
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
-    
+.form-image{
+  display: block;
+  min-height: 100vh;
+  padding: 0;
+  background: url("/storage/conteudos/conteudos-digitais/galeria/2.jpg") no-repeat bottom center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+
+  .bottom-0{
+    @media screen and (max-width: $break-small) {
+      position: absolute;
+      left: 60px;
+      width: 60vh;
+      margin-top: 50px;
+    }
+    @media screen and (min-width: $break-large) {
+      position: absolute;
+      bottom: 0px;
+      right: 5px;
+      min-width: 360px;
+    }
+    @media screen and (min-width: $break-extra-large) {
+      position: absolute;
+      bottom: 0px;
+      right: 15px;
+      min-width: 420px;
+    }
+  }
+  form{
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+.links {
+  padding-top: 15px;
 }
 
-form {
-  margin-top: 30px;
-  margin-bottom: 30px;
-}
 </style>

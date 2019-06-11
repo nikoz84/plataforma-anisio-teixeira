@@ -1,8 +1,8 @@
 <template>
     
   <div class="row">
-      <div class="col-md-6 foto">
-          <!--<img class="img-responsive" src="/storage/conteudos/conteudos-digitais/galeria/10.jpg" alt="">-->
+      <div class="col-md-6">
+          <img class="img-responsive" src="/storage/conteudos/conteudos-digitais/galeria/10.jpg" alt="">
       </div>
       <article class="col-md-6">
         <div class="panel panel-default">
@@ -102,6 +102,9 @@ export default {
       };
 
       let resp = await axios.post("/faleconosco", data);
+      if (this.isError) {
+        console.log("error");
+      }
     }
   },
   computed: {

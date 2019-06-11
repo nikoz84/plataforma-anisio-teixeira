@@ -7,6 +7,7 @@
         <side-bar></side-bar>
         <back-to-top></back-to-top>
         <icon-bar></icon-bar>
+        <back-to-top></back-to-top>
     </main>
 </template>
 
@@ -25,7 +26,8 @@ export default {
     "footer-app": FooterApp,
     "back-to-top": BackToTop,
     "side-bar": SideBar,
-    "icon-bar": IconBar
+    "icon-bar": IconBar,
+    "back-to-top": BackToTop
   },
   mounted() {},
   created() {
