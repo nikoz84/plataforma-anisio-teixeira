@@ -1,15 +1,13 @@
 <template>
-
+    
   <div class="row">
       <div class="col-md-6 foto">
-          <a href="/galeria" class="gallery-link">Visite nossa galeria de fotos</a>
+          <!--<img class="img-responsive" src="/storage/conteudos/conteudos-digitais/galeria/10.jpg" alt="">-->
       </div>
       <article class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-              <button class="btn btn-default col-md-6">Enviar</button>
-
-              <div class="clearfix"></div>
+                
             </div>
             <div class="panel-body">
                 <form v-on:submit.prevent="enviar()">
@@ -52,6 +50,10 @@
                           
                             <div class="g-recaptcha" :data-sitekey="siteKey"></div>
                       </div>
+
+                      <div class="form-group">
+                          <button class="btn btn-default">Enviar</button>
+                      </div>
                     </div>  
                 </form>
             </div>
@@ -67,7 +69,7 @@ export default {
   components: { Loader },
   data() {
     return {
-      data:{
+      data:{ 
         name: "",
         email: "",
         subject: "",
@@ -96,7 +98,7 @@ export default {
   },
   methods: {
     async enviar() {
-
+      
       let data = {
         name: this.name,
         email: this.email,
@@ -106,9 +108,9 @@ export default {
       };
 
       let resp = await axios.config("POST", "/faleconosco", data);
-
+      
       console.log(resp);
-
+      
     }
   }
 };
