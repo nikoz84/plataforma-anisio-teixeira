@@ -83,14 +83,14 @@ const actions = {
   async createConteudo({ commit, dispatch }, conteudo) {
     let resp = await axios.post("/conteudos", conteudo);
     console.warn(resp);
-    dispatch("showResponse", resp);
+    dispatch("hideAlert");
 
     commit("SET_CONTEUDO", resp.data);
   },
   async updateConteudo({ commit, dispatch }, conteudo) {
     console.log(conteudo);
     let resp = await axios.put(`/conteudos/${conteudo.id}`, conteudo);
-    await dispatch("showResponse", resp);
+    await dispatch("hideAlert");
 
     commit("SET_CONTEUDO", resp.data.conteudo);
   },
@@ -98,32 +98,12 @@ const actions = {
     let resp = await axios.delete(`/conteudos/${id}`);
     commit("DELETE_CONTEUDO", resp.data);
   },
-  async showResponse({ commit, dispatch }, response) {
-    if (response.status == 201) {
-      console.log(response.data);
-      let errors = response.data.errors ? response.data.errors : [];
-      commit("SET_ERRORS", errors);
-      commit("SET_SHOW_ALERT", true);
-      commit("SET_SHOW_MESSAGE", response.data.message);
-      commit("SET_IS_ERROR", true);
-    } else if (response.status == 200) {
-      commit("SET_ERRORS", []);
-      commit("SET_SHOW_ALERT", true);
-      commit("SET_SHOW_MESSAGE", response.data.message);
-    } else {
-      let message = `Erro desconhecido status: ${response.statusText}`;
-      commit("SET_SHOW_MESSAGE", message);
-      commit("SET_SHOW_ALERT", true);
-      commit("SET_IS_ERROR", true);
-    }
-
-    dispatch("hideAlert");
-  },
   async hideAlert({ commit }) {
     setTimeout(() => {
       commit("SET_SHOW_ALERT", false);
       commit("SET_SHOW_MESSAGE", "");
       commit("SET_IS_ERROR", false);
+      commit("SET_ERRORS", []);
     }, 2500);
   },
   async login({ commit, dispatch }, payload) {
@@ -133,7 +113,7 @@ const actions = {
       localStorage.setItem("token", resp.data.metadata.token.access_token);
       commit("SET_LOGIN_USER", true);
     } else {
-      dispatch("showResponse", resp);
+      dispatch("hideAlert");
     }
   },
   async logout({ commit }) {
@@ -153,7 +133,7 @@ const actions = {
     if (resp.status == 200 && resp.data.success) {
       commit("SET_IS_ERROR", false);
     } else {
-      dispatch("showResponse", resp);
+      dispatch("hideAlert");
     }
   },
   /** CANAIS FOR SELECT */

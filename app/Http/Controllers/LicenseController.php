@@ -26,16 +26,16 @@ class LicenseController extends ApiController
 
         if ($this->request->has('select')) {
             $licenses = $this->license::with(['childs' => function ($q) {
-                                        $q->select('id', 'parent_id', 'name');
-                                    }])->whereRaw('parent_id IS NULL')
-                                        ->get(['id', 'parent_id', 'name']);
+                $q->select('id', 'parent_id', 'name');
+            }])->whereRaw('parent_id IS NULL')
+                ->get(['id', 'parent_id', 'name']);
 
             return $this->showAll($licenses);
         }
 
         $licenses = $this->license::with(['childs'])
-                                    ->whereRaw('parent_id IS NULL')
-                                    ->paginate($limit);
+            ->whereRaw('parent_id IS NULL')
+            ->paginate($limit);
 
         return $this->showAsPaginator($licenses);
     }

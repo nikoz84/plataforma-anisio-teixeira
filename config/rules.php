@@ -54,7 +54,14 @@ return [
         'email' => 'required',
         'url' => 'required',
         'subject' => 'required',
-        'message' => 'required|min:30|max:170',
+        'message' => 'required|min:50|max:300',
+        'recaptcha' => ['required', new \App\Rules\ValidRecaptcha],
+    ],
+    'faleconosco' => [
+        'name' => 'required|min:5',
+        'email' => 'required',
+        'subject' => 'required',
+        'message' => 'required|min:50|max:300',
         'recaptcha' => ['required', new \App\Rules\ValidRecaptcha],
     ]
 ];

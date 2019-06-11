@@ -55,14 +55,14 @@ class AuthController extends ApiController
     {
         try {
             if (!$user = JWTAuth::parseToken()->authenticate()) {
-                return $this->errorResponse([], 'Usuário não encontrado', 404);
+                return $this->errorResponse([], 'Usuário não encontrado', 201);
             }
         } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-            return $this->errorResponse([], 'Token Expirado', 404);
+            return $this->errorResponse([], 'Token Expirado', 201);
         } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-            return $this->errorResponse([], 'Token Inválido', 404);
+            return $this->errorResponse([], 'Token Inválido', 201);
         } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-            return $this->errorResponse([], 'Token Ausente', 404);
+            return $this->errorResponse([], 'Token Ausente', 201);
         }
 
         return $this->successResponse(['user' => compact('user')], '', 200);

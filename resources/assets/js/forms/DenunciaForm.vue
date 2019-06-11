@@ -104,7 +104,6 @@ export default {
     };
   },
   mounted() {
-    //console.log(window.grecaptcha)
     if (window.grecaptcha) {
       let container = document.getElementsByClassName("g-recaptcha")[0];
       if (typeof grecaptcha.render === "function") {
@@ -146,10 +145,6 @@ export default {
         this.SET_IS_ERROR(true);
         this.SET_IS_LOADING(false);
       }
-
-      setTimeout(() => {
-        this.isError = true;
-      }, 3000);
     }
   }
 };

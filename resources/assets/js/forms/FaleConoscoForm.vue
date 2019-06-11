@@ -21,34 +21,35 @@
                       <div class="form-group" v-bind:class="{ 'has-error': errors.name && errors.name.length > 0 }">
                           <label for="nome">Nome:<span class="glyphicon-asterisk"></span></label>
                           <input type="text" class="form-control" id="nome" v-model="data.name" placeholder="Digite seu nome">
-                          <small class="text-danger"
-                                  v-if="errors.name"
-                                  v-for="(error,n) in errors.name"
-                                  v-bind:key="n"
-                                  v-text="error">
-                          </small>
+                          <ShowErrors :errors="errors.name"></ShowErrors>
                       </div>
 
                       <div class="form-group">
                           <label for="email">E-mail:<span class="glyphicon-asterisk"></span></label>
                           <input type="email" class="form-control" id="email" v-model="data.email" placeholder="Digite seu e-mail">
+                          <ShowErrors :errors="errors.email"></ShowErrors>
                       </div>
 
                       <div class="form-group">
                           <label for="assunto">Assunto:<span class="glyphicon-asterisk"></span></label>
                           <input type="text" class="form-control" id="assunto" v-model="data.subject" placeholder="Qual é o assunto do contato">
+                          <ShowErrors :errors="errors.subject"></ShowErrors>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                           <label for="mensagem">Mensagem:<span class="glyphicon-asterisk"></span></label>
-                          <textarea class="form-control" id="mensagem" v-model="data.message" placeholder="Digite aqui sua mensagem"></textarea>
+                          <textarea class="form-control" 
+                                    id="mensagem" v-model="data.message" 
+                                    placeholder="Digite aqui sua mensagem"></textarea>
+                          <ShowErrors :errors="errors.message"></ShowErrors>
                       </div>
 
                       <div class="form-group">
                           <label for="mensagem">Código de segurança:<span class="glyphicon-asterisk"></span></label>
                           
                             <div class="g-recaptcha" :data-sitekey="siteKey"></div>
+                            <ShowErrors :errors="errors.recaptcha"></ShowErrors>
                       </div>
 
                       <div class="form-group">
@@ -63,27 +64,22 @@
 </template>
 <script>
 import Loader from "../components/Loader.vue";
+import { mapState } from "vuex";
+import ShowErrors from "../components/ShowErrors.vue";
 
 export default {
   name: "FaleConoscoForm",
-  components: { Loader },
+  components: { Loader, ShowErrors },
   data() {
     return {
-      data:{ 
+      data: {
         name: "",
         email: "",
         subject: "",
-        message: "",
+        message: ""
       },
       r_id: 0,
-      siteKey: "6LegZ48UAAAAAI-sKAY09kHtR-uBkiizT6XKcOli",
-      errors: {
-        name: [],
-        email: [],
-        subject: [],
-        message: [],
-        recaptcha: []
-      }
+      siteKey: "6LegZ48UAAAAAI-sKAY09kHtR-uBkiizT6XKcOli"
     };
   },
   mounted() {
@@ -98,7 +94,6 @@ export default {
   },
   methods: {
     async enviar() {
-      
       let data = {
         name: this.name,
         email: this.email,
@@ -107,11 +102,11 @@ export default {
         recaptcha: grecaptcha.getResponse()
       };
 
-      let resp = await axios.config("POST", "/faleconosco", data);
-      
-      console.log(resp);
-      
+      let resp = await axios.post("/faleconosco", data);
     }
+  },
+  computed: {
+    ...mapState(["errors", "isError"])
   }
 };
 </script>
@@ -132,12 +127,10 @@ textarea {
   height: 615px;
 }
 
-@media only screen and (max-width: 200px){
-
+@media only screen and (max-width: 200px) {
   .foto {
-  width: auto;
-  background: url("/storage/conteudos/conteudos-digitais/galeria/4.jpg");
+    width: auto;
+    background: url("/storage/conteudos/conteudos-digitais/galeria/4.jpg");
   }
-
 }
 </style>

@@ -30,16 +30,17 @@ Route::group(['middleware' => ['cors']], function () {
     /** DENUNCIA E FALE CONOSCO */
     Route::get('/denuncias', 'DenunciaController@list')->name('listar.denuncias');
     Route::post('/denuncias', 'DenunciaController@create')->name('criar.denuncias');
-    Route::post('/faleconosco', 'FaleconoscoController@list')->name('criar.faleconosco');
+    Route::post('/faleconosco', 'FaleconoscoController@create')->name('criar.faleconosco');
     /** CANAIS */
     Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscar.canal.x.url.amigavel');
-    /** CONTEUDOS E BLOG */
+    /** CONTEUDOS */
     Route::get('/conteudos', 'ConteudoController@list')->name('lista.conteudo');
     Route::get('/conteudos/sites', 'ConteudoController@getSitesTematicos')->name('lista.sites.tematicos');
     Route::get('/conteudos/search/{term}', 'ConteudoController@search')->name('busca.conteudo');
     Route::get('/conteudos/teste', 'ConteudoController@teste');
     Route::get('/conteudos/{id}', 'ConteudoController@getById')->name('busca.x.conteudo.id');
     Route::get('/conteudos/tag/{id}', 'ConteudoController@getByTagId')->name('busca.x.tag.id');
+    /** BLOG */
     Route::get('/posts', 'WordpressController@list')->name('lista.postagens');
     Route::get('/posts/estatisticas', 'WordpressController@getEstatisticas')->name('estatisticas.blog');
     /** APLICATIVOS */

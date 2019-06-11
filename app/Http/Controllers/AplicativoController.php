@@ -23,12 +23,13 @@ class AplicativoController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function list(Request $request) {
+    public function list(Request $request)
+    {
         $limit = ($request->has('limit')) ? $request->query('limit') : 15;
         $page = ($request->has('page')) ? $request->query('page') : 1;
 
         $aplicativos = Aplicativo::with(['category', 'canal'])
-        //->select(['id','user_id','name'])
+            //->select(['id','user_id','name'])
             ->orderBy('created_at', 'desc')
             ->paginate($limit);
 
@@ -37,7 +38,7 @@ class AplicativoController extends ApiController
         return $this->showAsPaginator($aplicativos, 'Aplicativos Educacionais', 200);
     }
 
-    
+
 
     /**
      * Cria um novo aplicativo.
@@ -51,7 +52,7 @@ class AplicativoController extends ApiController
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar o conteúdo", 201);
         }
-        
+
 
         $aplicativo = $this->aplicativo;
 
@@ -138,8 +139,11 @@ class AplicativoController extends ApiController
 
         $aplicativos->setPath("/aplicativos/search/{$termo}?limit={$limit}");
 
-        return $this->showAsPaginator($aplicativos, 
-                                "resultados da busca pelo termo {$termo}", 200); 
+        return $this->showAsPaginator(
+            $aplicativos,
+            "resultados da busca pelo termo {$termo}",
+            200
+        );
     }
     /**
      * Seleciona um recurso por id
@@ -152,11 +156,11 @@ class AplicativoController extends ApiController
         $aplicativo = $this->aplicativo::with(['tags', 'category', 'user', 'canal'])
             ->find($id);
 
-        
+
         if ($aplicativo) {
             return $this->showOne($aplicativo, '', 200);
         } else {
-            return $this->errorResponse([], 'Não encontrado', 404);
+            return $this->errorResponse([], 'Não encontrado', 201);
         }
     }
 }
