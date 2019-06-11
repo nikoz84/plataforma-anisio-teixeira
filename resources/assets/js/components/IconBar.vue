@@ -4,7 +4,7 @@
       class="">
         <i class="glyphicon glyphicon-search"></i>
     </a>
-    <a @click.prevent="openSidebar()" 
+    <a @click="backToTop" 
       class="">
         <i class="glyphicon glyphicon-home"></i>
     </a>
@@ -17,7 +17,30 @@ export default {
   methods: {
     openSidebar() {
       document.getElementById("sidebar-home").style.width = "100%";
-    }
+    },
+    initToTopButton: function() {
+            $(document).bind('scroll', function() {
+                var backToTopButton = $('.goTop');
+                if ($(document).scrollTop() > 250) {
+                    backToTopButton.addClass('isVisible');
+                    this.isVisible = true;
+                } else {
+                    backToTopButton.removeClass('isVisible');
+                    this.isVisible = false;
+                }
+            }.bind(this));
+        },
+        backToTop: function() {
+            $('html,body').stop().animate({
+                scrollTop: 0
+            }, 'slow', 'swing');
+        }
+  },
+
+  mounted: function() {
+    this.$nextTick(function() {
+      this.initToTopButton();
+    });
   }
 };
 </script>
