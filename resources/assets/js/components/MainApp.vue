@@ -5,6 +5,7 @@
         <router-view></router-view>
         <footer-app></footer-app>
         <side-bar></side-bar>
+        <back-to-top></back-to-top>
         <icon-bar></icon-bar>
         <back-to-top></back-to-top>
     </main>
@@ -13,9 +14,9 @@
 <script>
 import NavPrincipal from "./NavPrincipal.vue";
 import FooterApp from "./FooterApp.vue";
+import BackToTop from "./BackToTop.vue";
 import IconBar from "./IconBar.vue";
 import SideBar from "./SideBar.vue";
-import BackToTop from "./BackToTop.vue";
 import { mapState, mapActions, mapMutations } from "vuex";
 
 export default {
@@ -23,6 +24,7 @@ export default {
   components: {
     "nav-principal": NavPrincipal,
     "footer-app": FooterApp,
+    "back-to-top": BackToTop,
     "side-bar": SideBar,
     "icon-bar": IconBar,
     "back-to-top": BackToTop
