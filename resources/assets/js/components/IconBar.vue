@@ -1,17 +1,56 @@
+import { mapState } from 'vuex';
 <template>
   <div class="icon-bar afix" data-spy="affix" data-offset-bottom="50%">
-    <a @click.prevent="openSidebar()" 
-      class="">
+    <a @click.prevent="openSidebar()">
         <i class="glyphicon glyphicon-search"></i>
     </a>
+    <a href="javascript:history.go(-1)">
+      <i class="glyphicon glyphicon-arrow-left"></i>
+    </a>
+    <a @click.prevent="add()" v-if="isLogged">
+      <i class="glyphicon glyphicon-plus"></i>
+    </a>
+    <a @click.prevent="update()" v-if="isLogged">
+      <i class="glyphicon glyphicon-edit"></i>
+    </a>  
+    <a @click.prevent="remove()" v-if="isLogged">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+    
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "OpenSideBar",
+  computed: {
+    ...mapState(["isLogged"])
+  },
   methods: {
     openSidebar() {
       document.getElementById("sidebar-home").style.width = "100%";
+    },
+    add() {
+      let url = `/${this.$route.params.slug}/adicionar`;
+      console.log("add");
+    },
+    update() {
+      //return `/${this.$route.params.slug}/editar/${this.$route.params.id}`;
+      console.log("update");
+    },
+    remove() {
+      console.log("delete");
+
+      /*
+      //lista os conteúdos
+      if (resp.data.success) {
+        this.$router.push({
+          name: "Listar",
+          params: { slug: this.$route.params.slug }
+        });
+      }
+      */
     }
   }
 };
@@ -45,6 +84,6 @@ export default {
 
 .affix {
   top: 14vh;
-  right: 10px;
+  right: 0px;
 }
 </style>

@@ -3,15 +3,6 @@
         <Player></Player>
         <div class="panel panel-default" v-if="this.conteudo">
             <div class="panel-body">
-                <div class="btn-group" role="group" aria-label="Basic example">
-                  <router-link :to="updateConteudo">
-                    <a class="btn btn-default btn-xs">Editar</a>  
-                  </router-link> 
-                  <router-link :to="deleteConteudo">
-                    <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal">Apagar</a>  
-                  </router-link> 
-                </div>
-                
                 <h2 v-text="this.conteudo.title"></h2>
                 <small></small>
                 <div class="break-word" v-html="this.conteudo.description"></div>
@@ -61,22 +52,6 @@ export default {
     backgroundColor() {
       let color = this.conteudo.canal.color;
       return `background-color: ${color}`;
-    },
-    updateConteudo() {
-      return `/${this.$route.params.slug}/editar/${this.$route.params.id}`;
-    },
-    deleteConteudo() {
-      console.log();
-      return "";
-      /*
-      //lista os conteúdos
-      if (resp.data.success) {
-        this.$router.push({
-          name: "Listar",
-          params: { slug: this.$route.params.slug }
-        });
-      }
-      */
     }
   },
   methods: {}

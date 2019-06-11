@@ -34,7 +34,7 @@ export default {
   height: 100%; /* 100% Full-height */
   width: 0; /* 0 width - change this with JavaScript */
   position: fixed; /* Stay in place */
-  z-index: 900; /* Stay on top */
+  z-index: 1500; /* Stay on top */
   top: 0;
   left: 0;
   background-color: rgb(255, 255, 255);

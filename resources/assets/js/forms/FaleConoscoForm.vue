@@ -11,7 +11,7 @@
             </div>
             <div class="panel-body">
                 <form v-on:submit.prevent="enviar()">
-                  <div class="col-md-6">
+                  <div class="col-sm-12 col-lg-6">
                       <p>Este espaço serve para você informar quaisquer dificuldade ocorrida na
                           visualização do conteúdo. Tem alguma dúvida, sugestão ou crítica a fazer?
                           Então entre em contato com a gente. Sua opinião é fundamental para o nosso
@@ -35,7 +35,7 @@
                           <ShowErrors :errors="errors.subject"></ShowErrors>
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-sm-12 col-lg-6">
                       <div class="form-group">
                           <label for="mensagem">Mensagem:<span class="glyphicon-asterisk"></span></label>
                           <textarea class="form-control" 

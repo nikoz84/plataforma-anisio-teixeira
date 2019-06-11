@@ -2,8 +2,6 @@
     <article class="panel panel-default" v-if="this.aplicativo">
         <div class="panel-body">
             <h2 v-text="aplicativo.name"></h2>
-            <button class="btn btn-info btn-xs" v-on:click="updateAplicativo()">Editar</button>
-            <button class="btn btn-danger btn-xs" v-on:click="deleteAplicativo()">Apagar</button>
             <div class="row">
                 <div class="col-sm-8 break-word" v-html="aplicativo.description"></div>
                 <figure class="col-sm-4">
@@ -25,7 +23,8 @@
         </div>
         <div class="panel-footer tag-cloud">
             <h5> Tags: </h5>
-            <a href=""
+            <a :style="`color:${aplicativo.canal.color};`" 
+              href=""
                 v-for="tag in aplicativo.tags"
                 v-bind:key="tag.id"
                 v-text="tag.name">

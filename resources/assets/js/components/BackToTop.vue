@@ -5,49 +5,57 @@
 </template>
 <script>
 export default {
-    name: "BackToTop",
-    data(){
-        return {
-            isVisible: false
-        }
+  name: "BackToTop",
+  data() {
+    return {
+      isVisible: false
+    };
+  },
+  methods: {
+    initToTopButton: function() {
+      $(document).bind(
+        "scroll",
+        function() {
+          var backToTopButton = $(".goTop");
+          if ($(document).scrollTop() > 250) {
+            backToTopButton.addClass("isVisible");
+            this.isVisible = true;
+          } else {
+            backToTopButton.removeClass("isVisible");
+            this.isVisible = false;
+          }
+        }.bind(this)
+      );
     },
-    methods: {
-        initToTopButton: function() {
-            $(document).bind('scroll', function() {
-                var backToTopButton = $('.goTop');
-                if ($(document).scrollTop() > 250) {
-                    backToTopButton.addClass('isVisible');
-                    this.isVisible = true;
-                } else {
-                    backToTopButton.removeClass('isVisible');
-                    this.isVisible = false;
-                }
-            }.bind(this));
-        },
-        backToTop: function() {
-            $('html,body').stop().animate({
-                scrollTop: 0
-            }, 'slow', 'swing');
-        }
+    backToTop: function() {
+      $("html,body")
+        .stop()
+        .animate(
+          {
+            scrollTop: 0
+          },
+          "slow",
+          "swing"
+        );
+    }
   },
   mounted: function() {
     this.$nextTick(function() {
       this.initToTopButton();
     });
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .goTop {
-  border-radius: 2px;
-  background-color: rgb(1,14,27);
-  background-color: rgba(1, 14, 27, .7);
+  background-color: rgb(1, 14, 27);
+  background-color: rgba(1, 14, 27, 0.7);
   position: fixed;
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   display: block;
-  right: 10px;
-  bottom: 10px;
+  right: 0px;
+  bottom: 5px;
   border: none;
   opacity: 0;
   z-index: -1;
@@ -57,14 +65,14 @@ export default {
   }
   &:hover {
     opacity: 1;
-    background-color: rgb(1,14,27);
-    background-color: rgba(1, 14, 27, .9);
+    background-color: rgb(1, 14, 27);
+    background-color: rgba(1, 14, 27, 0.9);
   }
 }
 
 .isVisible {
-  opacity: .8;
+  opacity: 0.8;
   z-index: 4;
-  transition: all .4s ease-in;
+  transition: all 0.4s ease-in;
 }
 </style>
