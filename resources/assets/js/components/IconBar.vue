@@ -18,6 +18,7 @@ import { mapState } from 'vuex';
     </a>
     
   </div>
+  
 </template>
 <script>
 import { mapState } from "vuex";

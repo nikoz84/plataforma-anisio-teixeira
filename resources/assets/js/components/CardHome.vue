@@ -100,6 +100,7 @@ $white: rgba(255, 255, 130, 1);
   box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
   max-height: 50vh;
   overflow: hidden;
+  margin-bottom: 20px;
 }
 
 .card-container > .card-content {

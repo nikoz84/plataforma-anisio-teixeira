@@ -8,7 +8,6 @@
         <article class="col-md-6">
           <div class="panel panel-default">
             <div class="panel-heading">
-              
               <button class="btn btn-default col-md-6" v-if="!isLoading">Enviar</button>
               <div v-else>
                 <Loader></Loader>
@@ -188,5 +187,6 @@ textarea {
   font-size: 11px;
   font-weight: bolder;
   display: inline-block;
+  opacity: 0.7;
 }
 </style>
