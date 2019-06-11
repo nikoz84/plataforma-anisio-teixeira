@@ -102,6 +102,9 @@ export default {
       };
 
       let resp = await axios.post("/faleconosco", data);
+      if (this.isError) {
+        console.log("error");
+      }
     }
   },
   computed: {

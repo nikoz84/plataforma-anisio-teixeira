@@ -36,8 +36,8 @@ const state = {
   viewport: {
     width: 0,
     heigth: 0
-  }
-
+  },
+  action: ""
 };
 
 export default state;

@@ -6,6 +6,7 @@
         <footer-app></footer-app>
         <side-bar></side-bar>
         <icon-bar></icon-bar>
+        <back-to-top></back-to-top>
     </main>
 </template>
 
@@ -14,6 +15,7 @@ import NavPrincipal from "./NavPrincipal.vue";
 import FooterApp from "./FooterApp.vue";
 import IconBar from "./IconBar.vue";
 import SideBar from "./SideBar.vue";
+import BackToTop from "./BackToTop.vue";
 import { mapState, mapActions, mapMutations } from "vuex";
 
 export default {
@@ -22,7 +24,8 @@ export default {
     "nav-principal": NavPrincipal,
     "footer-app": FooterApp,
     "side-bar": SideBar,
-    "icon-bar": IconBar
+    "icon-bar": IconBar,
+    "back-to-top": BackToTop
   },
   mounted() {},
   created() {
