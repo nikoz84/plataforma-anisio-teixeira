@@ -62,6 +62,14 @@ axios.interceptors.response.use(
       Store.commit("SET_IS_ERROR", isError);
       Store.commit("SET_SHOW_MESSAGE", message);
       Store.commit("SET_SHOW_ALERT", true);
+    } else if (
+      response.data.status == "token_not_found_md" ||
+      response.data.status == "invalid_token_md" ||
+      response.data.status == "expired_token_md"
+    ) {
+      Store.commit("SET_IS_ERROR", isError);
+      Store.commit("SET_SHOW_MESSAGE", message);
+      Store.commit("SET_SHOW_ALERT", true);
     }
 
     return response;

@@ -1,4 +1,3 @@
-import { mapState } from 'vuex';
 <template>
   <div class="icon-bar afix" data-spy="affix" data-offset-bottom="50%">
     <a @click.prevent="openSidebar()">
@@ -7,7 +6,7 @@ import { mapState } from 'vuex';
     <a href="javascript:history.go(-1)">
       <i class="glyphicon glyphicon-arrow-left"></i>
     </a>
-    <a @click.prevent="add()" v-if="isLogged">
+    <a @click.prevent="add()" v-if="isLogged && $route.params.slug">
       <i class="glyphicon glyphicon-plus"></i>
     </a>
     <a @click.prevent="update()" v-if="isLogged && $route.params.id">
