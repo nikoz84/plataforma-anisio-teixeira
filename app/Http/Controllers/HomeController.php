@@ -4,19 +4,23 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ApiController;
 use App\Options;
-use App\Conteudo;
-use App\Aplicativo;
+use App\Helpers\Destaques;
+use Illuminate\Http\Request;
 
 class HomeController extends ApiController
 {
+    protected $destaques;
+    protected $request;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Destaques $destaques, Request $request)
     {
         $this->middleware('jwt.verify')->except(['index', 'getLayout', 'getHomeData']);
+        $this->destaques = new $destaques;
+        $this->request = $request;
     }
 
     /**
@@ -45,72 +49,51 @@ class HomeController extends ApiController
         ];
         return response()->json($data, 200);
     }
+
     public function getHomeData()
     {
-        $data = [
-            'conteudos_recentes' => $this->getConteudosMaisRecentes(),
-            'conteudos_baixados' => $this->getConteudosMaisBaixados(),
-            'conteudos_acessados' => $this->getConteudosMaisAcessados(),
-            'conteudos_destaque' => $this->getConteudosDestaques(),
-            'aplicativos_recentes' => $this->getAplicativosMaisRecentes(),
-            'aplicativos_destaque' => $this->getAplicativosDestaques(),
-        ];
+        $get = $this->request->query('get', 'conteudos_recentes');
+        $data = [];
+
+        switch ($get) {
+            case 'conteudos_recentes':
+                $data = [
+                    'title' => 'Conteúdos Recentes',
+                    'items' => $this->destaques->getConteudosMaisRecentes()
+                ];
+                break;
+            case 'conteudos_baixados':
+                $data = [
+                    'title' => 'Conteúdos Mais Baixados',
+                    'items' => $this->destaques->getConteudosMaisBaixados(),
+                ];
+                break;
+            case 'conteudos_acessados':
+                $data = [
+                    'title' => 'Conteúdos Mais Acessados',
+                    'items' => $this->destaques->getConteudosMaisAcessados(),
+                ];
+                break;
+            case 'conteudos_destacados':
+                $data = [
+                    'title' => 'Conteúdos Destacados',
+                    'items' => $this->destaques->getConteudosDestaques(),
+                ];
+                break;
+            case 'aplicativos_recentes':
+                $data = [
+                    'title' => 'Aplicativos Recentes',
+                    'items' => $this->destaques->getAplicativosMaisRecentes(),
+                ];
+                break;
+            case 'aplicativos_destacados':
+                $data = [
+                    'title' => 'Aplicativos Destacados',
+                    'items' => $this->destaques->getAplicativosDestaques(),
+                ];
+                break;
+        }
 
         return response()->json($data, 200);
-    }
-    // CONTEÙDOS
-    protected function getConteudosMaisRecentes()
-    {
-        $conteudos = Conteudo::orderBy('created_at', 'desc')
-            ->limit(4)
-            ->get();
-
-        return $conteudos->map(function ($conteudo) {
-            return $conteudo->only(['id', 'title', 'image', 'url_exibir']);
-        });
-    }
-
-    protected function getConteudosMaisBaixados()
-    {
-        $conteudos = Conteudo::orderBy('qt_downloads', 'desc')->limit(4)->get();
-
-        return $conteudos->map(function ($conteudo) {
-            return $conteudo->only(['id', 'title', 'image', 'qt_downloads', 'url_exibir']);
-        });
-    }
-    protected function getConteudosMaisAcessados()
-    {
-        $conteudos = Conteudo::orderBy('qt_access', 'desc')->limit(4)->get();
-
-        return $conteudos->map(function ($conteudo) {
-            return $conteudo->only(['id', 'title', 'image', 'qt_access', 'url_exibir']);
-        });
-    }
-
-    protected function getConteudosDestaques()
-    {
-        $conteudos = Conteudo::where("is_featured", true)->limit(4)->get();
-
-        return $conteudos->map(function ($conteudo) {
-            return $conteudo->only(['id', 'title', 'image', 'url_exibir']);
-        });
-    }
-    // APLICATIVOS
-    protected function getAplicativosDestaques()
-    {
-        $aplicativos = Aplicativo::whereRaw("options->'is_featured' = 'true'")
-            ->limit(4)->get();
-
-        return $aplicativos->map(function ($aplicativo) {
-            return $aplicativo->only(['id', 'name', 'image', 'url_exibir']);
-        });
-    }
-    protected function getAplicativosMaisRecentes()
-    {
-        $aplicativos = Aplicativo::orderBy('created_at', 'desc')->limit(4)->get();
-
-        return $aplicativos->map(function ($aplicativo) {
-            return $aplicativo->only(['id', 'name', 'image', 'url_exibir']);
-        });
     }
 }

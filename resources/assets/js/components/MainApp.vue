@@ -28,7 +28,6 @@ export default {
     "icon-bar": IconBar,
     "back-to-top": BackToTop
   },
-  mounted() {},
   created() {
     window.addEventListener("resize", this.handleResize);
 
@@ -59,7 +58,7 @@ $white: #fff;
 $primary: #fff;
 
 body {
-  padding-top: 60px;
+  padding-top: 50px;
 }
 
 .heigth {

@@ -1,15 +1,13 @@
 <template>
-
-  <section class="container-fluid heigth">
-    <section class="main" id="main-home">
-      <side-bar-home class="col-sm-12 col-md-3"></side-bar-home>
-      <div class="col-sm-12 col-md-9 separador-vertical">
-        <CardHome :title="'Conteúdos Mais Baixados'" :items="data.conteudos_baixados"></CardHome>
-        <CardHome :title="'Conteúdos Mais Acessados'" :items="data.conteudos_acessados"></CardHome>
-        <CardHome :title="'Aplicativos Destacados'" :items="data.aplicativos_destaque"></CardHome>
+  <div class="container-fluid no-padding">
+    <section id="main-home">
+      <!-- SideBarHome class="col-md-3"></!-->
+      <div class="load heigth" 
+                v-for="(item, index) in items" 
+                :key="index" :id="item" style="background-color: #49255b;border:solid 1px #000;">
       </div>
     </section>
-  </section>
+  </div>
 </template>
 <script>
 import { mapState, mapMutations } from "vuex";
@@ -20,78 +18,63 @@ export default {
   name: "Home",
   components: {
     CardHome,
-    "side-bar-home": SideBarHome
+    SideBarHome
   },
 
   data() {
     return {
-      data: {}
+      data: {},
+      items: [
+        "conteudos_recentes",
+        "conteudos_baixados",
+        "conteudos_acessados",
+        "conteudos_destacados",
+        "aplicativos_recentes",
+        "aplicativos_destacados"
+      ],
+      current: ""
     };
   },
   mounted() {
-    this.getData();
+    //this.getData();
+    let elements = document
+      .getElementById("main-home")
+      .getElementsByClassName("load");
+
+    for (let el of elements) {
+      let ele = document.getElementById(el.id);
+      console.log(ele.scrollTop, ele.scrollLeft);
+    }
+
+    window.addEventListener("scroll", this.handleLoadScroll, { passive: true });
   },
   methods: {
     async getData() {
       let resp = await axios.get("/destaques");
       if (resp.status == 200 && resp.data) {
-        this.data = resp.data;
+        //this.data = resp.data;
       }
+    },
+    async handleLoadScroll() {
+      var scrollLeft =
+          window.pageXOffset || document.documentElement.scrollLeft,
+        scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      //console.log(scrollLeft, scrollTop);
     }
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.handleLoadScroll, {
+      passive: true
+    });
   }
 };
 </script>
 <style lang="scss" scoped>
-.texto h1 {
-  color: #ffffff;
-  font-size: 30px;
-  font-weight: bold;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-}
-.texto p {
-  color: #ffffff;
-  font-size: 15px;
-  text-align: justify;
-  margin: 10px;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-}
-.texto ul {
-  margin: 5px;
-}
-
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main-home {
   transition: margin-left 0.5s;
-  padding: 20px;
-  min-height: 90vh;
 }
-.box-shadow {
-  -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-}
+
 .no-padding {
-  padding: 0;
-}
-.container-fluid .btn-flutuante {
-  position: fixed;
-  left: 1rem;
-  top: 1rem;
-}
-
-.separador-vertical {
-  border-left: 1px solid rgb(209, 208, 208);
-  padding: 0px 40px;
-}
-
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-  .sidebar {
-    padding-top: 15px;
-  }
-  .sidebar a {
-    font-size: 18px;
-  }
+  padding: 0 0 50px 0;
 }
 </style>

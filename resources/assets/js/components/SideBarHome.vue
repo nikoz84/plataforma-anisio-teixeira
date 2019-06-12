@@ -6,10 +6,11 @@
               :key="i"
               tag="li"
               class="swipable"
-              :to="{ name: 'Listar', params: { slug: link.slug}}">
+              :to="{ name: 'Listar', params: { slug: link.slug }}">
           <a>{{link.name}}</a>
       </router-link>
     </ul>
+    <div class="clearfix"></div>
   </nav>
 </template>
 <script>
@@ -49,6 +50,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+/*
 .scrollmenu {
   overflow: auto;
   white-space: nowrap;
@@ -74,7 +76,7 @@ export default {
 .scrollmenu::-webkit-scrollbar {
   display: none;
 }
-
+*/
 ul {
   margin: 5px;
 }

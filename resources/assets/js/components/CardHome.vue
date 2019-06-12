@@ -1,10 +1,10 @@
 <template>
   <div class="row">
     <header class="page-header">
-      <h2 class="page-title" v-text="title"></h2>
+      <h2 class="page-title" v-text="data.title"></h2>
     </header>
     <section>
-      <article class="col-sm-6" v-for="(item, i) in items" :key="i">
+      <article class="col-sm-6" v-for="(item, i) in data.items" :key="i">
         <figure class="card-container">
           <img v-lazy="item.image" :src="item.image">
           <caption class="card-content">
@@ -20,29 +20,22 @@
 <script>
 export default {
   name: "CardHome",
-  props: ["title", "items"],
-  methods: {
-    isDestaque(index) {}
-  }
+  props: ["data"]
 };
 </script>
 <style lang="scss" scoped>
-$primary: #48246a;
+$primary: rgba(4, 9, 30, 0.637);
 $white: #f0f0f5;
-$shadow: -2px 2px 2px #05182550;
+$shadow: -2px 2px 2px #071925e5;
 $transition: all 0.8s;
 $scale: scale(1.2);
 
-.page-caption {
-  padding-top: 170px;
-  padding-bottom: 174px;
-}
 .page-title {
-  font-size: 46px;
+  font-size: 30px;
   line-height: 1;
-  color: #fff;
   font-weight: 600;
-  text-align: center;
+  padding-left: 10px;
+  color: #071925b6;
 }
 
 .card-container {
@@ -69,7 +62,7 @@ $scale: scale(1.2);
     }
   }
   .card-content {
-    box-shadow: inset 0 0 3px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 5px 3px rgba(0, 0, 0, 0.3);
     position: absolute;
     bottom: 0;
     padding-left: 10px;

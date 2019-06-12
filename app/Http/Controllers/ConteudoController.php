@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Conteudo;
 use App\Tag;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Helpers\WordpressService;
 
 class ConteudoController extends ApiController
 {
+    protected $conteudo;
+    protected $request;
+
     public function __construct(Conteudo $conteudo, Request $request)
     {
         $this->middleware('jwt.verify')->except(['list', 'search', 'getById', 'getByTagId', 'getSitesTematicos']);
