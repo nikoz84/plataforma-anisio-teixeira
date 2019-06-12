@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <header class="page-header">
-      <h2 v-text="title"></h2>
+      <h2 class="page-title" v-text="title"></h2>
     </header>
     <section>
       <article class="col-sm-6" v-for="(item, i) in items" :key="i">
@@ -32,6 +32,18 @@ $white: #f0f0f5;
 $shadow: -2px 2px 2px #05182550;
 $transition: all 0.8s;
 $scale: scale(1.2);
+
+.page-caption {
+  padding-top: 170px;
+  padding-bottom: 174px;
+}
+.page-title {
+  font-size: 46px;
+  line-height: 1;
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+}
 
 .card-container {
   position: relative;
