@@ -1,7 +1,6 @@
 <template>
     <main>
         <nav-principal></nav-principal>
-        {{viewport}}
         <router-view></router-view>
         <footer-app></footer-app>
         <side-bar></side-bar>

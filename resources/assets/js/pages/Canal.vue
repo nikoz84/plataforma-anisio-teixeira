@@ -56,15 +56,18 @@ export default {
       "fetchPosts"
     ]),
     fetchData() {
+      let query = this.$route.query;
+      query.canal = localStorage.canal;
       switch (true) {
         case localStorage.canal == 9:
-          return this.fetchAplicativos();
+          return this.fetchAplicativos(query);
           break;
         case localStorage.canal == 7:
           return this.fetchPosts();
           break;
         default:
-          return this.fetchConteudos(localStorage.canal);
+          console.log(query);
+          return this.fetchConteudos(query);
           break;
       }
     }
@@ -75,6 +78,17 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+$downriver-900: #051825; /* 900 */
+$downriver-800: #0f285d; /* 800 */
+$downriver-700: #263c6c; /* 700 */
+$downriver-600: #42537f; /* 600 */
+$downriver-400: #5f6a93; /* 400 */
+$downriver-300: #7f87a9; /* 300 */
+$downriver-200: #a0a4bf; /* 200 */
+$downriver-80: #c1c3d5; /* 80 */
+$downriver-50: #d9d9e5; /* 50 */
+$downriver-20: #f0f0f5; /* 20 */
+
 .page-header {
   margin: 0;
 }
@@ -83,12 +97,13 @@ export default {
   margin-top: 0;
   position: relative;
   margin-bottom: 30px;
+  color: $downriver-800;
 }
 .page-header .page-title:after {
-  width: 15%;
+  width: 25%;
   height: 2px;
   content: "";
-  background: var(--color);
+  background: $downriver-700;
   display: block;
   position: absolute;
   bottom: -10px;

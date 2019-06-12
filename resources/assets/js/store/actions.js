@@ -25,7 +25,7 @@ const actions = {
   async fetchAplicativos({ commit }, payload) {
     commit("SET_IS_LOADING", true);
     try {
-      await axios.get(`aplicativos`).then(resp => {
+      await axios.get(`/aplicativos`, { params: payload }).then(resp => {
         if (resp.status == 200 && resp.data.paginator) {
           commit("SET_COMPONENT_ID", "Paginator");
           commit("SET_IS_LOADING", false);
@@ -41,7 +41,7 @@ const actions = {
     commit("SET_IS_LOADING", true);
     let url = `/posts`;
     try {
-      await axios.get(url).then(resp => {
+      await axios.get(url, { params: payload }).then(resp => {
         commit("SET_COMPONENT_ID", "");
         if (resp.status == 200 && resp.data.paginator) {
           commit("SET_COMPONENT_ID", "Paginator");
@@ -54,11 +54,11 @@ const actions = {
     }
   },
   /** CONTEUDOS */
-  async fetchConteudos({ commit }, id) {
+  async fetchConteudos({ commit }, payload) {
     commit("SET_IS_LOADING", true);
-    let url = `/conteudos?canal=${id}`;
+    let url = `/conteudos`;
     try {
-      await axios.get(url).then(resp => {
+      await axios.get(url, { params: payload }).then(resp => {
         commit("SET_COMPONENT_ID", "");
         if (resp.status == 200 && resp.data.paginator) {
           commit("SET_COMPONENT_ID", "Paginator");

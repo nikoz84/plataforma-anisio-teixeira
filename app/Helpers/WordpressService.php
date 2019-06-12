@@ -75,7 +75,5 @@ class WordpressService
     public function getOne()
     {
         $url = $this->api . "posts/{$this->id}";
-
-        dd($url);
     }
 }

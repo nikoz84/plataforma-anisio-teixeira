@@ -1,19 +1,29 @@
 // Body
+$downriver-900: #051825; /* 900 */
+$downriver-800: #0f285d; /* 800 */
+$downriver-700: #263c6c; /* 700 */
+$downriver-600: #42537f; /* 600 */
+$downriver-400: #5f6a93; /* 400 */
+$downriver-300: #7f87a9; /* 300 */
+$downriver-200: #a0a4bf; /* 200 */
+$downriver-80: #c1c3d5; /* 80 */
+$downriver-50: #d9d9e5; /* 50 */
+$downriver-20: #f0f0f5; /* 20 */
+
 $body-bg: #ffffff;
 $gray: #888787;
 
 // Borders
-$laravel-border-color: darken($body-bg, 10%);
-$navbar-default-border: #636363;;
-$panel-default-border: $laravel-border-color;
-$panel-inner-border: $laravel-border-color;
+$navbar-default-border: $downriver-20;
+$panel-default-border: $downriver-20;
+$panel-inner-border: $downriver-20;
 
 // Brands
-$brand-primary: #636363;
-$brand-info: #5ba8d8;
+$brand-primary: $downriver-200;
+$brand-info: $downriver-400;
 $brand-success: #3ba77c;
 $brand-warning: #bdaa43;
-$brand-danger: #d85e2e;
+$brand-danger: #b63531;
 
 // Typography
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
@@ -22,28 +32,25 @@ $font-size-base: 16px;
 $line-height-base: 1.6;
 
 // link color
-$link-color: #316ca3;
+$link-color: #1e78c2;
 $link-hover-color: darken($link-color, 50%);
 
 // Navbar
 $navbar-default-bg: #fff;
-$navbar-margin-bottom: #fff;
+$navbar-margin-bottom: $downriver-20;
 $navbar-height: 50px;
 
 //input
-$text-color: #757373;
-$text-button:#504d4d;
-$text-input-border: #807e7e;
+$text-color: #504d4d;
+//$text-button: #504d4d;
+$text-input-border: $downriver-80;
 $text-color-button: #fff;
 
 $input-border: $text-input-border;
-$btn-default-color: $text-color-button;
-$btn-primary-color: $text-color-button;
 
 // Buttons
 $btn-default-color: #fff;
-$btn-default-bg: $text-button;
-
+$btn-default-bg: $downriver-900;
 
 // Inputs
 $input-border: lighten($text-color, 20%);
@@ -53,16 +60,16 @@ $input-color-placeholder: lighten($text-color, 30%);
 // Panels
 $panel-default-heading-bg: #fff;
 
-$border-radius-base:             1px;
-$border-radius-large:            2px;
-$border-radius-small:            1.5px;
+$border-radius-base: 1px;
+$border-radius-large: 2px;
+$border-radius-small: 1.5px;
 
 // Shared Nav
 $nav-link-padding: 10px 20px;
 $nav-link-hover-bg: adjust-color($gray, $lightness: 20%);
-$nav-disabled-link-color: adjust-color($gray, $lightness: 10%) ;
+$nav-disabled-link-color: adjust-color($gray, $lightness: 10%);
 $nav-disabled-link-hover-color: adjust-color($gray, $lightness: -40%);
-$nav-link-hover-bg: adjust-color($gray, $lightness: 30%) ;
+$nav-link-hover-bg: adjust-color($gray, $lightness: 30%);
 $nav-disabled-link-hover-color: adjust-color($gray, $lightness: 30%);
 
 $nav-pills-active-link-hover-bg: adjust-color($gray, $lightness: 50%);
@@ -76,22 +83,21 @@ $nav-tabs-active-link-hover-border-color: #ddd;
 $nav-tabs-justified-link-border-color: #ddd;
 $nav-tabs-justified-active-link-border-color: $body-bg;
 
-
 // Fontes
 $font-size-base: 16px;
 $font-size-large: ceil(($font-size-base * 1.25));
 $font-size-small: ceil(($font-size-base * 1));
-$font-size-h1: floor(($font-size-base * 1.8));
-$font-size-h2: floor(($font-size-base * 1.6));
+$font-size-h1: floor(($font-size-base * 1.6));
+$font-size-h2: floor(($font-size-base * 1.5));
 $font-size-h3: floor(($font-size-base * 1.4));
-$font-size-h4: floor(($font-size-base * 1.2));
-$font-size-h5: floor(($font-size-base * 1.1));
-$font-size-h6: floor(($font-size-base * 1));
+$font-size-h4: floor(($font-size-base * 1.3));
+$font-size-h5: floor(($font-size-base * 1.2));
+$font-size-h6: floor(($font-size-base * 1.1));
 
 //List Group
-$laravel-list-border-color: #dddde0;  //dddde0
+//$laravel-list-border-color: #dddde0;  //dddde0
 
-$list-group-border: $laravel-border-color;
-$list-group-bg: $laravel-list-border-color;
+$list-group-border: $downriver-200;
+$list-group-bg: $downriver-200;
 $list-group-hover-bg: rgb(158, 157, 157);
-$component-active-color: $laravel-border-color;
+//$component-active-color: $laravel-border-color;

@@ -62,15 +62,12 @@ export default {
     },
     async getData() {
       this.SET_IS_LOADING(true);
-      if (this.slug != "inicio") {
-        let resp = await axios.get(`/${this.slug}`);
 
-        if (resp.data.success) {
-          this.SET_IS_LOADING(false);
-          this.SET_PAGINATOR(resp.data.paginator);
-        }
-      } else {
-        console.log("hola");
+      let resp = await axios.get(`/${this.slug}`);
+
+      if (resp.data.success) {
+        this.SET_IS_LOADING(false);
+        this.SET_PAGINATOR(resp.data.paginator);
       }
     },
     async getOne() {

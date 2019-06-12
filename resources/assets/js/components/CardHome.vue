@@ -1,23 +1,21 @@
 <template>
-<div>
-  <header class="row justify-content-center heading-section" 
-         style="padding-bottom: 1rem !important;margin-bottom: 3rem !important;">
-    <h2 class="text-center" style="margin-bottom: 1.5rem !important;"
-        v-text="title"></h2>
-  </header>
-    <div class="row">
-      <article class="col-sm col-md-6 col-lg-4" v-for="(item, i) in items" :key="i">
-        <figure class="card-container retina">
-          <img v-lazy="item.image" class="img-responsive">
-          <caption class="card-content" :style="isDestaque(i)">
+  <div class="row">
+    <header class="page-header">
+      <h2 v-text="title"></h2>
+    </header>
+    <section>
+      <article class="col-sm-6" v-for="(item, i) in items" :key="i">
+        <figure class="card-container">
+          <img v-lazy="item.image" :src="item.image">
+          <caption class="card-content">
             <a :href="item.url_exibir">
               <h2>{{ item.title ? item.title : item.name }}</h2>
             </a>
           </caption>
         </figure>
       </article>
-    </div>
-  </div>
+    </section>
+</div>
 </template>
 <script>
 export default {
@@ -29,124 +27,67 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-$primary: rgba(59, 9, 103, 0.7);
-$white: rgba(255, 255, 130, 1);
-// HEADING HOME
-.heading-section {
-  .subheading {
-    font-size: 14px;
-    display: block;
-    margin-bottom: 10px;
-  }
-  h2 {
-    font-size: 38px;
-    font-weight: 400;
-    position: relative;
-    strong {
-      font-weight: 700;
-    }
-    @media only screen and (max-width: 700px) {
-      font-size: 25px;
-    }
-    &:after,
-    &:before {
-      width: 100px;
-      height: 2px;
-      position: absolute;
-      bottom: -15px;
-      left: 0;
-      right: 0;
-      margin: 0 auto;
-      background: $primary;
-      content: "";
-    }
-    &:before {
-      width: 80px;
-      height: 2px;
-      bottom: -19px;
-    }
-  }
-  &.heading-section-white {
-    .subheading {
-      color: rgba(255, 255, 255, 0.9);
-    }
-    h2 {
-      font-size: 38px;
-      color: $white;
-      &:after,
-      &:before {
-        display: none;
-      }
-    }
-    p {
-      color: rgba(255, 255, 255, 0.9);
-    }
-  }
-  &.heading-section-wo-line {
-    h2 {
-      &:after,
-      &:before {
-        display: none;
-      }
-    }
-  }
-}
+$primary: #48246a;
+$white: #f0f0f5;
+$shadow: -2px 2px 2px #05182550;
+$transition: all 0.8s;
+$scale: scale(1.2);
+
 .card-container {
   position: relative;
   display: table;
-  margin: 0 auto;
-  -webkit-box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
-  -moz-box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
-  box-shadow: -4px 7px 5px rgba(50, 50, 50, 0.77);
-  max-height: 50vh;
+  padding: 0px;
+  margin-bottom: 15px;
   overflow: hidden;
-  margin-bottom: 20px;
+  -webkit-box-shadow: $shadow;
+  -moz-box-shadow: $shadow;
+  box-shadow: $shadow;
+  img {
+    -webkit-transition: $transition;
+    -moz-transition: $transition;
+    -ms-transition: $transition;
+    -o-transition: $transition;
+    transition: $transition;
+    &:hover {
+      -webkit-transform: $scale;
+      -moz-transform: $scale;
+      -ms-transform: $scale;
+      -o-transform: $scale;
+      transform: $scale;
+    }
+  }
+  .card-content {
+    box-shadow: inset 0 0 3px 2px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    bottom: 0;
+    padding-left: 10px;
+    background: rgba(0, 0, 0, 0.877);
+    background-color: $primary;
+    width: 100%;
+    a {
+      text-decoration: none;
+      z-index: 2;
+    }
+    > a h2 {
+      margin-top: 7px;
+      margin-bottom: 5.5px;
+      font-weight: bolder;
+      font-size: 2.2vh;
+      color: #fff;
+    }
+  }
 }
 
-.card-container > .card-content {
-  position: absolute;
-  bottom: 0;
-  background: rgb(0, 0, 0);
-  background-color: rgba(59, 9, 103, 0.7);
-  width: 100%;
-  padding: 10px;
-  a {
-    text-decoration: none;
-    z-index: 2;
-  }
-  > a h2 {
-    font-size: 3vh;
-    color: #fff;
+@media only screen and (min-width: 0px) and (max-width: 1023px) {
+  .card-container img {
+    width: 68vh;
+    height: 35vh;
   }
 }
-img {
-  -webkit-transition: all 0.8s;
-  -moz-transition: all 0.8s;
-  -ms-transition: all 0.8s;
-  -o-transition: all 0.8s;
-  transition: all 0.8s;
-}
-.card-container:hover > img {
-  -webkit-transform: scale(1.5);
-  -moz-transform: scale(1.5);
-  -ms-transform: scale(1.5);
-  -o-transform: scale(1.5);
-  transform: scale(1.5);
-}
-.card-container .retina {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
-  text-align: left;
-  z-index: 1;
-  -webkit-transition: all 0.8s;
-  -moz-transition: all 0.8s;
-  -ms-transition: all 0.8s;
-  -o-transition: all 0.8s;
-  transition: all 0.8s;
-}
-.card-container:hover .retina {
-  box-shadow: inset 0 0 100px 50px rgba(0, 0, 0, 0.5);
+@media only screen and (min-width: 1024px) {
+  .card-container img {
+    width: 70vh;
+    height: 35vh;
+  }
 }
 </style>
