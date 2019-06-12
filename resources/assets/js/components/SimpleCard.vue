@@ -67,6 +67,7 @@ export default {
 <style lang="scss" scoped>
 .card-panel {
   margin-bottom: 20px;
+  margin-right: 30px;
 }
 .card-panel img {
   width: 100%;

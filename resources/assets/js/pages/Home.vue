@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid no-padding">
-    <section id="main-home">
+    <section class="row">
       <!-- SideBarHome class="col-md-3"></!-->
       <div class="load heigth" 
                 v-for="(item, index) in items" 
@@ -37,6 +37,7 @@ export default {
   },
   mounted() {
     //this.getData();
+    /*
     let elements = document
       .getElementById("main-home")
       .getElementsByClassName("load");
@@ -45,7 +46,7 @@ export default {
       let ele = document.getElementById(el.id);
       console.log(ele.scrollTop, ele.scrollLeft);
     }
-
+    */
     window.addEventListener("scroll", this.handleLoadScroll, { passive: true });
   },
   methods: {

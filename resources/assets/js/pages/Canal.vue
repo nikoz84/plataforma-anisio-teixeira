@@ -2,7 +2,7 @@
     <section class="container-fluid heigth">
         <div class="row">
             <aside class="col-sm-3">
-                <sidebar></sidebar>
+                <SidebarCanal></SidebarCanal>
             </aside>
             <article class="col-sm-9">
                 <!--Breadcrum></Breadcrum-->
@@ -33,7 +33,7 @@ import { mapState, mapActions } from "vuex";
 
 export default {
   name: "canal",
-  components: { NavCanal, sidebar: SidebarCanal },
+  components: { NavCanal, SidebarCanal },
   mounted() {
     this.getCanalBySlug(this.$route.params.slug).then(() => {
       this.fetchData();
@@ -90,27 +90,24 @@ $downriver-50: #d9d9e5; /* 50 */
 $downriver-20: #f0f0f5; /* 20 */
 
 .page-header {
-  margin: 0;
-}
-
-.page-header .page-title {
-  margin-top: 0;
-  position: relative;
-  margin-bottom: 30px;
-  color: $downriver-800;
-}
-.page-header .page-title:after {
-  width: 25%;
-  height: 2px;
-  content: "";
-  background: $downriver-700;
-  display: block;
-  position: absolute;
-  bottom: -10px;
-}
-
-aside > header > h3 {
-  margin-top: 5px;
-  font-size: 18px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  text-align: center;
+  .page-title {
+    margin-top: 0;
+    position: relative;
+    font-size: 35px;
+    color: $downriver-600;
+    font-weight: 700;
+    &:after {
+      width: 100%;
+      height: 1px;
+      content: "";
+      background: $downriver-80;
+      display: block;
+      position: absolute;
+      bottom: -10px;
+    }
+  }
 }
 </style>
