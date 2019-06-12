@@ -1,5 +1,7 @@
 <template>
     <div class="row">
+      <div class="form-image">
+        <div class="bottom-0">
         <div class="col-md-6 col-md-offset-4 col-xs-10 col-xs-offset-1 center-xs">
             <form v-on:submit.prevent="register()">
                 
@@ -52,6 +54,8 @@
                 
             </form>
             
+          </div>
+          </div>
         </div>
     </div>
 </template>
@@ -104,3 +108,29 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+$break-small: 780px;
+$break-large: 781px;
+$break-extra-large: 1200px;
+
+.form-image{
+  display: block;
+  min-height: 100vh;
+  padding: 0;
+  background: url("/storage/conteudos/conteudos-digitais/galeria/5.jpg") no-repeat bottom center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+
+  
+  form{
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+.links {
+  padding-top: 15px;
+}
+
+</style>
