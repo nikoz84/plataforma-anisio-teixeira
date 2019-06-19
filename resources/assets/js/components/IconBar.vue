@@ -68,7 +68,7 @@ export default {
   background-color: #010e1b;
   background-color: rgba(1, 14, 27, 0.7);
   opacity: 0.8;
-  z-index: 200 !important;
+  z-index: 150 !important;
 }
 
 .icon-bar a {

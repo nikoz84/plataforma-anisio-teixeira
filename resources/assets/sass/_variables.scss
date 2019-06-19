@@ -65,10 +65,10 @@ $border-radius-large: 2px;
 $border-radius-small: 1.5px;
 
 // Shared Nav
-$nav-link-padding: 10px 20px;
-$nav-link-hover-bg: adjust-color($gray, $lightness: 20%);
+$nav-link-padding: 10px 10px;
+$nav-link-hover-bg: $downriver-900;
 $nav-disabled-link-color: adjust-color($gray, $lightness: 10%);
-$nav-disabled-link-hover-color: adjust-color($gray, $lightness: -40%);
+$nav-disabled-link-hover-color: #fff;
 $nav-link-hover-bg: adjust-color($gray, $lightness: 30%);
 $nav-disabled-link-hover-color: adjust-color($gray, $lightness: 30%);
 
@@ -79,8 +79,8 @@ $nav-tabs-border-color: adjust-color($gray, $lightness: 20%);
 $nav-tabs-link-hover-border-color: adjust-color($gray, $lightness: -10%);
 $nav-tabs-active-link-hover-bg: $body-bg;
 $nav-tabs-active-link-hover-color: adjust-color($gray, $lightness: 50%);
-$nav-tabs-active-link-hover-border-color: #ddd;
-$nav-tabs-justified-link-border-color: #ddd;
+$nav-tabs-active-link-hover-border-color: #dddddd;
+$nav-tabs-justified-link-border-color: #dddddd;
 $nav-tabs-justified-active-link-border-color: $body-bg;
 
 // Fontes
@@ -95,9 +95,19 @@ $font-size-h5: floor(($font-size-base * 1.2));
 $font-size-h6: floor(($font-size-base * 1.1));
 
 //List Group
-//$laravel-list-border-color: #dddde0;  //dddde0
+$list-group-border: $downriver-20;
+$list-group-bg: #fff;
+$list-group-hover-bg: $downriver-900;
+$list-group-active-bg: $downriver-800;
+$list-group-active-border: $downriver-900;
+$list-group-link-hover-color: #fff;
 
-$list-group-border: $downriver-200;
-$list-group-bg: $downriver-200;
-$list-group-hover-bg: rgb(158, 157, 157);
-//$component-active-color: $laravel-border-color;
+// Btn Borders
+/*
+$btn-primary-border: $border-radius-base;
+$btn-success-border: $border-radius-base;
+$btn-info-border: $border-radius-base;
+$btn-warning-border: $border-radius-base;
+$btn-danger-border: $border-radius-base;
+//$btn-border-radius-large: 5%;
+*/

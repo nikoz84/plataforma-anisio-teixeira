@@ -3,7 +3,18 @@
     <Categories></Categories>
     <Temas></Temas>
     <Disciplinas></Disciplinas>
-
+    <ul class="list-unstyled">
+        <li v-for="(tipo, ti) in tipos" :key="ti" style="padding-left:5px;">
+            <input type="checkbox"
+                    :id="'tipo-' + tipo.id"
+                    :value="tipo.id"
+                    v-model="checkedTipos"
+                    v-on:change="addToQuery">
+            <label :for="'tipo-' + tipo.id">
+                {{ tipo.name }}
+            </label>
+        </li>
+    </ul>
     <nav role="menu tipos de mídias" v-if="false">
         <h5 data-toggle="collapse"
                     class="pointer"
@@ -19,7 +30,7 @@
                         type="checkbox"
                         :id="'tipo-' + tipo.id"
                         :value="tipo.id"
-                        v-model="checkedTipos"
+                        
                         v-on:change="addToQuery">
                 <label :for="'tipo-' + tipo.id">
                     {{ tipo.name }}
@@ -107,43 +118,55 @@
 </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import Categories from "./Categories.vue";
 import Temas from "./Temas.vue";
 import Disciplinas from "./Disciplinas.vue";
 
 export default {
   name: "SidebarCanal",
-  components:{Categories,Temas, Disciplinas},
+  components: { Categories, Temas, Disciplinas },
   data() {
     return {
       checkedTipos: [],
-      checkedLicenses: [],
+      checkedLicencas: [],
       checkedComponents: [],
-      isVisible: false
+      isVisible: false,
+      tipos: []
     };
   },
   created() {
-
+    this.getTipos();
   },
   computed: {
-    ...mapState(["sidebar"]),
+    ...mapState(["sidebar"])
   },
   methods: {
     addToQuery() {
+      const tipos = this.checkedTipos;
+      const licencas = this.checkedLicencas;
+      const componentes = this.checkedComponents;
+
       this.$router.push({
         name: "Listar",
         params: { slug: this.$route.params.slug },
         query: {
-          tipos: [this.checkedTipos],
-          licencas: [this.checkedLicenses],
-          componentes: [this.checkedComponents]
+          tipos: tipos.join(","),
+          licencas: licencas.join(",")
+          //componentes: [this.checkedComponents]
         }
       });
+    },
+    addTipos() {
+      this.checkedTipos.push();
+    },
+    async getTipos() {
+      await axios.get("/tipos").then(resp => {
+        this.tipos = resp.data.metadata;
+      });
     }
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>
-
 </style>

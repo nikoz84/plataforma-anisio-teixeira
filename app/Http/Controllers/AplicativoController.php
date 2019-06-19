@@ -25,17 +25,22 @@ class AplicativoController extends ApiController
      */
     public function list(Request $request)
     {
-        $limit = ($request->has('limit')) ? $request->query('limit') : 15;
-        $page = ($request->has('page')) ? $request->query('page') : 1;
+        $limit = $request->query('limit', 15);
+        $page = $request->query('page', 1);
+        $category = $request->query('categoria');
 
-        $aplicativos = Aplicativo::with(['category', 'canal'])
-            //->select(['id','user_id','name'])
-            ->orderBy('created_at', 'desc')
-            ->paginate($limit);
+        $query = $this->aplicativo::query();
 
-        $aplicativos->setPath("/aplicativos?limit={$limit}");
+        $query->when($category, function ($q, $category) {
+            return $q->where('category_id', $category);
+        });
 
-        return $this->showAsPaginator($aplicativos, 'Aplicativos Educacionais', 200);
+        $apps = $query->with(['category', 'canal'])
+            ->orderBy('name', 'desc')
+            ->paginate($limit)
+            ->setPath("/aplicativos?categoria={$category}&limit={$limit}");
+
+        return $this->showAsPaginator($apps, 'Aplicativos Educacionais', 200);
     }
 
 

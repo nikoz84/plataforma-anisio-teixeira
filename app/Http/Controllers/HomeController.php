@@ -6,6 +6,7 @@ use App\Http\Controllers\ApiController;
 use App\Options;
 use App\Helpers\Destaques;
 use Illuminate\Http\Request;
+use App\Helpers\WordpressService;
 
 class HomeController extends ApiController
 {
@@ -95,5 +96,12 @@ class HomeController extends ApiController
         }
 
         return response()->json($data, 200);
+    }
+
+    public function getAnalytics()
+    {
+        $wordpress = new WordpressService($this->request);
+
+        return response()->json($wordpress->getCatalogacao(), 200);
     }
 }

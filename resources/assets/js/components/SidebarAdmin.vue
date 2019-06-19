@@ -1,42 +1,45 @@
 <template>
-    <nav class="list-group">
+    <aside class="list-group">
         <a href="#" class="thumbnail">
             <img class="w-150" v-bind:src="'https://via.placeholder.com/300x200'" alt="Foto Usuário">
         </a>
         <p>{{ 'Benvindo ' + username }}</p>
-        <router-link tag="li" :to=" { name:'admin', params: { slug: 'inicio' }}" class="menu_admin">
-            <a>Inicio</a>
-        </router-link>
-        <router-link tag="li" :to=" { name:'admin', params: { slug: 'aplicativos', action:'listar' }}" class="menu_admin">
-            <a>Aplicativos</a>
-        </router-link>
-        <router-link tag="li" :to=" { name:'admin', params: { slug: 'conteudos', action:'listar' }}" class="menu_admin">
-            <a>Conteúdos</a>
-        </router-link>
-        <router-link tag="li" :to=" { name:'admin', params: { slug: 'canais', action:'listar' }}" class="menu_admin">
-            <a>Canais</a>
-        </router-link>
-        <router-link tag="li" :to=" { name:'admin', params: { slug: 'licenses', action:'listar' }}" class="menu_admin">
-            <a>Licenças</a>
-        </router-link>
-        <router-link tag="li" :to=" { name:'admin', params: { slug: 'tags', action:'listar' }}" class="menu_admin">
-            <a>Palavras chave</a>
-        </router-link>
-        <router-link tag="li" :to=" { name:'admin', params: { slug: 'usuarios', action:'listar' }}" class="menu_admin">
-            <a>Usuários</a>
-        </router-link>
-        <router-link tag="li" :to=" { name:'admin', params: { slug: 'denuncias', action:'listar' }}" class="menu_admin">
-            <a>Denúncias</a>
-        </router-link>
-        <router-link tag="li" :to=" { name:'admin', params: { slug: 'usuarios', action:'alterar-senha' }}" class="menu_admin">
-            <a>Alterar senha</a>
-        </router-link>
-        <router-link tag="li" :to=" { name:'admin', params: { slug: 'usuarios', action:'adicionar' }}" class="menu_admin">
-            <a>Adicionar Usuário</a>
-        </router-link>
+        <nav class="list-group">
+            <router-link :to=" { name:'admin', params: { slug: 'analytics', action: 'listar' }}">
+                <a class="list-group-item">Inicio</a>
+            </router-link>
+            <router-link :to=" { name:'admin', params: { slug: 'aplicativos', action:'listar' }}" >
+                <a class="list-group-item">Aplicativos</a>
+            </router-link>
+            <router-link :to=" { name:'admin', params: { slug: 'conteudos', action:'listar' }}" >
+                <a class="list-group-item">Conteúdos</a>
+            </router-link>
+            <router-link :to=" { name:'admin', params: { slug: 'canais', action:'listar' }}" >
+                <a class="list-group-item">Canais</a>
+            </router-link>
+            <router-link :to=" { name:'admin', params: { slug: 'licenses', action:'listar' }}" >
+                <a class="list-group-item">Licenças</a>
+            </router-link>
+            <router-link :to=" { name:'admin', params: { slug: 'tags', action:'listar' }}" >
+                <a class="list-group-item">Palavras chave</a>
+            </router-link>
+            <router-link :to=" { name:'admin', params: { slug: 'usuarios', action:'listar' }}" >
+                <a class="list-group-item">Usuários</a>
+            </router-link>
+            <router-link :to=" { name:'admin', params: { slug: 'denuncias', action:'listar' }}" >
+                <a class="list-group-item">Denúncias</a>
+            </router-link>
+            <router-link :to=" { name:'admin', params: { slug: 'usuarios', action:'alterar-senha' }}" >
+                <a class="list-group-item">Alterar senha</a>
+            </router-link>
+            <router-link :to=" { name:'admin', params: { slug: 'usuarios', action:'adicionar' }}" >
+                <a class="list-group-item">Adicionar Usuário</a>
+            </router-link>
+        </nav>
+        
 
 
-    </nav>
+    </aside>
 </template>
 <script>
 export default {

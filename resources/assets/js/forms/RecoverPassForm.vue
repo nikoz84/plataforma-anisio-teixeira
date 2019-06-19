@@ -19,9 +19,9 @@
                             <label for="confirmasenha">Confirme a Senha</label>
                             <input type="password" class="form-control" id="confirmasenha" aria-describedby="confirmar senha" v-model="confirmPassword">
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-default">Enviar</button>
+                        <div class="form-group">
+                          <button class="btn btn-default btn-block">Enviar</button>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -31,7 +31,6 @@
 </template>
 
 <script>
-
 export default {
   name: "RecoverForm",
   components: {},
@@ -50,7 +49,6 @@ export default {
         code: this.verificationCode
       };
       console.warn(data);
-      
     },
     verificationPass() {}
   }
@@ -62,17 +60,18 @@ $break-small: 780px;
 $break-large: 781px;
 $break-extra-large: 1200px;
 
-.form-image{
+.form-image {
   display: block;
   min-height: 100vh;
   padding: 0;
-  background: url("/storage/conteudos/conteudos-digitais/galeria/11.jpg") no-repeat bottom center scroll;
+  background: url("/storage/conteudos/conteudos-digitais/galeria/11.jpg")
+    no-repeat bottom center scroll;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
   -o-background-size: cover;
-  
-  form{
+
+  form {
     padding-left: 15px;
     padding-right: 15px;
   }
@@ -80,5 +79,4 @@ $break-extra-large: 1200px;
 .links {
   padding-top: 15px;
 }
-
 </style>

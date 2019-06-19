@@ -97,7 +97,7 @@ $downriver-20: #f0f0f5; /* 20 */
     margin-top: 0;
     position: relative;
     font-size: 35px;
-    color: $downriver-600;
+    color: $downriver-800;
     font-weight: 700;
     &:after {
       width: 100%;

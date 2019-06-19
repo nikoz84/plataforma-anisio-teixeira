@@ -1,7 +1,9 @@
 <template>
   <nav>
     <ul class="nav nav-pills">
-      <router-link tag="li" :to="{ name: 'Inicio', params: {slug: $route.params.slug}}" exact>
+      <router-link v-if="canal && canal.options && canal.options.has_home" 
+                tag="li" 
+                :to="{ name: 'Inicio', params: {slug: $route.params.slug}}">
           <a>Home</a>
       </router-link>
       <router-link tag="li" :to="{ name: 'Listar', params: {slug: $route.params.slug}}">
@@ -17,9 +19,12 @@
   </nav>
 </template>
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "NavCanal",
   computed: {
+    ...mapState(["canal"]),
     setUrlDenuncia() {
       localStorage.setItem("urlDenuncia", location.href);
       return {
@@ -37,4 +42,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.nav .nav-pills > li {
+  border-bottom: solid 2px #0f285d;
+}
 </style>

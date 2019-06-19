@@ -111,4 +111,6 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     Route::post('/options', 'OptionsController@create')->name('criar.opcoes');
     Route::put('/options/{name}', 'OptionsController@update')->name('atualizar.opcoes.x.nome');
     Route::delete('/options/{name}', 'OptionsController@delete')->name('apagar.opcoes.x.nome');
+    /** ANALYTICS */
+    Route::get('/analytics', 'HomeController@getAnalytics')->name('catalogacao.blog');
 });

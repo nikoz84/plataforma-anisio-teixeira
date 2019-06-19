@@ -1,13 +1,13 @@
 <template>
-    <div class="container-fluid heigth">
-        <sidebar-admin class="col-sm-3" ></sidebar-admin>
-        <section class="col-sm-9">
-            <header class="page-header">
-                <h1><small>{{ title }}</small></h1>
-            </header>
-            <router-view name="admin"></router-view>
-        </section>
-    </div>
+  <div class="container-fluid heigth">
+      <SidebarAdmin class="col-sm-3" ></SidebarAdmin>
+      <section class="col-sm-9">
+          <header class="page-header">
+              <h1>{{ title }}</h1>
+          </header>
+          <router-view name="admin"></router-view>
+      </section>
+  </div>
 </template>
 <script>
 import SidebarAdmin from "../components/SidebarAdmin.vue";
@@ -16,22 +16,18 @@ import { mapState } from "vuex";
 export default {
   name: "admin",
   components: {
-    "sidebar-admin": SidebarAdmin
+    SidebarAdmin
   },
   data() {
     return {
-      title: "Administração da Plataforma",
-      search: "",
-      show: false,
-      slug: "",
-      action: ""
+      title: "Administração da Plataforma"
     };
   },
   computed: {}
 };
 </script>
 <style lang="scss" scoped>
-.page-header > h1 {
+.page-header {
   margin-top: 0px;
 }
 </style>

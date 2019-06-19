@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -23,10 +24,10 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 
-        'email', 
-        'password', 
-        'verification_token', 
+        'name',
+        'email',
+        'password',
+        'verification_token',
         'verified',
     ];
 
@@ -55,7 +56,7 @@ class User extends Authenticatable implements JWTSubject
         'options' => 'array',
     ];
 
-    protected $appends = ['is_admin'];
+    protected $appends = ['is_admin', 'image'];
 
     public function setNameAttribute($value)
     {
@@ -79,6 +80,14 @@ class User extends Authenticatable implements JWTSubject
     public function getIsAdminAttribute()
     {
         return $this->where('options->role', 'administrador')->exists();
+    }
+    public function getImageAttribute()
+    {
+
+        $image = "{$this['id']}.jpg";
+        //dd(Storage::disk('users')->exists("{$image}"));
+        return Storage::disk('users')
+            ->url("{$image}");
     }
     public static function createVerificationToken()
     {

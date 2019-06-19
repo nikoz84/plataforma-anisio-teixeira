@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Tipo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
+
 class TipoController extends ApiController
 {
     public function __construct(Tipo $tipo, Request $request)
@@ -18,7 +19,6 @@ class TipoController extends ApiController
     {
         $tipos = $this->tipo::all();
 
-        return $this->showAll($tipos,'', 200);
-        
+        return $this->showAll($tipos, '', 200);
     }
 }

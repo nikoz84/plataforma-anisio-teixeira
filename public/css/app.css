@@ -20,6 +20,15 @@
 
 /* 20 */
 
+/*
+$btn-primary-border: $border-radius-base;
+$btn-success-border: $border-radius-base;
+$btn-info-border: $border-radius-base;
+$btn-warning-border: $border-radius-base;
+$btn-danger-border: $border-radius-base;
+//$btn-border-radius-large: 5%;
+*/
+
 /*!
  * Bootstrap v3.4.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 Twitter, Inc.
@@ -5050,7 +5059,7 @@ tbody.collapse.in {
 .nav > li > a {
   position: relative;
   display: block;
-  padding: 10px 20px;
+  padding: 10px 10px;
 }
 
 .nav > li > a:hover,
@@ -5115,7 +5124,7 @@ tbody.collapse.in {
   color: white;
   cursor: default;
   background-color: #ffffff;
-  border: 1px solid #ddd;
+  border: 1px solid #dddddd;
   border-bottom-color: transparent;
 }
 
@@ -5198,13 +5207,13 @@ tbody.collapse.in {
 .nav-tabs.nav-justified > .active > a:hover,
 .nav-tabs-justified > .active > a:focus,
 .nav-tabs.nav-justified > .active > a:focus {
-  border: 1px solid #ddd;
+  border: 1px solid #dddddd;
 }
 
 @media (min-width: 768px) {
   .nav-tabs-justified > li > a,
   .nav-tabs.nav-justified > li > a {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #dddddd;
     border-radius: 1px 1px 0 0;
   }
 
@@ -6554,8 +6563,8 @@ a.thumbnail.active {
   display: block;
   padding: 10px 15px;
   margin-bottom: -1px;
-  background-color: #a0a4bf;
-  border: 1px solid #a0a4bf;
+  background-color: #fff;
+  border: 1px solid #f0f0f5;
 }
 
 .list-group-item:first-child {
@@ -6594,8 +6603,8 @@ a.thumbnail.active {
 .list-group-item.active:focus {
   z-index: 2;
   color: #fff;
-  background-color: #a0a4bf;
-  border-color: #a0a4bf;
+  background-color: #0f285d;
+  border-color: #051825;
 }
 
 .list-group-item.active .list-group-item-heading,
@@ -6613,7 +6622,7 @@ a.thumbnail.active {
 .list-group-item.active .list-group-item-text,
 .list-group-item.active:hover .list-group-item-text,
 .list-group-item.active:focus .list-group-item-text {
-  color: white;
+  color: #5582e4;
 }
 
 a.list-group-item,
@@ -6630,9 +6639,9 @@ a.list-group-item:hover,
 a.list-group-item:focus,
 button.list-group-item:hover,
 button.list-group-item:focus {
-  color: #555;
+  color: #fff;
   text-decoration: none;
-  background-color: #9e9d9d;
+  background-color: #051825;
 }
 
 button.list-group-item {

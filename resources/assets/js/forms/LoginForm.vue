@@ -69,7 +69,10 @@ export default {
       this.login(data).then(() => {
         if (this.isLogged) {
           this.docodePayloadToken();
-          this.$router.push("/admin/inicio/estatisticas");
+          this.$router.push({
+            name: "admin",
+            params: { slug: "analytics", action: "listar" }
+          });
         }
       });
     },
@@ -91,17 +94,18 @@ $break-small: 780px;
 $break-large: 781px;
 $break-extra-large: 1200px;
 
-.form-image{
+.form-image {
   display: block;
   min-height: 100vh;
   padding: 0;
-  background: url("/storage/conteudos/conteudos-digitais/galeria/2.jpg") no-repeat bottom center scroll;
+  background: url("/storage/conteudos/conteudos-digitais/galeria/2.jpg")
+    no-repeat bottom center scroll;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
   -o-background-size: cover;
 
-  .bottom-0{
+  .bottom-0 {
     @media screen and (max-width: $break-small) {
       position: absolute;
       left: 60px;
@@ -121,7 +125,7 @@ $break-extra-large: 1200px;
       min-width: 420px;
     }
   }
-  form{
+  form {
     padding-left: 15px;
     padding-right: 15px;
   }
@@ -129,5 +133,4 @@ $break-extra-large: 1200px;
 .links {
   padding-top: 15px;
 }
-
 </style>

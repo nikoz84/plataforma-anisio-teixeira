@@ -1,12 +1,7 @@
 <template>
 <div class="row">
     <div class="col-lg-12">
-        <a class="btn btn-default btn-xs pull-left"
-            data-toggle="tooltip" 
-            data-placement="top" 
-            title="Adicionar"
-        ><i class="glyphicon glyphicon-plus"></i></a>
-        <search-form></search-form>
+        <SearchForm v-if="paginator.data && paginator.data.length > 0"></SearchForm>
     </div>
     <div class="col-lg-12 table-responsive"> 
         <table class="table table-striped" v-if="paginator.data && paginator.data.length > 0">
@@ -51,7 +46,7 @@ import SearchForm from "../forms/SearchForm.vue";
 export default {
     name: "Table",
     components:{
-        "search-form":SearchForm
+        SearchForm
     },
     props:["paginator"]
 }
