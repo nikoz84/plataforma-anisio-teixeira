@@ -8,7 +8,8 @@
             <li  v-for="(tema, t) in temas.components" :key="t">
                 <router-link :to="{ name: 'Listar', 
                             params: { slug : $route.params.slug }, 
-                            query: { categoria: $route.query.categoria, tema: tema.id }}" exact>
+                            query: { categoria: $route.query.categoria, 
+                            tema: tema.id }}" exact>
                 <a>{{ tema.name }}</a>
                 </router-link>
             </li>

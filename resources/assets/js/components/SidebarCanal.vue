@@ -3,7 +3,7 @@
     <Categories></Categories>
     <Temas></Temas>
     <Disciplinas></Disciplinas>
-    <ul class="list-unstyled">
+    <ul class="list-unstyled" v-if="tipos">
         <li v-for="(tipo, ti) in tipos" :key="ti" style="padding-left:5px;">
             <input type="checkbox"
                     :id="'tipo-' + tipo.id"
@@ -15,6 +15,7 @@
             </label>
         </li>
     </ul>
+    
     <nav role="menu tipos de mídias" v-if="false">
         <h5 data-toggle="collapse"
                     class="pointer"
@@ -122,10 +123,11 @@ import { mapState, mapActions } from "vuex";
 import Categories from "./Categories.vue";
 import Temas from "./Temas.vue";
 import Disciplinas from "./Disciplinas.vue";
+import TiposCheckBox from './TiposCheckBox.vue';
 
 export default {
   name: "SidebarCanal",
-  components: { Categories, Temas, Disciplinas },
+  components: { Categories, Temas, Disciplinas, TiposCheckBox },
   data() {
     return {
       checkedTipos: [],
