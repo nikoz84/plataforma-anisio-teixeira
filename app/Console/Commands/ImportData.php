@@ -43,19 +43,23 @@ class ImportData extends Command
         $files = array_sort(File::files(storage_path('dumps')), function ($file) {
             return $file->getFilename();
         });
+        $this->info('Importando dados esper um momento...');
 
         foreach ($files as $file) {
+
             if ($file->getExtension() == 'json') {
                 $filename = pathinfo($file, PATHINFO_FILENAME);
-                //$this->info("Importando opção: {$filename}");
                 $data = file_get_contents($file);
                 DB::statement("insert into options (name, meta_data) values ('$filename','$data')");
+                $option = strtoupper($filename);
+                $this->info("Opção: {$option} criada com sucesso!!");
             } else {
-                //$this->info("Importando: {$file->extension()}");
                 DB::statement("COPY {$file->getExtension()} FROM '{$file->getPathname()}' DELIMITER '*';");
+                $tabela = strtoupper($file->getExtension());
+                $this->line("Tabela: $tabela copiada com successo!!");
             }
         }
-
+        $this->info('Reiniciando as sequencias');
         DB::statement("ALTER SEQUENCE users_id_seq RESTART WITH 2669;");
         DB::statement("ALTER SEQUENCE canais_id_seq RESTART WITH 15;");
         DB::statement("ALTER SEQUENCE tags_id_seq RESTART WITH 13877;");
@@ -67,10 +71,11 @@ class ImportData extends Command
         DB::statement("ALTER SEQUENCE niveis_ensino_id_seq RESTART WITH 12;");
 
 
-        // update de canais
+        $this->info('Update dos canais');
         DB::statement("UPDATE conteudos set canal_id = 6 where is_site = false and canal_id is null;");
         DB::statement("UPDATE conteudos set canal_id = 5 where is_site = true and canal_id is null;");
         DB::statement("UPDATE canais set is_active = false where  id  IN (4,10,11,13,14,15);");
         DB::statement("UPDATE canais set name = 'Recursos Educacionais' where id = 6;");
+        $this->info('Processo finalizado com sucesso');
     }
 }

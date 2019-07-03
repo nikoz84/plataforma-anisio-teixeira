@@ -100,4 +100,29 @@ class Aplicativo extends Conteudo
 
         return "/{$slug}/aplicativo/exibir/" . $this['id'];
     }
+    /**
+     * Criar aplicativo
+     *
+     * @param [type] $request
+     * @return void
+     */
+    public static function create($request)
+    {
+        $aplicativo = new \App\Aplicativo();
+
+        $aplicativo->user_id = Auth::user()->id;
+        $aplicativo->category_id = $request->category_id;
+        $aplicativo->canal_id = 9;
+        $aplicativo->name = $request->name;
+        $aplicativo->url = $request->url;
+        $aplicativo->description = $request->description;
+        $aplicativo->is_featured = $request->is_featured;
+
+        $aplicativo->options = json_decode($request->options, true);
+        $aplicativo->tags->attach($request->tags);
+
+        $aplicativo->save();
+
+        return $aplicativo->id;
+    }
 }
