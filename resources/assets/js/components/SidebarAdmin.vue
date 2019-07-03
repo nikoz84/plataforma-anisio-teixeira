@@ -26,14 +26,11 @@
             <router-link :to=" { name:'admin', params: { slug: 'usuarios', action:'listar' }}" >
                 <a class="list-group-item">Usuários</a>
             </router-link>
+            <router-link :to=" { name:'admin', params: { slug: 'roles', action:'listar' }}" >
+                <a class="list-group-item">Roles</a>
+            </router-link>
             <router-link :to=" { name:'admin', params: { slug: 'denuncias', action:'listar' }}" >
                 <a class="list-group-item">Denúncias</a>
-            </router-link>
-            <router-link :to=" { name:'admin', params: { slug: 'usuarios', action:'alterar-senha' }}" >
-                <a class="list-group-item">Alterar senha</a>
-            </router-link>
-            <router-link :to=" { name:'admin', params: { slug: 'usuarios', action:'adicionar' }}" >
-                <a class="list-group-item">Adicionar Usuário</a>
             </router-link>
         </nav>
         

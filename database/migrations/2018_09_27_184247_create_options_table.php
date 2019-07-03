@@ -18,6 +18,9 @@ class CreateOptionsTable extends Migration
             $table->string('name');
             // meta data
             $table->jsonb('meta_data')->default('{}')->nullable();
+
+            $table->softDeletes();
+            $table->timestamps();
         });
 
         DB::statement('CREATE INDEX options_meta_data_index ON options USING GIN (meta_data jsonb_path_ops);');
@@ -30,7 +33,7 @@ class CreateOptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('options',function(Blueprint $table){
+        Schema::dropIfExists('options', function (Blueprint $table) {
             $table->dropIndex('options_meta_data_index');
         });
     }

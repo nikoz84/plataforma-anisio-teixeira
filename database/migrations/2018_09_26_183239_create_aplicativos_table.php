@@ -24,6 +24,7 @@ class CreateAplicativosTable extends Migration
             $table->jsonb('options')->default('{}')->nullable()->comment('Meta data do aplicativo');
             // campos created_at e updated_at
             $table->timestamps();
+            $table->softDeletes();
             // indice
             $table->index('id')->comment('btree index por default');
             //chaves foraneas

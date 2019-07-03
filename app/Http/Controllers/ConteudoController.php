@@ -44,17 +44,16 @@ class ConteudoController extends ApiController
             return $q->whereRaw("options->'tipo' <@  {$data}");
         });
 
-
-        $query->when($canal != 6, function ($q, $canal) {
-            return $q->where('canal_id', $canal);
-        });
-
+        if ($canal != 6) {
+            $query->when($canal, function ($q, $canal) {
+                return $q->where('canal_id', $canal);
+            });
+        }
 
         $query->when($categoria, function ($q, $categoria) {
             return $q->where('category_id', $categoria);
         });
 
-        //dd($query);
         $query->when($licencas, function ($q, $licencas) {
             return $q->whereIn('license_id', explode(',', $licencas));
         });

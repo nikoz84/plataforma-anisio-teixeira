@@ -3,8 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Denuncia extends Model
 {
-    protected $fillable= ['name','email','url','subject','message'];
+    use SoftDeletes;
+
+    protected $fillable = ['name', 'email', 'url', 'subject', 'message'];
 }

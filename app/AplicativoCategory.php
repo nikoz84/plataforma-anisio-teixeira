@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AplicativoCategory extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'aplicativo_categories';
     public $fillable = ['name'];
 }

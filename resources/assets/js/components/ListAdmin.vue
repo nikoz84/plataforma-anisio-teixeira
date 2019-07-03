@@ -4,9 +4,9 @@
         <h2>{{title}}</h2>
     </div>
       <div v-if="!isLoading" class="content">
-        <table-app :paginator="paginator"></table-app>   
+        <Table :paginator="paginator"></Table>
       </div>
-      <loader v-else></loader>
+      <Loader v-else></Loader>
   </div>
 </template>
 <script>
@@ -16,10 +16,7 @@ import { mapMutations, mapState } from "vuex";
 
 export default {
   name: "Listar",
-  components: {
-    loader: Loader,
-    "table-app": Table
-  },
+  components: { Loader, Table },
   data() {
     return {
       title: null,
@@ -62,7 +59,6 @@ export default {
     },
     async getData() {
       this.SET_IS_LOADING(true);
-
       let resp = await axios.get(`/${this.slug}`);
 
       if (resp.data.success) {

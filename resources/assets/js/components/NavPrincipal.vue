@@ -43,9 +43,16 @@
                             <router-link tag="li" to="/usuario/login" v-if="!isLogged">
                                 <a>Login</a>
                             </router-link>
+                            <router-link tag="li" 
+                                        :to=" { name:'admin', params: { slug: 'usuarios', action:'alterar-senha' }}" 
+                                        v-if="isLogged">
+                                <a class="pointer">Alterar senha</a>
+                            </router-link>
+                            <li role="separador" class="divider" v-if="isLogged"></li>
                             <li v-if="isLogged">
                                 <a class="pointer" v-on:click.prevent="sair()">Sair</a>
                             </li>
+
                         </ul>
                     </li>
                 </ul>

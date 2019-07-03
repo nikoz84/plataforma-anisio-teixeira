@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use App\Traits\FileSystemLogic;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Conteudo extends Model
 {
-    use FileSystemLogic;
+    use FileSystemLogic, SoftDeletes;
 
     protected $id = 'id';
     const IS_SITE = 'false';
@@ -147,4 +148,7 @@ class Conteudo extends Model
     {
         return DB::table('tipos')->where('id', $this['options']['tipo'])->get(['id', 'name'])->first();
     }
+
+    public function create($data)
+    { }
 }

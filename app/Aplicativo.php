@@ -5,9 +5,12 @@ namespace App;
 use App\Conteudo;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Aplicativo extends Conteudo
 {
+    use SoftDeletes;
+
     protected $table = 'aplicativos';
 
     protected $fillable = [
@@ -20,7 +23,11 @@ class Aplicativo extends Conteudo
         'is_featured',
         'options'
     ];
-    protected $appends = ['image', 'excerpt', 'url_exibir'];
+    protected $appends = [
+        'image',
+        'excerpt',
+        'url_exibir'
+    ];
     protected $dates = [
         'created_at',
         'updated_at',
@@ -29,6 +36,11 @@ class Aplicativo extends Conteudo
     protected $casts = [
         'options' => 'array',
     ];
+    /**
+     * Clase que extende de conteúdo
+     *
+     * @return void
+     */
     public static function boot()
     {
         parent::boot();
@@ -37,28 +49,51 @@ class Aplicativo extends Conteudo
             $query->where('canal_id', 9);
         });
     }
-    
+    /**
+     * Conjunto de tags do aplicativo
+     *
+     * @return void
+     */
     public function tags()
     {
         return $this->belongsToMany('App\Tag', 'aplicativo_tag', 'aplicativo_id', 'tag_id')
             ->select(['id', 'name']);
     }
+    /**
+     * Conjunto de categorias do aplicativo
+     *
+     * @return void
+     */
     public function category()
     {
         return $this->hasOne('App\AplicativoCategory', 'id', 'category_id')
             ->select(['id', 'name']);
     }
-    
+    /**
+     * Descrição abreviada
+     *
+     * @return void
+     */
     public function getExcerptAttribute()
     {
         return strip_tags(Str::words($this['description'], 30));
     }
+    /**
+     * Imagem de destaque do aplicativo
+     *
+     * @return void
+     */
     public function getImageAttribute()
     {
         $image = "{$this['id']}.jpg";
         return Storage::disk('aplicativos-educacionais')
             ->url("imagem-associada/{$image}");
     }
+    /**
+     * Cria url exibir
+     *
+     * @return void
+     */
     public function getUrlExibirAttribute()
     {
         $slug = $this->canal()->pluck('slug')->first();

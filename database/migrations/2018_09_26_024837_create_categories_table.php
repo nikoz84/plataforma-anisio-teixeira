@@ -19,7 +19,9 @@ class CreateCategoriesTable extends Migration
             $table->integer('canal_id')->nullable()->comment('Categoria do canal');
             $table->string('name', 255)->comment('Nome da categoria');
             $table->jsonb('options')->nullable()->comment('Meta dados da categoria');
+
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('canal_id')->references('id')->on('canais')->comment('chave foranea do canal');
         });

@@ -72,6 +72,8 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     Route::post('/auth/logout', 'AuthController@logout')->name('sair');
     Route::post('/auth/refresh', 'AuthController@refresh')->name('refrescar.token');
     Route::post('/auth/user', 'AuthController@getAuthUser')->name('usuario.logado');
+    /** ROLES */
+    Route::get('/roles', 'RoleController@list')->name('role.listar');
     /** USUARIOS */
     Route::get('/usuarios/search/{termo}', 'UserController@search')->name('usuario.buscar');
     Route::delete('/usuarios/{id}', 'UserController@delete')->name('usuario.apagar');

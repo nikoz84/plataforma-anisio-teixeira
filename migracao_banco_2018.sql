@@ -81,26 +81,66 @@ update tag set nometag = (concat('deletar_',nometag)) where idtag = 2475;
 update tag set nometag = (concat('deletar_',nometag)) where idtag = 10689;
 update tag set nometag = (concat('deletar_',nometag)) where idtag = 14430;
 
+
+update usuariotipo
+set nomeusuariotipo = 'super-admin'
+where idusuariotipo = 1;
+
+
+update usuariotipo
+set nomeusuariotipo = 'admin'
+where idusuariotipo = 2;
+
+
+update usuariotipo
+set nomeusuariotipo = 'coordenador'
+where idusuariotipo = 3;
+
+
+update usuariotipo
+set nomeusuariotipo = 'editor'
+where idusuariotipo = 4;
+
+
+update usuariotipo
+set nomeusuariotipo = 'convidado'
+where idusuariotipo = 5;
+
+-- EXPORTAR ROLES
+COPY( 
+	select idusuariotipo as id,
+		nomeusuariotipo as name,
+		now() as created_at,
+		null as updated_at,
+		null as deleted_at
+	from usuariotipo
+) TO '/home/niko/Documentos/db/MIGRA/final/aa.roles' WITH (FORMAT text, DELIMITER '*');
+
+
+
 -- EXPORTAR USUARIOS
-COPY (
-    select u.idusuario as id, 
-	    u.nomeusuario as name,
-	    u.email as email,	
-	    case when u.senha is null then md5('teste') else u.senha end as password,
-            jsonb_build_object('role', (select ut.nomeusuariotipo from usuariotipo as ut where ut.idusuariotipo = u.idusuariotipo),
-		'is_active', u.flativo,
-		'sexo', u.sexo,
-		'birthday', u.datanascimento,
-		'telefone', telefone,
-		'neighborhood', bairro	
-            ) as options,
-            null as remember_token,
-            null as verification_token,
-            TRUE as verified,
-            u.datacriacao as created_at,
-            u.dataatualizacao as updated_at	
-    from usuario as u  
-) TO '/home/niko/Documentos/db/MIGRA/final/a.users' WITH (FORMAT text, DELIMITER '*');
+COPY
+(select u.idusuario as id,
+	case
+		when u.idusuariotipo is null then 5
+		when u.idusuariotipo = 4 then 5
+		when u.idusuariotipo = 6 then 5
+		else u.idusuariotipo
+	end as role_id,
+	lower(u.nomeusuario) as name,
+	lower(u.email) as email,
+	case
+		when u.senha is null then md5('teste')
+		else u.senha
+	end as password,
+	jsonb_build_object('is_active', u.flativo, 'sexo', u.sexo, 'birthday', u.datanascimento, 'telefone', telefone, 'neighborhood', upper(bairro)) as options,
+	null as remember_token,
+	null as verification_token,
+	TRUE as verified,
+	u.datacriacao as created_at,
+	u.dataatualizacao as updated_at,
+	null as deleted_at
+from usuario as u) TO '/home/niko/Documentos/db/MIGRA/final/a.users' WITH (FORMAT text, DELIMITER '*');
 
 -- EXPORTAR CANAIS
 
@@ -144,7 +184,8 @@ SELECT idtag as id,
        nometag as name,
        busca as searched,
        (select now()::timestamp) as created_at,
-       dataatualizacao as updated_at
+       dataatualizacao as updated_at,
+	   null as deleted_at
 FROM tag
 ) to '/home/niko/Documentos/db/MIGRA/final/c.tags' WITH ( FORMAT TEXT, DELIMITER '*' );
 
@@ -153,7 +194,8 @@ COPY (
 select  idambientedeapoiocategoria as id,
        nomeambientedeapoiocategoria as name,
        now()::timestamp as created_at,
-       null as updated_at
+       null as updated_at,
+	   null as deleted_at
 from ambientedeapoiocategoria
 ) to '/home/niko/Documentos/db/MIGRA/final/d.aplicativo_categories' WITH (FORMAT TEXT, DELIMITER '*');
 
@@ -172,7 +214,8 @@ SELECT aa.idambientedeapoio as id,
 			'is_featured', aa.fldestaque
 		) as options, 		
 		now()::timestamp as created_at,
-		null as updated_at
+		null as updated_at,
+		null as deleted_at
 	FROM ambientedeapoio aa
 	INNER JOIN ambientedeapoiocategoria aac 
 	ON aa.idambientedeapoiocategoria = aac.idambientedeapoiocategoria
@@ -195,7 +238,8 @@ select idconteudolicenca as id,
       descricaoconteudolicenca as description, 
       siteconteudolicenca as site,
       now() as created_at,
-      now() as updated_at 
+      now() as updated_at,
+	  null as deleted_at
 from conteudolicenca	
 ) to '/home/niko/Documentos/db/MIGRA/final/g.licenses' WITH ( FORMAT TEXT, DELIMITER '*' );
 
@@ -211,7 +255,8 @@ select sc.idconteudodigitalcategoria AS id,
 	'description', sc.descricaoconteudodigitalcategoria
       ) as options,
       sc.datacriacao as created_at,
-      null as updated_at
+      null as updated_at,
+	  null as deleted_at
 from conteudodigitalcategoria AS sc
 ) TO '/home/niko/Documentos/db/MIGRA/final/h.categories' WITH ( FORMAT TEXT, DELIMITER '*' );
 
@@ -340,12 +385,34 @@ update canais set is_active = false where id IN (4,10,11,13,14,15);
 
 -- update in jsonb options
 
-select meta_data from options
-select meta_data->'marcas'->>'is_active' from options where name like '%layout%'
+select meta_data from options;
+
+select meta_data->'marcas'->>'is_active' from options where name like '%layout%';
+
 update options
 set meta_data = jsonb_set(meta_data, '{"marcas", "is_active"}', '"false"'::jsonb) 
-where name like '%layout%'
+where name like '%layout%';
 
 update canais
 set options = jsonb_set(options, '{"back_url"}', '"http://colaborativus.pat.educacao.ba.gov.br/"'::jsonb) 
-where id = 8
+where id = 8;
+
+update users
+set options = jsonb_set(options, '{"role"}', '"convidado"' :: jsonb)
+where options ->> 'role' like '%amigo da escola%';
+
+update users 
+set options = jsonb_set(options, '{"role"}', '"super-admin"' :: jsonb)
+where options ->> 'role' like '%super administrador%';
+
+update users
+set options = jsonb_set(options, '{"role"}', '"convidado"' :: jsonb)
+where options ->> 'role' like '%editor%';
+
+update users
+set options = jsonb_set(options, '{"role"}', '"convidado"' :: jsonb)
+where options ->> 'role' like '%colaborador%';
+
+update users
+set options = jsonb_set(options, '{"role"}', '"convidado"' :: jsonb)
+where options ->> 'role' is null;

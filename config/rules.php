@@ -41,17 +41,17 @@ return [
     ],
     'register' => [
         'name' => 'required|string|max:255|min:4',
-        'email' => 'required|string|max:100|unique:users,email',
+        'email' => 'required|email|string|max:100|unique:users,email',
         'password' => 'required|string|min:6|required_with:confirmation|same:confirmation',
         'confirmation' => 'required'
     ],
     'login' => [
-        'email' => 'required|string|max:150',
+        'email' => 'required|string|max:150|email',
         'password' => 'required|min:6',
     ],
     'denuncia' => [
         'name' => 'required|min:5',
-        'email' => 'required',
+        'email' => 'required|email',
         'url' => 'required',
         'subject' => 'required',
         'message' => 'required|min:50|max:300',
@@ -59,7 +59,7 @@ return [
     ],
     'faleconosco' => [
         'name' => 'required|min:5',
-        'email' => 'required',
+        'email' => 'required|email',
         'subject' => 'required',
         'message' => 'required|min:50|max:300',
         'recaptcha' => ['required', new \App\Rules\ValidRecaptcha],

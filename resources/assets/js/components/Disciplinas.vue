@@ -5,7 +5,9 @@
             <li  v-for="(disciplina, d) in disciplinas.components" :key="d">
                 <router-link :to="{ name: 'Listar', 
                             params: { slug : $route.params.slug }, 
-                            query: { categoria: $route.query.categoria, disciplina: disciplina.id }}" exact>
+                            query: { categoria: $route.query.categoria, 
+                                     componentes: disciplina.id }}" 
+                exact>
                 <a>{{ disciplina.name }}</a>
                 </router-link>
             </li>

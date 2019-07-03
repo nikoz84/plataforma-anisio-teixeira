@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Canal extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'canais';
     protected $id = 'id';
     /**
@@ -20,7 +22,7 @@ class Canal extends Model
     ];
 
     protected $hidden = ['token'];
-    
+
     protected $dates = [
         'created_at',
         'updated_at',

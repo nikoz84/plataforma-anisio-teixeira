@@ -62,14 +62,15 @@ class AplicativoController extends ApiController
         $aplicativo = $this->aplicativo;
 
         $aplicativo->user_id = Auth::user()->id;
-        $aplicativo->category_id = $this->request->get('category_id');
-        $aplicativo->canal_id = $this->request->get('canal_id', 9);
-        $aplicativo->name = $this->request->get('name');
-        $aplicativo->url = $this->request->get('url');
-        $aplicativo->description = $this->request->get('description');
-        $aplicativo->is_featured = $this->request->get('is_featured');
-        $aplicativo->options = json_decode($this->request->get('options', '{}'), true);
-        //$aplicativo->tags->attach($this->request->get('tags'));
+        $aplicativo->category_id = $this->request->category_id;
+        $aplicativo->canal_id = 9;
+        $aplicativo->name = $this->request->name;
+        $aplicativo->url = $this->request->url;
+        $aplicativo->description = $this->request->description;
+        $aplicativo->is_featured = $this->request->is_featured;
+
+        $aplicativo->options = json_decode($this->request->options, true);
+        $aplicativo->tags->attach($this->request->tags);
         $aplicativo->save();
 
         $path = $this->createFile($aplicativo->id, $this->request->file('image'));

@@ -14,12 +14,12 @@
             </router-link>
             
                 <!-- SUBCATEGORIAS -->
-                <ul class="list-unstyled list-group" v-if="category.sub_categories && category.sub_categories.length > 0" >
+                <ul class="list-unstyled" v-if="category.sub_categories && category.sub_categories.length > 0" >
                     <li v-for="(subcategory, s) in category.sub_categories" v-bind:key="s">
                         <router-link :to="{ name: 'Listar', 
                             params: { slug : $route.params.slug }, 
                             query: { categoria: subcategory.id }}" exact >
-                        <a class="list-group-item" v-text="subcategory.name"></a>
+                        <a class="" v-text="subcategory.name"></a>
                         </router-link>
                     </li>
                 </ul>
