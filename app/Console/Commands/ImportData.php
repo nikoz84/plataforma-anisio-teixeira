@@ -46,7 +46,6 @@ class ImportData extends Command
         $this->info('Importando dados esper um momento...');
 
         foreach ($files as $file) {
-
             if ($file->getExtension() == 'json') {
                 $filename = pathinfo($file, PATHINFO_FILENAME);
                 $data = file_get_contents($file);

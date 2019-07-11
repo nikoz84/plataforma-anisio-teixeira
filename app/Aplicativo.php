@@ -101,10 +101,10 @@ class Aplicativo extends Conteudo
         return "/{$slug}/aplicativo/exibir/" . $this['id'];
     }
     /**
-     * Criar aplicativo
+     * Cria aplicativo no banco de dados
      *
-     * @param [type] $request
-     * @return void
+     * @param object $request
+     * @return App\Aplicativo
      */
     public static function create($request)
     {
@@ -123,6 +123,6 @@ class Aplicativo extends Conteudo
 
         $aplicativo->save();
 
-        return $aplicativo->id;
+        return $aplicativo;
     }
 }

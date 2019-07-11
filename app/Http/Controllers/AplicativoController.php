@@ -59,14 +59,14 @@ class AplicativoController extends ApiController
         }
 
 
-        $id = $this->aplicativo::create($this->request);
+        $app = $this->aplicativo::create($this->request);
 
-        $path = $this->createFile($id, $this->request->file('image'));
+        $path = $this->createFile($app->id, $this->request->file('image'));
 
         return response()->json([
             'success' => true,
             'message' => 'Aplicativo cadastrado com sucesso',
-            'id' => $id,
+            'id' => $app->id,
             'image' => $path,
         ]);
     }
@@ -135,7 +135,7 @@ class AplicativoController extends ApiController
 
         return $this->showAsPaginator(
             $aplicativos,
-            "resultados da busca pelo termo {$termo}",
+            "Resultados da busca pelo termo: {$termo}",
             200
         );
     }

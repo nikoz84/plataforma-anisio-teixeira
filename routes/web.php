@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,8 @@ use App\Aplicativo;
 Route::get('/email', function (Request $request) {
     return new App\Mail\SendMail($request);
 });
+
+
 
 Route::get('/teste', function (Request $request) {
     $wordpres = new App\Helpers\WordpressService($request->limit, $request->page);

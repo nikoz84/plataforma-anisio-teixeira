@@ -80,10 +80,8 @@ class WordpressService
     {
         $url = $this->api . "posts/{$this->id}";
 
-        $response = Curl::to($url)
+        return Curl::to($url)
             ->asJsonResponse()
             ->get();
-
-        return $response;
     }
 }

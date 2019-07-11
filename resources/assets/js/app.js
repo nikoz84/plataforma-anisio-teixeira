@@ -3,10 +3,11 @@ import VueRouter from "vue-router";
 import routes from "./routes";
 import MainApp from "./components/MainApp";
 import Vuex from "vuex";
-//import 'es6-promise/auto';
 import store from "./store/index.js";
 import VueLazyload from "vue-lazyload";
+import infiniteScroll from "vue-infinite-scroll";
 
+Vue.use(infiniteScroll);
 Vue.use(VueLazyload, {
   preLoad: 1.3,
   error: "/img/fundo-padrao.svg",
