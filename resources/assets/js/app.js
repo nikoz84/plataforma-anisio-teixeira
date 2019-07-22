@@ -1,39 +1,30 @@
 import Vue from "vue";
+import "./bootstrap";
+import Quasar from "quasar/dist/quasar.umd.min.js";
+import "quasar/dist/quasar.ie.polyfills";
+import lang from "quasar/lang/pt-br.js";
+import materialIcons from "quasar/dist/icon-set/material-icons.umd.min.js";
+import "quasar-extras/roboto-font/roboto-font.css";
+import "quasar-extras/material-icons/material-icons.css";
 import VueRouter from "vue-router";
 import routes from "./routes";
-import MainApp from "./components/MainApp";
+import Main from "./layout/Main.vue";
 import Vuex from "vuex";
 import store from "./store/index.js";
-import VueLazyload from "vue-lazyload";
-import infiniteScroll from "vue-infinite-scroll";
 
-Vue.use(infiniteScroll);
-Vue.use(VueLazyload, {
-  preLoad: 1.3,
-  error: "/img/fundo-padrao.svg",
-  //loading: "/img/loader.svg",
-  attempt: 1,
-  // the default is ['scroll', 'wheel', 'mousewheel', 'resize', 'animationend', 'transitionend']
-  listenEvents: ["scroll"]
+Quasar.lang.set(Quasar.lang.ptBr);
+
+Vue.use(Quasar, {
+  lang,
+  iconSet: materialIcons
 });
 Vue.use(Vuex);
 Vue.use(VueRouter);
 
-require("animate.css/animate.min.css");
-require("./bootstrap");
-
 const router = new VueRouter({
   mode: "history",
-  routes,
-  //linkActiveClass: "active",
-  linkExactActiveClass: "active",
-  scrollBehavior(to, from, savedPosition) {
-    // page scroll to top for all route navigations
-    return { x: 0, y: 0 };
-  }
+  routes
 });
-
-window.Store = store;
 
 router.beforeEach((to, from, next) => {
   document.title = `Plataforma Anísio Texeira - ${to.meta.title}`;
@@ -48,7 +39,7 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
-
+/*
 axios.interceptors.response.use(
   response => {
     var status = response.status,
@@ -79,9 +70,10 @@ axios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+*/
 
 new Vue({
   router,
   store,
-  render: h => h(MainApp)
+  render: h => h(Main)
 }).$mount("#app");

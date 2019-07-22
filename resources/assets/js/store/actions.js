@@ -1,6 +1,3 @@
-import conteudoModel from "./models/conteudo";
-import { longStackSupport } from "q";
-
 const actions = {
   async getLayout({ commit }) {
     let resp = await axios("/layout");

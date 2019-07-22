@@ -22,7 +22,5 @@ mix.config.webpackConfig.output = {
 
 mix
   .js("resources/assets/js/app.js", "public/js")
-  .sass("resources/assets/sass/app.scss", "public/css", {
-    implementation: require("node-sass")
-  })
+  .stylus("resources/assets/stylus/app.styl", "public/css")
   .version();
