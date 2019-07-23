@@ -17,7 +17,7 @@
                   v-text="title">
             </div>
             <p class="q-pt-lg" v-html="item.excerpt"></p>
-            <router-link class="absolute-top-right text-subtitle2"
+            <router-link class="absolute-bottom-right text-subtitle2"
                 :to="{ name: 'ExibirConteudo', params: { slug: slug, id: item.id, action: 'exibir'}}" 
                   flat>
                 <QBtn color="secondary" style="font-weight: 900;">Saiba Mais</QBtn>

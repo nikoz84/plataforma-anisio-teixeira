@@ -6,9 +6,7 @@
           {{ canal.name }}
       </h1>
       <nav>
-        <q-tabs v-model="tab"
-            inline-label
-            class="bg-primary text-white shadow-2">
+        <q-tabs inline-label class="bg-primary text-white shadow-2">
             
             <q-route-tab name="inicio" 
                   label="INÍCIO" 
