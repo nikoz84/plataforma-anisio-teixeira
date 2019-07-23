@@ -1,9 +1,9 @@
 <template>
-    <div>
-       <q-card v-bind:id="item.id">
-          <q-card-section>
-            <q-img alt="imagem destacada" 
+       <q-card class="row q-mt-lg" v-bind:id="item.id">
+          <q-card-section class="col-4" >
+            <q-img alt="imagem destacada"
                   :src="getImage"
+                  style="height: 200px; max-width: 300px"
                   placeholder-src="/img/fundo-padrao.svg">
               <div class="absolute-bottom-right text-subtitle2">
                 {{ getTipo }}
@@ -11,28 +11,29 @@
             </q-img>
           </q-card-section>
 
-          <q-card-section>
-            <div :style="`border-bottom: 2px solid ${color}`" 
-                  class="text-h6 card-heading-inner"
+          <q-card-section class="col-8" >
+            <div :style="`border-bottom: 2px solid ${color}`"
+                  class="text-h6 card-heading-inner q-pt-md"
                   v-text="title">
             </div>
-            <p v-html="item.excerpt"></p>
+            <p class="q-pt-lg" v-html="item.excerpt"></p>
+            <q-btn  
+                :to="{ name: 'ExibirConteudo', params: { slug: slug, id: item.id, action: 'exibir'}}" 
+                  flat>
+                Saiba Mais
+            </q-btn>
           </q-card-section>
-          <q-card-actions>
-            <q-btn :to="{ name: 'ExibirConteudo', params: { slug: slug, id: item.id, action: 'exibir'}}" flat>Saiba Mais</q-btn>
-          </q-card-actions>
-        </q-card>
-    </div>
+      </q-card>
 </template>
 <script>
-import { QCard, QCardSection, QCardActions, QImg } from "quasar";
+import { QCard, QCardSection, QImg } from "quasar";
 
 export default {
   name: "SimpleCard",
   props: {
     item: Object
   },
-  components: { QCard, QCardSection, QCardActions, QImg },
+  components: { QCard, QCardSection, QImg },
   computed: {
     title() {
       return this.item.name ? this.item.name : this.item.title;

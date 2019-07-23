@@ -1,28 +1,41 @@
 <template>
   <nav>
-    <ul class="nav nav-pills">
-      <router-link v-if="canal && canal.options && canal.options.has_home" 
-                tag="li" 
-                :to="{ name: 'Inicio', params: {slug: $route.params.slug}}">
-          <a>Home</a>
-      </router-link>
-      <router-link tag="li" :to="{ name: 'Listar', params: {slug: $route.params.slug}}">
-          <a>Listar</a>
-      </router-link>
-      <router-link tag="li" :to="setUrlDenuncia">
-          <a>Denúnciar</a>
-      </router-link> 
-      <router-link tag="li" :to="setUrlFaleConosco">
-          <a>Fale Conosco</a>
-      </router-link> 
-    </ul>
+    <q-tabs
+        v-model="tab"
+        inline-label
+        class="bg-primary text-white shadow-2"
+      >
+        <q-tab name="inicio" 
+              label="INÍCIO" 
+              :to="{ name: 'Inicio', params: {slug: $route.params.slug}}"
+              v-if="canal && canal.options && canal.options.has_home"/>
+        <q-separator vertical inset />
+        <q-tab name="listar" 
+              label="Listar" 
+              :to="{ name: 'Listar', params: {slug: $route.params.slug}}"/>
+        <q-separator vertical inset />
+        <q-tab name="denunciar" 
+              label="Denúnciar"
+              :to="setUrlDenuncia" />
+        <q-separator vertical inset />
+        <q-tab name="faleconosco" 
+              label="Fale Conosco" 
+              :to="setUrlFaleConosco"/>
+    </q-tabs>
   </nav>
 </template>
 <script>
 import { mapState } from "vuex";
+import { QTabs, QTab, QSeparator } from "quasar";
 
 export default {
   name: "NavCanal",
+  components: {QTabs, QTab, QSeparator},
+  data(){
+    return {
+      tab: ""
+    }
+  },
   computed: {
     ...mapState(["canal"]),
     setUrlDenuncia() {

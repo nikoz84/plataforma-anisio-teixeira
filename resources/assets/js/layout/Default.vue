@@ -18,7 +18,7 @@
 
         <q-btn-dropdown stretch flat label="Canais">
           <q-list>
-            <q-item :to="link.slug" v-for="(link, i) in links" :key="`x.${i}`" clickable v-close-popup tabindex="0">
+            <q-item :to="`/${link.slug}`" v-for="(link, i) in links" :key="`x.${i}`" clickable v-close-popup tabindex="0">
               <q-item-section>
                 <q-item-label>{{ link.name }}</q-item-label>
               </q-item-section>
@@ -48,7 +48,7 @@
             <q-item-label>Inicio</q-item-label>
           </q-item-section>
         </q-item>
-        
+       
       </q-list>
     </q-drawer>
 
@@ -62,6 +62,7 @@
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
+import SidebarCanal from "../components/SidebarCanal.vue";
 import {
   QLayout,
   QDrawer,
@@ -93,7 +94,8 @@ export default {
     QItemLabel,
     QItem,
     QItemSection,
-    QInput
+    QInput,
+    SidebarCanal
   },
   data() {
     return {
