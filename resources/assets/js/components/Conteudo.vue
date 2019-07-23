@@ -1,8 +1,8 @@
 <template>
     <article class="row">
         <Player></Player>
-        <q-card class="panel panel-default" v-if="this.conteudo">
-            <q-card-section class="panel-body">
+        <q-card v-if="this.conteudo">
+            <q-card-section >
                 <div class="text-h6" v-text="this.conteudo.title"></div>
                 <div class="text-subtitle2">
                   <small>Usuário(a) publicador: {{this.conteudo.user.name}} </small>
@@ -28,17 +28,17 @@
             </q-card-section>
             <q-card-section class="panel-footer tag-cloud">
                 <div class="text-h6">Tags: </div>
-                <router-link :to="`/recursos-educacionais/listar/tag/${tag.id}`">
-                  <q-chip color="secondary" 
-                        text-color="white"
-                        clickable
-                        icon="local_offer"
-                        v-for="(tag,i) in this.conteudo.tags"
-                        :key="`t-${i}`"
-                        >
-                        {{tag.name}}
-                  </q-chip>
-                </router-link>
+                <q-chip color="ligth" 
+                      icon="local_offer"
+                      v-for="(tag, i) in this.conteudo.tags"
+                      :key="i"
+                      :label="tag.name"
+                      clickable
+                      @click="onClick(`/recursos-educacionais/tag/${tag.id}`)"
+                      >
+                      
+                </q-chip>
+                
             </q-card-section>
         </q-card>
     </article>
@@ -64,7 +64,7 @@ export default {
     }
   },
   methods: {
-    goTo(url){
+    onClick(url){
       this.$router.push(url);
     }
   }

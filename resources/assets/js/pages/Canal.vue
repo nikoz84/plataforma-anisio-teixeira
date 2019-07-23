@@ -19,7 +19,7 @@
             <q-separator vertical inset />
             <q-space />
             <q-route-tab name="denunciar" 
-                  label="Denúnciar"
+                  label="Denunciar"
                   :to="setUrlDenuncia" />
             <q-separator vertical inset />
             <q-route-tab name="faleconosco" 
@@ -103,18 +103,16 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-
 $downriver-800: #0f285d; /* 800 */
 
 .page-header {
-text-align: center;
+  text-align: center;
   .page-title {
     margin-top: 0;
     position: relative;
     font-size: 25px;
     color: $downriver-800;
     font-weight: 700;
-    
   }
 }
 </style>
