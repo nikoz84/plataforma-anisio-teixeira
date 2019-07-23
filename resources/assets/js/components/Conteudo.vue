@@ -25,12 +25,17 @@
             </div>
             <div class="panel-footer tag-cloud">
                 <h5>Tags: </h5>
-                <a class=""
-                    v-for="tag in this.conteudo.tags"
-                    v-bind:key="tag.id"
-                    v-bind:href="'/recursos-educacionais-abertos/listar/tag/'+ tag.id"
-                    v-text="tag.name">
-                </a>
+                <q-chip outline color="primary" 
+                      text-color="white"
+                      clickable
+                      v-for="tag in this.conteudo.tags"
+                      :key="tag.id"
+                      >
+                      <router-link :to="`/recursos-educacionais/listar/tag/${tag.id}`">
+                        <a :style="'text-decoration: none;'">{{tag.name}}</a>
+                      </router-link>
+                </q-chip>
+                
             </div>
         </div>
     </article>
@@ -38,10 +43,11 @@
 <script>
 import Player from "../components/Player.vue";
 import { mapState } from "vuex";
+import { QChip } from "quasar";
 
 export default {
   name: "Conteudo",
-  components: { Player },
+  components: { Player, QChip },
   created() {},
   computed: {
     ...mapState(["conteudo"]),
@@ -54,7 +60,11 @@ export default {
       return `background-color: ${color}`;
     }
   },
-  methods: {}
+  methods: {
+    goTo(url){
+      this.$router.push(url);
+    }
+  }
 };
 </script>
 <style scoped>

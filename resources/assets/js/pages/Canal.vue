@@ -19,6 +19,7 @@
                   label="Listar" 
                   :to="{ name: 'Listar', params: {slug: $route.params.slug}}"/>
             <q-separator vertical inset />
+            <q-space />
             <q-route-tab name="denunciar" 
                   label="Denúnciar"
                   :to="setUrlDenuncia" />
@@ -41,17 +42,12 @@
   
 </template>
 <script>
-import { QTabs, QRouteTab, QSeparator } from "quasar";
+import { QTabs, QRouteTab, QSeparator, QSpace } from "quasar";
 import { mapState, mapActions } from "vuex";
 
 export default {
   name: "canal",
-  components: { QTabs, QRouteTab, QSeparator },
-  data(){
-    return {
-      tab: ""
-    }
-  },
+  components: { QTabs, QRouteTab, QSeparator, QSpace },
   mounted() {
     this.getCanalBySlug(this.$route.params.slug).then(() => {
       this.fetchData();

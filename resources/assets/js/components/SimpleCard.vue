@@ -12,28 +12,29 @@
           </q-card-section>
 
           <q-card-section class="col-8" >
-            <div :style="`border-bottom: 2px solid ${color}`"
+            <div :style="`border-bottom: 2px solid ${color};`"
                   class="text-h6 card-heading-inner q-pt-md"
                   v-text="title">
             </div>
             <p class="q-pt-lg" v-html="item.excerpt"></p>
-            <q-btn  
+            <router-link class="absolute-top-right text-subtitle2"
                 :to="{ name: 'ExibirConteudo', params: { slug: slug, id: item.id, action: 'exibir'}}" 
                   flat>
-                Saiba Mais
-            </q-btn>
+                <QBtn color="secondary" style="font-weight: 900;">Saiba Mais</QBtn>
+            </router-link>
           </q-card-section>
+          
       </q-card>
 </template>
 <script>
-import { QCard, QCardSection, QImg } from "quasar";
+import { QCard, QCardSection, QBtn, QImg } from "quasar";
 
 export default {
   name: "SimpleCard",
   props: {
     item: Object
   },
-  components: { QCard, QCardSection, QImg },
+  components: { QCard, QCardSection, QBtn, QImg },
   computed: {
     title() {
       return this.item.name ? this.item.name : this.item.title;

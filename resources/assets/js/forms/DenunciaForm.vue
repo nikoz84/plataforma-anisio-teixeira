@@ -1,19 +1,26 @@
 <template>
-  <div class="bg-img">
+  <div>
     <div class="row">
-      <figure class="col-md-6 foto">
-        <a href="/galeria" class="gallery-link">Visite nossa galeria de fotos</a>
+      <figure class="col-4">
+        <q-img alt="imagem destacada"
+                  :src="'/storage/conteudos/conteudos-digitais/galeria/10.jpg'"
+                  style="width: 100%;"
+                  placeholder-src="/img/fundo-padrao.svg">
+              <div class="absolute-bottom-right text-subtitle2">
+                <router-link to="/galeria" >Visite nossa galeria de fotos</router-link>
+              </div>
+            </q-img>
       </figure>
-      <form v-on:submit.prevent="send()">
-        <article class="col-md-6">
-          <div class="panel panel-default">
-            <div class="panel-heading">
+      <article class="col-8">
+        <form v-on:submit.prevent="send()">
+          <div>
+            <q-card-section class="panel-heading">
               <h4 class="panel-title text-center">
                 Denuncie
               </h4>
-            </div>
+            </q-card-section>
             <div class="panel-body">
-              <section class="col-md-6">
+              <section class="">
                 <p>Este espaço serve para você denunciar qualquer coisa que você considere imprópria,
                     basta fornecer o endereço da página onde esse conteúdo se localiza e uma mensagem
                     descrevendo do que se trata e por que você acha que essa página merece a denuncia.
@@ -68,8 +75,8 @@
               </section>
             </div> <!-- panel body fim -->
           </div> <!-- panel fim -->
+          </form>
         </article>
-      </form>
     </div>
   </div>
 </template>
@@ -78,10 +85,11 @@
 import Loader from "../components/Loader.vue";
 import ShowErrors from "../components/ShowErrors.vue";
 import { mapState, mapMutations } from "vuex";
+import { QCard, QCardSection, QImg } from "quasar";
 
 export default {
   name: "DenunciaForm",
-  components: { Loader, ShowErrors },
+  components: { Loader, ShowErrors, QCard, QCardSection, QImg },
   data() {
     return {
       name: "",

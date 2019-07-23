@@ -55,7 +55,7 @@
     <q-page-container>
       <router-view />
        <q-page-scroller position="bottom">
-        <q-btn fab icon="keyboard_arrow_up" color="red" />
+        <q-btn fab icon="keyboard_arrow_up" color="primary" />
       </q-page-scroller>
     </q-page-container>
   </q-layout>
@@ -76,11 +76,13 @@ import {
   QItemLabel,
   QItem,
   QItemSection,
-  QInput
+  QInput,
+  GoBack
 } from "quasar";
 
 export default {
   name: "Default",
+  directives:{ GoBack },
   componentes: {
     QLayout,
     QDrawer,
