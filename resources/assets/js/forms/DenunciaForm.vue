@@ -11,7 +11,7 @@
         </p>
       </q-card-section>
       <q-card-section>
-        <q-form @submit.prevent="onSubmit($event)" class="q-gutter-md" ref="denunciaForm">
+        <q-form @submit.prevent="onSubmit()" class="q-gutter-md" ref="denunciaForm">
           <q-input filled v-model="name" label="Seu Nome *" hint="Nome" 
                   bottom-slots :error="errors.name && errors.name.length > 0">
             <template v-slot:error>
@@ -39,10 +39,10 @@
           </q-input>
           <div>
             <p>Código de segurança:</p>
-            <div class="g-recaptcha" :data-sitekey="siteKey" bottom-slots :error="errors.recaptcha && errors.recaptcha > 0"></div>
-            <template v-slot:error>
+            <div class="g-recaptcha" :data-sitekey="siteKey"></div>
+            <div bottom-slots :error="errors.recaptcha && errors.recaptcha > 0">
               <ShowErrors :errors="errors.recaptcha"></ShowErrors>
-            </template>
+            </div>
           </div>
           
           <div>
@@ -106,24 +106,20 @@ export default {
         recaptcha: grecaptcha.getResponse()
       };
 
-      console.log(data);
-
       let resp = await axios.post("/denuncias", data);
-      console.log(resp);
-
-      if (resp.data.success && res.status == 200) {
+      if (resp.data.success && resp.status == 200) {
         this.$q.loading.hide();
         localStorage.removeItem("urlDenuncia");
+        this.$router.push("/");
         this.$q.notify({
           color: "positive",
           textColor: "white",
           icon: "done",
           message: "Enviado com sucesso!"
         });
-        this.SET_IS_ERROR(false);
       } else {
         this.SET_ERRORS(resp.data.errors);
-        this.SET_IS_ERROR(true);
+        grecaptcha.reset();
         this.$q.loading.hide();
         this.$q.notify({
           color: "negative",
