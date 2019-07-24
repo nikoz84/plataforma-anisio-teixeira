@@ -1,6 +1,6 @@
 <template>
        <q-card class="row q-mt-lg" v-bind:id="item.id">
-          <q-card-section class="col-4" >
+          <q-card-section class="col-3" >
             <q-img alt="imagem destacada"
                   :src="getImage"
                   style="height: 200px; max-width: 300px"
@@ -11,17 +11,22 @@
             </q-img>
           </q-card-section>
 
-          <q-card-section class="col-8" >
+          <q-card-section class="col-9" >
             <div :style="`border-bottom: 2px solid ${color};`"
-                  class="text-h6 card-heading-inner q-pt-md"
-                  v-text="title">
+                  class="text-h6 card-heading-inner q-pt-md cursor-pointer"
+                  >
+                <router-link tag="div" 
+                      :to="{ name: 'ExibirConteudo', params: { slug: slug, id: item.id, action: 'exibir'}}" 
+                      v-html="title"/>
             </div>
             <p class="q-pt-lg" v-html="item.excerpt"></p>
-            <router-link class="absolute-bottom-right text-subtitle2"
-                :to="{ name: 'ExibirConteudo', params: { slug: slug, id: item.id, action: 'exibir'}}" 
-                  flat>
-                <QBtn color="secondary" style="font-weight: 900;">Saiba Mais</QBtn>
-            </router-link>
+            
+          <QBtn :to="{ name: 'ExibirConteudo', params: { slug: slug, id: item.id, action: 'exibir'}}" 
+                  color="primary" 
+                style="font-weight: 900;" flat>
+                Saiba Mais
+            </QBtn>
+            
           </q-card-section>
           
       </q-card>
