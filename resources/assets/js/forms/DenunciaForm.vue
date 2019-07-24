@@ -11,16 +11,40 @@
         </p>
       </q-card-section>
       <q-card-section>
-        <q-form @submit.prevent="onSubmit" class="q-gutter-md">
-          <q-input filled v-model="name" label="Seu Nome *" hint="Nome">
+        <q-form @submit.prevent="onSubmit($event)" class="q-gutter-md" ref="denunciaForm">
+          <q-input filled v-model="name" label="Seu Nome *" hint="Nome" 
+                  bottom-slots :error="errors.name && errors.name.length > 0">
             <template v-slot:error>
-              Please use maximum 3 characters.
+              <ShowErrors :errors="errors.name"></ShowErrors>
             </template>
           </q-input>
-          <q-input v-model="email" label="example@dominio.com *" filled type="email" hint="E-mail" />
-          <q-input filled v-model="subject" label="Assunto da mensagem *" hint="Assunto"/>
-          <q-input v-model="message" filled type="textarea" />
-          <div class="g-recaptcha" :data-sitekey="siteKey"></div>
+          <q-input v-model="email" label="example@dominio.com *" filled type="email" hint="E-mail"
+                  bottom-slots :error="errors.email && errors.email.length > 0">
+            <template v-slot:error>
+              <ShowErrors :errors="errors.email"></ShowErrors>
+            </template>
+          </q-input>
+          <q-input filled v-model="subject" label="Assunto da mensagem *" hint="Assunto" 
+                  bottom-slots :error="errors.subject && errors.subject.length > 0">
+            <template v-slot:error>
+              <ShowErrors :errors="errors.subject"></ShowErrors>
+            </template>
+          </q-input>
+
+          <q-input v-model="message" filled type="textarea" 
+                  bottom-slots :error="errors.message && errors.message.length > 0">
+            <template v-slot:error>
+              <ShowErrors :errors="errors.message"></ShowErrors>
+            </template>
+          </q-input>
+          <div>
+            <p>Código de segurança:</p>
+            <div class="g-recaptcha" :data-sitekey="siteKey" bottom-slots :error="errors.recaptcha && errors.recaptcha > 0"></div>
+            <template v-slot:error>
+              <ShowErrors :errors="errors.recaptcha"></ShowErrors>
+            </template>
+          </div>
+          
           <div>
             <q-btn label="Enviar" type="submit" color="primary"/>
           </div>
@@ -68,9 +92,9 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["SET_IS_LOADING", "SET_ERRORS", "SET_IS_ERROR"]),
-    async onSubmit() {
-      this.SET_IS_LOADING(true);
+    ...mapMutations(["SET_ERRORS", "SET_IS_ERROR"]),
+    async onSubmit(e) {
+      this.$q.loading.show();
 
       let data = {
         name: this.name,
@@ -81,20 +105,33 @@ export default {
         action: location.href,
         recaptcha: grecaptcha.getResponse()
       };
+
       console.log(data);
 
       let resp = await axios.post("/denuncias", data);
       console.log(resp);
-      /*  
+
       if (resp.data.success && res.status == 200) {
-        this.SET_IS_LOADING(false);
+        this.$q.loading.hide();
         localStorage.removeItem("urlDenuncia");
+        this.$q.notify({
+          color: "positive",
+          textColor: "white",
+          icon: "done",
+          message: "Enviado com sucesso!"
+        });
+        this.SET_IS_ERROR(false);
       } else {
         this.SET_ERRORS(resp.data.errors);
         this.SET_IS_ERROR(true);
-        this.SET_IS_LOADING(false);
+        this.$q.loading.hide();
+        this.$q.notify({
+          color: "negative",
+          textColor: "white",
+          icon: "error",
+          message: "Ups! Ouve um problema."
+        });
       }
-      */
     }
   }
 };

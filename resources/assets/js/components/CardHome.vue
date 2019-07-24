@@ -1,26 +1,36 @@
 <template>
-  <div class="row">
+  <div >
     <header class="page-header">
-      <h2 class="page-title" v-text="data.title"></h2>
+      <div class="text-h5" v-text="data.title"></div>
     </header>
-    <section>
-      <article class="col-sm-6" v-for="(item, i) in data.items" :key="i">
+    <article>
+      <c-card class="" v-for="(item, i) in data.items" :key="i">
         <figure class="card-container">
-          <img v-lazy="item.image" :src="item.image">
-          <caption class="card-content">
-            <a :href="item.url_exibir">
-              <h2>{{ item.title ? item.title : item.name }}</h2>
-            </a>
-          </caption>
+          <q-img alt="imagem destacada"
+                  :src="item.image"
+                  style="height: 200px; max-width: 300px"
+                  placeholder-src="/img/fundo-padrao.svg">
+              <caption class="absolute-bottom-right text-subtitle2">
+                <a :href="item.url_exibir">
+                  <h2>{{ item.title ? item.title : item.name }}</h2>
+                </a>
+              </caption>
+          </q-img>
         </figure>
-      </article>
-    </section>
+      </c-card>
+    </article>
 </div>
 </template>
 <script>
+import { QImg, QCard } from "quasar";
+
 export default {
   name: "CardHome",
-  props: ["data"]
+  props: ["data"],
+  components:{ QImg, QCard },
+  created(){
+    console.log(this.data)
+  }
 };
 </script>
 <style lang="scss" scoped>

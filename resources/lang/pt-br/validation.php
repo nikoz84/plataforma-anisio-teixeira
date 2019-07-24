@@ -114,6 +114,7 @@ return [
         'title' => 'título',
         'description' => 'descrição',
         'name' => 'nome',
+        'message' => 'mensagem',
         'options' => 'opções',
         'email' => 'e-mail',
         'source' => 'fonte',

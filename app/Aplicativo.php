@@ -106,6 +106,7 @@ class Aplicativo extends Conteudo
      * @param object $request
      * @return App\Aplicativo
      */
+     /*
     public static function create($request)
     {
         $aplicativo = new \App\Aplicativo();
@@ -125,4 +126,5 @@ class Aplicativo extends Conteudo
 
         return $aplicativo;
     }
+    */
 }
