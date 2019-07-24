@@ -9,13 +9,20 @@
         Próximo 
       </a>
     </small>
-    <section v-for="(item, i) in paginator.data" :key="i">
-            <SimpleCard v-bind:item="item"></SimpleCard>
-    </section>
+    <q-infinite-scroll @load="goToPage(paginator.next_page_url)" :offset="250" v-if="infiniteSrollData">
+      <section v-for="(item, i) in infiniteSrollData" :key="i">
+              <SimpleCard v-bind:item="item"></SimpleCard>
+      </section>
+      <template v-slot:loading>
+        <div class="row justify-center q-my-md">
+          <q-spinner-dots color="primary" size="60px" />
+        </div>
+      </template>
+    </q-infinite-scroll>
     <div class="jumbotron text-center" v-if="paginator.total == 0">
         Sem informações
     </div>
-    <nav aria-label="paginador de resultados">
+    <!--nav aria-label="paginador de resultados">
           <section class="jumbotron" v-if="paginator.total == 0">
              <h2>Sem Resultados</h2>
           </section>
@@ -31,28 +38,44 @@
                   </a>
               </li>
           </ul>
-      </nav>
+      </!--nav -->
   </div>
 </template>
 <script>
+import { QInfiniteScroll, QSpinnerDots } from "quasar";
 import { mapState, mapMutations } from "vuex";
 import SimpleCard from "./SimpleCard.vue";
 
 export default {
   name: "Paginator",
-  components: { SimpleCard },
+  data() {
+    return {
+      infiniteSrollData: []
+    };
+  },
+  components: { QInfiniteScroll, QSpinnerDots, SimpleCard },
+  mounted() {
+    this.infiniteSrollData = this.paginator.data;
+  },
   computed: {
-    ...mapState(["paginator"]),
+    ...mapState(["paginator"])
   },
   methods: {
     ...mapMutations(["SET_PAGINATOR"]),
     async goToPage(page) {
-      if(!page){
-        return
+      if (!page) {
+        return;
       }
+      console.log(page);
       let resp = await axios.get(page);
-      console.log(resp.data)
       await this.SET_PAGINATOR(resp.data.paginator);
+      /*
+      
+      
+      console.log(resp.data);
+      this.infiniteSrollData.join(resp.data.paginator.data);
+      console.log(this.infiniteSrollData);
+      */
     }
   }
 };

@@ -1,22 +1,8 @@
 <template>
   <article>
-      <div class="row">
-        <q-parallax src="/storage/conteudos/conteudos-digitais/galeria/1.jpg" style="max-height:50vh;">
-          <template v-slot:content="scope">
-            <div class="absolute-bottom-rigth column items-center">
-              <div class="text-h6 text-white text-center">
-                <router-link tag="div" to="/galeria" style="background-color: hsla(218, 84%, 20%, 0.8); padding: 15px;cursor: pointer;">
-                  <q-icon name="photo" class="cursor-pointer"/>
-                  Visite nossa galeria de imagens
-                </router-link>
-              </div>
-            </div>
-          </template>
-        </q-parallax>
-      </div>
+      <IntroParallax/>
       <div class="row q-pa-md">
-        <div class="col-lg-3"></div>
-        <q-card class="col-lg-6">
+        <q-card class="offset-md-3 col-md-6">
           <q-card-section>
             <div class="text-center text-h5">
               Denuncie
@@ -75,6 +61,7 @@
 
 <script>
 import Loader from "../components/Loader.vue";
+import IntroParallax from "../components/IntroParallax.vue";
 import ShowErrors from "../components/ShowErrors.vue";
 import { mapState, mapMutations } from "vuex";
 import {
@@ -96,7 +83,7 @@ export default {
     QCardSection,
     QForm,
     QInput,
-    QParallax,
+    IntroParallax,
     QImg,
     QSeparator
   },
@@ -122,7 +109,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["errors", "isLoading", "isError", "viewport"]),
+    ...mapState(["errors"]),
 
     getUrl() {
       return localStorage.urlDenuncia;
@@ -146,6 +133,7 @@ export default {
       let resp = await axios.post("/denuncias", data);
       if (resp.data.success && resp.status == 200) {
         this.$q.loading.hide();
+        this.SET_ERRORS([]);
         localStorage.removeItem("urlDenuncia");
         this.$router.push("/");
         this.$q.notify({

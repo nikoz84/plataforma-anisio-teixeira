@@ -34,7 +34,7 @@
                       :key="i"
                       :label="tag.name"
                       clickable
-                      @click="onClick(`/recursos-educacionais/tag/${tag.id}`)"
+                      @click="onClick(`/recursos-educacionais/listar/tag/${tag.id}`)"
                       >
                       
                 </q-chip>
@@ -50,7 +50,7 @@ import { QCard, QCardSection, QSeparator, QChip } from "quasar";
 
 export default {
   name: "Conteudo",
-  components: { QCard, QCardSection,QSeparator, Player, QChip },
+  components: { QCard, QCardSection, QSeparator, Player, QChip },
   created() {},
   computed: {
     ...mapState(["conteudo"]),
@@ -64,7 +64,7 @@ export default {
     }
   },
   methods: {
-    onClick(url){
+    onClick(url) {
       this.$router.push(url);
     }
   }

@@ -1,25 +1,12 @@
 <template>
   <article>
-     <div class="row">
-      <q-parallax src="/storage/conteudos/conteudos-digitais/galeria/2.jpg" style="max-height:50vh;">
-        <template v-slot:content="scope">
-          <div class="absolute-bottom-rigth column items-center">
-            <div class="text-h6 text-white text-center">
-              <router-link tag="div" to="/galeria" style="background-color: hsla(218, 84%, 20%, 0.8); padding: 15px;cursor: pointer;">
-                <q-icon name="photo" class="cursor-pointer"/>
-                Visite nossa galeria de imagens
-              </router-link>
-            </div>
-          </div>
-        </template>
-      </q-parallax>
-    </div>
+     <IntroParallax/>
     <div class="row">
-      <div>
-        <q-card>
+        <q-card class="offset-md-4 col-md-4">
             <q-card-section >
                 <div class="text-center text-h5">Faça seu Login</div>
             </q-card-section>
+            <q-separator inset />
             <q-card-section>
                 <q-form @submit.prevent="onSubmit()" class="q-gutter-md" ref="loginForm">
                   <q-input filled v-model="email" label="Seu E-mail *" hint="E-mail" type="email"
@@ -41,13 +28,12 @@
                       <ShowErrors :errors="errors.password"></ShowErrors>
                     </template>
                   </q-input>
- 
-                        
-                    
-                    <button type="submit" class="btn btn-default btn-block">Login</button>
+                   <div>
+                     <q-btn class="full-width" label="Entrar" type="submit" color="primary"/>
+                   </div>
                 </q-form>
                 
-                <div class="text-center links">
+                <div class="text-center q-mt-lg">
                   <router-link to="/usuario/recuperar-senha">
                     Recuperar senha
                   </router-link> |
@@ -57,24 +43,25 @@
                 </div>
             </q-card-section>
         </q-card>
-      </div>
     </div>
   </article>
 </template>
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
-import { QParallax, QCard, QCardSection, QInput, QForm } from "quasar";
+import { QCard, QCardSection, QInput, QForm, QImg, QSeparator } from "quasar";
 import ShowErrors from "../components/ShowErrors.vue";
+import IntroParallax from "../components/IntroParallax.vue";
 
 export default {
   name: "LoginForm",
   components: {
-    QParallax,
     QCard,
     QCardSection,
     ShowErrors,
     QForm,
-    QInput
+    QInput,
+    QImg,
+    IntroParallax
   },
   data() {
     return {
@@ -93,21 +80,51 @@ export default {
   },
   methods: {
     ...mapActions(["login"]),
-    entrar() {
+    ...mapMutations(["SET_ERRORS", "SET_LOGIN_USER"]),
+    async onSubmit() {
+      this.$q.loading.show();
       let data = { email: this.email, password: this.password };
+      let resp = await axios.post("/auth/login", data);
 
+      if (resp.data && resp.data.success) {
+        this.$q.loading.hide();
+        localStorage.setItem("token", resp.data.metadata.token.access_token);
+        this.docodePayloadToken();
+        this.SET_ERRORS([]);
+        this.SET_LOGIN_USER(true);
+        this.$router.push("/admin/analitycs/listar");
+        this.$q.notify({
+          color: "positive",
+          textColor: "white",
+          icon: "done",
+          message: `${resp.data.message} ${localStorage.username}!!`
+        });
+      } else {
+        this.SET_ERRORS(resp.data.errors);
+        this.$q.loading.hide();
+
+        this.$q.notify({
+          color: "negative",
+          textColor: "white",
+          icon: "error",
+          message: resp.data.message
+        });
+      }
+      console.log(resp);
+      /*
       this.login(data).then(() => {
         if (this.isLogged) {
-          this.docodePayloadToken();
+          
           this.$router.push({
             name: "admin",
             params: { slug: "analytics", action: "listar" }
           });
+          this.$q.loading.hide();
+        } else {
+          this.$q.loading.hide();
         }
-      });
-    },
-    inputErrors(attr) {
-      return getInputError(this.errors, attr);
+      })
+      */
     },
     docodePayloadToken() {
       const base64Url = localStorage.token.split(".")[1];
@@ -119,48 +136,3 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
-$break-small: 780px;
-$break-large: 781px;
-$break-extra-large: 1200px;
-
-.form-image {
-  display: block;
-  min-height: 100vh;
-  padding: 0;
-  background: url("/storage/conteudos/conteudos-digitais/galeria/2.jpg")
-    no-repeat bottom center scroll;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  -o-background-size: cover;
-
-  .bottom-0 {
-    @media screen and (max-width: $break-small) {
-      position: absolute;
-      left: 60px;
-      width: 60vh;
-      margin-top: 50px;
-    }
-    @media screen and (min-width: $break-large) {
-      position: absolute;
-      bottom: 0px;
-      right: 5px;
-      min-width: 360px;
-    }
-    @media screen and (min-width: $break-extra-large) {
-      position: absolute;
-      bottom: 0px;
-      right: 15px;
-      min-width: 420px;
-    }
-  }
-  form {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-}
-.links {
-  padding-top: 15px;
-}
-</style>

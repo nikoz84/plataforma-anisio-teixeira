@@ -1,27 +1,43 @@
 <template>
-    <section>
-        <header>
-            <h2 class="text-capitalize text-center" style="margin-bottom: 1.5rem !important;">
+    <section class="row">
+        <header class="col-12">
+            <h2 class="text-center" style="margin-bottom: 1.5rem !important;">
                 {{title}}
             </h2>
         </header>
-        <section class="masonry bordered"> 
-            <article class="brick" v-for="(img, i) in images" :key="i">
-                <img v-lazy="img" :src="img" class="img-responsive"
-                alt="">
-                
+        <section class="col-12">
+          <div class="masonry bordered">
+            <article class="q-gutter-xs q-mt-xs img" v-for="(img, i) in images" :key="i">
+                <q-img :src="img" :placeholder-img="'/img/fundo-padrao.svg'" alt="Imagem da galeria" @click="fullWidth = true"/>
             </article>
+          </div>
         </section>
+        
+        <q-dialog v-model="fullWidth" full-width>
+          <q-card dark class="bg-grey-9">
+            <q-card-section>
+              sdsdsdf
+            </q-card-section>
+    
+            <q-card-actions align="right">
+              <q-btn flat label="FECHAR" v-close-popup ></q-btn>
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
     </section>
     
 </template>
 <script>
+import { QImg, QDialog, QCard, QCardSection, QCardActions } from "quasar";
+
 export default {
   name: "Gallery",
+  components: { QImg, QDialog, QCard, QCardSection, QCardActions },
   data() {
     return {
       images: [],
-      title: ""
+      title: "",
+      fullWidth: true
     };
   },
   created() {
@@ -35,49 +51,25 @@ export default {
           this.title = resp.data.message;
         }
       });
+    },
+    openModal(img) {
+      console.log(img);
+      let message = `<img src="${img}"/>`;
     }
   }
 };
 </script>
-<style lang="scss" scoped>
-/* Masonry grid */
-.masonry {
-  transition: all 0.5s ease-in-out;
-  column-gap: 30px;
-  padding-left: 30px;
-  padding-right: 30px;
-  column-fill: initial;
-  .brick {
-    margin-bottom: 30px;
-    display: inline-block; /* Fix the misalignment of items */
-    vertical-align: top; /* Keep the item on the very top */
-  }
-  .brick img {
-    transition: all 0.5s ease-in-out;
-    backface-visibility: hidden; /* Remove Image flickering on hover */
-    &:hover {
-      opacity: 0.75;
-      cursor: pointer;
-    }
-  }
-}
-
+<style lang="stylus" scoped>
 /* Bordered masonry */
 .masonry.bordered {
   column-rule: 1px solid #eee;
   column-gap: 50px;
-  .brick {
-    padding-bottom: 25px;
-    margin-bottom: 25px;
-    border-bottom: 1px solid #eee;
-  }
-}
 
-/* Gutterless masonry */
-.masonry.gutterless {
-  column-gap: 0;
-  .brick {
-    margin-bottom: 0;
+  .img {
+    &:hover {
+      opacity: 0.75;
+      cursor: pointer;
+    }
   }
 }
 
@@ -90,14 +82,6 @@ export default {
 
 /* Masonry on big screens */
 @media only screen and (min-width: 1024px) {
-  .desc {
-    font-size: 1.25em;
-  }
-
-  .intro {
-    letter-spacing: 1px;
-  }
-
   .masonry {
     column-count: 3;
   }
