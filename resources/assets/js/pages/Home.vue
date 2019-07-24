@@ -2,20 +2,42 @@
   <section>
     <!--SideBarHome/-->
     <article class="row justify-between">
-      <q-parallax src="/storage/conteudos/slider/banner-blog.jpg" style="min-height:100vh;">
-        <div class="absolute-bottom text-subtitle2"> 
-            <h1 class="text-secondary">Plataforma Anísio Teixeira 3.0</h1>
-        </div>
+      <q-parallax style="min-height:100vh;">
+        <template v-slot:media>
+          <img src="/storage/conteudos/slider/banner-blog.jpg">
+        </template>
+
+        <template v-slot:content="scope">
+          <div class="absolute column items-center"
+            :style="{ opacity: 0.45 + (1 - scope.percentScrolled) * 0.55, top: (scope.percentScrolled * 60) + '%', left: 0, right: 0 }"
+          >
+            <img src="/logo.svg" style="width: 150px; height: 150px">
+            <div class="text-h3 text-primary text-center">Plataforma Anísio Teixeira</div>
+            <div class="text-h6 text-dark text-center">
+              v3.0.0
+            </div>
+          </div>
+        </template>
       </q-parallax>
     </article>
     <article class="row justify-between">
       <q-parallax src="/storage/conteudos/slider/andressa-falcc3a3o.jpg" style="min-height:100vh;">
-        <h1 class="text-white"> DESTAQUES </h1>
+        <template v-slot:content="scope">
+          <div class="absolute column items-center">
+            <img src="/logo.svg" style="width: 150px; height: 150px">
+            <div class="text-h3 text-primary text-center">Destaque do Blog</div>
+          </div>
+        </template>
       </q-parallax>
     </article>
     <article class="row justify-between">
-      <q-parallax src="/storage/conteudos/slider/andressa-falcc3a3o.jpg" style="min-height:100vh;">
-        <h1 class="text-white"> TEXTO </h1>
+      <q-parallax src="/storage/conteudos/conteudos-digitais/galeria/4.jpg" style="min-height:100vh;">
+        <template v-slot:content="scope">
+          <div class="absolute column items-center">
+            <img src="/logo.svg" style="width: 150px; height: 150px">
+            <div class="text-h3 text-primary text-center">Outro destaque da Plataforma</div>
+          </div>
+        </template>
       </q-parallax>
     </article>
 

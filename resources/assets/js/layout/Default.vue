@@ -11,7 +11,7 @@
 
         <q-btn-dropdown stretch flat label="Canais">
           <q-list>
-            <q-item :to="`/${link.slug}`" v-for="(link, i) in links" :key="`x.${i}`" clickable v-close-popup tabindex="0">
+            <q-item :to="`/${link.slug}/listar`" v-for="(link, i) in links" :key="`x.${i}`" clickable v-close-popup tabindex="0">
               <q-item-section>
                 <q-item-label>{{ link.name }}</q-item-label>
               </q-item-section>
@@ -94,7 +94,7 @@ import {
 
 export default {
   name: "Default",
-  directives:{ GoBack },
+  directives: { GoBack },
   componentes: {
     QLayout,
     QDrawer,
@@ -117,14 +117,14 @@ export default {
       termSearch: ""
     };
   },
-  created(){
+  created() {
     this.getLayout();
   },
-  computed:{
-    ...mapState(["isLogged", "links", "canal"]),
+  computed: {
+    ...mapState(["isLogged", "links", "canal"])
   },
-  methods:{
-    ...mapActions(["getLayout","logout"]),
+  methods: {
+    ...mapActions(["getLayout", "logout"]),
     sair() {
       this.logout().then(() => {
         if (!this.isLogged) {
