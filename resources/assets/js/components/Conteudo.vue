@@ -1,47 +1,56 @@
 <template>
     <article class="row">
         <Player></Player>
-        <div class="panel panel-default" v-if="this.conteudo">
-            <div class="panel-body">
-                <h2 v-text="this.conteudo.title"></h2>
-                <small></small>
+        <q-card v-if="this.conteudo">
+            <q-card-section >
+                <div class="text-h6" v-text="this.conteudo.title"></div>
+                <div class="text-subtitle2">
+                  <small>Usuário(a) publicador: {{this.conteudo.user.name}} </small>
+                </div>
                 <div class="break-word" v-html="this.conteudo.description"></div>
-                <hr class="line">
+                
                 <span class="label label-default" v-bind:style="backgroundColor"> Fonte: </span>
                     <i class="i-list break-word">{{ this.conteudo.source }}</i>
-                <hr class="line">
+                
                 <span class="label label-default" v-bind:style="backgroundColor"> Autores: </span>
                 <i class="i-list break-word" v-for="(author,i) in splitAuthors" v-bind:key="i" v-text="author"></i>
-                <hr class="line">
+                
                 <span class="label label-default" v-bind:style="backgroundColor"> Componentes: </span>
                 <i class="i-list break-word"
                     v-for="(componente) in this.conteudo.componentes"
                     v-bind:key="componente.id"
                     v-text="componente.name"
                     ></i>
-                <hr class="line">
+                
                 <span class="label label-default" v-bind:style="backgroundColor"> Licença: </span>
                 <i class="i-list break-word" v-if="this.conteudo.license" v-text="this.conteudo.license.name"></i>
-            </div>
-            <div class="panel-footer tag-cloud">
-                <h5>Tags: </h5>
-                <a class=""
-                    v-for="tag in this.conteudo.tags"
-                    v-bind:key="tag.id"
-                    v-bind:href="'/recursos-educacionais-abertos/listar/tag/'+ tag.id"
-                    v-text="tag.name">
-                </a>
-            </div>
-        </div>
+
+            </q-card-section>
+            <q-card-section class="panel-footer tag-cloud">
+                <div class="text-h6">Tags: </div>
+                <q-chip color="ligth" 
+                      icon="local_offer"
+                      v-for="(tag, i) in this.conteudo.tags"
+                      :key="i"
+                      :label="tag.name"
+                      clickable
+                      @click="onClick(`/recursos-educacionais/tag/${tag.id}`)"
+                      >
+                      
+                </q-chip>
+                
+            </q-card-section>
+        </q-card>
     </article>
 </template>
 <script>
 import Player from "../components/Player.vue";
 import { mapState } from "vuex";
+import { QCard, QCardSection, QSeparator, QChip } from "quasar";
 
 export default {
   name: "Conteudo",
-  components: { Player },
+  components: { QCard, QCardSection,QSeparator, Player, QChip },
   created() {},
   computed: {
     ...mapState(["conteudo"]),
@@ -54,7 +63,11 @@ export default {
       return `background-color: ${color}`;
     }
   },
-  methods: {}
+  methods: {
+    onClick(url){
+      this.$router.push(url);
+    }
+  }
 };
 </script>
 <style scoped>

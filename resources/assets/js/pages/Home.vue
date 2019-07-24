@@ -1,7 +1,7 @@
 <template>
   <section class="row">
-    <!-- SideBarHome class="col-md-3"></!-->
-asdasdasd
+    <!--SideBarHome/-->
+    <CardHome :data="data" v-for="(data, i) in destaques" :key="`i-${i}`"/>
     
   </section>
 </template>
@@ -19,31 +19,21 @@ export default {
 
   data() {
     return {
-      data: {},
-      items: [
-        "conteudos_recentes",
-        "conteudos_baixados",
-        "conteudos_acessados",
-        "conteudos_destacados",
-        "aplicativos_recentes",
-        "aplicativos_destacados"
-      ],
-      blocks: null,
-      busy: false
+      destaques: [],
     };
   },
   beforeMount() {
-    this.getData("conteudos_recentes");
+    this.getData();
   },
   mounted() {
     
   },
   methods: {
-    async getData(get) {
-      let resp = await axios.get("/destaques", { get });
-      console.log(resp)
-      if (resp.status == 200 && resp.data) {
-        //this.data = resp.data;
+    async getData() {
+      let resp = await axios.get("/destaques");
+      console.log(resp.data.metadata)
+      if (resp.status == 200 && resp.data.success) {
+        this.destaques = resp.data.metadata
       }
     },
     

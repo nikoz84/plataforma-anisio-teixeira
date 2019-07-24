@@ -1,87 +1,40 @@
 <template>
-  <div class="bg-img">
-    <div class="row">
-      <figure class="col-md-6 foto">
-        <a href="/galeria" class="gallery-link">Visite nossa galeria de fotos</a>
-      </figure>
-      <form v-on:submit.prevent="send()">
-        <article class="col-md-6">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h4 class="panel-title text-center">
-                Denuncie
-              </h4>
-            </div>
-            <div class="panel-body">
-              <section class="col-md-6">
-                <p>Este espaço serve para você denunciar qualquer coisa que você considere imprópria,
-                    basta fornecer o endereço da página onde esse conteúdo se localiza e uma mensagem
-                    descrevendo do que se trata e por que você acha que essa página merece a denuncia.
-                </p>
-                <!-- NOME -->
-                <div class="form-group" v-bind:class="{ 'has-error': errors.name && errors.name.length > 0 }">
-                    <label for="nome">Nome:<span class="glyphicon-asterisk"></span></label>
-                    <input type="text" class="form-control" id="nome" v-model="name" placeholder="Digite seu nome">
-                    <ShowErrors :errors="errors.name"></ShowErrors>
-                </div>
-                <!-- EMAIL -->
-                <div class="form-group" v-bind:class="{ 'has-error': errors.email && errors.email.length > 0 }">
-                    <label for="email">E-mail:<span class="glyphicon-asterisk"></span></label>
-                    <input type="email"
-                          class="form-control"
-                          id="email"
-                          v-model="email"
-                          placeholder="Digite seu e-mail"
-                          autocomplete="off">
-                    <ShowErrors :errors="errors.email"></ShowErrors>
-                </div>
-                <!-- URL -->
-                <div class="form-group">
-                    <label for="assunto">URL:</label>
-                    <input type="text" class="form-control" id="url" v-model="getUrl" disabled>
-                </div>
-              </section> <!-- fim col-md-6 -->
-
-              <section class="col-md-6">
-                <div class="form-group" v-bind:class="{ 'has-error': errors.subject && errors.subject.length > 0 }">
-                    <label for="assunto">Assunto:<span class="glyphicon-asterisk"></span></label>
-                    <input type="text" class="form-control" id="assunto" v-model="subject" placeholder="Qual é o assunto do contato">
-                    <ShowErrors :errors="errors.subject"></ShowErrors>
-                </div>
-                <div class="form-group" v-bind:class="{ 'has-error': errors.message && errors.message.length > 0 }">
-                    <label for="mensagem">Mensagem:<span class="glyphicon-asterisk"></span></label>
-                    <textarea class="form-control" id="mensagem" v-model="message" placeholder="Digite aqui sua mensagem"></textarea>
-                    <ShowErrors :errors="errors.message"></ShowErrors>
-                </div>
-
-                <div class="form-group" v-bind:class="{ 'has-error': errors.recaptcha && errors.recaptcha.length > 0 }">
-                  <label for="mensagem">Código de segurança:<span class="glyphicon-asterisk"></span></label>
-                  <div class="g-recaptcha" :data-sitekey="siteKey"></div>
-                    <ShowErrors :errors="errors.recaptcha"></ShowErrors>
-                </div>
-              </section>
-              <section class="col-md-12" style="padding-top:70px;">
-                <div class="form-group">
-                  <button class="btn btn-default btn-block" v-if="!isLoading">Enviar Denuncia</button>
-                  <Loader v-else></Loader>
-                </div>
-              </section>
-            </div> <!-- panel body fim -->
-          </div> <!-- panel fim -->
-        </article>
-      </form>
-    </div>
-  </div>
+  <article class="row">
+    <q-card>
+      <q-card-section>
+        <div class="text-center text-h5">
+          Denuncie
+        </div>
+        <p class="q-pt-lg">Este espaço serve para você denunciar qualquer coisa que você considere <b>imprópria</b>,
+          basta fornecer o endereço da página onde esse conteúdo se localiza e uma mensagem
+          descrevendo do que se trata e por que você acha que essa página merece a denuncia.
+        </p>
+      </q-card-section>
+      <q-card-section>
+        <q-form @submit.prevent="onSubmit" class="q-gutter-md">
+          <q-input filled v-model="name" label="Seu Nome *" hint="Nome"/>
+          <q-input v-model="email" label="example@dominio.com *" filled type="email" hint="E-mail" />
+          <q-input filled v-model="subject" label="Assunto da mensagem *" hint="Assunto"/>
+          <q-input v-model="message" filled type="textarea" />
+          <div class="g-recaptcha" :data-sitekey="siteKey"></div>
+          <div>
+            <q-btn label="Enviar" type="submit" color="primary"/>
+          </div>
+        </q-form>
+      </q-card-section> 
+    </q-card>
+  </article>
 </template>
 
 <script>
 import Loader from "../components/Loader.vue";
 import ShowErrors from "../components/ShowErrors.vue";
 import { mapState, mapMutations } from "vuex";
+import { QCard, QCardSection, QImg, QForm, QInput } from "quasar";
 
 export default {
   name: "DenunciaForm",
-  components: { Loader, ShowErrors },
+  components: { Loader, ShowErrors, QCard, QCardSection, QForm, QInput, QImg },
   data() {
     return {
       name: "",
@@ -112,7 +65,7 @@ export default {
   },
   methods: {
     ...mapMutations(["SET_IS_LOADING", "SET_ERRORS", "SET_IS_ERROR"]),
-    async send() {
+    async onSubmit() {
       this.SET_IS_LOADING(true);
 
       let data = {
@@ -124,9 +77,11 @@ export default {
         action: location.href,
         recaptcha: grecaptcha.getResponse()
       };
+      console.log(data);
 
       let resp = await axios.post("/denuncias", data);
-
+      console.log(resp);
+      /*  
       if (resp.data.success && res.status == 200) {
         this.SET_IS_LOADING(false);
         localStorage.removeItem("urlDenuncia");
@@ -135,12 +90,12 @@ export default {
         this.SET_IS_ERROR(true);
         this.SET_IS_LOADING(false);
       }
+      */
     }
   }
 };
 </script>
 <style lang="scss" scoped>
-
 textarea {
   height: 170px;
   resize: none;

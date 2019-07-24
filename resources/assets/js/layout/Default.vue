@@ -2,14 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          @click="leftDrawerOpen = !leftDrawerOpen"
-          aria-label="Menu"
-          icon="menu"
-        />
+        <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" aria-label="Menu" icon="menu"/>
         <q-toolbar-title>
           Plataforma Anísio Teixeira
         </q-toolbar-title>
@@ -23,6 +16,25 @@
                 <q-item-label>{{ link.name }}</q-item-label>
               </q-item-section>
             </q-item>
+          </q-list>
+        </q-btn-dropdown>
+        <q-btn-dropdown stretch flat icon="person">
+          <q-list>
+            <q-item v-if="!isLogged" to="/usuario/login" clickable v-close-popup tabindex="0">
+              <q-item-section>
+                <q-item-label>Login</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item v-if="isLogged" to="/usuario/alterar-senha" clickable v-close-popup tabindex="0">
+              <q-item-section>
+                <q-item-label>Alterar senha</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item v-if="isLogged" @click="sair()" clickable v-close-popup tabindex="0">
+              <q-item-section>
+                <q-item-label>Sair</q-item-label>
+              </q-item-section>
+            </q-item> 
           </q-list>
         </q-btn-dropdown>
       </q-toolbar>
@@ -48,20 +60,21 @@
             <q-item-label>Inicio</q-item-label>
           </q-item-section>
         </q-item>
-        
+       
       </q-list>
     </q-drawer>
 
     <q-page-container>
       <router-view />
        <q-page-scroller position="bottom">
-        <q-btn fab icon="keyboard_arrow_up" color="red" />
+        <q-btn fab icon="keyboard_arrow_up" color="primary" />
       </q-page-scroller>
     </q-page-container>
   </q-layout>
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
+import SidebarCanal from "../components/SidebarCanal.vue";
 import {
   QLayout,
   QDrawer,
@@ -75,11 +88,13 @@ import {
   QItemLabel,
   QItem,
   QItemSection,
-  QInput
+  QInput,
+  GoBack
 } from "quasar";
 
 export default {
   name: "Default",
+  directives:{ GoBack },
   componentes: {
     QLayout,
     QDrawer,
@@ -90,10 +105,11 @@ export default {
     QPageContainer,
     QPageScroller,
     QList,
-    QItemLabel,
     QItem,
     QItemSection,
-    QInput
+    QItemLabel,
+    QInput,
+    SidebarCanal
   },
   data() {
     return {
@@ -105,10 +121,17 @@ export default {
     this.getLayout();
   },
   computed:{
-    ...mapState(["links"])
+    ...mapState(["isLogged", "links", "canal"]),
   },
   methods:{
-    ...mapActions(["getLayout"])
+    ...mapActions(["getLayout","logout"]),
+    sair() {
+      this.logout().then(() => {
+        if (!this.isLogged) {
+          this.$router.push("/");
+        }
+      });
+    }
   }
 };
 </script>
