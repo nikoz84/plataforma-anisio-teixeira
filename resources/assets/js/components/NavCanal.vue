@@ -41,8 +41,6 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
-.nav .nav-pills > li {
-  border-bottom: solid 2px #0f285d;
-}
+<style lang="stylus" scoped>
+
 </style>
