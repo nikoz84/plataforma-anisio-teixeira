@@ -1,108 +1,40 @@
 <template>
-  <div >
-    <header class="page-header">
-      <div class="text-h5" v-text="data.title"></div>
+  <article class="q-ma-md">
+    <header class="row">
+      <div class="text-h4 text-light q-pa-md" v-text="data.title">
+      </div>
     </header>
-    <article>
-      <c-card class="" v-for="(item, i) in data.items" :key="i">
-        <figure class="card-container">
-          <q-img alt="imagem destacada"
-                  :src="item.image"
-                  style="height: 200px; max-width: 300px"
-                  placeholder-src="/img/fundo-padrao.svg">
-              <caption class="absolute-bottom-right text-subtitle2">
-                <a :href="item.url_exibir">
-                  <h2>{{ item.title ? item.title : item.name }}</h2>
-                </a>
-              </caption>
+    
+    <div class="row q-col-gutter-xs" >
+      <q-card class="col-xs-12 col-sm-6 col-md-6 col-lg-3" v-for="(item, i) in data.items" :key="i">
+        <q-card-section>
+          <q-img :src="item.image" :placeholder-src="`/img/fundo-padrao.svg`" style="height: 200px; width: 100%;">
+            <div class="absolute-bottom">
+              <router-link
+                      :to="item.url_exibir" >
+                  <a class="link"> {{ item.title ? item.title : item.name }}</a>
+              </router-link>
+            </div>
           </q-img>
-        </figure>
-      </c-card>
-    </article>
-</div>
+        </q-card-section>
+      </q-card>
+    </div>
+  </article>
 </template>
 <script>
-import { QImg, QCard } from "quasar";
+import { QImg, QCard, QCardSection, QSeparator } from "quasar";
 
 export default {
   name: "CardHome",
   props: ["data"],
-  components:{ QImg, QCard },
-  created(){
-    console.log(this.data)
-  }
+  components: { QImg, QCard, QCardSection, QSeparator }
 };
 </script>
-<style lang="scss" scoped>
-$primary: rgba(4, 9, 30, 0.637);
-$white: #f0f0f5;
-$shadow: -2px 2px 2px #071925e5;
-$transition: all 0.8s;
-$scale: scale(1.2);
-
-.page-title {
-  font-size: 30px;
-  line-height: 1;
-  font-weight: 600;
-  padding-left: 10px;
-  color: #071925b6;
-}
-
-.card-container {
-  position: relative;
-  display: table;
-  padding: 0px;
-  margin-bottom: 15px;
-  overflow: hidden;
-  -webkit-box-shadow: $shadow;
-  -moz-box-shadow: $shadow;
-  box-shadow: $shadow;
-  img {
-    -webkit-transition: $transition;
-    -moz-transition: $transition;
-    -ms-transition: $transition;
-    -o-transition: $transition;
-    transition: $transition;
-    &:hover {
-      -webkit-transform: $scale;
-      -moz-transform: $scale;
-      -ms-transform: $scale;
-      -o-transform: $scale;
-      transform: $scale;
-    }
-  }
-  .card-content {
-    box-shadow: inset 0 0 5px 3px rgba(0, 0, 0, 0.3);
-    position: absolute;
-    bottom: 0;
-    padding-left: 10px;
-    background: rgba(0, 0, 0, 0.877);
-    background-color: $primary;
-    width: 100%;
-    a {
-      text-decoration: none;
-      z-index: 2;
-    }
-    > a h2 {
-      margin-top: 7px;
-      margin-bottom: 5.5px;
-      font-weight: bolder;
-      font-size: 2.2vh;
-      color: #fff;
-    }
-  }
-}
-
-@media only screen and (min-width: 0px) and (max-width: 1023px) {
-  .card-container img {
-    width: 68vh;
-    height: 35vh;
-  }
-}
-@media only screen and (min-width: 1024px) {
-  .card-container img {
-    width: 70vh;
-    height: 35vh;
-  }
+<style lang="stylus" scoped>
+.link {
+  color: #fff;
+  font-weight: bolder;
+  font-size: 0.9rem;
+  text-decoration: none;
 }
 </style>
