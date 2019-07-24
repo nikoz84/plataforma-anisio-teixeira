@@ -1,56 +1,75 @@
 <template>
-  <article class="row">
-    <q-card>
-      <q-card-section>
-        <div class="text-center text-h5">
-          Denuncie
-        </div>
-        <p class="q-pt-lg">Este espaço serve para você denunciar qualquer coisa que você considere <b>imprópria</b>,
-          basta fornecer o endereço da página onde esse conteúdo se localiza e uma mensagem
-          descrevendo do que se trata e por que você acha que essa página merece a denuncia.
-        </p>
-      </q-card-section>
-      <q-card-section>
-        <q-form @submit.prevent="onSubmit()" class="q-gutter-md" ref="denunciaForm">
-          <q-input filled v-model="name" label="Seu Nome *" hint="Nome" 
-                  bottom-slots :error="errors.name && errors.name.length > 0">
-            <template v-slot:error>
-              <ShowErrors :errors="errors.name"></ShowErrors>
-            </template>
-          </q-input>
-          <q-input v-model="email" label="example@dominio.com *" filled type="email" hint="E-mail"
-                  bottom-slots :error="errors.email && errors.email.length > 0">
-            <template v-slot:error>
-              <ShowErrors :errors="errors.email"></ShowErrors>
-            </template>
-          </q-input>
-          <q-input filled v-model="subject" label="Assunto da mensagem *" hint="Assunto" 
-                  bottom-slots :error="errors.subject && errors.subject.length > 0">
-            <template v-slot:error>
-              <ShowErrors :errors="errors.subject"></ShowErrors>
-            </template>
-          </q-input>
-
-          <q-input v-model="message" filled type="textarea" 
-                  bottom-slots :error="errors.message && errors.message.length > 0">
-            <template v-slot:error>
-              <ShowErrors :errors="errors.message"></ShowErrors>
-            </template>
-          </q-input>
-          <div>
-            <p>Código de segurança:</p>
-            <div class="g-recaptcha" :data-sitekey="siteKey"></div>
-            <div bottom-slots :error="errors.recaptcha && errors.recaptcha > 0">
-              <ShowErrors :errors="errors.recaptcha"></ShowErrors>
+  <article>
+      <div class="row">
+        <q-parallax src="/storage/conteudos/conteudos-digitais/galeria/1.jpg" style="max-height:50vh;">
+          <template v-slot:content="scope">
+            <div class="absolute-bottom-rigth column items-center">
+              <div class="text-h6 text-white text-center">
+                <router-link tag="div" to="/galeria" style="background-color: hsla(218, 84%, 20%, 0.8); padding: 15px;cursor: pointer;">
+                  <q-icon name="photo" class="cursor-pointer"/>
+                  Visite nossa galeria de imagens
+                </router-link>
+              </div>
             </div>
-          </div>
-          
-          <div>
-            <q-btn label="Enviar" type="submit" color="primary"/>
-          </div>
-        </q-form>
-      </q-card-section> 
-    </q-card>
+          </template>
+        </q-parallax>
+      </div>
+      <div class="row q-pa-md">
+        <div class="col-lg-3"></div>
+        <q-card class="col-lg-6">
+          <q-card-section>
+            <div class="text-center text-h5">
+              Denuncie
+            </div>
+            <q-separator inset/>
+            <p class="q-pt-lg">Este espaço serve para você denunciar qualquer coisa que você considere <b>imprópria</b>,
+              basta fornecer o endereço da página onde esse conteúdo se localiza e uma mensagem
+              descrevendo do que se trata e por que você acha que essa página merece a denuncia.
+            </p>
+            <q-separator inset/>
+          </q-card-section>
+          <q-card-section>
+            <q-form @submit.prevent="onSubmit()" class="q-gutter-md" ref="denunciaForm">
+              <q-input filled v-model="name" label="Seu Nome *" hint="Nome" 
+                      bottom-slots :error="errors.name && errors.name.length > 0">
+                <template v-slot:error>
+                  <ShowErrors :errors="errors.name"></ShowErrors>
+                </template>
+              </q-input>
+              <q-input v-model="email" label="example@dominio.com *" filled type="email" hint="E-mail"
+                      bottom-slots :error="errors.email && errors.email.length > 0">
+                <template v-slot:error>
+                  <ShowErrors :errors="errors.email"></ShowErrors>
+                </template>
+              </q-input>
+              <q-input filled v-model="subject" label="Assunto da mensagem *" hint="Assunto" 
+                      bottom-slots :error="errors.subject && errors.subject.length > 0">
+                <template v-slot:error>
+                  <ShowErrors :errors="errors.subject"></ShowErrors>
+                </template>
+              </q-input>
+
+              <q-input v-model="message" filled type="textarea" label="Escreva aqui sua mensagem *" hint="Mensagem"
+                      bottom-slots :error="errors.message && errors.message.length > 0">
+                <template v-slot:error>
+                  <ShowErrors :errors="errors.message"></ShowErrors>
+                </template>
+              </q-input>
+              <div>
+                <p>Código de segurança:</p>
+                <div class="g-recaptcha" :data-sitekey="siteKey"></div>
+                <div bottom-slots :error="errors.recaptcha && errors.recaptcha > 0">
+                  <ShowErrors :errors="errors.recaptcha"></ShowErrors>
+                </div>
+              </div>
+              
+              <div>
+                <q-btn class="full-width q-mt-lg" label="Enviar" type="submit" color="primary"/>
+              </div>
+            </q-form>
+          </q-card-section> 
+        </q-card>
+      </div>
   </article>
 </template>
 
@@ -58,11 +77,29 @@
 import Loader from "../components/Loader.vue";
 import ShowErrors from "../components/ShowErrors.vue";
 import { mapState, mapMutations } from "vuex";
-import { QCard, QCardSection, QImg, QForm, QInput } from "quasar";
+import {
+  QCard,
+  QCardSection,
+  QImg,
+  QForm,
+  QInput,
+  QSeparator,
+  QParallax
+} from "quasar";
 
 export default {
   name: "DenunciaForm",
-  components: { Loader, ShowErrors, QCard, QCardSection, QForm, QInput, QImg },
+  components: {
+    Loader,
+    ShowErrors,
+    QCard,
+    QCardSection,
+    QForm,
+    QInput,
+    QParallax,
+    QImg,
+    QSeparator
+  },
   data() {
     return {
       name: "",

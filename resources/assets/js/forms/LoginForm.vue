@@ -1,26 +1,52 @@
 <template>
-  <section class="row">
-    <div class="form-image">
-      <div class="bottom-0">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title text-center">Faça seu Login</h4>
+  <article>
+     <div class="row">
+      <q-parallax src="/storage/conteudos/conteudos-digitais/galeria/2.jpg" style="max-height:50vh;">
+        <template v-slot:content="scope">
+          <div class="absolute-bottom-rigth column items-center">
+            <div class="text-h6 text-white text-center">
+              <router-link tag="div" to="/galeria" style="background-color: hsla(218, 84%, 20%, 0.8); padding: 15px;cursor: pointer;">
+                <q-icon name="photo" class="cursor-pointer"/>
+                Visite nossa galeria de imagens
+              </router-link>
             </div>
-            <div class="panel-body">
-                <form v-on:submit.prevent="entrar()">
-                    <div class="form-group" v-bind:class="inputErrors('email')">
-                        <label for="email">E-mail</label>
-                        <input class="form-control" v-model="email" id="email" type="text">
-                        <ShowErrors :errors="errors.email"></ShowErrors>
-                    </div>
-                    <div class="form-group" v-bind:class="inputErrors('password')">
-                        <label for="senha">Senha</label>
-                        <input class="form-control" v-model="password" id="senha" type="password">
-                        <ShowErrors :errors="errors.password"></ShowErrors>
-                    </div>
+          </div>
+        </template>
+      </q-parallax>
+    </div>
+    <div class="row">
+      <div>
+        <q-card>
+            <q-card-section >
+                <div class="text-center text-h5">Faça seu Login</div>
+            </q-card-section>
+            <q-card-section>
+                <q-form @submit.prevent="onSubmit()" class="q-gutter-md" ref="loginForm">
+                  <q-input filled v-model="email" label="Seu E-mail *" hint="E-mail" type="email"
+                                bottom-slots :error="errors.email && errors.email.length > 0">
+                    <template v-slot:error>
+                      <ShowErrors :errors="errors.email"></ShowErrors>
+                    </template>
+                  </q-input>
+                  <q-input v-model="password" filled :type="isPwd ? 'password' : 'text'" hint="Senha"
+                            bottom-slots :error="errors.password && errors.password.length > 0">
+                    <template v-slot:append>
+                      <q-icon
+                        :name="isPwd ? 'visibility_off' : 'visibility'"
+                        class="cursor-pointer"
+                        @click="isPwd = !isPwd"
+                      />
+                    </template>
+                    <template v-slot:error>
+                      <ShowErrors :errors="errors.password"></ShowErrors>
+                    </template>
+                  </q-input>
+ 
+                        
+                    
                     <button type="submit" class="btn btn-default btn-block">Login</button>
-                </form>
-                <AlertShake></AlertShake>
+                </q-form>
+                
                 <div class="text-center links">
                   <router-link to="/usuario/recuperar-senha">
                     Recuperar senha
@@ -29,28 +55,32 @@
                       Cadastre-se
                   </router-link>
                 </div>
-            </div>
-        </div>
+            </q-card-section>
+        </q-card>
       </div>
     </div>
-  </section>
+  </article>
 </template>
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
-import AlertShake from "../components/AlertShake.vue";
+import { QParallax, QCard, QCardSection, QInput, QForm } from "quasar";
 import ShowErrors from "../components/ShowErrors.vue";
-import { getInputError } from "../functions.js";
 
 export default {
   name: "LoginForm",
   components: {
-    AlertShake,
-    ShowErrors
+    QParallax,
+    QCard,
+    QCardSection,
+    ShowErrors,
+    QForm,
+    QInput
   },
   data() {
     return {
       email: null,
-      password: null
+      password: null,
+      isPwd: true
     };
   },
   beforeCreate() {
