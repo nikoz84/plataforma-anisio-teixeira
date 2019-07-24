@@ -1,20 +1,24 @@
 <template>
-  <div>
+  <div >
     <header class="page-header">
       <div class="text-h5" v-text="data.title"></div>
     </header>
-    <section>
-      <article class="" v-for="(item, i) in data.items" :key="i">
+    <article>
+      <c-card class="" v-for="(item, i) in data.items" :key="i">
         <figure class="card-container">
-          <q-img :src="item.image"/>
-          <caption class="card-content">
-            <a :href="item.url_exibir">
-              <h2>{{ item.title ? item.title : item.name }}</h2>
-            </a>
-          </caption>
+          <q-img alt="imagem destacada"
+                  :src="item.image"
+                  style="height: 200px; max-width: 300px"
+                  placeholder-src="/img/fundo-padrao.svg">
+              <caption class="absolute-bottom-right text-subtitle2">
+                <a :href="item.url_exibir">
+                  <h2>{{ item.title ? item.title : item.name }}</h2>
+                </a>
+              </caption>
+          </q-img>
         </figure>
-      </article>
-    </section>
+      </c-card>
+    </article>
 </div>
 </template>
 <script>
