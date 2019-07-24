@@ -12,7 +12,11 @@
       </q-card-section>
       <q-card-section>
         <q-form @submit.prevent="onSubmit" class="q-gutter-md">
-          <q-input filled v-model="name" label="Seu Nome *" hint="Nome"/>
+          <q-input filled v-model="name" label="Seu Nome *" hint="Nome">
+            <template v-slot:error>
+              Please use maximum 3 characters.
+            </template>
+          </q-input>
           <q-input v-model="email" label="example@dominio.com *" filled type="email" hint="E-mail" />
           <q-input filled v-model="subject" label="Assunto da mensagem *" hint="Assunto"/>
           <q-input v-model="message" filled type="textarea" />
