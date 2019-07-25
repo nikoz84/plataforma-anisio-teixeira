@@ -6,7 +6,6 @@
         <template v-slot:media>
           <img src="/storage/conteudos/slider/banner-blog.jpg">
         </template>
-
         <template v-slot:content="scope">
           <div class="absolute column items-center"
             :style="{ opacity: 0.45 + (1 - scope.percentScrolled) * 0.55, top: (scope.percentScrolled * 60) + '%', left: 0, right: 0 }"
@@ -30,7 +29,7 @@
         </template>
       </q-parallax>
     </article>
-    <article class="row justify-between">
+    <article class="" >
       <q-parallax src="/storage/conteudos/conteudos-digitais/galeria/4.jpg" style="min-height:100vh;">
         <template v-slot:content="scope">
           <div class="absolute column items-center">
@@ -49,10 +48,13 @@
 import { mapState, mapMutations } from "vuex";
 import CardHome from "../components/CardHome.vue";
 //import SideBarHome from "../components/SideBarHome.vue";
-import { QParallax } from "quasar";
+import { QParallax, ScrollFire } from "quasar";
 
 export default {
   name: "Home",
+  directives: {
+    ScrollFire
+  },
   components: {
     QParallax,
     CardHome
@@ -64,12 +66,9 @@ export default {
       destaques: []
     };
   },
-  beforeMount() {
-    this.getData();
-  },
   mounted() {},
   methods: {
-    async getData() {
+    async getDestaques(done) {
       let resp = await axios.get("/destaques");
       console.log(resp.data.metadata);
       if (resp.status == 200 && resp.data.success) {
