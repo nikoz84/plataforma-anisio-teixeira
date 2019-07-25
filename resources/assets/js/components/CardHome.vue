@@ -1,22 +1,20 @@
 <template>
-  <article class="q-ma-md">
-    <header class="row">
-      <div class="text-h4 text-light q-pa-md" v-text="data.title">
-      </div>
+  <article class="q-ma-md justify-center">
+    <header class="row text-center q-pt-xl q-pb-xl">
+      <div class="text-h4 text-light" v-text="data.title"></div>
     </header>
     
-    <div class="row q-col-gutter-xs" >
-      <q-card class="col-xs-12 col-sm-6 col-md-6 col-lg-3" v-for="(item, i) in data.items" :key="i">
-        <q-card-section>
-          <q-img :src="item.image" :placeholder-src="`/img/fundo-padrao.svg`" style="height: 200px; width: 100%;">
-            <div class="absolute-bottom">
-              <router-link
-                      :to="item.url_exibir" >
-                  <a class="link"> {{ item.title ? item.title : item.name }}</a>
-              </router-link>
+    <div class="row q-gutter-lg">
+      <q-card class="col-xs-12 col-sm-5 col-md-5 col-lg-5" v-for="(item, i) in data.items" :key="i">
+        
+          <q-img basic :src="item.image" :placeholder-src="`/img/fundo-padrao.svg`" style="height: 250px; width: 100%;">
+            <div class="absolute-bottom text-subtitle1 cursor-pointer">
+              <router-link tag="div"
+                      :to="item.url_exibir" 
+                      v-text="item.title ? item.title : item.name"/>
             </div>
           </q-img>
-        </q-card-section>
+        
       </q-card>
     </div>
   </article>
@@ -31,10 +29,8 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-.link {
-  color: #fff;
+.q-img__content > div {
   font-weight: bolder;
-  font-size: 0.9rem;
-  text-decoration: none;
+  background: rgba(23, 2, 99, 0.6);
 }
 </style>
