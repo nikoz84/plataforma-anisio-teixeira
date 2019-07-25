@@ -65,6 +65,6 @@ class Destaques
     }
     public function getPostsMaisRecentes()
     {
-        $wordpress = new WordpressService($this->request);
+        //$wordpress = new WordpressService($this->request);
     }
 }
