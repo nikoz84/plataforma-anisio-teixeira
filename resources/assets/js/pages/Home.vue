@@ -1,15 +1,13 @@
 <template>
   <section>
     <!--SideBarHome/-->
-    <article class="row justify-between">
+    <article class="row justify-between" >
       <q-parallax style="min-height:100vh;">
         <template v-slot:media>
           <img src="/storage/conteudos/slider/banner-blog.jpg">
         </template>
         <template v-slot:content="scope">
-          <div class="absolute column items-center"
-            :style="{ opacity: 0.45 + (1 - scope.percentScrolled) * 0.55, top: (scope.percentScrolled * 60) + '%', left: 0, right: 0 }"
-          >
+          <div class="absolute column items-center">
             <img src="/logo.svg" style="width: 150px; height: 150px">
             <div class="text-h3 text-primary text-center">Plataforma Anísio Teixeira</div>
             <div class="text-h6 text-dark text-center">
@@ -19,8 +17,11 @@
         </template>
       </q-parallax>
     </article>
-    <article class="row justify-between">
-      <q-parallax src="/storage/conteudos/slider/andressa-falcc3a3o.jpg" style="min-height:100vh;">
+    <article class="row justify-between load" v-scroll-fire="getDestaques">
+      <q-parallax style="min-height:100vh;">
+        <template v-slot:media>
+          <img src="/storage/conteudos/slider/andressa-falcc3a3o.jpg">
+        </template>
         <template v-slot:content="scope">
           <div class="absolute column items-center">
             <img src="/logo.svg" style="width: 150px; height: 150px">
@@ -29,8 +30,11 @@
         </template>
       </q-parallax>
     </article>
-    <article class="" >
-      <q-parallax src="/storage/conteudos/conteudos-digitais/galeria/4.jpg" style="min-height:100vh;">
+    <article class="row justify-between" >
+      <q-parallax style="min-height:100vh;">
+        <template v-slot:media>
+          <img src="/storage/conteudos/conteudos-digitais/galeria/4.jpg">
+        </template>
         <template v-slot:content="scope">
           <div class="absolute column items-center">
             <img src="/logo.svg" style="width: 150px; height: 150px">
@@ -39,8 +43,9 @@
         </template>
       </q-parallax>
     </article>
-
+        
     <CardHome :data="data" v-for="(data, i) in destaques" :key="`i-${i}`"/>
+      
     
   </section>
 </template>
@@ -66,18 +71,16 @@ export default {
       destaques: []
     };
   },
-  mounted() {},
   methods: {
-    async getDestaques(done) {
-      let resp = await axios.get("/destaques");
-      console.log(resp.data.metadata);
-      if (resp.status == 200 && resp.data.success) {
-        this.destaques = resp.data.metadata;
+    async getDestaques(el) {
+      if (el.classList.contains("load")) {
+        let resp = await axios.get("/destaques");
+        if (resp.status == 200 && resp.data.success) {
+          this.destaques = resp.data.metadata;
+        }
+        el.classList.remove("load");
       }
     }
-  },
-  destroyed() {
-    // window.removeEventListener("scroll", this.handleLoadScroll);
   }
 };
 </script>

@@ -1,5 +1,6 @@
 <template>
   <div v-if="paginator">
+    
     <!-- small class="text-center">
       {{paginator.total}} 
       <a class="pointer" v-on:click="goToPage(paginator.prev_page_url)">
@@ -9,7 +10,11 @@
         Próximo 
       </a>
     </!-->
+    
     <q-infinite-scroll @load="onLoad" :offset="250">
+      <q-card class="text-center">
+        {{ paginator.total }} conteúdos
+      </q-card>
       <div v-for="(item, i) in infiniteSrollData" :key="i">
         <SimpleCard v-bind:item="item"></SimpleCard>
       </div>
@@ -19,6 +24,7 @@
         </div>
       </template>
     </q-infinite-scroll>
+    
     <div class="jumbotron text-center" v-if="paginator.total == 0">
         Sem informações
     </div>
@@ -42,7 +48,7 @@
   </div>
 </template>
 <script>
-import { QInfiniteScroll, QSpinnerDots } from "quasar";
+import { QInfiniteScroll, QSpinnerDots, QCard } from "quasar";
 import { mapState, mapMutations } from "vuex";
 import SimpleCard from "./SimpleCard.vue";
 
@@ -53,7 +59,7 @@ export default {
       infiniteSrollData: []
     };
   },
-  components: { QInfiniteScroll, QSpinnerDots, SimpleCard },
+  components: { QInfiniteScroll, QSpinnerDots, SimpleCard, QCard },
   mounted() {
     this.infiniteSrollData = this.infiniteSrollData.concat(this.paginator.data);
   },
@@ -71,6 +77,7 @@ export default {
           this.paginator.data
         );
         done();
+        //console.log(this.infiniteSrollData)
       }
     }
   }
