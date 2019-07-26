@@ -94,7 +94,6 @@ export default {
           return this.fetchPosts();
           break;
         default:
-          console.log(query);
           return this.fetchConteudos(query);
           break;
       }

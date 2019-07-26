@@ -9,10 +9,10 @@
         Próximo 
       </a>
     </!-->
-    <q-infinite-scroll @load="goToPage" :offset="250" v-if="infiniteSrollData">
-      <section v-for="(item, i) in infiniteSrollData" :key="i">
-              <SimpleCard v-bind:item="item"></SimpleCard>
-      </section>
+    <q-infinite-scroll @load="onLoad" :offset="250">
+      <div v-for="(item, i) in infiniteSrollData" :key="i">
+        <SimpleCard v-bind:item="item"></SimpleCard>
+      </div>
       <template v-slot:loading>
         <div class="row justify-center q-my-md">
           <q-spinner-dots color="primary" size="60px" />
@@ -55,20 +55,23 @@ export default {
   },
   components: { QInfiniteScroll, QSpinnerDots, SimpleCard },
   mounted() {
-    this.goToPage();
+    this.infiniteSrollData = this.infiniteSrollData.concat(this.paginator.data);
   },
   computed: {
     ...mapState(["paginator"])
   },
   methods: {
     ...mapMutations(["SET_PAGINATOR"]),
-    async goToPage() {
-      if (this.paginator.total > 0 && this.paginator.current_page == 1) {
-        this.infiniteSrollData = this.paginator.data;
+    async onLoad(index, done) {
+      if (this.paginator.next_page_url) {
+        let resp = await axios.get(this.paginator.next_page_url);
+
+        this.SET_PAGINATOR(resp.data.paginator);
+        this.infiniteSrollData = this.infiniteSrollData.concat(
+          this.paginator.data
+        );
+        done();
       }
-      console.log(this.paginator.next_page_url);
-      //let resp = await axios.get(paginator.next_page_url);
-      //await this.SET_PAGINATOR(resp.data.paginator);
     }
   }
 };
