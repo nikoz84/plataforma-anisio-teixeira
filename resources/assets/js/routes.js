@@ -10,6 +10,7 @@ import ListAdmin from "./components/ListAdmin.vue";
 import DenunciaForm from "./forms/DenunciaForm.vue";
 import FaleConoscoForm from "./forms/FaleConoscoForm.vue";
 import Gallery from "./components/Gallery.vue";
+import ConfirmationEmail from './forms/ConfirmationEmailForm.vue'
 
 const routes = [
   {
@@ -180,6 +181,15 @@ const routes = [
         meta: {
           requiresAuth: false,
           title: "faça seu registro"
+        }
+      },
+      {
+        path: "confirmar-email/:code",
+        name: "confirmar",
+        component: ConfirmationEmail,
+        meta: {
+          requiresAuth: false,
+          title: "Código de verificação do E-mail"
         }
       },
       {

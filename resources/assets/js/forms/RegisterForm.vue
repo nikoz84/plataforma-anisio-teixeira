@@ -84,7 +84,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["isError", "errors"])
+    ...mapState(["errors"])
   },
   mounted() {
     //
@@ -105,7 +105,7 @@ export default {
       if(resp.data.success){
         this.$q.loading.hide();
         this.SET_ERRORS([]);
-        this.$router.push("/usuario/login");
+        this.$router.push("/usuario/confirmar-email");
         
         this.$q.notify({
           color: "positive",
