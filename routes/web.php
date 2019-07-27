@@ -20,9 +20,11 @@ Route::get('/email', function (Request $request) {
 
 
 Route::get('/teste', function (Request $request) {
-    $wordpres = new App\Helpers\WordpressService($request->limit, $request->page);
+    //$wordpres = new App\Helpers\WordpressService($request->limit, $request->page);
+    $colaborativus = new App\Helpers\ColaborativusService();
 
-    return $wordpres->getPosts();
+    return $colaborativus->findCourses();
+    //return $wordpres->getPosts();
 });
 
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');

@@ -1,21 +1,22 @@
 import Vue from "vue";
 import "./bootstrap";
+
 import Quasar from "quasar/dist/quasar.umd.min.js";
 import "quasar/dist/quasar.ie.polyfills";
 import lang from "quasar/lang/pt-br.js";
 import materialIcons from "quasar/dist/icon-set/material-icons.umd.min.js";
 import "quasar-extras/roboto-font/roboto-font.css";
 import "quasar-extras/material-icons/material-icons.css";
+
 import VueRouter from "vue-router";
 import routes from "./routes";
 import Main from "./layout/Main.vue";
 import Vuex from "vuex";
 import store from "./store/index.js";
 
-Quasar.lang.set(Quasar.lang.ptBr);
+Quasar.lang.set(lang);
 
 Vue.use(Quasar, {
-  lang,
   iconSet: materialIcons
 });
 Vue.use(Vuex);
