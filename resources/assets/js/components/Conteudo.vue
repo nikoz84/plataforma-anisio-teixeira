@@ -1,36 +1,50 @@
 <template>
     <article class="row">
         <Player></Player>
-        <q-card v-if="this.conteudo">
+        <q-card v-if="conteudo">
             <q-card-section >
-                <div class="text-h6" v-text="this.conteudo.title"></div>
-                <div class="text-subtitle2">
-                  <small>Usuário(a) publicador: {{this.conteudo.user.name}} </small>
+              <section class="row">
+                <div class="col-xs-12 col-sm-7">
+                  <div class="text-h4 q-pr-lg" :style="`color:${conteudo.canal.color};`" v-text="conteudo.title"></div>
+                  <q-separator class="q-mb-lg" inset />
+                  <div class="">
+                    <small>
+                      <b>Usuário(a) publicador(ora):</b> {{ conteudo.user.name }}
+                    </small> <br>
+                    <small>
+                      <b>Acessos:</b> {{ conteudo.qt_access }}
+                    </small> - 
+                    <small>
+                      <b>Downloads:</b> {{ conteudo.qt_downloads }}
+                    </small>
+                  </div>
+                  <div class="q-mt-lg q-pr-lg" v-html="conteudo.description"></div>
                 </div>
-                <div class="break-word" v-html="this.conteudo.description"></div>
-                
-                <span class="label label-default" v-bind:style="backgroundColor"> Fonte: </span>
-                    <i class="i-list break-word">{{ this.conteudo.source }}</i>
-                
-                <span class="label label-default" v-bind:style="backgroundColor"> Autores: </span>
-                <i class="i-list break-word" v-for="(author,i) in splitAuthors" v-bind:key="i" v-text="author"></i>
-                
-                <span class="label label-default" v-bind:style="backgroundColor"> Componentes: </span>
-                <i class="i-list break-word"
-                    v-for="(componente) in this.conteudo.componentes"
-                    v-bind:key="componente.id"
-                    v-text="componente.name"
-                    ></i>
-                
-                <span class="label label-default" v-bind:style="backgroundColor"> Licença: </span>
-                <i class="i-list break-word" v-if="this.conteudo.license" v-text="this.conteudo.license.name"></i>
-
+                <div class="col-xs-12 col-sm-5">
+                  <q-chip color="ligth" label="Fonte:"> </q-chip>
+                      <i class="i-list break-word">{{ conteudo.source }}</i>
+                  <q-separator class="q-mb-lg" inset/>
+                  <q-chip label="Autores:" color="ligth"></q-chip>
+                  <i class="i-list break-word" v-for="(author,i) in splitAuthors" v-bind:key="`a-${i}`" v-text="author"></i>
+                  <q-separator class="q-mb-lg" inset/>
+                  <q-chip label="Licença:" color="ligth"></q-chip>
+                  <i class="i-list break-word" v-if="conteudo.license" v-text="conteudo.license.name"></i>
+                  <q-separator class="q-mb-lg" inset/>
+                  <q-chip label="Componentes:" color="ligth"></q-chip>
+                  <i class="i-list break-word"
+                      v-for="(componente) in conteudo.componentes"
+                      :key="`c-${componente.id}`"
+                      v-text="componente.name"
+                      ></i>
+                  
+                </div>
+              </section>
             </q-card-section>
-            <q-card-section class="panel-footer tag-cloud">
+            <q-card-section>
                 <div class="text-h6">Tags: </div>
                 <q-chip color="ligth" 
                       icon="local_offer"
-                      v-for="(tag, i) in this.conteudo.tags"
+                      v-for="(tag, i) in conteudo.tags"
                       :key="i"
                       :label="tag.name"
                       clickable

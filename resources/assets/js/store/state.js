@@ -32,11 +32,6 @@ const state = {
   alertText: "",
   showAlert: false,
   formData: {},
-  buttonText: "Salvar",
-  viewport: {
-    width: 0,
-    heigth: 0
-  },
   action: ""
 };
 

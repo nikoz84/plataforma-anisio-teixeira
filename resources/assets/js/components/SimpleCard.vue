@@ -21,7 +21,7 @@
             </div>
             <p class="q-pt-lg" v-html="item.excerpt"></p>
             
-          <QBtn :to="{ name: 'ExibirConteudo', params: { slug: slug, id: item.id, action: 'exibir'}}" 
+            <QBtn :to="{ name: 'ExibirConteudo', params: { slug: slug, id: item.id, action: 'exibir'}}" 
                   color="primary" 
                 style="font-weight: 900;" flat>
                 Saiba Mais
