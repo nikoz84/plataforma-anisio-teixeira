@@ -160,8 +160,7 @@
           <div class="form-group">
             <button class="btn btn-default">Salvar</button>
           </div>
-          <!-- RESPOSTA FORMULARIO -->
-          <alert></alert>
+          
         </div>
       </div>
 
@@ -191,15 +190,12 @@
 import { mapGetters, mapActions, mapState, mapMutations } from "vuex";
 import { mapFields } from "vuex-map-fields";
 import showErrors from "../components/ShowErrors.vue";
-import Alert from "../components/Alert.vue";
-import { getInputError } from "../functions.js";
 
 export default {
   name: "ConteudoForm",
   delay: 2000,
   components: {
-    erros: showErrors,
-    alert: Alert
+    erros: showErrors
   },
   data() {
     return {
@@ -245,9 +241,6 @@ export default {
     ...mapFields([])
   },
   methods: {
-    showError(attr) {
-      return getInputError(this.errors, attr);
-    },
     ...mapActions([
       "fetchConteudo",
       "fetchTiposForm",

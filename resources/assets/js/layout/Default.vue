@@ -60,8 +60,9 @@
             <q-item-label>Inicio</q-item-label>
           </q-item-section>
         </q-item>
-       
       </q-list>
+
+      <LeftSidebar></LeftSidebar>
     </q-drawer>
 
     <q-page-container>
@@ -74,7 +75,7 @@
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
-import SidebarCanal from "../components/SidebarCanal.vue";
+import LeftSidebar from "../components/LeftSidebar.vue";
 import {
   QLayout,
   QDrawer,
@@ -109,7 +110,7 @@ export default {
     QItemSection,
     QItemLabel,
     QInput,
-    SidebarCanal
+    LeftSidebar
   },
   data() {
     return {
