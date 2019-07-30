@@ -60,19 +60,26 @@
             <q-item-label>Inicio</q-item-label>
           </q-item-section>
         </q-item>
-
-        <q-item clickable tag="a" to="/" 
-            v-if="sidebar.components" v-for="(component, i) in sidebar.components" 
-            :key="`c-${i}`">
-          <q-item-section>
-            <q-item-label>
-              {{component}}
-            </q-item-label>
-          </q-item-section>
-        </q-item>
-
+        <!-- template>
+          <div v-for="(category, i) in sidebar.categories" :key="`c-${i}`">
+            <q-item clickable to="/" v-if="category.sub_categories.length <= 0">
+              <q-item-section >
+                {{ category.name }}
+              </q-item-section>
+              
+            </q-item>
+            <q-expansion-item v-else :label="category.name">
+              <q-item clickable v-for="(subcategory, i) in category.sub_categories" :key="`s-${i}`">
+                <q-item-section >
+                  {{ subcategory.name }}
+                </q-item-section>
+              </q-item>
+            </q-expansion-item>    
+          </div>
+        </!-->
+        
       </q-list>
-      {{sidebar}}
+      
       
     </q-drawer>
 
@@ -100,6 +107,7 @@ import {
   QItemLabel,
   QItem,
   QItemSection,
+  QExpansionItem,
   QInput,
   GoBack
 } from "quasar";
@@ -120,13 +128,13 @@ export default {
     QItem,
     QItemSection,
     QItemLabel,
+    QExpansionItem,
     QInput
   },
   data() {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop,
-      termSearch: "",
-      
+      termSearch: ""
     };
   },
   created() {

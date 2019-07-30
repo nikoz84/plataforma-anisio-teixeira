@@ -3,12 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Canal;
-use App\Category;
-use App\AplicativoCategory;
-use App\NivelEnsino;
-use App\CurricularComponentCategory;
-use App\License;
-use App\Tipo;
+use App\Helpers\SideBar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ApiController;
@@ -31,7 +26,7 @@ class CanalController extends ApiController
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
         $select = $this->request->has('select');
-        
+
         $query = $this->canal::query();
 
         $query->when($select, function ($q, $select) {
@@ -122,7 +117,7 @@ class CanalController extends ApiController
         return response()->json([
             'success' => true,
             'canal' => $canal,
-            'sidebar' => $this->getSideBar($canal->id),
+            'sidebar' => Sidebar::getSideBar($canal->id),
         ]);
     }
     private function getSideBar($id)
@@ -162,7 +157,7 @@ class CanalController extends ApiController
             'niveis' => $niveis[0]
         ];
     }
-    
+
     private function getSideBarCategories($id)
     {
         /** categorias dos canais */

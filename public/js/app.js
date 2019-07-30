@@ -4490,6 +4490,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     QItem: quasar__WEBPACK_IMPORTED_MODULE_1__["QItem"],
     QItemSection: quasar__WEBPACK_IMPORTED_MODULE_1__["QItemSection"],
     QItemLabel: quasar__WEBPACK_IMPORTED_MODULE_1__["QItemLabel"],
+    QExpansionItem: quasar__WEBPACK_IMPORTED_MODULE_1__["QExpansionItem"],
     QInput: quasar__WEBPACK_IMPORTED_MODULE_1__["QInput"]
   },
   data: function data() {
@@ -23465,10 +23466,10 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************!*\
   !*** ./node_modules/quasar/package.json ***!
   \******************************************/
-/*! exports provided: _args, _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _spec, _where, author, browserslist, bugs, dependencies, description, devDependencies, engines, files, homepage, keywords, license, main, module, name, repository, scripts, typings, version, vetur, default */
+/*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, browserslist, bugs, bundleDependencies, dependencies, deprecated, description, devDependencies, engines, files, homepage, keywords, license, main, module, name, repository, scripts, typings, version, vetur, default */
 /***/ (function(module) {
 
-module.exports = {"_args":[["quasar@1.0.5","C:\\xampp\\htdocs\\plataforma-anisio-teixeira"]],"_from":"quasar@1.0.5","_id":"quasar@1.0.5","_inBundle":false,"_integrity":"sha512-8CxBZk5Ge+jUC7nzlzrLwlZRedpBkcYjkmyBOA0QJLvCXE8K8Ro68R7Vxf7+Baplo11aBMhFX1FhHZWrSM7Y2A==","_location":"/quasar","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"quasar@1.0.5","name":"quasar","escapedName":"quasar","rawSpec":"1.0.5","saveSpec":null,"fetchSpec":"1.0.5"},"_requiredBy":["/"],"_resolved":"https://registry.npmjs.org/quasar/-/quasar-1.0.5.tgz","_spec":"1.0.5","_where":"C:\\xampp\\htdocs\\plataforma-anisio-teixeira","author":{"name":"Razvan Stoenescu","email":"razvan.stoenescu@gmail.com","url":"https://quasar.dev"},"browserslist":["last 1 version, not dead, ie >= 11"],"bugs":{"url":"https://github.com/quasarframework/quasar/issues"},"dependencies":{},"description":"Build high-performance VueJS user interfaces (SPA, PWA, SSR, Mobile and Desktop) in record time","devDependencies":{"@babel/core":"^7.5.4","@quasar/babel-preset-app":"^1.1.4","@quasar/extras":"^1.2.0","autoprefixer":"^9.6.1","babel-eslint":"^10.0.2","babel-loader":"^8.0.6","babel-preset-es2015-rollup":"^3.0.0","chokidar":"^3.0.2","css-loader":"^3.0.0","cssnano":"^4.1.10","eslint":"^5.15.3","eslint-config-standard":"^12.0.0","eslint-friendly-formatter":"^4.0.1","eslint-loader":"^2.1.2","eslint-plugin-import":"^2.13.0","eslint-plugin-node":"^9.1.0","eslint-plugin-promise":"^4.0.1","eslint-plugin-standard":"^4.0.0","eslint-plugin-vue":"^5.2.1","file-loader":"^4.0.0","friendly-errors-webpack-plugin":"^1.6.1","html-webpack-plugin":"^3.2.0","json-beautify":"^1.0.1","lru-cache":"^5.1.1","memory-fs":"^0.4.1","open":"^6.4.0","postcss-loader":"^3.0.0","postcss-rtl":"^1.3.3","rimraf":"^2.6.3","rollup":"^1.16.7","rollup-plugin-buble":"^0.19.8","rollup-plugin-json":"^4.0.0","rollup-plugin-node-resolve":"^5.2.0","style-resources-loader":"^1.2.1","stylus":"^0.54.5","stylus-loader":"^3.0.2","uglify-es":"^3.3.9","url-loader":"^2.0.1","vue":"^2.6.10","vue-loader":"^15.7.0","vue-router":"^3.0.7","vue-server-renderer":"^2.6.10","vue-style-loader":"^4.1.2","vue-template-compiler":"^2.6.10","webpack":"^4.35.3","webpack-chain":"^6.0.0","webpack-dev-middleware":"^3.7.0","webpack-dev-server":"^3.7.2","webpack-hot-middleware":"^2.25.0","webpack-merge":"^4.2.1","webpack-node-externals":"^1.7.2"},"engines":{"node":">= 8.9.0","npm":">= 5.6.0","yarn":">= 1.6.0"},"files":["dist","lang","icon-set","src"],"homepage":"https://quasar.dev","keywords":["vuejs","vue","quasar","js","phone","tablet","desktop","spa","pwa","website","electron"],"license":"MIT","main":"dist/quasar.common.js","module":"src/index.esm.js","name":"quasar","repository":{"type":"git","url":"git+https://github.com/quasarframework/quasar.git"},"scripts":{"build":"node build/script.build.js","clean":"node build/script.clean.js","dev":"node build/script.dev.spa.js","dev:quploader":"cd dev/upload-server && yarn && cd ../.. && node dev/upload-server/server.js","dev:ssr":"node build/script.dev.ssr.js","dev:umd":"node build/script.test-umd.js","lint":"eslint --ext .js,.vue src dev","lint-fix":"eslint --ext .js,.vue src dev --fix","test":"eslint --ext .js,.vue src dev"},"typings":"dist/types/index.d.ts","version":"1.0.5","vetur":{"tags":"dist/vetur/quasar-tags.json","attributes":"dist/vetur/quasar-attributes.json"}};
+module.exports = {"_from":"quasar","_id":"quasar@1.0.5","_inBundle":false,"_integrity":"sha512-8CxBZk5Ge+jUC7nzlzrLwlZRedpBkcYjkmyBOA0QJLvCXE8K8Ro68R7Vxf7+Baplo11aBMhFX1FhHZWrSM7Y2A==","_location":"/quasar","_phantomChildren":{},"_requested":{"type":"tag","registry":true,"raw":"quasar","name":"quasar","escapedName":"quasar","rawSpec":"","saveSpec":null,"fetchSpec":"latest"},"_requiredBy":["#USER","/"],"_resolved":"https://registry.npmjs.org/quasar/-/quasar-1.0.5.tgz","_shasum":"caddfac55fca0779c996dc1b3977a045ae1426e6","_spec":"quasar","_where":"/home/niko/Documentos/projetos-web/pat_laravel","author":{"name":"Razvan Stoenescu","email":"razvan.stoenescu@gmail.com","url":"https://quasar.dev"},"browserslist":["last 1 version, not dead, ie >= 11"],"bugs":{"url":"https://github.com/quasarframework/quasar/issues"},"bundleDependencies":false,"dependencies":{},"deprecated":false,"description":"Build high-performance VueJS user interfaces (SPA, PWA, SSR, Mobile and Desktop) in record time","devDependencies":{"@babel/core":"^7.5.4","@quasar/babel-preset-app":"^1.1.4","@quasar/extras":"^1.2.0","autoprefixer":"^9.6.1","babel-eslint":"^10.0.2","babel-loader":"^8.0.6","babel-preset-es2015-rollup":"^3.0.0","chokidar":"^3.0.2","css-loader":"^3.0.0","cssnano":"^4.1.10","eslint":"^5.15.3","eslint-config-standard":"^12.0.0","eslint-friendly-formatter":"^4.0.1","eslint-loader":"^2.1.2","eslint-plugin-import":"^2.13.0","eslint-plugin-node":"^9.1.0","eslint-plugin-promise":"^4.0.1","eslint-plugin-standard":"^4.0.0","eslint-plugin-vue":"^5.2.1","file-loader":"^4.0.0","friendly-errors-webpack-plugin":"^1.6.1","html-webpack-plugin":"^3.2.0","json-beautify":"^1.0.1","lru-cache":"^5.1.1","memory-fs":"^0.4.1","open":"^6.4.0","postcss-loader":"^3.0.0","postcss-rtl":"^1.3.3","rimraf":"^2.6.3","rollup":"^1.16.7","rollup-plugin-buble":"^0.19.8","rollup-plugin-json":"^4.0.0","rollup-plugin-node-resolve":"^5.2.0","style-resources-loader":"^1.2.1","stylus":"^0.54.5","stylus-loader":"^3.0.2","uglify-es":"^3.3.9","url-loader":"^2.0.1","vue":"^2.6.10","vue-loader":"^15.7.0","vue-router":"^3.0.7","vue-server-renderer":"^2.6.10","vue-style-loader":"^4.1.2","vue-template-compiler":"^2.6.10","webpack":"^4.35.3","webpack-chain":"^6.0.0","webpack-dev-middleware":"^3.7.0","webpack-dev-server":"^3.7.2","webpack-hot-middleware":"^2.25.0","webpack-merge":"^4.2.1","webpack-node-externals":"^1.7.2"},"engines":{"node":">= 8.9.0","npm":">= 5.6.0","yarn":">= 1.6.0"},"files":["dist","lang","icon-set","src"],"homepage":"https://quasar.dev","keywords":["vuejs","vue","quasar","js","phone","tablet","desktop","spa","pwa","website","electron"],"license":"MIT","main":"dist/quasar.common.js","module":"src/index.esm.js","name":"quasar","repository":{"type":"git","url":"git+https://github.com/quasarframework/quasar.git"},"scripts":{"build":"node build/script.build.js","clean":"node build/script.clean.js","dev":"node build/script.dev.spa.js","dev:quploader":"cd dev/upload-server && yarn && cd ../.. && node dev/upload-server/server.js","dev:ssr":"node build/script.dev.ssr.js","dev:umd":"node build/script.test-umd.js","lint":"eslint --ext .js,.vue src dev","lint-fix":"eslint --ext .js,.vue src dev --fix","test":"eslint --ext .js,.vue src dev"},"typings":"dist/types/index.d.ts","version":"1.0.5","vetur":{"tags":"dist/vetur/quasar-tags.json","attributes":"dist/vetur/quasar-attributes.json"}};
 
 /***/ }),
 
@@ -50895,7 +50896,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!**********************************************!*\
   !*** ./node_modules/quasar/src/index.esm.js ***!
   \**********************************************/
-/*! exports provided: default, ClosePopup, GoBack, Ripple, ScrollFire, Scroll, TouchHold, TouchPan, TouchRepeat, TouchSwipe, AddressbarColor, AppFullscreen, AppVisibility, BottomSheet, Cookies, Dialog, LoadingBar, Loading, Meta, Notify, Platform, Screen, LocalStorage, SessionStorage, clone, colors, date, debounce, dom, event, extend, format, frameDebounce, noop, openURL, patterns, scroll, throttle, uid, QAjaxBar, QAvatar, QBadge, QBanner, QBar, QBreadcrumbs, QBreadcrumbsEl, QBtn, QBtnGroup, QBtnDropdown, QBtnToggle, QCard, QCardSection, QCardActions, QCarousel, QCarouselSlide, QCarouselControl, QChatMessage, QCheckbox, QChip, QCircularProgress, QColor, QDate, QTime, QDialog, QEditor, QFab, QFabAction, QField, QForm, QIcon, QImg, QInfiniteScroll, QInnerLoading, QInput, QKnob, QLayout, QDrawer, QFooter, QHeader, QPage, QPageContainer, QPageSticky, QList, QItem, QItemSection, QItemLabel, QExpansionItem, QSlideItem, QMenu, QNoSsr, QResizeObserver, QScrollObserver, QOptionGroup, QPageScroller, QPagination, QParallax, QPopupEdit, QPopupProxy, QLinearProgress, QPullToRefresh, QRadio, QRange, QRating, QScrollArea, QSelect, QSeparator, QSlideTransition, QSlider, QSpace, QSpinner, QSpinnerAudio, QSpinnerBall, QSpinnerBars, QSpinnerComment, QSpinnerCube, QSpinnerDots, QSpinnerFacebook, QSpinnerGears, QSpinnerGrid, QSpinnerHearts, QSpinnerHourglass, QSpinnerInfinity, QSpinnerIos, QSpinnerOval, QSpinnerPie, QSpinnerPuff, QSpinnerRadio, QSpinnerRings, QSpinnerTail, QSplitter, QStep, QStepper, QStepperNavigation, QTabPanels, QTabPanel, QTable, QTh, QTr, QTd, QMarkupTable, QTabs, QTab, QRouteTab, QTimeline, QTimelineEntry, QToggle, QToolbar, QToolbarTitle, QTooltip, QTree, QUploader, QUploaderBase, QUploaderAddTrigger, QVideo */
+/*! exports provided: ClosePopup, GoBack, Ripple, ScrollFire, Scroll, TouchHold, TouchPan, TouchRepeat, TouchSwipe, AddressbarColor, AppFullscreen, AppVisibility, BottomSheet, Cookies, Dialog, LoadingBar, Loading, Meta, Notify, Platform, Screen, LocalStorage, SessionStorage, clone, colors, date, debounce, dom, event, extend, format, frameDebounce, noop, openURL, patterns, scroll, throttle, uid, default, QAjaxBar, QAvatar, QBadge, QBanner, QBar, QBreadcrumbs, QBreadcrumbsEl, QBtn, QBtnGroup, QBtnDropdown, QBtnToggle, QCard, QCardSection, QCardActions, QCarousel, QCarouselSlide, QCarouselControl, QChatMessage, QCheckbox, QChip, QCircularProgress, QColor, QDate, QTime, QDialog, QEditor, QFab, QFabAction, QField, QForm, QIcon, QImg, QInfiniteScroll, QInnerLoading, QInput, QKnob, QLayout, QDrawer, QFooter, QHeader, QPage, QPageContainer, QPageSticky, QList, QItem, QItemSection, QItemLabel, QExpansionItem, QSlideItem, QMenu, QNoSsr, QResizeObserver, QScrollObserver, QOptionGroup, QPageScroller, QPagination, QParallax, QPopupEdit, QPopupProxy, QLinearProgress, QPullToRefresh, QRadio, QRange, QRating, QScrollArea, QSelect, QSeparator, QSlideTransition, QSlider, QSpace, QSpinner, QSpinnerAudio, QSpinnerBall, QSpinnerBars, QSpinnerComment, QSpinnerCube, QSpinnerDots, QSpinnerFacebook, QSpinnerGears, QSpinnerGrid, QSpinnerHearts, QSpinnerHourglass, QSpinnerInfinity, QSpinnerIos, QSpinnerOval, QSpinnerPie, QSpinnerPuff, QSpinnerRadio, QSpinnerRings, QSpinnerTail, QSplitter, QStep, QStepper, QStepperNavigation, QTabPanels, QTabPanel, QTable, QTh, QTr, QTd, QMarkupTable, QTabs, QTab, QRouteTab, QTimeline, QTimelineEntry, QToggle, QToolbar, QToolbarTitle, QTooltip, QTree, QUploader, QUploaderBase, QUploaderAddTrigger, QVideo */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -63391,39 +63392,10 @@ var render = function() {
                   )
                 ],
                 1
-              ),
-              _vm._v(" "),
-              _vm._l(_vm.sidebar.components, function(component, i) {
-                return _vm.sidebar.components
-                  ? _c(
-                      "q-item",
-                      {
-                        key: "c-" + i,
-                        attrs: { clickable: "", tag: "a", to: "/" }
-                      },
-                      [
-                        _c(
-                          "q-item-section",
-                          [
-                            _c("q-item-label", [
-                              _vm._v(
-                                "\n            " +
-                                  _vm._s(component) +
-                                  "\n          "
-                              )
-                            ])
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  : _vm._e()
-              })
+              )
             ],
-            2
-          ),
-          _vm._v("\n    " + _vm._s(_vm.sidebar) + "\n    \n  ")
+            1
+          )
         ],
         1
       ),
@@ -83148,8 +83120,8 @@ var state = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\plataforma-anisio-teixeira\resources\assets\js\app.js */"./resources/assets/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\plataforma-anisio-teixeira\resources\assets\stylus\app.styl */"./resources/assets/stylus/app.styl");
+__webpack_require__(/*! /home/niko/Documentos/projetos-web/pat_laravel/resources/assets/js/app.js */"./resources/assets/js/app.js");
+module.exports = __webpack_require__(/*! /home/niko/Documentos/projetos-web/pat_laravel/resources/assets/stylus/app.styl */"./resources/assets/stylus/app.styl");
 
 
 /***/ })

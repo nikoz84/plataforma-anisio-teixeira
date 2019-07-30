@@ -44,11 +44,11 @@ class ConteudoController extends ApiController
             return $q->whereRaw("options->'tipo' <@  {$data}");
         });
 
-        
-        $query->when($canal != 6, function ($q, $canal) {
-            return $q->where('canal_id', $canal);
+
+        $query->when($canal != 6, function ($q) {
+            return $q->where('canal_id', $this->request->canal);
         });
-        
+
         $query->when($categoria, function ($q, $categoria) {
             return $q->where('category_id', $categoria);
         });
@@ -67,26 +67,6 @@ class ConteudoController extends ApiController
             ->setPath("/conteudos?{$url}");
 
         return $this->showAsPaginator($conteudos);
-    }
-
-    private function getConteudosByIdCanal($canal_id)
-    {
-        $url = null;
-
-        switch (true) {
-            case $canal_id == 5:
-                $url = '/conteudos/sites';
-                break;
-            case $canal_id == 6:
-                $url = '/conteudos';
-                break;
-            case $canal_id == 9:
-                $url = '/aplicativos';
-                break;
-            default:
-                $url = '/conteudos?canal=${$canal_id}&site=false';
-        }
-        return $url;
     }
 
     /**
