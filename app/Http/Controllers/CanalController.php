@@ -3,16 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Canal;
+use App\Category;
+use App\AplicativoCategory;
+use App\NivelEnsino;
+use App\CurricularComponentCategory;
+use App\License;
+use App\Tipo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ApiController;
 
 class CanalController extends ApiController
 {
-    public function __construct(Request $request)
+    public function __construct(Request $request, Canal $canal)
     {
-        $this->middleware('jwt.verify')->except(['list', 'search', 'getBySlug']);
+        $this->middleware('jwt.verify')->except(['getBySlug']);
         $this->request = $request;
+        $this->canal = $canal;
     }
     /**
      * Display a listing of the resource.
@@ -23,14 +30,17 @@ class CanalController extends ApiController
     {
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
+        $select = $this->request->has('select');
+        
+        $query = $this->canal::query();
 
-        if ($this->request->has('select')) {
-            $canaisForSelect = Canal::whereRaw('is_active = true AND id <> 9')->get(['id', 'name']);
+        $query->when($select, function ($q, $select) {
+            $canaisForSelect = $query::whereRaw('is_active = true AND id <> 9')->get(['id', 'name']);
             return $this->showAll($canaisForSelect, 'Select', 200);
-        }
+        });
 
 
-        $canais = Canal::where('is_active', true)
+        $canais = $query::where('is_active', true)
             ->paginate($limit);
 
         $canais->setPath("/canais?limit={$limit}");
@@ -46,10 +56,10 @@ class CanalController extends ApiController
     {
         $id = DB::table('canais')->insertGetId(
             [
-                'name' => $this->request->get('name'),
-                'description' => $this->request->get('description'),
-                'slug' => 'teste-slug',
-                'is_active' => true,
+                'name' => $this->request->name,
+                'description' => $this->request->description,
+                'slug' => $this->request->slug,
+                'is_active' => $this->request->is_active,
             ]
         );
         return response()->json([
@@ -69,11 +79,11 @@ class CanalController extends ApiController
         $canal = Canal::find($id);
 
         $data = [
-            'title' => $this->request->get('title'),
-            'description' => $this->request->get('description'),
-            'is_featured' => $this->request->get('is_featured'),
-            'is_approved' => $this->request->get('is_approved'),
-            'options' => $this->request->get('options'),
+            'title' => $this->request->title,
+            'description' => $this->request->description,
+            'is_featured' => $this->request->is_featured,
+            'is_approved' => $this->request->is_approved,
+            'options' => $this->request->options,
         ];
 
         $canal->save($data);
@@ -134,16 +144,16 @@ class CanalController extends ApiController
                 return $this->getSideBarAdvancedFilter();
                 break;
             case 9:
-                return ['categories' => \App\AplicativoCategory::get()];
+                return ['categories' => AplicativoCategory::get()];
                 break;
         }
     }
     private function getSideBarAdvancedFilter()
     {
-        $componentes = \App\CurricularComponentCategory::with('components')->get()->first();
-        $tipos = \App\Tipo::select(['id', 'name'])->get();
-        $licencas = \App\License::select(['id', 'name'])->whereRaw('parent_id is null')->get();
-        $niveis = \App\NivelEnsino::with('components')->get()->first();
+        $componentes = CurricularComponentCategory::with('components')->get()->first();
+        $tipos = Tipo::select(['id', 'name'])->get();
+        $licencas = License::select(['id', 'name'])->whereRaw('parent_id is null')->get();
+        $niveis = NivelEnsino::with('components')->get()->first();
 
         return [
             'components' => $componentes,
@@ -152,19 +162,21 @@ class CanalController extends ApiController
             'niveis' => $niveis[0]
         ];
     }
-    // /root/.ssh/id_rsa
+    
     private function getSideBarCategories($id)
     {
-        $categories = \App\Category::selectRaw("id, parent_id, name, options->'is_active' as is_active")
+        /** categorias dos canais */
+        $categories = Category::selectRaw("id, parent_id, name, options->'is_active' as is_active")
             ->where('canal_id', $id)
             ->whereRaw('parent_id is null')
             ->where('options->is_active', 'true')
             ->with('subCategories')
             ->orderBy('created_at', 'asc')
             ->get();
+        /** disciplinas ensino medio */
         $disciplinas = [];
         if ($id == 2) {
-            $disciplinas = \App\NivelEnsino::where('id', '=', 5)->with('components')->get()->first();
+            $disciplinas = NivelEnsino::where('id', '=', 5)->with('components')->get()->first();
             return [
                 'categories' => $categories,
                 'disciplinas' => $disciplinas
@@ -175,8 +187,8 @@ class CanalController extends ApiController
     }
     private function getSidebarSitesTematicos()
     {
-        $temas = \App\CurricularComponentCategory::where('id', '=', 3)->with('components')->get()->first();
-        $disciplinas = \App\NivelEnsino::where('id', '=', 5)->with('components')->get()->first();
+        $temas = CurricularComponentCategory::where('id', '=', 3)->with('components')->get()->first();
+        $disciplinas = NivelEnsino::where('id', '=', 5)->with('components')->get()->first();
 
         return [
             "temas" => $temas,
