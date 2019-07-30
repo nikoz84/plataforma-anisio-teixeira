@@ -110,21 +110,6 @@ export default {
           message: resp.data.message
         });
       }
-      console.log(resp);
-      /*
-      this.login(data).then(() => {
-        if (this.isLogged) {
-          
-          this.$router.push({
-            name: "admin",
-            params: { slug: "analytics", action: "listar" }
-          });
-          this.$q.loading.hide();
-        } else {
-          this.$q.loading.hide();
-        }
-      })
-      */
     },
     docodePayloadToken() {
       const base64Url = localStorage.token.split(".")[1];
@@ -132,6 +117,7 @@ export default {
       let payload = JSON.parse(window.atob(base64));
       localStorage.setItem("username", payload.user.name);
       localStorage.setItem("user_id", payload.user.id);
+      localStorage.setItem("sexo", payload.user.sexo);
     }
   }
 };
