@@ -1,43 +1,55 @@
 <template>
-    <article class="panel panel-default" v-if="this.aplicativo">
-        <div class="panel-body">
-            <h2 v-text="aplicativo.name"></h2>
-            <div class="row">
-                <div class="col-sm-8 break-word" v-html="aplicativo.description"></div>
-                <figure class="col-sm-4">
-                    <img v-lazy="aplicativo.image"
-                        class="img-responsive thumbnail"
-                        v-bind:style="`border-color:${aplicativo.canal.color};margin: 0 auto;`"
-                        alt="Imagem de destaque">
-                    <a class="btn btn-success btn-block"
-                        v-bind:href="aplicativo.url"
-                        v-bind:style="`background-color: ${aplicativo.canal.color};margin-top:15px;`"
-                        target="_blank">
-                        Ir ao site
-                    </a>
-                </figure>
-            </div>
-            <hr class="line">
-            <span class="label label-default" v-bind:style="'background-color:' + aplicativo.canal.color"> Acessos: </span>
-            <i class="i-list break-word" v-text="aplicativo.options.qt_access"></i>
-        </div>
-        <div class="panel-footer tag-cloud">
-            <h5> Tags: </h5>
-            <a :style="`color:${aplicativo.canal.color};`" 
-              href=""
-                v-for="tag in aplicativo.tags"
-                v-bind:key="tag.id"
-                v-text="tag.name">
-            </a>
-        </div>
-    </article>
+  <article class="q-mt-md">
+    <q-card v-if="aplicativo">
+      <q-card-section>
+        <section class="row">
+          <div class="col-xs-12 col-sm-7 col-md-7">
+            <div class="text-h3" v-text="aplicativo.name"></div>
+            <div class="q-pt-lg q-pr-lg" v-html="aplicativo.description"></div>
+            <q-chip class="q-mt-lg" color="ligth" :label="`${aplicativo.options.qt_access} acessos`"></q-chip>
+          </div>
+          
+          <div class="col-xs-12 col-sm-4 col-md-4">
+            <q-img :src="aplicativo.image"
+                    :placeholder-src="`/img/fundo-padrao.svg`" 
+                  style="height: 250px; width: 100%;"
+                  v-bind:style="`border-color:${aplicativo.canal.color};margin: 0 auto;`"
+                  alt="Imagem de destaque">
+                  <div class="absolute-bottom text-subtitle1 text-center q-pa-xs">
+                     <q-btn class=""
+                      v-bind:href="aplicativo.url"
+                      target="_blank"
+                      flat>
+                      Ir ao site
+                     </q-btn>
+                  </div>
+              </q-img>
+          </div>
+        </section>
+      </q-card-section>
+      <q-card-section>
+        <div class="text-h6">Tags: </div>
+        <q-chip color="ligth" 
+              icon="local_offer"
+              v-for="(tag, i) in aplicativo.tags"
+              :key="i"
+              :label="tag.name"
+              clickable
+              @click="onClick(`/recursos-educacionais/listar/tag/${tag.id}`)"
+              >
+              
+        </q-chip>
+      </q-card-section>
+    </q-card>
+  </article>
 </template>
 <script>
 import { mapState } from "vuex";
+import { QImg, QCard, QCardSection, QSeparator } from "quasar";
 
 export default {
   name: "Aplicativo",
-  components: {},
+  components: { QImg, QCard, QCardSection, QSeparator },
   computed: {
     ...mapState(["aplicativo"]),
     splitAuthors() {
@@ -70,6 +82,9 @@ export default {
           update: true
         }
       });
+    },
+    onClick(url) {
+      this.$router.push(url);
     }
   }
 };

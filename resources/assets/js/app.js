@@ -1,5 +1,5 @@
-import Vue from "vue";
 import "./bootstrap";
+import Vue from "vue";
 
 import Quasar from "quasar/dist/quasar.umd.min.js";
 import "quasar/dist/quasar.ie.polyfills";
