@@ -5,6 +5,6 @@
 </template>
 <script>
 export default {
-  name: "LeftSidebar"
+  name: "LeftSidebarCanais",
 };
 </script>

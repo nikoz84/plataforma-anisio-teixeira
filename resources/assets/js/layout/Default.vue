@@ -60,9 +60,20 @@
             <q-item-label>Inicio</q-item-label>
           </q-item-section>
         </q-item>
-      </q-list>
 
-      <LeftSidebar></LeftSidebar>
+        <q-item clickable tag="a" to="/" 
+            v-if="sidebar.components" v-for="(component, i) in sidebar.components" 
+            :key="`c-${i}`">
+          <q-item-section>
+            <q-item-label>
+              {{component}}
+            </q-item-label>
+          </q-item-section>
+        </q-item>
+
+      </q-list>
+      {{sidebar}}
+      
     </q-drawer>
 
     <q-page-container>
@@ -75,7 +86,7 @@
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
-import LeftSidebar from "../components/LeftSidebar.vue";
+
 import {
   QLayout,
   QDrawer,
@@ -109,20 +120,20 @@ export default {
     QItem,
     QItemSection,
     QItemLabel,
-    QInput,
-    LeftSidebar
+    QInput
   },
   data() {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop,
-      termSearch: ""
+      termSearch: "",
+      
     };
   },
   created() {
     this.getLayout();
   },
   computed: {
-    ...mapState(["isLogged", "links", "canal"])
+    ...mapState(["isLogged", "links", "canal", "sidebar"])
   },
   methods: {
     ...mapActions(["getLayout", "logout"]),
