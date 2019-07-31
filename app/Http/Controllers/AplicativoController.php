@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ApiController;
+use Illuminate\Support\Facades\Validator;
 
 class AplicativoController extends ApiController
 {
@@ -81,9 +82,9 @@ class AplicativoController extends ApiController
         $image->resize($filePath, $fileName, $dir);
     }
     /**
-     * Update the specified resource in storage.
+     * Atualiza aplicativo no banco de dados
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param int $id identificador único
      * @param  \App\Aplicativo  $aplicativo
      * @return \Illuminate\Http\Response
      */
@@ -96,7 +97,9 @@ class AplicativoController extends ApiController
         }
 
         $aplicativo = Aplicativo::find($id);
-        $aplicativo->fill($this->request->all());
+        $aplicativo->fill($this->request->intersect([
+            "name", "description", "url",
+        ]));
         //$aplicativo->category_id = $this->request->get('category_id');
         $aplicativo->save();
         // 'options' => json_decode($this->request->get('options', '{}'), true)

@@ -10,7 +10,7 @@ class Category extends Model
     use SoftDeletes;
 
     public $fillable = ['name', 'parent_id', 'options'];
-    protected $casts = ['options' => 'array',];
+    protected $casts = ['options' => 'array'];
 
     public function subCategories()
     {

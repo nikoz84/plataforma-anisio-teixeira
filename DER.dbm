@@ -3,22 +3,18 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.1" last-position="0,0" last-zoom="0.75"
+<dbmodel pgmodeler-ver="0.9.1-beta" last-position="700,102" last-zoom="0.6"
 	 default-schema="public" default-owner="postgres">
-<role name="niko"
-      superuser="true"
+<role name="user_local"
       createdb="true"
-      replication="true"
-      createrole="true"
       inherit="true"
       login="true"
       encrypted="true"
-      connlimit="100"
       password="********">
 </role>
 
-<database name="migra_pat" encoding="UTF8" lc-collate="pt_BR.UTF-8" lc-ctype="pt_BR.UTF-8" is-template="false" allow-conns="true">
-	<role name="niko"/>
+<database name="migrapat" encoding="UTF8" lc-collate="pt_BR.UTF-8" lc-ctype="pt_BR.UTF-8">
+	<role name="postgres"/>
 	<tablespace name="pg_default"/>
 </database>
 
@@ -30,13 +26,13 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 min-value="1" max-value="2147483647"
 	 cache="1" cycle="false">
 	<schema name="public"/>
-	<role name="niko"/>
+	<role name="postgres"/>
 </sequence>
 
 <table name="migrations">
 	<schema name="public"/>
-	<role name="niko"/>
-	<position x="60" y="40"/>
+	<role name="postgres"/>
+	<position x="4020" y="323"/>
 	<column name="id" not-null="true" sequence="public.migrations_id_seq">
 		<type name="integer" length="0"/>
 	</column>
@@ -51,19 +47,27 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
+<extension name="unaccent" cur-version="1.1">
+	<schema name="public"/>
+	<comment><![CDATA[text search dictionary that removes accents]]></comment>
+</extension>
+
 <sequence name="users_id_seq"
 	 start="1" increment="1"
 	 min-value="1" max-value="9223372036854775807"
 	 cache="1" cycle="false">
 	<schema name="public"/>
-	<role name="niko"/>
+	<role name="postgres"/>
 </sequence>
 
 <table name="users">
 	<schema name="public"/>
-	<role name="niko"/>
-	<position x="520" y="40"/>
+	<role name="postgres"/>
+	<position x="2260" y="1143"/>
 	<column name="id" not-null="true" sequence="public.users_id_seq">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="role_id" not-null="true" default-value="'5'">
 		<type name="bigint" length="0"/>
 	</column>
 	<column name="name" not-null="true">
@@ -75,16 +79,25 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="password" not-null="true">
 		<type name="character varying" length="255"/>
 	</column>
-	<column name="options" not-null="true">
+	<column name="options" default-value="'{}'">
 		<type name="jsonb" length="0"/>
 	</column>
 	<column name="remember_token">
 		<type name="character varying" length="100"/>
 	</column>
+	<column name="verification_token">
+		<type name="character varying" length="200"/>
+	</column>
+	<column name="verified" not-null="true" default-value="false">
+		<type name="boolean" length="0"/>
+	</column>
 	<column name="created_at">
 		<type name="timestamp" length="0" precision="0"/>
 	</column>
 	<column name="updated_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="deleted_at">
 		<type name="timestamp" length="0" precision="0"/>
 	</column>
 	<constraint name="users_pkey" type="pk-constr" table="public.users">
@@ -97,8 +110,8 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="password_resets">
 	<schema name="public"/>
-	<role name="niko"/>
-	<position x="60" y="260"/>
+	<role name="postgres"/>
+	<position x="3980" y="643"/>
 	<column name="email" not-null="true">
 		<type name="character varying" length="255"/>
 	</column>
@@ -118,34 +131,229 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		</idxelement>
 </index>
 
+<table name="oauth_auth_codes">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="4000" y="103"/>
+	<column name="id" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<column name="user_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="client_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="scopes">
+		<type name="text" length="0"/>
+	</column>
+	<column name="revoked" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="expires_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<constraint name="oauth_auth_codes_pkey" type="pk-constr" table="public.oauth_auth_codes">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="oauth_access_tokens">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="3560" y="103"/>
+	<column name="id" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<column name="user_id">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="client_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="name">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="scopes">
+		<type name="text" length="0"/>
+	</column>
+	<column name="revoked" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="created_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="updated_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="expires_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<constraint name="oauth_access_tokens_pkey" type="pk-constr" table="public.oauth_access_tokens">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<index name="oauth_access_tokens_user_id_index" table="public.oauth_access_tokens"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="user_id"/>
+		</idxelement>
+</index>
+
+<table name="oauth_refresh_tokens">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="3900" y="803"/>
+	<column name="id" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<column name="access_token_id" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<column name="revoked" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="expires_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<constraint name="oauth_refresh_tokens_pkey" type="pk-constr" table="public.oauth_refresh_tokens">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<index name="oauth_refresh_tokens_access_token_id_index" table="public.oauth_refresh_tokens"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="access_token_id"/>
+		</idxelement>
+</index>
+
+<sequence name="oauth_clients_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<table name="oauth_clients">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="3940" y="1023"/>
+	<column name="id" not-null="true" sequence="public.oauth_clients_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="user_id">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="secret" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<column name="redirect" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="personal_access_client" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="password_client" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="revoked" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="created_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="updated_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<constraint name="oauth_clients_pkey" type="pk-constr" table="public.oauth_clients">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<index name="oauth_clients_user_id_index" table="public.oauth_clients"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="user_id"/>
+		</idxelement>
+</index>
+
+<sequence name="oauth_personal_access_clients_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<table name="oauth_personal_access_clients">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="3840" y="463"/>
+	<column name="id" not-null="true" sequence="public.oauth_personal_access_clients_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="client_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="created_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="updated_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<constraint name="oauth_personal_access_clients_pkey" type="pk-constr" table="public.oauth_personal_access_clients">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<index name="oauth_personal_access_clients_client_id_index" table="public.oauth_personal_access_clients"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="client_id"/>
+		</idxelement>
+</index>
+
 <sequence name="canais_id_seq"
 	 start="1" increment="1"
 	 min-value="1" max-value="9223372036854775807"
 	 cache="1" cycle="false">
 	<schema name="public"/>
-	<role name="niko"/>
+	<role name="postgres"/>
 </sequence>
 
 <table name="canais">
 	<schema name="public"/>
-	<role name="niko"/>
-	<position x="1180" y="360"/>
+	<role name="postgres"/>
+	<position x="2200" y="703"/>
 	<column name="id" not-null="true" sequence="public.canais_id_seq">
 		<type name="bigint" length="0"/>
 	</column>
 	<column name="name" not-null="true">
-		<type name="character varying" length="100"/>
+		<type name="character varying" length="155"/>
 	</column>
 	<column name="description" not-null="true">
 		<type name="text" length="0"/>
 	</column>
 	<column name="slug" not-null="true">
-		<type name="character varying" length="100"/>
+		<type name="character varying" length="255"/>
 	</column>
 	<column name="is_active" not-null="true" default-value="false">
 		<type name="boolean" length="0"/>
 	</column>
-	<column name="options" default-value="'{}'">
+	<column name="token">
+		<type name="text" length="0"/>
+	</column>
+	<column name="options" not-null="true" default-value="'{}'">
 		<type name="jsonb" length="0"/>
 	</column>
 	<column name="created_at">
@@ -159,6 +367,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</column>
 	<constraint name="canais_pkey" type="pk-constr" table="public.canais">
 		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="canais_slug_unique" type="uq-constr" table="public.canais">
+		<columns names="slug" ref-type="src-columns"/>
 	</constraint>
 </table>
 
@@ -178,18 +389,100 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		</idxelement>
 </index>
 
+<sequence name="categories_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<table name="categories">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1520" y="263"/>
+	<column name="id" not-null="true" sequence="public.categories_id_seq">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="parent_id">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="canal_id">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="options">
+		<type name="jsonb" length="0"/>
+	</column>
+	<column name="created_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="updated_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="deleted_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<constraint name="categories_pkey" type="pk-constr" table="public.categories">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="licenses_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<table name="licenses">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1020" y="403"/>
+	<column name="id" not-null="true" sequence="public.licenses_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="parent_id">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="description" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="site">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="created_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="updated_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="deleted_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<constraint name="licenses_pkey" type="pk-constr" table="public.licenses">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
 <sequence name="conteudos_id_seq"
 	 start="1" increment="1"
 	 min-value="1" max-value="9223372036854775807"
 	 cache="1" cycle="false">
 	<schema name="public"/>
-	<role name="niko"/>
+	<role name="postgres"/>
 </sequence>
 
 <table name="conteudos">
 	<schema name="public"/>
-	<role name="niko"/>
-	<position x="1700" y="40"/>
+	<role name="postgres"/>
+	<position x="1440" y="903"/>
 	<column name="id" not-null="true" sequence="public.conteudos_id_seq">
 		<type name="bigint" length="0"/>
 	</column>
@@ -199,8 +492,26 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="user_id" not-null="true">
 		<type name="bigint" length="0"/>
 	</column>
+	<column name="approving_user_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="license_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="category_id">
+		<type name="bigint" length="0"/>
+	</column>
 	<column name="title" not-null="true">
-		<type name="character varying" length="120"/>
+		<type name="character varying" length="250"/>
+	</column>
+	<column name="description" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="authors" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="source" not-null="true">
+		<type name="text" length="0"/>
 	</column>
 	<column name="is_approved" not-null="true" default-value="false">
 		<type name="boolean" length="0"/>
@@ -208,8 +519,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="is_featured" not-null="true" default-value="false">
 		<type name="boolean" length="0"/>
 	</column>
-	<column name="description" not-null="true">
-		<type name="text" length="0"/>
+	<column name="is_site" not-null="true" default-value="false">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="qt_downloads" default-value="0">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="qt_access" default-value="0">
+		<type name="integer" length="0"/>
 	</column>
 	<column name="options" default-value="'{}'">
 		<type name="jsonb" length="0"/>
@@ -260,20 +577,20 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 min-value="1" max-value="9223372036854775807"
 	 cache="1" cycle="false">
 	<schema name="public"/>
-	<role name="niko"/>
+	<role name="postgres"/>
 </sequence>
 
 <table name="tags">
 	<schema name="public"/>
-	<role name="niko"/>
-	<position x="1100" y="760"/>
+	<role name="postgres"/>
+	<position x="2860" y="163"/>
 	<column name="id" not-null="true" sequence="public.tags_id_seq">
 		<type name="bigint" length="0"/>
 	</column>
-	<column name="nome" not-null="true">
+	<column name="name" not-null="true">
 		<type name="character varying" length="120"/>
 	</column>
-	<column name="busca" not-null="true">
+	<column name="searched" default-value="0">
 		<type name="integer" length="0"/>
 	</column>
 	<column name="created_at">
@@ -282,8 +599,49 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="updated_at">
 		<type name="timestamp" length="0" precision="0"/>
 	</column>
+	<column name="deleted_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
 	<constraint name="tags_pkey" type="pk-constr" table="public.tags">
 		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="tags_name_unique" type="uq-constr" table="public.tags">
+		<columns names="name" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="aplicativo_categories_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<table name="aplicativo_categories">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="3440" y="1023"/>
+	<column name="id" not-null="true" sequence="public.aplicativo_categories_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="250"/>
+	</column>
+	<column name="created_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="updated_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="deleted_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<constraint name="aplicativo_categories_pkey" type="pk-constr" table="public.aplicativo_categories">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="aplicativo_categories_name_unique" type="uq-constr" table="public.aplicativo_categories">
+		<columns names="name" ref-type="src-columns"/>
 	</constraint>
 </table>
 
@@ -292,27 +650,33 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 min-value="1" max-value="9223372036854775807"
 	 cache="1" cycle="false">
 	<schema name="public"/>
-	<role name="niko"/>
+	<role name="postgres"/>
 </sequence>
 
 <table name="aplicativos">
 	<schema name="public"/>
-	<role name="niko"/>
-	<position x="100" y="380"/>
+	<role name="postgres"/>
+	<position x="2980" y="1003"/>
 	<column name="id" not-null="true" sequence="public.aplicativos_id_seq">
 		<type name="bigint" length="0"/>
 	</column>
 	<column name="user_id" not-null="true">
-		<type name="bigint" length="0"/>
+		<type name="integer" length="0"/>
+	</column>
+	<column name="category_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="canal_id" not-null="true">
+		<type name="integer" length="0"/>
 	</column>
 	<column name="name" not-null="true">
-		<type name="character varying" length="120"/>
+		<type name="character varying" length="150"/>
 	</column>
 	<column name="description" not-null="true">
 		<type name="text" length="0"/>
 	</column>
-	<column name="is_featured" not-null="true">
-		<type name="boolean" length="0"/>
+	<column name="url" not-null="true">
+		<type name="character varying" length="150"/>
 	</column>
 	<column name="options" default-value="'{}'">
 		<type name="jsonb" length="0"/>
@@ -321,6 +685,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="timestamp" length="0" precision="0"/>
 	</column>
 	<column name="updated_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="deleted_at">
 		<type name="timestamp" length="0" precision="0"/>
 	</column>
 	<constraint name="aplicativos_pkey" type="pk-constr" table="public.aplicativos">
@@ -336,32 +703,32 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		</idxelement>
 </index>
 
-<table name="conteudo_tags">
+<table name="conteudo_tag">
 	<schema name="public"/>
-	<role name="niko"/>
-	<position x="1700" y="740"/>
+	<role name="postgres"/>
+	<position x="2060" y="363"/>
 	<column name="conteudo_id" not-null="true">
 		<type name="bigint" length="0"/>
 	</column>
 	<column name="tag_id" not-null="true">
 		<type name="bigint" length="0"/>
 	</column>
-	<constraint name="conteudo_tags_pkey" type="pk-constr" table="public.conteudo_tags">
+	<constraint name="conteudo_tag_pkey" type="pk-constr" table="public.conteudo_tag">
 		<columns names="conteudo_id,tag_id" ref-type="src-columns"/>
 	</constraint>
 </table>
 
-<table name="aplicativo_tags">
+<table name="aplicativo_tag">
 	<schema name="public"/>
-	<role name="niko"/>
-	<position x="200" y="780"/>
+	<role name="postgres"/>
+	<position x="3080" y="443"/>
 	<column name="aplicativo_id" not-null="true">
 		<type name="bigint" length="0"/>
 	</column>
 	<column name="tag_id" not-null="true">
 		<type name="bigint" length="0"/>
 	</column>
-	<constraint name="aplicativo_tags_pkey" type="pk-constr" table="public.aplicativo_tags">
+	<constraint name="aplicativo_tag_pkey" type="pk-constr" table="public.aplicativo_tag">
 		<columns names="aplicativo_id,tag_id" ref-type="src-columns"/>
 	</constraint>
 </table>
@@ -371,21 +738,30 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 min-value="1" max-value="2147483647"
 	 cache="1" cycle="false">
 	<schema name="public"/>
-	<role name="niko"/>
+	<role name="postgres"/>
 </sequence>
 
 <table name="options">
 	<schema name="public"/>
-	<role name="niko"/>
-	<position x="60" y="140"/>
+	<role name="postgres"/>
+	<position x="1060" y="123"/>
 	<column name="id" not-null="true" sequence="public.options_id_seq">
 		<type name="integer" length="0"/>
 	</column>
-	<column name="nome" not-null="true">
+	<column name="name" not-null="true">
 		<type name="character varying" length="255"/>
 	</column>
 	<column name="meta_data" default-value="'{}'">
 		<type name="jsonb" length="0"/>
+	</column>
+	<column name="deleted_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="created_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="updated_at">
+		<type name="timestamp" length="0" precision="0"/>
 	</column>
 	<constraint name="options_pkey" type="pk-constr" table="public.options">
 		<columns names="id" ref-type="src-columns"/>
@@ -400,20 +776,218 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		</idxelement>
 </index>
 
-<table name="user_canais">
+<table name="user_canal">
 	<schema name="public"/>
-	<role name="niko"/>
-	<position x="540" y="400"/>
+	<role name="postgres"/>
+	<position x="2640" y="863"/>
 	<column name="user_id" not-null="true">
 		<type name="bigint" length="0"/>
 	</column>
 	<column name="canal_id" not-null="true">
 		<type name="bigint" length="0"/>
 	</column>
-	<constraint name="user_canais_pkey" type="pk-constr" table="public.user_canais">
+	<constraint name="user_canal_pkey" type="pk-constr" table="public.user_canal">
 		<columns names="user_id,canal_id" ref-type="src-columns"/>
 	</constraint>
 </table>
+
+<sequence name="tipos_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<table name="tipos">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1580" y="123"/>
+	<column name="id" not-null="true" sequence="public.tipos_id_seq">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="options" not-null="true">
+		<type name="jsonb" length="0"/>
+	</column>
+	<constraint name="tipos_pkey" type="pk-constr" table="public.tipos">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="niveis_ensino_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<table name="niveis_ensino">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="980" y="1563"/>
+	<column name="id" not-null="true" sequence="public.niveis_ensino_id_seq">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<constraint name="niveis_ensino_pkey" type="pk-constr" table="public.niveis_ensino">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="curricular_components_categories_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<table name="curricular_components_categories">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="2080" y="1743"/>
+	<column name="id" not-null="true" sequence="public.curricular_components_categories_id_seq">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<constraint name="curricular_components_categories_pkey" type="pk-constr" table="public.curricular_components_categories">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="curricular_components_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<table name="curricular_components">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1420" y="1743"/>
+	<column name="id" not-null="true" sequence="public.curricular_components_id_seq">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="category_id">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="nivel_id">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<constraint name="curricular_components_pkey" type="pk-constr" table="public.curricular_components">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="conteudo_curricular_component">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1920" y="1463"/>
+	<column name="conteudo_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="curricular_component_id" not-null="true">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="conteudo_curricular_component_pkey" type="pk-constr" table="public.conteudo_curricular_component">
+		<columns names="conteudo_id,curricular_component_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="denuncias_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<table name="denuncias">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1040" y="803"/>
+	<column name="id" not-null="true" sequence="public.denuncias_id_seq">
+		<type name="bigint" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<column name="email" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<column name="url" not-null="true">
+		<type name="character varying" length="250"/>
+	</column>
+	<column name="subject" not-null="true">
+		<type name="character varying" length="140"/>
+	</column>
+	<column name="message" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="created_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="updated_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="deleted_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<constraint name="denuncias_pkey" type="pk-constr" table="public.denuncias">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="roles_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<table name="roles">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="2640" y="1603"/>
+	<column name="id" not-null="true" sequence="public.roles_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="80"/>
+	</column>
+	<column name="created_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="updated_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<column name="deleted_at">
+		<type name="timestamp" length="0" precision="0"/>
+	</column>
+	<constraint name="roles_pkey" type="pk-constr" table="public.roles">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<constraint name="categories_canal_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.canais" table="public.categories">
+	<columns names="canal_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
 
 <constraint name="conteudos_user_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
 	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.users" table="public.conteudos">
@@ -427,112 +1001,208 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
+<constraint name="conteudos_approving_user_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.users" table="public.conteudos">
+	<columns names="approving_user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="conteudos_license_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.licenses" table="public.conteudos">
+	<columns names="license_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="conteudos_category_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.categories" table="public.conteudos">
+	<columns names="category_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
 <constraint name="aplicativos_user_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
 	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.users" table="public.aplicativos">
 	<columns names="user_id" ref-type="src-columns"/>
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
-<constraint name="conteudo_tags_conteudo_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.conteudos" table="public.conteudo_tags">
-	<columns names="conteudo_id" ref-type="src-columns"/>
+<constraint name="aplicativos_category_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.aplicativo_categories" table="public.aplicativos">
+	<columns names="category_id" ref-type="src-columns"/>
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
-<constraint name="conteudo_tags_tag_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.tags" table="public.conteudo_tags">
-	<columns names="tag_id" ref-type="src-columns"/>
-	<columns names="id" ref-type="dst-columns"/>
-</constraint>
-
-<constraint name="aplicativo_tags_aplicativo_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.aplicativos" table="public.aplicativo_tags">
-	<columns names="aplicativo_id" ref-type="src-columns"/>
-	<columns names="id" ref-type="dst-columns"/>
-</constraint>
-
-<constraint name="aplicativo_tags_tag_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.tags" table="public.aplicativo_tags">
-	<columns names="tag_id" ref-type="src-columns"/>
-	<columns names="id" ref-type="dst-columns"/>
-</constraint>
-
-<constraint name="user_canais_user_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.users" table="public.user_canais">
-	<columns names="user_id" ref-type="src-columns"/>
-	<columns names="id" ref-type="dst-columns"/>
-</constraint>
-
-<constraint name="user_canais_canal_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.canais" table="public.user_canais">
+<constraint name="aplicativos_canal_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.canais" table="public.aplicativos">
 	<columns names="canal_id" ref-type="src-columns"/>
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
+<constraint name="conteudo_tag_conteudo_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.conteudos" table="public.conteudo_tag">
+	<columns names="conteudo_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="conteudo_tag_tag_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.tags" table="public.conteudo_tag">
+	<columns names="tag_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="aplicativo_tag_aplicativo_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.aplicativos" table="public.aplicativo_tag">
+	<columns names="aplicativo_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="aplicativo_tag_tag_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.tags" table="public.aplicativo_tag">
+	<columns names="tag_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="user_canal_user_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.users" table="public.user_canal">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="user_canal_canal_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.canais" table="public.user_canal">
+	<columns names="canal_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="curricular_components_nivel_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.niveis_ensino" table="public.curricular_components">
+	<columns names="nivel_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="curricular_components_category_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.curricular_components_categories" table="public.curricular_components">
+	<columns names="category_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="conteudo_curricular_component_conteudo_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.conteudos" table="public.conteudo_curricular_component">
+	<columns names="conteudo_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="conteudo_curricular_component_curricular_component_id_foreign" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.curricular_components" table="public.conteudo_curricular_component">
+	<columns names="curricular_component_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="rel_categories_canais" type="relfk"
+	 custom-color="#057680"
+	 src-table="public.categories"
+	 dst-table="public.canais"
+	 src-required="false" dst-required="false"/>
+
 <relationship name="rel_conteudos_users" type="relfk"
-	 custom-color="#40ff65"
+	 custom-color="#0ddf31"
 	 src-table="public.conteudos"
-	 dst-table="public.users" reference-fk="conteudos_user_id_foreign"
+	 dst-table="public.users"
 	 src-required="false" dst-required="false"/>
 
 <relationship name="rel_conteudos_canais" type="relfk"
-	 custom-color="#2fcdb3"
+	 custom-color="#613fc9"
 	 src-table="public.conteudos"
-	 dst-table="public.canais" reference-fk="conteudos_canal_id_foreign"
+	 dst-table="public.canais"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_conteudos_licenses" type="relfk"
+	 custom-color="#4a570c"
+	 src-table="public.conteudos"
+	 dst-table="public.licenses"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_conteudos_categories" type="relfk"
+	 custom-color="#88288a"
+	 src-table="public.conteudos"
+	 dst-table="public.categories"
 	 src-required="false" dst-required="false"/>
 
 <relationship name="rel_aplicativos_users" type="relfk"
-	 custom-color="#87149f"
+	 custom-color="#ad7364"
 	 src-table="public.aplicativos"
-	 dst-table="public.users" reference-fk="aplicativos_user_id_foreign"
+	 dst-table="public.users"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="rel_conteudo_tags_conteudos" type="relfk"
-	 custom-color="#aba71a"
-	 src-table="public.conteudo_tags"
-	 dst-table="public.conteudos" reference-fk="conteudo_tags_conteudo_id_foreign"
-	 src-required="false" dst-required="false">
-	<label ref-type="name-label">
-		<position x="43.3947" y="47.2393"/>
-	</label>
-</relationship>
-
-<relationship name="rel_conteudo_tags_tags" type="relfk"
-	 custom-color="#54fdfe"
-	 src-table="public.conteudo_tags"
-	 dst-table="public.tags" reference-fk="conteudo_tags_tag_id_foreign"
+<relationship name="rel_aplicativos_aplicativo_categories" type="relfk"
+	 custom-color="#2433b5"
+	 src-table="public.aplicativos"
+	 dst-table="public.aplicativo_categories"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="rel_aplicativo_tags_aplicativos" type="relfk"
-	 custom-color="#e3410c"
-	 src-table="public.aplicativo_tags"
-	 dst-table="public.aplicativos" reference-fk="aplicativo_tags_aplicativo_id_foreign"
+<relationship name="rel_aplicativos_canais" type="relfk"
+	 custom-color="#f3fae7"
+	 src-table="public.aplicativos"
+	 dst-table="public.canais"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="rel_aplicativo_tags_tags" type="relfk"
-	 custom-color="#055f96"
-	 src-table="public.aplicativo_tags"
-	 dst-table="public.tags" reference-fk="aplicativo_tags_tag_id_foreign"
+<relationship name="rel_conteudo_tag_conteudos" type="relfk"
+	 custom-color="#d3a5a3"
+	 src-table="public.conteudo_tag"
+	 dst-table="public.conteudos"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="rel_user_canais_users" type="relfk"
-	 custom-color="#ae74de"
-	 src-table="public.user_canais"
-	 dst-table="public.users" reference-fk="user_canais_user_id_foreign"
-	 src-required="false" dst-required="false">
-	<label ref-type="name-label">
-		<position x="22.3844" y="39.4955"/>
-	</label>
-</relationship>
+<relationship name="rel_conteudo_tag_tags" type="relfk"
+	 custom-color="#3c71b9"
+	 src-table="public.conteudo_tag"
+	 dst-table="public.tags"
+	 src-required="false" dst-required="false"/>
 
-<relationship name="rel_user_canais_canais" type="relfk"
-	 custom-color="#edb806"
-	 src-table="public.user_canais"
-	 dst-table="public.canais" reference-fk="user_canais_canal_id_foreign"
-	 src-required="false" dst-required="false">
-	<label ref-type="dst-label">
-		<position x="0.1425" y="19.725"/>
-	</label>
-</relationship>
+<relationship name="rel_aplicativo_tag_aplicativos" type="relfk"
+	 custom-color="#984184"
+	 src-table="public.aplicativo_tag"
+	 dst-table="public.aplicativos"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_aplicativo_tag_tags" type="relfk"
+	 custom-color="#739614"
+	 src-table="public.aplicativo_tag"
+	 dst-table="public.tags"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_user_canal_users" type="relfk"
+	 custom-color="#625ab8"
+	 src-table="public.user_canal"
+	 dst-table="public.users"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_user_canal_canais" type="relfk"
+	 custom-color="#ce3232"
+	 src-table="public.user_canal"
+	 dst-table="public.canais"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_curricular_components_niveis_ensino" type="relfk"
+	 custom-color="#91eda5"
+	 src-table="public.curricular_components"
+	 dst-table="public.niveis_ensino"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_curricular_components_curricular_components_categories" type="relfk"
+	 custom-color="#27c739"
+	 src-table="public.curricular_components"
+	 dst-table="public.curricular_components_categories"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_conteudo_curricular_component_conteudos" type="relfk"
+	 custom-color="#322560"
+	 src-table="public.conteudo_curricular_component"
+	 dst-table="public.conteudos"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_conteudo_curricular_component_curricular_components" type="relfk"
+	 custom-color="#09868a"
+	 src-table="public.conteudo_curricular_component"
+	 dst-table="public.curricular_components"
+	 src-required="false" dst-required="false"/>
 
 </dbmodel>

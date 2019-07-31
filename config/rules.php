@@ -63,5 +63,8 @@ return [
         'subject' => 'required',
         'message' => 'required|min:50|max:300',
         'recaptcha' => ['required', new \App\Rules\ValidRecaptcha],
+    ],
+    'categoria' => [
+        'name' => 'required','canal_id' => 'required'
     ]
 ];

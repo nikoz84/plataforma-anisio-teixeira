@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 */
 use App\Aplicativo;
 
+
 Route::get('/email', function (Request $request) {
     return new App\Mail\SendMail($request);
 });
@@ -23,6 +24,13 @@ Route::get('/teste', function (Request $request) {
     $wordpres = new App\Helpers\WordpressService($request->limit, $request->page);
 
     return $wordpres->getPosts();
+});
+
+Route::get('/form', function (Request $request){
+    if($request->all()){
+        dd($request->all());
+    }
+    return view('forms.teste');
 });
 
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');

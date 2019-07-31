@@ -40,5 +40,10 @@
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
     "**/node_modules/*/**": true
-  }
+  },
+  "cSpell.words": [
+    "criado",
+    "deletar",
+    "perfil"
+  ]
 }

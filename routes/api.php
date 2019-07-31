@@ -22,8 +22,10 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/layout', 'HomeController@getLayout')->name('lista.links');
     /** CATEGORIAS */
     Route::get('/categories', 'CategoryController@list')->name('lista.categorias');
-    Route::get('/categories/aplicativos', 'CategoryController@getAplicativoCategories')
-        ->name('lista.categorias.aplicativos');
+    Route::get('/categories/{id}', 'CategoryController@getCategoryById')->name('lista.categoria.x.id');
+    // Route::get('/categories/aplicativos', 'CategoryController@getAplicativoCategories')
+       //     ->name('lista.categorias.aplicativos');
+    Route::get('/aplicativos/categories', 'AplicativoCategoryController@list')->name('lista.categorias.aplicativo');
     /** TIPOS */
     Route::get('/tipos', 'TipoController@list')->name('listar.tipos');
 
@@ -47,7 +49,7 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/aplicativos', 'AplicativoController@list')->name('lista.aplicativo');
     Route::get('/aplicativos/search/{term}', 'AplicativoController@search')->name('busca.aplicativo');
     Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('busca.x.aplicativo.id');
-    Route::get('/aplicativos/categories', 'AplicativoCategoryController@list')->name('lista.categorias.aplicativo');
+    
     /** AUTENTICACAO */
     Route::post('/auth/login', 'AuthController@login')->name('login.usuario');
     Route::post('/auth/register', 'AuthController@register')->name('registro.usuario');
@@ -64,16 +66,23 @@ Route::group(['middleware' => ['cors']], function () {
 /**
  *
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN
- * USUÁRIO DEBE ESTAR LOGADO PARA ACESSAR ESSAS ROTAS
+ * USUÁRIO DEVE ESTAR LOGADO PARA ACESSAR ESSAS ROTAS
  *
  * */
 Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
+    /** CATEGORIAS */
+    Route::post('/categories', 'CategoryController@create')->name('criar.categorias');// Em andamento
+    Route::delete('/categories/{id}', 'CategoryController@delete')->name('categorias.apagar');// Em andamento
+    Route::put('/categories/{id}', 'CategoryController@update')->name('atualizar.categorias');// Em andamento
     /** AUTENTICACAO */
     Route::post('/auth/logout', 'AuthController@logout')->name('sair');
     Route::post('/auth/refresh', 'AuthController@refresh')->name('refrescar.token');
     Route::post('/auth/user', 'AuthController@getAuthUser')->name('usuario.logado');
     /** ROLES */
     Route::get('/roles', 'RoleController@list')->name('role.listar');
+    Route::post('/roles', 'RoleController@create')->name('criar.role');
+    Route::put('/roles/{id}', 'RoleController@update')->name('atualizar.role');
+    Route::delete('/roles/{id}', 'RoleController@delete')->name('deletar.role');
     /** USUARIOS */
     Route::get('/usuarios/search/{termo}', 'UserController@search')->name('usuario.buscar');
     Route::delete('/usuarios/{id}', 'UserController@delete')->name('usuario.apagar');
