@@ -49,7 +49,6 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/aplicativos', 'AplicativoController@list')->name('lista.aplicativo');
     Route::get('/aplicativos/search/{term}', 'AplicativoController@search')->name('busca.aplicativo');
     Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('busca.x.aplicativo.id');
-    
     /** AUTENTICACAO */
     Route::post('/auth/login', 'AuthController@login')->name('login.usuario');
     Route::post('/auth/register', 'AuthController@register')->name('registro.usuario');

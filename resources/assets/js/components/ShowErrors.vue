@@ -1,11 +1,7 @@
 <template>
-    <div v-if="errors">
-        <ul class="list-unstyled">
-            <li v-for="(error,i) in errors" :key="i">
-                <small class="text-danger" v-text="error"></small>
-            </li>
-        </ul>
-    </div>
+  <div v-if="errors">
+    <p class="text-negative" v-for="(error,i) in errors" :key="i" v-text="error"></p>
+  </div>
 </template>
 <script>
 export default {

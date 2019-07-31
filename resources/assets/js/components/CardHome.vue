@@ -1,98 +1,42 @@
 <template>
-  <div class="row">
-    <header class="page-header">
-      <h2 class="page-title" v-text="data.title"></h2>
+  <article class="q-ma-md justify-center">
+    <header class="row text-center q-pt-xl q-pb-xl">
+      <div class="text-h4 text-light" v-text="data.title"></div>
     </header>
-    <section>
-      <article class="col-sm-6" v-for="(item, i) in data.items" :key="i">
-        <figure class="card-container">
-          <img v-lazy="item.image" :src="item.image">
-          <caption class="card-content">
-            <a :href="item.url_exibir">
-              <h2>{{ item.title ? item.title : item.name }}</h2>
-            </a>
-          </caption>
-        </figure>
-      </article>
-    </section>
-</div>
+    
+    <div class="row q-gutter-xl">
+      <q-card class="col-xs-12 col-sm-5 col-md-5 col-lg-5" v-for="(item, i) in data.items" :key="i">
+        
+          <q-img basic :src="item.image" :placeholder-src="`/img/fundo-padrao.svg`" style="height: 250px; width: 100%;">
+            <div class="absolute-bottom text-subtitle1 cursor-pointer">
+              <router-link tag="div"
+                      :to="item.url_exibir" 
+                      v-text="title(item.title ? item.title : item.name)"/>
+            </div>
+          </q-img>
+        
+      </q-card>
+    </div>
+  </article>
 </template>
 <script>
+import { QImg, QCard, QCardSection, QSeparator } from "quasar";
+
 export default {
   name: "CardHome",
-  props: ["data"]
+  props: ["data"],
+  components: { QImg, QCard, QCardSection, QSeparator },
+  methods: {
+    title(title) {
+      let stringLength = title.length;
+      return stringLength > 55 ? title.substr(0, 55) + " ..." : title;
+    }
+  }
 };
 </script>
-<style lang="scss" scoped>
-$primary: rgba(4, 9, 30, 0.637);
-$white: #f0f0f5;
-$shadow: -2px 2px 2px #071925e5;
-$transition: all 0.8s;
-$scale: scale(1.2);
-
-.page-title {
-  font-size: 30px;
-  line-height: 1;
-  font-weight: 600;
-  padding-left: 10px;
-  color: #071925b6;
-}
-
-.card-container {
-  position: relative;
-  display: table;
-  padding: 0px;
-  margin-bottom: 15px;
-  overflow: hidden;
-  -webkit-box-shadow: $shadow;
-  -moz-box-shadow: $shadow;
-  box-shadow: $shadow;
-  img {
-    -webkit-transition: $transition;
-    -moz-transition: $transition;
-    -ms-transition: $transition;
-    -o-transition: $transition;
-    transition: $transition;
-    &:hover {
-      -webkit-transform: $scale;
-      -moz-transform: $scale;
-      -ms-transform: $scale;
-      -o-transform: $scale;
-      transform: $scale;
-    }
-  }
-  .card-content {
-    box-shadow: inset 0 0 5px 3px rgba(0, 0, 0, 0.3);
-    position: absolute;
-    bottom: 0;
-    padding-left: 10px;
-    background: rgba(0, 0, 0, 0.877);
-    background-color: $primary;
-    width: 100%;
-    a {
-      text-decoration: none;
-      z-index: 2;
-    }
-    > a h2 {
-      margin-top: 7px;
-      margin-bottom: 5.5px;
-      font-weight: bolder;
-      font-size: 2.2vh;
-      color: #fff;
-    }
-  }
-}
-
-@media only screen and (min-width: 0px) and (max-width: 1023px) {
-  .card-container img {
-    width: 68vh;
-    height: 35vh;
-  }
-}
-@media only screen and (min-width: 1024px) {
-  .card-container img {
-    width: 70vh;
-    height: 35vh;
-  }
+<style lang="stylus" scoped>
+.q-img__content > div {
+  font-weight: bolder;
+  background: rgba(23, 2, 99, 0.6);
 }
 </style>

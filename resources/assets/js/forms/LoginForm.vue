@@ -1,27 +1,39 @@
 <template>
-  <section class="row">
-    <div class="form-image">
-      <div class="bottom-0">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title text-center">Faça seu Login</h4>
-            </div>
-            <div class="panel-body">
-                <form v-on:submit.prevent="entrar()">
-                    <div class="form-group" v-bind:class="inputErrors('email')">
-                        <label for="email">E-mail</label>
-                        <input class="form-control" v-model="email" id="email" type="text">
-                        <ShowErrors :errors="errors.email"></ShowErrors>
-                    </div>
-                    <div class="form-group" v-bind:class="inputErrors('password')">
-                        <label for="senha">Senha</label>
-                        <input class="form-control" v-model="password" id="senha" type="password">
-                        <ShowErrors :errors="errors.password"></ShowErrors>
-                    </div>
-                    <button type="submit" class="btn btn-default btn-block">Login</button>
-                </form>
-                <AlertShake></AlertShake>
-                <div class="text-center links">
+  <article>
+     <IntroParallax/>
+    <div class="row">
+        <q-card class="offset-md-4 col-md-4">
+            <q-card-section >
+                <div class="text-center text-h5">Faça seu Login</div>
+            </q-card-section>
+            <q-separator inset />
+            <q-card-section>
+                <q-form @submit.prevent="onSubmit()" class="q-gutter-md" ref="loginForm">
+                  <q-input filled v-model="email" label="Seu E-mail *" hint="E-mail" type="email"
+                                bottom-slots :error="errors.email && errors.email.length > 0">
+                    <template v-slot:error>
+                      <ShowErrors :errors="errors.email"></ShowErrors>
+                    </template>
+                  </q-input>
+                  <q-input v-model="password" filled :type="isPwd ? 'password' : 'text'" hint="Senha"
+                            bottom-slots :error="errors.password && errors.password.length > 0">
+                    <template v-slot:append>
+                      <q-icon
+                        :name="isPwd ? 'visibility_off' : 'visibility'"
+                        class="cursor-pointer"
+                        @click="isPwd = !isPwd"
+                      />
+                    </template>
+                    <template v-slot:error>
+                      <ShowErrors :errors="errors.password"></ShowErrors>
+                    </template>
+                  </q-input>
+                   <div>
+                     <q-btn class="full-width" label="Entrar" type="submit" color="primary"/>
+                   </div>
+                </q-form>
+                
+                <div class="text-center q-mt-lg">
                   <router-link to="/usuario/recuperar-senha">
                     Recuperar senha
                   </router-link> |
@@ -29,28 +41,33 @@
                       Cadastre-se
                   </router-link>
                 </div>
-            </div>
-        </div>
-      </div>
+            </q-card-section>
+        </q-card>
     </div>
-  </section>
+  </article>
 </template>
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
-import AlertShake from "../components/AlertShake.vue";
+import { QCard, QCardSection, QInput, QForm, QImg, QSeparator } from "quasar";
 import ShowErrors from "../components/ShowErrors.vue";
-import { getInputError } from "../functions.js";
+import IntroParallax from "../components/IntroParallax.vue";
 
 export default {
   name: "LoginForm",
   components: {
-    AlertShake,
-    ShowErrors
+    QCard,
+    QCardSection,
+    ShowErrors,
+    QForm,
+    QInput,
+    QImg,
+    IntroParallax
   },
   data() {
     return {
       email: null,
-      password: null
+      password: null,
+      isPwd: true
     };
   },
   beforeCreate() {
@@ -63,21 +80,36 @@ export default {
   },
   methods: {
     ...mapActions(["login"]),
-    entrar() {
+    ...mapMutations(["SET_ERRORS", "SET_LOGIN_USER"]),
+    async onSubmit() {
+      this.$q.loading.show();
       let data = { email: this.email, password: this.password };
+      let resp = await axios.post("/auth/login", data);
 
-      this.login(data).then(() => {
-        if (this.isLogged) {
-          this.docodePayloadToken();
-          this.$router.push({
-            name: "admin",
-            params: { slug: "analytics", action: "listar" }
-          });
-        }
-      });
-    },
-    inputErrors(attr) {
-      return getInputError(this.errors, attr);
+      if (resp.data && resp.data.success) {
+        this.$q.loading.hide();
+        localStorage.setItem("token", resp.data.metadata.token.access_token);
+        this.docodePayloadToken();
+        this.SET_ERRORS([]);
+        this.SET_LOGIN_USER(true);
+        this.$router.push("/admin/analitycs/listar");
+        this.$q.notify({
+          color: "positive",
+          textColor: "white",
+          icon: "done",
+          message: `${resp.data.message} ${localStorage.username}!!`
+        });
+      } else {
+        this.SET_ERRORS(resp.data.errors);
+        this.$q.loading.hide();
+
+        this.$q.notify({
+          color: "negative",
+          textColor: "white",
+          icon: "error",
+          message: resp.data.message
+        });
+      }
     },
     docodePayloadToken() {
       const base64Url = localStorage.token.split(".")[1];
@@ -85,52 +117,8 @@ export default {
       let payload = JSON.parse(window.atob(base64));
       localStorage.setItem("username", payload.user.name);
       localStorage.setItem("user_id", payload.user.id);
+      localStorage.setItem("sexo", payload.user.sexo);
     }
   }
 };
 </script>
-<style lang="scss" scoped>
-$break-small: 780px;
-$break-large: 781px;
-$break-extra-large: 1200px;
-
-.form-image {
-  display: block;
-  min-height: 100vh;
-  padding: 0;
-  background: url("/storage/conteudos/conteudos-digitais/galeria/2.jpg")
-    no-repeat bottom center scroll;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  -o-background-size: cover;
-
-  .bottom-0 {
-    @media screen and (max-width: $break-small) {
-      position: absolute;
-      left: 60px;
-      width: 60vh;
-      margin-top: 50px;
-    }
-    @media screen and (min-width: $break-large) {
-      position: absolute;
-      bottom: 0px;
-      right: 5px;
-      min-width: 360px;
-    }
-    @media screen and (min-width: $break-extra-large) {
-      position: absolute;
-      bottom: 0px;
-      right: 15px;
-      min-width: 420px;
-    }
-  }
-  form {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-}
-.links {
-  padding-top: 15px;
-}
-</style>

@@ -1,18 +1,24 @@
 ﻿-- EXTENSÃO SEM ACENTOS
-CREATE EXTENSION IF NOT EXISTS unaccent;
+CREATE EXTENSION
+IF NOT EXISTS unaccent;
 -- DESHABILITA TRIGGERS
 ALTER TABLE conteudodigital DISABLE TRIGGER ALL;
 
 --- LIMPA EMAILS REPETIDOS
 
-with emails as (
-select email,
-       count(*)
-from usuario
-group by email
-having count(*) > 1
-) select u.idusuario, u.username, u.nomeusuario, u.email from usuario as u 
-  join emails as e on e.email = u.email
+with
+	emails
+	as
+	(
+		select email,
+			count(*)
+		from usuario
+		group by email
+		having count(*) > 1
+	)
+select u.idusuario, u.username, u.nomeusuario, u.email
+from usuario as u
+	join emails as e on e.email = u.email
 
 
 
@@ -40,15 +46,21 @@ update usuario set email = (concat('deletar',email)) where idusuario = 2668;
 
 -- LIMPA TAGS
 
-select * from tag
+select *
+from tag
 
-with tags as (
+with tags
+as
+(
 select nometag,
-       count(*)
+	count(*)
 from tag
 group by nometag
 having count(*) > 1
-) select t.idtag, t.nometag from tag as t join tags as tgs on tgs.nometag = t.nometag order by idtag
+)
+select t.idtag, t.nometag
+from tag as t join tags as tgs on tgs.nometag = t.nometag
+order by idtag
 
 --
 update tag set nometag = (concat('deletar_',nometag)) where idtag = 3438;
@@ -107,14 +119,18 @@ set nomeusuariotipo = 'convidado'
 where idusuariotipo = 5;
 
 -- EXPORTAR ROLES
-COPY( 
+COPY
+( 
 	select idusuariotipo as id,
-		nomeusuariotipo as name,
-		now() as created_at,
-		null as updated_at,
-		null as deleted_at
-	from usuariotipo
-) TO '/home/niko/Documentos/db/MIGRA/final/aa.roles' WITH (FORMAT text, DELIMITER '*');
+	nomeusuariotipo as name,
+	now() as created_at,
+	null as updated_at,
+	null as deleted_at
+from usuariotipo
+)
+TO '/home/niko/Documentos/db/MIGRA/final/aa.roles'
+WITH
+(FORMAT text, DELIMITER '*');
 
 
 
@@ -140,13 +156,17 @@ COPY
 	u.datacriacao as created_at,
 	u.dataatualizacao as updated_at,
 	null as deleted_at
-from usuario as u) TO '/home/niko/Documentos/db/MIGRA/final/a.users' WITH (FORMAT text, DELIMITER '*');
+from usuario as u)
+TO '/home/niko/Documentos/db/MIGRA/final/a.users'
+WITH
+(FORMAT text, DELIMITER '*');
 
 -- EXPORTAR CANAIS
 
-copy (
+copy
+(
   select idcanal as id,
-        titulomenucanal as name,
+	titulomenucanal as name,
 	descricaocanal as description,
 	case when idcanal = 6 then 'recursos-educacionais' 
 	    when idcanal = 4 then 'midias-educacionais'
@@ -172,141 +192,190 @@ copy (
 		'has_categories', flcategoria,
 		'complement_description', jsonb_build_object('que',descricaooquecanal,'porque',descricaoporquecanal,'como',descricaocomocanal)	
 	) AS options,
-	now()::timestamp as created_at,
+	now()
+::timestamp as created_at,
 	null as updated_at,
 	null as deletet_at
   from canal			
-) to '/home/niko/Documentos/db/MIGRA/final/b.canais' WITH ( FORMAT TEXT, DELIMITER '*' );
+) to '/home/niko/Documentos/db/MIGRA/final/b.canais'
+WITH
+( FORMAT TEXT, DELIMITER '*' );
 
 -- EXPORTAR TAGS
-copy(
+copy
+(
 SELECT idtag as id,
-       nometag as name,
-       busca as searched,
-       (select now()::timestamp) as created_at,
+	nometag as name,
+	busca as searched,
+	(select now()
+::timestamp) as created_at,
        dataatualizacao as updated_at,
 	   null as deleted_at
 FROM tag
-) to '/home/niko/Documentos/db/MIGRA/final/c.tags' WITH ( FORMAT TEXT, DELIMITER '*' );
+) to '/home/niko/Documentos/db/MIGRA/final/c.tags'
+WITH
+( FORMAT TEXT, DELIMITER '*' );
 
 -- EXPORTAR APLICATIVO CATEGORIA
-COPY (
-select  idambientedeapoiocategoria as id,
-       nomeambientedeapoiocategoria as name,
-       now()::timestamp as created_at,
+COPY
+(
+select idambientedeapoiocategoria as id,
+	nomeambientedeapoiocategoria as name,
+	now()
+::timestamp as created_at,
        null as updated_at,
 	   null as deleted_at
 from ambientedeapoiocategoria
-) to '/home/niko/Documentos/db/MIGRA/final/d.aplicativo_categories' WITH (FORMAT TEXT, DELIMITER '*');
+) to '/home/niko/Documentos/db/MIGRA/final/d.aplicativo_categories'
+WITH
+(FORMAT TEXT, DELIMITER '*');
 
 --select * from ambientedeapoio
 -- EXPORTAR APLICATIVOS
-COPY(
+COPY
+(
 SELECT aa.idambientedeapoio as id,
-		aa.idusuariopublicador as user_id,
-		aa.idambientedeapoiocategoria as category_id,
-		9 as canal_id,
-		aa.titulo as name, 
-		aa.descricao as description,
-		aa.url AS url,
-		jsonb_build_object(
+	aa.idusuariopublicador as user_id,
+	aa.idambientedeapoiocategoria as category_id,
+	9 as canal_id,
+	aa.titulo as name,
+	aa.descricao as description,
+	aa.url AS url,
+	jsonb_build_object(
 			'qt_access', aa.acessos,
 			'is_featured', aa.fldestaque
-		) as options, 		
-		now()::timestamp as created_at,
+		) as options,
+	now()
+::timestamp as created_at,
 		null as updated_at,
 		null as deleted_at
 	FROM ambientedeapoio aa
 	INNER JOIN ambientedeapoiocategoria aac 
 	ON aa.idambientedeapoiocategoria = aac.idambientedeapoiocategoria
-) to '/home/niko/Documentos/db/MIGRA/final/e.aplicativos' WITH ( FORMAT TEXT, DELIMITER '*' );
+) to '/home/niko/Documentos/db/MIGRA/final/e.aplicativos'
+WITH
+( FORMAT TEXT, DELIMITER '*' );
 
 
 -- EXPORTAR APLICATIVO_TAG
-COPY(
-select idambientedeapoio as aplicativo_id, idtag as tag_id from ambientedeapoiotag
-) to '/home/niko/Documentos/db/MIGRA/final/f.aplicativo_tag' WITH ( FORMAT TEXT, DELIMITER '*' );
+COPY
+(
+select idambientedeapoio as aplicativo_id, idtag as tag_id
+from ambientedeapoiotag
+)
+to '/home/niko/Documentos/db/MIGRA/final/f.aplicativo_tag'
+WITH
+( FORMAT TEXT, DELIMITER '*' );
 
 
 
 
 -- EXPORTAR LICENSES 
-COPY(
+COPY
+(
 select idconteudolicenca as id,
-      idconteudolicencapai as parent_id, 
-      nomeconteudolicenca as name, 
-      descricaoconteudolicenca as description, 
-      siteconteudolicenca as site,
-      now() as created_at,
-      now() as updated_at,
-	  null as deleted_at
+	idconteudolicencapai as parent_id,
+	nomeconteudolicenca as name,
+	descricaoconteudolicenca as description,
+	siteconteudolicenca as site,
+	now() as created_at,
+	now() as updated_at,
+	null as deleted_at
 from conteudolicenca	
-) to '/home/niko/Documentos/db/MIGRA/final/g.licenses' WITH ( FORMAT TEXT, DELIMITER '*' );
+)
+to '/home/niko/Documentos/db/MIGRA/final/g.licenses'
+WITH
+( FORMAT TEXT, DELIMITER '*' );
 
 -- EXPORTAR CATEGORIAS
-COPY(
+COPY
+(
 select sc.idconteudodigitalcategoria AS id,
-      sc.idconteudodigitalcategoriapai as parent_id,
-      sc.idcanal as canal_id,	
-      sc.nomeconteudodigitalcategoria AS name,
-      jsonb_build_object(
+	sc.idconteudodigitalcategoriapai as parent_id,
+	sc.idcanal as canal_id,
+	sc.nomeconteudodigitalcategoria AS name,
+	jsonb_build_object(
 	'is_active', flativo,
 	'is_featured', fldestaque,
 	'description', sc.descricaoconteudodigitalcategoria
       ) as options,
-      sc.datacriacao as created_at,
-      null as updated_at,
-	  null as deleted_at
+	sc.datacriacao as created_at,
+	null as updated_at,
+	null as deleted_at
 from conteudodigitalcategoria AS sc
-) TO '/home/niko/Documentos/db/MIGRA/final/h.categories' WITH ( FORMAT TEXT, DELIMITER '*' );
+)
+TO '/home/niko/Documentos/db/MIGRA/final/h.categories'
+WITH
+( FORMAT TEXT, DELIMITER '*' );
 
 
 -- EXPORTAR TIPOS
-copy (
+copy
+(
 select ct.idconteudotipo as id,
-     ct.nomeconteudotipo as name,
-     jsonb_build_object(
+	ct.nomeconteudotipo as name,
+	jsonb_build_object(
 	'formatos', to_json(array_agg(f.nomeformato))
      ) as options
 from formato as f
-join conteudotipo as ct on ct.idconteudotipo = f.idconteudotipo
+	join conteudotipo as ct on ct.idconteudotipo = f.idconteudotipo
 group by ct.idconteudotipo, ct.nomeconteudotipo
-) to '/home/niko/Documentos/db/MIGRA/final/i.tipos' WITH ( FORMAT TEXT, DELIMITER '*' );
+)
+to '/home/niko/Documentos/db/MIGRA/final/i.tipos'
+WITH
+( FORMAT TEXT, DELIMITER '*' );
 
 
 -- EXPORTAR CONTEUDOS
-copy (
-with conteudos as (
-SELECT 	 cd.idconteudodigital as id,
-	 case 
+copy
+(
+with
+	conteudos
+	as
+	(
+		SELECT cd.idconteudodigital as id,
+			case 
 		when (cd.idcanal is null and cd.flsitetematico = false) then 6
 		when (cd.idcanal is null and cd.flsitetematico = true) then 5
 		else cd.idcanal
-	 end as canal_id,	 	
-	 cd.idusuariopublicador as user_id,
-	 cd.idusuariopublicador as approving_user_id,
-	 cd.idlicencaconteudo as license_id,
-	 cd.idconteudodigitalcategoria as category_id,
-	 cd.titulo as title,
-	 cd.descricao as description,
-	 cd.autores as authors,
-	 cd.fonte as source,
-	 cd.flaprovado as is_approved,
-	 cd.fldestaque as is_featured,
-	 cd.flsitetematico as is_site,
-	 (case when cd.qtddownloads is null then 0 else cd.qtddownloads end) as qt_downloads,	
-	 (case when cd.acessos is null then 0 else cd.acessos end) as qt_access,
-	 cd.datapublicacao as created_at,
-	 null as updated_at,
-	 null as deleted_at,
-	  cd.site
-	 ,(SELECT ct.idconteudotipo FROM conteudotipo AS ct JOIN formato AS f ON f.idformato = cd.idformato AND ct.idconteudotipo = f.idconteudotipo) as tipo
-	 ,(SELECT jsonb_agg(tag.idtag) FROM conteudodigitaltag INNER JOIN tag ON tag.idtag = conteudodigitaltag.idtag WHERE conteudodigitaltag.idconteudodigital = cd.idconteudodigital) as tags
-	 ,(SELECT jsonb_agg(cc.idcomponentecurricular) FROM conteudodigitalcomponente as cdc INNER JOIN componentecurricular as cc on cc.idcomponentecurricular = cdc.idcomponentecurricular WHERE cdc.idconteudodigital = cd.idconteudodigital) as componentes	
-	,(SELECT case when fv.nomeformato = 'link' then cd.site when fv.nomeformato is not null then concat(cd.idconteudodigital,'.',fv.nomeformato) else '' end from formato as fv where fv.idformato = cd.idformato) AS visualizacao
-	,(SELECT case when fd.nomeformato = 'link' then cd.site when fd.nomeformato is not null then concat(cd.idconteudodigital,'.',fd.nomeformato) else '' end from formato as fd where fd.idformato = cd.idformatodownload) AS download
-	,(SELECT case when fg.nomeformato is not null then concat(cd.idconteudodigital,'.',fg.nomeformato) else '' end from formato as fg where fg.idformato = cd.idformatoguiapedagogico) AS guia_pedagogica
-	,setweight( to_tsvector( 'simple', (SELECT string_agg(lower(COALESCE(unaccent(t.nometag),'')), ' ' ) FROM conteudodigitaltag AS ct INNER JOIN tag t ON t.idtag = ct.idtag WHERE ct.idconteudodigital = cd.idconteudodigital)), 'A') ||
+	 end as canal_id,
+			cd.idusuariopublicador as user_id,
+			cd.idusuariopublicador as approving_user_id,
+			cd.idlicencaconteudo as license_id,
+			cd.idconteudodigitalcategoria as category_id,
+			cd.titulo as title,
+			cd.descricao as description,
+			cd.autores as authors,
+			cd.fonte as source,
+			cd.flaprovado as is_approved,
+			cd.fldestaque as is_featured,
+			cd.flsitetematico as is_site,
+			(case when cd.qtddownloads is null then 0 else cd.qtddownloads end) as qt_downloads,
+			(case when cd.acessos is null then 0 else cd.acessos end) as qt_access,
+			cd.datapublicacao as created_at,
+			null as updated_at,
+			null as deleted_at,
+			cd.site
+	 , (SELECT ct.idconteudotipo
+			FROM conteudotipo AS ct JOIN formato AS f ON f.idformato = cd.idformato AND ct.idconteudotipo = f.idconteudotipo) as tipo
+	 , (SELECT jsonb_agg(tag.idtag)
+			FROM conteudodigitaltag INNER JOIN tag ON tag.idtag = conteudodigitaltag.idtag
+			WHERE conteudodigitaltag.idconteudodigital = cd.idconteudodigital) as tags
+	 , (SELECT jsonb_agg(cc.idcomponentecurricular)
+			FROM conteudodigitalcomponente as cdc INNER JOIN componentecurricular as cc on cc.idcomponentecurricular = cdc.idcomponentecurricular
+			WHERE cdc.idconteudodigital = cd.idconteudodigital) as componentes	
+	, (SELECT case when fv.nomeformato = 'link' then cd.site when fv.nomeformato is not null then concat(cd.idconteudodigital,'.',fv.nomeformato) else '' end
+			from formato as fv
+			where fv.idformato = cd.idformato) AS visualizacao
+	, (SELECT case when fd.nomeformato = 'link' then cd.site when fd.nomeformato is not null then concat(cd.idconteudodigital,'.',fd.nomeformato) else '' end
+			from formato as fd
+			where fd.idformato = cd.idformatodownload) AS download
+	, (SELECT case when fg.nomeformato is not null then concat(cd.idconteudodigital,'.',fg.nomeformato) else '' end
+			from formato as fg
+			where fg.idformato = cd.idformatoguiapedagogico) AS guia_pedagogica
+	, setweight( to_tsvector( 'simple', (SELECT string_agg(lower(COALESCE(unaccent(t.nometag),'')), ' ' )
+			FROM conteudodigitaltag AS ct INNER JOIN tag t ON t.idtag = ct.idtag
+			WHERE ct.idconteudodigital = cd.idconteudodigital)), 'A') ||
 	 setweight( to_tsvector( 'simple', lower( COALESCE( unaccent(cd.titulo), '') ) ), 'B' ) ||
 	 setweight( to_tsvector( 'portuguese', unaccent( lower( COALESCE( cd.fonte, '') ) ) ), 'C' ) ||
 	 setweight( to_tsvector( 'portuguese', unaccent( lower( COALESCE( cd.autores, '') ) ) ), 'C' ) ||
@@ -314,16 +383,18 @@ SELECT 	 cd.idconteudodigital as id,
 			regexp_replace(
 			regexp_replace(
 			regexp_replace( cd.descricao 
-			, E'<.*?>', '', 'g')
+			, E'<.*?>', '', 'g'
+	)
 			, E'&nbsp;', ' ', 'g')
 			, E'[\\n\\r]+', ' ', 'g')
 		))),'D') AS ts_documento
 FROM conteudodigital cd
 INNER JOIN usuario ON usuario.idusuario = cd.idusuariopublicador
-) select id, canal_id, user_id, approving_user_id, license_id, category_id, title, 
-        description, authors, source, is_approved, is_featured, is_site,
-        qt_downloads, qt_access,
-        jsonb_build_object('tipo',tipo,
+)
+select id, canal_id, user_id, approving_user_id, license_id, category_id, title,
+	description, authors, source, is_approved, is_featured, is_site,
+	qt_downloads, qt_access,
+	jsonb_build_object('tipo',tipo,
                         'site', site,
                         'componentes', componentes,
                         'tags', tags,
@@ -331,45 +402,70 @@ INNER JOIN usuario ON usuario.idusuario = cd.idusuariopublicador
                         'visualizacao', visualizacao,
                         'guia', guia_pedagogica
                         ) as options,
-        created_at, updated_at, deleted_at                
+	created_at, updated_at, deleted_at                
         , ts_documento
-from conteudos ) to '/home/niko/Documentos/db/MIGRA/final/j.conteudos' WITH ( FORMAT TEXT, DELIMITER '*' );
+from conteudos
+) to '/home/niko/Documentos/db/MIGRA/final/j.conteudos'
+WITH
+( FORMAT TEXT, DELIMITER '*' );
   
 
 -- EXPORTAR CONTEUDO_TAG
-COPY(
-select idconteudodigital as conteudo_id, idtag as tag_id from conteudodigitaltag
-) to '/home/niko/Documentos/db/MIGRA/final/k.conteudo_tag' WITH ( FORMAT TEXT, DELIMITER '*' );
+COPY
+(
+select idconteudodigital as conteudo_id, idtag as tag_id
+from conteudodigitaltag
+)
+to '/home/niko/Documentos/db/MIGRA/final/k.conteudo_tag'
+WITH
+( FORMAT TEXT, DELIMITER '*' );
 
 
 -- EXPORTAR NIVEIS DE ENSINO
-COPY(
-select idnivelensino as id, nomenivelensino as name from nivelensino
-) to '/home/niko/Documentos/db/MIGRA/final/l.niveis_ensino' WITH ( FORMAT TEXT, DELIMITER '*' );
+COPY
+(
+select idnivelensino as id, nomenivelensino as name
+from nivelensino
+)
+to '/home/niko/Documentos/db/MIGRA/final/l.niveis_ensino'
+WITH
+( FORMAT TEXT, DELIMITER '*' );
 
 -- EXPORTAR CATEGORIA COMPONENTE CURRICULAR
-COPY(
+COPY
+(
 select idcategoriacomponentecurricular as id,
 	nomecategoriacomponentecurricular as name
 from categoriacomponentecurricular
-) to '/home/niko/Documentos/db/MIGRA/final/m.curricular_components_categories' WITH ( FORMAT TEXT, DELIMITER '*' );
+)
+to '/home/niko/Documentos/db/MIGRA/final/m.curricular_components_categories'
+WITH
+( FORMAT TEXT, DELIMITER '*' );
 
 -- EXPORTAR COMPONENTES_CURRICULARES
-COPY(
-select idcomponentecurricular as id, 
-	idcategoriacomponentecurricular as category_id, 
+COPY
+(
+select idcomponentecurricular as id,
+	idcategoriacomponentecurricular as category_id,
 	idnivelensino as nivel_id,
-	nomecomponentecurricular as name 
+	nomecomponentecurricular as name
 from componentecurricular
-) to '/home/niko/Documentos/db/MIGRA/final/n.curricular_components' WITH ( FORMAT TEXT, DELIMITER '*' );
+)
+to '/home/niko/Documentos/db/MIGRA/final/n.curricular_components'
+WITH
+( FORMAT TEXT, DELIMITER '*' );
 
 
 -- EXPORTAR CONTEUDO_COMPONENT
-COPY(
-select idconteudodigital as conteudo_id, 
-idcomponentecurricular as componente_id 
+COPY
+(
+select idconteudodigital as conteudo_id,
+	idcomponentecurricular as componente_id
 from conteudodigitalcomponente
-) to '/home/niko/Documentos/db/MIGRA/final/o.conteudo_curricular_component' WITH ( FORMAT TEXT, DELIMITER '*' );
+)
+to '/home/niko/Documentos/db/MIGRA/final/o.conteudo_curricular_component'
+WITH
+( FORMAT TEXT, DELIMITER '*' );
 
 
 
@@ -385,34 +481,50 @@ update canais set is_active = false where id IN (4,10,11,13,14,15);
 
 -- update in jsonb options
 
-select meta_data from options;
+select meta_data
+from options;
 
-select meta_data->'marcas'->>'is_active' from options where name like '%layout%';
+select meta_data->'marcas'
+->>'is_active' from options where name like '%layout%';
 
 update options
-set meta_data = jsonb_set(meta_data, '{"marcas", "is_active"}', '"false"'::jsonb) 
+set meta_data = jsonb_set(meta_data, '{"marcas", "is_active"}', '"false"'
+::jsonb) 
 where name like '%layout%';
 
 update canais
-set options = jsonb_set(options, '{"back_url"}', '"http://colaborativus.pat.educacao.ba.gov.br/"'::jsonb) 
+set options = jsonb_set(options, '{"back_url"}', '"http://colaborativus.pat.educacao.ba.gov.br/"'
+::jsonb) 
 where id = 8;
 
 update users
-set options = jsonb_set(options, '{"role"}', '"convidado"' :: jsonb)
+set options = jsonb_set(options, '{"role"}', '"convidado"'
+:: jsonb)
 where options ->> 'role' like '%amigo da escola%';
 
 update users 
-set options = jsonb_set(options, '{"role"}', '"super-admin"' :: jsonb)
+set options = jsonb_set(options, '{"role"}', '"super-admin"'
+:: jsonb)
 where options ->> 'role' like '%super administrador%';
 
 update users
-set options = jsonb_set(options, '{"role"}', '"convidado"' :: jsonb)
+set options = jsonb_set(options, '{"role"}', '"convidado"'
+:: jsonb)
 where options ->> 'role' like '%editor%';
 
 update users
-set options = jsonb_set(options, '{"role"}', '"convidado"' :: jsonb)
+set options = jsonb_set(options, '{"role"}', '"convidado"'
+:: jsonb)
 where options ->> 'role' like '%colaborador%';
 
 update users
-set options = jsonb_set(options, '{"role"}', '"convidado"' :: jsonb)
+set options = jsonb_set(options, '{"role"}', '"convidado"'
+:: jsonb)
 where options ->> 'role' is null;
+
+
+
+update categories set name = replace(name,'3ª SÉRIE - ', '') 
+where canal_id = 2 and parent_id is not null
+
+

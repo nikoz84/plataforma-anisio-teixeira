@@ -1,122 +1,88 @@
 <template>
-  <div class="container-fluid no-padding">
-    <section class="row">
-      <!-- SideBarHome class="col-md-3"></!-->
-      <div class="load">
-        <div class=" heigth" 
-                style="background-color: #49255b;border:solid 1px #000;"
-                v-infinite-scroll="loadMore"
-                infinite-scroll-disabled="busy"
-                infinite-scroll-distance="10">
-      </div>
-      </div>
+  <section>
+    <!--SideBarHome/-->
+    <article class="row justify-between" >
+      <q-parallax style="min-height:100vh;">
+        <template v-slot:media>
+          <img src="/storage/conteudos/slider/banner-blog.jpg">
+        </template>
+        <template v-slot:content="scope">
+          <div class="absolute column items-center">
+            <img src="/logo.svg" style="width: 150px; height: 150px">
+            <div class="text-h3 text-primary text-center">Plataforma Anísio Teixeira</div>
+            <div class="text-h6 text-dark text-center">
+              v3.0.0
+            </div>
+          </div>
+        </template>
+      </q-parallax>
+    </article>
+    <article class="row justify-between load" v-scroll-fire="getDestaques">
+      <q-parallax style="min-height:100vh;">
+        <template v-slot:media>
+          <img src="/storage/conteudos/slider/andressa-falcc3a3o.jpg">
+        </template>
+        <template v-slot:content="scope">
+          <div class="absolute column items-center">
+            <img src="/logo.svg" style="width: 150px; height: 150px">
+            <div class="text-h3 text-primary text-center">Destaque do Blog</div>
+          </div>
+        </template>
+      </q-parallax>
+    </article>
+    <article class="row justify-between" >
+      <q-parallax style="min-height:100vh;">
+        <template v-slot:media>
+          <img src="/storage/conteudos/conteudos-digitais/galeria/4.jpg">
+        </template>
+        <template v-slot:content="scope">
+          <div class="absolute column items-center">
+            <img src="/logo.svg" style="width: 150px; height: 150px">
+            <div class="text-h3 text-primary text-center">Outro destaque da Plataforma</div>
+          </div>
+        </template>
+      </q-parallax>
+    </article>
+        
+    <CardHome :data="data" v-for="(data, i) in destaques" :key="`i-${i}`"/>
       
-    </section>
-  </div>
+    
+  </section>
 </template>
 <script>
 import { mapState, mapMutations } from "vuex";
 import CardHome from "../components/CardHome.vue";
-import SideBarHome from "../components/SideBarHome.vue";
-import debounce from "lodash/debounce";
+//import SideBarHome from "../components/SideBarHome.vue";
+import { QParallax, ScrollFire } from "quasar";
 
 export default {
   name: "Home",
+  directives: {
+    ScrollFire
+  },
   components: {
-    CardHome,
-    SideBarHome
+    QParallax,
+    CardHome
+    //SideBarHome
   },
 
   data() {
     return {
-      data: {},
-      items: [
-        "conteudos_recentes",
-        "conteudos_baixados",
-        "conteudos_acessados",
-        "conteudos_destacados",
-        "aplicativos_recentes",
-        "aplicativos_destacados"
-      ],
-      blocks: null,
-      busy: false
+      destaques: []
     };
   },
-  watch: {
-    termo(novo, antigo) {
-      debounce(this.handleLoadScroll(), 20);
-    }
-  },
-  beforeMount() {
-    this.getData("conteudos_recentes");
-  },
-  mounted() {
-    this.blocks = document.querySelectorAll(".load");
-  },
   methods: {
-    async getData(get) {
-      let resp = await axios.get("/destaques", { get });
-      console.log(resp);
-      if (resp.status == 200 && resp.data) {
-        //this.data = resp.data;
-      }
-    },
-    async loadMore() {
-      let items = this.blocks ? this.blocks : [];
-      var self = this;
-      self.busy = true;
-      const load = document.querySelector(".load");
-      //console.log("loading... " + new Date());
-      setTimeout(function() {
-        var height = load.clientHeight;
-        load.style.height = height + 300 + "px";
-        console.log("end... " + new Date());
-        self.busy = false;
-      }, 1000);
-      /*
-      items.forEach(item => {
-        console.log(item.offsetTop);
-        console.warn(window.pageYOffset);
-        if (item.offsetTop == window.pageYOffset) {
-          //console.warn(item.id);
+    async getDestaques(el) {
+      if (el.classList.contains("load")) {
+        let resp = await axios.get("/destaques");
+        if (resp.status == 200 && resp.data.success) {
+          this.destaques = resp.data.metadata;
         }
-      });
-      */
+        el.classList.remove("load");
+      }
     }
-  },
-  destroyed() {
-    // window.removeEventListener("scroll", this.handleLoadScroll);
   }
 };
 </script>
 <style lang="scss" scoped>
-#main-home {
-  transition: margin-left 0.5s;
-}
-
-.no-padding {
-  padding: 0 0 50px 0;
-}
-.align-right {
-  float: right;
-  margin-right: 20px;
-}
-.align-left {
-  float: left;
-  margin-left: 20px;
-}
-.slide-in {
-  opacity: 0;
-  transition: all 0.5ms;
-}
-.align-left.slide-in {
-  transform: translate(-30%) scale(0.95);
-}
-.align-right.slide-in {
-  transform: translate(30%) scale(0.95);
-}
-.slide-in.active {
-  opacity: 1;
-  transform: translateX(0%) scale(1);
-}
 </style>

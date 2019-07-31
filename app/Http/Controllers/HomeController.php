@@ -53,49 +53,36 @@ class HomeController extends ApiController
 
     public function getHomeData()
     {
-        $get = $this->request->query('get', 'conteudos_recentes');
-        $data = [];
+        $data = [
+            [
+                'title' => 'Conteúdos Recentes',
+                'items' => $this->destaques->getConteudosMaisRecentes()
+            ],
+            [
+                'title' => 'Conteúdos Mais Baixados',
+                'items' => $this->destaques->getConteudosMaisBaixados()
+            ],
+            [
+                'title' => 'Conteúdos Mais Acessados',
+                'items' => $this->destaques->getConteudosMaisAcessados()
+            ],
+            [
+                'title' => 'Conteúdos Destacados',
+                'items' => $this->destaques->getConteudosDestaques()
+            ],
+            [
+                'title' => 'Aplicativos Destacados',
+                'items' => $this->destaques->getAplicativosDestaques()
+            ],
+            [
+                'title' => 'Aplicativos Recentes',
+                'items' => $this->destaques->getAplicativosMaisRecentes()
+            ]
+            
+        ];
+               
 
-        switch ($get) {
-            case 'conteudos_recentes':
-                $data = [
-                    'title' => 'Conteúdos Recentes',
-                    'items' => $this->destaques->getConteudosMaisRecentes()
-                ];
-                break;
-            case 'conteudos_baixados':
-                $data = [
-                    'title' => 'Conteúdos Mais Baixados',
-                    'items' => $this->destaques->getConteudosMaisBaixados(),
-                ];
-                break;
-            case 'conteudos_acessados':
-                $data = [
-                    'title' => 'Conteúdos Mais Acessados',
-                    'items' => $this->destaques->getConteudosMaisAcessados(),
-                ];
-                break;
-            case 'conteudos_destacados':
-                $data = [
-                    'title' => 'Conteúdos Destacados',
-                    'items' => $this->destaques->getConteudosDestaques(),
-                ];
-                break;
-            case 'aplicativos_recentes':
-                $data = [
-                    'title' => 'Aplicativos Recentes',
-                    'items' => $this->destaques->getAplicativosMaisRecentes(),
-                ];
-                break;
-            case 'aplicativos_destacados':
-                $data = [
-                    'title' => 'Aplicativos Destacados',
-                    'items' => $this->destaques->getAplicativosDestaques(),
-                ];
-                break;
-        }
-
-        return response()->json($data, 200);
+        return $this->successResponse($data,'', 200);
     }
 
     public function getAnalytics()

@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Conteudo;
 use App\Aplicativo;
+use App\Helpers\WordpressService;
 
 class Destaques
 {
@@ -61,5 +62,9 @@ class Destaques
         return $aplicativos->map(function ($aplicativo) {
             return $aplicativo->only(['id', 'name', 'image', 'url_exibir']);
         });
+    }
+    public function getPostsMaisRecentes()
+    {
+        //$wordpress = new WordpressService($this->request);
     }
 }

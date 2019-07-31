@@ -23,8 +23,6 @@
 export default {
     name: 'Modal',
     props:['user'],
-    criated(){
-
-    }
+    
 }
 </script>

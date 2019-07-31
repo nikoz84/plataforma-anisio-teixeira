@@ -1,39 +1,51 @@
 <template>
-    <section class="container-fluid heigth">
-        <div class="row">
-            <aside class="col-sm-3">
-                <SidebarCanal></SidebarCanal>
-            </aside>
-            <article class="col-sm-9">
-                <!--Breadcrum></Breadcrum-->
-                <header class="page-header">
-                    <h1 class="page-title">
-                        {{ canal.name }}
-                    </h1>
-                    <NavCanal></NavCanal>
-                </header>
-                <div>
-                    <transition name="custom-classes-transition" 
-                                enter-active-class="animated fadeIn" 
-                                leave-active-class="animated fadeOut"
-                                mode="out-in">
-                        <router-view></router-view>
-                    </transition>
-                </div>
-            </article>
-        </div>
-    </section>
+  <article class="q-pa-md">
+    <!--Breadcrum></Breadcrum-->
+    <header class="page-header">
+      <h1 class="page-title">
+          {{ canal.name }}
+      </h1>
+      <nav>
+        <q-tabs inline-label class="bg-primary text-white shadow-2">
+            
+            <q-route-tab name="inicio" 
+                  label="INÍCIO" 
+                  :to="{ name: 'Inicio', params: {slug: $route.params.slug}}"
+                  v-if="canal && canal.options && canal.options.has_home"/>
+            <q-separator vertical inset />
+            <q-route-tab name="listar" 
+                  label="Listar" 
+                  :to="{ name: 'Listar', params: {slug: $route.params.slug}}"/>
+            <q-separator vertical inset />
+            <q-space />
+            <q-route-tab name="denunciar" 
+                  label="Denunciar"
+                  :to="setUrlDenuncia" />
+            <q-separator vertical inset />
+            <q-route-tab name="faleconosco" 
+                  label="Fale Conosco" 
+                  :to="setUrlFaleConosco"/>
+        </q-tabs>
+      </nav>
+    </header>
+    <div>
+      <transition name="custom-classes-transition" 
+                  enter-active-class="animated fadeIn" 
+                  leave-active-class="animated fadeOut"
+                  mode="out-in">
+        <router-view></router-view>
+      </transition>
+    </div>
+  </article>
+  
 </template>
 <script>
-import NavCanal from "../components/NavCanal.vue";
-import SidebarCanal from "../components/SidebarCanal.vue";
-//import Breadcrum from "../components/Breadcrum.vue";
-import debounce from "lodash/debounce";
+import { QTabs, QRouteTab, QSeparator, QSpace } from "quasar";
 import { mapState, mapActions } from "vuex";
 
 export default {
   name: "canal",
-  components: { NavCanal, SidebarCanal },
+  components: { QTabs, QRouteTab, QSeparator, QSpace },
   mounted() {
     this.getCanalBySlug(this.$route.params.slug).then(() => {
       this.fetchData();
@@ -46,6 +58,22 @@ export default {
           this.fetchData();
         });
       }
+    }
+  },
+  computed: {
+    ...mapState(["canal"]),
+    setUrlDenuncia() {
+      localStorage.setItem("urlDenuncia", location.href);
+      return {
+        name: "DenunciaForm",
+        path: "denuncia"
+      };
+    },
+    setUrlFaleConosco() {
+      return {
+        name: "FaleConoscoForm",
+        params: { slug: this.$route.params.slug }
+      };
     }
   },
   methods: {
@@ -66,48 +94,24 @@ export default {
           return this.fetchPosts();
           break;
         default:
-          console.log(query);
           return this.fetchConteudos(query);
           break;
       }
     }
-  },
-  computed: {
-    ...mapState(["canal"])
   }
 };
 </script>
 <style lang="scss" scoped>
-$downriver-900: #051825; /* 900 */
 $downriver-800: #0f285d; /* 800 */
-$downriver-700: #263c6c; /* 700 */
-$downriver-600: #42537f; /* 600 */
-$downriver-400: #5f6a93; /* 400 */
-$downriver-300: #7f87a9; /* 300 */
-$downriver-200: #a0a4bf; /* 200 */
-$downriver-80: #c1c3d5; /* 80 */
-$downriver-50: #d9d9e5; /* 50 */
-$downriver-20: #f0f0f5; /* 20 */
 
 .page-header {
-  margin-top: 15px;
-  margin-bottom: 15px;
   text-align: center;
   .page-title {
     margin-top: 0;
     position: relative;
-    font-size: 35px;
+    font-size: 25px;
     color: $downriver-800;
     font-weight: 700;
-    &:after {
-      width: 100%;
-      height: 1px;
-      content: "";
-      background: $downriver-80;
-      display: block;
-      position: absolute;
-      bottom: -10px;
-    }
   }
 }
 </style>

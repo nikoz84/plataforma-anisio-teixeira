@@ -49,47 +49,6 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
-/*
-.scrollmenu {
-  overflow: auto;
-  white-space: nowrap;
-  display: flex;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-  > li {
-    flex: 0 0 auto;
-    padding-top: 15px;
-    padding-bottom: 15px;
-  }
-  > li::after {
-    content: " | ";
-    padding: 0 20px;
-  }
-  > li:first-child {
-    padding-left: 15px;
-  }
-  margin-bottom: 5vh;
-}
-.scrollmenu::-webkit-scrollbar {
-  display: none;
-}
-*/
-ul {
-  margin: 5px;
-}
+<style lang="stylus" scoped>
 
-li {
-  border: 1px solid rgb(231, 230, 230);
-  background-color: rgb(233, 233, 233);
-}
-
-.title {
-  background-color: rgb(131, 133, 134);
-  color: rgb(255, 255, 255);
-  padding: 10px;
-  font-weight: bold;
-}
 </style>

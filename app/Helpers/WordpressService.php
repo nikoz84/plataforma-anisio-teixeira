@@ -28,7 +28,7 @@ class WordpressService
         $this->data_inicio = $request->query('inicio', date('Y-01-01 00:00:00'));
         $this->data_fim = $request->query('fim', date("Y-m-d H:i:s"));
 
-        $canal = $canal = Canal::find(7);
+        $canal = Canal::find(7);
         $canal_url = $canal->options['back_url'];
 
         $this->api =  $canal_url . "/wp-json/pat/v1/";

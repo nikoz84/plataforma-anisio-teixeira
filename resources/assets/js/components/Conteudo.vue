@@ -1,47 +1,70 @@
 <template>
     <article class="row">
         <Player></Player>
-        <div class="panel panel-default" v-if="this.conteudo">
-            <div class="panel-body">
-                <h2 v-text="this.conteudo.title"></h2>
-                <small></small>
-                <div class="break-word" v-html="this.conteudo.description"></div>
-                <hr class="line">
-                <span class="label label-default" v-bind:style="backgroundColor"> Fonte: </span>
-                    <i class="i-list break-word">{{ this.conteudo.source }}</i>
-                <hr class="line">
-                <span class="label label-default" v-bind:style="backgroundColor"> Autores: </span>
-                <i class="i-list break-word" v-for="(author,i) in splitAuthors" v-bind:key="i" v-text="author"></i>
-                <hr class="line">
-                <span class="label label-default" v-bind:style="backgroundColor"> Componentes: </span>
-                <i class="i-list break-word"
-                    v-for="(componente) in this.conteudo.componentes"
-                    v-bind:key="componente.id"
-                    v-text="componente.name"
-                    ></i>
-                <hr class="line">
-                <span class="label label-default" v-bind:style="backgroundColor"> Licença: </span>
-                <i class="i-list break-word" v-if="this.conteudo.license" v-text="this.conteudo.license.name"></i>
-            </div>
-            <div class="panel-footer tag-cloud">
-                <h5>Tags: </h5>
-                <a class=""
-                    v-for="tag in this.conteudo.tags"
-                    v-bind:key="tag.id"
-                    v-bind:href="'/recursos-educacionais-abertos/listar/tag/'+ tag.id"
-                    v-text="tag.name">
-                </a>
-            </div>
-        </div>
+        <q-card v-if="conteudo">
+            <q-card-section >
+              <section class="row">
+                <div class="col-xs-12 col-sm-7">
+                  <div class="text-h4 q-pr-lg" :style="`color:${conteudo.canal.color};`" v-text="conteudo.title"></div>
+                  <q-separator class="q-mb-lg" inset />
+                  <div class="">
+                    <small>
+                      <b>Usuário(a) publicador(ora):</b> {{ conteudo.user.name }}
+                    </small> <br>
+                    <small>
+                      <b>Acessos:</b> {{ conteudo.qt_access }}
+                    </small> - 
+                    <small>
+                      <b>Downloads:</b> {{ conteudo.qt_downloads }}
+                    </small>
+                  </div>
+                  <div class="q-mt-lg q-pr-lg" v-html="conteudo.description"></div>
+                </div>
+                <div class="col-xs-12 col-sm-5">
+                  <q-chip color="ligth" label="Fonte:"> </q-chip>
+                      <i class="i-list break-word">{{ conteudo.source }}</i>
+                  <q-separator class="q-mb-lg" inset/>
+                  <q-chip label="Autores:" color="ligth"></q-chip>
+                  <i class="i-list break-word" v-for="(author,i) in splitAuthors" v-bind:key="`a-${i}`" v-text="author"></i>
+                  <q-separator class="q-mb-lg" inset/>
+                  <q-chip label="Licença:" color="ligth"></q-chip>
+                  <i class="i-list break-word" v-if="conteudo.license" v-text="conteudo.license.name"></i>
+                  <q-separator class="q-mb-lg" inset/>
+                  <q-chip label="Componentes:" color="ligth"></q-chip>
+                  <i class="i-list break-word"
+                      v-for="(componente) in conteudo.componentes"
+                      :key="`c-${componente.id}`"
+                      v-text="componente.name"
+                      ></i>
+                  
+                </div>
+              </section>
+            </q-card-section>
+            <q-card-section>
+                <div class="text-h6">Tags: </div>
+                <q-chip color="ligth" 
+                      icon="local_offer"
+                      v-for="(tag, i) in conteudo.tags"
+                      :key="i"
+                      :label="tag.name"
+                      clickable
+                      @click="onClick(`/recursos-educacionais/listar/tag/${tag.id}`)"
+                      >
+                      
+                </q-chip>
+                
+            </q-card-section>
+        </q-card>
     </article>
 </template>
 <script>
 import Player from "../components/Player.vue";
 import { mapState } from "vuex";
+import { QCard, QCardSection, QSeparator, QChip } from "quasar";
 
 export default {
   name: "Conteudo",
-  components: { Player },
+  components: { QCard, QCardSection, QSeparator, Player, QChip },
   created() {},
   computed: {
     ...mapState(["conteudo"]),
@@ -54,7 +77,11 @@ export default {
       return `background-color: ${color}`;
     }
   },
-  methods: {}
+  methods: {
+    onClick(url) {
+      this.$router.push(url);
+    }
+  }
 };
 </script>
 <style scoped>

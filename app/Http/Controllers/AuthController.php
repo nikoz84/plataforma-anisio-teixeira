@@ -44,7 +44,7 @@ class AuthController extends ApiController
         }
         $data = ['token' => $this->respondWithToken($token)];
 
-        return $this->successResponse($data, "Bemvindo!!", 200);
+        return $this->successResponse($data, "Bemvindo ", 200);
     }
     /**
      * Get the authenticated User.

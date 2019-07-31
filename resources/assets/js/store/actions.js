@@ -1,6 +1,3 @@
-import conteudoModel from "./models/conteudo";
-import { longStackSupport } from "q";
-
 const actions = {
   async getLayout({ commit }) {
     let resp = await axios("/layout");
@@ -106,16 +103,6 @@ const actions = {
       commit("SET_ERRORS", []);
     }, 2500);
   },
-  async login({ commit, dispatch }, payload) {
-    let resp = await axios.post("/auth/login", payload);
-
-    if (resp.status == 200 && resp.data.success) {
-      localStorage.setItem("token", resp.data.metadata.token.access_token);
-      commit("SET_LOGIN_USER", true);
-    } else {
-      dispatch("hideAlert");
-    }
-  },
   async logout({ commit }) {
     if (localStorage.token) {
       await axios.post("/auth/logout", {
@@ -126,14 +113,6 @@ const actions = {
     } else {
       commit("SET_LOGOUT_USER");
       localStorage.removeItem("token");
-    }
-  },
-  async registerUser({ commit, dispatch }, user) {
-    let resp = await axios.post(`/auth/register`, user);
-    if (resp.status == 200 && resp.data.success) {
-      commit("SET_IS_ERROR", false);
-    } else {
-      dispatch("hideAlert");
     }
   },
   /** CANAIS FOR SELECT */
