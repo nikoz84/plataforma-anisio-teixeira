@@ -52,7 +52,7 @@ Route::group(['middleware' => ['cors']], function () {
     /** AUTENTICACAO */
     Route::post('/auth/login', 'AuthController@login')->name('login.usuario');
     Route::post('/auth/register', 'AuthController@register')->name('registro.usuario');
-    /** OPTIONS */
+    /** OPTIONS  */
     Route::get('/options/{name}', 'OptionsController@getByName')->name('busca.metadata.x.nome');
     Route::get('/options', 'OptionsController@list')->name('listar.opcoes');
     /** TAGS */
