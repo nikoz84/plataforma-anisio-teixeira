@@ -28,11 +28,16 @@ Route::get('/teste', function (Request $request) {
     //return $wordpres->getPosts();
 });
 
-Route::get('/form', function (Request $request){
-    if($request->all()){
+Route::get('/form', function (Request $request) {
+    if ($request->all()) {
         dd($request->all());
     }
     return view('forms.teste');
+});
+
+Route::get('/docs', function (Request $request) {
+
+    return view('docs');
 });
 
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');

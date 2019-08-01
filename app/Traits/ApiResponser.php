@@ -17,13 +17,21 @@ trait ApiResponser
         ], $code);
     }
 
-    protected function errorResponse($errors, $message, $code)
+    protected function errorResponse($errors, $message, $code, $headers = null)
     {
-        return response()->json([
-            'errors'=> $errors,
-            'message' => $message,
-            'success' => false
-        ], $code);
+        if ($headers) {
+            return response()->json([
+                'errors' => $errors,
+                'message' => $message,
+                'success' => false
+            ], $code, $headers);
+        } else {
+            return response()->json([
+                'errors' => $errors,
+                'message' => $message,
+                'success' => false
+            ], $code);
+        }
     }
 
     protected function showAll(Collection $collection, $message = '', $code = 200)
@@ -43,5 +51,4 @@ trait ApiResponser
     {
         return $this->successResponse($instance, $message, $code);
     }
-    
 }

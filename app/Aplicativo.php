@@ -106,11 +106,7 @@ class Aplicativo extends Conteudo
      * @param object $request
      * @return App\Aplicativo
      */
-<<<<<<< HEAD
     /*
-=======
-     /*
->>>>>>> a0ae835f88226a04b0132d318e1e95b01498fbdd
     public static function create($request)
     {
         $aplicativo = new \App\Aplicativo();

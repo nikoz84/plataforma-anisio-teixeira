@@ -24,7 +24,7 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/categories', 'CategoryController@list')->name('lista.categorias');
     Route::get('/categories/{id}', 'CategoryController@getCategoryById')->name('lista.categoria.x.id');
     // Route::get('/categories/aplicativos', 'CategoryController@getAplicativoCategories')
-       //     ->name('lista.categorias.aplicativos');
+    //     ->name('lista.categorias.aplicativos');
     Route::get('/aplicativos/categories', 'AplicativoCategoryController@list')->name('lista.categorias.aplicativo');
     /** TIPOS */
     Route::get('/tipos', 'TipoController@list')->name('listar.tipos');
@@ -50,8 +50,8 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/aplicativos/search/{term}', 'AplicativoController@search')->name('busca.aplicativo');
     Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('busca.x.aplicativo.id');
     /** AUTENTICACAO */
-    Route::post('/auth/login', 'AuthController@login')->name('login.usuario');
-    Route::post('/auth/register', 'AuthController@register')->name('registro.usuario');
+    Route::post('/auth/login', 'AuthController@login')->name('login.usuario')->middleware("throttle:3,1");
+    Route::post('/auth/register', 'AuthController@register')->name('registro.usuario')->middleware("throttle:3,1");
     /** OPTIONS  */
     Route::get('/options/{name}', 'OptionsController@getByName')->name('busca.metadata.x.nome');
     Route::get('/options', 'OptionsController@list')->name('listar.opcoes');
