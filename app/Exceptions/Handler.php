@@ -8,6 +8,7 @@ use Response;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -53,14 +54,24 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         if ($exception instanceof TokenExpiredException) {
-            return Response::json(['token_expired' . $exception->getMessage()], 201);
+            return Response::json(['message' => 'token_expired' . $exception->getMessage()], 201);
         } elseif ($exception instanceof TokenInvalidException) {
-            return Response::json(['token_invalid'], 201);
+            return Response::json(['message' => 'token_invalid'], 201);
         } elseif ($exception instanceof JWTException) {
-            return Response::json([$exception->getMessage()], 201);
+            return Response::json(['message' => $exception->getMessage()], 201);
         }
         if ($exception instanceof ModelNotFoundException) {
-            return Response::json(['modelo não encontrado'], 201);
+            return Response::json(['message' => 'modelo não encontrado'], 201);
+        }
+        if ($exception instanceof HttpException) {
+            return Response::json(
+                [
+                    'success' => false,
+                    'message' => 'Muitas tentativas...'
+                ],
+                $exception->getStatusCode(),
+                $exception->getHeaders()
+            );
         }
 
         return parent::render($request, $exception);

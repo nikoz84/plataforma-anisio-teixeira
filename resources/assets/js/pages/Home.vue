@@ -1,6 +1,5 @@
 <template>
   <section>
-    <!--SideBarHome/-->
     <article class="row justify-between" >
       <q-parallax style="min-height:100vh;">
         <template v-slot:media>

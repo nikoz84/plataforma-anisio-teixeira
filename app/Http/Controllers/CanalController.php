@@ -24,22 +24,17 @@ class CanalController extends ApiController
     public function list()
     {
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;
-        $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
         $select = $this->request->has('select');
 
         $query = $this->canal::query();
 
-        $query->when($select, function ($q, $select) {
+        $query->when($select, function ($query) {
             $canaisForSelect = $query::whereRaw('is_active = true AND id <> 9')->get(['id', 'name']);
-            return $this->showAll($canaisForSelect, 'Select', 200);
+            return $this->showAll($canaisForSelect, 'Selecione', 200);
         });
 
-<<<<<<< HEAD
-        $canais = Canal::where('is_active', true)
-=======
 
         $canais = $query::where('is_active', true)
->>>>>>> a0ae835f88226a04b0132d318e1e95b01498fbdd
             ->paginate($limit);
 
         $canais->setPath("/canais?limit={$limit}");
@@ -49,11 +44,12 @@ class CanalController extends ApiController
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return json
      */
     public function create()
     {
-        $id = DB::table('canais')->insertGetId(
+
+        $canal = $this->canail::create(
             [
                 'name' => $this->request->name,
                 'description' => $this->request->description,
@@ -63,19 +59,19 @@ class CanalController extends ApiController
         );
         return response()->json([
             'message' => 'Canal cadastrado com sucesso',
-            'id' => $id,
+            'id' => $canal
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Canal  $canal
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update($id)
     {
-        $canal = Canal::find($id);
+        $canal = $this->canal::find($id);
 
         $data = [
             'title' => $this->request->title,
@@ -87,9 +83,8 @@ class CanalController extends ApiController
 
         $canal->save($data);
 
-        return response()->json($canal->toJson());
+        return $this->successResponse($canal, 'Canal Editado com sucesso!', 200);
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -98,7 +93,7 @@ class CanalController extends ApiController
      */
     public function delete($id)
     {
-        $canal = Canal::find($id);
+        $canal = $this->canal::find($id);
         $resp = [];
         if (is_null($canal)) {
             $resp = [
@@ -116,98 +111,20 @@ class CanalController extends ApiController
     }
     public function getBySlug($slug)
     {
-        
-        $canal = Canal::where('slug', 'ilike', $slug)->first();
+
+        $canal = $this->canal::where('slug', 'ilike', $slug)->first();
 
         return response()->json([
             'success' => true,
             'canal' => $canal,
-<<<<<<< HEAD
-            'sidebar' => $this->getSideBar($canal->id)
-=======
             'sidebar' => Sidebar::getSideBar($canal->id),
->>>>>>> a0ae835f88226a04b0132d318e1e95b01498fbdd
         ]);
     }
-    private function getSideBar($id)
-    {
-        switch ($id) {
-            case 1:
-            case 2:
-            case 3:
-            case 12:
-                return $this->getSideBarCategories($id);
-                break;
-            case 7:
-                return [];
-                break;
-            case 5:
-                return $this->getSidebarSitesTematicos();
-                break;
-            case 6:
-                return $this->getSideBarAdvancedFilter();
-                break;
-            case 9:
-                return ['categories' => AplicativoCategory::get()];
-                break;
-        }
-    }
-    private function getSideBarAdvancedFilter()
-    {
-        $componentes = CurricularComponentCategory::with('components')->get()->first();
-        $tipos = Tipo::select(['id', 'name'])->get();
-        $licencas = License::select(['id', 'name'])->whereRaw('parent_id is null')->get();
-        $niveis = NivelEnsino::with('components')->get()->first();
 
-        return [
-            'components' => $componentes,
-            'tipos' => $tipos,
-            'licenses' => $licencas,
-            'niveis' => $niveis[0]
-        ];
-<<<<<<< HEAD
-    } 
-    // /root/.ssh/id_rsa
-=======
-    }
-
->>>>>>> a0ae835f88226a04b0132d318e1e95b01498fbdd
-    private function getSideBarCategories($id)
-    {
-        /** categorias dos canais */
-        $categories = Category::selectRaw("id, parent_id, name, options->'is_active' as is_active")
-            ->where('canal_id', $id)
-            ->whereRaw('parent_id is null')
-            ->where('options->is_active', 'true')
-            ->with('subCategories')
-            ->orderBy('created_at', 'asc')
-            ->get();
-        /** disciplinas ensino medio */
-        $disciplinas = [];
-        if ($id == 2) {
-            $disciplinas = NivelEnsino::where('id', '=', 5)->with('components')->get()->first();
-            return [
-                'categories' => $categories,
-                'disciplinas' => $disciplinas
-            ];
-        }
-
-        return ['categories' => $categories];
-    }
-    private function getSidebarSitesTematicos()
-    {
-        $temas = CurricularComponentCategory::where('id', '=', 3)->with('components')->get()->first();
-        $disciplinas = NivelEnsino::where('id', '=', 5)->with('components')->get()->first();
-
-        return [
-            "temas" => $temas,
-            "disciplinas" => $disciplinas
-        ];
-    }
-    public function search(Request $request, $termo)
+    public function search($termo)
     {
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;
-        $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
+
         $search = "%{$termo}%";
         $canais = Canal::whereRaw("unaccent(lower(name)) LIKE unaccent(lower(?))")
             ->setBindings([$search])
