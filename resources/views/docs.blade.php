@@ -36,7 +36,13 @@
                     </ul>
                 </aside>
                 <article class="col-sm-9">
-                    Descrição
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Conteudos</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Rota: {{ url('/') }}/api-v1/conteudos </h6>
+                            <div class="card-text">Descrição</div>
+                        </div>
+                    </div>
                 </article>
             </section>
         </main>
