@@ -26,7 +26,7 @@ class CategoryController extends ApiController
 
     public function list()
     {
-        $limit = $this->request->get('limit',15);
+        $limit = $this->request->get('limit', 15);
 
         if ($this->request->has('canal')) {
             $categories = $this->category::where('canal_id', $this->request->get('canal'))
@@ -55,7 +55,7 @@ class CategoryController extends ApiController
         $category->canal_id = $this->request->canal_id;
         $category->options = $this->request->options;
 
-        if($category->save()){
+        if ($category->save()) {
             return $this->successResponse($category, 'Categoria criada com sucesso!', 200);
         }
     }
@@ -73,11 +73,10 @@ class CategoryController extends ApiController
 
         $cat = $this->category::find($id);
         $cat->fill($this->request->all());
-        if( $cat->update() ) {
 
+        if ($cat->update()) {
             return $this->successResponse($cat, 'Categoria editada com sucesso!', 200);
-        }else
-        {
+        } else {
             return $this->errorResponse($category, 'Não existe essa categoria para ser atualizada', 200);
         }
     }
@@ -89,17 +88,12 @@ class CategoryController extends ApiController
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível deletar.", 201);
         }
-            $category = $this->category;
-            $resp = $this->category::find($id);
-            if( $resp ){
-                if( $resp->delete() )
-                {
-                    return $this->successResponse($category, 'Categoria deletada com sucesso!', 200);
-                }
-            }else{
+        $category = $this->category;
+        $resp = $this->category::findOrFail($id);
 
-                return $this->errorResponse($category, 'Não existe essa categoria para ser deletado', 200);
-            }
+        if ($resp->delete()) {
+            return $this->successResponse($category, 'Categoria deletada com sucesso!', 200);
+        }
     }
     public function getCategoryById($id)
     {

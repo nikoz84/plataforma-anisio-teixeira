@@ -34,12 +34,8 @@ class CanalController extends ApiController
             return $this->showAll($canaisForSelect, 'Select', 200);
         });
 
-<<<<<<< HEAD
-        $canais = Canal::where('is_active', true)
-=======
 
         $canais = $query::where('is_active', true)
->>>>>>> a0ae835f88226a04b0132d318e1e95b01498fbdd
             ->paginate($limit);
 
         $canais->setPath("/canais?limit={$limit}");
@@ -122,11 +118,7 @@ class CanalController extends ApiController
         return response()->json([
             'success' => true,
             'canal' => $canal,
-<<<<<<< HEAD
-            'sidebar' => $this->getSideBar($canal->id)
-=======
             'sidebar' => Sidebar::getSideBar($canal->id),
->>>>>>> a0ae835f88226a04b0132d318e1e95b01498fbdd
         ]);
     }
     private function getSideBar($id)
@@ -165,13 +157,8 @@ class CanalController extends ApiController
             'licenses' => $licencas,
             'niveis' => $niveis[0]
         ];
-<<<<<<< HEAD
-    } 
-    // /root/.ssh/id_rsa
-=======
     }
 
->>>>>>> a0ae835f88226a04b0132d318e1e95b01498fbdd
     private function getSideBarCategories($id)
     {
         /** categorias dos canais */

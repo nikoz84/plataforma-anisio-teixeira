@@ -71,8 +71,11 @@ Route::group(['middleware' => ['cors']], function () {
 Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     /** CATEGORIAS */
     Route::post('/categories', 'CategoryController@create')->name('criar.categorias');// Em andamento
-    Route::delete('/categories/{id}', 'CategoryController@delete')->name('categorias.apagar');// Em andamento
     Route::put('/categories/{id}', 'CategoryController@update')->name('atualizar.categorias');// Em andamento
+    Route::delete('/categories/{id}', 'CategoryController@delete')->name('categorias.apagar');// Em andamento
+    /** APLICATIVOS CATEGORIAS */
+    Route::post('/aplicativos/categories', 'AplicativoCategoryController@create')->name('criar.aplicativo.categorias');// andamento
+    Route::put('/aplicativos/categories', 'AplicativoCategoryController@update')->name('atualizar.aplicativo.categorias');// andamento
     /** AUTENTICACAO */
     Route::post('/auth/logout', 'AuthController@logout')->name('sair');
     Route::post('/auth/refresh', 'AuthController@refresh')->name('refrescar.token');

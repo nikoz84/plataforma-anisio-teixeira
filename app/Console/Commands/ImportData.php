@@ -69,6 +69,7 @@ class ImportData extends Command
         DB::statement("ALTER SEQUENCE aplicativo_categories_id_seq RESTART WITH 16;");
         DB::statement("ALTER SEQUENCE niveis_ensino_id_seq RESTART WITH 12;");
         DB::statement("ALTER SEQUENCE roles_id_seq RESTART WITH 8;");
+        DB::statement("ALTER SEQUENCE aplicativo_categories_id_seq RESTART WITH 40;");
 
 
         $this->info('Update dos canais');
