@@ -62,13 +62,12 @@
   </div>
 </template>
 <script>
-import Loader from "../components/Loader.vue";
 import { mapState } from "vuex";
 import ShowErrors from "../components/ShowErrors.vue";
 
 export default {
   name: "FaleConoscoForm",
-  components: { Loader, ShowErrors },
+  components: { ShowErrors },
   data() {
     return {
       data: {

@@ -60,7 +60,6 @@
 </template>
 
 <script>
-import Loader from "../components/Loader.vue";
 import IntroParallax from "../components/IntroParallax.vue";
 import ShowErrors from "../components/ShowErrors.vue";
 import { mapState, mapMutations } from "vuex";
@@ -77,7 +76,6 @@ import {
 export default {
   name: "DenunciaForm",
   components: {
-    Loader,
     ShowErrors,
     QCard,
     QCardSection,

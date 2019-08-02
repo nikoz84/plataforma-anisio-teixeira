@@ -16,6 +16,14 @@
                 <q-item-label>{{ link.name }}</q-item-label>
               </q-item-section>
             </q-item>
+            <q-separator class="q-mt-md" v-if="isLogged" />
+            <q-item class="bg-blue-1" v-if="isLogged" :to="`/admin/conteudos/listar`" clickable v-close-popup tabindex="0">
+              <q-item-section>
+                <q-item-label>Administração</q-item-label>
+              </q-item-section>
+            </q-item>
+            
+            
           </q-list>
         </q-btn-dropdown>
         <q-btn-dropdown stretch flat icon="person">
