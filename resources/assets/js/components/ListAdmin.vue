@@ -3,20 +3,16 @@
     <div>
         <h2>{{title}}</h2>
     </div>
-      <div v-if="!isLoading" class="content">
-        <Table :paginator="paginator"></Table>
-      </div>
-      <Loader v-else></Loader>
+    <Table :paginator="paginator"></Table>
   </div>
 </template>
 <script>
-import Loader from "./Loader.vue";
 import Table from "./Table.vue";
 import { mapMutations, mapState } from "vuex";
 
 export default {
   name: "Listar",
-  components: { Loader, Table },
+  components: { Table },
   data() {
     return {
       title: null,
@@ -34,10 +30,10 @@ export default {
     this.getAction();
   },
   computed: {
-    ...mapState(["paginator", "isLoading"])
+    ...mapState(["paginator"])
   },
   methods: {
-    ...mapMutations(["SET_PAGINATOR", "SET_IS_LOADING"]),
+    ...mapMutations(["SET_PAGINATOR"]),
     getAction() {
       switch (true) {
         case this.action == "listar":
@@ -58,16 +54,16 @@ export default {
       }
     },
     async getData() {
-      this.SET_IS_LOADING(true);
+      this.$q.loading.show();
       let resp = await axios.get(`/${this.slug}`);
 
       if (resp.data.success) {
-        this.SET_IS_LOADING(false);
+        this.$q.loading.hide();
         this.SET_PAGINATOR(resp.data.paginator);
       }
     },
     async getOne() {
-      console.log("get one");
+      this.$q.loading.show();
       let resp = await axios.get(`/${this.slug}/${this.id}`);
       this.response(resp);
     },

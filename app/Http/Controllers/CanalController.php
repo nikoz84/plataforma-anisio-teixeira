@@ -34,7 +34,7 @@ class CanalController extends ApiController
         });
 
 
-        $canais = $query::where('is_active', true)
+        $canais = $query->where('is_active', true)
             ->paginate($limit);
 
         $canais->setPath("/canais?limit={$limit}");

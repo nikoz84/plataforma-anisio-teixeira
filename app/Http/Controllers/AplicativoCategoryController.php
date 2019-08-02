@@ -60,6 +60,7 @@ class AplicativoCategoryController extends ApiController
             return $this->errorResponse($validator->errors(), "Não foi possível deletar.", 201);
         }
         $category = $this->category;
+        //asd 
         $resp = $this->category::findOrFail($id);
 
         if ($resp->delete()) {

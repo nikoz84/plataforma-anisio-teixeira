@@ -36,7 +36,6 @@ Route::get('/form', function (Request $request) {
 });
 
 Route::get('/docs', function (Request $request) {
-
     return view('docs');
 });
 

@@ -58,11 +58,12 @@ class Handler extends ExceptionHandler
         } elseif ($exception instanceof TokenInvalidException) {
             return Response::json(['message' => 'token_invalid'], 201);
         } elseif ($exception instanceof JWTException) {
-            return Response::json(['message' => $exception->getMessage()], 201);
+            //return Response::json(['message' => $exception->getMessage()], 201);
         }
         if ($exception instanceof ModelNotFoundException) {
             return Response::json(['message' => 'modelo não encontrado'], 201);
         }
+        /*
         if ($exception instanceof HttpException) {
             return Response::json(
                 [
@@ -73,6 +74,7 @@ class Handler extends ExceptionHandler
                 $exception->getHeaders()
             );
         }
+        */
 
         return parent::render($request, $exception);
     }

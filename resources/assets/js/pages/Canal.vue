@@ -9,7 +9,7 @@
         <q-tabs inline-label class="bg-primary text-white shadow-2">
             
             <q-route-tab name="inicio" 
-                  label="INÍCIO" 
+                  label="Sobre" 
                   :to="{ name: 'Inicio', params: {slug: $route.params.slug}}"
                   v-if="canal && canal.options && canal.options.has_home"/>
             <q-separator vertical inset />
