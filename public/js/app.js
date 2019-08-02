@@ -2973,9 +2973,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Loader_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Loader.vue */ "./resources/assets/js/components/Loader.vue");
-/* harmony import */ var _Table_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Table.vue */ "./resources/assets/js/components/Table.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _Table_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Table.vue */ "./resources/assets/js/components/Table.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2988,12 +2987,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Listar",
   components: {
-    Loader: _Loader_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    Table: _Table_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    Table: _Table_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
@@ -3011,8 +3008,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   created: function created() {
     this.getAction();
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapState"])(["paginator", "isLoading"])),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapMutations"])(["SET_PAGINATOR", "SET_IS_LOADING"]), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])(["paginator"])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapMutations"])(["SET_PAGINATOR"]), {
     getAction: function getAction() {
       switch (true) {
         case this.action == "listar":
@@ -3043,7 +3040,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                this.SET_IS_LOADING(true);
+                this.$q.loading.show();
                 _context.next = 3;
                 return axios.get("/".concat(this.slug));
 
@@ -3051,7 +3048,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 resp = _context.sent;
 
                 if (resp.data.success) {
-                  this.SET_IS_LOADING(false);
+                  this.$q.loading.hide();
                   this.SET_PAGINATOR(resp.data.paginator);
                 }
 
@@ -3076,7 +3073,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                console.log("get one");
+                this.$q.loading.show();
                 _context2.next = 3;
                 return axios.get("/".concat(this.slug, "/").concat(this.id));
 
@@ -3439,10 +3436,22 @@ __webpack_require__.r(__webpack_exports__);
         rowsPerPage: this.paginator.per_page
       },
       columns: [{
-        name: 'id',
-        align: 'center',
-        label: 'ID',
-        field: 'id',
+        name: "id",
+        align: "center",
+        label: "ID",
+        field: "id",
+        sortable: true
+      }, {
+        name: "name",
+        align: "center",
+        label: "Nome",
+        field: "name",
+        sortable: true
+      }, {
+        name: "title",
+        align: "center",
+        label: "Título",
+        field: "title",
         sortable: true
       }]
     };
@@ -50896,7 +50905,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!**********************************************!*\
   !*** ./node_modules/quasar/src/index.esm.js ***!
   \**********************************************/
-/*! exports provided: default, ClosePopup, GoBack, Ripple, ScrollFire, Scroll, TouchHold, TouchPan, TouchRepeat, TouchSwipe, AddressbarColor, AppFullscreen, AppVisibility, BottomSheet, Cookies, Dialog, LoadingBar, Loading, Meta, Notify, Platform, Screen, LocalStorage, SessionStorage, clone, colors, date, debounce, dom, event, extend, format, frameDebounce, noop, openURL, patterns, scroll, throttle, uid, QAjaxBar, QAvatar, QBadge, QBanner, QBar, QBreadcrumbs, QBreadcrumbsEl, QBtn, QBtnGroup, QBtnDropdown, QBtnToggle, QCard, QCardSection, QCardActions, QCarousel, QCarouselSlide, QCarouselControl, QChatMessage, QCheckbox, QChip, QCircularProgress, QColor, QDate, QTime, QDialog, QEditor, QFab, QFabAction, QField, QForm, QIcon, QImg, QInfiniteScroll, QInnerLoading, QInput, QKnob, QLayout, QDrawer, QFooter, QHeader, QPage, QPageContainer, QPageSticky, QList, QItem, QItemSection, QItemLabel, QExpansionItem, QSlideItem, QMenu, QNoSsr, QResizeObserver, QScrollObserver, QOptionGroup, QPageScroller, QPagination, QParallax, QPopupEdit, QPopupProxy, QLinearProgress, QPullToRefresh, QRadio, QRange, QRating, QScrollArea, QSelect, QSeparator, QSlideTransition, QSlider, QSpace, QSpinner, QSpinnerAudio, QSpinnerBall, QSpinnerBars, QSpinnerComment, QSpinnerCube, QSpinnerDots, QSpinnerFacebook, QSpinnerGears, QSpinnerGrid, QSpinnerHearts, QSpinnerHourglass, QSpinnerInfinity, QSpinnerIos, QSpinnerOval, QSpinnerPie, QSpinnerPuff, QSpinnerRadio, QSpinnerRings, QSpinnerTail, QSplitter, QStep, QStepper, QStepperNavigation, QTabPanels, QTabPanel, QTable, QTh, QTr, QTd, QMarkupTable, QTabs, QTab, QRouteTab, QTimeline, QTimelineEntry, QToggle, QToolbar, QToolbarTitle, QTooltip, QTree, QUploader, QUploaderBase, QUploaderAddTrigger, QVideo */
+/*! exports provided: ClosePopup, GoBack, Ripple, ScrollFire, Scroll, TouchHold, TouchPan, TouchRepeat, TouchSwipe, AddressbarColor, AppFullscreen, AppVisibility, BottomSheet, Cookies, Dialog, LoadingBar, Loading, Meta, Notify, Platform, Screen, LocalStorage, SessionStorage, clone, colors, date, debounce, dom, event, extend, format, frameDebounce, noop, openURL, patterns, scroll, throttle, uid, default, QAjaxBar, QAvatar, QBadge, QBanner, QBar, QBreadcrumbs, QBreadcrumbsEl, QBtn, QBtnGroup, QBtnDropdown, QBtnToggle, QCard, QCardSection, QCardActions, QCarousel, QCarouselSlide, QCarouselControl, QChatMessage, QCheckbox, QChip, QCircularProgress, QColor, QDate, QTime, QDialog, QEditor, QFab, QFabAction, QField, QForm, QIcon, QImg, QInfiniteScroll, QInnerLoading, QInput, QKnob, QLayout, QDrawer, QFooter, QHeader, QPage, QPageContainer, QPageSticky, QList, QItem, QItemSection, QItemLabel, QExpansionItem, QSlideItem, QMenu, QNoSsr, QResizeObserver, QScrollObserver, QOptionGroup, QPageScroller, QPagination, QParallax, QPopupEdit, QPopupProxy, QLinearProgress, QPullToRefresh, QRadio, QRange, QRating, QScrollArea, QSelect, QSeparator, QSlideTransition, QSlider, QSpace, QSpinner, QSpinnerAudio, QSpinnerBall, QSpinnerBars, QSpinnerComment, QSpinnerCube, QSpinnerDots, QSpinnerFacebook, QSpinnerGears, QSpinnerGrid, QSpinnerHearts, QSpinnerHourglass, QSpinnerInfinity, QSpinnerIos, QSpinnerOval, QSpinnerPie, QSpinnerPuff, QSpinnerRadio, QSpinnerRings, QSpinnerTail, QSplitter, QStep, QStepper, QStepperNavigation, QTabPanels, QTabPanel, QTable, QTh, QTr, QTd, QMarkupTable, QTabs, QTab, QRouteTab, QTimeline, QTimelineEntry, QToggle, QToolbar, QToolbarTitle, QTooltip, QTree, QUploader, QUploaderBase, QUploaderAddTrigger, QVideo */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -60241,14 +60250,7 @@ var render = function() {
     [
       _c("div", [_c("h2", [_vm._v(_vm._s(_vm.title))])]),
       _vm._v(" "),
-      !_vm.isLoading
-        ? _c(
-            "div",
-            { staticClass: "content" },
-            [_c("Table", { attrs: { paginator: _vm.paginator } })],
-            1
-          )
-        : _c("Loader")
+      _c("Table", { attrs: { paginator: _vm.paginator } })
     ],
     1
   )
@@ -60651,119 +60653,45 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c(
-      "div",
-      { staticClass: "col-lg-12" },
-      [
-        _vm.paginator.data && _vm.paginator.data.length > 0
-          ? _c("SearchForm")
-          : _vm._e()
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "col-lg-12 table-responsive" },
-      [
-        _c("q-table", {
-          attrs: {
-            title: "Tabela",
-            data: _vm.paginator.data,
-            columns: _vm.columns,
-            pagination: _vm.pagination,
-            "row-key": "name",
-            "binary-state-sort": ""
-          },
-          on: {
-            "update:pagination": function($event) {
-              _vm.pagination = $event
-            }
-          }
-        }),
-        _vm._v(" "),
-        _vm.paginator.data && _vm.paginator.data.length > 0
-          ? _c("table", { staticClass: "table table-striped" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.paginator.data, function(item, i) {
-                  return _c("tr", { key: i }, [
-                    _c("td", { domProps: { textContent: _vm._s(item.id) } }),
-                    _vm._v(" "),
-                    _c("td", {
-                      staticClass: "text-truncate",
-                      domProps: {
-                        textContent: _vm._s(item.name ? item.name : item.title)
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm._m(1, true)
-                  ])
-                }),
-                0
-              )
-            ])
-          : _vm._e()
-      ],
-      1
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("ID")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("nome/titulo")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("ações")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("div", [
+  return _vm.paginator.data
+    ? _c("div", { staticClass: "row" }, [
         _c(
-          "a",
-          {
-            staticClass: "btn btn-default btn-xs",
-            attrs: {
-              "data-toggle": "tooltip",
-              "data-placement": "top",
-              "data-container": "body",
-              title: "Editar"
-            }
-          },
-          [_c("i", { staticClass: "glyphicon glyphicon-edit" })]
+          "div",
+          { staticClass: "col-lg-12" },
+          [
+            _vm.paginator.data && _vm.paginator.data.length > 0
+              ? _c("SearchForm")
+              : _vm._e()
+          ],
+          1
         ),
         _vm._v(" "),
         _c(
-          "a",
-          {
-            staticClass: "btn btn-danger btn-xs",
-            attrs: {
-              "data-toggle": "tooltip",
-              "data-placement": "top",
-              "data-container": "body",
-              title: "Apagar"
-            }
-          },
-          [_c("i", { staticClass: "glyphicon glyphicon-trash" })]
+          "div",
+          { staticClass: "col-lg-12 table-responsive" },
+          [
+            _c("q-table", {
+              attrs: {
+                title: "Tabela",
+                data: _vm.paginator.data,
+                columns: _vm.columns,
+                pagination: _vm.pagination,
+                "row-key": "name",
+                "binary-state-sort": ""
+              },
+              on: {
+                "update:pagination": function($event) {
+                  _vm.pagination = $event
+                }
+              }
+            })
+          ],
+          1
         )
       ])
-    ])
-  }
-]
+    : _vm._e()
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -82214,7 +82142,7 @@ var actions = {
               commit("SET_IS_LOADING", true);
               _context2.prev = 2;
               _context2.next = 5;
-              return axios.get("aplicativos/".concat(payload.id)).then(function (resp) {
+              return axios.get("/aplicativos/".concat(payload.id)).then(function (resp) {
                 console.log(resp);
                 commit("SET_EXIBIR_ID", "Aplicativo");
                 commit("SET_APLICATIVO", resp.data.metadata);

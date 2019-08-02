@@ -50,15 +50,15 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/aplicativos/search/{term}', 'AplicativoController@search')->name('busca.aplicativo');
     Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('busca.x.aplicativo.id');
     /** AUTENTICACAO */
-    Route::post('/auth/login', 'AuthController@login')->name('login.usuario')->middleware("throttle:3,1");
-    Route::post('/auth/register', 'AuthController@register')->name('registro.usuario')->middleware("throttle:3,1");
+    Route::post('/auth/login', 'AuthController@login')->name('login.usuario');
+    Route::post('/auth/register', 'AuthController@register')->name('registro.usuario');
     /** OPTIONS  */
     Route::get('/options/{name}', 'OptionsController@getByName')->name('busca.metadata.x.nome');
     Route::get('/options', 'OptionsController@list')->name('listar.opcoes');
     /** TAGS */
     Route::get('/tags/{id}', 'TagController@getById')->name('busca.x.tag.id');
     /**  */
-    Route::get('/licenses', 'LicenseController@list')->name('listar.licencas');
+    Route::get('/licencas', 'LicenseController@list')->name('listar.licencas');
     /** TOKEN */
     Route::name('verify')->get('usuarios/verify/{token}', 'UserController@verify');
 });

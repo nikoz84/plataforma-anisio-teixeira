@@ -9,7 +9,7 @@ const actions = {
   async fetchAplicativo({ commit }, payload) {
     commit("SET_IS_LOADING", true);
     try {
-      await axios.get(`aplicativos/${payload.id}`).then(resp => {
+      await axios.get(`/aplicativos/${payload.id}`).then(resp => {
         console.log(resp);
         commit("SET_EXIBIR_ID", "Aplicativo");
         commit("SET_APLICATIVO", resp.data.metadata);
