@@ -40,7 +40,12 @@
                         <div class="card-body">
                             <h5 class="card-title">Conteudos</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Rota: {{ url('/') }}/api-v1/conteudos </h6>
-                            <div class="card-text">Descrição</div>
+                            <div class="card-text">
+                                parámetros
+                                limit <br>
+                                categorias <br>
+
+                            </div>
                         </div>
                     </div>
                 </article>

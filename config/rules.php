@@ -66,5 +66,8 @@ return [
     ],
     'categoria' => [
         'name' => 'required','canal_id' => 'required'
+    ],
+    'aplicativo_categoria' => [
+        'name' => 'required'
     ]
 ];

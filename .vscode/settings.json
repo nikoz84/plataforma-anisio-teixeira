@@ -42,8 +42,11 @@
     "**/node_modules/*/**": true
   },
   "cSpell.words": [
+    "atualizar",
+    "categoria",
     "criado",
     "deletar",
+    "obrigatório",
     "perfil"
   ]
 }

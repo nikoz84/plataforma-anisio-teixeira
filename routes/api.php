@@ -23,8 +23,9 @@ Route::group(['middleware' => ['cors']], function () {
     /** CATEGORIAS */
     Route::get('/categories', 'CategoryController@list')->name('lista.categorias');
     Route::get('/categories/{id}', 'CategoryController@getCategoryById')->name('lista.categoria.x.id');
-    // Route::get('/categories/aplicativos', 'CategoryController@getAplicativoCategories')
-    //     ->name('lista.categorias.aplicativos');
+    /** APLICATIVOS CATEGORIAS */
+    Route::get('/aplicativos/categories/{id}', 'AplicativoCategoryController@getAplicativoCategories')
+        ->name('lista.categorias.aplicativos');
     Route::get('/aplicativos/categories', 'AplicativoCategoryController@list')->name('lista.categorias.aplicativo');
     /** TIPOS */
     Route::get('/tipos', 'TipoController@list')->name('listar.tipos');
@@ -70,9 +71,13 @@ Route::group(['middleware' => ['cors']], function () {
  * */
 Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     /** CATEGORIAS */
-    Route::post('/categories', 'CategoryController@create')->name('criar.categorias'); // Em andamento
-    Route::delete('/categories/{id}', 'CategoryController@delete')->name('categorias.apagar'); // Em andamento
-    Route::put('/categories/{id}', 'CategoryController@update')->name('atualizar.categorias'); // Em andamento
+    Route::post('/categories', 'CategoryController@create')->name('criar.categorias');// Em andamento
+    Route::put('/categories/{id}', 'CategoryController@update')->name('atualizar.categorias');// Em andamento
+    Route::delete('/categories/{id}', 'CategoryController@delete')->name('categorias.apagar');// Em andamento
+    /** APLICATIVOS CATEGORIAS */
+    Route::post('/aplicativos/categories', 'AplicativoCategoryController@create')->name('criar.aplicativo.categorias');// andamento
+    Route::put('/aplicativos/categories/{id}', 'AplicativoCategoryController@update')->name('atualizar.aplicativo.categorias');// andamento
+    Route::delete('/aplicativos/categories/{id}', 'AplicativoCategoryController@delete')->name('apagar.aplicativo.categorias');// andamento
     /** AUTENTICACAO */
     Route::post('/auth/logout', 'AuthController@logout')->name('sair');
     Route::post('/auth/refresh', 'AuthController@refresh')->name('refrescar.token');
