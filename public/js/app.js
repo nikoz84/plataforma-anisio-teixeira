@@ -3426,14 +3426,15 @@ __webpack_require__.r(__webpack_exports__);
   name: "Table",
   components: {
     SearchForm: _forms_SearchForm_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    QTable: quasar__WEBPACK_IMPORTED_MODULE_1__["QTable"]
+    QMarkupTable: quasar__WEBPACK_IMPORTED_MODULE_1__["QMarkupTable"]
   },
   props: ["paginator"],
   data: function data() {
     return {
       pagination: {
         page: this.paginator.current_page,
-        rowsPerPage: this.paginator.per_page
+        rowsPerPage: this.paginator.per_page,
+        rowsNumber: this.paginator.total
       },
       columns: [{
         name: "id",
@@ -3444,14 +3445,10 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         name: "name",
         align: "center",
-        label: "Nome",
-        field: "name",
-        sortable: true
-      }, {
-        name: "title",
-        align: "center",
-        label: "Título",
-        field: "title",
+        label: "Nome/Título",
+        field: function field(row) {
+          return row.name ? row.name : row.title;
+        },
         sortable: true
       }]
     };
@@ -60654,7 +60651,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.paginator.data
-    ? _c("div", { staticClass: "row" }, [
+    ? _c("div", [
         _c(
           "div",
           { staticClass: "col-lg-12" },
@@ -60668,23 +60665,39 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "col-lg-12 table-responsive" },
+          { staticClass: "col-lg-12" },
           [
-            _c("q-table", {
-              attrs: {
-                title: "Tabela",
-                data: _vm.paginator.data,
-                columns: _vm.columns,
-                pagination: _vm.pagination,
-                "row-key": "name",
-                "binary-state-sort": ""
-              },
-              on: {
-                "update:pagination": function($event) {
-                  _vm.pagination = $event
-                }
-              }
-            })
+            _c(
+              "q-markup-table",
+              { attrs: { separator: "horizontal", flat: "", bordered: "" } },
+              [
+                _c("thead", [
+                  _c("tr", [
+                    _c("th", { staticClass: "text-left" }, [_vm._v("ID")]),
+                    _vm._v(" "),
+                    _c("th", { staticClass: "text-center" }, [
+                      _vm._v("Nome/Título")
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.paginator.data, function(row, i) {
+                    return _c("tr", { key: "row-" + i }, [
+                      _c("td", { staticClass: "text-left" }, [
+                        _vm._v(_vm._s(row.id))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-center" }, [
+                        _vm._v(_vm._s(row.name ? row.name : row.title))
+                      ])
+                    ])
+                  }),
+                  0
+                )
+              ]
+            )
           ],
           1
         )
