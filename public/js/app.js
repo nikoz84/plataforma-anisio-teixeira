@@ -2994,10 +2994,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      title: null,
       id: null,
-      slug: "inicio",
-      action: ""
+      slug: this.$route.params.slug,
+      action: this.$route.params.action
     };
   },
   beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {
@@ -3011,6 +3010,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])(["paginator"])),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapMutations"])(["SET_PAGINATOR"]), {
     getAction: function getAction() {
+      console.log(this.$route.params);
+
       switch (true) {
         case this.action == "listar":
           this.getData();
@@ -3050,6 +3051,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 if (resp.data.success) {
                   this.$q.loading.hide();
                   this.SET_PAGINATOR(resp.data.paginator);
+                } else {
+                  this.$q.loading.hide();
+                  this.$router.push();
                 }
 
               case 5:
@@ -3430,28 +3434,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   props: ["paginator"],
   data: function data() {
-    return {
-      pagination: {
-        page: this.paginator.current_page,
-        rowsPerPage: this.paginator.per_page,
-        rowsNumber: this.paginator.total
-      },
-      columns: [{
-        name: "id",
-        align: "center",
-        label: "ID",
-        field: "id",
-        sortable: true
-      }, {
-        name: "name",
-        align: "center",
-        label: "Nome/Título",
-        field: function field(row) {
-          return row.name ? row.name : row.title;
-        },
-        sortable: true
-      }]
-    };
+    return {};
   }
 });
 
@@ -60242,15 +60225,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("div", [_c("h2", [_vm._v(_vm._s(_vm.title))])]),
-      _vm._v(" "),
-      _c("Table", { attrs: { paginator: _vm.paginator } })
-    ],
-    1
-  )
+  return _c("div", [_c("Table", { attrs: { paginator: _vm.paginator } })], 1)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -60654,7 +60629,7 @@ var render = function() {
     ? _c("div", [
         _c(
           "div",
-          { staticClass: "col-lg-12" },
+          { staticClass: "col-lg-12 q-pa-md" },
           [
             _vm.paginator.data && _vm.paginator.data.length > 0
               ? _c("SearchForm")
@@ -60665,11 +60640,11 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "col-lg-12" },
+          { staticClass: "col-lg-12 q-pa-md" },
           [
             _c(
               "q-markup-table",
-              { attrs: { separator: "horizontal", flat: "", bordered: "" } },
+              { attrs: { separator: "vertical", flat: "", bordered: "" } },
               [
                 _c("thead", [
                   _c("tr", [
@@ -60677,7 +60652,9 @@ var render = function() {
                     _vm._v(" "),
                     _c("th", { staticClass: "text-center" }, [
                       _vm._v("Nome/Título")
-                    ])
+                    ]),
+                    _vm._v(" "),
+                    _c("th", { staticClass: "text-center" }, [_vm._v("Ações")])
                   ])
                 ]),
                 _vm._v(" "),
@@ -60689,9 +60666,37 @@ var render = function() {
                         _vm._v(_vm._s(row.id))
                       ]),
                       _vm._v(" "),
-                      _c("td", { staticClass: "text-center" }, [
-                        _vm._v(_vm._s(row.name ? row.name : row.title))
-                      ])
+                      _c("td", {
+                        staticClass: "text-center",
+                        domProps: {
+                          innerHTML: _vm._s(row.name ? row.name : row.title)
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        {
+                          staticClass: "text-center",
+                          staticStyle: { width: "150px" }
+                        },
+                        [
+                          _c(
+                            "q-btn-group",
+                            { attrs: { spread: "" } },
+                            [
+                              _c("q-btn", {
+                                attrs: { color: "primary", icon: "edit" }
+                              }),
+                              _vm._v(" "),
+                              _c("q-btn", {
+                                attrs: { color: "negative", icon: "delete" }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
                     ])
                   }),
                   0

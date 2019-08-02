@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div>
-        <h2>{{title}}</h2>
-    </div>
+    
     <Table :paginator="paginator"></Table>
   </div>
 </template>
@@ -15,10 +13,9 @@ export default {
   components: { Table },
   data() {
     return {
-      title: null,
       id: null,
-      slug: "inicio",
-      action: ""
+      slug: this.$route.params.slug,
+      action: this.$route.params.action
     };
   },
   beforeRouteUpdate(to, from, next) {
@@ -35,6 +32,7 @@ export default {
   methods: {
     ...mapMutations(["SET_PAGINATOR"]),
     getAction() {
+      console.log(this.$route.params);
       switch (true) {
         case this.action == "listar":
           this.getData();
@@ -60,6 +58,9 @@ export default {
       if (resp.data.success) {
         this.$q.loading.hide();
         this.SET_PAGINATOR(resp.data.paginator);
+      } else {
+        this.$q.loading.hide();
+        this.$router.push();
       }
     },
     async getOne() {
