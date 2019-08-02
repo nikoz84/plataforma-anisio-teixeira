@@ -100,9 +100,9 @@ class CategoryController extends ApiController
         $category = $this->category::find($id);
         return $this->showOne($category);
     }
-    public function getAplicativoCategories()
-    {
-        $categories = $this->appCategory::get();
-        return $this->showAll($categories, '', 200);
-    }
+    // public function getAplicativoCategories()
+    // {
+    //     $categories = $this->appCategory::get();
+    //     return $this->showAll($categories, '', 200);
+    // }
 }

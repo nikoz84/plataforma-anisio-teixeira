@@ -36,17 +36,13 @@ class AplicativoCategoryController extends ApiController
     }
     public function update(Request $request, $id)
     {
-        dd('Marlon');
-        // $validator = Validator::make($this->request->all(), config("rules.categoria"));
-        // if ($validator->fails()) {
-        //     return $this->errorResponse($validator->errors(), "Não foi possível atualizar a categoria", 201);
-        // }
-
+        $validator = Validator::make($this->request->all(), config("rules.aplicativo_categoria"));
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors(), "Não foi possível atualizar a categoria", 201);
+        }
         $aplicativo_category = $this->category;
         $aplicativo_category->name = $this->request->name;
-
-        $cat = $this->aplicativo_category::find($id);
-        //findOrFail
+        $cat = $aplicativo_category::findOrFail($id);
         $cat->fill($this->request->all());
 
         if ($cat->update()) {
@@ -54,5 +50,26 @@ class AplicativoCategoryController extends ApiController
         } else {
             return $this->errorResponse($aplicativo_category, 'Não existe essa categoria para ser atualizada', 200);
         }
+    }
+    public function delete($id)
+    {
+        $validator = Validator::make($this->request->all(), [
+            'delete_confirmation' => ['required', new \App\Rules\ValidBoolean]
+        ]);
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors(), "Não foi possível deletar.", 201);
+        }
+        $category = $this->category;
+        $resp = $this->category::findOrFail($id);
+
+        if ($resp->delete()) {
+            return $this->successResponse($category, 'Categoria deletada com sucesso!', 200);
+        }
+    }
+
+    public function getAplicativoCategories($id)
+    {
+        $category = $this->category::findOrFail($id);
+        return $this->showOne($category);
     }
 }
