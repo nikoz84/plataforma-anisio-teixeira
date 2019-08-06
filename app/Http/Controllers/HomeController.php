@@ -78,11 +78,8 @@ class HomeController extends ApiController
                 'title' => 'Aplicativos Recentes',
                 'items' => $this->destaques->getAplicativosMaisRecentes()
             ]
-            
         ];
-               
-
-        return $this->successResponse($data,'', 200);
+        return $this->successResponse( $data,'', 200 );
     }
 
     public function getAnalytics()

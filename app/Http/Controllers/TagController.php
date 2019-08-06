@@ -28,7 +28,7 @@ class TagController extends Controller
                     ->paginate($limit);
 
         $tags->setPath("/tags?limit={$limit}");
-        
+
         return response()->json([
                 'success'=> true,
                 'title'=> 'Lista de tags',
@@ -46,18 +46,16 @@ class TagController extends Controller
     public function create(Request $request)
     {
         $name = $request->get('name');
-        
+
         $id = DB::table('tags')->insertGetId([
                 'name' => $name
             ]);
-        
         return response()->json([
                 'menssage' => "Tag - {$name} - adicionada com sucesso",
                 'id' => $id
             ]);
     }
 
-    
     /**
      * Update the specified resource in storage.
      *
@@ -90,7 +88,6 @@ class TagController extends Controller
                     ->select(['id','name'])
                     ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
                     ->paginate($limit);
-        
         $tags->setPath("/tags/search/{$termo}?limit={$limit}");
 
         return response()->json([
@@ -122,8 +119,6 @@ class TagController extends Controller
     public function getById($id)
     {
         $tag = Tag::where('id', $id);
-        
-        
         return response()->json([
             'success' => true,
             'tag' => $tag

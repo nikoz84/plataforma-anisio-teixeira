@@ -44,8 +44,6 @@ class AplicativoController extends ApiController
         return $this->showAsPaginator($apps, 'Aplicativos Educacionais', 200);
     }
 
-
-
     /**
      * Cria um novo aplicativo.
      *
