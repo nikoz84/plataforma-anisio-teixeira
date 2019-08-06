@@ -83,7 +83,7 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     Route::post('/auth/user', 'AuthController@getAuthUser')->name('usuario.logado');
     /** TIPOS */
     Route::post('/tipos', 'TipoController@create')->name('criar.tipos');
-    Route::put('/update/{id}', 'TipoController@update')->name('atualizar.tipos');
+    Route::put('/tipos/{id}', 'TipoController@update')->name('atualizar.tipos');
     /** ROLES */
     Route::get('/roles', 'RoleController@list')->name('role.listar');
     Route::post('/roles', 'RoleController@create')->name('criar.role');
