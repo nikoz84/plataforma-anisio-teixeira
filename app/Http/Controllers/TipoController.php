@@ -58,4 +58,20 @@ class TipoController extends ApiController
             return $this->errorResponse($tipo, 'Não existe essa categoria para ser atualizada', 200);
         }
     }
+    public function delete($id)
+    {
+        $validator = Validator::make($this->request->all(), [
+            'delete_confirmation' => ['required', new \App\Rules\ValidBoolean]
+        ]);
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors(), "Não foi possível deletar.", 201);
+        }
+        $tipo = $this->tipo;
+        $resp = $this->tipo::findOrFail($id);
+
+        if ($resp->delete()) {
+            return $this->successResponse($tipo, 'Tipo deletado com sucesso!', 200);
+        }
+    }
+
 }
