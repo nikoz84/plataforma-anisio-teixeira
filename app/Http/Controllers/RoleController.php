@@ -34,7 +34,7 @@ class RoleController extends ApiController
         }
         $role = $this->role;
         $role->name = $this->request->name;
-        if($role->save()){
+        if ($role->save()) {
             return $this->successResponse($role, 'Perfil criado com sucesso!', 200);
         }
     }
@@ -49,7 +49,7 @@ class RoleController extends ApiController
 
         $role = $this->role::find($id);
         $role->fill($this->request->all());
-        if($role->update()){
+        if ($role->update()) {
             return $this->successResponse($role, 'Perfil editado com sucesso!', 200);
         }
     }
@@ -63,7 +63,7 @@ class RoleController extends ApiController
         }
         $role = $this->role;
         $resp = $this->role::find($id);
-        if( $resp->delete() ){
+        if ($resp->delete()) {
             return $this->successResponse($role, 'Perfil deletado com sucesso!', 200);
         }
     }
