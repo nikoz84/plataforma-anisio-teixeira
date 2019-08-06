@@ -26,18 +26,12 @@ class UserController extends Controller
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'name';
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
-
-		$query = $this->user::query();
-        
-
-		$paginator = $query->orderBy('name', 'asc')
-            	->paginate($limit);
-
+        $query = $this->user::query();
+        $paginator = $query->orderBy('name', 'asc')->paginate($limit);
         $paginator->setPath("/usuarios?limit={$limit}");
-        
         return response()->json([
             'success' => true,
-			'title' => 'Lista de Usuários',
+            'title' => 'Lista de Usuários',
             'paginator' => $paginator
         ]);
 

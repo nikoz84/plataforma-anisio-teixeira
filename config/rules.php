@@ -69,5 +69,8 @@ return [
     ],
     'aplicativo_categoria' => [
         'name' => 'required'
+    ],
+    'tipos' => [
+        'name' => 'required'
     ]
 ];

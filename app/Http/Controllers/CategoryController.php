@@ -48,13 +48,12 @@ class CategoryController extends ApiController
     {
         $validator = Validator::make($this->request->all(), config("rules.categoria"));
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível criar o perfil", 201);
+            return $this->errorResponse($validator->errors(), "Não foi possível criar a categoria", 201);
         }
-        $category = $this->category;
-        $category->name = $this->request->name;
+        $category           = $this->category;
+        $category->name     = $this->request->name;
         $category->canal_id = $this->request->canal_id;
-        $category->options = $this->request->options;
-
+        $category->options  = $this->request->options;
         if ($category->save()) {
             return $this->successResponse($category, 'Categoria criada com sucesso!', 200);
         }
@@ -100,9 +99,4 @@ class CategoryController extends ApiController
         $category = $this->category::find($id);
         return $this->showOne($category);
     }
-    // public function getAplicativoCategories()
-    // {
-    //     $categories = $this->appCategory::get();
-    //     return $this->showAll($categories, '', 200);
-    // }
 }
