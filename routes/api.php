@@ -94,6 +94,7 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     /** TIPOS */
     Route::post('/tipos', 'TipoController@create')->name('criar.tipos');
     Route::put('/tipos/{id}', 'TipoController@update')->name('atualizar.tipos');
+    Route::delete('/tipos/{id}', 'TipoController@delete')->name('apagar.tipos');
     /** ROLES */
     Route::get('/roles', 'RoleController@list')->name('role.listar');
     Route::post('/roles', 'RoleController@create')->name('criar.role');
