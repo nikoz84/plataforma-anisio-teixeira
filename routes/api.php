@@ -71,13 +71,13 @@ Route::group(['middleware' => ['cors']], function () {
  * */
 Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     /** CATEGORIAS */
-    Route::post('/categories', 'CategoryController@create')->name('criar.categorias');// Em andamento
-    Route::put('/categories/{id}', 'CategoryController@update')->name('atualizar.categorias');// Em andamento
-    Route::delete('/categories/{id}', 'CategoryController@delete')->name('categorias.apagar');// Em andamento
+    Route::post('/categories', 'CategoryController@create')->name('criar.categorias'); // Em andamento
+    Route::put('/categories/{id}', 'CategoryController@update')->name('atualizar.categorias'); // Em andamento
+    Route::delete('/categories/{id}', 'CategoryController@delete')->name('categorias.apagar'); // Em andamento
     /** APLICATIVOS CATEGORIAS */
-    Route::post('/aplicativos/categories', 'AplicativoCategoryController@create')->name('criar.aplicativo.categorias');// andamento
-    Route::put('/aplicativos/categories/{id}', 'AplicativoCategoryController@update')->name('atualizar.aplicativo.categorias');// andamento
-    Route::delete('/aplicativos/categories/{id}', 'AplicativoCategoryController@delete')->name('apagar.aplicativo.categorias');// andamento
+    Route::post('/aplicativos/categories', 'AplicativoCategoryController@create')->name('criar.aplicativo.categorias'); // andamento
+    Route::put('/aplicativos/categories/{id}', 'AplicativoCategoryController@update')->name('atualizar.aplicativo.categorias'); // andamento
+    Route::delete('/aplicativos/categories/{id}', 'AplicativoCategoryController@delete')->name('apagar.aplicativo.categorias'); // andamento
     /** AUTENTICACAO */
     Route::post('/auth/logout', 'AuthController@logout')->name('sair');
     Route::post('/auth/refresh', 'AuthController@refresh')->name('refrescar.token');
@@ -127,5 +127,5 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     Route::put('/options/{name}', 'OptionsController@update')->name('atualizar.opcoes.x.nome');
     Route::delete('/options/{name}', 'OptionsController@delete')->name('apagar.opcoes.x.nome');
     /** ANALYTICS */
-    Route::get('/analytics', 'HomeController@getAnalytics')->name('catalogacao.blog');
+    Route::get('/analytics', 'HomeController@getAnalytics')->name('catalogacao.blog.e.plataforma');
 });
