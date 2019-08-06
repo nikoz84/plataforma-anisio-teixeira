@@ -73,5 +73,10 @@ class TipoController extends ApiController
             return $this->successResponse($tipo, 'Tipo deletado com sucesso!', 200);
         }
     }
+    public function getTiposById($id)
+    {
+        $tipo = $this->tipo::find($id);
+        return $this->showOne($tipo);
+    }
 
 }
