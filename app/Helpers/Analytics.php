@@ -2,18 +2,37 @@
 
 namespace App\Helpers;
 
-class Analitycs
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class Analytics
 {
-    public function postsPerCanal()
+    protected $limit;
+    protected $page;
+    protected $data_inicio;
+    protected $data_fim;
+
+    public function __construct(Request $request)
     {
-        $sql = "SELECT (SELECT nomecanal FROM canal as c WHERE c.idcanal = cd.idcanal) AS canal,
-                COUNT (cd.idcanal) as total
+        $this->limit = $request->query('limit', 15);
+        $this->page = $request->query('page', 1);
+        $this->data_inicio = $request->query('inicio', date('Y-01-01 00:00:00'));
+        $this->data_fim = $request->query('fim', date("Y-m-d H:i:s"));
+
+    }
+
+    public function postsPerTveRadio()
+    {
+        $sql = "SELECT (SELECT name FROM canais as c WHERE c.id = cd.canal_id) AS canal,
+                COUNT (cd.canal_id) as total
                 FROM
-                conteudodigital as cd
-                WHERE datapublicacao BETWEEN '01/01/2019' AND '22/07/2019'
-                and idcanal in (1,12)
+                conteudos as cd
+                WHERE created_at BETWEEN '01/01/2019' AND '22/07/2019'
+                and cd.canal_id in (1,12)
                 GROUP BY
-                cd.idcanal";
+                cd.canal_id";
+
+        return DB::select($sql);
     }
 
     public function postsPerUser()
@@ -25,6 +44,8 @@ class Analitycs
                 WHERE datapublicacao BETWEEN '01/01/2019' AND '22/07/2019'
                 GROUP BY
                 idusuariopublicador";
+
+        return DB::select($sql);
     }
 
     public function postsPerMonth()
@@ -38,6 +59,8 @@ class Analitycs
                     count(idusuariopublicador) as total
                 FROM data
                 GROUP BY 1";
+
+        return DB::select($sql);
     }
 
     public function postsPerUserMonth()
@@ -53,26 +76,30 @@ class Analitycs
                             AND to_char(datapublicacao,'TMMONTH') = to_char(datapublicacao,'TMMONTH')
                             THEN count(idusuariopublicador)
                         end as total
-                from data
-                group by 1, idusuariopublicador, usuario
-                order by usuario";
+                FROM data
+                GROUP BY 1, idusuariopublicador, usuario
+                ORDER BY usuario";
+
+        return DB::select($sql);
     }
 
     public function postsPerCanalMonth()
     {
-        $sql = "with data as (
+        $sql = "WITH data AS (
                     SELECT conteudodigital.idconteudodigital, conteudodigital.datapublicacao, conteudodigital.idcanal,
                       (SELECT upper(canal.nomecanal) FROM canal WHERE canal.idcanal = conteudodigital.idcanal) AS canal
                     FROM conteudodigital
                     WHERE conteudodigital.datapublicacao BETWEEN '01/01/2019' AND '22/07/2019'
-                ) select to_char(datapublicacao,'TMMONTH') as mes,
+                ) SELECT to_char(datapublicacao,'TMMONTH') AS mes,
                         canal,
-                        case when idcanal = idcanal
+                        CASE WHEN idcanal = idcanal
                             AND to_char(datapublicacao,'TMMONTH') = to_char(datapublicacao,'TMMONTH')
                             THEN count(idcanal)
-                        end as total
-                from data
-                group by 1, idcanal, canal
-                order by canal";
+                        END AS total
+                FROM data
+                GROUP BY 1, idcanal, canal
+                ORDER BY canal";
+
+        return DB::select($sql);
     }
 }

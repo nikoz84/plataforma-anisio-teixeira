@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Conteudo;
+use App\Http\Controllers\ApiController;
 use App\Tag;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
-use App\Http\Controllers\ApiController;
 
 class ConteudoController extends ApiController
 {
@@ -26,8 +26,7 @@ class ConteudoController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function list()
-    {
+    function list() {
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $canal = $this->request->query('canal', 6);
@@ -102,28 +101,34 @@ class ConteudoController extends ApiController
         }
 
         $conteudo = $this->conteudo;
-
+        // USUÁRIO LOGADO
         $conteudo->user_id = Auth::user()->id;
+        // PERMISSÃO DA TABELA ROLES
         $conteudo->approving_user_id = Auth::user()->id;
+        // IDS
         $conteudo->license_id = $this->request->license_id;
         $conteudo->canal_id = $this->request->canal_id;
         $conteudo->category_id = $this->request->category_id;
+        // INFORMAÇÕES BÁSICAS
         $conteudo->title = $this->request->title;
         $conteudo->description = $this->request->description;
         $conteudo->authors = $this->request->authors;
         $conteudo->source = $this->request->source;
+        // FL_DESTAQUE, FL_APROVADO, FL_SITE
         $conteudo->is_featured = $this->request->is_featured;
         $conteudo->is_approved = $this->request->is_approved;
-        $conteudo->is_site = $this->request->is_site;
+        $conteudo->is_site = $this->request->is_site ? $this->request->is_site : $this->conteudo::IS_SITE;
+        // QUANTIDADE DE ACESSOS E DOWNLOADS
         $conteudo->qt_downloads = $this->conteudo::INIT_COUNT;
         $conteudo->qt_access = $this->conteudo::INIT_COUNT;
-
+        // PALAVRAS CHAVE, COMPONENTES CURRICULARES, NIVEIS DE ENSINO
         $conteudo->tags()->attach($this->request->tags);
         $conteudo->componentes()->attach($this->request->componentes);
+        $conteudo->niveis()->attach($this->request->niveis);
 
         $conteudo->save();
 
-        $this->saveOptions($conteudo->id);
+        //$this->saveOptions($conteudo->id);
 
         $conteudo::with([
             'user', 'canal', 'tags', 'license', 'componentes', 'niveis',
@@ -139,14 +144,14 @@ class ConteudoController extends ApiController
         $options = [
             'tipo' => [
                 'id' => $tipo->id,
-                'name' => $tipo->name
+                'name' => $tipo->name,
             ],
             'componentes' => [$this->request->componentes],
             'tags' => [$this->request->tags],
             'site' => $this->request->site,
             'guia' => $this->request->guia,
-            'download' => null,
-            'visualizacao' => null
+            'download' => $this->request->download,
+            'visualizacao' => $this->request->visualizacao,
         ];
         $conteudo = DB::select('select * from users where id = ?', [$conteudo_id]);
 
@@ -157,27 +162,30 @@ class ConteudoController extends ApiController
 
     public function saveFullTextSearch($conteudo_id)
     {
-        $tags = $this->conteudo::with('tags')->whereRaw('id = ?', [$conteudo_id]);
         $componentes = $this->conteudo::with('componentes')->whereRaw('id = ?', [$conteudo_id]);
-        $authorsSourceTitle = DB::select("select authors,source,title from conteudos")->whereRaw('id = ?', [$conteudo_id]);
 
-        dd($tags);
-
-        $sql = "
-        setweight( to_tsvector( 'simple', (SELECT string_agg(lower(COALESCE(unaccent(t.nometag),'')), ' ' ) FROM conteudodigitaltag AS ct INNER JOIN tag t ON t.idtag = ct.idtag WHERE ct.idconteudodigital = cd.idconteudodigital)), 'A') ||
-        setweight( to_tsvector( 'simple', lower( COALESCE( unaccent(cd.titulo), '') ) ), 'B' ) ||
-        setweight( to_tsvector( 'portuguese', unaccent( lower( COALESCE( cd.fonte, '') ) ) ), 'C' ) ||
-        setweight( to_tsvector( 'portuguese', unaccent( lower( COALESCE( cd.autores, '') ) ) ), 'C' ) ||
-        setweight( to_tsvector( 'portuguese', unaccent(lower(
+        $fullTextSearch = DB::table('conteudos as c')
+            ->selectRaw("setweight( to_tsvector( 'simple',
+                    (SELECT string_agg(lower(COALESCE(unaccent(t.name),'')), ' ' )
+                    FROM conteudo_tag AS ct
+                    INNER JOIN tags t ON t.id = ct.tag_id
+                    WHERE ct.conteudo_id = c.id)), 'A') ||
+            setweight( to_tsvector( 'simple', lower( COALESCE( unaccent(c.title), '') ) ), 'A' ) ||
+            setweight( to_tsvector( 'portuguese',
+                                    lower( COALESCE( unaccent(concat(c.source, ' ', c.authors)), '') ) ), 'C' ) ||
+            setweight( to_tsvector( 'portuguese', unaccent(lower(
                regexp_replace(
                regexp_replace(
-               regexp_replace( cd.descricao 
+               regexp_replace( c.description
                , E'<.*?>', '', 'g')
                , E'&nbsp;', ' ', 'g')
                , E'[\\n\\r]+', ' ', 'g')
-           ))),'D') AS ts_documento";
-        $fullTextSearch = "";
-        $conteudo->ts_documento = $fullTextSearch;
+           ))),'D') AS ts_documento")
+            ->where('id', '=', $conteudo_id)
+            ->get()
+            ->first();
+
+        $conteudo->ts_documento = $fullTextSearch->ts_documento;
 
         $conteudo->save();
     }
@@ -203,7 +211,6 @@ class ConteudoController extends ApiController
         $conteudo->fill($this->request->all());
 
         $conteudo->save();
-
 
         return $this->showOne($conteudo, 'Conteúdo editado com sucesso!!', 200);
     }

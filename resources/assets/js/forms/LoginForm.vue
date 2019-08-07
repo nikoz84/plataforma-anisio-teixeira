@@ -99,6 +99,7 @@ export default {
           icon: "done",
           message: `${resp.data.message} ${localStorage.username}!!`
         });
+        this.$forceUpdate();
       } else {
         this.SET_ERRORS(resp.data.errors);
         this.$q.loading.hide();
