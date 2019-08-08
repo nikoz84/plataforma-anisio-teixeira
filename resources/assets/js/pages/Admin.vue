@@ -11,7 +11,7 @@
                     :key="`links+${i}`"
                     :label="link.label" 
                     :name="link.name" 
-                    :to=" { name:link.view, params: link.params }"
+                    :to="{ name:link.view, params: link.params }"
                     />
               <q-separator vertical inset />
               

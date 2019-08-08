@@ -29,6 +29,7 @@ Route::group(['middleware' => ['cors']], function () {
         ->name('lista.categorias.aplicativos');
     /** TIPOS */
     Route::get('/tipos', 'TipoController@list')->name('listar.tipos');
+    Route::get('/tipos/{id}', 'TipoController@getTiposById')->name('lista.tipos.x.id');
     /** DENUNCIA E FALE CONOSCO */
     Route::get('/denuncias', 'DenunciaController@list')->name('listar.denuncias');
     Route::post('/denuncias', 'DenunciaController@create')->name('criar.denuncias');

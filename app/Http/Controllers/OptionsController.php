@@ -17,10 +17,8 @@ class OptionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list() 
-	{
+    public function list() {
         $user = JWTAuth::parseToken()->toUser();
-
         $options = $this->options::all();
         return response()->json([
             'success' => true,

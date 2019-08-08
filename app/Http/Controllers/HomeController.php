@@ -78,7 +78,6 @@ class HomeController extends ApiController
                 'title' => 'Aplicativos Recentes',
                 'items' => $this->destaques->getAplicativosMaisRecentes(),
             ],
-
         ];
 
         return $this->successResponse($data, '', 200);
@@ -93,6 +92,7 @@ class HomeController extends ApiController
         $analitycs = new Analytics($this->request);
         $collect = collect($analitycs->postsPerTveRadio());
         //return $this->showAll($collect, '', 200);
+        return $this->fullTextSearchTeste();
     }
 
     public function fullTextSearchTeste()
@@ -113,7 +113,7 @@ class HomeController extends ApiController
                , E'<.*?>', '', 'g')
                , E'&nbsp;', ' ', 'g')
                , E'[\\n\\r]+', ' ', 'g')
-           ))),'D') AS ts_documento")
+           ))),'B') AS ts_documento")
             ->where('id', '=', 1558)
             ->get()
             ->first();

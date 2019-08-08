@@ -4114,7 +4114,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   this.docodePayloadToken();
                   this.SET_ERRORS([]);
                   this.SET_LOGIN_USER(true);
-                  this.$router.push("/admin/analitycs/listar");
+                  this.$router.push("/admin/conteudos/listar");
                   this.$q.notify({
                     color: "positive",
                     textColor: "white",
@@ -79742,10 +79742,9 @@ try {} catch (e) {}
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.baseURL = "http://pat.des/api-v1";
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
-var AUTH_TOKEN = "Bearer ".concat(localStorage.token);
 
 if (localStorage.token) {
-  axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
+  axios.defaults.headers.common["Authorization"] = "Bearer ".concat(localStorage.token);
 } else {
   axios.defaults.headers.common["Authorization"] = null;
 }
