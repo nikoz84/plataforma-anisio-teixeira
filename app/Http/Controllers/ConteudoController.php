@@ -14,7 +14,6 @@ class ConteudoController extends ApiController
 {
     protected $conteudo;
     protected $request;
-
     public function __construct(Conteudo $conteudo, Request $request)
     {
         $this->middleware('jwt.verify')->except(['list', 'search', 'getById', 'getByTagId', 'getSitesTematicos']);
@@ -67,7 +66,6 @@ class ConteudoController extends ApiController
 
         return $this->showAsPaginator($conteudos);
     }
-
     /**
      * Lista de sites temáticos
      *
@@ -87,7 +85,6 @@ class ConteudoController extends ApiController
 
         return $this->showAsPaginator($sitesTematicos);
     }
-
     /**
      * Adiciona e valida novo conteúdo
      *
@@ -103,20 +100,20 @@ class ConteudoController extends ApiController
 
         $conteudo = $this->conteudo;
 
-        $conteudo->user_id = Auth::user()->id;
-        $conteudo->approving_user_id = Auth::user()->id;
-        $conteudo->license_id = $this->request->license_id;
-        $conteudo->canal_id = $this->request->canal_id;
-        $conteudo->category_id = $this->request->category_id;
-        $conteudo->title = $this->request->title;
-        $conteudo->description = $this->request->description;
-        $conteudo->authors = $this->request->authors;
-        $conteudo->source = $this->request->source;
-        $conteudo->is_featured = $this->request->is_featured;
-        $conteudo->is_approved = $this->request->is_approved;
-        $conteudo->is_site = $this->request->is_site;
-        $conteudo->qt_downloads = $this->conteudo::INIT_COUNT;
-        $conteudo->qt_access = $this->conteudo::INIT_COUNT;
+        $conteudo->user_id              = Auth::user()->id;
+        $conteudo->approving_user_id    = Auth::user()->id;
+        $conteudo->license_id           = $this->request->license_id;
+        $conteudo->canal_id             = $this->request->canal_id;
+        $conteudo->category_id          = $this->request->category_id;
+        $conteudo->title                = $this->request->title;
+        $conteudo->description          = $this->request->description;
+        $conteudo->authors              = $this->request->authors;
+        $conteudo->source               = $this->request->source;
+        $conteudo->is_featured          = $this->request->is_featured;
+        $conteudo->is_approved          = $this->request->is_approved;
+        $conteudo->is_site              = $this->request->is_site;
+        $conteudo->qt_downloads         = $this->conteudo::INIT_COUNT;
+        $conteudo->qt_access            = $this->conteudo::INIT_COUNT;
 
         $conteudo->tags()->attach($this->request->tags);
         $conteudo->componentes()->attach($this->request->componentes);
