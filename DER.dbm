@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.1-beta" last-position="700,102" last-zoom="0.6"
+<dbmodel pgmodeler-ver="0.9.1-beta" last-position="471,506" last-zoom="0.65"
 	 default-schema="public" default-owner="postgres">
 <role name="user_local"
       createdb="true"
@@ -32,7 +32,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="migrations">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="4020" y="323"/>
+	<position x="4020" y="320"/>
 	<column name="id" not-null="true" sequence="public.migrations_id_seq">
 		<type name="integer" length="0"/>
 	</column>
@@ -63,7 +63,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="users">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="2260" y="1143"/>
+	<position x="2260" y="1140"/>
 	<column name="id" not-null="true" sequence="public.users_id_seq">
 		<type name="bigint" length="0"/>
 	</column>
@@ -111,7 +111,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="password_resets">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="3980" y="643"/>
+	<position x="3980" y="640"/>
 	<column name="email" not-null="true">
 		<type name="character varying" length="255"/>
 	</column>
@@ -134,7 +134,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="oauth_auth_codes">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="4000" y="103"/>
+	<position x="4000" y="100"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="100"/>
 	</column>
@@ -161,7 +161,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="oauth_access_tokens">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="3560" y="103"/>
+	<position x="3560" y="100"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="100"/>
 	</column>
@@ -205,7 +205,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="oauth_refresh_tokens">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="3900" y="803"/>
+	<position x="3900" y="800"/>
 	<column name="id" not-null="true">
 		<type name="character varying" length="100"/>
 	</column>
@@ -242,7 +242,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="oauth_clients">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="3940" y="1023"/>
+	<position x="3940" y="1020"/>
 	<column name="id" not-null="true" sequence="public.oauth_clients_id_seq">
 		<type name="integer" length="0"/>
 	</column>
@@ -297,7 +297,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="oauth_personal_access_clients">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="3840" y="463"/>
+	<position x="3840" y="460"/>
 	<column name="id" not-null="true" sequence="public.oauth_personal_access_clients_id_seq">
 		<type name="integer" length="0"/>
 	</column>
@@ -334,7 +334,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="canais">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="2200" y="703"/>
+	<position x="2200" y="700"/>
 	<column name="id" not-null="true" sequence="public.canais_id_seq">
 		<type name="bigint" length="0"/>
 	</column>
@@ -400,7 +400,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="categories">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1520" y="263"/>
+	<position x="1520" y="260"/>
 	<column name="id" not-null="true" sequence="public.categories_id_seq">
 		<type name="bigint" length="0"/>
 	</column>
@@ -441,7 +441,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="licenses">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1020" y="403"/>
+	<position x="1120" y="440"/>
 	<column name="id" not-null="true" sequence="public.licenses_id_seq">
 		<type name="integer" length="0"/>
 	</column>
@@ -482,7 +482,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="conteudos">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1440" y="903"/>
+	<position x="1440" y="900"/>
 	<column name="id" not-null="true" sequence="public.conteudos_id_seq">
 		<type name="bigint" length="0"/>
 	</column>
@@ -583,7 +583,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="tags">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="2860" y="163"/>
+	<position x="2600" y="120"/>
 	<column name="id" not-null="true" sequence="public.tags_id_seq">
 		<type name="bigint" length="0"/>
 	</column>
@@ -621,7 +621,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="aplicativo_categories">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="3440" y="1023"/>
+	<position x="3440" y="1020"/>
 	<column name="id" not-null="true" sequence="public.aplicativo_categories_id_seq">
 		<type name="integer" length="0"/>
 	</column>
@@ -656,7 +656,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="aplicativos">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="2980" y="1003"/>
+	<position x="2980" y="1000"/>
 	<column name="id" not-null="true" sequence="public.aplicativos_id_seq">
 		<type name="bigint" length="0"/>
 	</column>
@@ -706,7 +706,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="conteudo_tag">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="2060" y="363"/>
+	<position x="2060" y="360"/>
 	<column name="conteudo_id" not-null="true">
 		<type name="bigint" length="0"/>
 	</column>
@@ -721,7 +721,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="aplicativo_tag">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="3080" y="443"/>
+	<position x="3080" y="440"/>
 	<column name="aplicativo_id" not-null="true">
 		<type name="bigint" length="0"/>
 	</column>
@@ -744,7 +744,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="options">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1060" y="123"/>
+	<position x="1060" y="120"/>
 	<column name="id" not-null="true" sequence="public.options_id_seq">
 		<type name="integer" length="0"/>
 	</column>
@@ -779,7 +779,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="user_canal">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="2640" y="863"/>
+	<position x="2640" y="860"/>
 	<column name="user_id" not-null="true">
 		<type name="bigint" length="0"/>
 	</column>
@@ -802,7 +802,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="tipos">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1580" y="123"/>
+	<position x="1580" y="120"/>
 	<column name="id" not-null="true" sequence="public.tipos_id_seq">
 		<type name="bigint" length="0"/>
 	</column>
@@ -828,7 +828,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="niveis_ensino">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="980" y="1563"/>
+	<position x="980" y="1560"/>
 	<column name="id" not-null="true" sequence="public.niveis_ensino_id_seq">
 		<type name="bigint" length="0"/>
 	</column>
@@ -851,7 +851,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="curricular_components_categories">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="2080" y="1743"/>
+	<position x="2080" y="1740"/>
 	<column name="id" not-null="true" sequence="public.curricular_components_categories_id_seq">
 		<type name="bigint" length="0"/>
 	</column>
@@ -874,7 +874,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="curricular_components">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1420" y="1743"/>
+	<position x="1420" y="1740"/>
 	<column name="id" not-null="true" sequence="public.curricular_components_id_seq">
 		<type name="bigint" length="0"/>
 	</column>
@@ -895,7 +895,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="conteudo_curricular_component">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1920" y="1463"/>
+	<position x="1920" y="1460"/>
 	<column name="conteudo_id" not-null="true">
 		<type name="bigint" length="0"/>
 	</column>
@@ -918,7 +918,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="denuncias">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="1040" y="803"/>
+	<position x="1040" y="800"/>
 	<column name="id" not-null="true" sequence="public.denuncias_id_seq">
 		<type name="bigint" length="0"/>
 	</column>
@@ -962,7 +962,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="roles">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="2640" y="1603"/>
+	<position x="2640" y="1600"/>
 	<column name="id" not-null="true" sequence="public.roles_id_seq">
 		<type name="integer" length="0"/>
 	</column>

@@ -138,7 +138,8 @@ return [
         'password' => 'senha',
         'confirmation' => 'confirmação da senha',
         'birthday' => 'nascimento',
-        'delete_confirmation' => 'confirmação'
+        'delete_confirmation' => 'confirmação',
+        'download' => 'arquivo de download'
     ],
     'options' => [
         'lang' => 'pt-BR',

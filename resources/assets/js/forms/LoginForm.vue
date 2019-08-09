@@ -48,7 +48,15 @@
 </template>
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
-import { QCard, QCardSection, QInput, QForm, QImg, QSeparator } from "quasar";
+import {
+  QCard,
+  QCardSection,
+  QInput,
+  QForm,
+  QImg,
+  QSeparator,
+  LocalStorage
+} from "quasar";
 import ShowErrors from "../components/ShowErrors.vue";
 import IntroParallax from "../components/IntroParallax.vue";
 
@@ -92,7 +100,8 @@ export default {
         this.docodePayloadToken();
         this.SET_ERRORS([]);
         this.SET_LOGIN_USER(true);
-        this.$router.push("/admin/analitycs/listar");
+
+        this.$router.push("/admin/conteudos/listar");
         this.$q.notify({
           color: "positive",
           textColor: "white",
@@ -115,6 +124,7 @@ export default {
       const base64Url = localStorage.token.split(".")[1];
       const base64 = base64Url.replace("-", "+").replace("_", "/");
       let payload = JSON.parse(window.atob(base64));
+
       localStorage.setItem("username", payload.user.name);
       localStorage.setItem("user_id", payload.user.id);
       localStorage.setItem("sexo", payload.user.sexo);

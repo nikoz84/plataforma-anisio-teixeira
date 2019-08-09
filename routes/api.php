@@ -70,14 +70,16 @@ Route::group(['middleware' => ['cors']], function () {
  *
  * */
 Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
-    /** CATEGORIAS */
+    /** CATEGORIAS DOS CONTEÚDOS*/
     Route::post('/categories', 'CategoryController@create')->name('criar.categorias');
     Route::put('/categories/{id}', 'CategoryController@update')->name('atualizar.categorias');
     Route::delete('/categories/{id}', 'CategoryController@delete')->name('categorias.apagar');
     /** APLICATIVOS CATEGORIAS */
     Route::post('/aplicativos/categories', 'AplicativoCategoryController@create')->name('criar.aplicativo.categorias');
-    Route::put('/aplicativos/categories/{id}', 'AplicativoCategoryController@update')->name('atualizar.aplicativo.categorias');
-    Route::delete('/aplicativos/categories/{id}', 'AplicativoCategoryController@delete')->name('apagar.aplicativo.categorias');
+    Route::put('/aplicativos/categories/{id}', 'AplicativoCategoryController@update')
+        ->name('atualizar.aplicativo.categorias');
+    Route::delete('/aplicativos/categories/{id}', 'AplicativoCategoryController@delete')
+        ->name('apagar.aplicativo.categorias');
     /** AUTENTICACAO */
     Route::post('/auth/logout', 'AuthController@logout')->name('sair');
     Route::post('/auth/refresh', 'AuthController@refresh')->name('refrescar.token');
@@ -85,7 +87,6 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     /** TIPOS */
     Route::post('/tipos', 'TipoController@create')->name('criar.tipos');
     Route::put('/tipos/{id}', 'TipoController@update')->name('atualizar.tipos');
-    Route::delete('/tipos/{id}', 'TipoController@delete')->name('apagar.tipos');
     /** ROLES */
     Route::get('/roles', 'RoleController@list')->name('role.listar');
     Route::post('/roles', 'RoleController@create')->name('criar.role');
@@ -131,5 +132,5 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     Route::put('/options/{name}', 'OptionsController@update')->name('atualizar.opcoes.x.nome');
     Route::delete('/options/{name}', 'OptionsController@delete')->name('apagar.opcoes.x.nome');
     /** ANALYTICS */
-    Route::get('/analytics', 'HomeController@getAnalytics')->name('catalogacao.blog');
+    Route::get('/analytics', 'HomeController@getAnalytics')->name('catalogacao.blog.e.plataforma');
 });
