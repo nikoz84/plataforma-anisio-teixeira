@@ -11,9 +11,8 @@ use Illuminate\Http\Request;
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\Aplicativo;
 
-
+/*
 Route::get('/email', function (Request $request) {
     return new App\Mail\SendMail($request);
 });
@@ -38,5 +37,7 @@ Route::get('/form', function (Request $request) {
 Route::get('/docs', function (Request $request) {
     return view('docs');
 });
+
+*/
 
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');

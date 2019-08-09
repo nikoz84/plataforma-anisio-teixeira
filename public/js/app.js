@@ -2975,6 +2975,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Table_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Table.vue */ "./resources/assets/js/components/Table.vue");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var quasar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! quasar */ "./node_modules/quasar/src/index.esm.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2987,16 +2988,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Listar",
   components: {
-    Table: _Table_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    Table: _Table_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    QTable: quasar__WEBPACK_IMPORTED_MODULE_3__["QTable"],
+    QTh: quasar__WEBPACK_IMPORTED_MODULE_3__["QTh"],
+    QTr: quasar__WEBPACK_IMPORTED_MODULE_3__["QTr"],
+    QTd: quasar__WEBPACK_IMPORTED_MODULE_3__["QTd"],
+    QCard: quasar__WEBPACK_IMPORTED_MODULE_3__["QCard"],
+    QCardSection: quasar__WEBPACK_IMPORTED_MODULE_3__["QCardSection"],
+    QSeparator: quasar__WEBPACK_IMPORTED_MODULE_3__["QSeparator"]
   },
   data: function data() {
     return {
       id: null,
       slug: this.$route.params.slug,
-      action: this.$route.params.action
+      action: this.$route.params.action,
+      metadata: {}
     };
   },
   beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {
@@ -3010,8 +3020,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])(["paginator"])),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapMutations"])(["SET_PAGINATOR"]), {
     getAction: function getAction() {
-      console.log(this.$route.params);
-
       switch (true) {
         case this.action == "listar":
           this.getData();
@@ -3048,9 +3056,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 3:
                 resp = _context.sent;
 
-                if (resp.data.success) {
+                if (resp.data.success && resp.data.paginator) {
                   this.$q.loading.hide();
                   this.SET_PAGINATOR(resp.data.paginator);
+                } else if (resp.data.success && resp.data.metadata) {
+                  this.$q.loading.hide();
+                  this.metadata = resp.data.metadata;
+                  console.log(this.metadata);
                 } else {
                   this.$q.loading.hide();
                   this.$router.push();
@@ -50845,7 +50857,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!**********************************************!*\
   !*** ./node_modules/quasar/src/index.esm.js ***!
   \**********************************************/
-/*! exports provided: default, ClosePopup, GoBack, Ripple, ScrollFire, Scroll, TouchHold, TouchPan, TouchRepeat, TouchSwipe, AddressbarColor, AppFullscreen, AppVisibility, BottomSheet, Cookies, Dialog, LoadingBar, Loading, Meta, Notify, Platform, Screen, LocalStorage, SessionStorage, clone, colors, date, debounce, dom, event, extend, format, frameDebounce, noop, openURL, patterns, scroll, throttle, uid, QAjaxBar, QAvatar, QBadge, QBanner, QBar, QBreadcrumbs, QBreadcrumbsEl, QBtn, QBtnGroup, QBtnDropdown, QBtnToggle, QCard, QCardSection, QCardActions, QCarousel, QCarouselSlide, QCarouselControl, QChatMessage, QCheckbox, QChip, QCircularProgress, QColor, QDate, QTime, QDialog, QEditor, QFab, QFabAction, QField, QForm, QIcon, QImg, QInfiniteScroll, QInnerLoading, QInput, QKnob, QLayout, QDrawer, QFooter, QHeader, QPage, QPageContainer, QPageSticky, QList, QItem, QItemSection, QItemLabel, QExpansionItem, QSlideItem, QMenu, QNoSsr, QResizeObserver, QScrollObserver, QOptionGroup, QPageScroller, QPagination, QParallax, QPopupEdit, QPopupProxy, QLinearProgress, QPullToRefresh, QRadio, QRange, QRating, QScrollArea, QSelect, QSeparator, QSlideTransition, QSlider, QSpace, QSpinner, QSpinnerAudio, QSpinnerBall, QSpinnerBars, QSpinnerComment, QSpinnerCube, QSpinnerDots, QSpinnerFacebook, QSpinnerGears, QSpinnerGrid, QSpinnerHearts, QSpinnerHourglass, QSpinnerInfinity, QSpinnerIos, QSpinnerOval, QSpinnerPie, QSpinnerPuff, QSpinnerRadio, QSpinnerRings, QSpinnerTail, QSplitter, QStep, QStepper, QStepperNavigation, QTabPanels, QTabPanel, QTable, QTh, QTr, QTd, QMarkupTable, QTabs, QTab, QRouteTab, QTimeline, QTimelineEntry, QToggle, QToolbar, QToolbarTitle, QTooltip, QTree, QUploader, QUploaderBase, QUploaderAddTrigger, QVideo */
+/*! exports provided: ClosePopup, GoBack, Ripple, ScrollFire, Scroll, TouchHold, TouchPan, TouchRepeat, TouchSwipe, AddressbarColor, AppFullscreen, AppVisibility, BottomSheet, Cookies, Dialog, LoadingBar, Loading, Meta, Notify, Platform, Screen, LocalStorage, SessionStorage, clone, colors, date, debounce, dom, event, extend, format, frameDebounce, noop, openURL, patterns, scroll, throttle, uid, default, QAjaxBar, QAvatar, QBadge, QBanner, QBar, QBreadcrumbs, QBreadcrumbsEl, QBtn, QBtnGroup, QBtnDropdown, QBtnToggle, QCard, QCardSection, QCardActions, QCarousel, QCarouselSlide, QCarouselControl, QChatMessage, QCheckbox, QChip, QCircularProgress, QColor, QDate, QTime, QDialog, QEditor, QFab, QFabAction, QField, QForm, QIcon, QImg, QInfiniteScroll, QInnerLoading, QInput, QKnob, QLayout, QDrawer, QFooter, QHeader, QPage, QPageContainer, QPageSticky, QList, QItem, QItemSection, QItemLabel, QExpansionItem, QSlideItem, QMenu, QNoSsr, QResizeObserver, QScrollObserver, QOptionGroup, QPageScroller, QPagination, QParallax, QPopupEdit, QPopupProxy, QLinearProgress, QPullToRefresh, QRadio, QRange, QRating, QScrollArea, QSelect, QSeparator, QSlideTransition, QSlider, QSpace, QSpinner, QSpinnerAudio, QSpinnerBall, QSpinnerBars, QSpinnerComment, QSpinnerCube, QSpinnerDots, QSpinnerFacebook, QSpinnerGears, QSpinnerGrid, QSpinnerHearts, QSpinnerHourglass, QSpinnerInfinity, QSpinnerIos, QSpinnerOval, QSpinnerPie, QSpinnerPuff, QSpinnerRadio, QSpinnerRings, QSpinnerTail, QSplitter, QStep, QStepper, QStepperNavigation, QTabPanels, QTabPanel, QTable, QTh, QTr, QTd, QMarkupTable, QTabs, QTab, QRouteTab, QTimeline, QTimelineEntry, QToggle, QToolbar, QToolbarTitle, QTooltip, QTree, QUploader, QUploaderBase, QUploaderAddTrigger, QVideo */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -60155,7 +60167,63 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_c("Table", { attrs: { paginator: _vm.paginator } })], 1)
+  return _c(
+    "article",
+    [
+      this.$route.params.slug != "analytics"
+        ? _c("Table", { attrs: { paginator: _vm.paginator } })
+        : _c(
+            "q-card",
+            { staticClass: "q-mb-xl" },
+            [
+              _c("q-card-section", [
+                _vm.metadata.title
+                  ? _c("h5", { staticClass: "text-center" }, [
+                      _vm._v(_vm._s(_vm.metadata.title))
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.metadata.tables, function(table, i) {
+                return _c(
+                  "q-card-section",
+                  { key: i },
+                  [
+                    _c("q-table", {
+                      attrs: {
+                        title: table.title,
+                        data: table.data,
+                        columns: table.columns,
+                        "row-key": "id"
+                      }
+                    })
+                  ],
+                  1
+                )
+              }),
+              _vm._v(" "),
+              _vm.metadata.blog
+                ? _c(
+                    "q-card-section",
+                    [
+                      _c("q-table", {
+                        attrs: {
+                          title: _vm.metadata.blog.title,
+                          data: _vm.metadata.blog.data.posts,
+                          columns: _vm.metadata.blog.columns,
+                          "row-key": "id"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                : _vm._e()
+            ],
+            2
+          )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

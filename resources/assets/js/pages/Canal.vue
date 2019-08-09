@@ -2,7 +2,7 @@
   <article class="q-pa-md">
     <!--Breadcrum></Breadcrum-->
     <header class="page-header">
-      <h1 class="page-title">
+      <h1 class="page-title" :style="`color:${canal.color};`">
           {{ canal.name }}
       </h1>
       <nav>

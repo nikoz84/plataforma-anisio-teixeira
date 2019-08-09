@@ -7,6 +7,7 @@ use Ixudra\Curl\Facades\Curl;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use App\Traits\FileSystemLogic;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class WordpressService
 {
@@ -22,11 +23,12 @@ class WordpressService
 
     public function __construct(Request $request)
     {
+        $this->request = $request;
         $this->limit = $request->query('limit', 15);
         $this->page = $request->query('page', 1);
         $this->id = $request->query('id', 0);
         $this->data_inicio = $request->query('inicio', date('Y-01-01 00:00:00'));
-        $this->data_fim = $request->query('fim', date("Y-m-d H:i:s"));
+        $this->data_fim = $request->query('fim', Carbon::now());
 
         $canal = Canal::find(7);
         $canal_url = $canal->options['back_url'];
