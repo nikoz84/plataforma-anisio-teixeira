@@ -1,7 +1,7 @@
 import { QParallax } from 'quasar';
 <template>
   <div class="row">
-    <q-parallax :src="`/storage/conteudos/conteudos-digitais/galeria/${randomImg}.jpg`" style="max-height:50vh;">
+    <q-parallax :src="`/storage/conteudos/conteudos-digitais/galeria/${randomImg}.jpg`" style="max-height:80vh;">
         <template v-slot:content="scope">
         <div class="absolute-bottom column items-end">
             <div class="text-h6 text-white">

@@ -48,15 +48,7 @@
 </template>
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
-import {
-  QCard,
-  QCardSection,
-  QInput,
-  QForm,
-  QImg,
-  QSeparator,
-  LocalStorage
-} from "quasar";
+import { QCard, QCardSection, QInput, QForm, QImg, QSeparator } from "quasar";
 import ShowErrors from "../components/ShowErrors.vue";
 import IntroParallax from "../components/IntroParallax.vue";
 
@@ -102,12 +94,16 @@ export default {
         this.SET_LOGIN_USER(true);
 
         this.$router.push("/admin/conteudos/listar");
+
         this.$q.notify({
           color: "positive",
           textColor: "white",
           icon: "done",
           message: `${resp.data.message} ${localStorage.username}!!`
         });
+        setTimeout(() => {
+          window.location.reload(true);
+        }, 150);
       } else {
         this.SET_ERRORS(resp.data.errors);
         this.$q.loading.hide();

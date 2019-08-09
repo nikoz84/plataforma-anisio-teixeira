@@ -4133,6 +4133,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                     icon: "done",
                     message: "".concat(resp.data.message, " ").concat(localStorage.username, "!!")
                   });
+                  setTimeout(function () {
+                    window.location.reload(true);
+                  }, 150);
                 } else {
                   this.SET_ERRORS(resp.data.errors);
                   this.$q.loading.hide();
@@ -60094,7 +60097,7 @@ var render = function() {
     { staticClass: "row" },
     [
       _c("q-parallax", {
-        staticStyle: { "max-height": "50vh" },
+        staticStyle: { "max-height": "80vh" },
         attrs: {
           src:
             "/storage/conteudos/conteudos-digitais/galeria/" +
