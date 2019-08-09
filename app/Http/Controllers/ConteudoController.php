@@ -14,7 +14,6 @@ class ConteudoController extends ApiController
 {
     protected $conteudo;
     protected $request;
-
     public function __construct(Conteudo $conteudo, Request $request)
     {
         $this->middleware('jwt.verify')->except(['list', 'search', 'getById', 'getByTagId', 'getSitesTematicos']);
@@ -26,7 +25,7 @@ class ConteudoController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    function list() {
+    public function list() {
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $canal = $this->request->query('canal', 6);
@@ -66,7 +65,6 @@ class ConteudoController extends ApiController
 
         return $this->showAsPaginator($conteudos);
     }
-
     /**
      * Lista de sites temáticos
      *
@@ -86,7 +84,6 @@ class ConteudoController extends ApiController
 
         return $this->showAsPaginator($sitesTematicos);
     }
-
     /**
      * Adiciona e valida novo conteúdo
      *
@@ -99,7 +96,7 @@ class ConteudoController extends ApiController
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar o conteúdo", 201);
         }
-
+        dd($this->request->all());
         $conteudo = $this->conteudo;
         // USUÁRIO LOGADO
         $conteudo->user_id = Auth::user()->id;
@@ -115,25 +112,30 @@ class ConteudoController extends ApiController
         $conteudo->authors = $this->request->authors;
         $conteudo->source = $this->request->source;
         // FL_DESTAQUE, FL_APROVADO, FL_SITE
-        $conteudo->is_featured = $this->request->is_featured;
-        $conteudo->is_approved = $this->request->is_approved;
+        $conteudo->is_featured = $this->request->is_featured ?
+            $this->request->is_approved : $this->conteudo::IS_FEATURED;
+        $conteudo->is_approved = $this->request->is_approved ?
+            $this->request->is_approved : $this->conteudo::IS_APPROVED;
         $conteudo->is_site = $this->request->is_site ? $this->request->is_site : $this->conteudo::IS_SITE;
         // QUANTIDADE DE ACESSOS E DOWNLOADS
         $conteudo->qt_downloads = $this->conteudo::INIT_COUNT;
         $conteudo->qt_access = $this->conteudo::INIT_COUNT;
-        // PALAVRAS CHAVE, COMPONENTES CURRICULARES, NIVEIS DE ENSINO
-        $conteudo->tags()->attach($this->request->tags);
-        $conteudo->componentes()->attach($this->request->componentes);
-        $conteudo->niveis()->attach($this->request->niveis);
 
         $conteudo->save();
 
-        //$this->saveOptions($conteudo->id);
+        // PALAVRAS CHAVE, COMPONENTES CURRICULARES
+        $conteudo->tags()->attach(explode(',', $this->request->tags));
+
+        $conteudo->componentes()->attach(explode(',', $this->request->componentes));
+
+        $this->saveFullTextSearch($conteudo->id);
+
+        $this->saveOptions($conteudo->id);
 
         $conteudo::with([
             'user', 'canal', 'tags', 'license', 'componentes', 'niveis',
         ]);
-
+        dd($conteudo);
         return $this->showOne($conteudo, 'Conteúdo cadastrado com sucesso!!', 200);
     }
 
@@ -148,10 +150,10 @@ class ConteudoController extends ApiController
             ],
             'componentes' => [$this->request->componentes],
             'tags' => [$this->request->tags],
-            'site' => $this->request->site,
-            'guia' => $this->request->guia,
-            'download' => $this->request->download,
-            'visualizacao' => $this->request->visualizacao,
+            'site' => $this->request->site, // URL DO SITE
+            'guia' => $this->request->guia, // ARQUIVO DE GUIA PEDAGOGICA
+            'download' => $this->request->download, // ARQUIVO DE DOWNLOAD
+            'visualizacao' => $this->request->visualizacao, // ARQUIVO DE VISUALIZACAO
         ];
         $conteudo = DB::select('select * from users where id = ?', [$conteudo_id]);
 
@@ -162,7 +164,8 @@ class ConteudoController extends ApiController
 
     public function saveFullTextSearch($conteudo_id)
     {
-        $componentes = $this->conteudo::with('componentes')->whereRaw('id = ?', [$conteudo_id]);
+        //$componentes = $this->conteudo::with('componentes')->whereRaw('id = ?', [$conteudo_id]);
+        $conteudo = $this->conteudo::find($conteudo_id);
 
         $fullTextSearch = DB::table('conteudos as c')
             ->selectRaw("setweight( to_tsvector( 'simple',

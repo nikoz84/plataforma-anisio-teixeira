@@ -11,9 +11,6 @@ return [
         'description' => 'required|min:140',
         'tipo_id' => 'required',
         'site' => 'nullable',
-        'guia' => 'nullable',
-        'download' => 'nullable',
-        'visualizacao' => 'nullable',
         'tags' => 'required',
         'componentes' => 'required',
         'authors' => 'required',
@@ -22,7 +19,10 @@ return [
         'terms' => 'required|in:true,false',
         'is_featured' => 'nullable|in:true,false',
         'is_approved' => 'required|in:true,false',
-        'is_site' => 'nullable|in:true,false'
+        'is_site' => 'nullable|in:true,false',
+        'download' => 'nullable|file|max:4500000',
+        'guia' => 'nullable|file',
+        'visualizacao' => 'nullable|file',
     ],
     "aplicativo" => [
         'name' => 'required|min:2|max:255',
