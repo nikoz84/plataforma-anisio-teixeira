@@ -3,7 +3,7 @@
           <q-card-section class="col-3" >
             <q-img alt="imagem destacada"
                   :src="getImage"
-                  style="height: 200px; max-width: 300px"
+                  :style="`height: 200px; max-width: 300px;backgroud-color:${color};`"
                   placeholder-src="/img/fundo-padrao.svg">
               <div class="absolute-bottom-right text-subtitle2">
                 {{ getTipo }}
@@ -70,5 +70,11 @@ export default {
 
 .card-heading-inner {
   display: inline-block;
+}
+
+.q-img__image {
+  & .absolute-full {
+    background-color: black;
+  }
 }
 </style>

@@ -51,7 +51,6 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import CardHome from "../components/CardHome.vue";
-//import SideBarHome from "../components/SideBarHome.vue";
 import { QParallax, ScrollFire } from "quasar";
 
 export default {

@@ -10,9 +10,9 @@ import "quasar-extras/material-icons/material-icons.css";
 
 import VueRouter from "vue-router";
 import routes from "./routes";
-import Main from "./layout/Main.vue";
 import Vuex from "vuex";
 import store from "./store/index.js";
+import Main from "./layout/Main.vue";
 
 Quasar.lang.set(lang);
 

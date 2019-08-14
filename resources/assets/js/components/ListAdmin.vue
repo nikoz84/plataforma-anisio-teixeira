@@ -28,9 +28,13 @@
   </article>
 </template>
 <script>
+import Vue from "vue";
+import VueApexChart from "vue-apexcharts";
 import Table from "./Table.vue";
 import { mapMutations, mapState } from "vuex";
 import { QTable, QTh, QTr, QTd, QCard, QCardSection, QSeparator } from "quasar";
+
+Vue.use(VueApexChart);
 
 export default {
   name: "Listar",
@@ -40,7 +44,21 @@ export default {
       id: null,
       slug: this.$route.params.slug,
       action: this.$route.params.action,
-      metadata: {}
+      metadata: {},
+      chartOptions: {
+        chart: {
+          id: "vuechart-example"
+        },
+        xaxis: {
+          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+        }
+      },
+      series: [
+        {
+          name: "series-1",
+          data: [30, 40, 35, 50, 49, 60, 70, 91]
+        }
+      ]
     };
   },
   beforeRouteUpdate(to, from, next) {

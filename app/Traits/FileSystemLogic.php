@@ -48,7 +48,7 @@ trait FileSystemLogic
             $img_sinopse = str_replace($path_assoc, "", $img_sinopse);
             return Storage::disk('conteudos-digitais')->url("imagem-associada" . $img_sinopse);
         } else {
-            return Storage::disk('conteudos-digitais')->url("imagem-associada/tipo-conteudo/{$tipo}.png");
+            return Storage::disk('conteudos-digitais')->url("imagem-associada/tipo-conteudo/{$tipo}.svg");
         }
     }
     public function getImagesGallery($rand = false)

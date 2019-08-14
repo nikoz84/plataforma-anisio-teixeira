@@ -8,31 +8,26 @@
         <section class="col-12">
           <div class="masonry bordered">
             <article class="q-gutter-xs q-mt-xs img" v-for="(img, i) in images" :key="i">
-                <q-img :src="img" :placeholder-img="'/img/fundo-padrao.svg'" alt="Imagem da galeria" @click="fullWidth = true"/>
+                <q-img :src="img"
+                      :placeholder-img="'/img/fundo-padrao.svg'" 
+                      alt="Imagem da galeria"
+                      clickable
+                      @click="fullWidth = true"
+                      />
             </article>
           </div>
         </section>
         
-        <q-dialog v-model="fullWidth" full-width>
-          <q-card dark class="bg-grey-9">
-            <q-card-section>
-              sdsdsdf
-            </q-card-section>
-    
-            <q-card-actions align="right">
-              <q-btn flat label="FECHAR" v-close-popup ></q-btn>
-            </q-card-actions>
-          </q-card>
-        </q-dialog>
+        
     </section>
     
 </template>
 <script>
-import { QImg, QDialog, QCard, QCardSection, QCardActions } from "quasar";
+import { QImg, QCard, QCardSection, QCardActions } from "quasar";
 
 export default {
   name: "Gallery",
-  components: { QImg, QDialog, QCard, QCardSection, QCardActions },
+  components: { QImg, QCard, QCardSection, QCardActions },
   data() {
     return {
       images: [],
