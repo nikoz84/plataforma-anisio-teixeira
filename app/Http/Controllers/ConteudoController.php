@@ -9,9 +9,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\Traits\FileSystemLogic;
 
 class ConteudoController extends ApiController
 {
+    use FileSystemLogic;
+
     protected $conteudo;
     protected $request;
     public function __construct(Conteudo $conteudo, Request $request)
@@ -26,19 +29,18 @@ class ConteudoController extends ApiController
      * @return \Illuminate\Http\Response
      */
     public function list() {
+
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $canal = $this->request->query('canal', 6);
-
-        $tipos = $this->request->get('tipos');
-        $licencas = $this->request->query('licencas');
-        $componentes = $this->request->query('componentes');
-        $categoria = $this->request->query('categoria');
-
-        $query = $this->conteudo::query();
+        $tipos          = $this->request->get('tipos');
+        $licencas       = $this->request->query('licencas');
+        $componentes    = $this->request->query('componentes');
+        $categoria      = $this->request->query('categoria');
+        $query          = $this->conteudo::query();
 
         $query->when($tipos, function ($q, $tipos) {
-            $data = "'[$tipos]'::jsonb";
+            $data       = "'[$tipos]'::jsonb";
             return $q->whereRaw("options->'tipo' <@  {$data}");
         });
 
@@ -53,15 +55,14 @@ class ConteudoController extends ApiController
         $query->when($licencas, function ($q, $licencas) {
             return $q->whereIn('license_id', explode(',', $licencas));
         });
-
         $url = "limit={$limit}&canal={$canal}";
         $url .= "&tipos={$tipos}&componentes={$componentes}&categoria={$categoria}&licencas={$licencas}";
-
         $conteudos = $query->where('is_approved', 'true')
             ->with(['canal'])
             ->orderBy($orderBy, 'desc')
             ->paginate($limit)
             ->setPath("/conteudos?{$url}");
+            //dd($conteudos);
 
         return $this->showAsPaginator($conteudos);
     }
@@ -96,7 +97,6 @@ class ConteudoController extends ApiController
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar o conteúdo", 201);
         }
-        dd($this->request->all());
         $conteudo = $this->conteudo;
         // USUÁRIO LOGADO
         $conteudo->user_id = Auth::user()->id;
@@ -121,44 +121,32 @@ class ConteudoController extends ApiController
         $conteudo->qt_downloads = $this->conteudo::INIT_COUNT;
         $conteudo->qt_access = $this->conteudo::INIT_COUNT;
 
-        $conteudo->save();
-
+        if ($conteudo->save()) {
+            $this->createFile($conteudo->id, $this->request->download);
+        }
         // PALAVRAS CHAVE, COMPONENTES CURRICULARES
         $conteudo->tags()->attach(explode(',', $this->request->tags));
-
         $conteudo->componentes()->attach(explode(',', $this->request->componentes));
 
         $this->saveFullTextSearch($conteudo->id);
 
         $this->saveOptions($conteudo->id);
-
-        $conteudo::with([
-            'user', 'canal', 'tags', 'license', 'componentes', 'niveis',
-        ]);
-        dd($conteudo);
         return $this->showOne($conteudo, 'Conteúdo cadastrado com sucesso!!', 200);
     }
-
     private function saveOptions($conteudo_id)
     {
-        $tipo = DB::select('select * from tipos where id = ?', [$this->request->tipo_id]);
-
+        $tipo = collect(DB::select('select * from tipos where id = ?', [$this->request->tipo_id]))->first();
         $options = [
-            'tipo' => [
-                'id' => $tipo->id,
-                'name' => $tipo->name,
-            ],
-            'componentes' => [$this->request->componentes],
-            'tags' => [$this->request->tags],
-            'site' => $this->request->site, // URL DO SITE
-            'guia' => $this->request->guia, // ARQUIVO DE GUIA PEDAGOGICA
-            'download' => $this->request->download, // ARQUIVO DE DOWNLOAD
-            'visualizacao' => $this->request->visualizacao, // ARQUIVO DE VISUALIZACAO
+            'tipo'          => $tipo->id,
+            'componentes'   => [$this->request->componentes],
+            'tags'          => [$this->request->tags],
+            'site'          => $this->request->site, // URL DO SITE
+            'guia'          => $this->request->guia, // ARQUIVO DE GUIA PEDAGOGICA
+            'download'      => $this->request->hasFile('download') ? $conteudo_id . '.' . $this->request->download->guessExtension() : null,
+            'visualizacao'  => null, // ARQUIVO DE VISUALIZACAO - $this->request->visualizacao
         ];
-        $conteudo = DB::select('select * from users where id = ?', [$conteudo_id]);
-
+        $conteudo = $this->conteudo::findOrFail($conteudo_id);
         $conteudo->options = $options;
-
         $conteudo->save();
     }
 
@@ -189,7 +177,6 @@ class ConteudoController extends ApiController
             ->first();
 
         $conteudo->ts_documento = $fullTextSearch->ts_documento;
-
         $conteudo->save();
     }
 
@@ -202,21 +189,19 @@ class ConteudoController extends ApiController
     public function update($id)
     {
         $validator = Validator::make($this->request->all(), config("rules.conteudo"));
-
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível atualizar o conteúdo", 201);
         }
-
-        $conteudo = $this->conteudo::with([
-            'user', 'canal', 'tags', 'license', 'componentes', 'niveis',
-        ])->find($id);
-
+        $conteudo = $this->conteudo::find($id);
         $conteudo->fill($this->request->all());
-
-        $conteudo->save();
-
+        if ($conteudo->save()) {
+            $this->createFile($id, $this->request->download);
+            $this->saveOptions($id);
+            $conteudo->tags()->sync(explode(',', $this->request->tags));
+        }
         return $this->showOne($conteudo, 'Conteúdo editado com sucesso!!', 200);
     }
+
     public function createConteudoTags($id)
     {
         $conteudo = $this->conteudo::find($id);
@@ -234,13 +219,10 @@ class ConteudoController extends ApiController
         $conteudo->tags()->detach();
         $conteudo->componentes()->detach();
         $conteudo->niveis()->detach();
-
-        $resp = [];
-
-        if (!$conteudo) {
+        if (!$conteudo->delete()) {
             return $this->errorResponse([], 'Não foi Possível deletar o conteúdo', 201);
         } else {
-            return $this->showOne($conteudo->delete(), "Conteúdo de id: {$id} foi apagado com sucesso!!", 200);
+            return $this->successResponse([], "Conteúdo de id: {$id} foi apagado com sucesso!!", 200);
         }
     }
     /**

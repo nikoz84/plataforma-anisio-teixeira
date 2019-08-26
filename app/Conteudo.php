@@ -146,7 +146,7 @@ class Conteudo extends Model
      */
     public function getTipoAttribute()
     {
-        return DB::table('tipos')->where('id', $this['options']['tipo'])->get(['id', 'name'])->first();
+        return DB::table('tipos')->where('id', $this['options']['tipo'])->get(["id", "name"])->first();
     }
 
     public function create($data)
