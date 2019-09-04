@@ -66,4 +66,21 @@ trait FileSystemLogic
             return Storage::disk('conteudos-digitais')->url("galeria/{$file->getFilename()}");
         })->inRandomOrder()->first();
     }
+    public function createFile($id, $file)
+    {
+        if ($file) {
+            $filesystem = new Filesystem;
+            $path = Storage::disk('conteudos-digitais')->path("download") . "/{$id}.*";
+            $files = $filesystem->glob($path);
+            File::delete($files);
+            $arr = [
+                'mime_type' => $file->getMimeType(),
+                'extension' => $file->guessExtension(),
+                'size'      => $file->getSize(),
+                'name'      => $id . '.' . "{$file->guessExtension()}"
+            ];
+            $file->storeAs('download', $arr['name'], 'conteudos-digitais');
+            return $arr;
+        }
+    }
 }
