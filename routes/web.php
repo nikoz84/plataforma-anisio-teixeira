@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,5 +38,14 @@ Route::get('/docs', function (Request $request) {
 });
 
 */
+
+/**/
+Route::get('/teste', function (\Illuminate\Http\Request $request) {
+
+    $analytics = new \App\Helpers\Analytics($request);
+
+    return $analytics->getData();
+});
+
 
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');

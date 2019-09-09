@@ -117,7 +117,8 @@ import {
   QItemSection,
   QExpansionItem,
   QInput,
-  GoBack
+  GoBack,
+  Platform
 } from "quasar";
 
 export default {
@@ -147,6 +148,7 @@ export default {
   },
   created() {
     this.getLayout();
+    console.log(this.$q.platform.is.desktop);
   },
   computed: {
     ...mapState(["isLogged", "links", "canal", "sidebar"])

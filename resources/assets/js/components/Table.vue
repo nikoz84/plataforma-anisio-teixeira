@@ -18,25 +18,31 @@
                     <td class="text-center" v-html="row.name ? row.name : row.title"></td>
                     <td class="text-center" style="width:150px;">
                         <q-btn-group spread>
-                            <q-btn color="primary" icon="edit" />
-                            <q-btn color="negative" icon="delete" />
+                            <q-btn color="primary" icon="edit" :to="`/admin/${$route.params.slug}/editar/${row.id}`"/>
+                            <q-btn color="negative" icon="delete" :to="`/admin/${$route.params.slug}/apagar/${row.id}`"/>
                         </q-btn-group>
                     </td>
                 </tr>
             </tbody>
         </q-markup-table>
+        
+        <!-- q-page-sticky position="bottom-right" :offset="[18, 480]">
+                <q-btn icon="add" color="positive" :to="`/admin/${$route.params.slug}/adicionar`"/>
+        </!-->
     </div>
 </div>
 </template>
 <script>
 import SearchForm from "../forms/SearchForm.vue";
-import { QMarkupTable } from "quasar";
+import { QMarkupTable, QDialog, ClosePopup } from "quasar";
 
 export default {
   name: "Table",
   components: {
     SearchForm,
-    QMarkupTable
+    QMarkupTable,
+    QDialog,
+    ClosePopup
   },
   props: ["paginator"],
   data() {

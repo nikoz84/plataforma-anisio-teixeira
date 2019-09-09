@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\WordpressService;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 
 class Analytics
 {
@@ -94,29 +95,34 @@ class Analytics
     {
         $sql = "WITH data AS (
                     SELECT id, created_at, canal_id,
-                      (SELECT upper(name) FROM canais WHERE id = canal_id) AS canal
+                      (SELECT upper(name) FROM canais WHERE id = canal_id) AS name
                     FROM conteudos
                     WHERE created_at BETWEEN ? AND ?
                 ) SELECT to_char(created_at,'TMMONTH') AS month,
-                        canal,
+                        name,
                         CASE WHEN canal_id = canal_id
                             AND to_char(created_at,'TMMONTH') = to_char(created_at,'TMMONTH')
                             THEN count(canal_id)
                         END AS total,
                         row_number() OVER () AS id
                 FROM data
-                GROUP BY 1, canal_id, canal
-                ORDER BY canal";
+                GROUP BY 1, canal_id, name
+                ORDER BY name";
 
         return DB::select($sql, [$this->data_inicio, $this->data_fim]);
     }
 
     public function getData()
     {
-
         $wordpress = new WordpressService($this->request);
         $d_inicio = new Carbon($this->data_inicio, config('locale'));
         $d_fim = new Carbon($this->data_fim, config('locale'));
+        $per_user = $this->postsPerUser();
+        $wordpress_data = collect($wordpress->getCatalogacao());
+        $tv_radio = $this->postsPerTvAndRadio();
+        $user_montly = $this->postsPerUserMonthly();
+        $per_month = $this->postsPerMonth();
+        $canal_montly = $this->postsPerCanalMonthly();
 
         return [
             'title' => "Periodo compreendido entre {$d_inicio->format('d/m/Y')} a {$d_fim->format('d/m/Y')}",
@@ -127,7 +133,8 @@ class Analytics
                     ['name' => 'email', 'label' => 'E-mail', 'field' => 'email'],
                     ['name' => 'total', 'label' => 'Total', 'field' => 'total']
                 ],
-                'data' => $wordpress->getCatalogacao()
+                'data' => $wordpress_data->count() > 0 ? $wordpress_data : [],
+                'series' => $this->getSeries($wordpress_data->get('posts'))
             ],
             'tables' => [
                 [
@@ -136,7 +143,8 @@ class Analytics
                         ['name' => 'name', 'label' => 'Canal', 'field' => 'name'],
                         ['name' => 'total', 'label' => 'Total', 'field' => 'total']
                     ],
-                    'data' => $this->postsPerTvAndRadio()
+                    'data' => $tv_radio,
+                    'series' => $this->getSeries($tv_radio)
                 ],
                 [
                     'title' => 'Catalogação por Usuário',
@@ -144,7 +152,8 @@ class Analytics
                         ['name' => 'name', 'label' => 'Nome', 'field' => 'name'],
                         ['name' => 'total', 'label' => 'Total', 'field' => 'total']
                     ],
-                    'data' => $this->postsPerUser()
+                    'data' => $per_user,
+                    'series' => $this->getSeries($per_user)
                 ],
                 [
                     'title' => 'Catalogação Mensal por Usuário',
@@ -153,7 +162,8 @@ class Analytics
                         ['name' => 'name', 'label' => 'Nome', 'field' => 'name'],
                         ['name' => 'total', 'label' => 'Total', 'field' => 'total']
                     ],
-                    'data' => $this->postsPerUserMonthly()
+                    'data' => $user_montly,
+                    'series' => $this->getSeries($user_montly)
                 ],
                 [
                     'title' => 'Catalologação Mensal',
@@ -161,18 +171,49 @@ class Analytics
                         ['name' => 'month', 'label' => 'Mês', 'field' => 'month'],
                         ['name' => 'total', 'label' => 'Total', 'field' => 'total']
                     ],
-                    'data' => $this->postsPerMonth()
+                    'data' => $per_month,
+                    'series' => $this->getSeries($per_month)
                 ],
                 [
                     'title' => 'Catalogação Mensal por Canal',
                     'columns' => [
                         ['name' => 'month', 'label' => 'Mês', 'field' => 'month'],
-                        ['name' => 'canal', 'label' => 'Canal', 'field' => 'canal'],
+                        ['name' => 'name', 'label' => 'Canal', 'field' => 'name'],
                         ['name' => 'total', 'label' => 'Total', 'field' => 'total']
                     ],
-                    'data' => $this->postsPerCanalMonthly(),
+                    'data' => $canal_montly,
+                    'series' =>
+                    [
+                        'data' => $this->getSeries($canal_montly)
+                    ]
                 ]
             ]
         ];
+    }
+    /**
+     * Método para gráficos, converte o array associativo em um array simples ou lista
+     *
+     * @param Collection $data intância de collection
+     * @return void
+     */
+    public function getSeries($data)
+    {
+        $collect = collect($data);
+
+
+
+
+        return $collect;
+        /*
+        return $collect->map(function ($item) {
+
+            return [
+                'data' => [
+                    'x' => $item->name,
+                    'y' => $item->total
+                ]
+            ];
+        });
+        */
     }
 }

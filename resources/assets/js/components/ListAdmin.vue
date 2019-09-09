@@ -4,18 +4,29 @@
     <Table :paginator="paginator" v-if="this.$route.params.slug != 'analytics'"></Table>
     <q-card v-else class="q-mb-xl">
       <q-card-section>
-        <h5 class="text-center" v-if="metadata.title">{{ metadata.title }}</h5> 
+        <h5 class="text-center" v-if="metadata && metadata.title">{{ metadata.title }}</h5> 
       </q-card-section>
-      <q-card-section v-for="(table, i) in metadata.tables" :key="i">
-        <q-table :title="table.title"
-          :data="table.data"
-          :columns="table.columns"
-          :row-key="'id'"
-          >
-        </q-table>
+      <q-card-section v-if="metadata && metadata.tables">
+        <div class="row" v-for="(table, i) in metadata.tables" :key="i">
+          <q-table :title="table.title"
+            :data="table.data"
+            :columns="table.columns"
+            :row-key="'id'"
+            class="q-mb-lg"
+            >
+          </q-table>
+          <div class="" :id="`chart-${i}`">
+            <!--  VueApexChart width="500" 
+              type="bar" 
+              :options="{chart:{id:`chart-${i}`}}" 
+              :series="series"
+              >
+            </VueApexChart -->
+          </div>
+        </div>
       </q-card-section>
-      <q-card-section v-if="metadata.blog">
-        <q-table  :title="metadata.blog.title"
+      <q-card-section v-if="metadata && metadata.blog && metadata.blog.title">
+        <q-table :title="metadata.blog.title"
           :data="metadata.blog.data.posts"
           :columns="metadata.blog.columns"
           :row-key="'id'"
@@ -28,35 +39,43 @@
   </article>
 </template>
 <script>
-import Vue from "vue";
 import VueApexChart from "vue-apexcharts";
 import Table from "./Table.vue";
 import { mapMutations, mapState } from "vuex";
 import { QTable, QTh, QTr, QTd, QCard, QCardSection, QSeparator } from "quasar";
 
-Vue.use(VueApexChart);
-
 export default {
   name: "Listar",
-  components: { Table, QTable, QTh, QTr, QTd, QCard, QCardSection, QSeparator },
+  components: {
+    Table,
+    QTable,
+    QTh,
+    QTr,
+    QTd,
+    QCard,
+    QCardSection,
+    QSeparator,
+    VueApexChart
+    //AplicativoForm: () => import("../forms/AplicativoForm.vue")
+  },
   data() {
     return {
       id: null,
       slug: this.$route.params.slug,
       action: this.$route.params.action,
-      metadata: {},
-      chartOptions: {
-        chart: {
-          id: "vuechart-example"
-        },
-        xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
-        }
-      },
+      metadata: null,
       series: [
         {
-          name: "series-1",
-          data: [30, 40, 35, 50, 49, 60, 70, 91]
+          data: [
+            {
+              x: "Apple",
+              y: 54
+            },
+            {
+              x: "Orange",
+              y: 66
+            }
+          ]
         }
       ]
     };
@@ -102,11 +121,11 @@ export default {
         this.SET_PAGINATOR(resp.data.paginator);
       } else if (resp.data.success && resp.data.metadata) {
         this.$q.loading.hide();
-        this.metadata = resp.data.metadata;
+        this.metadata = resp.data.metadata.tables;
         console.log(this.metadata);
       } else {
         this.$q.loading.hide();
-        this.$router.push();
+        this.$router.push(`/admin/${this.slug}/listar`);
       }
     },
     async getOne() {
@@ -125,7 +144,7 @@ export default {
     }
   },
   watch: {
-    $route(to, from) {
+    $route(to, from, next) {
       this.getAction();
     }
   }

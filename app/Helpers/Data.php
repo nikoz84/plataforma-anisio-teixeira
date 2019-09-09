@@ -14,6 +14,6 @@ class Data
     }
 
     public function getFormatedData(){
-        $this->carbon
+        $this->carbon;
     }
 }

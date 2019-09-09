@@ -11,8 +11,10 @@ let mix = require("laravel-mix");
 |
 */
 
+//mix.extract(["vue", "lodash"]);
+
 mix.browserSync({
-  proxy: "pat.des"
+  proxy: "http://pat.des"
 });
 
 mix.config.webpackConfig.output = {

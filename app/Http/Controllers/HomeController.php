@@ -89,6 +89,7 @@ class HomeController extends ApiController
         $analitycs = new Analytics($this->request);
         $collect = collect($analitycs->getData());
 
+
         return $this->showAll($collect, '', 200);
     }
 }

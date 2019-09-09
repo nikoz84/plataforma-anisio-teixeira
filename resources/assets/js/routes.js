@@ -10,7 +10,7 @@ import ListAdmin from "./components/ListAdmin.vue";
 import DenunciaForm from "./forms/DenunciaForm.vue";
 import FaleConoscoForm from "./forms/FaleConoscoForm.vue";
 import Gallery from "./components/Gallery.vue";
-import ConfirmationEmail from './forms/ConfirmationEmailForm.vue'
+import ConfirmationEmail from "./forms/ConfirmationEmailForm.vue";
 
 const routes = [
   {
@@ -33,7 +33,7 @@ const routes = [
   },
   {
     path: "/admin",
-    name: "Admin",
+    name: "admin-home",
     component: () =>
       import(/* webpackChunkName: "admin" */ "./pages/Admin.vue"),
     meta: {
@@ -42,7 +42,7 @@ const routes = [
     },
     children: [
       {
-        path: ":slug/:action",
+        path: ":slug/:action/:id?",
         name: "admin",
         components: {
           default: ListAdmin,
@@ -107,43 +107,6 @@ const routes = [
         meta: {
           requiresAuth: false,
           title: "Exibir aplicativo educacional"
-        }
-      },
-
-      {
-        path: "adicionar",
-        name: "AdicionarConteudo",
-        component: ConteudoForm,
-        meta: {
-          requiresAuth: true,
-          title: "Adicionar conteúdo"
-        }
-      },
-      {
-        path: "editar/:id",
-        name: "EditarConteudo",
-        component: ConteudoForm,
-        meta: {
-          requiresAuth: true,
-          title: "Editar conteúdo"
-        }
-      },
-      {
-        path: "aplicativo/editar/:id",
-        name: "EditarAplicativo",
-        component: AplicativoForm,
-        meta: {
-          requiresAuth: true,
-          title: "Editar aplicativo"
-        }
-      },
-      {
-        path: "aplicativo/adicionar",
-        name: "AdicionarAplicativo",
-        component: AplicativoForm,
-        meta: {
-          requiresAuth: true,
-          title: "Adicionar aplicativo"
         }
       }
     ]
