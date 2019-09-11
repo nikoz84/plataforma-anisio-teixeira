@@ -34,6 +34,10 @@ class HomeController extends ApiController
     {
         return view('home');
     }
+    /**
+     * Seleciona da tabela options as configurações do layout
+     * @return json resposta em json
+     */
     public function getLayout()
     {
         $links = DB::select(DB::raw("SELECT name,
@@ -51,7 +55,11 @@ class HomeController extends ApiController
         ];
         return response()->json($data, 200);
     }
-
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
     public function getHomeData()
     {
         $data = [
