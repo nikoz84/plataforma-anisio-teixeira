@@ -53,11 +53,6 @@ class ConteudoController extends ApiController
     public function list(User $user, Conteudo $conteudo)
     {
 
-        if (Gate::forUser($user)->allows('list-canal', $conteudo)) {
-            // The user can update the post...
-            dd( 'sdsdsd' );
-        }
-
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $canal = $this->request->query('canal', 6);
@@ -90,7 +85,6 @@ class ConteudoController extends ApiController
             ->orderBy($orderBy, 'desc')
             ->paginate($limit)
             ->setPath("/conteudos?{$url}");
-            //dd($conteudos);
 
         return $this->showAsPaginator($conteudos);
     }

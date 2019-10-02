@@ -25,7 +25,6 @@ class AplicativoController extends ApiController
      */
     public function list(Request $request)
     {
-
         $limit = $request->query('limit', 15);
         $page = $request->query('page', 1);
         $category = $request->query('categoria');
