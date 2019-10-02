@@ -7,7 +7,7 @@
         </template>
         <template v-slot:content="scope">
           <div class="absolute column items-center">
-            <img src="/logo.svg" style="width: 150px; height: 150px">
+            <img src="/logo.svg" style="width: 150px; height: 150px;">
             <div class="text-h3 text-primary text-center">Plataforma Anísio Teixeira</div>
             <div class="text-h6 text-dark text-center">
               v3.0.0
@@ -23,7 +23,7 @@
         </template>
         <template v-slot:content="scope">
           <div class="absolute column items-center">
-            <img src="/logo.svg" style="width: 150px; height: 150px">
+            <img src="/logo.svg" style="width: 150px; height: 150px;">
             <div class="text-h3 text-primary text-center">Destaque do Blog</div>
           </div>
         </template>
@@ -36,7 +36,7 @@
         </template>
         <template v-slot:content="scope">
           <div class="absolute column items-center">
-            <img src="/logo.svg" style="width: 150px; height: 150px">
+            <img src="/logo.svg" style="width: 150px; height: 150px;">
             <div class="text-h3 text-primary text-center">Outro destaque da Plataforma</div>
           </div>
         </template>
@@ -44,7 +44,7 @@
     </article>
         
     <CardHome :data="data" v-for="(data, i) in destaques" :key="`i-${i}`"/>
-      
+    <FooterApp></FooterApp>
     
   </section>
 </template>
@@ -52,6 +52,7 @@
 import { mapState, mapMutations } from "vuex";
 import CardHome from "../components/CardHome.vue";
 import { QParallax, ScrollFire } from "quasar";
+import FooterApp from "../components/FooterApp.vue";
 
 export default {
   name: "Home",
@@ -60,7 +61,8 @@ export default {
   },
   components: {
     QParallax,
-    CardHome
+    CardHome,
+    FooterApp
     //SideBarHome
   },
 

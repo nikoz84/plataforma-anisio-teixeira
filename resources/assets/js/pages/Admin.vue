@@ -10,8 +10,7 @@
               <q-route-tab v-for="(link,i) in links"
                     :key="`links+${i}`"
                     :label="link.label" 
-                    :name="link.name" 
-                    :to="{ name:link.view, params: link.params }"
+                    :to="{ name:link.view, params: link.params, path: '/admin'}"
                     />
               <q-separator vertical inset />
               
@@ -78,6 +77,12 @@ export default {
           name: "funcoes",
           view: "admin",
           params: { slug: "roles", action: "listar" }
+        },
+        {
+          label: "Licenças",
+          name: "licencas",
+          view: "admin",
+          params: { slug: "licencas", action: "listar" }
         }
       ]
     };

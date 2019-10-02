@@ -124,10 +124,10 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     Route::get('/canais', 'CanalController@list')->name('listar.canais');
     Route::get('/canais/search/{term}', 'CanalController@search')->name('buscar.canal');
     /** LICENCAS */
-    Route::get('/licenses/search/{term}', 'LicenseController@search')->name('buscar.licenca');
-    Route::post('/licenses', 'LicenseController@create')->name('adicionar.licenca');
-    Route::put('/licenses/{id}', 'LicenseController@update')->name('atualizar.licenca');
-    Route::delete('/licenses/{id}', 'LicenseController@delete')->name('apagar.licenca');
+    Route::get('/licencas/search/{term}', 'LicenseController@search')->name('buscar.licenca');
+    Route::post('/licencas', 'LicenseController@create')->name('adicionar.licenca');
+    Route::put('/licencas/{id}', 'LicenseController@update')->name('atualizar.licenca');
+    Route::delete('/licencas/{id}', 'LicenseController@delete')->name('apagar.licenca');
     /** DENUNCIAS */
     Route::delete('/denuncias/{id}', 'DenunciaController@delete')->name('apagar.denuncias');
     /** OPTIONS */
