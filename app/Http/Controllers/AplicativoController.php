@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Aplicativo;
 use App\Helpers\ResizeImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,9 +25,14 @@ class AplicativoController extends ApiController
      */
     public function list(Request $request)
     {
+
         $limit = $request->query('limit', 15);
         $page = $request->query('page', 1);
         $category = $request->query('categoria');
+
+        // $query = $this->aplicativo::where('user_id', 433);
+
+        //dd(Auth::user()->role->name);
 
         $query = $this->aplicativo::query();
 
@@ -40,7 +44,6 @@ class AplicativoController extends ApiController
             ->orderBy('name', 'desc')
             ->paginate($limit)
             ->setPath("/aplicativos?categoria={$category}&limit={$limit}");
-
         return $this->showAsPaginator($apps, 'Aplicativos Educacionais', 200);
     }
 
@@ -56,7 +59,6 @@ class AplicativoController extends ApiController
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar o conteúdo", 201);
         }
-
 
         $app = $this->aplicativo::create($this->request);
 

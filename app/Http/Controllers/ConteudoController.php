@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\FileSystemLogic;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MailUsuario;
+use App\User;
+use Illuminate\Support\Facades\Gate;
 
 class ConteudoController extends ApiController
 {
@@ -23,12 +27,36 @@ class ConteudoController extends ApiController
         $this->conteudo = $conteudo;
         $this->request = $request;
     }
+
+    public function teste()
+    {
+        // dd('criar um email segunda feira');
+        //$email = Mail::to('robemarlon@gmail.com')
+        //->send(new MailUsuario());
+        $x = Mail::send('emails.emailUsuario', [], function ($message) {
+            $message->from('iateventos71@gmail.com', 'IAT - Instituto Anísio Teixeira');
+            $message->to('marlonrobert_2@hotmail.com', 'Marlon Trindade')->subject('Nova mensagem');
+        });
+
+        // Mail::send('emails', [], function ($message) {
+        //     $message->from('plataforma-b532cb@inbox.mailtrap.io', 'IAT - Instituto Anísio Teixeira');
+        //     $message->to('marlonrobert_2@hotmail.com')->subject('Nova mensagem');
+        // });
+        //dd($email);
+        //return 'ok';
+    }
     /**
      * Lista de conteúdos por canal
      *
      * @return \Illuminate\Http\Response
      */
-    public function list() {
+    public function list(User $user, Conteudo $conteudo)
+    {
+
+        if (Gate::forUser($user)->allows('list-canal', $conteudo)) {
+            // The user can update the post...
+            dd( 'sdsdsd' );
+        }
 
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
@@ -97,6 +125,7 @@ class ConteudoController extends ApiController
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar o conteúdo", 201);
         }
+        
         $conteudo = $this->conteudo;
         // USUÁRIO LOGADO
         $conteudo->user_id = Auth::user()->id;
@@ -267,15 +296,7 @@ class ConteudoController extends ApiController
 
         return $this->showOne($conteudo);
     }
-    public function teste()
-    {
-        $conteudo = Conteudo::find(4);
-        //$conteudo->tags()->detach([1,5]);
-
-        return response()->json([
-            'tags' => $conteudo->tags,
-        ]);
-    }
+    
     /**
      * Lista de Conteúdos por Tag ID
      *

@@ -34,7 +34,6 @@ class UserController extends Controller
             'title' => 'Lista de Usuários',
             'paginator' => $paginator
         ]);
-
     }
     /**
      * Buscar usuário por ID

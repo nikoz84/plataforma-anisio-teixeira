@@ -110,15 +110,6 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return void
      */
-    public function getIsAdminAttribute()
-    {
-        return; //$this->where('role_id', 'admin')->exists();
-    }
-    /**
-     * Undocumented function
-     *
-     * @return void
-     */
     public function getImageAttribute()
     {
 
@@ -169,12 +160,12 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        
+
         return [
             'user' => [
-                'name' => $this['name'], 
+                'name' => $this['name'],
                 'id' => $this['id'],
-                'sexo' => 'm'
+                'is_admin' => ''
             ]
         ];
     }
@@ -185,6 +176,23 @@ class User extends Authenticatable implements JWTSubject
      */
     public function role()
     {
-        //
+        return $this->belongsTo(Role::class, 'role_id', 'id')->select(['id', 'name']);
+    }
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function getIsAdminAttribute()
+    {
+        return true; //$this->role()->name == 'admin'
+    }
+    public function updateUser()
+    {
+        // $user = $this->update([
+        //     'name' => 'Luis'
+        // ]);
+
+        // $user->save();
     }
 }

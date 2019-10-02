@@ -37,14 +37,14 @@ class AuthController extends ApiController
 
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
-                return $this->errorResponse([], 'Email ou Senha inválidos', 201);
+                return $this->errorResponse([], 'E-mail ou Senha inválidos', 201);
             }
         } catch (JWTException $e) {
             return $this->errorResponse([], 'Impossível criar Token de acesso', 201);
         }
         $data = ['token' => $this->respondWithToken($token)];
 
-        return $this->successResponse($data, "Bemvindo ", 200);
+        return $this->successResponse($data, "Bem vindo ", 200);
     }
     /**
      * Get the authenticated User.

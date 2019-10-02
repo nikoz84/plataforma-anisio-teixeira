@@ -23,6 +23,7 @@ class CanalController extends ApiController
      */
     public function list()
     {
+
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;
         $select = $this->request->has('select');
 

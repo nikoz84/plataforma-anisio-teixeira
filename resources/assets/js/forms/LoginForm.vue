@@ -123,7 +123,7 @@ export default {
 
       localStorage.setItem("username", payload.user.name);
       localStorage.setItem("user_id", payload.user.id);
-      localStorage.setItem("sexo", payload.user.sexo);
+      localStorage.setItem("role", payload.user.role);
     }
   }
 };

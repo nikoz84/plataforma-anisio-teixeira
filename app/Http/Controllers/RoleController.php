@@ -23,7 +23,6 @@ class RoleController extends ApiController
     public function list()
     {
         $roles = $this->role::paginate();
-
         return $this->showAsPaginator($roles, '', 200);
     }
     public function create()
@@ -66,5 +65,19 @@ class RoleController extends ApiController
         if ($resp->delete()) {
             return $this->successResponse($role, 'Perfil deletado com sucesso!', 200);
         }
+    }
+    public function search($termo)
+    {
+
+        $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;
+        $search = "%{$termo}%";
+        $roles = Role::whereRaw("unaccent(lower(name)) LIKE unaccent(lower(?))")
+            ->setBindings([$search])
+            ->paginate($limit);
+        $roles->setPath("/roles/search/{$termo}?limit={$limit}");
+        return response()->json([
+            'success' => true,
+            'paginator' => $roles,
+        ]);
     }
 }
