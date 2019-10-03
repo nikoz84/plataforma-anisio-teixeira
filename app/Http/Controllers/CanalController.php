@@ -7,6 +7,8 @@ use App\Helpers\SideBar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ApiController;
+use Illuminate\Support\Facades\Auth;
+use Gate;
 
 class CanalController extends ApiController
 {
@@ -23,7 +25,6 @@ class CanalController extends ApiController
      */
     public function list()
     {
-
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;
         $select = $this->request->has('select');
 
@@ -72,6 +73,12 @@ class CanalController extends ApiController
      */
     public function update($id)
     {
+        if(Gate::denies('super-admin', $this->canal)){
+            abort(403,'Nao autorizado');
+        }
+        if (!Gate::denies('super-admin', Auth::user())) {
+            return $this->errorResponse([], 'mensagem', 403);
+        }
         $canal = $this->canal::find($id);
 
         $data = [

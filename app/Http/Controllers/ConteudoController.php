@@ -52,7 +52,6 @@ class ConteudoController extends ApiController
      */
     public function list(User $user, Conteudo $conteudo)
     {
-
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $canal = $this->request->query('canal', 6);
@@ -119,7 +118,7 @@ class ConteudoController extends ApiController
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar o conteúdo", 201);
         }
-        
+
         $conteudo = $this->conteudo;
         // USUÁRIO LOGADO
         $conteudo->user_id = Auth::user()->id;
