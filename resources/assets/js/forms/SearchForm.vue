@@ -8,17 +8,11 @@
         fill-input
         :options="options" 
         label="Pesquisar" 
-        input-debounce="300"
-        style="width: 250px;padding-bottom: 32px;"
+        input-debounce="400"
+        style="width: 250px;"
         @filter="filterFn"
         >
-        <template v-slot:no-option>
-          <q-item>
-            <q-item-section class="text-grey">
-              não encontrado
-            </q-item-section>
-          </q-item>
-        </template>
+        
       </q-select>
        
     </div>
@@ -45,11 +39,11 @@ export default {
       if (!this.termo) return;
 
       let url = `/${this.$route.params.slug}/search/${this.termo}`;
-      this.SET_IS_LOADING(true);
+      this.$q.loading.show();
       let resp = await axios.get(url);
 
       if (resp.status == 200 && resp.data.paginator) {
-        this.SET_IS_LOADING(false);
+        this.$q.loading.hide();
         this.SET_PAGINATOR(resp.data.paginator);
       }
     },
@@ -61,6 +55,7 @@ export default {
           let url = `/${this.$route.params.slug}/search/${val}`;
           axios.get(url).then(resp => {
             console.log(resp.data);
+            this.SET_PAGINATOR(resp.data.paginator);
           });
         }
       });

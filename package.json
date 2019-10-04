@@ -37,6 +37,7 @@
     "babel-loader": "^8.0.6",
     "fastclick": "^1.0.6",
     "moment": "^2.15.0",
+    "node-sass": "^4.12.0",
     "quasar": "^1.0.5",
     "roboto-fontface": "^0.7.0",
     "vue-apexcharts": "^1.4.0",

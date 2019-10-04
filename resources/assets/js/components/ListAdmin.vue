@@ -1,7 +1,7 @@
 <template>
   <article>
     <!-- TABELA COM PAGINAÇÃO -->
-    <Table :paginator="paginator" v-if="this.$route.params.slug != 'analytics'"></Table>
+    <Table v-if="this.$route.params.slug != 'analytics'"></Table>
     <q-card v-else class="q-mb-xl">
       <q-card-section>
         <h5 class="text-center" v-if="metadata && metadata.title">{{ metadata.title }}</h5> 
