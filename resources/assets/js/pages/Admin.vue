@@ -39,8 +39,8 @@ export default {
         {
           label: "Inicio",
           name: "inicio",
-          view: "resumo",
-          params: { slug: "resumo" }
+          view: "admin",
+          params: { slug: "analytics", action: "listar" }
         },
         {
           label: "Aplicativos",

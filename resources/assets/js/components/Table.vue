@@ -19,7 +19,7 @@
                     <td class="text-center" style="width:150px;">
                         <q-btn-group spread>
                             <q-btn color="primary" icon="edit" :to="`/admin/${$route.params.slug}/editar/${row.id}`"/>
-                            <q-btn color="negative" icon="delete" :to="`/admin/${$route.params.slug}/apagar/${row.id}`"/>
+                            <q-btn color="negative" icon="delete" @click="confirmDelete(row)"/>
                         </q-btn-group>
                     </td>
                 </tr>
@@ -41,14 +41,32 @@
                 </q-pagination>
             </div>
         </div>
+
+        <!-- ADICIONAR ITEM -->
         <q-page-sticky position="bottom-right" :offset="[18, 480]">
                 <q-btn icon="add" color="positive" :to="`/admin/${$route.params.slug}/adicionar`"/>
         </q-page-sticky>
+
+        <!-- CONFIRMAR APAGADO -->
+        <q-dialog v-model="confirm" persistent>
+          <q-card>
+            <q-card-section class="row items-center">
+              <q-avatar icon="delete" color="negative" text-color="white" />
+              <span class="q-ml-sm" v-html="text"></span>
+            </q-card-section>
+
+            <q-card-actions align="right">
+              <q-btn flat label="Cancelar" color="primary" v-close-popup />
+              <q-btn flat label="Confirmar" color="negative" v-close-popup />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
     </div>
 </div>
 </template>
 <script>
 import SearchForm from "../forms/SearchForm.vue";
+
 import {
   QMarkupTable,
   QDialog,
@@ -69,7 +87,9 @@ export default {
   },
   data() {
     return {
-      current: this.paginator ? this.paginator.current_page : 1
+      current: this.paginator ? this.paginator.current_page : 1,
+      confirm: false,
+      text: ""
     };
   },
   computed: {
@@ -100,6 +120,12 @@ export default {
       }
 
       this.$q.loading.hide();
+    },
+    confirmDelete(item) {
+      this.confirm = true;
+      let title = item.name ? item.name : item.title;
+      this.text = `Realmente deseja <strong class="text-negative">deletar</strong> <strong>${title}</strong>?`;
+      console.log(this.$route.params.slug, item.id);
     }
   }
 };

@@ -11,7 +11,6 @@ import DenunciaForm from "./forms/DenunciaForm.vue";
 import FaleConoscoForm from "./forms/FaleConoscoForm.vue";
 import Gallery from "./components/Gallery.vue";
 import ConfirmationEmail from "./forms/ConfirmationEmailForm.vue";
-import Resumo from "./pages/Resumo.vue";
 
 const routes = [
   {
@@ -51,16 +50,6 @@ const routes = [
         },
         meta: {
           requiresAuth: true,
-          title: "Administração"
-        }
-      },
-      {
-        path: "resumo",
-        name: "resumo",
-        component: Resumo,
-        meta: {
-          requiresAuth: true,
-          //is_admin : true,
           title: "Administração"
         }
       }
