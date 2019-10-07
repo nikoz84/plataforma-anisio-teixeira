@@ -165,7 +165,7 @@ class User extends Authenticatable implements JWTSubject
             'user' => [
                 'name' => $this['name'],
                 'id' => $this['id'],
-                'is_admin' => ''
+                'is_admin' => $this->is('admin')
             ]
         ];
     }
@@ -185,7 +185,17 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getIsAdminAttribute()
     {
-        return true; //$this->role()->name == 'admin'
+        return $this->is('super-admin');
+    }
+
+    public function is($role_name)
+    {
+        foreach ($this->role()->get() as $role) {
+            if ($role->name == $role_name) {
+                return true;
+            }
+        }
+        return false;
     }
     public function updateUser()
     {

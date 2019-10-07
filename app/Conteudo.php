@@ -20,6 +20,7 @@ class Conteudo extends Model
 
     protected $fillable = [
         'approving_user_id',
+        'user_id',
         'canal_id',
         'license_id',
         'category_id',
@@ -57,7 +58,7 @@ class Conteudo extends Model
      */
     public function user()
     {
-        return $this->belongsTo(\App\User::class, 'user_id')
+        return $this->belongsTo(\App\User::class, 'user_id', 'id')
             ->select(['id', 'name']);
     }
     /**

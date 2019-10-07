@@ -73,13 +73,11 @@ class CanalController extends ApiController
      */
     public function update($id)
     {
-        if(Gate::denies('super-admin', $this->canal)){
-            abort(403,'Nao autorizado');
-        }
-        if (!Gate::denies('super-admin', Auth::user())) {
-            return $this->errorResponse([], 'mensagem', 403);
-        }
         $canal = $this->canal::find($id);
+
+        if (Gate::denies('super-admin', $canal)) {
+            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
+        }
 
         $data = [
             'title' => $this->request->title,
@@ -102,6 +100,9 @@ class CanalController extends ApiController
     public function delete($id)
     {
         $canal = $this->canal::find($id);
+        if (Gate::denies('super-admin', $canal)) {
+            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
+        }
         $resp = [];
         if (is_null($canal)) {
             $resp = [
