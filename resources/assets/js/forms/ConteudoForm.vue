@@ -171,9 +171,9 @@ export default {
       }
     },
     inputValue(val, done) {
-      console.log(this.tags);
-      this.tags = this.tags.push(val[0].id);
-      val = "";
+      console.log(val);
+      //this.tags = this.tags.concat(val);
+
       done;
       //this.tags = Array.isArray(val) ? val[0] : [];
     },

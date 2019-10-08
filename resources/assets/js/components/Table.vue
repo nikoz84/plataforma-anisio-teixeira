@@ -1,7 +1,7 @@
 <template>
 <div v-if="paginator">
     <div class="col-lg-12 q-pa-md">
-        <SearchForm></SearchForm>
+        <SearchForm></SearchForm> 
     </div>
     <div class="col-lg-12 q-pa-md"  v-if="paginator && paginator.total > 0">
         <q-markup-table :separator="'vertical'" flat bordered>
@@ -41,11 +41,6 @@
                 </q-pagination>
             </div>
         </div>
-
-        <!-- ADICIONAR ITEM -->
-        <q-page-sticky position="bottom-right" :offset="[18, 480]">
-                <q-btn icon="add" color="positive" :to="`/admin/${$route.params.slug}/adicionar`"/>
-        </q-page-sticky>
 
         <!-- CONFIRMAR APAGADO -->
         <q-dialog v-model="confirm" persistent>

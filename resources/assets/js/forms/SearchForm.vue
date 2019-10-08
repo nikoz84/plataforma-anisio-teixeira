@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="row">
         <q-select
         filled 
         v-model="termo" 
@@ -9,21 +9,22 @@
         :options="options" 
         label="Pesquisar" 
         input-debounce="400"
-        style="width: 250px;"
+        style="width:250px;"
         @filter="filterFn"
         >
         
       </q-select>
-       
+      <q-space></q-space>
+      <q-btn icon="add" color="positive" :to="`/admin/${$route.params.slug}/adicionar`" title="Adicionar novo item"/>
     </div>
 </template>
 <script>
-import { QSelect, QItem, QItemSection } from "quasar";
+import { QSelect, QItem, QItemSection, QSpace } from "quasar";
 import { mapMutations, mapState } from "vuex";
 
 export default {
   name: "SearchForm",
-  components: { QSelect, QItem, QItemSection },
+  components: { QSelect, QItem, QItemSection, QSpace },
   data() {
     return {
       termo: "",
