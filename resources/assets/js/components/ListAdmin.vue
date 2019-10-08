@@ -56,7 +56,7 @@ export default {
             }
           ]
         }
-      ]
+      ],
 
       metadata: null,
       componentName: "",
