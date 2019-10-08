@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ResizeImage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;

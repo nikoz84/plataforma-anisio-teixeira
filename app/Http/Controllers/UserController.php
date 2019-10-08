@@ -26,7 +26,8 @@ class UserController extends ApiController
      *
      *
      */
-    public function list() {
+    public function index()
+    {
 
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'name';

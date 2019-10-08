@@ -23,7 +23,7 @@ class ConteudoController extends ApiController
     protected $request;
     public function __construct(Conteudo $conteudo, Request $request)
     {
-        $this->middleware('jwt.verify')->except(['list', 'search', 'getById', 'getByTagId', 'getSitesTematicos']);
+        $this->middleware('jwt.verify')->except(['index', 'search', 'getById', 'getByTagId', 'getSitesTematicos']);
         $this->conteudo = $conteudo;
         $this->request = $request;
     }
@@ -50,7 +50,7 @@ class ConteudoController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function list(User $user, Conteudo $conteudo)
+    public function index(User $user, Conteudo $conteudo)
     {
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
@@ -201,7 +201,8 @@ class ConteudoController extends ApiController
         $conteudo->ts_documento = $fullTextSearch->ts_documento;
         $conteudo->save();
     }
-    public function lerHDImage(){}
+    public function lerHDImage()
+    { }
     /**
      * Atualiza o conteúdo.
      *
@@ -302,7 +303,7 @@ class ConteudoController extends ApiController
 
         return $this->showOne($conteudo);
     }
-    
+
     /**
      * Lista de Conteúdos por Tag ID
      *

@@ -18,8 +18,8 @@
                     <td class="text-center" v-html="row.name ? row.name : row.title"></td>
                     <td class="text-center" style="width:150px;">
                         <q-btn-group spread>
-                            <q-btn color="primary" icon="edit" :to="`/admin/${$route.params.slug}/editar/${row.id}`"/>
-                            <q-btn color="negative" icon="delete" @click="confirmDelete(row)"/>
+                            <q-btn color="primary" title="Editar item" icon="edit" :to="`/admin/${$route.params.slug}/editar/${row.id}`"/>
+                            <q-btn color="negative" title="Deletar item" icon="delete" @click="confirmDelete(row)"/>
                         </q-btn-group>
                     </td>
                 </tr>
@@ -51,8 +51,8 @@
             </q-card-section>
 
             <q-card-actions align="right">
-              <q-btn flat label="Cancelar" color="primary" v-close-popup />
-              <q-btn flat label="Confirmar" color="negative" v-close-popup />
+              <q-btn flat label="Cancelar" title="Cancelar ação" color="primary" v-close-popup />
+              <q-btn flat label="Confirmar" title="Confirmar apagado" color="negative" v-close-popup />
             </q-card-actions>
           </q-card>
         </q-dialog>

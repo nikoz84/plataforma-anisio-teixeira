@@ -14,12 +14,12 @@ class TipoController extends ApiController
 
     public function __construct(Tipo $tipo, Request $request)
     {
-        $this->middleware('jwt.verify')->except(['list']);
+        $this->middleware('jwt.verify')->except(['index']);
         $this->tipo = $tipo;
         $this->request = $request;
     }
 
-    public function list()
+    public function index()
     {
 
         $tipos = $this->tipo::all();

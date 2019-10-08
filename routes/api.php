@@ -21,33 +21,33 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/destaques', 'HomeController@getHomeData')->name('dados.home');
     Route::get('/layout', 'HomeController@getLayout')->name('lista.links');
     /** CATEGORIAS */
-    Route::get('/categories', 'CategoryController@list')->name('lista.categorias');
+    Route::get('/categories', 'CategoryController@index')->name('lista.categorias');
     Route::get('/categories/{id}', 'CategoryController@getCategoryById')->name('lista.categoria.x.id');
     /** APLICATIVOS CATEGORIAS */
-    Route::get('/aplicativos/categories', 'AplicativoCategoryController@list')->name('lista.categorias.aplicativo');
+    Route::get('/aplicativos/categories', 'AplicativoCategoryController@index')->name('lista.categorias.aplicativo');
     Route::get('/aplicativos/categories/{id}', 'AplicativoCategoryController@getAplicativoCategories')
         ->name('lista.categorias.aplicativos');
     /** TIPOS */
-    Route::get('/tipos', 'TipoController@list')->name('listar.tipos');
+    Route::get('/tipos', 'TipoController@index')->name('listar.tipos');
     Route::get('/tipos/{id}', 'TipoController@getTiposById')->name('lista.tipos.x.id');
     /** DENUNCIA E FALE CONOSCO */
-    Route::get('/denuncias', 'DenunciaController@list')->name('listar.denuncias');
+    Route::get('/denuncias', 'DenunciaController@index')->name('listar.denuncias');
     Route::post('/denuncias', 'DenunciaController@create')->name('criar.denuncias');
     Route::post('/faleconosco', 'FaleconoscoController@create')->name('criar.faleconosco');
     /** CANAIS */
     Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscar.canal.x.url.amigavel');
     /** CONTEUDOS */
-    Route::get('/conteudos', 'ConteudoController@list')->name('lista.conteudo');
+    Route::get('/conteudos', 'ConteudoController@index')->name('lista.conteudo');
     Route::get('/conteudos/sites', 'ConteudoController@getSitesTematicos')->name('lista.sites.tematicos');
     Route::get('/conteudos/search/{term}', 'ConteudoController@search')->name('busca.conteudo');
     Route::get('/conteudos/teste', 'ConteudoController@teste');
     Route::get('/conteudos/{id}', 'ConteudoController@getById')->name('busca.x.conteudo.id');
     Route::get('/conteudos/tag/{id}', 'ConteudoController@getByTagId')->name('busca.x.tag.id');
     /** BLOG */
-    Route::get('/posts', 'WordpressController@list')->name('lista.postagens');
+    Route::get('/posts', 'WordpressController@index')->name('lista.postagens');
     Route::get('/posts/estatisticas', 'WordpressController@getEstatisticas')->name('estatisticas.blog');
     /** APLICATIVOS */
-    Route::get('/aplicativos', 'AplicativoController@list')->name('lista.aplicativo');
+    Route::get('/aplicativos', 'AplicativoController@index')->name('lista.aplicativo');
     Route::get('/aplicativos/search/{term}', 'AplicativoController@search')->name('busca.aplicativo');
     Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('busca.x.aplicativo.id');
     /** AUTENTICACAO */
@@ -55,12 +55,12 @@ Route::group(['middleware' => ['cors']], function () {
     Route::post('/auth/register', 'AuthController@register')->name('registro.usuario');
     /** OPTIONS  */
     Route::get('/options/{name}', 'OptionsController@getByName')->name('busca.metadata.x.nome');
-    Route::get('/options', 'OptionsController@list')->name('listar.opcoes');
+    Route::get('/options', 'OptionsController@index')->name('listar.opcoes');
     /** TAGS */
     Route::get('/tags/{id}', 'TagController@getById')->name('busca.x.tag.id');
     Route::get('/tags/autocomplete/{term}', 'TagController@autocomplete')->name('autocompletar.tag');
     /**  */
-    Route::get('/licencas', 'LicenseController@list')->name('listar.licencas');
+    Route::get('/licencas', 'LicenseController@index')->name('listar.licencas');
     /** TOKEN */
     Route::name('verify')->get('usuarios/verify/{token}', 'UserController@verify');
 });
@@ -90,7 +90,7 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     Route::post('/tipos', 'TipoController@create')->name('criar.tipos');
     Route::put('/tipos/{id}', 'TipoController@update')->name('atualizar.tipos');
     /** ROLES */
-    Route::get('/roles', 'RoleController@list')->name('role.listar');
+    Route::get('/roles', 'RoleController@index')->name('role.listar');
     //->middleware(['isAdmin', 'isSuperAdmin']);
     Route::post('/roles', 'RoleController@create')->name('criar.role');
     Route::put('/roles/{id}', 'RoleController@update')->name('atualizar.role');
@@ -100,7 +100,7 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     Route::get('/usuarios/search/{termo}', 'UserController@search')->name('usuario.buscar');
     Route::delete('/usuarios/{id}', 'UserController@delete')->name('usuario.apagar');
     Route::get('/usuarios/{id}', 'UserController@getById')->name('user.x.id');
-    Route::get('/usuarios', 'UserController@list')->name('usuario.listar');
+    Route::get('/usuarios', 'UserController@index')->name('usuario.listar');
     Route::put('/usuarios/{id}', 'UserController@update');
     Route::put('/usuarios/reset-password', 'UserController@resetPass')->name('senha.atualizar');
     Route::post('/usuarios', 'UserController@create')->name('adicionar.usuario');
@@ -109,7 +109,7 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     Route::put('/aplicativos/{id}', 'AplicativoController@update')->name('aplicativo.editar');
     Route::delete('/aplicativos/{id}', 'AplicativoController@delete')->name('aplicativo.apagar');
     /** TAGS */
-    Route::get('/tags', 'TagController@list')->name('listaTags');
+    Route::get('/tags', 'TagController@index')->name('listaTags');
     Route::post('/tags', 'TagController@create')->name('adicionarTag');
     Route::get('/tags/search/{term}', 'TagController@search')->name('buscaTag');
     Route::put('/tags/{id}', 'TagController@update')->name('atualizarTag');
@@ -122,7 +122,7 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     Route::post('/canais', 'CanalController@create')->name('adicionar.canal');
     Route::put('/canais/{id}', 'CanalController@update')->name('atualizar.canal');
     Route::delete('/canais/{id}', 'CanalController@delete')->name('apagar.canal');
-    Route::get('/canais', 'CanalController@list')->name('listar.canais');
+    Route::get('/canais', 'CanalController@index')->name('listar.canais');
     Route::get('/canais/search/{term}', 'CanalController@search')->name('buscar.canal');
     /** LICENCAS */
     Route::get('/licencas/search/{term}', 'LicenseController@search')->name('buscar.licenca');

@@ -15,13 +15,13 @@ class RoleController extends ApiController
     public function __construct(Request $request, Role $role)
     {
         $this->middleware('jwt.verify')->except([
-            'list', 'search', 'getById',
+            'index', 'search', 'getById',
         ]);
         $this->role = $role;
         $this->request = $request;
     }
 
-    public function list()
+    public function index()
     {
         $roles = $this->role::paginate();
         return $this->showAsPaginator($roles, '', 200);

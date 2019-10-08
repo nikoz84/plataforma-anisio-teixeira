@@ -7,12 +7,7 @@ use App\Helpers\SideBar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ApiController;
-<<<<<<< HEAD
 use App\Traits\ApiResponser;
-=======
-use Illuminate\Support\Facades\Auth;
-use Gate;
->>>>>>> 52abfe2f7043b521e96981d420344837f728b11d
 
 class CanalController extends ApiController
 {
@@ -25,11 +20,11 @@ class CanalController extends ApiController
         $this->canal = $canal;
     }
     /**
-     * Display a listing of the resource.
+     * Display a indexing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function list()
+    public function index()
     {
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;
         if ($this->request->has('select')) {

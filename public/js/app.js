@@ -60803,6 +60803,7 @@ var render = function() {
                                   _c("q-btn", {
                                     attrs: {
                                       color: "primary",
+                                      title: "Editar item",
                                       icon: "edit",
                                       to:
                                         "/admin/" +
@@ -60815,6 +60816,7 @@ var render = function() {
                                   _c("q-btn", {
                                     attrs: {
                                       color: "negative",
+                                      title: "Deletar item",
                                       icon: "delete"
                                     },
                                     on: {
@@ -60925,6 +60927,7 @@ var render = function() {
                               attrs: {
                                 flat: "",
                                 label: "Cancelar",
+                                title: "Cancelar ação",
                                 color: "primary"
                               }
                             }),
@@ -60939,6 +60942,7 @@ var render = function() {
                               attrs: {
                                 flat: "",
                                 label: "Confirmar",
+                                title: "Confirmar apagado",
                                 color: "negative"
                               }
                             })
