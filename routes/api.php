@@ -58,6 +58,7 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/options', 'OptionsController@list')->name('listar.opcoes');
     /** TAGS */
     Route::get('/tags/{id}', 'TagController@getById')->name('busca.x.tag.id');
+    Route::get('/tags/autocomplete/{term}', 'TagController@autocomplete')->name('autocompletar.tag');
     /**  */
     Route::get('/licencas', 'LicenseController@list')->name('listar.licencas');
     /** TOKEN */
@@ -106,8 +107,8 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     Route::delete('/aplicativos/{id}', 'AplicativoController@delete')->name('aplicativo.apagar');
     /** TAGS */
     Route::get('/tags', 'TagController@list')->name('listaTags');
-    Route::get('/tags/search/{term}', 'TagController@search')->name('buscaTag');
     Route::post('/tags', 'TagController@create')->name('adicionarTag');
+    Route::get('/tags/search/{term}', 'TagController@search')->name('buscaTag');
     Route::put('/tags/{id}', 'TagController@update')->name('atualizarTag');
     Route::delete('/tags/{id}', 'TagController@delete')->name('apagarTag');
     /** CONTEUDOS */

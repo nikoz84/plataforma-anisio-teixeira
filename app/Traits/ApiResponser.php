@@ -51,4 +51,15 @@ trait ApiResponser
     {
         return $this->successResponse($instance, $message, $code);
     }
+
+    protected function fetchForSelect(Collection $collection)
+    {
+        $select = $collection->map(function ($item) {
+            $data['label'] = $item->name ? $item->name : $item->title;
+            $data['id'] = $item->id;
+            return $data;
+        });
+
+        return $this->showAll($select, 'Selecione', 200);
+    }
 }

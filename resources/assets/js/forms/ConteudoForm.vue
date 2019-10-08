@@ -1,7 +1,83 @@
 <template>
-  <div class="row">
-    <form v-on:submit.prevent="send($event)" >
-      conteudos
+  <div class="q-pa-md">
+    <form v-on:submit.prevent="send($route.params.action)" >
+      <q-stepper
+        v-model="step"
+        vertical
+        color="primary"
+        animated
+      >
+        <q-step
+          :name="1"
+          title="Canal e Tipo de Mídia"
+          icon="settings"
+          :done="step > 1"
+        >
+          <q-select outlined v-model="canal_id" :options="canais" label="Escolha um Canal" />
+          <q-select outlined v-model="tipo_id" :options="tiposForm" label="Tipo de Mídia" />
+          <q-stepper-navigation>
+            <q-btn @click="step = 2" color="primary" label="Próximo" />
+          </q-stepper-navigation>
+        </q-step>
+        <q-step
+          :name="2"
+          title="Título, Autores, Fonte e Descrição"
+          icon="settings"
+          :done="step > 2"
+        >
+          <q-input outlined v-model="title" label="Título do conteúdo" />
+          <q-input outlined v-model="authors" label="Autores" />
+          <q-input outlined v-model="source" label="Fonte" />
+          <label for="editor">Descrição</label>
+          <q-editor v-model="description" min-height="15rem" id="editor"/>
+          <q-card flat bordered>
+            <q-card-section v-html="description" />
+          </q-card>
+          <q-stepper-navigation>
+            <q-btn @click="step = 3" color="primary" label="Próximo" />
+            <q-btn flat @click="step = 1" color="primary" label="Voltar" class="q-ml-sm" />
+          </q-stepper-navigation>
+        </q-step>
+        <q-step
+        :name="3"
+        title="Tags"
+        icon="settings"
+        disable
+      >
+       <q-badge color="secondary" multi-line class="q-mb-md">
+      Model: {{ tags || 'empty' }}
+    </q-badge>
+        <q-select
+          filled
+          :value="tags"
+          use-input
+          fill-input
+          use-chips
+          multiple
+          stack-label
+          map-options
+          input-debounce="300"
+          @input="inputValue"
+          :options="autocompleteTags"
+          @filter="getTags"
+        />
+      </q-step>
+
+      <q-step
+        :name="4"
+        title="Componentes curriculares"
+        icon="settings"
+      >
+        Try out different ad text to see what brings in the most customers, and learn how to
+        enhance your ads using features like ad extensions. If you run into any problems with
+        your ads, find out how to tell if they're running and how to resolve approval issues.
+
+        <q-stepper-navigation>
+          <q-btn color="primary" label="Enviar" />
+          <q-btn flat @click="step = 3" color="primary" label="Voltar" class="q-ml-sm" />
+        </q-stepper-navigation>
+      </q-step>
+       </q-stepper>
     </form>
   </div>
 </template>
@@ -10,17 +86,36 @@
 import { mapGetters, mapActions, mapState, mapMutations } from "vuex";
 import { mapFields } from "vuex-map-fields";
 import ShowErrors from "../components/ShowErrors.vue";
+import {
+  QInput,
+  QEditor,
+  QCard,
+  QCardSection,
+  QSelect,
+  QStepper,
+  QStep,
+  QStepperNavigation
+} from "quasar";
 
 export default {
   name: "ConteudoForm",
   delay: 2000,
   components: {
+    QInput,
+    QEditor,
+    QCard,
+    QSelect,
+    QCardSection,
+    QStepper,
+    QStep,
+    QStepperNavigation,
     ShowErrors
   },
   data() {
     return {
-      autocompleteItems: [],
+      autocompleteTags: [],
       categories: [],
+      step: 1,
       license_id: "",
       canal_id: "",
       category_id: "",
@@ -41,12 +136,12 @@ export default {
     };
   },
   mounted() {
-    if (this.$route.params.id) {
+    if (this.$route.params.action == "editar") {
       this.fetchConteudo(this.$route.params);
     }
-    this.fetchTiposForm();
+    this.fetchTiposForSelect();
     //this.fetchLicenses();
-    //this.fetchCanaisForSelect();
+    this.fetchCanaisForSelect();
   },
   computed: {
     ...mapState([
@@ -62,18 +157,37 @@ export default {
   methods: {
     ...mapActions([
       "fetchConteudo",
-      "fetchTiposForm",
+      "fetchTiposForSelect",
       "fetchLicenses",
       "fetchCanaisForSelect",
       "createConteudo",
       "updateConteudo"
     ]),
-    send() {
-      if (this.$route.params.id) {
+    send(action) {
+      if (action == "editar") {
         this.updateConteudo(this.getConteudo());
       } else {
         this.createConteudo(this.getConteudo());
       }
+    },
+    inputValue(val, done) {
+      console.log(this.tags);
+      this.tags = this.tags.push(val[0].id);
+      val = "";
+      done;
+      //this.tags = Array.isArray(val) ? val[0] : [];
+    },
+    getTags(val, update, abort) {
+      update(() => {
+        if (val === "" && val.length < 3) {
+          return;
+        } else {
+          //this.tags = this.tags.concat();
+          axios.get(`tags/autocomplete/${val}`).then(resp => {
+            this.autocompleteTags = resp.data.metadata;
+          });
+        }
+      });
     },
     getConteudo() {
       return {

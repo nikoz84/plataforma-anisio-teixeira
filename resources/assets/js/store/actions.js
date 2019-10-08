@@ -118,12 +118,13 @@ const actions = {
   /** CANAIS FOR SELECT */
   async fetchCanaisForSelect({ commit }) {
     let resp = await axios.get("/canais?select");
-    commit("SET_CANAIS", resp.data.metadata);
+    if (resp.status == 200 && resp.data.success == true) {
+      commit("SET_CANAIS", resp.data.metadata);
+    }
   },
   /** TIPO DE CONTEUDOS */
-  async fetchTiposForm({ commit }) {
-    let resp = await axios.get("/tipos");
-
+  async fetchTiposForSelect({ commit }) {
+    let resp = await axios.get("/tipos?select");
     if (resp.status == 200 && resp.data.success == true) {
       commit("SET_TIPOS_FORM", resp.data.metadata);
     }

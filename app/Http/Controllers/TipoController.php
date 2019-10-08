@@ -6,9 +6,12 @@ use App\Http\Controllers\ApiController;
 use App\Tipo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Traits\ApiResponser;
 
 class TipoController extends ApiController
 {
+    use ApiResponser;
+
     public function __construct(Tipo $tipo, Request $request)
     {
         $this->middleware('jwt.verify')->except(['list']);
@@ -16,11 +19,16 @@ class TipoController extends ApiController
         $this->request = $request;
     }
 
-    public function list() {
-        $tipos = $this->tipo::all();
+    public function list()
+    {
 
+        $tipos = $this->tipo::all();
+        if ($this->request->has('select')) {
+            return $this->fetchForSelect(collect($tipos));
+        }
         return $this->showAll($tipos, '', 200);
     }
+
     public function create()
     {
         $validator = Validator::make($this->request->all(), config("rules.tipos"));
@@ -77,5 +85,4 @@ class TipoController extends ApiController
         $tipo = $this->tipo::find($id);
         return $this->showOne($tipo);
     }
-
 }

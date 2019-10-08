@@ -7,9 +7,12 @@ use App\Helpers\SideBar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ApiController;
+use App\Traits\ApiResponser;
 
 class CanalController extends ApiController
 {
+    use ApiResponser;
+
     public function __construct(Request $request, Canal $canal)
     {
         $this->middleware('jwt.verify')->except(['getBySlug']);
@@ -24,15 +27,13 @@ class CanalController extends ApiController
     public function list()
     {
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;
-        $select = $this->request->has('select');
-
+        if ($this->request->has('select')) {
+            $select = $this->canal::whereRaw('is_active = true AND id <> 9 AND id <> 7 AND id <> 8')
+                ->orderBy('id')
+                ->get(['id', 'name']);
+            return $this->fetchForSelect(collect($select));
+        }
         $query = $this->canal::query();
-
-        $query->when($select, function ($query) {
-            $canaisForSelect = $query::whereRaw('is_active = true AND id <> 9')->get(['id', 'name']);
-            return $this->showAll($canaisForSelect, 'Selecione', 200);
-        });
-
 
         $canais = $query->where('is_active', true)
             ->paginate($limit);

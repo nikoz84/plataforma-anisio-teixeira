@@ -3188,9 +3188,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       slug: this.$route.params.slug,
       action: this.$route.params.action,
       metadata: null,
-      componentName: "",
-      load: false,
-      loadTable: true
+      componentName: ""
     };
   },
   beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {
@@ -4016,9 +4014,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var vuex_map_fields__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex-map-fields */ "./node_modules/vuex-map-fields/dist/index.esm.js");
 /* harmony import */ var _components_ShowErrors_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/ShowErrors.vue */ "./resources/assets/js/components/ShowErrors.vue");
+/* harmony import */ var quasar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! quasar */ "./node_modules/quasar/src/index.esm.js");
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -4027,12 +4027,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   name: "ConteudoForm",
   delay: 2000,
   components: {
+    QInput: quasar__WEBPACK_IMPORTED_MODULE_3__["QInput"],
+    QEditor: quasar__WEBPACK_IMPORTED_MODULE_3__["QEditor"],
+    QCard: quasar__WEBPACK_IMPORTED_MODULE_3__["QCard"],
+    QSelect: quasar__WEBPACK_IMPORTED_MODULE_3__["QSelect"],
+    QCardSection: quasar__WEBPACK_IMPORTED_MODULE_3__["QCardSection"],
+    QStepper: quasar__WEBPACK_IMPORTED_MODULE_3__["QStepper"],
+    QStep: quasar__WEBPACK_IMPORTED_MODULE_3__["QStep"],
+    QStepperNavigation: quasar__WEBPACK_IMPORTED_MODULE_3__["QStepperNavigation"],
     ShowErrors: _components_ShowErrors_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
-      autocompleteItems: [],
+      autocompleteTags: [],
       categories: [],
+      step: 1,
       license_id: "",
       canal_id: "",
       category_id: "",
@@ -4053,20 +4062,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   mounted: function mounted() {
-    if (this.$route.params.id) {
+    if (this.$route.params.action == "editar") {
       this.fetchConteudo(this.$route.params);
     }
 
-    this.fetchTiposForm();
+    this.fetchTiposForSelect();
+    this.fetchCanaisForSelect();
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["errors", "tiposForm", "conteudo", "licenses", "childsLicenses", "canais"]), Object(vuex_map_fields__WEBPACK_IMPORTED_MODULE_1__["mapFields"])([])),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["fetchConteudo", "fetchTiposForm", "fetchLicenses", "fetchCanaisForSelect", "createConteudo", "updateConteudo"]), {
-    send: function send() {
-      if (this.$route.params.id) {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["fetchConteudo", "fetchTiposForSelect", "fetchLicenses", "fetchCanaisForSelect", "createConteudo", "updateConteudo"]), {
+    send: function send(action) {
+      if (action == "editar") {
         this.updateConteudo(this.getConteudo());
       } else {
         this.createConteudo(this.getConteudo());
       }
+    },
+    inputValue: function inputValue(val, done) {
+      console.log(this.tags);
+      this.tags = this.tags.push(val[0].id);
+      val = "";
+      done;
+    },
+    getTags: function getTags(val, update, abort) {
+      var _this = this;
+
+      update(function () {
+        if (val === "" && val.length < 3) {
+          return;
+        } else {
+          axios.get("tags/autocomplete/".concat(val)).then(function (resp) {
+            _this.autocompleteTags = resp.data.metadata;
+          });
+        }
+      });
     },
     getConteudo: function getConteudo() {
       return {
@@ -4972,8 +5001,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var quasar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! quasar */ "./node_modules/quasar/src/index.esm.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var quasar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! quasar */ "./node_modules/quasar/src/index.esm.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -4983,36 +5020,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Default",
   directives: {
-    GoBack: quasar__WEBPACK_IMPORTED_MODULE_1__["GoBack"]
+    GoBack: quasar__WEBPACK_IMPORTED_MODULE_2__["GoBack"]
   },
   componentes: {
-    QLayout: quasar__WEBPACK_IMPORTED_MODULE_1__["QLayout"],
-    QDrawer: quasar__WEBPACK_IMPORTED_MODULE_1__["QDrawer"],
-    QHeader: quasar__WEBPACK_IMPORTED_MODULE_1__["QHeader"],
-    QSpace: quasar__WEBPACK_IMPORTED_MODULE_1__["QSpace"],
-    QToolbar: quasar__WEBPACK_IMPORTED_MODULE_1__["QToolbar"],
-    QToolbarTitle: quasar__WEBPACK_IMPORTED_MODULE_1__["QToolbarTitle"],
-    QPageContainer: quasar__WEBPACK_IMPORTED_MODULE_1__["QPageContainer"],
-    QPageScroller: quasar__WEBPACK_IMPORTED_MODULE_1__["QPageScroller"],
-    QList: quasar__WEBPACK_IMPORTED_MODULE_1__["QList"],
-    QItem: quasar__WEBPACK_IMPORTED_MODULE_1__["QItem"],
-    QItemSection: quasar__WEBPACK_IMPORTED_MODULE_1__["QItemSection"],
-    QItemLabel: quasar__WEBPACK_IMPORTED_MODULE_1__["QItemLabel"],
-    QExpansionItem: quasar__WEBPACK_IMPORTED_MODULE_1__["QExpansionItem"],
-    QInput: quasar__WEBPACK_IMPORTED_MODULE_1__["QInput"]
+    QLayout: quasar__WEBPACK_IMPORTED_MODULE_2__["QLayout"],
+    QDrawer: quasar__WEBPACK_IMPORTED_MODULE_2__["QDrawer"],
+    QHeader: quasar__WEBPACK_IMPORTED_MODULE_2__["QHeader"],
+    QSpace: quasar__WEBPACK_IMPORTED_MODULE_2__["QSpace"],
+    QToolbar: quasar__WEBPACK_IMPORTED_MODULE_2__["QToolbar"],
+    QToolbarTitle: quasar__WEBPACK_IMPORTED_MODULE_2__["QToolbarTitle"],
+    QPageContainer: quasar__WEBPACK_IMPORTED_MODULE_2__["QPageContainer"],
+    QPageScroller: quasar__WEBPACK_IMPORTED_MODULE_2__["QPageScroller"],
+    QList: quasar__WEBPACK_IMPORTED_MODULE_2__["QList"],
+    QItem: quasar__WEBPACK_IMPORTED_MODULE_2__["QItem"],
+    QItemSection: quasar__WEBPACK_IMPORTED_MODULE_2__["QItemSection"],
+    QItemLabel: quasar__WEBPACK_IMPORTED_MODULE_2__["QItemLabel"],
+    QExpansionItem: quasar__WEBPACK_IMPORTED_MODULE_2__["QExpansionItem"],
+    QSelect: quasar__WEBPACK_IMPORTED_MODULE_2__["QSelect"]
   },
   data: function data() {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop,
-      termSearch: ""
+      termSearch: "",
+      options: []
     };
   },
   created: function created() {
     this.getLayout();
-    console.log(this.$q.platform.is.desktop);
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["isLogged", "links", "canal", "sidebar"])),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["getLayout", "logout"]), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["isLogged", "links", "canal", "sidebar"])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(["getLayout", "logout"]), {
     sair: function sair() {
       var _this = this;
 
@@ -5021,7 +5058,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this.$router.push("/");
         }
       });
-    }
+    },
+    getData: function () {
+      var _getData = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var resp;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return console.log(this.termSearch);
+
+              case 2:
+                _context.next = 4;
+                return axios.get("tags/search/matematicas");
+
+              case 4:
+                resp = _context.sent;
+                console.log(resp);
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function getData() {
+        return _getData.apply(this, arguments);
+      }
+
+      return getData;
+    }()
   })
 });
 
@@ -43796,18 +43865,266 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
+  return _c("div", { staticClass: "q-pa-md" }, [
     _c(
       "form",
       {
         on: {
           submit: function($event) {
             $event.preventDefault()
-            return _vm.send($event)
+            return _vm.send(_vm.$route.params.action)
           }
         }
       },
-      [_vm._v("\n    conteudos\n  ")]
+      [
+        _c(
+          "q-stepper",
+          {
+            attrs: { vertical: "", color: "primary", animated: "" },
+            model: {
+              value: _vm.step,
+              callback: function($$v) {
+                _vm.step = $$v
+              },
+              expression: "step"
+            }
+          },
+          [
+            _c(
+              "q-step",
+              {
+                attrs: {
+                  name: 1,
+                  title: "Canal e Tipo de Mídia",
+                  icon: "settings",
+                  done: _vm.step > 1
+                }
+              },
+              [
+                _c("q-select", {
+                  attrs: {
+                    outlined: "",
+                    options: _vm.canais,
+                    label: "Escolha um Canal"
+                  },
+                  model: {
+                    value: _vm.canal_id,
+                    callback: function($$v) {
+                      _vm.canal_id = $$v
+                    },
+                    expression: "canal_id"
+                  }
+                }),
+                _vm._v(" "),
+                _c("q-select", {
+                  attrs: {
+                    outlined: "",
+                    options: _vm.tiposForm,
+                    label: "Tipo de Mídia"
+                  },
+                  model: {
+                    value: _vm.tipo_id,
+                    callback: function($$v) {
+                      _vm.tipo_id = $$v
+                    },
+                    expression: "tipo_id"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "q-stepper-navigation",
+                  [
+                    _c("q-btn", {
+                      attrs: { color: "primary", label: "Próximo" },
+                      on: {
+                        click: function($event) {
+                          _vm.step = 2
+                        }
+                      }
+                    })
+                  ],
+                  1
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "q-step",
+              {
+                attrs: {
+                  name: 2,
+                  title: "Título, Autores, Fonte e Descrição",
+                  icon: "settings",
+                  done: _vm.step > 2
+                }
+              },
+              [
+                _c("q-input", {
+                  attrs: { outlined: "", label: "Título do conteúdo" },
+                  model: {
+                    value: _vm.title,
+                    callback: function($$v) {
+                      _vm.title = $$v
+                    },
+                    expression: "title"
+                  }
+                }),
+                _vm._v(" "),
+                _c("q-input", {
+                  attrs: { outlined: "", label: "Autores" },
+                  model: {
+                    value: _vm.authors,
+                    callback: function($$v) {
+                      _vm.authors = $$v
+                    },
+                    expression: "authors"
+                  }
+                }),
+                _vm._v(" "),
+                _c("q-input", {
+                  attrs: { outlined: "", label: "Fonte" },
+                  model: {
+                    value: _vm.source,
+                    callback: function($$v) {
+                      _vm.source = $$v
+                    },
+                    expression: "source"
+                  }
+                }),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "editor" } }, [
+                  _vm._v("Descrição")
+                ]),
+                _vm._v(" "),
+                _c("q-editor", {
+                  attrs: { "min-height": "15rem", id: "editor" },
+                  model: {
+                    value: _vm.description,
+                    callback: function($$v) {
+                      _vm.description = $$v
+                    },
+                    expression: "description"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "q-card",
+                  { attrs: { flat: "", bordered: "" } },
+                  [
+                    _c("q-card-section", {
+                      domProps: { innerHTML: _vm._s(_vm.description) }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "q-stepper-navigation",
+                  [
+                    _c("q-btn", {
+                      attrs: { color: "primary", label: "Próximo" },
+                      on: {
+                        click: function($event) {
+                          _vm.step = 3
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("q-btn", {
+                      staticClass: "q-ml-sm",
+                      attrs: { flat: "", color: "primary", label: "Voltar" },
+                      on: {
+                        click: function($event) {
+                          _vm.step = 1
+                        }
+                      }
+                    })
+                  ],
+                  1
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "q-step",
+              {
+                attrs: { name: 3, title: "Tags", icon: "settings", disable: "" }
+              },
+              [
+                _c(
+                  "q-badge",
+                  {
+                    staticClass: "q-mb-md",
+                    attrs: { color: "secondary", "multi-line": "" }
+                  },
+                  [
+                    _vm._v(
+                      "\n    Model: " + _vm._s(_vm.tags || "empty") + "\n  "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("q-select", {
+                  attrs: {
+                    filled: "",
+                    value: _vm.tags,
+                    "use-input": "",
+                    "fill-input": "",
+                    "use-chips": "",
+                    multiple: "",
+                    "stack-label": "",
+                    "map-options": "",
+                    "input-debounce": "300",
+                    options: _vm.autocompleteTags
+                  },
+                  on: { input: _vm.inputValue, filter: _vm.getTags }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "q-step",
+              {
+                attrs: {
+                  name: 4,
+                  title: "Componentes curriculares",
+                  icon: "settings"
+                }
+              },
+              [
+                _vm._v(
+                  "\n      Try out different ad text to see what brings in the most customers, and learn how to\n      enhance your ads using features like ad extensions. If you run into any problems with\n      your ads, find out how to tell if they're running and how to resolve approval issues.\n\n      "
+                ),
+                _c(
+                  "q-stepper-navigation",
+                  [
+                    _c("q-btn", {
+                      attrs: { color: "primary", label: "Enviar" }
+                    }),
+                    _vm._v(" "),
+                    _c("q-btn", {
+                      staticClass: "q-ml-sm",
+                      attrs: { flat: "", color: "primary", label: "Voltar" },
+                      on: {
+                        click: function($event) {
+                          _vm.step = 3
+                        }
+                      }
+                    })
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ],
+      1
     )
   ])
 }
@@ -46156,12 +46473,15 @@ var render = function() {
           _c(
             "q-list",
             [
-              _c("q-input", {
+              _c("q-select", {
                 attrs: {
-                  standout: "bg-grey-11",
-                  label: "Pesquisar",
-                  dense: false
+                  filled: "",
+                  "use-input": "",
+                  "hide-selected": "",
+                  "fill-input": "",
+                  options: _vm.options
                 },
+                on: { filter: _vm.getData },
                 scopedSlots: _vm._u([
                   {
                     key: "prepend",
@@ -46171,6 +46491,25 @@ var render = function() {
                           staticClass: "text-primary",
                           attrs: { name: "search" }
                         })
+                      ]
+                    },
+                    proxy: true
+                  },
+                  {
+                    key: "no-option",
+                    fn: function() {
+                      return [
+                        _c(
+                          "q-item",
+                          [
+                            _c("q-item-section", { staticClass: "text-grey" }, [
+                              _vm._v(
+                                "\n              Sem Resultados\n            "
+                              )
+                            ])
+                          ],
+                          1
+                        )
                       ]
                     },
                     proxy: true
@@ -65802,7 +66141,10 @@ var actions = {
 
             case 3:
               resp = _context12.sent;
-              commit("SET_CANAIS", resp.data.metadata);
+
+              if (resp.status == 200 && resp.data.success == true) {
+                commit("SET_CANAIS", resp.data.metadata);
+              }
 
             case 5:
             case "end":
@@ -65818,8 +66160,8 @@ var actions = {
 
     return fetchCanaisForSelect;
   }(),
-  fetchTiposForm: function () {
-    var _fetchTiposForm = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13(_ref13) {
+  fetchTiposForSelect: function () {
+    var _fetchTiposForSelect = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13(_ref13) {
       var commit, resp;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
         while (1) {
@@ -65827,7 +66169,7 @@ var actions = {
             case 0:
               commit = _ref13.commit;
               _context13.next = 3;
-              return axios.get("/tipos");
+              return axios.get("/tipos?select");
 
             case 3:
               resp = _context13.sent;
@@ -65844,11 +66186,11 @@ var actions = {
       }, _callee13);
     }));
 
-    function fetchTiposForm(_x21) {
-      return _fetchTiposForm.apply(this, arguments);
+    function fetchTiposForSelect(_x21) {
+      return _fetchTiposForSelect.apply(this, arguments);
     }
 
-    return fetchTiposForm;
+    return fetchTiposForSelect;
   }(),
   fetchLicenses: function () {
     var _fetchLicenses = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14(_ref14) {

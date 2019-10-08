@@ -34,9 +34,7 @@ export default {
       slug: this.$route.params.slug,
       action: this.$route.params.action,
       metadata: null,
-      componentName: "",
-      load: false,
-      loadTable: true
+      componentName: ""
     };
   },
   beforeRouteUpdate(to, from, next) {

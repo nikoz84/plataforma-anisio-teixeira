@@ -5,12 +5,18 @@ namespace App\Http\Controllers;
 use App\Tag;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Http\Controllers\ApiController;
+use App\Traits\ApiResponser;
 
-class TagController extends Controller
+class TagController extends ApiController
 {
-    public function __construct()
+    use ApiResponser;
+
+    public function __construct(Request $request, Tag $tag)
     {
-        $this->middleware('jwt.verify')->except(['list','search','getById']);
+        $this->middleware('jwt.verify')->except(['list', 'search', 'getById']);
+        $this->request = $request;
+        $this->tag = $tag;
     }
 
     /**
@@ -18,24 +24,16 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list(Request $request)
+    public function list()
     {
-        $limit = ($request->has('limit')) ? $request->query('limit'): 15;
-        $page = ($request->has('page')) ? $request->query('page'): 1;
+        $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 15;
 
-        $tags = DB::table('tags')
-                    ->select(['id','name','searched'])
-                    ->paginate($limit);
+        $tags = Tag::select(['id', 'name', 'searched'])
+            ->paginate($limit);
 
         $tags->setPath("/tags?limit={$limit}");
 
-        return response()->json([
-                'success'=> true,
-                'title'=> 'Lista de tags',
-                'paginator' => $tags,
-                'page'=> $tags->currentPage(),
-                'limit' => $tags->perPage()
-            ]);
+        return $this->showAsPaginator($tags, '', 200);
     }
 
     /**
@@ -43,17 +41,18 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        $name = $request->get('name');
+        $name = $this->request->get('name');
 
-        $id = DB::table('tags')->insertGetId([
-                'name' => $name
-            ]);
+        $id = Tag::insertGetId([
+            'name' => $name
+        ]);
+
         return response()->json([
-                'menssage' => "Tag - {$name} - adicionada com sucesso",
-                'id' => $id
-            ]);
+            'menssage' => "Tag - {$name} - adicionada com sucesso",
+            'id' => $id
+        ]);
     }
 
     /**
@@ -63,13 +62,12 @@ class TagController extends Controller
      * @param  \App\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        $name = ($request->has('name')) ? $request->get('name'): false;
+        $name = ($this->request->has('name')) ? $this->request->get('name') : false;
         $is_update = false;
         if ($name) {
-            $is_update = DB::table('tags')
-                ->where('id', $id)
+            $is_update = Tag::where('id', $id)
                 ->update(['name' => $name]);
         }
 
@@ -79,26 +77,27 @@ class TagController extends Controller
         ]);
     }
 
-    public function search(Request $request, $termo)
+    public function search($termo)
     {
-        $limit = $request->query('limit', 15);
-        $page = $request->query('page', 1);
+        $limit = $this->request->query('limit', 15);
         $search = "%{$termo}%";
-        $tags = DB::table('tags')
-                    ->select(['id','name'])
-                    ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
-                    ->paginate($limit);
+
+        $tags = $this->tag::select(['id', 'name'])
+            ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
+            ->paginate($limit);
         $tags->setPath("/tags/search/{$termo}?limit={$limit}");
 
-        return response()->json([
-            'success'=> true,
-            'message' => 'Resultados da busca',
-            'paginator' => $tags,
-            'page'=> $tags->currentPage(),
-            'limit' => $tags->perPage()
-        ]);
+        return $this->showAsPaginator($tags, '', 200);
     }
-
+    public function autocomplete($term)
+    {
+        $search = "%{$term}%";
+        $limit = $this->request->query('limit', 100);
+        $tags = $this->tag::select(['id', 'name'])
+            ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
+            ->get(['id', 'name']);
+        return $this->fetchForSelect(collect($tags));
+    }
     /**
      * Remove the specified resource from storage.
      *

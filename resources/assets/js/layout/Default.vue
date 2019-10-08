@@ -54,11 +54,25 @@
       content-class="bg-grey-2"
     >
       <q-list>
-        <q-input standout="bg-grey-11" v-model="termSearch" label="Pesquisar" :dense="false">
+        <q-select filled
+        v-model="termSearch"
+        use-input
+        hide-selected
+        fill-input
+        
+        :options="options"
+        @filter="getData">
           <template v-slot:prepend>
             <q-icon class="text-primary" name="search" />
           </template>
-        </q-input>
+          <template v-slot:no-option>
+            <q-item>
+              <q-item-section class="text-grey">
+                Sem Resultados
+              </q-item-section>
+            </q-item>
+        </template>
+        </q-select>
         
         <q-item clickable tag="a" to="/">
           <q-item-section avatar>
@@ -116,7 +130,7 @@ import {
   QItem,
   QItemSection,
   QExpansionItem,
-  QInput,
+  QSelect,
   GoBack,
   Platform
 } from "quasar";
@@ -138,17 +152,17 @@ export default {
     QItemSection,
     QItemLabel,
     QExpansionItem,
-    QInput
+    QSelect
   },
   data() {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop,
-      termSearch: ""
+      termSearch: "",
+      options: []
     };
   },
   created() {
     this.getLayout();
-    console.log(this.$q.platform.is.desktop);
   },
   computed: {
     ...mapState(["isLogged", "links", "canal", "sidebar"])
@@ -161,6 +175,12 @@ export default {
           this.$router.push("/");
         }
       });
+    },
+    async getData() {
+      await console.log(this.termSearch);
+
+      let resp = await axios.get(`tags/search/matematicas`);
+      console.log(resp);
     }
   }
 };
