@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use App\Aplicativo;
+use App\Conteudo;
 
 class AplicativoPolicy
 {
@@ -19,8 +19,8 @@ class AplicativoPolicy
     {
         //
     }
-    // public function list(User $user, Aplicativo $aplicativo)
+    // public function updatePermission(User $user, Conteudo $conteudo)
     // {
-    //     return $user->id === $aplicativo->user_id;
+    //     return $user->id == $conteudo->user_id;
     // }
 }

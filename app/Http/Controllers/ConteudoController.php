@@ -52,6 +52,7 @@ class ConteudoController extends ApiController
      */
     public function list(User $user, Conteudo $conteudo)
     {
+
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $canal = $this->request->query('canal', 6);
@@ -84,7 +85,6 @@ class ConteudoController extends ApiController
             ->orderBy($orderBy, 'desc')
             ->paginate($limit)
             ->setPath("/conteudos?{$url}");
-
         return $this->showAsPaginator($conteudos);
     }
     /**
@@ -212,9 +212,12 @@ class ConteudoController extends ApiController
     {
         $conteudo = $this->conteudo::find($id);
 
-        if (Gate::denies('update', $conteudo)) {
-            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
-        }
+        // if (Gate::denies('update', $conteudo)) {
+        //     return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
+        // }
+        // if (Gate::any(['update'], $conteudo)) {
+        //     return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
+        // }
 
         $validator = Validator::make($this->request->all(), config("rules.conteudo"));
         if ($validator->fails()) {
@@ -295,11 +298,15 @@ class ConteudoController extends ApiController
      */
     public function getById($id)
     {
-
         $conteudo = $this->conteudo::with([
             'user', 'canal', 'tags', 'license', 'componentes', 'niveis',
         ])->find($id);
-
+        // if (Gate::denies('update', $conteudo)) {
+        //     return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
+        // }
+        if (Gate::none(['update'], $conteudo)) {
+            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
+        }
         return $this->showOne($conteudo);
     }
     
