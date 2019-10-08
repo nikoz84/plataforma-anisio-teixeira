@@ -6,6 +6,7 @@ use App\License;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;
+use Gate;
 
 class LicenseController extends ApiController
 {
@@ -68,13 +69,16 @@ class LicenseController extends ApiController
      */
     public function update(Request $request, $id)
     {
+        $license = $this->license::find($id);
+        if (Gate::denies('super-admin', $license)) {
+            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
+        }
+
         $validator = Validator::make($this->request->all(), config("rules.license"));
 
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível atualizar a licença", 201);
         }
-
-        $license = $this->license::find($id);
 
         $license->fill($this->request->all());
 
@@ -100,6 +104,9 @@ class LicenseController extends ApiController
         }
 
         $license = $this->license::find($id);
+        if (Gate::denies('super-admin', $license)) {
+            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
+        }
         $license->delete();
 
         return response()->json([

@@ -6,6 +6,7 @@ use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ApiController;
+use Gate;
 
 class RoleController extends ApiController
 {
@@ -23,7 +24,6 @@ class RoleController extends ApiController
     public function list()
     {
         $roles = $this->role::paginate();
-
         return $this->showAsPaginator($roles, '', 200);
     }
     public function create()
@@ -40,6 +40,11 @@ class RoleController extends ApiController
     }
     public function update(Request $request, $id)
     {
+        $role = $this->role::find($id);
+
+        if (Gate::denies('super-admin', $role)) {
+            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
+        }
         $validator = Validator::make($this->request->all(), ["name" => "required"]);
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar o perfil", 201);
@@ -47,7 +52,6 @@ class RoleController extends ApiController
         $role = $this->role;
         $role->name = $this->request->name;
 
-        $role = $this->role::find($id);
         $role->fill($this->request->all());
         if ($role->update()) {
             return $this->successResponse($role, 'Perfil editado com sucesso!', 200);
@@ -63,8 +67,25 @@ class RoleController extends ApiController
         }
         $role = $this->role;
         $resp = $this->role::find($id);
+        if (Gate::denies('super-admin', $resp)) {
+            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
+        }
         if ($resp->delete()) {
             return $this->successResponse($role, 'Perfil deletado com sucesso!', 200);
         }
+    }
+    public function search($termo)
+    {
+
+        $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;
+        $search = "%{$termo}%";
+        $roles = Role::whereRaw("unaccent(lower(name)) LIKE unaccent(lower(?))")
+            ->setBindings([$search])
+            ->paginate($limit);
+        $roles->setPath("/roles/search/{$termo}?limit={$limit}");
+        return response()->json([
+            'success' => true,
+            'paginator' => $roles,
+        ]);
     }
 }

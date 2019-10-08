@@ -4472,7 +4472,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var payload = JSON.parse(window.atob(base64));
       localStorage.setItem("username", payload.user.name);
       localStorage.setItem("user_id", payload.user.id);
-      localStorage.setItem("sexo", payload.user.sexo);
+      localStorage.setItem("role", payload.user.role);
     }
   })
 });

@@ -6,9 +6,14 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
+use Gate;
+use App\Http\Controllers\ApiController;
+use App\Traits\ApiResponser;
 
-class UserController extends Controller
+class UserController extends ApiController
 {
+    use ApiResponser;
+
     public function __construct(Request $request, User $user)
     {
         $this->middleware('jwt.verify')->except([]);
@@ -34,7 +39,6 @@ class UserController extends Controller
             'title' => 'Lista de Usuários',
             'paginator' => $paginator
         ]);
-
     }
     /**
      * Buscar usuário por ID
@@ -54,6 +58,11 @@ class UserController extends Controller
     public function update($id)
     {
         $user = $this->user::find($id);
+
+        if (Gate::denies('super-admin', $user)) {
+            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
+        }
+
         $user->fill($this->request->all());
         $user->save();
         return response()->json([
@@ -70,7 +79,9 @@ class UserController extends Controller
     public function delete($id)
     {
         $resp = $this->user::where(['id' => $id])->delete();
-
+        if (Gate::denies('super-admin', $resp)) {
+            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
+        }
         if (!$resp) {
             return response()->json([
                 'success' => false,

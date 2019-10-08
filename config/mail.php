@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 2525),
+    'port' => env('MAIL_PORT', 587),
 
     /*
     |--------------------------------------------------------------------------
@@ -55,8 +55,12 @@ return [
     |
     */
 
+    // 'from' => [
+    //     'address' => env('MAIL_FROM_ADDRESS', 'plataforma-b532cb@inbox.mailtrap.io'),
+    //     'name' => env('MAIL_FROM_NAME', 'Plataforma IAT'),
+    // ],
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'plataforma-b532cb@inbox.mailtrap.io'),
+        'address' => env('MAIL_FROM_ADDRESS', 'robemarlon@gmail.com'),
         'name' => env('MAIL_FROM_NAME', 'Plataforma IAT'),
     ],
 

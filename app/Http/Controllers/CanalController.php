@@ -7,7 +7,12 @@ use App\Helpers\SideBar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ApiController;
+<<<<<<< HEAD
 use App\Traits\ApiResponser;
+=======
+use Illuminate\Support\Facades\Auth;
+use Gate;
+>>>>>>> 52abfe2f7043b521e96981d420344837f728b11d
 
 class CanalController extends ApiController
 {
@@ -74,6 +79,10 @@ class CanalController extends ApiController
     {
         $canal = $this->canal::find($id);
 
+        if (Gate::denies('super-admin', $canal)) {
+            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
+        }
+
         $data = [
             'title' => $this->request->title,
             'description' => $this->request->description,
@@ -95,6 +104,9 @@ class CanalController extends ApiController
     public function delete($id)
     {
         $canal = $this->canal::find($id);
+        if (Gate::denies('super-admin', $canal)) {
+            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
+        }
         $resp = [];
         if (is_null($canal)) {
             $resp = [

@@ -73,6 +73,7 @@ Route::group(['middleware' => ['cors']], function () {
 Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     /** CATEGORIAS DOS CONTEÚDOS*/
     Route::post('/categories', 'CategoryController@create')->name('criar.categorias');
+    // ->middleware('isAdmin');
     Route::put('/categories/{id}', 'CategoryController@update')->name('atualizar.categorias');
     Route::delete('/categories/{id}', 'CategoryController@delete')->name('categorias.apagar');
     /** APLICATIVOS CATEGORIAS */
@@ -90,9 +91,11 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     Route::put('/tipos/{id}', 'TipoController@update')->name('atualizar.tipos');
     /** ROLES */
     Route::get('/roles', 'RoleController@list')->name('role.listar');
+    //->middleware(['isAdmin', 'isSuperAdmin']);
     Route::post('/roles', 'RoleController@create')->name('criar.role');
     Route::put('/roles/{id}', 'RoleController@update')->name('atualizar.role');
     Route::delete('/roles/{id}', 'RoleController@delete')->name('deletar.role');
+    Route::get('/roles/search/{term}', 'RoleController@search')->name('busca.role');
     /** USUARIOS */
     Route::get('/usuarios/search/{termo}', 'UserController@search')->name('usuario.buscar');
     Route::delete('/usuarios/{id}', 'UserController@delete')->name('usuario.apagar');

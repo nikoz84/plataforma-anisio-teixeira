@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\FileSystemLogic;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MailUsuario;
+use App\User;
+use Gate;
 
 class ConteudoController extends ApiController
 {
@@ -23,13 +27,31 @@ class ConteudoController extends ApiController
         $this->conteudo = $conteudo;
         $this->request = $request;
     }
+
+    public function teste()
+    {
+        // dd('criar um email segunda feira');
+        //$email = Mail::to('robemarlon@gmail.com')
+        //->send(new MailUsuario());
+        $x = Mail::send('emails.emailUsuario', [], function ($message) {
+            $message->from('iateventos71@gmail.com', 'IAT - Instituto Anísio Teixeira');
+            $message->to('marlonrobert_2@hotmail.com', 'Marlon Trindade')->subject('Nova mensagem');
+        });
+
+        // Mail::send('emails', [], function ($message) {
+        //     $message->from('plataforma-b532cb@inbox.mailtrap.io', 'IAT - Instituto Anísio Teixeira');
+        //     $message->to('marlonrobert_2@hotmail.com')->subject('Nova mensagem');
+        // });
+        //dd($email);
+        //return 'ok';
+    }
     /**
      * Lista de conteúdos por canal
      *
      * @return \Illuminate\Http\Response
      */
-    public function list() {
-
+    public function list(User $user, Conteudo $conteudo)
+    {
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $canal = $this->request->query('canal', 6);
@@ -62,7 +84,6 @@ class ConteudoController extends ApiController
             ->orderBy($orderBy, 'desc')
             ->paginate($limit)
             ->setPath("/conteudos?{$url}");
-            //dd($conteudos);
 
         return $this->showAsPaginator($conteudos);
     }
@@ -97,6 +118,7 @@ class ConteudoController extends ApiController
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar o conteúdo", 201);
         }
+
         $conteudo = $this->conteudo;
         // USUÁRIO LOGADO
         $conteudo->user_id = Auth::user()->id;
@@ -121,9 +143,7 @@ class ConteudoController extends ApiController
         $conteudo->qt_downloads = $this->conteudo::INIT_COUNT;
         $conteudo->qt_access = $this->conteudo::INIT_COUNT;
 
-        if ($conteudo->save()) {
-            $this->createFile($conteudo->id, $this->request->download);
-        }
+        $conteudo->save();
         // PALAVRAS CHAVE, COMPONENTES CURRICULARES
         $conteudo->tags()->attach(explode(',', $this->request->tags));
         $conteudo->componentes()->attach(explode(',', $this->request->componentes));
@@ -136,13 +156,15 @@ class ConteudoController extends ApiController
     private function saveOptions($conteudo_id)
     {
         $tipo = collect(DB::select('select * from tipos where id = ?', [$this->request->tipo_id]))->first();
+        $arr_file = $this->createFile($conteudo->id, $this->request->download);
         $options = [
             'tipo'          => $tipo->id,
             'componentes'   => [$this->request->componentes],
             'tags'          => [$this->request->tags],
             'site'          => $this->request->site, // URL DO SITE
             'guia'          => $this->request->guia, // ARQUIVO DE GUIA PEDAGOGICA
-            'download'      => $this->request->hasFile('download') ? $conteudo_id . '.' . $this->request->download->guessExtension() : null,
+            //'download'      => $this->request->hasFile('download') ? $conteudo_id . '.' . $this->request->download->guessExtension() : null,
+            'download'      => $this->request->hasFile('download') ? $arr_file : null,
             'visualizacao'  => null, // ARQUIVO DE VISUALIZACAO - $this->request->visualizacao
         ];
         $conteudo = $this->conteudo::findOrFail($conteudo_id);
@@ -179,7 +201,7 @@ class ConteudoController extends ApiController
         $conteudo->ts_documento = $fullTextSearch->ts_documento;
         $conteudo->save();
     }
-
+    public function lerHDImage(){}
     /**
      * Atualiza o conteúdo.
      *
@@ -188,11 +210,16 @@ class ConteudoController extends ApiController
      */
     public function update($id)
     {
+        $conteudo = $this->conteudo::find($id);
+
+        if (Gate::denies('update', $conteudo)) {
+            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
+        }
+
         $validator = Validator::make($this->request->all(), config("rules.conteudo"));
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível atualizar o conteúdo", 201);
         }
-        $conteudo = $this->conteudo::find($id);
         $conteudo->fill($this->request->all());
         if ($conteudo->save()) {
             $this->createFile($id, $this->request->download);
@@ -216,6 +243,14 @@ class ConteudoController extends ApiController
     public function delete($id)
     {
         $conteudo = $this->conteudo::with('tags')->find($id);
+        // or Gate::denies('super-admin', $conteudo)
+        // if (Gate::denies('super-admin', $conteudo)) {
+        //     return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
+        // }
+        if (Gate::denies('delete', $conteudo)) {
+            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
+        }
+
         $conteudo->tags()->detach();
         $conteudo->componentes()->detach();
         $conteudo->niveis()->detach();
@@ -267,15 +302,7 @@ class ConteudoController extends ApiController
 
         return $this->showOne($conteudo);
     }
-    public function teste()
-    {
-        $conteudo = Conteudo::find(4);
-        //$conteudo->tags()->detach([1,5]);
-
-        return response()->json([
-            'tags' => $conteudo->tags,
-        ]);
-    }
+    
     /**
      * Lista de Conteúdos por Tag ID
      *
