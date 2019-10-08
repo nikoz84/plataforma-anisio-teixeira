@@ -40,20 +40,22 @@
         </q-step>
         <q-step
           :name="3"
-          title="Tags"
+          title="Palavras Chave"
           icon="settings"
+          :done="step > 3"
         >
-          <q-badge color="secondary" multi-line class="q-mb-md">
-            Model: {{ tags || 'empty' }}
-          </q-badge>
           <q-select
               filled
-              :value="tags"
+              v-model="tags"
               use-input
-              use-chips
               multiple
+              option-value="id"
+              option-label="label"
+              use-chips
+              stack-label
+              new-value-mode="add"
               input-debounce="300"
-              @input="input"
+              
               :options="autocompleteTags"
               @filter="getTags"
             />
@@ -77,6 +79,7 @@
           <q-btn flat @click="step = 3" color="primary" label="Voltar" class="q-ml-sm" />
         </q-stepper-navigation>
       </q-step>
+        sdfs
        </q-stepper>
     </form>
   </div>
@@ -173,30 +176,6 @@ export default {
       }
       */
     },
-    input(val) {
-      //console.log(val[0].id);
-      //console.log(val[0].label);
-
-      if (val.length > 0 && Array.isArray(val)) {
-        if (!this.tags.includes(val[0].label) && val[0].label != "undefined") {
-          this.tags.push(val[0].label);
-        }
-        //done(val, "toggle");
-        /*
-        if (!autocompleteTags.includes(val)) {
-          autocompleteTags.push(val);
-        }
-        done(val, "toggle");
-        */
-      }
-      //this.tags.push(val);
-      //this.tags = this.tags.concat(val);
-      //this.tags.push({ id: val[0].id, label: val[0].label });
-      //this.tags.concat(val);
-
-      //done;
-      //this.tags = Array.isArray(val) ? val[0] : [];
-    },
     getTags(val, update, abort) {
       update(() => {
         if (val === "" && val.length < 3) {
@@ -205,6 +184,7 @@ export default {
           const self = this;
           //this.tags = this.tags.concat();
           axios.get(`tags/autocomplete/${val}`).then(resp => {
+            console.log(resp.data.metadata);
             self.autocompleteTags = resp.data.metadata;
           });
         }

@@ -4070,13 +4070,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     send: function send() {
       console.log(this.$route.params.action);
     },
-    input: function input(val) {
-      if (val.length > 0 && Array.isArray(val)) {
-        if (!this.tags.includes(val[0].label) && val[0].label != "undefined") {
-          this.tags.push(val[0].label);
-        }
-      }
-    },
     getTags: function getTags(val, update, abort) {
       var _this = this;
 
@@ -4086,6 +4079,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         } else {
           var self = _this;
           axios.get("tags/autocomplete/".concat(val)).then(function (resp) {
+            console.log(resp.data.metadata);
             self.autocompleteTags = resp.data.metadata;
           });
         }
@@ -61249,34 +61243,36 @@ var render = function() {
             _vm._v(" "),
             _c(
               "q-step",
-              { attrs: { name: 3, title: "Tags", icon: "settings" } },
+              {
+                attrs: {
+                  name: 3,
+                  title: "Palavras Chave",
+                  icon: "settings",
+                  done: _vm.step > 3
+                }
+              },
               [
-                _c(
-                  "q-badge",
-                  {
-                    staticClass: "q-mb-md",
-                    attrs: { color: "secondary", "multi-line": "" }
-                  },
-                  [
-                    _vm._v(
-                      "\n          Model: " +
-                        _vm._s(_vm.tags || "empty") +
-                        "\n        "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
                 _c("q-select", {
                   attrs: {
                     filled: "",
-                    value: _vm.tags,
                     "use-input": "",
-                    "use-chips": "",
                     multiple: "",
+                    "option-value": "id",
+                    "option-label": "label",
+                    "use-chips": "",
+                    "stack-label": "",
+                    "new-value-mode": "add",
                     "input-debounce": "300",
                     options: _vm.autocompleteTags
                   },
-                  on: { input: _vm.input, filter: _vm.getTags }
+                  on: { filter: _vm.getTags },
+                  model: {
+                    value: _vm.tags,
+                    callback: function($$v) {
+                      _vm.tags = $$v
+                    },
+                    expression: "tags"
+                  }
                 }),
                 _vm._v(" "),
                 _c(
@@ -61345,7 +61341,8 @@ var render = function() {
                 )
               ],
               1
-            )
+            ),
+            _vm._v("\n      sdfs\n     ")
           ],
           1
         )
