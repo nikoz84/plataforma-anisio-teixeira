@@ -18,7 +18,7 @@ with
 	)
 select u.idusuario, u.username, u.nomeusuario, u.email
 from usuario as u
-	join emails as e on e.email = u.email
+	join emails as e on e.email = u.email;
 
 
 
@@ -60,7 +60,7 @@ having count(*) > 1
 )
 select t.idtag, t.nometag
 from tag as t join tags as tgs on tgs.nometag = t.nometag
-order by idtag
+order by idtag;
 
 --
 update tag set nometag = (concat('deletar_',nometag)) where idtag = 3438;
@@ -92,6 +92,13 @@ update tag set nometag = (concat('deletar_',nometag)) where idtag = 7220;
 update tag set nometag = (concat('deletar_',nometag)) where idtag = 2475;
 update tag set nometag = (concat('deletar_',nometag)) where idtag = 10689;
 update tag set nometag = (concat('deletar_',nometag)) where idtag = 14430;
+update tag set nometag = (concat('deletar_',nometag)) where idtag = 14984;
+update tag set nometag = (concat('deletar_',nometag)) where idtag = 14969;
+update tag set nometag = (concat('deletar_',nometag)) where idtag = 14958;
+update tag set nometag = (concat('deletar_r_',nometag)) where idtag = 14936;
+update tag set nometag = (concat('deletar_',nometag)) where idtag = 14899;
+update tag set nometag = (concat('deletar_',nometag)) where idtag = 14854;
+update tag set nometag = (concat('deletar_',nometag)) where idtag = 7520;
 
 
 update usuariotipo

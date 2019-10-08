@@ -1,9 +1,9 @@
 <template>
   <article>
-     <IntroParallax/>
-    <div class="row">
+     <!-- IntroParallax/ -->
+    <div class="row q-mt-xl">
         <q-card class="offset-md-4 col-md-4">
-            <q-card-section >
+            <q-card-section>
                 <div class="text-center text-h5">Faça seu Login</div>
             </q-card-section>
             <q-separator inset />

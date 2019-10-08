@@ -1,99 +1,9 @@
 <template>
-    <div class="row">
-        <div class="panel panel-default col-md-8">
-            <div class="panel-heading">
-                Adicionar Aplicativos
-            </div>
-            <div class="panel-body">
-                <form v-on:submit.prevent="send()">
-                    <!-- TITULO -->
-                    <div class="form-group" v-bind:class="{ 'has-error': errors.name && errors.name.length > 0 }">
-                        <label for="nomeaplicativo">Nome do aplicativo:*</label>
-                        <input type="text"
-                                class="form-control"
-                                name="nomeaplicativo"
-                                id="nomeaplicativo"
-                                v-model.trim="name">
-                        <erros :errors="errors.name"></erros>
-                    </div>
-                    <!-- CATEGORIA -->
-                    <div class="form-group" v-bind:class="{ 'has-error': errors.category_id && errors.category_id.length > 0 }">
-                        <label for="estado">Categoria:*</label>
-                        <select name="categoria"
-                                id="categoria"
-                                class="form-control"
-                                v-model="category_id">
-                            <option value="">« SELECIONE »</option>
-                            <option v-for="(category, i) in categories"
-                                    v-bind:value="category.id"
-                                    v-bind:key="i">{{category.name}}
-                            </option>
-                        </select>
-                        <erros :errors="errors.category_id"></erros>
-                    </div>
-                    <!-- URL -->
-                    <div class="form-group" v-bind:class="{ 'has-error': errors.url && errors.url.length > 0 }">
-                        <label for="url">URL:*</label>
-                        <input type="text" class="form-control" id="url" v-model="url" v-model.trim="url">
-                        <erros :errors="errors.url"></erros>
-                    </div>
-                    <!-- DESCRICAO -->
-                    <div class="form-group" v-bind:class="{ 'has-error': errors.description && errors.description.length > 0 }">
-                        <label for="descricao">Descrição:*</label>
-                        <textarea class="form-control"
-                                    id="descricao"
-                                    rows="15"
-                                    cols="50"
-                                    v-model="description"
-                                    style="resize: none"
-                                    v-on:keyup="countCaracters($event)"></textarea>
-                        <span class="pull-right" v-bind:class="{'text-success': success }">
-                            {{ count }}
-                        </span>
-                        <erros :errors="errors.description"></erros>
-                    </div>
-                    <!-- DESTAQUE -->
-                    <div class="form-group">
-                       <label for="destaque">Marcar como destaque</label>
-                       <input type="checkbox" id="destaque" v-model="is_featured">
-                    </div>
-                    <!-- ENVIAR -->
-                    <div class="form-group">
-                        <button class="btn btn-default" > {{ textButton }} </button>
-                    </div>
-                
-                    <transition  name="custom-classes-transition"
-                            enter-active-class="animated shake"
-                            leave-active-class="animated fadeOut">
-                        <div v-if="!isError" class="alert alert-info" role="alert" >
-                            {{ message }}
-                        </div>
-                    </transition>
-                </form>
-            </div>
-          </div>
-          <div class="panel panel-default col-md-4">
-            <div class="panel-heading">
-                Adicione uma imagem
-            </div>
-              <div class="panel-body">
-                <!-- IMAGEM -->
-                  <div class="form-group" v-bind:class="{ 'has-error': errors.image && errors.image.length > 0 }">
-                      <img class="img-responsive" width="150" height="150" v-if="image" :src="image">
-                      <input type="file" class="form-control" id="imagem" name="imagem"
-                              aria-describedby="imagem de destaque"
-                              v-on:change="onFileChange($event)">
-                      <small class="text-info">Escolha uma imagem</small><br>
-                      <erros :errors="errors.image"></erros>
-                      
-                      <!--<small v-if="this.file">
-                          {{ ` ${this.file.name} -- ${this.file.size} -- ${this.file.type} `}}
-                      </small>-->
-                  </div>
-
-            </div>
-        </div>
-    </div>
+  <div class="row">
+    <form v-on:submit.prevent="send()">
+      aplicativos
+    </form>
+  </div>
 </template>
 
 <script>
@@ -131,7 +41,7 @@ export default {
     };
   },
   created() {
-    this.getCategories();
+    //this.getCategories();
     if (this.$route.params.update) {
       this.getAplicativo();
       this.isUpdate = true;

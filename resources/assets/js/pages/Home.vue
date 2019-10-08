@@ -44,7 +44,7 @@
     </article>
         
     <CardHome :data="data" v-for="(data, i) in destaques" :key="`i-${i}`"/>
-    <FooterApp></FooterApp>
+    
     
   </section>
 </template>
@@ -52,7 +52,7 @@
 import { mapState, mapMutations } from "vuex";
 import CardHome from "../components/CardHome.vue";
 import { QParallax, ScrollFire } from "quasar";
-import FooterApp from "../components/FooterApp.vue";
+
 
 export default {
   name: "Home",
@@ -62,7 +62,7 @@ export default {
   components: {
     QParallax,
     CardHome,
-    FooterApp
+
     //SideBarHome
   },
 
