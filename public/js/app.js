@@ -3242,10 +3242,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 if (resp.data.success && resp.data.paginator) {
                   this.$q.loading.hide();
                   this.SET_PAGINATOR(resp.data.paginator);
-                } else if (resp.data.success && resp.data.metadata) {
-                  this.$q.loading.hide();
-                  this.metadata = resp.data.metadata.tables;
-                  console.log(this.metadata);
                 } else {
                   this.$q.loading.hide();
                   this.$router.push("/admin/".concat(this.slug, "/listar"));
@@ -4071,26 +4067,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["errors", "tiposForm", "conteudo", "licenses", "childsLicenses", "canais"]), Object(vuex_map_fields__WEBPACK_IMPORTED_MODULE_1__["mapFields"])([])),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["fetchConteudo", "fetchTiposForSelect", "fetchLicenses", "fetchCanaisForSelect", "createConteudo", "updateConteudo"]), {
-    send: function send(action) {
-      if (action == "editar") {
-        this.updateConteudo(this.getConteudo());
-      } else {
-        this.createConteudo(this.getConteudo());
-      }
+    send: function send() {
+      console.log(this.$route.params.action);
     },
-    inputValue: function inputValue(val, done) {
-      console.log(val);
-      done;
+    input: function input(val) {
+      if (val.length > 0 && Array.isArray(val)) {
+        if (!this.tags.includes(val[0].label) && val[0].label != "undefined") {
+          this.tags.push(val[0].label);
+        }
+      }
     },
     getTags: function getTags(val, update, abort) {
       var _this = this;
 
       update(function () {
         if (val === "" && val.length < 3) {
-          return;
+          _this.autocompleteTags = [];
         } else {
+          var self = _this;
           axios.get("tags/autocomplete/".concat(val)).then(function (resp) {
-            _this.autocompleteTags = resp.data.metadata;
+            self.autocompleteTags = resp.data.metadata;
           });
         }
       });
@@ -61076,7 +61072,7 @@ var render = function() {
         on: {
           submit: function($event) {
             $event.preventDefault()
-            return _vm.send(_vm.$route.params.action)
+            return _vm.send()
           }
         }
       },
@@ -61253,9 +61249,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "q-step",
-              {
-                attrs: { name: 3, title: "Tags", icon: "settings", disable: "" }
-              },
+              { attrs: { name: 3, title: "Tags", icon: "settings" } },
               [
                 _c(
                   "q-badge",
@@ -61265,7 +61259,9 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n    Model: " + _vm._s(_vm.tags || "empty") + "\n  "
+                      "\n          Model: " +
+                        _vm._s(_vm.tags || "empty") +
+                        "\n        "
                     )
                   ]
                 ),
@@ -61275,16 +61271,38 @@ var render = function() {
                     filled: "",
                     value: _vm.tags,
                     "use-input": "",
-                    "fill-input": "",
                     "use-chips": "",
                     multiple: "",
-                    "stack-label": "",
-                    "map-options": "",
                     "input-debounce": "300",
                     options: _vm.autocompleteTags
                   },
-                  on: { input: _vm.inputValue, filter: _vm.getTags }
-                })
+                  on: { input: _vm.input, filter: _vm.getTags }
+                }),
+                _vm._v(" "),
+                _c(
+                  "q-stepper-navigation",
+                  [
+                    _c("q-btn", {
+                      attrs: { color: "primary", label: "Próximo" },
+                      on: {
+                        click: function($event) {
+                          _vm.step = 4
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("q-btn", {
+                      staticClass: "q-ml-sm",
+                      attrs: { flat: "", color: "primary", label: "Voltar" },
+                      on: {
+                        click: function($event) {
+                          _vm.step = 2
+                        }
+                      }
+                    })
+                  ],
+                  1
+                )
               ],
               1
             ),
@@ -61306,7 +61324,11 @@ var render = function() {
                   "q-stepper-navigation",
                   [
                     _c("q-btn", {
-                      attrs: { color: "primary", label: "Enviar" }
+                      attrs: {
+                        label: "Salvar",
+                        type: "submit",
+                        color: "primary"
+                      }
                     }),
                     _vm._v(" "),
                     _c("q-btn", {

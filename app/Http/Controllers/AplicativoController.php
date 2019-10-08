@@ -6,13 +6,14 @@ use App\Helpers\ResizeImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ApiController;
+use App\Aplicativo;
 use Illuminate\Support\Facades\Validator;
 
 class AplicativoController extends ApiController
 {
     public function __construct(Aplicativo $aplicativo, Request $request, Storage $storage)
     {
-        $this->middleware('jwt.verify')->except(['list', 'search', 'getById']);
+        $this->middleware('jwt.verify')->except(['index', 'search', 'getById']);
         $this->aplicativo = $aplicativo;
         $this->request = $request;
         $this->storage = $storage;
@@ -22,11 +23,10 @@ class AplicativoController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function list(Request $request)
+    public function index()
     {
-        $limit = $request->query('limit', 15);
-        $page = $request->query('page', 1);
-        $category = $request->query('categoria');
+        $limit = $this->request->query('limit', 15);
+        $category = $this->request->query('categoria');
 
         // $query = $this->aplicativo::where('user_id', 433);
 
@@ -59,15 +59,13 @@ class AplicativoController extends ApiController
         }
 
         $app = $this->aplicativo::create($this->request);
+        if ($app) {
+            $this->createFile($app->id, $this->request->file('image'));
 
-        $path = $this->createFile($app->id, $this->request->file('image'));
+            return $this->successResponse($app, 'Aplicativo cadastrado com sucesso!', 200);
+        }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Aplicativo cadastrado com sucesso',
-            'id' => $app->id,
-            'image' => $path,
-        ]);
+        return $this->errorResponse([], 'não foi possível cadastrar o aplicativo', 201);
     }
     private function createFile($id, $image)
     {
@@ -113,20 +111,15 @@ class AplicativoController extends ApiController
     public function delete($id)
     {
         $aplicativo = $this->aplicativo::find($id);
-        $resp = [];
-        $aplicativo->delete();
         $aplicativo->tags()->delete();
+        $aplicativo->delete();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Aplicativo deletado com sucesso!!',
-        ]);
+        return $this->successResponse([], 'Aplicativo deletado com sucesso!!', 200);
     }
 
     public function search(Request $request, $termo)
     {
         $limit = $request->query('limit', 15);
-        $page = $request->query('page', 1);
         $search = "%{$termo}%";
         $aplicativos = Aplicativo::select(['id', 'name'])
             ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])

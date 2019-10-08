@@ -5,14 +5,10 @@ namespace App\Http\Controllers;
 use App\Canal;
 use App\Helpers\SideBar;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ApiController;
-use App\Traits\ApiResponser;
 
 class CanalController extends ApiController
 {
-    use ApiResponser;
-
     public function __construct(Request $request, Canal $canal)
     {
         $this->middleware('jwt.verify')->except(['getBySlug']);

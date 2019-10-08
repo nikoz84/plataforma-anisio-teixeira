@@ -77,10 +77,6 @@ export default {
       if (resp.data.success && resp.data.paginator) {
         this.$q.loading.hide();
         this.SET_PAGINATOR(resp.data.paginator);
-      } else if (resp.data.success && resp.data.metadata) {
-        this.$q.loading.hide();
-        this.metadata = resp.data.metadata.tables;
-        console.log(this.metadata);
       } else {
         this.$q.loading.hide();
         this.$router.push(`/admin/${this.slug}/listar`);
