@@ -17,7 +17,7 @@ class DenunciaController extends ApiController
 
     public function __construct(Request $request, Denuncia $denuncia)
     {
-        $this->middleware('jwt.verify')->except(['list', 'create']);
+        $this->middleware('jwt.verify')->except(['index', 'create']);
         $this->denuncia = $denuncia;
         $this->request = $request;
     }
@@ -26,7 +26,7 @@ class DenunciaController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function list()
+    public function index()
     {
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';

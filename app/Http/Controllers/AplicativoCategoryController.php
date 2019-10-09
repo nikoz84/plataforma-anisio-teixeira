@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -10,11 +11,11 @@ class AplicativoCategoryController extends ApiController
 {
     public function __construct(AplicativoCategory $category, Request $request)
     {
-        $this->middleware('jwt.verify')->except(['list']);
+        $this->middleware('jwt.verify')->except(['index']);
         $this->category = $category;
-        $this->request= $request;
+        $this->request = $request;
     }
-    public function list()
+    public function index()
     {
         $categories = $this->category::all();
         return response()->json([
@@ -31,7 +32,7 @@ class AplicativoCategoryController extends ApiController
         $aplicativo_category = $this->category;
         $aplicativo_category->name = $this->request->name;
         if ($aplicativo_category->save()) {
-             return $this->successResponse($aplicativo_category, 'Aplicativo categoria criada com sucesso!', 200);
+            return $this->successResponse($aplicativo_category, 'Aplicativo categoria criada com sucesso!', 200);
         }
     }
     public function update(Request $request, $id)

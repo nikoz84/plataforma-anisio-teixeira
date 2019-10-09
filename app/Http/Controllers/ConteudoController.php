@@ -23,7 +23,7 @@ class ConteudoController extends ApiController
     protected $request;
     public function __construct(Conteudo $conteudo, Request $request)
     {
-        $this->middleware('jwt.verify')->except(['list', 'search', 'getById', 'getByTagId', 'getSitesTematicos']);
+        $this->middleware('jwt.verify')->except(['index', 'search', 'getById', 'getByTagId', 'getSitesTematicos']);
         $this->conteudo = $conteudo;
         $this->request = $request;
     }
@@ -50,7 +50,7 @@ class ConteudoController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function list(User $user, Conteudo $conteudo)
+    public function index(User $user, Conteudo $conteudo)
     {
 
         $limit = $this->request->query('limit', 15);
@@ -201,7 +201,8 @@ class ConteudoController extends ApiController
         $conteudo->ts_documento = $fullTextSearch->ts_documento;
         $conteudo->save();
     }
-    public function lerHDImage(){}
+    public function lerHDImage()
+    { }
     /**
      * Atualiza o conteúdo.
      *
@@ -211,14 +212,9 @@ class ConteudoController extends ApiController
     public function update($id)
     {
         $conteudo = $this->conteudo::find($id);
-
-        // if (Gate::denies('update', $conteudo)) {
-        //     return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
-        // }
-        // if (Gate::any(['update'], $conteudo)) {
-        //     return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
-        // }
-
+        if (Gate::denies('update', $conteudo)) {
+            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
+        }
         $validator = Validator::make($this->request->all(), config("rules.conteudo"));
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível atualizar o conteúdo", 201);
@@ -246,14 +242,9 @@ class ConteudoController extends ApiController
     public function delete($id)
     {
         $conteudo = $this->conteudo::with('tags')->find($id);
-        // or Gate::denies('super-admin', $conteudo)
-        // if (Gate::denies('super-admin', $conteudo)) {
-        //     return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
-        // }
         if (Gate::denies('delete', $conteudo)) {
             return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
         }
-
         $conteudo->tags()->detach();
         $conteudo->componentes()->detach();
         $conteudo->niveis()->detach();
@@ -301,15 +292,9 @@ class ConteudoController extends ApiController
         $conteudo = $this->conteudo::with([
             'user', 'canal', 'tags', 'license', 'componentes', 'niveis',
         ])->find($id);
-        // if (Gate::denies('update', $conteudo)) {
-        //     return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
-        // }
-        if (Gate::none(['update'], $conteudo)) {
-            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
-        }
         return $this->showOne($conteudo);
     }
-    
+
     /**
      * Lista de Conteúdos por Tag ID
      *

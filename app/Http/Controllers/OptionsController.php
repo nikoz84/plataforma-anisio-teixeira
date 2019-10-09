@@ -13,11 +13,12 @@ class OptionsController extends Controller
         $this->options = $options;
     }
     /**
-     * Display a listing of the resource.
+     * Display a indexing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function list() {
+    public function index()
+    {
         $user = JWTAuth::parseToken()->toUser();
         $options = $this->options::all();
         return response()->json([

@@ -12,7 +12,7 @@ class LicenseController extends ApiController
 {
     public function __construct(Request $request, License $license)
     {
-        $this->middleware('jwt.verify')->except(['list', 'search']);
+        $this->middleware('jwt.verify')->except(['index', 'search']);
         $this->request = $request;
         $this->license = $license;
     }
@@ -21,7 +21,7 @@ class LicenseController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function list()
+    public function index()
     {
         $limit = $this->request->query('limit', 15);
 

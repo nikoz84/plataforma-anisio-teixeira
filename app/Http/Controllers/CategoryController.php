@@ -17,14 +17,14 @@ class CategoryController extends ApiController
     public function __construct(Request $request, AplicativoCategory $appCategory, Category $category)
     {
         $this->middleware('jwt.verify')->except([
-            'list', 'search', 'getById', 'getByTagId', 'getAplicativoCategories'
+            'index', 'search', 'getById', 'getByTagId', 'getAplicativoCategories'
         ]);
         $this->category = $category;
         $this->request = $request;
         $this->appCategory =  $appCategory;
     }
 
-    public function list()
+    public function index()
     {
         $limit = $this->request->get('limit', 15);
 

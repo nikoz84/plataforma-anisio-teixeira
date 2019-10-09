@@ -6,25 +6,22 @@ use App\Tag;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Traits\ApiResponser;
 
 class TagController extends ApiController
 {
-    use ApiResponser;
-
     public function __construct(Request $request, Tag $tag)
     {
-        $this->middleware('jwt.verify')->except(['list', 'search', 'getById']);
+        $this->middleware('jwt.verify')->except(['index', 'search', 'getById']);
         $this->request = $request;
         $this->tag = $tag;
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a indexing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function list()
+    public function index()
     {
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 15;
 

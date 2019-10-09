@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md">
-    <form v-on:submit.prevent="send($route.params.action)" >
+    <form v-on:submit.prevent="send()" >
       <q-stepper
         v-model="step"
         vertical
@@ -39,28 +39,28 @@
           </q-stepper-navigation>
         </q-step>
         <q-step
-        :name="3"
-        title="Tags"
-        icon="settings"
-        disable
-      >
-       <q-badge color="secondary" multi-line class="q-mb-md">
-      Model: {{ tags || 'empty' }}
-    </q-badge>
-        <q-select
-          filled
-          :value="tags"
-          use-input
-          fill-input
-          use-chips
-          multiple
-          stack-label
-          map-options
-          input-debounce="300"
-          @input="inputValue"
-          :options="autocompleteTags"
-          @filter="getTags"
-        />
+          :name="3"
+          title="Tags"
+          icon="settings"
+        >
+          <q-badge color="secondary" multi-line class="q-mb-md">
+            Model: {{ tags || 'empty' }}
+          </q-badge>
+          <q-select
+              filled
+              :value="tags"
+              use-input
+              use-chips
+              multiple
+              input-debounce="300"
+              @input="input"
+              :options="autocompleteTags"
+              @filter="getTags"
+            />
+        <q-stepper-navigation>
+          <q-btn @click="step = 4" color="primary" label="Próximo" />
+          <q-btn flat @click="step = 2" color="primary" label="Voltar" class="q-ml-sm" />
+        </q-stepper-navigation>
       </q-step>
 
       <q-step
@@ -73,7 +73,7 @@
         your ads, find out how to tell if they're running and how to resolve approval issues.
 
         <q-stepper-navigation>
-          <q-btn color="primary" label="Enviar" />
+          <q-btn label="Salvar" type="submit" color="primary"/>
           <q-btn flat @click="step = 3" color="primary" label="Voltar" class="q-ml-sm" />
         </q-stepper-navigation>
       </q-step>
@@ -163,28 +163,49 @@ export default {
       "createConteudo",
       "updateConteudo"
     ]),
-    send(action) {
-      if (action == "editar") {
+    send() {
+      console.log(this.$route.params.action);
+      /*
+      if (this.$route.params.action == "editar") {
         this.updateConteudo(this.getConteudo());
       } else {
         this.createConteudo(this.getConteudo());
       }
+      */
     },
-    inputValue(val, done) {
-      console.log(val);
-      //this.tags = this.tags.concat(val);
+    input(val) {
+      //console.log(val[0].id);
+      //console.log(val[0].label);
 
-      done;
+      if (val.length > 0 && Array.isArray(val)) {
+        if (!this.tags.includes(val[0].label) && val[0].label != "undefined") {
+          this.tags.push(val[0].label);
+        }
+        //done(val, "toggle");
+        /*
+        if (!autocompleteTags.includes(val)) {
+          autocompleteTags.push(val);
+        }
+        done(val, "toggle");
+        */
+      }
+      //this.tags.push(val);
+      //this.tags = this.tags.concat(val);
+      //this.tags.push({ id: val[0].id, label: val[0].label });
+      //this.tags.concat(val);
+
+      //done;
       //this.tags = Array.isArray(val) ? val[0] : [];
     },
     getTags(val, update, abort) {
       update(() => {
         if (val === "" && val.length < 3) {
-          return;
+          this.autocompleteTags = [];
         } else {
+          const self = this;
           //this.tags = this.tags.concat();
           axios.get(`tags/autocomplete/${val}`).then(resp => {
-            this.autocompleteTags = resp.data.metadata;
+            self.autocompleteTags = resp.data.metadata;
           });
         }
       });

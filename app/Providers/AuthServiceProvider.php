@@ -27,17 +27,19 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('super-admin', function ( $user, $controller ) {
+        Gate::define('super-admin', function ($user, $x) {
             return $user->is('super-admin');
         });
         Gate::define('update', function ($user, $controller) {
-            // die($model->user_id . "---" . $user->id . "---" . $user->role_id) ;
-            // $user->id == $model->user_id
-            return $user->id == $controller->user_id;
+            // return $user->id == $controller->user_id or $user->role_id == 1;
+            return $user->id == $controller->user_id
+            or $user->role_id == 1
+            or $user->role_id == 2;
         });
         Gate::define('delete', function ($user, $controller) {
-            return $user->id === $controller->user_id;
+            return $user->id == $controller->user_id
+            or $user->role_id == 2
+            or $user->role_id == 1;
         });
     }
-    // canais - usuarios ok - funcoes ok - linceças
 }

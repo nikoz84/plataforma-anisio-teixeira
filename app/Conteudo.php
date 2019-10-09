@@ -8,6 +8,9 @@ use App\Traits\FileSystemLogic;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Gate;
+use App\User;
+use Auth;
+use App\Policies\AplicativoPolicy;
 
 class Conteudo extends Model
 {
