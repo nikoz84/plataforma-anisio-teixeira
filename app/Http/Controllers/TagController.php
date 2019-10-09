@@ -40,16 +40,14 @@ class TagController extends ApiController
      */
     public function create()
     {
-        $name = $this->request->get('name');
 
-        $id = Tag::insertGetId([
-            'name' => $name
-        ]);
+        $tag = $this->tag::firstOrCreate(['name' => $this->request->name]);
 
-        return response()->json([
-            'menssage' => "Tag - {$name} - adicionada com sucesso",
-            'id' => $id
-        ]);
+        if ($tag) {
+            return $this->successResponse($tag, "Tag - {$tag->name} - adicionada com sucesso!!", 200);
+        } else {
+            return $this->errorResponse([], "Não foi possivel adicionar a nova tag", 201);
+        }
     }
 
     /**

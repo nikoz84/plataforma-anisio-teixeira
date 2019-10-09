@@ -53,9 +53,9 @@
               option-label="label"
               use-chips
               stack-label
-              new-value-mode="add"
               input-debounce="300"
-              
+              new-value-mode="add-unique"
+              @new-value="addTag"
               :options="autocompleteTags"
               @filter="getTags"
             />
@@ -66,21 +66,21 @@
       </q-step>
 
       <q-step
-        :name="4"
-        title="Componentes curriculares"
-        icon="settings"
-      >
-        Try out different ad text to see what brings in the most customers, and learn how to
-        enhance your ads using features like ad extensions. If you run into any problems with
-        your ads, find out how to tell if they're running and how to resolve approval issues.
+          :name="4"
+          title="Componentes curriculares"
+          icon="settings"
+        >
+          Try out different ad text to see what brings in the most customers, and learn how to
+          enhance your ads using features like ad extensions. If you run into any problems with
+          your ads, find out how to tell if they're running and how to resolve approval issues.
 
-        <q-stepper-navigation>
-          <q-btn label="Salvar" type="submit" color="primary"/>
-          <q-btn flat @click="step = 3" color="primary" label="Voltar" class="q-ml-sm" />
-        </q-stepper-navigation>
-      </q-step>
-        sdfs
-       </q-stepper>
+          <q-stepper-navigation>
+            <q-btn label="Salvar" type="submit" color="primary"/>
+            <q-btn flat @click="step = 4" color="primary" label="Voltar" class="q-ml-sm" />
+          </q-stepper-navigation>
+        </q-step>
+      </q-stepper>
+      
     </form>
   </div>
 </template>
@@ -97,12 +97,16 @@ import {
   QSelect,
   QStepper,
   QStep,
-  QStepperNavigation
+  QStepperNavigation,
+  QDialog,
+  ClosePopup
 } from "quasar";
 
 export default {
   name: "ConteudoForm",
-  delay: 2000,
+  directives: {
+    ClosePopup
+  },
   components: {
     QInput,
     QEditor,
@@ -112,7 +116,8 @@ export default {
     QStepper,
     QStep,
     QStepperNavigation,
-    ShowErrors
+    ShowErrors,
+    QDialog
   },
   data() {
     return {
@@ -135,7 +140,13 @@ export default {
       terms: false,
       is_approved: false,
       is_featured: false,
-      is_site: false
+      is_site: false,
+      dialog: {
+        text: "",
+        open: false,
+        confirm: false,
+        new_tag: ""
+      }
     };
   },
   mounted() {
@@ -176,15 +187,51 @@ export default {
       }
       */
     },
+    addTag(val, done) {
+      const form = new FormData();
+      const http = axios;
+
+      if (this.autocompleteTags.length == 0) {
+        this.$q.notify({
+          message: `Essa palavra chave não existe deseja adicionar ${val}?`,
+          multiLine: true,
+          color: "grey-4",
+          textColor: "primary",
+          possition: "center",
+          timeout: Math.random() * 5000 + 5000,
+          actions: [
+            {
+              label: "Confirmar",
+              color: "positive",
+              handler: async () => {
+                form.append("name", val);
+                let resp = await http.post("/tags", form);
+                if (resp.data.success) {
+                  let id = resp.data.metadata.id;
+                  let label = resp.data.metadata.name;
+                  done({ id, label });
+                }
+              }
+            },
+            {
+              label: "Cancelar",
+              color: "secondary",
+              handler: () => {
+                //this.tags = this.tags.pop(0,);
+              }
+            }
+          ]
+        });
+      }
+    },
     getTags(val, update, abort) {
+      console.log(this.tags);
       update(() => {
         if (val === "" && val.length < 3) {
           this.autocompleteTags = [];
         } else {
           const self = this;
-          //this.tags = this.tags.concat();
           axios.get(`tags/autocomplete/${val}`).then(resp => {
-            console.log(resp.data.metadata);
             self.autocompleteTags = resp.data.metadata;
           });
         }
@@ -215,30 +262,4 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-/* Hide all steps by default: */
-.tab {
-  display: none;
-}
-
-/* Make circles that indicate the steps of the form: */
-.step {
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #bbbbbb;
-  border: none;
-  border-radius: 50%;
-  display: inline-block;
-  opacity: 0.5;
-}
-
-/* Mark the active step: */
-.step.active {
-  opacity: 1;
-}
-
-/* Mark the steps that are finished and valid: */
-.step.finish {
-  background-color: #4caf50;
-}
 </style>
