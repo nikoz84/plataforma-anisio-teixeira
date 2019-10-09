@@ -7,6 +7,10 @@ use Illuminate\Support\Str;
 use App\Traits\FileSystemLogic;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Gate;
+use App\User;
+use Auth;
+use App\Policies\AplicativoPolicy;
 
 class Conteudo extends Model
 {
@@ -38,7 +42,7 @@ class Conteudo extends Model
         'updated_at',
         'deleted_at',
     ];
-    protected $appends = ['image', 'excerpt', 'url_exibir', 'tipo'];
+    protected $appends = ['image', 'excerpt', 'url_exibir', 'tipo', 'permission'];
     protected $casts = ['options' => 'array',];
     protected $hidden = ['ts_documento'];
     /**
@@ -134,10 +138,15 @@ class Conteudo extends Model
      *
      * @return void
      */
+    public function getPermissionAttribute()
+    {
+        if (Gate::any(['update', 'delete', 'super-admin'], $this)) {
+            return true;
+        }
+    }
     public function getUrlExibirAttribute()
     {
         $slug = $this->canal()->pluck('slug')->first();
-
         return "/{$slug}/conteudo/exibir/" . $this['id'];
     }
     /**

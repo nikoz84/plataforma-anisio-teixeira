@@ -3,11 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Auth;
-use App\Conteudo;
 use Gate;
-use App\Canal;
-
+use App\Policies\AplicativoPolicy;
+use App\Conteudo;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -16,9 +14,9 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    // protected $policies = [
-    //     Aplicativo::class => AplicativoPolicy::class
-    // ];
+    protected $policies = [
+        Conteudo::class => AplicativoPolicy::class
+    ];
 
     /**
      * Register any authentication / authorization services.
@@ -29,15 +27,19 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('super-admin', function ( $user, $controller ) {
+        Gate::define('super-admin', function ($user, $x) {
             return $user->is('super-admin');
         });
         Gate::define('update', function ($user, $controller) {
-            return $user->id === $controller->user_id;
+            // return $user->id == $controller->user_id or $user->role_id == 1;
+            return $user->id == $controller->user_id
+            or $user->role_id == 1
+            or $user->role_id == 2;
         });
         Gate::define('delete', function ($user, $controller) {
-            return $user->id === $controller->user_id;
+            return $user->id == $controller->user_id
+            or $user->role_id == 2
+            or $user->role_id == 1;
         });
     }
-    // canais - usuarios ok - funcoes ok - linceças
 }
