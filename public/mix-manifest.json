@@ -1,8 +1,12 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "/js/app.js": "/js/app.js?id=61ef3ceae815ab30c390",
 =======
     "/js/app.js": "/js/app.js?id=50a452373415709f74ac",
 >>>>>>> 9351cb72200ea9472bcf07da99ece76923ce79b3
+=======
+    "/js/app.js": "/js/app.js?id=a859ecf8c5c1f60c1fc0",
+>>>>>>> a5a86eba99e1e1fa5cb10f0e17dd120ced61c1dd
     "/css/app.css": "/css/app.css?id=aa7e37513fefeea11ebf"
 }
