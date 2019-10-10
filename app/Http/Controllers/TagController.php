@@ -44,9 +44,9 @@ class TagController extends ApiController
         $tag = $this->tag::firstOrCreate(['name' => $this->request->name]);
 
         if ($tag) {
-            return $this->successResponse($tag, "Tag - {$tag->name} - adicionada com sucesso!!", 200);
+            return $this->successResponse($tag, "Palavra chave - {$tag->name} - adicionada com sucesso!!", 200);
         } else {
-            return $this->errorResponse([], "Não foi possivel adicionar a nova tag", 201);
+            return $this->errorResponse([], "Não foi possivel adicionar a palavra chave", 201);
         }
     }
 
@@ -59,17 +59,14 @@ class TagController extends ApiController
      */
     public function update($id)
     {
-        $name = ($this->request->has('name')) ? $this->request->get('name') : false;
-        $is_update = false;
-        if ($name) {
-            $is_update = Tag::where('id', $id)
-                ->update(['name' => $name]);
-        }
+        $tag = $this->tag::find($id);
+        $tag->name = $this->request->name;
 
-        return response()->json([
-            'message' => "Nome de tag: {$name} mudado com sucesso",
-            'is_update' => $is_update
-        ]);
+        if ($tag->save()) {
+            return $this->showOne($tag, 'Palavra chave atualizada com sucesso!!', 200);
+        } else {
+            return $this->errorResponse([], 'Não foi possível editar', 200);
+        }
     }
 
     public function search($termo)
@@ -112,10 +109,8 @@ class TagController extends ApiController
 
     public function getById($id)
     {
-        $tag = Tag::where('id', $id);
-        return response()->json([
-            'success' => true,
-            'tag' => $tag
-        ]);
+        $tag = $this->tag::find($id);
+
+        return $this->showOne($tag, '', 200);
     }
 }

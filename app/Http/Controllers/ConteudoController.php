@@ -202,7 +202,9 @@ class ConteudoController extends ApiController
         $conteudo->save();
     }
     public function lerHDImage()
-    { }
+    {
+        //
+    }
     /**
      * Atualiza o conteúdo.
      *

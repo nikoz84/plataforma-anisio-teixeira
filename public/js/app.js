@@ -3634,7 +3634,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       text: ""
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapState"])(["paginator"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapState"])(["paginator"]), {
+    last: function last() {
+      return this.paginator ? this.paginator.last_page : 1;
+    }
+  }),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapMutations"])(["SET_PAGINATOR"]), {
     getPage: function () {
       var _getPage = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -4842,8 +4846,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         } else {
           var url = "/".concat(_this.$route.params.slug, "/search/").concat(val);
           axios.get(url).then(function (resp) {
-            console.log(resp.data);
-
             _this.SET_PAGINATOR(resp.data.paginator);
           });
         }
@@ -4883,31 +4885,59 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   name: "TagForm",
   components: {
     QInput: quasar__WEBPACK_IMPORTED_MODULE_1__["QInput"],
-    QChip: quasar__WEBPACK_IMPORTED_MODULE_1__["QChip"]
+    QChip: quasar__WEBPACK_IMPORTED_MODULE_1__["QChip"],
+    QCard: quasar__WEBPACK_IMPORTED_MODULE_1__["QCard"],
+    QCardSection: quasar__WEBPACK_IMPORTED_MODULE_1__["QCardSection"]
   },
   data: function data() {
     return {
-      name: '',
+      busca: "",
+      tag: {},
       tags: []
     };
   },
   watch: {
-    name: Object(lodash__WEBPACK_IMPORTED_MODULE_2__["debounce"])(function (val) {
-      if (val.length > 2 && val != '') {
+    busca: Object(lodash__WEBPACK_IMPORTED_MODULE_2__["debounce"])(function (val) {
+      if (val.length > 2 && val != "") {
         this.getTags(val);
       }
-    }, 300)
+    }, 400),
+    $route: function $route(to, from) {
+      this.getTag();
+    }
+  },
+  created: function created() {
+    this.getTag();
   },
   methods: {
-    send: function () {
-      var _send = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+    save: function () {
+      var _save = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var form, url, resp;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                console.warn(this.name);
+                form = new FormData();
+                url = "tags";
+                form.append("name", this.tag.name);
 
-              case 1:
+                if (this.$route.params.action == "editar") {
+                  form.append("id", this.$route.params.id);
+                  url = "".concat(url, "/").concat(this.$route.params.id);
+                  form.append("_method", "PUT");
+                }
+
+                _context.next = 6;
+                return axios.post(url, form);
+
+              case 6:
+                resp = _context.sent;
+
+                if (resp.data.success) {
+                  this.$q.notify(resp.data.message);
+                }
+
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -4915,11 +4945,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee, this);
       }));
 
-      function send() {
-        return _send.apply(this, arguments);
+      function save() {
+        return _save.apply(this, arguments);
       }
 
-      return send;
+      return save;
     }(),
     getTags: function () {
       var _getTags = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(val) {
@@ -4928,17 +4958,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
-                return axios.get("tags/search/".concat(val, "?limit=100"));
+                if (val) {
+                  _context2.next = 2;
+                  break;
+                }
+
+                return _context2.abrupt("return");
 
               case 2:
+                _context2.next = 4;
+                return axios.get("tags/search/".concat(val, "?limit=150"));
+
+              case 4:
                 resp = _context2.sent;
 
                 if (resp.data.success == true) {
                   this.tags = resp.data.paginator.data;
                 }
 
-              case 4:
+              case 6:
               case "end":
                 return _context2.stop();
             }
@@ -4951,7 +4989,49 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return getTags;
-    }()
+    }(),
+    getTag: function () {
+      var _getTag = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var resp;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                if (this.$route.params.id) {
+                  _context3.next = 2;
+                  break;
+                }
+
+                return _context3.abrupt("return");
+
+              case 2:
+                _context3.next = 4;
+                return axios.get("tags/".concat(this.$route.params.id));
+
+              case 4:
+                resp = _context3.sent;
+
+                if (resp.data.success) {
+                  this.tag = resp.data.metadata;
+                }
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function getTag() {
+        return _getTag.apply(this, arguments);
+      }
+
+      return getTag;
+    }(),
+    onClick: function onClick(url) {
+      this.$router.push(url);
+    }
   }
 });
 
@@ -23448,10 +23528,10 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************!*\
   !*** ./node_modules/quasar/package.json ***!
   \******************************************/
-/*! exports provided: _args, _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _spec, _where, author, browserslist, bugs, dependencies, description, devDependencies, engines, files, homepage, keywords, license, main, module, name, repository, scripts, typings, version, vetur, default */
+/*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, browserslist, bugs, bundleDependencies, dependencies, deprecated, description, devDependencies, engines, files, homepage, keywords, license, main, module, name, repository, scripts, typings, version, vetur, default */
 /***/ (function(module) {
 
-module.exports = {"_args":[["quasar@1.0.5","/home/marlon/Documentos/projetos/pat.des"]],"_from":"quasar@1.0.5","_id":"quasar@1.0.5","_inBundle":false,"_integrity":"sha512-8CxBZk5Ge+jUC7nzlzrLwlZRedpBkcYjkmyBOA0QJLvCXE8K8Ro68R7Vxf7+Baplo11aBMhFX1FhHZWrSM7Y2A==","_location":"/quasar","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"quasar@1.0.5","name":"quasar","escapedName":"quasar","rawSpec":"1.0.5","saveSpec":null,"fetchSpec":"1.0.5"},"_requiredBy":["/"],"_resolved":"https://registry.npmjs.org/quasar/-/quasar-1.0.5.tgz","_spec":"1.0.5","_where":"/home/marlon/Documentos/projetos/pat.des","author":{"name":"Razvan Stoenescu","email":"razvan.stoenescu@gmail.com","url":"https://quasar.dev"},"browserslist":["last 1 version, not dead, ie >= 11"],"bugs":{"url":"https://github.com/quasarframework/quasar/issues"},"dependencies":{},"description":"Build high-performance VueJS user interfaces (SPA, PWA, SSR, Mobile and Desktop) in record time","devDependencies":{"@babel/core":"^7.5.4","@quasar/babel-preset-app":"^1.1.4","@quasar/extras":"^1.2.0","autoprefixer":"^9.6.1","babel-eslint":"^10.0.2","babel-loader":"^8.0.6","babel-preset-es2015-rollup":"^3.0.0","chokidar":"^3.0.2","css-loader":"^3.0.0","cssnano":"^4.1.10","eslint":"^5.15.3","eslint-config-standard":"^12.0.0","eslint-friendly-formatter":"^4.0.1","eslint-loader":"^2.1.2","eslint-plugin-import":"^2.13.0","eslint-plugin-node":"^9.1.0","eslint-plugin-promise":"^4.0.1","eslint-plugin-standard":"^4.0.0","eslint-plugin-vue":"^5.2.1","file-loader":"^4.0.0","friendly-errors-webpack-plugin":"^1.6.1","html-webpack-plugin":"^3.2.0","json-beautify":"^1.0.1","lru-cache":"^5.1.1","memory-fs":"^0.4.1","open":"^6.4.0","postcss-loader":"^3.0.0","postcss-rtl":"^1.3.3","rimraf":"^2.6.3","rollup":"^1.16.7","rollup-plugin-buble":"^0.19.8","rollup-plugin-json":"^4.0.0","rollup-plugin-node-resolve":"^5.2.0","style-resources-loader":"^1.2.1","stylus":"^0.54.5","stylus-loader":"^3.0.2","uglify-es":"^3.3.9","url-loader":"^2.0.1","vue":"^2.6.10","vue-loader":"^15.7.0","vue-router":"^3.0.7","vue-server-renderer":"^2.6.10","vue-style-loader":"^4.1.2","vue-template-compiler":"^2.6.10","webpack":"^4.35.3","webpack-chain":"^6.0.0","webpack-dev-middleware":"^3.7.0","webpack-dev-server":"^3.7.2","webpack-hot-middleware":"^2.25.0","webpack-merge":"^4.2.1","webpack-node-externals":"^1.7.2"},"engines":{"node":">= 8.9.0","npm":">= 5.6.0","yarn":">= 1.6.0"},"files":["dist","lang","icon-set","src"],"homepage":"https://quasar.dev","keywords":["vuejs","vue","quasar","js","phone","tablet","desktop","spa","pwa","website","electron"],"license":"MIT","main":"dist/quasar.common.js","module":"src/index.esm.js","name":"quasar","repository":{"type":"git","url":"git+https://github.com/quasarframework/quasar.git"},"scripts":{"build":"node build/script.build.js","clean":"node build/script.clean.js","dev":"node build/script.dev.spa.js","dev:quploader":"cd dev/upload-server && yarn && cd ../.. && node dev/upload-server/server.js","dev:ssr":"node build/script.dev.ssr.js","dev:umd":"node build/script.test-umd.js","lint":"eslint --ext .js,.vue src dev","lint-fix":"eslint --ext .js,.vue src dev --fix","test":"eslint --ext .js,.vue src dev"},"typings":"dist/types/index.d.ts","version":"1.0.5","vetur":{"tags":"dist/vetur/quasar-tags.json","attributes":"dist/vetur/quasar-attributes.json"}};
+module.exports = {"_from":"quasar","_id":"quasar@1.0.5","_inBundle":false,"_integrity":"sha512-8CxBZk5Ge+jUC7nzlzrLwlZRedpBkcYjkmyBOA0QJLvCXE8K8Ro68R7Vxf7+Baplo11aBMhFX1FhHZWrSM7Y2A==","_location":"/quasar","_phantomChildren":{},"_requested":{"type":"tag","registry":true,"raw":"quasar","name":"quasar","escapedName":"quasar","rawSpec":"","saveSpec":null,"fetchSpec":"latest"},"_requiredBy":["#USER","/"],"_resolved":"https://registry.npmjs.org/quasar/-/quasar-1.0.5.tgz","_shasum":"caddfac55fca0779c996dc1b3977a045ae1426e6","_spec":"quasar","_where":"/home/niko/Documentos/projetos-web/pat_laravel","author":{"name":"Razvan Stoenescu","email":"razvan.stoenescu@gmail.com","url":"https://quasar.dev"},"browserslist":["last 1 version, not dead, ie >= 11"],"bugs":{"url":"https://github.com/quasarframework/quasar/issues"},"bundleDependencies":false,"dependencies":{},"deprecated":false,"description":"Build high-performance VueJS user interfaces (SPA, PWA, SSR, Mobile and Desktop) in record time","devDependencies":{"@babel/core":"^7.5.4","@quasar/babel-preset-app":"^1.1.4","@quasar/extras":"^1.2.0","autoprefixer":"^9.6.1","babel-eslint":"^10.0.2","babel-loader":"^8.0.6","babel-preset-es2015-rollup":"^3.0.0","chokidar":"^3.0.2","css-loader":"^3.0.0","cssnano":"^4.1.10","eslint":"^5.15.3","eslint-config-standard":"^12.0.0","eslint-friendly-formatter":"^4.0.1","eslint-loader":"^2.1.2","eslint-plugin-import":"^2.13.0","eslint-plugin-node":"^9.1.0","eslint-plugin-promise":"^4.0.1","eslint-plugin-standard":"^4.0.0","eslint-plugin-vue":"^5.2.1","file-loader":"^4.0.0","friendly-errors-webpack-plugin":"^1.6.1","html-webpack-plugin":"^3.2.0","json-beautify":"^1.0.1","lru-cache":"^5.1.1","memory-fs":"^0.4.1","open":"^6.4.0","postcss-loader":"^3.0.0","postcss-rtl":"^1.3.3","rimraf":"^2.6.3","rollup":"^1.16.7","rollup-plugin-buble":"^0.19.8","rollup-plugin-json":"^4.0.0","rollup-plugin-node-resolve":"^5.2.0","style-resources-loader":"^1.2.1","stylus":"^0.54.5","stylus-loader":"^3.0.2","uglify-es":"^3.3.9","url-loader":"^2.0.1","vue":"^2.6.10","vue-loader":"^15.7.0","vue-router":"^3.0.7","vue-server-renderer":"^2.6.10","vue-style-loader":"^4.1.2","vue-template-compiler":"^2.6.10","webpack":"^4.35.3","webpack-chain":"^6.0.0","webpack-dev-middleware":"^3.7.0","webpack-dev-server":"^3.7.2","webpack-hot-middleware":"^2.25.0","webpack-merge":"^4.2.1","webpack-node-externals":"^1.7.2"},"engines":{"node":">= 8.9.0","npm":">= 5.6.0","yarn":">= 1.6.0"},"files":["dist","lang","icon-set","src"],"homepage":"https://quasar.dev","keywords":["vuejs","vue","quasar","js","phone","tablet","desktop","spa","pwa","website","electron"],"license":"MIT","main":"dist/quasar.common.js","module":"src/index.esm.js","name":"quasar","repository":{"type":"git","url":"git+https://github.com/quasarframework/quasar.git"},"scripts":{"build":"node build/script.build.js","clean":"node build/script.clean.js","dev":"node build/script.dev.spa.js","dev:quploader":"cd dev/upload-server && yarn && cd ../.. && node dev/upload-server/server.js","dev:ssr":"node build/script.dev.ssr.js","dev:umd":"node build/script.test-umd.js","lint":"eslint --ext .js,.vue src dev","lint-fix":"eslint --ext .js,.vue src dev --fix","test":"eslint --ext .js,.vue src dev"},"typings":"dist/types/index.d.ts","version":"1.0.5","vetur":{"tags":"dist/vetur/quasar-tags.json","attributes":"dist/vetur/quasar-attributes.json"}};
 
 /***/ }),
 
@@ -50878,7 +50958,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!**********************************************!*\
   !*** ./node_modules/quasar/src/index.esm.js ***!
   \**********************************************/
-/*! exports provided: default, ClosePopup, GoBack, Ripple, ScrollFire, Scroll, TouchHold, TouchPan, TouchRepeat, TouchSwipe, AddressbarColor, AppFullscreen, AppVisibility, BottomSheet, Cookies, Dialog, LoadingBar, Loading, Meta, Notify, Platform, Screen, LocalStorage, SessionStorage, clone, colors, date, debounce, dom, event, extend, format, frameDebounce, noop, openURL, patterns, scroll, throttle, uid, QAjaxBar, QAvatar, QBadge, QBanner, QBar, QBreadcrumbs, QBreadcrumbsEl, QBtn, QBtnGroup, QBtnDropdown, QBtnToggle, QCard, QCardSection, QCardActions, QCarousel, QCarouselSlide, QCarouselControl, QChatMessage, QCheckbox, QChip, QCircularProgress, QColor, QDate, QTime, QDialog, QEditor, QFab, QFabAction, QField, QForm, QIcon, QImg, QInfiniteScroll, QInnerLoading, QInput, QKnob, QLayout, QDrawer, QFooter, QHeader, QPage, QPageContainer, QPageSticky, QList, QItem, QItemSection, QItemLabel, QExpansionItem, QSlideItem, QMenu, QNoSsr, QResizeObserver, QScrollObserver, QOptionGroup, QPageScroller, QPagination, QParallax, QPopupEdit, QPopupProxy, QLinearProgress, QPullToRefresh, QRadio, QRange, QRating, QScrollArea, QSelect, QSeparator, QSlideTransition, QSlider, QSpace, QSpinner, QSpinnerAudio, QSpinnerBall, QSpinnerBars, QSpinnerComment, QSpinnerCube, QSpinnerDots, QSpinnerFacebook, QSpinnerGears, QSpinnerGrid, QSpinnerHearts, QSpinnerHourglass, QSpinnerInfinity, QSpinnerIos, QSpinnerOval, QSpinnerPie, QSpinnerPuff, QSpinnerRadio, QSpinnerRings, QSpinnerTail, QSplitter, QStep, QStepper, QStepperNavigation, QTabPanels, QTabPanel, QTable, QTh, QTr, QTd, QMarkupTable, QTabs, QTab, QRouteTab, QTimeline, QTimelineEntry, QToggle, QToolbar, QToolbarTitle, QTooltip, QTree, QUploader, QUploaderBase, QUploaderAddTrigger, QVideo */
+/*! exports provided: ClosePopup, GoBack, Ripple, ScrollFire, Scroll, TouchHold, TouchPan, TouchRepeat, TouchSwipe, AddressbarColor, AppFullscreen, AppVisibility, BottomSheet, Cookies, Dialog, LoadingBar, Loading, Meta, Notify, Platform, Screen, LocalStorage, SessionStorage, clone, colors, date, debounce, dom, event, extend, format, frameDebounce, noop, openURL, patterns, scroll, throttle, uid, default, QAjaxBar, QAvatar, QBadge, QBanner, QBar, QBreadcrumbs, QBreadcrumbsEl, QBtn, QBtnGroup, QBtnDropdown, QBtnToggle, QCard, QCardSection, QCardActions, QCarousel, QCarouselSlide, QCarouselControl, QChatMessage, QCheckbox, QChip, QCircularProgress, QColor, QDate, QTime, QDialog, QEditor, QFab, QFabAction, QField, QForm, QIcon, QImg, QInfiniteScroll, QInnerLoading, QInput, QKnob, QLayout, QDrawer, QFooter, QHeader, QPage, QPageContainer, QPageSticky, QList, QItem, QItemSection, QItemLabel, QExpansionItem, QSlideItem, QMenu, QNoSsr, QResizeObserver, QScrollObserver, QOptionGroup, QPageScroller, QPagination, QParallax, QPopupEdit, QPopupProxy, QLinearProgress, QPullToRefresh, QRadio, QRange, QRating, QScrollArea, QSelect, QSeparator, QSlideTransition, QSlider, QSpace, QSpinner, QSpinnerAudio, QSpinnerBall, QSpinnerBars, QSpinnerComment, QSpinnerCube, QSpinnerDots, QSpinnerFacebook, QSpinnerGears, QSpinnerGrid, QSpinnerHearts, QSpinnerHourglass, QSpinnerInfinity, QSpinnerIos, QSpinnerOval, QSpinnerPie, QSpinnerPuff, QSpinnerRadio, QSpinnerRings, QSpinnerTail, QSplitter, QStep, QStepper, QStepperNavigation, QTabPanels, QTabPanel, QTable, QTh, QTr, QTd, QMarkupTable, QTabs, QTab, QRouteTab, QTimeline, QTimelineEntry, QToggle, QToolbar, QToolbarTitle, QTooltip, QTree, QUploader, QUploaderBase, QUploaderAddTrigger, QVideo */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -60766,13 +60846,34 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.paginator
-    ? _c("div", [
-        _c("div", { staticClass: "col-lg-12 q-pa-md" }, [_c("SearchForm")], 1),
+    ? _c("div", { staticClass: "q-pa-md" }, [
+        _c("div", { staticClass: "col-lg-12" }, [_c("SearchForm")], 1),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-lg-12 flex flex-center" },
+          [
+            _vm.paginator && _vm.paginator.total > _vm.paginator.per_page
+              ? _c("q-pagination", {
+                  attrs: { max: _vm.last, input: true },
+                  on: { input: _vm.getPage },
+                  model: {
+                    value: _vm.current,
+                    callback: function($$v) {
+                      _vm.current = $$v
+                    },
+                    expression: "current"
+                  }
+                })
+              : _vm._e()
+          ],
+          1
+        ),
         _vm._v(" "),
         _vm.paginator && _vm.paginator.total > 0
           ? _c(
               "div",
-              { staticClass: "col-lg-12 q-pa-md" },
+              { staticClass: "col-lg-12" },
               [
                 _c(
                   "q-markup-table",
@@ -60857,8 +60958,8 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _vm.paginator && _vm.paginator.total > _vm.paginator.per_page
-                  ? _c("div", { staticClass: "row q-mt-lg" }, [
-                      _c("div", { staticClass: "col-sm-5" }, [
+                  ? _c("div", { staticClass: "col-lg-12 q-mt-lg" }, [
+                      _c("div", { staticClass: "flex flex-center" }, [
                         _c("p", [
                           _c("strong", [_vm._v("Total")]),
                           _vm._v(
@@ -60873,13 +60974,10 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "div",
-                        { staticClass: "col-sm-7" },
+                        { staticClass: "flex flex-center" },
                         [
                           _c("q-pagination", {
-                            attrs: {
-                              max: _vm.paginator.last_page,
-                              input: true
-                            },
+                            attrs: { max: _vm.last, input: true },
                             on: { input: _vm.getPage },
                             model: {
                               value: _vm.current,
@@ -62764,53 +62862,117 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "q-pa-md" }, [
-    _c(
-      "form",
-      {
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.send($event)
+  return _c("div", { staticClass: "row q-pa-md" }, [
+    _c("div", { staticClass: "col-sm-6 q-pa-md" }, [
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.save($event)
+            }
           }
-        }
-      },
+        },
+        [
+          _c("q-input", {
+            attrs: { filled: "", label: "Palavra Chave" },
+            model: {
+              value: _vm.tag.name,
+              callback: function($$v) {
+                _vm.$set(
+                  _vm.tag,
+                  "name",
+                  typeof $$v === "string" ? $$v.trim() : $$v
+                )
+              },
+              expression: "tag.name"
+            }
+          }),
+          _vm._v(" "),
+          _vm.tag.id
+            ? _c(
+                "q-card",
+                [
+                  _c("q-card-section", [
+                    _c("p", [
+                      _vm._v("Vezes pesquisada: " + _vm._s(_vm.tag.searched))
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v("Creada em: " + _vm._s(_vm.tag.created_at))
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v("Atualizada em: " + _vm._s(_vm.tag.updated_at))
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("ID: " + _vm._s(_vm.tag.id))])
+                  ])
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c("q-btn", {
+            staticStyle: { "margin-top": "15px" },
+            attrs: { label: "Salvar", type: "submit", color: "primary" }
+          })
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "col-sm-6 q-pa-md" },
       [
         _c("q-input", {
-          staticStyle: { "max-width": "400px" },
-          attrs: { filled: "", label: "Palavra Chave" },
+          attrs: { filled: "", label: "Pesquisa" },
           model: {
-            value: _vm.name,
+            value: _vm.busca,
             callback: function($$v) {
-              _vm.name = typeof $$v === "string" ? $$v.trim() : $$v
+              _vm.busca = typeof $$v === "string" ? $$v.trim() : $$v
             },
-            expression: "name"
+            expression: "busca"
           }
         }),
         _vm._v(" "),
-        _c("q-btn", {
-          staticStyle: { "margin-top": "15px" },
-          attrs: { label: "Salvar", type: "submit", color: "primary" }
-        }),
-        _vm._v(" "),
-        _vm.name.length > 2
+        _vm.busca.length > 2
           ? _c(
               "div",
               { staticStyle: { "margin-top": "30px" } },
               [
                 _c("p", [
                   _vm._v("Palavras chave semelhantes à "),
-                  _c("b", [_vm._v(_vm._s(_vm.name))])
+                  _c("b", [_vm._v(_vm._s(_vm.busca))])
                 ]),
                 _vm._v(" "),
-                _vm._l(_vm.tags, function(tag, i) {
-                  return _c("q-chip", {
-                    key: i,
-                    attrs: { icon: "bookmark", label: tag.name }
-                  })
-                })
+                _vm.tags && _vm.tags.length
+                  ? _c(
+                      "div",
+                      _vm._l(_vm.tags, function(tag, i) {
+                        return _c("q-chip", {
+                          key: i,
+                          attrs: {
+                            icon: "bookmark",
+                            clickable: "",
+                            label: tag.name
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.onClick("/admin/tags/editar/" + tag.id)
+                            }
+                          }
+                        })
+                      }),
+                      1
+                    )
+                  : _c("q-chip", {
+                      attrs: { icon: "", label: "Não encontrado" }
+                    })
               ],
-              2
+              1
             )
           : _vm._e()
       ],
@@ -83979,8 +84141,8 @@ var state = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/marlon/Documentos/projetos/pat.des/resources/assets/js/app.js */"./resources/assets/js/app.js");
-module.exports = __webpack_require__(/*! /home/marlon/Documentos/projetos/pat.des/resources/assets/stylus/app.styl */"./resources/assets/stylus/app.styl");
+__webpack_require__(/*! /home/niko/Documentos/projetos-web/pat_laravel/resources/assets/js/app.js */"./resources/assets/js/app.js");
+module.exports = __webpack_require__(/*! /home/niko/Documentos/projetos-web/pat_laravel/resources/assets/stylus/app.styl */"./resources/assets/stylus/app.styl");
 
 
 /***/ })

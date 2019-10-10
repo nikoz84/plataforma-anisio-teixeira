@@ -1,9 +1,19 @@
 <template>
-<div v-if="paginator">
-    <div class="col-lg-12 q-pa-md">
+<div class="q-pa-md" v-if="paginator">
+    <div class="col-lg-12">
         <SearchForm></SearchForm> 
     </div>
-    <div class="col-lg-12 q-pa-md"  v-if="paginator && paginator.total > 0">
+    <div class="col-lg-12 flex flex-center">
+      <q-pagination
+          v-if="paginator && paginator.total > paginator.per_page"
+          v-model="current"
+          :max="last"
+          :input="true"
+          @input="getPage"
+          >
+      </q-pagination>
+    </div>
+    <div class="col-lg-12"  v-if="paginator && paginator.total > 0">
         <q-markup-table :separator="'vertical'" flat bordered>
             <thead>
                 <tr>
@@ -25,16 +35,16 @@
                 </tr>
             </tbody>
         </q-markup-table>
-        <div class="row q-mt-lg" v-if="paginator && paginator.total > paginator.per_page">
-            <div class="col-sm-5">
+        <div class="col-lg-12 q-mt-lg" v-if="paginator && paginator.total > paginator.per_page">
+            <div class="flex flex-center">
                 <p> 
                     <strong>Total</strong>: {{paginator.total}} itens - {{paginator.per_page}} itens por página 
                 </p>
             </div>
-            <div class="col-sm-7">
+            <div class="flex flex-center">
                 <q-pagination
                 v-model="current"
-                :max="paginator.last_page"
+                :max="last"
                 :input="true"
                 @input="getPage"
                 >
@@ -88,7 +98,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(["paginator"])
+    ...mapState(["paginator"]),
+    last() {
+      return this.paginator ? this.paginator.last_page : 1;
+    }
   },
   methods: {
     ...mapMutations(["SET_PAGINATOR"]),

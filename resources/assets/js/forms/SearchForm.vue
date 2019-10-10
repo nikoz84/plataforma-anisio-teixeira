@@ -55,7 +55,6 @@ export default {
         } else {
           let url = `/${this.$route.params.slug}/search/${val}`;
           axios.get(url).then(resp => {
-            console.log(resp.data);
             this.SET_PAGINATOR(resp.data.paginator);
           });
         }
