@@ -141,9 +141,13 @@
           <q-card-section>
             <p v-if="canal.id">ID: <strong>{{canal ? canal.id : null }}</strong></p> 
             <p>URL AMIGÁVEL: <strong>{{url}}</strong></p> 
-            <p>ATIVO: <strong>{{active}}</strong></p>
             <p>NOME: <strong>{{canal.name}}</strong></p>
             <p>NOME EM EXTENSO: <strong>{{canal.options.extend_name}}</strong></p>
+            <p>ATIVO: <strong>{{ formatTrueFalse(canal.is_active) }}</strong></p>
+            <p>POSSUI HOME: <strong>{{ formatTrueFalse(canal.options.has_home) }}</strong></p>
+            <p>POSSUI SOBRE: <strong>{{ formatTrueFalse(canal.options.has_about) }}</strong></p>
+            <p>POSSUI CATEGORIAS: <strong>{{ formatTrueFalse(canal.options.has_categories) }}</strong></p>
+            <p>POSSUI ACESSO RÁPIDO: <strong>{{ formatTrueFalse(canal.options.has_quick_access) }}</strong></p>
             <p>TIPOS DE CONTEÚDOS: <strong v-for="(tipo, t) in canal.tipos" :key="t"> {{tipo.name}} </strong></p>
           </q-card-section>
           <q-card-section v-if="canal.options">
@@ -220,9 +224,6 @@ export default {
     url() {
       let slug = this.canal ? this.canal.slug : "url-amigavel";
       return `http://${window.location.hostname}/${slug}`;
-    },
-    active() {
-      return this.canal.is_active ? "Sim" : "Não";
     }
   },
   methods: {
@@ -233,7 +234,7 @@ export default {
       this.canal.options.tipo_conteudo = this.canal.tipos.map(i => i.id);
       form.append("name", this.canal.name);
       form.append("is_active", this.canal.is_active);
-      form.append("options", this.canal.options);
+      form.append("options", JSON.stringify(this.canal.options));
       form.append("slug", this.canal.slug);
       form.append("description", this.canal.description);
       if (this.$route.params.action == "editar") {
@@ -256,6 +257,9 @@ export default {
           possition: "center"
         });
       }
+    },
+    formatTrueFalse(data) {
+      return data ? "Sim" : "Não";
     },
     async getTipos() {
       let resp = await axios.get("tipos");

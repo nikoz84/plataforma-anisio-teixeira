@@ -163,7 +163,6 @@ class ConteudoController extends ApiController
             'tags'          => [$this->request->tags],
             'site'          => $this->request->site, // URL DO SITE
             'guia'          => $this->request->guia, // ARQUIVO DE GUIA PEDAGOGICA
-            //'download'      => $this->request->hasFile('download') ? $conteudo_id . '.' . $this->request->download->guessExtension() : null,
             'download'      => $this->request->hasFile('download') ? $arr_file : null,
             'visualizacao'  => null, // ARQUIVO DE VISUALIZACAO - $this->request->visualizacao
         ];

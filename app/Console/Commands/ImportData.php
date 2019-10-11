@@ -60,7 +60,7 @@ class ImportData extends Command
         }
         $this->info('Reiniciando as sequencias');
         DB::statement("ALTER SEQUENCE users_id_seq RESTART WITH 2675;");
-        DB::statement("ALTER SEQUENCE canais_id_seq RESTART WITH 15;");
+        DB::statement("ALTER SEQUENCE canais_id_seq RESTART WITH 16;");
         DB::statement("ALTER SEQUENCE tags_id_seq RESTART WITH 15018;");
         DB::statement("ALTER SEQUENCE aplicativos_id_seq RESTART WITH 126;");
         DB::statement("ALTER SEQUENCE conteudos_id_seq RESTART WITH 9846;");

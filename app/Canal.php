@@ -46,8 +46,12 @@ class Canal extends Model
 
     public function getTiposAttribute()
     {
-        $tipos = DB::table('tipos')->where('id', $this['options']['tipo_conteudo'])->get(["id", "name"]);
+        $ids = $this->options['tipo_conteudo'];
 
-        return count($tipos) ? $tipos : [];
+        if ($ids) {
+            return DB::table('tipos')->whereIn('id', $this['options']['tipo_conteudo'])->get(["id", "name"]);
+        }
+
+        return [];
     }
 }

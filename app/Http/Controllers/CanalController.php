@@ -23,7 +23,8 @@ class CanalController extends ApiController
      */
     public function index()
     {
-        $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;
+        $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 15;
+
         if ($this->request->has('select')) {
             $select = $this->canal::whereRaw('is_active = true AND id <> 9 AND id <> 7 AND id <> 8')
                 ->orderBy('id')
@@ -32,10 +33,8 @@ class CanalController extends ApiController
         }
 
         $query = $this->canal::query();
-        
-        $canais = $query->where('is_active', true)
-            ->paginate($limit);
-        dd($canais);
+
+        $canais = $query->paginate($limit);
         $canais->setPath("/canais?limit={$limit}");
 
         return $this->showAsPaginator($canais, 'Lista de Canais', 200);
@@ -47,19 +46,19 @@ class CanalController extends ApiController
      */
     public function create()
     {
+        $canal = $this->canal;
 
-        $canal = $this->canal::create(
-            [
-                'name' => $this->request->name,
-                'description' => $this->request->description,
-                'slug' => $this->request->slug,
-                'is_active' => $this->request->is_active,
-            ]
-        );
-        return response()->json([
-            'message' => 'Canal cadastrado com sucesso',
-            'id' => $canal
-        ]);
+        $canal->name = $this->request->name;
+        $canal->slug = $this->request->slug;
+        $canal->description = $this->request->description;
+        $canal->is_active = $this->request->is_active;
+        $canal->options = json_decode($this->request->options, true);
+
+        if ($canal->save()) {
+            return $this->successResponse($canal, 'Canal cadastrado com sucesso!!', 200);
+        } else {
+            return $this->errorResponse([], 'Impossível cadastrar o canal', 200);
+        }
     }
 
     /**
@@ -76,17 +75,19 @@ class CanalController extends ApiController
         // return $this->errorResponse([], 'Usuário sem permissão de acesso!', 200);
         //}
 
-        $data = [
-            'title' => $this->request->title,
-            'description' => $this->request->description,
-            'is_featured' => $this->request->is_featured,
-            'is_approved' => $this->request->is_approved,
-            'options' => $this->request->options,
-        ];
 
-        $canal->save($data);
+        $canal->name = $this->request->name;
+        $canal->slug = $this->request->slug;
+        $canal->description = $this->request->description;
+        $canal->is_active = $this->request->is_active;
+        $canal->options = json_decode($this->request->options, true);
 
-        return $this->successResponse($canal, 'Canal Editado com sucesso!', 200);
+
+        if ($canal->save()) {
+            return $this->successResponse($canal, 'Canal Editado com sucesso!', 200);
+        } else {
+            return $this->errorResponse([], 'Não foi possível editar o canal', 200);
+        }
     }
     /**
      * Remove the specified resource from storage.
