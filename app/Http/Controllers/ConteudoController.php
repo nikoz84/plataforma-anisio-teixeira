@@ -156,6 +156,8 @@ class ConteudoController extends ApiController
     private function saveOptions($conteudo_id)
     {
         $tipo = collect(DB::select('select * from tipos where id = ?', [$this->request->tipo_id]))->first();
+        $conteudo = $this->conteudo::find($conteudo_id);
+
         $arr_file = $this->createFile($conteudo->id, $this->request->download);
         $options = [
             'tipo'          => $tipo->id,
@@ -166,7 +168,7 @@ class ConteudoController extends ApiController
             'download'      => $this->request->hasFile('download') ? $arr_file : null,
             'visualizacao'  => null, // ARQUIVO DE VISUALIZACAO - $this->request->visualizacao
         ];
-        $conteudo = $this->conteudo::findOrFail($conteudo_id);
+
         $conteudo->options = $options;
         $conteudo->save();
     }

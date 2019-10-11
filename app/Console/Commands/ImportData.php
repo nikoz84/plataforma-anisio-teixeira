@@ -58,7 +58,7 @@ class ImportData extends Command
                 $this->line("Tabela: $tabela copiada com successo!!");
             }
         }
-        $this->info('Reiniciando as sequencias');
+        $this->info('Reiniciando sequencias');
         DB::statement("ALTER SEQUENCE users_id_seq RESTART WITH 2675;");
         DB::statement("ALTER SEQUENCE canais_id_seq RESTART WITH 16;");
         DB::statement("ALTER SEQUENCE tags_id_seq RESTART WITH 15018;");
@@ -73,7 +73,7 @@ class ImportData extends Command
         DB::statement("ALTER SEQUENCE tipos_id_seq RESTART WITH 20;");
 
 
-        $this->info('Update dos canais');
+        $this->info('Atualizando Canais');
         DB::statement("UPDATE conteudos set canal_id = 6 where is_site = false and canal_id is null;");
         DB::statement("UPDATE conteudos set canal_id = 5 where is_site = true and canal_id is null;");
         DB::statement("UPDATE canais set is_active = false where  id  IN (4,10,11,13,14,15);");
