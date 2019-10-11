@@ -6,6 +6,7 @@ use App\Canal;
 use App\Helpers\SideBar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
+use Gate;
 
 class CanalController extends ApiController
 {
@@ -46,7 +47,7 @@ class CanalController extends ApiController
     public function create()
     {
 
-        $canal = $this->canail::create(
+        $canal = $this->canal::create(
             [
                 'name' => $this->request->name,
                 'description' => $this->request->description,
@@ -70,9 +71,9 @@ class CanalController extends ApiController
     {
         $canal = $this->canal::find($id);
 
-        if (Gate::denies('super-admin', $canal)) {
-            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
-        }
+        //if (Gate::denies('super-admin', $canal)) {
+        // return $this->errorResponse([], 'Usuário sem permissão de acesso!', 200);
+        //}
 
         $data = [
             'title' => $this->request->title,
@@ -124,7 +125,12 @@ class CanalController extends ApiController
             'sidebar' => Sidebar::getSideBar($canal->id),
         ]);
     }
+    public function getById($id)
+    {
+        $canal = $this->canal::findOrFail($id);
 
+        return $this->showOne($canal, '', 200);
+    }
     public function search($termo)
     {
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;

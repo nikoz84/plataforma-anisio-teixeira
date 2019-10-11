@@ -22,4 +22,8 @@ class Tag extends Model
     {
         return $this->belongsToMany(App\Conteudo::class);
     }
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtolower($value);
+    }
 }

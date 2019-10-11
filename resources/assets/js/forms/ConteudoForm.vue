@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md">
-    <form v-on:submit.prevent="send()" >
+    <form v-on:submit.prevent="save()" >
       <q-stepper
         v-model="step"
         vertical
@@ -28,8 +28,10 @@
           <q-input outlined v-model="title" label="Título do conteúdo" />
           <q-input outlined v-model="authors" label="Autores" />
           <q-input outlined v-model="source" label="Fonte" />
-          <label for="editor">Descrição</label>
-          <q-editor v-model="description" min-height="15rem" id="editor"/>
+          <div class="q-mt-md">
+            <p class="text-center">Escreva uma descrição do conteúdo</p>
+          </div>
+          <q-editor v-model="description" min-height="15rem"/>
           <q-card flat bordered>
             <q-card-section v-html="description" />
           </q-card>
@@ -177,7 +179,7 @@ export default {
       "createConteudo",
       "updateConteudo"
     ]),
-    send() {
+    save() {
       console.log(this.$route.params.action);
       /*
       if (this.$route.params.action == "editar") {
@@ -225,7 +227,6 @@ export default {
       }
     },
     getTags(val, update, abort) {
-      console.log(this.tags);
       update(() => {
         if (val === "" && val.length < 3) {
           this.autocompleteTags = [];

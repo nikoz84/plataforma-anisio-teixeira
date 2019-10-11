@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-        <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" aria-label="Menu" icon="menu"/>
+        <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" aria-label="Menu" icon="search"/>
         <q-toolbar-title>
           Plataforma Anísio Teixeira
         </q-toolbar-title>
@@ -156,7 +156,7 @@ export default {
   },
   data() {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop,
+      leftDrawerOpen: false, //this.$q.platform.is.desktop,
       termSearch: "",
       options: []
     };

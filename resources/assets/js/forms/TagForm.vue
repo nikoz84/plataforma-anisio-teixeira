@@ -6,8 +6,8 @@
                 <q-card v-if="tag.id">
                     <q-card-section>
                         <p>Vezes pesquisada: {{ tag.searched }}</p> 
-                        <p>Creada em: {{ tag.created_at }}</p>
-                        <p>Atualizada em: {{ tag.updated_at }}</p>
+                        <p>Criada em: {{ format(tag.created_at) }}</p>
+                        <p>Atualizada em: {{ format(tag.updated_at) }}</p>
                         <p>ID: {{ tag.id }}</p>
                     </q-card-section>
                 </q-card>
@@ -32,7 +32,7 @@
     </div>
 </template>
 <script>
-import { QInput, QChip, QCard, QCardSection } from "quasar";
+import { QInput, QChip, QCard, QCardSection, date } from "quasar";
 import { debounce } from "lodash";
 
 export default {
@@ -58,22 +58,29 @@ export default {
   created() {
     this.getTag();
   },
+  computed: {},
   methods: {
     async save() {
+      let id = this.$route.params.id ? `/${this.$route.params.id}` : "";
       let form = new FormData();
-      let url = "tags";
-      form.append("name", this.tag.name);
+      form.append("name", this.tag.name.toLowerCase());
 
       if (this.$route.params.action == "editar") {
         form.append("id", this.$route.params.id);
-        url = `${url}/${this.$route.params.id}`;
         form.append("_method", "PUT");
       }
 
-      let resp = await axios.post(url, form);
+      let resp = await axios.post(this.$route.params.slug + id, form);
       if (resp.data.success) {
-        this.$q.notify(resp.data.message);
+        this.$q.notify({
+          color: "possitive",
+          textColor: "white",
+          message: resp.data.message
+        });
       }
+    },
+    format(data) {
+      return date.formatDate(data, "DD/MM/YYYY");
     },
     async getTags(val) {
       if (!val) return;

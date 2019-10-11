@@ -1,8 +1,10 @@
 <?php
+
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use DB;
 
 class Canal extends Model
 {
@@ -28,7 +30,7 @@ class Canal extends Model
         'updated_at',
         'deleted_at'
     ];
-
+    protected $appends = ['tipos'];
     protected $casts = [
         'options' => 'array',
     ];
@@ -40,5 +42,10 @@ class Canal extends Model
     public function aplicativos()
     {
         return $this->hasMany(\App\Aplicativo::class);
+    }
+
+    public function getTiposAttribute()
+    {
+        return DB::table('tipos')->where('id', $this['options']['tipo_conteudo'])->get(["id", "name"]);
     }
 }

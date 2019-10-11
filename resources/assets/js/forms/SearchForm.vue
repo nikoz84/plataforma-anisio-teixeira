@@ -59,25 +59,6 @@ export default {
           });
         }
       });
-      /*
-      setTimeout(() => {
-        update(() => {
-          if (val === "") {
-            this.options = stringOptions;
-          } else {
-            const needle = val.toLowerCase();
-            this.options = stringOptions.filter(
-              v => v.toLowerCase().indexOf(needle) > -1
-            );
-          }
-        });
-      }, 1500);
-
-      */
-    },
-
-    abortFilterFn() {
-      console.log("delayed filter aborted");
     }
   }
 };

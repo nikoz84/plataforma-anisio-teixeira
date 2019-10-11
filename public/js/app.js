@@ -3964,10 +3964,200 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var quasar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! quasar */ "./node_modules/quasar/src/index.esm.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CanalForm",
+  components: {
+    QInput: quasar__WEBPACK_IMPORTED_MODULE_1__["QInput"],
+    QEditor: quasar__WEBPACK_IMPORTED_MODULE_1__["QEditor"],
+    QCard: quasar__WEBPACK_IMPORTED_MODULE_1__["QCard"],
+    QCardSection: quasar__WEBPACK_IMPORTED_MODULE_1__["QCardSection"],
+    QBtn: quasar__WEBPACK_IMPORTED_MODULE_1__["QBtn"],
+    QToggle: quasar__WEBPACK_IMPORTED_MODULE_1__["QToggle"],
+    QColor: quasar__WEBPACK_IMPORTED_MODULE_1__["QColor"],
+    QStepper: quasar__WEBPACK_IMPORTED_MODULE_1__["QStepper"],
+    QStep: quasar__WEBPACK_IMPORTED_MODULE_1__["QStep"],
+    QStepperNavigation: quasar__WEBPACK_IMPORTED_MODULE_1__["QStepperNavigation"]
+  },
   data: function data() {
-    return {};
+    return {
+      step: 1,
+      tipos: [],
+      canal: {
+        name: "",
+        description: "",
+        slug: "",
+        is_active: false,
+        options: {
+          color: "",
+          back_url: "",
+          extend_name: "",
+          has_about: false,
+          has_categories: false,
+          has_home: false,
+          has_quick_access: false,
+          order_menu: null,
+          tipo_conteudo: null,
+          complement_description: {
+            que: "",
+            como: "",
+            porque: ""
+          }
+        }
+      }
+    };
+  },
+  created: function created() {
+    this.getCanal();
+    this.getTipos();
+  },
+  computed: {
+    url: function url() {
+      var slug = this.canal ? this.canal.slug : "url-amigavel";
+      return "http://".concat(window.location.hostname, "/").concat(slug);
+    },
+    active: function active() {
+      return this.canal.is_active ? "Sim" : "Não";
+    }
+  },
+  methods: {
+    save: function () {
+      var _save = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var id, form, resp;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                id = this.$route.params.id ? "/".concat(this.$route.params.id) : "";
+                form = new FormData();
+                this.canal.options.tipo_conteudo = this.canal.tipos.map(function (i) {
+                  return i.id;
+                });
+                form.append("name", this.canal.name);
+                form.append("is_active", this.canal.is_active);
+                form.append("options", this.canal.options);
+                form.append("slug", this.canal.slug);
+                form.append("description", this.canal.description);
+
+                if (this.$route.params.action == "editar") {
+                  form.append("_method", "PUT");
+                }
+
+                _context.next = 11;
+                return axios.post(this.$route.params.slug + id, form);
+
+              case 11:
+                resp = _context.sent;
+
+                if (resp.data.success) {
+                  this.$q.notify({
+                    message: resp.data.message,
+                    color: "grey-4",
+                    textColor: "primary",
+                    possition: "center"
+                  });
+                } else {
+                  this.$q.notify({
+                    message: resp.data.message,
+                    color: "grey-4",
+                    textColor: "primary",
+                    possition: "center"
+                  });
+                }
+
+              case 13:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function save() {
+        return _save.apply(this, arguments);
+      }
+
+      return save;
+    }(),
+    getTipos: function () {
+      var _getTipos = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var resp;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios.get("tipos");
+
+              case 2:
+                resp = _context2.sent;
+
+                if (resp.data.success) {
+                  this.tipos = resp.data.metadata;
+                }
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function getTipos() {
+        return _getTipos.apply(this, arguments);
+      }
+
+      return getTipos;
+    }(),
+    getCanal: function () {
+      var _getCanal = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var resp;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                if (this.$route.params.id) {
+                  _context3.next = 2;
+                  break;
+                }
+
+                return _context3.abrupt("return");
+
+              case 2:
+                _context3.next = 4;
+                return axios.get("canais/".concat(this.$route.params.id));
+
+              case 4:
+                resp = _context3.sent;
+
+                if (resp.data.success) {
+                  this.canal = resp.data.metadata;
+                }
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function getCanal() {
+        return _getCanal.apply(this, arguments);
+      }
+
+      return getCanal;
+    }()
   }
 });
 
@@ -4088,7 +4278,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["errors", "tiposForm", "conteudo", "licenses", "childsLicenses", "canais"]), Object(vuex_map_fields__WEBPACK_IMPORTED_MODULE_2__["mapFields"])([])),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(["fetchConteudo", "fetchTiposForSelect", "fetchLicenses", "fetchCanaisForSelect", "createConteudo", "updateConteudo"]), {
-    send: function send() {
+    save: function save() {
       console.log(this.$route.params.action);
     },
     addTag: function addTag(val, done) {
@@ -4154,7 +4344,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getTags: function getTags(val, update, abort) {
       var _this = this;
 
-      console.log(this.tags);
       update(function () {
         if (val === "" && val.length < 3) {
           _this.autocompleteTags = [];
@@ -4850,9 +5039,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         }
       });
-    },
-    abortFilterFn: function abortFilterFn() {
-      console.log("delayed filter aborted");
     }
   })
 });
@@ -4909,32 +5095,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   created: function created() {
     this.getTag();
   },
+  computed: {},
   methods: {
     save: function () {
       var _save = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var form, url, resp;
+        var id, form, resp;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                id = this.$route.params.id ? "/".concat(this.$route.params.id) : "";
                 form = new FormData();
-                url = "tags";
-                form.append("name", this.tag.name);
+                form.append("name", this.tag.name.toLowerCase());
 
                 if (this.$route.params.action == "editar") {
                   form.append("id", this.$route.params.id);
-                  url = "".concat(url, "/").concat(this.$route.params.id);
                   form.append("_method", "PUT");
                 }
 
                 _context.next = 6;
-                return axios.post(url, form);
+                return axios.post(this.$route.params.slug + id, form);
 
               case 6:
                 resp = _context.sent;
 
                 if (resp.data.success) {
-                  this.$q.notify(resp.data.message);
+                  this.$q.notify({
+                    color: "possitive",
+                    textColor: "white",
+                    message: resp.data.message
+                  });
                 }
 
               case 8:
@@ -4951,6 +5141,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return save;
     }(),
+    format: function format(data) {
+      return quasar__WEBPACK_IMPORTED_MODULE_1__["date"].formatDate(data, "DD/MM/YYYY");
+    },
     getTags: function () {
       var _getTags = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(val) {
         var resp;
@@ -5286,7 +5479,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop,
+      leftDrawerOpen: false,
       termSearch: "",
       options: []
     };
@@ -5503,25 +5696,6 @@ __webpack_require__.r(__webpack_exports__);
     console.log("sss");
   }
 });
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/forms/CanalForm.vue?vue&type=style&index=0&id=70fab8c6&lang=scss&scoped=true&":
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/lib/loader.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/forms/CanalForm.vue?vue&type=style&index=0&id=70fab8c6&lang=scss&scoped=true& ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, ".clase-teste[data-v-70fab8c6] {\n  background-color: black;\n  color: aliceblue;\n}\n", ""]);
-
-// exports
-
 
 /***/ }),
 
@@ -58875,36 +59049,6 @@ var _package_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpac
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/forms/CanalForm.vue?vue&type=style&index=0&id=70fab8c6&lang=scss&scoped=true&":
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/lib/loader.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/forms/CanalForm.vue?vue&type=style&index=0&id=70fab8c6&lang=scss&scoped=true& ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../../node_modules/css-loader!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--7-2!../../../../node_modules/sass-loader/lib/loader.js??ref--7-3!../../../../node_modules/vue-loader/lib??vue-loader-options!./CanalForm.vue?vue&type=style&index=0&id=70fab8c6&lang=scss&scoped=true& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/forms/CanalForm.vue?vue&type=style&index=0&id=70fab8c6&lang=scss&scoped=true&");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/forms/DenunciaForm.vue?vue&type=style&index=0&id=15ad492b&lang=scss&scoped=true&":
 /*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/lib/loader.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/forms/DenunciaForm.vue?vue&type=style&index=0&id=15ad492b&lang=scss&scoped=true& ***!
@@ -61137,7 +61281,523 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [_vm._v("\n    canal\n")])
+  return _c("div", { staticClass: "row q-pa-md" }, [
+    _c("div", { staticClass: "col-sm-6" }, [
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.save()
+            }
+          }
+        },
+        [
+          _c(
+            "q-stepper",
+            {
+              attrs: { vertical: "", color: "primary", animated: "" },
+              model: {
+                value: _vm.step,
+                callback: function($$v) {
+                  _vm.step = $$v
+                },
+                expression: "step"
+              }
+            },
+            [
+              _c(
+                "q-step",
+                {
+                  attrs: {
+                    name: 1,
+                    title: "Nome do Canal, Url Amigável, URL da API",
+                    icon: "settings",
+                    done: _vm.step > 1
+                  }
+                },
+                [
+                  _c("q-input", {
+                    attrs: {
+                      filled: "",
+                      label: "Nome do canal em extenso",
+                      hint: "Verdadeiro nome do canal em extenso"
+                    },
+                    model: {
+                      value: _vm.canal.options.extend_name,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.canal.options,
+                          "extend_name",
+                          typeof $$v === "string" ? $$v.trim() : $$v
+                        )
+                      },
+                      expression: "canal.options.extend_name"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("q-input", {
+                    attrs: {
+                      filled: "",
+                      label: "Nome do Canal",
+                      hint: "Nome abreviado ou reduzido"
+                    },
+                    model: {
+                      value: _vm.canal.name,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.canal,
+                          "name",
+                          typeof $$v === "string" ? $$v.trim() : $$v
+                        )
+                      },
+                      expression: "canal.name"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("q-input", {
+                    attrs: {
+                      filled: "",
+                      label: "Url Amigável",
+                      hint:
+                        "Url amigável separado por ifens e em minusculas sem espaços"
+                    },
+                    model: {
+                      value: _vm.canal.slug,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.canal,
+                          "slug",
+                          typeof $$v === "string" ? $$v.trim() : $$v
+                        )
+                      },
+                      expression: "canal.slug"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("q-input", {
+                    attrs: {
+                      filled: "",
+                      label: "URL da API",
+                      hint: "BackEnd URL"
+                    },
+                    model: {
+                      value: _vm.canal.options.back_url,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.canal.options,
+                          "back_url",
+                          typeof $$v === "string" ? $$v.trim() : $$v
+                        )
+                      },
+                      expression: "canal.options.back_url"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("q-select", {
+                    attrs: {
+                      filled: "",
+                      "use-input": "",
+                      "use-chips": "",
+                      multiple: "",
+                      "option-value": "id",
+                      "option-label": "name",
+                      "input-debounce": "0",
+                      options: _vm.tipos,
+                      label: "Tipos de conteúdos",
+                      hint: "Tipos de conteúdos que o canal vai cadastrar"
+                    },
+                    model: {
+                      value: _vm.canal.tipos,
+                      callback: function($$v) {
+                        _vm.$set(_vm.canal, "tipos", $$v)
+                      },
+                      expression: "canal.tipos"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "q-stepper-navigation",
+                    [
+                      _c("q-btn", {
+                        attrs: { color: "primary", label: "Próximo" },
+                        on: {
+                          click: function($event) {
+                            _vm.step = 2
+                          }
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "q-step",
+                {
+                  attrs: {
+                    name: 2,
+                    title: "Descrição e complementos da descrição",
+                    icon: "settings",
+                    done: _vm.step > 2
+                  }
+                },
+                [
+                  _c("div", { staticClass: "q-mt-md" }, [
+                    _c("p", { staticClass: "text-center" }, [
+                      _vm._v("Escreva uma descrição do canal")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("q-editor", {
+                    attrs: { "min-height": "15rem", id: "editor" },
+                    model: {
+                      value: _vm.canal.description,
+                      callback: function($$v) {
+                        _vm.$set(_vm.canal, "description", $$v)
+                      },
+                      expression: "canal.description"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "q-mt-md" }, [
+                    _c("p", { staticClass: "text-center" }, [
+                      _vm._v("Complementos da descrição")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("q-input", {
+                    attrs: {
+                      label: "O quê?",
+                      filled: "",
+                      type: "textarea",
+                      hint: "Razão de ser do canal"
+                    },
+                    model: {
+                      value: _vm.canal.options.complement_description.que,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.canal.options.complement_description,
+                          "que",
+                          $$v
+                        )
+                      },
+                      expression: "canal.options.complement_description.que"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("q-input", {
+                    attrs: {
+                      label: "O cômo",
+                      filled: "",
+                      type: "textarea",
+                      hint: "Cômo o canal pode ajudar seus usuários"
+                    },
+                    model: {
+                      value: _vm.canal.options.complement_description.como,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.canal.options.complement_description,
+                          "como",
+                          $$v
+                        )
+                      },
+                      expression: "canal.options.complement_description.como"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("q-input", {
+                    attrs: {
+                      label: "O porquê",
+                      filled: "",
+                      type: "textarea",
+                      hint: "Porquê existe o canal"
+                    },
+                    model: {
+                      value: _vm.canal.options.complement_description.porque,
+                      callback: function($$v) {
+                        _vm.$set(
+                          _vm.canal.options.complement_description,
+                          "porque",
+                          $$v
+                        )
+                      },
+                      expression: "canal.options.complement_description.porque"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "q-stepper-navigation",
+                    [
+                      _c("q-btn", {
+                        attrs: { color: "primary", label: "Próximo" },
+                        on: {
+                          click: function($event) {
+                            _vm.step = 3
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("q-btn", {
+                        staticClass: "q-ml-sm",
+                        attrs: { flat: "", color: "primary", label: "Voltar" },
+                        on: {
+                          click: function($event) {
+                            _vm.step = 1
+                          }
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "q-step",
+                {
+                  attrs: {
+                    name: 3,
+                    title:
+                      "Ativar: Canal, Possui Home, Possui Categorias, Possui Acesso Rápido, Possui Sobre",
+                    icon: "settings",
+                    done: _vm.step > 2
+                  }
+                },
+                [
+                  _c("q-toggle", {
+                    staticClass: "q-mt-md",
+                    attrs: {
+                      label: "Ativar ou Desativar Canal",
+                      color: "pink",
+                      "checked-icon": "check",
+                      "unchecked-icon": "clear"
+                    },
+                    model: {
+                      value: _vm.canal.is_active,
+                      callback: function($$v) {
+                        _vm.$set(_vm.canal, "is_active", $$v)
+                      },
+                      expression: "canal.is_active"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("q-toggle", {
+                    staticClass: "q-mt-md",
+                    attrs: {
+                      label: "O canal possui página de inicio?",
+                      color: "pink",
+                      "checked-icon": "check",
+                      "unchecked-icon": "clear"
+                    },
+                    model: {
+                      value: _vm.canal.options.has_home,
+                      callback: function($$v) {
+                        _vm.$set(_vm.canal.options, "has_home", $$v)
+                      },
+                      expression: "canal.options.has_home"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("q-toggle", {
+                    staticClass: "q-mt-md",
+                    attrs: {
+                      label: "O canal possui categorias?",
+                      color: "pink",
+                      "checked-icon": "check",
+                      "unchecked-icon": "clear"
+                    },
+                    model: {
+                      value: _vm.canal.options.has_categories,
+                      callback: function($$v) {
+                        _vm.$set(_vm.canal.options, "has_categories", $$v)
+                      },
+                      expression: "canal.options.has_categories"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("q-toggle", {
+                    staticClass: "q-mt-md",
+                    attrs: {
+                      label:
+                        "O canal possui acesso rápido na página de inicio?",
+                      color: "pink",
+                      "checked-icon": "check",
+                      "unchecked-icon": "clear"
+                    },
+                    model: {
+                      value: _vm.canal.options.has_quick_access,
+                      callback: function($$v) {
+                        _vm.$set(_vm.canal.options, "has_quick_access", $$v)
+                      },
+                      expression: "canal.options.has_quick_access"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("q-toggle", {
+                    staticClass: "q-mt-md",
+                    attrs: {
+                      label: "O canal possui sobre?",
+                      color: "pink",
+                      "checked-icon": "check",
+                      "unchecked-icon": "clear"
+                    },
+                    model: {
+                      value: _vm.canal.options.has_about,
+                      callback: function($$v) {
+                        _vm.$set(_vm.canal.options, "has_about", $$v)
+                      },
+                      expression: "canal.options.has_about"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("q-color", {
+                    staticStyle: { "max-width": "250px", "margin-top": "30px" },
+                    attrs: { "default-value": _vm.canal.options.color },
+                    model: {
+                      value: _vm.canal.options.color,
+                      callback: function($$v) {
+                        _vm.$set(_vm.canal.options, "color", $$v)
+                      },
+                      expression: "canal.options.color"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "q-stepper-navigation",
+                    [
+                      _c("q-btn", {
+                        staticClass: "q-ml-sm",
+                        attrs: { flat: "", color: "primary", label: "Voltar" },
+                        on: {
+                          click: function($event) {
+                            _vm.step = 2
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("q-btn", {
+                        staticClass: "full-width q-mt-md",
+                        attrs: {
+                          label: "Salvar",
+                          type: "submit",
+                          color: "primary"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "col-sm-6" },
+      [
+        _c(
+          "q-card",
+          { staticClass: "q-ml-sm", attrs: { flat: "", bordered: "" } },
+          [
+            _c("q-card-section", [
+              _vm.canal.id
+                ? _c("p", [
+                    _vm._v("ID: "),
+                    _c("strong", [
+                      _vm._v(_vm._s(_vm.canal ? _vm.canal.id : null))
+                    ])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v("URL AMIGÁVEL: "),
+                _c("strong", [_vm._v(_vm._s(_vm.url))])
+              ]),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v("ATIVO: "),
+                _c("strong", [_vm._v(_vm._s(_vm.active))])
+              ]),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v("NOME: "),
+                _c("strong", [_vm._v(_vm._s(_vm.canal.name))])
+              ]),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v("NOME EM EXTENSO: "),
+                _c("strong", [_vm._v(_vm._s(_vm.canal.options.extend_name))])
+              ]),
+              _vm._v(" "),
+              _c(
+                "p",
+                [
+                  _vm._v("TIPOS DE CONTEÚDOS: "),
+                  _vm._l(_vm.canal.tipos, function(tipo, t) {
+                    return _c("strong", { key: t }, [
+                      _vm._v(" " + _vm._s(tipo.name) + " ")
+                    ])
+                  })
+                ],
+                2
+              )
+            ]),
+            _vm._v(" "),
+            _vm.canal.options
+              ? _c("q-card-section", [
+                  _c("p", [
+                    _vm._v("DESCRIÇÃO: "),
+                    _c("small", {
+                      domProps: { innerHTML: _vm._s(_vm.canal.description) }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v("O QUÊ?: "),
+                    _c("span", [
+                      _vm._v(
+                        _vm._s(_vm.canal.options.complement_description.porque)
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v("O PORQUÊ: "),
+                    _c("span", [
+                      _vm._v(
+                        _vm._s(_vm.canal.options.complement_description.porque)
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v("O CÔMO: "),
+                    _c("span", [
+                      _vm._v(
+                        _vm._s(_vm.canal.options.complement_description.como)
+                      )
+                    ])
+                  ])
+                ])
+              : _vm._e()
+          ],
+          1
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -61192,7 +61852,7 @@ var render = function() {
         on: {
           submit: function($event) {
             $event.preventDefault()
-            return _vm.send()
+            return _vm.save()
           }
         }
       },
@@ -61313,12 +61973,14 @@ var render = function() {
                   }
                 }),
                 _vm._v(" "),
-                _c("label", { attrs: { for: "editor" } }, [
-                  _vm._v("Descrição")
+                _c("div", { staticClass: "q-mt-md" }, [
+                  _c("p", { staticClass: "text-center" }, [
+                    _vm._v("Escreva uma descrição do conteúdo")
+                  ])
                 ]),
                 _vm._v(" "),
                 _c("q-editor", {
-                  attrs: { "min-height": "15rem", id: "editor" },
+                  attrs: { "min-height": "15rem" },
                   model: {
                     value: _vm.description,
                     callback: function($$v) {
@@ -62900,11 +63562,16 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("p", [
-                      _vm._v("Creada em: " + _vm._s(_vm.tag.created_at))
+                      _vm._v(
+                        "Criada em: " + _vm._s(_vm.format(_vm.tag.created_at))
+                      )
                     ]),
                     _vm._v(" "),
                     _c("p", [
-                      _vm._v("Atualizada em: " + _vm._s(_vm.tag.updated_at))
+                      _vm._v(
+                        "Atualizada em: " +
+                          _vm._s(_vm.format(_vm.tag.updated_at))
+                      )
                     ]),
                     _vm._v(" "),
                     _c("p", [_vm._v("ID: " + _vm._s(_vm.tag.id))])
@@ -63732,7 +64399,7 @@ var render = function() {
                   dense: "",
                   round: "",
                   "aria-label": "Menu",
-                  icon: "menu"
+                  icon: "search"
                 },
                 on: {
                   click: function($event) {
@@ -81612,9 +82279,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _CanalForm_vue_vue_type_template_id_70fab8c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CanalForm.vue?vue&type=template&id=70fab8c6&scoped=true& */ "./resources/assets/js/forms/CanalForm.vue?vue&type=template&id=70fab8c6&scoped=true&");
 /* harmony import */ var _CanalForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CanalForm.vue?vue&type=script&lang=js& */ "./resources/assets/js/forms/CanalForm.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _CanalForm_vue_vue_type_style_index_0_id_70fab8c6_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CanalForm.vue?vue&type=style&index=0&id=70fab8c6&lang=scss&scoped=true& */ "./resources/assets/js/forms/CanalForm.vue?vue&type=style&index=0&id=70fab8c6&lang=scss&scoped=true&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -81622,7 +82287,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _CanalForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _CanalForm_vue_vue_type_template_id_70fab8c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
   _CanalForm_vue_vue_type_template_id_70fab8c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -81651,22 +82316,6 @@ component.options.__file = "resources/assets/js/forms/CanalForm.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CanalForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./CanalForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/forms/CanalForm.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CanalForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/assets/js/forms/CanalForm.vue?vue&type=style&index=0&id=70fab8c6&lang=scss&scoped=true&":
-/*!***********************************************************************************************************!*\
-  !*** ./resources/assets/js/forms/CanalForm.vue?vue&type=style&index=0&id=70fab8c6&lang=scss&scoped=true& ***!
-  \***********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CanalForm_vue_vue_type_style_index_0_id_70fab8c6_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--7-2!../../../../node_modules/sass-loader/lib/loader.js??ref--7-3!../../../../node_modules/vue-loader/lib??vue-loader-options!./CanalForm.vue?vue&type=style&index=0&id=70fab8c6&lang=scss&scoped=true& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/forms/CanalForm.vue?vue&type=style&index=0&id=70fab8c6&lang=scss&scoped=true&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CanalForm_vue_vue_type_style_index_0_id_70fab8c6_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CanalForm_vue_vue_type_style_index_0_id_70fab8c6_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CanalForm_vue_vue_type_style_index_0_id_70fab8c6_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CanalForm_vue_vue_type_style_index_0_id_70fab8c6_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CanalForm_vue_vue_type_style_index_0_id_70fab8c6_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
