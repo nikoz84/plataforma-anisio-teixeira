@@ -38,6 +38,7 @@ trait ApiResponser
     {
         return $this->successResponse($collection, $message, $code);
     }
+
     protected function showAsPaginator(Paginator $paginator, $message = '', $code = 200)
     {
         return response()->json([
@@ -59,7 +60,6 @@ trait ApiResponser
             $data['id'] = $item->id;
             return $data;
         });
-
         return $this->showAll($select, 'Selecione', 200);
     }
 }
