@@ -189,7 +189,7 @@ copy
 				when idcanal = 7 then urlcanal 
 				when idcanal =8 then urlcanal 
 				else 'conteudos' end,
-		'tipo_conteudo', conteudotipocanal,
+		'tipo_conteudo', case when conteudotipocanal is null then '[]' else conteudotipocanal end,
 		'color', corcanal,
 		'order_menu', posicaomenucanal,
 		'extend_name', nomecanal,

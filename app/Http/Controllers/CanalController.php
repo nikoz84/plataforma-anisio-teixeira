@@ -30,11 +30,12 @@ class CanalController extends ApiController
                 ->get(['id', 'name']);
             return $this->fetchForSelect(collect($select));
         }
-        $query = $this->canal::query();
 
+        $query = $this->canal::query();
+        
         $canais = $query->where('is_active', true)
             ->paginate($limit);
-
+        dd($canais);
         $canais->setPath("/canais?limit={$limit}");
 
         return $this->showAsPaginator($canais, 'Lista de Canais', 200);
