@@ -5617,6 +5617,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   name: "Resumo",
   components: {
     QCard: quasar__WEBPACK_IMPORTED_MODULE_2__["QCard"],
+    QChip: quasar__WEBPACK_IMPORTED_MODULE_2__["QChip"],
     QSelect: quasar__WEBPACK_IMPORTED_MODULE_2__["QSelect"],
     QCardSection: quasar__WEBPACK_IMPORTED_MODULE_2__["QCardSection"],
     QSeparator: quasar__WEBPACK_IMPORTED_MODULE_2__["QSeparator"],
@@ -5632,8 +5633,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         label: "Catalogação por usuário",
         value: "per_user"
       }, {
-        label: "Catalogação canais Tv e Radio Anísio Teixeira",
-        value: "tv_radio"
+        label: "Catalogação por canal",
+        value: "per_chanel"
       }, {
         label: "Catalogação mensal por usuário",
         value: "user_montly"
@@ -5650,7 +5651,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       chartOptions: {
         chart: {
           id: "vuechart-teste",
+          height: 430,
+          width: "100%",
           type: "bar"
+        },
+        legend: {
+          position: "top"
         },
         plotOptions: {
           bar: {
@@ -62232,7 +62238,6 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("q-input", {
-              staticClass: "q-mt-md",
               attrs: {
                 filled: "",
                 label: "URL do Site",
@@ -64703,11 +64708,9 @@ var render = function() {
       _vm._v(" "),
       _c(
         "q-card",
-        { staticClass: "row" },
         [
           _c(
             "q-card-section",
-            { staticClass: "col-sm-6" },
             [
               _c("VueApexCharts", {
                 attrs: {
@@ -64720,21 +64723,23 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c("q-card-section", { staticClass: "col-sm-6" }, [
-            _c(
-              "ul",
-              _vm._l(_vm.metadata, function(item, i) {
-                return _c("li", { key: i }, [
+          _c(
+            "q-card-section",
+            _vm._l(_vm.metadata, function(item, i) {
+              return _c(
+                "div",
+                { key: i },
+                [
                   _vm._v(
-                    _vm._s(item ? item.name : item.title) +
-                      " - " +
-                      _vm._s(item.total)
-                  )
-                ])
-              }),
-              0
-            )
-          ])
+                    "\n        " + _vm._s(item ? item.name : item.title) + " - "
+                  ),
+                  _c("q-chip", [_vm._v(_vm._s(item.total))])
+                ],
+                1
+              )
+            }),
+            0
+          )
         ],
         1
       )

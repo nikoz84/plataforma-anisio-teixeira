@@ -25,7 +25,7 @@ class Analytics
         $this->data_fim = $request->query('fim', Carbon::now());
     }
 
-    public function postsPerTvAndRadio()
+    public function postsPerCanal()
     {
         $sql = "SELECT (SELECT upper(name) FROM canais as c WHERE c.id = cd.canal_id) AS name,
                 COUNT (cd.canal_id) as total,
@@ -33,7 +33,6 @@ class Analytics
                 FROM
                 conteudos as cd
                 WHERE created_at BETWEEN ? AND ?
-                and cd.canal_id in (1,12)
                 GROUP BY
                 cd.canal_id";
 
@@ -126,8 +125,8 @@ class Analytics
             case 'wordpress_data':
                 return collect($wordpress->getCatalogacao());
                 break;
-            case 'tv_radio':
-                return $this->getSeries($this->postsPerTvAndRadio());
+            case 'per_chanel':
+                return $this->getSeries($this->postsPerCanal());
                 break;
             case 'user_montly':
                 return $this->getSeries($this->postsPerUserMonthly());

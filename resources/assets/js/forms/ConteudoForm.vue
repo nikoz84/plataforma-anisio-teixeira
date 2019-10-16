@@ -103,7 +103,6 @@
         />
         <q-input
           filled
-          class="q-mt-md"
           v-model="site"
           label="URL do Site"
           hint="Exemplo: http://dominio.com.br"

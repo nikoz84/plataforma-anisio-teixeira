@@ -13,26 +13,34 @@
       class="q-mb-lg"
       @input="getData"
     />
-    <q-card class="row">
-      <q-card-section class="col-sm-6">
+    <q-card >
+      <q-card-section>
         <VueApexCharts type="bar" :options="chartOptions" :series="series"></VueApexCharts>
       </q-card-section>
-      <q-card-section class="col-sm-6">
-        <ul>
-          <li v-for="(item, i) in metadata" :key="i">{{ item ? item.name : item.title }} - {{ item.total }}</li>
-        </ul>
+      <q-card-section>
+        <div v-for="(item, i) in metadata" :key="i">
+          {{ item ? item.name : item.title }} - <q-chip>{{ item.total }}</q-chip>
+        </div>
       </q-card-section>
     </q-card>
   </div>
 </template>
 <script>
 import VueApexCharts from "vue-apexcharts";
-import { QTable, QCard, QCardSection, QSeparator, QSelect } from "quasar";
+import {
+  QTable,
+  QCard,
+  QCardSection,
+  QSeparator,
+  QSelect,
+  QChip
+} from "quasar";
 
 export default {
   name: "Resumo",
   components: {
     QCard,
+    QChip,
     QSelect,
     QCardSection,
     QSeparator,
@@ -44,8 +52,8 @@ export default {
       selectOptions: [
         { label: "Catalogação por usuário", value: "per_user" },
         {
-          label: "Catalogação canais Tv e Radio Anísio Teixeira",
-          value: "tv_radio"
+          label: "Catalogação por canal",
+          value: "per_chanel"
         },
         { label: "Catalogação mensal por usuário", value: "user_montly" },
         { label: "Catalogação total mensal", value: "per_month" },
@@ -55,7 +63,12 @@ export default {
       chartOptions: {
         chart: {
           id: "vuechart-teste",
+          height: 430,
+          width: "100%",
           type: "bar"
+        },
+        legend: {
+          position: "top"
         },
         plotOptions: {
           bar: {
