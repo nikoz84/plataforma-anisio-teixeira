@@ -19,7 +19,7 @@
       </q-card-section>
       <q-card-section class="col-sm-6">
         <ul>
-          <li v-for="(item, i) in metadata" :key="i">{{ item ? item.name : item.title }}</li>
+          <li v-for="(item, i) in metadata" :key="i">{{ item ? item.name : item.title }} - {{ item.total }}</li>
         </ul>
       </q-card-section>
     </q-card>
@@ -40,27 +40,36 @@ export default {
   },
   data() {
     return {
-      item: { label: "Catalogação PAT por usuário", value: "per_user" },
+      item: { label: "Catalogação por usuário", value: "per_user" },
       selectOptions: [
-        { label: "Catalogação PAT por usuário", value: "per_user" },
+        { label: "Catalogação por usuário", value: "per_user" },
         {
-          label: "Catalogação PAT canais Tv e Radio Anísio Teixeira",
+          label: "Catalogação canais Tv e Radio Anísio Teixeira",
           value: "tv_radio"
         },
-        { label: "Catalogação PAT mensal por usuário", value: "user_montly" },
+        { label: "Catalogação mensal por usuário", value: "user_montly" },
         { label: "Catalogação total mensal", value: "per_month" },
         { label: "Catalogação total mensal por canal", value: "canal_montly" },
         { label: "Catalogação BLOG", value: "wordpress_data" }
       ],
       chartOptions: {
         chart: {
-          id: "vuechart-teste"
+          id: "vuechart-teste",
+          type: "bar"
+        },
+        plotOptions: {
+          bar: {
+            horizontal: true
+          }
+        },
+        dataLabels: {
+          enabled: false
         },
         xaxis: {
           categories: []
         }
       },
-      series: { data: [] },
+      series: [{ data: [] }],
       metadata: null
     };
   },
@@ -73,17 +82,23 @@ export default {
       let resp = await axios.get(url);
 
       if (resp.data.success) {
-        console.log(resp.data.metadata);
-        //this.chartOptions.xaxis.categories = resp.data.metadata.nomes;
-        this.appendData(resp.data.metadata.totais);
-        this.metadata = resp.data.metadata;
+        this.chartOptions = {
+          ...this.chartOptions,
+          ...{
+            xaxis: {
+              categories: resp.data.metadata.names
+            }
+          }
+        };
+
+        this.appendData(resp.data.metadata.totals);
+        this.metadata = resp.data.metadata.tables;
       }
     },
     appendData(data) {
       let arr = this.series.slice();
-      arr.push(data);
-      console.log(arr);
-      this.series.data = arr;
+      arr[0].data = data;
+      this.series = arr;
     }
   }
 };

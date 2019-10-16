@@ -155,8 +155,9 @@ class Analytics
 
         if (!$collect->contains('month')) {
             return [
+                'tables' => $data,
                 'names' => $collect->pluck('name'),
-                'totais' => $collect->pluck('total')
+                'totals' => $collect->pluck('total')
             ];
         }
     }

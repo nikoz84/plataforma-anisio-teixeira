@@ -5603,6 +5603,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var quasar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! quasar */ "./node_modules/quasar/src/index.esm.js");
 
 
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -5621,17 +5625,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       item: {
-        label: "Catalogação PAT por usuário",
+        label: "Catalogação por usuário",
         value: "per_user"
       },
       selectOptions: [{
-        label: "Catalogação PAT por usuário",
+        label: "Catalogação por usuário",
         value: "per_user"
       }, {
-        label: "Catalogação PAT canais Tv e Radio Anísio Teixeira",
+        label: "Catalogação canais Tv e Radio Anísio Teixeira",
         value: "tv_radio"
       }, {
-        label: "Catalogação PAT mensal por usuário",
+        label: "Catalogação mensal por usuário",
         value: "user_montly"
       }, {
         label: "Catalogação total mensal",
@@ -5645,15 +5649,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }],
       chartOptions: {
         chart: {
-          id: "vuechart-teste"
+          id: "vuechart-teste",
+          type: "bar"
+        },
+        plotOptions: {
+          bar: {
+            horizontal: true
+          }
+        },
+        dataLabels: {
+          enabled: false
         },
         xaxis: {
           categories: []
         }
       },
-      series: {
+      series: [{
         data: []
-      },
+      }],
       metadata: null
     };
   },
@@ -5676,10 +5689,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 resp = _context.sent;
 
                 if (resp.data.success) {
-                  console.log(resp.data.metadata);
-                  this.chartOptions.xaxis.categories = resp.data.metadata.nomes;
-                  this.appendData(resp.data.metadata.totais);
-                  this.metadata = resp.data.metadata;
+                  this.chartOptions = _objectSpread({}, this.chartOptions, {
+                    xaxis: {
+                      categories: resp.data.metadata.names
+                    }
+                  });
+                  this.appendData(resp.data.metadata.totals);
+                  this.metadata = resp.data.metadata.tables;
                 }
 
               case 5:
@@ -5698,8 +5714,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }(),
     appendData: function appendData(data) {
       var arr = this.series.slice();
-      arr.push(data);
-      console.log(arr);
+      arr[0].data = data;
       this.series = arr;
     }
   }
@@ -64710,7 +64725,11 @@ var render = function() {
               "ul",
               _vm._l(_vm.metadata, function(item, i) {
                 return _c("li", { key: i }, [
-                  _vm._v(_vm._s(item ? item.name : item.title))
+                  _vm._v(
+                    _vm._s(item ? item.name : item.title) +
+                      " - " +
+                      _vm._s(item.total)
+                  )
                 ])
               }),
               0
