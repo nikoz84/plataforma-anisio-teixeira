@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\MailUsuario;
 use App\User;
 use Gate;
+use Illuminate\Support\Facades\File;
 
 class ConteudoController extends ApiController
 {
@@ -149,7 +150,7 @@ class ConteudoController extends ApiController
         $conteudo->componentes()->attach(explode(',', $this->request->componentes));
 
         $this->saveFullTextSearch($conteudo->id);
-
+        lluminate\Support\Facades\File;
         $this->saveOptions($conteudo->id);
         return $this->showOne($conteudo, 'Conteúdo cadastrado com sucesso!!', 200);
     }
@@ -202,9 +203,35 @@ class ConteudoController extends ApiController
         $conteudo->ts_documento = $fullTextSearch->ts_documento;
         $conteudo->save();
     }
-    public function lerHDImage()
+    public function lerHD()
     {
-        //
+        $conteudos = $this->conteudo::all();
+        $filesystem = new \Illuminate\Filesystem\Filesystem;
+
+        foreach($conteudos as $conteudo) {
+            $id = $conteudo->id;
+            $path = \Illuminate\Support\Facades\Storage::disk('conteudos-digitais')->path("download") . "/{$id}.*";
+            $files = $filesystem->glob($path);
+            foreach($files as $file) {
+                $arr = [
+                    'mime_type' => $filesystem->mimeType($file),
+                    'extension' => $filesystem->extension($file),
+                    'size'      => $filesystem->size($file),
+                    'name'      => $filesystem->name($file) . "." . $filesystem->extension($file)
+                ];
+                $conteudo = $this->conteudo::find($id);
+
+                // $data = json_encode($arr);
+                // $conteudo = $this->conteudo::where('id', $id)->update([
+                //     DB::raw("options->'download' = '{$data}'")
+                //     ]);
+
+                $conteudo->options['download'] = $arr;
+
+                $conteudo->save();
+                dd($conteudo->options['download']);
+            }
+        }
     }
     /**
      * Atualiza o conteúdo.

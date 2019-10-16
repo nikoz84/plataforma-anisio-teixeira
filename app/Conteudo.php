@@ -42,7 +42,7 @@ class Conteudo extends Model
         'updated_at',
         'deleted_at',
     ];
-    protected $appends = ['image', 'excerpt', 'url_exibir', 'tipo', 'permission'];
+    protected $appends = ['image', 'excerpt', 'url_exibir', 'tipo', 'permission', 'arquivos'];
     protected $casts = ['options' => 'array',];
     protected $hidden = ['ts_documento'];
     /**
@@ -114,6 +114,33 @@ class Conteudo extends Model
     public function getExcerptAttribute()
     {
         return strip_tags(Str::words($this['description'], 30));
+    }
+    public function getMetaDados($pasta)
+    {
+        $filesystem = new \Illuminate\Filesystem\Filesystem;
+        $id = $this['id'];
+        $path = \Illuminate\Support\Facades\Storage::disk('conteudos-digitais')->path($pasta) . "/{$id}.*";
+        $files = $filesystem->glob($path);
+        $arr = [];
+        foreach ($files as $file) {
+            $arr = [
+                'mime_type' => $filesystem->mimeType($file),
+                'extension' => $filesystem->extension($file),
+                'size'      => $filesystem->size($file),
+                'name'      => $filesystem->name($file) . "." . $filesystem->extension($file),
+                'url'       => \Illuminate\Support\Facades\Storage::disk('conteudos-digitais')->url($pasta)
+            ];
+        }
+        return $arr;
+    }
+    public function getArquivosAttribute()
+    {
+        $arrAr = [
+            'download'      => $this->getMetaDados('download'),
+            'visualizacao'  => $this->getMetaDados('visualizacao'),
+            'guia'          => $this->getMetaDados('guias-pedagogicos'),
+        ];
+        return $arrAr;
     }
     /**
      * Undocumented function

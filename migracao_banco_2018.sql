@@ -175,26 +175,26 @@ copy
   select idcanal as id,
 	titulomenucanal as name,
 	descricaocanal as description,
-	case when idcanal = 6 then 'recursos-educacionais' 
+	case when idcanal = 6 then 'recursos-educacionais'
 	    when idcanal = 4 then 'midias-educacionais'
-	    when idcanal = 15 then 'central-de-midias' 
-	    else nomemodulocanal 
+	    when idcanal = 15 then 'central-de-midias'
+	    else nomemodulocanal
 	end as slug,
 	flativo as is_active,
 	case when idcanal = 8 then tokencanal else null end AS token,
 	jsonb_build_object(
-		'back_url', case 
-				when idcanal = 5 then 'sites-tematicos' 
-				when idcanal = 9 then 'aplicativos' 
-				when idcanal = 7 then urlcanal 
-				when idcanal =8 then urlcanal 
+		'back_url', case
+				when idcanal = 5 then 'sites-tematicos'
+				when idcanal = 9 then 'aplicativos'
+				when idcanal = 7 then urlcanal
+				when idcanal = 8 then urlcanal
 				else 'conteudos' end,
 		'tipo_conteudo', case when conteudotipocanal is null then '[]' else conteudotipocanal end,
 		'color', corcanal,
 		'order_menu', posicaomenucanal,
 		'extend_name', nomecanal,
 		'has_home', flvisualizarhomepage,
-		'has_about', flpossuisobre,			
+		'has_about', flpossuisobre,
 		'has_quick_access', flacessorapido,
 		'has_categories', flcategoria,
 		'complement_description', jsonb_build_object('que',descricaooquecanal,'porque',descricaoporquecanal,'como',descricaocomocanal)	
