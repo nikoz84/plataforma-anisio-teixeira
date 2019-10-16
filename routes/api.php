@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
  */
 
 Route::group(['middleware' => ['cors']], function () {
-
+    Route::get('/ler', 'ConteudoController@lerHD')->name('ler.hd');
     Route::get('/files/gallery', 'FileController@getGallery')->name('lista.galeria.imagens');
     Route::get('/files/{id}', 'FileController@getFiles')->name('busca.arquivo');
     Route::post('/files/{id}', 'FileController@createFile')->name('adiciona.arquivo');
