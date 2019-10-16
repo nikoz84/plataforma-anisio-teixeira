@@ -127,16 +127,16 @@ class Analytics
                 return collect($wordpress->getCatalogacao());
                 break;
             case 'tv_radio':
-                return $this->postsPerTvAndRadio();
+                return $this->getSeries($this->postsPerTvAndRadio());
                 break;
             case 'user_montly':
-                return $this->postsPerUserMonthly();
+                return $this->getSeries($this->postsPerUserMonthly());
                 break;
             case 'per_month':
-                return $this->postsPerMonth();
+                return $this->getSeries($this->postsPerMonth());
                 break;
             case 'canal_montly':
-                return $this->postsPerCanalMonthly();
+                return $this->getSeries($this->postsPerCanalMonthly());
                 break;
             default:
                 return $this->postsPerUser();
