@@ -125,6 +125,10 @@ update usuariotipo
 set nomeusuariotipo = 'convidado'
 where idusuariotipo = 5;
 
+update usuariotipo
+set nomeusuariotipo = 'amigo'
+where idusuariotipo = 6;
+
 -- EXPORTAR ROLES
 COPY
 ( 
@@ -156,7 +160,7 @@ COPY
 		when u.senha is null then md5('teste')
 		else u.senha
 	end as password,
-	jsonb_build_object('is_active', u.flativo, 'sexo', u.sexo, 'birthday', u.datanascimento, 'telefone', telefone, 'neighborhood', upper(bairro)) as options,
+	jsonb_build_object('is_active', u.flativo, 'sexo', u.sexo, 'birthday', TO_CHAR(u.datanascimento, 'YYYY-MM-DD'), 'telefone', telefone, 'neighborhood', upper(bairro)) as options,
 	null as remember_token,
 	null as verification_token,
 	TRUE as verified,

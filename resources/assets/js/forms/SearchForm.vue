@@ -4,7 +4,7 @@
         filled 
         v-model="termo" 
         use-input
-        hide-selected
+        stack-label
         fill-input
         :options="options" 
         label="Pesquisar" 
@@ -12,10 +12,14 @@
         style="width:250px;"
         @filter="filterFn"
         >
-        
       </q-select>
+      
       <q-space></q-space>
-      <q-btn icon="add" color="positive" :to="`/admin/${$route.params.slug}/adicionar`" title="Adicionar novo item"/>
+      <q-btn size="md" 
+            icon="add" 
+            color="positive" 
+            :to="`/admin/${$route.params.slug}/adicionar`" 
+            title="Adicionar novo item"/>
     </div>
 </template>
 <script>

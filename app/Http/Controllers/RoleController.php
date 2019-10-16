@@ -23,6 +23,10 @@ class RoleController extends ApiController
 
     public function index()
     {
+        if ($this->request->has('select')) {
+            $select = $this->role::all();
+            return $this->fetchForSelect($select);
+        }
         $roles = $this->role::paginate();
         return $this->showAsPaginator($roles, '', 200);
     }

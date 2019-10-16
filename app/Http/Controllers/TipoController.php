@@ -21,12 +21,17 @@ class TipoController extends ApiController
 
     public function index()
     {
-
-        $tipos = $this->tipo::all();
+        $limit = $this->request->query('limit', 15);
         if ($this->request->has('select')) {
+            $tipos = $this->tipo::all();
             return $this->fetchForSelect(collect($tipos));
         }
-        return $this->showAll($tipos, '', 200);
+        $query = $this->tipo;
+
+        $paginator = $query->paginate($limit)
+            ->setPath("/tipos?limit={$limit}");
+
+        return $this->showAsPaginator($paginator, '', 200);
     }
 
     public function create()
@@ -44,7 +49,7 @@ class TipoController extends ApiController
         }
     }
 
-    public function update(Request $request, $id)
+    public function update($id)
     {
         $validator = Validator::make($this->request->all(), config("rules.tipos"));
         if ($validator->fails()) {

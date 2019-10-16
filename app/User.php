@@ -86,6 +86,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return ucwords($value);
     }
+
     /**
      * Atributo email a minusculas
      *
@@ -96,6 +97,7 @@ class User extends Authenticatable implements JWTSubject
     {
         $this->attributes['email'] = strtolower($value);
     }
+
     /**
      * Comprova se o email do usuário foi verificado
      *
@@ -176,7 +178,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function role()
     {
-        return $this->belongsTo(Role::class, 'role_id', 'id')->select(['id', 'name']);
+        return $this->belongsTo(Role::class, 'role_id', 'id')->select(['id', 'name as label']);
     }
     /**
      * Undocumented function

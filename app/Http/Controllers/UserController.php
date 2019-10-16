@@ -8,11 +8,9 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
 use Gate;
 use App\Http\Controllers\ApiController;
-use App\Traits\ApiResponser;
 
 class UserController extends ApiController
 {
-    use ApiResponser;
 
     public function __construct(Request $request, User $user)
     {
@@ -35,11 +33,8 @@ class UserController extends ApiController
         $query = $this->user::query();
         $paginator = $query->orderBy('name', 'asc')->paginate($limit);
         $paginator->setPath("/usuarios?limit={$limit}");
-        return response()->json([
-            'success' => true,
-            'title' => 'Lista de Usuários',
-            'paginator' => $paginator
-        ]);
+
+        return $this->showAsPaginator($paginator, '', 200);
     }
     /**
      * Buscar usuário por ID
@@ -49,13 +44,16 @@ class UserController extends ApiController
      */
     public function getById($id)
     {
-        $user = $this->user::find($id)->makeVisible('email')->toArray();
+        $user = $this->user::with('role')->find($id)->makeVisible('email');
 
-        return response()->json([
-            'success' => true,
-            'user' => $user,
-        ]);
+        return $this->showOne($user, '', 200);
     }
+    /**
+     * Atualizar usuário por ID
+     *
+     * @param [integer] $id
+     * @return json
+     */
     public function update($id)
     {
         $user = $this->user::find($id);
@@ -65,11 +63,11 @@ class UserController extends ApiController
         }
 
         $user->fill($this->request->all());
-        $user->save();
-        return response()->json([
-            'success' => true,
-            'data' => $user,
-        ]);
+        if ($user->save()) {
+            $this->successResponse($user, 'Usuário editado com sucesso!', 200);
+        } else {
+            $this->errorResponse([], 'Não foi possível editar o usuário', 200);
+        }
     }
     /**
      * Método apagar por id
@@ -103,11 +101,7 @@ class UserController extends ApiController
 
         $paginator->setPath("/usuarios/search/{$termo}?limit={$limit}");
 
-        return response()->json([
-            'success' => true,
-            'title' => 'Resultado da busca',
-            'paginator' => $paginator,
-        ]);
+        $this->showAsPaginator($paginator, '', 200);
     }
     /**
      * Valida a criação do Usuário
@@ -146,18 +140,11 @@ class UserController extends ApiController
         $user->password = bcrypt($this->request->get('password'));
         $user->options = json_decode($this->request->get('options', '{}'), true);
 
-        $resp = $user->save();
 
-        if ($resp) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Usuário registrado com sucesso',
-            ], 200);
+        if ($user->save()) {
+            $this->successResponse([], 'Usuário registrado com sucesso!!', 200);
         } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Usuário não registrado',
-            ]);
+            $this->errorResponse([], 'Não foi possível registrar o usuário', 200);
         }
     }
 
@@ -167,6 +154,6 @@ class UserController extends ApiController
         $user->verified = $this->user::USER_NOT_VERIFIED;
         $user->verification_token = null;
         $user->save();
-        return $this->showOne('Conta verificada', 200);
+        return $this->showOne($user, 'Conta verificada', 200);
     }
 }

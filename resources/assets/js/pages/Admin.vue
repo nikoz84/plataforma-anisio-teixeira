@@ -73,6 +73,12 @@ export default {
           params: { slug: "usuarios", action: "listar" }
         },
         {
+          label: "Tipos",
+          name: "admin",
+          view: "admin",
+          params: { slug: "tipos", action: "listar" }
+        },
+        {
           label: "Funções",
           name: "funcoes",
           view: "admin",

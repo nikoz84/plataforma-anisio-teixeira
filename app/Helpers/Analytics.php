@@ -20,6 +20,7 @@ class Analytics
         $this->request = $request;
         $this->limit = $request->query('limit', 15);
         $this->page = $request->query('page', 1);
+        $this->option = $request->query('option', 'per_user');
         $this->data_inicio = $request->query('inicio', date('Y-01-01 00:00:00'));
         $this->data_fim = $request->query('fim', Carbon::now());
     }
@@ -117,78 +118,30 @@ class Analytics
         $wordpress = new WordpressService($this->request);
         $d_inicio = new Carbon($this->data_inicio, config('locale'));
         $d_fim = new Carbon($this->data_fim, config('locale'));
-        $per_user = $this->postsPerUser();
-        $wordpress_data = collect($wordpress->getCatalogacao());
-        $tv_radio = $this->postsPerTvAndRadio();
-        $user_montly = $this->postsPerUserMonthly();
-        $per_month = $this->postsPerMonth();
-        $canal_montly = $this->postsPerCanalMonthly();
 
-        return [
-            'title' => "Periodo compreendido entre {$d_inicio->format('d/m/Y')} a {$d_fim->format('d/m/Y')}",
-            'blog' => [
-                'title' => 'Postagens do Blog',
-                'columns' => [
-                    ['name' => 'name', 'label' => 'Nome', 'field' => 'name'],
-                    ['name' => 'email', 'label' => 'E-mail', 'field' => 'email'],
-                    ['name' => 'total', 'label' => 'Total', 'field' => 'total']
-                ],
-                'data' => $wordpress_data->count() > 0 ? $wordpress_data : [],
-                'series' => $this->getSeries($wordpress_data->get('posts'))
-            ],
-            'tables' => [
-                [
-                    'title' => 'Catalogação dos canais TV e Radio Anísio Teixeira',
-                    'columns' => [
-                        ['name' => 'name', 'label' => 'Canal', 'field' => 'name'],
-                        ['name' => 'total', 'label' => 'Total', 'field' => 'total']
-                    ],
-                    'data' => $tv_radio,
-                    'series' => $this->getSeries($tv_radio)
-                ],
-                [
-                    'title' => 'Catalogação por Usuário',
-                    'columns' => [
-                        ['name' => 'name', 'label' => 'Nome', 'field' => 'name'],
-                        ['name' => 'total', 'label' => 'Total', 'field' => 'total']
-                    ],
-                    'data' => $per_user,
-                    'series' => $this->getSeries($per_user)
-                ],
-                [
-                    'title' => 'Catalogação Mensal por Usuário',
-                    'columns' => [
-                        ['name' => 'month', 'label' => 'Mês', 'field' => 'month'],
-                        ['name' => 'name', 'label' => 'Nome', 'field' => 'name'],
-                        ['name' => 'total', 'label' => 'Total', 'field' => 'total']
-                    ],
-                    'data' => $user_montly,
-                    'series' => $this->getSeries($user_montly)
-                ],
-                [
-                    'title' => 'Catalologação Mensal',
-                    'columns' => [
-                        ['name' => 'month', 'label' => 'Mês', 'field' => 'month'],
-                        ['name' => 'total', 'label' => 'Total', 'field' => 'total']
-                    ],
-                    'data' => $per_month,
-                    'series' => $this->getSeries($per_month)
-                ],
-                [
-                    'title' => 'Catalogação Mensal por Canal',
-                    'columns' => [
-                        ['name' => 'month', 'label' => 'Mês', 'field' => 'month'],
-                        ['name' => 'name', 'label' => 'Canal', 'field' => 'name'],
-                        ['name' => 'total', 'label' => 'Total', 'field' => 'total']
-                    ],
-                    'data' => $canal_montly,
-                    'series' =>
-                    [
-                        'data' => $this->getSeries($canal_montly)
-                    ]
-                ]
-            ]
-        ];
+        switch ($this->option) {
+            case 'per_user':
+                return $this->getSeries($this->postsPerUser());
+                break;
+            case 'wordpress_data':
+                return collect($wordpress->getCatalogacao());
+                break;
+            case 'tv_radio':
+                return $this->postsPerTvAndRadio();
+                break;
+            case 'user_montly':
+                return $this->postsPerUserMonthly();
+                break;
+            case 'per_month':
+                return $this->postsPerMonth();
+                break;
+            case 'canal_montly':
+                return $this->postsPerCanalMonthly();
+                break;
+            default:
+                return $this->postsPerUser();
+                break;
+        }
     }
     /**
      * Método para gráficos, converte o array associativo em um array simples ou lista
@@ -200,20 +153,11 @@ class Analytics
     {
         $collect = collect($data);
 
-
-
-
-        return $collect;
-        /*
-        return $collect->map(function ($item) {
-
+        if (!$collect->contains('month')) {
             return [
-                'data' => [
-                    'x' => $item->name,
-                    'y' => $item->total
-                ]
+                'names' => $collect->pluck('name'),
+                'totais' => $collect->pluck('total')
             ];
-        });
-        */
+        }
     }
 }

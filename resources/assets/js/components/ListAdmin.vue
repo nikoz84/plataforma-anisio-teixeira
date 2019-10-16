@@ -13,6 +13,7 @@ import UserForm from "../forms/UserForm.vue";
 import LicenseForm from "../forms/LicenseForm.vue";
 import TagForm from "../forms/TagForm.vue";
 import RoleForm from "../forms/RoleForm.vue";
+import TipoForm from "../forms/TipoForm.vue";
 import Resumo from "../pages/Resumo.vue";
 
 export default {
@@ -26,83 +27,39 @@ export default {
     licencas: LicenseForm,
     tags: TagForm,
     roles: RoleForm,
-    resumo: Resumo
+    tipos: TipoForm,
+    Resumo
   },
   data() {
     return {
-      id: null,
-      slug: this.$route.params.slug,
-      action: this.$route.params.action,
-      metadata: null,
       componentName: ""
     };
   },
-  beforeRouteUpdate(to, from, next) {
-    this.slug = to.params.slug;
-    this.action = to.params.action;
-    next();
-  },
-  created() {
-    this.getAction();
-  },
-  computed: {
-    ...mapState(["paginator"])
-  },
-  methods: {
-    ...mapMutations(["SET_PAGINATOR"]),
-    getAction() {
-      switch (true) {
-        case this.action == "listar":
-          this.getData();
-          break;
-        case this.action == "adicionar":
-          this.create();
-          break;
-        case this.action == "editar":
-          this.update();
-          break;
-        case this.action == "apagar":
-          this.delete();
-          break;
-        case this.action == "exibir":
-          this.getOne();
-          break;
-      }
-    },
-    async getData() {
-      this.componentName = "Table";
-      this.$q.loading.show();
-      let resp = await axios.get(`/${this.slug}`);
-
-      if (resp.data.success && resp.data.paginator) {
-        this.$q.loading.hide();
-        this.SET_PAGINATOR(resp.data.paginator);
-      } else {
-        this.$q.loading.hide();
-        this.$router.push(`/admin/${this.slug}/listar`);
-      }
-    },
-    async getOne() {
-      this.$q.loading.show();
-      let resp = await axios.get(`/${this.slug}/${this.id}`);
-      this.response(resp);
-    },
-    async create() {
-      console.log(`create ${this.slug}`);
-      this.componentName = this.slug;
-    },
-    async update() {
-      console.log("update");
-      this.componentName = this.slug;
-    },
-    async delete() {
-      console.log("delete");
-      //this.componentName = "Confirm";
-    }
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.getAction();
+    });
   },
   watch: {
-    $route(to, from, next) {
+    $route: function() {
       this.getAction();
+    }
+  },
+  methods: {
+    getAction() {
+      switch (true) {
+        case this.$route.params.slug != "analytics" &&
+          this.$route.params.action == "listar":
+          this.componentName = "Table";
+          break;
+        case this.$route.params.action == "editar" ||
+          this.$route.params.action == "adicionar":
+          this.componentName = this.$route.params.slug;
+          break;
+        case this.$route.params.slug == "analytics":
+          this.componentName = "Resumo";
+          break;
+      }
     }
   }
 };

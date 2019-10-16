@@ -1,9 +1,9 @@
 <template>
-<div class="q-pa-md" v-if="paginator">
+<div class="q-pa-md">
     <div class="col-lg-12">
         <SearchForm></SearchForm> 
     </div>
-    <div class="col-lg-12 flex flex-center">
+    <div class="col-lg-12 flex flex-center q-mt-xs">
       <q-pagination
           v-if="paginator && paginator.total > paginator.per_page"
           v-model="current"
@@ -12,6 +12,9 @@
           @input="getPage"
           >
       </q-pagination>
+      <div v-if="paginator && paginator.total == 0">
+        <p class="text-h6">Sem resultados</p>
+      </div>
     </div>
     <div class="col-lg-12"  v-if="paginator && paginator.total > 0">
         <q-markup-table :separator="'vertical'" flat bordered>
@@ -71,7 +74,7 @@
 </template>
 <script>
 import SearchForm from "../forms/SearchForm.vue";
-
+import { mapMutations, mapState } from "vuex";
 import {
   QMarkupTable,
   QDialog,
@@ -79,7 +82,6 @@ import {
   QPagination,
   QParallax
 } from "quasar";
-import { mapMutations, mapState } from "vuex";
 
 export default {
   name: "Table",
@@ -102,6 +104,14 @@ export default {
     last() {
       return this.paginator ? this.paginator.last_page : 1;
     }
+  },
+  watch: {
+    $route(to, from, next) {
+      this.getData();
+    }
+  },
+  created() {
+    this.getData();
   },
   methods: {
     ...mapMutations(["SET_PAGINATOR"]),
@@ -129,10 +139,19 @@ export default {
 
       this.$q.loading.hide();
     },
+    async getData() {
+      this.$q.loading.show();
+      let resp = await axios.get(`/${this.$route.params.slug}`);
+
+      if (resp.data.success && resp.data.paginator) {
+        this.$q.loading.hide();
+        this.SET_PAGINATOR(resp.data.paginator);
+      }
+    },
     confirmDelete(item) {
       this.confirm = true;
       let title = item.name ? item.name : item.title;
-      this.text = `Realmente deseja <strong class="text-negative">deletar</strong> <strong>${title}</strong>?`;
+      this.text = `Realmente deseja <strong class="text-negative">deletar</strong> <b>${title}</b>?`;
       console.log(this.$route.params.slug, item.id);
     }
   }
