@@ -5630,6 +5630,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         value: "per_user"
       },
       selectOptions: [{
+        label: "Tipos de mídias",
+        value: "type_of_midia"
+      }, {
         label: "Catalogação por usuário",
         value: "per_user"
       }, {
@@ -5655,6 +5658,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           width: "100%",
           type: "bar"
         },
+        title: {
+          text: "hola",
+          align: "center"
+        },
         legend: {
           position: "top"
         },
@@ -5671,6 +5678,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       },
       series: [{
+        name: "Quantidade",
         data: []
       }],
       metadata: null
@@ -5696,12 +5704,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (resp.data.success) {
                   this.chartOptions = _objectSpread({}, this.chartOptions, {
+                    title: {
+                      text: resp.data.metadata.title
+                    },
                     xaxis: {
                       categories: resp.data.metadata.names
                     }
                   });
                   this.appendData(resp.data.metadata.totals);
-                  this.metadata = resp.data.metadata.tables;
+                  this.metadata = resp.data.metadata.data;
                 }
 
               case 5:

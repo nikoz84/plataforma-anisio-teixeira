@@ -50,6 +50,7 @@ export default {
     return {
       item: { label: "Catalogação por usuário", value: "per_user" },
       selectOptions: [
+        { label: "Tipos de mídias", value: "type_of_midia" },
         { label: "Catalogação por usuário", value: "per_user" },
         {
           label: "Catalogação por canal",
@@ -67,6 +68,10 @@ export default {
           width: "100%",
           type: "bar"
         },
+        title: {
+          text: "hola",
+          align: "center"
+        },
         legend: {
           position: "top"
         },
@@ -82,7 +87,7 @@ export default {
           categories: []
         }
       },
-      series: [{ data: [] }],
+      series: [{ name: "Quantidade", data: [] }],
       metadata: null
     };
   },
@@ -98,6 +103,9 @@ export default {
         this.chartOptions = {
           ...this.chartOptions,
           ...{
+            title: {
+              text: resp.data.metadata.title
+            },
             xaxis: {
               categories: resp.data.metadata.names
             }
@@ -105,7 +113,7 @@ export default {
         };
 
         this.appendData(resp.data.metadata.totals);
-        this.metadata = resp.data.metadata.tables;
+        this.metadata = resp.data.metadata.data;
       }
     },
     appendData(data) {

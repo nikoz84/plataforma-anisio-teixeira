@@ -52,6 +52,18 @@ class Analytics
 
         return DB::select($sql, [$this->data_inicio, $this->data_fim]);
     }
+    public function perTypeOfMidia()
+    {
+        $sql = "SELECT (SELECT upper(name) FROM tipos WHERE id = cast(c.options->'tipo' as int)) AS name,
+                COUNT (cast(c.options->'tipo' as int)) as total,
+                row_number() OVER () AS id
+                FROM
+                conteudos as c
+                GROUP BY
+                name";
+
+        return DB::select(DB::raw($sql));
+    }
 
     public function postsPerMonth()
     {
@@ -120,13 +132,13 @@ class Analytics
 
         switch ($this->option) {
             case 'per_user':
-                return $this->getSeries($this->postsPerUser());
+                return $this->getSeries($this->postsPerUser(), "Catalogação por usuário publicador na PAT entre as datas {$d_inicio} - {$d_fim}");
                 break;
             case 'wordpress_data':
-                return collect($wordpress->getCatalogacao());
+                return collect($wordpress->getCatalogacao(), "Catalogação por usuário publicador no Blog entre as datas {$d_inicio} - {$d_fim}");
                 break;
             case 'per_chanel':
-                return $this->getSeries($this->postsPerCanal());
+                return $this->getSeries($this->postsPerCanal(), "Catalogação por canais entre as datas {$d_inicio} - {$d_fim}");
                 break;
             case 'user_montly':
                 return $this->getSeries($this->postsPerUserMonthly());
@@ -136,6 +148,9 @@ class Analytics
                 break;
             case 'canal_montly':
                 return $this->getSeries($this->postsPerCanalMonthly());
+                break;
+            case 'type_of_midia':
+                return $this->getSeries($this->perTypeOfMidia(), "Tipos de mídia");
                 break;
             default:
                 return $this->postsPerUser();
@@ -148,13 +163,14 @@ class Analytics
      * @param Collection $data intância de collection
      * @return void
      */
-    public function getSeries($data)
+    public function getSeries($data, $title = "")
     {
         $collect = collect($data);
 
         if (!$collect->contains('month')) {
             return [
-                'tables' => $data,
+                'title' => $title,
+                'data' => $data,
                 'names' => $collect->pluck('name'),
                 'totals' => $collect->pluck('total')
             ];
