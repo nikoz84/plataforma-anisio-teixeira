@@ -147,15 +147,15 @@ class Analytics
                 break;
             case 'user_montly':
                 $this->render_graph = false;
-                return $this->getSeries($this->postsPerUserMonthly());
+                return $this->getSeries($this->postsPerUserMonthly(), "Catalogação mensal por usuário");
                 break;
             case 'per_month':
                 $this->render_graph = false;
-                return $this->getSeries($this->postsPerMonth());
+                return $this->getSeries($this->postsPerMonth(), "Catalogação mensal");
                 break;
             case 'canal_montly':
                 $this->render_graph = true;
-                return $this->getSeries($this->postsPerCanalMonthly());
+                return $this->getSeries($this->postsPerCanalMonthly(), "Catalogação mensal por canal");
                 break;
             case 'type_of_midia':
                 $this->render_graph = true;
