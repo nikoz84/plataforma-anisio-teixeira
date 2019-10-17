@@ -123,7 +123,7 @@ export default {
         this.title = resp.data.metadata.title;
         this.metadata = resp.data.metadata.data;
         this.render = resp.data.metadata.render;
-        if (resp.data.metadata.render) {
+        if (this.render) {
           this.appendData(resp.data.metadata.series);
           this.createInfoGraf(resp.data.metadata.categories);
         }
