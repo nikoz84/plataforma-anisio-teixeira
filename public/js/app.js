@@ -4991,7 +4991,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (val.length > 2 && val != "") {
         this.getTags(val);
       }
-    }, 400),
+    }, 500),
     $route: function $route(to, from) {
       this.getTag();
     }
@@ -5063,17 +5063,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context2.abrupt("return");
 
               case 2:
-                _context2.next = 4;
+                console.log(val);
+                _context2.next = 5;
                 return axios.get("tags/search/".concat(val, "?limit=150"));
 
-              case 4:
+              case 5:
                 resp = _context2.sent;
 
                 if (resp.data.success == true) {
                   this.tags = resp.data.paginator.data;
                 }
 
-              case 6:
+              case 7:
               case "end":
                 return _context2.stop();
             }
@@ -5625,6 +5626,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      title: "",
+      render: false,
+      metadata: [],
+      columns: [{
+        name: "name",
+        label: "Nome",
+        field: "name"
+      }, {
+        name: "total",
+        label: "Total",
+        field: "total"
+      }, {
+        name: "month",
+        label: "Mês",
+        field: "month",
+        required: false
+      }],
       item: {
         label: "Catalogação por usuário",
         value: "per_user"
@@ -5662,9 +5680,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           text: "hola",
           align: "center"
         },
-        legend: {
-          position: "top"
-        },
         plotOptions: {
           bar: {
             horizontal: true
@@ -5680,8 +5695,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       series: [{
         name: "Quantidade",
         data: []
-      }],
-      metadata: null
+      }]
     };
   },
   created: function created() {
@@ -5703,16 +5717,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 resp = _context.sent;
 
                 if (resp.data.success) {
-                  this.chartOptions = _objectSpread({}, this.chartOptions, {
-                    title: {
-                      text: resp.data.metadata.title
-                    },
-                    xaxis: {
-                      categories: resp.data.metadata.names
-                    }
-                  });
-                  this.appendData(resp.data.metadata.totals);
+                  this.title = resp.data.metadata.title;
                   this.metadata = resp.data.metadata.data;
+                  this.render = resp.data.metadata.render;
+
+                  if (resp.data.metadata.render) {
+                    this.appendData(resp.data.metadata.series);
+                    this.createInfoGraf(resp.data.metadata.categories);
+                  }
                 }
 
               case 5:
@@ -5729,6 +5741,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return getData;
     }(),
+    createInfoGraf: function createInfoGraf(categories) {
+      this.chartOptions = _objectSpread({}, this.chartOptions, {
+        title: {
+          text: this.title
+        },
+        xaxis: {
+          categories: categories
+        }
+      });
+    },
     appendData: function appendData(data) {
       var arr = this.series.slice();
       arr[0].data = data;
@@ -64723,33 +64745,33 @@ var render = function() {
           _c(
             "q-card-section",
             [
-              _c("VueApexCharts", {
-                attrs: {
-                  type: "bar",
-                  options: _vm.chartOptions,
-                  series: _vm.series
-                }
-              })
+              _vm.render
+                ? _c("VueApexCharts", {
+                    attrs: {
+                      type: "bar",
+                      options: _vm.chartOptions,
+                      series: _vm.series
+                    }
+                  })
+                : _vm._e()
             ],
             1
           ),
           _vm._v(" "),
           _c(
             "q-card-section",
-            _vm._l(_vm.metadata, function(item, i) {
-              return _c(
-                "div",
-                { key: i },
-                [
-                  _vm._v(
-                    "\n        " + _vm._s(item ? item.name : item.title) + " - "
-                  ),
-                  _c("q-chip", [_vm._v(_vm._s(item.total))])
-                ],
-                1
-              )
-            }),
-            0
+            [
+              _c("q-table", {
+                attrs: {
+                  title: _vm.title,
+                  data: _vm.metadata,
+                  columns: _vm.columns,
+                  "row-key": "id",
+                  separator: "horizontal"
+                }
+              })
+            ],
+            1
           )
         ],
         1

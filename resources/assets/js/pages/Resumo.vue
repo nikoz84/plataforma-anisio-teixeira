@@ -14,13 +14,17 @@
       @input="getData"
     />
     <q-card >
-      <q-card-section>
-        <VueApexCharts type="bar" :options="chartOptions" :series="series"></VueApexCharts>
+      <q-card-section >
+        <VueApexCharts v-if="render" type="bar" :options="chartOptions" :series="series"></VueApexCharts>
       </q-card-section>
       <q-card-section>
-        <div v-for="(item, i) in metadata" :key="i">
-          {{ item ? item.name : item.title }} - <q-chip>{{ item.total }}</q-chip>
-        </div>
+        <q-table
+          :title="title"
+          :data="metadata"
+          :columns="columns"
+          row-key="id"
+          separator="horizontal"
+        />
       </q-card-section>
     </q-card>
   </div>
@@ -48,6 +52,27 @@ export default {
   },
   data() {
     return {
+      title: "",
+      render: false,
+      metadata: [],
+      columns: [
+        {
+          name: "name",
+          label: "Nome",
+          field: "name"
+        },
+        {
+          name: "total",
+          label: "Total",
+          field: "total"
+        },
+        {
+          name: "month",
+          label: "Mês",
+          field: "month",
+          required: false
+        }
+      ],
       item: { label: "Catalogação por usuário", value: "per_user" },
       selectOptions: [
         { label: "Tipos de mídias", value: "type_of_midia" },
@@ -72,9 +97,6 @@ export default {
           text: "hola",
           align: "center"
         },
-        legend: {
-          position: "top"
-        },
         plotOptions: {
           bar: {
             horizontal: true
@@ -87,8 +109,7 @@ export default {
           categories: []
         }
       },
-      series: [{ name: "Quantidade", data: [] }],
-      metadata: null
+      series: [{ name: "Quantidade", data: [] }]
     };
   },
   created() {
@@ -98,23 +119,28 @@ export default {
     async getData() {
       let url = `${this.$route.params.slug}?option=${this.item.value}`;
       let resp = await axios.get(url);
-
       if (resp.data.success) {
-        this.chartOptions = {
-          ...this.chartOptions,
-          ...{
-            title: {
-              text: resp.data.metadata.title
-            },
-            xaxis: {
-              categories: resp.data.metadata.names
-            }
-          }
-        };
-
-        this.appendData(resp.data.metadata.totals);
+        this.title = resp.data.metadata.title;
         this.metadata = resp.data.metadata.data;
+        this.render = resp.data.metadata.render;
+        if (resp.data.metadata.render) {
+          this.appendData(resp.data.metadata.series);
+          this.createInfoGraf(resp.data.metadata.categories);
+        }
       }
+    },
+    createInfoGraf(categories) {
+      this.chartOptions = {
+        ...this.chartOptions,
+        ...{
+          title: {
+            text: this.title
+          },
+          xaxis: {
+            categories
+          }
+        }
+      };
     },
     appendData(data) {
       let arr = this.series.slice();

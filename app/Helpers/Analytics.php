@@ -14,6 +14,8 @@ class Analytics
     protected $page;
     protected $data_inicio;
     protected $data_fim;
+    protected $option;
+    protected $render_graph;
 
     public function __construct(Request $request)
     {
@@ -132,24 +134,31 @@ class Analytics
 
         switch ($this->option) {
             case 'per_user':
+                $this->render_graph = true;
                 return $this->getSeries($this->postsPerUser(), "Catalogação por usuário publicador na PAT entre as datas {$d_inicio} - {$d_fim}");
                 break;
             case 'wordpress_data':
+                $this->render_graph = false;
                 return collect($wordpress->getCatalogacao(), "Catalogação por usuário publicador no Blog entre as datas {$d_inicio} - {$d_fim}");
                 break;
             case 'per_chanel':
+                $this->render_graph = true;
                 return $this->getSeries($this->postsPerCanal(), "Catalogação por canais entre as datas {$d_inicio} - {$d_fim}");
                 break;
             case 'user_montly':
+                $this->render_graph = false;
                 return $this->getSeries($this->postsPerUserMonthly());
                 break;
             case 'per_month':
+                $this->render_graph = false;
                 return $this->getSeries($this->postsPerMonth());
                 break;
             case 'canal_montly':
+                $this->render_graph = true;
                 return $this->getSeries($this->postsPerCanalMonthly());
                 break;
             case 'type_of_midia':
+                $this->render_graph = true;
                 return $this->getSeries($this->perTypeOfMidia(), "Tipos de mídia");
                 break;
             default:
@@ -168,11 +177,13 @@ class Analytics
         $collect = collect($data);
 
         if (!$collect->contains('month')) {
+
             return [
                 'title' => $title,
+                'render' => $this->render_graph,
                 'data' => $data,
-                'names' => $collect->pluck('name'),
-                'totals' => $collect->pluck('total')
+                'categories' => $collect->pluck('name'),
+                'series' => $collect->pluck('total')
             ];
         }
     }

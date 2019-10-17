@@ -50,7 +50,7 @@ export default {
       if (val.length > 2 && val != "") {
         this.getTags(val);
       }
-    }, 400),
+    }, 500),
     $route(to, from) {
       this.getTag();
     }
@@ -84,6 +84,7 @@ export default {
     },
     async getTags(val) {
       if (!val) return;
+      console.log(val);
       let resp = await axios.get(`tags/search/${val}?limit=150`);
       if (resp.data.success == true) {
         this.tags = resp.data.paginator.data;
