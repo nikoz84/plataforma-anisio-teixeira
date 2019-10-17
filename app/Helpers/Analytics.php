@@ -54,8 +54,8 @@ class Analytics
     }
     public function perTypeOfMidia()
     {
-        $sql = "SELECT (SELECT upper(name) FROM tipos WHERE id = cast(c.options->'tipo' as int)) AS name,
-                COUNT (cast(c.options->'tipo' as int)) as total,
+        $sql = "SELECT (SELECT upper(name) FROM tipos WHERE id = cast(c.options->>'tipo' as int)) AS name,
+                COUNT (cast(c.options->>'tipo' as int)) as total,
                 row_number() OVER () AS id
                 FROM
                 conteudos as c
