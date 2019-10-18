@@ -123,12 +123,13 @@ class Conteudo extends Model
         $files = $filesystem->glob($path);
         $arr = [];
         foreach ($files as $file) {
+            $name = $filesystem->name($file) . "." . $filesystem->extension($file);
             $arr = [
                 'mime_type' => $filesystem->mimeType($file),
                 'extension' => $filesystem->extension($file),
                 'size'      => $filesystem->size($file),
-                'name'      => $filesystem->name($file) . "." . $filesystem->extension($file),
-                'url'       => \Illuminate\Support\Facades\Storage::disk('conteudos-digitais')->url($pasta)
+                'name'      => $name,
+                'url'       => \Illuminate\Support\Facades\Storage::disk('conteudos-digitais')->url($pasta) . "/{$name}"
             ];
         }
         return $arr;

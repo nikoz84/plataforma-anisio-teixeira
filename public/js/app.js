@@ -2588,23 +2588,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var quasar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! quasar */ "./node_modules/quasar/src/index.esm.js");
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'Player',
-  props: ['guia', 'download', 'visualizacao', 'tipo', 'id'],
+  name: "Player",
+  components: {
+    QCard: quasar__WEBPACK_IMPORTED_MODULE_0__["QCard"],
+    QCardActions: quasar__WEBPACK_IMPORTED_MODULE_0__["QCardActions"],
+    QCardSection: quasar__WEBPACK_IMPORTED_MODULE_0__["QCardSection"],
+    QBtn: quasar__WEBPACK_IMPORTED_MODULE_0__["QBtn"],
+    QBtnGroup: quasar__WEBPACK_IMPORTED_MODULE_0__["QBtnGroup"]
+  },
+  props: ["arquivos", "tipo"],
+  data: function data() {
+    return {
+      is_video: false
+    };
+  },
   mounted: function mounted() {},
   computed: {
-    visualizarConteudo: function visualizarConteudo() {
-      console.log(this.guia);
-      console.log(this.download);
-      console.log(this.visualizacao);
-      console.log(this.tipo);
-      console.log(this.id);
-    },
-    video: function video() {
-      if (this.visualizacao) {
-        return "/storage/conteudos/conteudos-digitais/visualizacao/".concat(this.visualizacao);
-      } else {
-        return "/storage/conteudos/conteudos-digitais/download/".concat(this.download);
+    videos: function videos() {
+      if (this.tipo.id == 5 && this.arquivos.download) {
+        this.is_video = true;
+        return [{
+          source: this.arquivos.download.url,
+          mime: this.arquivos.download.mime_type
+        }, {
+          source: this.arquivos.visualizacao.url,
+          mime: this.arquivos.visualizacao.mime_type
+        }];
       }
     }
   },
@@ -51293,7 +51305,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!**********************************************!*\
   !*** ./node_modules/quasar/src/index.esm.js ***!
   \**********************************************/
-/*! exports provided: default, ClosePopup, GoBack, Ripple, ScrollFire, Scroll, TouchHold, TouchPan, TouchRepeat, TouchSwipe, AddressbarColor, AppFullscreen, AppVisibility, BottomSheet, Cookies, Dialog, LoadingBar, Loading, Meta, Notify, Platform, Screen, LocalStorage, SessionStorage, clone, colors, date, debounce, dom, event, extend, format, frameDebounce, noop, openURL, patterns, scroll, throttle, uid, QAjaxBar, QAvatar, QBadge, QBanner, QBar, QBreadcrumbs, QBreadcrumbsEl, QBtn, QBtnGroup, QBtnDropdown, QBtnToggle, QCard, QCardSection, QCardActions, QCarousel, QCarouselSlide, QCarouselControl, QChatMessage, QCheckbox, QChip, QCircularProgress, QColor, QDate, QTime, QDialog, QEditor, QFab, QFabAction, QField, QForm, QIcon, QImg, QInfiniteScroll, QInnerLoading, QInput, QKnob, QLayout, QDrawer, QFooter, QHeader, QPage, QPageContainer, QPageSticky, QList, QItem, QItemSection, QItemLabel, QExpansionItem, QSlideItem, QMenu, QNoSsr, QResizeObserver, QScrollObserver, QOptionGroup, QPageScroller, QPagination, QParallax, QPopupEdit, QPopupProxy, QLinearProgress, QPullToRefresh, QRadio, QRange, QRating, QScrollArea, QSelect, QSeparator, QSlideTransition, QSlider, QSpace, QSpinner, QSpinnerAudio, QSpinnerBall, QSpinnerBars, QSpinnerComment, QSpinnerCube, QSpinnerDots, QSpinnerFacebook, QSpinnerGears, QSpinnerGrid, QSpinnerHearts, QSpinnerHourglass, QSpinnerInfinity, QSpinnerIos, QSpinnerOval, QSpinnerPie, QSpinnerPuff, QSpinnerRadio, QSpinnerRings, QSpinnerTail, QSplitter, QStep, QStepper, QStepperNavigation, QTabPanels, QTabPanel, QTable, QTh, QTr, QTd, QMarkupTable, QTabs, QTab, QRouteTab, QTimeline, QTimelineEntry, QToggle, QToolbar, QToolbarTitle, QTooltip, QTree, QUploader, QUploaderBase, QUploaderAddTrigger, QVideo, QVirtualScroll */
+/*! exports provided: ClosePopup, GoBack, Ripple, ScrollFire, Scroll, TouchHold, TouchPan, TouchRepeat, TouchSwipe, AddressbarColor, AppFullscreen, AppVisibility, BottomSheet, Cookies, Dialog, LoadingBar, Loading, Meta, Notify, Platform, Screen, LocalStorage, SessionStorage, clone, colors, date, debounce, dom, event, extend, format, frameDebounce, noop, openURL, patterns, scroll, throttle, uid, default, QAjaxBar, QAvatar, QBadge, QBanner, QBar, QBreadcrumbs, QBreadcrumbsEl, QBtn, QBtnGroup, QBtnDropdown, QBtnToggle, QCard, QCardSection, QCardActions, QCarousel, QCarouselSlide, QCarouselControl, QChatMessage, QCheckbox, QChip, QCircularProgress, QColor, QDate, QTime, QDialog, QEditor, QFab, QFabAction, QField, QForm, QIcon, QImg, QInfiniteScroll, QInnerLoading, QInput, QKnob, QLayout, QDrawer, QFooter, QHeader, QPage, QPageContainer, QPageSticky, QList, QItem, QItemSection, QItemLabel, QExpansionItem, QSlideItem, QMenu, QNoSsr, QResizeObserver, QScrollObserver, QOptionGroup, QPageScroller, QPagination, QParallax, QPopupEdit, QPopupProxy, QLinearProgress, QPullToRefresh, QRadio, QRange, QRating, QScrollArea, QSelect, QSeparator, QSlideTransition, QSlider, QSpace, QSpinner, QSpinnerAudio, QSpinnerBall, QSpinnerBars, QSpinnerComment, QSpinnerCube, QSpinnerDots, QSpinnerFacebook, QSpinnerGears, QSpinnerGrid, QSpinnerHearts, QSpinnerHourglass, QSpinnerInfinity, QSpinnerIos, QSpinnerOval, QSpinnerPie, QSpinnerPuff, QSpinnerRadio, QSpinnerRings, QSpinnerTail, QSplitter, QStep, QStepper, QStepperNavigation, QTabPanels, QTabPanel, QTable, QTh, QTr, QTd, QMarkupTable, QTabs, QTab, QRouteTab, QTimeline, QTimelineEntry, QToggle, QToolbar, QToolbarTitle, QTooltip, QTree, QUploader, QUploaderBase, QUploaderAddTrigger, QVideo, QVirtualScroll */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -61977,140 +61989,128 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "article",
-    { staticClass: "row" },
+    { staticClass: "q-pa-md row" },
     [
-      _c("Player"),
+      _c("Player", {
+        staticClass: "col-md-6",
+        attrs: { arquivos: _vm.conteudo.arquivos, tipo: _vm.conteudo.tipo }
+      }),
       _vm._v(" "),
       _vm.conteudo
         ? _c(
             "q-card",
+            { staticClass: "col-md-6" },
             [
+              _c(
+                "q-card-section",
+                {},
+                [
+                  _c("div", {
+                    staticClass: "text-h5 q-mb-lg",
+                    style: "color:" + _vm.conteudo.canal.color + ";",
+                    domProps: { textContent: _vm._s(_vm.conteudo.title) }
+                  }),
+                  _vm._v(" "),
+                  _c("q-separator", {
+                    staticClass: "q-mb-lg",
+                    attrs: { inset: "" }
+                  }),
+                  _vm._v(" "),
+                  _c("small", [
+                    _c("b", [_vm._v("Usuário(a) publicador(ora):")]),
+                    _vm._v(
+                      " " + _vm._s(_vm.conteudo.user.name) + "\n          "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c("small", [
+                    _c("b", [_vm._v("Acessos:")]),
+                    _vm._v(
+                      " " + _vm._s(_vm.conteudo.qt_access) + "\n          "
+                    )
+                  ]),
+                  _vm._v(" - \n          "),
+                  _c("small", [
+                    _c("b", [_vm._v("Downloads:")]),
+                    _vm._v(
+                      " " + _vm._s(_vm.conteudo.qt_downloads) + "\n          "
+                    )
+                  ])
+                ],
+                1
+              ),
+              _vm._v(" "),
               _c("q-card-section", [
-                _c("section", { staticClass: "row" }, [
-                  _c(
-                    "div",
-                    { staticClass: "col-xs-12 col-sm-7" },
-                    [
-                      _c("div", {
-                        staticClass: "text-h4 q-pr-lg",
-                        style: "color:" + _vm.conteudo.canal.color + ";",
-                        domProps: { textContent: _vm._s(_vm.conteudo.title) }
-                      }),
-                      _vm._v(" "),
-                      _c("q-separator", {
-                        staticClass: "q-mb-lg",
-                        attrs: { inset: "" }
-                      }),
-                      _vm._v(" "),
-                      _c("div", {}, [
-                        _c("small", [
-                          _c("b", [_vm._v("Usuário(a) publicador(ora):")]),
-                          _vm._v(
-                            " " +
-                              _vm._s(_vm.conteudo.user.name) +
-                              "\n                "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("br"),
-                        _vm._v(" "),
-                        _c("small", [
-                          _c("b", [_vm._v("Acessos:")]),
-                          _vm._v(
-                            " " +
-                              _vm._s(_vm.conteudo.qt_access) +
-                              "\n                "
-                          )
-                        ]),
-                        _vm._v(" - \n                "),
-                        _c("small", [
-                          _c("b", [_vm._v("Downloads:")]),
-                          _vm._v(
-                            " " +
-                              _vm._s(_vm.conteudo.qt_downloads) +
-                              "\n                "
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", {
-                        staticClass: "q-mt-lg q-pr-lg",
+                _c("div", {
+                  domProps: { innerHTML: _vm._s(_vm.conteudo.description) }
+                })
+              ]),
+              _vm._v(" "),
+              _c(
+                "q-card-section",
+                [
+                  _c("q-chip", { attrs: { color: "ligth", label: "Fonte:" } }),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "i-list break-word" }, [
+                    _vm._v(_vm._s(_vm.conteudo.source))
+                  ]),
+                  _vm._v(" "),
+                  _c("q-separator", {
+                    staticClass: "q-mb-lg",
+                    attrs: { inset: "" }
+                  }),
+                  _vm._v(" "),
+                  _c("q-chip", {
+                    attrs: { label: "Autores:", color: "ligth" }
+                  }),
+                  _vm._v(" "),
+                  _vm._l(_vm.splitAuthors, function(author, i) {
+                    return _c("i", {
+                      key: "a-" + i,
+                      staticClass: "i-list break-word",
+                      domProps: { textContent: _vm._s(author) }
+                    })
+                  }),
+                  _vm._v(" "),
+                  _c("q-separator", {
+                    staticClass: "q-mb-lg",
+                    attrs: { inset: "" }
+                  }),
+                  _vm._v(" "),
+                  _c("q-chip", {
+                    attrs: { label: "Licença:", color: "ligth" }
+                  }),
+                  _vm._v(" "),
+                  _vm.conteudo.license
+                    ? _c("i", {
+                        staticClass: "i-list break-word",
                         domProps: {
-                          innerHTML: _vm._s(_vm.conteudo.description)
+                          textContent: _vm._s(_vm.conteudo.license.name)
                         }
                       })
-                    ],
-                    1
-                  ),
+                    : _vm._e(),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "col-xs-12 col-sm-5" },
-                    [
-                      _c("q-chip", {
-                        attrs: { color: "ligth", label: "Fonte:" }
-                      }),
-                      _vm._v(" "),
-                      _c("i", { staticClass: "i-list break-word" }, [
-                        _vm._v(_vm._s(_vm.conteudo.source))
-                      ]),
-                      _vm._v(" "),
-                      _c("q-separator", {
-                        staticClass: "q-mb-lg",
-                        attrs: { inset: "" }
-                      }),
-                      _vm._v(" "),
-                      _c("q-chip", {
-                        attrs: { label: "Autores:", color: "ligth" }
-                      }),
-                      _vm._v(" "),
-                      _vm._l(_vm.splitAuthors, function(author, i) {
-                        return _c("i", {
-                          key: "a-" + i,
-                          staticClass: "i-list break-word",
-                          domProps: { textContent: _vm._s(author) }
-                        })
-                      }),
-                      _vm._v(" "),
-                      _c("q-separator", {
-                        staticClass: "q-mb-lg",
-                        attrs: { inset: "" }
-                      }),
-                      _vm._v(" "),
-                      _c("q-chip", {
-                        attrs: { label: "Licença:", color: "ligth" }
-                      }),
-                      _vm._v(" "),
-                      _vm.conteudo.license
-                        ? _c("i", {
-                            staticClass: "i-list break-word",
-                            domProps: {
-                              textContent: _vm._s(_vm.conteudo.license.name)
-                            }
-                          })
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c("q-separator", {
-                        staticClass: "q-mb-lg",
-                        attrs: { inset: "" }
-                      }),
-                      _vm._v(" "),
-                      _c("q-chip", {
-                        attrs: { label: "Componentes:", color: "ligth" }
-                      }),
-                      _vm._v(" "),
-                      _vm._l(_vm.conteudo.componentes, function(componente) {
-                        return _c("i", {
-                          key: "c-" + componente.id,
-                          staticClass: "i-list break-word",
-                          domProps: { textContent: _vm._s(componente.name) }
-                        })
-                      })
-                    ],
-                    2
-                  )
-                ])
-              ]),
+                  _c("q-separator", {
+                    staticClass: "q-mb-lg",
+                    attrs: { inset: "" }
+                  }),
+                  _vm._v(" "),
+                  _c("q-chip", {
+                    attrs: { label: "Componentes:", color: "ligth" }
+                  }),
+                  _vm._v(" "),
+                  _vm._l(_vm.conteudo.componentes, function(componente) {
+                    return _c("i", {
+                      key: "c-" + componente.id,
+                      staticClass: "i-list break-word",
+                      domProps: { textContent: _vm._s(componente.name) }
+                    })
+                  })
+                ],
+                2
+              ),
               _vm._v(" "),
               _c(
                 "q-card-section",
@@ -62454,20 +62454,77 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    [
+      _c(
+        "q-card",
+        [
+          _vm.tipo.id == 5
+            ? _c("q-card-section", [
+                _c(
+                  "video",
+                  { attrs: { width: "640", height: "360" } },
+                  _vm._l(_vm.videos, function(video, i) {
+                    return _c("source", {
+                      key: i,
+                      attrs: { src: video.source, type: video.mime }
+                    })
+                  }),
+                  0
+                )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("q-card-section", [
+            _vm._v(
+              "\n            " +
+                _vm._s(_vm.arquivos) +
+                " - " +
+                _vm._s(_vm.tipo) +
+                "\n      "
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "q-card-actions",
+            [
+              _c(
+                "q-btn-group",
+                { attrs: { outline: "" } },
+                [
+                  _c("q-btn", {
+                    attrs: { outline: "", color: "primary", label: "Baixar" }
+                  }),
+                  _vm._v(" "),
+                  _vm.arquivos && _vm.arquivos.guia
+                    ? _c("q-btn", {
+                        attrs: {
+                          outline: "",
+                          color: "primary",
+                          label: "Guia Pedagógica",
+                          "icon-right": "watch_later"
+                        }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("q-btn", {
+                    attrs: { outline: "", color: "primary", label: "Third" }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "panel panel-default" }, [
-      _c("div", { staticClass: "panel-body" }, [
-        _c("div", { staticClass: "row" })
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

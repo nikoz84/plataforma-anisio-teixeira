@@ -1,90 +1,61 @@
 <template>
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <div class="row">
-                <!-- div class="col-sm-9">
-                    {{download}} {{visualizacao}}
-                    <object v-if="guia"
-                        v-bind:data="`/storage/conteudos/conteudos-digitais/guias-pedagogicos/` + id.guia" 
-                        type="application/pdf" width="100%" height="460">
-                        <p>Alternative text - include a link 
-                            <a v:bind:href="`/storage/conteudos/conteudos-digitais/guias-pedagogicos/` + id.guia">
-                                to the PDF!
-                            </a>
-                        </p>
-                    </object>
-                    <div v-if="tipo.id == 1" documento>
-                        <h3> {{tipo.name}} - {{tipo.id}} </h3>
-                    </div>
-                    <div v-if="tipo.id == 2" planilha>
-                        <h3> {{tipo.name}} - {{tipo.id}} </h3>
-                    </div>
-                    <div v-if="tipo.id == 3" apresentacao>
-                        <h3> {{tipo.name}} - {{tipo.id}} </h3>
-                    </div>
-                    <div v-if="tipo.id == 4" audio>
-                        <h3> {{tipo.name}} - {{tipo.id}} </h3>
-                    </div>
-                    <div class="" v-if="tipo.id == 5" video>
-                        <h3> {{tipo.name}} - {{tipo.id}} </h3>
-                        <div align="center" class="embed-responsive embed-responsive-16by9">
-                            <video controls>
-                                <source  class="embed-responsive-item" :src="video" type="video/webm">
-                            </video>
-                        </div>
-                    </div>
-                    <div v-if="tipo.id == 6" imagem>
-                        <h3> {{tipo.name}} - {{tipo.id}} </h3>
-                    </div>
-                    <div v-if="tipo.id == 7" animacao>
-                        <h3> {{tipo.name}} - {{tipo.id}} </h3>
-                    </div>
-                    <div v-if="tipo.id == 8" site>
-                        <h3> {{tipo.name}} - {{tipo.id}} </h3>
-                    </div>
-                    <div v-if="tipo.id == 9" software>
-                        <h3> {{tipo.name}} - {{tipo.id}} </h3>
-                    </div>
-                    <div v-if="tipo.id == 10" sequencia>
-                        <h3> {{tipo.name}} - {{tipo.id}} </h3>
-                    </div>
-                </div-->
-            </div>
-        </div>
+    <div>
+        <q-card>
+          <q-card-section v-if="tipo.id == 5">
+            <video  width="640" height="360">
+              <source v-for="(video, i) in videos" :key="i" :src="video.source" :type="video.mime">
+            </video>
+          </q-card-section>
+          <q-card-section>
+                {{arquivos}} - {{tipo}}
+          </q-card-section>
+          <q-card-actions>
+            <q-btn-group outline>
+              <q-btn outline color="primary" label="Baixar" />
+              <q-btn v-if="arquivos && arquivos.guia" outline color="primary" label="Guia Pedagógica" icon-right="watch_later" />
+              <q-btn outline color="primary" label="Third" />
+            </q-btn-group>
+          </q-card-actions>
+        </q-card>
     </div>
 </template>
 
 <script>
-    export default {
-        name : 'Player',
-        props:['guia','download','visualizacao','tipo','id'],
-        mounted(){
-            //this.$refs.videoRef.src = ``;
-            //console.log()
-        },
-        computed:{
-            visualizarConteudo(){
-                console.log(this.guia)
-                console.log(this.download)
-                console.log(this.visualizacao)
-                console.log(this.tipo)
-                console.log(this.id)
-                
-            },
-            video(){
-                if(this.visualizacao){
-                    return `/storage/conteudos/conteudos-digitais/visualizacao/${this.visualizacao}`;
-                }else {
-                    return `/storage/conteudos/conteudos-digitais/download/${this.download}`;
-                }
-                
-            }
+import { QCard, QCardActions, QCardSection, QBtnGroup, QBtn } from "quasar";
 
-        },
-        methods:{
-            visualizar(){
-
-            }
-        }    
+export default {
+  name: "Player",
+  components: { QCard, QCardActions, QCardSection, QBtn, QBtnGroup },
+  props: ["arquivos", "tipo"],
+  data() {
+    return {
+      is_video: false
+    };
+  },
+  mounted() {
+    //this.$refs.videoRef.src = ``;
+    //console.log()
+  },
+  computed: {
+    videos() {
+      if (this.tipo.id == 5 && this.arquivos.download) {
+        this.is_video = true;
+        return [
+          {
+            source: this.arquivos.download.url,
+            mime: this.arquivos.download.mime_type
+          },
+          {
+            source: this.arquivos.visualizacao.url,
+            mime: this.arquivos.visualizacao.mime_type
+          }
+        ];
+      }
     }
+  },
+
+  methods: {
+    visualizar() {}
+  }
+};
 </script>
