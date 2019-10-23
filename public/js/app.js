@@ -4661,16 +4661,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var quasar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! quasar */ "./node_modules/quasar/src/index.esm.js");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var quasar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! quasar */ "./node_modules/quasar/src/index.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -4682,36 +4674,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Default",
   directives: {
-    GoBack: quasar__WEBPACK_IMPORTED_MODULE_2__["GoBack"]
+    GoBack: quasar__WEBPACK_IMPORTED_MODULE_1__["GoBack"]
   },
   componentes: {
-    QLayout: quasar__WEBPACK_IMPORTED_MODULE_2__["QLayout"],
-    QDrawer: quasar__WEBPACK_IMPORTED_MODULE_2__["QDrawer"],
-    QHeader: quasar__WEBPACK_IMPORTED_MODULE_2__["QHeader"],
-    QSpace: quasar__WEBPACK_IMPORTED_MODULE_2__["QSpace"],
-    QToolbar: quasar__WEBPACK_IMPORTED_MODULE_2__["QToolbar"],
-    QToolbarTitle: quasar__WEBPACK_IMPORTED_MODULE_2__["QToolbarTitle"],
-    QPageContainer: quasar__WEBPACK_IMPORTED_MODULE_2__["QPageContainer"],
-    QPageScroller: quasar__WEBPACK_IMPORTED_MODULE_2__["QPageScroller"],
-    QList: quasar__WEBPACK_IMPORTED_MODULE_2__["QList"],
-    QItem: quasar__WEBPACK_IMPORTED_MODULE_2__["QItem"],
-    QItemSection: quasar__WEBPACK_IMPORTED_MODULE_2__["QItemSection"],
-    QItemLabel: quasar__WEBPACK_IMPORTED_MODULE_2__["QItemLabel"],
-    QExpansionItem: quasar__WEBPACK_IMPORTED_MODULE_2__["QExpansionItem"],
-    QSelect: quasar__WEBPACK_IMPORTED_MODULE_2__["QSelect"]
+    QLayout: quasar__WEBPACK_IMPORTED_MODULE_1__["QLayout"],
+    QDrawer: quasar__WEBPACK_IMPORTED_MODULE_1__["QDrawer"],
+    QHeader: quasar__WEBPACK_IMPORTED_MODULE_1__["QHeader"],
+    QSpace: quasar__WEBPACK_IMPORTED_MODULE_1__["QSpace"],
+    QToolbar: quasar__WEBPACK_IMPORTED_MODULE_1__["QToolbar"],
+    QToolbarTitle: quasar__WEBPACK_IMPORTED_MODULE_1__["QToolbarTitle"],
+    QPageContainer: quasar__WEBPACK_IMPORTED_MODULE_1__["QPageContainer"],
+    QPageScroller: quasar__WEBPACK_IMPORTED_MODULE_1__["QPageScroller"],
+    QList: quasar__WEBPACK_IMPORTED_MODULE_1__["QList"],
+    QItem: quasar__WEBPACK_IMPORTED_MODULE_1__["QItem"],
+    QItemSection: quasar__WEBPACK_IMPORTED_MODULE_1__["QItemSection"],
+    QItemLabel: quasar__WEBPACK_IMPORTED_MODULE_1__["QItemLabel"],
+    QExpansionItem: quasar__WEBPACK_IMPORTED_MODULE_1__["QExpansionItem"],
+    QSelect: quasar__WEBPACK_IMPORTED_MODULE_1__["QSelect"]
   },
   data: function data() {
     return {
-      leftDrawerOpen: false,
-      termSearch: "",
-      options: []
+      leftDrawerOpen: this.$q.platform.is.desktop
     };
   },
   created: function created() {
     this.getLayout();
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["isLogged", "links", "canal", "sidebar"])),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(["getLayout", "logout"]), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["isLogged", "links", "canal", "sidebar"])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["getLayout", "logout"]), {
     sair: function sair() {
       var _this = this;
 
@@ -4720,39 +4710,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this.$router.push("/");
         }
       });
-    },
-    getData: function () {
-      var _getData = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var resp;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return console.log(this.termSearch);
-
-              case 2:
-                _context.next = 4;
-                return axios.get("tags/search/matematicas");
-
-              case 4:
-                resp = _context.sent;
-                console.log(resp);
-
-              case 6:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function getData() {
-        return _getData.apply(this, arguments);
-      }
-
-      return getData;
-    }()
+    }
   })
 });
 
@@ -61989,17 +61947,17 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "article",
-    { staticClass: "q-pa-md row" },
+    { staticClass: "row q-mt-sm" },
     [
       _c("Player", {
-        staticClass: "col-md-6",
+        staticClass: "col-6",
         attrs: { arquivos: _vm.conteudo.arquivos, tipo: _vm.conteudo.tipo }
       }),
       _vm._v(" "),
       _vm.conteudo
         ? _c(
             "q-card",
-            { staticClass: "col-md-6" },
+            { staticClass: "col-6" },
             [
               _c(
                 "q-card-section",
@@ -62017,7 +61975,7 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("small", [
-                    _c("b", [_vm._v("Usuário(a) publicador(ora):")]),
+                    _c("b", [_vm._v("Publicador(ora):")]),
                     _vm._v(
                       " " + _vm._s(_vm.conteudo.user.name) + "\n          "
                     )
@@ -62404,7 +62362,7 @@ var render = function() {
               )
             },
             [
-              _c("q-card", { staticClass: "text-center" }, [
+              _c("q-card", { staticClass: "q-mt-sm text-center" }, [
                 _vm._v(
                   "\n      " + _vm._s(_vm.paginator.total) + " conteúdos\n    "
                 )
@@ -63630,7 +63588,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "q-pa-md row" }, [
+  return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "col-md-8" }, [
       _c(
         "form",
@@ -65763,7 +65721,7 @@ var render = function() {
                   dense: "",
                   round: "",
                   "aria-label": "Menu",
-                  icon: "search"
+                  icon: "dehaze"
                 },
                 on: {
                   click: function($event) {
@@ -65772,81 +65730,34 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("q-toolbar-title", [
-                _vm._v("\n        Plataforma Anísio Teixeira\n      ")
-              ]),
-              _vm._v(" "),
-              _c("q-space"),
-              _vm._v(" "),
               _c(
-                "q-btn-dropdown",
-                { attrs: { stretch: "", flat: "", label: "Canais" } },
+                "q-btn",
+                {
+                  staticClass: "q-ml-xs",
+                  attrs: { flat: "", "no-caps": "", "no-wrap": "", to: "/" }
+                },
                 [
-                  _c(
-                    "q-list",
-                    [
-                      _vm._l(_vm.links, function(link, i) {
-                        return _c(
-                          "q-item",
-                          {
-                            directives: [
-                              { name: "close-popup", rawName: "v-close-popup" }
-                            ],
-                            key: "x." + i,
-                            attrs: {
-                              to: "/" + link.slug + "/listar",
-                              clickable: "",
-                              tabindex: "0"
-                            }
-                          },
-                          [
-                            _c(
-                              "q-item-section",
-                              [_c("q-item-label", [_vm._v(_vm._s(link.name))])],
-                              1
-                            )
-                          ],
-                          1
-                        )
-                      }),
-                      _vm._v(" "),
-                      _vm.isLogged
-                        ? _c("q-separator", { staticClass: "q-mt-md" })
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.isLogged
-                        ? _c(
-                            "q-item",
-                            {
-                              directives: [
-                                {
-                                  name: "close-popup",
-                                  rawName: "v-close-popup"
-                                }
-                              ],
-                              staticClass: "bg-blue-1",
-                              attrs: {
-                                to: "/admin/conteudos/listar",
-                                clickable: "",
-                                tabindex: "0"
-                              }
-                            },
-                            [
-                              _c(
-                                "q-item-section",
-                                [_c("q-item-label", [_vm._v("Administração")])],
-                                1
-                              )
-                            ],
-                            1
+                  _c("q-icon", { attrs: { name: "img:/logo.svg" } }),
+                  _vm._v(" "),
+                  _vm.$q.screen.gt.xs
+                    ? _c(
+                        "q-toolbar-title",
+                        {
+                          staticClass: "text-weight-bold",
+                          attrs: { shrink: "" }
+                        },
+                        [
+                          _vm._v(
+                            "\n          Plataforma Anísio Teixeira\n        "
                           )
-                        : _vm._e()
-                    ],
-                    2
-                  )
+                        ]
+                      )
+                    : _vm._e()
                 ],
                 1
               ),
+              _vm._v(" "),
+              _c("q-space"),
               _vm._v(" "),
               _c(
                 "q-btn-dropdown",
@@ -65965,57 +65876,6 @@ var render = function() {
           _c(
             "q-list",
             [
-              _c("q-select", {
-                attrs: {
-                  filled: "",
-                  "use-input": "",
-                  "hide-selected": "",
-                  "fill-input": "",
-                  options: _vm.options
-                },
-                on: { filter: _vm.getData },
-                scopedSlots: _vm._u([
-                  {
-                    key: "prepend",
-                    fn: function() {
-                      return [
-                        _c("q-icon", {
-                          staticClass: "text-primary",
-                          attrs: { name: "search" }
-                        })
-                      ]
-                    },
-                    proxy: true
-                  },
-                  {
-                    key: "no-option",
-                    fn: function() {
-                      return [
-                        _c(
-                          "q-item",
-                          [
-                            _c("q-item-section", { staticClass: "text-grey" }, [
-                              _vm._v(
-                                "\n              Sem Resultados\n            "
-                              )
-                            ])
-                          ],
-                          1
-                        )
-                      ]
-                    },
-                    proxy: true
-                  }
-                ]),
-                model: {
-                  value: _vm.termSearch,
-                  callback: function($$v) {
-                    _vm.termSearch = $$v
-                  },
-                  expression: "termSearch"
-                }
-              }),
-              _vm._v(" "),
               _c(
                 "q-item",
                 { attrs: { clickable: "", tag: "a", to: "/" } },
@@ -66034,9 +65894,62 @@ var render = function() {
                   )
                 ],
                 1
-              )
+              ),
+              _vm._v(" "),
+              _vm.isLogged ? _c("q-separator") : _vm._e(),
+              _vm._v(" "),
+              _vm.isLogged
+                ? _c(
+                    "q-item",
+                    {
+                      directives: [
+                        { name: "close-popup", rawName: "v-close-popup" }
+                      ],
+                      attrs: {
+                        to: "/admin/conteudos/listar",
+                        clickable: "",
+                        tabindex: "0"
+                      }
+                    },
+                    [
+                      _c(
+                        "q-item-section",
+                        [_c("q-item-label", [_vm._v("Administração")])],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.isLogged ? _c("q-separator") : _vm._e(),
+              _vm._v(" "),
+              _vm._l(_vm.links, function(link, i) {
+                return _c(
+                  "q-item",
+                  {
+                    directives: [
+                      { name: "close-popup", rawName: "v-close-popup" }
+                    ],
+                    key: "x." + i,
+                    attrs: {
+                      to: "/" + link.slug + "/listar",
+                      clickable: "",
+                      tabindex: "0"
+                    }
+                  },
+                  [
+                    _c(
+                      "q-item-section",
+                      [_c("q-item-label", [_vm._v(_vm._s(link.name))])],
+                      1
+                    )
+                  ],
+                  1
+                )
+              })
             ],
-            1
+            2
           )
         ],
         1
@@ -86019,11 +85932,9 @@ var actions = {
               _context15.prev = 1;
               _context15.next = 4;
               return axios.get("/canais/slug/".concat(slug)).then(function (resp) {
-                commit("SET_CANAL", resp.data.canal);
-                commit("SET_CANAL_ID", resp.data.canal.id);
-                localStorage.setItem("canal", resp.data.canal.id);
-                commit("SET_SIDEBAR", resp.data.sidebar);
-                dispatch("sideBarSet", resp.data.sidebar);
+                commit("SET_CANAL", resp.data.metadata);
+                commit("SET_CANAL_ID", resp.data.metadata.id);
+                localStorage.setItem("canal", resp.data.metadata.id);
               });
 
             case 4:
@@ -86049,61 +85960,8 @@ var actions = {
 
     return getCanalBySlug;
   }(),
-  sideBarSet: function sideBarSet(_ref16, sidebar) {
+  showExibir: function showExibir(_ref16, slug) {
     var commit = _ref16.commit;
-    var categories = sidebar.categories ? sidebar.categories : null;
-    commit("SET_CATEGORIES", categories);
-    var temas = sidebar.temas ? sidebar.temas : null;
-    commit("SET_TEMAS", temas);
-    var disciplinas = sidebar.disciplinas ? sidebar.disciplinas : null;
-    commit("SET_DISCIPLINAS", disciplinas);
-    var components = sidebar.components ? sidebar.components : null;
-    commit("SET_COMPONENTS", components);
-    var niveis = sidebar.niveis ? sidebar.niveis : null;
-    commit("SET_NIVEIS", niveis);
-    var tipos = sidebar.tipos ? sidebar.tipos : null;
-    commit("SET_TIPOS", tipos);
-  },
-  fetchEnabledCategories: function () {
-    var _fetchEnabledCategories = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16(_ref17, params) {
-      var commit, resp;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
-        while (1) {
-          switch (_context16.prev = _context16.next) {
-            case 0:
-              commit = _ref17.commit;
-              _context16.next = 3;
-              return axios.get("/categories", params);
-
-            case 3:
-              resp = _context16.sent;
-
-              if (resp.status == 200 && resp.data) {
-                commit("SET_CATEGORIES", resp.data.sidebar.categories);
-                commit("SET_TEMAS", resp.data.sidebar.temas);
-                commit("SET_DISCIPLINAS", resp.data.sidebar.disciplinas);
-                commit("SET_COMPONENTES", resp.data.sidebar.componentes);
-                commit("SET_NIVEIS", resp.data.sidebar.niveis);
-              } else {
-                commit("SET_IS_ERROR", true);
-              }
-
-            case 5:
-            case "end":
-              return _context16.stop();
-          }
-        }
-      }, _callee16);
-    }));
-
-    function fetchEnabledCategories(_x25, _x26) {
-      return _fetchEnabledCategories.apply(this, arguments);
-    }
-
-    return fetchEnabledCategories;
-  }(),
-  showExibir: function showExibir(_ref18, slug) {
-    var commit = _ref18.commit;
 
     if (slug != "aplicativos-educacionais") {
       commit("SET_SHOW_CONTEUDO", true);

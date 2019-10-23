@@ -12,7 +12,7 @@
     </!-->
     
     <q-infinite-scroll @load="onLoad" :offset="250">
-      <q-card class="text-center">
+      <q-card class="q-mt-sm text-center">
         {{ paginator.total }} conteúdos
       </q-card>
       <div v-for="(item, i) in infiniteSrollData" :key="i">

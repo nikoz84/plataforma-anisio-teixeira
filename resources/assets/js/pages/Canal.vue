@@ -5,47 +5,77 @@
       <h1 class="page-title" :style="`color:${canal.color};`">
           {{ canal.name }}
       </h1>
-      <nav>
-        <q-tabs inline-label class="bg-primary text-white shadow-2">
-            
-            <q-route-tab name="inicio" 
-                  label="Sobre" 
-                  :to="{ name: 'Inicio', params: {slug: $route.params.slug}}"
-                  v-if="canal && canal.options && canal.options.has_home"/>
-            <q-separator vertical inset />
-            <q-route-tab name="listar" 
-                  label="Listar" 
-                  :to="{ name: 'Listar', params: {slug: $route.params.slug}}"/>
-            <q-separator vertical inset />
-            <q-space />
-            <q-route-tab name="denunciar" 
-                  label="Denunciar"
-                  :to="setUrlDenuncia" />
-            <q-separator vertical inset />
-            <q-route-tab name="faleconosco" 
-                  label="Fale Conosco" 
-                  :to="setUrlFaleConosco"/>
-        </q-tabs>
-      </nav>
     </header>
-    <div>
-      <transition name="custom-classes-transition" 
-                  enter-active-class="animated fadeIn" 
-                  leave-active-class="animated fadeOut"
-                  mode="out-in">
-        <router-view></router-view>
-      </transition>
-    </div>
+    <nav>
+      <q-tabs inline-label class="bg-primary text-white shadow-2">
+        <q-route-tab name="inicio" 
+              label="Sobre" 
+              :to="{ name: 'Inicio', params: {slug: $route.params.slug}}"
+              v-if="canal && canal.options && canal.options.has_home"/>
+        <q-separator vertical inset />
+        <q-route-tab name="listar" 
+              label="Listar" 
+              :to="{ name: 'Listar', params: {slug: $route.params.slug}}"/>
+        <q-separator vertical inset />
+        <q-tab label="Categorias" @click="showCategories"/>
+        <q-separator vertical inset />
+        <q-select 
+          v-model="termSearch"
+          use-input
+          hide-selected
+          fill-input
+          :options="options"
+          @filter="search">
+        </q-select>
+        <q-space />
+        <q-route-tab name="denunciar" 
+              label="Denunciar"
+              :to="setUrlDenuncia" />
+        <q-separator vertical inset />
+        <q-route-tab name="faleconosco" 
+              label="Fale Conosco" 
+              :to="setUrlFaleConosco"/>
+      </q-tabs>
+    </nav>
+    
+    
+    <q-card class="q-gutter-xs" v-if="canal && canal.options && canal.options.has_categories">
+      <q-btn v-for="(category, i) in canal.sidebar.categories" :key="i" :label="category.name">
+        
+      </q-btn>
+    </q-card>
+
+    <transition name="custom-classes-transition" 
+                enter-active-class="animated fadeIn" 
+                leave-active-class="animated fadeOut"
+                mode="out-in">
+      <router-view></router-view>
+    </transition>
+    
   </article>
   
 </template>
 <script>
-import { QTabs, QRouteTab, QSeparator, QSpace } from "quasar";
+import {
+  QTabs,
+  QRouteTab,
+  QSeparator,
+  QSpace,
+  QSelect,
+  QTab,
+  QCard
+} from "quasar";
 import { mapState, mapActions } from "vuex";
 
 export default {
   name: "canal",
-  components: { QTabs, QRouteTab, QSeparator, QSpace },
+  components: { QTabs, QRouteTab, QSeparator, QSpace, QSelect, QTab, QCard },
+  data() {
+    return {
+      termSearch: "",
+      options: []
+    };
+  },
   mounted() {
     this.getCanalBySlug(this.$route.params.slug).then(() => {
       this.fetchData();
@@ -83,6 +113,12 @@ export default {
       "fetchAplicativos",
       "fetchPosts"
     ]),
+    search(val) {
+      console.log(val);
+    },
+    showCategories() {
+      console.log(this.canal);
+    },
     fetchData() {
       let query = this.$route.query;
       query.canal = localStorage.canal;
@@ -101,16 +137,15 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
-$downriver-800: #0f285d; /* 800 */
-
+<style lang="stylus" scoped>
 .page-header {
   text-align: center;
+
   .page-title {
     margin-top: 0;
     position: relative;
-    font-size: 25px;
-    color: $downriver-800;
+    font-size: 20px;
+    color: #0f285d;
     font-weight: 700;
   }
 }

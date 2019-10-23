@@ -1,12 +1,12 @@
 <template>
-    <article class="q-pa-md row">
-        <Player class="col-md-6" :arquivos="conteudo.arquivos" :tipo="conteudo.tipo"></Player>
-        <q-card class="col-md-6" v-if="conteudo">
+    <article class="row q-mt-sm">
+        <Player class="col-6" :arquivos="conteudo.arquivos" :tipo="conteudo.tipo"></Player>
+        <q-card class="col-6" v-if="conteudo">
             <q-card-section class="">
               <div class="text-h5 q-mb-lg" :style="`color:${conteudo.canal.color};`" v-text="conteudo.title"></div>
               <q-separator class="q-mb-lg" inset />
               <small>
-                <b>Usuário(a) publicador(ora):</b> {{ conteudo.user.name }}
+                <b>Publicador(ora):</b> {{ conteudo.user.name }}
               </small> <br>
               <small>
                 <b>Acessos:</b> {{ conteudo.qt_access }}

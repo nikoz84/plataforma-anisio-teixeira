@@ -145,42 +145,11 @@ const actions = {
   async getCanalBySlug({ commit, dispatch }, slug) {
     try {
       await axios.get(`/canais/slug/${slug}`).then(resp => {
-        commit("SET_CANAL", resp.data.canal);
-        commit("SET_CANAL_ID", resp.data.canal.id);
-        localStorage.setItem("canal", resp.data.canal.id);
-        commit("SET_SIDEBAR", resp.data.sidebar);
-        dispatch("sideBarSet", resp.data.sidebar);
+        commit("SET_CANAL", resp.data.metadata);
+        commit("SET_CANAL_ID", resp.data.metadata.id);
+        localStorage.setItem("canal", resp.data.metadata.id);
       });
     } catch (e) {
-      commit("SET_IS_ERROR", true);
-    }
-  },
-  sideBarSet({ commit }, sidebar) {
-    let categories = sidebar.categories ? sidebar.categories : null;
-    commit("SET_CATEGORIES", categories);
-    let temas = sidebar.temas ? sidebar.temas : null;
-    commit("SET_TEMAS", temas);
-    let disciplinas = sidebar.disciplinas ? sidebar.disciplinas : null;
-    commit("SET_DISCIPLINAS", disciplinas);
-    let components = sidebar.components ? sidebar.components : null;
-    commit("SET_COMPONENTS", components);
-    let niveis = sidebar.niveis ? sidebar.niveis : null;
-    commit("SET_NIVEIS", niveis);
-    let tipos = sidebar.tipos ? sidebar.tipos : null;
-    commit("SET_TIPOS", tipos);
-    //let licenses = (sidebar.licenses) ? sidebar.licenses : null;
-    //commit("SET_LICENSES",licenses)
-  },
-  async fetchEnabledCategories({ commit }, params) {
-    let resp = await axios.get("/categories", params);
-
-    if (resp.status == 200 && resp.data) {
-      commit("SET_CATEGORIES", resp.data.sidebar.categories);
-      commit("SET_TEMAS", resp.data.sidebar.temas);
-      commit("SET_DISCIPLINAS", resp.data.sidebar.disciplinas);
-      commit("SET_COMPONENTES", resp.data.sidebar.componentes);
-      commit("SET_NIVEIS", resp.data.sidebar.niveis);
-    } else {
       commit("SET_IS_ERROR", true);
     }
   },

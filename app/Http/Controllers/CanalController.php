@@ -121,11 +121,7 @@ class CanalController extends ApiController
 
         $canal = $this->canal::where('slug', 'ilike', $slug)->first();
 
-        return response()->json([
-            'success' => true,
-            'canal' => $canal,
-            'sidebar' => Sidebar::getSideBar($canal->id),
-        ]);
+        return $this->showOne($canal, '', 200);
     }
     public function getById($id)
     {

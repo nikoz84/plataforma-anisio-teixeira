@@ -1,5 +1,5 @@
 <template>
-<div class="q-pa-md row">
+<div class="row">
   <div class="col-md-8">
     <form v-on:submit.prevent="save()" >
         <q-stepper

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use DB;
+use App\Helpers\SideBar;
 
 class Canal extends Model
 {
@@ -30,7 +31,7 @@ class Canal extends Model
         'updated_at',
         'deleted_at'
     ];
-    protected $appends = ['tipos'];
+    protected $appends = ['tipos', 'sidebar'];
     protected $casts = [
         'options' => 'array',
     ];
@@ -53,5 +54,10 @@ class Canal extends Model
         }
 
         return [];
+    }
+    public function getSidebarAttribute()
+    {
+
+        return Sidebar::getSideBar($this['id']);
     }
 }

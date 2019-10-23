@@ -2,30 +2,35 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-        <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" aria-label="Menu" icon="search"/>
-        <q-toolbar-title>
-          Plataforma Anísio Teixeira
-        </q-toolbar-title>
+        <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" aria-label="Menu" icon="dehaze"/>
+        <q-btn flat no-caps no-wrap class="q-ml-xs" to="/">
+          <q-icon name="img:/logo.svg" />
+          <q-toolbar-title shrink class="text-weight-bold" v-if="$q.screen.gt.xs">
+            Plataforma Anísio Teixeira
+          </q-toolbar-title>
+        </q-btn>
 
         <q-space/>
+        
+        <!--q-select filled
+          v-model="termSearch"
+          use-input
+          hide-selected
+          fill-input
+          :options="options"
+          @filter="getData">
+            <template v-slot:prepend>
+              <q-icon class="text-primary" name="search" />
+            </template>
+            <template v-slot:no-option>
+              <q-item>
+                <q-item-section class="text-grey">
+                  Sem Resultados
+                </q-item-section>
+              </q-item>
+          </template>
+        </q-select -->
 
-        <q-btn-dropdown stretch flat label="Canais">
-          <q-list>
-            <q-item :to="`/${link.slug}/listar`" v-for="(link, i) in links" :key="`x.${i}`" clickable v-close-popup tabindex="0">
-              <q-item-section>
-                <q-item-label>{{ link.name }}</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-separator class="q-mt-md" v-if="isLogged" />
-            <q-item class="bg-blue-1" v-if="isLogged" :to="`/admin/conteudos/listar`" clickable v-close-popup tabindex="0">
-              <q-item-section>
-                <q-item-label>Administração</q-item-label>
-              </q-item-section>
-            </q-item>
-            
-            
-          </q-list>
-        </q-btn-dropdown>
         <q-btn-dropdown stretch flat icon="person">
           <q-list>
             <q-item v-if="!isLogged" to="/usuario/login" clickable v-close-popup tabindex="0">
@@ -54,26 +59,6 @@
       content-class="bg-grey-2"
     >
       <q-list>
-        <q-select filled
-        v-model="termSearch"
-        use-input
-        hide-selected
-        fill-input
-        
-        :options="options"
-        @filter="getData">
-          <template v-slot:prepend>
-            <q-icon class="text-primary" name="search" />
-          </template>
-          <template v-slot:no-option>
-            <q-item>
-              <q-item-section class="text-grey">
-                Sem Resultados
-              </q-item-section>
-            </q-item>
-        </template>
-        </q-select>
-        
         <q-item clickable tag="a" to="/">
           <q-item-section avatar>
             <q-icon name="home" />
@@ -81,6 +66,18 @@
           <q-item-section>
             <q-item-label>Inicio</q-item-label>
           </q-item-section>
+        </q-item>
+        <q-separator v-if="isLogged" />
+        <q-item v-if="isLogged" :to="`/admin/conteudos/listar`" clickable v-close-popup tabindex="0">
+          <q-item-section>
+            <q-item-label>Administração</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-separator v-if="isLogged" />
+        <q-item :to="`/${link.slug}/listar`" v-for="(link, i) in links" :key="`x.${i}`" clickable v-close-popup tabindex="0">
+              <q-item-section>
+                <q-item-label>{{ link.name }}</q-item-label>
+              </q-item-section>
         </q-item>
         <!-- template>
           <div v-for="(category, i) in sidebar.categories" :key="`c-${i}`">
@@ -156,9 +153,8 @@ export default {
   },
   data() {
     return {
-      leftDrawerOpen: false, //this.$q.platform.is.desktop,
-      termSearch: "",
-      options: []
+      leftDrawerOpen: this.$q.platform.is.desktop
+      // is.ie
     };
   },
   created() {
@@ -175,12 +171,6 @@ export default {
           this.$router.push("/");
         }
       });
-    },
-    async getData() {
-      await console.log(this.termSearch);
-
-      let resp = await axios.get(`tags/search/matematicas`);
-      console.log(resp);
     }
   }
 };
