@@ -12,11 +12,9 @@
               label="Sobre" 
               :to="{ name: 'Inicio', params: {slug: $route.params.slug}}"
               v-if="canal && canal.options && canal.options.has_home"/>
-        <q-separator vertical inset />
         <q-route-tab name="listar" 
               label="Listar" 
               :to="{ name: 'Listar', params: {slug: $route.params.slug}}"/>
-        <q-separator vertical inset />
         <q-tab label="Categorias" v-if="canal && canal.options && canal.options.has_categories">
           <q-menu anchor="center middle" self="center middle" class="">
             <q-list dense>
@@ -64,7 +62,6 @@
         <q-route-tab name="denunciar" 
               label="Denunciar"
               :to="setUrlDenuncia" />
-        <q-separator vertical inset />
         <q-route-tab name="faleconosco" 
               label="Fale Conosco" 
               :to="setUrlFaleConosco"/>
@@ -191,7 +188,6 @@ export default {
   text-align: center;
 
   .page-title {
-    margin-top: 0;
     position: relative;
     font-size: 20px;
     color: #0f285d;
