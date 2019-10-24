@@ -17,16 +17,49 @@
               label="Listar" 
               :to="{ name: 'Listar', params: {slug: $route.params.slug}}"/>
         <q-separator vertical inset />
-        <q-tab label="Categorias" @click="showCategories"/>
-        <q-separator vertical inset />
-        <q-select 
+        <q-tab label="Categorias" v-if="canal && canal.options && canal.options.has_categories">
+          <q-menu anchor="center middle" self="center middle" class="">
+            <q-list dense>
+              <q-item clickable dense 
+                    v-close-popup 
+                    v-for="(category, i) in canal.sidebar.categories" 
+                    :key="i" 
+                    @click="showCategory">
+                <q-item-section>{{category.name }}</q-item-section>
+                <q-item-section side v-if="category.sub_categories.length > 0">
+                  <q-icon name="keyboard_arrow_right" />
+                </q-item-section>
+
+                <q-menu anchor="top right" self="top left" v-if="category.sub_categories.length > 0">
+                  <q-list dense>
+                    <q-item v-for="n in 3" :key="n" clickable>
+                      <q-item-section>Submenu Label</q-item-section>
+                      <q-item-section side>
+                        <q-icon name="keyboard_arrow_right" />
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-menu>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-tab>
+        <q-space />
+        <q-input 
+          class="q-mt-md input-search"
+          clearable
+          filled
+          clear-icon="close"
           v-model="termSearch"
-          use-input
-          hide-selected
-          fill-input
-          :options="options"
-          @filter="search">
-        </q-select>
+          placeholder="Buscar"
+          color="red-9"
+          bg-color="white"
+          dense
+          bottom-slots >
+          <template v-slot:append>
+            <q-btn round dense flat icon="search" @click="search"/>
+          </template>
+        </q-input>
         <q-space />
         <q-route-tab name="denunciar" 
               label="Denunciar"
@@ -37,14 +70,6 @@
               :to="setUrlFaleConosco"/>
       </q-tabs>
     </nav>
-    
-    
-    <q-card class="q-gutter-xs" v-if="canal && canal.options && canal.options.has_categories">
-      <q-btn v-for="(category, i) in canal.sidebar.categories" :key="i" :label="category.name">
-        
-      </q-btn>
-    </q-card>
-
     <transition name="custom-classes-transition" 
                 enter-active-class="animated fadeIn" 
                 leave-active-class="animated fadeOut"
@@ -56,6 +81,7 @@
   
 </template>
 <script>
+import { mapState, mapActions } from "vuex";
 import {
   QTabs,
   QRouteTab,
@@ -63,13 +89,32 @@ import {
   QSpace,
   QSelect,
   QTab,
-  QCard
+  QInput,
+  QCard,
+  QMenu,
+  QList,
+  QItem,
+  QItemSection,
+  ClosePopup
 } from "quasar";
-import { mapState, mapActions } from "vuex";
 
 export default {
   name: "canal",
-  components: { QTabs, QRouteTab, QSeparator, QSpace, QSelect, QTab, QCard },
+  directives: { ClosePopup },
+  components: {
+    QTabs,
+    QRouteTab,
+    QSeparator,
+    QSpace,
+    QSelect,
+    QInput,
+    QTab,
+    QCard,
+    QMenu,
+    QList,
+    QItem,
+    QItemSection
+  },
   data() {
     return {
       termSearch: "",
@@ -116,8 +161,8 @@ export default {
     search(val) {
       console.log(val);
     },
-    showCategories() {
-      console.log(this.canal);
+    showCategory(id) {
+      console.log(id);
     },
     fetchData() {
       let query = this.$route.query;
@@ -138,6 +183,10 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
+.input-search {
+  min-width: 150px;
+}
+
 .page-header {
   text-align: center;
 
