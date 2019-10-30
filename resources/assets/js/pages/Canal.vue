@@ -1,10 +1,37 @@
 <template>
   <article class="q-pa-md">
     <!--Breadcrum></Breadcrum-->
-    <header class="page-header">
-      <h1 class="page-title" :style="`color:${canal.color};`">
-          {{ canal.name }}
-      </h1>
+    <header class="row">
+      <div class="text-h6">
+        {{ (canal && canal.options) ? canal.options.extend_name : '' }}
+      </div>
+      <q-space></q-space>
+      <q-input 
+        class="input-search"
+        style=""
+        clearable
+        filled
+        clear-icon="close"
+        debounce="500"
+        v-model="termSearch"
+        placeholder="Pesquisar..."
+        color="red-9"
+        bg-color="default"
+        dense
+        bottom-slots >
+        <template v-slot:append>
+          <q-btn round dense flat color="primary" icon="search" @click="search"/>
+          <q-btn round dense flat color="primary" icon="reorder">
+            <q-menu anchor="top right" self="top left">
+              <q-list dense>
+                <q-item clickable v-for="(qt, i) in perPage" :key="`perpage-${i}`">
+                  <q-item-section>{{qt}}</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
+        </template>
+      </q-input>
     </header>
     <nav>
       <q-tabs inline-label class="bg-primary text-white shadow-2">
@@ -19,46 +46,37 @@
           <q-menu anchor="center middle" self="center middle" class="">
             <q-list dense>
               <q-item clickable dense 
-                    v-close-popup 
                     v-for="(category, i) in canal.sidebar.categories" 
-                    :key="i" 
-                    @click="showCategory">
+                    :key="i"
+                    v-close-popup="category.sub_categories.length == 0"
+                    @click="showCategory(category.id, category.sub_categories)">
                 <q-item-section>{{category.name }}</q-item-section>
-                <q-item-section side v-if="category.sub_categories.length > 0">
+                <q-item-section side v-if="category.sub_categories && category.sub_categories.length > 0">
                   <q-icon name="keyboard_arrow_right" />
                 </q-item-section>
 
-                <q-menu anchor="top right" self="top left" v-if="category.sub_categories.length > 0">
-                  <q-list dense>
-                    <q-item v-for="n in 3" :key="n" clickable>
-                      <q-item-section>Submenu Label</q-item-section>
-                      <q-item-section side>
-                        <q-icon name="keyboard_arrow_right" />
+                <q-menu anchor="center middle" self="center middle" v-if="category.sub_categories && category.sub_categories.length > 0">
+                  <q-list>
+                    <q-item v-for="(subcategory,n) in category.sub_categories" 
+                            :key="n" 
+                            clickable
+                            dense
+                            v-close-popup
+                            @click="showCategory(subcategory.id, 'sub')">
+                      <q-item-section>
+                        {{subcategory.name}}
                       </q-item-section>
                     </q-item>
                   </q-list>
                 </q-menu>
+                
               </q-item>
             </q-list>
           </q-menu>
         </q-tab>
         <q-space />
-        <q-input 
-          class="q-mt-md input-search"
-          clearable
-          filled
-          clear-icon="close"
-          v-model="termSearch"
-          placeholder="Buscar"
-          color="red-9"
-          bg-color="white"
-          dense
-          bottom-slots >
-          <template v-slot:append>
-            <q-btn round dense flat icon="search" @click="search"/>
-          </template>
-        </q-input>
-        <q-space />
+        
+        
         <q-route-tab name="denunciar" 
               label="Denunciar"
               :to="setUrlDenuncia" />
@@ -115,6 +133,7 @@ export default {
   data() {
     return {
       termSearch: "",
+      perPage: [15, 30, 45],
       options: []
     };
   },
@@ -158,8 +177,14 @@ export default {
     search(val) {
       console.log(val);
     },
-    showCategory(id) {
-      console.log(id);
+    showCategory(categoryId, subCategory) {
+      let path = `/${this.$route.params.slug}/listar`;
+      let categoria = categoryId;
+      if (subCategory == "sub") {
+        this.$router.push({ path, query: { categoria } });
+      } else if (subCategory.length == 0) {
+        this.$router.push({ path, query: { categoria } });
+      }
     },
     fetchData() {
       let query = this.$route.query;
@@ -181,7 +206,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 .input-search {
-  min-width: 150px;
+  min-width: 350px;
 }
 
 .page-header {

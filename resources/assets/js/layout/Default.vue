@@ -59,6 +59,7 @@
       content-class="bg-grey-2"
     >
       <q-list>
+        <!-- HOME -->
         <q-item clickable tag="a" to="/">
           <q-item-section avatar>
             <q-icon name="home" />
@@ -67,38 +68,37 @@
             <q-item-label>Inicio</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator v-if="isLogged" />
+        <q-separator/>
+        <!-- SOBRE -->
+        <q-item clickable tag="a" to="/sobre">
+          <q-item-section avatar>
+            <q-icon name="info" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Sobre</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-separator />
+        <!-- ADMINISTRAÇÃO -->
         <q-item v-if="isLogged" :to="`/admin/conteudos/listar`" clickable v-close-popup tabindex="0">
+          <q-item-section avatar>
+            <q-icon name="settings_applications" />
+          </q-item-section>
           <q-item-section>
             <q-item-label>Administração</q-item-label>
           </q-item-section>
         </q-item>
         <q-separator v-if="isLogged" />
+        <!-- CANAIS -->
         <q-item :to="`/${link.slug}/listar`" v-for="(link, i) in links" :key="`x.${i}`" clickable v-close-popup tabindex="0">
               <q-item-section>
                 <q-item-label>{{ link.name }}</q-item-label>
               </q-item-section>
         </q-item>
-        <!-- template>
-          <div v-for="(category, i) in sidebar.categories" :key="`c-${i}`">
-            <q-item clickable to="/" v-if="category.sub_categories.length <= 0">
-              <q-item-section >
-                {{ category.name }}
-              </q-item-section>
-              
-            </q-item>
-            <q-expansion-item v-else :label="category.name">
-              <q-item clickable v-for="(subcategory, i) in category.sub_categories" :key="`s-${i}`">
-                <q-item-section >
-                  {{ subcategory.name }}
-                </q-item-section>
-              </q-item>
-            </q-expansion-item>    
-          </div>
-        </!-->
-        
       </q-list>
+      <q-separator class="q-mt-md q-mb-lg" />
       
+        
       
     </q-drawer>
 
@@ -119,6 +119,7 @@ import {
   QHeader,
   QToolbar,
   QSpace,
+  QSeparator,
   QToolbarTitle,
   QPageContainer,
   QPageScroller,
@@ -140,6 +141,7 @@ export default {
     QDrawer,
     QHeader,
     QSpace,
+    QSeparator,
     QToolbar,
     QToolbarTitle,
     QPageContainer,
@@ -161,7 +163,7 @@ export default {
     this.getLayout();
   },
   computed: {
-    ...mapState(["isLogged", "links", "canal", "sidebar"])
+    ...mapState(["isLogged", "links", "canal", "sidebar", "layout"])
   },
   methods: {
     ...mapActions(["getLayout", "logout"]),
@@ -175,5 +177,15 @@ export default {
   }
 };
 </script>
-<style >
+<style lang="stylus">
+.drawer-footer-link {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.75rem;
+
+  &:hover {
+    color: #000;
+  }
+}
 </style>

@@ -32,6 +32,16 @@ const routes = [
     }
   },
   {
+    path: "/sobre",
+    name: "Sobre",
+    component: () =>
+      import(/* webpackChunkName: "sobre" */ "./pages/Sobre.vue"),
+    meta: {
+      requiresAuth: false,
+      title: "Sobre a Plataforma"
+    }
+  },
+  {
     path: "/admin",
     name: "admin-home",
     component: () =>

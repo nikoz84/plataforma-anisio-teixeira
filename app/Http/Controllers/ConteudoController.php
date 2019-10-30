@@ -68,8 +68,8 @@ class ConteudoController extends ApiController
             return $q->whereRaw("options->'tipo' <@  {$data}");
         });
 
-        $query->when($canal != 6, function ($q) {
-            return $q->where('canal_id', $this->request->canal);
+        $query->when($canal != 6, function ($q) use ($canal) {
+            return $q->where('canal_id', $canal);
         });
 
         $query->when($categoria, function ($q, $categoria) {
@@ -208,11 +208,11 @@ class ConteudoController extends ApiController
         $conteudos = $this->conteudo::all();
         $filesystem = new \Illuminate\Filesystem\Filesystem;
 
-        foreach($conteudos as $conteudo) {
+        foreach ($conteudos as $conteudo) {
             $id = $conteudo->id;
             $path = \Illuminate\Support\Facades\Storage::disk('conteudos-digitais')->path("download") . "/{$id}.*";
             $files = $filesystem->glob($path);
-            foreach($files as $file) {
+            foreach ($files as $file) {
                 $arr = [
                     'mime_type' => $filesystem->mimeType($file),
                     'extension' => $filesystem->extension($file),
