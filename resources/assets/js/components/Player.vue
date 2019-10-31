@@ -1,19 +1,33 @@
 <template>
-    <div>
+    <div class="q-mb-md">
         <q-card>
           <q-card-section v-if="tipo.id == 5">
-            <video  width="640" height="360">
-              <source v-for="(video, i) in videos" :key="i" :src="video.source" :type="video.mime">
+            <video autoplay controls width="640" height="360">
+              <source v-if="arquivos.visualizacao.url" :src="arquivos.visualizacao.url" :type="arquivos.visualizacao.mime_type">
+              <source v-if="arquivos.download.url" :src="arquivos.download.url" :type="arquivos.download.mime_type">
             </video>
           </q-card-section>
-          <q-card-section>
+          <q-card-section v-else>
                 {{arquivos}} - {{tipo}}
           </q-card-section>
+          <q-card-section>
+            {{arquivos}} - {{tipo}}
+          </q-card-section>
+          
           <q-card-actions>
             <q-btn-group outline>
-              <q-btn outline color="primary" label="Baixar" />
-              <q-btn v-if="arquivos && arquivos.guia" outline color="primary" label="Guia Pedagógica" icon-right="watch_later" />
-              <q-btn outline color="primary" label="Third" />
+              <q-btn v-if="downloadVideo" 
+                    outline
+                    @click="download('video')"
+                    color="primary" 
+                    label="Baixar Vídeo" />
+              <q-btn v-if="arquivos && arquivos.guia.url" 
+                    filled 
+                    @click="download('guia')"
+                    color="primary"
+                    label="Baixar Guia Pedagógica" 
+                    icon-right="cloud_download" />
+              <q-btn outline color="primary" label="Compartilhar" @click="share"/>
             </q-btn-group>
           </q-card-actions>
         </q-card>
@@ -29,7 +43,7 @@ export default {
   props: ["arquivos", "tipo"],
   data() {
     return {
-      is_video: false
+      downloadVideo: false
     };
   },
   mounted() {
@@ -37,25 +51,23 @@ export default {
     //console.log()
   },
   computed: {
-    videos() {
-      if (this.tipo.id == 5 && this.arquivos.download) {
-        this.is_video = true;
-        return [
-          {
-            source: this.arquivos.download.url,
-            mime: this.arquivos.download.mime_type
-          },
-          {
-            source: this.arquivos.visualizacao.url,
-            mime: this.arquivos.visualizacao.mime_type
-          }
-        ];
-      }
-    }
+    videos() {}
   },
 
   methods: {
-    visualizar() {}
+    download(file) {
+      switch (file) {
+        case "video":
+          console.log("download video");
+          break;
+        case "guia":
+          console.warn("guia");
+          break;
+      }
+    },
+    share() {
+      console.log("compartilhar");
+    }
   }
 };
 </script>

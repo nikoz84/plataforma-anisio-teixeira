@@ -24,7 +24,7 @@
           <q-btn round dense flat color="primary" icon="reorder">
             <q-menu anchor="top right" self="top left">
               <q-list dense>
-                <q-item clickable v-for="(qt, i) in perPage" :key="`perpage-${i}`">
+                <q-item clickable v-for="(qt, i) in perPage" :key="`perpage-${i}`" v-close-popup>
                   <q-item-section>{{qt}}</q-item-section>
                 </q-item>
               </q-list>
