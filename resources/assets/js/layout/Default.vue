@@ -48,27 +48,28 @@
       content-class="bg-grey-2"
     >
       <q-list>
+        <!-- MARCA -->
+        <q-item-label v-if="!$q.screen.gt.xs || !$q.screen.gt.sm">
+          <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" aria-label="Menu" icon="dehaze"/>
+          <q-btn flat no-caps no-wrap class="q-ml-xs" to="/">
+            <q-icon name="img:/logo.svg" />
+            <div clas="text-h6">
+              PLATAFORMA ANÍSIO TEIXEIRA
+            </div>
+          </q-btn>
+        </q-item-label>
         <!-- HOME -->
         <q-item clickable to="/">
           <q-item-section avatar>
             <q-icon name="home" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Inicio</q-item-label>
+            <q-item-label>Início</q-item-label>
           </q-item-section>
         </q-item>
         <q-separator/>
-        <q-item-label v-if="!$q.screen.gt.xs || !$q.screen.gt.sm">
-          <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" aria-label="Menu" icon="dehaze"/>
-          <q-btn flat no-caps no-wrap class="q-ml-xs" to="/">
-            <q-icon name="img:/logo.svg" />
-            <div clas="text-h6">
-              Plataforma Anísio Teixeira
-            </div>
-          </q-btn>
-        </q-item-label>
-        <q-item-label class="bg-grey-4" header >
-          <b class="text-h6 text-grey-10">Canais</b>
+        <q-item-label class="bg-grey-3" header >
+          <b>CANAIS</b>
         </q-item-label>
         <!-- CANAIS -->
         <div v-for="(link, i) in links" :key="`x.${i}`">

@@ -66021,28 +66021,6 @@ var render = function() {
           _c(
             "q-list",
             [
-              _c(
-                "q-item",
-                { attrs: { clickable: "", to: "/" } },
-                [
-                  _c(
-                    "q-item-section",
-                    { attrs: { avatar: "" } },
-                    [_c("q-icon", { attrs: { name: "home" } })],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "q-item-section",
-                    [_c("q-item-label", [_vm._v("Inicio")])],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("q-separator"),
-              _vm._v(" "),
               !_vm.$q.screen.gt.xs || !_vm.$q.screen.gt.sm
                 ? _c(
                     "q-item-label",
@@ -66078,7 +66056,7 @@ var render = function() {
                           _vm._v(" "),
                           _c("div", { attrs: { clas: "text-h6" } }, [
                             _vm._v(
-                              "\n            Plataforma Anísio Teixeira\n          "
+                              "\n            PLATAFORMA ANÍSIO TEIXEIRA\n          "
                             )
                           ])
                         ],
@@ -66090,13 +66068,31 @@ var render = function() {
                 : _vm._e(),
               _vm._v(" "),
               _c(
-                "q-item-label",
-                { staticClass: "bg-grey-4", attrs: { header: "" } },
+                "q-item",
+                { attrs: { clickable: "", to: "/" } },
                 [
-                  _c("b", { staticClass: "text-h6 text-grey-10" }, [
-                    _vm._v("Canais")
-                  ])
-                ]
+                  _c(
+                    "q-item-section",
+                    { attrs: { avatar: "" } },
+                    [_c("q-icon", { attrs: { name: "home" } })],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "q-item-section",
+                    [_c("q-item-label", [_vm._v("Início")])],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("q-separator"),
+              _vm._v(" "),
+              _c(
+                "q-item-label",
+                { staticClass: "bg-grey-3", attrs: { header: "" } },
+                [_c("b", [_vm._v("CANAIS")])]
               ),
               _vm._v(" "),
               _vm._l(_vm.links, function(link, i) {
