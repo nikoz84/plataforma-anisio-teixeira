@@ -8,7 +8,7 @@
         {{layout.description_footer}}
       </div>
       <q-separator class="q-mt-md q-mb-lg" />
-      <div class="row">
+      <div class="row" v-if="layout && layout.contact">
         {{layout.contact.city}} <br/>
         {{layout.contact.email}} <br/>
         {{layout.contact.phone}} <br/>
@@ -28,8 +28,8 @@
         </a>
       </div>
       <q-separator class="q-mt-md q-mb-lg" />
-      <div class="row">
-        <q-img style="height: 70px;" class="bg-primary" v-if="layout.marcas.is_active" :src="layout.marcas.url"></q-img>
+      <div class="row" v-if="layout && layout.marcas">
+        <q-img style="max-width: 741px; height: auto;" v-if="layout.marcas.is_active" :src="layout.marcas.url"></q-img>
       </div>
       
     </div>

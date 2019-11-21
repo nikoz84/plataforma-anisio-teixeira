@@ -54,6 +54,7 @@ const actions = {
   async fetchConteudos({ commit }, payload) {
     commit("SET_IS_LOADING", true);
     let url = `/conteudos`;
+    console.log(payload);
     try {
       await axios.get(url, { params: payload }).then(resp => {
         commit("SET_COMPONENT_ID", "");

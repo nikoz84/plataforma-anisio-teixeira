@@ -1,9 +1,9 @@
 <template>
        <q-card class="row q-mt-lg" v-bind:id="item.id">
-          <q-card-section class="col-3" >
+          <q-card-section class="col-xs-5 col-sm-4" >
             <q-img alt="imagem destacada"
                   :src="getImage"
-                  :style="`height: 200px; max-width: 300px;backgroud-color:${color};`"
+                  :style="`height: 200px; width: 100%;backgroud-color:${color};`"
                   placeholder-src="/img/fundo-padrao.svg">
               <div class="absolute-bottom-right text-subtitle2">
                 {{ getTipo }}
@@ -11,7 +11,7 @@
             </q-img>
           </q-card-section>
 
-          <q-card-section class="col-9" >
+          <q-card-section class="col-xs-7 col-sm-8" >
             <div :style="`border-bottom: 2px solid ${color};`"
                   class="text-h6 card-heading-inner q-pt-md cursor-pointer"
                   >

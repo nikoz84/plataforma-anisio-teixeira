@@ -143,7 +143,7 @@ const routes = [
         name: "Recover",
         component: RecoverPassForm,
         meta: {
-          requiresAuth: false,
+          requiresAuth: true,
           title: "recuperar senha"
         }
       },
@@ -166,21 +166,12 @@ const routes = [
         }
       },
       {
-        path: "denuncia",
+        path: "contato/:action",
         name: "DenunciaForm",
         component: DenunciaForm,
         meta: {
           requiresAuth: false,
-          title: "Enviar denúncia"
-        }
-      },
-      {
-        path: "faleconosco",
-        name: "FaleConoscoForm",
-        component: FaleConoscoForm,
-        meta: {
-          requiresAuth: false,
-          title: "Fale conosco"
+          title: "Enviar denúncia ou Fale conosco"
         }
       }
     ]

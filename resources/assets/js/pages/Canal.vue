@@ -5,33 +5,6 @@
       <div class="text-h6">
         {{ (canal && canal.options) ? canal.options.extend_name : '' }}
       </div>
-      <q-space></q-space>
-      <q-input 
-        class="input-search"
-        style=""
-        clearable
-        filled
-        clear-icon="close"
-        debounce="500"
-        v-model="termSearch"
-        placeholder="Pesquisar..."
-        color="red-9"
-        bg-color="default"
-        dense
-        bottom-slots >
-        <template v-slot:append>
-          <q-btn round dense flat color="primary" icon="search" @click="search"/>
-          <q-btn round dense flat color="primary" icon="reorder">
-            <q-menu anchor="top right" self="top left">
-              <q-list dense>
-                <q-item clickable v-for="(qt, i) in perPage" :key="`perpage-${i}`" v-close-popup>
-                  <q-item-section>{{qt}}</q-item-section>
-                </q-item>
-              </q-list>
-            </q-menu>
-          </q-btn>
-        </template>
-      </q-input>
     </header>
     <nav>
       <q-tabs inline-label class="bg-primary text-white shadow-2">
@@ -76,13 +49,6 @@
         </q-tab>
         <q-space />
         
-        
-        <q-route-tab name="denunciar" 
-              label="Denunciar"
-              :to="setUrlDenuncia" />
-        <q-route-tab name="faleconosco" 
-              label="Fale Conosco" 
-              :to="setUrlFaleConosco"/>
       </q-tabs>
     </nav>
     <transition name="custom-classes-transition" 
@@ -96,7 +62,7 @@
   
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 import {
   QTabs,
   QRouteTab,
@@ -134,7 +100,8 @@ export default {
     return {
       termSearch: "",
       perPage: [15, 30, 45],
-      options: []
+      options: [],
+      loadingState: false
     };
   },
   mounted() {
@@ -152,20 +119,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["canal"]),
-    setUrlDenuncia() {
-      localStorage.setItem("urlDenuncia", location.href);
-      return {
-        name: "DenunciaForm",
-        path: "denuncia"
-      };
-    },
-    setUrlFaleConosco() {
-      return {
-        name: "FaleConoscoForm",
-        params: { slug: this.$route.params.slug }
-      };
-    }
+    ...mapState(["canal"])
   },
   methods: {
     ...mapActions([
@@ -174,8 +128,21 @@ export default {
       "fetchAplicativos",
       "fetchPosts"
     ]),
-    search(val) {
-      console.log(val);
+    ...mapMutations(["SET_PAGINATOR"]),
+    async search() {
+      console.log(this.termSearch);
+      if (this.termSearch && this.termSearch.length >= 2) {
+        this.$router.push(
+          `/recursos-educacionais/listar?busca=${this.termSearch}`
+        );
+        this.loadingState = true;
+        await axios.get(`conteudos/search/${this.termSearch}`).then(resp => {
+          if (resp.data.success == true) {
+            this.SET_PAGINATOR(resp.data.paginator);
+            this.loadingState = false;
+          }
+        });
+      }
     },
     showCategory(categoryId, subCategory) {
       let path = `/${this.$route.params.slug}/listar`;

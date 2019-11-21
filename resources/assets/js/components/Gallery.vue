@@ -1,11 +1,9 @@
 <template>
-    <section class="row">
-        <header class="col-12">
-            <h2 class="text-center" style="margin-bottom: 1.5rem !important;">
-                {{title}}
-            </h2>
-        </header>
-        <section class="col-12">
+    <section class="q-ma-md">
+      <header class="row text-h5">
+          {{title}}
+      </header>
+      <section class="">
           <div class="masonry bordered">
             <article class="q-gutter-xs q-mt-xs img" v-for="(img, i) in images" :key="i">
                 <q-img :src="img"

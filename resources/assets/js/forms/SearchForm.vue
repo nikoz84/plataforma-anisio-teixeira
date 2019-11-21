@@ -43,7 +43,7 @@ export default {
     async onSearch() {
       if (!this.termo) return;
 
-      let url = `/${this.$route.params.slug}/search/${this.termo}`;
+      let url = `${this.$route.params.slug}/search/${this.termo}`;
       this.$q.loading.show();
       let resp = await axios.get(url);
 
@@ -57,7 +57,7 @@ export default {
         if (val === "") {
           return;
         } else {
-          let url = `/${this.$route.params.slug}/search/${val}`;
+          let url = `${this.$route.params.slug}/search/${val}`;
           axios.get(url).then(resp => {
             this.SET_PAGINATOR(resp.data.paginator);
           });
@@ -67,7 +67,4 @@ export default {
   }
 };
 </script>
-<style lang="sass" scoped>
-
-</style>
 

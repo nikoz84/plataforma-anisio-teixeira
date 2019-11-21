@@ -3586,10 +3586,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_IntroParallax_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/IntroParallax.vue */ "./resources/assets/js/components/IntroParallax.vue");
-/* harmony import */ var _components_ShowErrors_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/ShowErrors.vue */ "./resources/assets/js/components/ShowErrors.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var quasar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! quasar */ "./node_modules/quasar/src/index.esm.js");
+/* harmony import */ var _components_ShowErrors_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/ShowErrors.vue */ "./resources/assets/js/components/ShowErrors.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var quasar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! quasar */ "./node_modules/quasar/src/index.esm.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -3605,18 +3604,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "DenunciaForm",
   components: {
-    ShowErrors: _components_ShowErrors_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    QCard: quasar__WEBPACK_IMPORTED_MODULE_4__["QCard"],
-    QCardSection: quasar__WEBPACK_IMPORTED_MODULE_4__["QCardSection"],
-    QForm: quasar__WEBPACK_IMPORTED_MODULE_4__["QForm"],
-    QInput: quasar__WEBPACK_IMPORTED_MODULE_4__["QInput"],
-    IntroParallax: _components_IntroParallax_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    QImg: quasar__WEBPACK_IMPORTED_MODULE_4__["QImg"],
-    QSeparator: quasar__WEBPACK_IMPORTED_MODULE_4__["QSeparator"]
+    ShowErrors: _components_ShowErrors_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    QCard: quasar__WEBPACK_IMPORTED_MODULE_3__["QCard"],
+    QCardSection: quasar__WEBPACK_IMPORTED_MODULE_3__["QCardSection"],
+    QForm: quasar__WEBPACK_IMPORTED_MODULE_3__["QForm"],
+    QInput: quasar__WEBPACK_IMPORTED_MODULE_3__["QInput"],
+    QImg: quasar__WEBPACK_IMPORTED_MODULE_3__["QImg"],
+    QSeparator: quasar__WEBPACK_IMPORTED_MODULE_3__["QSeparator"]
   },
   data: function data() {
     return {
@@ -3629,6 +3626,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       siteKey: "6LegZ48UAAAAAI-sKAY09kHtR-uBkiizT6XKcOli"
     };
   },
+  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
+    localStorage.setItem("urlDenuncia", "".concat(location.origin).concat(from.path));
+    next();
+  },
   mounted: function mounted() {
     if (window.grecaptcha) {
       var container = document.getElementsByClassName("g-recaptcha")[0];
@@ -3640,15 +3641,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapState"])(["errors"]), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])(["errors"]), {
     getUrl: function getUrl() {
       return localStorage.urlDenuncia;
     }
   }),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapMutations"])(["SET_ERRORS", "SET_IS_ERROR"]), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapMutations"])(["SET_ERRORS", "SET_IS_ERROR"]), {
     onSubmit: function () {
       var _onSubmit = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(e) {
-        var data, resp;
+        var data, url, resp;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -3663,10 +3664,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   action: location.href,
                   recaptcha: grecaptcha.getResponse()
                 };
-                _context.next = 4;
-                return axios.post("/denuncias", data);
+                url = this.$route.params.action;
+                _context.next = 5;
+                return axios.post(url, data);
 
-              case 4:
+              case 5:
                 resp = _context.sent;
 
                 if (resp.data.success && resp.status == 200) {
@@ -3692,7 +3694,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   });
                 }
 
-              case 6:
+              case 7:
               case "end":
                 return _context.stop();
             }
@@ -4203,7 +4205,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 return _context.abrupt("return");
 
               case 2:
-                url = "/".concat(this.$route.params.slug, "/search/").concat(this.termo);
+                url = "".concat(this.$route.params.slug, "/search/").concat(this.termo);
                 this.$q.loading.show();
                 _context.next = 6;
                 return axios.get(url);
@@ -4237,7 +4239,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         if (val === "") {
           return;
         } else {
-          var url = "/".concat(_this.$route.params.slug, "/search/").concat(val);
+          var url = "".concat(_this.$route.params.slug, "/search/").concat(val);
           axios.get(url).then(function (resp) {
             _this.SET_PAGINATOR(resp.data.paginator);
           });
@@ -4697,7 +4699,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop
+      leftDrawerOpen: this.$q.platform.is.desktop,
+      search: ""
     };
   },
   created: function created() {
@@ -5156,7 +5159,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".drawer-footer-link {\n  color: inherit;\n  text-decoration: none;\n  font-weight: 500;\n  font-size: 0.75rem;\n}\n.drawer-footer-link:hover {\n  color: #000;\n}\n", ""]);
+exports.push([module.i, ".drawer-footer-link {\n  color: inherit;\n  text-decoration: none;\n  font-weight: 500;\n  font-size: 0.75rem;\n}\n.drawer-footer-link:hover {\n  color: #000;\n}\n.toolbar-input-container {\n  min-width: 100px;\n  width: 50%;\n}\n.toolbar-input-btn {\n  border-radius: 0;\n  border-style: solid;\n  border-width: 1px 1px 1px 0;\n  border-color: rgba(0,0,0,0.24);\n  max-width: 60px;\n  width: 100%;\n}\n", ""]);
 
 // exports
 
@@ -62191,19 +62194,12 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("section", { staticClass: "row" }, [
-    _c("header", { staticClass: "col-12" }, [
-      _c(
-        "h2",
-        {
-          staticClass: "text-center",
-          staticStyle: { "margin-bottom": "1.5rem !important" }
-        },
-        [_vm._v("\n            " + _vm._s(_vm.title) + "\n        ")]
-      )
+  return _c("section", { staticClass: "q-ma-md" }, [
+    _c("header", { staticClass: "row text-h5" }, [
+      _vm._v("\n      " + _vm._s(_vm.title) + "\n  ")
     ]),
     _vm._v(" "),
-    _c("section", { staticClass: "col-12" }, [
+    _c("section", {}, [
       _c(
         "div",
         { staticClass: "masonry bordered" },
@@ -62494,7 +62490,7 @@ var render = function() {
                     attrs: {
                       autoplay: "",
                       controls: "",
-                      width: "640",
+                      width: "100%",
                       height: "360"
                     }
                   },
@@ -62519,15 +62515,31 @@ var render = function() {
                   ]
                 )
               ])
-            : _c("q-card-section", [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.arquivos) +
-                    " - " +
-                    _vm._s(_vm.tipo) +
-                    "\n      "
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.tipo.id == 4
+            ? _c("q-card-section", [
+                _c(
+                  "audio",
+                  { attrs: { autoplay: "", controls: "", width: "100%" } },
+                  [
+                    _c("source", {
+                      attrs: {
+                        src: _vm.arquivos.visualizacao.url,
+                        type: _vm.arquivos.visualizacao.mime_type
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("source", {
+                      attrs: {
+                        src: _vm.arquivos.download.url,
+                        type: _vm.arquivos.download.mime_type
+                      }
+                    })
+                  ]
                 )
-              ]),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("q-card-section", [
             _vm._v(
@@ -62546,18 +62558,14 @@ var render = function() {
                 "q-btn-group",
                 { attrs: { outline: "" } },
                 [
-                  _vm.downloadVideo
+                  _vm.arquivos && _vm.arquivos.download.url
                     ? _c("q-btn", {
                         attrs: {
                           outline: "",
                           color: "primary",
-                          label: "Baixar Vídeo"
+                          label: "Baixar Arquivo"
                         },
-                        on: {
-                          click: function($event) {
-                            return _vm.download("video")
-                          }
-                        }
+                        on: { click: _vm.download }
                       })
                     : _vm._e(),
                   _vm._v(" "),
@@ -62697,15 +62705,13 @@ var render = function() {
     [
       _c(
         "q-card-section",
-        { staticClass: "col-3" },
+        { staticClass: "col-xs-5 col-sm-4" },
         [
           _c(
             "q-img",
             {
               style:
-                "height: 200px; max-width: 300px;backgroud-color:" +
-                _vm.color +
-                ";",
+                "height: 200px; width: 100%;backgroud-color:" + _vm.color + ";",
               attrs: {
                 alt: "imagem destacada",
                 src: _vm.getImage,
@@ -62726,7 +62732,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "q-card-section",
-        { staticClass: "col-9" },
+        { staticClass: "col-xs-7 col-sm-8" },
         [
           _c(
             "div",
@@ -64073,238 +64079,232 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "article",
-    [
-      _c("IntroParallax"),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "row q-pa-md" },
-        [
-          _c(
-            "q-card",
-            { staticClass: "offset-md-3 col-md-6" },
-            [
-              _c(
-                "q-card-section",
-                [
-                  _c("div", { staticClass: "text-center text-h5" }, [
-                    _vm._v("\n            Denuncie\n          ")
-                  ]),
-                  _vm._v(" "),
-                  _c("q-separator", { attrs: { inset: "" } }),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "q-pt-lg" }, [
-                    _vm._v(
-                      "Este espaço serve para você denunciar qualquer coisa que você considere "
-                    ),
-                    _c("b", [_vm._v("imprópria")]),
-                    _vm._v(
-                      ",\n            basta fornecer o endereço da página onde esse conteúdo se localiza e uma mensagem\n            descrevendo do que se trata e por que você acha que essa página merece a denuncia.\n          "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("q-separator", { attrs: { inset: "" } })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "q-card-section",
-                [
-                  _c(
-                    "q-form",
-                    {
-                      ref: "denunciaForm",
-                      staticClass: "q-gutter-md",
-                      on: {
-                        submit: function($event) {
-                          $event.preventDefault()
-                          return _vm.onSubmit()
-                        }
+  return _c("article", [
+    _c(
+      "div",
+      { staticClass: "row q-pa-md" },
+      [
+        _c(
+          "q-card",
+          { staticClass: "offset-md-3 col-md-6" },
+          [
+            _c(
+              "q-card-section",
+              [
+                _c("div", { staticClass: "text-center text-h5" }, [
+                  _vm._v("\n            Denuncie\n          ")
+                ]),
+                _vm._v(" "),
+                _c("q-separator", { attrs: { inset: "" } }),
+                _vm._v(" "),
+                _c("p", { staticClass: "q-pt-lg" }, [
+                  _vm._v(
+                    "Este espaço serve para você denunciar qualquer coisa que você considere "
+                  ),
+                  _c("b", [_vm._v("imprópria")]),
+                  _vm._v(
+                    ",\n            basta fornecer o endereço da página onde esse conteúdo se localiza e uma mensagem\n            descrevendo do que se trata e por que você acha que essa página merece a denuncia.\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("q-separator", { attrs: { inset: "" } })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "q-card-section",
+              [
+                _c(
+                  "q-form",
+                  {
+                    ref: "denunciaForm",
+                    staticClass: "q-gutter-md",
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.onSubmit()
                       }
-                    },
-                    [
-                      _c("q-input", {
-                        attrs: {
-                          filled: "",
-                          label: "Seu Nome *",
-                          hint: "Nome",
-                          "bottom-slots": "",
-                          error: _vm.errors.name && _vm.errors.name.length > 0
-                        },
-                        scopedSlots: _vm._u([
-                          {
-                            key: "error",
-                            fn: function() {
-                              return [
-                                _c("ShowErrors", {
-                                  attrs: { errors: _vm.errors.name }
-                                })
-                              ]
-                            },
-                            proxy: true
-                          }
-                        ]),
-                        model: {
-                          value: _vm.name,
-                          callback: function($$v) {
-                            _vm.name = $$v
+                    }
+                  },
+                  [
+                    _c("q-input", {
+                      attrs: {
+                        filled: "",
+                        label: "Seu Nome *",
+                        hint: "Nome",
+                        "bottom-slots": "",
+                        error: _vm.errors.name && _vm.errors.name.length > 0
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "error",
+                          fn: function() {
+                            return [
+                              _c("ShowErrors", {
+                                attrs: { errors: _vm.errors.name }
+                              })
+                            ]
                           },
-                          expression: "name"
+                          proxy: true
                         }
-                      }),
-                      _vm._v(" "),
-                      _c("q-input", {
-                        attrs: {
-                          label: "example@dominio.com *",
-                          filled: "",
-                          type: "email",
-                          hint: "E-mail",
-                          "bottom-slots": "",
-                          error: _vm.errors.email && _vm.errors.email.length > 0
-                        },
-                        scopedSlots: _vm._u([
-                          {
-                            key: "error",
-                            fn: function() {
-                              return [
-                                _c("ShowErrors", {
-                                  attrs: { errors: _vm.errors.email }
-                                })
-                              ]
-                            },
-                            proxy: true
-                          }
-                        ]),
-                        model: {
-                          value: _vm.email,
-                          callback: function($$v) {
-                            _vm.email = $$v
-                          },
-                          expression: "email"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("q-input", {
-                        attrs: {
-                          filled: "",
-                          label: "Assunto da mensagem *",
-                          hint: "Assunto",
-                          "bottom-slots": "",
-                          error:
-                            _vm.errors.subject && _vm.errors.subject.length > 0
-                        },
-                        scopedSlots: _vm._u([
-                          {
-                            key: "error",
-                            fn: function() {
-                              return [
-                                _c("ShowErrors", {
-                                  attrs: { errors: _vm.errors.subject }
-                                })
-                              ]
-                            },
-                            proxy: true
-                          }
-                        ]),
-                        model: {
-                          value: _vm.subject,
-                          callback: function($$v) {
-                            _vm.subject = $$v
-                          },
-                          expression: "subject"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("q-input", {
-                        attrs: {
-                          filled: "",
-                          type: "textarea",
-                          label: "Escreva aqui sua mensagem *",
-                          hint: "Mensagem",
-                          "bottom-slots": "",
-                          error:
-                            _vm.errors.message && _vm.errors.message.length > 0
-                        },
-                        scopedSlots: _vm._u([
-                          {
-                            key: "error",
-                            fn: function() {
-                              return [
-                                _c("ShowErrors", {
-                                  attrs: { errors: _vm.errors.message }
-                                })
-                              ]
-                            },
-                            proxy: true
-                          }
-                        ]),
-                        model: {
-                          value: _vm.message,
-                          callback: function($$v) {
-                            _vm.message = $$v
-                          },
-                          expression: "message"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c("p", [_vm._v("Código de segurança:")]),
-                        _vm._v(" "),
-                        _c("div", {
-                          staticClass: "g-recaptcha",
-                          attrs: { "data-sitekey": _vm.siteKey }
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            attrs: {
-                              "bottom-slots": "",
-                              error:
-                                _vm.errors.recaptcha && _vm.errors.recaptcha > 0
-                            }
-                          },
-                          [
-                            _c("ShowErrors", {
-                              attrs: { errors: _vm.errors.recaptcha }
-                            })
-                          ],
-                          1
-                        )
                       ]),
+                      model: {
+                        value: _vm.name,
+                        callback: function($$v) {
+                          _vm.name = $$v
+                        },
+                        expression: "name"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("q-input", {
+                      attrs: {
+                        label: "example@dominio.com *",
+                        filled: "",
+                        type: "email",
+                        hint: "E-mail",
+                        "bottom-slots": "",
+                        error: _vm.errors.email && _vm.errors.email.length > 0
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "error",
+                          fn: function() {
+                            return [
+                              _c("ShowErrors", {
+                                attrs: { errors: _vm.errors.email }
+                              })
+                            ]
+                          },
+                          proxy: true
+                        }
+                      ]),
+                      model: {
+                        value: _vm.email,
+                        callback: function($$v) {
+                          _vm.email = $$v
+                        },
+                        expression: "email"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("q-input", {
+                      attrs: {
+                        filled: "",
+                        label: "Assunto da mensagem *",
+                        hint: "Assunto",
+                        "bottom-slots": "",
+                        error:
+                          _vm.errors.subject && _vm.errors.subject.length > 0
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "error",
+                          fn: function() {
+                            return [
+                              _c("ShowErrors", {
+                                attrs: { errors: _vm.errors.subject }
+                              })
+                            ]
+                          },
+                          proxy: true
+                        }
+                      ]),
+                      model: {
+                        value: _vm.subject,
+                        callback: function($$v) {
+                          _vm.subject = $$v
+                        },
+                        expression: "subject"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("q-input", {
+                      attrs: {
+                        filled: "",
+                        type: "textarea",
+                        label: "Escreva aqui sua mensagem *",
+                        hint: "Mensagem",
+                        "bottom-slots": "",
+                        error:
+                          _vm.errors.message && _vm.errors.message.length > 0
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "error",
+                          fn: function() {
+                            return [
+                              _c("ShowErrors", {
+                                attrs: { errors: _vm.errors.message }
+                              })
+                            ]
+                          },
+                          proxy: true
+                        }
+                      ]),
+                      model: {
+                        value: _vm.message,
+                        callback: function($$v) {
+                          _vm.message = $$v
+                        },
+                        expression: "message"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("p", [_vm._v("Código de segurança:")]),
+                      _vm._v(" "),
+                      _c("div", {
+                        staticClass: "g-recaptcha",
+                        attrs: { "data-sitekey": _vm.siteKey }
+                      }),
                       _vm._v(" "),
                       _c(
                         "div",
+                        {
+                          attrs: {
+                            "bottom-slots": "",
+                            error:
+                              _vm.errors.recaptcha && _vm.errors.recaptcha > 0
+                          }
+                        },
                         [
-                          _c("q-btn", {
-                            staticClass: "full-width q-mt-lg",
-                            attrs: {
-                              label: "Enviar",
-                              type: "submit",
-                              color: "primary"
-                            }
+                          _c("ShowErrors", {
+                            attrs: { errors: _vm.errors.recaptcha }
                           })
                         ],
                         1
                       )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      [
+                        _c("q-btn", {
+                          staticClass: "full-width q-mt-lg",
+                          attrs: {
+                            label: "Enviar",
+                            type: "submit",
+                            color: "primary"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -65361,10 +65361,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/forms/SearchForm.vue?vue&type=template&id=64832ebe&scoped=true&":
-/*!***************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/forms/SearchForm.vue?vue&type=template&id=64832ebe&scoped=true& ***!
-  \***************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/forms/SearchForm.vue?vue&type=template&id=64832ebe&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/forms/SearchForm.vue?vue&type=template&id=64832ebe& ***!
+  \***************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -65822,7 +65822,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "q-layout",
-    { attrs: { view: "lHh Lpr lFf" } },
+    { attrs: { view: "hHh lpR fFf" } },
     [
       _c(
         "q-header",
@@ -65846,29 +65846,58 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
+              _vm.$q.screen.gt.sm
+                ? _c(
+                    "q-btn",
+                    {
+                      staticClass: "q-ml-xs",
+                      attrs: { flat: "", "no-caps": "", "no-wrap": "", to: "/" }
+                    },
+                    [
+                      _c("q-icon", { attrs: { name: "img:/logo.svg" } }),
+                      _vm._v(" "),
+                      _c("q-toolbar-title", { attrs: { shrink: "" } }, [
+                        _vm._v(
+                          "\n          Plataforma Anísio Teixeira\n        "
+                        )
+                      ])
+                    ],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _c("q-space"),
+              _vm._v(" "),
               _c(
-                "q-btn",
-                {
-                  staticClass: "q-ml-xs",
-                  attrs: { flat: "", "no-caps": "", "no-wrap": "", to: "/" }
-                },
+                "div",
+                { staticClass: "toolbar-input-container row no-wrap" },
                 [
-                  _c("q-icon", { attrs: { name: "img:/logo.svg" } }),
+                  _c("q-input", {
+                    staticClass: "bg-white col",
+                    attrs: {
+                      dense: "",
+                      outlined: "",
+                      square: "",
+                      placeholder: "Pesquiçar"
+                    },
+                    model: {
+                      value: _vm.search,
+                      callback: function($$v) {
+                        _vm.search = $$v
+                      },
+                      expression: "search"
+                    }
+                  }),
                   _vm._v(" "),
-                  _vm.$q.screen.gt.xs
-                    ? _c(
-                        "q-toolbar-title",
-                        {
-                          staticClass: "text-weight-bold",
-                          attrs: { shrink: "" }
-                        },
-                        [
-                          _vm._v(
-                            "\n          Plataforma Anísio Teixeira\n        "
-                          )
-                        ]
-                      )
-                    : _vm._e()
+                  _c("q-btn", {
+                    staticClass: "toolbar-input-btn",
+                    attrs: {
+                      color: "grey-3",
+                      "text-color": "grey-8",
+                      icon: "search",
+                      unelevated: ""
+                    }
+                  })
                 ],
                 1
               ),
@@ -65920,7 +65949,7 @@ var render = function() {
                                 }
                               ],
                               attrs: {
-                                to: "/usuario/alterar-senha",
+                                to: "/usuario/recuperar-senha",
                                 clickable: "",
                                 tabindex: "0"
                               }
@@ -65994,7 +66023,7 @@ var render = function() {
             [
               _c(
                 "q-item",
-                { attrs: { clickable: "", tag: "a", to: "/" } },
+                { attrs: { clickable: "", to: "/" } },
                 [
                   _c(
                     "q-item-section",
@@ -66014,27 +66043,107 @@ var render = function() {
               _vm._v(" "),
               _c("q-separator"),
               _vm._v(" "),
-              _c(
-                "q-item",
-                { attrs: { clickable: "", tag: "a", to: "/sobre" } },
-                [
-                  _c(
-                    "q-item-section",
-                    { attrs: { avatar: "" } },
-                    [_c("q-icon", { attrs: { name: "info" } })],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "q-item-section",
-                    [_c("q-item-label", [_vm._v("Sobre")])],
+              !_vm.$q.screen.gt.xs || !_vm.$q.screen.gt.sm
+                ? _c(
+                    "q-item-label",
+                    [
+                      _c("q-btn", {
+                        attrs: {
+                          flat: "",
+                          dense: "",
+                          round: "",
+                          "aria-label": "Menu",
+                          icon: "dehaze"
+                        },
+                        on: {
+                          click: function($event) {
+                            _vm.leftDrawerOpen = !_vm.leftDrawerOpen
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "q-btn",
+                        {
+                          staticClass: "q-ml-xs",
+                          attrs: {
+                            flat: "",
+                            "no-caps": "",
+                            "no-wrap": "",
+                            to: "/"
+                          }
+                        },
+                        [
+                          _c("q-icon", { attrs: { name: "img:/logo.svg" } }),
+                          _vm._v(" "),
+                          _c("div", { attrs: { clas: "text-h6" } }, [
+                            _vm._v(
+                              "\n            Plataforma Anísio Teixeira\n          "
+                            )
+                          ])
+                        ],
+                        1
+                      )
+                    ],
                     1
                   )
-                ],
-                1
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "q-item-label",
+                { staticClass: "bg-grey-4", attrs: { header: "" } },
+                [
+                  _c("b", { staticClass: "text-h6 text-grey-10" }, [
+                    _vm._v("Canais")
+                  ])
+                ]
               ),
               _vm._v(" "),
-              _c("q-separator"),
+              _vm._l(_vm.links, function(link, i) {
+                return _c(
+                  "div",
+                  { key: "x." + i },
+                  [
+                    _c(
+                      "q-item",
+                      {
+                        directives: [
+                          { name: "close-popup", rawName: "v-close-popup" }
+                        ],
+                        attrs: {
+                          tag: "div",
+                          to: "/" + link.slug + "/listar",
+                          clickable: "",
+                          tabindex: "0"
+                        }
+                      },
+                      [
+                        _c(
+                          "q-item-section",
+                          [_c("q-item-label", [_vm._v(_vm._s(link.name))])],
+                          1
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("q-separator")
+                  ],
+                  1
+                )
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "q-list",
+            [
+              _c(
+                "q-item-label",
+                { staticClass: "bg-grey-4", attrs: { header: "" } },
+                [_c("b", { staticClass: "text-h5 text-grey-10" })]
+              ),
               _vm._v(" "),
               _vm.isLogged
                 ? _c(
@@ -66073,35 +66182,74 @@ var render = function() {
               _vm._v(" "),
               _vm.isLogged ? _c("q-separator") : _vm._e(),
               _vm._v(" "),
-              _vm._l(_vm.links, function(link, i) {
-                return _c(
-                  "q-item",
-                  {
-                    directives: [
-                      { name: "close-popup", rawName: "v-close-popup" }
-                    ],
-                    key: "x." + i,
-                    attrs: {
-                      to: "/" + link.slug + "/listar",
-                      clickable: "",
-                      tabindex: "0"
-                    }
-                  },
-                  [
-                    _c(
-                      "q-item-section",
-                      [_c("q-item-label", [_vm._v(_vm._s(link.name))])],
-                      1
-                    )
-                  ],
-                  1
-                )
-              })
+              _c(
+                "q-item",
+                { attrs: { clickable: "", to: "/sobre" } },
+                [
+                  _c(
+                    "q-item-section",
+                    { attrs: { avatar: "" } },
+                    [_c("q-icon", { attrs: { name: "info" } })],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "q-item-section",
+                    [_c("q-item-label", [_vm._v("Sobre")])],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("q-separator"),
+              _vm._v(" "),
+              _c(
+                "q-item",
+                { attrs: { clickable: "", to: "/galeria" } },
+                [
+                  _c(
+                    "q-item-section",
+                    { attrs: { avatar: "" } },
+                    [_c("q-icon", { attrs: { name: "photo" } })],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "q-item-section",
+                    [_c("q-item-label", [_vm._v("Galeria")])],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("q-separator"),
+              _vm._v(" "),
+              _c(
+                "q-item",
+                {
+                  attrs: { clickable: "", to: "/usuario/contato/faleconosco" }
+                },
+                [
+                  _c(
+                    "q-item-section",
+                    { attrs: { avatar: "" } },
+                    [_c("q-icon", { attrs: { name: "message" } })],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "q-item-section",
+                    [_c("q-item-label", [_vm._v("Fale Conosco")])],
+                    1
+                  )
+                ],
+                1
+              )
             ],
-            2
-          ),
-          _vm._v(" "),
-          _c("q-separator", { staticClass: "q-mt-md q-mb-lg" })
+            1
+          )
         ],
         1
       ),
@@ -84670,7 +84818,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _SearchForm_vue_vue_type_template_id_64832ebe_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SearchForm.vue?vue&type=template&id=64832ebe&scoped=true& */ "./resources/assets/js/forms/SearchForm.vue?vue&type=template&id=64832ebe&scoped=true&");
+/* harmony import */ var _SearchForm_vue_vue_type_template_id_64832ebe___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SearchForm.vue?vue&type=template&id=64832ebe& */ "./resources/assets/js/forms/SearchForm.vue?vue&type=template&id=64832ebe&");
 /* harmony import */ var _SearchForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchForm.vue?vue&type=script&lang=js& */ "./resources/assets/js/forms/SearchForm.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
@@ -84682,11 +84830,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _SearchForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _SearchForm_vue_vue_type_template_id_64832ebe_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _SearchForm_vue_vue_type_template_id_64832ebe_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _SearchForm_vue_vue_type_template_id_64832ebe___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SearchForm_vue_vue_type_template_id_64832ebe___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "64832ebe",
+  null,
   null
   
 )
@@ -84712,19 +84860,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/assets/js/forms/SearchForm.vue?vue&type=template&id=64832ebe&scoped=true&":
-/*!*********************************************************************************************!*\
-  !*** ./resources/assets/js/forms/SearchForm.vue?vue&type=template&id=64832ebe&scoped=true& ***!
-  \*********************************************************************************************/
+/***/ "./resources/assets/js/forms/SearchForm.vue?vue&type=template&id=64832ebe&":
+/*!*********************************************************************************!*\
+  !*** ./resources/assets/js/forms/SearchForm.vue?vue&type=template&id=64832ebe& ***!
+  \*********************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchForm_vue_vue_type_template_id_64832ebe_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./SearchForm.vue?vue&type=template&id=64832ebe&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/forms/SearchForm.vue?vue&type=template&id=64832ebe&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchForm_vue_vue_type_template_id_64832ebe_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchForm_vue_vue_type_template_id_64832ebe___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./SearchForm.vue?vue&type=template&id=64832ebe& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/forms/SearchForm.vue?vue&type=template&id=64832ebe&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchForm_vue_vue_type_template_id_64832ebe___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchForm_vue_vue_type_template_id_64832ebe_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchForm_vue_vue_type_template_id_64832ebe___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -85525,7 +85673,7 @@ var routes = [{
     name: "Recover",
     component: _forms_RecoverPassForm_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
     meta: {
-      requiresAuth: false,
+      requiresAuth: true,
       title: "recuperar senha"
     }
   }, {
@@ -85545,20 +85693,12 @@ var routes = [{
       title: "Código de verificação do E-mail"
     }
   }, {
-    path: "denuncia",
+    path: "contato/:action",
     name: "DenunciaForm",
     component: _forms_DenunciaForm_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
     meta: {
       requiresAuth: false,
-      title: "Enviar denúncia"
-    }
-  }, {
-    path: "faleconosco",
-    name: "FaleConoscoForm",
-    component: _forms_FaleConoscoForm_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
-    meta: {
-      requiresAuth: false,
-      title: "Fale conosco"
+      title: "Enviar denúncia ou Fale conosco"
     }
   }]
 }];
@@ -85756,8 +85896,9 @@ var actions = {
               commit = _ref5.commit;
               commit("SET_IS_LOADING", true);
               url = "/conteudos";
-              _context5.prev = 3;
-              _context5.next = 6;
+              console.log(payload);
+              _context5.prev = 4;
+              _context5.next = 7;
               return axios.get(url, {
                 params: payload
               }).then(function (resp) {
@@ -85770,21 +85911,21 @@ var actions = {
                 }
               });
 
-            case 6:
-              _context5.next = 11;
+            case 7:
+              _context5.next = 12;
               break;
 
-            case 8:
-              _context5.prev = 8;
-              _context5.t0 = _context5["catch"](3);
+            case 9:
+              _context5.prev = 9;
+              _context5.t0 = _context5["catch"](4);
               commit("SET_IS_ERROR", true);
 
-            case 11:
+            case 12:
             case "end":
               return _context5.stop();
           }
         }
-      }, _callee5, null, [[3, 8]]);
+      }, _callee5, null, [[4, 9]]);
     }));
 
     function fetchConteudos(_x8, _x9) {

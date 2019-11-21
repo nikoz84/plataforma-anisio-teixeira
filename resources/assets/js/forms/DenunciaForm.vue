@@ -1,6 +1,6 @@
 <template>
   <article>
-      <IntroParallax/>
+      
       <div class="row q-pa-md">
         <q-card class="offset-md-3 col-md-6">
           <q-card-section>
@@ -60,7 +60,6 @@
 </template>
 
 <script>
-import IntroParallax from "../components/IntroParallax.vue";
 import ShowErrors from "../components/ShowErrors.vue";
 import { mapState, mapMutations } from "vuex";
 import {
@@ -81,7 +80,6 @@ export default {
     QCardSection,
     QForm,
     QInput,
-    IntroParallax,
     QImg,
     QSeparator
   },
@@ -95,6 +93,10 @@ export default {
       r_id: 0,
       siteKey: "6LegZ48UAAAAAI-sKAY09kHtR-uBkiizT6XKcOli"
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    localStorage.setItem("urlDenuncia", `${location.origin}${from.path}`);
+    next();
   },
   mounted() {
     if (window.grecaptcha) {
@@ -128,7 +130,8 @@ export default {
         recaptcha: grecaptcha.getResponse()
       };
 
-      let resp = await axios.post("/denuncias", data);
+      let url = this.$route.params.action;
+      let resp = await axios.post(url, data);
       if (resp.data.success && resp.status == 200) {
         this.$q.loading.hide();
         this.SET_ERRORS([]);

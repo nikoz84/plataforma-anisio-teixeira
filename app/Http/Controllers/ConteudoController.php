@@ -61,6 +61,7 @@ class ConteudoController extends ApiController
         $licencas       = $this->request->query('licencas');
         $componentes    = $this->request->query('componentes');
         $categoria      = $this->request->query('categoria');
+        $busca      = $this->request->query('busca');
         $query          = $this->conteudo::query();
 
         $query->when($tipos, function ($q, $tipos) {
@@ -79,7 +80,7 @@ class ConteudoController extends ApiController
         $query->when($licencas, function ($q, $licencas) {
             return $q->whereIn('license_id', explode(',', $licencas));
         });
-        $url = "limit={$limit}&canal={$canal}";
+        $url = "busca={$busca}&limit={$limit}&canal={$canal}";
         $url .= "&tipos={$tipos}&componentes={$componentes}&categoria={$categoria}&licencas={$licencas}";
         $conteudos = $query->where('is_approved', 'true')
             ->with(['canal'])
@@ -264,7 +265,7 @@ class ConteudoController extends ApiController
         $conteudo->tags()->attach($this->request->get('tags'));
     }
     /**
-     * Apaga o conteúdo do banco de dados.
+     * Apaga o conteúdo do banco de dados, com tags, componentes
      *
      * @param  Integer $id
      * @return Json

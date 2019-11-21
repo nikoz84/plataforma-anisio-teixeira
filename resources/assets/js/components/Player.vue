@@ -2,13 +2,16 @@
     <div class="q-mb-md">
         <q-card>
           <q-card-section v-if="tipo.id == 5">
-            <video autoplay controls width="640" height="360">
+            <video autoplay controls width="100%" height="360">
               <source v-if="arquivos.visualizacao.url" :src="arquivos.visualizacao.url" :type="arquivos.visualizacao.mime_type">
               <source v-if="arquivos.download.url" :src="arquivos.download.url" :type="arquivos.download.mime_type">
             </video>
           </q-card-section>
-          <q-card-section v-else>
-                {{arquivos}} - {{tipo}}
+          <q-card-section v-if="tipo.id == 4">
+                <audio autoplay controls width="100%">
+                  <source :src="arquivos.visualizacao.url" :type="arquivos.visualizacao.mime_type">
+                  <source :src="arquivos.download.url" :type="arquivos.download.mime_type">
+                </audio>
           </q-card-section>
           <q-card-section>
             {{arquivos}} - {{tipo}}
@@ -16,11 +19,11 @@
           
           <q-card-actions>
             <q-btn-group outline>
-              <q-btn v-if="downloadVideo" 
-                    outline
-                    @click="download('video')"
+              <q-btn outline
+                    v-if="arquivos && arquivos.download.url"
+                    @click="download"
                     color="primary" 
-                    label="Baixar Vídeo" />
+                    label="Baixar Arquivo" />
               <q-btn v-if="arquivos && arquivos.guia.url" 
                     filled 
                     @click="download('guia')"
