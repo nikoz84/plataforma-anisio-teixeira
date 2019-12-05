@@ -11,33 +11,17 @@ use App\Tipo;
 
 class SideBar
 {
-
     public static function getSideBar($id)
     {
         switch ($id) {
-            case 1:
-            case 2:
-            case 3:
-            case 12:
-                return self::getSideBarCategories($id);
-                break;
-            case 7:
-                return [];
-                break;
             case 5:
                 return self::getSidebarSitesTematicos();
                 break;
             case 6:
                 return self::getSideBarAdvancedFilter();
                 break;
-            case 9:
-                return ['categories' => AplicativoCategory::get()];
-                break;
-            case 'admin':
-                return;
-                break;
-            case 'home':
-                return;
+            default:
+                return self::getSideBarCategories($id);
                 break;
         }
     }
@@ -52,39 +36,36 @@ class SideBar
             'tipos' => $tipos,
             'licenses' => $licencas,
             'components' => $componentes,
-            'niveis' => $niveis[0]
+            'niveis' => $niveis
         ];
     }
-
+    /** categorias dos canais */
     private static function getSideBarCategories($id)
     {
-        /** categorias dos canais */
-        $categories = Category::selectRaw("id, parent_id, name, options->'is_active' as is_active")
+        $categorias = Category::selectRaw("id, parent_id, name, options->'is_active' as is_active")
             ->where('canal_id', $id)
             ->whereRaw('parent_id is null')
             ->where('options->is_active', 'true')
             ->with('subCategories')
             ->orderBy('created_at', 'asc')
             ->get();
-        /** disciplinas ensino medio */
-        $disciplinas = [];
-        if ($id == 2) {
-            $disciplinas = NivelEnsino::where('id', '=', 5)->with('components')->get()->first();
-            return [
-                'categories' => $categories,
-                'disciplinas' => $disciplinas
-            ];
-        }
+        $disciplinas = NivelEnsino::where('id', '=', 5)->with('components')->get()->first();
+        $aplicativosCat = AplicativoCategory::get(['id', 'name']);
 
-        return ['categories' => $categories];
+        return [
+            'categories' => $id == 9 ? $aplicativosCat : $categorias,
+            'disciplinas' => $id == 2 ? $disciplinas : []
+        ];
     }
+
+    /**categorias dos sites tematicos */
     private static function getSidebarSitesTematicos()
     {
         $temas = CurricularComponentCategory::where('id', '=', 3)->with('components')->get()->first();
         $disciplinas = NivelEnsino::where('id', '=', 5)->with('components')->get()->first();
 
         return [
-            "temas" => $temas,
+            'temas' => $temas,
             "disciplinas" => $disciplinas
         ];
     }

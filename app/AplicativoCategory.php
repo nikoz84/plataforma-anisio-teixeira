@@ -10,5 +10,11 @@ class AplicativoCategory extends Model
     use SoftDeletes;
 
     protected $table = 'aplicativo_categories';
+    protected $appends = ['sub_categories'];
     public $fillable = ['name'];
+
+    public function getSubCategoriesAttribute()
+    {
+        return [];
+    }
 }

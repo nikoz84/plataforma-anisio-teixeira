@@ -16,9 +16,8 @@ export default {
   name: "Listar",
   components: { Paginator, Posts, QSpinnerTail },
   computed: {
-    ...mapState(["componentId", "isLoading", "canal"])
-  },
-  methods: {}
+    ...mapState(["componentId", "canal", "isLoading"])
+  }
 };
 </script>
 <style lang="sass" scoped>

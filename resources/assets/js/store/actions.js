@@ -54,7 +54,6 @@ const actions = {
   async fetchConteudos({ commit }, payload) {
     commit("SET_IS_LOADING", true);
     let url = `/conteudos`;
-    console.log(payload);
     try {
       await axios.get(url, { params: payload }).then(resp => {
         commit("SET_COMPONENT_ID", "");
@@ -95,14 +94,6 @@ const actions = {
   async deleteConteudo({ commit }, id) {
     let resp = await axios.delete(`/conteudos/${id}`);
     commit("DELETE_CONTEUDO", resp.data);
-  },
-  async hideAlert({ commit }) {
-    setTimeout(() => {
-      commit("SET_SHOW_ALERT", false);
-      commit("SET_SHOW_MESSAGE", "");
-      commit("SET_IS_ERROR", false);
-      commit("SET_ERRORS", []);
-    }, 2500);
   },
   async logout({ commit }) {
     if (localStorage.token) {

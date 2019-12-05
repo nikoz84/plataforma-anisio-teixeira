@@ -7,6 +7,7 @@
       </div>
     </header>
     <nav>
+      
       <q-tabs inline-label class="bg-primary text-white shadow-2">
         <q-route-tab name="inicio" 
               label="Sobre" 
@@ -15,15 +16,15 @@
         <q-route-tab name="listar" 
               label="Listar" 
               :to="{ name: 'Listar', params: {slug: $route.params.slug}}"/>
-        <q-tab label="Categorias" v-if="canal && canal.options && canal.options.has_categories">
-          <q-menu anchor="center middle" self="center middle" class="">
+        <q-tab :label="categoryName" v-if="categoryName">
+          <q-menu anchor="bottom middle" self="top middle">
             <q-list dense>
               <q-item clickable dense 
                     v-for="(category, i) in canal.sidebar.categories" 
                     :key="i"
                     v-close-popup="category.sub_categories.length == 0"
                     @click="showCategory(category.id, category.sub_categories)">
-                <q-item-section>{{category.name }}</q-item-section>
+                <q-item-section>{{category.name}}</q-item-section>
                 <q-item-section side v-if="category.sub_categories && category.sub_categories.length > 0">
                   <q-icon name="keyboard_arrow_right" />
                 </q-item-section>
@@ -42,7 +43,6 @@
                     </q-item>
                   </q-list>
                 </q-menu>
-                
               </q-item>
             </q-list>
           </q-menu>
@@ -57,9 +57,7 @@
                 mode="out-in">
       <router-view></router-view>
     </transition>
-    
   </article>
-  
 </template>
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
@@ -98,10 +96,9 @@ export default {
   },
   data() {
     return {
-      termSearch: "",
-      perPage: [15, 30, 45],
       options: [],
-      loadingState: false
+      loadingState: false,
+      categoryName: ""
     };
   },
   mounted() {
@@ -128,22 +125,6 @@ export default {
       "fetchAplicativos",
       "fetchPosts"
     ]),
-    ...mapMutations(["SET_PAGINATOR"]),
-    async search() {
-      console.log(this.termSearch);
-      if (this.termSearch && this.termSearch.length >= 2) {
-        this.$router.push(
-          `/recursos-educacionais/listar?busca=${this.termSearch}`
-        );
-        this.loadingState = true;
-        await axios.get(`conteudos/search/${this.termSearch}`).then(resp => {
-          if (resp.data.success == true) {
-            this.SET_PAGINATOR(resp.data.paginator);
-            this.loadingState = false;
-          }
-        });
-      }
-    },
     showCategory(categoryId, subCategory) {
       let path = `/${this.$route.params.slug}/listar`;
       let categoria = categoryId;
@@ -158,12 +139,28 @@ export default {
       query.canal = localStorage.canal;
       switch (true) {
         case localStorage.canal == 9:
+          this.categoryName = "Categorias";
           return this.fetchAplicativos(query);
           break;
         case localStorage.canal == 7:
           return this.fetchPosts();
           break;
+        case localStorage.canal == 1:
+        case localStorage.canal == 12:
+          this.categoryName = "Programas";
+          return this.fetchConteudos(query);
+          break;
+        case localStorage.canal == 2:
+          this.categoryName = "Níveis de Ensino";
+          return this.fetchConteudos(query);
+          break;
+        case localStorage.canal == 3:
+          this.categoryName = "Projetos";
+          return this.fetchConteudos(query);
+          break;
+
         default:
+          this.categoryName = "";
           return this.fetchConteudos(query);
           break;
       }
