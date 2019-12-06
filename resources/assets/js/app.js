@@ -2,6 +2,7 @@ import "./bootstrap";
 import Vue from "vue";
 
 import Quasar from "quasar";
+import { Meta } from "quasar";
 import "quasar/dist/quasar.ie.polyfills.umd.min.js";
 import lang from "quasar/lang/pt-br.js";
 import materialIcons from "quasar/dist/icon-set/material-icons.umd.min.js";
@@ -17,7 +18,10 @@ import Main from "./layout/Main.vue";
 
 Vue.use(Quasar, {
   lang,
-  iconSet: materialIcons
+  iconSet: materialIcons,
+  plugins: {
+    Meta
+  }
 });
 
 Vue.use(VueApexCharts);
@@ -30,7 +34,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  document.title = `Plataforma Anísio Texeira - ${to.meta.title}`;
+  document.title = `${to.meta.title} - Plataforma Anísio Texeira`;
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // You can use store variable here to access globalError or commit mutation
     if (store.state.isLogged) {

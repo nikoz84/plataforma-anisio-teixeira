@@ -6,7 +6,7 @@ use App\Canal;
 use App\Helpers\SideBar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use Gate;
+use Illuminate\Auth\Access\Gate;
 
 class CanalController extends ApiController
 {

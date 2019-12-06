@@ -4852,8 +4852,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     Posts: _components_Posts_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     QSpinnerTail: quasar__WEBPACK_IMPORTED_MODULE_3__["QSpinnerTail"]
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])(["componentId", "isLoading", "canal"])),
-  methods: {}
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])(["componentId", "canal", "isLoading"]))
 });
 
 /***/ }),
@@ -51288,7 +51287,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!**********************************************!*\
   !*** ./node_modules/quasar/src/index.esm.js ***!
   \**********************************************/
-/*! exports provided: default, ClosePopup, GoBack, Ripple, ScrollFire, Scroll, TouchHold, TouchPan, TouchRepeat, TouchSwipe, AddressbarColor, AppFullscreen, AppVisibility, BottomSheet, Cookies, Dialog, LoadingBar, Loading, Meta, Notify, Platform, Screen, LocalStorage, SessionStorage, clone, colors, date, debounce, dom, event, extend, format, frameDebounce, noop, openURL, patterns, scroll, throttle, uid, QAjaxBar, QAvatar, QBadge, QBanner, QBar, QBreadcrumbs, QBreadcrumbsEl, QBtn, QBtnGroup, QBtnDropdown, QBtnToggle, QCard, QCardSection, QCardActions, QCarousel, QCarouselSlide, QCarouselControl, QChatMessage, QCheckbox, QChip, QCircularProgress, QColor, QDate, QTime, QDialog, QEditor, QFab, QFabAction, QField, QForm, QIcon, QImg, QInfiniteScroll, QInnerLoading, QInput, QKnob, QLayout, QDrawer, QFooter, QHeader, QPage, QPageContainer, QPageSticky, QList, QItem, QItemSection, QItemLabel, QExpansionItem, QSlideItem, QMenu, QNoSsr, QResizeObserver, QScrollObserver, QOptionGroup, QPageScroller, QPagination, QParallax, QPopupEdit, QPopupProxy, QLinearProgress, QPullToRefresh, QRadio, QRange, QRating, QScrollArea, QSelect, QSeparator, QSlideTransition, QSlider, QSpace, QSpinner, QSpinnerAudio, QSpinnerBall, QSpinnerBars, QSpinnerComment, QSpinnerCube, QSpinnerDots, QSpinnerFacebook, QSpinnerGears, QSpinnerGrid, QSpinnerHearts, QSpinnerHourglass, QSpinnerInfinity, QSpinnerIos, QSpinnerOval, QSpinnerPie, QSpinnerPuff, QSpinnerRadio, QSpinnerRings, QSpinnerTail, QSplitter, QStep, QStepper, QStepperNavigation, QTabPanels, QTabPanel, QTable, QTh, QTr, QTd, QMarkupTable, QTabs, QTab, QRouteTab, QTimeline, QTimelineEntry, QToggle, QToolbar, QToolbarTitle, QTooltip, QTree, QUploader, QUploaderBase, QUploaderAddTrigger, QVideo, QVirtualScroll */
+/*! exports provided: ClosePopup, GoBack, Ripple, ScrollFire, Scroll, TouchHold, TouchPan, TouchRepeat, TouchSwipe, AddressbarColor, AppFullscreen, AppVisibility, BottomSheet, Cookies, Dialog, LoadingBar, Loading, Meta, Notify, Platform, Screen, LocalStorage, SessionStorage, clone, colors, date, debounce, dom, event, extend, format, frameDebounce, noop, openURL, patterns, scroll, throttle, uid, default, QAjaxBar, QAvatar, QBadge, QBanner, QBar, QBreadcrumbs, QBreadcrumbsEl, QBtn, QBtnGroup, QBtnDropdown, QBtnToggle, QCard, QCardSection, QCardActions, QCarousel, QCarouselSlide, QCarouselControl, QChatMessage, QCheckbox, QChip, QCircularProgress, QColor, QDate, QTime, QDialog, QEditor, QFab, QFabAction, QField, QForm, QIcon, QImg, QInfiniteScroll, QInnerLoading, QInput, QKnob, QLayout, QDrawer, QFooter, QHeader, QPage, QPageContainer, QPageSticky, QList, QItem, QItemSection, QItemLabel, QExpansionItem, QSlideItem, QMenu, QNoSsr, QResizeObserver, QScrollObserver, QOptionGroup, QPageScroller, QPagination, QParallax, QPopupEdit, QPopupProxy, QLinearProgress, QPullToRefresh, QRadio, QRange, QRating, QScrollArea, QSelect, QSeparator, QSlideTransition, QSlider, QSpace, QSpinner, QSpinnerAudio, QSpinnerBall, QSpinnerBars, QSpinnerComment, QSpinnerCube, QSpinnerDots, QSpinnerFacebook, QSpinnerGears, QSpinnerGrid, QSpinnerHearts, QSpinnerHourglass, QSpinnerInfinity, QSpinnerIos, QSpinnerOval, QSpinnerPie, QSpinnerPuff, QSpinnerRadio, QSpinnerRings, QSpinnerTail, QSplitter, QStep, QStepper, QStepperNavigation, QTabPanels, QTabPanel, QTable, QTh, QTr, QTd, QMarkupTable, QTabs, QTab, QRouteTab, QTimeline, QTimelineEntry, QToggle, QToolbar, QToolbarTitle, QTooltip, QTree, QUploader, QUploaderBase, QUploaderAddTrigger, QVideo, QVirtualScroll */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -83027,9 +83026,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(quasar__WEBPACK_IMPORTED_MODULE_2__["default"], {
   lang: quasar_lang_pt_br_js__WEBPACK_IMPORTED_MODULE_4__["default"],
-  iconSet: quasar_dist_icon_set_material_icons_umd_min_js__WEBPACK_IMPORTED_MODULE_5___default.a
+  iconSet: quasar_dist_icon_set_material_icons_umd_min_js__WEBPACK_IMPORTED_MODULE_5___default.a,
+  plugins: {
+    Meta: quasar__WEBPACK_IMPORTED_MODULE_2__["Meta"]
+  }
 });
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_apexcharts__WEBPACK_IMPORTED_MODULE_8___default.a);
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_11__["default"]);
@@ -83039,7 +83042,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_9__["default"]({
   routes: _routes__WEBPACK_IMPORTED_MODULE_10__["default"]
 });
 router.beforeEach(function (to, from, next) {
-  document.title = "Plataforma An\xEDsio Texeira - ".concat(to.meta.title);
+  document.title = "".concat(to.meta.title, " - Plataforma An\xEDsio Texeira");
 
   if (to.matched.some(function (record) {
     return record.meta.requiresAuth;
@@ -85892,9 +85895,8 @@ var actions = {
               commit = _ref5.commit;
               commit("SET_IS_LOADING", true);
               url = "/conteudos";
-              console.log(payload);
-              _context5.prev = 4;
-              _context5.next = 7;
+              _context5.prev = 3;
+              _context5.next = 6;
               return axios.get(url, {
                 params: payload
               }).then(function (resp) {
@@ -85907,21 +85909,21 @@ var actions = {
                 }
               });
 
-            case 7:
-              _context5.next = 12;
+            case 6:
+              _context5.next = 11;
               break;
 
-            case 9:
-              _context5.prev = 9;
-              _context5.t0 = _context5["catch"](4);
+            case 8:
+              _context5.prev = 8;
+              _context5.t0 = _context5["catch"](3);
               commit("SET_IS_ERROR", true);
 
-            case 12:
+            case 11:
             case "end":
               return _context5.stop();
           }
         }
-      }, _callee5, null, [[4, 9]]);
+      }, _callee5, null, [[3, 8]]);
     }));
 
     function fetchConteudos(_x8, _x9) {
@@ -86062,50 +86064,21 @@ var actions = {
 
     return deleteConteudo;
   }(),
-  hideAlert: function () {
-    var _hideAlert = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10(_ref10) {
+  logout: function () {
+    var _logout = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10(_ref10) {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
         while (1) {
           switch (_context10.prev = _context10.next) {
             case 0:
               commit = _ref10.commit;
-              setTimeout(function () {
-                commit("SET_SHOW_ALERT", false);
-                commit("SET_SHOW_MESSAGE", "");
-                commit("SET_IS_ERROR", false);
-                commit("SET_ERRORS", []);
-              }, 2500);
-
-            case 2:
-            case "end":
-              return _context10.stop();
-          }
-        }
-      }, _callee10);
-    }));
-
-    function hideAlert(_x18) {
-      return _hideAlert.apply(this, arguments);
-    }
-
-    return hideAlert;
-  }(),
-  logout: function () {
-    var _logout = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11(_ref11) {
-      var commit;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
-        while (1) {
-          switch (_context11.prev = _context11.next) {
-            case 0:
-              commit = _ref11.commit;
 
               if (!localStorage.token) {
-                _context11.next = 8;
+                _context10.next = 8;
                 break;
               }
 
-              _context11.next = 4;
+              _context10.next = 4;
               return axios.post("/auth/logout", {
                 token: localStorage.token
               });
@@ -86113,7 +86086,7 @@ var actions = {
             case 4:
               commit("SET_LOGOUT_USER");
               localStorage.removeItem("token");
-              _context11.next = 10;
+              _context10.next = 10;
               break;
 
             case 8:
@@ -86122,20 +86095,52 @@ var actions = {
 
             case 10:
             case "end":
-              return _context11.stop();
+              return _context10.stop();
           }
         }
-      }, _callee11);
+      }, _callee10);
     }));
 
-    function logout(_x19) {
+    function logout(_x18) {
       return _logout.apply(this, arguments);
     }
 
     return logout;
   }(),
   fetchCanaisForSelect: function () {
-    var _fetchCanaisForSelect = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12(_ref12) {
+    var _fetchCanaisForSelect = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11(_ref11) {
+      var commit, resp;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
+        while (1) {
+          switch (_context11.prev = _context11.next) {
+            case 0:
+              commit = _ref11.commit;
+              _context11.next = 3;
+              return axios.get("/canais?select");
+
+            case 3:
+              resp = _context11.sent;
+
+              if (resp.status == 200 && resp.data.success == true) {
+                commit("SET_CANAIS", resp.data.metadata);
+              }
+
+            case 5:
+            case "end":
+              return _context11.stop();
+          }
+        }
+      }, _callee11);
+    }));
+
+    function fetchCanaisForSelect(_x19) {
+      return _fetchCanaisForSelect.apply(this, arguments);
+    }
+
+    return fetchCanaisForSelect;
+  }(),
+  fetchTiposForSelect: function () {
+    var _fetchTiposForSelect = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12(_ref12) {
       var commit, resp;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
         while (1) {
@@ -86143,13 +86148,13 @@ var actions = {
             case 0:
               commit = _ref12.commit;
               _context12.next = 3;
-              return axios.get("/canais?select");
+              return axios.get("/tipos?select");
 
             case 3:
               resp = _context12.sent;
 
               if (resp.status == 200 && resp.data.success == true) {
-                commit("SET_CANAIS", resp.data.metadata);
+                commit("SET_TIPOS_FORM", resp.data.metadata);
               }
 
             case 5:
@@ -86160,57 +86165,25 @@ var actions = {
       }, _callee12);
     }));
 
-    function fetchCanaisForSelect(_x20) {
-      return _fetchCanaisForSelect.apply(this, arguments);
-    }
-
-    return fetchCanaisForSelect;
-  }(),
-  fetchTiposForSelect: function () {
-    var _fetchTiposForSelect = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13(_ref13) {
-      var commit, resp;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
-        while (1) {
-          switch (_context13.prev = _context13.next) {
-            case 0:
-              commit = _ref13.commit;
-              _context13.next = 3;
-              return axios.get("/tipos?select");
-
-            case 3:
-              resp = _context13.sent;
-
-              if (resp.status == 200 && resp.data.success == true) {
-                commit("SET_TIPOS_FORM", resp.data.metadata);
-              }
-
-            case 5:
-            case "end":
-              return _context13.stop();
-          }
-        }
-      }, _callee13);
-    }));
-
-    function fetchTiposForSelect(_x21) {
+    function fetchTiposForSelect(_x20) {
       return _fetchTiposForSelect.apply(this, arguments);
     }
 
     return fetchTiposForSelect;
   }(),
   fetchLicenses: function () {
-    var _fetchLicenses = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14(_ref14) {
+    var _fetchLicenses = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13(_ref13) {
       var commit, resp, data, licenses, childs;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
         while (1) {
-          switch (_context14.prev = _context14.next) {
+          switch (_context13.prev = _context13.next) {
             case 0:
-              commit = _ref14.commit;
-              _context14.next = 3;
+              commit = _ref13.commit;
+              _context13.next = 3;
               return axios.get("/licenses?select");
 
             case 3:
-              resp = _context14.sent;
+              resp = _context13.sent;
               data = resp.data.metadata;
               licenses = data.filter(function (key) {
                 return key.id != 2;
@@ -86225,28 +86198,28 @@ var actions = {
 
             case 8:
             case "end":
-              return _context14.stop();
+              return _context13.stop();
           }
         }
-      }, _callee14);
+      }, _callee13);
     }));
 
-    function fetchLicenses(_x22) {
+    function fetchLicenses(_x21) {
       return _fetchLicenses.apply(this, arguments);
     }
 
     return fetchLicenses;
   }(),
   getCanalBySlug: function () {
-    var _getCanalBySlug = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15(_ref15, slug) {
+    var _getCanalBySlug = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14(_ref14, slug) {
       var commit, dispatch;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
         while (1) {
-          switch (_context15.prev = _context15.next) {
+          switch (_context14.prev = _context14.next) {
             case 0:
-              commit = _ref15.commit, dispatch = _ref15.dispatch;
-              _context15.prev = 1;
-              _context15.next = 4;
+              commit = _ref14.commit, dispatch = _ref14.dispatch;
+              _context14.prev = 1;
+              _context14.next = 4;
               return axios.get("/canais/slug/".concat(slug)).then(function (resp) {
                 commit("SET_CANAL", resp.data.metadata);
                 commit("SET_CANAL_ID", resp.data.metadata.id);
@@ -86254,30 +86227,30 @@ var actions = {
               });
 
             case 4:
-              _context15.next = 9;
+              _context14.next = 9;
               break;
 
             case 6:
-              _context15.prev = 6;
-              _context15.t0 = _context15["catch"](1);
+              _context14.prev = 6;
+              _context14.t0 = _context14["catch"](1);
               commit("SET_IS_ERROR", true);
 
             case 9:
             case "end":
-              return _context15.stop();
+              return _context14.stop();
           }
         }
-      }, _callee15, null, [[1, 6]]);
+      }, _callee14, null, [[1, 6]]);
     }));
 
-    function getCanalBySlug(_x23, _x24) {
+    function getCanalBySlug(_x22, _x23) {
       return _getCanalBySlug.apply(this, arguments);
     }
 
     return getCanalBySlug;
   }(),
-  showExibir: function showExibir(_ref16, slug) {
-    var commit = _ref16.commit;
+  showExibir: function showExibir(_ref15, slug) {
+    var commit = _ref15.commit;
 
     if (slug != "aplicativos-educacionais") {
       commit("SET_SHOW_CONTEUDO", true);
