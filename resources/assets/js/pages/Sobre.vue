@@ -28,7 +28,9 @@
       </div>
       <q-separator class="q-mt-md q-mb-lg" />
       <div class="row wrap justify-center">
-        <div class="text-h6 text-grey-6">SECRETARIA DA EDUCAÇÃO DO ESTADO DA BAHIA</div><br/>
+        <div class="text-h6 text-grey-6">SECRETARIA DA EDUCAÇÃO DO ESTADO DA BAHIA</div>
+      </div>
+      <div class="row wrap justify-center">
         <small>5ª Avenida Nº550, Centro Administrativo da Bahia - CAB, Salvador, Bahia, Brasil, CEP: 41.745-004 | Tel. (+55) 71 3115-8933, 3115-9033 e 3115-1401</small>
       </div>
       <div class="row wrap justify-center items-start content-start q-gutter-x-md q-gutter-y-md">

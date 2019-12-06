@@ -1,37 +1,29 @@
 <template>
   <article class="q-ma-md">
-    <q-list>
-      <q-item-label class="bg-grey-5" header style="margin-top:60px;">
+    <div>
+      <div class="row bg-grey-5 q-pa-lg">
         <b class="text-h5 text-grey-10">{{data.title}}</b>
-      </q-item-label>
-      <q-item v-for="(item, i) in data.items" :key="i" clickable class="q-pl-lg">
-        <q-item-section top thumbnail class="q-ml-none">
-            <img style="min-width: 168px; height: 94px;" :src="item.image" :placeholder-src="`/img/fundo-padrao.svg`">
-        </q-item-section>
-        <q-item-section>
+      </div>
+      <div class="row items-start q-gutter-xs">
+        <q-card class="col-sm-3 col-md-3" style="max-heigth:300px;" v-for="(item, i) in data.items" :key="i">
           
-          <router-link tag="div"
-                        :to="item.url_exibir" 
-                        class="pointer text-blue-10"
-                        :title="item.title ? item.title : item.name">
-              <q-item-label v-text="title(item.title ? item.title : item.name)"></q-item-label>
-          </router-link>
-        </q-item-section>
-      </q-item>
-    </q-list>
+              <img style="min-width: 100%; height: 150px;" :src="item.image" :placeholder-src="`/img/fundo-padrao.svg`">
+          
+          <q-card-section class="q-pa-sm">
+            <router-link tag="div"
+                          :to="item.url_exibir" 
+                          class="pointer text-accent-10"
+                          :title="item.title ? item.title : item.name">
+                <div class="text-h6" v-text="title(item.title ? item.title : item.name)"></div>
+            </router-link>
+          </q-card-section>
+          </q-card>
+      </div>
+    </div>
   </article>
 </template>
 <script>
-import {
-  QImg,
-  QCard,
-  QCardSection,
-  QSeparator,
-  QList,
-  QItem,
-  QItemSection,
-  QItemLabel
-} from "quasar";
+import { QImg, QCard, QCardSection, QSeparator } from "quasar";
 
 export default {
   name: "CardHome",
@@ -40,11 +32,7 @@ export default {
     QImg,
     QCard,
     QCardSection,
-    QSeparator,
-    QList,
-    QItem,
-    QItemSection,
-    QItemLabel
+    QSeparator
   },
   methods: {
     title(title) {
