@@ -9,10 +9,12 @@ use App\Helpers\WordpressService;
 class Destaques
 {
     // CONTEÙDOS
+    public $limit = 6;
+
     public function getConteudosMaisRecentes()
     {
         $conteudos = Conteudo::orderBy('created_at', 'desc')
-            ->limit(4)
+            ->limit($this->limit)
             ->get();
 
         return $conteudos->map(function ($conteudo) {
@@ -22,7 +24,7 @@ class Destaques
 
     public function getConteudosMaisBaixados()
     {
-        $conteudos = Conteudo::orderBy('qt_downloads', 'desc')->limit(4)->get();
+        $conteudos = Conteudo::orderBy('qt_downloads', 'desc')->limit($this->limit)->get();
 
         return $conteudos->map(function ($conteudo) {
             return $conteudo->only(['id', 'title', 'image', 'qt_downloads', 'url_exibir']);
@@ -30,7 +32,7 @@ class Destaques
     }
     public function getConteudosMaisAcessados()
     {
-        $conteudos = Conteudo::orderBy('qt_access', 'desc')->limit(4)->get();
+        $conteudos = Conteudo::orderBy('qt_access', 'desc')->limit($this->limit)->get();
 
         return $conteudos->map(function ($conteudo) {
             return $conteudo->only(['id', 'title', 'image', 'qt_access', 'url_exibir']);
@@ -39,7 +41,7 @@ class Destaques
 
     public function getConteudosDestaques()
     {
-        $conteudos = Conteudo::where("is_featured", true)->limit(4)->get();
+        $conteudos = Conteudo::where("is_featured", true)->limit($this->limit)->get();
 
         return $conteudos->map(function ($conteudo) {
             return $conteudo->only(['id', 'title', 'image', 'url_exibir']);
@@ -49,7 +51,7 @@ class Destaques
     public function getAplicativosDestaques()
     {
         $aplicativos = Aplicativo::whereRaw("options->'is_featured' = 'true'")
-            ->limit(4)->get();
+            ->limit($this->limit)->get();
 
         return $aplicativos->map(function ($aplicativo) {
             return $aplicativo->only(['id', 'name', 'image', 'url_exibir']);
@@ -57,7 +59,7 @@ class Destaques
     }
     public function getAplicativosMaisRecentes()
     {
-        $aplicativos = Aplicativo::orderBy('created_at', 'desc')->limit(4)->get();
+        $aplicativos = Aplicativo::orderBy('created_at', 'desc')->limit($this->limit)->get();
 
         return $aplicativos->map(function ($aplicativo) {
             return $aplicativo->only(['id', 'name', 'image', 'url_exibir']);

@@ -1,6 +1,22 @@
 .text-light {
   color: #bdbdbd;
 }
+.home-cat-title {
+  display: block;
+  border-left: solid #4bbeab 5px;
+}
+.card-home {
+  border: solid #35586a 1px;
+}
+.btn-mais-home {
+  left: 9px;
+  box-shadow: inset 7px 0px 0px 0px #9c27b0 !important;
+}
+.card-img {
+  width: 100%;
+  min-height: 185px;
+  max-height: 185px;
+}
 /*
  * Quasar Framework v1.2.2
  * (c) 2015-present Razvan Stoenescu

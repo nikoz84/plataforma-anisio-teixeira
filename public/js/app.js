@@ -5218,7 +5218,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\ni[data-v-54b41baf]::before {\r\n  content: \" \\BB   \";\r\n  padding-right: 5px;\r\n  padding-left: 7px;\n}\r\n", ""]);
+exports.push([module.i, "\ni[data-v-54b41baf]::before {\n  content: \" \\BB   \";\n  padding-right: 5px;\n  padding-left: 7px;\n}\n", ""]);
 
 // exports
 
@@ -5237,7 +5237,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\ni[data-v-72ea6e24]::before {\r\n  content: \" \\BB   \";\r\n  padding-right: 5px;\r\n  padding-left: 7px;\n}\r\n", ""]);
+exports.push([module.i, "\ni[data-v-72ea6e24]::before {\n  content: \" \\BB   \";\n  padding-right: 5px;\n  padding-left: 7px;\n}\n", ""]);
 
 // exports
 
@@ -23058,10 +23058,10 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************!*\
   !*** ./node_modules/quasar/package.json ***!
   \******************************************/
-/*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, browserslist, bugs, bundleDependencies, deprecated, description, devDependencies, engines, files, homepage, keywords, license, main, module, name, repository, scripts, typings, version, vetur, web-types, default */
+/*! exports provided: _args, _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _spec, _where, author, browserslist, bugs, description, devDependencies, engines, files, homepage, keywords, license, main, module, name, repository, scripts, typings, version, vetur, web-types, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"_from\":\"quasar@1.2.2\",\"_id\":\"quasar@1.2.2\",\"_inBundle\":false,\"_integrity\":\"sha512-aBeFvd/UGQfEdZM5Kd2z3qV/LXfetWL3gOJL6wnLdqhjFkOvaecc8r9HV6EKPt/pFiL1rlpwTOkQ2ARNTuYJJw==\",\"_location\":\"/quasar\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"quasar@1.2.2\",\"name\":\"quasar\",\"escapedName\":\"quasar\",\"rawSpec\":\"1.2.2\",\"saveSpec\":null,\"fetchSpec\":\"1.2.2\"},\"_requiredBy\":[\"#USER\",\"/\"],\"_resolved\":\"https://registry.npmjs.org/quasar/-/quasar-1.2.2.tgz\",\"_shasum\":\"9a64bb35814833c36a2585b86c5b84d862064510\",\"_spec\":\"quasar@1.2.2\",\"_where\":\"/home/niko/Documentos/projetos-web/pat_laravel\",\"author\":{\"name\":\"Razvan Stoenescu\",\"email\":\"razvan.stoenescu@gmail.com\",\"url\":\"https://quasar.dev\"},\"browserslist\":[\"last 1 version, not dead, ie >= 11\"],\"bugs\":{\"url\":\"https://github.com/quasarframework/quasar/issues\"},\"bundleDependencies\":false,\"deprecated\":false,\"description\":\"Build high-performance VueJS user interfaces (SPA, PWA, SSR, Mobile and Desktop) in record time\",\"devDependencies\":{\"@babel/core\":\"^7.5.5\",\"@quasar/babel-preset-app\":\"^1.1.6\",\"@quasar/extras\":\"^1.3.1\",\"autoprefixer\":\"^9.6.1\",\"babel-eslint\":\"^10.0.2\",\"babel-loader\":\"^8.0.6\",\"babel-preset-es2015-rollup\":\"^3.0.0\",\"chokidar\":\"^3.1.0\",\"css-loader\":\"^3.2.0\",\"cssnano\":\"^4.1.10\",\"eslint\":\"^5.15.3\",\"eslint-config-standard\":\"^12.0.0\",\"eslint-friendly-formatter\":\"^4.0.1\",\"eslint-loader\":\"^2.2.1\",\"eslint-plugin-import\":\"^2.18.2\",\"eslint-plugin-node\":\"^9.1.0\",\"eslint-plugin-promise\":\"^4.2.1\",\"eslint-plugin-standard\":\"^4.0.1\",\"eslint-plugin-vue\":\"^5.2.3\",\"file-loader\":\"^4.2.0\",\"friendly-errors-webpack-plugin\":\"^1.7.0\",\"html-webpack-plugin\":\"^3.2.0\",\"json-beautify\":\"^1.1.1\",\"lru-cache\":\"^5.1.1\",\"memory-fs\":\"^0.4.1\",\"node-sass\":\"^4.12.0\",\"open\":\"^6.4.0\",\"postcss-loader\":\"^3.0.0\",\"postcss-rtl\":\"^1.5.0\",\"recast\":\"^0.18.2\",\"rimraf\":\"^2.7.1\",\"rollup\":\"^1.21.4\",\"rollup-plugin-buble\":\"^0.19.8\",\"rollup-plugin-json\":\"^4.0.0\",\"rollup-plugin-node-resolve\":\"^5.2.0\",\"sass-loader\":\"^8.0.0\",\"style-resources-loader\":\"^1.2.1\",\"stylus\":\"^0.54.7\",\"stylus-loader\":\"^3.0.2\",\"uglify-es\":\"^3.3.9\",\"url-loader\":\"^2.1.0\",\"vue\":\"^2.6.10\",\"vue-loader\":\"^15.7.1\",\"vue-router\":\"^3.1.2\",\"vue-server-renderer\":\"^2.6.10\",\"vue-style-loader\":\"^4.1.2\",\"vue-template-compiler\":\"^2.6.10\",\"webpack\":\"^4.40.2\",\"webpack-chain\":\"^6.0.0\",\"webpack-dev-middleware\":\"^3.7.0\",\"webpack-dev-server\":\"^3.8.1\",\"webpack-hot-middleware\":\"^2.25.0\",\"webpack-merge\":\"^4.2.1\",\"webpack-node-externals\":\"^1.7.2\"},\"engines\":{\"node\":\">= 8.9.0\",\"npm\":\">= 5.6.0\",\"yarn\":\">= 1.6.0\"},\"files\":[\"dist\",\"lang\",\"icon-set\",\"src\"],\"homepage\":\"https://quasar.dev\",\"keywords\":[\"vuejs\",\"vue\",\"quasar\",\"js\",\"phone\",\"tablet\",\"desktop\",\"spa\",\"pwa\",\"website\",\"electron\"],\"license\":\"MIT\",\"main\":\"dist/quasar.common.js\",\"module\":\"src/index.esm.js\",\"name\":\"quasar\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/quasarframework/quasar.git\"},\"scripts\":{\"build\":\"node build/script.build.js\",\"clean\":\"node build/script.clean.js\",\"dev\":\"node build/script.dev.spa.js\",\"dev:quploader\":\"cd dev/upload-server && yarn && cd ../.. && node dev/upload-server/server.js\",\"dev:ssr\":\"node build/script.dev.ssr.js\",\"dev:umd\":\"node build/script.test-umd.js\",\"lint\":\"eslint --ext .js,.vue src dev\",\"lint-fix\":\"eslint --ext .js,.vue src dev --fix\",\"test\":\"eslint --ext .js,.vue src dev\"},\"typings\":\"dist/types/index.d.ts\",\"version\":\"1.2.2\",\"vetur\":{\"tags\":\"dist/vetur/quasar-tags.json\",\"attributes\":\"dist/vetur/quasar-attributes.json\"},\"web-types\":\"dist/web-types/web-types.json\"}");
+module.exports = JSON.parse("{\"_args\":[[\"quasar@1.2.2\",\"/home/david/Documentos/projetos web/plataforma-anisio-teixeira\"]],\"_from\":\"quasar@1.2.2\",\"_id\":\"quasar@1.2.2\",\"_inBundle\":false,\"_integrity\":\"sha512-aBeFvd/UGQfEdZM5Kd2z3qV/LXfetWL3gOJL6wnLdqhjFkOvaecc8r9HV6EKPt/pFiL1rlpwTOkQ2ARNTuYJJw==\",\"_location\":\"/quasar\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"quasar@1.2.2\",\"name\":\"quasar\",\"escapedName\":\"quasar\",\"rawSpec\":\"1.2.2\",\"saveSpec\":null,\"fetchSpec\":\"1.2.2\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/quasar/-/quasar-1.2.2.tgz\",\"_spec\":\"1.2.2\",\"_where\":\"/home/david/Documentos/projetos web/plataforma-anisio-teixeira\",\"author\":{\"name\":\"Razvan Stoenescu\",\"email\":\"razvan.stoenescu@gmail.com\",\"url\":\"https://quasar.dev\"},\"browserslist\":[\"last 1 version, not dead, ie >= 11\"],\"bugs\":{\"url\":\"https://github.com/quasarframework/quasar/issues\"},\"description\":\"Build high-performance VueJS user interfaces (SPA, PWA, SSR, Mobile and Desktop) in record time\",\"devDependencies\":{\"@babel/core\":\"^7.5.5\",\"@quasar/babel-preset-app\":\"^1.1.6\",\"@quasar/extras\":\"^1.3.1\",\"autoprefixer\":\"^9.6.1\",\"babel-eslint\":\"^10.0.2\",\"babel-loader\":\"^8.0.6\",\"babel-preset-es2015-rollup\":\"^3.0.0\",\"chokidar\":\"^3.1.0\",\"css-loader\":\"^3.2.0\",\"cssnano\":\"^4.1.10\",\"eslint\":\"^5.15.3\",\"eslint-config-standard\":\"^12.0.0\",\"eslint-friendly-formatter\":\"^4.0.1\",\"eslint-loader\":\"^2.2.1\",\"eslint-plugin-import\":\"^2.18.2\",\"eslint-plugin-node\":\"^9.1.0\",\"eslint-plugin-promise\":\"^4.2.1\",\"eslint-plugin-standard\":\"^4.0.1\",\"eslint-plugin-vue\":\"^5.2.3\",\"file-loader\":\"^4.2.0\",\"friendly-errors-webpack-plugin\":\"^1.7.0\",\"html-webpack-plugin\":\"^3.2.0\",\"json-beautify\":\"^1.1.1\",\"lru-cache\":\"^5.1.1\",\"memory-fs\":\"^0.4.1\",\"node-sass\":\"^4.12.0\",\"open\":\"^6.4.0\",\"postcss-loader\":\"^3.0.0\",\"postcss-rtl\":\"^1.5.0\",\"recast\":\"^0.18.2\",\"rimraf\":\"^2.7.1\",\"rollup\":\"^1.21.4\",\"rollup-plugin-buble\":\"^0.19.8\",\"rollup-plugin-json\":\"^4.0.0\",\"rollup-plugin-node-resolve\":\"^5.2.0\",\"sass-loader\":\"^8.0.0\",\"style-resources-loader\":\"^1.2.1\",\"stylus\":\"^0.54.7\",\"stylus-loader\":\"^3.0.2\",\"uglify-es\":\"^3.3.9\",\"url-loader\":\"^2.1.0\",\"vue\":\"^2.6.10\",\"vue-loader\":\"^15.7.1\",\"vue-router\":\"^3.1.2\",\"vue-server-renderer\":\"^2.6.10\",\"vue-style-loader\":\"^4.1.2\",\"vue-template-compiler\":\"^2.6.10\",\"webpack\":\"^4.40.2\",\"webpack-chain\":\"^6.0.0\",\"webpack-dev-middleware\":\"^3.7.0\",\"webpack-dev-server\":\"^3.8.1\",\"webpack-hot-middleware\":\"^2.25.0\",\"webpack-merge\":\"^4.2.1\",\"webpack-node-externals\":\"^1.7.2\"},\"engines\":{\"node\":\">= 8.9.0\",\"npm\":\">= 5.6.0\",\"yarn\":\">= 1.6.0\"},\"files\":[\"dist\",\"lang\",\"icon-set\",\"src\"],\"homepage\":\"https://quasar.dev\",\"keywords\":[\"vuejs\",\"vue\",\"quasar\",\"js\",\"phone\",\"tablet\",\"desktop\",\"spa\",\"pwa\",\"website\",\"electron\"],\"license\":\"MIT\",\"main\":\"dist/quasar.common.js\",\"module\":\"src/index.esm.js\",\"name\":\"quasar\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/quasarframework/quasar.git\"},\"scripts\":{\"build\":\"node build/script.build.js\",\"clean\":\"node build/script.clean.js\",\"dev\":\"node build/script.dev.spa.js\",\"dev:quploader\":\"cd dev/upload-server && yarn && cd ../.. && node dev/upload-server/server.js\",\"dev:ssr\":\"node build/script.dev.ssr.js\",\"dev:umd\":\"node build/script.test-umd.js\",\"lint\":\"eslint --ext .js,.vue src dev\",\"lint-fix\":\"eslint --ext .js,.vue src dev --fix\",\"test\":\"eslint --ext .js,.vue src dev\"},\"typings\":\"dist/types/index.d.ts\",\"version\":\"1.2.2\",\"vetur\":{\"tags\":\"dist/vetur/quasar-tags.json\",\"attributes\":\"dist/vetur/quasar-attributes.json\"},\"web-types\":\"dist/web-types/web-types.json\"}");
 
 /***/ }),
 
@@ -62941,7 +62941,7 @@ var render = function() {
                           _vm._s(_vm.paginator.total) +
                           " itens - " +
                           _vm._s(_vm.paginator.per_page) +
-                          " itens por página \r\n                "
+                          " itens por página \n                "
                       )
                     ])
                   ]),
@@ -63968,7 +63968,7 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\r\n            Try out different ad text to see what brings in the most customers, and learn how to\r\n            enhance your ads using features like ad extensions. If you run into any problems with\r\n            your ads, find out how to tell if they're running and how to resolve approval issues.\r\n\r\n            "
+                    "\n            Try out different ad text to see what brings in the most customers, and learn how to\n            enhance your ads using features like ad extensions. If you run into any problems with\n            your ads, find out how to tell if they're running and how to resolve approval issues.\n\n            "
                   ),
                   _c(
                     "q-stepper-navigation",
@@ -65271,14 +65271,14 @@ var render = function() {
                         { attrs: { to: "/usuario/recuperar-senha" } },
                         [
                           _vm._v(
-                            "\r\n                    Recuperar senha\r\n                  "
+                            "\n                    Recuperar senha\n                  "
                           )
                         ]
                       ),
-                      _vm._v(" |\r\n                  "),
+                      _vm._v(" |\n                  "),
                       _c("router-link", { attrs: { to: "/usuario/login" } }, [
                         _vm._v(
-                          "\r\n                      Login\r\n                  "
+                          "\n                      Login\n                  "
                         )
                       ])
                     ],
@@ -86616,8 +86616,8 @@ var state = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/niko/Documentos/projetos-web/pat_laravel/resources/assets/js/app.js */"./resources/assets/js/app.js");
-module.exports = __webpack_require__(/*! /home/niko/Documentos/projetos-web/pat_laravel/resources/assets/stylus/app.styl */"./resources/assets/stylus/app.styl");
+__webpack_require__(/*! /home/david/Documentos/projetos web/plataforma-anisio-teixeira/resources/assets/js/app.js */"./resources/assets/js/app.js");
+module.exports = __webpack_require__(/*! /home/david/Documentos/projetos web/plataforma-anisio-teixeira/resources/assets/stylus/app.styl */"./resources/assets/stylus/app.styl");
 
 
 /***/ })

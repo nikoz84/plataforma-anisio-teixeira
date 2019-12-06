@@ -5,10 +5,12 @@
         <template v-slot:avatar>
           <div class="absolute column items-center">
             <img src="/logo.svg" style="width: 150px; height: 150px;" class="load" v-scroll-fire="getDestaques">
-            <div class="text-5 text-primary text-center">Plataforma Anísio Teixeira</div>
+            <div class="text-5 text-primary text-center">Plataforma Anísio Teixeira\zx\zx\zx</div>
           </div>
+	<h6>{{itens}}</h6>
         </template>
       </q-banner>
+	
     </article>
         
     <CardHome :data="data" v-for="(data, i) in destaques" :key="`i-${i}`"/>
@@ -34,7 +36,8 @@ export default {
 
   data() {
     return {
-      destaques: []
+      destaques: [],
+      itens: 'hola mundo'
     };
   },
   created() {},
