@@ -85583,7 +85583,7 @@ var routes = [{
   path: "/admin",
   name: "admin-home",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./pages/Admin.vue */ "./resources/assets/js/pages/Admin.vue"));
+    return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./pages/Admin.vue */ "./resources/assets/js/pages/Admin.vue"));
   },
   meta: {
     requiresAuth: true
@@ -85603,7 +85603,7 @@ var routes = [{
 }, {
   path: "/:slug",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./pages/Canal.vue */ "./resources/assets/js/pages/Canal.vue"));
+    return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./pages/Canal.vue */ "./resources/assets/js/pages/Canal.vue"));
   },
   meta: {
     requiresAuth: false,

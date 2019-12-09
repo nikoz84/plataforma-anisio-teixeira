@@ -1,29 +1,35 @@
 <template>
   <article class="q-ma-md">
-    <div>
-      <div class="row bg-grey-5 q-pa-lg">
-        <b class="text-h5 text-grey-10">{{data.title}}</b>
-      </div>
-      <div class="row items-start q-gutter-xs">
-        <q-card class="col-sm-3 col-md-3" style="max-heigth:300px;" v-for="(item, i) in data.items" :key="i">
-          
-              <img style="min-width: 100%; height: 150px;" :src="item.image" :placeholder-src="`/img/fundo-padrao.svg`">
-          
-          <q-card-section class="q-pa-sm">
+      <b class="home-cat-title text-h5 text-grey-10 q-ma-sm q-pa-sm">{{data.title}}</b>
+      <div class="row">
+        
+        <q-card class="card-home card-padrao col-md-3 q-ma-sm" v-for="(item, i) in data.items.slice(0, limit)" :key="i">
             <router-link tag="div"
                           :to="item.url_exibir" 
-                          class="pointer text-accent-10"
+                          class="pointer"
                           :title="item.title ? item.title : item.name">
-                <div class="text-h6" v-text="title(item.title ? item.title : item.name)"></div>
+              <img  class="card-img" :src="item.image" :placeholder-src="`/img/fundo-padrao.svg`">
+              <q-card-section>
+                <div class="text-body1 text-weight-medium text-grey-10" v-text="title(item.title ? item.title : item.name)"></div>
+              </q-card-section>
             </router-link>
-          </q-card-section>
-          </q-card>
+        </q-card>
+        <q-btn @click="showData($event)" align="left" icon="cached" class="btn-mais-home q-mt-md q-mb-xl full-width" label="Carregar mais" />
       </div>
-    </div>
   </article>
 </template>
 <script>
-import { QImg, QCard, QCardSection, QSeparator } from "quasar";
+import {
+  QImg,
+  QCard,
+  QCardSection,
+  QSeparator,
+  QList,
+  QItem,
+  QItemSection,
+  QItemLabel,
+  QBtn
+} from "quasar";
 
 export default {
   name: "CardHome",
@@ -32,12 +38,28 @@ export default {
     QImg,
     QCard,
     QCardSection,
-    QSeparator
+    QSeparator,
+    QList,
+    QItem,
+    QItemSection,
+    QItemLabel,
+    QBtn
+  },
+  data() {
+    return {
+      limit: 3,
+      show: true
+    };
   },
   methods: {
     title(title) {
       let stringLength = title.length;
-      return stringLength > 100 ? title.substr(0, 100) + " ..." : title;
+      return stringLength > 70 ? title.substr(0, 70) + " ..." : title;
+    },
+    showData(e) {
+      this.limit = this.limit + 3;
+      let el = e.target;
+      el.classList.add("invisible");
     }
   }
 };

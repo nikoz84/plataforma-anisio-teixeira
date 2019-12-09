@@ -68,7 +68,13 @@ Nicolás Romero
 
 <a href="https://github.com/nikoz84"><img src="https://avatars1.githubusercontent.com/u/6708508?s=460&v=4" title="Nicolás Romero" width="80" height="80"></a>
 
+Marlon Trindade Ferreira
+
 <a href="https://github.com/marlontrin20"><img src="https://avatars0.githubusercontent.com/u/8275515?s=460&v=4" title="Marlon Trindade Ferreira" width="80" height="80"></a>
+
+David Galvão
+
+<a href="https://github.com/davidgalvao"><img src="https://robohash.org/davidgalvao" title="David Galvão" width="80" height="80"></a>
 
 #### Antigo Colaborador
 
