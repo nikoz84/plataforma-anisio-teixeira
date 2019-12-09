@@ -1,6 +1,6 @@
 <template>
     <div>
-        <q-btn label="Maximized" color="primary" @click="dialog = true" />
+        <q-btn label="Ferramentas" size="sm" color="primary" @click="dialog = true" />
         <q-dialog
             v-model="dialog"
             persistent
@@ -23,25 +23,88 @@
                 </q-btn>
                 </q-bar>
 
-                <q-card-section>
-                <div class="text-h6">Alert</div>
+                <q-card-section class="row">
+                    <div class="text-h6">Busca Avanzada</div>
                 </q-card-section>
-
-                <q-card-section>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
+                <q-card-section class="row" v-if="canal.sidebar && canal.sidebar.tipos">
+                    <div class="col-sm-3">
+                        <div class="text-h6">Tipos de Mídia</div>
+                        <q-list>
+                            <q-item v-for="(tipo, i) in canal.sidebar.tipos" :key="`t-${i}`">
+                                <q-item-section>
+                                    <q-checkbox v-model="tipos"
+                                            :val="tipo.id" 
+                                            :label="tipo.name" 
+                                            color="orange" />
+                                </q-item-section>
+                            </q-item>
+                        </q-list>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="text-h6">Licenças</div>
+                        <q-list>
+                            <q-item v-for="(license, i) in canal.sidebar.licenses" :key="`l-${i}`">
+                                <q-item-section>
+                                    <q-checkbox v-model="licencas"
+                                            :val="license.id" 
+                                            :label="license.name" 
+                                            color="orange" />
+                                </q-item-section>
+                            </q-item>
+                        </q-list>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="text-h6">{{canal.sidebar.components.name}}</div>
+                        <q-list>
+                            <q-item v-for="(component, i) in canal.sidebar.components.components" :key="`c-${i}`">
+                                <q-item-section>
+                                    <q-checkbox v-model="opcoes"
+                                            :val="component.id" 
+                                            :label="component.name"
+                                            color="orange" />
+                                </q-item-section>
+                            </q-item>
+                        </q-list>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="text-h6">{{canal.sidebar.niveis.name}}</div>
+                        <q-list>
+                            <q-item v-for="(component, i) in canal.sidebar.niveis.components" :key="`n-${i}`">
+                                <q-item-section>
+                                    <q-checkbox v-model="opcoes"
+                                            :val="component.id" 
+                                            :label="component.name"
+                                            color="orange" />
+                                </q-item-section>
+                            </q-item>
+                        </q-list>
+                    </div>
+                    
+                </q-card-section>
+                <q-card-section class="row">
+                {{canal.sidebar}}
                 </q-card-section>
             </q-card>
         </q-dialog>
     </div>
 </template>
 <script>
+import { mapState } from "vuex";
+import { QList, QItem, QItemSection, QCheckbox, QCardSection } from "quasar";
+
 export default {
   name: "AdvancedSearchForm",
   data() {
     return {
       dialog: false,
-      maximizedToggle: true
+      maximizedToggle: true,
+      tipos: [],
+      licencas: [],
+      opcoes: []
     };
+  },
+  computed: {
+    ...mapState(["canal"])
   }
 };
 </script>

@@ -5,6 +5,8 @@
       <div class="text-h6">
         {{ (canal && canal.options) ? canal.options.extend_name : '' }}
       </div>
+      <q-space /> 
+      <AdvancedSearchForm></AdvancedSearchForm> 
     </header>
     <nav>
       
@@ -17,8 +19,7 @@
               label="Listar" 
               :to="{ name: 'Listar', params: {slug: $route.params.slug}}"/>
         <CategoriasMenu :categoryName="categoryName" :categories="canal.sidebar.categories" v-if="canal.sidebar"></CategoriasMenu>
-        <q-space />
-        
+        <q-space /> 
       </q-tabs>
     </nav>
     <transition name="custom-classes-transition" 
@@ -32,6 +33,7 @@
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
 import CategoriasMenu from "../components/CategoriasMenu.vue";
+import AdvancedSearchForm from "../forms/AdvancedSearchForm.vue";
 import {
   QTabs,
   QRouteTab,
@@ -64,7 +66,8 @@ export default {
     QList,
     QItem,
     QItemSection,
-    CategoriasMenu
+    CategoriasMenu,
+    AdvancedSearchForm
   },
   data() {
     return {

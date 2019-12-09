@@ -2,7 +2,6 @@
   <article class="q-ma-md">
       <b class="home-cat-title text-h5 text-grey-10 q-ma-sm q-pa-sm">{{data.title}}</b>
       <div class="row">
-        
         <q-card class="card-home card-padrao col-md-3 q-ma-sm" v-for="(item, i) in data.items.slice(0, limit)" :key="i">
             <router-link tag="div"
                           :to="item.url_exibir" 
@@ -19,17 +18,7 @@
   </article>
 </template>
 <script>
-import {
-  QImg,
-  QCard,
-  QCardSection,
-  QSeparator,
-  QList,
-  QItem,
-  QItemSection,
-  QItemLabel,
-  QBtn
-} from "quasar";
+import { QImg, QCard, QCardSection, QSeparator, QBtn } from "quasar";
 
 export default {
   name: "CardHome",
@@ -39,10 +28,6 @@ export default {
     QCard,
     QCardSection,
     QSeparator,
-    QList,
-    QItem,
-    QItemSection,
-    QItemLabel,
     QBtn
   },
   data() {
