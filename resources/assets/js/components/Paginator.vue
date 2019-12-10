@@ -16,7 +16,7 @@
       </template>
     </q-infinite-scroll>
     
-    <div class="jumbotron text-center" v-if="paginator.total == 0">
+    <div class="jumbotron text-center" v-if="infiniteSrollData.length == 0">
         Sem registros encontrados
     </div>
   </div>
@@ -43,7 +43,9 @@ export default {
   methods: {
     ...mapMutations(["SET_PAGINATOR"]),
     async onLoad(index, done) {
-      if (this.paginator.next_page_url) {
+      if (this.paginator.next_page_url && this.paginator.data.length > 0) {
+        let params = this.queryStringToObject(this.paginator.next_page_url);
+        console.log(params)
         let resp = await axios.get(this.paginator.next_page_url);
 
         this.SET_PAGINATOR(resp.data.paginator);
@@ -52,7 +54,17 @@ export default {
         );
         done();
         //console.log(this.infiniteSrollData)
+      }else {
+        done(true)
       }
+    },
+    queryStringToObject(str){
+      let url = new URL(window.location.origin + str);
+      let queryString = url.searchParams.toString();
+      
+      let params = queryString.replace(/(^\?)/,'').split("&").map(function(n){return n = n.split("="),this[n[0]] = n[1],this}.bind({}))[0];
+      
+      return params;
     }
   }
 };

@@ -133,7 +133,7 @@
     <q-page-container>
       <router-view />
        <q-page-scroller position="bottom-right">
-        <q-btn fab icon="keyboard_arrow_up" color="primary" />
+        <q-btn round color="accent" icon="arrow_upward" />
       </q-page-scroller>
     </q-page-container>
   </q-layout>

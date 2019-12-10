@@ -82,6 +82,9 @@
                     
                 </q-card-section>
                 <q-card-section class="row">
+                {{tipos}}
+                </q-card-section>
+                <q-card-section class="row">
                 {{canal.sidebar}}
                 </q-card-section>
             </q-card>

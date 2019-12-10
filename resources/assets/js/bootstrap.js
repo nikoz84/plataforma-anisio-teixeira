@@ -23,10 +23,9 @@ window.axios.defaults.baseURL = "http://pat.des/api-v1";
 //window.axios.defaults.timeout = 4000;
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
-if (localStorage.token) {
-  axios.defaults.headers.common[
-    "Authorization"
-  ] = `Bearer ${localStorage.token}`;
+let jwtToken = localStorage.token;
+if (jwtToken) {
+  axios.defaults.headers.common["Authorization"] = `Bearer ${jwtToken}`;
 } else {
   axios.defaults.headers.common["Authorization"] = null;
 }

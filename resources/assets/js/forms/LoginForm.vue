@@ -1,8 +1,7 @@
 <template>
-  <article>
-     <!-- IntroParallax/ -->
-    <div class="row q-mt-xl">
-        <q-card class="offset-md-4 col-md-4">
+  <article class="q-pa-md">
+    <div class="row no-wrap justify-center">
+        <q-card class="col-sm-6">
             <q-card-section>
                 <div class="text-center text-h5">Faça seu Login</div>
             </q-card-section>
@@ -32,57 +31,59 @@
                      <q-btn class="full-width" label="Entrar" type="submit" color="primary"/>
                    </div>
                 </q-form>
-                
-                <div class="text-center q-mt-lg">
-                  <router-link to="/usuario/recuperar-senha">
-                    Recuperar senha
-                  </router-link> |
-                  <router-link to="/usuario/registro">
-                      Cadastre-se
-                  </router-link>
-                </div>
             </q-card-section>
+            <q-card-actions align="around">
+                  <q-btn flat to="/usuario/recuperar-senha">Recuperar senha</q-btn>
+                  <q-btn flat to="/usuario/registro">Cadastre-se</q-btn>
+            </q-card-actions>
         </q-card>
     </div>
   </article>
 </template>
 <script>
-import { mapActions, mapState, mapMutations } from "vuex";
-import { QCard, QCardSection, QInput, QForm, QImg, QSeparator } from "quasar";
 import ShowErrors from "../components/ShowErrors.vue";
-import IntroParallax from "../components/IntroParallax.vue";
+import { mapActions, mapState, mapMutations } from "vuex";
+import {
+  QCard,
+  QCardSection,
+  QCardActions,
+  QInput,
+  QForm,
+  QImg,
+  QSeparator,
+  QSpace
+} from "quasar";
 
 export default {
   name: "LoginForm",
   components: {
     QCard,
     QCardSection,
+    QCardActions,
     ShowErrors,
     QForm,
     QInput,
-    QImg,
-    IntroParallax
+    QSeparator,
+    QSpace
   },
   data() {
     return {
       email: null,
       password: null,
-      isPwd: true
+      isPwd: true,
+      errors: {}
     };
   },
-  beforeCreate() {
-    if (!this.isLogged) {
-      this.$router.push("/usuario/login");
-    }
-  },
   computed: {
-    ...mapState(["isLogged", "errors"])
+    ...mapState(["isLogged"])
   },
   methods: {
     ...mapActions(["login"]),
-    ...mapMutations(["SET_ERRORS", "SET_LOGIN_USER"]),
+    ...mapMutations(["SET_LOGIN_USER"]),
     async onSubmit() {
       this.$q.loading.show();
+      this.errors = {};
+
       let data = { email: this.email, password: this.password };
       let resp = await axios.post("/auth/login", data);
 
@@ -90,7 +91,6 @@ export default {
         this.$q.loading.hide();
         localStorage.setItem("token", resp.data.metadata.token.access_token);
         this.docodePayloadToken();
-        this.SET_ERRORS([]);
         this.SET_LOGIN_USER(true);
 
         this.$router.push("/admin/conteudos/listar");
@@ -101,11 +101,8 @@ export default {
           icon: "done",
           message: `${resp.data.message} ${localStorage.username}!!`
         });
-        setTimeout(() => {
-          window.location.reload(true);
-        }, 150);
       } else {
-        this.SET_ERRORS(resp.data.errors);
+        this.errors = resp.data.errors;
         this.$q.loading.hide();
 
         this.$q.notify({

@@ -1,49 +1,63 @@
 <template>
-    <div class="row">
-      <div class="form-image">
-      <div class="col-md-6 col-md-offset-4 col-xs-10 col-xs-offset-1 center-xs">
-            <form v-on:submit.prevent="recoverPass()">
+  <article class="q-pa-md">
+    <div class="row no-wrap justify-center">
+        <q-card style="min-width:350px;">
+            <q-card-section >
+                <div class="text-center text-h5">Mudar Senha</div>
+            </q-card-section>
+            <q-separator inset />
+            <q-card-section>
+                <q-form @submit.prevent="onSubmit()" class="q-gutter-md" ref="loginForm">
+                  
+                  <q-input v-model="password" filled :type="isPwd ? 'password' : 'text'" hint="Senha"
+                            bottom-slots :error="errors.password && errors.password.length > 0">
+                    <template v-slot:append>
+                      <q-icon
+                        :name="isPwd ? 'visibility_off' : 'visibility'"
+                        class="cursor-pointer"
+                        @click="isPwd = !isPwd"
+                      />
+                    </template>
+                    <template v-slot:error>
+                      <ShowErrors :errors="errors.password"></ShowErrors>
+                    </template>
+                  </q-input>
+                  <q-input v-model="confirmation" filled type="password" hint="Repita a senha"
+                            bottom-slots :error="errors.confirmation && errors.confirmation.length > 0">
+                    <template v-slot:error>
+                      <ShowErrors :errors="errors.confirmation"></ShowErrors>
+                    </template>
+                  </q-input>
+                   <div>
+                     <q-btn class="full-width" label="Cadastre-se" type="submit" color="primary"/>
+                   </div>
+                </q-form>
                 
-                <div class="panel panel-default col-md-7">
-                    <div class="panel-heading">
-                        Mudar Senha
-                    </div>
-                    <div class="panel-body">
-                        <!-- Nova senha -->
-                        <div class="form-group">
-                            <label for="senha">Senha</label>
-                            <input type="password" class="form-control" id="senha" aria-describedby="senha" v-model="password">
-                            <small class="form-text text-muted">Escreva uma nova senha</small>
-                        </div>
-                        <div class="form-group">
-                            <label for="confirmasenha">Confirme a Senha</label>
-                            <input type="password" class="form-control" id="confirmasenha" aria-describedby="confirmar senha" v-model="confirmPassword">
-                        </div>
-                        <div class="form-group">
-                          <button class="btn btn-default btn-block">Enviar</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-      </div>
+            </q-card-section>
+        </q-card>
     </div>
+  </article>
 </template>
-
 <script>
+import ShowErrors from "../components/ShowErrors.vue";
+import {QCard, QCardSection } from "quasar";
+
 export default {
   name: "RecoverForm",
-  components: {},
+  components: {QCard,
+  QCardSection},
   data() {
     return {
+      isPwd: false,
       password: "",
-      confirmPassword: "",
-      verificationCode: ""
+      confirmation: false,
+      verificationCode: "",
+      errors:{}
     };
   },
   created() {},
   methods: {
-    async recoverPass() {
+    async onSubmit() {
       let data = {
         password: this.password,
         code: this.verificationCode

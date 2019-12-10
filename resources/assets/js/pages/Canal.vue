@@ -100,9 +100,6 @@ export default {
       "fetchAplicativos",
       "fetchPosts"
     ]),
-    categories() {
-      console.log(this.canal);
-    },
     fetchData() {
       let query = this.$route.query;
       query.canal = localStorage.canal;

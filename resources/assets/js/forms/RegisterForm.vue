@@ -1,10 +1,9 @@
 <template>
-<article>
-     <IntroParallax/>
-    <div class="row">
-        <q-card class="offset-md-4 col-md-4">
+<article class="q-pa-md">
+    <div class="row no-wrap justify-center">
+        <q-card style="min-width:350px;">
             <q-card-section >
-                <div class="text-center text-h5">Cadastrese</div>
+                <div class="text-center text-h5">Cadastre-se</div>
             </q-card-section>
             <q-separator inset />
             <q-card-section>
@@ -34,7 +33,7 @@
                       <ShowErrors :errors="errors.password"></ShowErrors>
                     </template>
                   </q-input>
-                  <q-input v-model="confirmation" filled type="password" hint="Senha"
+                  <q-input v-model="confirmation" filled type="password" hint="Repita a senha"
                             bottom-slots :error="errors.confirmation && errors.confirmation.length > 0">
                     <template v-slot:error>
                       <ShowErrors :errors="errors.confirmation"></ShowErrors>
@@ -45,78 +44,78 @@
                    </div>
                 </q-form>
                 
-                <div class="text-center q-mt-lg">
-                  <router-link to="/usuario/recuperar-senha">
-                    Recuperar senha
-                  </router-link> |
-                  <router-link to="/usuario/login">
-                      Login
-                  </router-link>
-                </div>
             </q-card-section>
+            <q-card-actions align="around">
+              <q-btn flat to="/usuario/login">Login</q-btn>
+              <q-btn flat to="/usuario/recuperar-senha">Recuperar senha</q-btn>
+            </q-card-actions>
         </q-card>
     </div>
   </article>
 </template>
 
 <script>
-import { mapActions, mapState, mapMutations } from "vuex";
 import ShowErrors from "../components/ShowErrors.vue";
-import { QCard, QCardSection, QInput, QForm, QImg, QSeparator } from "quasar";
-import IntroParallax from "../components/IntroParallax.vue";
+import { mapActions, mapState, mapMutations } from "vuex";
+import {
+  QCard,
+  QCardSection,
+  QCardActions,
+  QInput,
+  QForm,
+  QImg,
+  QSeparator
+} from "quasar";
 
 export default {
   name: "RegisterForm",
-  components: { QCard,
+  components: {
+    QCard,
     QCardSection,
-    ShowErrors,
-    QForm,
+    QCardActions,
     QInput,
+    QForm,
     QImg,
-    IntroParallax },
+    QSeparator,
+    ShowErrors
+  },
   data() {
     return {
       name: "",
       email: "",
       password: "",
       confirmation: "",
-      isPwd: true
+      isPwd: true,
+      errors: {}
     };
   },
-  computed: {
-    ...mapState(["errors"])
-  },
-  mounted() {
-    //
-  },
   methods: {
-    ...mapActions(["registerUser"]),
-    ...mapMutations(["SET_ERRORS"]),
     async onSubmit() {
       this.$q.loading.show();
+      this.errors = {};
       let data = {
         name: this.name,
         email: this.email,
         password: this.password,
         confirmation: this.confirmation
       };
-      let resp = await axios.post('/auth/register',data);
+      let resp = await axios.post("/auth/register", data);
       
-      if(resp.data.success){
+      if (resp.data && resp.data.success) {
         this.$q.loading.hide();
-        this.SET_ERRORS([]);
-        this.$router.push("/usuario/confirmar-email");
         
+        this.$router.push("/usuario/confirmar-email");
+
         this.$q.notify({
           color: "positive",
           textColor: "white",
           icon: "done",
           message: `${resp.data.message}`
         });
-      }else{
-        this.$q.loading.hide();
-        this.SET_ERRORS(resp.data.errors);
+      } else {
         
+        this.errors = resp.data.errors;
+        this.$q.loading.hide();
         this.$q.notify({
           color: "negative",
           textColor: "white",
@@ -129,23 +128,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.form-image {
-  display: block;
-  min-height: 100vh;
-  padding: 0;
-  background: url("/storage/conteudos/conteudos-digitais/galeria/5.jpg")
-    no-repeat bottom center scroll;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  -o-background-size: cover;
 
-  form {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-}
-.links {
-  padding-top: 15px;
-}
 </style>
