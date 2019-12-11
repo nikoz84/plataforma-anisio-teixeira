@@ -13,7 +13,7 @@
 	
     </article>
         
-    <CardHome :data="data" v-for="(data, i) in destaques" :key="`i-${i}`"/>
+    <CardHome :data="data" v-for="(data, i) in destaques" :key="`i-${i}`" :index="`i-${i}`"/>
     
     
   </section>
@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       destaques: [],
-      itens: 'hola mundo'
+      itens: "hola mundo"
     };
   },
   created() {},

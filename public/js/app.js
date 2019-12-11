@@ -67723,7 +67723,7 @@ var render = function() {
             { attrs: { position: "bottom-right" } },
             [
               _c("q-btn", {
-                attrs: { round: "", color: "accent", icon: "arrow_upward" }
+                attrs: { round: "", color: "dark", icon: "arrow_upward" }
               })
             ],
             1

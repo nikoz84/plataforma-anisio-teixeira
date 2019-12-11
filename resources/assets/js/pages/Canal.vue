@@ -1,34 +1,43 @@
 <template>
-  <article class="q-pa-md">
+  <section class="q-pa-md">
     <!--Breadcrum></Breadcrum-->
-    <header class="row">
-      <div class="text-h6">
-        {{ (canal && canal.options) ? canal.options.extend_name : '' }}
+    <header class="row no-wrap justify-center">
+      <div class="text-h6 title-page" :style="`color:${color}`">
+        {{ canal && canal.options ? canal.options.extend_name : "" }}
       </div>
-      <q-space /> 
-      <AdvancedSearchForm></AdvancedSearchForm> 
+      <q-space />
+      <AdvancedSearchForm></AdvancedSearchForm>
     </header>
     <nav>
-      
-      <q-tabs inline-label class="bg-primary text-white shadow-2">
-        <q-route-tab name="inicio" 
-              label="Sobre" 
-              :to="{ name: 'Inicio', params: {slug: $route.params.slug}}"
-              v-if="canal && canal.options && canal.options.has_home"/>
-        <q-route-tab name="listar" 
-              label="Listar" 
-              :to="{ name: 'Listar', params: {slug: $route.params.slug}}"/>
-        <CategoriasMenu :categoryName="categoryName" :categories="canal.sidebar.categories" v-if="canal.sidebar"></CategoriasMenu>
-        <q-space /> 
+      <q-tabs inline-label class="text-white shadow-3" :style="`background-color:${color}`">
+        <q-route-tab
+          name="inicio"
+          label="Sobre"
+          :to="{ name: 'Inicio', params: { slug: $route.params.slug } }"
+          v-if="canal && canal.options && canal.options.has_home"
+        />
+        <q-route-tab
+          name="listar"
+          label="Listar"
+          :to="{ name: 'Listar', params: { slug: $route.params.slug } }"
+        />
+        <CategoriasMenu
+          :categoryName="categoryName"
+          :categories="canal.sidebar.categories"
+          v-if="canal.sidebar"
+        ></CategoriasMenu>
+        <q-space />
       </q-tabs>
     </nav>
-    <transition name="custom-classes-transition" 
-                enter-active-class="animated fadeIn" 
-                leave-active-class="animated fadeOut"
-                mode="out-in">
+    <transition
+      name="custom-classes-transition"
+      enter-active-class="animated fadeIn"
+      leave-active-class="animated fadeOut"
+      mode="out-in"
+    >
       <router-view></router-view>
     </transition>
-  </article>
+  </section>
 </template>
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
@@ -91,7 +100,12 @@ export default {
     }
   },
   computed: {
-    ...mapState(["canal"])
+    ...mapState(["canal"]),
+    color() {
+      return this.canal && this.canal.options
+        ? this.canal.options.color
+        : "#08275e";
+    }
   },
   methods: {
     ...mapActions([
@@ -137,16 +151,5 @@ export default {
 <style lang="stylus" scoped>
 .input-search {
   min-width: 350px;
-}
-
-.page-header {
-  text-align: center;
-
-  .page-title {
-    position: relative;
-    font-size: 20px;
-    color: #0f285d;
-    font-weight: 700;
-  }
 }
 </style>
