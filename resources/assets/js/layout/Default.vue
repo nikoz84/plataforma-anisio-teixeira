@@ -28,8 +28,8 @@
         <q-space />
 
         <div class="toolbar-input-container row no-wrap">
-            <q-select
-            standout="bg-grey-3"
+          <q-select
+            filled
             dense
             square
             clearable
@@ -44,11 +44,13 @@
             @new-value="add"
             @input="selectedInput"
             :options="options"
-            input-class="text-accent"
-            class="bg-grey-11 col text-accent"
+            text-color="grey-8"
+            color="positive"
+            bg-color="bg-grey-11"
+            class="bg-grey-11 col"
             label="Pesquisar"
           />
-          
+
           <q-btn
             @click="searchTerm"
             class="toolbar-input-btn"
@@ -281,7 +283,6 @@ export default {
       });
     },
     selectedInput(value) {
-      console.log(value);
       if (value) {
         this.$router.replace(
           `/recursos-educacionais/listar?busca=${value.label}`
@@ -316,9 +317,9 @@ export default {
 .toolbar-input-btn {
   border-radius: 0;
   border-style: solid;
-  border-width: 1px 1px 1px 0;
+  border-width: 3px 3px 3px 3px;
   border-color: rgba(0, 0, 0, 0.24);
-  max-width: 60px;
+  max-width: 50px;
   width: 100%;
 }
 </style>
