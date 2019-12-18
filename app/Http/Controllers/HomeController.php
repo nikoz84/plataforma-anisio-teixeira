@@ -8,6 +8,7 @@ use App\Http\Controllers\ApiController;
 use App\Options;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\Autocomplete;
 
 class HomeController extends ApiController
 {
@@ -20,7 +21,7 @@ class HomeController extends ApiController
      */
     public function __construct(Destaques $destaques, Request $request)
     {
-        $this->middleware('jwt.verify')->except(['index', 'getLayout', 'getHomeData']);
+        $this->middleware('jwt.verify')->except(['index', 'getLayout', 'getHomeData', 'autocomplete']);
         $this->destaques = new $destaques;
         $this->request = $request;
     }
@@ -99,5 +100,16 @@ class HomeController extends ApiController
 
 
         return $this->showAll($collect, '', 200);
+    }
+    public function autocomplete()
+    {
+        $termo = $this->request->query('termo');
+        $limit = $this->request->query('limit', 15);
+        $per = $this->request->query('por', 'tag');
+
+        $data = new Autocomplete($termo, $limit, $per);
+        $paginator = $data->autocomplete();
+
+        return $this->showAsPaginator($paginator, '', 200);
     }
 }

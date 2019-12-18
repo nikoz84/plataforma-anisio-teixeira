@@ -19,6 +19,7 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/files/{id}', 'FileController@getFiles')->name('busca.arquivo');
     Route::post('/files/{id}', 'FileController@createFile')->name('adiciona.arquivo');
     Route::get('/destaques', 'HomeController@getHomeData')->name('dados.home');
+    Route::get('/autocompletar', 'HomeController@autocomplete')->name('autocompletar.home');
     Route::get('/layout', 'HomeController@getLayout')->name('lista.links');
     /** CATEGORIAS */
     Route::get('/categories', 'CategoryController@index')->name('lista.categorias');
@@ -58,7 +59,6 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/options', 'OptionsController@index')->name('listar.opcoes');
     /** TAGS */
     Route::get('/tags/{id}', 'TagController@getById')->name('busca.x.tag.id');
-    Route::get('/tags/autocomplete/{term}', 'TagController@autocomplete')->name('autocompletar.tag');
     /**  */
     Route::get('/licencas', 'LicenseController@index')->name('listar.licencas');
     /** TOKEN */
@@ -109,11 +109,12 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     Route::put('/aplicativos/{id}', 'AplicativoController@update')->name('aplicativo.editar');
     Route::delete('/aplicativos/{id}', 'AplicativoController@delete')->name('aplicativo.apagar');
     /** TAGS */
-    Route::get('/tags', 'TagController@index')->name('listaTags');
-    Route::post('/tags', 'TagController@create')->name('adicionarTag');
-    Route::get('/tags/search/{term}', 'TagController@search')->name('buscaTag');
-    Route::put('/tags/{id}', 'TagController@update')->name('atualizarTag');
-    Route::delete('/tags/{id}', 'TagController@delete')->name('apagarTag');
+    Route::get('/tags', 'TagController@index')->name('lista.tag');
+    Route::post('/tags', 'TagController@create')->name('adicionar.tag');
+    Route::get('/tags/search/{term}', 'TagController@search')->name('busca.tag');
+    Route::get('/tags/autocomplete/{term}', 'TagController@autocomplete')->name('autocompletar.tag');
+    Route::put('/tags/{id}', 'TagController@update')->name('atualizar.tag');
+    Route::delete('/tags/{id}', 'TagController@delete')->name('apagar.tag');
     /** CONTEUDOS */
     Route::post('/conteudos', 'ConteudoController@create')->name('adicionar.conteudo');
     Route::put('/conteudos/{id}', 'ConteudoController@update')->name('atualizar.conteudo');

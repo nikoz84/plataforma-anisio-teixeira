@@ -15,7 +15,7 @@
     />
     <q-card >
       <q-card-section >
-        <VueApexCharts v-if="render" type="bar" :options="chartOptions" :series="series"></VueApexCharts>
+        <VueApexCharts height="450" v-if="render" type="bar" :options="chartOptions" :series="series"></VueApexCharts>
       </q-card-section>
       <q-card-section>
         <q-table

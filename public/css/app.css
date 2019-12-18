@@ -1,7 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Concert+One|Lobster+Two:400,700&display=swap);.title-page {
   font-family: 'Concert One', sans-serif, cursive;
-  border-left: 15px solid #08275e;
-  border-bottom: 3px solid #08275e;
+  border-bottom: 4px solid #451e5f;
   padding-left: 15px;
 }
 /*
@@ -1856,7 +1855,7 @@ body.q-ios-padding .q-dialog__inner > div {
   border: none;
   border-radius: 0;
   background: none;
-  color: #08275e;
+  color: #35586a;
   outline: 0;
   padding: 6px 0;
 }
@@ -1906,7 +1905,7 @@ body.q-ios-padding .q-dialog__inner > div {
   left: 0;
   right: 0;
   top: 18px;
-  color: #1a356e;
+  color: #451e5f;
   font-size: 16px;
   line-height: 20px;
   font-weight: 400;
@@ -5339,7 +5338,7 @@ body.q-ios-padding .q-notifications__list--bottom {
 :root {
   --q-color-primary: #08275e;
   --q-color-secondary: #424242;
-  --q-color-accent: #9c27b0;
+  --q-color-accent: #451e5f;
   --q-color-positive: #4bbeab;
   --q-color-negative: #b05552;
   --q-color-info: #35586a;
@@ -5371,11 +5370,11 @@ body.q-ios-padding .q-notifications__list--bottom {
   background: var(--q-color-secondary) !important;
 }
 .text-accent {
-  color: #9c27b0 !important;
+  color: #451e5f !important;
   color: var(--q-color-accent) !important;
 }
 .bg-accent {
-  background: #9c27b0 !important;
+  background: #451e5f !important;
   background: var(--q-color-accent) !important;
 }
 .text-positive {

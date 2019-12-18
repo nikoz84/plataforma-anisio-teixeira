@@ -3634,11 +3634,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])(["errors"]), {
     getUrl: function getUrl() {
       return localStorage.urlDenuncia;
+    },
+    title: function title() {
+      console.log(this.$route.params.action);
+      return this.$route.params.action == "faleconosco" ? "Fale Conosco" : "Denunciar";
     }
   }),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapMutations"])(["SET_ERRORS", "SET_IS_ERROR"]), {
     onSubmit: function () {
-      var _onSubmit = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(e) {
+      var _onSubmit = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var data, url, resp;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -3651,7 +3655,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   url: localStorage.urlDenuncia,
                   subject: this.subject,
                   message: this.message,
-                  action: location.href,
+                  action: this.$route.params.action,
                   recaptcha: grecaptcha.getResponse()
                 };
                 url = this.$route.params.action;
@@ -3680,7 +3684,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                     color: "negative",
                     textColor: "white",
                     icon: "error",
-                    message: "Ups! Ouve um problema."
+                    message: "Prencha os campos."
                   });
                 }
 
@@ -3692,7 +3696,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee, this);
       }));
 
-      function onSubmit(_x) {
+      function onSubmit() {
         return _onSubmit.apply(this, arguments);
       }
 
@@ -4683,7 +4687,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop,
-      search: ""
+      term: null,
+      options: []
     };
   },
   created: function created() {
@@ -4699,6 +4704,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this.$router.push("/");
         }
       });
+    },
+    searchTerm: function searchTerm(val, update, abort) {
+      var _this2 = this;
+
+      update(function () {
+        if (val === "" && val.length < 3) {
+          _this2.options = [];
+        } else {
+          var self = _this2;
+          axios.get("/autocompletar?termo=".concat(val, "&por=tag")).then(function (resp) {
+            if (resp.data.success) {
+              self.options = resp.data.paginator.data;
+            }
+          });
+        }
+      });
+    },
+    selectedInput: function selectedInput(value) {
+      console.log(value);
+
+      if (value) {
+        this.$router.replace("/recursos-educacionais/listar?busca=".concat(value.label));
+      } else {
+        this.$router.replace("/recursos-educacionais/listar");
+      }
+    },
+    add: function add(details) {
+      console.log(details);
     }
   })
 });
@@ -65541,9 +65574,10 @@ var render = function() {
             _c(
               "q-card-section",
               [
-                _c("div", { staticClass: "text-center text-h5" }, [
-                  _vm._v("\n            Denuncie\n          ")
-                ]),
+                _c("div", {
+                  staticClass: "text-center text-h5",
+                  domProps: { textContent: _vm._s(_vm.title) }
+                }),
                 _vm._v(" "),
                 _c("q-separator", { attrs: { inset: "" } }),
                 _vm._v(" "),
@@ -65553,7 +65587,7 @@ var render = function() {
                   ),
                   _c("b", [_vm._v("imprópria")]),
                   _vm._v(
-                    ",\n            basta fornecer o endereço da página onde esse conteúdo se localiza e uma mensagem\n            descrevendo do que se trata e por que você acha que essa página merece a denuncia.\n          "
+                    ",\n          basta fornecer o endereço da página onde esse conteúdo se localiza e uma mensagem\n          descrevendo do que se trata e por que você acha que essa página merece a denuncia.\n        "
                   )
                 ]),
                 _vm._v(" "),
@@ -67335,20 +67369,34 @@ var render = function() {
                 "div",
                 { staticClass: "toolbar-input-container row no-wrap" },
                 [
-                  _c("q-input", {
-                    staticClass: "bg-white col",
+                  _c("q-select", {
+                    staticClass: "bg-grey-11 col text-accent",
                     attrs: {
+                      standout: "bg-grey-3",
                       dense: "",
-                      outlined: "",
                       square: "",
-                      placeholder: "Pesquiçar"
+                      clearable: "",
+                      "use-input": "",
+                      "option-value": "id",
+                      "option-label": "label",
+                      "stack-label": "",
+                      "hide-dropdown-icon": "",
+                      debounce: "300",
+                      options: _vm.options,
+                      "input-class": "text-accent",
+                      label: "Pesquisar"
+                    },
+                    on: {
+                      filter: _vm.searchTerm,
+                      "new-value": _vm.add,
+                      input: _vm.selectedInput
                     },
                     model: {
-                      value: _vm.search,
+                      value: _vm.term,
                       callback: function($$v) {
-                        _vm.search = $$v
+                        _vm.term = $$v
                       },
-                      expression: "search"
+                      expression: "term"
                     }
                   }),
                   _vm._v(" "),
@@ -67359,7 +67407,8 @@ var render = function() {
                       "text-color": "grey-8",
                       icon: "search",
                       unelevated: ""
-                    }
+                    },
+                    on: { click: _vm.searchTerm }
                   })
                 ],
                 1
@@ -67655,28 +67704,6 @@ var render = function() {
                   _c(
                     "q-item-section",
                     [_c("q-item-label", [_vm._v("Sobre")])],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("q-separator"),
-              _vm._v(" "),
-              _c(
-                "q-item",
-                { attrs: { clickable: "", to: "/galeria" } },
-                [
-                  _c(
-                    "q-item-section",
-                    { attrs: { avatar: "" } },
-                    [_c("q-icon", { attrs: { name: "photo" } })],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "q-item-section",
-                    [_c("q-item-label", [_vm._v("Galeria")])],
                     1
                   )
                 ],
@@ -68104,6 +68131,7 @@ var render = function() {
               _vm.render
                 ? _c("VueApexCharts", {
                     attrs: {
+                      height: "450",
                       type: "bar",
                       options: _vm.chartOptions,
                       series: _vm.series

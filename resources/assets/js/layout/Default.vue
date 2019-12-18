@@ -2,55 +2,117 @@
   <q-layout view="hHh lpR fFf">
     <q-header elevated>
       <q-toolbar>
-        <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" aria-label="Menu" icon="dehaze"/>
-        <q-btn flat no-caps no-wrap class="q-ml-xs" to="/" v-if="$q.screen.gt.sm">
+        <q-btn
+          flat
+          dense
+          round
+          @click="leftDrawerOpen = !leftDrawerOpen"
+          aria-label="Menu"
+          icon="dehaze"
+        />
+        <q-btn
+          flat
+          no-caps
+          no-wrap
+          class="q-ml-xs"
+          to="/"
+          v-if="$q.screen.gt.sm"
+        >
           <q-icon name="img:/logo.svg" />
-          
-          <q-toolbar-title shrink >
+
+          <q-toolbar-title shrink>
             Plataforma Anísio Teixeira
           </q-toolbar-title>
         </q-btn>
 
-        <q-space/>
-        
+        <q-space />
+
         <div class="toolbar-input-container row no-wrap">
-          <q-input dense outlined square v-model="search" placeholder="Pesquiçar" class="bg-white col" />
-          <q-btn class="toolbar-input-btn" color="grey-3" text-color="grey-8" icon="search" unelevated />
+            <q-select
+            standout="bg-grey-3"
+            dense
+            square
+            clearable
+            v-model="term"
+            use-input
+            option-value="id"
+            option-label="label"
+            stack-label
+            hide-dropdown-icon
+            debounce="300"
+            @filter="searchTerm"
+            @new-value="add"
+            @input="selectedInput"
+            :options="options"
+            input-class="text-accent"
+            class="bg-grey-11 col text-accent"
+            label="Pesquisar"
+          />
+          
+          <q-btn
+            @click="searchTerm"
+            class="toolbar-input-btn"
+            color="grey-3"
+            text-color="grey-8"
+            icon="search"
+            unelevated
+          />
         </div>
-        
-        <q-space/>
+
+        <q-space />
 
         <q-btn-dropdown stretch flat icon="person">
           <q-list>
-            <q-item v-if="!isLogged" to="/usuario/login" clickable v-close-popup tabindex="0">
+            <q-item
+              v-if="!isLogged"
+              to="/usuario/login"
+              clickable
+              v-close-popup
+              tabindex="0"
+            >
               <q-item-section>
                 <q-item-label>Login</q-item-label>
               </q-item-section>
             </q-item>
-            <q-item v-if="isLogged" to="/usuario/recuperar-senha" clickable v-close-popup tabindex="0">
+            <q-item
+              v-if="isLogged"
+              to="/usuario/recuperar-senha"
+              clickable
+              v-close-popup
+              tabindex="0"
+            >
               <q-item-section>
                 <q-item-label>Alterar senha</q-item-label>
               </q-item-section>
             </q-item>
-            <q-item v-if="isLogged" @click="sair()" clickable v-close-popup tabindex="0">
+            <q-item
+              v-if="isLogged"
+              @click="sair()"
+              clickable
+              v-close-popup
+              tabindex="0"
+            >
               <q-item-section>
                 <q-item-label>Sair</q-item-label>
               </q-item-section>
-            </q-item> 
+            </q-item>
           </q-list>
         </q-btn-dropdown>
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      bordered
-      content-class="bg-grey-2"
-    >
+    <q-drawer v-model="leftDrawerOpen" bordered content-class="bg-grey-2">
       <q-list>
         <!-- MARCA -->
         <q-item-label v-if="!$q.screen.gt.xs || !$q.screen.gt.sm">
-          <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" aria-label="Menu" icon="dehaze"/>
+          <q-btn
+            flat
+            dense
+            round
+            @click="leftDrawerOpen = !leftDrawerOpen"
+            aria-label="Menu"
+            icon="dehaze"
+          />
           <q-btn flat no-caps no-wrap class="q-ml-xs" to="/">
             <q-icon name="img:/logo.svg" />
             <div clas="text-h6">
@@ -67,27 +129,39 @@
             <q-item-label>Início</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator/>
-        <q-item-label class="bg-grey-3" header >
+        <q-separator />
+        <q-item-label class="bg-grey-3" header>
           <b>CANAIS</b>
         </q-item-label>
         <!-- CANAIS -->
         <div v-for="(link, i) in links" :key="`x.${i}`">
-          <q-item tag="div" :to="`/${link.slug}/listar`" clickable v-close-popup tabindex="0">
+          <q-item
+            tag="div"
+            :to="`/${link.slug}/listar`"
+            clickable
+            v-close-popup
+            tabindex="0"
+          >
             <q-item-section>
               <q-item-label>{{ link.name }}</q-item-label>
             </q-item-section>
           </q-item>
-          <q-separator/>
+          <q-separator />
         </div>
       </q-list>
-      
+
       <q-list>
-        <q-item-label class="bg-grey-4" header >
+        <q-item-label class="bg-grey-4" header>
           <b class="text-h5 text-grey-10"></b>
         </q-item-label>
         <!-- ADMINISTRAÇÃO -->
-        <q-item v-if="isLogged" :to="`/admin/conteudos/listar`" clickable v-close-popup tabindex="0">
+        <q-item
+          v-if="isLogged"
+          :to="`/admin/conteudos/listar`"
+          clickable
+          v-close-popup
+          tabindex="0"
+        >
           <q-item-section avatar>
             <q-icon name="settings_applications" />
           </q-item-section>
@@ -106,18 +180,8 @@
           </q-item-section>
         </q-item>
         <q-separator />
-        <!-- GALERIA -->
-        <q-item clickable to="/galeria">
-          <q-item-section avatar>
-            <q-icon name="photo" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Galeria</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-separator />
         <!-- Fale conosco -->
-        <q-item clickable to="/usuario/contato/faleconosco" >
+        <q-item clickable to="/usuario/contato/faleconosco">
           <q-item-section avatar>
             <q-icon name="message" />
           </q-item-section>
@@ -126,13 +190,11 @@
           </q-item-section>
         </q-item>
       </q-list>
-      
-      
     </q-drawer>
 
     <q-page-container>
       <router-view />
-       <q-page-scroller position="bottom-right">
+      <q-page-scroller position="bottom-right">
         <q-btn round color="dark" icon="arrow_upward" />
       </q-page-scroller>
     </q-page-container>
@@ -156,6 +218,7 @@ import {
   QItem,
   QItemSection,
   QExpansionItem,
+  QMenu,
   QSelect,
   GoBack,
   Platform
@@ -184,7 +247,8 @@ export default {
   data() {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop,
-      search: ""
+      term: null,
+      options: []
     };
   },
   created() {
@@ -201,6 +265,33 @@ export default {
           this.$router.push("/");
         }
       });
+    },
+    searchTerm(val, update, abort) {
+      update(() => {
+        if (val === "" && val.length < 3) {
+          this.options = [];
+        } else {
+          const self = this;
+          axios.get(`/autocompletar?termo=${val}&por=tag`).then(resp => {
+            if (resp.data.success) {
+              self.options = resp.data.paginator.data;
+            }
+          });
+        }
+      });
+    },
+    selectedInput(value) {
+      console.log(value);
+      if (value) {
+        this.$router.replace(
+          `/recursos-educacionais/listar?busca=${value.label}`
+        );
+      } else {
+        this.$router.replace(`/recursos-educacionais/listar`);
+      }
+    },
+    add(details) {
+      console.log(details);
     }
   }
 };

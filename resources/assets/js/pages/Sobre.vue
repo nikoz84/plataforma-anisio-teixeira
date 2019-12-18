@@ -1,10 +1,10 @@
 <template>
     <div class="q-ma-md">
-      <div class="row text-h5">
+      <div class="row text-h6">
           Sobre a {{layout.title_footer}}
       </div>
       <q-separator class="q-mt-md q-mb-lg" />
-      <div class="row">
+      <div class="row ">
         {{layout.description_footer}}
       </div>
       <q-separator class="q-mt-md q-mb-lg" />
@@ -48,8 +48,9 @@
         <q-img style="max-width: 741px; height: auto;" v-if="layout.marcas.is_active" :src="layout.marcas.url"></q-img>
       </div>
       <q-separator class="q-mt-md q-mb-lg" />
-      <div class="row wrap justify-center" v-if="layout && layout.marcas">
-        <b>Todos os direitos e conteúdos desta Plataforma são de uso compartilhado, exceto onde indicado de outra forma.</b>
+      <div class="row wrap justify-center text-center" v-if="layout && layout.marcas">
+        <q-btn outline to="/galeria" icon-right="photo" label="Visite nossa galería de Imagens"></q-btn>
+        <b class="q-mt-lg">Todos os direitos e conteúdos desta Plataforma são de uso compartilhado, exceto onde indicado de outra forma.</b>
       </div>
       <div class="row wrap justify-center" v-if="layout && layout.marcas">
         <q-img style="max-width: 180px; height: auto;" src="/img/creative-commons.svg"></q-img>
