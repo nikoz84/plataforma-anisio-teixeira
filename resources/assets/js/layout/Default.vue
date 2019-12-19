@@ -48,7 +48,7 @@
             color="positive"
             bg-color="bg-grey-11"
             class="bg-grey-11 col"
-            label="Pesquisar"
+            label="Buscar"
           />
 
           <q-btn
@@ -249,8 +249,7 @@ export default {
   data() {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop,
-      term: null,
-      options: []
+      
     };
   },
   created() {
