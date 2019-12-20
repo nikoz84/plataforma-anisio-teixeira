@@ -1,0 +1,116 @@
+<template>
+  <div class="toolbar-input-container row no-wrap">
+    <q-select
+      filled
+      dense
+      square
+      clearable
+      v-model="term"
+      use-input
+      option-value="id"
+      option-label="label"
+      stack-label
+      hide-dropdown-icon
+      debounce="300"
+      @filter="searchTerm"
+      @new-value="add"
+      @input="selectedInput"
+      :options="options"
+      text-color="grey-8"
+      color="positive"
+      bg-color="bg-grey-11"
+      class="bg-grey-11 col"
+      :placeholder="`Buscar por: ${label}`"
+    />
+
+    <q-btn
+      @click="searchTerm"
+      class="toolbar-input-btn"
+      color="grey-3"
+      text-color="grey-8"
+      icon="search"
+      unelevated
+    />
+    <q-btn color="grey-7" round flat icon="more_vert">
+      <q-menu cover auto-close>
+        <q-list>
+          <q-item clickable>
+            <q-item-section @click="recommendationPer('tag')">Sugerência por palavra chave</q-item-section>
+          </q-item>
+          <q-item clickable @click="recommendationPer('titulo')">
+            <q-item-section>Sugerência por título</q-item-section>
+          </q-item>
+          <q-item clickable>
+            <q-item-section>Busca avançada</q-item-section>
+          </q-item>
+        </q-list>
+      </q-menu>
+    </q-btn>
+  </div>
+</template>
+<script>
+export default {
+  name: "AutocompleteForm",
+  data() {
+    return {
+      term: null,
+      label: "palavra chave",
+      options: [],
+      per: "tag"
+    };
+  },
+  methods: {
+    searchTerm(val, update, abort) {
+      update(() => {
+        if (val === "" && val.length < 3) {
+          this.options = [];
+        } else {
+          const self = this;
+          axios
+            .get(`/autocompletar?termo=${val}&por=${this.per}`)
+            .then(resp => {
+              if (resp.data.success) {
+                self.options = resp.data.paginator.data;
+              }
+            });
+        }
+      });
+    },
+    selectedInput(value) {
+      if (value) {
+        this.$router.replace(
+          `/recursos-educacionais/listar?busca=${value.label}`
+        );
+      } else {
+        this.$router.replace(`/recursos-educacionais/listar`);
+      }
+    },
+    add(details) {
+      console.log(details);
+    },
+    recommendationPer(per) {
+      this.per = per;
+      if (per == "tag") {
+        this.label = "palavra chave";
+      } else {
+        this.label = "título";
+      }
+    }
+  }
+};
+</script>
+<style lang="stylus" scoped>
+.toolbar-input-container {
+  min-width: 150px;
+  width: 50%;
+}
+
+.toolbar-input-btn {
+  border-radius: 0;
+  border-style: solid;
+  border-width: 3px 3px 3px 3px;
+  border-color: rgba(0, 0, 0, 0.24);
+  max-width: 50px;
+  width: 100%;
+}
+</style>

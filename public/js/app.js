@@ -3115,6 +3115,66 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/forms/AutocompleteForm.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/forms/AutocompleteForm.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "AutocompleteForm",
+  data: function data() {
+    return {
+      term: null,
+      label: "palavra chave",
+      options: [],
+      per: "tag"
+    };
+  },
+  methods: {
+    searchTerm: function searchTerm(val, update, abort) {
+      var _this = this;
+
+      update(function () {
+        if (val === "" && val.length < 3) {
+          _this.options = [];
+        } else {
+          var self = _this;
+          axios.get("/autocompletar?termo=".concat(val, "&por=").concat(_this.per)).then(function (resp) {
+            if (resp.data.success) {
+              self.options = resp.data.paginator.data;
+            }
+          });
+        }
+      });
+    },
+    selectedInput: function selectedInput(value) {
+      if (value) {
+        this.$router.replace("/recursos-educacionais/listar?busca=".concat(value.label));
+      } else {
+        this.$router.replace("/recursos-educacionais/listar");
+      }
+    },
+    add: function add(details) {
+      console.log(details);
+    },
+    recommendationPer: function recommendationPer(per) {
+      this.per = per;
+
+      if (per == "tag") {
+        this.label = "palavra chave";
+      } else {
+        this.label = "título";
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/forms/CanalForm.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/forms/CanalForm.vue?vue&type=script&lang=js& ***!
@@ -4653,7 +4713,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var quasar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! quasar */ "./node_modules/quasar/src/index.esm.js");
+/* harmony import */ var _forms_AutocompleteForm_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../forms/AutocompleteForm.vue */ "./resources/assets/js/forms/AutocompleteForm.vue");
+/* harmony import */ var _LeftSideBar_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LeftSideBar.vue */ "./resources/assets/js/layout/LeftSideBar.vue");
+/* harmony import */ var quasar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! quasar */ "./node_modules/quasar/src/index.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -4662,33 +4724,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Default",
   directives: {
-    GoBack: quasar__WEBPACK_IMPORTED_MODULE_1__["GoBack"]
+    GoBack: quasar__WEBPACK_IMPORTED_MODULE_3__["GoBack"]
   },
-  componentes: {
-    QLayout: quasar__WEBPACK_IMPORTED_MODULE_1__["QLayout"],
-    QDrawer: quasar__WEBPACK_IMPORTED_MODULE_1__["QDrawer"],
-    QHeader: quasar__WEBPACK_IMPORTED_MODULE_1__["QHeader"],
-    QSpace: quasar__WEBPACK_IMPORTED_MODULE_1__["QSpace"],
-    QSeparator: quasar__WEBPACK_IMPORTED_MODULE_1__["QSeparator"],
-    QToolbar: quasar__WEBPACK_IMPORTED_MODULE_1__["QToolbar"],
-    QToolbarTitle: quasar__WEBPACK_IMPORTED_MODULE_1__["QToolbarTitle"],
-    QPageContainer: quasar__WEBPACK_IMPORTED_MODULE_1__["QPageContainer"],
-    QPageScroller: quasar__WEBPACK_IMPORTED_MODULE_1__["QPageScroller"],
-    QList: quasar__WEBPACK_IMPORTED_MODULE_1__["QList"],
-    QItem: quasar__WEBPACK_IMPORTED_MODULE_1__["QItem"],
-    QItemSection: quasar__WEBPACK_IMPORTED_MODULE_1__["QItemSection"],
-    QItemLabel: quasar__WEBPACK_IMPORTED_MODULE_1__["QItemLabel"],
-    QExpansionItem: quasar__WEBPACK_IMPORTED_MODULE_1__["QExpansionItem"],
-    QSelect: quasar__WEBPACK_IMPORTED_MODULE_1__["QSelect"]
+  components: {
+    AutocompleteForm: _forms_AutocompleteForm_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    LeftSideBar: _LeftSideBar_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    QLayout: quasar__WEBPACK_IMPORTED_MODULE_3__["QLayout"],
+    QDrawer: quasar__WEBPACK_IMPORTED_MODULE_3__["QDrawer"],
+    QHeader: quasar__WEBPACK_IMPORTED_MODULE_3__["QHeader"],
+    QSpace: quasar__WEBPACK_IMPORTED_MODULE_3__["QSpace"],
+    QSeparator: quasar__WEBPACK_IMPORTED_MODULE_3__["QSeparator"],
+    QToolbar: quasar__WEBPACK_IMPORTED_MODULE_3__["QToolbar"],
+    QToolbarTitle: quasar__WEBPACK_IMPORTED_MODULE_3__["QToolbarTitle"],
+    QPageContainer: quasar__WEBPACK_IMPORTED_MODULE_3__["QPageContainer"],
+    QPageScroller: quasar__WEBPACK_IMPORTED_MODULE_3__["QPageScroller"],
+    QList: quasar__WEBPACK_IMPORTED_MODULE_3__["QList"],
+    QItem: quasar__WEBPACK_IMPORTED_MODULE_3__["QItem"],
+    QItemSection: quasar__WEBPACK_IMPORTED_MODULE_3__["QItemSection"],
+    QItemLabel: quasar__WEBPACK_IMPORTED_MODULE_3__["QItemLabel"],
+    QExpansionItem: quasar__WEBPACK_IMPORTED_MODULE_3__["QExpansionItem"],
+    QSelect: quasar__WEBPACK_IMPORTED_MODULE_3__["QSelect"]
   },
   data: function data() {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop,
-      term: null,
-      options: []
+      leftDrawerOpen: this.$q.platform.is.desktop
     };
   },
   created: function created() {
@@ -4704,34 +4768,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this.$router.push("/");
         }
       });
-    },
-    searchTerm: function searchTerm(val, update, abort) {
-      var _this2 = this;
-
-      update(function () {
-        if (val === "" && val.length < 3) {
-          _this2.options = [];
-        } else {
-          var self = _this2;
-          axios.get("/autocompletar?termo=".concat(val, "&por=tag")).then(function (resp) {
-            if (resp.data.success) {
-              self.options = resp.data.paginator.data;
-            }
-          });
-        }
-      });
-    },
-    selectedInput: function selectedInput(value) {
-      if (value) {
-        this.$router.replace("/recursos-educacionais/listar?busca=".concat(value.label));
-      } else {
-        this.$router.replace("/recursos-educacionais/listar");
-      }
-    },
-    add: function add(details) {
-      console.log(details);
     }
   })
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/layout/LeftSideBar.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/layout/LeftSideBar.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var quasar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! quasar */ "./node_modules/quasar/src/index.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "LeftSideBar",
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["isLogged", "links"]))
 });
 
 /***/ }),
@@ -5141,6 +5205,25 @@ exports.push([module.i, ".card-heading-bottom .card-heading-inner[data-v-2196845
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/stylus-loader/index.js!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/forms/AutocompleteForm.vue?vue&type=style&index=0&id=3fb0dd7e&lang=stylus&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--10-2!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/forms/AutocompleteForm.vue?vue&type=style&index=0&id=3fb0dd7e&lang=stylus&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".toolbar-input-container[data-v-3fb0dd7e] {\n  min-width: 150px;\n  width: 50%;\n}\n.toolbar-input-btn[data-v-3fb0dd7e] {\n  border-radius: 0;\n  border-style: solid;\n  border-width: 3px 3px 3px 3px;\n  border-color: rgba(0,0,0,0.24);\n  max-width: 50px;\n  width: 100%;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/stylus-loader/index.js!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/layout/Default.vue?vue&type=style&index=0&lang=stylus&":
 /*!***************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--10-2!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/layout/Default.vue?vue&type=style&index=0&lang=stylus& ***!
@@ -5153,7 +5236,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".drawer-footer-link {\n  color: inherit;\n  text-decoration: none;\n  font-weight: 500;\n  font-size: 0.75rem;\n}\n.drawer-footer-link:hover {\n  color: #000;\n}\n.toolbar-input-container {\n  min-width: 100px;\n  width: 50%;\n}\n.toolbar-input-btn {\n  border-radius: 0;\n  border-style: solid;\n  border-width: 3px 3px 3px 3px;\n  border-color: rgba(0,0,0,0.24);\n  max-width: 50px;\n  width: 100%;\n}\n", ""]);
+exports.push([module.i, ".drawer-footer-link {\n  color: inherit;\n  text-decoration: none;\n  font-weight: 500;\n  font-size: 0.75rem;\n}\n.drawer-footer-link:hover {\n  color: #000;\n}\n", ""]);
 
 // exports
 
@@ -52291,7 +52374,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!**********************************************!*\
   !*** ./node_modules/quasar/src/index.esm.js ***!
   \**********************************************/
-/*! exports provided: default, ClosePopup, GoBack, Intersection, Mutation, Ripple, ScrollFire, Scroll, TouchHold, TouchPan, TouchRepeat, TouchSwipe, AddressbarColor, AppFullscreen, AppVisibility, BottomSheet, Cookies, Dark, Dialog, LoadingBar, Loading, Meta, Notify, Platform, Screen, LocalStorage, SessionStorage, clone, colors, copyToClipboard, date, debounce, dom, event, exportFile, extend, format, frameDebounce, noop, openURL, patterns, scroll, throttle, uid, QAjaxBar, QAvatar, QBadge, QBanner, QBar, QBreadcrumbs, QBreadcrumbsEl, QBtn, QBtnDropdown, QBtnGroup, QBtnToggle, QCard, QCardSection, QCardActions, QCarousel, QCarouselSlide, QCarouselControl, QChatMessage, QCheckbox, QChip, QCircularProgress, QColor, QDate, QDialog, QDrawer, QEditor, QExpansionItem, QFab, QFabAction, QField, QFooter, QForm, QHeader, QIcon, QImg, QInfiniteScroll, QInnerLoading, QInput, QIntersection, QList, QItem, QItemSection, QItemLabel, QKnob, QLayout, QMarkupTable, QMenu, QNoSsr, QOptionGroup, QPage, QPageContainer, QPageScroller, QPageSticky, QPagination, QParallax, QPopupEdit, QPopupProxy, QLinearProgress, QPullToRefresh, QRadio, QRange, QRating, QResizeObserver, QScrollArea, QScrollObserver, QSelect, QSeparator, QSlideItem, QSlideTransition, QSlider, QSpace, QSpinner, QSpinnerAudio, QSpinnerBall, QSpinnerBars, QSpinnerComment, QSpinnerCube, QSpinnerDots, QSpinnerFacebook, QSpinnerGears, QSpinnerGrid, QSpinnerHearts, QSpinnerHourglass, QSpinnerInfinity, QSpinnerIos, QSpinnerOval, QSpinnerPie, QSpinnerPuff, QSpinnerRadio, QSpinnerRings, QSpinnerTail, QSplitter, QStep, QStepper, QStepperNavigation, QTabPanels, QTabPanel, QTable, QTh, QTr, QTd, QTabs, QTab, QRouteTab, QTime, QTimeline, QTimelineEntry, QToggle, QToolbar, QToolbarTitle, QTooltip, QTree, QUploader, QUploaderBase, QUploaderAddTrigger, QVideo, QVirtualScroll */
+/*! exports provided: ClosePopup, GoBack, Intersection, Mutation, Ripple, ScrollFire, Scroll, TouchHold, TouchPan, TouchRepeat, TouchSwipe, AddressbarColor, AppFullscreen, AppVisibility, BottomSheet, Cookies, Dark, Dialog, LoadingBar, Loading, Meta, Notify, Platform, Screen, LocalStorage, SessionStorage, clone, colors, copyToClipboard, date, debounce, dom, event, exportFile, extend, format, frameDebounce, noop, openURL, patterns, scroll, throttle, uid, default, QAjaxBar, QAvatar, QBadge, QBanner, QBar, QBreadcrumbs, QBreadcrumbsEl, QBtn, QBtnDropdown, QBtnGroup, QBtnToggle, QCard, QCardSection, QCardActions, QCarousel, QCarouselSlide, QCarouselControl, QChatMessage, QCheckbox, QChip, QCircularProgress, QColor, QDate, QDialog, QDrawer, QEditor, QExpansionItem, QFab, QFabAction, QField, QFooter, QForm, QHeader, QIcon, QImg, QInfiniteScroll, QInnerLoading, QInput, QIntersection, QList, QItem, QItemSection, QItemLabel, QKnob, QLayout, QMarkupTable, QMenu, QNoSsr, QOptionGroup, QPage, QPageContainer, QPageScroller, QPageSticky, QPagination, QParallax, QPopupEdit, QPopupProxy, QLinearProgress, QPullToRefresh, QRadio, QRange, QRating, QResizeObserver, QScrollArea, QScrollObserver, QSelect, QSeparator, QSlideItem, QSlideTransition, QSlider, QSpace, QSpinner, QSpinnerAudio, QSpinnerBall, QSpinnerBars, QSpinnerComment, QSpinnerCube, QSpinnerDots, QSpinnerFacebook, QSpinnerGears, QSpinnerGrid, QSpinnerHearts, QSpinnerHourglass, QSpinnerInfinity, QSpinnerIos, QSpinnerOval, QSpinnerPie, QSpinnerPuff, QSpinnerRadio, QSpinnerRings, QSpinnerTail, QSplitter, QStep, QStepper, QStepperNavigation, QTabPanels, QTabPanel, QTable, QTh, QTr, QTd, QTabs, QTab, QRouteTab, QTime, QTimeline, QTimelineEntry, QToggle, QToolbar, QToolbarTitle, QTooltip, QTree, QUploader, QUploaderBase, QUploaderAddTrigger, QVideo, QVirtualScroll */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -62550,6 +62633,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/stylus-loader/index.js!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/forms/AutocompleteForm.vue?vue&type=style&index=0&id=3fb0dd7e&lang=stylus&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--10-2!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/forms/AutocompleteForm.vue?vue&type=style&index=0&id=3fb0dd7e&lang=stylus&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--10-2!../../../../node_modules/stylus-loader!../../../../node_modules/vue-loader/lib??vue-loader-options!./AutocompleteForm.vue?vue&type=style&index=0&id=3fb0dd7e&lang=stylus&scoped=true& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/stylus-loader/index.js!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/forms/AutocompleteForm.vue?vue&type=style&index=0&id=3fb0dd7e&lang=stylus&scoped=true&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/stylus-loader/index.js!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/layout/Default.vue?vue&type=style&index=0&lang=stylus&":
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--10-2!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/layout/Default.vue?vue&type=style&index=0&lang=stylus& ***!
@@ -64648,6 +64761,139 @@ var render = function() {
       [_vm._v("\n    aplicativos\n  ")]
     )
   ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/forms/AutocompleteForm.vue?vue&type=template&id=3fb0dd7e&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/forms/AutocompleteForm.vue?vue&type=template&id=3fb0dd7e&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "toolbar-input-container row no-wrap" },
+    [
+      _c("q-select", {
+        staticClass: "bg-grey-11 col",
+        attrs: {
+          filled: "",
+          dense: "",
+          square: "",
+          clearable: "",
+          "use-input": "",
+          "option-value": "id",
+          "option-label": "label",
+          "stack-label": "",
+          "hide-dropdown-icon": "",
+          debounce: "300",
+          options: _vm.options,
+          "text-color": "grey-8",
+          color: "positive",
+          "bg-color": "bg-grey-11",
+          placeholder: "Buscar por: " + _vm.label
+        },
+        on: {
+          filter: _vm.searchTerm,
+          "new-value": _vm.add,
+          input: _vm.selectedInput
+        },
+        model: {
+          value: _vm.term,
+          callback: function($$v) {
+            _vm.term = $$v
+          },
+          expression: "term"
+        }
+      }),
+      _vm._v(" "),
+      _c("q-btn", {
+        staticClass: "toolbar-input-btn",
+        attrs: {
+          color: "grey-3",
+          "text-color": "grey-8",
+          icon: "search",
+          unelevated: ""
+        },
+        on: { click: _vm.searchTerm }
+      }),
+      _vm._v(" "),
+      _c(
+        "q-btn",
+        { attrs: { color: "grey-7", round: "", flat: "", icon: "more_vert" } },
+        [
+          _c(
+            "q-menu",
+            { attrs: { cover: "", "auto-close": "" } },
+            [
+              _c(
+                "q-list",
+                [
+                  _c(
+                    "q-item",
+                    { attrs: { clickable: "" } },
+                    [
+                      _c(
+                        "q-item-section",
+                        {
+                          on: {
+                            click: function($event) {
+                              return _vm.recommendationPer("tag")
+                            }
+                          }
+                        },
+                        [_vm._v("Sugerência por palavra chave")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "q-item",
+                    {
+                      attrs: { clickable: "" },
+                      on: {
+                        click: function($event) {
+                          return _vm.recommendationPer("titulo")
+                        }
+                      }
+                    },
+                    [_c("q-item-section", [_vm._v("Sugerência por título")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "q-item",
+                    { attrs: { clickable: "" } },
+                    [_c("q-item-section", [_vm._v("Busca avançada")])],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -67449,56 +67695,7 @@ var render = function() {
               _vm._v(" "),
               _c("q-space"),
               _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "toolbar-input-container row no-wrap" },
-                [
-                  _c("q-select", {
-                    staticClass: "bg-grey-11 col",
-                    attrs: {
-                      filled: "",
-                      dense: "",
-                      square: "",
-                      clearable: "",
-                      "use-input": "",
-                      "option-value": "id",
-                      "option-label": "label",
-                      "stack-label": "",
-                      "hide-dropdown-icon": "",
-                      debounce: "300",
-                      options: _vm.options,
-                      "text-color": "grey-8",
-                      color: "positive",
-                      "bg-color": "bg-grey-11",
-                      label: "Buscar"
-                    },
-                    on: {
-                      filter: _vm.searchTerm,
-                      "new-value": _vm.add,
-                      input: _vm.selectedInput
-                    },
-                    model: {
-                      value: _vm.term,
-                      callback: function($$v) {
-                        _vm.term = $$v
-                      },
-                      expression: "term"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("q-btn", {
-                    staticClass: "toolbar-input-btn",
-                    attrs: {
-                      color: "grey-3",
-                      "text-color": "grey-8",
-                      icon: "search",
-                      unelevated: ""
-                    },
-                    on: { click: _vm.searchTerm }
-                  })
-                ],
-                1
-              ),
+              _c("AutocompleteForm"),
               _vm._v(" "),
               _c("q-space"),
               _vm._v(" "),
@@ -67509,6 +67706,24 @@ var render = function() {
                   _c(
                     "q-list",
                     [
+                      _c(
+                        "q-item",
+                        {
+                          attrs: {
+                            clickable: "",
+                            to: "/usuario/contato/faleconosco"
+                          }
+                        },
+                        [
+                          _c(
+                            "q-item-section",
+                            [_c("q-item-label", [_vm._v("Fale Conosco")])],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
                       !_vm.isLogged
                         ? _c(
                             "q-item",
@@ -67615,214 +67830,7 @@ var render = function() {
             expression: "leftDrawerOpen"
           }
         },
-        [
-          _c(
-            "q-list",
-            [
-              !_vm.$q.screen.gt.xs || !_vm.$q.screen.gt.sm
-                ? _c(
-                    "q-item-label",
-                    [
-                      _c("q-btn", {
-                        attrs: {
-                          flat: "",
-                          dense: "",
-                          round: "",
-                          "aria-label": "Menu",
-                          icon: "dehaze"
-                        },
-                        on: {
-                          click: function($event) {
-                            _vm.leftDrawerOpen = !_vm.leftDrawerOpen
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "q-btn",
-                        {
-                          staticClass: "q-ml-xs",
-                          attrs: {
-                            flat: "",
-                            "no-caps": "",
-                            "no-wrap": "",
-                            to: "/"
-                          }
-                        },
-                        [
-                          _c("q-icon", { attrs: { name: "img:/logo.svg" } }),
-                          _vm._v(" "),
-                          _c("div", { attrs: { clas: "text-h6" } }, [
-                            _vm._v(
-                              "\n            PLATAFORMA ANÍSIO TEIXEIRA\n          "
-                            )
-                          ])
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "q-item",
-                { attrs: { clickable: "", to: "/" } },
-                [
-                  _c(
-                    "q-item-section",
-                    { attrs: { avatar: "" } },
-                    [_c("q-icon", { attrs: { name: "home" } })],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "q-item-section",
-                    [_c("q-item-label", [_vm._v("Início")])],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("q-separator"),
-              _vm._v(" "),
-              _c(
-                "q-item-label",
-                { staticClass: "bg-grey-3", attrs: { header: "" } },
-                [_c("b", [_vm._v("CANAIS")])]
-              ),
-              _vm._v(" "),
-              _vm._l(_vm.links, function(link, i) {
-                return _c(
-                  "div",
-                  { key: "x." + i },
-                  [
-                    _c(
-                      "q-item",
-                      {
-                        directives: [
-                          { name: "close-popup", rawName: "v-close-popup" }
-                        ],
-                        attrs: {
-                          tag: "div",
-                          to: "/" + link.slug + "/listar",
-                          clickable: "",
-                          tabindex: "0"
-                        }
-                      },
-                      [
-                        _c(
-                          "q-item-section",
-                          [_c("q-item-label", [_vm._v(_vm._s(link.name))])],
-                          1
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c("q-separator")
-                  ],
-                  1
-                )
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c(
-            "q-list",
-            [
-              _c(
-                "q-item-label",
-                { staticClass: "bg-grey-4", attrs: { header: "" } },
-                [_c("b", { staticClass: "text-h5 text-grey-10" })]
-              ),
-              _vm._v(" "),
-              _vm.isLogged
-                ? _c(
-                    "q-item",
-                    {
-                      directives: [
-                        { name: "close-popup", rawName: "v-close-popup" }
-                      ],
-                      attrs: {
-                        to: "/admin/conteudos/listar",
-                        clickable: "",
-                        tabindex: "0"
-                      }
-                    },
-                    [
-                      _c(
-                        "q-item-section",
-                        { attrs: { avatar: "" } },
-                        [
-                          _c("q-icon", {
-                            attrs: { name: "settings_applications" }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "q-item-section",
-                        [_c("q-item-label", [_vm._v("Administração")])],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.isLogged ? _c("q-separator") : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "q-item",
-                { attrs: { clickable: "", to: "/sobre" } },
-                [
-                  _c(
-                    "q-item-section",
-                    { attrs: { avatar: "" } },
-                    [_c("q-icon", { attrs: { name: "info" } })],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "q-item-section",
-                    [_c("q-item-label", [_vm._v("Sobre")])],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("q-separator"),
-              _vm._v(" "),
-              _c(
-                "q-item",
-                {
-                  attrs: { clickable: "", to: "/usuario/contato/faleconosco" }
-                },
-                [
-                  _c(
-                    "q-item-section",
-                    { attrs: { avatar: "" } },
-                    [_c("q-icon", { attrs: { name: "message" } })],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "q-item-section",
-                    [_c("q-item-label", [_vm._v("Fale Conosco")])],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
+        [_c("LeftSideBar")],
         1
       ),
       _vm._v(" "),
@@ -67836,11 +67844,211 @@ var render = function() {
             { attrs: { position: "bottom-right" } },
             [
               _c("q-btn", {
-                attrs: { round: "", color: "dark", icon: "arrow_upward" }
+                attrs: { round: "", color: "accent", icon: "arrow_upward" }
               })
             ],
             1
           )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/layout/LeftSideBar.vue?vue&type=template&id=59fe8362&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/layout/LeftSideBar.vue?vue&type=template&id=59fe8362& ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "q-list",
+        [
+          !_vm.$q.screen.gt.xs || !_vm.$q.screen.gt.sm
+            ? _c(
+                "q-item-label",
+                [
+                  _c("q-btn", {
+                    attrs: {
+                      flat: "",
+                      dense: "",
+                      round: "",
+                      "aria-label": "Menu",
+                      icon: "dehaze"
+                    },
+                    on: {
+                      click: function($event) {
+                        _vm.leftDrawerOpen = !_vm.leftDrawerOpen
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "q-btn",
+                    {
+                      staticClass: "q-ml-xs",
+                      attrs: { flat: "", "no-caps": "", "no-wrap": "", to: "/" }
+                    },
+                    [
+                      _c("q-icon", { attrs: { name: "img:/logo.svg" } }),
+                      _vm._v(" "),
+                      _c("div", { attrs: { clas: "text-h6" } }, [
+                        _vm._v(
+                          "\n            PLATAFORMA ANÍSIO TEIXEIRA\n          "
+                        )
+                      ])
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c("q-separator"),
+          _vm._v(" "),
+          _c(
+            "q-item-label",
+            { staticClass: "bg-grey-3", attrs: { header: "" } },
+            [_c("b", [_vm._v("CANAIS")])]
+          ),
+          _vm._v(" "),
+          _vm._l(_vm.links, function(link, i) {
+            return _c(
+              "div",
+              { key: "x." + i },
+              [
+                _c(
+                  "q-item",
+                  {
+                    directives: [
+                      { name: "close-popup", rawName: "v-close-popup" }
+                    ],
+                    attrs: {
+                      tag: "div",
+                      to: "/" + link.slug + "/listar",
+                      clickable: "",
+                      tabindex: "0"
+                    }
+                  },
+                  [
+                    _c(
+                      "q-item-section",
+                      [_c("q-item-label", [_vm._v(_vm._s(link.name))])],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("q-separator")
+              ],
+              1
+            )
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "q-list",
+        [
+          _c(
+            "q-item-label",
+            { staticClass: "bg-grey-4", attrs: { header: "" } },
+            [_c("b", { staticClass: "text-h5 text-grey-10" })]
+          ),
+          _vm._v(" "),
+          _vm.isLogged
+            ? _c(
+                "q-item",
+                {
+                  directives: [
+                    { name: "close-popup", rawName: "v-close-popup" }
+                  ],
+                  attrs: {
+                    to: "/admin/conteudos/listar",
+                    clickable: "",
+                    tabindex: "0"
+                  }
+                },
+                [
+                  _c(
+                    "q-item-section",
+                    { attrs: { avatar: "" } },
+                    [
+                      _c("q-icon", { attrs: { name: "settings_applications" } })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "q-item-section",
+                    [_c("q-item-label", [_vm._v("Administração")])],
+                    1
+                  )
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.isLogged ? _c("q-separator") : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "q-item",
+            { attrs: { clickable: "", to: "/" } },
+            [
+              _c(
+                "q-item-section",
+                { attrs: { avatar: "" } },
+                [_c("q-icon", { attrs: { name: "home" } })],
+                1
+              ),
+              _vm._v(" "),
+              _c("q-item-section", [_c("q-item-label", [_vm._v("Início")])], 1)
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("q-separator"),
+          _vm._v(" "),
+          _c(
+            "q-item",
+            { attrs: { clickable: "", to: "/sobre" } },
+            [
+              _c(
+                "q-item-section",
+                { attrs: { avatar: "" } },
+                [_c("q-icon", { attrs: { name: "info" } })],
+                1
+              ),
+              _vm._v(" "),
+              _c("q-item-section", [_c("q-item-label", [_vm._v("Sobre")])], 1)
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("q-separator")
         ],
         1
       )
@@ -85640,6 +85848,93 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/assets/js/forms/AutocompleteForm.vue":
+/*!********************************************************!*\
+  !*** ./resources/assets/js/forms/AutocompleteForm.vue ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AutocompleteForm_vue_vue_type_template_id_3fb0dd7e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AutocompleteForm.vue?vue&type=template&id=3fb0dd7e&scoped=true& */ "./resources/assets/js/forms/AutocompleteForm.vue?vue&type=template&id=3fb0dd7e&scoped=true&");
+/* harmony import */ var _AutocompleteForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AutocompleteForm.vue?vue&type=script&lang=js& */ "./resources/assets/js/forms/AutocompleteForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _AutocompleteForm_vue_vue_type_style_index_0_id_3fb0dd7e_lang_stylus_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AutocompleteForm.vue?vue&type=style&index=0&id=3fb0dd7e&lang=stylus&scoped=true& */ "./resources/assets/js/forms/AutocompleteForm.vue?vue&type=style&index=0&id=3fb0dd7e&lang=stylus&scoped=true&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _AutocompleteForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AutocompleteForm_vue_vue_type_template_id_3fb0dd7e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AutocompleteForm_vue_vue_type_template_id_3fb0dd7e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "3fb0dd7e",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/assets/js/forms/AutocompleteForm.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/assets/js/forms/AutocompleteForm.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/assets/js/forms/AutocompleteForm.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AutocompleteForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./AutocompleteForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/forms/AutocompleteForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AutocompleteForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/assets/js/forms/AutocompleteForm.vue?vue&type=style&index=0&id=3fb0dd7e&lang=stylus&scoped=true&":
+/*!********************************************************************************************************************!*\
+  !*** ./resources/assets/js/forms/AutocompleteForm.vue?vue&type=style&index=0&id=3fb0dd7e&lang=stylus&scoped=true& ***!
+  \********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_2_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_AutocompleteForm_vue_vue_type_style_index_0_id_3fb0dd7e_lang_stylus_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--10-2!../../../../node_modules/stylus-loader!../../../../node_modules/vue-loader/lib??vue-loader-options!./AutocompleteForm.vue?vue&type=style&index=0&id=3fb0dd7e&lang=stylus&scoped=true& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/stylus-loader/index.js!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/forms/AutocompleteForm.vue?vue&type=style&index=0&id=3fb0dd7e&lang=stylus&scoped=true&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_2_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_AutocompleteForm_vue_vue_type_style_index_0_id_3fb0dd7e_lang_stylus_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_2_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_AutocompleteForm_vue_vue_type_style_index_0_id_3fb0dd7e_lang_stylus_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_2_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_AutocompleteForm_vue_vue_type_style_index_0_id_3fb0dd7e_lang_stylus_scoped_true___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_2_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_AutocompleteForm_vue_vue_type_style_index_0_id_3fb0dd7e_lang_stylus_scoped_true___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_2_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_AutocompleteForm_vue_vue_type_style_index_0_id_3fb0dd7e_lang_stylus_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/assets/js/forms/AutocompleteForm.vue?vue&type=template&id=3fb0dd7e&scoped=true&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/assets/js/forms/AutocompleteForm.vue?vue&type=template&id=3fb0dd7e&scoped=true& ***!
+  \***************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AutocompleteForm_vue_vue_type_template_id_3fb0dd7e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./AutocompleteForm.vue?vue&type=template&id=3fb0dd7e&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/forms/AutocompleteForm.vue?vue&type=template&id=3fb0dd7e&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AutocompleteForm_vue_vue_type_template_id_3fb0dd7e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AutocompleteForm_vue_vue_type_template_id_3fb0dd7e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/forms/CanalForm.vue":
 /*!*************************************************!*\
   !*** ./resources/assets/js/forms/CanalForm.vue ***!
@@ -86726,6 +87021,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Default_vue_vue_type_template_id_77d380ee___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Default_vue_vue_type_template_id_77d380ee___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/layout/LeftSideBar.vue":
+/*!****************************************************!*\
+  !*** ./resources/assets/js/layout/LeftSideBar.vue ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _LeftSideBar_vue_vue_type_template_id_59fe8362___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LeftSideBar.vue?vue&type=template&id=59fe8362& */ "./resources/assets/js/layout/LeftSideBar.vue?vue&type=template&id=59fe8362&");
+/* harmony import */ var _LeftSideBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LeftSideBar.vue?vue&type=script&lang=js& */ "./resources/assets/js/layout/LeftSideBar.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _LeftSideBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _LeftSideBar_vue_vue_type_template_id_59fe8362___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _LeftSideBar_vue_vue_type_template_id_59fe8362___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/assets/js/layout/LeftSideBar.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/assets/js/layout/LeftSideBar.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/assets/js/layout/LeftSideBar.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LeftSideBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./LeftSideBar.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/layout/LeftSideBar.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LeftSideBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/assets/js/layout/LeftSideBar.vue?vue&type=template&id=59fe8362&":
+/*!***********************************************************************************!*\
+  !*** ./resources/assets/js/layout/LeftSideBar.vue?vue&type=template&id=59fe8362& ***!
+  \***********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LeftSideBar_vue_vue_type_template_id_59fe8362___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./LeftSideBar.vue?vue&type=template&id=59fe8362& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/layout/LeftSideBar.vue?vue&type=template&id=59fe8362&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LeftSideBar_vue_vue_type_template_id_59fe8362___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LeftSideBar_vue_vue_type_template_id_59fe8362___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

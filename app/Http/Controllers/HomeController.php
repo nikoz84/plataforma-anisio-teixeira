@@ -104,7 +104,7 @@ class HomeController extends ApiController
     public function autocomplete()
     {
         $termo = $this->request->query('termo');
-        $limit = $this->request->query('limit', 15);
+        $limit = $this->request->query('limit', 20);
         $per = $this->request->query('por', 'tag');
 
         $data = new Autocomplete($termo, $limit, $per);

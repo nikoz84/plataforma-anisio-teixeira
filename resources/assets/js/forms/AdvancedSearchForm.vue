@@ -97,6 +97,7 @@ import { QList, QItem, QItemSection, QCheckbox, QCardSection } from "quasar";
 
 export default {
   name: "AdvancedSearchForm",
+  props: ["dialog"],
   data() {
     return {
       dialog: false,
