@@ -3,16 +3,25 @@
     <article>
       <q-banner style="min-height:50vh;">
         <template v-slot:avatar>
+          <div>
+            
+          </div>
+          <img src="/storage/conteudos/conteudos-digitais/imagem-associada/emitec/ico-emitec_disciplina29.svg">
           <div class="absolute column items-center">
             <img src="/logo.svg" style="width: 150px; height: 150px;" class="load" v-scroll-fire="getDestaques">
             <div class="text-5 text-primary text-center">Plataforma Anísio Teixeira\zx\zx\zx</div>
           </div>
-	<h6>{{itens}}</h6>
-        </template>
+	      </template>
       </q-banner>
 	
     </article>
+    <section>
+      <div v-for="(disciplina, i) in disciplinas.components" :key="`d-${i}`">
+         <img rounded-borders :title="disciplina.name" :src="`/storage/conteudos/conteudos-digitais/imagem-associada/emitec/ico-${disciplina.id}.svg`" style="width: 100px; height: 100px;">
         
+      </div>
+      {{disciplinas}}
+    </section>
     <CardHome :data="data" v-for="(data, i) in destaques" :key="`i-${i}`" :index="`i-${i}`"/>
     
     
@@ -36,11 +45,12 @@ export default {
 
   data() {
     return {
-      destaques: [],
-      itens: "hola mundo"
+      destaques: []
     };
   },
-  created() {},
+  computed: {
+    ...mapState(["disciplinas"])
+  },
   methods: {
     async getDestaques(el) {
       if (el.classList.contains("load")) {

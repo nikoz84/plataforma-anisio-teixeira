@@ -9,6 +9,7 @@ use App\Options;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\Autocomplete;
+use App\NivelEnsino;
 
 class HomeController extends ApiController
 {
@@ -53,11 +54,18 @@ class HomeController extends ApiController
         $data = [
             "layout" => (object) $layout,
             "links" => $links,
+            "disciplinas" => $this->getDisciplinas()
         ];
         return response()->json($data, 200);
     }
+    private function getDisciplinas()
+    {
+        $disciplinas = NivelEnsino::where('id', '=', 5)->with('components')->get()->first();
+
+        return $disciplinas;
+    }
     /**
-     * Undocumented function
+     * Seleciona os destaques da plataforma do helper
      *
      * @return void
      */

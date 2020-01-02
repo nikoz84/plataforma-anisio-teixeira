@@ -3139,6 +3139,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       update(function () {
+        console.log(encodeURIComponent(val.trim()));
+
         if (val === "" && val.length < 3) {
           _this.options = [];
         } else {
@@ -84885,7 +84887,8 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(quasar__WEBPACK_IMPORTED_MODULE_2
     Notify: quasar__WEBPACK_IMPORTED_MODULE_2__["Notify"],
     Loading: quasar__WEBPACK_IMPORTED_MODULE_2__["Loading"],
     Dialog: quasar__WEBPACK_IMPORTED_MODULE_2__["Dialog"],
-    Dark: quasar__WEBPACK_IMPORTED_MODULE_2__["Dark"]
+    Dark: quasar__WEBPACK_IMPORTED_MODULE_2__["Dark"],
+    Platform: quasar__WEBPACK_IMPORTED_MODULE_2__["Platform"]
   }
 });
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_apexcharts__WEBPACK_IMPORTED_MODULE_8___default.a);
@@ -87641,538 +87644,422 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 var actions = {
-  getLayout: function () {
-    var _getLayout = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_ref) {
-      var commit, resp;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              commit = _ref.commit;
-              _context.next = 3;
-              return axios("/layout");
+  getLayout: function getLayout(_ref) {
+    var commit, resp;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getLayout$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            commit = _ref.commit;
+            _context.next = 3;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios("/layout"));
 
-            case 3:
-              resp = _context.sent;
-              commit("SET_LAYOUT", resp.data.layout.meta_data);
-              commit("SET_LINKS", resp.data.links);
+          case 3:
+            resp = _context.sent;
+            commit("SET_LAYOUT", resp.data.layout.meta_data);
+            commit("SET_LINKS", resp.data.links);
+            commit("SET_DISCIPLINAS", resp.data.disciplinas);
 
-            case 6:
-            case "end":
-              return _context.stop();
-          }
+          case 7:
+          case "end":
+            return _context.stop();
         }
-      }, _callee);
-    }));
+      }
+    });
+  },
+  fetchAplicativo: function fetchAplicativo(_ref2, payload) {
+    var commit;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function fetchAplicativo$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            commit = _ref2.commit;
+            commit("SET_IS_LOADING", true);
+            _context2.prev = 2;
+            _context2.next = 5;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.get("/aplicativos/".concat(payload.id)).then(function (resp) {
+              console.log(resp);
+              commit("SET_EXIBIR_ID", "Aplicativo");
+              commit("SET_APLICATIVO", resp.data.metadata);
+              commit("SET_IS_LOADING", false);
+            }));
 
-    function getLayout(_x) {
-      return _getLayout.apply(this, arguments);
-    }
+          case 5:
+            _context2.next = 10;
+            break;
 
-    return getLayout;
-  }(),
-  fetchAplicativo: function () {
-    var _fetchAplicativo = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(_ref2, payload) {
-      var commit;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              commit = _ref2.commit;
-              commit("SET_IS_LOADING", true);
-              _context2.prev = 2;
-              _context2.next = 5;
-              return axios.get("/aplicativos/".concat(payload.id)).then(function (resp) {
-                console.log(resp);
-                commit("SET_EXIBIR_ID", "Aplicativo");
-                commit("SET_APLICATIVO", resp.data.metadata);
+          case 7:
+            _context2.prev = 7;
+            _context2.t0 = _context2["catch"](2);
+            console.log(_context2.t0);
+
+          case 10:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, null, null, [[2, 7]]);
+  },
+  fetchAplicativos: function fetchAplicativos(_ref3, payload) {
+    var commit;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function fetchAplicativos$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            commit = _ref3.commit;
+            commit("SET_IS_LOADING", true);
+            _context3.prev = 2;
+            _context3.next = 5;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.get("/aplicativos", {
+              params: payload
+            }).then(function (resp) {
+              if (resp.status == 200 && resp.data.paginator) {
+                commit("SET_COMPONENT_ID", "Paginator");
                 commit("SET_IS_LOADING", false);
-              });
-
-            case 5:
-              _context2.next = 10;
-              break;
-
-            case 7:
-              _context2.prev = 7;
-              _context2.t0 = _context2["catch"](2);
-              console.log(_context2.t0);
-
-            case 10:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2, null, [[2, 7]]);
-    }));
-
-    function fetchAplicativo(_x2, _x3) {
-      return _fetchAplicativo.apply(this, arguments);
-    }
-
-    return fetchAplicativo;
-  }(),
-  fetchAplicativos: function () {
-    var _fetchAplicativos = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref3, payload) {
-      var commit;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              commit = _ref3.commit;
-              commit("SET_IS_LOADING", true);
-              _context3.prev = 2;
-              _context3.next = 5;
-              return axios.get("/aplicativos", {
-                params: payload
-              }).then(function (resp) {
-                if (resp.status == 200 && resp.data.paginator) {
-                  commit("SET_COMPONENT_ID", "Paginator");
-                  commit("SET_IS_LOADING", false);
-                  commit("SET_PAGINATOR", resp.data.paginator);
-                }
-              });
-
-            case 5:
-              _context3.next = 10;
-              break;
-
-            case 7:
-              _context3.prev = 7;
-              _context3.t0 = _context3["catch"](2);
-              console.log(_context3.t0);
-
-            case 10:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3, null, [[2, 7]]);
-    }));
-
-    function fetchAplicativos(_x4, _x5) {
-      return _fetchAplicativos.apply(this, arguments);
-    }
-
-    return fetchAplicativos;
-  }(),
-  fetchPosts: function () {
-    var _fetchPosts = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(_ref4, payload) {
-      var commit, url;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              commit = _ref4.commit;
-              commit("SET_IS_LOADING", true);
-              url = "/posts";
-              _context4.prev = 3;
-              _context4.next = 6;
-              return axios.get(url, {
-                params: payload
-              }).then(function (resp) {
-                commit("SET_COMPONENT_ID", "");
-
-                if (resp.status == 200 && resp.data.paginator) {
-                  commit("SET_COMPONENT_ID", "Paginator");
-                  commit("SET_IS_LOADING", false);
-                  commit("SET_PAGINATOR", resp.data.paginator);
-                }
-              });
-
-            case 6:
-              _context4.next = 11;
-              break;
-
-            case 8:
-              _context4.prev = 8;
-              _context4.t0 = _context4["catch"](3);
-              commit("SET_IS_ERROR", true);
-
-            case 11:
-            case "end":
-              return _context4.stop();
-          }
-        }
-      }, _callee4, null, [[3, 8]]);
-    }));
-
-    function fetchPosts(_x6, _x7) {
-      return _fetchPosts.apply(this, arguments);
-    }
-
-    return fetchPosts;
-  }(),
-  fetchConteudos: function () {
-    var _fetchConteudos = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(_ref5, payload) {
-      var commit, url;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-        while (1) {
-          switch (_context5.prev = _context5.next) {
-            case 0:
-              commit = _ref5.commit;
-              commit("SET_IS_LOADING", true);
-              url = "/conteudos";
-              _context5.prev = 3;
-              _context5.next = 6;
-              return axios.get(url, {
-                params: payload
-              }).then(function (resp) {
-                commit("SET_COMPONENT_ID", "");
-
-                if (resp.status == 200 && resp.data.paginator) {
-                  commit("SET_COMPONENT_ID", "Paginator");
-                  commit("SET_IS_LOADING", false);
-                  commit("SET_PAGINATOR", resp.data.paginator);
-                }
-              });
-
-            case 6:
-              _context5.next = 11;
-              break;
-
-            case 8:
-              _context5.prev = 8;
-              _context5.t0 = _context5["catch"](3);
-              commit("SET_IS_ERROR", true);
-
-            case 11:
-            case "end":
-              return _context5.stop();
-          }
-        }
-      }, _callee5, null, [[3, 8]]);
-    }));
-
-    function fetchConteudos(_x8, _x9) {
-      return _fetchConteudos.apply(this, arguments);
-    }
-
-    return fetchConteudos;
-  }(),
-  fetchConteudo: function () {
-    var _fetchConteudo = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(_ref6, payload) {
-      var commit;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
-        while (1) {
-          switch (_context6.prev = _context6.next) {
-            case 0:
-              commit = _ref6.commit;
-              _context6.prev = 1;
-              _context6.next = 4;
-              return axios.get("/conteudos/".concat(payload.id)).then(function (resp) {
-                commit("SET_EXIBIR_ID", "Conteudo");
-                commit("SET_CONTEUDO", resp.data.metadata);
-              });
-
-            case 4:
-              _context6.next = 9;
-              break;
-
-            case 6:
-              _context6.prev = 6;
-              _context6.t0 = _context6["catch"](1);
-              commit("SET_EXIBIR_ID", "NotFound");
-
-            case 9:
-            case "end":
-              return _context6.stop();
-          }
-        }
-      }, _callee6, null, [[1, 6]]);
-    }));
-
-    function fetchConteudo(_x10, _x11) {
-      return _fetchConteudo.apply(this, arguments);
-    }
-
-    return fetchConteudo;
-  }(),
-  createConteudo: function () {
-    var _createConteudo = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(_ref7, conteudo) {
-      var commit, dispatch, resp;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
-        while (1) {
-          switch (_context7.prev = _context7.next) {
-            case 0:
-              commit = _ref7.commit, dispatch = _ref7.dispatch;
-              _context7.next = 3;
-              return axios.post("/conteudos", conteudo);
-
-            case 3:
-              resp = _context7.sent;
-              console.warn(resp);
-              dispatch("hideAlert");
-              commit("SET_CONTEUDO", resp.data);
-
-            case 7:
-            case "end":
-              return _context7.stop();
-          }
-        }
-      }, _callee7);
-    }));
-
-    function createConteudo(_x12, _x13) {
-      return _createConteudo.apply(this, arguments);
-    }
-
-    return createConteudo;
-  }(),
-  updateConteudo: function () {
-    var _updateConteudo = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(_ref8, conteudo) {
-      var commit, dispatch, resp;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
-        while (1) {
-          switch (_context8.prev = _context8.next) {
-            case 0:
-              commit = _ref8.commit, dispatch = _ref8.dispatch;
-              console.log(conteudo);
-              _context8.next = 4;
-              return axios.put("/conteudos/".concat(conteudo.id), conteudo);
-
-            case 4:
-              resp = _context8.sent;
-              _context8.next = 7;
-              return dispatch("hideAlert");
-
-            case 7:
-              commit("SET_CONTEUDO", resp.data.conteudo);
-
-            case 8:
-            case "end":
-              return _context8.stop();
-          }
-        }
-      }, _callee8);
-    }));
-
-    function updateConteudo(_x14, _x15) {
-      return _updateConteudo.apply(this, arguments);
-    }
-
-    return updateConteudo;
-  }(),
-  deleteConteudo: function () {
-    var _deleteConteudo = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(_ref9, id) {
-      var commit, resp;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
-        while (1) {
-          switch (_context9.prev = _context9.next) {
-            case 0:
-              commit = _ref9.commit;
-              _context9.next = 3;
-              return axios["delete"]("/conteudos/".concat(id));
-
-            case 3:
-              resp = _context9.sent;
-              commit("DELETE_CONTEUDO", resp.data);
-
-            case 5:
-            case "end":
-              return _context9.stop();
-          }
-        }
-      }, _callee9);
-    }));
-
-    function deleteConteudo(_x16, _x17) {
-      return _deleteConteudo.apply(this, arguments);
-    }
-
-    return deleteConteudo;
-  }(),
-  logout: function () {
-    var _logout = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10(_ref10) {
-      var commit;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
-        while (1) {
-          switch (_context10.prev = _context10.next) {
-            case 0:
-              commit = _ref10.commit;
-
-              if (!localStorage.token) {
-                _context10.next = 8;
-                break;
+                commit("SET_PAGINATOR", resp.data.paginator);
               }
+            }));
 
-              _context10.next = 4;
-              return axios.post("/auth/logout", {
-                token: localStorage.token
-              });
+          case 5:
+            _context3.next = 10;
+            break;
 
-            case 4:
-              commit("SET_LOGOUT_USER");
-              localStorage.removeItem("token");
-              _context10.next = 10;
-              break;
+          case 7:
+            _context3.prev = 7;
+            _context3.t0 = _context3["catch"](2);
+            console.log(_context3.t0);
 
-            case 8:
-              commit("SET_LOGOUT_USER");
-              localStorage.removeItem("token");
-
-            case 10:
-            case "end":
-              return _context10.stop();
-          }
+          case 10:
+          case "end":
+            return _context3.stop();
         }
-      }, _callee10);
-    }));
+      }
+    }, null, null, [[2, 7]]);
+  },
+  fetchPosts: function fetchPosts(_ref4, payload) {
+    var commit, url;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function fetchPosts$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            commit = _ref4.commit;
+            commit("SET_IS_LOADING", true);
+            url = "/posts";
+            _context4.prev = 3;
+            _context4.next = 6;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.get(url, {
+              params: payload
+            }).then(function (resp) {
+              commit("SET_COMPONENT_ID", "");
 
-    function logout(_x18) {
-      return _logout.apply(this, arguments);
-    }
-
-    return logout;
-  }(),
-  fetchCanaisForSelect: function () {
-    var _fetchCanaisForSelect = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11(_ref11) {
-      var commit, resp;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
-        while (1) {
-          switch (_context11.prev = _context11.next) {
-            case 0:
-              commit = _ref11.commit;
-              _context11.next = 3;
-              return axios.get("/canais?select");
-
-            case 3:
-              resp = _context11.sent;
-
-              if (resp.status == 200 && resp.data.success == true) {
-                commit("SET_CANAIS", resp.data.metadata);
+              if (resp.status == 200 && resp.data.paginator) {
+                commit("SET_COMPONENT_ID", "Paginator");
+                commit("SET_IS_LOADING", false);
+                commit("SET_PAGINATOR", resp.data.paginator);
               }
+            }));
 
-            case 5:
-            case "end":
-              return _context11.stop();
-          }
+          case 6:
+            _context4.next = 11;
+            break;
+
+          case 8:
+            _context4.prev = 8;
+            _context4.t0 = _context4["catch"](3);
+            commit("SET_IS_ERROR", true);
+
+          case 11:
+          case "end":
+            return _context4.stop();
         }
-      }, _callee11);
-    }));
+      }
+    }, null, null, [[3, 8]]);
+  },
+  fetchConteudos: function fetchConteudos(_ref5, payload) {
+    var commit, url;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function fetchConteudos$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            commit = _ref5.commit;
+            commit("SET_IS_LOADING", true);
+            url = "/conteudos";
+            _context5.prev = 3;
+            _context5.next = 6;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.get(url, {
+              params: payload
+            }).then(function (resp) {
+              commit("SET_COMPONENT_ID", "");
 
-    function fetchCanaisForSelect(_x19) {
-      return _fetchCanaisForSelect.apply(this, arguments);
-    }
-
-    return fetchCanaisForSelect;
-  }(),
-  fetchTiposForSelect: function () {
-    var _fetchTiposForSelect = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12(_ref12) {
-      var commit, resp;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
-        while (1) {
-          switch (_context12.prev = _context12.next) {
-            case 0:
-              commit = _ref12.commit;
-              _context12.next = 3;
-              return axios.get("/tipos?select");
-
-            case 3:
-              resp = _context12.sent;
-
-              if (resp.status == 200 && resp.data.success == true) {
-                commit("SET_TIPOS_FORM", resp.data.metadata);
+              if (resp.status == 200 && resp.data.paginator) {
+                commit("SET_COMPONENT_ID", "Paginator");
+                commit("SET_IS_LOADING", false);
+                commit("SET_PAGINATOR", resp.data.paginator);
               }
+            }));
 
-            case 5:
-            case "end":
-              return _context12.stop();
-          }
+          case 6:
+            _context5.next = 11;
+            break;
+
+          case 8:
+            _context5.prev = 8;
+            _context5.t0 = _context5["catch"](3);
+            commit("SET_IS_ERROR", true);
+
+          case 11:
+          case "end":
+            return _context5.stop();
         }
-      }, _callee12);
-    }));
+      }
+    }, null, null, [[3, 8]]);
+  },
+  fetchConteudo: function fetchConteudo(_ref6, payload) {
+    var commit;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function fetchConteudo$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            commit = _ref6.commit;
+            _context6.prev = 1;
+            _context6.next = 4;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.get("/conteudos/".concat(payload.id)).then(function (resp) {
+              commit("SET_EXIBIR_ID", "Conteudo");
+              commit("SET_CONTEUDO", resp.data.metadata);
+            }));
 
-    function fetchTiposForSelect(_x20) {
-      return _fetchTiposForSelect.apply(this, arguments);
-    }
+          case 4:
+            _context6.next = 9;
+            break;
 
-    return fetchTiposForSelect;
-  }(),
-  fetchLicenses: function () {
-    var _fetchLicenses = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13(_ref13) {
-      var commit, resp, data, licenses, childs;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
-        while (1) {
-          switch (_context13.prev = _context13.next) {
-            case 0:
-              commit = _ref13.commit;
-              _context13.next = 3;
-              return axios.get("/licenses?select");
+          case 6:
+            _context6.prev = 6;
+            _context6.t0 = _context6["catch"](1);
+            commit("SET_EXIBIR_ID", "NotFound");
 
-            case 3:
-              resp = _context13.sent;
-              data = resp.data.metadata;
-              licenses = data.filter(function (key) {
-                return key.id != 2;
-              });
-              childs = data.filter(function (key) {
-                return key.id === 2;
-              });
-              commit("SET_LICENSES", {
-                licenses: licenses,
-                childs: childs
-              });
-
-            case 8:
-            case "end":
-              return _context13.stop();
-          }
+          case 9:
+          case "end":
+            return _context6.stop();
         }
-      }, _callee13);
-    }));
+      }
+    }, null, null, [[1, 6]]);
+  },
+  createConteudo: function createConteudo(_ref7, conteudo) {
+    var commit, dispatch, resp;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function createConteudo$(_context7) {
+      while (1) {
+        switch (_context7.prev = _context7.next) {
+          case 0:
+            commit = _ref7.commit, dispatch = _ref7.dispatch;
+            _context7.next = 3;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.post("/conteudos", conteudo));
 
-    function fetchLicenses(_x21) {
-      return _fetchLicenses.apply(this, arguments);
-    }
+          case 3:
+            resp = _context7.sent;
+            console.warn(resp);
+            dispatch("hideAlert");
+            commit("SET_CONTEUDO", resp.data);
 
-    return fetchLicenses;
-  }(),
-  getCanalBySlug: function () {
-    var _getCanalBySlug = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14(_ref14, slug) {
-      var commit, dispatch;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
-        while (1) {
-          switch (_context14.prev = _context14.next) {
-            case 0:
-              commit = _ref14.commit, dispatch = _ref14.dispatch;
-              _context14.prev = 1;
-              _context14.next = 4;
-              return axios.get("/canais/slug/".concat(slug)).then(function (resp) {
-                commit("SET_CANAL", resp.data.metadata);
-                commit("SET_CANAL_ID", resp.data.metadata.id);
-                localStorage.setItem("canal", resp.data.metadata.id);
-              });
+          case 7:
+          case "end":
+            return _context7.stop();
+        }
+      }
+    });
+  },
+  updateConteudo: function updateConteudo(_ref8, conteudo) {
+    var commit, dispatch, resp;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function updateConteudo$(_context8) {
+      while (1) {
+        switch (_context8.prev = _context8.next) {
+          case 0:
+            commit = _ref8.commit, dispatch = _ref8.dispatch;
+            console.log(conteudo);
+            _context8.next = 4;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.put("/conteudos/".concat(conteudo.id), conteudo));
 
-            case 4:
-              _context14.next = 9;
+          case 4:
+            resp = _context8.sent;
+            _context8.next = 7;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(dispatch("hideAlert"));
+
+          case 7:
+            commit("SET_CONTEUDO", resp.data.conteudo);
+
+          case 8:
+          case "end":
+            return _context8.stop();
+        }
+      }
+    });
+  },
+  deleteConteudo: function deleteConteudo(_ref9, id) {
+    var commit, resp;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function deleteConteudo$(_context9) {
+      while (1) {
+        switch (_context9.prev = _context9.next) {
+          case 0:
+            commit = _ref9.commit;
+            _context9.next = 3;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios["delete"]("/conteudos/".concat(id)));
+
+          case 3:
+            resp = _context9.sent;
+            commit("DELETE_CONTEUDO", resp.data);
+
+          case 5:
+          case "end":
+            return _context9.stop();
+        }
+      }
+    });
+  },
+  logout: function logout(_ref10) {
+    var commit;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function logout$(_context10) {
+      while (1) {
+        switch (_context10.prev = _context10.next) {
+          case 0:
+            commit = _ref10.commit;
+
+            if (!localStorage.token) {
+              _context10.next = 8;
               break;
+            }
 
-            case 6:
-              _context14.prev = 6;
-              _context14.t0 = _context14["catch"](1);
-              commit("SET_IS_ERROR", true);
+            _context10.next = 4;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.post("/auth/logout", {
+              token: localStorage.token
+            }));
 
-            case 9:
-            case "end":
-              return _context14.stop();
-          }
+          case 4:
+            commit("SET_LOGOUT_USER");
+            localStorage.removeItem("token");
+            _context10.next = 10;
+            break;
+
+          case 8:
+            commit("SET_LOGOUT_USER");
+            localStorage.removeItem("token");
+
+          case 10:
+          case "end":
+            return _context10.stop();
         }
-      }, _callee14, null, [[1, 6]]);
-    }));
+      }
+    });
+  },
+  fetchCanaisForSelect: function fetchCanaisForSelect(_ref11) {
+    var commit, resp;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function fetchCanaisForSelect$(_context11) {
+      while (1) {
+        switch (_context11.prev = _context11.next) {
+          case 0:
+            commit = _ref11.commit;
+            _context11.next = 3;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.get("/canais?select"));
 
-    function getCanalBySlug(_x22, _x23) {
-      return _getCanalBySlug.apply(this, arguments);
-    }
+          case 3:
+            resp = _context11.sent;
 
-    return getCanalBySlug;
-  }(),
+            if (resp.status == 200 && resp.data.success == true) {
+              commit("SET_CANAIS", resp.data.metadata);
+            }
+
+          case 5:
+          case "end":
+            return _context11.stop();
+        }
+      }
+    });
+  },
+  fetchTiposForSelect: function fetchTiposForSelect(_ref12) {
+    var commit, resp;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function fetchTiposForSelect$(_context12) {
+      while (1) {
+        switch (_context12.prev = _context12.next) {
+          case 0:
+            commit = _ref12.commit;
+            _context12.next = 3;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.get("/tipos?select"));
+
+          case 3:
+            resp = _context12.sent;
+
+            if (resp.status == 200 && resp.data.success == true) {
+              commit("SET_TIPOS_FORM", resp.data.metadata);
+            }
+
+          case 5:
+          case "end":
+            return _context12.stop();
+        }
+      }
+    });
+  },
+  fetchLicenses: function fetchLicenses(_ref13) {
+    var commit, resp, data, licenses, childs;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function fetchLicenses$(_context13) {
+      while (1) {
+        switch (_context13.prev = _context13.next) {
+          case 0:
+            commit = _ref13.commit;
+            _context13.next = 3;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.get("/licenses?select"));
+
+          case 3:
+            resp = _context13.sent;
+            data = resp.data.metadata;
+            licenses = data.filter(function (key) {
+              return key.id != 2;
+            });
+            childs = data.filter(function (key) {
+              return key.id === 2;
+            });
+            commit("SET_LICENSES", {
+              licenses: licenses,
+              childs: childs
+            });
+
+          case 8:
+          case "end":
+            return _context13.stop();
+        }
+      }
+    });
+  },
+  getCanalBySlug: function getCanalBySlug(_ref14, slug) {
+    var commit, dispatch;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getCanalBySlug$(_context14) {
+      while (1) {
+        switch (_context14.prev = _context14.next) {
+          case 0:
+            commit = _ref14.commit, dispatch = _ref14.dispatch;
+            _context14.prev = 1;
+            _context14.next = 4;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.get("/canais/slug/".concat(slug)).then(function (resp) {
+              commit("SET_CANAL", resp.data.metadata);
+              commit("SET_CANAL_ID", resp.data.metadata.id);
+              localStorage.setItem("canal", resp.data.metadata.id);
+            }));
+
+          case 4:
+            _context14.next = 9;
+            break;
+
+          case 6:
+            _context14.prev = 6;
+            _context14.t0 = _context14["catch"](1);
+            commit("SET_IS_ERROR", true);
+
+          case 9:
+          case "end":
+            return _context14.stop();
+        }
+      }
+    }, null, null, [[1, 6]]);
+  },
   showExibir: function showExibir(_ref15, slug) {
     var commit = _ref15.commit;
 

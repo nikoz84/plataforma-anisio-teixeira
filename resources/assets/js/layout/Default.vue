@@ -113,8 +113,7 @@ import {
   QExpansionItem,
   QMenu,
   QSelect,
-  GoBack,
-  Platform
+  GoBack
 } from "quasar";
 
 export default {

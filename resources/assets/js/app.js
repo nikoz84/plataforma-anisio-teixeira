@@ -2,7 +2,7 @@ import "./bootstrap";
 import Vue from "vue";
 
 import Quasar from "quasar";
-import { Meta, Notify, Loading, Dialog, Dark } from "quasar";
+import { Meta, Notify, Loading, Dialog, Dark, Platform } from "quasar";
 import "quasar/dist/quasar.ie.polyfills.umd.min.js";
 import lang from "quasar/lang/pt-br.js";
 import iconSet from "quasar/dist/icon-set/material-icons.umd.min.js";
@@ -24,7 +24,8 @@ Vue.use(Quasar, {
     Notify,
     Loading,
     Dialog,
-    Dark
+    Dark,
+    Platform
   }
 });
 

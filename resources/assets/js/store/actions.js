@@ -4,6 +4,7 @@ const actions = {
 
     commit("SET_LAYOUT", resp.data.layout.meta_data);
     commit("SET_LINKS", resp.data.links);
+    commit("SET_DISCIPLINAS", resp.data.disciplinas);
   },
   /** APLICATIVOS */
   async fetchAplicativo({ commit }, payload) {

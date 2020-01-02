@@ -42,8 +42,9 @@ Route::get('/docs', function (Request $request) {
 /**/
 Route::get('/teste', function (\Illuminate\Http\Request $request) {
 
-    $analitycs = new App\Helpers\Analytics($request);
-    $collect = collect($analitycs->getData());
+    $collect = App\NivelEnsino::where('id', '=', 5)->with(["components" => function ($query) {
+        $query->where('components.nivel_id', "!=", 5);
+    }])->toSql(); //->get()->first();
 
 
     return response()->json($collect, 200);
