@@ -1,27 +1,22 @@
 <template>
-  <section >
-    <article>
-      <q-banner style="min-height:50vh;">
-        <template v-slot:avatar>
-          <div>
-            
-          </div>
-          <img src="/storage/conteudos/conteudos-digitais/imagem-associada/emitec/ico-emitec_disciplina29.svg">
-          <div class="absolute column items-center">
-            <img src="/logo.svg" style="width: 150px; height: 150px;" class="load" v-scroll-fire="getDestaques">
-            <div class="text-5 text-primary text-center">Plataforma Anísio Teixeira\zx\zx\zx</div>
-          </div>
-	      </template>
-      </q-banner>
-	
-    </article>
-    <section>
-      <div v-for="(disciplina, i) in disciplinas.components" :key="`d-${i}`">
-         <img rounded-borders :title="disciplina.name" :src="`/storage/conteudos/conteudos-digitais/imagem-associada/emitec/ico-${disciplina.id}.svg`" style="width: 100px; height: 100px;">
-        
-      </div>
-      {{disciplinas}}
-    </section>
+  <section class="row q-pa-sm">
+    
+	  <div class="q-gutter-sm load" v-scroll-fire="getDestaques"> 
+      <q-card v-for="(disciplina, i) in disciplinas.components" :key="`d-${i}`">
+        <q-item clickable>
+          <q-item-section avatar>
+            <q-avatar>
+              <img rounded-borders :title="disciplina.name" :src="`/storage/conteudos/conteudos-digitais/imagem-associada/emitec/ico-${disciplina.id}.svg`" >
+            </q-avatar>
+          </q-item-section>
+          <q-item-section >
+            <q-item-label>
+              {{disciplina.name}}
+            </q-item-label>
+          </q-item-section>
+        </q-item>
+      </q-card>
+    </div>
     <CardHome :data="data" v-for="(data, i) in destaques" :key="`i-${i}`" :index="`i-${i}`"/>
     
     
@@ -30,7 +25,16 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import CardHome from "../components/CardHome.vue";
-import { QParallax, ScrollFire, QBanner } from "quasar";
+import {
+  QParallax,
+  ScrollFire,
+  QBanner,
+  QCard,
+  QItem,
+  QItemSection,
+  QItemLabel,
+  QAvatar
+} from "quasar";
 
 export default {
   name: "Home",
@@ -40,7 +44,12 @@ export default {
   components: {
     QParallax,
     CardHome,
-    QBanner
+    QBanner,
+    QCard,
+    QItem,
+    QItemSection,
+    QItemLabel,
+    QAvatar
   },
 
   data() {

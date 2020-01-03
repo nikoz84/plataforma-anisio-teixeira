@@ -43,7 +43,7 @@ Route::get('/docs', function (Request $request) {
 Route::get('/teste', function (\Illuminate\Http\Request $request) {
 
     $collect = App\NivelEnsino::where('id', '=', 5)->with(["components" => function ($q) {
-        $q->where('curricular_components.nivel_id', "!=", 5);
+        $q->where('curricular_components.id', '!=', 31);
     }])->get();
 
 
