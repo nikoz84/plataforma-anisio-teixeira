@@ -89,17 +89,22 @@ export default {
 
       if (resp.data && resp.data.success) {
         this.$q.loading.hide();
-        localStorage.setItem("token", resp.data.metadata.token.access_token);
+        const jwtToken = resp.data.metadata.token.access_token;
+
+        this.$q.localStorage.set("token", jwtToken);
         this.docodePayloadToken();
         this.SET_LOGIN_USER(true);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${jwtToken}`;
 
-        this.$router.push("/admin/conteudos/listar");
+        this.$router.replace("/admin/conteudos/listar");
 
         this.$q.notify({
           color: "positive",
           textColor: "white",
           icon: "done",
-          message: `${resp.data.message} ${localStorage.username}!!`
+          message: `${resp.data.message} ${this.$q.localStorage.getItem(
+            "username"
+          )}!!`
         });
       } else {
         this.errors = resp.data.errors;

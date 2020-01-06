@@ -1,25 +1,42 @@
 <template>
-  <section class="row q-pa-sm">
-    
-	  <div class="q-gutter-sm load" v-scroll-fire="getDestaques"> 
-      <q-card v-for="(disciplina, i) in disciplinas.components" :key="`d-${i}`">
-        <q-item clickable>
-          <q-item-section avatar>
-            <q-avatar>
-              <img rounded-borders :title="disciplina.name" :src="`/storage/conteudos/conteudos-digitais/imagem-associada/emitec/ico-${disciplina.id}.svg`" >
-            </q-avatar>
-          </q-item-section>
-          <q-item-section >
-            <q-item-label>
-              {{disciplina.name}}
-            </q-item-label>
-          </q-item-section>
-        </q-item>
+  <section class="q-pa-sm">
+    <div
+      class="row justify-center q-gutter-sm load"
+      v-scroll-fire="getDestaques"
+    >
+      <q-card
+        class="col-sm-2"
+        v-for="(disciplina, i) in disciplinas.components"
+        :key="`d-${i}`"
+      >
+        <q-card-section class="row justify-center">
+          <q-avatar>
+            <img
+              rounded-borders
+              :title="disciplina.name"
+              :src="
+                `/storage/conteudos/conteudos-digitais/imagem-associada/emitec/ico-${disciplina.id}.svg`
+              "
+              placeholder-src="/img/fundo-padrao.svg"
+            />
+          </q-avatar>
+        </q-card-section>
+        <q-card-actions>
+          <q-btn
+            class="full-width"
+            :label="disciplina.name"
+            :to="`recursos-educacionais/listar?busca=${disciplina.name}`"
+          ></q-btn>
+        </q-card-actions>
       </q-card>
     </div>
-    <CardHome :data="data" v-for="(data, i) in destaques" :key="`i-${i}`" :index="`i-${i}`"/>
-    
-    
+
+    <CardHome
+      :data="data"
+      v-for="(data, i) in destaques"
+      :key="`i-${i}`"
+      :index="`i-${i}`"
+    />
   </section>
 </template>
 <script>
@@ -30,9 +47,9 @@ import {
   ScrollFire,
   QBanner,
   QCard,
-  QItem,
-  QItemSection,
-  QItemLabel,
+  QCardSection,
+  QCardActions,
+  QBtn,
   QAvatar
 } from "quasar";
 
@@ -46,9 +63,9 @@ export default {
     CardHome,
     QBanner,
     QCard,
-    QItem,
-    QItemSection,
-    QItemLabel,
+    QCardSection,
+    QCardActions,
+    QBtn,
     QAvatar
   },
 
@@ -73,5 +90,4 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

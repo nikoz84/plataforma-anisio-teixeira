@@ -1,32 +1,33 @@
 <template>
-  <article class="q-ma-md">
-      <div class="text-h5 text-grey-10 q-ma-md q-pa-sm title-page">{{data.title}}</div>
-      <div class="row q-gutter-md">
-        <q-card flat bordered class="col-sm-3" v-for="(item, i) in data.items.slice(0, limit)" :key="i">
-            <img :src="item.image" :placeholder-src="`/img/fundo-padrao.svg`">
-            <router-link tag="div"
-                          :to="item.url_exibir" 
-                          class="cursor-pointer"
-                          :title="item.title ? item.title : item.name">
-              <q-card-section>
-                <div class="text-body1 text-weight-medium text-blue-10" v-text="title(item.title ? item.title : item.name)"></div>
-              </q-card-section>
-            </router-link>
-        </q-card>
-      </div>
-      <div class="row no-wrap justify-center q-ma-xl" >
-        <div class="col-sm-4">
-          <q-btn flat 
-                no-caps 
-                no-wrap
-                :id="`${index}`"
-                @click="showData" 
-                align="left" 
-                icon="cached" 
-                class="full-width border-left" 
-                label="Carregar mais" />
-        </div>
-      </div>
+  <article class="q-my-xl">
+    <q-separator class="bg-white"></q-separator>
+    <div class="text-h5 title-page text-center q-py-lg">
+      {{ data.title }}
+    </div>
+    <div class="row justify-center q-gutter-sm q-py-xl">
+      <q-card
+        flat
+        bordered
+        class="col-sm-3"
+        v-for="(item, i) in data.items"
+        :key="i"
+      >
+        <q-img :src="item.image" placeholder-src="/img/fundo-padrao.svg" />
+        <router-link
+          tag="div"
+          :to="item.url_exibir"
+          class="cursor-pointer"
+          :title="item.title ? item.title : item.name"
+        >
+          <q-card-section>
+            <div
+              class="text-body1 text-weight-medium text-blue-10"
+              v-text="title(item.title ? item.title : item.name)"
+            ></div>
+          </q-card-section>
+        </router-link>
+      </q-card>
+    </div>
   </article>
 </template>
 <script>

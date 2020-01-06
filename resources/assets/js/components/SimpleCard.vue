@@ -1,45 +1,68 @@
 <template>
-       <q-card class="row q-mt-lg" v-bind:id="item.id">
-          <q-card-section class="col-xs-5 col-sm-4" >
-            <q-img alt="imagem destacada"
-                  :src="getImage"
-                  :style="`height: 200px; width: 100%;backgroud-color:${color};`"
-                  placeholder-src="/img/fundo-padrao.svg">
-              <div class="absolute-bottom-right text-subtitle2">
-                {{ getTipo }}
-              </div>
-            </q-img>
-          </q-card-section>
+  <q-card v-bind:id="item.id">
+    <q-img
+      alt="imagem destacada"
+      :src="getImage"
+      :style="`min-height: 200px; width: 100%;backgroud-color:${color};`"
+      placeholder-src="/img/fundo-padrao.svg"
+    >
+      <div class="absolute-bottom-right text-subtitle2">
+        {{ getTipo }}
+      </div>
+    </q-img>
 
-          <q-card-section class="col-xs-7 col-sm-8" >
-            <div :style="`border-bottom: 2px solid ${color};`"
-                  class="text-h6 card-heading-inner q-pt-md cursor-pointer"
-                  >
-                <router-link tag="div" 
-                      :to="item.url_exibir ? item.url_exibir : {name:'ExibirConteudo', params : {slug:slug, id:item.id, action: 'exibir'}}" 
-                      v-html="title"/>
-            </div>
-            <p class="q-pt-lg" v-html="item.excerpt"></p>
-            
-            <QBtn :to="item.url_exibir ? item.url_exibir : {name:'ExibirConteudo', params : {slug:slug, id:item.id, action: 'exibir'}}" 
-                  color="primary" 
-                style="font-weight: 900;" flat>
-                Saiba Mais
-            </QBtn>
-            
-          </q-card-section>
-          
-      </q-card>
+    <q-card-section>
+      <div
+        :style="`border-bottom: 2px solid ${color};`"
+        class="text-h6 card-heading-inner q-pt-md cursor-pointer"
+      >
+        <router-link
+          tag="div"
+          :to="
+            item.url_exibir
+              ? item.url_exibir
+              : {
+                  name: 'ExibirConteudo',
+                  params: { slug: slug, id: item.id, action: 'exibir' }
+                }
+          "
+          v-html="title"
+        />
+      </div>
+      <p
+        class="q-pt-lg"
+        style="word-break: break-word;"
+        v-html="item.excerpt"
+      ></p>
+    </q-card-section>
+    <q-card-actions vertical align="center">
+      <QBtn
+        :to="
+          item.url_exibir
+            ? item.url_exibir
+            : {
+                name: 'ExibirConteudo',
+                params: { slug: slug, id: item.id, action: 'exibir' }
+              }
+        "
+        color="primary"
+        style="font-weight: 900;"
+        flat
+      >
+        Saiba Mais
+      </QBtn>
+    </q-card-actions>
+  </q-card>
 </template>
 <script>
-import { QCard, QCardSection, QBtn, QImg } from "quasar";
+import { QCard, QCardSection, QCardActions, QBtn, QImg } from "quasar";
 
 export default {
   name: "SimpleCard",
   props: {
     item: Object
   },
-  components: { QCard, QCardSection, QBtn, QImg },
+  components: { QCard, QCardSection, QCardActions, QBtn, QImg },
   computed: {
     title() {
       return this.item.name ? this.item.name : this.item.title;
@@ -48,7 +71,7 @@ export default {
       return this.item.canal ? this.item.canal.slug : this.item.slug;
     },
     color() {
-      return this.item.canal ? this.item.canal.color : "#faf";
+      return this.item.canal ? this.item.canal.color : "#08275e";
     },
     getImage() {
       return this.item.image;
