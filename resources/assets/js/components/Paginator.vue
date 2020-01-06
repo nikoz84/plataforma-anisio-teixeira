@@ -5,7 +5,7 @@
     </q-card>
 
     <q-infinite-scroll @load="onLoad" :offset="250">
-      <div class="row justify-center q-gutter-x-lg">
+      <div class="row justify-center q-gutter-x-lg q-gutter-y-md">
         <SimpleCard
           class="col-xs-10 col-sm-5 col-md-3 col-lg-3 col-xl-2"
           v-for="(item, i) in infiniteSrollData"
