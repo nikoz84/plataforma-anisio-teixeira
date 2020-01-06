@@ -60,8 +60,8 @@ class HomeController extends ApiController
     }
     private function getDisciplinas()
     {
-        $disciplinas = $collect = NivelEnsino::where('id', '=', 5)->with(["components" => function ($q) {
-            $q->where('curricular_components.id', '!=', 31);
+        $disciplinas = NivelEnsino::where('id', '=', 5)->with(["components" => function ($q) {
+            $q->where('curricular_components.id', '!=', 31)->orderBy('name');
         }])->get()->first();
 
         return $disciplinas;
