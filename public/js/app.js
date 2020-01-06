@@ -2724,7 +2724,8 @@ __webpack_require__.r(__webpack_exports__);
     QCardSection: quasar__WEBPACK_IMPORTED_MODULE_0__["QCardSection"],
     QCardActions: quasar__WEBPACK_IMPORTED_MODULE_0__["QCardActions"],
     QBtn: quasar__WEBPACK_IMPORTED_MODULE_0__["QBtn"],
-    QImg: quasar__WEBPACK_IMPORTED_MODULE_0__["QImg"]
+    QImg: quasar__WEBPACK_IMPORTED_MODULE_0__["QImg"],
+    QSeparator: quasar__WEBPACK_IMPORTED_MODULE_0__["QSeparator"]
   },
   computed: {
     title: function title() {
@@ -64444,7 +64445,9 @@ var render = function() {
             [
               _c(
                 "div",
-                { staticClass: "row justify-center q-gutter-x-lg" },
+                {
+                  staticClass: "row justify-center q-gutter-x-lg q-gutter-y-md"
+                },
                 _vm._l(_vm.infiniteSrollData, function(item, i) {
                   return _c("SimpleCard", {
                     key: i,
@@ -64778,6 +64781,7 @@ var render = function() {
           _c(
             "QBtn",
             {
+              staticClass: "absolute-bottom",
               staticStyle: { "font-weight": "900" },
               attrs: {
                 to: _vm.item.url_exibir

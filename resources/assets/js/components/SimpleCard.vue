@@ -37,6 +37,7 @@
     </q-card-section>
     <q-card-actions vertical align="center">
       <QBtn
+        class="absolute-bottom"
         :to="
           item.url_exibir
             ? item.url_exibir
@@ -55,14 +56,21 @@
   </q-card>
 </template>
 <script>
-import { QCard, QCardSection, QCardActions, QBtn, QImg } from "quasar";
+import {
+  QCard,
+  QCardSection,
+  QCardActions,
+  QBtn,
+  QImg,
+  QSeparator
+} from "quasar";
 
 export default {
   name: "SimpleCard",
   props: {
     item: Object
   },
-  components: { QCard, QCardSection, QCardActions, QBtn, QImg },
+  components: { QCard, QCardSection, QCardActions, QBtn, QImg, QSeparator },
   computed: {
     title() {
       return this.item.name ? this.item.name : this.item.title;
