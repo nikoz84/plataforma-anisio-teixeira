@@ -58,6 +58,10 @@ class HomeController extends ApiController
         ];
         return response()->json($data, 200);
     }
+    /**
+     * Seleciona as Disciplinas do ensino medio 
+     * 
+     */
     private function getDisciplinas()
     {
         $disciplinas = NivelEnsino::where('id', '=', 5)->with(["components" => function ($q) {

@@ -80,13 +80,16 @@ class ConteudoController extends ApiController
         $query->when($licencas, function ($q, $licencas) {
             return $q->whereIn('license_id', explode(',', $licencas));
         });
+
         $url = "busca={$busca}&limit={$limit}&canal={$canal}";
         $url .= "&tipos={$tipos}&componentes={$componentes}&categoria={$categoria}&licencas={$licencas}";
+
         $conteudos = $query->where('is_approved', 'true')
             ->with(['canal'])
             ->orderBy($orderBy, 'desc')
             ->paginate($limit)
             ->setPath("/conteudos?{$url}");
+
         return $this->showAsPaginator($conteudos);
     }
     /**

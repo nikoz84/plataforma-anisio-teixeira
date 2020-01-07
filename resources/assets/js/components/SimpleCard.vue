@@ -3,7 +3,7 @@
     <q-img
       alt="imagem destacada"
       :src="getImage"
-      :style="`min-height: 200px; width: 100%;backgroud-color:${color};`"
+      :style="`max-height: 200px; width: 100%;backgroud-color:${color};`"
       placeholder-src="/img/fundo-padrao.svg"
     >
       <div class="absolute-bottom-right text-subtitle2">

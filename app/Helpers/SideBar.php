@@ -27,10 +27,16 @@ class SideBar
     }
     private static function getSideBarAdvancedFilter()
     {
-        $componentes = CurricularComponentCategory::with('components')->get()->first();
+        $componentes = CurricularComponentCategory::with(['components' => function ($q) {
+            $q->orderBy('name');
+        }])->get();
         $tipos = Tipo::select(['id', 'name'])->get();
         $licencas = License::select(['id', 'name'])->whereRaw('parent_id is null')->get();
-        $niveis = NivelEnsino::with('components')->get()->first();
+        $niveis = NivelEnsino::with(['components' => function ($q) {
+            $q->where('curricular_components.id', '!=', 13)
+                ->where('curricular_components.id', '!=', 12)
+                ->orderBy('name');
+        }])->get();
 
         return [
             'tipos' => $tipos,

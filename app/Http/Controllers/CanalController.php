@@ -71,9 +71,9 @@ class CanalController extends ApiController
     {
         $canal = $this->canal::find($id);
 
-        //if (Gate::denies('super-admin', $canal)) {
-        // return $this->errorResponse([], 'Usuário sem permissão de acesso!', 200);
-        //}
+        if (Gate::denies('super-admin', $canal)) {
+            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 200);
+        }
 
 
         $canal->name = $this->request->name;
@@ -90,7 +90,7 @@ class CanalController extends ApiController
         }
     }
     /**
-     * Remove the specified resource from storage.
+     * Apaga um canal pelo ID.
      *
      * @param  \App\Canal  $canal
      * @return \Illuminate\Http\Response
@@ -116,6 +116,12 @@ class CanalController extends ApiController
 
         return response()->json($resp);
     }
+    /**
+     * Seleciona Canal pela url amigável (SLUG)
+     *
+     * @param [type] $slug
+     * @return void
+     */
     public function getBySlug($slug)
     {
 
@@ -123,12 +129,21 @@ class CanalController extends ApiController
 
         return $this->showOne($canal, '', 200);
     }
+    /**
+     * Seleciona canal por ID
+     */
     public function getById($id)
     {
         $canal = $this->canal::findOrFail($id);
 
         return $this->showOne($canal, '', 200);
     }
+    /**
+     * Procura canal pelo termo
+     *
+     * @param [type] $termo
+     * @return void
+     */
     public function search($termo)
     {
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 10;
