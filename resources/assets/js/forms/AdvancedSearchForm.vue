@@ -1,6 +1,5 @@
 <template>
     <div>
-        <q-btn label="Ferramentas" size="sm" color="primary" @click="dialog = true" />
         <q-dialog
             v-model="dialog"
             persistent
@@ -100,7 +99,6 @@ export default {
   props: ["dialog"],
   data() {
     return {
-      dialog: false,
       maximizedToggle: true,
       tipos: [],
       licencas: [],
@@ -108,7 +106,11 @@ export default {
     };
   },
   computed: {
-    ...mapState(["canal"])
+    ...mapState(["canal"]),
+    
+  },
+  methods:{
+      
   }
 };
 </script>

@@ -40,19 +40,24 @@
           <q-item clickable @click="recommendationPer('titulo')">
             <q-item-section>Sugerência por título</q-item-section>
           </q-item>
-          <q-item clickable>
+          <q-item clickable @click.prevent="dialog = true">
             <q-item-section>Busca avançada</q-item-section>
           </q-item>
         </q-list>
       </q-menu>
     </q-btn>
+    <AdvancedSearchForm :dialog="dialog"></AdvancedSearchForm>
   </div>
 </template>
 <script>
+import AdvancedSearchForm from "./AdvancedSearchForm.vue";
+
 export default {
   name: "AutocompleteForm",
+  components:{AdvancedSearchForm},
   data() {
     return {
+      dialog: false,
       term: null,
       label: "palavra chave",
       options: [],
@@ -96,6 +101,11 @@ export default {
       } else {
         this.label = "título";
       }
+    },
+    openDialog(){
+      console.log(this.dialog)
+      //return this.dialog != this.dialog;
+      return this.dialog
     }
   }
 };
@@ -103,7 +113,8 @@ export default {
 <style lang="stylus" scoped>
 .toolbar-input-container {
   min-width: 150px;
-  width: 50%;
+  width: 75%;
+  max-height : 50px;
 }
 
 .toolbar-input-btn {
