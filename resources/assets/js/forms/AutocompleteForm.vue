@@ -108,8 +108,8 @@ export default {
 <style lang="stylus" scoped>
 .toolbar-input-container {
   min-width: 150px;
-  width: 75%;
-  max-height: 50px;
+  width: 60%;
+  max-height: 45px;
 }
 
 .toolbar-input-btn {

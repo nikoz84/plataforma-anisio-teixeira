@@ -17,14 +17,17 @@
 
                 <q-card-section>
                     <div class="text-h6">Busca Avanzada</div>
-                    <q-input color="teal" bottom-slots>
+                    <q-input square filled dark color="grey-4" bottom-slots>
                         <template v-slot:after>
-                            <q-btn color="primary" round dense icon="search" />
+                            <q-btn filled color="grey-2" text-color="accent" icon="search" label="Pesquisar"/>
                         </template>
                     </q-input>
                 </q-card-section>
+                <q-card-section>
+                    {{tipos}} - {{licencas}} - {{componentes}}
+                </q-card-section>
                 <q-card-section class="q-my-lg" v-if="canal.sidebar && canal.sidebar.tipos">
-                    <div class="text-h6 text-orange">Tipos de Mídia</div>
+                    <div class="text-h6 text-orange q-pa-md">Tipos de Mídia</div>
                     <div class="q-gutter-sm">
                         <q-checkbox 
                                 v-for="(tipo, i) in canal.sidebar.tipos" 
@@ -36,11 +39,11 @@
                                 color="orange" 
                                 />
                     </div>
-                    <q-separator inset color="orange"></q-separator>
+                    <q-separator class="q-mt-lg" inset color="orange"></q-separator>
                 </q-card-section>
                 
                 <q-card-section class="q-my-lg" v-if="canal.sidebar && canal.sidebar.licenses">
-                    <div class="text-h6 text-positive">Licenças</div>
+                    <div class="text-h6 text-positive q-pa-md">Licenças</div>
                     <div class="q-gutter-sm">
                         <q-checkbox dark
                                     v-for="(license, i) in canal.sidebar.licenses" 
@@ -50,11 +53,11 @@
                                     :label="license.name" 
                                     color="positive" />
                     </div>
-                    <q-separator inset color="positive"></q-separator>
+                    <q-separator class="q-mt-lg" inset color="positive"></q-separator>
                 </q-card-section>
                 <div v-if="canal.sidebar && canal.sidebar.components">
                     <q-card-section class="q-my-lg" v-for="(component, i) in canal.sidebar.components" :key="`c-${i}`" :index="component.id">
-                        <div class="text-h6 text-negative">{{component.name}}</div>
+                        <div class="text-h6 text-negative q-pa-md">{{component.name}}</div>
                         <div class="q-gutter-sm" >
                             <q-checkbox  dark 
                                         v-for="(component, i) in component.components" 
@@ -64,12 +67,12 @@
                                         :label="component.name"
                                         color="negative" />
                         </div>
-                        <q-separator inset color="negative"></q-separator>
+                        <q-separator class="q-mt-lg" inset color="negative"></q-separator>
                     </q-card-section>
                 </div>
                 <div v-if="canal.sidebar && canal.sidebar.niveis">
                     <q-card-section class="q-my-lg" v-for="(nivel, n) in canal.sidebar.niveis" :key="`n-${n}`" :index="nivel.id">    
-                        <div class="text-h6 text-teal ">{{nivel.name}}</div>
+                        <div class="text-h6 text-teal q-pa-md">{{nivel.name}}</div>
                         <div class="q-gutter-sm">
                             <q-checkbox dark 
                                     v-for="(component, i) in nivel.components" 
@@ -79,16 +82,9 @@
                                     :label="component.name"
                                     color="teal" />
                         </div>
-                        <q-separator inset color="teal"></q-separator>
+                        <q-separator class="q-mt-lg" inset color="teal"></q-separator>
                     </q-card-section>
                 </div>
-                
-                <q-card-section class="row">
-                {{tipos}}  - {{licencas}} - {{componentes}} 
-                </q-card-section>
-                <q-card-section class="row">
-                {{canal.sidebar}}
-                </q-card-section>
             </q-card>
         </q-dialog>
     </div>

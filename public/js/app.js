@@ -5322,7 +5322,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".toolbar-input-container[data-v-3fb0dd7e] {\n  min-width: 150px;\n  width: 75%;\n  max-height: 50px;\n}\n.toolbar-input-btn[data-v-3fb0dd7e] {\n  border-radius: 0;\n  border-style: solid;\n  border-width: 3px 3px 3px 3px;\n  border-color: rgba(0,0,0,0.24);\n  max-width: 50px;\n  width: 100%;\n}\n", ""]);
+exports.push([module.i, ".toolbar-input-container[data-v-3fb0dd7e] {\n  min-width: 150px;\n  width: 60%;\n  max-height: 45px;\n}\n.toolbar-input-btn[data-v-3fb0dd7e] {\n  border-radius: 0;\n  border-style: solid;\n  border-width: 3px 3px 3px 3px;\n  border-color: rgba(0,0,0,0.24);\n  max-width: 50px;\n  width: 100%;\n}\n", ""]);
 
 // exports
 
@@ -65199,7 +65199,13 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("q-input", {
-                    attrs: { color: "teal", "bottom-slots": "" },
+                    attrs: {
+                      square: "",
+                      filled: "",
+                      dark: "",
+                      color: "grey-4",
+                      "bottom-slots": ""
+                    },
                     scopedSlots: _vm._u([
                       {
                         key: "after",
@@ -65207,10 +65213,11 @@ var render = function() {
                           return [
                             _c("q-btn", {
                               attrs: {
-                                color: "primary",
-                                round: "",
-                                dense: "",
-                                icon: "search"
+                                filled: "",
+                                color: "grey-2",
+                                "text-color": "accent",
+                                icon: "search",
+                                label: "Pesquisar"
                               }
                             })
                           ]
@@ -65223,14 +65230,28 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
+              _c("q-card-section", [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.tipos) +
+                    " - " +
+                    _vm._s(_vm.licencas) +
+                    " - " +
+                    _vm._s(_vm.componentes) +
+                    "\n            "
+                )
+              ]),
+              _vm._v(" "),
               _vm.canal.sidebar && _vm.canal.sidebar.tipos
                 ? _c(
                     "q-card-section",
                     { staticClass: "q-my-lg" },
                     [
-                      _c("div", { staticClass: "text-h6 text-orange" }, [
-                        _vm._v("Tipos de Mídia")
-                      ]),
+                      _c(
+                        "div",
+                        { staticClass: "text-h6 text-orange q-pa-md" },
+                        [_vm._v("Tipos de Mídia")]
+                      ),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -65257,6 +65278,7 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       _c("q-separator", {
+                        staticClass: "q-mt-lg",
                         attrs: { inset: "", color: "orange" }
                       })
                     ],
@@ -65269,9 +65291,11 @@ var render = function() {
                     "q-card-section",
                     { staticClass: "q-my-lg" },
                     [
-                      _c("div", { staticClass: "text-h6 text-positive" }, [
-                        _vm._v("Licenças")
-                      ]),
+                      _c(
+                        "div",
+                        { staticClass: "text-h6 text-positive q-pa-md" },
+                        [_vm._v("Licenças")]
+                      ),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -65301,6 +65325,7 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       _c("q-separator", {
+                        staticClass: "q-mt-lg",
                         attrs: { inset: "", color: "positive" }
                       })
                     ],
@@ -65323,9 +65348,11 @@ var render = function() {
                           attrs: { index: component.id }
                         },
                         [
-                          _c("div", { staticClass: "text-h6 text-negative" }, [
-                            _vm._v(_vm._s(component.name))
-                          ]),
+                          _c(
+                            "div",
+                            { staticClass: "text-h6 text-negative q-pa-md" },
+                            [_vm._v(_vm._s(component.name))]
+                          ),
                           _vm._v(" "),
                           _c(
                             "div",
@@ -65355,6 +65382,7 @@ var render = function() {
                           ),
                           _vm._v(" "),
                           _c("q-separator", {
+                            staticClass: "q-mt-lg",
                             attrs: { inset: "", color: "negative" }
                           })
                         ],
@@ -65377,9 +65405,11 @@ var render = function() {
                           attrs: { index: nivel.id }
                         },
                         [
-                          _c("div", { staticClass: "text-h6 text-teal " }, [
-                            _vm._v(_vm._s(nivel.name))
-                          ]),
+                          _c(
+                            "div",
+                            { staticClass: "text-h6 text-teal q-pa-md" },
+                            [_vm._v(_vm._s(nivel.name))]
+                          ),
                           _vm._v(" "),
                           _c(
                             "div",
@@ -65406,6 +65436,7 @@ var render = function() {
                           ),
                           _vm._v(" "),
                           _c("q-separator", {
+                            staticClass: "q-mt-lg",
                             attrs: { inset: "", color: "teal" }
                           })
                         ],
@@ -65414,27 +65445,7 @@ var render = function() {
                     }),
                     1
                   )
-                : _vm._e(),
-              _vm._v(" "),
-              _c("q-card-section", { staticClass: "row" }, [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.tipos) +
-                    "  - " +
-                    _vm._s(_vm.licencas) +
-                    " - " +
-                    _vm._s(_vm.componentes) +
-                    " \n            "
-                )
-              ]),
-              _vm._v(" "),
-              _c("q-card-section", { staticClass: "row" }, [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.canal.sidebar) +
-                    "\n            "
-                )
-              ])
+                : _vm._e()
             ],
             1
           )
