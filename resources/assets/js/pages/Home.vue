@@ -1,36 +1,18 @@
 <template>
   <section class="q-pa-sm">
-    <div
-      class="row justify-center q-gutter-sm load"
-      v-scroll-fire="getDestaques"
-    >
-      <q-card
-        class="col-sm-2"
-        v-for="(disciplina, i) in disciplinas.components"
-        :key="`d-${i}`"
-      >
-        <q-card-section class="row justify-center">
-          <q-avatar>
-            <img
-              rounded-borders
-              :title="disciplina.name"
-              :src="
-                `/storage/conteudos/conteudos-digitais/imagem-associada/emitec/ico-${disciplina.id}.svg`
-              "
-              placeholder-src="/img/fundo-padrao.svg"
-            />
-          </q-avatar>
-        </q-card-section>
-        <q-card-actions>
-          <q-btn
-            class="full-width"
-            :label="disciplina.name"
-            :to="`recursos-educacionais/listar?busca=${disciplina.name}`"
-          ></q-btn>
-        </q-card-actions>
-      </q-card>
-    </div>
-
+    <CardHomeIcon
+      title="Tipos de Conteúdos"
+      :items="tipos"
+      source="tipo-conteudo"
+      style="padding-bottom: 20vh;"
+    ></CardHomeIcon>
+    <CardHomeIcon
+      title="Disciplinas"
+      :items="disciplinas.components"
+      source="emitec"
+      style="padding-bottom: 15vh;"
+    ></CardHomeIcon>
+    <div class="q-my-lg load" v-scroll-fire="getDestaques"></div>
     <CardHome
       :data="data"
       v-for="(data, i) in destaques"
@@ -42,6 +24,8 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import CardHome from "../components/CardHome.vue";
+import CardHomeIcon from "../components/CardHomeIcon.vue";
+
 import {
   QParallax,
   ScrollFire,
@@ -66,7 +50,8 @@ export default {
     QCardSection,
     QCardActions,
     QBtn,
-    QAvatar
+    QAvatar,
+    CardHomeIcon
   },
 
   data() {
@@ -75,7 +60,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["disciplinas"])
+    ...mapState(["disciplinas", "tipos"])
   },
   methods: {
     async getDestaques(el) {

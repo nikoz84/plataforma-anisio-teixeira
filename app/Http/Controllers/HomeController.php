@@ -51,10 +51,12 @@ class HomeController extends ApiController
                                     ORDER BY options->'order_menu';"), [true]);
 
         $layout = Options::select("meta_data")->where("name", "like", "layout")->get()->first();
+
         $data = [
             "layout" => (object) $layout,
             "links" => $links,
-            "disciplinas" => $this->getDisciplinas()
+            "disciplinas" => $this->getDisciplinasEnsinoMedio(),
+            "tipos" => \App\Tipo::select(['id', 'name'])->get()
         ];
         return response()->json($data, 200);
     }
@@ -62,7 +64,7 @@ class HomeController extends ApiController
      * Seleciona as Disciplinas do ensino medio 
      * 
      */
-    private function getDisciplinas()
+    private function getDisciplinasEnsinoMedio()
     {
         $disciplinas = NivelEnsino::where('id', '=', 5)->with(["components" => function ($q) {
             $q->where('curricular_components.id', '!=', 31)->orderBy('name');
@@ -70,6 +72,7 @@ class HomeController extends ApiController
 
         return $disciplinas;
     }
+
     /**
      * Seleciona os destaques da plataforma do helper
      *

@@ -89,6 +89,7 @@ import { QList, QItem, QItemSection, QIcon } from "quasar";
 
 export default {
   name: "LeftSideBar",
+  props: ["leftDrawerOpen"],
   computed: {
     ...mapState(["isLogged", "links"])
   }

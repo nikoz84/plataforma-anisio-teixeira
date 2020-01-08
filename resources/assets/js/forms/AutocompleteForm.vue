@@ -40,13 +40,13 @@
           <q-item clickable @click="recommendationPer('titulo')">
             <q-item-section>Sugerência por título</q-item-section>
           </q-item>
-          <q-item clickable @click="open = true">
+          <q-item clickable @click="openDialog()">
             <q-item-section>Busca avançada</q-item-section>
           </q-item>
         </q-list>
       </q-menu>
     </q-btn>
-    <AdvancedSearchForm :open.sync="open" ></AdvancedSearchForm>
+    
   </div>
 </template>
 <script>
@@ -54,10 +54,8 @@ import AdvancedSearchForm from "./AdvancedSearchForm.vue";
 
 export default {
   name: "AutocompleteForm",
-  components: { AdvancedSearchForm },
   data() {
     return {
-      open: false,
       term: null,
       label: "palavra chave",
       options: [],
@@ -101,6 +99,12 @@ export default {
       } else {
         this.label = "título";
       }
+    },
+    openDialog() {
+      this.$q.dialog({
+        component: AdvancedSearchForm,
+        parent: this
+      });
     }
   }
 };
