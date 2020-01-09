@@ -1,16 +1,17 @@
 <template>
   <section>
     <div class="text-h5 title-page text-center q-py-lg" v-text="title"></div>
-    <div class="row justify-center q-gutter-sm load" v-if="items">
+    <div class="row justify-center q-gutter-sm" v-if="items">
       <q-card class="col-sm-2" v-for="(item, i) in items" :key="`item-${i}`">
         <q-card-section class="row justify-center">
           <q-avatar>
             <img
-              rounded-borders
+              :rounded-borders="rounded"
               :alt="`icone: ${item.name}`"
               :aria-label="item.name"
+              class="bg-deep-purple-2"
               :src="
-                `/storage/conteudos/conteudos-digitais/imagem-associada/${source}/${item.id}.svg`
+                `/img/${source}/${item.id}.svg`
               "
               :placeholder-src="`/img/fundo-padrao.svg`"
             />
@@ -32,10 +33,16 @@
 export default {
   name: "CardHomeIcon",
   props: ["title", "items", "source"],
+  data() {
+    return {
+      rounded: false
+    };
+  },
   methods: {
     goTo(item) {
       let to = `tipos=${item.id}`;
       if (this.source == "emitec") {
+        this.rounded = true;
         to = `busca=${item.name}`;
       }
 

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="85px" height="85px" viewBox="0 0 85 85" enable-background="new 0 0 85 85" xml:space="preserve">
+<g>
+	<defs>
+		<rect id="SVGID_1_" width="85" height="85"/>
+	</defs>
+	<clipPath id="SVGID_2_">
+		<use xlink:href="#SVGID_1_"  overflow="visible"/>
+	</clipPath>
+	<path clip-path="url(#SVGID_2_)" fill="#009A9A" d="M84.638,42.499c0-23.271-18.865-42.138-42.137-42.138
+		c-23.277,0-42.138,18.867-42.138,42.138c0,23.272,18.861,42.14,42.138,42.14C65.772,84.639,84.638,65.771,84.638,42.499"/>
+	<path clip-path="url(#SVGID_2_)" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" d="M36.644,44.323
+		c-1.644-1.576-2.684-3.77-2.759-6.2c-0.227-0.017-0.451-0.034-0.685-0.034h-6.16c-5.128,0-9.298,4.17-9.298,9.297v7.538
+		l0.019,0.119l0.52,0.161c3.922,1.225,7.427,1.791,10.472,1.967v-2.274C28.752,49.903,32.083,45.677,36.644,44.323"/>
+	<path clip-path="url(#SVGID_2_)" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" d="M30.122,37.594
+		c1.42,0,2.742-0.416,3.864-1.122c0.357-2.322,1.599-4.353,3.376-5.732c0.007-0.136,0.022-0.272,0.022-0.411
+		c0-4.009-3.252-7.26-7.262-7.26c-4.011,0-7.262,3.251-7.262,7.26C22.86,34.343,26.111,37.594,30.122,37.594"/>
+	<path clip-path="url(#SVGID_2_)" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" d="M57.96,38.089h-6.115
+		c-0.064,2.448-1.108,4.651-2.76,6.234c4.557,1.355,7.889,5.58,7.889,10.574v2.322c6.038-0.224,9.52-1.933,9.747-2.048l0.487-0.247
+		h0.052v-7.541C67.26,42.259,63.09,38.089,57.96,38.089"/>
+	<path clip-path="url(#SVGID_2_)" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" d="M45.946,45.584h-6.164
+		c-5.125,0-9.298,4.174-9.298,9.3v7.539l0.021,0.115l0.518,0.163c4.892,1.529,9.144,2.04,12.642,2.04
+		c6.834,0,10.797-1.949,11.041-2.074l0.484-0.244h0.052v-7.539C55.242,49.758,51.071,45.584,45.946,45.584"/>
+	<path clip-path="url(#SVGID_2_)" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" d="M42.864,45.09
+		c4.01,0,7.262-3.251,7.262-7.261c0-4.011-3.252-7.262-7.262-7.262s-7.265,3.251-7.265,7.262
+		C35.599,41.839,38.854,45.09,42.864,45.09"/>
+	<path clip-path="url(#SVGID_2_)" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" d="M47.624,30.221
+		c2.289,1.437,3.896,3.864,4.187,6.686c0.933,0.433,1.97,0.687,3.068,0.687c4.011,0,7.261-3.254,7.261-7.265
+		c0-4.009-3.25-7.26-7.261-7.26C50.906,23.069,47.683,26.261,47.624,30.221"/>
+</g>
+</svg>
