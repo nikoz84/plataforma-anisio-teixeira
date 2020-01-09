@@ -11,8 +11,8 @@
             aria-label="Menu"
             icon="dehaze"
           />
-          <q-btn flat no-caps no-wrap class="q-ml-xs" to="/">
-            <q-icon name="img:/logo.svg" />
+          <q-btn flat no-caps no-wrap class="q-ml-xs" to="/" aria-label="voltar ao inicio">
+            <img src="/logo.svg" alt="marca" aria-label="marca da plataforma Anísio Teixeira"/>
             <div clas="text-h6">
               PLATAFORMA ANÍSIO TEIXEIRA
             </div>
@@ -28,6 +28,7 @@
           <q-item
             tag="div"
             :to="`/${link.slug}/listar`"
+            :aria-label="`endereço para: ${link.name}`"
             clickable
             v-close-popup
             tabindex="0"

@@ -9,17 +9,15 @@
         >
         <q-card class="bg-grey-10 text-white">
             <q-bar>
+                <div class="text-h6">Busca Avanzada</div>
                 <q-space />
-                <q-btn flat icon="close" v-close-popup >
+                <q-btn flat icon="close" v-close-popup aria-label="fechar">
                     <q-tooltip content-class="bg-white text-primary">Fechar</q-tooltip>
                 </q-btn>
             </q-bar>
-            <q-card-section class="text-center">
-              <div class="text-h6">Busca Avanzada</div>
-            </q-card-section>
             <q-card-section class="row justify-center q-gutter-sm">
                 <q-input class="input-search" filled dense dark color="teal"></q-input>
-                <q-btn class="btn-input" filled dark color="teal" icon="search" label="Pesquisar" @click="onOKClick"/>
+                <q-btn aria-label="pesquisar" class="btn-input" filled dark color="teal" icon="search" label="Pesquisar" @click="onOKClick"/>
                 <q-select dense dark color="teal" v-model="perPage" stack-label :options="perPageOptions" hint="Itens Por Página" />
             </q-card-section>
             <q-card-section class="row justify-center q-gutter-sm">

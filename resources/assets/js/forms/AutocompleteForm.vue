@@ -20,7 +20,7 @@
       color="positive"
       bg-color="bg-grey-11"
       class="bg-grey-11 col"
-      :placeholder="`Buscar por: ${label}`"
+      :label="`Buscar por: ${label}`"
     />
 
     <q-btn
@@ -30,17 +30,18 @@
       text-color="grey-8"
       icon="search"
       unelevated
+      aria-label="pesquisar"
     />
-    <q-btn color="grey-7" round flat icon="more_vert">
+    <q-btn color="grey-7" round flat icon="more_vert" aria-label="opções de busca">
       <q-menu cover auto-close>
         <q-list>
-          <q-item clickable>
-            <q-item-section @click="recommendationPer('tag')">Sugerência por palavra chave</q-item-section>
+          <q-item clickable aria-label="sugerir por palavra chave" @click="recommendationPer('tag')">
+            <q-item-section >Sugerência por palavra chave</q-item-section>
           </q-item>
-          <q-item clickable @click="recommendationPer('titulo')">
-            <q-item-section>Sugerência por título</q-item-section>
+          <q-item clickable aria-label="sugerir por título" @click="recommendationPer('titulo')">
+            <q-item-section >Sugerência por título</q-item-section>
           </q-item>
-          <q-item clickable @click="openDialog()">
+          <q-item clickable aria-label="busca avançada" @click="openDialog()">
             <q-item-section>Busca avançada</q-item-section>
           </q-item>
         </q-list>

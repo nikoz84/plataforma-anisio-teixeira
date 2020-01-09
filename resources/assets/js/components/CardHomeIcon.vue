@@ -7,7 +7,8 @@
           <q-avatar>
             <img
               rounded-borders
-              :title="item.name"
+              :alt="`icone: ${item.name}`"
+              :aria-label="item.name"
               :src="
                 `/storage/conteudos/conteudos-digitais/imagem-associada/${source}/${item.id}.svg`
               "
@@ -17,6 +18,7 @@
         </q-card-section>
         <q-card-actions vertical align="center">
           <q-btn
+            :aria-label="`Buscar por ${item.name}`"
             style="word-break:break-word"
             :label="item.name"
             :to="goTo(item)"

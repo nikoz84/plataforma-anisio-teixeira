@@ -12,9 +12,10 @@
         v-for="(item, i) in data.items"
         :key="i"
       >
-        <q-img :src="item.image" placeholder-src="/img/fundo-padrao.svg" />
+        <q-img :src="item.image" placeholder-src="/img/fundo-padrao.svg" aria-label="imagen de destaque" alt="imagen de destaque"/>
         <router-link
           tag="div"
+          aria-label="visualizar recurso"
           :to="item.url_exibir"
           class="cursor-pointer"
           :title="item.title ? item.title : item.name"

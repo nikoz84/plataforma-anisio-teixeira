@@ -16,6 +16,7 @@
                 :key="`links-${i}`" 
                 :href="`/${link.slug}/listar`" 
                 v-text="link.name"
+                :title="`endereço para o canal:  ${link.name}`"
                 style="color:#0071bc;">
           </a>
       </div>
@@ -39,21 +40,24 @@
                 :key="`links-${i}`" 
                 :href="link.url" 
                 v-text="link.title"
+                :title="`endereço do portal da educação para:  ${link.title}`"
                 style="color:#0071bc;">
           </a>
         
       </div>
       <q-separator class="q-mt-md q-mb-lg" />
       <div class="row wrap justify-center" v-if="layout && layout.marcas">
-        <q-img style="max-width: 741px; height: auto;" v-if="layout.marcas.is_active" :src="layout.marcas.url"></q-img>
+        <q-img alt="imagem de marcas" aria-label="imagem" style="max-width: 741px; height: auto;" v-if="layout.marcas.is_active" :src="layout.marcas.url"></q-img>
       </div>
       <q-separator class="q-mt-md q-mb-lg" />
       <div class="row wrap justify-center text-center" v-if="layout && layout.marcas">
-        <q-btn outline to="/galeria" icon-right="photo" label="Visite nossa galería de Imagens"></q-btn>
+        <q-btn outline to="/galeria" icon-right="photo" label="Visite nossa galería de Imagens" aria-label="visite a galería de imagens"></q-btn>
+      </div>
+      <div class="row wrap justify-center">
         <b class="q-mt-lg">Todos os direitos e conteúdos desta Plataforma são de uso compartilhado, exceto onde indicado de outra forma.</b>
       </div>
       <div class="row wrap justify-center" v-if="layout && layout.marcas">
-        <q-img style="max-width: 180px; height: auto;" src="/img/creative-commons.svg"></q-img>
+        <q-img alt="creative commond imagem" aria-label="imagem" style="max-width: 180px; height: auto;" src="/img/creative-commons.svg"></q-img>
       </div>
       
     </div>

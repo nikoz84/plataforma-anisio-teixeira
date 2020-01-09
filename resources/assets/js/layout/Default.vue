@@ -1,5 +1,6 @@
 <template>
   <q-layout view="hHh lpR fFf">
+    <a class="skip-link" href="#maincontent">Pular ao conteúdo</a>
     <q-header elevated>
       <q-toolbar >
         <q-btn
@@ -15,10 +16,11 @@
           no-caps
           no-wrap
           class="q-ml-xs"
+          aria-label="voltar ao inicio"
           to="/"
           v-if="$q.screen.gt.sm"
         >
-          <q-icon name="img:/logo.svg" />
+          <img src="/logo.svg" alt="marca" aria-label="marca da plataforma Anísio Teixeira"/>
 
           <q-toolbar-title shrink>
             Plataforma Anísio Teixeira
@@ -33,10 +35,10 @@
 
         <q-space />
 
-        <q-btn-dropdown stretch flat icon="person">
+        <q-btn-dropdown stretch flat icon="person" aria-label="Opçoes de usuário">
           <q-list>
             <!-- Fale conosco -->
-            <q-item clickable to="/usuario/contato/faleconosco">
+            <q-item clickable to="/usuario/contato/faleconosco" aria-label="fale conosco">
               <q-item-section>
                 <q-item-label>Fale Conosco</q-item-label>
               </q-item-section>
@@ -85,9 +87,9 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view :id="`main`" />
       <q-page-scroller position="bottom-right">
-        <q-btn round color="accent" icon="arrow_upward" />
+        <q-btn round color="accent" icon="arrow_upward" aria-label="subir ao topo"/>
       </q-page-scroller>
     </q-page-container>
   </q-layout>
@@ -162,6 +164,20 @@ export default {
 };
 </script>
 <style lang="stylus">
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000000;
+  color: white;
+  padding: 8px;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
 .drawer-footer-link {
   color: inherit;
   text-decoration: none;
