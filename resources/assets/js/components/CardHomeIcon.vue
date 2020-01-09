@@ -9,7 +9,6 @@
               :rounded-borders="rounded"
               :alt="`icone: ${item.name}`"
               :aria-label="item.name"
-              class="bg-deep-purple-2"
               :src="
                 `/img/${source}/${item.id}.svg`
               "
@@ -22,6 +21,8 @@
             :aria-label="`Buscar por ${item.name}`"
             style="word-break:break-word"
             :label="item.name"
+            outline
+            color="primary"
             :to="goTo(item)"
           ></q-btn>
         </q-card-actions>
