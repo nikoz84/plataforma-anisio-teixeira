@@ -68824,7 +68824,7 @@ var render = function() {
           _c(
             "q-item-label",
             { staticClass: "bg-grey-3", attrs: { header: "" } },
-            [_c("b", [_vm._v("CANAIS")])]
+            [_c("div", { staticClass: "text-h6" }, [_vm._v("CANAIS")])]
           ),
           _vm._v(" "),
           _vm._l(_vm.links, function(link, i) {
@@ -68842,6 +68842,7 @@ var render = function() {
                       tag: "div",
                       to: "/" + link.slug + "/listar",
                       "aria-label": "endereço para: " + link.name,
+                      title: "endereço para: " + link.name,
                       clickable: "",
                       tabindex: "0"
                     }

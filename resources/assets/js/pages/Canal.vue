@@ -1,7 +1,7 @@
 <template>
   <section class="q-pa-md">
     <!--Breadcrum></Breadcrum-->
-    <header class="row no-wrap justify-center">
+    <header class="rowjustify-center">
       <div class="text-h5 title-page" :style="`color:${color}`">
         {{ canal && canal.options ? canal.options.extend_name : "" }}
       </div>

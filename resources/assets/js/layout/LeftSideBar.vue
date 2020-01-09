@@ -21,7 +21,7 @@
         
         <q-separator />
         <q-item-label class="bg-grey-3" header>
-          <b>CANAIS</b>
+          <div class="text-h6">CANAIS</div>
         </q-item-label>
         <!-- CANAIS -->
         <div v-for="(link, i) in links" :key="`x.${i}`">
@@ -29,6 +29,7 @@
             tag="div"
             :to="`/${link.slug}/listar`"
             :aria-label="`endereço para: ${link.name}`"
+            :title="`endereço para: ${link.name}`"
             clickable
             v-close-popup
             tabindex="0"

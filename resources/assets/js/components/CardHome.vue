@@ -1,5 +1,5 @@
 <template>
-  <article class="q-my-xl">
+  <section class="q-my-xl">
     <a class="skip-link" :href="`#${data.slug}`" v-text="data.title"></a>
     <div class="text-h5 title-page text-center q-py-lg" :id="data.slug">
       {{ data.title }}
@@ -13,23 +13,18 @@
         :key="i"
       >
         <q-img :src="item.image" placeholder-src="/img/fundo-padrao.svg" aria-label="imagen de destaque" alt="imagen de destaque"/>
-        <router-link
-          tag="div"
-          aria-label="visualizar recurso"
-          :to="item.url_exibir"
-          class="cursor-pointer"
-          :title="item.title ? item.title : item.name"
-        >
-          <q-card-section>
-            <div
-              class="text-body1 text-weight-medium text-blue-10"
-              v-text="title(item.title ? item.title : item.name)"
-            ></div>
-          </q-card-section>
-        </router-link>
+        <q-card-section>
+            <q-btn
+                aria-label="visualizar recurso"
+                :to="item.url_exibir"
+                :title="item.title ? item.title : item.name"
+                class="text-body1 text-weight-medium text-blue-10"
+                v-text="title(item.title ? item.title : item.name)">
+            </q-btn>
+        </q-card-section>
       </q-card>
     </div>
-  </article>
+  </section>
 </template>
 <script>
 import { QImg, QCard, QCardSection, QSeparator, QBtn } from "quasar";
