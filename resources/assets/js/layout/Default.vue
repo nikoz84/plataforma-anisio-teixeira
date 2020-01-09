@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <a class="skip-link" href="#maincontent">Pular ao conteúdo</a>
+    <a class="skip-link" href="#main-content">Pular ao conteúdo</a>
     <q-header elevated>
       <q-toolbar >
         <q-btn
@@ -87,7 +87,7 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view :id="`main`" />
+      <router-view :id="`main-content`" />
       <q-page-scroller position="bottom-right">
         <q-btn round color="accent" icon="arrow_upward" aria-label="subir ao topo"/>
       </q-page-scroller>

@@ -68505,7 +68505,7 @@ var render = function() {
     "q-layout",
     { attrs: { view: "hHh lpR fFf" } },
     [
-      _c("a", { staticClass: "skip-link", attrs: { href: "#maincontent" } }, [
+      _c("a", { staticClass: "skip-link", attrs: { href: "#main-content" } }, [
         _vm._v("Pular ao conteúdo")
       ]),
       _vm._v(" "),
@@ -68715,7 +68715,7 @@ var render = function() {
       _c(
         "q-page-container",
         [
-          _c("router-view", { attrs: { id: "main" } }),
+          _c("router-view", { attrs: { id: "main-content" } }),
           _vm._v(" "),
           _c(
             "q-page-scroller",

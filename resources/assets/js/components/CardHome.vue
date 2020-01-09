@@ -1,10 +1,10 @@
 <template>
   <article class="q-my-xl">
-    <q-separator class="bg-white"></q-separator>
-    <div class="text-h5 title-page text-center q-py-lg">
+    <a class="skip-link" :href="`#${data.slug}`" v-text="data.title"></a>
+    <div class="text-h5 title-page text-center q-py-lg" :id="data.slug">
       {{ data.title }}
     </div>
-    <div class="row justify-center q-gutter-sm q-py-xl">
+    <div class="row justify-center q-gutter-sm">
       <q-card
         flat
         bordered

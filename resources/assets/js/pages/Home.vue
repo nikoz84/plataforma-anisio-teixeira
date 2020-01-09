@@ -1,12 +1,16 @@
 <template>
   <section class="q-pa-sm">
+    <a class="skip-link" href="#tipo-conteudos">ir a tipo de conteúdos</a>
     <CardHomeIcon
+      id="tipo-conteudos"
       title="Tipos de Conteúdos"
       :items="tipos"
       source="tipo-conteudo"
       style="padding-bottom: 20vh;"
     ></CardHomeIcon>
+    <a class="skip-link" href="#disciplinas">disciplinas</a>
     <CardHomeIcon
+      id="disciplinas"
       title="Disciplinas"
       :items="disciplinas.components"
       source="emitec"
@@ -17,7 +21,6 @@
       :data="data"
       v-for="(data, i) in destaques"
       :key="`i-${i}`"
-      :index="`i-${i}`"
     />
   </section>
 </template>

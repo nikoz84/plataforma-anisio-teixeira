@@ -21,8 +21,9 @@
             :aria-label="`Buscar por ${item.name}`"
             style="word-break:break-word"
             :label="item.name"
-            outline
-            color="primary"
+            flat
+            size="13px"
+            color="accent"
             :to="goTo(item)"
           ></q-btn>
         </q-card-actions>
