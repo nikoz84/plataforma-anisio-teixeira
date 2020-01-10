@@ -26,11 +26,12 @@ class WordpressController extends ApiController
 
         return $this->showAsPaginator($wordpress->getPosts(), 'Conteúdos blog', 200);
     }
+
     public function getOne($id)
     {
         $wordpress = new WordpressService($this->request);
 
-        return $this->successResponse($wordpress->getOnePost(), "Postagem", 200);
+        return $this->successResponse($wordpress->getOne($id), "Postagem", 200);
     }
 
 

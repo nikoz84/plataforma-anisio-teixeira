@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Canal;
 use Ixudra\Curl\Facades\Curl;
+use GuzzleHttp\Client;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use App\Traits\FileSystemLogic;
 use Illuminate\Http\Request;
@@ -38,25 +39,27 @@ class WordpressService
 
     public function getPosts()
     {
-        $url = $this->api . "posts";
 
-        $response = Curl::to($url)
-            ->withData([
-                'limit' => $this->limit,
-                'page' => $this->page
-            ])->asJsonResponse()
-            ->get();
+        $client = new Client([
+            'base_uri' => $this->api,
+            'timeout'  => 6.0,
+            'query' => ['page' => $this->page, 'limit' => $this->limit]
+        ]);
 
-        if ($response) {
-            return $this->getPaginator($response);
-        }
+        $response = $client->request('GET', 'posts');
+        $data = json_decode($response->getBody(), true);
+
+        return $this->getPaginator($data);
     }
 
     protected function getPaginator($data)
     {
+        $itemsCollection = collect($data);
 
-        $itemsCollection = collect($data->posts);
-        $paginatedItems = new Paginator($itemsCollection, $data->total, $this->limit, $this->page);
+        $total = $itemsCollection->get('total');
+        $items = $itemsCollection->get('posts');
+
+        $paginatedItems = new Paginator($items, $total, $this->limit, null);
 
         $paginatedItems->setPath("/posts?limit={$this->limit}");
 
@@ -65,17 +68,19 @@ class WordpressService
 
     public function getCatalogacao()
     {
-        $url = $this->api . "posts/catalogacao";
-        $data = [
-            'inicio' => $this->data_inicio,
-            'fim'    => $this->data_fim
-        ];
-        $response = Curl::to($url)
-            //->withData($data)
-            ->asJsonResponse()
-            ->get();
+        $client = new Client([
+            'base_uri' => $this->api,
+            'timeout'  => 6.0,
+            'query' => [
+                'inicio' => $this->data_inicio,
+                'fim'    => $this->data_fim
+            ]
+        ]);
 
-        return $response;
+        $response = $client->request('GET', 'posts');
+        $data = json_decode($response->getBody(), true);
+
+        return $data;
     }
 
     public function getOne()
