@@ -20,8 +20,8 @@
         </q-item-label>
         
         <q-separator />
-        <q-item-label header>
-          <div class="text-h6 color-white">CANAIS</div>
+        <q-item-label  header>
+          <div class="text-h6 text-primary" style="font-family: 'Concert One', sans-serif, cursive;">CANAIS</div>
         </q-item-label>
         <!-- CANAIS -->
         <div v-for="(link, i) in links" :key="`x.${i}`">

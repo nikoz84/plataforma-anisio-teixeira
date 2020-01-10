@@ -68821,11 +68821,18 @@ var render = function() {
           _vm._v(" "),
           _c("q-separator"),
           _vm._v(" "),
-          _c(
-            "q-item-label",
-            { staticClass: "bg-grey-3", attrs: { header: "" } },
-            [_c("div", { staticClass: "text-h6" }, [_vm._v("CANAIS")])]
-          ),
+          _c("q-item-label", { attrs: { header: "" } }, [
+            _c(
+              "div",
+              {
+                staticClass: "text-h6 text-primary",
+                staticStyle: {
+                  "font-family": "'Concert One', sans-serif, cursive"
+                }
+              },
+              [_vm._v("CANAIS")]
+            )
+          ]),
           _vm._v(" "),
           _vm._l(_vm.links, function(link, i) {
             return _c(

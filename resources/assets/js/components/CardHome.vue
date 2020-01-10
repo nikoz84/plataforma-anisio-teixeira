@@ -1,9 +1,7 @@
 <template>
   <section class="q-my-xl">
     <a class="skip-link" :href="`#${data.slug}`" v-text="data.title"></a>
-    <div class="text-h5 title-page text-center q-py-lg" :id="data.slug">
-      {{ data.title }}
-    </div>
+    <div class="text-h5 title-page text-center q-py-lg text-primary" :id="data.slug" v-text="data.title"></div>
     <div class="row justify-center q-gutter-sm">
       <q-card
         flat

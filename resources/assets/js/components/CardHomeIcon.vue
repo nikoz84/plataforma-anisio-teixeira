@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="text-h5 title-page text-center q-py-lg" v-text="title"></div>
+    <div class="text-h5 title-page text-center q-py-lg text-primary" v-text="title"></div>
     <div class="row justify-center q-gutter-sm" v-if="items">
       <q-card class="col-sm-2" v-for="(item, i) in items" :key="`item-${i}`">
         <q-card-section class="row justify-center">
