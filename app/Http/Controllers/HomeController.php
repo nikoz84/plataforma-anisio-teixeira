@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\Autocomplete;
 use App\NivelEnsino;
+use Illuminate\Database\Eloquent\Builder;
 
 class HomeController extends ApiController
 {
@@ -78,40 +79,10 @@ class HomeController extends ApiController
      *
      * @return void
      */
-    public function getHomeData()
+    public function getHomeData($slug)
     {
-        $data = [
-            [
-                'title' => 'Conteúdos Recentes',
-                'slug' => 'conteudos-recentes',
-                'items' => $this->destaques->getConteudosMaisRecentes(),
-            ],
-            [
-                'title' => 'Conteúdos Mais Baixados',
-                'slug' => 'conteudos-mais-baixados',
-                'items' => $this->destaques->getConteudosMaisBaixados(),
-            ],
-            [
-                'title' => 'Conteúdos Mais Acessados',
-                'slug' => 'conteudos-mais-acessados',
-                'items' => $this->destaques->getConteudosMaisAcessados(),
-            ],
-            [
-                'title' => 'Conteúdos Destacados',
-                'slug' => 'conteudos-destacados',
-                'items' => $this->destaques->getConteudosDestaques(),
-            ],
-            [
-                'title' => 'Aplicativos Destacados',
-                'slug' => 'aplicativos-destacados',
-                'items' => $this->destaques->getAplicativosDestaques(),
-            ],
-            [
-                'title' => 'Aplicativos Recentes',
-                'slug' => 'aplicativos-recentes',
-                'items' => $this->destaques->getAplicativosMaisRecentes(),
-            ],
-        ];
+        $destaques = new Destaques();
+        $data = $destaques->getHomeDestaques($slug);
 
         return $this->successResponse($data, '', 200);
     }

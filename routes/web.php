@@ -40,14 +40,12 @@ Route::get('/docs', function (Request $request) {
 */
 
 /**/
-Route::get('/teste', function (\Illuminate\Http\Request $request) {
+Route::get('/teste/{slug}', function (\Illuminate\Http\Request $request, $slug) {
 
-    $collect = App\NivelEnsino::where('id', '=', 5)->with(["components" => function ($q) {
-        $q->where('curricular_components.id', '!=', 31)->orderBy('name');
-    }])->get();
+    $destaques = new \App\Helpers\Destaques;
+    $data = $destaques->getHomeDestaques($slug);
 
-
-    return response()->json($collect, 200);
+    return response()->json($data, 200);
 });
 
 

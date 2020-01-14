@@ -41,7 +41,7 @@
                       :key="i"
                       :label="tag.name"
                       clickable
-                      @click="onClick(`/recursos-educacionais/listar/tag/${tag.id}`)"
+                      @click="onClick(`/recursos-educacionais/listar?tag=${tag.id}`)"
                       >
                       
                 </q-chip>

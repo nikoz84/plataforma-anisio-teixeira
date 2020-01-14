@@ -4,12 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Helpers\SideBar;
+use App\Traits\WithoutAppends;
 
 class Canal extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, WithoutAppends;
 
     protected $table = 'canais';
     protected $id = 'id';

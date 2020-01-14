@@ -9,7 +9,7 @@
         >
         <q-card class="bg-grey-10 text-white">
             <q-bar>
-                <div class="text-h6">Busca Avanzada</div>
+                <div class="text-h6">Busca Avançada</div>
                 <q-space />
                 <q-btn flat icon="close" v-close-popup aria-label="fechar">
                     <q-tooltip content-class="bg-white text-primary">Fechar</q-tooltip>

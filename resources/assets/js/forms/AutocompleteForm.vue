@@ -35,10 +35,10 @@
     <q-btn color="grey-7" round flat icon="more_vert" aria-label="opções de busca">
       <q-menu cover auto-close>
         <q-list>
-          <q-item clickable aria-label="sugerir por palavra chave" @click="recommendationPer('tag')">
+          <q-item clickable aria-label="sugerir por palavra chave" @click="recommendationPer('simple')">
             <q-item-section >Sugerência por palavra chave</q-item-section>
           </q-item>
-          <q-item clickable aria-label="sugerir por título" @click="recommendationPer('titulo')">
+          <q-item clickable aria-label="sugerir por título" @click="recommendationPer('portugues')">
             <q-item-section >Sugerência por título</q-item-section>
           </q-item>
           <q-item clickable aria-label="busca avançada" @click="openDialog()">

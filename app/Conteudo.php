@@ -7,10 +7,11 @@ use Illuminate\Support\Str;
 use App\Traits\FileSystemLogic;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Gate;
+use Illuminate\Support\Facades\Gate;
+use App\Canal;
 use App\User;
+use App\Tag;
 use Auth;
-use App\Policies\AplicativoPolicy;
 
 class Conteudo extends Model
 {
@@ -52,8 +53,10 @@ class Conteudo extends Model
      */
     public function canal()
     {
-        return $this->belongsTo(\App\Canal::class, 'canal_id')
-            ->selectRaw("id, name, slug, options->>'color' as color");
+        Canal::$without_appends = true;
+
+        return $this->belongsTo(Canal::class, 'canal_id')
+            ->select(['id', 'name', 'slug', 'options->color as color']);
     }
     /**
      * Undocumented function
@@ -62,7 +65,7 @@ class Conteudo extends Model
      */
     public function user()
     {
-        return $this->belongsTo(\App\User::class, 'user_id', 'id')
+        return $this->belongsTo(User::class, 'user_id', 'id')
             ->select(['id', 'name']);
     }
     /**
@@ -187,6 +190,26 @@ class Conteudo extends Model
         return DB::table('tipos')->where('id', $this['options']['tipo'])->get(["id", "name"])->first();
     }
 
-    public function create($data)
-    { }
+    public function scopeSearch($query, $search)
+    {
+        
+        if (!$search) {
+            return $query;
+        }
+
+        return $query->whereRaw('ts_documento @@ plainto_tsquery(\'simple\', lower(unaccent(?)))', [$search])
+            ->orderByRaw('ts_rank(ts_documento, plainto_tsquery(\'simple\', lower(unaccent(?)))) DESC', [$search]);
+    }
+
+    public function scopeSearchTag($query, $id)
+    {
+        if (!$id) {
+            return $query;
+        }
+        Tag::where('id', $id)->increment('searched', 1);
+
+        return $query->whereHas("tags", function ($q) use ($id) {
+            return $q->where('id', '=', $id);
+        });
+    }
 }

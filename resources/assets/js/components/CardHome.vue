@@ -1,7 +1,8 @@
 <template>
   <section class="q-my-xl">
-    <a class="skip-link" :href="`#${data.slug}`" v-text="data.title"></a>
-    <div class="text-h5 title-page text-center q-py-lg text-primary" :id="data.slug" v-text="data.title"></div>
+    <transition appear :enter-active-class="`animated ${animation}`">
+      <div v-if="show" class="text-h5 title-page text-center q-py-lg text-primary" :id="data.slug" v-text="data.title"></div>
+    </transition>
     <div class="row justify-center q-gutter-sm">
       <q-card
         flat
@@ -29,7 +30,7 @@ import { QImg, QCard, QCardSection, QSeparator, QBtn } from "quasar";
 
 export default {
   name: "CardHome",
-  props: ["data", "index"],
+  props: ["data", "animation", "show"],
   components: {
     QImg,
     QCard,
@@ -37,22 +38,11 @@ export default {
     QSeparator,
     QBtn
   },
-  data() {
-    return {
-      limit: 3,
-      show: true
-    };
-  },
   methods: {
     title(title) {
+      console.log(this.animation);
       let stringLength = title.length;
       return stringLength > 70 ? title.substr(0, 70) + " ..." : title;
-    },
-    showData() {
-      this.limit = this.limit + 3;
-      let el = document.getElementById();
-
-      //hide.classList.add("invisible");
     }
   }
 };

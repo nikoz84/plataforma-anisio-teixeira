@@ -1,10 +1,15 @@
 <template>
   <section class="q-pa-md">
-    <!--Breadcrum></Breadcrum-->
-    <header class="row justify-center">
+    <header class="row">
       <div class="text-h5 title-page" :style="`color:${color}`">
-        {{ canal && canal.options ? canal.options.extend_name : "" }}
+        {{canal && canal.options ? canal.options.extend_name : ''}}
       </div>
+      <q-space></q-space>
+      <q-breadcrumbs align="right">
+        <q-breadcrumbs-el to="/" label="Home" />
+        <q-breadcrumbs-el :to="`/${$route.params.slug}/listar`" :label="canal.name" />
+        <q-breadcrumbs-el v-if="$route.params.id" :label="$route.params.id" />
+      </q-breadcrumbs>
     </header>
     <nav>
       <q-tabs inline-label class="text-white shadow-3" :style="`background-color:${color}`">
@@ -54,7 +59,9 @@ import {
   QList,
   QItem,
   QItemSection,
-  ClosePopup
+  ClosePopup,
+  QBreadcrumbs,
+  QBreadcrumbsEl
 } from "quasar";
 
 export default {
@@ -74,7 +81,9 @@ export default {
     QItem,
     QItemSection,
     CategoriasMenu,
-    AdvancedSearchForm
+    AdvancedSearchForm,
+    QBreadcrumbs,
+    QBreadcrumbsEl
   },
   data() {
     return {

@@ -83,7 +83,7 @@
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" bordered content-class="bg-grey-2">
-      <LeftSideBar :leftDrawerOpen="leftDrawerOpen"></LeftSideBar>
+      <LeftSideBar :leftDrawerOpen.sync="leftDrawerOpen"></LeftSideBar>
     </q-drawer>
 
     <q-page-container>

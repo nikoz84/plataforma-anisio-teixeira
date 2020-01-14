@@ -4898,7 +4898,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "LeftSideBar",
   props: ["leftDrawerOpen"],
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["isLogged", "links"]))
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["isLogged", "links"]), {
+    leftDrawerOpenModel: {
+      get: function get() {
+        return this.leftDrawerOpen;
+      },
+      set: function set(val) {
+        this.$emit("update:leftDrawerOpen", val);
+      }
+    }
+  })
 });
 
 /***/ }),
@@ -64332,7 +64341,7 @@ var render = function() {
                       on: {
                         click: function($event) {
                           return _vm.onClick(
-                            "/recursos-educacionais/listar/tag/" + tag.id
+                            "/recursos-educacionais/listar?tag=" + tag.id
                           )
                         }
                       }
@@ -65188,7 +65197,7 @@ var render = function() {
           _c(
             "q-bar",
             [
-              _c("div", { staticClass: "text-h6" }, [_vm._v("Busca Avanzada")]),
+              _c("div", { staticClass: "text-h6" }, [_vm._v("Busca Avançada")]),
               _vm._v(" "),
               _c("q-space"),
               _vm._v(" "),
@@ -68708,7 +68717,19 @@ var render = function() {
             expression: "leftDrawerOpen"
           }
         },
-        [_c("LeftSideBar", { attrs: { leftDrawerOpen: _vm.leftDrawerOpen } })],
+        [
+          _c("LeftSideBar", {
+            attrs: { leftDrawerOpen: _vm.leftDrawerOpen },
+            on: {
+              "update:leftDrawerOpen": function($event) {
+                _vm.leftDrawerOpen = $event
+              },
+              "update:left-drawer-open": function($event) {
+                _vm.leftDrawerOpen = $event
+              }
+            }
+          })
+        ],
         1
       ),
       _vm._v(" "),
@@ -68781,7 +68802,7 @@ var render = function() {
                     },
                     on: {
                       click: function($event) {
-                        _vm.leftDrawerOpen = !_vm.leftDrawerOpen
+                        _vm.leftDrawerOpenModel = false
                       }
                     }
                   }),

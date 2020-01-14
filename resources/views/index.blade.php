@@ -11,6 +11,8 @@
         <!-- Fonts -->
         <!--link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css"-->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     </head>
     <body>

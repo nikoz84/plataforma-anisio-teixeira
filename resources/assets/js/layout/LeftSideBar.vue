@@ -7,7 +7,7 @@
             flat
             dense
             round
-            @click="leftDrawerOpen = !leftDrawerOpen"
+            @click="leftDrawerOpenModel = false"
             aria-label="Menu"
             icon="dehaze"
           />
@@ -93,7 +93,15 @@ export default {
   name: "LeftSideBar",
   props: ["leftDrawerOpen"],
   computed: {
-    ...mapState(["isLogged", "links"])
+    ...mapState(["isLogged", "links"]),
+    leftDrawerOpenModel: {
+      get() {
+        return this.leftDrawerOpen;
+      },
+      set(val) {
+        this.$emit("update:leftDrawerOpen", val);
+      }
+    }
   }
 };
 </script>

@@ -16,12 +16,18 @@
       source="emitec"
       style="padding-bottom: 15vh;"
     ></CardHomeIcon>
-    <div class="q-my-lg load" v-scroll-fire="getDestaques"></div>
-    <CardHome
-      :data="data"
-      v-for="(data, i) in destaques"
-      :key="`i-${i}`"
-    />
+    
+    <CardHome v-for="(id, index) in ids"
+      :key="index"
+      :data="id.data" 
+      class="load"
+      :show="id.show"
+      :animation="id.animation"
+      v-scroll-fire="getDestaques" 
+      :id="id.name"
+      style="padding-bottom: 15vh;"></CardHome>
+      
+    
   </section>
 </template>
 <script>
@@ -59,7 +65,44 @@ export default {
 
   data() {
     return {
-      destaques: []
+      ids: [
+        {
+          name: "conteudos-recentes",
+          animation: "bounceInLeft",
+          show: false,
+          data: []
+        },
+        {
+          name: "conteudos-destacados",
+          animation: "slideInRight",
+          show: false,
+          data: []
+        },
+        {
+          name: "conteudos-mais-baixados",
+          animation: "bounceInDown",
+          show: false,
+          data: []
+        },
+        {
+          name: "conteudos-mais-acessados",
+          animation: "bounceInLeft",
+          show: false,
+          data: []
+        },
+        {
+          name: "aplicativos-recentes",
+          animation: "bounceInUp",
+          show: false,
+          data: []
+        },
+        {
+          name: "aplicativos-destacados",
+          animation: "bounceInRight",
+          show: false,
+          data: []
+        }
+      ]
     };
   },
   computed: {
@@ -67,13 +110,23 @@ export default {
   },
   methods: {
     async getDestaques(el) {
+      let slug = "/destaques/" + el.id;
+
       if (el.classList.contains("load")) {
-        let resp = await axios.get("/destaques");
+        let resp = await axios.get(slug);
         if (resp.status == 200 && resp.data.success) {
-          this.destaques = resp.data.metadata;
+          this.pushData(el.id, resp.data.metadata, el);
         }
         el.classList.remove("load");
       }
+    },
+    pushData(find, data, el) {
+      const element = this.ids.find(item => item.name === find);
+      console.log(element.show);
+      element.show = true;
+      console.log(element.show);
+      el.classList.add(element.animation);
+      element.data = data;
     }
   }
 };
