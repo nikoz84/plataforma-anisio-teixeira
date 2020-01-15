@@ -8,6 +8,7 @@ const state = {
   aplicativos: [],
   aplicativo: {},
   posts: [],
+  post: {},
   canais: [],
   canal: {},
   sidebar: {},

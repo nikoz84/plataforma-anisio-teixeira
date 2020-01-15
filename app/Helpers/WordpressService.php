@@ -27,19 +27,16 @@ class WordpressService
         $this->request = $request;
         $this->limit = $request->query('limit', 15);
         $this->page = $request->query('page', 1);
-        $this->id = $request->query('id', 0);
         $this->data_inicio = $request->query('inicio', date('Y-01-01 00:00:00'));
         $this->data_fim = $request->query('fim', Carbon::now());
 
         $canal = Canal::find(7);
-        $canal_url = $canal->options['back_url'];
 
-        $this->api =  $canal_url . "/wp-json/pat/v1/";
+        $this->api =  $canal->options['back_url'] . "/wp-json/pat/v1/";
     }
 
     public function getPosts()
     {
-
         $client = new Client([
             'base_uri' => $this->api,
             'timeout'  => 6.0,
@@ -85,10 +82,13 @@ class WordpressService
 
     public function getOne()
     {
-        $url = $this->api . "posts/{$this->id}";
+        $client = new Client([
+            'base_uri' => $this->api,
+            'timeout'  => 6.0
+        ]);
 
-        return Curl::to($url)
-            ->asJsonResponse()
-            ->get();
+        $response = $client->request('GET', "posts/{$this->request->id}");
+
+        return json_decode($response->getBody(), true);
     }
 }

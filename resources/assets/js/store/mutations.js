@@ -17,6 +17,9 @@ const mutations = {
   SET_POSTS(state, posts) {
     state.posts = posts;
   },
+  SET_POST(state, post) {
+    state.post = post;
+  },
   SET_APLICATIVO(state, aplicativo) {
     state.aplicativo = aplicativo;
   },
@@ -80,26 +83,6 @@ const mutations = {
   },
   SET_CANAL_ID(state, id) {
     state.canalId = id;
-  },
-  RESET_OBJECT(state, data) {
-    const { model, init } = data;
-
-    let obj = state[init];
-    if (obj && obj != "undefined" && obj != null) {
-      Object.keys(obj).map(key => {
-        if (model.hasOwnProperty(key)) {
-          if (key == "options") {
-            obj[key] = Object.assign({}, model[key]);
-          } else {
-            obj[key] = model[key];
-          }
-        } else {
-          delete obj[key];
-        }
-      });
-    }
-
-    state[init] = Object.assign({}, obj);
   },
   SET_ERRORS(state, errors) {
     state.errors = errors;

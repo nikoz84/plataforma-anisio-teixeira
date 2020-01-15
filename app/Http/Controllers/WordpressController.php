@@ -24,19 +24,8 @@ class WordpressController extends ApiController
     {
         $wordpress = new WordpressService($this->request);
 
-        return $this->showAsPaginator($wordpress->getPosts(), 'Conteúdos blog', 200);
+        return $this->showAsPaginator($wordpress->getPosts(), 'Postagens do blog', 200);
     }
-
-    public function getOne($id)
-    {
-        $wordpress = new WordpressService($this->request);
-
-        return $this->successResponse($wordpress->getOne($id), "Postagem", 200);
-    }
-
-
-
-
 
     public function search(Request $request, $termo)
     {
@@ -50,9 +39,11 @@ class WordpressController extends ApiController
      * @param Integer $id
      * @return json
      */
-    public function getById($id)
+    public function getById()
     {
-        //
+        $wordpress = new WordpressService($this->request);
+
+        return $this->successResponse($wordpress->getOne(), "Postagem", 200);
     }
 
     public function getEstatisticas()

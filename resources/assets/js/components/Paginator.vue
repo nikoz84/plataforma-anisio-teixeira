@@ -4,7 +4,7 @@
       {{ paginator.total }} - itens encontrados
     </q-card>
 
-    <q-infinite-scroll @load="onLoad" :offset="250">
+    <q-infinite-scroll @load="onLoad" :offset="150">
       <div class="row justify-center q-gutter-x-lg q-gutter-y-md">
         <SimpleCard
           class="col-xs-10 col-sm-5 col-md-3 col-lg-3 col-xl-2"
@@ -14,19 +14,32 @@
         ></SimpleCard>
       </div>
       <template v-slot:loading>
-        <div class="q-my-md">
-          <q-spinner-dots color="primary" size="60px" />
+        <div class="row justify-center q-my-xl">
+          <q-spinner-dots color="accent" size="100px" />
         </div>
       </template>
     </q-infinite-scroll>
 
-    <div class="jumbotron text-center" v-if="infiniteSrollData.length == 0">
-      Sem registros encontrados
-    </div>
+    <q-card class="q-mt-xl" v-if="infiniteSrollData.length == 0">
+      <q-banner dense class="bg-secondary text-white">
+        <p>Sua pesquisa não encontrou nenhum documento correspondente.</p>
+        <p>Sugestões:</p>
+          <ul>
+            <li>Certifique-se de que todas as palavras estejam escritas corretamente.</li>
+            <li>Tente palavras-chave diferentes.</li>
+            <li>Tente palavras-chave mais genéricas.</li>
+            <li>Tente usar menos palavras-chave.</li>
+          </ul>
+        <template v-slot:action>
+          <q-btn flat color="white" to="/recursos-educacionais/listar" label="Voltar" />
+          <q-btn flat color="white" to="/usuario/contato/faleconosco" label="Fale Conosco" />
+        </template>
+      </q-banner>
+    </q-card>
   </div>
 </template>
 <script>
-import { QInfiniteScroll, QSpinnerDots, QCard } from "quasar";
+import { QInfiniteScroll, QSpinnerDots, QCard, QBanner } from "quasar";
 import { mapState, mapMutations } from "vuex";
 import SimpleCard from "./SimpleCard.vue";
 

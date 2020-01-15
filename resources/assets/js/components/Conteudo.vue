@@ -33,6 +33,7 @@
                   v-text="componente.name"
                   ></i>
             </q-card-section>
+            <q-separator class="q-mb-lg" inset/>
             <q-card-section>
                 <div class="text-h6">Tags: </div>
                 <q-chip color="ligth" 

@@ -1,19 +1,21 @@
 const actions = {
   async getLayout({ commit }) {
-    let resp = await axios("/layout");
+    try {
+      let resp = await axios("/layout");
 
-    commit("SET_LAYOUT", resp.data.layout.meta_data);
-    commit("SET_LINKS", resp.data.links);
-    commit("SET_DISCIPLINAS", resp.data.disciplinas);
-    console.log(resp);
-    commit("SET_TIPOS", resp.data.tipos);
+      commit("SET_LAYOUT", resp.data.layout.meta_data);
+      commit("SET_LINKS", resp.data.links);
+      commit("SET_DISCIPLINAS", resp.data.disciplinas);
+      commit("SET_TIPOS", resp.data.tipos);
+    } catch (e) {
+      console.log(e);
+    }
   },
   /** APLICATIVOS */
   async fetchAplicativo({ commit }, payload) {
     commit("SET_IS_LOADING", true);
     try {
       await axios.get(`/aplicativos/${payload.id}`).then(resp => {
-        console.log(resp);
         commit("SET_EXIBIR_ID", "Aplicativo");
         commit("SET_APLICATIVO", resp.data.metadata);
         commit("SET_IS_LOADING", false);
@@ -51,6 +53,20 @@ const actions = {
       });
     } catch (e) {
       commit("SET_IS_ERROR", true);
+    }
+  },
+  /** WORDPRESS*/
+  async fetchPost({ commit }, payload) {
+    commit("SET_IS_LOADING", true);
+    console.log(payload);
+    try {
+      await axios.get(`/posts/${payload.id}`).then(resp => {
+        commit("SET_EXIBIR_ID", "Post");
+        commit("SET_POST", resp.data.metadata);
+        commit("SET_IS_LOADING", false);
+      });
+    } catch (e) {
+      console.log(e);
     }
   },
   /** CONTEUDOS */

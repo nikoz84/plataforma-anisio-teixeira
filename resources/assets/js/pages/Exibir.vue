@@ -1,11 +1,12 @@
 <template>
-    <div>
+    
         <component :is="exibirId"></component>
-    </div>
+    
 </template>
 <script>
 import Conteudo from "../components/Conteudo.vue";
 import Aplicativo from "../components/Aplicativo.vue";
+import Post from "../components/Post.vue";
 import NotFound from "../components/NotFound.vue";
 import { mapState, mapActions } from "vuex";
 
@@ -14,11 +15,14 @@ export default {
   components: {
     Conteudo,
     Aplicativo,
+    Post,
     NotFound
   },
   created() {
     if (this.$route.params.slug == "aplicativos-educacionais") {
       this.fetchAplicativo(this.$route.params);
+    } else if (this.$route.params.slug == "blog") {
+      this.fetchPost(this.$route.params);
     } else {
       this.fetchConteudo(this.$route.params);
     }
@@ -28,7 +32,7 @@ export default {
     ...mapState(["exibirId"])
   },
   methods: {
-    ...mapActions(["fetchConteudo", "fetchAplicativo"])
+    ...mapActions(["fetchConteudo", "fetchAplicativo", "fetchPost"])
   }
 };
 </script>

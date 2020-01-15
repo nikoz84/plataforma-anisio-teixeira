@@ -122,9 +122,7 @@ export default {
     },
     pushData(find, data, el) {
       const element = this.ids.find(item => item.name === find);
-      console.log(element.show);
       element.show = true;
-      console.log(element.show);
       el.classList.add(element.animation);
       element.data = data;
     }

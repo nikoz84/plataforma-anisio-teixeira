@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -46,6 +44,7 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/conteudos/tag/{id}', 'ConteudoController@getByTagId')->name('busca.x.tag.id');
     /** BLOG */
     Route::get('/posts', 'WordpressController@index')->name('lista.postagens');
+    Route::get('/posts/{id}', 'WordpressController@getById')->name('busca.postagen.x.id');
     Route::get('/posts/estatisticas', 'WordpressController@getEstatisticas')->name('estatisticas.blog');
     /** APLICATIVOS */
     Route::get('/aplicativos', 'AplicativoController@index')->name('lista.aplicativo');

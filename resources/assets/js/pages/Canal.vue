@@ -7,8 +7,8 @@
       <q-space></q-space>
       <q-breadcrumbs align="right">
         <q-breadcrumbs-el to="/" label="Home" />
-        <q-breadcrumbs-el :to="`/${$route.params.slug}/listar`" :label="canal.name" />
-        <q-breadcrumbs-el v-if="$route.params.id" :label="$route.params.id" />
+        <q-breadcrumbs-el :to="goTo" :label="canal.name" />
+        <q-breadcrumbs-el v-if="$route.params.id" :label="`Conteúdo: ${$route.params.id}`" />
       </q-breadcrumbs>
     </header>
     <nav>
@@ -108,6 +108,10 @@ export default {
   },
   computed: {
     ...mapState(["canal"]),
+    goTo() {
+      let slug = this.$route.params.slug;
+      return `/${slug}/listar`;
+    },
     color() {
       return this.canal && this.canal.options
         ? this.canal.options.color
