@@ -64933,6 +64933,7 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("q-card-section", {
+                class: "row justify-center",
                 domProps: { innerHTML: _vm._s(_vm.post.content) }
               }),
               _vm._v(" "),

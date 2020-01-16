@@ -6,7 +6,7 @@
                 <p>{{post.author}} - {{post.created_at}}</p>
                 <q-separator class="q-mb-lg" />
             </q-card-section>
-            <q-card-section v-html="post.content"></q-card-section>
+            <q-card-section :class="`row justify-center`" v-html="post.content"></q-card-section>
             <q-card-section>
                 <div class="text-h6">Categorias:</div>
                 <q-chip color="ligth" 
