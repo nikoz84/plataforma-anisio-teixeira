@@ -8,12 +8,14 @@ const actions = {
       commit("SET_DISCIPLINAS", resp.data.disciplinas);
       commit("SET_TIPOS", resp.data.tipos);
     } catch (e) {
-      console.log(e);
+      commit("SET_IS_LOADING", false);
+      commit("SET_IS_ERROR", true);
     }
   },
   /** APLICATIVOS */
   async fetchAplicativo({ commit }, payload) {
     commit("SET_IS_LOADING", true);
+    commit("SET_APLICATIVO", {});
     try {
       await axios.get(`/aplicativos/${payload.id}`).then(resp => {
         commit("SET_EXIBIR_ID", "Aplicativo");
@@ -21,7 +23,8 @@ const actions = {
         commit("SET_IS_LOADING", false);
       });
     } catch (e) {
-      console.log(e);
+      commit("SET_IS_LOADING", false);
+      commit("SET_IS_ERROR", true);
     }
   },
   async fetchAplicativos({ commit }, payload) {
@@ -35,7 +38,8 @@ const actions = {
         }
       });
     } catch (e) {
-      console.log(e);
+      commit("SET_IS_LOADING", false);
+      commit("SET_IS_ERROR", true);
     }
   },
   /** WORDPRESS*/
@@ -52,13 +56,14 @@ const actions = {
         }
       });
     } catch (e) {
+      commit("SET_IS_LOADING", false);
       commit("SET_IS_ERROR", true);
     }
   },
   /** WORDPRESS*/
   async fetchPost({ commit }, payload) {
     commit("SET_IS_LOADING", true);
-    console.log(payload);
+    commit("SET_POST", {});
     try {
       await axios.get(`/posts/${payload.id}`).then(resp => {
         commit("SET_EXIBIR_ID", "Post");
@@ -66,7 +71,8 @@ const actions = {
         commit("SET_IS_LOADING", false);
       });
     } catch (e) {
-      console.log(e);
+      commit("SET_IS_LOADING", false);
+      commit("SET_IS_ERROR", true);
     }
   },
   /** CONTEUDOS */
@@ -83,36 +89,24 @@ const actions = {
         }
       });
     } catch (e) {
+      commit("SET_IS_LOADING", false);
       commit("SET_IS_ERROR", true);
     }
   },
   async fetchConteudo({ commit }, payload) {
+    commit("SET_IS_LOADING", true);
+    commit("SET_CONTEUDO", {});
     try {
       await axios.get(`/conteudos/${payload.id}`).then(resp => {
         commit("SET_EXIBIR_ID", "Conteudo");
         commit("SET_CONTEUDO", resp.data.metadata);
+        commit("SET_IS_LOADING", false);
       });
     } catch (e) {
       commit("SET_EXIBIR_ID", "NotFound");
+      commit("SET_IS_LOADING", false);
+      commit("SET_IS_ERROR", true);
     }
-  },
-  async createConteudo({ commit, dispatch }, conteudo) {
-    let resp = await axios.post("/conteudos", conteudo);
-    console.warn(resp);
-    dispatch("hideAlert");
-
-    commit("SET_CONTEUDO", resp.data);
-  },
-  async updateConteudo({ commit, dispatch }, conteudo) {
-    console.log(conteudo);
-    let resp = await axios.put(`/conteudos/${conteudo.id}`, conteudo);
-    await dispatch("hideAlert");
-
-    commit("SET_CONTEUDO", resp.data.conteudo);
-  },
-  async deleteConteudo({ commit }, id) {
-    let resp = await axios.delete(`/conteudos/${id}`);
-    commit("DELETE_CONTEUDO", resp.data);
   },
   async logout({ commit }) {
     if (localStorage.token) {

@@ -11,7 +11,12 @@ use Illuminate\Support\Facades\Gate;
 use App\Canal;
 use App\User;
 use App\Tag;
-use Auth;
+use App\CurricularComponent;
+use App\License;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class Conteudo extends Model
 {
@@ -47,7 +52,7 @@ class Conteudo extends Model
     protected $casts = ['options' => 'array',];
     protected $hidden = ['ts_documento'];
     /**
-     * Undocumented function
+     * Seleciona o canal do conteúdo sem os campos adicionais
      *
      * @return boolean
      */
@@ -59,7 +64,7 @@ class Conteudo extends Model
             ->select(['id', 'name', 'slug', 'options->color as color']);
     }
     /**
-     * Undocumented function
+     * Seleciona usuário publicador
      *
      * @return void
      */
@@ -69,48 +74,48 @@ class Conteudo extends Model
             ->select(['id', 'name']);
     }
     /**
-     * Undocumented function
+     * Seleciona as Tags relacionadas
      *
      * @return void
      */
     public function tags()
     {
-        return $this->belongsToMany(\App\Tag::class, 'conteudo_tag', 'conteudo_id', 'tag_id')
+        return $this->belongsToMany(Tag::class, 'conteudo_tag', 'conteudo_id', 'tag_id')
             ->select(['id', 'name']);
     }
     /**
-     * Undocumented function
+     * Seleciona os componentes curriculares
      *
      * @return void
      */
     public function componentes()
     {
-        return $this->belongsToMany(\App\CurricularComponent::class)
+        return $this->belongsToMany(CurricularComponent::class)
             ->whereRaw('category_id IS NOT NULL')
             ->with('categories');
     }
     /**
-     * Undocumented function
+     * Seleciona niveis de ensino
      *
      * @return void
      */
     public function niveis()
     {
-        return $this->belongsToMany(\App\CurricularComponent::class)
+        return $this->belongsToMany(CurricularComponent::class)
             ->whereRaw('nivel_id IS NOT NULL')
             ->with('niveis');
     }
     /**
-     * Undocumented function
+     * Seleciona a licença relacionada
      *
      * @return void
      */
     public function license()
     {
-        return $this->hasOne(\App\License::class, 'id', 'license_id');
+        return $this->hasOne(License::class, 'id', 'license_id');
     }
     /**
-     * Undocumented function
+     * Adiciona novo atributo ao objeto que limita o tamanho da descrição
      *
      * @return void
      */
@@ -118,11 +123,17 @@ class Conteudo extends Model
     {
         return strip_tags(Str::words($this['description'], 30));
     }
+    /**
+     * Seleciona todos os metadados dos arquivos do conteúdo
+     *
+     * @param [type] $pasta
+     * @return void
+     */
     public function getMetaDados($pasta)
     {
-        $filesystem = new \Illuminate\Filesystem\Filesystem;
+        $filesystem = new Filesystem;
         $id = $this['id'];
-        $path = \Illuminate\Support\Facades\Storage::disk('conteudos-digitais')->path($pasta) . "/{$id}.*";
+        $path = Storage::disk('conteudos-digitais')->path($pasta) . "/{$id}.*";
         $files = $filesystem->glob($path);
         $arr = [];
         foreach ($files as $file) {
@@ -132,11 +143,24 @@ class Conteudo extends Model
                 'extension' => $filesystem->extension($file),
                 'size'      => $filesystem->size($file),
                 'name'      => $name,
-                'url'       => \Illuminate\Support\Facades\Storage::disk('conteudos-digitais')->url($pasta) . "/{$name}"
+                'url'       => Storage::disk('conteudos-digitais')->url($pasta) . "/{$name}"
             ];
         }
         return $arr;
     }
+    public function getCreatedAtAttribute($value)
+    {
+        $locale = env('APP_LOCALE');
+        $timezone = env('APP_TIMEZONE');
+        $carbon = new Carbon($value, $timezone, $locale);
+        //"10 de dezembro de 2019 às 19:44";
+        return "{$carbon->day} de {$carbon->month} de {$carbon->year} às {$carbon->hour}:{$carbon->minute}";
+    }
+    /**
+     * Seleciona os Arquivos de download, visualizaçao e guias pedagógicas
+     *
+     * @return void
+     */
     public function getArquivosAttribute()
     {
         $arrAr = [
@@ -147,7 +171,7 @@ class Conteudo extends Model
         return $arrAr;
     }
     /**
-     * Undocumented function
+     * Adiciona atributo imagem associada ao objeto
      *
      * @return void
      */
@@ -165,7 +189,7 @@ class Conteudo extends Model
         }
     }
     /**
-     * Undocumented function
+     * Permissões do usuário
      *
      * @return void
      */
@@ -174,14 +198,21 @@ class Conteudo extends Model
         if (Gate::any(['update', 'delete', 'super-admin'], $this)) {
             return true;
         }
+
+        return false;
     }
+    /**
+     * Adiciona atributo url_exibir
+     *
+     * @return void
+     */
     public function getUrlExibirAttribute()
     {
         $slug = $this->canal()->pluck('slug')->first();
         return "/{$slug}/conteudo/exibir/" . $this['id'];
     }
     /**
-     * Undocumented function
+     * Adiciona o atributo tipo de conteúdo ao objeto
      *
      * @return void
      */
@@ -189,10 +220,16 @@ class Conteudo extends Model
     {
         return DB::table('tipos')->where('id', $this['options']['tipo'])->get(["id", "name"])->first();
     }
-
+    /**
+     * Filtro para full text search
+     *
+     * @param [type] $query
+     * @param [type] $search
+     * @return void
+     */
     public function scopeSearch($query, $search)
     {
-        
+
         if (!$search) {
             return $query;
         }
@@ -200,7 +237,13 @@ class Conteudo extends Model
         return $query->whereRaw('ts_documento @@ plainto_tsquery(\'simple\', lower(unaccent(?)))', [$search])
             ->orderByRaw('ts_rank(ts_documento, plainto_tsquery(\'simple\', lower(unaccent(?)))) DESC', [$search]);
     }
-
+    /**
+     * Filtro de busca por tags e incrementa das veces buscada
+     *
+     * @param [type] $query
+     * @param [type] $id
+     * @return void
+     */
     public function scopeSearchTag($query, $id)
     {
         if (!$id) {

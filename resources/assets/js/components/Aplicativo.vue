@@ -1,22 +1,32 @@
 <template>
-  <article class="q-mt-md">
-    <q-card v-if="aplicativo">
+  <article class="q-mt-md" v-if="aplicativo">
+    <q-card>
       <q-card-section>
         <section class="row">
           <div class="col-xs-12 col-sm-7 col-md-7">
-            <div class="text-h3" v-text="aplicativo.name"></div>
+            <div class="text-h4">{{aplicativo.name}}</div>
+            <q-separator></q-separator>
+            <small v-if="aplicativo.options">
+              Acessos: 
+              <q-badge color="secondary">{{aplicativo.options.qt_access}}</q-badge>
+            </small>
+            <small>
+              Publicador(a): 
+              <q-badge color="secondary">{{aplicativo.user.name}}</q-badge>
+            </small>
             <div class="q-pt-lg q-pr-lg" v-html="aplicativo.description"></div>
-            <q-chip class="q-mt-lg" color="ligth" :label="`${aplicativo.options.qt_access} acessos`"></q-chip>
           </div>
           
-          <div class="col-xs-12 col-sm-4 col-md-4">
-            <q-img :src="aplicativo.image"
-                    :placeholder-src="`/img/fundo-padrao.svg`" 
+          <div class="col-xs-12 col-sm-5 col-md-5">
+            <figure class="row">
+              <q-img :src="aplicativo.image"
+                  v-if="aplicativo.canal"
+                  :placeholder-src="`/img/fundo-padrao.svg`" 
                   style="height: 250px; width: 100%;"
                   v-bind:style="`border-color:${aplicativo.canal.color};margin: 0 auto;`"
                   alt="Imagem de destaque">
-                  <div class="absolute-bottom text-subtitle1 text-center q-pa-xs">
-                     <q-btn class=""
+                  <div class="absolute-bottom text-subtitle1 text-center q-pa-xs bg-secondary">
+                     <q-btn 
                       v-bind:href="aplicativo.url"
                       target="_blank"
                       flat>
@@ -24,6 +34,7 @@
                      </q-btn>
                   </div>
               </q-img>
+            </figure>
           </div>
         </section>
       </q-card-section>
@@ -58,31 +69,6 @@ export default {
     }
   },
   methods: {
-    async deleteAplicativo() {
-      let params = {
-        token: localStorage.token
-      };
-      let resp = await axios.delete(
-        `/aplicativos/${this.$route.params.id}`,
-        params
-      );
-      if (resp.data.success) {
-        this.$router.push({
-          name: "Listar",
-          params: { slug: this.$route.params.slug }
-        });
-      }
-    },
-    updateAplicativo() {
-      this.$router.push({
-        name: "EditarAplicativo",
-        params: {
-          slug: this.$route.params.slug,
-          id: this.$route.params.id,
-          update: true
-        }
-      });
-    },
     onClick(url) {
       this.$router.push(url);
     }

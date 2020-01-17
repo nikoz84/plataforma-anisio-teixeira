@@ -66,7 +66,7 @@ import {
 } from "quasar";
 
 export default {
-  name: "SimpleCard",
+  name: "PaginatorCard",
   props: {
     item: Object
   },

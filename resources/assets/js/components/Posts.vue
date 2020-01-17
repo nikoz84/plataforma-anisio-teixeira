@@ -1,17 +1,17 @@
 <template>
     <div>
         <section v-for="(item, i) in posts" :key="i">
-            <SimpleCard v-bind:item="item"></SimpleCard>
+            <PaginatorCard v-bind:item="item"></PaginatorCard>
         </section>
     </div>
 </template>
 <script>
 import { mapState } from "vuex";
-import SimpleCard from "./SimpleCard.vue";
+import PaginatorCard from "./PaginatorCard.vue";
 
 export default {
   name: "Posts",
-  components: { SimpleCard },
+  components: { PaginatorCard },
   computed: {
     ...mapState(["posts"])
   }

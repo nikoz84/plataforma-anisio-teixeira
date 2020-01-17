@@ -168,7 +168,7 @@ class ConteudoController extends ApiController
         $conteudo->save();
     }
 
-    public function saveFullTextSearch($conteudo_id)
+    private function saveFullTextSearch($conteudo_id)
     {
         //$componentes = $this->conteudo::with('componentes')->whereRaw('id = ?', [$conteudo_id]);
         $conteudo = $this->conteudo::find($conteudo_id);
@@ -197,36 +197,7 @@ class ConteudoController extends ApiController
         $conteudo->ts_documento = $fullTextSearch->ts_documento;
         $conteudo->save();
     }
-    public function lerHD()
-    {
-        $conteudos = $this->conteudo::all();
-        $filesystem = new \Illuminate\Filesystem\Filesystem;
 
-        foreach ($conteudos as $conteudo) {
-            $id = $conteudo->id;
-            $path = \Illuminate\Support\Facades\Storage::disk('conteudos-digitais')->path("download") . "/{$id}.*";
-            $files = $filesystem->glob($path);
-            foreach ($files as $file) {
-                $arr = [
-                    'mime_type' => $filesystem->mimeType($file),
-                    'extension' => $filesystem->extension($file),
-                    'size'      => $filesystem->size($file),
-                    'name'      => $filesystem->name($file) . "." . $filesystem->extension($file)
-                ];
-                $conteudo = $this->conteudo::find($id);
-
-                // $data = json_encode($arr);
-                // $conteudo = $this->conteudo::where('id', $id)->update([
-                //     DB::raw("options->'download' = '{$data}'")
-                //     ]);
-
-                $conteudo->options['download'] = $arr;
-
-                $conteudo->save();
-                dd($conteudo->options['download']);
-            }
-        }
-    }
     /**
      * Atualiza o conteúdo.
      *
@@ -252,7 +223,7 @@ class ConteudoController extends ApiController
         return $this->showOne($conteudo, 'Conteúdo editado com sucesso!!', 200);
     }
 
-    public function createConteudoTags($id)
+    private function createConteudoTags($id)
     {
         $conteudo = $this->conteudo::find($id);
         $conteudo->tags()->attach($this->request->get('tags'));
@@ -315,6 +286,8 @@ class ConteudoController extends ApiController
         $conteudo = $this->conteudo::with([
             'user', 'canal', 'tags', 'license', 'componentes', 'niveis',
         ])->find($id);
+        $conteudo->increment('qt_access', 1);
+
         return $this->showOne($conteudo);
     }
 }

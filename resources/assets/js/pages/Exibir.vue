@@ -1,7 +1,5 @@
 <template>
-    
-        <component :is="exibirId"></component>
-    
+    <component :is="exibirId"></component>
 </template>
 <script>
 import Conteudo from "../components/Conteudo.vue";

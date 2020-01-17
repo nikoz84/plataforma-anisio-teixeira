@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ApiController;
 use App\Aplicativo;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class AplicativoController extends ApiController
 {
@@ -27,10 +28,6 @@ class AplicativoController extends ApiController
     {
         $limit = $this->request->query('limit', 15);
         $category = $this->request->query('categoria');
-
-        // $query = $this->aplicativo::where('user_id', 433);
-
-        //dd(Auth::user()->role->name);
 
         $query = $this->aplicativo::query();
 
@@ -143,7 +140,10 @@ class AplicativoController extends ApiController
     {
         $aplicativo = $this->aplicativo::with(['tags', 'category', 'user', 'canal'])
             ->find($id);
+        $increment = $aplicativo->options['qt_access'] + 1;
 
+        $aplicativo->setAttribute('options->qt_access', $increment); // json attribute
+        $aplicativo->save();
 
         if ($aplicativo) {
             return $this->showOne($aplicativo, '', 200);

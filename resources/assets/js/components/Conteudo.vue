@@ -1,22 +1,30 @@
 <template>
     <article class="row q-mt-sm">
-        <q-card class="col-sm-8" v-if="conteudo">
-            <Player :arquivos="conteudo.arquivos" :tipo="conteudo.tipo"></Player>
+        <q-card v-if="conteudo">
+            <Player class="row" :arquivos="conteudo.arquivos" :tipo="conteudo.tipo"></Player>
+            
             <q-card-section class="">
-              <div class="text-h5 q-mb-lg" :style="`color:${conteudo.canal.color};`" v-text="conteudo.title"></div>
-              <q-separator class="q-mb-lg" />
+              <div class="text-h4">{{conteudo.title}}</div>
+              <q-separator></q-separator>
+              <small>
+                Acessos: 
+                <q-badge color="secondary">{{conteudo.qt_access}}</q-badge>
+              </small>
+              <small>
+                Downloads: 
+                <q-badge color="secondary">{{conteudo.qt_downloads}}</q-badge>
+              </small>
+              <small>
+                Publicador(a): 
+                <q-badge color="secondary">{{conteudo.user.name}}</q-badge>
+              </small>
+              <small>
+                Publicado em: 
+                <q-badge color="secondary">{{conteudo.created_at}}</q-badge>
+              </small>
               <div v-html="conteudo.description"></div>  
             </q-card-section>
             <q-card-section>
-              <q-chip color="ligth" label="Downloads:"> </q-chip>
-                      <i class="i-list break-word">{{ conteudo.qt_downloads }}</i>
-              <q-separator class="q-mb-lg" inset/>
-              <q-chip color="ligth" label="Acessos:"> </q-chip>
-                      <i class="i-list break-word">{{ conteudo.qt_access }}</i>
-              <q-separator class="q-mb-lg" inset/>
-              <q-chip color="ligth" label="Publicador(ora):"> </q-chip>
-                      <i class="i-list break-word">{{ conteudo.user.name }}</i>
-              <q-separator class="q-mb-lg" inset/>
               <q-chip color="ligth" label="Fonte:"> </q-chip>
                       <i class="i-list break-word">{{ conteudo.source }}</i>
               <q-separator class="q-mb-lg" inset/>

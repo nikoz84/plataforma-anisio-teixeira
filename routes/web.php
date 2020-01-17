@@ -40,12 +40,11 @@ Route::get('/docs', function (Request $request) {
 */
 
 /**/
-Route::get('/teste/{slug}', function (\Illuminate\Http\Request $request, $slug) {
+Route::get('/teste', function (\Illuminate\Http\Request $request) {
 
-    $destaques = new \App\Helpers\Destaques;
-    $data = $destaques->getHomeDestaques($slug);
 
-    return response()->json($data, 200);
+
+    return response()->json(["ip" => request()->ip()], 200);
 });
 
 

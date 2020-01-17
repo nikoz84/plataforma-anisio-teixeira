@@ -6,12 +6,12 @@
 
     <q-infinite-scroll @load="onLoad" :offset="150">
       <div class="row justify-center q-gutter-x-lg q-gutter-y-md">
-        <SimpleCard
+        <PaginatorCard
           class="col-xs-10 col-sm-5 col-md-3 col-lg-3 col-xl-2"
           v-for="(item, i) in infiniteSrollData"
           :key="i"
           v-bind:item="item"
-        ></SimpleCard>
+        ></PaginatorCard>
       </div>
       <template v-slot:loading>
         <div class="row justify-center q-my-xl">
@@ -41,7 +41,7 @@
 <script>
 import { QInfiniteScroll, QSpinnerDots, QCard, QBanner } from "quasar";
 import { mapState, mapMutations } from "vuex";
-import SimpleCard from "./SimpleCard.vue";
+import PaginatorCard from "./PaginatorCard.vue";
 
 export default {
   name: "Paginator",
@@ -50,7 +50,7 @@ export default {
       infiniteSrollData: []
     };
   },
-  components: { QInfiniteScroll, QSpinnerDots, SimpleCard, QCard },
+  components: { QInfiniteScroll, QSpinnerDots, PaginatorCard, QCard },
   mounted() {
     this.infiniteSrollData = this.infiniteSrollData.concat(this.paginator.data);
   },
