@@ -6,6 +6,7 @@ use App\Conteudo;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Helpers\TransformDate;
 
 class Aplicativo extends Conteudo
 {
@@ -26,7 +27,8 @@ class Aplicativo extends Conteudo
     protected $appends = [
         'image',
         'excerpt',
-        'url_exibir'
+        'url_exibir',
+        'formated_date'
     ];
     protected $dates = [
         'created_at',
@@ -99,6 +101,15 @@ class Aplicativo extends Conteudo
         $slug = $this->canal()->pluck('slug')->first();
 
         return "/{$slug}/aplicativo/exibir/" . $this['id'];
+    }
+    /**
+     * Seleciona e tranforma created-at ao formato (06 setembro de 2019 ás 17:37)
+     *
+     * @return void
+     */
+    public function getFormatedDateAttribute()
+    {
+        return TransformDate::format($this['created_at']);
     }
     /**
      * Cria aplicativo no banco de dados

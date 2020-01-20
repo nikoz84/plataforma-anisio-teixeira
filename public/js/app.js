@@ -64113,6 +64113,19 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
+                      _c(
+                        "small",
+                        [
+                          _vm._v(
+                            "\n              Publicado em: \n              "
+                          ),
+                          _c("q-badge", { attrs: { color: "secondary" } }, [
+                            _vm._v(_vm._s(_vm.aplicativo.formated_date))
+                          ])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
                       _c("div", {
                         staticClass: "q-pt-lg q-pr-lg",
                         domProps: {
@@ -64299,7 +64312,7 @@ var render = function() {
                     [
                       _vm._v("\n            Publicado em: \n            "),
                       _c("q-badge", { attrs: { color: "secondary" } }, [
-                        _vm._v(_vm._s(_vm.conteudo.created_at))
+                        _vm._v(_vm._s(_vm.conteudo.formated_date))
                       ])
                     ],
                     1

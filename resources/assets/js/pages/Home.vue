@@ -80,19 +80,19 @@ export default {
         },
         {
           name: "conteudos-mais-baixados",
-          animation: "bounceInDown",
-          show: false,
-          data: []
-        },
-        {
-          name: "conteudos-mais-acessados",
           animation: "bounceInLeft",
           show: false,
           data: []
         },
         {
+          name: "conteudos-mais-acessados",
+          animation: "bounceInRight",
+          show: false,
+          data: []
+        },
+        {
           name: "aplicativos-recentes",
-          animation: "bounceInUp",
+          animation: "bounceInLeft",
           show: false,
           data: []
         },
@@ -113,9 +113,11 @@ export default {
       let slug = "/destaques/" + el.id;
 
       if (el.classList.contains("load")) {
+        this.$q.loading.show();
         let resp = await axios.get(slug);
         if (resp.status == 200 && resp.data.success) {
           this.pushData(el.id, resp.data.metadata, el);
+          this.$q.loading.hide();
         }
         el.classList.remove("load");
       }

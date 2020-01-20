@@ -15,7 +15,7 @@ use App\CurricularComponent;
 use App\License;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Carbon;
+use App\Helpers\TransformDate;
 use Illuminate\Support\Facades\Auth;
 
 class Conteudo extends Model
@@ -48,7 +48,7 @@ class Conteudo extends Model
         'updated_at',
         'deleted_at',
     ];
-    protected $appends = ['image', 'excerpt', 'url_exibir', 'tipo', 'permission', 'arquivos'];
+    protected $appends = ['image', 'excerpt', 'url_exibir', 'tipo', 'permission', 'arquivos', 'formated_date'];
     protected $casts = ['options' => 'array',];
     protected $hidden = ['ts_documento'];
     /**
@@ -121,7 +121,7 @@ class Conteudo extends Model
      */
     public function getExcerptAttribute()
     {
-        return strip_tags(Str::words($this['description'], 30));
+        return strip_tags(Str::words($this->description, 30));
     }
     /**
      * Seleciona todos os metadados dos arquivos do conteúdo
@@ -132,8 +132,8 @@ class Conteudo extends Model
     public function getMetaDados($pasta)
     {
         $filesystem = new Filesystem;
-        $id = $this['id'];
-        $path = Storage::disk('conteudos-digitais')->path($pasta) . "/{$id}.*";
+
+        $path = Storage::disk('conteudos-digitais')->path($pasta) . "/{$this['id']}.*";
         $files = $filesystem->glob($path);
         $arr = [];
         foreach ($files as $file) {
@@ -148,13 +148,14 @@ class Conteudo extends Model
         }
         return $arr;
     }
-    public function getCreatedAtAttribute($value)
+    /**
+     * Seleciona e tranforma created-at ao formato (06 setembro de 2019 ás 17:37)
+     *
+     * @return void
+     */
+    public function getFormatedDateAttribute()
     {
-        $locale = env('APP_LOCALE');
-        $timezone = env('APP_TIMEZONE');
-        $carbon = new Carbon($value, $timezone, $locale);
-        //"10 de dezembro de 2019 às 19:44";
-        return "{$carbon->day} de {$carbon->month} de {$carbon->year} às {$carbon->hour}:{$carbon->minute}";
+        return TransformDate::format($this['created_at']);
     }
     /**
      * Seleciona os Arquivos de download, visualizaçao e guias pedagógicas
@@ -244,15 +245,15 @@ class Conteudo extends Model
      * @param [type] $id
      * @return void
      */
-    public function scopeSearchTag($query, $id)
+    public function scopeSearchTag($query, $tag_id)
     {
-        if (!$id) {
+        if (!$tag_id) {
             return $query;
         }
-        Tag::where('id', $id)->increment('searched', 1);
+        Tag::where('id', $tag_id)->increment('searched', 1);
 
-        return $query->whereHas("tags", function ($q) use ($id) {
-            return $q->where('id', '=', $id);
+        return $query->whereHas("tags", function ($q) use ($tag_id) {
+            return $q->where('id', '=', $tag_id);
         });
     }
 }

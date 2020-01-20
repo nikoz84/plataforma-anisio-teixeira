@@ -177,6 +177,7 @@ return [
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Ixudra\Curl\CurlServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Jenssegers\Date\DateServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -240,6 +241,7 @@ return [
         'Curl' => Ixudra\Curl\Facades\Curl::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Date' => Jenssegers\Date\Date::class,
     ],
 
 ];

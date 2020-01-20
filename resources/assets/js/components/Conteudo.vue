@@ -20,7 +20,7 @@
               </small>
               <small>
                 Publicado em: 
-                <q-badge color="secondary">{{conteudo.created_at}}</q-badge>
+                <q-badge color="secondary">{{conteudo.formated_date}}</q-badge>
               </small>
               <div v-html="conteudo.description"></div>  
             </q-card-section>

@@ -14,6 +14,10 @@
               Publicador(a): 
               <q-badge color="secondary">{{aplicativo.user.name}}</q-badge>
             </small>
+            <small>
+                Publicado em: 
+                <q-badge color="secondary">{{aplicativo.formated_date}}</q-badge>
+              </small>
             <div class="q-pt-lg q-pr-lg" v-html="aplicativo.description"></div>
           </div>
           
