@@ -4,23 +4,25 @@
       <q-card-section>
         <section class="row">
           <div class="col-xs-12 col-sm-7 col-md-7">
-            <div class="text-h4">{{aplicativo.name}}</div>
-            <q-separator></q-separator>
-            <small v-if="aplicativo.options">
-              Acessos: 
-              <q-badge color="secondary">{{aplicativo.options.qt_access}}</q-badge>
-            </small>
-            <small>
-              Publicador(a): 
-              <q-badge color="secondary">{{aplicativo.user.name}}</q-badge>
-            </small>
-            <small>
-                Publicado em: 
-                <q-badge color="secondary">{{aplicativo.formated_date}}</q-badge>
+            <div class="text-h3 text-center">{{aplicativo.name}}</div>
+            <section class="q-my-xl text-center">
+              <q-separator class="q-mb-lg" />
+              <small>
+                Publicador(a): 
+                <q-badge color="secondary">{{aplicativo.user.name}}</q-badge>
+              </small> 
+              <small>
+                  Publicado em: 
+                  <q-badge color="secondary">{{aplicativo.formated_date}}</q-badge>
+                </small> 
+              <small v-if="aplicativo.options">
+                Acessos: 
+                <q-badge color="secondary">{{aplicativo.options.qt_access}}</q-badge>
               </small>
+            </section>
             <div class="q-pt-lg q-pr-lg" v-html="aplicativo.description"></div>
           </div>
-          
+          <q-separator class="q-mb-lg" />
           <div class="col-xs-12 col-sm-5 col-md-5">
             <figure class="row">
               <q-img :src="aplicativo.image"

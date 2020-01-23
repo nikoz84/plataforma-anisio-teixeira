@@ -1,12 +1,24 @@
 <template>
     <article class="row q-mt-sm">
         <q-card class="" v-if="post">
-            <q-card-section>
-                <div class="text-h5" :style="`color:${canal.options.color};`" v-html="post.title"></div>
-                <p>{{post.author}} - {{post.created_at}}</p>
-                <q-separator class="q-mb-lg" />
+            <q-card-section class="text-center">
+                <div class="text-h3" :style="`color:${canal.options.color};`" v-html="post.title"></div>
             </q-card-section>
-            <q-card-section :class="`row justify-center`" v-html="post.content"></q-card-section>
+            <q-card-section class="q-my-lg text-center">
+              <q-separator class="q-mb-lg" />
+              <small>
+                  Autor: 
+                  <q-badge color="secondary">{{post.author}}</q-badge>
+                </small>
+                <small>
+                  Publicado em: 
+                  <q-badge color="secondary">{{post.created_at}}</q-badge>
+                </small>
+              <q-separator class="q-mt-lg" />
+            </q-card-section>
+            <q-card-section :class="`row justify-center q-mt-xl q-pa-xl`" 
+                            v-html="post.content">
+            </q-card-section>
             <q-card-section>
                 <div class="text-h6">Categorias:</div>
                 <q-chip color="ligth" 

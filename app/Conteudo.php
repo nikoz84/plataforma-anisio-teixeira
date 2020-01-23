@@ -27,6 +27,7 @@ class Conteudo extends Model
     const IS_APPROVED = 'false';
     const IS_FEATURED = 'false';
     const INIT_COUNT = 0;
+    public static $TYPE_SEARCH = 'simple';
 
     protected $fillable = [
         'approving_user_id',
@@ -228,15 +229,16 @@ class Conteudo extends Model
      * @param [type] $search
      * @return void
      */
-    public function scopeSearch($query, $search)
+    public function scopeSearch($query, $search, $por)
     {
 
         if (!$search) {
             return $query;
         }
 
-        return $query->whereRaw('ts_documento @@ plainto_tsquery(\'simple\', lower(unaccent(?)))', [$search])
-            ->orderByRaw('ts_rank(ts_documento, plainto_tsquery(\'simple\', lower(unaccent(?)))) DESC', [$search]);
+        $type = ($por == 'tag') ? "simple" : "portuguese";
+        return $query->whereRaw('ts_documento @@ plainto_tsquery(?, lower(unaccent(?)))', [$type, $search])
+            ->orderByRaw('ts_rank(ts_documento, plainto_tsquery(?, lower(unaccent(?)))) DESC', [$type, $search]);
     }
     /**
      * Filtro de busca por tags e incrementa das veces buscada

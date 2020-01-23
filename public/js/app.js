@@ -64078,50 +64078,67 @@ var render = function() {
             "q-card",
             [
               _c("q-card-section", [
-                _c("section", { staticClass: "row" }, [
-                  _c(
-                    "div",
-                    { staticClass: "col-xs-12 col-sm-7 col-md-7" },
-                    [
-                      _c("div", { staticClass: "text-h4" }, [
+                _c(
+                  "section",
+                  { staticClass: "row" },
+                  [
+                    _c("div", { staticClass: "col-xs-12 col-sm-7 col-md-7" }, [
+                      _c("div", { staticClass: "text-h3 text-center" }, [
                         _vm._v(_vm._s(_vm.aplicativo.name))
                       ]),
                       _vm._v(" "),
-                      _c("q-separator"),
-                      _vm._v(" "),
-                      _vm.aplicativo.options
-                        ? _c(
+                      _c(
+                        "section",
+                        { staticClass: "q-my-xl text-center" },
+                        [
+                          _c("q-separator", { staticClass: "q-mb-lg" }),
+                          _vm._v(" "),
+                          _c(
                             "small",
                             [
-                              _vm._v("\n            Acessos: \n            "),
+                              _vm._v(
+                                "\n              Publicador(a): \n              "
+                              ),
                               _c("q-badge", { attrs: { color: "secondary" } }, [
-                                _vm._v(_vm._s(_vm.aplicativo.options.qt_access))
+                                _vm._v(_vm._s(_vm.aplicativo.user.name))
                               ])
                             ],
                             1
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c(
-                        "small",
-                        [
-                          _vm._v("\n            Publicador(a): \n            "),
-                          _c("q-badge", { attrs: { color: "secondary" } }, [
-                            _vm._v(_vm._s(_vm.aplicativo.user.name))
-                          ])
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "small",
-                        [
-                          _vm._v(
-                            "\n              Publicado em: \n              "
                           ),
-                          _c("q-badge", { attrs: { color: "secondary" } }, [
-                            _vm._v(_vm._s(_vm.aplicativo.formated_date))
-                          ])
+                          _vm._v(" "),
+                          _c(
+                            "small",
+                            [
+                              _vm._v(
+                                "\n                Publicado em: \n                "
+                              ),
+                              _c("q-badge", { attrs: { color: "secondary" } }, [
+                                _vm._v(_vm._s(_vm.aplicativo.formated_date))
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _vm.aplicativo.options
+                            ? _c(
+                                "small",
+                                [
+                                  _vm._v(
+                                    "\n              Acessos: \n              "
+                                  ),
+                                  _c(
+                                    "q-badge",
+                                    { attrs: { color: "secondary" } },
+                                    [
+                                      _vm._v(
+                                        _vm._s(_vm.aplicativo.options.qt_access)
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            : _vm._e()
                         ],
                         1
                       ),
@@ -64132,64 +64149,69 @@ var render = function() {
                           innerHTML: _vm._s(_vm.aplicativo.description)
                         }
                       })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-xs-12 col-sm-5 col-md-5" }, [
-                    _c(
-                      "figure",
-                      { staticClass: "row" },
-                      [
-                        _vm.aplicativo.canal
-                          ? _c(
-                              "q-img",
-                              {
-                                staticStyle: { height: "250px", width: "100%" },
-                                style:
-                                  "border-color:" +
-                                  _vm.aplicativo.canal.color +
-                                  ";margin: 0 auto;",
-                                attrs: {
-                                  src: _vm.aplicativo.image,
-                                  "placeholder-src": "/img/fundo-padrao.svg",
-                                  alt: "Imagem de destaque"
-                                }
-                              },
-                              [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "absolute-bottom text-subtitle1 text-center q-pa-xs bg-secondary"
+                    ]),
+                    _vm._v(" "),
+                    _c("q-separator", { staticClass: "q-mb-lg" }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-xs-12 col-sm-5 col-md-5" }, [
+                      _c(
+                        "figure",
+                        { staticClass: "row" },
+                        [
+                          _vm.aplicativo.canal
+                            ? _c(
+                                "q-img",
+                                {
+                                  staticStyle: {
+                                    height: "250px",
+                                    width: "100%"
                                   },
-                                  [
-                                    _c(
-                                      "q-btn",
-                                      {
-                                        attrs: {
-                                          href: _vm.aplicativo.url,
-                                          target: "_blank",
-                                          flat: ""
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                    Ir ao site\n                   "
-                                        )
-                                      ]
-                                    )
-                                  ],
-                                  1
-                                )
-                              ]
-                            )
-                          : _vm._e()
-                      ],
-                      1
-                    )
-                  ])
-                ])
+                                  style:
+                                    "border-color:" +
+                                    _vm.aplicativo.canal.color +
+                                    ";margin: 0 auto;",
+                                  attrs: {
+                                    src: _vm.aplicativo.image,
+                                    "placeholder-src": "/img/fundo-padrao.svg",
+                                    alt: "Imagem de destaque"
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "absolute-bottom text-subtitle1 text-center q-pa-xs bg-secondary"
+                                    },
+                                    [
+                                      _c(
+                                        "q-btn",
+                                        {
+                                          attrs: {
+                                            href: _vm.aplicativo.url,
+                                            target: "_blank",
+                                            flat: ""
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                    Ir ao site\n                   "
+                                          )
+                                        ]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ]
+                              )
+                            : _vm._e()
+                        ],
+                        1
+                      )
+                    ])
+                  ],
+                  1
+                )
               ]),
               _vm._v(" "),
               _c(
@@ -65002,30 +65024,49 @@ var render = function() {
             "q-card",
             {},
             [
+              _c("q-card-section", { staticClass: "text-center" }, [
+                _c("div", {
+                  staticClass: "text-h3",
+                  style: "color:" + _vm.canal.options.color + ";",
+                  domProps: { innerHTML: _vm._s(_vm.post.title) }
+                })
+              ]),
+              _vm._v(" "),
               _c(
                 "q-card-section",
+                { staticClass: "q-my-lg text-center" },
                 [
-                  _c("div", {
-                    staticClass: "text-h5",
-                    style: "color:" + _vm.canal.options.color + ";",
-                    domProps: { innerHTML: _vm._s(_vm.post.title) }
-                  }),
+                  _c("q-separator", { staticClass: "q-mb-lg" }),
                   _vm._v(" "),
-                  _c("p", [
-                    _vm._v(
-                      _vm._s(_vm.post.author) +
-                        " - " +
-                        _vm._s(_vm.post.created_at)
-                    )
-                  ]),
+                  _c(
+                    "small",
+                    [
+                      _vm._v("\n              Autor: \n              "),
+                      _c("q-badge", { attrs: { color: "secondary" } }, [
+                        _vm._v(_vm._s(_vm.post.author))
+                      ])
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
-                  _c("q-separator", { staticClass: "q-mb-lg" })
+                  _c(
+                    "small",
+                    [
+                      _vm._v("\n              Publicado em: \n              "),
+                      _c("q-badge", { attrs: { color: "secondary" } }, [
+                        _vm._v(_vm._s(_vm.post.created_at))
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("q-separator", { staticClass: "q-mt-lg" })
                 ],
                 1
               ),
               _vm._v(" "),
               _c("q-card-section", {
-                class: "row justify-center",
+                class: "row justify-center q-mt-xl q-pa-xl",
                 domProps: { innerHTML: _vm._s(_vm.post.content) }
               }),
               _vm._v(" "),
@@ -65933,7 +65974,7 @@ var render = function() {
                       },
                       on: {
                         click: function($event) {
-                          return _vm.recommendationPer("simple")
+                          return _vm.recommendationPer("tag")
                         }
                       }
                     },
@@ -65954,7 +65995,7 @@ var render = function() {
                       },
                       on: {
                         click: function($event) {
-                          return _vm.recommendationPer("portugues")
+                          return _vm.recommendationPer("titulo")
                         }
                       }
                     },

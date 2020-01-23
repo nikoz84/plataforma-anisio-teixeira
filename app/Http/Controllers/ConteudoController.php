@@ -43,6 +43,7 @@ class ConteudoController extends ApiController
         $componentes    = $this->request->query('componentes');
         $categoria      = $this->request->query('categoria');
         $tag      = $this->request->query('tag');
+        $por      = $this->request->query('por', 'tag');
         $busca    = $this->request->query('busca');
         $query          = $this->conteudo::query();
 
@@ -51,8 +52,8 @@ class ConteudoController extends ApiController
             return $q->whereRaw("options->'tipo' <@  ?", $tipos);
         });
 
-        $query->when($this->request->query('busca'), function ($q, $busca) {
-            return $q->search($busca);
+        $query->when($this->request->query('busca'), function ($q) use ($busca, $por) {
+            return $q->search($busca, $por);
         });
 
         $query->when($tag, function ($q, $tag) {
