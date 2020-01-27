@@ -45,34 +45,40 @@ class ConteudoController extends ApiController
         $tag      = $this->request->query('tag');
         $por      = $this->request->query('por', 'tag');
         $busca    = $this->request->query('busca');
+        $publicador    = $this->request->query('publicador');
         $query          = $this->conteudo::query();
 
+        // FILTRO X TIPO
         $query->when($tipos, function ($q, $tipos) {
             //$data       = "'[$tipos]'::jsonb";
             return $q->whereRaw("options->'tipo' <@  ?", $tipos);
         });
-
+        // FILTRO X PUUBLICADOR
+        $query->when($publicador, function ($q) {
+            return $q->where('user_id', $this->request->query('publicador'));
+        });
+        // FILTRO BUSCA FULL TEXT SEARCH
         $query->when($this->request->query('busca'), function ($q) use ($busca, $por) {
             return $q->search($busca, $por);
         });
-
+        // FILTRO X TAG
         $query->when($tag, function ($q, $tag) {
             return $q->searchTag($tag);
         });
-
+        // FILTRO X CANAL
         $query->when($canal != 6, function ($q) {
             return $q->where('canal_id', $this->request->query('canal'));
         });
-
+        // FILTRO X CATEGORIA
         $query->when($categoria, function ($q, $categoria) {
             return $q->where('category_id', $categoria);
         });
-
+        // FILTRO X LICENÇA
         $query->when($licencas, function ($q, $licencas) {
             return $q->whereIn('license_id', explode(',', $licencas));
         });
 
-        $url = "busca={$busca}&limit={$limit}&canal={$canal}&tag={$tag}";
+        $url = "busca={$busca}&limit={$limit}&canal={$canal}&tag={$tag}&publicador=$publicador";
         $url .= "&tipos={$tipos}&componentes={$componentes}&categoria={$categoria}&licencas={$licencas}";
 
         $conteudos = $query->where('is_approved', 'true')

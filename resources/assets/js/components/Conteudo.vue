@@ -4,25 +4,27 @@
             <Player class="row" :arquivos="conteudo.arquivos" :tipo="conteudo.tipo"></Player>
             
             <q-card-section class="">
-              <div class="text-h4">{{conteudo.title}}</div>
-              <q-separator></q-separator>
-              <small>
-                Acessos: 
-                <q-badge color="secondary">{{conteudo.qt_access}}</q-badge>
-              </small>
-              <small>
-                Downloads: 
-                <q-badge color="secondary">{{conteudo.qt_downloads}}</q-badge>
-              </small>
-              <small>
+              <Title :title="conteudo.title"></Title>
+              
+              <small v-if="conteudo.user">
                 Publicador(a): 
-                <q-badge color="secondary">{{conteudo.user.name}}</q-badge>
+                <q-badge class="cursor-pointer"
+                        :bg-color="conteudo.canal.color"
+                        @click="onClick(`/recursos-educacionais/listar?publicador=${conteudo.user.id}`)">
+                  {{conteudo.user.name}}
+                </q-badge>
+                <q-tooltip>
+                        Outros conteúdos deste publicador
+                </q-tooltip>
               </small>
+              <q-space></q-space>
               <small>
                 Publicado em: 
                 <q-badge color="secondary">{{conteudo.formated_date}}</q-badge>
               </small>
-              <div v-html="conteudo.description"></div>  
+            </q-card-section>
+            <q-card-section>
+              <div v-html="conteudo.description"></div> 
             </q-card-section>
             <q-card-section>
               <q-chip color="ligth" label="Fonte:"> </q-chip>
@@ -61,17 +63,21 @@
 <script>
 import Player from "../components/Player.vue";
 import { mapState } from "vuex";
-import { QCard, QCardSection, QSeparator, QChip } from "quasar";
+import { QCard, QCardSection, QSeparator, QChip, Ripple } from "quasar";
+import Title from "./Title.vue";
 
 export default {
   name: "Conteudo",
-  components: { QCard, QCardSection, QSeparator, Player, QChip },
+  directives: { Ripple },
+  components: { QCard, QCardSection, QSeparator, Player, QChip, Title },
   created() {},
   computed: {
     ...mapState(["conteudo"]),
     splitAuthors() {
-      let replace = this.conteudo.authors.replace(",", ";");
-      return replace.split(";");
+      if (this.conteudo.authors) {
+        let replace = this.conteudo.authors.replace(",", ";");
+        return replace.split(";");
+      }
     },
     backgroundColor() {
       let color = this.conteudo.canal.color;

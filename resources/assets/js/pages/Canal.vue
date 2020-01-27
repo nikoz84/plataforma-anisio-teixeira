@@ -160,7 +160,4 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-.input-search {
-  min-width: 350px;
-}
 </style>

@@ -4,12 +4,11 @@
       <q-card-section>
         <section class="row">
           <div class="col-xs-12 col-sm-7 col-md-7">
-            <div class="text-h3 text-center">{{aplicativo.name}}</div>
-            <section class="q-my-xl text-center">
-              <q-separator class="q-mb-lg" />
+            <Title :title="aplicativo.name"></Title>
+            <section class="text-center">
               <small>
                 Publicador(a): 
-                <q-badge color="secondary">{{aplicativo.user.name}}</q-badge>
+                <q-badge :bg-color="aplicativo.canal.color">{{aplicativo.user.name}}</q-badge>
               </small> 
               <small>
                   Publicado em: 
@@ -63,10 +62,11 @@
 <script>
 import { mapState } from "vuex";
 import { QImg, QCard, QCardSection, QSeparator } from "quasar";
+import Title from "./Title.vue";
 
 export default {
   name: "Aplicativo",
-  components: { QImg, QCard, QCardSection, QSeparator },
+  components: { QImg, QCard, QCardSection, QSeparator, Title },
   computed: {
     ...mapState(["aplicativo"]),
     splitAuthors() {

@@ -2,7 +2,7 @@
     <article class="row q-mt-sm">
         <q-card class="" v-if="post">
             <q-card-section class="text-center">
-                <div class="text-h3" :style="`color:${canal.options.color};`" v-html="post.title"></div>
+                <div class="text-h5" :style="`color:${canal.options.color};`" v-html="post.title"></div>
             </q-card-section>
             <q-card-section class="q-my-lg text-center">
               <q-separator class="q-mb-lg" />
