@@ -44,17 +44,7 @@
         </section>
       </q-card-section>
       <q-card-section>
-        <div class="text-h6">Tags: </div>
-        <q-chip color="ligth" 
-              icon="local_offer"
-              v-for="(tag, i) in aplicativo.tags"
-              :key="i"
-              :label="tag.name"
-              clickable
-              @click="onClick(`/recursos-educacionais/listar?busca=${tag.name}`)"
-              >
-              
-        </q-chip>
+        <TagList :items="aplicativo.tags" title="Tags" slug="busca"></TagList>
       </q-card-section>
     </q-card>
   </article>
@@ -63,10 +53,11 @@
 import { mapState } from "vuex";
 import { QImg, QCard, QCardSection, QSeparator } from "quasar";
 import Title from "./Title.vue";
+import TagList from "./TagList.vue";
 
 export default {
   name: "Aplicativo",
-  components: { QImg, QCard, QCardSection, QSeparator, Title },
+  components: { QImg, QCard, QCardSection, QSeparator, Title, TagList },
   computed: {
     ...mapState(["aplicativo"]),
     splitAuthors() {

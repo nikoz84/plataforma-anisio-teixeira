@@ -1,15 +1,19 @@
 <template>
   <section class="q-pa-md">
-    <header class="row">
-      <div class="text-h5 title-page" :style="`color:${color}`">
-        {{canal && canal.options ? canal.options.extend_name : ''}}
-      </div>
-      <q-space></q-space>
-      <q-breadcrumbs align="right">
-        <q-breadcrumbs-el to="/" label="Home" />
+    <header class="row wrap items-center q-gutter-x-xl">
+      <q-breadcrumbs align="left" active-color="accent" gutter="xs">
+        <q-breadcrumbs-el to="/" icon="home" />
         <q-breadcrumbs-el :to="goTo" :label="canal.name" />
         <q-breadcrumbs-el v-if="$route.params.id" :label="`Conteúdo: ${$route.params.id}`" />
       </q-breadcrumbs>
+      <transition 
+                  enter-active-class="animated bounceIn"
+                  leave-active-class="animated bounceOut"
+                  >
+        <h2 class="text-h6 title-canal" :style="`color:${color};border-bottom: 3px double ${color};`">
+          {{canal && canal.options ? canal.options.extend_name : canal.name }}
+        </h2>
+      </transition>
     </header>
     <nav>
       <q-tabs inline-label class="text-white shadow-3" :style="`background-color:${color}`">
@@ -160,4 +164,7 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
+.title-canal {
+  padding-bottom: 2px;
+}
 </style>

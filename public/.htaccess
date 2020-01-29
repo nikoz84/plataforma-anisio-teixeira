@@ -21,13 +21,13 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
-# Turn on Expires and set default expires to 3 days
+# Turn on Expires and set default expires to 1 year
 ExpiresActive On
 ExpiresDefault A31536000
 
 # Set up caching on media files for 1 month
 <FilesMatch "\.(ico|gif|jpg|jpeg|png|mp4|webm|pdf|mp3|wmv|ppt)$">
-  ExpiresDefault A31536000
+  ExpiresDefault A25920000
   Header append Cache-Control "public"
 </FilesMatch>
 

@@ -99,12 +99,10 @@ export default {
   },
   computed: {
     ...mapState(["errors"]),
-
     getUrl() {
       return localStorage.urlDenuncia;
     },
     title() {
-      console.log(this.$route.params.action);
       return this.$route.params.action == "faleconosco"
         ? "Fale Conosco"
         : "Denunciar";
@@ -153,40 +151,5 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
-textarea {
-  height: 170px;
-  resize: none;
-}
-
-.foto {
-  overflow: hidden;
-  background: url("/storage/conteudos/conteudos-digitais/galeria/10.jpg");
-  height: 615px;
-  opacity: 0.9;
-}
-
-@media only screen and (max-width: 200px) {
-  .foto {
-    width: auto;
-    background: url("/storage/conteudos/conteudos-digitais/galeria/10.jpg");
-  }
-}
-.gallery-link {
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  border-top-left-radius: 10px;
-  padding: 15px 30px;
-  background-color: #fff;
-  -webkit-box-shadow: -19px -15px 17px -11px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: -19px -15px 17px -11px rgba(0, 0, 0, 0.4);
-  box-shadow: -19px -15px 17px -11px rgba(0, 0, 0, 0.4);
-  color: rgb(4, 9, 30);
-  text-transform: uppercase;
-  font-size: 11px;
-  font-weight: bolder;
-  display: inline-block;
-  opacity: 0.7;
-}
+<style lang="stylus" scoped>
 </style>

@@ -14,11 +14,6 @@ import lang from "quasar/lang/pt-br.js";
 import iconSet from "quasar/dist/icon-set/material-icons.umd.min.js";
 //import "@quasar/extras/roboto-font/roboto-font.css";
 //import "@quasar/extras/material-icons/material-icons.css";
-/**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
- * CSRF token as a header based on the value of the "XSRF" token cookie.
- */
 
 Vue.use(Quasar, {
   lang,
@@ -37,7 +32,7 @@ Vue.use(Quasar, {
 window.axios = require("axios");
 
 window.axios.defaults.baseURL = "https://pat.ba.gov.br/api-v1";
-//window.axios.defaults.timeout = 4000;
+
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 let isEmpty = LocalStorage.isEmpty("token");
 const jwtToken = LocalStorage.getItem("token");

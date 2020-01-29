@@ -82,7 +82,7 @@ class Conteudo extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'conteudo_tag', 'conteudo_id', 'tag_id')
-            ->select(['id', 'name']);
+            ->select(['id', 'name'])->orderBy('name');
     }
     /**
      * Seleciona os componentes curriculares

@@ -59,7 +59,7 @@ class Aplicativo extends Conteudo
     public function tags()
     {
         return $this->belongsToMany('App\Tag', 'aplicativo_tag', 'aplicativo_id', 'tag_id')
-            ->select(['id', 'name']);
+            ->select(['id', 'name'])->orderBy('name');
     }
     /**
      * Conjunto de categorias do aplicativo

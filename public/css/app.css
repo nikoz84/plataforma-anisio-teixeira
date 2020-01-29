@@ -69,7 +69,8 @@
 }
 .title-page {
   font-family: 'Concert One', sans-serif, cursive;
-  border-bottom: 4px solid #451e5f;
+  padding-bottom: 5px;
+  border-bottom: 4px double #451e5f;
 }
 /*
  * Quasar Framework v1.6.1

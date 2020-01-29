@@ -1,7 +1,11 @@
 <template>
-    <div class="text-h5 text-center">
-        {{ title }}
-        <q-separator class="q-my-lg" />
+    <div class="text-center">
+      <transition appear 
+                  enter-active-class="animated zoomIn"
+                  leave-active-class="animated zoomOut"
+                  >
+        <h1 class="text-h5 title-page" v-html="title"></h1>
+      </transition>
     </div>
 </template>
 <script>

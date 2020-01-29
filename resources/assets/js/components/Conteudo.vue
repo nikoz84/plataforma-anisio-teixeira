@@ -45,17 +45,7 @@
             </q-card-section>
             <q-separator class="q-mb-lg" inset/>
             <q-card-section>
-                <div class="text-h6">Tags: </div>
-                <q-chip color="ligth" 
-                      icon="local_offer"
-                      v-for="(tag, i) in conteudo.tags"
-                      :key="i"
-                      :label="tag.name"
-                      clickable
-                      @click="onClick(`/recursos-educacionais/listar?tag=${tag.id}`)"
-                      >
-                      
-                </q-chip>
+              <TagList :items="conteudo.tags" title="Tags" slug="tag"></TagList>
             </q-card-section>
         </q-card>
     </article>
@@ -65,11 +55,20 @@ import Player from "../components/Player.vue";
 import { mapState } from "vuex";
 import { QCard, QCardSection, QSeparator, QChip, Ripple } from "quasar";
 import Title from "./Title.vue";
+import TagList from "./TagList.vue";
 
 export default {
   name: "Conteudo",
   directives: { Ripple },
-  components: { QCard, QCardSection, QSeparator, Player, QChip, Title },
+  components: {
+    QCard,
+    QCardSection,
+    QSeparator,
+    Player,
+    QChip,
+    Title,
+    TagList
+  },
   created() {},
   computed: {
     ...mapState(["conteudo"]),
