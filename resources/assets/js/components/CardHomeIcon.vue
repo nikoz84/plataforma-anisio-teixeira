@@ -7,14 +7,15 @@
       <q-card class="col-sm-2" v-for="(item, i) in items" :key="`item-${i}`">
           <q-card-section class="row justify-center">
             <q-avatar>
-              <img
+              <q-img
                 :rounded-borders="rounded"
                 :alt="`icone: ${item.name}`"
                 :aria-label="item.name"
                 :src="
                   `/img/${source}/${item.id}.svg`
                 "
-                :placeholder-src="`/img/fundo-padrao.svg`"
+                loading="lazy"
+                placeholder-src="/img/fundo-padrao.svg"
               />
             </q-avatar>
           </q-card-section>

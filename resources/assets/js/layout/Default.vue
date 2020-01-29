@@ -20,7 +20,7 @@
           to="/"
           v-if="$q.screen.gt.sm"
         >
-          <img src="/logo.svg" alt="marca" aria-label="marca da plataforma Anísio Teixeira"/>
+          <img src="/logo.svg" loading="lazy" alt="marca" aria-label="marca da plataforma Anísio Teixeira"/>
 
           <q-toolbar-title shrink>
             Plataforma Anísio Teixeira

@@ -213,154 +213,6 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/
 
 /***/ }),
 
-/***/ "./node_modules/@quasar/extras/material-icons/material-icons.css":
-/*!***********************************************************************!*\
-  !*** ./node_modules/@quasar/extras/material-icons/material-icons.css ***!
-  \***********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../css-loader??ref--6-1!../../../postcss-loader/src??ref--6-2!./material-icons.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/@quasar/extras/material-icons/material-icons.css");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
-/***/ "./node_modules/@quasar/extras/material-icons/web-font/flUhRq6tzZclQEJ-Vdg-IuiaDsNa.woff":
-/*!***********************************************************************************************!*\
-  !*** ./node_modules/@quasar/extras/material-icons/web-font/flUhRq6tzZclQEJ-Vdg-IuiaDsNa.woff ***!
-  \***********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/@quasar/extras/material-icons/web-flUhRq6tzZclQEJ-Vdg-IuiaDsNa.woff?29b882f018fa6fe75fd338aaae6235b8";
-
-/***/ }),
-
-/***/ "./node_modules/@quasar/extras/material-icons/web-font/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2":
-/*!******************************************************************************************************!*\
-  !*** ./node_modules/@quasar/extras/material-icons/web-font/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2 ***!
-  \******************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/@quasar/extras/material-icons/web-flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2?0509ab09c1b0d2200a4135803c91d6ce";
-
-/***/ }),
-
-/***/ "./node_modules/@quasar/extras/roboto-font/roboto-font.css":
-/*!*****************************************************************!*\
-  !*** ./node_modules/@quasar/extras/roboto-font/roboto-font.css ***!
-  \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../css-loader??ref--6-1!../../../postcss-loader/src??ref--6-2!./roboto-font.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/@quasar/extras/roboto-font/roboto-font.css");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
-/***/ "./node_modules/@quasar/extras/roboto-font/web-font/KFOkCnqEu92Fr1MmgVxIIzQ.woff":
-/*!***************************************************************************************!*\
-  !*** ./node_modules/@quasar/extras/roboto-font/web-font/KFOkCnqEu92Fr1MmgVxIIzQ.woff ***!
-  \***************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/@quasar/extras/roboto-web-KFOkCnqEu92Fr1MmgVxIIzQ.woff?5cb7edfceb233100075dc9a1e12e8da3";
-
-/***/ }),
-
-/***/ "./node_modules/@quasar/extras/roboto-font/web-font/KFOlCnqEu92Fr1MmEU9fBBc-.woff":
-/*!****************************************************************************************!*\
-  !*** ./node_modules/@quasar/extras/roboto-font/web-font/KFOlCnqEu92Fr1MmEU9fBBc-.woff ***!
-  \****************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/@quasar/extras/roboto-web-KFOlCnqEu92Fr1MmEU9fBBc-.woff?87284894879f5b1c229cb49c8ff6decc";
-
-/***/ }),
-
-/***/ "./node_modules/@quasar/extras/roboto-font/web-font/KFOlCnqEu92Fr1MmSU5fBBc-.woff":
-/*!****************************************************************************************!*\
-  !*** ./node_modules/@quasar/extras/roboto-font/web-font/KFOlCnqEu92Fr1MmSU5fBBc-.woff ***!
-  \****************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/@quasar/extras/roboto-web-KFOlCnqEu92Fr1MmSU5fBBc-.woff?b00849e00f4c2331cddd8ffb44a6720b";
-
-/***/ }),
-
-/***/ "./node_modules/@quasar/extras/roboto-font/web-font/KFOlCnqEu92Fr1MmWUlfBBc-.woff":
-/*!****************************************************************************************!*\
-  !*** ./node_modules/@quasar/extras/roboto-font/web-font/KFOlCnqEu92Fr1MmWUlfBBc-.woff ***!
-  \****************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/@quasar/extras/roboto-web-KFOlCnqEu92Fr1MmWUlfBBc-.woff?adcde98f1d584de52060ad7b16373da3";
-
-/***/ }),
-
-/***/ "./node_modules/@quasar/extras/roboto-font/web-font/KFOlCnqEu92Fr1MmYUtfBBc-.woff":
-/*!****************************************************************************************!*\
-  !*** ./node_modules/@quasar/extras/roboto-font/web-font/KFOlCnqEu92Fr1MmYUtfBBc-.woff ***!
-  \****************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/@quasar/extras/roboto-web-KFOlCnqEu92Fr1MmYUtfBBc-.woff?bb1e4dc6333675d11ada2e857e7f95d7";
-
-/***/ }),
-
-/***/ "./node_modules/@quasar/extras/roboto-font/web-font/KFOmCnqEu92Fr1Mu4mxM.woff":
-/*!************************************************************************************!*\
-  !*** ./node_modules/@quasar/extras/roboto-font/web-font/KFOmCnqEu92Fr1Mu4mxM.woff ***!
-  \************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/vendor/@quasar/extras/roboto-web-KFOmCnqEu92Fr1Mu4mxM.woff?60fa3c0614b8fb2f394fa29944c21540";
-
-/***/ }),
-
 /***/ "./node_modules/apexcharts/dist/apexcharts.esm.js":
 /*!********************************************************!*\
   !*** ./node_modules/apexcharts/dist/apexcharts.esm.js ***!
@@ -5481,46 +5333,6 @@ exports.push([module.i, ".skip-link {\n  position: absolute;\n  top: -40px;\n  l
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/@quasar/extras/material-icons/material-icons.css":
-/*!*******************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/@quasar/extras/material-icons/material-icons.css ***!
-  \*******************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var escape = __webpack_require__(/*! ../../../css-loader/lib/url/escape.js */ "./node_modules/css-loader/lib/url/escape.js");
-exports = module.exports = __webpack_require__(/*! ../../../css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "@font-face {\n  font-family: 'Material Icons';\n  font-style: normal;\n  font-weight: 400;\n  src: url(" + escape(__webpack_require__(/*! ./web-font/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2 */ "./node_modules/@quasar/extras/material-icons/web-font/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2")) + ") format('woff2'), url(" + escape(__webpack_require__(/*! ./web-font/flUhRq6tzZclQEJ-Vdg-IuiaDsNa.woff */ "./node_modules/@quasar/extras/material-icons/web-font/flUhRq6tzZclQEJ-Vdg-IuiaDsNa.woff")) + ") format('woff');\n}\n\n.material-icons {\n  font-family: 'Material Icons';\n  font-weight: normal;\n  font-style: normal;\n  display: inline-block;\n  line-height: 1;\n  text-transform: none;\n  letter-spacing: normal;\n  word-wrap: normal;\n  white-space: nowrap;\n  direction: ltr;\n\n  /* Support for all WebKit browsers. */\n  -webkit-font-smoothing: antialiased;\n  /* Support for Safari and Chrome. */\n  text-rendering: optimizeLegibility;\n\n  /* Support for Firefox. */\n  -moz-osx-font-smoothing: grayscale;\n\n  /* Support for IE. */\n  font-feature-settings: 'liga';\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/@quasar/extras/roboto-font/roboto-font.css":
-/*!*************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/@quasar/extras/roboto-font/roboto-font.css ***!
-  \*************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var escape = __webpack_require__(/*! ../../../css-loader/lib/url/escape.js */ "./node_modules/css-loader/lib/url/escape.js");
-exports = module.exports = __webpack_require__(/*! ../../../css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "@font-face {\n  font-family: 'Roboto';\n  font-style: normal;\n  font-weight: 100;\n  src: url(" + escape(__webpack_require__(/*! ./web-font/KFOkCnqEu92Fr1MmgVxIIzQ.woff */ "./node_modules/@quasar/extras/roboto-font/web-font/KFOkCnqEu92Fr1MmgVxIIzQ.woff")) + ") format('woff');\n}\n@font-face {\n  font-family: 'Roboto';\n  font-style: normal;\n  font-weight: 300;\n  src: url(" + escape(__webpack_require__(/*! ./web-font/KFOlCnqEu92Fr1MmSU5fBBc-.woff */ "./node_modules/@quasar/extras/roboto-font/web-font/KFOlCnqEu92Fr1MmSU5fBBc-.woff")) + ") format('woff');\n}\n@font-face {\n  font-family: 'Roboto';\n  font-style: normal;\n  font-weight: 400;\n  src: url(" + escape(__webpack_require__(/*! ./web-font/KFOmCnqEu92Fr1Mu4mxM.woff */ "./node_modules/@quasar/extras/roboto-font/web-font/KFOmCnqEu92Fr1Mu4mxM.woff")) + ") format('woff');\n}\n@font-face {\n  font-family: 'Roboto';\n  font-style: normal;\n  font-weight: 500;\n  src: url(" + escape(__webpack_require__(/*! ./web-font/KFOlCnqEu92Fr1MmEU9fBBc-.woff */ "./node_modules/@quasar/extras/roboto-font/web-font/KFOlCnqEu92Fr1MmEU9fBBc-.woff")) + ") format('woff');\n}\n@font-face {\n  font-family: 'Roboto';\n  font-style: normal;\n  font-weight: 700;\n  src: url(" + escape(__webpack_require__(/*! ./web-font/KFOlCnqEu92Fr1MmWUlfBBc-.woff */ "./node_modules/@quasar/extras/roboto-font/web-font/KFOlCnqEu92Fr1MmWUlfBBc-.woff")) + ") format('woff');\n}\n@font-face {\n  font-family: 'Roboto';\n  font-style: normal;\n  font-weight: 900;\n  src: url(" + escape(__webpack_require__(/*! ./web-font/KFOlCnqEu92Fr1MmYUtfBBc-.woff */ "./node_modules/@quasar/extras/roboto-font/web-font/KFOlCnqEu92Fr1MmYUtfBBc-.woff")) + ") format('woff');\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/Aplicativo.vue?vue&type=style&index=0&id=54b41baf&scoped=true&lang=css&":
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/Aplicativo.vue?vue&type=style&index=0&id=54b41baf&scoped=true&lang=css& ***!
@@ -5641,33 +5453,6 @@ function toComment(sourceMap) {
 	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
 
 	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/lib/url/escape.js":
-/*!***************************************************!*\
-  !*** ./node_modules/css-loader/lib/url/escape.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function escape(url) {
-    if (typeof url !== 'string') {
-        return url
-    }
-    // If url is already wrapped in quotes, remove them
-    if (/^['"].*['"]$/.test(url)) {
-        url = url.slice(1, -1);
-    }
-    // Should url be wrapped?
-    // See https://drafts.csswg.org/css-values-3/#urls
-    if (/["'() \t\n]/.test(url)) {
-        return '"' + url.replace(/"/g, '\\"').replace(/\n/g, '\\n') + '"'
-    }
-
-    return url
 }
 
 
@@ -64878,6 +64663,7 @@ var render = function() {
           attrs: {
             alt: "imagem destacada",
             src: _vm.getImage,
+            loading: "lazy",
             "placeholder-src": "/img/fundo-padrao.svg"
           }
         },
@@ -69124,6 +68910,7 @@ var render = function() {
                       _c("img", {
                         attrs: {
                           src: "/logo.svg",
+                          loading: "lazy",
                           alt: "marca",
                           "aria-label": "marca da plataforma Anísio Teixeira"
                         }
@@ -86399,12 +86186,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var quasar_lang_pt_br_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! quasar/lang/pt-br.js */ "./node_modules/quasar/lang/pt-br.js");
 /* harmony import */ var quasar_dist_icon_set_material_icons_umd_min_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! quasar/dist/icon-set/material-icons.umd.min.js */ "./node_modules/quasar/dist/icon-set/material-icons.umd.min.js");
 /* harmony import */ var quasar_dist_icon_set_material_icons_umd_min_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(quasar_dist_icon_set_material_icons_umd_min_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _quasar_extras_roboto_font_roboto_font_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @quasar/extras/roboto-font/roboto-font.css */ "./node_modules/@quasar/extras/roboto-font/roboto-font.css");
-/* harmony import */ var _quasar_extras_roboto_font_roboto_font_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_quasar_extras_roboto_font_roboto_font_css__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _quasar_extras_material_icons_material_icons_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @quasar/extras/material-icons/material-icons.css */ "./node_modules/@quasar/extras/material-icons/material-icons.css");
-/* harmony import */ var _quasar_extras_material_icons_material_icons_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_quasar_extras_material_icons_material_icons_css__WEBPACK_IMPORTED_MODULE_6__);
-
-
 
 
 
@@ -86422,11 +86203,10 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(quasar__WEBPACK_IMPORTED_MODULE_0
     Dark: quasar__WEBPACK_IMPORTED_MODULE_0__["Dark"],
     Platform: quasar__WEBPACK_IMPORTED_MODULE_0__["Platform"],
     LocalStorage: quasar__WEBPACK_IMPORTED_MODULE_0__["LocalStorage"]
-  },
-  animations: "all"
+  }
 });
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.baseURL = "http://pat.des/api-v1";
+window.axios.defaults.baseURL = "https://pat.ba.gov.br/api-v1";
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 var isEmpty = quasar__WEBPACK_IMPORTED_MODULE_0__["LocalStorage"].isEmpty("token");
 var jwtToken = quasar__WEBPACK_IMPORTED_MODULE_0__["LocalStorage"].getItem("token");

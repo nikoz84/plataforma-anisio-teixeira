@@ -7,7 +7,11 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         
         <title>Plataforma Anísio Teixeira</title>
-
+        <meta name="description" content="Plataforma Anísio Teixeira projeto da Secretaria da Educação do Estado da Bahia(SEC)">
+        <meta name="keywords" content="educação, emitec, plataforma anísio teixeira, conteúdos digitais, secretaria da educação, software livre">
+        <link rel="manifest" href="/manifest.json">
+        <link rel="apple-touch-icon" href="/img/icons-192.png">
+        <meta name="theme-color" content="#08275e">
         <!-- Fonts -->
         <!--link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css"-->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -21,5 +25,9 @@
         </div>
         
         <script src="{{ asset('js/app.js') }}"></script>
+        <noscript>
+            A Plataforma Anísio Teixeira utiliza Javascript para ser executada, 
+            por favor, habilite o javascript no navegador.
+        </noscript>
     </body>
 </html>

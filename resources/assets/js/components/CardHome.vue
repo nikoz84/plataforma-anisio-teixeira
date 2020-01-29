@@ -11,7 +11,7 @@
         v-for="(item, i) in data.items"
         :key="i"
       >
-        <q-img :src="item.image" placeholder-src="/img/fundo-padrao.svg" aria-label="imagen de destaque" alt="imagen de destaque"/>
+        <q-img :src="item.image" placeholder-src="/img/fundo-padrao.svg" loading="lazy" aria-label="imagen de destaque" alt="imagen de destaque"/>
         <q-card-section>
             <q-btn
                 aria-label="visualizar recurso"
