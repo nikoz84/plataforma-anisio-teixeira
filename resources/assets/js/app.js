@@ -7,7 +7,7 @@ import VueRouter from "vue-router";
 import routes from "./routes";
 import Vuex from "vuex";
 import store from "./store/index.js";
-import Main from "./layout/Main.vue";
+import Default from "./layout/Default.vue";
 
 Vue.use(VueApexCharts);
 Vue.use(Vuex);
@@ -67,5 +67,5 @@ axios.interceptors.response.use(
 new Vue({
   router,
   store,
-  render: h => h(Main)
+  render: h => h(Default)
 }).$mount("#app");

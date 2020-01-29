@@ -26,8 +26,8 @@ ExpiresActive On
 ExpiresDefault A31536000
 
 # Set up caching on media files for 1 month
-<FilesMatch "\.(ico|gif|jpg|jpeg|png|flv|pdf|swf|mov|mp3|wmv|ppt)$">
-  ExpiresDefault A2419200
+<FilesMatch "\.(ico|gif|jpg|jpeg|png|mp4|webm|pdf|mp3|wmv|ppt)$">
+  ExpiresDefault A31536000
   Header append Cache-Control "public"
 </FilesMatch>
 
