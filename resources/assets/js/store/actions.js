@@ -148,7 +148,7 @@ const actions = {
     commit("SET_LICENSES", { licenses, childs });
   },
   /** CANAL */
-  async getCanalBySlug({ commit, dispatch }, slug) {
+  async getCanalBySlug({ commit }, slug) {
     try {
       await axios.get(`/canais/slug/${slug}`).then(resp => {
         commit("SET_CANAL", resp.data.metadata);

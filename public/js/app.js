@@ -89770,12 +89770,12 @@ var actions = {
   }(),
   getCanalBySlug: function () {
     var _getCanalBySlug = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12(_ref12, slug) {
-      var commit, dispatch;
+      var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
         while (1) {
           switch (_context12.prev = _context12.next) {
             case 0:
-              commit = _ref12.commit, dispatch = _ref12.dispatch;
+              commit = _ref12.commit;
               _context12.prev = 1;
               _context12.next = 4;
               return axios.get("/canais/slug/".concat(slug)).then(function (resp) {
