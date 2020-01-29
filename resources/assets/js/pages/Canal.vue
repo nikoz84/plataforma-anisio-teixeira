@@ -6,7 +6,7 @@
         <q-breadcrumbs-el :to="goTo" :label="canal.name" />
         <q-breadcrumbs-el v-if="$route.params.id" :label="`Conteúdo: ${$route.params.id}`" />
       </q-breadcrumbs>
-      <transition 
+      <transition appear
                   enter-active-class="animated bounceIn"
                   leave-active-class="animated bounceOut"
                   >
