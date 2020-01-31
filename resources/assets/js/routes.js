@@ -41,6 +41,17 @@ const routes = [
       title: "Sobre a Plataforma"
     }
   },
+  ,
+  {
+    path: "/georeferencia",
+    name: "GeoReference",
+    component: () =>
+      import(/* webpackChunkName: "geo" */ "./pages/GeoReference.vue"),
+    meta: {
+      requiresAuth: false,
+      title: "Georeferência"
+    }
+  },
   {
     path: "/admin",
     name: "admin-home",

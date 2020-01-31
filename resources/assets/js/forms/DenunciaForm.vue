@@ -80,7 +80,7 @@ export default {
       subject: "",
       message: "",
       r_id: 0,
-      siteKey: "6LegZ48UAAAAAI-sKAY09kHtR-uBkiizT6XKcOli"
+      siteKey: "6LczPtQUAAAAAOcgJ9NP9GXPJmA98rppQbsmzuX5"
     };
   },
   beforeRouteEnter(to, from, next) {

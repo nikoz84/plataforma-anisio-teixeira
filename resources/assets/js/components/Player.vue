@@ -1,16 +1,18 @@
 <template>
     <q-card class="row" v-if="conteudo && conteudo.tipo && conteudo.arquivos">
           <q-card-section class="col-sm-12" v-if="conteudo.tipo.id == 5">
-            <PlayerVideo :download="conteudo.arquivos.download"
+            <PlayerVideo class="row" :download="conteudo.arquivos.download"
                         :visualizacao="conteudo.arquivos.visualizacao"
                         :image="conteudo.image">
             </PlayerVideo>
           </q-card-section>
           <q-card-section class="col-sm-12" v-else-if="conteudo.tipo.id == 4">
-            <PlayerAudio :download="conteudo.arquivos.download"
-                        :visualizacao="conteudo.arquivos.visualizacao"
-                        :image="conteudo.image">
-            </PlayerAudio>
+            <q-img style="max-height: 380px; max-width: 640px;" :src="conteudo.image">
+              <PlayerAudio :download="conteudo.arquivos.download"
+                          :visualizacao="conteudo.arquivos.visualizacao"
+                          :image="conteudo.image">
+              </PlayerAudio>
+            </q-img>
           </q-card-section>
           <q-card-section class="col-sm-12" v-else-if="conteudo.tipo.id == 6">
             <PlayerImage :image="showImage"></PlayerImage>

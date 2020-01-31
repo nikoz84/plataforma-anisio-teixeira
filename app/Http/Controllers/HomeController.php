@@ -28,15 +28,7 @@ class HomeController extends ApiController
         $this->request = $request;
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('home');
-    }
+
     /**
      * Seleciona da tabela options as configurações do layout
      * @return json resposta em json

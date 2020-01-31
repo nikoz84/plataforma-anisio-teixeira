@@ -39,12 +39,14 @@ Route::get('/docs', function (Request $request) {
 
 */
 
+
 /**/
+
 Route::get('/teste', function (\Illuminate\Http\Request $request) {
 
 
-
-    return response()->json(["ip" => request()->ip()], 200);
+    if (Crawler::isCrawler()) {
+    }
 });
 
 

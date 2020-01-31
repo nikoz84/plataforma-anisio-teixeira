@@ -2,13 +2,14 @@ import "./bootstrap";
 import Vue from "vue";
 
 import VueApexCharts from "vue-apexcharts";
-
+import VuePlyr from "vue-plyr";
 import VueRouter from "vue-router";
 import routes from "./routes";
 import Vuex from "vuex";
 import store from "./store/index.js";
 import Default from "./layout/Default.vue";
 
+Vue.use(VuePlyr);
 Vue.use(VueApexCharts);
 Vue.use(Vuex);
 Vue.use(VueRouter);

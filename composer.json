@@ -8,7 +8,7 @@
   "license": "MIT",
   "type": "project",
   "require": {
-    "php": ">=7.0.0",
+    "php": ">=7.1.0",
     "adoy/oauth2": "*",
     "fideloper/proxy": "~3.3",
     "google/apiclient": "^2.0",
@@ -16,6 +16,7 @@
     "guzzlehttp/guzzle": "^6.3",
     "intervention/image": "^2.4",
     "ixudra/curl": "^6.16",
+    "jaybizzle/laravel-crawler-detect": "1.*",
     "jenssegers/date": "^3.5",
     "laravel/framework": "5.5.*",
     "laravel/passport": "~4.0.3",
