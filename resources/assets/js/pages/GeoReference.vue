@@ -1,6 +1,11 @@
 <template>
-  <div style="width:100%;min-heigth:60vh;background-color:#000;">
-    <div id="map"></div>
+  <div>
+    <div id="map"></div> <!-- point 1 -->
+    <template v-if="!!this.google && !!this.map"> <!-- point 2 -->
+      <div :google="google" :map="map">
+        <slot/>
+      </div>
+    </template>
   </div>
 </template>
 <script>
@@ -10,8 +15,14 @@ export default {
   data() {
     return {
       mapConfig: {
-        center: { lat: -34.397, lng: 150.644 },
-        zoom: 8
+        center: { lat: -12.579738, lng :-41.7007272 }, // lat: -13.3945273, lng: -46.4799032
+        zoom: 6,
+        zoomControl: true,
+        draggable: true,
+        gestureHandling: 'greedy',
+        scaleControl: true,
+        language:"pt",
+        
       },
       apiKey: "AIzaSyBxCs_ngbimWt-6ITucgoNTNJfuKUaWvvQ",
       google: null,
@@ -23,20 +34,35 @@ export default {
     const googleMapApi = await GoogleMapsApiLoader({
       apiKey: this.apiKey,
       libraries: ["places"]
-    });
-
-    this.google = googleMapApi;
-    this.initializeMap();
+    }).then((google) => {
+      this.google = google
+      this.initializeMap()
+    })
+    
   },
 
   methods: {
     async initializeMap() {
-      const mapContainer = await document.getElementById("map");
-      console.log(mapContainer);
-      this.map = new this.google.maps.Map(mapContainer, this.mapConfig);
-
-      console.log(this.map);
+      const mapContainer = this.$el.querySelector('#map');
+      
+      const { Map } = await this.google.maps
+      
+      this.map = new Map(mapContainer, this.mapConfig)
+      var marker = new this.google.maps.Marker({
+          position: { lat: -12.579738, lng :-41.7007272 },
+          map: this.map,
+          draggable:true,
+          title:"Estado da Bahia Brasil"
+      });
+      
     }
   }
 };
 </script>
+<style lang="stylus">
+#map {
+  height: 100vh;
+  width: 100%;
+}
+</style>
+
