@@ -1,97 +1,120 @@
 <template>
-  <div>
+  <nav>
     <q-list>
-        <!-- MARCA -->
-        <q-item-label v-if="!$q.screen.gt.xs || !$q.screen.gt.sm">
-          <q-btn
-            flat
-            dense
-            round
-            @click="leftDrawerOpenModel = false"
-            aria-label="Menu"
-            icon="dehaze"
-          />
-          <q-btn flat no-caps no-wrap class="q-ml-xs" to="/" aria-label="voltar ao inicio">
-            <img src="/logo.svg" alt="marca" aria-label="marca da plataforma Anísio Teixeira"/>
-            <div clas="text-h6">
-              PLATAFORMA ANÍSIO TEIXEIRA
-            </div>
-          </q-btn>
-        </q-item-label>
-        
-        <q-separator />
-        <q-item-label  header>
-          <div class="text-h6 text-primary" style="font-family: 'Concert One', sans-serif, cursive;">CANAIS</div>
-        </q-item-label>
-        <!-- CANAIS -->
-        <div v-for="(link, i) in links" :key="`x.${i}`">
-          <q-item
-            tag="div"
-            :to="`/${link.slug}/listar`"
-            :aria-label="`endereço para: ${link.name}`"
-            :title="`endereço para: ${link.name}`"
-            clickable
-            v-close-popup
-            tabindex="0"
-          >
-            <q-item-section>
-              <q-item-label>{{ link.name }}</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-separator />
+      <q-item-label v-if="!$q.screen.gt.xs || !$q.screen.gt.sm">
+        <q-btn
+          flat
+          dense
+          class="absolute-top-right"
+          @click="leftDrawerOpenModel = false"
+          aria-label="Menu"
+          icon="dehaze"
+        />
+        <BtnMarca></BtnMarca>
+      </q-item-label>
+      <!-- ADMINISTRAÇÃO -->
+      <q-item
+        v-if="isLogged"
+        @click="showAdmin()"
+        clickable
+        v-close-popup
+        tabindex="0"
+      >
+        <q-item-section avatar>
+          <q-icon name="settings_applications" />
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>
+            {{ this.admin ? "Canais" : "Configurações" }}
+          </q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-separator v-if="isLogged" />
+      <!-- HOME -->
+      <q-item clickable to="/">
+        <q-item-section avatar>
+          <q-icon name="home" />
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>Início</q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-separator />
+      <!-- SOBRE -->
+      <q-item clickable to="/sobre">
+        <q-item-section avatar>
+          <q-icon name="info" />
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>Sobre</q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-separator />
+    </q-list>
+    <!-- CANAIS-->
+    <AdminLeftSideBar v-if="admin"></AdminLeftSideBar>
+    <q-list v-else-if="!admin">
+      <q-item-label class="bg-grey-4" header>
+        <div
+          class="text-h6 text-primary"
+          style="font-family: 'Concert One', sans-serif, cursive;"
+        >
+          CANAIS
         </div>
-      </q-list>
-
-    <q-list>
-        <q-item-label class="bg-grey-4" header>
-          <b class="text-h5 text-grey-10"></b>
-        </q-item-label>
-        <!-- ADMINISTRAÇÃO -->
+      </q-item-label>
+      <!-- CANAIS -->
+      <div v-for="(link, i) in links" :key="`x-${i}`">
         <q-item
-          v-if="isLogged"
-          :to="`/admin/conteudos/listar`"
+          tag="div"
+          :to="`/${link.slug}/listar`"
+          :aria-label="`endereço para: ${link.name}`"
+          :title="`endereço para: ${link.name}`"
           clickable
           v-close-popup
           tabindex="0"
         >
-          <q-item-section avatar>
-            <q-icon name="settings_applications" />
-          </q-item-section>
           <q-item-section>
-            <q-item-label>Administração</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-separator v-if="isLogged" />
-        <!-- HOME -->
-        <q-item clickable to="/">
-          <q-item-section avatar>
-            <q-icon name="home" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Início</q-item-label>
+            <q-item-label>{{ link.name }}</q-item-label>
           </q-item-section>
         </q-item>
         <q-separator />
-        <!-- SOBRE -->
-        <q-item clickable to="/sobre">
-          <q-item-section avatar>
-            <q-icon name="info" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Sobre</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-separator />
+      </div>
+      <q-item
+        :to="`/praticas-pedagogicas`"
+        aria-label="`endereço para: Práticas Pedagogicas`"
+        :title="`endereço para: práticas pedagogicas`"
+        clickable
+        v-close-popup
+        tabindex="0"
+      >
+        <q-item-section>
+          <q-item-label>Práticas Pedagógicas</q-item-label>
+        </q-item-section>
+      </q-item>
     </q-list>
-  </div>
+  </nav>
 </template>
 <script>
 import { mapState } from "vuex";
 import { QList, QItem, QItemSection, QIcon } from "quasar";
+import BtnMarca from "./BtnMarca.vue";
+import AdminLeftSideBar from "./AdminLeftSideBar.vue";
 
 export default {
   name: "LeftSideBar",
+  components: { BtnMarca, AdminLeftSideBar },
   props: ["leftDrawerOpen"],
+  data() {
+    return {
+      admin: false,
+      text: ""
+    };
+  },
+  methods: {
+    showAdmin() {
+      return (this.admin = !this.admin);
+    }
+  },
   computed: {
     ...mapState(["isLogged", "links"]),
     leftDrawerOpenModel: {

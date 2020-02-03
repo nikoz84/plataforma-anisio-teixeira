@@ -14,7 +14,7 @@ let mix = require("laravel-mix");
 //mix.extract(["vue", "lodash"]);
 
 mix.browserSync({
-  proxy: "http://pat.des"
+  proxy: "https://pat.ba.gov.br"
 });
 
 mix.config.webpackConfig.output = {

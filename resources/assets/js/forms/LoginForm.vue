@@ -1,42 +1,64 @@
 <template>
   <article class="q-pa-md">
     <div class="row no-wrap justify-center">
-        <q-card class="col-sm-6">
-            <q-card-section>
-                <div class="text-center text-h5">Faça seu Login</div>
-            </q-card-section>
-            <q-separator inset />
-            <q-card-section>
-                <q-form @submit.prevent="onSubmit()" class="q-gutter-md" ref="loginForm">
-                  <q-input filled v-model="email" label="Seu E-mail *" hint="E-mail" type="email"
-                                bottom-slots :error="errors.email && errors.email.length > 0">
-                    <template v-slot:error>
-                      <ShowErrors :errors="errors.email"></ShowErrors>
-                    </template>
-                  </q-input>
-                  <q-input v-model="password" filled :type="isPwd ? 'password' : 'text'" hint="Senha"
-                            bottom-slots :error="errors.password && errors.password.length > 0">
-                    <template v-slot:append>
-                      <q-icon
-                        :name="isPwd ? 'visibility_off' : 'visibility'"
-                        class="cursor-pointer"
-                        @click="isPwd = !isPwd"
-                      />
-                    </template>
-                    <template v-slot:error>
-                      <ShowErrors :errors="errors.password"></ShowErrors>
-                    </template>
-                  </q-input>
-                   <div>
-                     <q-btn class="full-width" label="Entrar" type="submit" color="primary"/>
-                   </div>
-                </q-form>
-            </q-card-section>
-            <q-card-actions align="around">
-                  <q-btn flat to="/usuario/recuperar-senha">Recuperar senha</q-btn>
-                  <q-btn flat to="/usuario/registro">Cadastre-se</q-btn>
-            </q-card-actions>
-        </q-card>
+      <q-card class="col-sm-6">
+        <q-card-section>
+          <div class="text-center text-h5">Faça seu Login</div>
+        </q-card-section>
+        <q-separator inset />
+        <q-card-section>
+          <q-form
+            @submit.prevent="onSubmit()"
+            class="q-gutter-md"
+            ref="loginForm"
+          >
+            <q-input
+              filled
+              v-model="email"
+              label="Seu E-mail *"
+              hint="E-mail"
+              type="email"
+              bottom-slots
+              :error="errors.email && errors.email.length > 0"
+            >
+              <template v-slot:error>
+                <ShowErrors :errors="errors.email"></ShowErrors>
+              </template>
+            </q-input>
+            <q-input
+              v-model="password"
+              filled
+              :type="isPwd ? 'password' : 'text'"
+              hint="Senha"
+              bottom-slots
+              :error="errors.password && errors.password.length > 0"
+            >
+              <template v-slot:append>
+                <q-icon
+                  :name="isPwd ? 'visibility_off' : 'visibility'"
+                  class="cursor-pointer"
+                  @click="isPwd = !isPwd"
+                />
+              </template>
+              <template v-slot:error>
+                <ShowErrors :errors="errors.password"></ShowErrors>
+              </template>
+            </q-input>
+            <div>
+              <q-btn
+                class="full-width"
+                label="Entrar"
+                type="submit"
+                color="primary"
+              />
+            </div>
+          </q-form>
+        </q-card-section>
+        <q-card-actions align="around">
+          <q-btn flat to="/usuario/recuperar-senha">Recuperar senha</q-btn>
+          <q-btn flat to="/usuario/registro">Cadastre-se</q-btn>
+        </q-card-actions>
+      </q-card>
     </div>
   </article>
 </template>

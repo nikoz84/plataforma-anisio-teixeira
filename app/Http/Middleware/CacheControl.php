@@ -13,6 +13,8 @@ class CacheControl
         //$response->header('Cache-Control', 'no-cache, must-revalidate');
         // Or whatever you want it to be:
         $response->header('Cache-Control', 'max-age=31536000');
+        $response->header('Set-Cookie', 'HttpOnly;Secure;cross-site=teste;SameSite=None;');
+        //setcookie('cross-site', 'teste', ['samesite' => 'None', 'secure' => true]);
 
         return $response;
     }

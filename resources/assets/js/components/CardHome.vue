@@ -1,7 +1,12 @@
 <template>
   <section class="q-my-xl">
     <transition appear :enter-active-class="`animated ${animation}`">
-      <div v-if="show" class="text-h5 title-page text-center q-py-lg text-primary" :id="data.slug" v-text="data.title"></div>
+      <div
+        v-if="show"
+        class="text-h5 title-page text-center q-py-lg text-primary"
+        :id="data.slug"
+        v-text="data.title"
+      ></div>
     </transition>
     <div class="row justify-center q-gutter-sm">
       <q-card
@@ -11,15 +16,22 @@
         v-for="(item, i) in data.items"
         :key="i"
       >
-        <q-img :src="item.image" placeholder-src="/img/fundo-padrao.svg" loading="lazy" aria-label="imagen de destaque" alt="imagen de destaque"/>
+        <q-img
+          :src="item.image"
+          placeholder-src="/img/fundo-padrao.svg"
+          loading="lazy"
+          aria-label="imagen de destaque"
+          alt="imagen de destaque"
+        />
         <q-card-section>
-            <q-btn
-                aria-label="visualizar recurso"
-                :to="item.url_exibir"
-                :title="item.title ? item.title : item.name"
-                class="text-body1 text-weight-medium text-blue-10"
-                v-text="title(item.title ? item.title : item.name)">
-            </q-btn>
+          <q-btn
+            aria-label="visualizar recurso"
+            :to="item.url_exibir"
+            :title="item.title ? item.title : item.name"
+            class="text-body1 text-weight-medium text-blue-10"
+            v-text="title(item.title ? item.title : item.name)"
+          >
+          </q-btn>
         </q-card-section>
       </q-card>
     </div>
@@ -40,7 +52,6 @@ export default {
   },
   methods: {
     title(title) {
-      console.log(this.animation);
       let stringLength = title.length;
       return stringLength > 70 ? title.substr(0, 70) + " ..." : title;
     }

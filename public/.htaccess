@@ -32,7 +32,7 @@ ExpiresDefault A31536000
 </FilesMatch>
 
 # Set up 2 Hour caching on commonly updated files
-<FilesMatch "\.(xml|txt|html|js|css)$">
+<FilesMatch "\.(xml|txt|html|js|css|map)$">
   ExpiresDefault A7200
   Header append Cache-Control "private, must-revalidate"
 </FilesMatch>

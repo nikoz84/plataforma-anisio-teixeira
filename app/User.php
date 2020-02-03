@@ -105,7 +105,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function isVerified()
     {
-        return $this->verified == App\User::USER_VERIFIED;
+        return $this->verified == self::USER_VERIFIED;
     }
     /**
      * Undocumented function
@@ -167,6 +167,7 @@ class User extends Authenticatable implements JWTSubject
             'user' => [
                 'name' => $this['name'],
                 'id' => $this['id'],
+                'role' => $this->role->label,
                 'is_admin' => $this->is('admin')
             ]
         ];
@@ -187,7 +188,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getIsAdminAttribute()
     {
-        return $this->is('super-admin');
+        return $this->is('admin');
     }
 
     public function is($role_name)

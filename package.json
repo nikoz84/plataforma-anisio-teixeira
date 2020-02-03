@@ -39,7 +39,7 @@
     "fastclick": "^1.0.6",
     "google-maps-api-loader": "^1.1.1",
     "moment": "^2.15.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "plyr": "^3.5.7-beta.0",
     "quasar": "^1.6.1",
     "roboto-fontface": "^0.7.0",
@@ -47,6 +47,7 @@
     "vue-loader": "^15.8.3",
     "vue-plyr": "^6.0.4",
     "vue-progressbar": "^0.7.5",
+    "vue-recaptcha": "^1.3.0",
     "vuejs-datepicker": "^1.6.2",
     "vuex-map-fields": "^1.3.5",
     "webpack": "^4.41.5"

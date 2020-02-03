@@ -30,9 +30,7 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/tipos', 'TipoController@index')->name('listar.tipos');
     Route::get('/tipos/{id}', 'TipoController@getTiposById')->name('lista.tipos.x.id');
     /** DENUNCIA E FALE CONOSCO */
-    Route::get('/denuncias', 'DenunciaController@index')->name('listar.denuncias');
-    Route::post('/denuncias', 'DenunciaController@create')->name('criar.denuncias');
-    Route::post('/faleconosco', 'FaleconoscoController@create')->name('criar.faleconosco');
+    Route::post('/denuncias', 'DenunciaController@create')->name('criar.faleconosco.denuncias');
     /** CANAIS */
     Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscar.canal.x.url.amigavel');
     /** CONTEUDOS */
@@ -131,6 +129,7 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     Route::put('/licencas/{id}', 'LicenseController@update')->name('atualizar.licenca');
     Route::delete('/licencas/{id}', 'LicenseController@delete')->name('apagar.licenca');
     /** DENUNCIAS */
+    Route::get('/denuncias', 'DenunciaController@index')->name('listar.faleconosco.denuncias');
     Route::delete('/denuncias/{id}', 'DenunciaController@delete')->name('apagar.denuncias');
     /** OPTIONS */
     Route::post('/options', 'OptionsController@create')->name('criar.opcoes');

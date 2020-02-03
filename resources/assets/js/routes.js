@@ -1,14 +1,11 @@
 import HomeCanal from "./pages/HomeCanal.vue";
 import Listar from "./pages/Listar.vue";
 import Exibir from "./pages/Exibir.vue";
-import ConteudoForm from "./forms/ConteudoForm.vue";
-import AplicativoForm from "./forms/AplicativoForm.vue";
 import LoginForm from "./forms/LoginForm.vue";
 import RecoverPassForm from "./forms/RecoverPassForm.vue";
 import RegisterForm from "./forms/RegisterForm.vue";
 import ListAdmin from "./components/ListAdmin.vue";
 import DenunciaForm from "./forms/DenunciaForm.vue";
-import FaleConoscoForm from "./forms/FaleConoscoForm.vue";
 import Gallery from "./components/Gallery.vue";
 import ConfirmationEmail from "./forms/ConfirmationEmailForm.vue";
 
@@ -41,15 +38,16 @@ const routes = [
       title: "Sobre a Plataforma"
     }
   },
-  ,
   {
-    path: "/georeferencia",
-    name: "GeoReference",
+    path: "/praticas-pedagogicas",
+    name: "PraticasPedagogicas",
     component: () =>
-      import(/* webpackChunkName: "geo" */ "./pages/GeoReference.vue"),
+      import(
+        /* webpackChunkName: "praticas" */ "./pages/PraticasPedagogicas.vue"
+      ),
     meta: {
       requiresAuth: false,
-      title: "Georeferência"
+      title: "Pŕaticas pedagógicas"
     }
   },
   {

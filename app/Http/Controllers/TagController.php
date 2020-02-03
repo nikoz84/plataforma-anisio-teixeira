@@ -26,6 +26,7 @@ class TagController extends ApiController
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 15;
 
         $tags = Tag::select(['id', 'name', 'searched'])
+            ->orderBy('name')
             ->paginate($limit);
 
         $tags->setPath("/tags?limit={$limit}");
@@ -76,6 +77,7 @@ class TagController extends ApiController
 
         $tags = $this->tag::select(['id', 'name'])
             ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
+            ->orderBy('name')
             ->paginate($limit);
         $tags->setPath("/tags/search/{$termo}?limit={$limit}");
 
