@@ -4,7 +4,6 @@
   </article>
 </template>
 <script>
-import Table from "./Table.vue";
 import { mapMutations, mapState } from "vuex";
 import ConteudoForm from "../forms/ConteudoForm.vue";
 import AplicativoForm from "../forms/AplicativoForm.vue";
@@ -15,11 +14,12 @@ import TagForm from "../forms/TagForm.vue";
 import RoleForm from "../forms/RoleForm.vue";
 import TipoForm from "../forms/TipoForm.vue";
 import Resumo from "../pages/Resumo.vue";
+import Table from "./Table.vue";
+import Denuncia from "./Denuncia.vue";
 
 export default {
   name: "Listar",
   components: {
-    Table,
     aplicativos: AplicativoForm,
     conteudos: ConteudoForm,
     canais: CanalForm,
@@ -28,6 +28,8 @@ export default {
     tags: TagForm,
     roles: RoleForm,
     tipos: TipoForm,
+    denuncias: Denuncia,
+    Table,
     Resumo
   },
   data() {

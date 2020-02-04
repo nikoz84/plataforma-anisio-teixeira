@@ -3,15 +3,14 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use JWTAuth;
+use Tymon\JWTAuth\JWTAuth;
 use Exception;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
-
-// use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Traits\ApiResponser;
 
 class JwtMiddleware extends BaseMiddleware
 {
-
+    use ApiResponser;
     /**
      * Handle an incoming request.
      *
@@ -25,25 +24,13 @@ class JwtMiddleware extends BaseMiddleware
             $user = JWTAuth::parseToken()->authenticate();
         } catch (Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
-                return response()->json([
-                    'success'=> false,
-                    'message'=> 'Token Inválido',
-                    'status' => 'invalid_token_md'
-                 ]);
+                return $this->errorResponse([], "Token Inválido", 401);
             } elseif ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
-                return response()->json([
-                    'success'=> false,
-                    'message'=> 'Token Expirado',
-                    'status' => 'expired_token_md']);
+                return $this->errorResponse([], "Token Expirado", 403);
             } else {
-                return response()->json([
-                    'success'=> false,
-                    'message' => 'Token de autorização não encontrado',
-                    'status' => 'token_not_found_md'
-                ]);
+                //return $this->errorResponse([], "Token de autorização não encontrado", 403);
             }
         }
         return $next($request);
-        
     }
 }

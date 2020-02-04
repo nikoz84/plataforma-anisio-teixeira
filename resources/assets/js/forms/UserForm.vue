@@ -1,7 +1,19 @@
 <template>
     <div class="row q-pa-md">
         <div class="col-sm-12">
-            <form v-on:submit.prevent="save()">
+            <form @submit.prevent="save()">
+              <div class="col-4">
+                <q-img :src="user.image" 
+                      width="150px"
+                      height="150px"
+                     loading="lazy"
+                      style="width:150px;height:150px;" 
+                      placeholder-src="/img/fundo-padrao.svg" 
+                      :ratio="1">
+                </q-img>
+                <FileUpload :file="file" hint="Imagem de perfil"></FileUpload>
+              </div>
+               
                 <q-input filled v-model.trim="user.name" label="Usuário" hint="Nome Completo" style="margin-bottom:15px;"></q-input>
                 <q-input filled v-model.trim="user.email" label="E-mail" hint="Correio eletrónico" style="margin-bottom:15px;"></q-input>
                 <q-input filled v-model.trim="user.options.neighborhood" label="Bairro" hint="Bairro" style="margin-bottom:15px;"></q-input>
@@ -52,11 +64,12 @@
 </template>
 
 <script>
-import { QInput, QRadio, QDate, QBtn, date } from "quasar";
+import { QInput, QRadio, QDate, QBtn, date, QUploader } from "quasar";
+import FileUpload from "./FileUpload.vue";
 
 export default {
   name: "UserForm",
-  components: { QInput, QRadio, QDate, QBtn, date },
+  components: { QInput, QRadio, QDate, QBtn, date, QUploader, FileUpload },
   data() {
     return {
       user: {
@@ -64,6 +77,7 @@ export default {
         email: "",
         canais: [],
         created_at: null,
+        image: "",
         role: {
           id: null,
           label: ""
@@ -76,6 +90,7 @@ export default {
           is_active: false
         }
       },
+      file: null,
       roles: [],
       canais: []
     };
@@ -102,20 +117,24 @@ export default {
       if (this.$route.params.action == "editar") {
         form.append("_method", "PUT");
       }
-      console.log(this.user);
-      //let resp = await axios.post(this.$route.params.slug + id, form);
-      //console.log(resp);
+      if (this.file) {
+        form.append("file", this.file, this.file.name);
+      }
+
+      let resp = await axios.post(this.$route.params.slug + id, form);
+
+      if (resp.data.success) {
+        console.log(resp.message);
+      }
     },
     async getUser() {
       if (!this.$route.params.id) return;
       let url = `${this.$route.params.slug}/${this.$route.params.id}`;
       let resp = await axios.get(url);
       if (resp.data.success) {
-        console.log(resp.data.metadata);
         this.user = resp.data.metadata;
       }
     },
-
     async getRoles() {
       let resp = await axios.get(`/roles?select`);
       if (resp.data.success) {

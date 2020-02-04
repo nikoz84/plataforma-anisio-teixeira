@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -48,7 +48,7 @@ trait FileSystemLogic
             $img_sinopse = str_replace($path_assoc, "", $img_sinopse);
             return Storage::disk('conteudos-digitais')->url("imagem-associada" . $img_sinopse);
         } else {
-            return Storage::disk('conteudos-digitais')->url("imagem-associada/tipo-conteudo/{$tipo}.svg");
+            return Storage::disk('public')->url("img/{$tipo}.svg");
         }
     }
     public function getImagesGallery($rand = false)

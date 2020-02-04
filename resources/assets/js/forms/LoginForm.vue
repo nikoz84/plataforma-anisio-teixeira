@@ -109,7 +109,7 @@ export default {
       let data = { email: this.email, password: this.password };
       let resp = await axios.post("/auth/login", data);
 
-      if (resp.data && resp.data.success) {
+      if (resp.data.success) {
         this.$q.loading.hide();
         const jwtToken = resp.data.metadata.token.access_token;
 
@@ -129,15 +129,7 @@ export default {
           )}!!`
         });
       } else {
-        this.errors = resp.data.errors;
-        this.$q.loading.hide();
-
-        this.$q.notify({
-          color: "negative",
-          textColor: "white",
-          icon: "error",
-          message: resp.data.message
-        });
+        this.errors = resp.data;
       }
     },
     docodePayloadToken() {

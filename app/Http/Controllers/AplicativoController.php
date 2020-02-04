@@ -52,10 +52,11 @@ class AplicativoController extends ApiController
         $validator = Validator::make($this->request->all(), config("rules.aplicativo"));
 
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível criar o conteúdo", 201);
+            return $this->errorResponse($validator->errors(), "Não foi possível criar o conteúdo", 422);
         }
 
         $app = $this->aplicativo::create($this->request);
+
         if ($app) {
             $this->createFile($app->id, $this->request->file('image'));
 
@@ -110,7 +111,9 @@ class AplicativoController extends ApiController
         $aplicativo = $this->aplicativo::find($id);
         $aplicativo->tags()->delete();
         $aplicativo->delete();
-
+        if (!$aplicativo->delete()) {
+            $this->errorResponse([], 'não foi possível deletar!!', 422);
+        }
         return $this->successResponse([], 'Aplicativo deletado com sucesso!!', 200);
     }
 
@@ -145,10 +148,10 @@ class AplicativoController extends ApiController
         $aplicativo->setAttribute('options->qt_access', $increment); // json attribute
         $aplicativo->save();
 
-        if ($aplicativo) {
-            return $this->showOne($aplicativo, '', 200);
-        } else {
-            return $this->errorResponse([], 'Não encontrado', 201);
+        if (!$aplicativo) {
+            $this->errorResponse([], 'Não encontrado', 422);
         }
+
+        return $this->showOne($aplicativo, '', 200);
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Filesystem\Filesystem;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -114,11 +115,18 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getImageAttribute()
     {
+        $filesystem = new Filesystem;
+        $path_assoc = Storage::disk('fotos-perfil')->path('usuario');
 
-        $image = "{$this['id']}.jpg";
-        //dd(Storage::disk('users')->exists("{$image}"));
-        return Storage::disk('users')
-            ->url("{$image}");
+        $img_assoc = $path_assoc . "/{$this->id}.*";
+
+        $file = $filesystem->glob($img_assoc);
+        if (count($file)) {
+            $img_assoc = array_values($file)[0];
+            $img_assoc = str_replace($path_assoc, "", $img_assoc);
+
+            return Storage::disk('fotos-perfil')->url("usuario" . $img_assoc);
+        }
     }
     /**
      * Undocumented function

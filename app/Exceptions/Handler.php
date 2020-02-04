@@ -4,14 +4,17 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Response;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Traits\ApiResponser;
 
 class Handler extends ExceptionHandler
 {
+    use ApiResponser;
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -54,27 +57,19 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         if ($exception instanceof TokenExpiredException) {
-            return Response::json(['message' => 'token_expired' . $exception->getMessage()], 201);
+            return $this->errorResponse([], 'Token Expirado', 401);
         } elseif ($exception instanceof TokenInvalidException) {
-            return Response::json(['message' => 'token_invalid'], 201);
+            return $this->errorResponse([], 'Token Inválido', 401);
         } elseif ($exception instanceof JWTException) {
-            //return Response::json(['message' => $exception->getMessage()], 201);
+            return $this->errorResponse([], 'Não Autorizado', 403);
         }
         if ($exception instanceof ModelNotFoundException) {
-            return Response::json(['message' => 'modelo não encontrado'], 201);
+            return $this->errorResponse([], "Modelo não encontrado", 404);
         }
-        /*
         if ($exception instanceof HttpException) {
-            return Response::json(
-                [
-                    'success' => false,
-                    'message' => 'Muitas tentativas...'
-                ],
-                $exception->getStatusCode(),
-                $exception->getHeaders()
-            );
+            return $this->errorResponse([], "Muitas requisições, espere um minuto", 429);
         }
-        */
+
 
         return parent::render($request, $exception);
     }

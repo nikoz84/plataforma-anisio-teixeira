@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -37,7 +39,6 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/conteudos', 'ConteudoController@index')->name('lista.conteudo');
     Route::get('/conteudos/sites', 'ConteudoController@getSitesTematicos')->name('lista.sites.tematicos');
     Route::get('/conteudos/search/{term}', 'ConteudoController@search')->name('busca.conteudo');
-    Route::get('/conteudos/teste', 'ConteudoController@teste');
     Route::get('/conteudos/{id}', 'ConteudoController@getById')->name('busca.x.conteudo.id');
     Route::get('/conteudos/tag/{id}', 'ConteudoController@getByTagId')->name('busca.x.tag.id');
     /** BLOG */
@@ -56,7 +57,7 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/options', 'OptionsController@index')->name('listar.opcoes');
     /** TAGS */
     Route::get('/tags/{id}', 'TagController@getById')->name('busca.x.tag.id');
-    /**  */
+    /** LICENÇAS */
     Route::get('/licencas', 'LicenseController@index')->name('listar.licencas');
     /** TOKEN */
     Route::name('verify')->get('usuarios/verify/{token}', 'UserController@verify');
@@ -130,6 +131,7 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     Route::delete('/licencas/{id}', 'LicenseController@delete')->name('apagar.licenca');
     /** DENUNCIAS */
     Route::get('/denuncias', 'DenunciaController@index')->name('listar.faleconosco.denuncias');
+    Route::get('/denuncias/{id}', 'DenunciaController@getById')->name('busca.x.id');
     Route::delete('/denuncias/{id}', 'DenunciaController@delete')->name('apagar.denuncias');
     /** OPTIONS */
     Route::post('/options', 'OptionsController@create')->name('criar.opcoes');

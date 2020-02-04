@@ -46,7 +46,11 @@ class DenunciaController extends ApiController
     {
         $validator = Validator::make($this->request->all(), config('rules.denuncia'));
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), 'Não foi possível fazer o registro, tente novamente', 201);
+            return $this->errorResponse(
+                $validator->errors(),
+                'Não foi possível fazer o registro, tente novamente',
+                422
+            );
         }
 
         $denuncia = $this->denuncia;
@@ -58,13 +62,9 @@ class DenunciaController extends ApiController
         $denuncia->subject = $this->request->get('subject');
         $denuncia->message = $this->request->get('message');
 
-        $resp = $denuncia->save();
-
-        if (!$resp) {
-            return $this->errorResponse([], 'Aconteceu um problema', 201);
+        if (!$denuncia->save()) {
+            return $this->errorResponse([], 'Não foi possível enviar', 422);
         }
-
-        //$this->sendToAdminUsers(); // Envio de email a usuários admin e super admin
 
         return $this->successResponse([], 'Enviado com sucesso', 200);
     }
@@ -96,17 +96,21 @@ class DenunciaController extends ApiController
             'delete_confirmation' => ['required', new \App\Rules\ValidBoolean]
         ]);
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível deletar a licença", 201);
+            return $this->errorResponse($validator->errors(), "Não foi possível deletar a licença", 422);
         }
 
         $denuncia = $this->denuncia::find($id);
-        $denuncia->delete();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Licença deletada com sucesso!',
-        ]);
+        if (!$denuncia->delete()) {
+            return $this->errorResponse([], "Não foi possível apagar", 422);
+        }
 
-        return true;
+        return $this->successResponse([], "Apagado com sucesso!", 200);
+    }
+    public function getById($id)
+    {
+        $denuncia = $this->denuncia::findOrFail($id);
+
+        return $this->successResponse($denuncia, "", 200);
     }
 }

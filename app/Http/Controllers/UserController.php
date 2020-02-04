@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
-use Gate;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\ApiController;
 
 class UserController extends ApiController
@@ -56,18 +55,18 @@ class UserController extends ApiController
      */
     public function update($id)
     {
-        $user = $this->user::find($id);
+        $user = $this->user::findOrFail($id);
 
         if (Gate::denies('super-admin', $user)) {
-            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
+            return $this->errorResponse([], 'Usuário sem permissão para realizar essa ação', 422);
         }
 
         $user->fill($this->request->all());
         if ($user->save()) {
-            $this->successResponse($user, 'Usuário editado com sucesso!', 200);
-        } else {
-            $this->errorResponse([], 'Não foi possível editar o usuário', 200);
+            $this->successResponse($user, 'Usuário editado com sucesso!', 422);
         }
+
+        return $this->errorResponse([], 'Não foi possível editar o usuário', 200);
     }
     /**
      * Método apagar por id
@@ -79,7 +78,7 @@ class UserController extends ApiController
     {
         $resp = $this->user::where(['id' => $id])->delete();
         if (Gate::denies('super-admin', $resp)) {
-            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
+            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 422);
         }
         if (!$resp) {
             return response()->json([
@@ -126,11 +125,11 @@ class UserController extends ApiController
     {
         $validator = $this->validar($this->request->all());
         if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Não foi possível salvar usuário',
-                'errors' => $validator->errors(),
-            ], 200);
+            $this->errorResponse(
+                $validator->errors(),
+                'Não foi possível salvar usuário',
+                422
+            );
         }
 
         $user = $this->user;
@@ -141,11 +140,11 @@ class UserController extends ApiController
         $user->options = json_decode($this->request->get('options', '{}'), true);
 
 
-        if ($user->save()) {
-            $this->successResponse([], 'Usuário registrado com sucesso!!', 200);
-        } else {
-            $this->errorResponse([], 'Não foi possível registrar o usuário', 200);
+        if (!$user->save()) {
+            $this->successResponse([], 'Usuário registrado com sucesso!!', 422);
         }
+
+        return $this->errorResponse([], 'Não foi possível registrar o usuário', 200);
     }
 
     public function verify($token)

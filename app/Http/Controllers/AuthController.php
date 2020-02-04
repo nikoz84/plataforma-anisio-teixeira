@@ -7,9 +7,10 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use JWTAuth;
+use Tymon\JWTAuth\JWTAuth;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use App\Helpers\FormValidation;
 
 class AuthController extends ApiController
 {
@@ -28,7 +29,7 @@ class AuthController extends ApiController
         $validator = Validator::make($this->request->all(), config("rules.login"));
 
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Usuário ou senha inválidos", 201);
+            return $this->errorResponse($validator->errors(), "Usuário ou senha inválidos", 422);
         }
 
         $credentials = $this->request->only('email', 'password');
@@ -37,10 +38,10 @@ class AuthController extends ApiController
 
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
-                return $this->errorResponse([], 'E-mail ou Senha inválidos', 201);
+                return $this->errorResponse([], 'E-mail ou Senha inválidos', 422);
             }
         } catch (JWTException $e) {
-            return $this->errorResponse([], 'Impossível criar Token de acesso', 201);
+            return $this->errorResponse([], 'Impossível criar Token de acesso', 422);
         }
         $data = ['token' => $this->respondWithToken($token)];
 
@@ -55,14 +56,14 @@ class AuthController extends ApiController
     {
         try {
             if (!$user = JWTAuth::parseToken()->authenticate()) {
-                return $this->errorResponse([], 'Usuário não encontrado', 201);
+                return $this->errorResponse([], 'Usuário não encontrado', 404);
             }
-        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-            return $this->errorResponse([], 'Token Expirado', 201);
-        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-            return $this->errorResponse([], 'Token Inválido', 201);
-        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-            return $this->errorResponse([], 'Token Ausente', 201);
+        } catch (TokenExpiredException $e) {
+            return $this->errorResponse([], 'Token Expirado', 401);
+        } catch (TokenInvalidException $e) {
+            return $this->errorResponse([], 'Token Inválido', 403);
+        } catch (JWTException $e) {
+            return $this->errorResponse([], 'Token Ausente', 403);
         }
 
         return $this->successResponse(['user' => compact('user')], '', 200);
@@ -116,7 +117,7 @@ class AuthController extends ApiController
         $validator = Validator::make($this->request->all(), config("rules.register"));
 
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Verifique os dados fornecidos", 201);
+            return $this->errorResponse($validator->errors(), "Verifique os dados fornecidos", 422);
         }
 
 

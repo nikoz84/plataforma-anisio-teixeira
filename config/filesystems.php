@@ -96,10 +96,10 @@ return [
             'url' => env('APP_URL') . '/storage/conteudos/conteudos-digitais/imagem-associada/sinopse',
             'visibility' => 'public',
         ],
-        'users' => [
+        'fotos-perfil' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/conteudos/fotos-perfil/usuario'),
-            'url' => env('APP_URL') . '/storage/conteudos/fotos-perfil/usuario',
+            'root' => storage_path('app/public/conteudos/fotos-perfil'),
+            'url' => env('APP_URL') . '/storage/conteudos/fotos-perfil',
             'visibility' => 'public',
         ],
 
