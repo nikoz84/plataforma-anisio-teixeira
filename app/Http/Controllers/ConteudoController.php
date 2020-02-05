@@ -118,7 +118,7 @@ class ConteudoController extends ApiController
         $validator = Validator::make($this->request->all(), config("rules.conteudo"));
 
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível criar o conteúdo", 201);
+            return $this->errorResponse($validator->errors(), "Não foi possível criar o conteúdo", 422);
         }
 
         $conteudo = $this->conteudo;
@@ -145,7 +145,9 @@ class ConteudoController extends ApiController
         $conteudo->qt_downloads = $this->conteudo::INIT_COUNT;
         $conteudo->qt_access = $this->conteudo::INIT_COUNT;
 
-        $conteudo->save();
+        if (!$conteudo->save()) {
+            return $this->errorResponse([], "Não foi possível cadastrar o conteúdo", 422);
+        }
         // PALAVRAS CHAVE, COMPONENTES CURRICULARES
         $conteudo->tags()->attach(explode(',', $this->request->tags));
         $conteudo->componentes()->attach(explode(',', $this->request->componentes));
@@ -153,6 +155,7 @@ class ConteudoController extends ApiController
         $this->saveFullTextSearch($conteudo->id);
 
         $this->saveOptions($conteudo->id);
+
         return $this->showOne($conteudo, 'Conteúdo cadastrado com sucesso!!', 200);
     }
     private function saveOptions($conteudo_id)
@@ -219,7 +222,7 @@ class ConteudoController extends ApiController
         }
         $validator = Validator::make($this->request->all(), config("rules.conteudo"));
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível atualizar o conteúdo", 201);
+            return $this->errorResponse($validator->errors(), "Não foi possível atualizar o conteúdo", 422);
         }
         $conteudo->fill($this->request->all());
         if ($conteudo->save()) {
@@ -251,7 +254,7 @@ class ConteudoController extends ApiController
         $conteudo->componentes()->detach();
         $conteudo->niveis()->detach();
         if (!$conteudo->delete()) {
-            return $this->errorResponse([], 'Não foi Possível deletar o conteúdo', 201);
+            return $this->errorResponse([], 'Não foi Possível deletar o conteúdo', 422);
         } else {
             return $this->successResponse([], "Conteúdo de id: {$id} foi apagado com sucesso!!", 200);
         }

@@ -3,25 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Category;
-use App\AplicativoCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ApiController;
 
 class CategoryController extends ApiController
 {
-    private $appCategory;
     private $category;
     protected $request;
 
-    public function __construct(Request $request, AplicativoCategory $appCategory, Category $category)
+    public function __construct(Request $request, Category $category)
     {
         $this->middleware('jwt.verify')->except([
-            'index', 'search', 'getById', 'getByTagId', 'getAplicativoCategories'
+            'index', 'search', 'getById', 'getByTagId'
         ]);
         $this->category = $category;
         $this->request = $request;
-        $this->appCategory =  $appCategory;
     }
 
     public function index()

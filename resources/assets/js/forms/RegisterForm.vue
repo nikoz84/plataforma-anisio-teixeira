@@ -99,34 +99,17 @@ export default {
         password: this.password,
         confirmation: this.confirmation
       };
-      let resp = await axios.post("/auth/register", data);
-      
-      if (resp.data && resp.data.success) {
-        this.$q.loading.hide();
-        
-        this.$router.push("/usuario/confirmar-email");
 
-        this.$q.notify({
-          color: "positive",
-          textColor: "white",
-          icon: "done",
-          message: `${resp.data.message}`
-        });
-      } else {
-        
-        this.errors = resp.data.errors;
+      try {
+        let resp = await axios.post("/auth/register", data);
         this.$q.loading.hide();
-        this.$q.notify({
-          color: "negative",
-          textColor: "white",
-          icon: "error",
-          message: resp.data.message
-        });
+        this.$router.push("/usuario/confirmar-email");
+      } catch (response) {
+        this.errors = response.errors;
       }
     }
   }
 };
 </script>
 <style lang="scss" scoped>
-
 </style>

@@ -4,14 +4,17 @@
       <q-card class="offset-md-3 col-md-6">
         <q-card-section>
           <div class="text-center text-h5" v-text="title"></div>
-          <q-separator inset />
-          <p class="q-pt-lg">
-            Este espaço serve para você denunciar qualquer coisa que você
-            considere <b>imprópria</b>, basta fornecer o endereço da página onde
-            esse conteúdo se localiza e uma mensagem descrevendo do que se trata
-            e por que você acha que essa página merece a denuncia.
+        </q-card-section>
+        <q-card-section>
+          <p v-if="$route.params.action == 'denuncia'">
+            Denuncie neste espaço, o ODA que você considera imprópio, descrevendo a situação.
           </p>
-          <q-separator inset />
+          <p v-if="$route.params.action == 'faleconosco'">
+            Perguntas ou dúvidas? por favor preencha o formulario embaixo;
+          </p>
+          <p v-if="$route.params.action == 'reportar'">
+            Reporte algum problema na visualização ou qualquer resultado não esperado no site.
+          </p>
         </q-card-section>
         <q-card-section>
           <q-form
@@ -22,8 +25,8 @@
             <q-input
               filled
               v-model="name"
-              label="Seu Nome *"
-              hint="Nome"
+              label="Seu Nome"
+              hint="Nome obrigatório"
               bottom-slots
               :error="errors.name && errors.name.length > 0"
             >
@@ -33,10 +36,10 @@
             </q-input>
             <q-input
               v-model="email"
-              label="example@dominio.com *"
+              label="example@dominio.com"
               filled
               type="email"
-              hint="E-mail"
+              hint="E-mail obrigatório"
               bottom-slots
               :error="errors.email && errors.email.length > 0"
             >
@@ -47,8 +50,8 @@
             <q-input
               filled
               v-model="subject"
-              label="Assunto da mensagem *"
-              hint="Assunto"
+              label="Assunto da mensagem"
+              hint="Assunto obrigatório"
               bottom-slots
               :error="errors.subject && errors.subject.length > 0"
             >
@@ -61,8 +64,8 @@
               v-model="message"
               filled
               type="textarea"
-              label="Escreva aqui sua mensagem *"
-              hint="Mensagem"
+              label="Escreva aqui sua mensagem"
+              hint="Mensagem obrigatório"
               bottom-slots
               :error="errors.message && errors.message.length > 0"
             >
@@ -100,7 +103,6 @@
 <script>
 import ShowErrors from "../components/ShowErrors.vue";
 import VueRecaptcha from "vue-recaptcha";
-import { mapState, mapMutations } from "vuex";
 import { QCard, QCardSection, QImg, QForm, QInput, QSeparator } from "quasar";
 
 export default {
@@ -117,6 +119,7 @@ export default {
   },
   data() {
     return {
+      errors: {},
       name: "",
       email: "",
       url: this.$route.params.url,
@@ -141,18 +144,27 @@ export default {
     }
   },
   computed: {
-    ...mapState(["errors"]),
     getUrl() {
       return localStorage.urlDenuncia;
     },
     title() {
-      return this.$route.params.action == "faleconosco"
-        ? "Fale Conosco"
-        : "Denunciar";
+      switch (this.$route.params.action) {
+        case "faleconosco":
+          return "Fale conosco";
+          break;
+        case "denunciar":
+          return "Denunciar Conteúdo";
+          break;
+        case "reportar":
+          return "Reportar Problema";
+          break;
+        default:
+          return "Outros";
+          break;
+      }
     }
   },
   methods: {
-    ...mapMutations(["SET_ERRORS"]),
     async onSubmit() {
       this.$q.loading.show();
 
@@ -165,29 +177,15 @@ export default {
         action: this.$route.params.action,
         recaptcha: grecaptcha.getResponse()
       };
-
-      let resp = await axios.post("/denuncias", data);
-      if (resp.data.success && resp.status == 200) {
+      try {
+        let resp = await axios.post("/denuncias", data);
         this.$q.loading.hide();
-        this.SET_ERRORS([]);
+        this.errors = {};
         localStorage.removeItem("urlDenuncia");
         this.$router.push("/");
-        this.$q.notify({
-          color: "positive",
-          textColor: "white",
-          icon: "done",
-          message: "Enviado com sucesso!"
-        });
-      } else {
-        this.SET_ERRORS(resp.data.errors);
+      } catch (response) {
+        this.errors = response.errors;
         grecaptcha.reset();
-        this.$q.loading.hide();
-        this.$q.notify({
-          color: "negative",
-          textColor: "white",
-          icon: "error",
-          message: "Prencha os campos."
-        });
       }
     }
   }

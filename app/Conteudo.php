@@ -13,6 +13,7 @@ use App\User;
 use App\Tag;
 use App\CurricularComponent;
 use App\License;
+use App\Category;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Storage;
 use App\Helpers\TransformDate;
@@ -94,6 +95,10 @@ class Conteudo extends Model
         return $this->belongsToMany(CurricularComponent::class)
             ->whereRaw('category_id IS NOT NULL')
             ->with('categories');
+    }
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
     /**
      * Seleciona niveis de ensino

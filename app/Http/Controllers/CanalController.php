@@ -37,7 +37,7 @@ class CanalController extends ApiController
         $canais = $query->paginate($limit);
         $canais->setPath("/canais?limit={$limit}");
 
-        return $this->showAsPaginator($canais, 'Lista de Canais', 200);
+        return $this->showAsPaginator($canais);
     }
     /**
      * Show the form for creating a new resource.
@@ -54,11 +54,11 @@ class CanalController extends ApiController
         $canal->is_active = $this->request->is_active;
         $canal->options = json_decode($this->request->options, true);
 
-        if ($canal->save()) {
-            return $this->successResponse($canal, 'Canal cadastrado com sucesso!!', 200);
-        } else {
-            return $this->errorResponse([], 'Impossível cadastrar o canal', 200);
+        if (!$canal->save()) {
+            return $this->errorResponse([], 'Impossível cadastrar o canal', 422);
         }
+
+        return $this->successResponse($canal, 'Canal cadastrado com sucesso!!', 200);
     }
 
     /**
@@ -72,9 +72,8 @@ class CanalController extends ApiController
         $canal = $this->canal::find($id);
 
         if (Gate::denies('super-admin', $canal)) {
-            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 200);
+            return $this->errorResponse([], 'Usuário sem permissão para realizar essa ação', 422);
         }
-
 
         $canal->name = $this->request->name;
         $canal->slug = $this->request->slug;
@@ -82,12 +81,11 @@ class CanalController extends ApiController
         $canal->is_active = $this->request->is_active;
         $canal->options = json_decode($this->request->options, true);
 
-
-        if ($canal->save()) {
-            return $this->successResponse($canal, 'Canal Editado com sucesso!', 200);
-        } else {
-            return $this->errorResponse([], 'Não foi possível editar o canal', 200);
+        if (!$canal->save()) {
+            return $this->errorResponse([], 'Não foi possível editar o canal', 422);
         }
+
+        return $this->successResponse($canal, 'Canal Editado com sucesso!', 200);
     }
     /**
      * Apaga um canal pelo ID.
@@ -97,24 +95,16 @@ class CanalController extends ApiController
      */
     public function delete($id)
     {
-        $canal = $this->canal::find($id);
+        $canal = $this->canal::findOrFail($id);
+
         if (Gate::denies('super-admin', $canal)) {
-            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
+            return $this->errorResponse([], 'Usuário sem permissão para realizar essa ação', 422);
         }
-        $resp = [];
-        if (is_null($canal)) {
-            $resp = [
-                'menssage' => 'Canal não encontrado',
-                'is_deleted' => false,
-            ];
-        } else {
-            $resp = [
-                'menssage' => "Canal de id: {$id} foi excluido com sucesso!!",
-                'is_deleted' => $canal->delete(),
-            ];
+        if (!$canal->delete()) {
+            $this->errorResponse([], "Não foi possível deletar o canal", 422);
         }
 
-        return response()->json($resp);
+        return $this->successResponse([], "Canal apagado com sucesso!", 200);
     }
     /**
      * Seleciona Canal pela url amigável (SLUG)

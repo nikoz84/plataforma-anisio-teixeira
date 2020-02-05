@@ -2,11 +2,14 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Model;
 use App\Conteudo;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Helpers\TransformDate;
+use App\Tag;
+use App\AplicativoCategory;
 
 class Aplicativo extends Conteudo
 {
@@ -43,6 +46,7 @@ class Aplicativo extends Conteudo
      *
      * @return void
      */
+    /*
     public static function boot()
     {
         parent::boot();
@@ -51,6 +55,7 @@ class Aplicativo extends Conteudo
             $query->where('canal_id', 9);
         });
     }
+    */
     /**
      * Conjunto de tags do aplicativo
      *
@@ -58,7 +63,7 @@ class Aplicativo extends Conteudo
      */
     public function tags()
     {
-        return $this->belongsToMany('App\Tag', 'aplicativo_tag', 'aplicativo_id', 'tag_id')
+        return $this->belongsToMany(Tag::class, 'aplicativo_tag', 'aplicativo_id', 'tag_id')
             ->select(['id', 'name'])->orderBy('name');
     }
     /**
@@ -68,9 +73,10 @@ class Aplicativo extends Conteudo
      */
     public function category()
     {
-        return $this->hasOne('App\AplicativoCategory', 'id', 'category_id')
+        return $this->hasOne(AplicativoCategory::class, 'id', 'category_id')
             ->select(['id', 'name']);
     }
+
     /**
      * Descrição abreviada
      *
@@ -111,31 +117,4 @@ class Aplicativo extends Conteudo
     {
         return TransformDate::format($this['created_at']);
     }
-    /**
-     * Cria aplicativo no banco de dados
-     *
-     * @param object $request
-     * @return App\Aplicativo
-     */
-    /*
-    public static function create($request)
-    {
-        $aplicativo = new \App\Aplicativo();
-
-        $aplicativo->user_id = Auth::user()->id;
-        $aplicativo->category_id = $request->category_id;
-        $aplicativo->canal_id = 9;
-        $aplicativo->name = $request->name;
-        $aplicativo->url = $request->url;
-        $aplicativo->description = $request->description;
-        $aplicativo->is_featured = $request->is_featured;
-
-        $aplicativo->options = json_decode($request->options, true);
-        $aplicativo->tags->attach($request->tags);
-
-        $aplicativo->save();
-
-        return $aplicativo;
-    }
-    */
 }

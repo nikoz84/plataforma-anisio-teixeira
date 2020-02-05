@@ -9,6 +9,9 @@ use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\HttpException as KernerException;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Database\QueryException;
 use App\Traits\ApiResponser;
 
 class Handler extends ExceptionHandler
@@ -53,24 +56,36 @@ class Handler extends ExceptionHandler
      * @param  \Illuminate\Http\Request  $request
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
+     *
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof TokenExpiredException) {
-            return $this->errorResponse([], 'Token Expirado', 401);
-        } elseif ($exception instanceof TokenInvalidException) {
-            return $this->errorResponse([], 'Token Inválido', 401);
-        } elseif ($exception instanceof JWTException) {
-            return $this->errorResponse([], 'Não Autorizado', 403);
+        if (env('APP_ENV') == 'production') {
+            if ($exception instanceof TokenExpiredException) {
+                return $this->errorResponse([], 'Token Expirado', 401);
+            }
+            if ($exception instanceof TokenInvalidException) {
+                return $this->errorResponse([], 'Token Inválido', 401);
+            }
+            if ($exception instanceof JWTException) {
+                return $this->errorResponse([], 'Não Autorizado', 403);
+            }
+            if ($exception instanceof ModelNotFoundException) {
+                return $this->errorResponse([], "Modelo não encontrado", 404);
+            }
+            if ($exception instanceof QueryException) {
+                return $this->errorResponse([], "Modelo não encontrado", 404);
+            }
+            if ($exception instanceof HttpException) {
+                return $this->errorResponse([], "Muitas requisições, espere um minuto", 429);
+            }
+            if ($exception instanceof KernerException) {
+                return $this->errorResponse([], 'Erro no servidor', 500);
+            }
+            if ($exception instanceof ValidationException) {
+                return $this->errorResponse([], 'Erro de validação', 500);
+            }
         }
-        if ($exception instanceof ModelNotFoundException) {
-            return $this->errorResponse([], "Modelo não encontrado", 404);
-        }
-        if ($exception instanceof HttpException) {
-            return $this->errorResponse([], "Muitas requisições, espere um minuto", 429);
-        }
-
-
         return parent::render($request, $exception);
     }
 }

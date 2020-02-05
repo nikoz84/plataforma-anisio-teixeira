@@ -1,7 +1,7 @@
 <template>
     <div class="row q-pa-md">
         <div class="col-sm-6 q-pa-md">
-            <form v-on:submit.prevent="save">
+            <form v-on:submit.prevent="save()">
                 <q-input filled v-model.trim="tag.name" label="Palavra Chave"/>
                 <q-card v-if="tag.id">
                     <q-card-section>
@@ -42,7 +42,8 @@ export default {
     return {
       busca: "",
       tag: {},
-      tags: []
+      tags: [],
+      errors: {}
     };
   },
   watch: {
@@ -58,7 +59,6 @@ export default {
   created() {
     this.getTag();
   },
-  computed: {},
   methods: {
     async save() {
       let id = this.$route.params.id ? `/${this.$route.params.id}` : "";
@@ -69,14 +69,10 @@ export default {
         form.append("id", this.$route.params.id);
         form.append("_method", "PUT");
       }
-
-      let resp = await axios.post(this.$route.params.slug + id, form);
-      if (resp.data.success) {
-        this.$q.notify({
-          color: "possitive",
-          textColor: "white",
-          message: resp.data.message
-        });
+      try {
+        await axios.post(this.$route.params.slug + id, form);
+      } catch (response) {
+        this.errors = response.errors;
       }
     },
     format(data) {
@@ -84,7 +80,6 @@ export default {
     },
     async getTags(val) {
       if (!val) return;
-      console.log(val);
       let resp = await axios.get(`tags/search/${val}?limit=150`);
       if (resp.data.success == true) {
         this.tags = resp.data.paginator.data;

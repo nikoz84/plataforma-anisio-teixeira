@@ -9,31 +9,32 @@ use Illuminate\Support\Facades\Validator;
 
 class AplicativoCategoryController extends ApiController
 {
-    public function __construct(AplicativoCategory $category, Request $request)
+    public function __construct(Request $request)
     {
-        $this->middleware('jwt.verify')->except(['index']);
-        $this->category = $category;
+        $this->middleware('jwt.verify')->except(['index', 'getById']);
+
         $this->request = $request;
     }
     public function index()
     {
-        $categories = $this->category::all();
-        return response()->json([
-            'success' => true,
-            'categories' => $categories
-        ]);
+
+        $categories = AplicativoCategory::all();
+
+        return $this->successResponse($categories, '', 200);
     }
     public function create()
     {
         $validator = Validator::make($this->request->all(), config("rules.aplicativo_categoria"));
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Campo nome é obrigatório!", 201);
+            return $this->errorResponse($validator->errors(), "Campo nome é obrigatório!", 422);
         }
         $aplicativo_category = $this->category;
         $aplicativo_category->name = $this->request->name;
-        if ($aplicativo_category->save()) {
-            return $this->successResponse($aplicativo_category, 'Aplicativo categoria criada com sucesso!', 200);
+
+        if (!$aplicativo_category->save()) {
+            return $this->errorResponse([], 'Não foi possível cadastrar a categoria', 422);
         }
+        return $this->successResponse($aplicativo_category, 'Categoria criada com sucesso!', 200);
     }
     public function update(Request $request, $id)
     {
@@ -69,7 +70,7 @@ class AplicativoCategoryController extends ApiController
         }
     }
 
-    public function getAplicativoCategories($id)
+    public function getById($id)
     {
         $category = $this->category::findOrFail($id);
         return $this->showOne($category);

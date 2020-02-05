@@ -107,30 +107,23 @@ export default {
       this.errors = {};
 
       let data = { email: this.email, password: this.password };
-      let resp = await axios.post("/auth/login", data);
-
-      if (resp.data.success) {
-        this.$q.loading.hide();
-        const jwtToken = resp.data.metadata.token.access_token;
-
-        this.$q.localStorage.set("token", jwtToken);
-        this.docodePayloadToken();
-        this.SET_LOGIN_USER(true);
-        axios.defaults.headers.common["Authorization"] = `Bearer ${jwtToken}`;
-
-        this.$router.replace("/admin/conteudos/listar");
-
-        this.$q.notify({
-          color: "positive",
-          textColor: "white",
-          icon: "done",
-          message: `${resp.data.message} ${this.$q.localStorage.getItem(
-            "username"
-          )}!!`
-        });
-      } else {
-        this.errors = resp.data;
+      try {
+        let resp = await axios.post("/auth/login", data);
+        this.login(resp.data);
+      } catch (response) {
+        this.errors = response.errors;
       }
+    },
+    login(resp) {
+      this.$q.loading.hide();
+      const jwtToken = resp.metadata.token.access_token;
+
+      this.$q.localStorage.set("token", jwtToken);
+      this.docodePayloadToken();
+      this.SET_LOGIN_USER(true);
+      axios.defaults.headers.common["Authorization"] = `Bearer ${jwtToken}`;
+
+      this.$router.replace("/admin/conteudos/listar");
     },
     docodePayloadToken() {
       const base64Url = localStorage.token.split(".")[1];

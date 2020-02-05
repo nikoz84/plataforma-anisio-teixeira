@@ -3077,7 +3077,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_ShowErrors_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/ShowErrors.vue */ "./resources/assets/js/components/ShowErrors.vue");
+/* harmony import */ var quasar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! quasar */ "./node_modules/quasar/src/index.esm.js");
+/* harmony import */ var _components_ShowErrors_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/ShowErrors.vue */ "./resources/assets/js/components/ShowErrors.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -3085,56 +3086,35 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AplicativoForm",
   components: {
-    erros: _components_ShowErrors_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    QCard: quasar__WEBPACK_IMPORTED_MODULE_1__["QCard"],
+    showErrors: _components_ShowErrors_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
+      aplicativo: {},
       name: "",
       description: null,
       url: null,
-      is_featured: false,
       tags: null,
       options: {},
       image: null,
-      category_id: "",
+      category_id: null,
       categories: [],
-      message: null,
       count: 0,
-      success: false,
-      isError: true,
-      isUpdate: false,
-      textButton: "Criar",
-      errors: {
-        name: [],
-        url: [],
-        description: [],
-        category: [],
-        image: []
-      }
+      errors: {}
     };
   },
   created: function created() {
-    if (this.$route.params.update) {
-      this.getAplicativo();
-      this.isUpdate = true;
-      this.textButton = "Editar";
-    }
+    this.getCategories();
+    this.getAplicativo();
   },
   methods: {
-    send: function send() {
-      if (this.isUpdate) {
-        this.editAplicativo();
-      } else {
-        this.createAplicativo();
-      }
-    },
-    createAplicativo: function () {
-      var _createAplicativo = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var _this = this;
-
+    save: function () {
+      var _save = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var form, resp;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -3153,54 +3133,49 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 3:
                 form = new FormData();
-                form.append("name", this.name);
-                form.append("description", this.description);
-                form.append("category_id", this.category_id);
-                form.append("canal_id", localStorage.canal_id);
-                form.append("tags", this.tags);
-                form.append("url", this.url);
-                form.append("is_featured", this.is_featured);
-                form.append("options", JSON.stringify(this.options));
+                form.append("name", this.aplicativo.name);
+                form.append("description", this.aplicativo.description);
+                form.append("category_id", this.aplicativo.category_id);
+                form.append("canal_id", 9);
+                form.append("tags", this.aplicativo.tags);
+                form.append("url", this.aplicativo.url);
+                form.append("is_featured", this.aplicativo.is_featured);
+                form.append("options", JSON.stringify(this.aplicativo.options));
                 form.append("image", this.image, this.image.name);
-                _context.next = 15;
-                return axios.post("/aplicativos", form);
 
-              case 15:
-                resp = _context.sent;
-
-                if (resp.data.success) {
-                  this.$router.push({
-                    name: "Listar",
-                    params: {
-                      slug: this.$route.params.slug
-                    }
-                  });
-                } else {
-                  this.isError = resp.data.success;
-                  this.message = resp.data.message;
-
-                  if (resp.data.errors) {
-                    this.errors = resp.data.errors;
-                  }
-
-                  setTimeout(function () {
-                    _this.isError = true;
-                  }, 3000);
+                if (this.$route.params.action == "editar") {
+                  form.append("id", this.$route.params.id);
+                  form.append("_method", "PUT");
                 }
 
+                _context.prev = 14;
+                _context.next = 17;
+                return axios.post("/aplicativos", form);
+
               case 17:
+                resp = _context.sent;
+                this.$router.push("/admin/aplicativos/listar");
+                _context.next = 24;
+                break;
+
+              case 21:
+                _context.prev = 21;
+                _context.t0 = _context["catch"](14);
+                this.errors = _context.t0.errors;
+
+              case 24:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this);
+        }, _callee, this, [[14, 21]]);
       }));
 
-      function createAplicativo() {
-        return _createAplicativo.apply(this, arguments);
+      function save() {
+        return _save.apply(this, arguments);
       }
 
-      return createAplicativo;
+      return save;
     }(),
     getCategories: function () {
       var _getCategories = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
@@ -3210,7 +3185,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios.get("/categories/aplicativos");
+                return axios.get("/aplicativos/categories");
 
               case 2:
                 resp = _context2.sent;
@@ -3230,9 +3205,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return getCategories;
     }(),
-    onFileChange: function onFileChange(e) {
-      this.image = e.target.files[0];
-    },
     countCaracters: function countCaracters(e) {
       if (e.target.value.length > 140) {
         this.success = true;
@@ -3247,22 +3219,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _context3.next = 2;
-                return axios.get("/aplicativos/".concat(this.$route.params.id));
-
-              case 2:
-                resp = _context3.sent;
-
-                if (resp.data.success) {
-                  this.name = resp.data.aplicativo.name;
-                  this.category_id = resp.data.aplicativo.category_id;
-                  this.description = resp.data.aplicativo.description;
-                  this.url = resp.data.aplicativo.url;
-                  this.is_featured = resp.data.aplicativo.is_featured;
-                  this.image = resp.data.aplicativo.image;
+                if (this.$route.params.id) {
+                  _context3.next = 2;
+                  break;
                 }
 
+                return _context3.abrupt("return");
+
+              case 2:
+                _context3.next = 4;
+                return axios.get("/aplicativos/".concat(this.$route.params.id));
+
               case 4:
+                resp = _context3.sent;
+                console.log(resp);
+
+              case 6:
               case "end":
                 return _context3.stop();
             }
@@ -3275,46 +3247,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return getAplicativo;
-    }(),
-    editAplicativo: function () {
-      var _editAplicativo = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var params, resp;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                params = {
-                  name: this.name,
-                  category_id: this.category_id,
-                  canal_id: localStorage.canal_id,
-                  description: this.description,
-                  url: this.url,
-                  is_featured: this.is_featured,
-                  token: localStorage.token
-                };
-                _context4.next = 3;
-                return axios.put("/aplicativos/".concat(this.$route.params.id), params);
-
-              case 3:
-                resp = _context4.sent;
-
-                if (resp.data.success) {
-                  this.$router.push("/aplicativos-educacionais/exibir/".concat(this.$route.params.id));
-                }
-
-              case 5:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4, this);
-      }));
-
-      function editAplicativo() {
-        return _editAplicativo.apply(this, arguments);
-      }
-
-      return editAplicativo;
     }()
   }
 });
@@ -3854,20 +3786,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_ShowErrors_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/ShowErrors.vue */ "./resources/assets/js/components/ShowErrors.vue");
 /* harmony import */ var vue_recaptcha__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-recaptcha */ "./node_modules/vue-recaptcha/dist/vue-recaptcha.es.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var quasar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! quasar */ "./node_modules/quasar/src/index.esm.js");
+/* harmony import */ var quasar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! quasar */ "./node_modules/quasar/src/index.esm.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 
@@ -3876,16 +3800,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   name: "DenunciaForm",
   components: {
     ShowErrors: _components_ShowErrors_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    QCard: quasar__WEBPACK_IMPORTED_MODULE_4__["QCard"],
-    QCardSection: quasar__WEBPACK_IMPORTED_MODULE_4__["QCardSection"],
-    QForm: quasar__WEBPACK_IMPORTED_MODULE_4__["QForm"],
-    QInput: quasar__WEBPACK_IMPORTED_MODULE_4__["QInput"],
-    QImg: quasar__WEBPACK_IMPORTED_MODULE_4__["QImg"],
-    QSeparator: quasar__WEBPACK_IMPORTED_MODULE_4__["QSeparator"],
+    QCard: quasar__WEBPACK_IMPORTED_MODULE_3__["QCard"],
+    QCardSection: quasar__WEBPACK_IMPORTED_MODULE_3__["QCardSection"],
+    QForm: quasar__WEBPACK_IMPORTED_MODULE_3__["QForm"],
+    QInput: quasar__WEBPACK_IMPORTED_MODULE_3__["QInput"],
+    QImg: quasar__WEBPACK_IMPORTED_MODULE_3__["QImg"],
+    QSeparator: quasar__WEBPACK_IMPORTED_MODULE_3__["QSeparator"],
     VueRecaptcha: vue_recaptcha__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
+      errors: {},
       name: "",
       email: "",
       url: this.$route.params.url,
@@ -3910,15 +3835,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapState"])(["errors"]), {
+  computed: {
     getUrl: function getUrl() {
       return localStorage.urlDenuncia;
     },
     title: function title() {
-      return this.$route.params.action == "faleconosco" ? "Fale Conosco" : "Denunciar";
+      switch (this.$route.params.action) {
+        case "faleconosco":
+          return "Fale conosco";
+          break;
+
+        case "denunciar":
+          return "Denunciar Conteúdo";
+          break;
+
+        case "reportar":
+          return "Reportar Problema";
+          break;
+
+        default:
+          return "Outros";
+          break;
+      }
     }
-  }),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapMutations"])(["SET_ERRORS"]), {
+  },
+  methods: {
     onSubmit: function () {
       var _onSubmit = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var data, resp;
@@ -3936,41 +3877,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   action: this.$route.params.action,
                   recaptcha: grecaptcha.getResponse()
                 };
-                _context.next = 4;
+                _context.prev = 2;
+                _context.next = 5;
                 return axios.post("/denuncias", data);
 
-              case 4:
+              case 5:
                 resp = _context.sent;
+                this.$q.loading.hide();
+                this.errors = {};
+                localStorage.removeItem("urlDenuncia");
+                this.$router.push("/");
+                _context.next = 16;
+                break;
 
-                if (resp.data.success && resp.status == 200) {
-                  this.$q.loading.hide();
-                  this.SET_ERRORS([]);
-                  localStorage.removeItem("urlDenuncia");
-                  this.$router.push("/");
-                  this.$q.notify({
-                    color: "positive",
-                    textColor: "white",
-                    icon: "done",
-                    message: "Enviado com sucesso!"
-                  });
-                } else {
-                  this.SET_ERRORS(resp.data.errors);
-                  grecaptcha.reset();
-                  this.$q.loading.hide();
-                  this.$q.notify({
-                    color: "negative",
-                    textColor: "white",
-                    icon: "error",
-                    message: "Prencha os campos."
-                  });
-                }
+              case 12:
+                _context.prev = 12;
+                _context.t0 = _context["catch"](2);
+                this.errors = _context.t0.errors;
+                grecaptcha.reset();
 
-              case 6:
+              case 16:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this);
+        }, _callee, this, [[2, 12]]);
       }));
 
       function onSubmit() {
@@ -3979,7 +3910,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       return onSubmit;
     }()
-  })
+  }
 });
 
 /***/ }),
@@ -4069,7 +4000,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])(["login"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapMutations"])(["SET_LOGIN_USER"]), {
     onSubmit: function () {
       var _onSubmit = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var data, resp, jwtToken;
+        var data, resp;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -4080,36 +4011,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   email: this.email,
                   password: this.password
                 };
-                _context.next = 5;
+                _context.prev = 3;
+                _context.next = 6;
                 return axios.post("/auth/login", data);
 
-              case 5:
+              case 6:
                 resp = _context.sent;
+                this.login(resp.data);
+                _context.next = 13;
+                break;
 
-                if (resp.data.success) {
-                  this.$q.loading.hide();
-                  jwtToken = resp.data.metadata.token.access_token;
-                  this.$q.localStorage.set("token", jwtToken);
-                  this.docodePayloadToken();
-                  this.SET_LOGIN_USER(true);
-                  axios.defaults.headers.common["Authorization"] = "Bearer ".concat(jwtToken);
-                  this.$router.replace("/admin/conteudos/listar");
-                  this.$q.notify({
-                    color: "positive",
-                    textColor: "white",
-                    icon: "done",
-                    message: "".concat(resp.data.message, " ").concat(this.$q.localStorage.getItem("username"), "!!")
-                  });
-                } else {
-                  this.errors = resp.data;
-                }
+              case 10:
+                _context.prev = 10;
+                _context.t0 = _context["catch"](3);
+                this.errors = _context.t0.errors;
 
-              case 7:
+              case 13:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this);
+        }, _callee, this, [[3, 10]]);
       }));
 
       function onSubmit() {
@@ -4118,6 +4040,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       return onSubmit;
     }(),
+    login: function login(resp) {
+      this.$q.loading.hide();
+      var jwtToken = resp.metadata.token.access_token;
+      this.$q.localStorage.set("token", jwtToken);
+      this.docodePayloadToken();
+      this.SET_LOGIN_USER(true);
+      axios.defaults.headers.common["Authorization"] = "Bearer ".concat(jwtToken);
+      this.$router.replace("/admin/conteudos/listar");
+    },
     docodePayloadToken: function docodePayloadToken() {
       var base64Url = localStorage.token.split(".")[1];
       var base64 = base64Url.replace("-", "+").replace("_", "/");
@@ -4263,38 +4194,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   password: this.password,
                   confirmation: this.confirmation
                 };
-                _context.next = 5;
+                _context.prev = 3;
+                _context.next = 6;
                 return axios.post("/auth/register", data);
 
-              case 5:
+              case 6:
                 resp = _context.sent;
+                this.$q.loading.hide();
+                this.$router.push("/usuario/confirmar-email");
+                _context.next = 14;
+                break;
 
-                if (resp.data && resp.data.success) {
-                  this.$q.loading.hide();
-                  this.$router.push("/usuario/confirmar-email");
-                  this.$q.notify({
-                    color: "positive",
-                    textColor: "white",
-                    icon: "done",
-                    message: "".concat(resp.data.message)
-                  });
-                } else {
-                  this.errors = resp.data.errors;
-                  this.$q.loading.hide();
-                  this.$q.notify({
-                    color: "negative",
-                    textColor: "white",
-                    icon: "error",
-                    message: resp.data.message
-                  });
-                }
+              case 11:
+                _context.prev = 11;
+                _context.t0 = _context["catch"](3);
+                this.errors = _context.t0.errors;
 
-              case 7:
+              case 14:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this);
+        }, _callee, this, [[3, 11]]);
       }));
 
       function onSubmit() {
@@ -4476,7 +4397,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       busca: "",
       tag: {},
-      tags: []
+      tags: [],
+      errors: {}
     };
   },
   watch: {
@@ -4492,11 +4414,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   created: function created() {
     this.getTag();
   },
-  computed: {},
   methods: {
     save: function () {
       var _save = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var id, form, resp;
+        var id, form;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -4510,26 +4431,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   form.append("_method", "PUT");
                 }
 
-                _context.next = 6;
+                _context.prev = 4;
+                _context.next = 7;
                 return axios.post(this.$route.params.slug + id, form);
 
-              case 6:
-                resp = _context.sent;
+              case 7:
+                _context.next = 12;
+                break;
 
-                if (resp.data.success) {
-                  this.$q.notify({
-                    color: "possitive",
-                    textColor: "white",
-                    message: resp.data.message
-                  });
-                }
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](4);
+                this.errors = _context.t0.errors;
 
-              case 8:
+              case 12:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this);
+        }, _callee, this, [[4, 9]]);
       }));
 
       function save() {
@@ -4556,18 +4476,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context2.abrupt("return");
 
               case 2:
-                console.log(val);
-                _context2.next = 5;
+                _context2.next = 4;
                 return axios.get("tags/search/".concat(val, "?limit=150"));
 
-              case 5:
+              case 4:
                 resp = _context2.sent;
 
                 if (resp.data.success == true) {
                   this.tags = resp.data.paginator.data;
                 }
 
-              case 7:
+              case 6:
               case "end":
                 return _context2.stop();
             }
@@ -66173,20 +66092,73 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c(
-      "form",
-      {
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.send()
-          }
-        }
-      },
-      [_vm._v("\n    aplicativos\n  ")]
-    )
-  ])
+  return _c(
+    "article",
+    { staticClass: "q-pa-md" },
+    [
+      _c(
+        "q-card",
+        { staticClass: "row justify-start q-gutter-sm" },
+        [
+          _c("q-card-section", [
+            _c("div", { staticClass: "text-center text-h5" }, [
+              _vm._v(
+                "\n        " +
+                  _vm._s(
+                    _vm.$route.params.action == "adicionar"
+                      ? "Adicionar Aplicativo"
+                      : "Editar Aplicativo"
+                  ) +
+                  "\n      "
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "q-card-section",
+            [
+              _c(
+                "q-form",
+                {
+                  ref: "denunciaForm",
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.save()
+                    }
+                  }
+                },
+                [
+                  _c("q-input", {
+                    attrs: { label: "Nome do aplicativo", "bottom-slots": "" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "error",
+                        fn: function() {
+                          return [
+                            _c("ShowErrors", {
+                              attrs: { errors: _vm.errors.message }
+                            })
+                          ]
+                        },
+                        proxy: true
+                      }
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("q-input", { attrs: { label: "descrição" } })
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -67348,30 +67320,38 @@ var render = function() {
           "q-card",
           { staticClass: "offset-md-3 col-md-6" },
           [
-            _c(
-              "q-card-section",
-              [
-                _c("div", {
-                  staticClass: "text-center text-h5",
-                  domProps: { textContent: _vm._s(_vm.title) }
-                }),
-                _vm._v(" "),
-                _c("q-separator", { attrs: { inset: "" } }),
-                _vm._v(" "),
-                _c("p", { staticClass: "q-pt-lg" }, [
-                  _vm._v(
-                    "\n          Este espaço serve para você denunciar qualquer coisa que você\n          considere "
-                  ),
-                  _c("b", [_vm._v("imprópria")]),
-                  _vm._v(
-                    ", basta fornecer o endereço da página onde\n          esse conteúdo se localiza e uma mensagem descrevendo do que se trata\n          e por que você acha que essa página merece a denuncia.\n        "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("q-separator", { attrs: { inset: "" } })
-              ],
-              1
-            ),
+            _c("q-card-section", [
+              _c("div", {
+                staticClass: "text-center text-h5",
+                domProps: { textContent: _vm._s(_vm.title) }
+              })
+            ]),
+            _vm._v(" "),
+            _c("q-card-section", [
+              _vm.$route.params.action == "denuncia"
+                ? _c("p", [
+                    _vm._v(
+                      "\n          Denuncie neste espaço, o ODA que você considera imprópio, descrevendo a situação.\n        "
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.$route.params.action == "faleconosco"
+                ? _c("p", [
+                    _vm._v(
+                      "\n          Perguntas ou dúvidas? por favor preencha o formulario embaixo;\n        "
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.$route.params.action == "reportar"
+                ? _c("p", [
+                    _vm._v(
+                      "\n          Reporte algum problema na visualização ou qualquer resultado não esperado no site.\n        "
+                    )
+                  ])
+                : _vm._e()
+            ]),
             _vm._v(" "),
             _c(
               "q-card-section",
@@ -67392,8 +67372,8 @@ var render = function() {
                     _c("q-input", {
                       attrs: {
                         filled: "",
-                        label: "Seu Nome *",
-                        hint: "Nome",
+                        label: "Seu Nome",
+                        hint: "Nome obrigatório",
                         "bottom-slots": "",
                         error: _vm.errors.name && _vm.errors.name.length > 0
                       },
@@ -67421,10 +67401,10 @@ var render = function() {
                     _vm._v(" "),
                     _c("q-input", {
                       attrs: {
-                        label: "example@dominio.com *",
+                        label: "example@dominio.com",
                         filled: "",
                         type: "email",
-                        hint: "E-mail",
+                        hint: "E-mail obrigatório",
                         "bottom-slots": "",
                         error: _vm.errors.email && _vm.errors.email.length > 0
                       },
@@ -67453,8 +67433,8 @@ var render = function() {
                     _c("q-input", {
                       attrs: {
                         filled: "",
-                        label: "Assunto da mensagem *",
-                        hint: "Assunto",
+                        label: "Assunto da mensagem",
+                        hint: "Assunto obrigatório",
                         "bottom-slots": "",
                         error:
                           _vm.errors.subject && _vm.errors.subject.length > 0
@@ -67485,8 +67465,8 @@ var render = function() {
                       attrs: {
                         filled: "",
                         type: "textarea",
-                        label: "Escreva aqui sua mensagem *",
-                        hint: "Mensagem",
+                        label: "Escreva aqui sua mensagem",
+                        hint: "Mensagem obrigatório",
                         "bottom-slots": "",
                         error:
                           _vm.errors.message && _vm.errors.message.length > 0
@@ -68460,7 +68440,7 @@ var render = function() {
           on: {
             submit: function($event) {
               $event.preventDefault()
-              return _vm.save($event)
+              return _vm.save()
             }
           }
         },
@@ -69257,7 +69237,6 @@ var render = function() {
                 "q-item-label",
                 [
                   _c("q-btn", {
-                    staticClass: "absolute-top-right",
                     attrs: {
                       flat: "",
                       dense: "",
@@ -89365,11 +89344,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 axios__WEBPACK_IMPORTED_MODULE_0___default.a.interceptors.response.use(function (response) {
+  var message = response.data.message;
+
+  if (message) {
+    quasar__WEBPACK_IMPORTED_MODULE_1__["Notify"].create({
+      position: "top-right",
+      color: "positive",
+      message: message
+    });
+  }
+
   return response;
 }, function (error) {
   var status = error.response.status;
   var message = error.response.data.message;
-  var statusText = "Erro desconhecido " + status;
+  var statusText = status ? message : "Erro desconhecido " + status;
 
   switch (status) {
     case 404:

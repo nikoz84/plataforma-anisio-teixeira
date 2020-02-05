@@ -2,11 +2,18 @@ import axios from "axios";
 import { Notify, Dialog, Loading } from "quasar";
 
 axios.interceptors.response.use(
-  response => response,
+  response => {
+    let message = response.data.message;
+    if (message) {
+      Notify.create({ position: "top-right", color: "positive", message });
+    }
+
+    return response;
+  },
   function(error) {
     let status = error.response.status;
     let message = error.response.data.message;
-    let statusText = "Erro desconhecido " + status;
+    let statusText = status ? message : "Erro desconhecido " + status;
     switch (status) {
       case 404:
         // Não encontrado

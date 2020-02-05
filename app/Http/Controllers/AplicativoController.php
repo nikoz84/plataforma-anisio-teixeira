@@ -8,13 +8,13 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ApiController;
 use App\Aplicativo;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
+use App\AplicativoCategory;
 
 class AplicativoController extends ApiController
 {
     public function __construct(Aplicativo $aplicativo, Request $request, Storage $storage)
     {
-        $this->middleware('jwt.verify')->except(['index', 'search', 'getById']);
+        $this->middleware('jwt.verify')->except(['index', 'search', 'getById', 'categories']);
         $this->aplicativo = $aplicativo;
         $this->request = $request;
         $this->storage = $storage;
@@ -39,9 +39,14 @@ class AplicativoController extends ApiController
             ->orderBy('name', 'desc')
             ->paginate($limit)
             ->setPath("/aplicativos?categoria={$category}&limit={$limit}");
-        return $this->showAsPaginator($apps, 'Aplicativos Educacionais', 200);
+        return $this->showAsPaginator($apps);
     }
+    public function categories()
+    {
+        $categories = AplicativoCategory::all();
 
+        return $this->successResponse($categories, '', 200);
+    }
     /**
      * Cria um novo aplicativo.
      *
@@ -57,13 +62,13 @@ class AplicativoController extends ApiController
 
         $app = $this->aplicativo::create($this->request);
 
-        if ($app) {
-            $this->createFile($app->id, $this->request->file('image'));
-
-            return $this->successResponse($app, 'Aplicativo cadastrado com sucesso!', 200);
+        if (!$app) {
+            return $this->errorResponse([], 'não foi possível cadastrar o aplicativo', 201);
         }
 
-        return $this->errorResponse([], 'não foi possível cadastrar o aplicativo', 201);
+        $this->createFile($app->id, $this->request->file('image'));
+
+        return $this->successResponse($app, 'Aplicativo cadastrado com sucesso!', 200);
     }
     private function createFile($id, $image)
     {

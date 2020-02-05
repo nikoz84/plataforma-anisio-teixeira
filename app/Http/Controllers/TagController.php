@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Tag;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
+use Illuminate\Support\Facades\Validator;
 
 class TagController extends ApiController
 {
@@ -41,14 +41,18 @@ class TagController extends ApiController
      */
     public function create()
     {
+        $validator = Validator::make($this->request->all(), config("rules.conteudo"));
 
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors(), "Não foi possível atualizar o conteúdo", 422);
+        }
         $tag = $this->tag::firstOrCreate(['name' => $this->request->name]);
 
-        if ($tag) {
-            return $this->successResponse($tag, "Palavra chave - {$tag->name} - adicionada com sucesso!!", 200);
-        } else {
-            return $this->errorResponse([], "Não foi possivel adicionar a palavra chave", 201);
+        if (!$tag) {
+            return $this->errorResponse([], "Não foi possivel adicionar a palavra chave", 422);
         }
+
+        return $this->successResponse($tag, "Palavra chave - {$tag->name} - adicionada com sucesso!!", 200);
     }
 
     /**
@@ -60,14 +64,14 @@ class TagController extends ApiController
      */
     public function update($id)
     {
-        $tag = $this->tag::find($id);
+        $tag = $this->tag::findOrFail($id);
         $tag->name = $this->request->name;
 
-        if ($tag->save()) {
-            return $this->showOne($tag, 'Palavra chave atualizada com sucesso!!', 200);
-        } else {
-            return $this->errorResponse([], 'Não foi possível editar', 200);
+        if (!$tag->save()) {
+            return $this->errorResponse([], 'Não foi possível editar', 422);
         }
+
+        return $this->showOne($tag, 'Palavra chave atualizada com sucesso!!', 200);
     }
 
     public function search($termo)
@@ -81,7 +85,7 @@ class TagController extends ApiController
             ->paginate($limit);
         $tags->setPath("/tags/search/{$termo}?limit={$limit}");
 
-        return $this->showAsPaginator($tags, '', 200);
+        return $this->showAsPaginator($tags);
     }
     public function autocomplete($term)
     {
@@ -90,6 +94,7 @@ class TagController extends ApiController
         $tags = $this->tag::select(['id', 'name'])
             ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
             ->get(['id', 'name']);
+
         return $this->fetchForSelect(collect($tags));
     }
     /**
@@ -100,18 +105,18 @@ class TagController extends ApiController
      */
     public function delete($id)
     {
-        if ($id) {
-            DB::table('tags')->where('id', '=', $id)->delete();
+        $tag = $this->tag::findOrFail($id);
+
+        if (!$tag->delete()) {
+            $this->errorResponse([], "Impossível deletar tag", 422);
         }
 
-        return response()->json([
-            'success' => true
-        ]);
+        $this->successResponse([], "Tag apagada com sucesso!", 200);
     }
 
     public function getById($id)
     {
-        $tag = $this->tag::find($id);
+        $tag = $this->tag::findOrFail($id);
 
         return $this->showOne($tag, '', 200);
     }

@@ -9,5 +9,5 @@ class Denuncia extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name', 'email', 'url', 'subject', 'message'];
+    protected $fillable = ['name', 'email', 'url', 'subject', 'message', 'action'];
 }

@@ -5,7 +5,6 @@
         <q-btn
           flat
           dense
-          class="absolute-top-right"
           @click="leftDrawerOpenModel = false"
           aria-label="Menu"
           icon="dehaze"

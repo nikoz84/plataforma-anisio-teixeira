@@ -24,10 +24,6 @@ Route::group(['middleware' => ['cors']], function () {
     /** CATEGORIAS */
     Route::get('/categories', 'CategoryController@index')->name('lista.categorias');
     Route::get('/categories/{id}', 'CategoryController@getCategoryById')->name('lista.categoria.x.id');
-    /** APLICATIVOS CATEGORIAS */
-    Route::get('/aplicativos/categories', 'AplicativoCategoryController@index')->name('lista.categorias.aplicativo');
-    Route::get('/aplicativos/categories/{id}', 'AplicativoCategoryController@getAplicativoCategories')
-        ->name('lista.categorias.aplicativos');
     /** TIPOS */
     Route::get('/tipos', 'TipoController@index')->name('listar.tipos');
     Route::get('/tipos/{id}', 'TipoController@getTiposById')->name('lista.tipos.x.id');
@@ -49,6 +45,11 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/aplicativos', 'AplicativoController@index')->name('lista.aplicativo');
     Route::get('/aplicativos/search/{term}', 'AplicativoController@search')->name('busca.aplicativo');
     Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('busca.x.aplicativo.id');
+    /** APLICATIVOS CATEGORIAS */
+    Route::get('/aplicativos/categories', 'AplicativoCategoryController@index')
+        ->name('lista.categorias.aplicativo');
+    Route::get('/aplicativos/categories/{id}', 'AplicativoCategoryController@getById')
+        ->name('lista.categorias.aplicativos');
     /** AUTENTICACAO */
     Route::post('/auth/login', 'AuthController@login')->name('login.usuario');
     Route::post('/auth/register', 'AuthController@register')->name('registro.usuario');
