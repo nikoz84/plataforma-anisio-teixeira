@@ -31,8 +31,9 @@
         <CategoriasMenu
           :categoryName="categoryName"
           :categories="canal.sidebar.categories"
-          v-if="canal.sidebar"
+          v-if="canal.options && canal.options.has_categories"
         ></CategoriasMenu>
+        
         <q-space />
       </q-tabs>
     </nav>
@@ -92,6 +93,7 @@ export default {
   data() {
     return {
       options: [],
+      categories: [],
       loadingState: false,
       categoryName: ""
     };
@@ -99,13 +101,16 @@ export default {
   mounted() {
     this.getCanalBySlug(this.$route.params.slug).then(() => {
       this.fetchData();
+      this.getCategories();
     });
+    
   },
   watch: {
     $route(to, from) {
       if (to.fullPath != from.fullPath) {
         this.getCanalBySlug(this.$route.params.slug).then(() => {
           this.fetchData();
+          this.getCategories();
         });
       }
     }
@@ -159,6 +164,11 @@ export default {
           return this.fetchConteudos(query);
           break;
       }
+    },
+    getCategories(){
+        if(this.canal.options.has_categories){
+          console.log('hola')
+        }
     }
   }
 };

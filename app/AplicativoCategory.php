@@ -13,4 +13,13 @@ class AplicativoCategory extends Model
     protected $table = 'aplicativo_categories';
     protected $appends = [];
     public $fillable = ['name'];
+
+    public function aplicativos()
+    {
+        return $this->hasMany(Aplicativo::class, 'category_id', 'id');
+    }
+    public function getSubCategoriesAttribute()
+    {
+        return [];
+    }
 }

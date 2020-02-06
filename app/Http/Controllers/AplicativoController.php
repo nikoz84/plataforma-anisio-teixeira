@@ -14,7 +14,7 @@ class AplicativoController extends ApiController
 {
     public function __construct(Aplicativo $aplicativo, Request $request, Storage $storage)
     {
-        $this->middleware('jwt.verify')->except(['index', 'search', 'getById', 'categories']);
+        $this->middleware('jwt.verify')->except(['index', 'search', 'getById','categories']);
         $this->aplicativo = $aplicativo;
         $this->request = $request;
         $this->storage = $storage;

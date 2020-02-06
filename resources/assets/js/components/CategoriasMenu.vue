@@ -13,7 +13,7 @@
                   <q-icon name="keyboard_arrow_right" />
                 </q-item-section>
 
-                <q-menu anchor="center middle" self="center middle" v-if="category.sub_categories && category.sub_categories.length > 0">
+                <q-menu anchor="center middle" self="center middle" v-if="hasSubCategories(category)">
                   <q-list>
                     <q-item v-for="(subcategory,n) in category.sub_categories" 
                             :key="n" 

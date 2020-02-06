@@ -43,12 +43,13 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/posts/estatisticas', 'WordpressController@getEstatisticas')->name('estatisticas.blog');
     /** APLICATIVOS */
     Route::get('/aplicativos', 'AplicativoController@index')->name('lista.aplicativo');
+    Route::get('/aplicativos/categories', 'AplicativoController@categories')->name('lista.categorias');
     Route::get('/aplicativos/search/{term}', 'AplicativoController@search')->name('busca.aplicativo');
     Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('busca.x.aplicativo.id');
     /** APLICATIVOS CATEGORIAS */
-    Route::get('/aplicativos/categories', 'AplicativoCategoryController@index')
+    Route::get('/aplicativos-categories', 'AplicativoCategoryController@index')
         ->name('lista.categorias.aplicativo');
-    Route::get('/aplicativos/categories/{id}', 'AplicativoCategoryController@getById')
+    Route::get('/aplicativos-categories/{id}', 'AplicativoCategoryController@getById')
         ->name('lista.categorias.aplicativos');
     /** AUTENTICACAO */
     Route::post('/auth/login', 'AuthController@login')->name('login.usuario');
@@ -76,10 +77,10 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     Route::put('/categories/{id}', 'CategoryController@update')->name('atualizar.categorias');
     Route::delete('/categories/{id}', 'CategoryController@delete')->name('categorias.apagar');
     /** APLICATIVOS CATEGORIAS */
-    Route::post('/aplicativos/categories', 'AplicativoCategoryController@create')->name('criar.aplicativo.categorias');
-    Route::put('/aplicativos/categories/{id}', 'AplicativoCategoryController@update')
+    Route::post('/aplicativos-categories', 'AplicativoCategoryController@create')->name('criar.aplicativo.categorias');
+    Route::put('/aplicativos-categories/{id}', 'AplicativoCategoryController@update')
         ->name('atualizar.aplicativo.categorias');
-    Route::delete('/aplicativos/categories/{id}', 'AplicativoCategoryController@delete')
+    Route::delete('/aplicativos-categories/{id}', 'AplicativoCategoryController@delete')
         ->name('apagar.aplicativo.categorias');
     /** AUTENTICACAO */
     Route::post('/auth/logout', 'AuthController@logout')->name('sair');

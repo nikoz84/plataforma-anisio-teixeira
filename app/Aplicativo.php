@@ -41,21 +41,15 @@ class Aplicativo extends Conteudo
     protected $casts = [
         'options' => 'array',
     ];
-    /**
-     * Clase que extende de conteúdo
-     *
-     * @return void
-     */
-    /*
-    public static function boot()
+    
+    public function canal()
     {
-        parent::boot();
+        Canal::$without_appends = true;
 
-        static::addGlobalScope(function ($query) {
-            $query->where('canal_id', 9);
-        });
+        return $this->belongsTo(Canal::class, 'canal_id')
+            ->select(['id', 'name', 'slug', 'options->color as color'])
+            ->where('id', 9);
     }
-    */
     /**
      * Conjunto de tags do aplicativo
      *
@@ -73,10 +67,9 @@ class Aplicativo extends Conteudo
      */
     public function category()
     {
-        return $this->hasOne(AplicativoCategory::class, 'id', 'category_id')
-            ->select(['id', 'name']);
+        return $this->belongsTo(AplicativoCategory::class, 'category_id', 'id');
     }
-
+    
     /**
      * Descrição abreviada
      *

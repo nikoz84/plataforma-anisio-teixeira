@@ -45,7 +45,7 @@ class Canal extends Model
     {
         return $this->hasMany(\App\Aplicativo::class);
     }
-
+    
     public function getTiposAttribute()
     {
         $ids = $this->options['tipo_conteudo'];
@@ -55,10 +55,5 @@ class Canal extends Model
         }
 
         return [];
-    }
-    public function getSidebarAttribute()
-    {
-
-        return Sidebar::getSideBar($this['id']);
     }
 }

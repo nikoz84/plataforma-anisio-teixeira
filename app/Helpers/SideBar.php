@@ -56,7 +56,7 @@ class SideBar
             ->orderBy('created_at', 'asc')
             ->get();
         $disciplinas = NivelEnsino::where('id', '=', 5)->with('components')->get()->first();
-        $aplicativosCat = AplicativoCategory::get(['id', 'name']);
+        $aplicativosCat = AplicativoCategory::orderBy('name')->get(['id', 'name']);
 
         return [
             'categories' => $id == 9 ? $aplicativosCat : $categorias,
