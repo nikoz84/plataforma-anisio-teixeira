@@ -28,11 +28,7 @@
           label="Listar"
           :to="{ name: 'Listar', params: { slug: $route.params.slug } }"
         />
-        <CategoriasMenu
-          :categoryName="categoryName"
-          :categories="canal.sidebar.categories"
-          v-if="canal.options && canal.options.has_categories"
-        ></CategoriasMenu>
+        <CategoriasMenu v-if="canal.options && canal.options.has_categories"></CategoriasMenu>
         
         <q-space />
       </q-tabs>
@@ -93,7 +89,6 @@ export default {
   data() {
     return {
       options: [],
-      categories: [],
       loadingState: false,
       categoryName: ""
     };
@@ -101,7 +96,6 @@ export default {
   mounted() {
     this.getCanalBySlug(this.$route.params.slug).then(() => {
       this.fetchData();
-      this.getCategories();
     });
     
   },
@@ -110,7 +104,6 @@ export default {
       if (to.fullPath != from.fullPath) {
         this.getCanalBySlug(this.$route.params.slug).then(() => {
           this.fetchData();
-          this.getCategories();
         });
       }
     }
@@ -140,6 +133,7 @@ export default {
       switch (true) {
         case localStorage.canal == 9:
           this.categoryName = "Categorias";
+          this.getCategories('/aplicativos/categories')
           return this.fetchAplicativos(query);
           break;
         case localStorage.canal == 7:
@@ -165,9 +159,9 @@ export default {
           break;
       }
     },
-    getCategories(){
+    getCategories(url){
         if(this.canal.options.has_categories){
-          console.log('hola')
+          console.log(url)
         }
     }
   }

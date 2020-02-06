@@ -70,6 +70,9 @@ class AplicativoController extends ApiController
 
         return $this->successResponse($app, 'Aplicativo cadastrado com sucesso!', 200);
     }
+    /**
+     * Cria Arquivo de imagem
+     */
     private function createFile($id, $image)
     {
         $fileName = "{$id}.{$image->guessExtension()}";
@@ -148,8 +151,11 @@ class AplicativoController extends ApiController
     {
         $aplicativo = $this->aplicativo::with(['tags', 'category', 'user', 'canal'])
             ->find($id);
+        //$canal = \App\Canal::find(9);
+        //$canal->setAttribute('options->has_categories', true);
+        //$canal->save();
         $increment = $aplicativo->options['qt_access'] + 1;
-
+        
         $aplicativo->setAttribute('options->qt_access', $increment); // json attribute
         $aplicativo->save();
 

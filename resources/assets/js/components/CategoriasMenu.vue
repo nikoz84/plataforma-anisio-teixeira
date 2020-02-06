@@ -37,7 +37,12 @@
 import { QTab, QMenu, QList, QItem, QItemSection, ClosePopup } from "quasar";
 export default {
   name: "CategoriasMenu",
-  props: ["categoryName", "categories"],
+  data (){
+    return {
+       categoryName: "",
+       categories: []
+    }
+  },
   directives: { ClosePopup },
   methods: {
     showCategory(categoryId, subCategory) {

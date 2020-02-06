@@ -32,7 +32,7 @@ class Canal extends Model
         'updated_at',
         'deleted_at'
     ];
-    protected $appends = ['tipos', 'sidebar'];
+    protected $appends = ['tipos'];
     protected $casts = [
         'options' => 'array',
     ];

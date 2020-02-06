@@ -218,7 +218,7 @@ class ConteudoController extends ApiController
     {
         $conteudo = $this->conteudo::find($id);
         if (Gate::denies('update', $conteudo)) {
-            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
+            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 422);
         }
         $validator = Validator::make($this->request->all(), config("rules.conteudo"));
         if ($validator->fails()) {
@@ -255,9 +255,9 @@ class ConteudoController extends ApiController
         $conteudo->niveis()->detach();
         if (!$conteudo->delete()) {
             return $this->errorResponse([], 'Não foi Possível deletar o conteúdo', 422);
-        } else {
-            return $this->successResponse([], "Conteúdo de id: {$id} foi apagado com sucesso!!", 200);
         }
+        
+        return $this->successResponse([], "Conteúdo de id: {$id} foi apagado com sucesso!!", 200);
     }
     /**
      * Procura conteudos por full text search.
