@@ -24,6 +24,7 @@ Route::group(['middleware' => ['cors']], function () {
     /** CATEGORIAS */
     Route::get('/categories', 'CategoryController@index')->name('lista.categorias');
     Route::get('/categories/{id}', 'CategoryController@getCategoryById')->name('lista.categoria.x.id');
+    Route::get('/categories/canal/{id}', 'CategoryController@getCategoryByCanalId')->name('lista.categoria.x.canal.id');
     /** TIPOS */
     Route::get('/tipos', 'TipoController@index')->name('listar.tipos');
     Route::get('/tipos/{id}', 'TipoController@getTiposById')->name('lista.tipos.x.id');
@@ -43,14 +44,9 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/posts/estatisticas', 'WordpressController@getEstatisticas')->name('estatisticas.blog');
     /** APLICATIVOS */
     Route::get('/aplicativos', 'AplicativoController@index')->name('lista.aplicativo');
-    Route::get('/aplicativos/categories', 'AplicativoController@categories')->name('lista.categorias');
+    Route::get('/aplicativos/categories', 'AplicativoCategoryController@index')->name('lista.categorias');
     Route::get('/aplicativos/search/{term}', 'AplicativoController@search')->name('busca.aplicativo');
     Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('busca.x.aplicativo.id');
-    /** APLICATIVOS CATEGORIAS */
-    Route::get('/aplicativos-categories', 'AplicativoCategoryController@index')
-        ->name('lista.categorias.aplicativo');
-    Route::get('/aplicativos-categories/{id}', 'AplicativoCategoryController@getById')
-        ->name('lista.categorias.aplicativos');
     /** AUTENTICACAO */
     Route::post('/auth/login', 'AuthController@login')->name('login.usuario');
     Route::post('/auth/register', 'AuthController@register')->name('registro.usuario');
@@ -76,12 +72,6 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     // ->middleware('isAdmin');
     Route::put('/categories/{id}', 'CategoryController@update')->name('atualizar.categorias');
     Route::delete('/categories/{id}', 'CategoryController@delete')->name('categorias.apagar');
-    /** APLICATIVOS CATEGORIAS */
-    Route::post('/aplicativos-categories', 'AplicativoCategoryController@create')->name('criar.aplicativo.categorias');
-    Route::put('/aplicativos-categories/{id}', 'AplicativoCategoryController@update')
-        ->name('atualizar.aplicativo.categorias');
-    Route::delete('/aplicativos-categories/{id}', 'AplicativoCategoryController@delete')
-        ->name('apagar.aplicativo.categorias');
     /** AUTENTICACAO */
     Route::post('/auth/logout', 'AuthController@logout')->name('sair');
     Route::post('/auth/refresh', 'AuthController@refresh')->name('refrescar.token');
@@ -108,6 +98,12 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     Route::post('/aplicativos', 'AplicativoController@create')->name('aplicativo.adicionar');
     Route::put('/aplicativos/{id}', 'AplicativoController@update')->name('aplicativo.editar');
     Route::delete('/aplicativos/{id}', 'AplicativoController@delete')->name('aplicativo.apagar');
+    /** APLICATIVOS CATEGORIES */
+    Route::post('/aplicativos/categories', 'AplicativoCategoryController@create')->name('criar.aplicativo.categorias');
+    Route::put('/aplicativos/categories/{id}', 'AplicativoCategoryController@update')
+        ->name('atualizar.aplicativo.categorias');
+    Route::delete('/aplicativos/categories/{id}', 'AplicativoCategoryController@delete')
+        ->name('apagar.aplicativo.categorias');
     /** TAGS */
     Route::get('/tags', 'TagController@index')->name('lista.tag');
     Route::post('/tags', 'TagController@create')->name('adicionar.tag');

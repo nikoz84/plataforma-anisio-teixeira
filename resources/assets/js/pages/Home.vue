@@ -5,16 +5,14 @@
       id="tipo-conteudos"
       title="Tipos de Conteúdos"
       :items="tipos"
-      source="tipo-conteudo"
-      style="padding-bottom: 20vh;"
+      style="min-height: 85vh;"
     ></CardHomeIcon>
     <a class="skip-link" href="#disciplinas">disciplinas</a>
     <CardHomeIcon
       id="disciplinas"
       title="Disciplinas"
       :items="disciplinas.components"
-      source="emitec"
-      style="padding-bottom: 15vh;"
+      style="min-height: 55vh;"
     ></CardHomeIcon>
     
     <CardHome v-for="(id, index) in ids"
@@ -25,7 +23,7 @@
       :animation="id.animation"
       v-scroll-fire="getDestaques" 
       :id="id.name"
-      style="padding-bottom: 15vh;"></CardHome>
+      style="min-height: 55vh;"></CardHome>
       
     
   </section>

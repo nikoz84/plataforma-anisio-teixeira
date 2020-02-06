@@ -24,7 +24,7 @@ class WordpressController extends ApiController
     {
         $wordpress = new WordpressService($this->request);
 
-        return $this->showAsPaginator($wordpress->getPosts(), 'Postagens do blog', 200);
+        return $this->showAsPaginator($wordpress->getPosts());
     }
 
     public function search(Request $request, $termo)
@@ -43,7 +43,7 @@ class WordpressController extends ApiController
     {
         $wordpress = new WordpressService($this->request);
 
-        return $this->successResponse($wordpress->getOne(), "Postagem", 200);
+        return $this->successResponse($wordpress->getOne(), "", 200);
     }
 
     public function getEstatisticas()

@@ -14,7 +14,7 @@ class AplicativoController extends ApiController
 {
     public function __construct(Aplicativo $aplicativo, Request $request, Storage $storage)
     {
-        $this->middleware('jwt.verify')->except(['index', 'search', 'getById','categories']);
+        $this->middleware('jwt.verify')->except(['index', 'search', 'getById', 'categories']);
         $this->aplicativo = $aplicativo;
         $this->request = $request;
         $this->storage = $storage;
@@ -41,12 +41,7 @@ class AplicativoController extends ApiController
             ->setPath("/aplicativos?categoria={$category}&limit={$limit}");
         return $this->showAsPaginator($apps);
     }
-    public function categories()
-    {
-        $categories = AplicativoCategory::all();
 
-        return $this->successResponse($categories, '', 200);
-    }
     /**
      * Cria um novo aplicativo.
      *
@@ -155,7 +150,7 @@ class AplicativoController extends ApiController
         //$canal->setAttribute('options->has_categories', true);
         //$canal->save();
         $increment = $aplicativo->options['qt_access'] + 1;
-        
+
         $aplicativo->setAttribute('options->qt_access', $increment); // json attribute
         $aplicativo->save();
 

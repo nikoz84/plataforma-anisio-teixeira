@@ -22,14 +22,10 @@ class FileController extends ApiController
 
     public function getFiles($id)
     {
-        $exists = Storage::disk('aplicativos-educacionais')->exists('4.jpg');
-        $files = Storage::disk('aplicativos-educacionais');
+        $exists = Storage::disk('public')->exists('logo.png');
 
-        return response()->json([
-            'success' => $exists,
-            'path' => 'app/public/conteudos/aplicativos-educacionais/',
-            'disk', $files
-        ]);
+
+        return response(['exist' => $exists], 200, ['Content-Type' => 'image/png']);
     }
 
     public function createFile($id)

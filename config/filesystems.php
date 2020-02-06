@@ -54,7 +54,12 @@ return [
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],
-
+        'public-path' => [
+            'driver' => 'local',
+            'root' => public_path(),
+            'url' => env('APP_URL') . '/',
+            'visibility' => 'public',
+        ],
         'conteudos-blog' => [
             'driver' => 'local',
             'root' => storage_path('app/public/conteudos/conteudos-blog/uploads'),

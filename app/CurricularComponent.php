@@ -3,11 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class CurricularComponent extends Model
 {
     protected $table = 'curricular_components';
     protected $hidden = ['pivot'];
+    protected $appends = ['icon'];
 
     public function categories()
     {
@@ -21,5 +23,11 @@ class CurricularComponent extends Model
     public function conteudos()
     {
         return $this->belongsToMany('App\Conteudo');
+    }
+    public function getIconAttribute()
+    {
+        if ($this['nivel_id'] == 5) {
+            return Storage::disk('public-path')->url("img/emitec/{$this['id']}.svg");
+        }
     }
 }

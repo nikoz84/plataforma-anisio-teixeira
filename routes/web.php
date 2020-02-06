@@ -44,9 +44,7 @@ Route::get('/docs', function (Request $request) {
 
 Route::get('/teste', function (\Illuminate\Http\Request $request) {
 
-    return response()->json([
-        'categories' => App\AplicativoCategory::all()
-    ]);
+
     //if (Crawler::isCrawler()) {}
 });
 

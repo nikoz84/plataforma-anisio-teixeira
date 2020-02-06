@@ -32,9 +32,7 @@ class CanalController extends ApiController
             return $this->fetchForSelect(collect($select));
         }
 
-        $query = $this->canal::query();
-
-        $canais = $query->paginate($limit);
+        $canais = $this->canal::paginate($limit);
         $canais->setPath("/canais?limit={$limit}");
 
         return $this->showAsPaginator($canais);
@@ -115,7 +113,13 @@ class CanalController extends ApiController
     public function getBySlug($slug)
     {
 
-        $canal = $this->canal::where('slug', 'ilike', $slug)->first();
+        $cb = function ($query) {
+            $query->whereNull('parent_id');
+            $query->with('subCategories');
+        };
+
+        $canal = $this->canal::with(['categories' => $cb])
+            ->where('slug', 'ilike', $slug)->first();
 
         return $this->showOne($canal, '', 200);
     }
@@ -124,7 +128,11 @@ class CanalController extends ApiController
      */
     public function getById($id)
     {
-        $canal = $this->canal::findOrFail($id);
+        $cb = function ($query) {
+            $query->whereNull('parent_id');
+            $query->with('subCategories');
+        };
+        $canal = $this->canal::with(['categories' => $cb])->findOrFail($id);
 
         return $this->showOne($canal, '', 200);
     }

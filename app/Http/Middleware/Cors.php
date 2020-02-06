@@ -18,7 +18,6 @@ class Cors
     public function handle(Request $request, Closure $next)
     {
         $origin = '*'; //env('APP_URL');
-
         return $next($request)->header('Access-Control-Allow-Origin', '*')
             ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
             ->header('Access-Control-Allow-Headers', 'Authorization, X-Requested-With, Content-Type, X-CSRF-Token')

@@ -5,7 +5,9 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
-use App\Helpers\SideBar;
+use App\Aplicativo;
+use App\Conteudo;
+use App\Category;
 use App\Traits\WithoutAppends;
 
 class Canal extends Model
@@ -39,13 +41,16 @@ class Canal extends Model
 
     public function conteudos()
     {
-        return $this->hasMany(\App\Conteudo::class);
+        return $this->hasMany(Conteudo::class);
     }
     public function aplicativos()
     {
-        return $this->hasMany(\App\Aplicativo::class);
+        return $this->hasMany(Aplicativo::class);
     }
-    
+    public function categories()
+    {
+        return $this->hasMany(Category::class, 'canal_id', 'id');
+    }
     public function getTiposAttribute()
     {
         $ids = $this->options['tipo_conteudo'];

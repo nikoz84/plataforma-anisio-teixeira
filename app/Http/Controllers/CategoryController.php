@@ -15,7 +15,7 @@ class CategoryController extends ApiController
     public function __construct(Request $request, Category $category)
     {
         $this->middleware('jwt.verify')->except([
-            'index', 'search', 'getById', 'getByTagId'
+            'index', 'search', 'getById', 'getCategoryByCanalId'
         ]);
         $this->category = $category;
         $this->request = $request;
@@ -91,9 +91,14 @@ class CategoryController extends ApiController
             return $this->successResponse($category, 'Categoria deletada com sucesso!', 200);
         }
     }
-    public function getCategoryById($id)
+    public function getById()
     {
-        $category = $this->category::find($id);
-        return $this->showOne($category);
+        //
+    }
+    public function getCategoryByCanalId($id)
+    {
+        $categories = $this->category::where('canal_id', $id)->get();
+
+        return $this->showAll($categories);
     }
 }
