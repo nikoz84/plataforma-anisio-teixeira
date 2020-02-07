@@ -2,63 +2,49 @@
     <section class="q-pa-md">
         <q-card>
           <q-card-section>
-            <q-avatar class="absolute-top-rigth">
-              <img src="/storage/conteudos/geral/icone-sobre-canal.png" alt="" style="background-color: #051825;">
-            </q-avatar>
-            <div v-html="canal.description"></div>
+
           </q-card-section>
-          <q-separator inset />
-          <q-card-section v-if="canal.options && canal.options.complement_description.que">
-            <q-list>
-              <q-item>
-                <q-item-section avatar>
-                  <q-avatar>
-                    <img src="/storage/conteudos/geral/icone-o-que.png" alt="" style="background-color: #051825;"/>
-                  </q-avatar>
-                </q-item-section>
-                <q-item-section>
-                  <q-item-label lines="1">
-                    O quê?
-                  </q-item-label>
-                  <q-item-label lines="2">
-                    {{canal.options.complement_description.que}}
-                  </q-item-label>
-                </q-item-section>
-              </q-item>
-              <q-separator inset="item" />
-              <q-item>
-                <q-item-section avatar>
-                  <q-avatar>
-                    <img src="/storage/conteudos/geral/icone-por-que.png" alt="" style="background-color: #051825;"/>
-                  </q-avatar>
-                </q-item-section>
-                <q-item-section>
-                  <q-item-label lines="1">
-                    Por Quê?
-                  </q-item-label>
-                  <q-item-label lines="2">
-                    {{canal.options.complement_description.porque}}
-                  </q-item-label>
-                </q-item-section>
-              </q-item>
-              <q-separator inset="item" />
-              <q-item>
-                <q-item-section avatar>
-                  <q-avatar>
-                    <img src="/storage/conteudos/geral/icone-como.png" alt="" style="background-color: #051825;">
-                  </q-avatar>
-                </q-item-section>
-                <q-item-section>
-                  <q-item-label lines="1">
-                    Como?
-                  </q-item-label>
-                  <q-item-label lines="2">
-                    {{canal.options.complement_description.como}}
-                  </q-item-label>
-                </q-item-section>
-              </q-item>
-              <img >
-            </q-list>
+          <q-card-section>
+            <div class="row">
+              <div class="col-1 col-sm-2 q-pa-lg" thumbnail>
+                <q-img src="/img/sobre/info.svg" alt=""/>
+              </div>
+              <div class="col-11 col-sm-10 q-pl-md">
+                <div class="text-h5">SOBRE </div>
+                <div class="q-pt-md text-small" v-html="canal.description"></div>
+              </div>
+              <q-separator inset="item-thumbnail" color="orange" class="q-my-lg"/>
+            </div>
+            <div class="row">
+              <div class="col-1 col-sm-2 q-pa-lg" thumbnail>
+                <q-img src="/img/sobre/o-que.svg" alt=""/>
+              </div>
+              <div class="col-11 col-sm-10 q-pl-md">
+                <div class="text-h5">O QUÊ? </div>
+                <div class="q-pt-md">{{canal.options.complement_description.que}}</div>
+              </div>
+              <q-separator inset="item-thumbnail" color="orange" class="q-my-lg"/>
+            </div>
+            <div class="row">
+              <div class="col-1 col-sm-2 q-pa-lg" thumbnail>
+                <q-img src="/img/sobre/porque.svg" alt=""/>
+              </div>
+              <div class="col-11 col-sm-10 q-pl-md">
+                <div class="text-h5">POR QUÊ? </div>
+                <div class="q-pt-md">{{canal.options.complement_description.porque}}</div>
+              </div>
+              <q-separator inset="item-thumbnail" color="orange" class="q-my-lg"/>
+            </div>
+            <div class="row">
+              <div class="col-1 col-sm-2 q-pa-lg" thumbnail>
+                <q-img src="/img/sobre/como.svg" alt=""/>
+              </div>
+              <div class="col-11 col-sm-10 q-pl-md">
+                <div class="text-h5">COMO? </div>
+                <div class="q-pt-md">{{canal.options.complement_description.como}}</div>
+              </div>
+              <q-separator inset="item-thumbnail" color="orange" class="q-my-lg"/>
+            </div>
           </q-card-section>
         </q-card>
     </section>

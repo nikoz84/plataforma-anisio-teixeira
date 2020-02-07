@@ -28,7 +28,7 @@
           label="Listar"
           :to="{ name: 'Listar', params: { slug: $route.params.slug } }"
         />
-        <CategoriasMenu :categories="canal.categories"></CategoriasMenu>
+        <CategoriasMenu></CategoriasMenu>
         
         <q-space />
       </q-tabs>
@@ -131,29 +131,12 @@ export default {
       query.canal = localStorage.canal;
       switch (true) {
         case localStorage.canal == 9:
-          this.categoryName = "Categorias";
-          this.getCategories("/aplicativos/categories");
           return this.fetchAplicativos(query);
           break;
         case localStorage.canal == 7:
           return this.fetchPosts();
           break;
-        case localStorage.canal == 1:
-        case localStorage.canal == 12:
-          this.categoryName = "Programas";
-          return this.fetchConteudos(query);
-          break;
-        case localStorage.canal == 2:
-          this.categoryName = "Níveis de Ensino";
-          return this.fetchConteudos(query);
-          break;
-        case localStorage.canal == 3:
-          this.categoryName = "Projetos";
-          return this.fetchConteudos(query);
-          break;
-
         default:
-          this.categoryName = "";
           return this.fetchConteudos(query);
           break;
       }

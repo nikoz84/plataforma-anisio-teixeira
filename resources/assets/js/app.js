@@ -10,7 +10,12 @@ import store from "./store/index.js";
 import Default from "./layout/Default.vue";
 import "./interceptor.js";
 
-Vue.use(VuePlyr);
+Vue.use(VuePlyr, {
+  plyr: {
+    fullscreen: { enabled: false }
+  },
+  emit: ["ended"]
+});
 Vue.use(VueApexCharts);
 Vue.use(Vuex);
 Vue.use(VueRouter);

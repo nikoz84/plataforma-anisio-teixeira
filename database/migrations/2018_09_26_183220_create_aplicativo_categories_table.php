@@ -15,6 +15,7 @@ class CreateAplicativoCategoriesTable extends Migration
     {
         Schema::create('aplicativo_categories', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('canal_id')->default(9)->comment('Categorias do canal aplicativos educacionais');
             $table->string('name', 250)->unique()->comment('Nome da categoria');
             $table->timestamps();
             $table->softDeletes();

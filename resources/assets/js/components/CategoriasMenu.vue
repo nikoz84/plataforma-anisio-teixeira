@@ -1,5 +1,5 @@
 <template>
-  <q-tab :label="categoryName" v-if="categoryName">
+  <q-tab :label="canal.category_name" v-if="categories">
     <q-menu anchor="bottom middle" self="top middle">
       <q-list dense>
         <q-item clickable dense 
@@ -12,7 +12,7 @@
             <q-icon name="keyboard_arrow_right" />
           </q-item-section>
 
-          <q-menu anchor="center middle" self="center middle" v-if="hasSubCategories(category)">
+          <q-menu anchor="center middle" self="center middle" v-if="category.sub_categories">
             <q-list>
               <q-item v-for="(subcategory,n) in category.sub_categories" 
                       :key="n" 
@@ -33,10 +33,20 @@
 </template>
 <script>
 import { QTab, QMenu, QList, QItem, QItemSection, ClosePopup } from "quasar";
+import { mapState } from "vuex";
+
 export default {
   name: "CategoriasMenu",
-  props: ["categories", "categoryName"],
   directives: { ClosePopup },
+  computed: {
+    ...mapState(["canal"]),
+    categories() {
+      if (localStorage.canal == 9) {
+        return this.canal.apps_categories;
+      }
+      return this.canal.categories;
+    }
+  },
   methods: {
     showCategory(categoryId, subCategory) {
       let path = `/${this.$route.params.slug}/listar`;

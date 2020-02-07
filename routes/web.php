@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,9 +46,7 @@ Route::get('/docs', function (Request $request) {
 
 Route::get('/teste', function (\Illuminate\Http\Request $request) {
 
-
     //if (Crawler::isCrawler()) {}
 });
-
 
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');

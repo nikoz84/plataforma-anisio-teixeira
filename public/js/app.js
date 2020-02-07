@@ -68983,38 +68983,56 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _vm.$q.screen.gt.sm
-                ? _c(
-                    "q-btn",
-                    {
-                      staticClass: "q-ml-xs",
-                      attrs: {
-                        flat: "",
-                        "no-caps": "",
-                        "no-wrap": "",
-                        "aria-label": "voltar ao inicio",
-                        to: "/"
-                      }
-                    },
-                    [
-                      _c("img", {
-                        attrs: {
-                          src: "/logo.svg",
-                          loading: "lazy",
-                          alt: "marca",
-                          "aria-label": "marca da plataforma Anísio Teixeira"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("q-toolbar-title", { attrs: { shrink: "" } }, [
-                        _vm._v(
-                          "\n          Plataforma Anísio Teixeira\n        "
-                        )
-                      ])
-                    ],
-                    1
-                  )
-                : _vm._e(),
+              _c(
+                "q-btn",
+                {
+                  staticClass: "q-ml-xs",
+                  attrs: {
+                    flat: "",
+                    "no-caps": "",
+                    "no-wrap": "",
+                    "aria-label": "voltar ao inicio",
+                    to: "/"
+                  }
+                },
+                [
+                  _c("img", {
+                    attrs: {
+                      src: "/logo.svg",
+                      loading: "lazy",
+                      width: "30",
+                      height: "30",
+                      alt: "Marca",
+                      "aria-label": "Marca da plataforma Anísio Teixeira"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.$q.screen.gt.xs
+                    ? _c(
+                        "q-toolbar-title",
+                        {
+                          staticStyle: {
+                            "font-size": "14px",
+                            "font-weight": "600"
+                          },
+                          attrs: { shrink: "" }
+                        },
+                        [
+                          _vm._v(
+                            "\n          " +
+                              _vm._s(
+                                !_vm.$q.screen.gt.sm
+                                  ? "PAT"
+                                  : "PLATAFORMA ANÍSIO TEIXEIRA"
+                              ) +
+                              "\n        "
+                          )
+                        ]
+                      )
+                    : _vm._e()
+                ],
+                1
+              ),
               _vm._v(" "),
               _c("q-space"),
               _vm._v(" "),
@@ -69482,194 +69500,150 @@ var render = function() {
       _c(
         "q-card",
         [
-          _c(
-            "q-card-section",
-            [
-              _c("q-avatar", { staticClass: "absolute-top-rigth" }, [
-                _c("img", {
-                  staticStyle: { "background-color": "#051825" },
-                  attrs: {
-                    src: "/storage/conteudos/geral/icone-sobre-canal.png",
-                    alt: ""
-                  }
+          _c("q-card-section"),
+          _vm._v(" "),
+          _c("q-card-section", [
+            _c(
+              "div",
+              { staticClass: "row" },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-1 col-sm-2 q-pa-lg",
+                    attrs: { thumbnail: "" }
+                  },
+                  [
+                    _c("q-img", {
+                      attrs: { src: "/img/sobre/info.svg", alt: "" }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-11 col-sm-10 q-pl-md" }, [
+                  _c("div", { staticClass: "text-h5" }, [_vm._v("SOBRE ")]),
+                  _vm._v(" "),
+                  _c("div", {
+                    staticClass: "q-pt-md text-small",
+                    domProps: { innerHTML: _vm._s(_vm.canal.description) }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("q-separator", {
+                  staticClass: "q-my-lg",
+                  attrs: { inset: "item-thumbnail", color: "orange" }
                 })
-              ]),
-              _vm._v(" "),
-              _c("div", {
-                domProps: { innerHTML: _vm._s(_vm.canal.description) }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("q-separator", { attrs: { inset: "" } }),
-          _vm._v(" "),
-          _vm.canal.options && _vm.canal.options.complement_description.que
-            ? _c(
-                "q-card-section",
-                [
-                  _c(
-                    "q-list",
-                    [
-                      _c(
-                        "q-item",
-                        [
-                          _c(
-                            "q-item-section",
-                            { attrs: { avatar: "" } },
-                            [
-                              _c("q-avatar", [
-                                _c("img", {
-                                  staticStyle: {
-                                    "background-color": "#051825"
-                                  },
-                                  attrs: {
-                                    src:
-                                      "/storage/conteudos/geral/icone-o-que.png",
-                                    alt: ""
-                                  }
-                                })
-                              ])
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "q-item-section",
-                            [
-                              _c("q-item-label", { attrs: { lines: "1" } }, [
-                                _vm._v(
-                                  "\n                O quê?\n              "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("q-item-label", { attrs: { lines: "2" } }, [
-                                _vm._v(
-                                  "\n                " +
-                                    _vm._s(
-                                      _vm.canal.options.complement_description
-                                        .que
-                                    ) +
-                                    "\n              "
-                                )
-                              ])
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("q-separator", { attrs: { inset: "item" } }),
-                      _vm._v(" "),
-                      _c(
-                        "q-item",
-                        [
-                          _c(
-                            "q-item-section",
-                            { attrs: { avatar: "" } },
-                            [
-                              _c("q-avatar", [
-                                _c("img", {
-                                  staticStyle: {
-                                    "background-color": "#051825"
-                                  },
-                                  attrs: {
-                                    src:
-                                      "/storage/conteudos/geral/icone-por-que.png",
-                                    alt: ""
-                                  }
-                                })
-                              ])
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "q-item-section",
-                            [
-                              _c("q-item-label", { attrs: { lines: "1" } }, [
-                                _vm._v(
-                                  "\n                Por Quê?\n              "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("q-item-label", { attrs: { lines: "2" } }, [
-                                _vm._v(
-                                  "\n                " +
-                                    _vm._s(
-                                      _vm.canal.options.complement_description
-                                        .porque
-                                    ) +
-                                    "\n              "
-                                )
-                              ])
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("q-separator", { attrs: { inset: "item" } }),
-                      _vm._v(" "),
-                      _c(
-                        "q-item",
-                        [
-                          _c(
-                            "q-item-section",
-                            { attrs: { avatar: "" } },
-                            [
-                              _c("q-avatar", [
-                                _c("img", {
-                                  staticStyle: {
-                                    "background-color": "#051825"
-                                  },
-                                  attrs: {
-                                    src:
-                                      "/storage/conteudos/geral/icone-como.png",
-                                    alt: ""
-                                  }
-                                })
-                              ])
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "q-item-section",
-                            [
-                              _c("q-item-label", { attrs: { lines: "1" } }, [
-                                _vm._v(
-                                  "\n                Como?\n              "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("q-item-label", { attrs: { lines: "2" } }, [
-                                _vm._v(
-                                  "\n                " +
-                                    _vm._s(
-                                      _vm.canal.options.complement_description
-                                        .como
-                                    ) +
-                                    "\n              "
-                                )
-                              ])
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("img")
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            : _vm._e()
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "row" },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-1 col-sm-2 q-pa-lg",
+                    attrs: { thumbnail: "" }
+                  },
+                  [
+                    _c("q-img", {
+                      attrs: { src: "/img/sobre/o-que.svg", alt: "" }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-11 col-sm-10 q-pl-md" }, [
+                  _c("div", { staticClass: "text-h5" }, [_vm._v("O QUÊ? ")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "q-pt-md" }, [
+                    _vm._v(_vm._s(_vm.canal.options.complement_description.que))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("q-separator", {
+                  staticClass: "q-my-lg",
+                  attrs: { inset: "item-thumbnail", color: "orange" }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "row" },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-1 col-sm-2 q-pa-lg",
+                    attrs: { thumbnail: "" }
+                  },
+                  [
+                    _c("q-img", {
+                      attrs: { src: "/img/sobre/porque.svg", alt: "" }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-11 col-sm-10 q-pl-md" }, [
+                  _c("div", { staticClass: "text-h5" }, [_vm._v("POR QUÊ? ")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "q-pt-md" }, [
+                    _vm._v(
+                      _vm._s(_vm.canal.options.complement_description.porque)
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("q-separator", {
+                  staticClass: "q-my-lg",
+                  attrs: { inset: "item-thumbnail", color: "orange" }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "row" },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-1 col-sm-2 q-pa-lg",
+                    attrs: { thumbnail: "" }
+                  },
+                  [
+                    _c("q-img", {
+                      attrs: { src: "/img/sobre/como.svg", alt: "" }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-11 col-sm-10 q-pl-md" }, [
+                  _c("div", { staticClass: "text-h5" }, [_vm._v("COMO? ")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "q-pt-md" }, [
+                    _vm._v(
+                      _vm._s(_vm.canal.options.complement_description.como)
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("q-separator", {
+                  staticClass: "q-my-lg",
+                  attrs: { inset: "item-thumbnail", color: "orange" }
+                })
+              ],
+              1
+            )
+          ])
         ],
         1
       )
@@ -86701,7 +86675,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_plyr__WEBPACK_IMPORTED_MODULE_3__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_plyr__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  plyr: {
+    fullscreen: {
+      enabled: false
+    }
+  },
+  emit: ["ended"]
+});
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_apexcharts__WEBPACK_IMPORTED_MODULE_2___default.a);
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_6__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]);

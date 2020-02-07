@@ -73,6 +73,7 @@ class ConteudoController extends ApiController
         $query->when($categoria, function ($q, $categoria) {
             return $q->where('category_id', $categoria);
         });
+
         // FILTRO X LICENÇA
         $query->when($licencas, function ($q, $licencas) {
             return $q->whereIn('license_id', explode(',', $licencas));
@@ -256,7 +257,7 @@ class ConteudoController extends ApiController
         if (!$conteudo->delete()) {
             return $this->errorResponse([], 'Não foi Possível deletar o conteúdo', 422);
         }
-        
+
         return $this->successResponse([], "Conteúdo de id: {$id} foi apagado com sucesso!!", 200);
     }
     /**

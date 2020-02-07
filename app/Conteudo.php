@@ -99,6 +99,7 @@ class Conteudo extends Model
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
+        //->whereRaw('parent_id IS NOT NULL');
     }
     /**
      * Seleciona niveis de ensino
@@ -202,11 +203,7 @@ class Conteudo extends Model
      */
     public function getPermissionAttribute()
     {
-        if (Gate::any(['update', 'delete', 'super-admin'], $this)) {
-            return true;
-        }
-
-        return false;
+        return Gate::any(['update', 'delete', 'super-admin'], $this);
     }
     /**
      * Adiciona atributo url_exibir

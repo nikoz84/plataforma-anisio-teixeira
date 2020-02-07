@@ -18,12 +18,16 @@
           class="q-ml-xs"
           aria-label="voltar ao inicio"
           to="/"
-          v-if="$q.screen.gt.sm"
         >
-          <img src="/logo.svg" loading="lazy" alt="marca" aria-label="marca da plataforma Anísio Teixeira"/>
+          <img src="/logo.svg" 
+                loading="lazy" 
+                width="30" 
+                height="30" 
+                alt="Marca"
+                aria-label="Marca da plataforma Anísio Teixeira"/>
 
-          <q-toolbar-title shrink>
-            Plataforma Anísio Teixeira
+          <q-toolbar-title shrink style="font-size:14px;font-weight:600;" v-if="$q.screen.gt.xs">
+            {{ !$q.screen.gt.sm ? 'PAT' : 'PLATAFORMA ANÍSIO TEIXEIRA'}}
           </q-toolbar-title>
         </q-btn>
 

@@ -112,13 +112,7 @@ class CanalController extends ApiController
      */
     public function getBySlug($slug)
     {
-
-        $cb = function ($query) {
-            $query->whereNull('parent_id');
-            $query->with('subCategories');
-        };
-
-        $canal = $this->canal::with(['categories' => $cb])
+        $canal = $this->canal::with(['categories', 'appsCategories'])
             ->where('slug', 'ilike', $slug)->first();
 
         return $this->showOne($canal, '', 200);

@@ -54,8 +54,7 @@ class HomeController extends ApiController
         return response()->json($data, 200);
     }
     /**
-     * Seleciona as Disciplinas do ensino medio 
-     * 
+     * Seleciona as Disciplinas do ensino medio
      */
     private function getDisciplinasEnsinoMedio()
     {
