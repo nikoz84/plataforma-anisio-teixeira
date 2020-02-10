@@ -75,7 +75,7 @@
             </q-input>
             <div>
               <p>Código de segurança:</p>
-              <vue-recaptcha :sitekey="siteKey" :loadRecaptchaScript="true" />
+              <vue-recaptcha :id="r_id" :sitekey="siteKey" :loadRecaptchaScript="true" />
 
               <div
                 bottom-slots

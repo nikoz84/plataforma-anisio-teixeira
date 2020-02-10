@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\permissions;
+use App\User;
 
 class Role extends Model
 {
@@ -15,7 +15,7 @@ class Role extends Model
 
     public function users()
     {
-        return $this->hasMany(App\User::class);
+        //return $this->belongsTo(User::class, 'id', 'role_id');
     }
     public function permissions()
     {

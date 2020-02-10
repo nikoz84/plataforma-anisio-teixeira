@@ -127,6 +127,7 @@ return [
         'is_featured' => 'destaque',
         'terms' => 'termos e condições',
         'image' => 'imagem',
+        'options.is_featured' => 'destaque',
         'video' => 'vídeo',
         'file' => 'arquivo',
         'role' => 'tipo',

@@ -19,9 +19,10 @@
                 <q-input filled v-model.trim="user.options.neighborhood" label="Bairro" hint="Bairro" style="margin-bottom:15px;"></q-input>
                 <q-select filled 
                         option-value="id"
-                        option-label="label" 
+                        option-label="name" 
                         use-chips
                         v-model="user.role" 
+                        emmit-value
                         :options="roles" 
                         label="Tipo de Usuário" 
                         style="margin-bottom:15px;"/>
@@ -78,10 +79,7 @@ export default {
         canais: [],
         created_at: null,
         image: "",
-        role: {
-          id: null,
-          label: ""
-        },
+        role_id: null,
         options: {
           sexo: null,
           birthday: null,

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ApiController;
 use App\Aplicativo;
 use Illuminate\Support\Facades\Validator;
-use App\AplicativoCategory;
+use Illuminate\Support\Facades\Auth;
 
 class AplicativoController extends ApiController
 {
@@ -87,23 +87,28 @@ class AplicativoController extends ApiController
      */
     public function update($id)
     {
+        $aplicativo = Aplicativo::findOrFail($id);
+
+        $this->authorize('update', [$aplicativo]);
+
         $validator = Validator::make($this->request->all(), config("rules.aplicativo"));
 
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível criar o conteúdo", 201);
+            return $this->errorResponse($validator->errors(), "Não foi possível atualizar o aplicativo", 422);
         }
 
-        $aplicativo = Aplicativo::find($id);
-        $aplicativo->fill($this->request->intersect([
-            "name", "description", "url",
-        ]));
-        //$aplicativo->category_id = $this->request->get('category_id');
-        $aplicativo->save();
-        // 'options' => json_decode($this->request->get('options', '{}'), true)
+        $aplicativo->name = $this->request->name;
+        $aplicativo->description = $this->request->description;
+        $aplicativo->setAttribute('options->is_featured', boolval($this->request->is_featured));
+        $aplicativo->category_id = $this->request->category_id;
+
+        if (!$aplicativo->save()) {
+            return $this->errorResponse([], "Não foi possível atualizar o aplicativo", 422);
+        }
 
         //$this->createFile($aplicativo->id, $this->request->file('image'));
 
-        return $this->successResponse($aplicativo, "salvado com sucesso", 200);
+        return $this->successResponse($aplicativo, "Aplicativo atualizado com sucesso!!", 200);
     }
     /**
      * Remove the specified resource from storage.

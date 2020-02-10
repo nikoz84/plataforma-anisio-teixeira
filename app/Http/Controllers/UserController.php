@@ -43,7 +43,7 @@ class UserController extends ApiController
      */
     public function getById($id)
     {
-        $user = $this->user::with('role')->find($id)->makeVisible('email');
+        $user = $this->user::with('role')->findOrFail($id)->makeVisible('email');
 
         return $this->showOne($user, '', 200);
     }
@@ -95,12 +95,13 @@ class UserController extends ApiController
     {
         $limit = ($request->has('limit')) ? $request->query('limit') : 20;
         $search = "%{$termo}%";
-        $paginator = User::whereRaw('unaccent(lower(name)) ilike unaccent(lower(?))', [$search])
+
+        $paginator = User::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search])
             ->paginate($limit);
 
         $paginator->setPath("/usuarios/search/{$termo}?limit={$limit}");
 
-        $this->showAsPaginator($paginator, '', 200);
+        return $this->showAsPaginator($paginator, '', 200);
     }
     /**
      * Valida a criação do Usuário

@@ -69,10 +69,6 @@ class CanalController extends ApiController
     {
         $canal = $this->canal::find($id);
 
-        if (Gate::denies('super-admin', $canal)) {
-            return $this->errorResponse([], 'Usuário sem permissão para realizar essa ação', 422);
-        }
-
         $canal->name = $this->request->name;
         $canal->slug = $this->request->slug;
         $canal->description = $this->request->description;

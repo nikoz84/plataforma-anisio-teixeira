@@ -30,8 +30,8 @@ return [
         'url' => ['required', new \App\Rules\ValidUrl],
         'category_id' => 'required',
         'tags' => 'required',
-        'image' => 'required',
-        'is_featured' => 'required',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'is_featured' => 'required|in:true,false',
     ],
     "license" => [
         'parent_id' => 'nullable',
@@ -65,7 +65,7 @@ return [
         'recaptcha' => ['required', new \App\Rules\ValidRecaptcha],
     ],
     'categoria' => [
-        'name' => 'required','canal_id' => 'required'
+        'name' => 'required', 'canal_id' => 'required'
     ],
     'aplicativo_categoria' => [
         'name' => 'required'

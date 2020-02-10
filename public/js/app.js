@@ -3085,25 +3085,38 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AplicativoForm",
   components: {
+    QForm: quasar__WEBPACK_IMPORTED_MODULE_1__["QForm"],
+    QInput: quasar__WEBPACK_IMPORTED_MODULE_1__["QInput"],
+    QEditor: quasar__WEBPACK_IMPORTED_MODULE_1__["QEditor"],
+    QSelect: quasar__WEBPACK_IMPORTED_MODULE_1__["QSelect"],
     QCard: quasar__WEBPACK_IMPORTED_MODULE_1__["QCard"],
-    showErrors: _components_ShowErrors_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    QCardSection: quasar__WEBPACK_IMPORTED_MODULE_1__["QCardSection"],
+    ShowErrors: _components_ShowErrors_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
+    var _aplicativo;
+
     return {
-      aplicativo: {},
-      name: "",
-      description: null,
-      url: null,
-      tags: null,
-      options: {},
-      image: null,
-      category_id: null,
+      aplicativo: (_aplicativo = {
+        name: "",
+        description: "",
+        url: "",
+        tags: [],
+        options: {
+          is_featured: false
+        },
+        image: null,
+        category: null
+      }, _defineProperty(_aplicativo, "image", null), _defineProperty(_aplicativo, "tags", []), _aplicativo),
       categories: [],
+      image: null,
       count: 0,
       errors: {}
     };
@@ -3115,60 +3128,53 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   methods: {
     save: function () {
       var _save = _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var form, resp;
+        var id, form, resp;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                this.options = {
-                  qt_access: 0
-                };
-
-                if (this.image) {
-                  _context.next = 3;
-                  break;
-                }
-
-                return _context.abrupt("return");
-
-              case 3:
+                id = this.$route.params.id ? "/".concat(this.$route.params.id) : "";
                 form = new FormData();
                 form.append("name", this.aplicativo.name);
                 form.append("description", this.aplicativo.description);
-                form.append("category_id", this.aplicativo.category_id);
-                form.append("canal_id", 9);
-                form.append("tags", this.aplicativo.tags);
+                form.append("category_id", this.aplicativo.category.id);
                 form.append("url", this.aplicativo.url);
-                form.append("is_featured", this.aplicativo.is_featured);
-                form.append("options", JSON.stringify(this.aplicativo.options));
-                form.append("image", this.image, this.image.name);
+                form.append("tags", this.aplicativo.tags);
+                form.append("is_featured", this.aplicativo.options.is_featured);
+
+                if (this.image) {
+                  form.append("image", this.image, this.image.name);
+                }
+
+                form.append("aplicativo", JSON.stringify(this.aplicativo));
 
                 if (this.$route.params.action == "editar") {
                   form.append("id", this.$route.params.id);
                   form.append("_method", "PUT");
                 }
 
-                _context.prev = 14;
-                _context.next = 17;
-                return axios.post("/aplicativos", form);
+                _context.prev = 11;
+                _context.next = 14;
+                return axios.post("/aplicativos" + id, form);
 
-              case 17:
+              case 14:
                 resp = _context.sent;
-                this.$router.push("/admin/aplicativos/listar");
-                _context.next = 24;
+                console.log(resp);
+                _context.next = 22;
                 break;
 
-              case 21:
-                _context.prev = 21;
-                _context.t0 = _context["catch"](14);
+              case 18:
+                _context.prev = 18;
+                _context.t0 = _context["catch"](11);
+                console.log(_context.t0);
                 this.errors = _context.t0.errors;
 
-              case 24:
+              case 22:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[14, 21]]);
+        }, _callee, this, [[11, 18]]);
       }));
 
       function save() {
@@ -3189,7 +3195,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 resp = _context2.sent;
-                this.categories = resp.data.categories;
+
+                if (resp.data.success) {
+                  this.categories = resp.data.metadata;
+                }
 
               case 4:
               case "end":
@@ -3232,7 +3241,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
                 resp = _context3.sent;
-                console.log(resp);
+
+                if (resp.data.success) {
+                  console.log(resp.data.metadata);
+                  this.aplicativo = resp.data.metadata;
+                }
 
               case 6:
               case "end":
@@ -3924,9 +3937,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_ShowErrors_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/ShowErrors.vue */ "./resources/assets/js/components/ShowErrors.vue");
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "FileUpload",
-  props: ["file", "hint"],
+  components: {
+    ShowErrors: _components_ShowErrors_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: ["file", "hint", "errors"],
   computed: {
     fileChange: {
       get: function get() {
@@ -3939,7 +3957,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     onChange: function onChange(e) {
-      console.log(e);
+      console.log(e.target.files);
       this.fileChange = e.target.files[0];
     }
   }
@@ -4602,10 +4620,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         canais: [],
         created_at: null,
         image: "",
-        role: {
-          id: null,
-          label: ""
-        },
+        role_id: null,
         options: {
           sexo: null,
           birthday: null,
@@ -66114,45 +66129,210 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c(
-            "q-card-section",
-            [
-              _c(
-                "q-form",
-                {
-                  ref: "denunciaForm",
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.save()
-                    }
+          _c("q-card-section", [
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.save()
                   }
-                },
-                [
-                  _c("q-input", {
-                    attrs: { label: "Nome do aplicativo", "bottom-slots": "" },
-                    scopedSlots: _vm._u([
-                      {
-                        key: "error",
-                        fn: function() {
-                          return [
-                            _c("ShowErrors", {
-                              attrs: { errors: _vm.errors.message }
-                            })
-                          ]
-                        },
-                        proxy: true
-                      }
-                    ])
-                  }),
-                  _vm._v(" "),
-                  _c("q-input", { attrs: { label: "descrição" } })
-                ],
-                1
-              )
-            ],
-            1
-          )
+                }
+              },
+              [
+                _c("q-input", {
+                  attrs: {
+                    label: "Nome do aplicativo",
+                    error: _vm.errors.name && _vm.errors.name.length > 0
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "error",
+                      fn: function() {
+                        return [
+                          _c("ShowErrors", {
+                            attrs: { errors: _vm.errors.name }
+                          })
+                        ]
+                      },
+                      proxy: true
+                    }
+                  ]),
+                  model: {
+                    value: _vm.aplicativo.name,
+                    callback: function($$v) {
+                      _vm.$set(_vm.aplicativo, "name", $$v)
+                    },
+                    expression: "aplicativo.name"
+                  }
+                }),
+                _vm._v(" "),
+                _c("q-input", {
+                  attrs: {
+                    filled: "",
+                    type: "file",
+                    hint: "Imagem de destaque",
+                    "bottom-slots": "",
+                    error:
+                      _vm.errors &&
+                      _vm.errors.image &&
+                      _vm.errors.image.length > 0
+                  },
+                  on: {
+                    input: function(val) {
+                      _vm.image = val[0]
+                    }
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "error",
+                      fn: function() {
+                        return [
+                          _c("ShowErrors", {
+                            attrs: { errors: _vm.errors.image }
+                          })
+                        ]
+                      },
+                      proxy: true
+                    }
+                  ])
+                }),
+                _vm._v(" "),
+                _c("q-input", {
+                  attrs: {
+                    label: "URL do aplicativo",
+                    error: _vm.errors.url && _vm.errors.url.length > 0
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "error",
+                      fn: function() {
+                        return [
+                          _c("ShowErrors", {
+                            attrs: { errors: _vm.errors.url }
+                          })
+                        ]
+                      },
+                      proxy: true
+                    }
+                  ]),
+                  model: {
+                    value: _vm.aplicativo.url,
+                    callback: function($$v) {
+                      _vm.$set(_vm.aplicativo, "url", $$v)
+                    },
+                    expression: "aplicativo.url"
+                  }
+                }),
+                _vm._v(" "),
+                _c("q-select", {
+                  attrs: {
+                    outlined: "",
+                    options: _vm.categories,
+                    "option-value": "id",
+                    "option-label": "name",
+                    "use-input": "",
+                    label: "Escolha uma Categoria",
+                    "bottom-slots": "",
+                    error:
+                      _vm.errors.category_id &&
+                      _vm.errors.category_id.length > 0
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "error",
+                      fn: function() {
+                        return [
+                          _c("ShowErrors", {
+                            attrs: { errors: _vm.errors.category_id }
+                          })
+                        ]
+                      },
+                      proxy: true
+                    }
+                  ]),
+                  model: {
+                    value: _vm.aplicativo.category,
+                    callback: function($$v) {
+                      _vm.$set(_vm.aplicativo, "category", $$v)
+                    },
+                    expression: "aplicativo.category"
+                  }
+                }),
+                _vm._v(" "),
+                _c("q-toggle", {
+                  staticClass: "q-mt-md",
+                  attrs: {
+                    label: "Marcar como destaque",
+                    color: "pink",
+                    "checked-icon": "check",
+                    "unchecked-icon": "clear",
+                    "bottom-slots": "",
+                    error:
+                      _vm.errors.is_featured &&
+                      _vm.errors.is_featured.length > 0
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "error",
+                      fn: function() {
+                        return [
+                          _c("ShowErrors", {
+                            attrs: { errors: _vm.errors.is_featured }
+                          })
+                        ]
+                      },
+                      proxy: true
+                    }
+                  ]),
+                  model: {
+                    value: _vm.aplicativo.options.is_featured,
+                    callback: function($$v) {
+                      _vm.$set(_vm.aplicativo.options, "is_featured", $$v)
+                    },
+                    expression: "aplicativo.options.is_featured"
+                  }
+                }),
+                _vm._v(" "),
+                _c("q-editor", {
+                  attrs: {
+                    "min-height": "15rem",
+                    "bottom-slots": "",
+                    error:
+                      _vm.errors.description &&
+                      _vm.errors.description.length > 0
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "error",
+                      fn: function() {
+                        return [
+                          _c("ShowErrors", {
+                            attrs: { errors: _vm.errors.description }
+                          })
+                        ]
+                      },
+                      proxy: true
+                    }
+                  ]),
+                  model: {
+                    value: _vm.aplicativo.description,
+                    callback: function($$v) {
+                      _vm.$set(_vm.aplicativo, "description", $$v)
+                    },
+                    expression: "aplicativo.description"
+                  }
+                }),
+                _vm._v(" "),
+                _c("q-btn", {
+                  staticClass: "full-width q-mt-md",
+                  attrs: { label: "Salvar", type: "submit", color: "primary" }
+                })
+              ],
+              1
+            )
+          ])
         ],
         1
       )
@@ -67500,6 +67680,7 @@ var render = function() {
                         _vm._v(" "),
                         _c("vue-recaptcha", {
                           attrs: {
+                            id: _vm.r_id,
                             sitekey: _vm.siteKey,
                             loadRecaptchaScript: true
                           }
@@ -67576,12 +67757,27 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("q-input", {
-    attrs: { filled: "", type: "file", hint: _vm.hint },
+    attrs: {
+      filled: "",
+      type: "file",
+      hint: _vm.hint,
+      "bottom-slots": "",
+      error: _vm.errors && _vm.errors.file && _vm.errors.file.length > 0
+    },
     on: {
       change: function($event) {
         return _vm.onChange($event)
       }
-    }
+    },
+    scopedSlots: _vm._u([
+      {
+        key: "error",
+        fn: function() {
+          return [_c("ShowErrors", { attrs: { errors: _vm.errors.file } })]
+        },
+        proxy: true
+      }
+    ])
   })
 }
 var staticRenderFns = []
@@ -68690,8 +68886,9 @@ var render = function() {
             attrs: {
               filled: "",
               "option-value": "id",
-              "option-label": "label",
+              "option-label": "name",
               "use-chips": "",
+              "emmit-value": "",
               options: _vm.roles,
               label: "Tipo de Usuário"
             },

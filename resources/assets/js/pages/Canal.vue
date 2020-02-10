@@ -1,5 +1,5 @@
 <template>
-  <section class="q-pa-md">
+  <section class="q-pa-sm">
     <header class="row wrap items-center q-gutter-x-xl">
       <q-breadcrumbs align="left" active-color="accent" gutter="xs">
         <q-breadcrumbs-el to="/" icon="home" />

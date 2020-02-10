@@ -39,7 +39,6 @@ class ImportData extends Command
      */
     public function handle()
     {
-
         $files = array_sort(File::files(storage_path('dumps')), function ($file) {
             return $file->getFilename();
         });

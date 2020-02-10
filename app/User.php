@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Support\Facades\Storage;
@@ -187,7 +188,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function role()
     {
-        return $this->belongsTo(Role::class, 'role_id', 'id')->select(['id', 'name as label']);
+        return $this->belongsTo(Role::class, 'role_id', 'id');
     }
     /**
      * Undocumented function
@@ -208,12 +209,9 @@ class User extends Authenticatable implements JWTSubject
         }
         return false;
     }
-    public function updateUser()
-    {
-        // $user = $this->update([
-        //     'name' => 'Luis'
-        // ]);
 
-        // $user->save();
+    public function isOwner($user_id)
+    {
+        return Auth::user()->id == $user_id;
     }
 }

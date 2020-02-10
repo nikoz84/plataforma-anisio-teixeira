@@ -7,40 +7,110 @@
         </div>
       </q-card-section>
       <q-card-section>
-        <q-form @submit.prevent="save()" ref="denunciaForm">
-          <q-input label="Nome do aplicativo" bottom-slots>
+        <form v-on:submit.prevent="save()">
+          <!-- NOME -->
+          <q-input v-model="aplicativo.name" label="Nome do aplicativo" 
+          :error="errors.name && errors.name.length > 0">
             <template v-slot:error>
-                <ShowErrors :errors="errors.message"></ShowErrors>
-              </template>
+              <ShowErrors :errors="errors.name"></ShowErrors>
+            </template>
           </q-input>
-          <q-input label="descrição"></q-input>
-        </q-form>
+          <!-- IMAGEM DESTAQUE -->
+          <q-input @input="val => { image = val[0] }"
+            filled
+            type="file"
+            hint="Imagem de destaque"
+            bottom-slots
+            :error="errors && errors.image && errors.image.length > 0"
+              >
+            <template v-slot:error>
+              <ShowErrors :errors="errors.image"></ShowErrors>
+            </template>
+          </q-input>
+          <!-- URL -->
+          <q-input v-model="aplicativo.url" label="URL do aplicativo" 
+          :error="errors.url && errors.url.length > 0">
+            <template v-slot:error>
+              <ShowErrors :errors="errors.url"></ShowErrors>
+            </template>
+          </q-input>
+          <!-- CATEGORIA -->
+          <q-select outlined 
+            v-model="aplicativo.category" 
+            :options="categories"
+            option-value="id"
+            option-label="name"
+            use-input
+            label="Escolha uma Categoria" 
+            bottom-slots
+            :error="errors.category_id && errors.category_id.length > 0">
+            <template v-slot:error>
+              <ShowErrors :errors="errors.category_id"></ShowErrors>
+            </template>
+          </q-select>
+          <!-- DESTAQUE -->
+          <q-toggle
+                class="q-mt-md"
+                label="Marcar como destaque"
+                color="pink"
+                checked-icon="check"
+                unchecked-icon="clear"
+                v-model="aplicativo.options.is_featured"
+                bottom-slots
+                :error="errors.is_featured && errors.is_featured.length > 0"
+              >
+            <template v-slot:error>
+              <ShowErrors :errors="errors.is_featured"></ShowErrors>
+            </template>
+          </q-toggle>
+          <!-- DESCRIÇÃO -->
+          <q-editor v-model="aplicativo.description" 
+            min-height="15rem"
+            bottom-slots
+            :error="errors.description && errors.description.length > 0">
+            <template v-slot:error>
+              <ShowErrors :errors="errors.description"></ShowErrors>
+            </template>
+          </q-editor>
+          <q-btn class="full-width q-mt-md" label="Salvar" type="submit" color="primary"/>
+        </form>
       </q-card-section>
     </q-card>
   </article>
 </template>
 
 <script>
-import { QCard } from "quasar";
-import showErrors from "../components/ShowErrors.vue";
+import { QForm, QInput, QEditor, QSelect, QCard, QCardSection } from "quasar";
+import ShowErrors from "../components/ShowErrors.vue";
 
 export default {
   name: "AplicativoForm",
   components: {
+    QForm,
+    QInput,
+    QEditor,
+    QSelect,
     QCard,
-    showErrors
+    QCardSection,
+    ShowErrors
   },
   data() {
     return {
-      aplicativo: {},
-      name: "",
-      description: null,
-      url: null,
-      tags: null,
-      options: {},
-      image: null,
-      category_id: null,
+      aplicativo: {
+        name: "",
+        description: "",
+        url: "",
+        tags: [],
+        options: {
+          is_featured: false
+        },
+        image: null,
+        category: null,
+        image: null,
+        tags: []
+      },
       categories: [],
+      image: null,
       count: 0,
       errors: {}
     };
@@ -51,36 +121,40 @@ export default {
   },
   methods: {
     async save() {
-      this.options = {
-        qt_access: 0
-      };
-      if (!this.image) return;
+      let id = this.$route.params.id ? `/${this.$route.params.id}` : "";
+
       let form = new FormData();
+
       form.append("name", this.aplicativo.name);
       form.append("description", this.aplicativo.description);
-      form.append("category_id", this.aplicativo.category_id);
-      form.append("canal_id", 9);
-      form.append("tags", this.aplicativo.tags);
+      form.append("category_id", this.aplicativo.category.id);
       form.append("url", this.aplicativo.url);
-      form.append("is_featured", this.aplicativo.is_featured);
-      form.append("options", JSON.stringify(this.aplicativo.options));
-      form.append("image", this.image, this.image.name);
+      form.append("tags", this.aplicativo.tags);
+      form.append("is_featured", this.aplicativo.options.is_featured);
+
+      if (this.image) {
+        form.append("image", this.image, this.image.name);
+      }
+
+      form.append("aplicativo", JSON.stringify(this.aplicativo));
       if (this.$route.params.action == "editar") {
         form.append("id", this.$route.params.id);
         form.append("_method", "PUT");
       }
 
       try {
-        let resp = await axios.post(`/aplicativos`, form);
-        this.$router.push("/admin/aplicativos/listar");
+        let resp = await axios.post(`/aplicativos` + id, form);
+        console.log(resp);
       } catch (response) {
+        console.log(response);
         this.errors = response.errors;
       }
     },
     async getCategories() {
       let resp = await axios.get("/aplicativos/categories");
-
-      this.categories = resp.data.categories;
+      if (resp.data.success) {
+        this.categories = resp.data.metadata;
+      }
     },
     countCaracters(e) {
       if (e.target.value.length > 140) {
@@ -92,7 +166,10 @@ export default {
       if (!this.$route.params.id) return;
 
       let resp = await axios.get(`/aplicativos/${this.$route.params.id}`);
-      console.log(resp);
+      if (resp.data.success) {
+        console.log(resp.data.metadata);
+        this.aplicativo = resp.data.metadata;
+      }
     }
   }
 };
