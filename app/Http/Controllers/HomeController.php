@@ -93,6 +93,6 @@ class HomeController extends ApiController
         $data = new Autocomplete($termo, $limit, $per);
         $paginator = $data->autocomplete();
 
-        return $this->showAsPaginator($paginator, '', 200);
+        return $this->showAll($paginator, '', 200);
     }
 }

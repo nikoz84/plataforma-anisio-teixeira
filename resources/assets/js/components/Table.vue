@@ -96,6 +96,7 @@
               label="Confirmar"
               title="Confirmar apagado"
               color="negative"
+              @click="deleted()"
               v-close-popup
             />
           </q-card-actions>
@@ -185,6 +186,11 @@ export default {
       let title = item.name ? item.name : item.title;
       this.text = `Realmente deseja <strong class="text-negative">deletar</strong> <b>${title}</b>?`;
       console.log(this.$route.params.slug, item.id);
+    },
+    async deleted() {
+      let url = `/${this.$route.params.slug}/${id}`;
+      console.log(url);
+      //let resp = await axios.post(``)
     }
   }
 };

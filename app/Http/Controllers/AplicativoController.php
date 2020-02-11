@@ -36,7 +36,7 @@ class AplicativoController extends ApiController
         });
 
         $apps = $query->with(['category', 'canal'])
-            ->orderBy('name', 'desc')
+            ->orderBy('created_at', 'desc')
             ->paginate($limit)
             ->setPath("/aplicativos?categoria={$category}&limit={$limit}");
         return $this->showAsPaginator($apps);
@@ -49,21 +49,37 @@ class AplicativoController extends ApiController
      */
     public function create()
     {
+        $this->authorize('create', Aplicativo::class);
+
         $validator = Validator::make($this->request->all(), config("rules.aplicativo"));
 
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível criar o conteúdo", 422);
+            return $this->errorResponse($validator->errors(), "Não foi possível adicionar o aplicativo", 422);
+        }
+        $aplicativo = $this->aplicativo;
+
+        $aplicativo->name = $this->request->name;
+        $aplicativo->canal_id =  $this->aplicativo::CANAL_ID;
+        $aplicativo->category_id = $this->request->category_id;
+        $aplicativo->user_id = Auth::user()->id;
+        $aplicativo->url = $this->request->url;
+        $aplicativo->description = $this->request->description;
+
+        $is_featured = $this->request->options_is_featured === 'true' ? true : false;
+        $aplicativo->setAttribute('options->is_featured', $is_featured);
+        $aplicativo->setAttribute('options->qt_access', $this->aplicativo::QT_ACCESS_INIT);
+
+        if (!$aplicativo->save()) {
+            return $this->errorResponse([], "Não foi possível criar o aplicativo", 422);
         }
 
-        $app = $this->aplicativo::create($this->request);
+        $aplicativo->tags()->attach($this->request->tags);
 
-        if (!$app) {
-            return $this->errorResponse([], 'não foi possível cadastrar o aplicativo', 201);
+        if ($this->request->has('image')) {
+            $this->createFile($this->aplicativo->id, $this->request->file('image'));
         }
 
-        $this->createFile($app->id, $this->request->file('image'));
-
-        return $this->successResponse($app, 'Aplicativo cadastrado com sucesso!', 200);
+        return $this->successResponse($aplicativo, 'Aplicativo cadastrado com sucesso!', 200);
     }
     /**
      * Cria Arquivo de imagem
@@ -71,6 +87,7 @@ class AplicativoController extends ApiController
     private function createFile($id, $image)
     {
         $fileName = "{$id}.{$image->guessExtension()}";
+        return $this->successResponse($fileName, 'teste', 200);
         $path = $this->request->file('image')
             ->storeAs('imagem-associada', $fileName, 'aplicativos-educacionais');
         $image = new ResizeImage();
@@ -98,15 +115,20 @@ class AplicativoController extends ApiController
         }
 
         $aplicativo->name = $this->request->name;
+        $aplicativo->canal_id = $aplicativo::CANAL_ID;
         $aplicativo->description = $this->request->description;
-        $aplicativo->setAttribute('options->is_featured', boolval($this->request->is_featured));
+        $is_featured = $this->request->options_is_featured === 'true' ? true : false;
+        $aplicativo->setAttribute('options->is_featured', $is_featured);
         $aplicativo->category_id = $this->request->category_id;
+
+        $aplicativo->tags()->sync($this->request->tags);
 
         if (!$aplicativo->save()) {
             return $this->errorResponse([], "Não foi possível atualizar o aplicativo", 422);
         }
-
-        //$this->createFile($aplicativo->id, $this->request->file('image'));
+        if ($this->request->has('image')) {
+            $this->createFile($aplicativo->id, $this->request->file('image'));
+        }
 
         return $this->successResponse($aplicativo, "Aplicativo atualizado com sucesso!!", 200);
     }
@@ -116,9 +138,9 @@ class AplicativoController extends ApiController
      */
     public function delete($id)
     {
-        $aplicativo = $this->aplicativo::find($id);
-        $aplicativo->tags()->delete();
-        $aplicativo->delete();
+        $aplicativo = $this->aplicativo::findOrFail($id);
+        $aplicativo->tags()->detach();
+
         if (!$aplicativo->delete()) {
             $this->errorResponse([], 'não foi possível deletar!!', 422);
         }

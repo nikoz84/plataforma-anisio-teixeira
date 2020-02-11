@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Conteudo;
+use App\Aplicativo;
 
 class Tag extends Model
 {
@@ -16,11 +18,11 @@ class Tag extends Model
 
     public function conteudos()
     {
-        return $this->belongsToMany(App\Conteudo::class);
+        return $this->belongsToMany(Conteudo::class);
     }
     public function aplicativos()
     {
-        return $this->belongsToMany(App\Conteudo::class);
+        return $this->belongsToMany(Aplicativo::class);
     }
     public function setNameAttribute($value)
     {

@@ -102,7 +102,6 @@
 
 <script>
 import ShowErrors from "../components/ShowErrors.vue";
-import VueRecaptcha from "vue-recaptcha";
 import { QCard, QCardSection, QImg, QForm, QInput, QSeparator } from "quasar";
 
 export default {
@@ -114,8 +113,7 @@ export default {
     QForm,
     QInput,
     QImg,
-    QSeparator,
-    VueRecaptcha
+    QSeparator
   },
   data() {
     return {
@@ -124,25 +122,14 @@ export default {
       email: "",
       url: this.$route.params.url,
       subject: "",
-      message: "",
-      r_id: 0,
-      siteKey: "6LczPtQUAAAAAOcgJ9NP9GXPJmA98rppQbsmzuX5"
+      message: ""
     };
   },
   beforeRouteEnter(to, from, next) {
     localStorage.setItem("urlDenuncia", `${location.origin}${from.path}`);
     next();
   },
-  mounted() {
-    if (window.grecaptcha) {
-      let container = document.getElementsByClassName("g-recaptcha")[0];
-      if (typeof grecaptcha.render === "function") {
-        this.r_id = grecaptcha.render(container, {
-          sitekey: this.siteKey
-        });
-      }
-    }
-  },
+
   computed: {
     getUrl() {
       return localStorage.urlDenuncia;

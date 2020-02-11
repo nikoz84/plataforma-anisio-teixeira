@@ -56,7 +56,7 @@ class CanalPolicy
      */
     public function update(User $user, Canal $canal)
     {
-        if ($user->is('super-admin') && Auth::loginUsingId()) {
+        if ($user->role->name === 'super-admin') {
             return true;
         }
     }

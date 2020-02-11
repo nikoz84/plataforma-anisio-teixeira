@@ -95,7 +95,7 @@ class TagController extends ApiController
             ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
             ->get(['id', 'name']);
 
-        return $this->fetchForSelect(collect($tags));
+        return $this->showAll(collect($tags));
     }
     /**
      * Remove the specified resource from storage.

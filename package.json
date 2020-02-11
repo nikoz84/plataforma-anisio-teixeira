@@ -10,10 +10,10 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-object-rest-spread": "^7.7.7",
-    "@babel/plugin-syntax-dynamic-import": "^7.7.4",
-    "@babel/preset-env": "^7.7.7",
-    "axios": "^0.19.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "axios": "^0.19.2",
     "babel-plugin-dynamic-import-webpack": "^1.1.0",
     "browser-sync": "^2.26.7",
     "browser-sync-webpack-plugin": "^2.2.2",
@@ -26,30 +26,30 @@
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
     "vue": "^2.6.11",
-    "vue-router": "^3.1.3",
+    "vue-router": "^3.1.5",
     "vue-template-compiler": "^2.6.11",
     "vuex": "^3.1.2"
   },
   "dependencies": {
-    "@babel/core": "^7.7.7",
-    "@quasar/extras": "^1.3.3",
+    "@babel/core": "^7.8.4",
+    "@quasar/extras": "^1.5.1",
     "animate.css": "^3.7.2",
-    "apexcharts": "^3.12.0",
+    "apexcharts": "^3.15.5",
     "babel-loader": "^8.0.6",
     "fastclick": "^1.0.6",
     "google-maps-api-loader": "^1.1.1",
     "moment": "^2.15.0",
     "node-sass": "^4.13.1",
-    "plyr": "^3.5.7-beta.0",
-    "quasar": "^1.6.1",
+    "plyr": "^3.5.8",
+    "quasar": "^1.8.5",
     "roboto-fontface": "^0.7.0",
-    "vue-apexcharts": "^1.5.0",
+    "vue-apexcharts": "^1.5.2",
     "vue-loader": "^15.8.3",
     "vue-plyr": "^6.0.4",
     "vue-progressbar": "^0.7.5",
     "vue-recaptcha": "^1.3.0",
     "vuejs-datepicker": "^1.6.2",
     "vuex-map-fields": "^1.3.5",
-    "webpack": "^4.41.5"
+    "webpack": "^4.41.6"
   }
 }

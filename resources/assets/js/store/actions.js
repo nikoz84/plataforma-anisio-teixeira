@@ -110,14 +110,16 @@ const actions = {
     }
   },
   async logout({ commit }) {
-    if (localStorage.token) {
-      await axios.post("/auth/logout", {
-        token: localStorage.token
-      });
-      commit("SET_LOGOUT_USER");
-      localStorage.removeItem("token");
-    } else {
-      commit("SET_LOGOUT_USER");
+    try {
+      await axios
+        .post("/auth/logout", {
+          token: localStorage.token
+        })
+        .then(resp => {
+          commit("SET_LOGOUT_USER");
+          localStorage.removeItem("token");
+        });
+    } catch (error) {
       localStorage.removeItem("token");
     }
   },

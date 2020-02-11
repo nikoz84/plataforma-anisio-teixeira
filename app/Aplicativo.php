@@ -15,6 +15,9 @@ class Aplicativo extends Conteudo
 {
     use SoftDeletes;
 
+    const CANAL_ID = 9;
+    const QT_ACCESS_INIT = 0;
+
     protected $table = 'aplicativos';
 
     protected $fillable = [
@@ -41,7 +44,7 @@ class Aplicativo extends Conteudo
     protected $casts = [
         'options' => 'array',
     ];
-    
+
     public function canal()
     {
         Canal::$without_appends = true;
@@ -69,7 +72,7 @@ class Aplicativo extends Conteudo
     {
         return $this->belongsTo(AplicativoCategory::class, 'category_id', 'id');
     }
-    
+
     /**
      * Descrição abreviada
      *

@@ -53,7 +53,7 @@
                 use-input
                 multiple
                 option-value="id"
-                option-label="label"
+                option-label="name"
                 use-chips
                 stack-label
                 input-debounce="300"
@@ -285,27 +285,6 @@ export default {
           });
         }
       });
-    },
-    getConteudo() {
-      return {
-        license_id: this.license_id,
-        canal_id: this.canal_id,
-        category_id: this.category_id,
-        tipo_id: this.tipo_id,
-        site: this.site,
-        title: this.title,
-        description: this.description,
-        authors: this.authors,
-        source: this.source,
-        image: this.image,
-        tags: this.tags,
-        niveis: this.niveis,
-        components: this.components,
-        terms: this.terms,
-        is_approved: this.is_approved,
-        is_featured: this.is_featured,
-        is_site: this.is_site
-      };
     }
   }
 };

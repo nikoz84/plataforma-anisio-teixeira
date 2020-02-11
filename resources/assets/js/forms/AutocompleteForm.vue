@@ -8,7 +8,7 @@
       v-model="term"
       use-input
       option-value="id"
-      option-label="label"
+      option-label="name"
       stack-label
       hide-dropdown-icon
       debounce="300"
@@ -84,7 +84,7 @@ export default {
     selectedInput(value) {
       if (value) {
         this.$router.replace(
-          `/recursos-educacionais/listar?busca=${value.label}`
+          `/recursos-educacionais/listar?busca=${value.name}`
         );
       } else {
         this.$router.replace(`/recursos-educacionais/listar`);

@@ -47,9 +47,10 @@ class AplicativoPolicy
      */
     public function create(User $user)
     {
-        if ($user->is('super-admin') || $user->is('admin') || $user->is('coordenador')) {
-            return true;
-        }
+
+        return ($user->role->name === 'super-admin' ||
+            $user->role->name === 'admin' ||
+            $user->role->name === 'coordenador');
     }
 
     /**
@@ -63,6 +64,7 @@ class AplicativoPolicy
     {
         return ($user->role->name === 'super-admin' ||
             $user->role->name === 'admin' ||
+            $user->role->name === 'coordenador' ||
             $aplicativo->user_id === $user->id);
     }
 

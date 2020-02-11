@@ -29,9 +29,9 @@ return [
         'description' => 'required|min:140',
         'url' => ['required', new \App\Rules\ValidUrl],
         'category_id' => 'required',
-        'tags' => 'required',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'is_featured' => 'required|in:true,false',
+        'tags' => 'required|array|between:3,10',
+        'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'options_is_featured' => 'required|in:true,false',
     ],
     "license" => [
         'parent_id' => 'nullable',

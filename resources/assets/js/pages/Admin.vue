@@ -1,11 +1,6 @@
 <template>
-  <div class="row">
-    <header class="page-header col-12">
-      <Title title="Administração da Plataforma"></Title>
-    </header>
-    <section class="col-12">
-      <router-view name="admin"></router-view>
-    </section>
+  <div class="q-pa-md">
+    <router-view name="admin"></router-view>
   </div>
 </template>
 <script>

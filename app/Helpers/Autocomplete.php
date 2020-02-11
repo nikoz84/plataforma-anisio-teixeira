@@ -33,7 +33,7 @@ class Autocomplete
 
         $paginator = DB::table(DB::raw("conteudos as cd, plainto_tsquery('simple', lower(unaccent(?))) query"))
             ->select([
-                'cd.id', 'cd.title as label',
+                'cd.id', 'cd.title as name',
                 DB::raw('ts_rank_cd(cd.ts_documento, query) AS ranking'),
             ])
             ->whereRaw('query @@ cd.ts_documento')
@@ -49,7 +49,7 @@ class Autocomplete
         $search = "%{$this->term}%";
 
         $paginator = DB::table("tags as t")
-            ->select(['t.id', 't.name as label'])
+            ->select(['t.id', 't.name'])
             ->whereRaw('unaccent(lower(t.name)) LIKE unaccent(lower(?))', [$search])
             ->orderBy('t.name', 'desc')
             ->paginate($this->limit);

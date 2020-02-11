@@ -67,7 +67,9 @@ class CanalController extends ApiController
      */
     public function update($id)
     {
-        $canal = $this->canal::find($id);
+        $canal = $this->canal::findOrFail($id);
+
+        $this->authorize('update', [$canal]);
 
         $canal->name = $this->request->name;
         $canal->slug = $this->request->slug;
