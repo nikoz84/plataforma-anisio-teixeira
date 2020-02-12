@@ -9,7 +9,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class LicensePolicy
 {
     use HandlesAuthorization;
-    
+
     /**
      * Determine whether the user can view any licenses.
      *
@@ -25,12 +25,11 @@ class LicensePolicy
      * Determine whether the user can view the license.
      *
      * @param  \App\User  $user
-     * @param  \App\License  $license
      * @return mixed
      */
-    public function view(User $user, License $license)
+    public function index(User $user)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -41,7 +40,7 @@ class LicensePolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -51,9 +50,9 @@ class LicensePolicy
      * @param  \App\License  $license
      * @return mixed
      */
-    public function update(User $user, License $license)
+    public function update(User $user)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -63,9 +62,9 @@ class LicensePolicy
      * @param  \App\License  $license
      * @return mixed
      */
-    public function delete(User $user, License $license)
+    public function delete(User $user)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -75,9 +74,9 @@ class LicensePolicy
      * @param  \App\License  $license
      * @return mixed
      */
-    public function restore(User $user, License $license)
+    public function restore(User $user)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -87,8 +86,8 @@ class LicensePolicy
      * @param  \App\License  $license
      * @return mixed
      */
-    public function forceDelete(User $user, License $license)
+    public function forceDelete(User $user)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 }

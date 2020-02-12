@@ -34,7 +34,7 @@ class DenunciaController extends ApiController
 
         $paginator = $this->denuncia::paginate($limit)->setPath("/denuncias?limit={$limit}");
 
-        return $this->showAsPaginator($paginator, 'Lista de Denúncias', 200);
+        return $this->showAsPaginator($paginator);
     }
 
     /**
@@ -107,6 +107,12 @@ class DenunciaController extends ApiController
 
         return $this->successResponse([], "Apagado com sucesso!", 200);
     }
+    /**
+     * Seleciona uma denuncia pelo ID
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function getById($id)
     {
         $denuncia = $this->denuncia::findOrFail($id);

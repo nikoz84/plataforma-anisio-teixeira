@@ -2,14 +2,17 @@
 
 namespace App;
 
+use App\Traits\UserCan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class CurricularComponent extends Model
 {
+    use UserCan;
+
     protected $table = 'curricular_components';
     protected $hidden = ['pivot'];
-    protected $appends = ['icon'];
+    protected $appends = ['icon', 'user_can'];
 
     public function categories()
     {

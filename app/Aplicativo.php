@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Helpers\TransformDate;
 use App\Tag;
 use App\AplicativoCategory;
+use App\Traits\UserCan;
 
 class Aplicativo extends Conteudo
 {
-    use SoftDeletes;
+    use SoftDeletes, UserCan;
 
     const CANAL_ID = 9;
     const QT_ACCESS_INIT = 0;
@@ -34,7 +35,8 @@ class Aplicativo extends Conteudo
         'image',
         'excerpt',
         'url_exibir',
-        'formated_date'
+        'formated_date',
+        'user_can'
     ];
     protected $dates = [
         'created_at',

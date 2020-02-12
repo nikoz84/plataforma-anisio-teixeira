@@ -9,7 +9,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class RolePolicy
 {
     use HandlesAuthorization;
-    
+
     /**
      * Determine whether the user can view any roles.
      *
@@ -28,9 +28,9 @@ class RolePolicy
      * @param  \App\Role  $role
      * @return mixed
      */
-    public function view(User $user, Role $role)
+    public function index(User $user)
     {
-        //
+        return $user->role->name === 'super-admin';
     }
 
     /**
@@ -41,7 +41,7 @@ class RolePolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->role->name === 'super-admin';
     }
 
     /**
@@ -53,7 +53,7 @@ class RolePolicy
      */
     public function update(User $user, Role $role)
     {
-        //
+        return $user->role->name === 'super-admin';
     }
 
     /**
@@ -65,7 +65,7 @@ class RolePolicy
      */
     public function delete(User $user, Role $role)
     {
-        //
+        return $user->role->name === 'super-admin';
     }
 
     /**
@@ -75,9 +75,9 @@ class RolePolicy
      * @param  \App\Role  $role
      * @return mixed
      */
-    public function restore(User $user, Role $role)
+    public function restore(User $user)
     {
-        //
+        return $user->role->name === 'super-admin';
     }
 
     /**
@@ -87,8 +87,8 @@ class RolePolicy
      * @param  \App\Role  $role
      * @return mixed
      */
-    public function forceDelete(User $user, Role $role)
+    public function forceDelete(User $user)
     {
-        //
+        return $user->role->name === 'super-admin';
     }
 }

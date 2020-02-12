@@ -2,29 +2,15 @@
 
 namespace App\Helpers;
 
-use App\Category;
-use App\AplicativoCategory;
 use App\NivelEnsino;
 use App\CurricularComponentCategory;
 use App\License;
 use App\Tipo;
+use App\User;
 
 class SideBar
 {
-    public static function getSideBar($id)
-    {
-        switch ($id) {
-            case 5:
-                return self::getSidebarSitesTematicos();
-                break;
-            case 6:
-                return self::getSideBarAdvancedFilter();
-                break;
-            default:
-                return self::getSideBarCategories($id);
-                break;
-        }
-    }
+
     private static function getSideBarAdvancedFilter()
     {
         $componentes = CurricularComponentCategory::with(['components' => function ($q) {
@@ -45,24 +31,7 @@ class SideBar
             'niveis' => $niveis
         ];
     }
-    /** categorias dos canais */
-    private static function getSideBarCategories($id)
-    {
-        $categorias = Category::selectRaw("id, parent_id, name, options->'is_active' as is_active")
-            ->where('canal_id', $id)
-            ->whereRaw('parent_id is null')
-            ->where('options->is_active', 'true')
-            ->with('subCategories')
-            ->orderBy('created_at', 'asc')
-            ->get();
-        $disciplinas = NivelEnsino::where('id', '=', 5)->with('components')->get()->first();
-        $aplicativosCat = AplicativoCategory::orderBy('name')->get(['id', 'name']);
 
-        return [
-            'categories' => $id == 9 ? $aplicativosCat : $categorias,
-            'disciplinas' => $id == 2 ? $disciplinas : []
-        ];
-    }
 
     /**categorias dos sites tematicos */
     private static function getSidebarSitesTematicos()
@@ -74,5 +43,108 @@ class SideBar
             'temas' => $temas,
             "disciplinas" => $disciplinas
         ];
+    }
+    /**
+     * Cria o menu de administração
+     *
+     * @param User $user
+     * @return void
+     */
+    public function getAdminSidebar(User $user)
+    {
+        $linksLabels = $this->linksLabels();
+        $links = [];
+
+        $links = $linksLabels->map(function ($link) use ($user) {
+            if ($user->can($link['hability'], $link['class'])) {
+                return $this->createArray($link['label'], $link['slug']);
+            }
+        });
+
+        return $links;
+    }
+    /**
+     * Cria json para Links de administração
+     *
+     * @param [type] $label
+     * @param [type] $slug
+     * @param string $name
+     * @param string $view
+     * @param string $action
+     * @return void
+     */
+    public function createArray($label, $slug, $name = '', $view = 'admin', $action = 'listar')
+    {
+
+        return [
+            "label" => $label,
+            "name" => $name ? $name : $slug,
+            "view" => $view,
+            "params" => ["slug" => $slug, "action" => $action]
+        ];
+    }
+    /**
+     * Configurações de links
+     *
+     * @return void
+     */
+    public function linksLabels()
+    {
+        return collect([
+            [
+                'label' => 'Aplicativos',
+                'slug' => 'aplicativos',
+                'hability' => 'index',
+                'class' => \App\Aplicativo::class
+            ],
+            [
+                'label' => 'Conteudos',
+                'slug' => 'conteudos',
+                'hability' => 'index',
+                'class' => \App\Conteudo::class
+            ],
+            [
+                'label' => 'Canais',
+                'slug' => 'canais',
+                'hability' => 'index',
+                'class' => \App\Canal::class
+            ],
+            [
+                'label' => 'Denúncias',
+                'slug' => 'denuncias',
+                'hability' => 'index',
+                'class' => \App\Denuncia::class
+            ],
+            [
+                'label' => 'Licenças',
+                'slug' => 'licencas',
+                'hability' => 'index',
+                'class' => \App\License::class
+            ],
+            [
+                'label' => 'Tipo de Usuário',
+                'slug' => 'roles',
+                'hability' => 'index',
+                'class' => \App\Role::class
+            ],
+            [
+                'label' => 'Palavras Chaves',
+                'slug' => 'tags',
+                'hability' => 'index',
+                'class' => \App\Tag::class
+            ],
+            [
+                'label' => 'Tipos de Conteúdos',
+                'slug' => 'tipos',
+                'hability' => 'index',
+                'class' => \App\Tipo::class
+            ],
+            [
+                'label' => 'Usuários',
+                'slug' => 'usuarios',
+                'hability' => 'index',
+                'class' => \App\User::class
+            ]
+        ]);
     }
 }

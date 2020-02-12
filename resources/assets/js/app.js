@@ -1,13 +1,14 @@
 import "./bootstrap";
 import Vue from "vue";
 
+import VueRouter from "vue-router";
+import router from "./router";
 import VueApexCharts from "vue-apexcharts";
 import VuePlyr from "vue-plyr";
-import VueRouter from "vue-router";
-import routes from "./routes";
 import Vuex from "vuex";
 import store from "./store/index.js";
 import Default from "./layout/Default.vue";
+
 import "./interceptor.js";
 
 Vue.use(VuePlyr, {
@@ -19,11 +20,6 @@ Vue.use(VuePlyr, {
 Vue.use(VueApexCharts);
 Vue.use(Vuex);
 Vue.use(VueRouter);
-
-const router = new VueRouter({
-  mode: "history",
-  routes
-});
 
 router.beforeEach((to, from, next) => {
   document.title = `${to.meta.title} - Plataforma Anísio Texeira`;

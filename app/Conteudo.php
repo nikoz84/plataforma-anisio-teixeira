@@ -17,11 +17,11 @@ use App\Category;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Storage;
 use App\Helpers\TransformDate;
-use Illuminate\Support\Facades\Auth;
+use App\Traits\UserCan;
 
 class Conteudo extends Model
 {
-    use FileSystemLogic, SoftDeletes;
+    use FileSystemLogic, SoftDeletes, UserCan;
 
     protected $id = 'id';
     const IS_SITE = 'false';
@@ -50,7 +50,7 @@ class Conteudo extends Model
         'updated_at',
         'deleted_at',
     ];
-    protected $appends = ['image', 'excerpt', 'url_exibir', 'tipo', 'permission', 'arquivos', 'formated_date'];
+    protected $appends = ['image', 'excerpt', 'url_exibir', 'tipo', 'user_can', 'arquivos', 'formated_date'];
     protected $casts = ['options' => 'array',];
     protected $hidden = ['ts_documento'];
     /**
@@ -196,15 +196,7 @@ class Conteudo extends Model
             return $this::getImageFromTipo($tipo, $id);
         }
     }
-    /**
-     * Permissões do usuário
-     *
-     * @return void
-     */
-    public function getPermissionAttribute()
-    {
-        return Gate::any(['update', 'delete', 'super-admin'], $this);
-    }
+
     /**
      * Adiciona atributo url_exibir
      *

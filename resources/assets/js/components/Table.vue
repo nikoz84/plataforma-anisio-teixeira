@@ -41,13 +41,14 @@
                   color="primary"
                   title="Editar item"
                   icon="edit"
+                  v-if="row.user_can && row.user_can.update"
                   :to="`/admin/${$route.params.slug}/editar/${row.id}`"
                 />
                 <q-btn
                   color="negative"
                   title="Deletar item"
                   icon="delete"
-                  @click="confirmDelete(row)"
+                  v-if="row.user_can && row.user_can.delete"
                 />
               </q-btn-group>
             </td>
@@ -74,34 +75,6 @@
           </q-pagination>
         </div>
       </div>
-
-      <!-- CONFIRMAR APAGADO -->
-      <q-dialog v-model="confirm" persistent>
-        <q-card>
-          <q-card-section class="row items-center">
-            <q-avatar icon="delete" color="negative" text-color="white" />
-            <span class="q-ml-sm" v-html="text"></span>
-          </q-card-section>
-
-          <q-card-actions align="right">
-            <q-btn
-              flat
-              label="Cancelar"
-              title="Cancelar ação"
-              color="primary"
-              v-close-popup
-            />
-            <q-btn
-              flat
-              label="Confirmar"
-              title="Confirmar apagado"
-              color="negative"
-              @click="deleted()"
-              v-close-popup
-            />
-          </q-card-actions>
-        </q-card>
-      </q-dialog>
     </div>
   </div>
 </template>
@@ -180,17 +153,6 @@ export default {
         this.$q.loading.hide();
         this.SET_PAGINATOR(resp.data.paginator);
       }
-    },
-    confirmDelete(item) {
-      this.confirm = true;
-      let title = item.name ? item.name : item.title;
-      this.text = `Realmente deseja <strong class="text-negative">deletar</strong> <b>${title}</b>?`;
-      console.log(this.$route.params.slug, item.id);
-    },
-    async deleted() {
-      let url = `/${this.$route.params.slug}/${id}`;
-      console.log(url);
-      //let resp = await axios.post(``)
     }
   }
 };

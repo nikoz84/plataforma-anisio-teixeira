@@ -37,7 +37,7 @@
 <script>
 export default {
   name: "CardHomeIcon",
-  props: ["title", "items"],
+  props: ["title", "items", "source"],
   data() {
     return {
       rounded: false
@@ -45,13 +45,8 @@ export default {
   },
   methods: {
     goTo(item) {
-      let to = `tipos=${item.id}`;
-      if (this.source == "emitec") {
-        this.rounded = true;
-        to = `busca=${item.name}`;
-      }
-
-      return `recursos-educacionais/listar?${to}`;
+      let to = this.source == "tipos" ? `=${item.id}` : `=${item.name}`;
+      return `recursos-educacionais/listar?${this.source}${to}`;
     }
   }
 };

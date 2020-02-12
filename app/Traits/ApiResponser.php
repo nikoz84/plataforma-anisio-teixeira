@@ -8,7 +8,7 @@ use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 
 trait ApiResponser
 {
-    protected function successResponse($data, $message, $code)
+    protected function successResponse($data, $message = '', $code = 200)
     {
         return response()->json([
             'metadata' => $data,

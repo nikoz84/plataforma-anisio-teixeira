@@ -5,12 +5,14 @@
       id="tipo-conteudos"
       title="Tipos de Conteúdos"
       :items="tipos"
+      source="tipos"
       style="min-height: 85vh;"
     ></CardHomeIcon>
     <a class="skip-link" href="#disciplinas">disciplinas</a>
     <CardHomeIcon
       id="disciplinas"
       title="Disciplinas"
+      source="busca"
       :items="disciplinas.components"
       style="min-height: 55vh;"
     ></CardHomeIcon>

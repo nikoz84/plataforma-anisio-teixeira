@@ -9,11 +9,12 @@ use App\Aplicativo;
 use App\AplicativoCategory;
 use App\Conteudo;
 use App\Category;
+use App\Traits\UserCan;
 use App\Traits\WithoutAppends;
 
 class Canal extends Model
 {
-    use SoftDeletes, WithoutAppends;
+    use SoftDeletes, WithoutAppends, UserCan;
 
     protected $table = 'canais';
     /**
@@ -34,7 +35,7 @@ class Canal extends Model
         'updated_at',
         'deleted_at'
     ];
-    protected $appends = ['tipos', 'category_name'];
+    protected $appends = ['tipos', 'category_name', 'user_can'];
     protected $casts = [
         'options' => 'array',
     ];

@@ -2,13 +2,16 @@
 
 namespace App;
 
+use App\Traits\UserCan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class NivelEnsino extends Model
 {
+    use UserCan;
+
     protected $table = 'niveis_ensino';
-    protected $appends = [];
+    protected $appends = ['user_can'];
 
     public function components()
     {

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\SideBar;
 use App\Http\Controllers\ApiController;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use JWTAuth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -65,7 +66,12 @@ class AuthController extends ApiController
             return $this->errorResponse([], 'Token Ausente', 403);
         }
 
-        return $this->successResponse(['user' => compact('user')], '', 200);
+        $sidebar = new SideBar;
+
+        return $this->successResponse([
+            'user_data' => compact('user'),
+            'links' => $sidebar->getAdminSidebar(JWTAuth::user())
+        ]);
     }
     /**
      * Log the user out (Invalidate the token).

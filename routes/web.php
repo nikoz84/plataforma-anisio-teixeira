@@ -46,6 +46,7 @@ Route::get('/docs', function (Request $request) {
 
 Route::get('/teste', function (\Illuminate\Http\Request $request) {
 
+
     //if (Crawler::isCrawler()) {}
 });
 

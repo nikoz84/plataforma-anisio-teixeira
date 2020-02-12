@@ -9,7 +9,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class ConteudoPolicy
 {
     use HandlesAuthorization;
-    
+
     /**
      * Determine whether the user can view any conteudos.
      *
@@ -28,9 +28,9 @@ class ConteudoPolicy
      * @param  \App\Conteudo  $conteudo
      * @return mixed
      */
-    public function view(User $user, Conteudo $conteudo)
+    public function index(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -39,9 +39,11 @@ class ConteudoPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user, Conteudo $conteudo)
     {
-        //
+        return $user->role->name === 'super-admin' ||
+            $user->role->name === 'admin' || $user->role->name === 'coordenador' ||
+            $user->id === $conteudo->user_id;
     }
 
     /**
@@ -53,7 +55,9 @@ class ConteudoPolicy
      */
     public function update(User $user, Conteudo $conteudo)
     {
-        //
+        return $user->role->name === 'super-admin' ||
+            $user->role->name === 'admin' || $user->role->name === 'coordenador' ||
+            $user->id === $conteudo->user_id;
     }
 
     /**
@@ -65,7 +69,9 @@ class ConteudoPolicy
      */
     public function delete(User $user, Conteudo $conteudo)
     {
-        //
+        return $user->role->name === 'super-admin' ||
+            $user->role->name === 'admin' || $user->role->name === 'coordenador' ||
+            $user->id === $conteudo->user_id;
     }
 
     /**
@@ -75,9 +81,10 @@ class ConteudoPolicy
      * @param  \App\Conteudo  $conteudo
      * @return mixed
      */
-    public function restore(User $user, Conteudo $conteudo)
+    public function restore(User $user)
     {
-        //
+        return $user->role->name === 'super-admin' ||
+            $user->role->name === 'admin';
     }
 
     /**
@@ -87,8 +94,9 @@ class ConteudoPolicy
      * @param  \App\Conteudo  $conteudo
      * @return mixed
      */
-    public function forceDelete(User $user, Conteudo $conteudo)
+    public function forceDelete(User $user)
     {
-        //
+        return $user->role->name === 'super-admin' ||
+            $user->role->name === 'admin';
     }
 }

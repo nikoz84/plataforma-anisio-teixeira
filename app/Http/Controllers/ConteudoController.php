@@ -35,7 +35,7 @@ class ConteudoController extends ApiController
     public function index(User $user, Conteudo $conteudo)
     {
 
-        $limit = $this->request->query('limit', 15);
+        $limit = $this->request->query('limit', 6);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $canal = $this->request->query('canal', 6);
         $tipos          = $this->request->get('tipos');
@@ -97,14 +97,14 @@ class ConteudoController extends ApiController
      */
     public function getSitesTematicos()
     {
-        $limit = $this->request->query('limit', 15);
+        $limit = $this->request->query('limit', 10);
         $orderBy = $this->request->query('order', 'created_at');
 
         $sitesTematicos = $this->conteudo::with(['canal'])
             ->where('is_site', 'true')
             ->where('is_approved', 'true')
             ->orderBy($orderBy, 'desc')
-            ->paginate($limit)
+            ->paginate(10)
             ->setPath("/conteudos/sites?limit={$limit}");
 
         return $this->showAsPaginator($sitesTematicos);
@@ -218,9 +218,9 @@ class ConteudoController extends ApiController
     public function update($id)
     {
         $conteudo = $this->conteudo::find($id);
-        if (Gate::denies('update', $conteudo)) {
-            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 422);
-        }
+
+        $this->authorize('update', $conteudo);
+
         $validator = Validator::make($this->request->all(), config("rules.conteudo"));
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível atualizar o conteúdo", 422);

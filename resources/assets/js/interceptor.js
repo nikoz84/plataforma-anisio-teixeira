@@ -1,5 +1,7 @@
 import axios from "axios";
 import { Notify, Dialog, Loading } from "quasar";
+import router from "./router";
+import store from "./store";
 
 axios.interceptors.response.use(
   response => {
@@ -25,6 +27,7 @@ axios.interceptors.response.use(
         break;
       case 403:
         // Não Permitido
+        router.push("/");
         Notify.create({ position: "center", color: "accent", message });
         break;
       case 422:

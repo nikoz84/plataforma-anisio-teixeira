@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\UserCan;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
@@ -12,7 +13,7 @@ use Illuminate\Filesystem\Filesystem;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable, SoftDeletes;
+    use Notifiable, SoftDeletes, UserCan;
     // email verificado
     const USER_VERIFIED = 'TRUE';
     const USER_NOT_VERIFIED = 'FALSE';
@@ -67,7 +68,7 @@ class User extends Authenticatable implements JWTSubject
         'verified' => 'boolean'
     ];
 
-    protected $appends = ['is_admin', 'image'];
+    protected $appends = ['is_admin', 'image', 'user_can'];
     /**
      * Converte o atributo nome para minusculas
      *

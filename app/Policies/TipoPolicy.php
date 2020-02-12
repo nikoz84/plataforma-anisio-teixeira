@@ -9,7 +9,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class TipoPolicy
 {
     use HandlesAuthorization;
-    
+
     /**
      * Determine whether the user can view any tipos.
      *
@@ -28,9 +28,10 @@ class TipoPolicy
      * @param  \App\Tipo  $tipo
      * @return mixed
      */
-    public function view(User $user, Tipo $tipo)
+    public function index(User $user)
     {
-        //
+        return $user->role->name == 'super-admin' || $user->role->name == 'admin'
+            || $user->role->name == 'coordenador';
     }
 
     /**
@@ -41,7 +42,7 @@ class TipoPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->role->name == 'super-admin' || $user->role->name == 'admin';
     }
 
     /**
@@ -51,9 +52,9 @@ class TipoPolicy
      * @param  \App\Tipo  $tipo
      * @return mixed
      */
-    public function update(User $user, Tipo $tipo)
+    public function update(User $user)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -63,9 +64,9 @@ class TipoPolicy
      * @param  \App\Tipo  $tipo
      * @return mixed
      */
-    public function delete(User $user, Tipo $tipo)
+    public function delete(User $user)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -75,9 +76,9 @@ class TipoPolicy
      * @param  \App\Tipo  $tipo
      * @return mixed
      */
-    public function restore(User $user, Tipo $tipo)
+    public function restore(User $user)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -87,8 +88,8 @@ class TipoPolicy
      * @param  \App\Tipo  $tipo
      * @return mixed
      */
-    public function forceDelete(User $user, Tipo $tipo)
+    public function forceDelete(User $user)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 }

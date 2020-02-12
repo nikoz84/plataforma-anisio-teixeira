@@ -9,7 +9,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class TagPolicy
 {
     use HandlesAuthorization;
-    
+
     /**
      * Determine whether the user can view any tags.
      *
@@ -28,9 +28,10 @@ class TagPolicy
      * @param  \App\Tag  $tag
      * @return mixed
      */
-    public function view(User $user, Tag $tag)
+    public function index(User $user)
     {
-        //
+        return $user->role->name == 'super-admin' || $user->role->name == 'admin'
+            || $user->role->name == 'coordenador';
     }
 
     /**
@@ -41,7 +42,8 @@ class TagPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->role->name == 'super-admin' || $user->role->name == 'admin'
+            || $user->role->name == 'coordenador';
     }
 
     /**
@@ -53,7 +55,8 @@ class TagPolicy
      */
     public function update(User $user, Tag $tag)
     {
-        //
+        return $user->role->name == 'super-admin' || $user->role->name == 'admin'
+            || $user->role->name == 'coordenador';
     }
 
     /**
@@ -65,7 +68,8 @@ class TagPolicy
      */
     public function delete(User $user, Tag $tag)
     {
-        //
+        return $user->role->name == 'super-admin' || $user->role->name == 'admin'
+            || $user->role->name == 'coordenador';
     }
 
     /**
@@ -77,7 +81,7 @@ class TagPolicy
      */
     public function restore(User $user, Tag $tag)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -89,6 +93,6 @@ class TagPolicy
      */
     public function forceDelete(User $user, Tag $tag)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 }

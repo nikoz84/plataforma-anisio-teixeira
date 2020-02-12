@@ -9,7 +9,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class DenunciaPolicy
 {
     use HandlesAuthorization;
-    
+
     /**
      * Determine whether the user can view any denuncias.
      *
@@ -25,12 +25,13 @@ class DenunciaPolicy
      * Determine whether the user can view the denuncia.
      *
      * @param  \App\User  $user
-     * @param  \App\Denuncia  $denuncia
      * @return mixed
      */
-    public function view(User $user, Denuncia $denuncia)
+    public function index(User $user)
     {
-        //
+        return $user->role->name == 'super-admin' ||
+            $user->role->name == 'admin' ||
+            $user->role->name == 'coordenador';
     }
 
     /**
@@ -41,7 +42,7 @@ class DenunciaPolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +54,9 @@ class DenunciaPolicy
      */
     public function update(User $user, Denuncia $denuncia)
     {
-        //
+        return $user->role->name == 'super-admin' ||
+            $user->role->name == 'admin' ||
+            $user->role->name == 'coordenador';
     }
 
     /**
@@ -65,7 +68,9 @@ class DenunciaPolicy
      */
     public function delete(User $user, Denuncia $denuncia)
     {
-        //
+        return $user->role->name == 'super-admin' ||
+            $user->role->name == 'admin' ||
+            $user->role->name == 'coordenador';
     }
 
     /**
@@ -77,7 +82,7 @@ class DenunciaPolicy
      */
     public function restore(User $user, Denuncia $denuncia)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -89,6 +94,6 @@ class DenunciaPolicy
      */
     public function forceDelete(User $user, Denuncia $denuncia)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 }

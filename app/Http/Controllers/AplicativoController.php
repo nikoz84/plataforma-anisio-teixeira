@@ -26,7 +26,7 @@ class AplicativoController extends ApiController
      */
     public function index()
     {
-        $limit = $this->request->query('limit', 15);
+        $limit = $this->request->query('limit', 6);
         $category = $this->request->query('categoria');
 
         $query = $this->aplicativo::query();

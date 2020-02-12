@@ -31,69 +31,19 @@ export default {
   name: "AdminLeftSideBar",
   data() {
     return {
-      links: [
-        {
-          label: "Inicio",
-          name: "inicio",
-          view: "admin",
-          params: { slug: "analytics", action: "listar" }
-        },
-        {
-          label: "Aplicativos",
-          name: "aplicativos",
-          view: "admin",
-          params: { slug: "aplicativos", action: "listar" }
-        },
-        {
-          label: "Conteúdos",
-          name: "conteudos",
-          view: "admin",
-          params: { slug: "conteudos", action: "listar" }
-        },
-        {
-          label: "Canais",
-          name: "canais",
-          view: "admin",
-          params: { slug: "canais", action: "listar" }
-        },
-        {
-          label: "Tags",
-          name: "tags",
-          view: "admin",
-          params: { slug: "tags", action: "listar" }
-        },
-        {
-          label: "Usuários",
-          name: "usuarios",
-          view: "admin",
-          params: { slug: "usuarios", action: "listar" }
-        },
-        {
-          label: "Tipos",
-          name: "admin",
-          view: "admin",
-          params: { slug: "tipos", action: "listar" }
-        },
-        {
-          label: "Funções",
-          name: "funcoes",
-          view: "admin",
-          params: { slug: "roles", action: "listar" }
-        },
-        {
-          label: "Licenças",
-          name: "licencas",
-          view: "admin",
-          params: { slug: "licencas", action: "listar" }
-        },
-        {
-          label: "Denuncias",
-          name: "denuncias",
-          view: "admin",
-          params: { slug: "denuncias", action: "listar" }
-        }
-      ]
+      links: []
     };
+  },
+  mounted() {
+    this.getUser();
+  },
+  methods: {
+    async getUser() {
+      let resp = await axios.get("/auth/user");
+      if (resp.data.success) {
+        this.links = resp.data.metadata.links;
+      }
+    }
   }
 };
 </script>

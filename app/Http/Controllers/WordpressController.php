@@ -29,7 +29,7 @@ class WordpressController extends ApiController
 
     public function search(Request $request, $termo)
     {
-        $limit = $request->query('limit', 15);
+        $limit = $request->query('limit', 6);
         $page = $request->query('page', 1);
         $search = "%{$termo}%";
     }

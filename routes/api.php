@@ -75,7 +75,7 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     /** AUTENTICACAO */
     Route::post('/auth/logout', 'AuthController@logout')->name('sair');
     Route::post('/auth/refresh', 'AuthController@refresh')->name('refrescar.token');
-    Route::post('/auth/user', 'AuthController@getAuthUser')->name('usuario.logado');
+    Route::get('/auth/user', 'AuthController@getAuthUser')->name('usuario.logado');
     /** TIPOS */
     Route::post('/tipos', 'TipoController@create')->name('criar.tipos');
     Route::put('/tipos/{id}', 'TipoController@update')->name('atualizar.tipos');
@@ -116,13 +116,13 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     Route::put('/conteudos/{id}', 'ConteudoController@update')->name('atualizar.conteudo');
     Route::delete('/conteudos/{id}', 'ConteudoController@delete')->name('apagar.conteudo');
     /** CANAIS */
+    Route::get('/canais', 'CanalController@index')->name('listar.canais');
     Route::post('/canais', 'CanalController@create')->name('adicionar.canal');
     Route::put('/canais/{id}', 'CanalController@update')
         ->name('atualizar.canal')
         ->middleware('can:update,canal');
     Route::delete('/canais/{id}', 'CanalController@delete')->name('apagar.canal');
     Route::get('/canais/{id}', 'CanalController@getById')->name('listar.canal.x.id');
-    Route::get('/canais', 'CanalController@index')->name('listar.canais');
     Route::get('/canais/search/{term}', 'CanalController@search')->name('buscar.canal');
     /** LICENCAS */
     Route::get('/licencas/search/{term}', 'LicenseController@search')->name('buscar.licenca');

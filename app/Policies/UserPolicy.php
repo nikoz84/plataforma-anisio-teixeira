@@ -8,7 +8,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class UserPolicy
 {
     use HandlesAuthorization;
-    
+
     /**
      * Determine whether the user can view any models.
      *
@@ -27,9 +27,10 @@ class UserPolicy
      * @param  \App\User  $model
      * @return mixed
      */
-    public function view(User $user, User $model)
+    public function index(User $user)
     {
-        //
+        return $user->role->name === 'super-admin' ||
+            $user->role->name === 'admin';
     }
 
     /**
@@ -40,7 +41,8 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->role->name === 'super-admin' ||
+            $user->role->name === 'admin';
     }
 
     /**
@@ -52,7 +54,8 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        //
+        return $user->role->name === 'super-admin' ||
+            $user->role->name === 'admin';
     }
 
     /**
@@ -64,7 +67,8 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        //
+        return $user->role->name === 'super-admin' ||
+            $user->role->name === 'admin';
     }
 
     /**
@@ -76,7 +80,8 @@ class UserPolicy
      */
     public function restore(User $user, User $model)
     {
-        //
+        return $user->role->name === 'super-admin' ||
+            $user->role->name === 'admin';
     }
 
     /**
@@ -88,6 +93,7 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model)
     {
-        //
+        return $user->role->name === 'super-admin' ||
+            $user->role->name === 'admin';
     }
 }

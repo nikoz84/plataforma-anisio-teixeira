@@ -3,7 +3,6 @@
 namespace App\Helpers;
 
 use App\Canal;
-use Ixudra\Curl\Facades\Curl;
 use GuzzleHttp\Client;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use App\Traits\FileSystemLogic;
@@ -25,7 +24,7 @@ class WordpressService
     public function __construct(Request $request)
     {
         $this->request = $request;
-        $this->limit = $request->query('limit', 15);
+        $this->limit = $request->query('limit', 6);
         $this->page = $request->query('page', 1);
         $this->data_inicio = $request->query('inicio', date('Y-01-01 00:00:00'));
         $this->data_fim = $request->query('fim', Carbon::now());

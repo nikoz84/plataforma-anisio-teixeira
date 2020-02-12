@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Policies;
+
+use App\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
+
+class InicioAdmin
+{
+    use HandlesAuthorization;
+
+    /**
+     * Determine whether the user can create aplicativos.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function index(User $user)
+    {
+        return ($user->role->name === 'super-admin' ||
+            $user->role->name === 'admin' ||
+            $user->role->name === 'coordenador');
+    }
+}

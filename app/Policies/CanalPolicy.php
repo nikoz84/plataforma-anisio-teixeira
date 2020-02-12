@@ -29,9 +29,9 @@ class CanalPolicy
      * @param  \App\Canal  $canal
      * @return mixed
      */
-    public function index(User $user, Canal $canal)
+    public function index(User $user)
     {
-        //return $user->id === $canal->user_id;
+        return $user->role->name == 'super-admin' || $user->role->name == 'admin';
     }
 
     /**
@@ -42,9 +42,8 @@ class CanalPolicy
      */
     public function create(User $user)
     {
-        if ($user->is('super-admin')) {
-            return true;
-        }
+        return ($user->role->name === 'super-admin' ||
+            $user->role->name === 'admin');
     }
 
     /**
@@ -56,9 +55,9 @@ class CanalPolicy
      */
     public function update(User $user, Canal $canal)
     {
-        if ($user->role->name === 'super-admin') {
-            return true;
-        }
+        return ($user->role->name === 'super-admin' ||
+            $user->role->name === 'admin' ||
+            $user->role->name === 'coordenador');
     }
 
     /**

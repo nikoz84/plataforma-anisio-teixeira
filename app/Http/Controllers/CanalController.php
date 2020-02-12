@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Canal;
-use App\Helpers\SideBar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use Illuminate\Auth\Access\Gate;
+
 
 class CanalController extends ApiController
 {
@@ -44,6 +43,8 @@ class CanalController extends ApiController
      */
     public function create()
     {
+        $this->authorize('create', Canal::class);
+
         $canal = $this->canal;
 
         $canal->name = $this->request->name;
@@ -93,9 +94,8 @@ class CanalController extends ApiController
     {
         $canal = $this->canal::findOrFail($id);
 
-        if (Gate::denies('super-admin', $canal)) {
-            return $this->errorResponse([], 'Usuário sem permissão para realizar essa ação', 422);
-        }
+        $this->authorize('delete', [$canal]);
+
         if (!$canal->delete()) {
             $this->errorResponse([], "Não foi possível deletar o canal", 422);
         }
@@ -145,9 +145,6 @@ class CanalController extends ApiController
 
         $canais->setPath("/canais/search/{$termo}?limit={$limit}");
 
-        return response()->json([
-            'success' => true,
-            'paginator' => $canais,
-        ]);
+        return $this->showAsPaginator($canais);
     }
 }

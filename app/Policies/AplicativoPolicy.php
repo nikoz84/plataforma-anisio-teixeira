@@ -28,15 +28,9 @@ class AplicativoPolicy
      * @param  \App\Aplicativo  $aplicativo
      * @return mixed
      */
-    public function index(User $user, Aplicativo $aplicativo)
+    public function index(User $user)
     {
-        if (
-            $user->is('super-admin') ||
-            $user->is('admin') ||
-            $user->is('coordenador')
-        ) {
-            return true;
-        }
+        return true;
     }
 
     /**
@@ -77,14 +71,10 @@ class AplicativoPolicy
      */
     public function delete(User $user, Aplicativo $aplicativo)
     {
-        if (
-            $user->is('super-admin') ||
-            $user->is('admin') ||
-            $user->is('coordenador') ||
-            $user->isOwner($aplicativo->user_id)
-        ) {
-            return true;
-        }
+        return ($user->role->name === 'super-admin' ||
+            $user->role->name === 'admin' ||
+            $user->role->name === 'coordenador' ||
+            $aplicativo->user_id === $user->id);
     }
 
     /**
@@ -94,11 +84,10 @@ class AplicativoPolicy
      * @param  \App\Aplicativo  $aplicativo
      * @return mixed
      */
-    public function restore(User $user, Aplicativo $aplicativo)
+    public function restore(User $user)
     {
-        if ($user->is('super-admin') || $user->is('admin')) {
-            return true;
-        }
+        return ($user->role->name === 'super-admin' ||
+            $user->role->name === 'admin');
     }
 
     /**
@@ -108,10 +97,8 @@ class AplicativoPolicy
      * @param  \App\Aplicativo  $aplicativo
      * @return mixed
      */
-    public function forceDelete(User $user, Aplicativo $aplicativo)
+    public function forceDelete(User $user)
     {
-        if ($user->is('super-admin')) {
-            return true;
-        }
+        return ($user->role->name === 'super-admin');
     }
 }
