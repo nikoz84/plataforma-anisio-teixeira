@@ -21,20 +21,6 @@ Vue.use(VueApexCharts);
 Vue.use(Vuex);
 Vue.use(VueRouter);
 
-router.beforeEach((to, from, next) => {
-  document.title = `${to.meta.title} - Plataforma Anísio Texeira`;
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    // You can use store variable here to access globalError or commit mutation
-    if (store.state.isLogged) {
-      next();
-    } else {
-      next("/usuario/login");
-    }
-  } else {
-    next();
-  }
-});
-
 new Vue({
   router,
   store,

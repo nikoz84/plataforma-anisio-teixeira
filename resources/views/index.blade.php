@@ -13,17 +13,17 @@
         <link rel="apple-touch-icon" href="/img/icons-192.png">
         <meta name="theme-color" content="#08275e">
         
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="/css/app.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-
-        <!--script src="https://www.google.com/recaptcha/api.js" async defer></!--script -->
     </head>
     <body>
         <div id="app">
             <main-app></main-app>
         </div>
         
-        <script src="{{ asset('js/app.js') }}"></script>
+        
+        <script src="/js/app.js"></script>
+        
         <noscript>
             A Plataforma Anísio Teixeira utiliza Javascript para ser executada, 
             por favor, habilite o javascript no navegador.

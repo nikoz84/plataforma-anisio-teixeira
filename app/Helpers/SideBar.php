@@ -144,7 +144,14 @@ class SideBar
                 'slug' => 'usuarios',
                 'hability' => 'index',
                 'class' => \App\User::class
+            ],
+            [
+                'label' => 'Categorias',
+                'slug' => 'categorias',
+                'hability' => 'index',
+                'class' => \App\Category::class
             ]
+
         ]);
     }
 }

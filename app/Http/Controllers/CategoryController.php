@@ -25,21 +25,14 @@ class CategoryController extends ApiController
     {
         $limit = $this->request->get('limit', 15);
 
-        if ($this->request->has('canal')) {
-            $categories = $this->category::where('canal_id', $this->request->get('canal'))
-                ->whereRaw('parent_id is null')
-                ->where('options->is_active', 'true')
-                ->with('subCategories')
-                ->limit($limit)
-                ->orderBy('name', 'asc')
-                ->get();
-        } else {
-            $categories = $this->category::whereRaw('parent_id is null')
-                ->where('options->is_active', 'true')
-                ->limit($limit)
-                ->with('subCategories')->get();
-        }
-        return $this->showAll($categories, '', 200);
+        $categories = $this->category::whereNull('parent_id')
+            ->where('options->is_active', 'true')
+            ->with('subCategories')
+            ->limit($limit)
+            ->orderBy('name', 'asc')
+            ->paginate($limit);
+
+        return $this->showAsPaginator($categories);
     }
     public function create()
     {

@@ -22,9 +22,9 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/autocompletar', 'HomeController@autocomplete')->name('autocompletar.home');
     Route::get('/layout', 'HomeController@getLayout')->name('lista.links');
     /** CATEGORIAS */
-    Route::get('/categories', 'CategoryController@index')->name('lista.categorias');
-    Route::get('/categories/{id}', 'CategoryController@getCategoryById')->name('lista.categoria.x.id');
-    Route::get('/categories/canal/{id}', 'CategoryController@getCategoryByCanalId')->name('lista.categoria.x.canal.id');
+    Route::get('/categorias', 'CategoryController@index')->name('lista.categorias');
+    Route::get('/categorias/{id}', 'CategoryController@getCategoryById')->name('lista.categoria.x.id');
+    Route::get('/categorias/canal/{id}', 'CategoryController@getCategoryByCanalId')->name('lista.categoria.x.canal.id');
     /** TIPOS */
     Route::get('/tipos', 'TipoController@index')->name('listar.tipos');
     Route::get('/tipos/{id}', 'TipoController@getTiposById')->name('lista.tipos.x.id');
@@ -68,10 +68,10 @@ Route::group(['middleware' => ['cors']], function () {
  * */
 Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     /** CATEGORIAS DOS CONTEÚDOS*/
-    Route::post('/categories', 'CategoryController@create')->name('criar.categorias');
+    Route::post('/categorias', 'CategoryController@create')->name('criar.categorias');
     // ->middleware('isAdmin');
-    Route::put('/categories/{id}', 'CategoryController@update')->name('atualizar.categorias');
-    Route::delete('/categories/{id}', 'CategoryController@delete')->name('categorias.apagar');
+    Route::put('/categorias/{id}', 'CategoryController@update')->name('atualizar.categorias');
+    Route::delete('/categorias/{id}', 'CategoryController@delete')->name('categorias.apagar');
     /** AUTENTICACAO */
     Route::post('/auth/logout', 'AuthController@logout')->name('sair');
     Route::post('/auth/refresh', 'AuthController@refresh')->name('refrescar.token');

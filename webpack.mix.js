@@ -1,4 +1,5 @@
 let mix = require("laravel-mix");
+require("dotenv").config();
 
 /*
 |--------------------------------------------------------------------------
@@ -11,16 +12,16 @@ let mix = require("laravel-mix");
 |
 */
 
-//mix.extract(["vue", "lodash"]);
-
 mix.browserSync({
-  proxy: "https://pat.ba.gov.br"
+  proxy: process.env.APP_URL
 });
 
 mix.config.webpackConfig.output = {
-  chunkFilename: "js/[name].bundle.js",
+  chunkFilename: "js/[name].vendor.js",
   publicPath: "/"
 };
+
+//.extract(["vue", "quasar", "lodash", "axios"]);
 
 mix
   .js("resources/assets/js/app.js", "public/js")
