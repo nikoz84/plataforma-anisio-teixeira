@@ -12,7 +12,7 @@ class CurricularComponent extends Model
 
     protected $table = 'curricular_components';
     protected $hidden = ['pivot'];
-    protected $appends = ['icon', 'user_can'];
+    protected $appends = ['icon', 'user_can', 'search_url'];
 
     public function categories()
     {
@@ -31,6 +31,13 @@ class CurricularComponent extends Model
     {
         if ($this['nivel_id'] == 5) {
             return Storage::disk('public-path')->url("img/emitec/{$this['id']}.svg");
+        } elseif ($this['category_id'] == 3) {
+            return Storage::disk('public-path')->url("img/temas-transversais/{$this['id']}.svg");
         }
+    }
+    public function getSearchUrlAttribute()
+    {
+        $canal = Canal::find(6);
+        return "/{$canal->slug}/listar?componentes={$this['id']}";
     }
 }

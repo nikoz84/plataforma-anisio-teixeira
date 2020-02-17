@@ -27,7 +27,7 @@
               flat
               size="13px"
               color="accent"
-              :to="goTo(item)"
+              :to="item.search_url"
             ></q-btn>
           </q-card-actions>
         </q-card>
@@ -43,11 +43,6 @@ export default {
       rounded: false
     };
   },
-  methods: {
-    goTo(item) {
-      let to = this.source == "tipos" ? `=${item.id}` : `=${item.name}`;
-      return `recursos-educacionais/listar?${this.source}${to}`;
-    }
-  }
+  methods: {}
 };
 </script>

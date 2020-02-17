@@ -46,7 +46,16 @@ Route::get('/docs', function (Request $request) {
 
 Route::get('/teste', function (\Illuminate\Http\Request $request) {
 
+    $query = App\Conteudo::query();
+    $componentes = $request->componentes;
 
+    $query->when($componentes, function ($q, $componentes) {
+
+        return $q->searchByComponent($componentes);
+    });
+
+    dd($query->get());
+    return response()->json($query);
     //if (Crawler::isCrawler()) {}
 });
 

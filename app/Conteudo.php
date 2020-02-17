@@ -92,14 +92,16 @@ class Conteudo extends Model
      */
     public function componentes()
     {
-        return $this->belongsToMany(CurricularComponent::class)
-            ->whereRaw('category_id IS NOT NULL')
-            ->with('categories');
+        return $this->belongsToMany(
+            CurricularComponent::class,
+            'conteudo_curricular_component',
+            'conteudo_id',
+            'curricular_component_id'
+        )->orderBy('name');
     }
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
-        //->whereRaw('parent_id IS NOT NULL');
     }
     /**
      * Seleciona niveis de ensino
@@ -250,6 +252,17 @@ class Conteudo extends Model
 
         return $query->whereHas("tags", function ($q) use ($tag_id) {
             return $q->where('id', '=', $tag_id);
+        });
+    }
+    public function scopeSearchByComponent($query, $component_id)
+    {
+        if (!$component_id) {
+            return $query;
+        }
+
+        return $query->whereHas("componentes", function ($q) use ($component_id) {
+
+            return $q->where('id', '=', $component_id);
         });
     }
 }

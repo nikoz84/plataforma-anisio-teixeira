@@ -5,12 +5,10 @@ namespace App\Http\Controllers;
 use App\Helpers\Analytics;
 use App\Helpers\Destaques;
 use App\Http\Controllers\ApiController;
-use App\Options;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Helpers\Autocomplete;
+use App\Helpers\SideBar;
 use App\NivelEnsino;
-use Illuminate\Database\Eloquent\Builder;
 
 class HomeController extends ApiController
 {
@@ -35,33 +33,9 @@ class HomeController extends ApiController
      */
     public function getLayout()
     {
-        $links = DB::select(DB::raw("SELECT name,
-                                    slug,
-                                    options->'order_menu' AS order,
-                                    options->'back_url_exibir' AS url_exibir
-                                    FROM canais
-                                    WHERE is_active = ?
-                                    ORDER BY options->'order_menu';"), [true]);
-
-        $layout = Options::select("meta_data")->where("name", "like", "layout")->get()->first();
-
-        $data = [
-            "layout" => (object) $layout,
-            "links" => $links,
-            "disciplinas" => $this->getDisciplinasEnsinoMedio(),
-            "tipos" => \App\Tipo::select(['id', 'name'])->get()
-        ];
-        return response()->json($data, 200);
+        return response()->json(SideBar::getSideBarAdvancedFilter());
     }
-    /**
-     * Seleciona as Disciplinas do ensino medio
-     */
-    private function getDisciplinasEnsinoMedio()
-    {
-        return NivelEnsino::where('id', '=', 5)->with(["components" => function ($q) {
-            $q->where('curricular_components.id', '!=', 31)->orderBy('name');
-        }])->get()->first();
-    }
+
 
     /**
      * Seleciona os destaques da plataforma do helper
@@ -75,7 +49,11 @@ class HomeController extends ApiController
 
         return $this->successResponse($data, '', 200);
     }
-
+    /**
+     * Método que solicita analitica da aplicação
+     *
+     * @return void
+     */
     public function getAnalytics()
     {
         $analitycs = new Analytics($this->request);
@@ -84,6 +62,11 @@ class HomeController extends ApiController
 
         return $this->showAll($collect, '', 200);
     }
+    /**
+     * Método de autocompletar
+     *
+     * @return void
+     */
     public function autocomplete()
     {
         $termo = $this->request->query('termo');
@@ -93,6 +76,6 @@ class HomeController extends ApiController
         $data = new Autocomplete($termo, $limit, $per);
         $paginator = $data->autocomplete();
 
-        return $this->showAll($paginator, '', 200);
+        return $this->showAsPaginator($paginator, '', 200);
     }
 }

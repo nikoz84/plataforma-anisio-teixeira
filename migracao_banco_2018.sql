@@ -231,6 +231,7 @@ WITH
 COPY
 (
 select idambientedeapoiocategoria as id,
+	9 as canal_id,
 	nomeambientedeapoiocategoria as name,
 	now()
 ::timestamp as created_at,

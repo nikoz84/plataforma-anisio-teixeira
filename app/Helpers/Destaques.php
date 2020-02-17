@@ -5,95 +5,20 @@ namespace App\Helpers;
 use App\Conteudo;
 use App\Aplicativo;
 use App\Helpers\WordpressService;
+use App\CurricularComponentCategory;
+use App\NivelEnsino;
+use App\Tipo;
 
 class Destaques
 {
-    // CONTEÙDOS
     public $limit = 6;
 
-    public function getConteudosMaisRecentes()
-    {
-        $conteudos = Conteudo::orderBy('created_at', 'desc')
-            ->limit($this->limit)
-            ->get();
-
-        return [
-            'title' => 'Conteúdos Recentes',
-            'slug' => 'conteudos-recentes',
-            'items' => $conteudos->map(function ($conteudo) {
-                return $conteudo->only(['id', 'title', 'image', 'url_exibir']);
-            })
-        ];
-    }
-
-    public function getConteudosMaisBaixados()
-    {
-        $conteudos = Conteudo::orderBy('qt_downloads', 'desc')->limit($this->limit)->get();
-
-        return [
-            'title' => 'Conteúdos Mais Baixados',
-            'slug' => 'conteudos-mais-baixados',
-            'items' => $conteudos->map(function ($conteudo) {
-                return $conteudo->only(['id', 'title', 'image', 'qt_downloads', 'url_exibir']);
-            })
-        ];
-    }
-    public function getConteudosMaisAcessados()
-    {
-        $conteudos = Conteudo::orderBy('qt_access', 'desc')->limit($this->limit)->get();
-
-        return [
-            'title' => 'Conteúdos Mais Acessados',
-            'slug' => 'conteudos-mais-acessados',
-            'items' => $conteudos->map(function ($conteudo) {
-                return $conteudo->only(['id', 'title', 'image', 'qt_access', 'url_exibir']);
-            })
-        ];
-    }
-
-    public function getConteudosDestaques()
-    {
-        $conteudos = Conteudo::where("is_featured", true)->limit($this->limit)->get();
-
-        return [
-            'title' => 'Conteúdos Destacados',
-            'slug' => 'conteudos-destacados',
-            'items' => $conteudos->map(function ($conteudo) {
-                return $conteudo->only(['id', 'title', 'image', 'url_exibir']);
-            })
-        ];
-    }
-    // APLICATIVOS
-    public function getAplicativosDestaques()
-    {
-        $aplicativos = Aplicativo::whereRaw("options->'is_featured' = 'true'")
-            ->limit($this->limit)->get();
-
-        return [
-            'title' => 'Aplicativos Destacados',
-            'slug' => 'aplicativos-destacados',
-            'items' => $aplicativos->map(function ($aplicativo) {
-                return $aplicativo->only(['id', 'name', 'image', 'url_exibir']);
-            })
-        ];
-    }
-    public function getAplicativosMaisRecentes()
-    {
-        $aplicativos = Aplicativo::orderBy('created_at', 'desc')->limit($this->limit)->get();
-
-        return [
-            'title' => 'Aplicativos Recentes',
-            'slug' => 'aplicativos-recentes',
-            'items' => $aplicativos->map(function ($aplicativo) {
-                return $aplicativo->only(['id', 'name', 'image', 'url_exibir']);
-            })
-        ];
-    }
-    public function getPostsMaisRecentes()
-    {
-        //$wordpress = new WordpressService($this->request);
-    }
-
+    /**
+     * Retorna por demanda requisição
+     *
+     * @param [type] $slug
+     * @return void
+     */
     public function getHomeDestaques($slug)
     {
         switch ($slug) {
@@ -119,5 +44,120 @@ class Destaques
                 return [];
                 break;
         }
+    }
+
+    /**
+     * Conteúdos mais recentes
+     *
+     * @return void
+     */
+    private function getConteudosMaisRecentes()
+    {
+        $conteudos = Conteudo::orderBy('created_at', 'desc')
+            ->limit($this->limit)
+            ->get();
+
+        return [
+            'title' => 'Conteúdos Recentes',
+            'slug' => 'conteudos-recentes',
+            'items' => $conteudos->map(function ($conteudo) {
+                return $conteudo->only(['id', 'title', 'image', 'url_exibir']);
+            })
+        ];
+    }
+    /**
+     * Conteúdos mais baixados
+     *
+     * @return void
+     */
+    private function getConteudosMaisBaixados()
+    {
+        $conteudos = Conteudo::orderBy('qt_downloads', 'desc')->limit($this->limit)->get();
+
+        return [
+            'title' => 'Conteúdos Mais Baixados',
+            'slug' => 'conteudos-mais-baixados',
+            'items' => $conteudos->map(function ($conteudo) {
+                return $conteudo->only(['id', 'title', 'image', 'qt_downloads', 'url_exibir']);
+            })
+        ];
+    }
+    /**
+     * Conteúdos mais acessados
+     *
+     * @return void
+     */
+    private function getConteudosMaisAcessados()
+    {
+        $conteudos = Conteudo::orderBy('qt_access', 'desc')->limit($this->limit)->get();
+
+        return [
+            'title' => 'Conteúdos Mais Acessados',
+            'slug' => 'conteudos-mais-acessados',
+            'items' => $conteudos->map(function ($conteudo) {
+                return $conteudo->only(['id', 'title', 'image', 'qt_access', 'url_exibir']);
+            })
+        ];
+    }
+    /**
+     * Conteúdos destacados
+     *
+     * @return void
+     */
+    private function getConteudosDestaques()
+    {
+        $conteudos = Conteudo::where("is_featured", true)->limit($this->limit)->get();
+
+        return [
+            'title' => 'Conteúdos Destacados',
+            'slug' => 'conteudos-destacados',
+            'items' => $conteudos->map(function ($conteudo) {
+                return $conteudo->only(['id', 'title', 'image', 'url_exibir']);
+            })
+        ];
+    }
+    /**
+     * aplicativos em destaque
+     *
+     * @return void
+     */
+    private function getAplicativosDestaques()
+    {
+        $aplicativos = Aplicativo::whereRaw("options->'is_featured' = 'true'")
+            ->limit($this->limit)->get();
+
+        return [
+            'title' => 'Aplicativos Destacados',
+            'slug' => 'aplicativos-destacados',
+            'items' => $aplicativos->map(function ($aplicativo) {
+                return $aplicativo->only(['id', 'name', 'image', 'url_exibir']);
+            })
+        ];
+    }
+    /**
+     * Aplicativos mais recentes
+     *
+     * @return void
+     */
+    private function getAplicativosMaisRecentes()
+    {
+        $aplicativos = Aplicativo::orderBy('created_at', 'desc')->limit($this->limit)->get();
+
+        return [
+            'title' => 'Aplicativos Recentes',
+            'slug' => 'aplicativos-recentes',
+            'items' => $aplicativos->map(function ($aplicativo) {
+                return $aplicativo->only(['id', 'name', 'image', 'url_exibir']);
+            })
+        ];
+    }
+    /**
+     * Postagens recentes
+     *
+     * @return void
+     */
+    private function getPostsMaisRecentes()
+    {
+        //$wordpress = new WordpressService($this->request);
     }
 }

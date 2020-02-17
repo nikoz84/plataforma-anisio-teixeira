@@ -73,6 +73,10 @@ class ConteudoController extends ApiController
         $query->when($categoria, function ($q, $categoria) {
             return $q->where('category_id', $categoria);
         });
+        // FILTRO X COMPONENTES
+        $query->when($componentes, function ($q, $componentes) {
+            return $q->searchByComponent($componentes);
+        });
 
         // FILTRO X LICENÇA
         $query->when($licencas, function ($q, $licencas) {

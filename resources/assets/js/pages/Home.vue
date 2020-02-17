@@ -1,6 +1,6 @@
 <template>
   <section class="q-pa-sm">
-    <a class="skip-link" href="#tipo-conteudos">ir a tipo de conteúdos</a>
+    <a class="skip-link" href="#tipo-conteudos">Ir a tipo de conteúdos</a>
     <CardHomeIcon
       id="tipo-conteudos"
       title="Tipos de Conteúdos"
@@ -8,14 +8,23 @@
       source="tipos"
       style="min-height: 85vh;"
     ></CardHomeIcon>
-    <a class="skip-link" href="#disciplinas">disciplinas</a>
+    <a class="skip-link" href="#disciplinas">Ir a disciplinas</a>
     <CardHomeIcon
       id="disciplinas"
       title="Disciplinas"
       source="busca"
       :items="disciplinas.components"
-      style="min-height: 55vh;"
+      style="min-height: 85vh;"
     ></CardHomeIcon>
+    <a class="skip-link" href="#temas">Ir a temas transversais</a>
+    <CardHomeIcon
+      id="temas"
+      title="Temas Transversais"
+      source="busca"
+      :items="temas.components"
+      style="min-height: 45vh;"
+    ></CardHomeIcon>
+    
     
     <CardHome v-for="(id, index) in ids"
       :key="index"
@@ -106,7 +115,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["disciplinas", "tipos"])
+    ...mapState(["disciplinas", "tipos", "temas"])
   },
   methods: {
     async getDestaques(el) {

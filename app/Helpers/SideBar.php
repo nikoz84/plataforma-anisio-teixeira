@@ -7,43 +7,69 @@ use App\CurricularComponentCategory;
 use App\License;
 use App\Tipo;
 use App\User;
+use App\Options;
+use Illuminate\Support\Facades\DB;
 
 class SideBar
 {
 
-    private static function getSideBarAdvancedFilter()
+    public static function getSideBarAdvancedFilter()
     {
         $componentes = CurricularComponentCategory::with(['components' => function ($q) {
             $q->orderBy('name');
         }])->get();
-        $tipos = Tipo::select(['id', 'name'])->get();
+
         $licencas = License::select(['id', 'name'])->whereRaw('parent_id is null')->get();
         $niveis = NivelEnsino::with(['components' => function ($q) {
             $q->where('curricular_components.id', '!=', 13)
                 ->where('curricular_components.id', '!=', 12)
                 ->orderBy('name');
         }])->get();
-
+        $layout = (object) Options::select("meta_data")->where("name", "like", "layout")->get()->first();
+        $canais =  DB::select(DB::raw("SELECT name,
+                                    slug,
+                                    options->'order_menu' AS order,
+                                    options->'back_url_exibir' AS url_exibir
+                                    FROM canais
+                                    WHERE is_active = ?
+                                    ORDER BY options->'order_menu';"), [true]);
         return [
-            'tipos' => $tipos,
-            'licenses' => $licencas,
-            'components' => $componentes,
-            'niveis' => $niveis
+            'layout' => $layout,
+            "links" => $canais,
+            'licensas' => $licencas,
+            'componenes' => $componentes,
+            'niveis' => $niveis,
+            'temas' => self::getTemasTransversais(),
+            'tipos' => Tipo::select(['id', 'name'])->get(),
+            'disciplinas' => self::getDisciplinasEnsinoMedio()
         ];
     }
-
-
-    /**categorias dos sites tematicos */
-    private static function getSidebarSitesTematicos()
+    /**
+     * Temas transversais
+     *
+     * @return void
+     */
+    private static function getTemasTransversais()
     {
-        $temas = CurricularComponentCategory::where('id', '=', 3)->with('components')->get()->first();
-        $disciplinas = NivelEnsino::where('id', '=', 5)->with('components')->get()->first();
-
-        return [
-            'temas' => $temas,
-            "disciplinas" => $disciplinas
-        ];
+        return CurricularComponentCategory::where('id', '=', 3)
+            ->with(['components' => function ($q) {
+                $q->orderBy('name');
+            }])
+            ->get()
+            ->first();
     }
+    /**
+     * Disciplinas do ensino medio
+     *
+     * @return void
+     */
+    private static function getDisciplinasEnsinoMedio()
+    {
+        return NivelEnsino::where('id', '=', 5)->with(["components" => function ($q) {
+            $q->where('curricular_components.id', '!=', 31)->orderBy('name');
+        }])->get()->first();
+    }
+
     /**
      * Cria o menu de administração
      *
@@ -52,16 +78,13 @@ class SideBar
      */
     public function getAdminSidebar(User $user)
     {
-        $linksLabels = $this->linksLabels();
-        $links = [];
+        $links = $this->getlinks();
 
-        $links = $linksLabels->map(function ($link) use ($user) {
+        return $links->map(function ($link) use ($user) {
             if ($user->can($link['hability'], $link['class'])) {
-                return $this->createArray($link['label'], $link['slug']);
+                return $this->createMenu($link['label'], $link['slug']);
             }
         });
-
-        return $links;
     }
     /**
      * Cria json para Links de administração
@@ -73,7 +96,7 @@ class SideBar
      * @param string $action
      * @return void
      */
-    public function createArray($label, $slug, $name = '', $view = 'admin', $action = 'listar')
+    public function createMenu($label, $slug, $name = '', $view = 'admin', $action = 'listar')
     {
 
         return [
@@ -88,7 +111,7 @@ class SideBar
      *
      * @return void
      */
-    public function linksLabels()
+    public function getlinks()
     {
         return collect([
             [
