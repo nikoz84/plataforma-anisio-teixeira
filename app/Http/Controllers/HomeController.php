@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Helpers\Analytics;
 use App\Helpers\Destaques;
 use App\Http\Controllers\ApiController;
-use Illuminate\Http\Request;
 use App\Helpers\Autocomplete;
 use App\Helpers\SideBar;
 use App\NivelEnsino;
@@ -13,17 +12,15 @@ use App\NivelEnsino;
 class HomeController extends ApiController
 {
     protected $destaques;
-    protected $request;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(Destaques $destaques, Request $request)
+    public function __construct(Destaques $destaques)
     {
         $this->middleware('jwt.verify')->except(['index', 'getLayout', 'getHomeData', 'autocomplete']);
         $this->destaques = new $destaques;
-        $this->request = $request;
     }
 
 

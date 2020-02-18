@@ -9,11 +9,10 @@ use Illuminate\Support\Facades\Validator;
 
 class TagController extends ApiController
 {
-    public function __construct(Request $request, Tag $tag)
+    public function __construct(Request $request)
     {
         $this->middleware('jwt.verify')->except(['index', 'search', 'getById']);
         $this->request = $request;
-        $this->tag = $tag;
     }
 
     /**
@@ -46,7 +45,10 @@ class TagController extends ApiController
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível atualizar o conteúdo", 422);
         }
-        $tag = $this->tag::firstOrCreate(['name' => $this->request->name]);
+        $tag = TAG::firstOrCreate([
+            'name' => $this->request->name,
+            'searched' => TAG::INIT_SEARCHED
+        ]);
 
         if (!$tag) {
             return $this->errorResponse([], "Não foi possivel adicionar a palavra chave", 422);
@@ -64,7 +66,7 @@ class TagController extends ApiController
      */
     public function update($id)
     {
-        $tag = $this->tag::findOrFail($id);
+        $tag = TAG::findOrFail($id);
         $tag->name = $this->request->name;
 
         if (!$tag->save()) {
@@ -79,10 +81,11 @@ class TagController extends ApiController
         $limit = $this->request->query('limit', 15);
         $search = "%{$termo}%";
 
-        $tags = $this->tag::select(['id', 'name'])
+        $tags = TAG::select(['id', 'name'])
             ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
             ->orderBy('name')
             ->paginate($limit);
+
         $tags->setPath("/tags/search/{$termo}?limit={$limit}");
 
         return $this->showAsPaginator($tags);
@@ -91,7 +94,7 @@ class TagController extends ApiController
     {
         $search = "%{$term}%";
         $limit = $this->request->query('limit', 100);
-        $tags = $this->tag::select(['id', 'name'])
+        $tags = TAG::select(['id', 'name'])
             ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
             ->get(['id', 'name']);
 
@@ -105,7 +108,7 @@ class TagController extends ApiController
      */
     public function delete($id)
     {
-        $tag = $this->tag::findOrFail($id);
+        $tag = TAG::findOrFail($id);
 
         if (!$tag->delete()) {
             $this->errorResponse([], "Impossível deletar tag", 422);
@@ -116,7 +119,7 @@ class TagController extends ApiController
 
     public function getById($id)
     {
-        $tag = $this->tag::findOrFail($id);
+        $tag = TAG::findOrFail($id);
 
         return $this->showOne($tag, '', 200);
     }

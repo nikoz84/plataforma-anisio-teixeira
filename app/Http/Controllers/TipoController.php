@@ -4,18 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\ApiController;
 use App\Tipo;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\ApiResponser;
+use Illuminate\Http\Request;
 
 class TipoController extends ApiController
 {
     use ApiResponser;
 
-    public function __construct(Tipo $tipo, Request $request)
+    public function __construct(Request $request)
     {
         $this->middleware('jwt.verify')->except(['index']);
-        $this->tipo = $tipo;
         $this->request = $request;
     }
 
@@ -23,15 +22,15 @@ class TipoController extends ApiController
     {
         $limit = $this->request->query('limit', 15);
         if ($this->request->has('select')) {
-            $tipos = $this->tipo::all();
+            $tipos = Tipo::all();
             return $this->fetchForSelect(collect($tipos));
         }
-        $query = $this->tipo;
+        $query = Tipo::query();
 
-        $paginator = $query->paginate($limit)
-            ->setPath("/tipos?limit={$limit}");
+        $paginator = $query->select()->paginate($limit);
+        $paginator->setPath("/tipos?limit={$limit}");
 
-        return $this->showAsPaginator($paginator, '', 200);
+        return $this->showAsPaginator($paginator);
     }
 
     public function create()
@@ -40,7 +39,7 @@ class TipoController extends ApiController
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar o tipo", 201);
         }
-        $tipo = $this->tipo;
+        $tipo = new Tipo;
         $tipo->name = $this->request->name;
         $tipo->options = json_decode($this->request->options, true);
 
@@ -52,23 +51,25 @@ class TipoController extends ApiController
     public function update($id)
     {
         $validator = Validator::make($this->request->all(), config("rules.tipos"));
+
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível atualizar o tipo", 201);
+            return $this->errorResponse($validator->errors(), "Preencha o formulário corretamente", 422);
         }
 
-        $tipo = $this->tipo;
+        $tipo = Tipo::findOrFail($id);
+
+        $this->authorize('update', $tipo);
+
         $tipo->name = $this->request->name;
+
         $tipo->options = json_decode($this->request->options, true);
         $tipo->options = $this->request->options;
 
-        $cat = $this->tipo::find($id);
-        $cat->fill($this->request->all());
-
-        if ($cat->update()) {
-            return $this->successResponse($cat, 'Categoria editada com sucesso!', 200);
-        } else {
-            return $this->errorResponse($tipo, 'Não existe essa categoria para ser atualizada', 200);
+        if (!$tipo->save()) {
+            return $this->errorResponse([], 'Não foi possível editar', 422);
         }
+
+        $this->successResponse($tipo, 'Tipo de conteúdo editado com sucesso!', 200);
     }
     public function delete($id)
     {

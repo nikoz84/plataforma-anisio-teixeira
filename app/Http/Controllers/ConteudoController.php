@@ -4,26 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Conteudo;
 use App\Http\Controllers\ApiController;
-use App\Tag;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\FileSystemLogic;
-use App\User;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 class ConteudoController extends ApiController
 {
     use FileSystemLogic;
 
-    protected $conteudo;
-    protected $request;
-    public function __construct(Conteudo $conteudo, Request $request)
+    public function __construct(Request $request)
     {
-        $this->middleware('jwt.verify')->except(['index', 'search', 'getById', 'getByTagId', 'getSitesTematicos']);
-        $this->conteudo = $conteudo;
+        $this->middleware('jwt.verify')->except([
+            'index',
+            'search',
+            'getById',
+            'getByTagId',
+            'getSitesTematicos'
+        ]);
         $this->request = $request;
     }
 
@@ -32,13 +31,13 @@ class ConteudoController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user, Conteudo $conteudo)
+    public function index()
     {
 
         $limit = $this->request->query('limit', 6);
-        $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
+        $orderBy = $this->request->query('order', 'created_at');
         $canal = $this->request->query('canal', 6);
-        $tipos          = $this->request->get('tipos');
+        $tipos          = $this->request->query('tipos');
         $licencas       = $this->request->query('licencas');
         $componentes    = $this->request->query('componentes');
         $categoria      = $this->request->query('categoria');
@@ -46,11 +45,11 @@ class ConteudoController extends ApiController
         $por      = $this->request->query('por', 'tag');
         $busca    = $this->request->query('busca');
         $publicador    = $this->request->query('publicador');
-        $query          = $this->conteudo::query();
+
+        $query = Conteudo::query();
 
         // FILTRO X TIPO
         $query->when($tipos, function ($q, $tipos) {
-            //$data       = "'[$tipos]'::jsonb";
             return $q->whereRaw("options->'tipo' <@  ?", $tipos);
         });
         // FILTRO X PUUBLICADOR
@@ -58,7 +57,7 @@ class ConteudoController extends ApiController
             return $q->where('user_id', $this->request->query('publicador'));
         });
         // FILTRO BUSCA FULL TEXT SEARCH
-        $query->when($this->request->query('busca'), function ($q) use ($busca, $por) {
+        $query->when($busca, function ($q) use ($busca, $por) {
             return $q->search($busca, $por);
         });
         // FILTRO X TAG
@@ -77,10 +76,9 @@ class ConteudoController extends ApiController
         $query->when($componentes, function ($q, $componentes) {
             return $q->searchByComponent($componentes);
         });
-
         // FILTRO X LICENÇA
         $query->when($licencas, function ($q, $licencas) {
-            return $q->whereIn('license_id', explode(',', $licencas));
+            return $q->whereIn('license_id', $licencas);
         });
 
         $url = "busca={$busca}&limit={$limit}&canal={$canal}&tag={$tag}&publicador=$publicador";
@@ -126,12 +124,11 @@ class ConteudoController extends ApiController
             return $this->errorResponse($validator->errors(), "Não foi possível criar o conteúdo", 422);
         }
 
-        $conteudo = $this->conteudo;
-        // USUÁRIO LOGADO
+        $conteudo = new Conteudo;
+
         $conteudo->user_id = Auth::user()->id;
-        // PERMISSÃO DA TABELA ROLES
         $conteudo->approving_user_id = Auth::user()->id;
-        // IDS
+
         $conteudo->license_id = $this->request->license_id;
         $conteudo->canal_id = $this->request->canal_id;
         $conteudo->category_id = $this->request->category_id;
@@ -140,12 +137,13 @@ class ConteudoController extends ApiController
         $conteudo->description = $this->request->description;
         $conteudo->authors = $this->request->authors;
         $conteudo->source = $this->request->source;
-        // FL_DESTAQUE, FL_APROVADO, FL_SITE
-        $conteudo->is_featured = $this->request->is_featured ?
-            $this->request->is_approved : $this->conteudo::IS_FEATURED;
-        $conteudo->is_approved = $this->request->is_approved ?
-            $this->request->is_approved : $this->conteudo::IS_APPROVED;
-        $conteudo->is_site = $this->request->is_site ? $this->request->is_site : $this->conteudo::IS_SITE;
+        // FL_DESTAQUE, FL_APROVADO, FL_SITE, QT_DOWNLOAD, QT_ACCESS
+        $conteudo->is_approved = $this->request->has('is_approved') ?
+            $this->request->is_approved : Conteudo::IS_APPROVED;
+        $conteudo->is_featured = $this->request->has('is_featured') ?
+            $this->request->is_featured : Conteudo::IS_FEATURED;
+        $conteudo->is_site = $this->request->has('is_site') ?
+            $this->request->is_site : Conteudo::IS_SITE;
         // QUANTIDADE DE ACESSOS E DOWNLOADS
         $conteudo->qt_downloads = $this->conteudo::INIT_COUNT;
         $conteudo->qt_access = $this->conteudo::INIT_COUNT;

@@ -15,9 +15,10 @@ class UserPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function getById(User $user)
     {
-        //
+        return $user->role->name === 'super-admin' ||
+            $user->role->name === 'admin';
     }
 
     /**

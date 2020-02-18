@@ -3,18 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\ApiController;
+use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserController extends ApiController
 {
 
-    public function __construct(Request $request, User $user)
+    public function __construct(Request $request)
     {
         $this->middleware('jwt.verify')->except([]);
-        $this->user = $user;
         $this->request = $request;
     }
 
@@ -25,11 +24,12 @@ class UserController extends ApiController
      */
     public function index()
     {
+        $this->authorize('index', JWTAuth::user());
 
         $limit = $this->request->query('limit', 15);
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'name';
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
-        $query = $this->user::query();
+        $query = User::query();
         $paginator = $query->orderBy('name', 'asc')->paginate($limit);
         $paginator->setPath("/usuarios?limit={$limit}");
 
@@ -43,7 +43,9 @@ class UserController extends ApiController
      */
     public function getById($id)
     {
-        $user = $this->user::with('role')->findOrFail($id)->makeVisible('email');
+        $user = User::with('role')->findOrFail($id)->makeVisible('email');
+
+        $this->authorize('index', [$user]);
 
         return $this->showOne($user, '', 200);
     }
@@ -55,18 +57,17 @@ class UserController extends ApiController
      */
     public function update($id)
     {
-        $user = $this->user::findOrFail($id);
+        $user = User::findOrFail($id);
 
-        if (Gate::denies('super-admin', $user)) {
-            return $this->errorResponse([], 'Usuário sem permissão para realizar essa ação', 422);
-        }
+        $this->authorize('update', $user);
 
         $user->fill($this->request->all());
-        if ($user->save()) {
-            $this->successResponse($user, 'Usuário editado com sucesso!', 422);
+
+        if (!$user->save()) {
+            $this->errorResponse([], 'Não foi possível editar o usuário', 422);
         }
 
-        return $this->errorResponse([], 'Não foi possível editar o usuário', 200);
+        return $this->successResponse($user, 'Usuário editado com sucesso!', 200);
     }
     /**
      * Método apagar por id
@@ -76,24 +77,19 @@ class UserController extends ApiController
      */
     public function delete($id)
     {
-        $resp = $this->user::where(['id' => $id])->delete();
-        if (Gate::denies('super-admin', $resp)) {
-            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 422);
+        $user = User::findOrFail($id);
+
+        $this->authorize('delete', $user);
+
+        if (!$user->delete()) {
+            return $this->errorResponse([], 'Não foi possível deletar o usuário', 422);
         }
-        if (!$resp) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Não foi possível deletar usuário',
-            ]);
-        }
-        return response()->json([
-            'success' => true,
-            'message' => 'Usuário deletado com sucesso!!',
-        ]);
+
+        return $this->successResponse([], 'Usuário deletado com sucesso!!', 200);
     }
-    public function search(Request $request, $termo)
+    public function search($termo)
     {
-        $limit = ($request->has('limit')) ? $request->query('limit') : 20;
+        $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 20;
         $search = "%{$termo}%";
 
         $paginator = User::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search])
@@ -142,16 +138,16 @@ class UserController extends ApiController
 
 
         if (!$user->save()) {
-            $this->successResponse([], 'Usuário registrado com sucesso!!', 422);
+            $this->errorResponse([], 'não foi possível registrar o usuário', 422);
         }
 
-        return $this->errorResponse([], 'Não foi possível registrar o usuário', 200);
+        return $this->successResponse([], 'Usuário registrado com sucesso!', 200);
     }
 
     public function verify($token)
     {
-        $user = $this->user::where('verification_token', $token)->firstOrFail();
-        $user->verified = $this->user::USER_NOT_VERIFIED;
+        $user = USER::where('verification_token', $token)->firstOrFail();
+        $user->verified = USER::USER_NOT_VERIFIED;
         $user->verification_token = null;
         $user->save();
         return $this->showOne($user, 'Conta verificada', 200);

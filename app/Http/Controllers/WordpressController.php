@@ -3,16 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\WordpressService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ApiController;
 
 class WordpressController extends ApiController
 {
-    public function __construct(Request $request, Storage $storage)
+    public function __construct(Storage $storage)
     {
         $this->middleware('jwt.verify')->except(['index', 'search', 'getById', 'getEstatisticas']);
-        $this->request = $request;
         $this->storage = $storage;
     }
     /**
@@ -27,10 +25,10 @@ class WordpressController extends ApiController
         return $this->showAsPaginator($wordpress->getPosts());
     }
 
-    public function search(Request $request, $termo)
+    public function search($termo)
     {
-        $limit = $request->query('limit', 6);
-        $page = $request->query('page', 1);
+        $limit = $this->request->query('limit', 6);
+        $page = $this->request->query('page', 1);
         $search = "%{$termo}%";
     }
     /**
