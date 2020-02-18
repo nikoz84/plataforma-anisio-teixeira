@@ -250,9 +250,9 @@ class ConteudoController extends ApiController
     public function delete($id)
     {
         $conteudo = $this->conteudo::with('tags')->find($id);
-        if (Gate::denies('delete', $conteudo)) {
-            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
-        }
+
+        $this->authorize('delete', $conteudo);
+
         $conteudo->tags()->detach();
         $conteudo->componentes()->detach();
         $conteudo->niveis()->detach();
@@ -296,9 +296,10 @@ class ConteudoController extends ApiController
      */
     public function getById($id)
     {
-        $conteudo = $this->conteudo::with([
+        $conteudo = Conteudo::with([
             'user', 'canal', 'tags', 'license', 'componentes', 'niveis',
         ])->find($id);
+
         $conteudo->increment('qt_access', 1);
 
         return $this->showOne($conteudo);
