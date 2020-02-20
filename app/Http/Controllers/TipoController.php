@@ -7,6 +7,7 @@ use App\Tipo;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class TipoController extends ApiController
 {
@@ -37,15 +38,20 @@ class TipoController extends ApiController
     {
         $validator = Validator::make($this->request->all(), config("rules.tipos"));
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível criar o tipo", 201);
+            return $this->errorResponse($validator->errors(), "Não foi possível criar o tipo", 422);
         }
         $tipo = new Tipo;
+
+        $this->authorize('create', JWTAuth::user());
+
         $tipo->name = $this->request->name;
         $tipo->options = json_decode($this->request->options, true);
 
-        if ($tipo->save()) {
-            return $this->successResponse($tipo, 'Tipo criado com sucesso!', 200);
+        if (!$tipo->save()) {
+            return $this->errorResponse($tipo, 'Não foi possível editar o tipo de conteúdo', 422);
         }
+
+        return $this->successResponse($tipo, 'Tipo criado com sucesso!', 200);
     }
 
     public function update($id)
@@ -77,14 +83,18 @@ class TipoController extends ApiController
             'delete_confirmation' => ['required', new \App\Rules\ValidBoolean],
         ]);
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível deletar.", 201);
+            return $this->errorResponse($validator->errors(), "Não foi possível deletar.", 422);
         }
-        $tipo = $this->tipo;
-        $resp = $this->tipo::findOrFail($id);
 
-        if ($resp->delete()) {
-            return $this->successResponse($tipo, 'Tipo deletado com sucesso!', 200);
+        $tipo = Tipo::findOrFail($id);
+
+        $this->authorize('delete', $tipo);
+
+        if (!$tipo->delete()) {
+            return $this->successResponse([], 'Não foi possível deletar o tipo de conteúdo', 422);
         }
+
+        return $this->successResponse($tipo, 'Tipo deletado com sucesso!', 200);
     }
     public function getTiposById($id)
     {

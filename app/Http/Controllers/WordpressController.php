@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use App\Helpers\WordpressService;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ApiController;
+use Illuminate\Http\Request;
 
 class WordpressController extends ApiController
 {
-    public function __construct(Storage $storage)
+    public function __construct(Storage $storage, Request $request)
     {
         $this->middleware('jwt.verify')->except(['index', 'search', 'getById', 'getEstatisticas']);
         $this->storage = $storage;
+        $this->request = $request;
     }
     /**
      * Display a listing of the resource.

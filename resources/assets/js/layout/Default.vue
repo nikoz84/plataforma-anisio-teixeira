@@ -24,24 +24,20 @@
                 width="30" 
                 height="30" 
                 alt="Marca"
+                title="marca"
                 aria-label="Marca da plataforma Anísio Teixeira"/>
 
-          <q-toolbar-title shrink style="font-size:14px;font-weight:600;" v-if="$q.screen.gt.xs">
+          <q-toolbar-title shrink v-if="$q.screen.gt.xs" style="font-size:14px;font-weight:600;">
             {{ !$q.screen.gt.sm ? 'PAT' : 'PLATAFORMA ANÍSIO TEIXEIRA'}}
           </q-toolbar-title>
         </q-btn>
 
         <q-space />
-
-        
         <AutocompleteForm></AutocompleteForm>
-        
-
         <q-space />
 
         <q-btn-dropdown stretch flat icon="person" aria-label="Opçoes de usuário">
           <q-list>
-            <!-- Fale conosco -->
             <q-item clickable to="/usuario/contato/faleconosco" aria-label="fale conosco">
               <q-item-section>
                 <q-item-label>Fale Conosco</q-item-label>

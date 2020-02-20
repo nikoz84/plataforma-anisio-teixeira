@@ -341,8 +341,7 @@ WITH
 -- EXPORTAR CONTEUDOS
 copy
 (
-with
-	conteudos
+with conteudos
 	as
 	(
 		SELECT cd.idconteudodigital as id,
@@ -359,6 +358,7 @@ with
 			cd.descricao as description,
 			cd.autores as authors,
 			cd.fonte as source,
+			cd.acessibilidade as accessibility,
 			cd.flaprovado as is_approved,
 			cd.fldestaque as is_featured,
 			cd.flsitetematico as is_site,
@@ -369,14 +369,8 @@ with
 			null as deleted_at,
 			cd.site
 	 , (SELECT ct.idconteudotipo
-			FROM conteudotipo AS ct JOIN formato AS f ON f.idformato = cd.idformato AND ct.idconteudotipo = f.idconteudotipo) as tipo
-	 , (SELECT jsonb_agg(tag.idtag)
-			FROM conteudodigitaltag INNER JOIN tag ON tag.idtag = conteudodigitaltag.idtag
-			WHERE conteudodigitaltag.idconteudodigital = cd.idconteudodigital) as tags
-	 , (SELECT jsonb_agg(cc.idcomponentecurricular)
-			FROM conteudodigitalcomponente as cdc INNER JOIN componentecurricular as cc on cc.idcomponentecurricular = cdc.idcomponentecurricular
-			WHERE cdc.idconteudodigital = cd.idconteudodigital) as componentes	
-	, (SELECT case when fv.nomeformato = 'link' then cd.site when fv.nomeformato is not null then concat(cd.idconteudodigital,'.',fv.nomeformato) else '' end
+			FROM conteudotipo AS ct JOIN formato AS f ON f.idformato = cd.idformato AND ct.idconteudotipo = f.idconteudotipo) as tipo_id
+	 , (SELECT case when fv.nomeformato = 'link' then cd.site when fv.nomeformato is not null then concat(cd.idconteudodigital,'.',fv.nomeformato) else '' end
 			from formato as fv
 			where fv.idformato = cd.idformato) AS visualizacao
 	, (SELECT case when fd.nomeformato = 'link' then cd.site when fd.nomeformato is not null then concat(cd.idconteudodigital,'.',fd.nomeformato) else '' end
@@ -403,17 +397,10 @@ with
 FROM conteudodigital cd
 INNER JOIN usuario ON usuario.idusuario = cd.idusuariopublicador
 )
-select id, canal_id, user_id, approving_user_id, license_id, category_id, title,
-	description, authors, source, is_approved, is_featured, is_site,
+select id, tipo_id, canal_id, user_id, approving_user_id, license_id, category_id, title,
+	description, authors, source, accessibility, is_approved, is_featured, is_site,
 	qt_downloads, qt_access,
-	jsonb_build_object('tipo',tipo,
-                        'site', site,
-                        'componentes', componentes,
-                        'tags', tags,
-                        'download', download,
-                        'visualizacao', visualizacao,
-                        'guia', guia_pedagogica
-                        ) as options,
+	jsonb_build_object('site', site) as options,
 	created_at, updated_at, deleted_at                
         , ts_documento
 from conteudos

@@ -174,10 +174,10 @@ return [
          * Package Service Providers...
          */
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-        Ixudra\Curl\CurlServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Jenssegers\Date\DateServiceProvider::class,
         Jaybizzle\LaravelCrawlerDetect\LaravelCrawlerDetectServiceProvider::class,
+        Buglinjo\LaravelWebp\WebpServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -237,8 +237,7 @@ return [
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
-        'Curl' => Ixudra\Curl\Facades\Curl::class,
+        'Webp' => Buglinjo\LaravelWebp\Facades\Webp::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Date' => Jenssegers\Date\Date::class,

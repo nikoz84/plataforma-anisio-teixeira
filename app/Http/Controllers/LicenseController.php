@@ -7,14 +7,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;
 use Gate;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LicenseController extends ApiController
 {
-    public function __construct(Request $request, License $license)
+    public function __construct(Request $request)
     {
         $this->middleware('jwt.verify')->except(['index', 'search']);
         $this->request = $request;
-        $this->license = $license;
     }
     /**
      * Lista das licenças.
@@ -26,7 +26,7 @@ class LicenseController extends ApiController
         $limit = $this->request->query('limit', 15);
 
         if ($this->request->has('select')) {
-            $licenses = $this->license::with(['childs' => function ($q) {
+            $licenses = License::with(['childs' => function ($q) {
                 $q->select('id', 'parent_id', 'name');
             }])->whereRaw('parent_id IS NULL')
                 ->get(['id', 'parent_id', 'name']);
@@ -34,7 +34,7 @@ class LicenseController extends ApiController
             return $this->showAll($licenses);
         }
 
-        $licenses = $this->license::with(['childs'])
+        $licenses = License::with(['childs'])
             ->whereRaw('parent_id IS NULL')
             ->paginate($limit);
 
@@ -51,28 +51,30 @@ class LicenseController extends ApiController
         $validator = Validator::make($this->request->all(), config("rules.license"));
 
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível criar a licença", 201);
+            return $this->errorResponse($validator->errors(), "Não foi possível criar a licença", 422);
         }
+        $this->authorize('update', JWTAuth::user());
 
-        $license = $this->license;
+        $license = new License;
 
         $license->fill($this->request->all());
 
-        $license->save();
+        if (!$license->save()) {
+            return $this->errorResponse([], 'Não foi possível criar a licença', 422);
+        }
 
-        return $this->showOne($license, 'Licença registrada com sucesso!!', 200);
+        return $this->successResponse($license, 'Licença registrada com sucesso!!', 200);
     }
 
     /**
      * Atualiza uma licença específica.
      *
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        $license = $this->license::find($id);
-        if (Gate::denies('super-admin', $license)) {
-            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
-        }
+        $license = License::find($id);
+
+        $this->authorize('update', $id);
 
         $validator = Validator::make($this->request->all(), config("rules.license"));
 
@@ -100,19 +102,18 @@ class LicenseController extends ApiController
             'delete_confirmation' => ['required', new \App\Rules\ValidBoolean]
         ]);
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível deletar a licença", 201);
+            return $this->errorResponse($validator->errors(), "Não foi possível deletar a licença", 422);
         }
 
-        $license = $this->license::find($id);
-        if (Gate::denies('super-admin', $license)) {
-            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
-        }
-        $license->delete();
+        $license = License::findOrFail($id);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Licença deletada com sucesso!',
-        ]);
+        $this->authorize('delete', $license);
+
+        if (!$license->delete()) {
+            $this->errorResponse([], 'não foi possível deletar a licença', 422);
+        }
+
+        return $this->successResponse($license, 'Licença apagada com sucesso!', 200);
     }
     /**
      * Busca por nome da licença.

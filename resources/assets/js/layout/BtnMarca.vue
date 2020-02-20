@@ -3,6 +3,10 @@
     <img
       src="/logo.svg"
       alt="marca"
+      title="marca"
+      width="35"
+      height="35"
+      loading="lazy"
       aria-label="marca da plataforma Anísio Teixeira"
     />
     <div class="q-pt-md">

@@ -7,7 +7,6 @@ use Illuminate\Support\Str;
 use App\Traits\FileSystemLogic;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Gate;
 use App\Canal;
 use App\User;
 use App\Tag;
@@ -50,7 +49,7 @@ class Conteudo extends Model
         'updated_at',
         'deleted_at',
     ];
-    protected $appends = ['image', 'excerpt', 'url_exibir', 'tipo', 'user_can', 'arquivos', 'formated_date'];
+    protected $appends = ['image', 'excerpt', 'url_exibir', 'user_can', 'arquivos', 'formated_date'];
     protected $casts = ['options' => 'array',];
     protected $hidden = ['ts_documento'];
     /**
@@ -74,6 +73,17 @@ class Conteudo extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id')
             ->select(['id', 'name']);
+    }
+    /**
+     * Conteúdo tipo
+     *
+     * @return void
+     */
+    public function tipo()
+    {
+        Tipo::$without_appends = true;
+
+        return $this->hasOne(Tipo::class, 'id', 'tipo_id')->select(['id', 'name']);
     }
     /**
      * Seleciona as Tags relacionadas
@@ -174,9 +184,9 @@ class Conteudo extends Model
     public function getArquivosAttribute()
     {
         $arrAr = [
-            'download'      => $this->getMetaDados('download'),
-            'visualizacao'  => $this->getMetaDados('visualizacao'),
-            'guia'          => $this->getMetaDados('guias-pedagogicos'),
+            'download'      => (object) $this->getMetaDados('download'),
+            'visualizacao'  => (object) $this->getMetaDados('visualizacao'),
+            'guia'          => (object) $this->getMetaDados('guias-pedagogicos'),
         ];
         return $arrAr;
     }
@@ -189,8 +199,8 @@ class Conteudo extends Model
     {
         $id = $this['id'];
         $canal = $this['canal_id'];
-        $tipo = $this['options']['tipo'];
-        $components = $this['options']['componentes'];
+        $tipo = $this['tipo_id'];
+        $components = $this->componentes();
 
         if ($canal == 2) {
             return $this::getEmitecImage($components);
@@ -209,15 +219,7 @@ class Conteudo extends Model
         $slug = $this->canal()->pluck('slug')->first();
         return "/{$slug}/conteudo/exibir/" . $this['id'];
     }
-    /**
-     * Adiciona o atributo tipo de conteúdo ao objeto
-     *
-     * @return void
-     */
-    public function getTipoAttribute()
-    {
-        return DB::table('tipos')->where('id', $this['options']['tipo'])->get(["id", "name"])->first();
-    }
+
     /**
      * Filtro para full text search
      *

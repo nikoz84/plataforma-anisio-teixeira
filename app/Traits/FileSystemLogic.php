@@ -12,10 +12,12 @@ trait FileSystemLogic
     // conteudos/conteudos-digitais/imagem-associada/emitec/img-emitec_disciplina29.png
     public static function getEmitecImage($components)
     {
+        $arrComp = $components->get()->pluck('id')->toArray();
+
         $disciplina = DB::table('curricular_components as cc')
             ->select(["cc.id"])
             ->join('niveis_ensino as ne', 'ne.id', '=', 'cc.nivel_id')
-            ->whereIn('cc.id', $components)
+            ->whereIn('cc.id', $arrComp)
             ->get()
             ->first();
 

@@ -59,4 +59,4 @@ Route::get('/teste', function (\Illuminate\Http\Request $request) {
     //if (Crawler::isCrawler()) {}
 });
 
-Route::get('/{any}', 'SpaController@index')->where('any', '.*');
+Route::get('/{any}', 'ApiController@index')->where('any', '.*');

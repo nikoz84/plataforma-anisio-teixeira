@@ -9,15 +9,13 @@ use App\Http\Controllers\ApiController;
 
 class CategoryController extends ApiController
 {
-    private $category;
     protected $request;
 
-    public function __construct(Request $request, Category $category)
+    public function __construct(Request $request)
     {
         $this->middleware('jwt.verify')->except([
             'index', 'search', 'getById', 'getCategoryByCanalId'
         ]);
-        $this->category = $category;
         $this->request = $request;
     }
 
@@ -25,7 +23,7 @@ class CategoryController extends ApiController
     {
         $limit = $this->request->get('limit', 15);
 
-        $categories = $this->category::whereNull('parent_id')
+        $categories = Category::whereNull('parent_id')
             ->where('options->is_active', 'true')
             ->with('subCategories')
             ->limit($limit)
@@ -38,36 +36,46 @@ class CategoryController extends ApiController
     {
         $validator = Validator::make($this->request->all(), config("rules.categoria"));
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível criar a categoria", 201);
+            return $this->errorResponse($validator->errors(), "Não foi possível criar a categoria", 422);
         }
-        $category           = $this->category;
+
+        $category           = new Category;
         $category->name     = $this->request->name;
         $category->canal_id = $this->request->canal_id;
         $category->options  = $this->request->options;
-        if ($category->save()) {
-            return $this->successResponse($category, 'Categoria criada com sucesso!', 200);
+
+        if (!$category->save()) {
+            return $this->errorResponse([], 'Não foi possível cadastrar a categoria', 422);
         }
+
+        return $this->successResponse($category, 'Categoria criada com sucesso!', 200);
     }
-    public function update(Request $request, $id)
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function update($id)
     {
         $validator = Validator::make($this->request->all(), config("rules.categoria"));
+
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível atualizar a categoria", 201);
         }
 
-        $category = $this->category;
+        $category = Category::findOrFail($id);
+
         $category->name = $this->request->name;
         $category->canal_id = $this->request->canal_id;
         $category->options = $this->request->options;
 
-        $cat = $this->category::find($id);
-        $cat->fill($this->request->all());
-
-        if ($cat->update()) {
-            return $this->successResponse($cat, 'Categoria editada com sucesso!', 200);
-        } else {
-            return $this->errorResponse($category, 'Não existe essa categoria para ser atualizada', 200);
+        if (!$category->update()) {
+            return $this->errorResponse([], 'Não foi possível editar', 422);
         }
+
+        return $this->successResponse($category, 'Categoria atualizada com sucesso!', 200);
     }
     public function delete($id)
     {
@@ -75,22 +83,24 @@ class CategoryController extends ApiController
             'delete_confirmation' => ['required', new \App\Rules\ValidBoolean]
         ]);
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível deletar.", 201);
+            return $this->errorResponse($validator->errors(), "Não foi possível deletar.", 422);
         }
-        $category = $this->category;
-        $resp = $this->category::findOrFail($id);
 
-        if ($resp->delete()) {
-            return $this->successResponse($category, 'Categoria deletada com sucesso!', 200);
+        $category = Category::findOrFail($id);
+
+        if (!$category->delete()) {
+            return $this->errorResponse([], 'Não foi possível deletar a categoria', 422);
         }
+
+        return $this->successResponse($category, 'Categoria deletada com sucesso!', 200);
     }
-    public function getById()
+    public function getById($id)
     {
-        //
+        return Category::findOrFail($id);
     }
     public function getCategoryByCanalId($id)
     {
-        $categories = $this->category::where('canal_id', $id)->get();
+        $categories = Category::where('canal_id', $id)->get();
 
         return $this->showAll($categories);
     }

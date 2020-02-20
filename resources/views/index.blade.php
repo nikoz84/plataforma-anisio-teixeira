@@ -9,12 +9,16 @@
         <title>Plataforma Anísio Teixeira</title>
         <meta name="description" content="Plataforma Anísio Teixeira projeto da Secretaria da Educação do Estado da Bahia(SEC)">
         <meta name="keywords" content="educação, emitec, plataforma anísio teixeira, conteúdos digitais, secretaria da educação, software livre">
+        <link rel="canonical" href="{{env('APP_URL')}}">
         <link rel="manifest" href="/manifest.json">
         <link rel="apple-touch-icon" href="/img/icons-192.png">
         <meta name="theme-color" content="#08275e">
         
-        <link rel="stylesheet" href="/css/app.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+        <link rel="prefetch" href="/css/app.css"  as="style" onload="this.rel='stylesheet'">
+        <noscript>
+            <link rel="stylesheet" href="/css/app.css" />
+        </noscript>
+        <link rel="prefetch" as="style" onload="this.rel='stylesheet'" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     </head>
     <body>
         <div id="app">

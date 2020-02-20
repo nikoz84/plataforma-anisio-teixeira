@@ -7,20 +7,19 @@ use App\Helpers\Destaques;
 use App\Http\Controllers\ApiController;
 use App\Helpers\Autocomplete;
 use App\Helpers\SideBar;
-use App\NivelEnsino;
+use Illuminate\Http\Request;
 
 class HomeController extends ApiController
 {
-    protected $destaques;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(Destaques $destaques)
+    public function __construct(Request $request)
     {
         $this->middleware('jwt.verify')->except(['index', 'getLayout', 'getHomeData', 'autocomplete']);
-        $this->destaques = new $destaques;
+        $this->request = $request;
     }
 
 
@@ -73,6 +72,6 @@ class HomeController extends ApiController
         $data = new Autocomplete($termo, $limit, $per);
         $paginator = $data->autocomplete();
 
-        return $this->showAsPaginator($paginator, '', 200);
+        return $this->showAsPaginator($paginator);
     }
 }

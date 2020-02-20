@@ -29,6 +29,7 @@
                   params: { slug: slug, id: item.id, action: 'exibir' }
                 }
           "
+          :title="item.name ? item.name : item.title"
           v-html="title"
         />
       </div>
@@ -76,7 +77,9 @@ export default {
   components: { QCard, QCardSection, QCardActions, QBtn, QImg, QSeparator },
   computed: {
     title() {
-      return this.item.name ? this.item.name : this.item.title;
+      let title = this.item.name ? this.item.name : this.item.title;
+
+      return title.length > 70 ? title.substr(0, 70) + " ..." : title;
     },
     slug() {
       return this.item.canal ? this.item.canal.slug : this.item.slug;

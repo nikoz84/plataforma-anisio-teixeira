@@ -77,6 +77,25 @@ class ImportData extends Command
         DB::statement("UPDATE conteudos set canal_id = 5 where is_site = true and canal_id is null;");
         DB::statement("UPDATE canais set is_active = false where  id  IN (4,10,11,13,14,15);");
         DB::statement("UPDATE canais set name = 'Recursos Educacionais' where id = 6;");
+        $this->info('Adicionando Temas contenporâneos');
+        DB::statement("INSERT into curricular_components_categories (id, name) values (7,'Temas Contemporáneos');");
+        DB::statement("INSERT into curricular_components (id,category_id,nivel_id,name) values 
+            (119,7,null,'Educação para o Trânsito'),
+            (120,7,null,'Vida Familiar e Social'),
+            (121,7,null,'Educação em Direitos Humanos'),
+            (122,7,null,'Direitos da Criança e do Adolescente'),
+            (123,7,null,'Processo de envelhecimento, respeito e valorização do idoso'),
+            (124,7,null,'Ciência e Tenologia'),
+            (125,7,null,'Trabalho'),
+            (126,7,null,'Educação Financeira'),
+            (127,7,null,'Educação Fiscal'),
+            (128,7,null,'Educação Ambiental'),
+            (129,7,null,'Educação para o Consumo'),
+            (130,7,null,'Diversidade Cultural'),
+            (131,7,null,'Educação para valorização do muliculturalismo nas matrizes históricas e culturais brasileiras'),
+            (132,7,null,'Saúde'),
+            (133,7,null,'Educação Alimentar e Nutricional');
+        ");
         $this->info('Processo finalizado com sucesso');
     }
 }

@@ -12,6 +12,7 @@
     "require": {
         "php": ">=7.1.0",
         "adoy/oauth2": "*",
+        "buglinjo/laravel-webp": "^2.0",
         "fideloper/proxy": "^4.0",
         "google/apiclient": "^2.0",
         "guzzlehttp/guzzle": "^6.3",

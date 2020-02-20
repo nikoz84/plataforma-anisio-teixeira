@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use App\Canal;
 use App\Traits\UserCan;
+use App\Traits\WithoutAppends;
 
 class Tipo extends Model
 {
-    use UserCan;
+    use UserCan, WithoutAppends;
 
     public $timestamps = false;
     protected $fillable = ['name', 'options'];

@@ -58,7 +58,7 @@ Route::group(['middleware' => ['cors']], function () {
     /** LICENÇAS */
     Route::get('/licencas', 'LicenseController@index')->name('listar.licencas');
     /** TOKEN */
-    Route::name('verify')->get('usuarios/verify/{token}', 'UserController@verify');
+    Route::get('usuarios/verify/{token}', 'UserController@verify')->name('verify.token');
 });
 /**
  *

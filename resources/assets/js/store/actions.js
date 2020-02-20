@@ -7,7 +7,6 @@ const actions = {
       commit("SET_LINKS", resp.data.links);
       commit("SET_DISCIPLINAS", resp.data.disciplinas);
       commit("SET_TIPOS", resp.data.tipos);
-      console.log(resp.data.temas);
       commit("SET_TEMAS", resp.data.temas);
     } catch (e) {
       commit("SET_IS_LOADING", false);
@@ -124,32 +123,6 @@ const actions = {
     } catch (error) {
       localStorage.removeItem("token");
     }
-  },
-  /** CANAIS FOR SELECT */
-  async fetchCanaisForSelect({ commit }) {
-    let resp = await axios.get("/canais?select");
-    if (resp.status == 200 && resp.data.success == true) {
-      commit("SET_CANAIS", resp.data.metadata);
-    }
-  },
-  /** TIPO DE CONTEUDOS */
-  async fetchTiposForSelect({ commit }) {
-    let resp = await axios.get("/tipos?select");
-    if (resp.status == 200 && resp.data.success == true) {
-      commit("SET_TIPOS_FORM", resp.data.metadata);
-    }
-  },
-  /** LICENÇAS */
-  async fetchLicenses({ commit }) {
-    let resp = await axios.get("/licenses?select");
-    const data = resp.data.metadata;
-    let licenses = data.filter(key => {
-      return key.id != 2;
-    });
-    let childs = data.filter(key => {
-      return key.id === 2;
-    });
-    commit("SET_LICENSES", { licenses, childs });
   },
   /** CANAL */
   async getCanalBySlug({ commit }, slug) {

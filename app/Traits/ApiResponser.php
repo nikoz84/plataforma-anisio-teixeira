@@ -60,6 +60,6 @@ trait ApiResponser
             $data['id'] = $item->id;
             return $data;
         });
-        return $this->showAll($select, 'Selecione', 200);
+        return $this->showAll($select);
     }
 }

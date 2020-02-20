@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Conteudo;
+use App\Helpers\Autocomplete;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -50,7 +51,7 @@ class ConteudoController extends ApiController
 
         // FILTRO X TIPO
         $query->when($tipos, function ($q, $tipos) {
-            return $q->whereRaw("options->'tipo' <@  ?", $tipos);
+            return $q->where("tipo_id", $tipos);
         });
         // FILTRO X PUUBLICADOR
         $query->when($publicador, function ($q) {
@@ -85,7 +86,7 @@ class ConteudoController extends ApiController
         $url .= "&tipos={$tipos}&componentes={$componentes}&categoria={$categoria}&licencas={$licencas}";
 
         $conteudos = $query->where('is_approved', 'true')
-            ->with(['canal'])
+            ->with(['canal', 'tipo'])
             ->orderBy($orderBy, 'desc')
             ->paginate($limit)
             ->setPath("/conteudos?{$url}");
@@ -270,19 +271,14 @@ class ConteudoController extends ApiController
      */
     public function search($termo)
     {
-        $limit = $this->request->query('limit', 15);
-        $page = $this->request->query('page', 1);
+        $limit = $this->request->query('limit', 6);
 
-        $conteudos = DB::table(DB::raw("conteudos as cd, plainto_tsquery('simple', lower(unaccent(?))) query"))
-            ->select([
-                'cd.id', 'cd.title',
-                DB::raw('ts_rank_cd(cd.ts_documento, query) AS ranking'),
-            ])
-            ->whereRaw('query @@ cd.ts_documento')
-            ->whereRaw('cd.is_approved = true')
-            ->setBindings([$termo])
-            ->orderBy('ranking', 'desc')
-            ->paginate($limit);
+        $query = Conteudo::query();
+
+        $query->when($termo, function ($q) use ($termo) {
+            return $q->search($termo, 'tag');
+        });
+        $conteudos = $query->paginate($limit);
 
         $conteudos->setPath("/conteudos/search/{$termo}?limit={$limit}");
 
@@ -297,7 +293,7 @@ class ConteudoController extends ApiController
     public function getById($id)
     {
         $conteudo = Conteudo::with([
-            'user', 'canal', 'tags', 'license', 'componentes', 'niveis',
+            'tipo', 'user', 'canal', 'tags', 'license', 'componentes', 'niveis',
         ])->find($id);
 
         $conteudo->increment('qt_access', 1);
