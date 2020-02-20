@@ -13,7 +13,7 @@ class NivelEnsino extends Model
     protected $table = 'niveis_ensino';
     protected $appends = ['user_can', 'search_url'];
 
-    public function components()
+    public function componentes()
     {
         return $this->hasMany(\App\CurricularComponent::class, 'nivel_id', 'id');
     }

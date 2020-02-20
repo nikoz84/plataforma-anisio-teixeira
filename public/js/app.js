@@ -3650,6 +3650,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         site: "",
         title: "",
         description: "",
+        options: {
+          site: null
+        },
         authors: "",
         source: "",
         image: "",
@@ -3681,18 +3684,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     save: function save() {
       console.log(this.conteudo);
       var form = new FormData();
-      form.append("license_id", this.conteudo.license_id);
-      form.append("canal_id", this.conteudo.canal_id);
-      form.append("category_id", this.conteudo.category_id);
-      form.append("tipo_id", this.conteudo.tipo_id);
+      form.append("license_id", this.conteudo.license ? this.conteudo.license.id : null);
+      form.append("tipo_id", this.conteudo.tipo ? this.conteudo.tipo.id : null);
+      form.append("canal_id", this.conteudo.canal ? this.conteudo.canal.id : null);
+      form.append("category_id", this.conteudo.category ? this.conteudo.category.id : null);
       form.append("title", this.conteudo.title);
       form.append("description", this.conteudo.description);
       form.append("source", this.conteudo.source);
       form.append("authors", this.conteudo.authors);
-      form.append("site", this.conteudo.site);
+      form.append("options_site", this.conteudo.options.site);
       form.append("image", this.conteudo.image);
       form.append("tags", this.conteudo.tags);
-      form.append("components", this.conteudo.components);
+      form.append("componentes", this.conteudo.componentes);
       form.append("terms", this.terms);
       form.append("is_approved", this.conteudo.is_approved);
       form.append("is_featured", this.conteudo.is_featured);
@@ -3707,7 +3710,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var canais, tipos, licencas, responses, conteudo;
+        var canais, tipos, licencas, componentes, responses, conteudo;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -3715,29 +3718,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 canais = axios.get("/canais?select");
                 tipos = axios.get("/tipos?select");
                 licencas = axios.get("/licencas?select");
-                _context.next = 5;
-                return axios.all([canais, tipos, licencas]);
+                componentes = axios.get("/componentes");
+                _context.next = 6;
+                return axios.all([canais, tipos, licencas, componentes]);
 
-              case 5:
+              case 6:
                 responses = _context.sent;
                 _this.canais = responses[0].data.metadata;
                 _this.tipos = responses[1].data.metadata;
                 _this.licencas = responses[2].data.metadata;
+                _this.componentes = responses[3].data.metadata;
+                console.warn(responses);
 
                 if (!_this.$route.params.id) {
-                  _context.next = 15;
+                  _context.next = 17;
                   break;
                 }
 
-                _context.next = 12;
+                _context.next = 15;
                 return axios.get("/conteudos/" + _this.$route.params.id);
 
-              case 12:
+              case 15:
                 conteudo = _context.sent;
-                console.log(conteudo.data.metadata);
                 _this.conteudo = conteudo.data.metadata;
 
-              case 15:
+              case 17:
               case "end":
                 return _context.stop();
             }
@@ -74833,30 +74838,41 @@ var render = function() {
               _c("q-select", {
                 attrs: {
                   outlined: "",
+                  "option-value": "id",
+                  "option-label": "name",
+                  "ransition-show": "scale",
+                  "transition-hide": "scale",
                   options: _vm.canais,
-                  label: "Escolha um Canal"
+                  label: "Escolha um Canal",
+                  behavior: "dialog"
                 },
                 model: {
-                  value: _vm.conteudo.canal_id,
+                  value: _vm.conteudo.canal,
                   callback: function($$v) {
-                    _vm.$set(_vm.conteudo, "canal_id", $$v)
+                    _vm.$set(_vm.conteudo, "canal", $$v)
                   },
-                  expression: "conteudo.canal_id"
+                  expression: "conteudo.canal"
                 }
               }),
               _vm._v(" "),
               _c("q-select", {
                 attrs: {
                   outlined: "",
+                  "stack-label": "",
+                  "option-value": "id",
+                  "option-label": "name",
+                  "transition-show": "flip-up",
+                  "transition-hide": "flip-down",
                   options: _vm.tipos,
-                  label: "Tipo de Mídia"
+                  label: "Tipo de Mídia",
+                  behavior: "dialog"
                 },
                 model: {
-                  value: _vm.conteudo.tipo_id,
+                  value: _vm.conteudo.tipo,
                   callback: function($$v) {
-                    _vm.$set(_vm.conteudo, "tipo_id", $$v)
+                    _vm.$set(_vm.conteudo, "tipo", $$v)
                   },
-                  expression: "conteudo.tipo_id"
+                  expression: "conteudo.tipo"
                 }
               }),
               _vm._v(" "),
@@ -74965,6 +74981,17 @@ var render = function() {
           _c(
             "q-card-section",
             [
+              _c("q-img", {
+                attrs: {
+                  loading: "lazy",
+                  width: "100%",
+                  height: "200",
+                  src: _vm.conteudo.image,
+                  "placeholder-src": "/img/fundo-padrao.svg",
+                  alt: "imagem de destaque"
+                }
+              }),
+              _vm._v(" "),
               _c("q-input", {
                 attrs: {
                   outlined: "",
@@ -74999,11 +75026,11 @@ var render = function() {
                   hint: "Exemplo: http://dominio.com.br"
                 },
                 model: {
-                  value: _vm.conteudo.site,
+                  value: _vm.conteudo.options.site,
                   callback: function($$v) {
-                    _vm.$set(_vm.conteudo, "site", $$v)
+                    _vm.$set(_vm.conteudo.options, "site", $$v)
                   },
-                  expression: "conteudo.site"
+                  expression: "conteudo.options.site"
                 }
               })
             ],
@@ -75017,7 +75044,18 @@ var render = function() {
         "q-card",
         { staticClass: "col-sm-2" },
         [
-          _c("q-card-section", [_vm._v("\n      lista de componentes\n    ")]),
+          _c("q-card-section", [
+            _c(
+              "ul",
+              _vm._l(_vm.componentes, function(componente, i) {
+                return _c("li", {
+                  key: i,
+                  domProps: { textContent: _vm._s(componente.name) }
+                })
+              }),
+              0
+            )
+          ]),
           _vm._v(" "),
           _c(
             "q-card-actions",

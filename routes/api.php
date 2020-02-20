@@ -32,6 +32,8 @@ Route::group(['middleware' => ['cors']], function () {
     Route::post('/denuncias', 'DenunciaController@create')->name('criar.faleconosco.denuncias');
     /** CANAIS */
     Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscar.canal.x.url.amigavel');
+    /** COMPONENTES */
+    Route::get('/componentes', 'ComponentesController@index')->name('lista.componentes.curriculares');
     /** CONTEUDOS */
     Route::get('/conteudos', 'ConteudoController@index')->name('lista.conteudo');
     Route::get('/conteudos/sites', 'ConteudoController@getSitesTematicos')->name('lista.sites.tematicos');

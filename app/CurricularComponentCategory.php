@@ -13,7 +13,7 @@ class CurricularComponentCategory extends Model
     protected $table = 'curricular_components_categories';
     protected $appends = ['user_can', 'search_url'];
 
-    public function components()
+    public function componentes()
     {
         return $this->hasMany(\App\CurricularComponent::class, 'category_id', 'id');
     }

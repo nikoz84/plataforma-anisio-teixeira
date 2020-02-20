@@ -4,15 +4,26 @@
       <q-card-section class="q-gutter-sm">
         <q-select
           outlined
-          v-model="conteudo.canal_id"
+          option-value="id"
+          option-label="name"
+          ransition-show="scale"
+          transition-hide="scale"
+          v-model="conteudo.canal"
           :options="canais"
           label="Escolha um Canal"
+          behavior="dialog"
         />
         <q-select
           outlined
-          v-model="conteudo.tipo_id"
+          stack-label
+          option-value="id"
+          option-label="name"
+          transition-show="flip-up"
+          transition-hide="flip-down"
+          v-model="conteudo.tipo"
           :options="tipos"
           label="Tipo de Mídia"
+          behavior="dialog"
         />
         <q-input outlined v-model="conteudo.title" label="Título do conteúdo" />
         <q-input outlined v-model="conteudo.authors" label="Autores" />
@@ -47,6 +58,13 @@
         />
       </q-card-section>
       <q-card-section>
+        <q-img 
+          loading="lazy" 
+          width="100%" 
+          height="200" 
+          :src="conteudo.image"
+          placeholder-src="/img/fundo-padrao.svg"
+          alt="imagem de destaque"/>
         <q-input
           @input="
             val => {
@@ -70,7 +88,7 @@
         />
         <q-input
           outlined
-          v-model="conteudo.site"
+          v-model="conteudo.options.site"
           label="URL do Site"
           hint="Exemplo: http://dominio.com.br"
         />
@@ -78,7 +96,9 @@
     </q-card>
     <q-card class="col-sm-2">
       <q-card-section>
-        lista de componentes
+        <ul>
+          <li v-for="(componente, i) in componentes" :key="i" v-text="componente.name"></li>
+        </ul>
       </q-card-section>
       <q-card-actions class="absolute-bottom">
         <q-btn
@@ -136,6 +156,9 @@ export default {
         site: "",
         title: "",
         description: "",
+        options: {
+          site: null
+        },
         authors: "",
         source: "",
         image: "",
@@ -167,18 +190,28 @@ export default {
     save() {
       console.log(this.conteudo);
       const form = new FormData();
-      form.append("license_id", this.conteudo.license_id);
-      form.append("canal_id", this.conteudo.canal_id);
-      form.append("category_id", this.conteudo.category_id);
-      form.append("tipo_id", this.conteudo.tipo_id);
+      form.append(
+        "license_id",
+        this.conteudo.license ? this.conteudo.license.id : null
+      );
+      form.append("tipo_id", this.conteudo.tipo ? this.conteudo.tipo.id : null);
+      form.append(
+        "canal_id",
+        this.conteudo.canal ? this.conteudo.canal.id : null
+      );
+      form.append(
+        "category_id",
+        this.conteudo.category ? this.conteudo.category.id : null
+      );
+
       form.append("title", this.conteudo.title);
       form.append("description", this.conteudo.description);
       form.append("source", this.conteudo.source);
       form.append("authors", this.conteudo.authors);
-      form.append("site", this.conteudo.site);
+      form.append("options_site", this.conteudo.options.site);
       form.append("image", this.conteudo.image);
       form.append("tags", this.conteudo.tags);
-      form.append("components", this.conteudo.components);
+      form.append("componentes", this.conteudo.componentes);
       form.append("terms", this.terms);
       form.append("is_approved", this.conteudo.is_approved);
       form.append("is_featured", this.conteudo.is_featured);
@@ -192,15 +225,16 @@ export default {
       const canais = axios.get("/canais?select");
       const tipos = axios.get("/tipos?select");
       const licencas = axios.get("/licencas?select");
-      let responses = await axios.all([canais, tipos, licencas]);
+      const componentes = axios.get("/componentes");
+      let responses = await axios.all([canais, tipos, licencas, componentes]);
 
       this.canais = responses[0].data.metadata;
       this.tipos = responses[1].data.metadata;
       this.licencas = responses[2].data.metadata;
-
+      this.componentes = responses[3].data.metadata;
+      console.warn(responses);
       if (this.$route.params.id) {
         let conteudo = await axios.get("/conteudos/" + this.$route.params.id);
-        console.log(conteudo.data.metadata);
         this.conteudo = conteudo.data.metadata;
       }
     },

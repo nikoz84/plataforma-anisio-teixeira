@@ -15,12 +15,12 @@ class SideBar
 
     public static function getSideBarAdvancedFilter()
     {
-        $componentes = CurricularComponentCategory::with(['components' => function ($q) {
+        $componentes = CurricularComponentCategory::with(['componentes' => function ($q) {
             $q->orderBy('name');
         }])->get();
 
         $licencas = License::select(['id', 'name'])->whereRaw('parent_id is null')->get();
-        $niveis = NivelEnsino::with(['components' => function ($q) {
+        $niveis = NivelEnsino::with(['componentes' => function ($q) {
             $q->where('curricular_components.id', '!=', 13)
                 ->where('curricular_components.id', '!=', 12)
                 ->orderBy('name');
@@ -36,8 +36,8 @@ class SideBar
         return [
             'layout' => $layout,
             "links" => $canais,
-            'licensas' => $licencas,
-            'componenes' => $componentes,
+            'licencas' => $licencas,
+            'componentes' => $componentes,
             'niveis' => $niveis,
             'temas' => self::getTemasTransversais(),
             'tipos' => Tipo::select(['id', 'name'])->get(),
@@ -52,7 +52,7 @@ class SideBar
     private static function getTemasTransversais()
     {
         return CurricularComponentCategory::where('id', '=', 3)
-            ->with(['components' => function ($q) {
+            ->with(['componentes' => function ($q) {
                 $q->orderBy('name');
             }])
             ->get()
@@ -65,7 +65,7 @@ class SideBar
      */
     private static function getDisciplinasEnsinoMedio()
     {
-        return NivelEnsino::where('id', '=', 5)->with(["components" => function ($q) {
+        return NivelEnsino::where('id', '=', 5)->with(["componentes" => function ($q) {
             $q->where('curricular_components.id', '!=', 31)->orderBy('name');
         }])->get()->first();
     }

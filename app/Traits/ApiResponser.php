@@ -56,7 +56,7 @@ trait ApiResponser
     protected function fetchForSelect(Collection $collection)
     {
         $select = $collection->map(function ($item) {
-            $data['label'] = $item->name ? $item->name : $item->title;
+            $data['name'] = $item->name ? $item->name : $item->title;
             $data['id'] = $item->id;
             return $data;
         });

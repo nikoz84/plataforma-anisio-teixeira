@@ -293,7 +293,14 @@ class ConteudoController extends ApiController
     public function getById($id)
     {
         $conteudo = Conteudo::with([
-            'tipo', 'user', 'canal', 'tags', 'license', 'componentes', 'niveis',
+            'tipo',
+            'user',
+            'canal',
+            'tags',
+            'license',
+            'category',
+            'componentes',
+            'niveis',
         ])->find($id);
 
         $conteudo->increment('qt_access', 1);
