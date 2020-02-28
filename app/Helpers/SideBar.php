@@ -35,7 +35,7 @@ class SideBar
                                     ORDER BY options->'order_menu';"), [true]);
         return [
             'layout' => $layout,
-            "links" => $canais,
+            'links' => $canais,
             'licencas' => $licencas,
             'componentes' => $componentes,
             'niveis' => $niveis,
