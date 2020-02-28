@@ -1,8 +1,6 @@
 <template>
   <section>
-    <transition appear enter-active-class="animated bounceInRight">
-      <div class="text-h5 title-page text-center q-py-lg text-primary" v-text="title"></div>
-    </transition>
+    <div class="text-h5 title-page text-center q-px-md q-py-lg text-primary" v-text="title"></div>
     <div class="row justify-center q-gutter-sm" v-if="items">
       <q-card class="col-sm-2" v-for="(item, i) in items" :key="`item-${i}`">
         <q-card-section style="word-break:break-word;">
@@ -37,12 +35,11 @@
 <script>
 export default {
   name: "CardHomeIcon",
-  props: ["title", "items", "source"],
+  props: ["title", "items"],
   data() {
     return {
       rounded: false
     };
-  },
-  methods: {}
+  }
 };
 </script>

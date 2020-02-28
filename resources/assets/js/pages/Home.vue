@@ -1,27 +1,24 @@
 <template>
   <section class="q-pa-sm">
-    <a class="skip-link" href="#tipo-conteudos">Ir a tipo de conteúdos</a>
+    <a class="skip-link" href="#tipo-conteudos">Ir a tipos de conteúdos</a>
     <CardHomeIcon
       id="tipo-conteudos"
       title="Tipos de Conteúdos"
       :items="tipos"
-      source="tipos"
       style="min-height: 85vh;"
     ></CardHomeIcon>
-    <a class="skip-link" href="#disciplinas">Ir a disciplinas</a>
+    <a class="skip-link" href="#disciplinas">Ir a disciplinas do ensino medio</a>
     <CardHomeIcon
       id="disciplinas"
-      title="Disciplinas"
-      source="busca"
-      :items="disciplinas.components"
+      :title="disciplinas.name"
+      :items="disciplinas.componentes"
       style="min-height: 85vh;"
     ></CardHomeIcon>
     <a class="skip-link" href="#temas">Ir a temas transversais</a>
     <CardHomeIcon
       id="temas"
-      title="Temas Transversais"
-      source="busca"
-      :items="temas.components"
+      :title="temas.name"
+      :items="temas.componentes"
       style="min-height: 45vh;"
     ></CardHomeIcon>
     
@@ -43,6 +40,7 @@
 import { mapState, mapMutations } from "vuex";
 import CardHome from "../components/CardHome.vue";
 import CardHomeIcon from "../components/CardHomeIcon.vue";
+import { ClosePopup } from "quasar";
 
 import {
   QParallax,
@@ -115,7 +113,23 @@ export default {
     };
   },
   computed: {
-    ...mapState(["disciplinas", "tipos", "temas"])
+    ...mapState(["tipos", "componentes", "niveis"]),
+    disciplinas() {
+      if (this.niveis.length) {
+        let niveis = this.niveis.filter(nivel => {
+          if (nivel.id === 5) return nivel;
+        });
+        return niveis[0];
+      }
+    },
+    temas() {
+      if (this.componentes.length) {
+        let componentes = this.componentes.filter(componente => {
+          if (componente.id === 3) return componente;
+        });
+        return componentes[0];
+      }
+    }
   },
   methods: {
     async getDestaques(el) {

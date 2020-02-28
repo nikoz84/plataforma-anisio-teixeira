@@ -5,9 +5,9 @@ const actions = {
 
       commit("SET_LAYOUT", resp.data.layout.meta_data);
       commit("SET_LINKS", resp.data.links);
-      commit("SET_DISCIPLINAS", resp.data.disciplinas);
       commit("SET_TIPOS", resp.data.tipos);
-      commit("SET_TEMAS", resp.data.temas);
+      commit("SET_COMPONENTES", resp.data.componentes);
+      commit("SET_NIVEIS", resp.data.niveis);
     } catch (e) {
       commit("SET_IS_LOADING", false);
       commit("SET_IS_ERROR", true);

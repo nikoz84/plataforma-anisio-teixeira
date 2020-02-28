@@ -23,6 +23,7 @@ class SideBar
         $niveis = NivelEnsino::with(['componentes' => function ($q) {
             $q->where('curricular_components.id', '!=', 13)
                 ->where('curricular_components.id', '!=', 12)
+                ->where('curricular_components.id', '!=', 31)
                 ->orderBy('name');
         }])->get();
         $layout = (object) Options::select("meta_data")->where("name", "like", "layout")->get()->first();

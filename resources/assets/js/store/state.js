@@ -16,7 +16,7 @@ const state = {
   niveis: {},
   temas: [],
   disciplinas: {},
-  components: [],
+  componentes: [],
   licenses: [],
   childsLicenses: [],
   tipos: [],

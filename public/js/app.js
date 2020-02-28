@@ -97849,9 +97849,9 @@ var actions = {
               resp = _context.sent;
               commit("SET_LAYOUT", resp.data.layout.meta_data);
               commit("SET_LINKS", resp.data.links);
-              commit("SET_DISCIPLINAS", resp.data.disciplinas);
               commit("SET_TIPOS", resp.data.tipos);
-              commit("SET_TEMAS", resp.data.temas);
+              commit("SET_COMPONENTES", resp.data.componentes);
+              commit("SET_NIVEIS", resp.data.niveis);
               _context.next = 15;
               break;
 
@@ -98367,8 +98367,8 @@ var mutations = {
   SET_CATEGORIES: function SET_CATEGORIES(state, categories) {
     state.categories = categories;
   },
-  SET_COMPONENTS: function SET_COMPONENTS(state, components) {
-    state.components = components;
+  SET_COMPONENTES: function SET_COMPONENTES(state, componentes) {
+    state.componentes = componentes;
   },
   SET_NIVEIS: function SET_NIVEIS(state, niveis) {
     state.niveis = niveis;
@@ -98444,7 +98444,7 @@ var state = {
   niveis: {},
   temas: [],
   disciplinas: {},
-  components: [],
+  componentes: [],
   licenses: [],
   childsLicenses: [],
   tipos: [],
