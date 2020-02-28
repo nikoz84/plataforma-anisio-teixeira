@@ -20,10 +20,12 @@ class WordpressService
     protected $post;
     protected $data_inicio;
     protected $data_fim;
+    protected $timeout;
 
     public function __construct(Request $request)
     {
         $this->request = $request;
+        $this->timeout = 10.0;
         $this->limit = $request->query('limit', 6);
         $this->page = $request->query('page', 1);
         $this->data_inicio = $request->query('inicio', date('Y-01-01 00:00:00'));
@@ -38,7 +40,7 @@ class WordpressService
     {
         $client = new Client([
             'base_uri' => $this->api,
-            'timeout'  => 6.0,
+            'timeout'  => $this->timeout,
             'query' => ['page' => $this->page, 'limit' => $this->limit]
         ]);
 
@@ -66,7 +68,7 @@ class WordpressService
     {
         $client = new Client([
             'base_uri' => $this->api,
-            'timeout'  => 6.0,
+            'timeout'  => $this->timeout,
             'query' => [
                 'inicio' => $this->data_inicio,
                 'fim'    => $this->data_fim
@@ -83,7 +85,7 @@ class WordpressService
     {
         $client = new Client([
             'base_uri' => $this->api,
-            'timeout'  => 6.0
+            'timeout'  => $this->timeout
         ]);
 
         $response = $client->request('GET', "posts/{$this->request->id}");

@@ -40,9 +40,7 @@ class SideBar
             'licencas' => $licencas,
             'componentes' => $componentes,
             'niveis' => $niveis,
-            'temas' => self::getTemasTransversais(),
-            'tipos' => Tipo::select(['id', 'name'])->get(),
-            'disciplinas' => self::getDisciplinasEnsinoMedio()
+            'tipos' => Tipo::select(['id', 'name'])->get()
         ];
     }
     /**
