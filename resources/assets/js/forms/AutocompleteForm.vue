@@ -66,7 +66,6 @@ export default {
   methods: {
     searchTerm(val, update, abort) {
       update(() => {
-        console.log(encodeURIComponent(val.trim()));
         if (val === "" && val.length < 3) {
           this.options = [];
         } else {

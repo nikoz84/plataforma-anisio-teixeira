@@ -1,6 +1,5 @@
 let mix = require("laravel-mix");
-require("dotenv").config();
-
+const ChunkRenamePlugin = require("webpack-chunk-rename-plugin");
 /*
 |--------------------------------------------------------------------------
 | Mix Asset Management
@@ -16,14 +15,29 @@ mix.browserSync({
   proxy: process.env.APP_URL
 });
 
-mix.config.webpackConfig.output = {
-  chunkFilename: "js/[name].vendor.js",
-  publicPath: "/"
-};
+mix.disableNotifications();
 
-//.extract(["vue", "quasar", "lodash", "axios"]);
+if (!mix.inProduction()) {
+  mix.config.webpackConfig.output = {
+    chunkFilename: "js/[name].min.js",
+    publicPath: "/"
+  };
+  mix
+    .js("resources/assets/js/app.js", "public/js")
+    .stylus("resources/assets/stylus/app.styl", "public/css")
+    .version();
 
-mix
-  .js("resources/assets/js/app.js", "public/js")
-  .stylus("resources/assets/stylus/app.styl", "public/css")
-  .version();
+  mix.copy("public/css/app.css", "public/css/app-copy.css");
+} else {
+  mix
+    .webpackConfig({
+      output: {
+        filename: "[name].js",
+        chunkFilename: "js/[name].js"
+      }
+    })
+    .js(["resources/assets/js/app.js"], "public/js")
+    .extract();
+  //mix.copy("public/js/js/app.vendor.js", "public/js/");
+  mix.styles(["public/css/app-copy.css"], "public/css/app.css");
+}

@@ -121,10 +121,10 @@ const actions = {
           localStorage.removeItem("token");
         });
     } catch (error) {
+      commit("SET_LOGOUT_USER");
       localStorage.removeItem("token");
     }
   },
-  /** CANAL */
   async getCanalBySlug({ commit }, slug) {
     try {
       await axios.get(`/canais/slug/${slug}`).then(resp => {

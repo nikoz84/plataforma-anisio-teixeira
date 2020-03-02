@@ -5,11 +5,13 @@
       id="tipo-conteudos"
       title="Tipos de Conteúdos"
       :items="tipos"
+      v-if="tipos"
       style="min-height: 85vh;"
     ></CardHomeIcon>
-    <a class="skip-link" href="#disciplinas">Ir a disciplinas do ensino medio</a>
+    <a class="skip-link" href="#ensino-medio">Ir a disciplinas do ensino medio</a>
     <CardHomeIcon
-      id="disciplinas"
+      id="ensino-medio"
+       v-if="disciplinas"
       :title="disciplinas.name"
       :items="disciplinas.componentes"
       style="min-height: 85vh;"
@@ -17,6 +19,7 @@
     <a class="skip-link" href="#temas">Ir a temas transversais</a>
     <CardHomeIcon
       id="temas"
+      v-if="temas"
       :title="temas.name"
       :items="temas.componentes"
       style="min-height: 45vh;"

@@ -26,8 +26,13 @@
         </div>
         
         
+        @if (env('APP_ENV') === 'development')
         <script src="/js/app.js"></script>
-        
+        @elseif (env('APP_ENV') === 'production')
+        <script src="/js/manifest.js"></script>
+        <script src="/js/js/vendor.js"></script>
+        <script src="/js/js/app.js"></script>
+        @endif
         <noscript>
             A Plataforma Anísio Teixeira utiliza Javascript para ser executada, 
             por favor, habilite o javascript no navegador.
