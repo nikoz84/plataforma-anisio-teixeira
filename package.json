@@ -45,6 +45,7 @@
     "plyr": "^3.5.10",
     "quasar": "^1.9.3",
     "roboto-fontface": "^0.7.0",
+    "url-search-params-polyfill": "^8.0.0",
     "vue-apexcharts": "^1.5.2",
     "vue-loader": "^15.9.0",
     "vue-plyr": "^6.0.4",

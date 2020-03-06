@@ -73,7 +73,7 @@ class Handler extends ExceptionHandler
             return $this->errorResponse([], "Modelo não encontrado", 404);
         }
         if ($exception instanceof QueryException) {
-            return $this->errorResponse([], "Modelo não encontrado", 404);
+            //return $this->errorResponse([], "Modelo não encontrado", 404);
         }
         if ($exception instanceof AuthorizationException) {
             return $this->errorResponse([], "Ação não autorizada", 403);

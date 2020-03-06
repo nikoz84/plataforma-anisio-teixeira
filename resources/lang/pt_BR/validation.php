@@ -128,6 +128,7 @@ return [
         'terms' => 'termos e condições',
         'image' => 'arquivo de imagem',
         'options_is_featured' => 'destaque',
+        'options_site' => 'site',
         'video' => 'vídeo',
         'file' => 'arquivo',
         'role' => 'tipo',

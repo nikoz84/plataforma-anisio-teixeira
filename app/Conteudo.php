@@ -256,15 +256,51 @@ class Conteudo extends Model
             return $q->where('id', '=', $tag_id);
         });
     }
-    public function scopeSearchByComponent($query, $component_id)
+    public function scopeSearchByComponent($query, $componentes)
     {
-        if (!$component_id) {
+        if (!$componentes) {
             return $query;
         }
 
-        return $query->whereHas("componentes", function ($q) use ($component_id) {
+        return $query->whereHas("componentes", function ($q) use ($componentes) {
 
-            return $q->where('id', '=', $component_id);
+            return $q->whereIn('id', explode(',', $componentes));
         });
+    }
+    public static function tsDocumentoSave($id)
+    {
+        if (!$id) {
+            return;
+        }
+
+        $conteudo = parent::find($id);
+
+        $fullTextSearch = DB::table('conteudos as c')
+            ->selectRaw("setweight( to_tsvector( 'simple',
+                    (SELECT string_agg(lower(COALESCE(unaccent(t.name),'')), ' ' )
+                    FROM conteudo_tag AS ct
+                    INNER JOIN tags t ON t.id = ct.tag_id
+                    WHERE ct.conteudo_id = c.id)), 'A') ||
+            setweight( to_tsvector( 'simple', lower( COALESCE( unaccent(c.title), '') ) ), 'A' ) ||
+            setweight( to_tsvector( 'portuguese',
+                                    lower( COALESCE( unaccent(concat(c.source, ' ', c.authors)), '') ) ), 'C' ) ||
+            setweight( to_tsvector( 'portuguese', unaccent(lower(
+               regexp_replace(
+               regexp_replace(
+               regexp_replace( c.description
+               , E'<.*?>', '', 'g')
+               , E'&nbsp;', ' ', 'g')
+               , E'[\\n\\r]+', ' ', 'g')
+           ))),'D') AS ts_documento")
+            ->where('id', '=', $id)
+            ->get()
+            ->first();
+
+
+        dd($conteudo);
+
+        $conteudo->save([
+            'ts_documento' => $fullTextSearch->ts_documento
+        ]);
     }
 }

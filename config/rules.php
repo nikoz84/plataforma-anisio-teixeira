@@ -6,11 +6,12 @@ return [
     "conteudo" => [
         'license_id' => 'required',
         'canal_id' => 'required',
+        'tipo_id' => 'required',
         'category_id' => 'nullable',
         'title' => 'required|min:10|max:255',
         'description' => 'required|min:140',
         'tipo_id' => 'required',
-        'site' => 'nullable',
+        'options_site' => 'nullable',
         'tags' => 'required',
         'componentes' => 'required',
         'authors' => 'required',

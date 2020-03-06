@@ -62,6 +62,6 @@ class FileController extends ApiController
     }
     public function getGallery()
     {
-        return $this->showAll($this->getImagesGallery(), 'Galeria de Imagens', 200);
+        return $this->showAll($this->getImagesGallery());
     }
 }
