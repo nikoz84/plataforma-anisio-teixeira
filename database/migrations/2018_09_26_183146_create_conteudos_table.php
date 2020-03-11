@@ -44,6 +44,7 @@ class CreateConteudosTable extends Migration
             $table->index('category_id')->comment('indice para busca');
             $table->index('license_id')->comment('indice para busca');
             $table->index('user_id')->comment('indice para busca');
+            $table->index('title')->comment('indice para titulo');
 
             $table->foreign('user_id')->references('id')->on('users')->comment('chave foranea do usuário');
             $table->foreign('tipo_id')->references('id')->on('tipos')->comment('chave foranea do tipo de conteúdo');

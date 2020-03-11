@@ -28,7 +28,7 @@
                         style="margin-bottom:15px;"/>
                 <q-select filled 
                         option-value="id"
-                        option-label="label" 
+                        option-label="name" 
                         use-chips
                         multiple
                         v-model="user.canais" 

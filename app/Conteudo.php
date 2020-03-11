@@ -22,10 +22,9 @@ class Conteudo extends Model
 {
     use FileSystemLogic, SoftDeletes, UserCan;
 
-    protected $id = 'id';
-    const IS_SITE = 'false';
-    const IS_APPROVED = 'false';
-    const IS_FEATURED = 'false';
+    const IS_SITE = false;
+    const IS_APPROVED = false;
+    const IS_FEATURED = false;
     const INIT_COUNT = 0;
     public static $TYPE_SEARCH = 'simple';
 
@@ -44,11 +43,7 @@ class Conteudo extends Model
         'is_approved',
         'options',
     ];
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
+
     protected $appends = ['image', 'excerpt', 'url_exibir', 'user_can', 'arquivos', 'formated_date'];
     protected $casts = ['options' => 'array',];
     protected $hidden = ['ts_documento'];
@@ -109,6 +104,11 @@ class Conteudo extends Model
             'curricular_component_id'
         )->orderBy('name');
     }
+    /**
+     * Seleciona a categoria do conteúdo
+     *
+     * @return void
+     */
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
@@ -132,6 +132,24 @@ class Conteudo extends Model
     public function license()
     {
         return $this->hasOne(License::class, 'id', 'license_id');
+    }
+
+    public function setApprovingUserIdAttribute($value)
+    {
+        $user = User::find($value);
+
+        if ($user->is('admin') || $user->is('super-admin') || $user->is('coordenador')) {
+            $this->attributes['approving_user_id'] = $user->id;
+        }
+
+        $this->attributes['approving_user_id'] = null;
+    }
+    public function setIsApprovedAttribute($value)
+    {
+        $user = User::find($value);
+        $role = $user->is('admin') || $user->is('super-admin') || $user->is('coordenador');
+        dd($role);
+        $this->attributes['is_approved'] = $role ? true : self::IS_APPROVED;
     }
     /**
      * Adiciona novo atributo ao objeto que limita o tamanho da descrição
@@ -273,8 +291,6 @@ class Conteudo extends Model
             return;
         }
 
-        $conteudo = parent::find($id);
-
         $fullTextSearch = DB::table('conteudos as c')
             ->selectRaw("setweight( to_tsvector( 'simple',
                     (SELECT string_agg(lower(COALESCE(unaccent(t.name),'')), ' ' )
@@ -296,11 +312,6 @@ class Conteudo extends Model
             ->get()
             ->first();
 
-
-        dd($conteudo);
-
-        $conteudo->save([
-            'ts_documento' => $fullTextSearch->ts_documento
-        ]);
+        DB::update('update conteudos set ts_documento = ? where id = ?', [$fullTextSearch->ts_documento, $id]);
     }
 }

@@ -128,7 +128,8 @@ class ConteudoController extends ApiController
         $conteudo = new Conteudo;
 
         $conteudo->user_id = Auth::user()->id;
-        $conteudo->approving_user_id = Auth::user()->id;
+        $conteudo->setAttribute('approving_user_id', Auth::user()->id);
+        $conteudo->setAttribute('is_approved', Auth::user()->id);
         $conteudo->tipo_id = $this->request->tipo_id;
         $conteudo->license_id = $this->request->license_id;
         $conteudo->canal_id = $this->request->canal_id;
@@ -140,8 +141,7 @@ class ConteudoController extends ApiController
         $conteudo->authors = $this->request->authors;
         $conteudo->source = $this->request->source;
         // FL_DESTAQUE, FL_APROVADO, FL_SITE, QT_DOWNLOAD, QT_ACCESS
-        $conteudo->is_approved = $this->request->has('is_approved') ?
-            $this->request->is_approved : Conteudo::IS_APPROVED;
+
         $conteudo->is_featured = $this->request->has('is_featured') ?
             $this->request->is_featured : Conteudo::IS_FEATURED;
         $conteudo->is_site = $this->request->has('is_site') ?
@@ -183,11 +183,15 @@ class ConteudoController extends ApiController
             return $this->errorResponse($validator->errors(), "Não foi possível atualizar o conteúdo", 422);
         }
         $conteudo->fill($this->request->all());
-        if ($conteudo->save()) {
-            $this->createFile($id, $this->request->download);
-            $this->saveOptions($id);
-            $conteudo->tags()->sync(explode(',', $this->request->tags));
+
+        if (!$conteudo->save()) {
+            return $this->errorResponse([], 'Não foi possível atualizar o conteúdo', 422);
         }
+        $conteudo->tags()->sync(explode(',', $this->request->tags));
+        $conteudo->componentes()->sync(explode(',', $this->request->componentes));
+        Conteudo::tsDocumentoSave($conteudo->id);
+        $this->createFile($conteudo->id, $this->request->download);
+
         return $this->showOne($conteudo, 'Conteúdo editado com sucesso!!', 200);
     }
     /**

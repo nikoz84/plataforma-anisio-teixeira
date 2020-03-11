@@ -20,6 +20,9 @@ class CreateTagsTable extends Migration
             $table->integer('searched')->default(Tag::INIT_SEARCHED)->nullable();
             $table->timestamps();
             $table->softDeletes();
+            // Indices
+            $table->index('id')->comment('indice para id');
+            $table->index('name')->comment('indice para nome');
         });
     }
 

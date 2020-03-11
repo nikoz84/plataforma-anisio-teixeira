@@ -84,15 +84,15 @@ class ImportData extends Command
             (120,7,null,'Vida Familiar e Social'),
             (121,7,null,'Educação em Direitos Humanos'),
             (122,7,null,'Direitos da Criança e do Adolescente'),
-            (123,7,null,'Processo de envelhecimento, respeito e valorização do idoso'),
-            (124,7,null,'Ciência e Tenologia'),
+            (123,7,null,'Processo de Envelhecimento, Respeito e Valorização do Idoso'),
+            (124,7,null,'Ciência e Tecnologia'),
             (125,7,null,'Trabalho'),
             (126,7,null,'Educação Financeira'),
             (127,7,null,'Educação Fiscal'),
             (128,7,null,'Educação Ambiental'),
             (129,7,null,'Educação para o Consumo'),
             (130,7,null,'Diversidade Cultural'),
-            (131,7,null,'Educação para valorização do muliculturalismo nas matrizes históricas e culturais brasileiras'),
+            (131,7,null,'Educação para Valorização do Muliculturalismo nas Matrizes Históricas e Culturais Brasileiras'),
             (132,7,null,'Saúde'),
             (133,7,null,'Educação Alimentar e Nutricional');
         ");

@@ -16,6 +16,10 @@ class CreateCurricularComponentsCategories extends Migration
         Schema::create('curricular_components_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+
+            // Indice
+            $table->index('id')->comment('indice para id');
+            $table->index('name')->comment('indice para nome');
         });
     }
 

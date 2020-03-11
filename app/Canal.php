@@ -53,11 +53,13 @@ class Canal extends Model
         return $this->hasMany(Category::class, 'canal_id', 'id')
             ->where('options->is_active', true)
             ->whereNull('parent_id')
+            ->orderBy('name')
             ->with('subCategories');
     }
     public function appsCategories()
     {
-        return $this->hasMany(AplicativoCategory::class, 'canal_id', 'id');
+        return $this->hasMany(AplicativoCategory::class, 'canal_id', 'id')
+            ->orderBy("name");
     }
 
     public function getTiposAttribute()
@@ -89,7 +91,7 @@ class Canal extends Model
                 return 'Categorias';
                 break;
             default:
-                return "";
+                return '';
                 break;
         }
     }

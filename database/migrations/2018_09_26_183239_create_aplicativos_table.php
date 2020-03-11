@@ -27,6 +27,7 @@ class CreateAplicativosTable extends Migration
             $table->softDeletes();
             // indice
             $table->index('id')->comment('btree index por default');
+            $table->index('name')->comment('indice para nome');
             //chaves foraneas
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('category_id')->references('id')->on('aplicativo_categories');
