@@ -17,6 +17,7 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Storage;
 use App\Helpers\TransformDate;
 use App\Traits\UserCan;
+use Illuminate\Support\Facades\Auth;
 
 class Conteudo extends Model
 {
@@ -24,7 +25,6 @@ class Conteudo extends Model
 
     const IS_SITE = false;
     const IS_APPROVED = false;
-    const IS_FEATURED = false;
     const INIT_COUNT = 0;
     public static $TYPE_SEARCH = 'simple';
 
@@ -32,6 +32,7 @@ class Conteudo extends Model
         'approving_user_id',
         'user_id',
         'canal_id',
+        'tipo_id',
         'license_id',
         'category_id',
         'title',
@@ -133,23 +134,62 @@ class Conteudo extends Model
     {
         return $this->hasOne(License::class, 'id', 'license_id');
     }
-
-    public function setApprovingUserIdAttribute($value)
+    /**
+     * Muta o valor do usuário que aprova o conteúdo
+     * @param [type] $user
+     * @return void
+     */
+    public function setApprovingUserIdAttribute($user)
     {
-        $user = User::find($value);
+        $id = null;
 
         if ($user->is('admin') || $user->is('super-admin') || $user->is('coordenador')) {
-            $this->attributes['approving_user_id'] = $user->id;
+            $id = $user->id;
         }
 
-        $this->attributes['approving_user_id'] = null;
+        $this->attributes['approving_user_id'] = $id;
     }
+    /**
+     * Muta o valor si o conteúdo é aprovado
+     *
+     * @param [type] $value
+     * @return void
+     */
     public function setIsApprovedAttribute($value)
     {
-        $user = User::find($value);
-        $role = $user->is('admin') || $user->is('super-admin') || $user->is('coordenador');
-        dd($role);
-        $this->attributes['is_approved'] = $role ? true : self::IS_APPROVED;
+        $approved = self::IS_APPROVED;
+
+        if ($this->getAttribute('approving_user_id') !== null) {
+            $approved = (bool) $value;
+        }
+
+        $this->attributes['is_approved'] = $approved;
+    }
+    /**
+     * Muta o valor si o conteúdo é site
+     *
+     * @param [type] $value
+     * @return void
+     */
+    public function setIsSiteAttribute($value)
+    {
+        $is_site = self::IS_SITE;
+
+        if ($this['options']['site'] && $this->getAttribute('tipo_id') === 8) {
+            $is_site = $value;
+        }
+
+        $this->attributes['is_site'] =  (bool) $is_site;
+    }
+    /**
+     * Muta o valor si o conteúdo é marcado como destaque
+     *
+     * @param [type] $value
+     * @return void
+     */
+    public function setIsFeaturedAttribute($value)
+    {
+        $this->attributes['is_featured'] = (bool) $value;
     }
     /**
      * Adiciona novo atributo ao objeto que limita o tamanho da descrição
@@ -183,7 +223,7 @@ class Conteudo extends Model
                 'url'       => Storage::disk('conteudos-digitais')->url($pasta) . "/{$name}"
             ];
         }
-        return $arr;
+        return (object) $arr;
     }
     /**
      * Seleciona e tranforma created-at ao formato (06 setembro de 2019 ás 17:37)
@@ -202,9 +242,9 @@ class Conteudo extends Model
     public function getArquivosAttribute()
     {
         $arrAr = [
-            'download'      => (object) $this->getMetaDados('download'),
-            'visualizacao'  => (object) $this->getMetaDados('visualizacao'),
-            'guia'          => (object) $this->getMetaDados('guias-pedagogicos'),
+            'download'      => $this->getMetaDados('download'),
+            'visualizacao'  => $this->getMetaDados('visualizacao'),
+            'guia'          => $this->getMetaDados('guias-pedagogicos'),
         ];
         return $arrAr;
     }

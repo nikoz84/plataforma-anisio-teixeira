@@ -14,17 +14,14 @@
       <!-- ADMINISTRAÇÃO -->
       <q-item
         v-if="isLogged"
-        @click="showAdmin()"
-        clickable
-        v-close-popup
-        tabindex="0"
+        clickable to="/admin/conteudos/listar"
       >
         <q-item-section avatar>
           <q-icon name="settings_applications" />
         </q-item-section>
         <q-item-section>
           <q-item-label>
-            {{ this.admin ? "Canais" : "Configurações" }}
+            Admin
           </q-item-label>
         </q-item-section>
       </q-item>
@@ -50,9 +47,10 @@
       </q-item>
       <q-separator />
     </q-list>
+    <!-- ADMINISTRAÇÃO-->
+    <AdminLeftSideBar v-if="this.$route.name == 'admin'"></AdminLeftSideBar>
     <!-- CANAIS-->
-    <AdminLeftSideBar v-if="admin"></AdminLeftSideBar>
-    <q-list v-else-if="!admin">
+    <q-list v-else>
       <q-item-label class="bg-grey-4" header>
         <div
           class="text-h6 text-primary"
@@ -61,7 +59,6 @@
           CANAIS
         </div>
       </q-item-label>
-      <!-- CANAIS -->
       <div v-for="(link, i) in links" :key="`x-${i}`">
         <q-item
           tag="div"
@@ -108,11 +105,6 @@ export default {
       admin: false,
       text: ""
     };
-  },
-  methods: {
-    showAdmin() {
-      return (this.admin = !this.admin);
-    }
   },
   computed: {
     ...mapState(["isLogged", "links"]),

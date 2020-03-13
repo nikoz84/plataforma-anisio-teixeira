@@ -132,7 +132,7 @@ class SideBar
                 'class' => \App\Canal::class
             ],
             [
-                'label' => 'Denúncias',
+                'label' => 'Fale Conosco',
                 'slug' => 'denuncias',
                 'hability' => 'index',
                 'class' => \App\Denuncia::class

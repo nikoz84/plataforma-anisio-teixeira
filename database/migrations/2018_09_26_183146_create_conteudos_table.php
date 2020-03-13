@@ -20,7 +20,7 @@ class CreateConteudosTable extends Migration
             $table->bigInteger('tipo_id')->unsigned()->comment('Chave foranea do tipo de conteúdo');
             $table->bigInteger('canal_id')->unsigned()->nullable()->comment('Chave foranea do canal');
             $table->bigInteger('user_id')->unsigned()->comment('Chave foranea do usuario');
-            $table->bigInteger('approving_user_id')->unsigned()->comment('Chave foranea do usuario aprovador');
+            $table->bigInteger('approving_user_id')->unsigned()->nullable()->comment('Chave foranea do usuario aprovador');
             $table->bigInteger('license_id')->unsigned()->comment('Chave foranea da licença do conteúdo');
             $table->bigInteger('category_id')->unsigned()->nullable()->comment('Chave foranea da categoria do conteúdo');
             $table->string('title', 250)->comment('Título do conteúdo');

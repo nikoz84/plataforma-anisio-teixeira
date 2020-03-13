@@ -11,7 +11,7 @@ return [
         'title' => 'required|min:10|max:255',
         'description' => 'required|min:140',
         'tipo_id' => 'required',
-        'options_site' => 'nullable',
+        'options_site' => ['nullable', new \App\Rules\ValidUrl],
         'tags' => 'required',
         'componentes' => 'required',
         'authors' => 'required',

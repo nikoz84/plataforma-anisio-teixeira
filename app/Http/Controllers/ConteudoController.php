@@ -6,7 +6,6 @@ use App\Conteudo;
 use App\Helpers\Autocomplete;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\FileSystemLogic;
 use Illuminate\Http\Request;
@@ -128,8 +127,9 @@ class ConteudoController extends ApiController
         $conteudo = new Conteudo;
 
         $conteudo->user_id = Auth::user()->id;
-        $conteudo->setAttribute('approving_user_id', Auth::user()->id);
-        $conteudo->setAttribute('is_approved', Auth::user()->id);
+        $conteudo->setAttribute('approving_user_id', Auth::user());
+
+        $conteudo->is_approved = $this->request->is_approved;
         $conteudo->tipo_id = $this->request->tipo_id;
         $conteudo->license_id = $this->request->license_id;
         $conteudo->canal_id = $this->request->canal_id;
@@ -141,18 +141,17 @@ class ConteudoController extends ApiController
         $conteudo->authors = $this->request->authors;
         $conteudo->source = $this->request->source;
         // FL_DESTAQUE, FL_APROVADO, FL_SITE, QT_DOWNLOAD, QT_ACCESS
+        $conteudo->options = ['site' => $this->request->options_site];
+        $conteudo->setAttribute('is_featured', $this->request->is_featured);
+        $conteudo->setAttribute('is_site', $this->request->is_site);
 
-        $conteudo->is_featured = $this->request->has('is_featured') ?
-            $this->request->is_featured : Conteudo::IS_FEATURED;
-        $conteudo->is_site = $this->request->has('is_site') ?
-            $this->request->is_site : Conteudo::IS_SITE;
         // QUANTIDADE DE ACESSOS E DOWNLOADS
         $conteudo->qt_downloads = Conteudo::INIT_COUNT;
         $conteudo->qt_access = Conteudo::INIT_COUNT;
-        $conteudo->options = [
-            'site' => $this->request->site,
-        ];
 
+
+
+        dd($conteudo);
         if (!$conteudo->save()) {
             return $this->errorResponse([], "Não foi possível cadastrar o conteúdo", 422);
         }

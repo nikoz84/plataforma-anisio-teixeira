@@ -32,13 +32,10 @@
           <p class="text-center">Escreva uma descrição do conteúdo</p>
         </div>
         <q-editor v-model="conteudo.description" min-height="15rem" />
-        <q-card flat bordered>
-          <q-card-section v-html="conteudo.description" />
-        </q-card>
       </q-card-section>
     </q-card>
 
-    <q-card class="col-sm-4">
+    <q-card class="col-sm-6">
       <q-card-section class="q-gutter-sm">
         <q-select
           outlined
@@ -93,14 +90,73 @@
           hint="Exemplo: http://dominio.com.br"
         />
       </q-card-section>
-    </q-card>
-    <q-card class="col-sm-2">
       <q-card-section>
-        <ul>
-          <li v-for="(componente, i) in componentes" :key="i" v-text="componente.name"></li>
-        </ul>
+        <div class="q-gutter-sm">
+          <q-checkbox
+            v-model="conteudo.is_approved"
+            label="Aprovar conteúdo"
+            color="pink"
+          />
+          <q-checkbox
+            v-model="conteudo.is_featured"
+            label="Marcar como destaque"
+            color="pink"
+          />
+        </div>
       </q-card-section>
-      <q-card-actions class="absolute-bottom">
+    </q-card>
+    <q-card class="col-sm-11">
+      <q-card-section>
+        <div class="text-center text-h6 q-pa-md">
+          Selecione ao menos 3 componentes curriculares
+        </div>
+        <div v-if="componentes">
+          <div
+            class="q-my-lg"
+            v-for="(component, i) in componentes"
+            :key="`c-${i}`"
+            :index="component.id"
+          >
+            <div class="text-h6 text-negative q-pa-md">
+              {{ component.name }}
+            </div>
+            <div class="q-gutter-sm">
+              <q-checkbox
+                v-for="(component, i) in component.componentes"
+                :key="`child-com-${i}`"
+                v-model="conteudo.componentes"
+                :val="component.id"
+                :label="component.name"
+                color="negative"
+              />
+            </div>
+            <q-separator class="q-mt-lg" inset color="negative"></q-separator>
+          </div>
+        </div>
+        <div v-if="niveis">
+          <div
+            class="q-my-lg"
+            v-for="(nivel, n) in niveis"
+            :key="`n-${n}`"
+            :index="nivel.id"
+          >
+            <div class="text-h6 text-teal q-pa-md">{{ nivel.name }}</div>
+            <div class="q-gutter-sm">
+              <q-checkbox
+                v-for="(component, i) in nivel.componentes"
+                :key="`child-com-${i}`"
+                v-model="conteudo.componentes"
+                :val="component.id"
+                :label="component.name"
+                color="teal"
+              />
+            </div>
+            <q-separator class="q-mt-lg" inset color="teal"></q-separator>
+          </div>
+        </div>
+      
+      </q-card-section>
+      <q-card-actions>
         <q-btn
           class="full-width"
           color="primary"
@@ -169,7 +225,6 @@ export default {
         is_featured: false,
         is_site: false
       },
-      componentes: [],
       canais: [],
       tipos: [],
       licencas: [],
@@ -185,6 +240,9 @@ export default {
   },
   mounted() {
     this.getData();
+  },
+  computed: {
+    ...mapState(["componentes", "niveis"])
   },
   methods: {
     save() {
@@ -225,13 +283,11 @@ export default {
       const canais = axios.get("/canais?select");
       const tipos = axios.get("/tipos?select");
       const licencas = axios.get("/licencas?select");
-      const componentes = axios.get("/componentes");
-      let responses = await axios.all([canais, tipos, licencas, componentes]);
+      let responses = await axios.all([canais, tipos, licencas]);
 
       this.canais = responses[0].data.metadata;
       this.tipos = responses[1].data.metadata;
       this.licencas = responses[2].data.metadata;
-      this.componentes = responses[3].data.metadata;
       console.warn(responses);
       if (this.$route.params.id) {
         let conteudo = await axios.get("/conteudos/" + this.$route.params.id);
