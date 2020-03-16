@@ -35,19 +35,33 @@ class Canal extends Model
         'updated_at',
         'deleted_at'
     ];
-    protected $appends = ['tipos', 'category_name', 'user_can'];
+    protected $appends = ['tipos', 'category_name', 'user_can', 'filters'];
     protected $casts = [
         'options' => 'array',
     ];
-
+    /**
+     * Conteúdos digitais
+     *
+     * @return void
+     */
     public function conteudos()
     {
         return $this->hasMany(Conteudo::class);
     }
+    /**
+     * Canal aplicativos educacionais
+     *
+     * @return void
+     */
     public function aplicativos()
     {
         return $this->hasMany(Aplicativo::class);
     }
+    /**
+     * Categorias conteúdos digitais
+     *
+     * @return void
+     */
     public function categories()
     {
         return $this->hasMany(Category::class, 'canal_id', 'id')
@@ -56,12 +70,21 @@ class Canal extends Model
             ->orderBy('name')
             ->with('subCategories');
     }
+    /**
+     * Categorias dos aplicativos educacionais
+     *
+     * @return void
+     */
     public function appsCategories()
     {
         return $this->hasMany(AplicativoCategory::class, 'canal_id', 'id')
             ->orderBy("name");
     }
-
+    /**
+     * Tipo de conteudos do canal
+     *
+     * @return void
+     */
     public function getTiposAttribute()
     {
         $ids = $this->options['tipo_conteudo'];
@@ -74,6 +97,11 @@ class Canal extends Model
 
         return [];
     }
+    /**
+     * Nome da categoria
+     *
+     * @return void
+     */
     public function getCategoryNameAttribute()
     {
         switch ($this['id']) {
@@ -92,6 +120,27 @@ class Canal extends Model
                 break;
             default:
                 return '';
+                break;
+        }
+    }
+    public function getFiltersAttribute()
+    {
+        switch ($this['id']) {
+            case 2:
+                return NivelEnsino::where('id', '=', 5)->with(["componentes" => function ($q) {
+                    $q->where('curricular_components.id', '!=', 31)->orderBy('name');
+                }])->get()->first();
+                break;
+            case 5:
+                return CurricularComponentCategory::where('id', '=', 3)
+                    ->with(['componentes' => function ($q) {
+                        $q->orderBy('name');
+                    }])
+                    ->get()
+                    ->first();
+                break;
+            default:
+                return [];
                 break;
         }
     }

@@ -29,10 +29,11 @@
           :to="{ name: 'Listar', params: { slug: $route.params.slug } }"
         />
         <CategoriasMenu></CategoriasMenu>
-        
+        <Filters></Filters>
         <q-space />
       </q-tabs>
     </nav>
+    
     <transition
       name="custom-classes-transition"
       enter-active-class="animated fadeIn"
@@ -47,6 +48,8 @@
 import { mapState, mapActions, mapMutations } from "vuex";
 import CategoriasMenu from "../components/CategoriasMenu.vue";
 import AdvancedSearchForm from "../forms/AdvancedSearchForm.vue";
+import Filters from "../components/Filters.vue";
+
 import {
   QTabs,
   QRouteTab,
@@ -84,7 +87,8 @@ export default {
     CategoriasMenu,
     AdvancedSearchForm,
     QBreadcrumbs,
-    QBreadcrumbsEl
+    QBreadcrumbsEl,
+    Filters
   },
   data() {
     return {

@@ -44,32 +44,6 @@ class SideBar
         ];
     }
     /**
-     * Temas transversais
-     *
-     * @return void
-     */
-    private static function getTemasTransversais()
-    {
-        return CurricularComponentCategory::where('id', '=', 3)
-            ->with(['componentes' => function ($q) {
-                $q->orderBy('name');
-            }])
-            ->get()
-            ->first();
-    }
-    /**
-     * Disciplinas do ensino medio
-     *
-     * @return void
-     */
-    private static function getDisciplinasEnsinoMedio()
-    {
-        return NivelEnsino::where('id', '=', 5)->with(["componentes" => function ($q) {
-            $q->where('curricular_components.id', '!=', 31)->orderBy('name');
-        }])->get()->first();
-    }
-
-    /**
      * Cria o menu de administração
      *
      * @param User $user
