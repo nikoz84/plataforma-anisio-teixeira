@@ -1,5 +1,5 @@
 <template>
-  <q-tab :label="canal.category_name" v-if="canal && categories && categories.length > 0">
+  <q-tab rigth-icon="mail" :label="canal.category_name" v-if="canal && categories && categories.length > 0">
     <q-menu anchor="bottom middle" self="top middle">
       <q-list dense>
         <q-item clickable dense 

@@ -30,6 +30,7 @@
         />
         <CategoriasMenu></CategoriasMenu>
         <Filters></Filters>
+        
         <q-space />
       </q-tabs>
     </nav>
