@@ -120,10 +120,12 @@ const actions = {
         .then(resp => {
           commit("SET_LOGOUT_USER");
           localStorage.removeItem("token");
+          localStorage.removeItem("user");
         });
     } catch (error) {
       commit("SET_LOGOUT_USER");
       localStorage.removeItem("token");
+      localStorage.removeItem("user");
     }
   },
   async getCanalBySlug({ commit }, slug) {

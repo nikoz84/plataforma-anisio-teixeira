@@ -14,6 +14,7 @@ router.beforeEach((to, from, next) => {
     if (store.state.isLogged) {
       next();
     } else {
+      store.commit('SET_LOGOUT_USER');
       next("/usuario/login");
     }
   } else {

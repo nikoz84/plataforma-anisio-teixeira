@@ -130,9 +130,8 @@ export default {
       const base64 = base64Url.replace("-", "+").replace("_", "/");
       let payload = JSON.parse(window.atob(base64));
 
-      localStorage.setItem("username", payload.user.name);
-      localStorage.setItem("user_id", payload.user.id);
-      localStorage.setItem("role", payload.user.role);
+      localStorage.setItem("user", JSON.stringify(payload.user.name));
+      
     }
   }
 };

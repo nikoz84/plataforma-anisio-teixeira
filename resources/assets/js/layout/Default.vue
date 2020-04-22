@@ -155,7 +155,7 @@ export default {
     ...mapActions(["getLayout", "logout"]),
     async sair() {
       await this.logout();
-      this.$router.push("/");
+      this.$router.push('/');
     }
   }
 };

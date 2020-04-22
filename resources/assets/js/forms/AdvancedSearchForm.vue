@@ -58,11 +58,11 @@
         </div>
         <div class="q-gutter-sm"></div>
       </q-card-section>
-      <q-card-section>
+      <!--q-card-section>
         {{ tiposModel }} - {{ licencasModel }} - {{ componentesModel }} -
         {{ per }} - {{ limit }}
-      </q-card-section>
-      <q-card-section style="max-height: 65vh" class="scroll">
+      </q-card-section -->
+      <q-card-section>
         <div class="q-my-lg" v-if="tipos">
           <div class="text-h6 text-orange q-pa-md">Tipos de Mídia</div>
           <div class="q-gutter-sm">

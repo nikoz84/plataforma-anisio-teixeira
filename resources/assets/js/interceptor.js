@@ -24,6 +24,10 @@ axios.interceptors.response.use(
       case 401:
         // Token Expirado
         Notify.create({ position: "top-right", color: "accent", message });
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        store.commit('SET_LOGOUT_USER');
+        document.reload()
         break;
       case 403:
         // Não Permitido

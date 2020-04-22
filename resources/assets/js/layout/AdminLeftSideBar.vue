@@ -17,6 +17,7 @@
         clickable
         v-close-popup
         tabindex="0"
+        v-if="link && link.view"
       >
         <q-item-section>
           <q-item-label>{{ link.label }}</q-item-label>
