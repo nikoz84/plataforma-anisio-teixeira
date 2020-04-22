@@ -3,9 +3,12 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
+use App\Traits\ApiResponser;
 
 class CheckIsSuperAdmin
 {
+    use ApiResponser;
     /**
      * Handle an incoming request.
      *

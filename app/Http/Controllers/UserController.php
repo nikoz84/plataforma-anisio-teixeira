@@ -52,7 +52,7 @@ class UserController extends ApiController
     /**
      * Atualizar usuário por ID
      *
-     * @param [integer] $id
+     * @param $id 
      * @return json
      */
     public function update($id)
@@ -87,9 +87,17 @@ class UserController extends ApiController
 
         return $this->successResponse([], 'Usuário deletado com sucesso!!', 200);
     }
-    public function search($termo)
+    /**
+     * Procura usuario pelo nome
+     *
+     * @param $request \Illuminate\Http\Request
+     * @param $termo string de busca
+     *
+     * @return App\Traits\ApiResponser
+     */
+    public function search(Request $request, $termo)
     {
-        $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 20;
+        $limit = ($request->has('limit')) ? $request->query('limit') : 20;
         $search = "%{$termo}%";
 
         $paginator = User::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search])
@@ -102,25 +110,34 @@ class UserController extends ApiController
     /**
      * Valida a criação do Usuário
      *
-     * @return
+     * @return array
      */
-    private function validar()
+    private function configRules()
     {
-        $validator = Validator::make($this->request->all(), [
+        return [
             'email' => 'required|unique:email',
             'name' => 'required|min:2|max:255',
             'role' => 'required',
             'password' => 'required|min:6|required_with:password_confirmation|same:password_confirmation',
             'password_confirmation' => 'min:6|same:password',
             'birthday' => 'required|date|date_format:Y-m-d',
-        ]);
-
-        return $validator;
+        ];
     }
-
-    public function create()
+    /**
+     * Cria novo usuário
+     *
+     * @param $request
+     *
+     * @return App\Traits\ApiResponser
+     */
+    public function create(Request $request)
     {
-        $validator = $this->validar($this->request->all());
+        $validator = Validator::make(
+            $request->all(),
+            $this->configRules()
+        );
+
+        $validator = $this->validar($request->all());
         if ($validator->fails()) {
             $this->errorResponse(
                 $validator->errors(),
@@ -131,10 +148,16 @@ class UserController extends ApiController
 
         $user = $this->user;
 
-        $user->email = $this->request->get('login');
-        $user->name = $this->request->get('name');
-        $user->password = bcrypt($this->request->get('password'));
-        $user->options = json_decode($this->request->get('options', '{}'), true);
+        $user->email = $request->get('login');
+        $user->name = $request->get('name');
+        $user->password = $request->get('password');
+        $user->options = [
+            "sexo" => null,
+            "birthday" => null,
+            "telefone" => null,
+            "is_active" => false,
+            "neighborhood"=> null
+        ];
 
 
         if (!$user->save()) {
@@ -144,12 +167,5 @@ class UserController extends ApiController
         return $this->successResponse([], 'Usuário registrado com sucesso!', 200);
     }
 
-    public function verify($token)
-    {
-        $user = USER::where('verification_token', $token)->firstOrFail();
-        $user->verified = USER::USER_NOT_VERIFIED;
-        $user->verification_token = null;
-        $user->save();
-        return $this->showOne($user, 'Conta verificada', 200);
-    }
+    
 }

@@ -23,28 +23,30 @@ class ConteudoController extends ApiController
             'getByTagId',
             'getSitesTematicos'
         ]);
-        $this->request = $request;
+        $request = $request;
     }
 
     /**
      * Lista de conteúdos por canal
      *
-     * @return \Illuminate\Http\Response
+     * @param $request \Illuminate\Http\Request
+     * 
+     * @return App\Traits\ApiResponder
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        $limit = $this->request->query('limit', 6);
-        $orderBy = $this->request->query('order', 'created_at');
-        $canal = $this->request->query('canal', 6);
-        $tipos          = $this->request->query('tipos');
-        $licencas       = $this->request->query('licencas');
-        $componentes    = $this->request->query('componentes');
-        $categoria      = $this->request->query('categoria');
-        $tag      = $this->request->query('tag');
-        $por      = $this->request->query('por', 'tag');
-        $busca    = $this->request->query('busca');
-        $publicador    = $this->request->query('publicador');
+        $limit = $request->query('limit', 6);
+        $orderBy = $request->query('order', 'created_at');
+        $canal = $request->query('canal', 6);
+        $tipos          = $request->query('tipos');
+        $licencas       = $request->query('licencas');
+        $componentes    = $request->query('componentes');
+        $categoria      = $request->query('categoria');
+        $tag      = $request->query('tag');
+        $por      = $request->query('por', 'tag');
+        $busca    = $request->query('busca');
+        $publicador    = $request->query('publicador');
 
         $query = Conteudo::query();
 
@@ -53,8 +55,8 @@ class ConteudoController extends ApiController
             return $q->whereIn("tipo_id", explode(',', $tipos));
         });
         // FILTRO X PUUBLICADOR
-        $query->when($publicador, function ($q) {
-            return $q->where('user_id', $this->request->query('publicador'));
+        $query->when($publicador, function ($q, $request) {
+            return $q->where('user_id', $request->query('publicador'));
         });
         // FILTRO BUSCA FULL TEXT SEARCH
         $query->when($busca, function ($q) use ($busca, $por) {
@@ -65,8 +67,8 @@ class ConteudoController extends ApiController
             return $q->searchTag($tag);
         });
         // FILTRO X CANAL
-        $query->when($canal != 6, function ($q) {
-            return $q->where('canal_id', $this->request->query('canal'));
+        $query->when($canal != 6, function ($q, $request) {
+            return $q->where('canal_id', $request->query('canal'));
         });
         // FILTRO X CATEGORIA
         $query->when($categoria, function ($q, $categoria) {
@@ -95,12 +97,12 @@ class ConteudoController extends ApiController
     /**
      * Lista de sites temáticos
      *
-     * @return \Illuminate\Http\Response
+     * @return App\Traits\ApiResponser
      */
-    public function getSitesTematicos()
+    public function getSitesTematicos(Request $request)
     {
-        $limit = $this->request->query('limit', 10);
-        $orderBy = $this->request->query('order', 'created_at');
+        $limit = $request->query('limit', 10);
+        $orderBy = $request->query('order', 'created_at');
 
         $sitesTematicos = $this->conteudo::with(['canal'])
             ->where('is_site', 'true')
@@ -112,16 +114,55 @@ class ConteudoController extends ApiController
         return $this->showAsPaginator($sitesTematicos);
     }
     /**
+     * Regras de validação
+     *
+     * @return array
+     */
+    public function configRules()
+    {
+        return [
+            'license_id' => 'required',
+            'canal_id' => 'required',
+            'tipo_id' => 'required',
+            'category_id' => 'nullable',
+            'title' => 'required|min:10|max:255',
+            'description' => 'required|min:140',
+            'tipo_id' => 'required',
+            'options_site' => ['nullable', new \App\Rules\ValidUrl],
+            'tags' => 'required',
+            'componentes' => 'required',
+            'authors' => 'required',
+            'source' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'terms' => 'required|in:true,false',
+            'is_featured' => 'nullable|in:true,false',
+            'is_approved' => 'required|in:true,false',
+            'is_site' => 'nullable|in:true,false',
+            'download' => 'nullable|file|max:4500000',
+            'guia' => 'nullable|file',
+            'visualizacao' => 'nullable|file',
+        ];
+    }
+    /**
      * Adiciona e valida novo conteúdo
      *
-     * @return Json
+     * @param $request \Illuminate\Http\Request
+     *
+     * @return App\Traits\ApiReponser
      */
-    public function create()
+    public function create(Request $request)
     {
-        $validator = Validator::make($this->request->all(), config("rules.conteudo"));
+        $validator = Validator::make(
+            $request->all(),
+            $this->configRules()
+        );
 
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível criar o conteúdo", 422);
+            return $this->errorResponse(
+                $validator->errors(),
+                "Não foi possível criar o conteúdo",
+                422
+            );
         }
 
         $conteudo = new Conteudo;
@@ -129,21 +170,21 @@ class ConteudoController extends ApiController
         $conteudo->user_id = Auth::user()->id;
         $conteudo->setAttribute('approving_user_id', Auth::user());
 
-        $conteudo->is_approved = $this->request->is_approved;
-        $conteudo->tipo_id = $this->request->tipo_id;
-        $conteudo->license_id = $this->request->license_id;
-        $conteudo->canal_id = $this->request->canal_id;
-        $conteudo->category_id = $this->request->category_id;
+        $conteudo->is_approved = $request->is_approved;
+        $conteudo->tipo_id = $request->tipo_id;
+        $conteudo->license_id = $request->license_id;
+        $conteudo->canal_id = $request->canal_id;
+        $conteudo->category_id = $request->category_id;
 
         // INFORMAÇÕES BÁSICAS
-        $conteudo->title = $this->request->title;
-        $conteudo->description = $this->request->description;
-        $conteudo->authors = $this->request->authors;
-        $conteudo->source = $this->request->source;
+        $conteudo->title = $request->title;
+        $conteudo->description = $request->description;
+        $conteudo->authors = $request->authors;
+        $conteudo->source = $request->source;
         // FL_DESTAQUE, FL_APROVADO, FL_SITE, QT_DOWNLOAD, QT_ACCESS
-        $conteudo->options = ['site' => $this->request->options_site];
-        $conteudo->setAttribute('is_featured', $this->request->is_featured);
-        $conteudo->setAttribute('is_site', $this->request->is_site);
+        $conteudo->options = ['site' => $request->options_site];
+        $conteudo->setAttribute('is_featured', $request->is_featured);
+        $conteudo->setAttribute('is_site', $request->is_site);
 
         // QUANTIDADE DE ACESSOS E DOWNLOADS
         $conteudo->qt_downloads = Conteudo::INIT_COUNT;
@@ -157,11 +198,11 @@ class ConteudoController extends ApiController
         }
         // PALAVRAS CHAVE, COMPONENTES CURRICULARES
 
-        $conteudo->tags()->attach(explode(',', $this->request->tags));
-        $conteudo->componentes()->attach(explode(',', $this->request->componentes));
+        $conteudo->tags()->attach(explode(',', $request->tags));
+        $conteudo->componentes()->attach(explode(',', $request->componentes));
         Conteudo::tsDocumentoSave($conteudo->id);
 
-        $this->createFile($conteudo->id, $this->request->download);
+        $this->createFile($conteudo->id, $request->download);
 
         return $this->showOne($conteudo, 'Conteúdo cadastrado com sucesso!!', 200);
     }
@@ -171,37 +212,40 @@ class ConteudoController extends ApiController
      * @param  Integer $id
      * @return Json
      */
-    public function update($id)
+    public function update(Request $request, $id)
     {
         $conteudo = $this->conteudo::find($id);
 
         $this->authorize('update', $conteudo);
 
-        $validator = Validator::make($this->request->all(), config("rules.conteudo"));
+        $validator = Validator::make($request->all(), config("rules.conteudo"));
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível atualizar o conteúdo", 422);
         }
-        $conteudo->fill($this->request->all());
+        $conteudo->fill($request->all());
 
         if (!$conteudo->save()) {
             return $this->errorResponse([], 'Não foi possível atualizar o conteúdo', 422);
         }
-        $conteudo->tags()->sync(explode(',', $this->request->tags));
-        $conteudo->componentes()->sync(explode(',', $this->request->componentes));
+        $conteudo->tags()->sync(explode(',', $request->tags));
+        $conteudo->componentes()->sync(explode(',', $request->componentes));
         Conteudo::tsDocumentoSave($conteudo->id);
-        $this->createFile($conteudo->id, $this->request->download);
+        $this->createFile($conteudo->id, $request->download);
 
         return $this->showOne($conteudo, 'Conteúdo editado com sucesso!!', 200);
     }
     /**
      * Apaga o conteúdo do banco de dados, com tags, componentes
      *
-     * @param  Integer $id
-     * @return Json
+     * @param $id integer
+     *
+     * @return App\Traits\ApiResponser
      */
     public function delete($id)
     {
-        $conteudo = $this->conteudo::with('tags')->find($id);
+        $conteudo = Conteudo::with(
+            ['tags', 'componentes','niveis']
+        )->find($id);
 
         $this->authorize('delete', $conteudo);
 
@@ -217,12 +261,14 @@ class ConteudoController extends ApiController
     /**
      * Procura conteudos por full text search.
      *
-     * @param  String $termo
-     * @return Json
+     * @param $request \Illuminate\Http\Request
+     * @param $termo   string termo de busca
+     *
+     * @return App\Traits\ApiResponser
      */
-    public function search($termo)
+    public function search(Request $request, $termo)
     {
-        $limit = $this->request->query('limit', 6);
+        $limit = $request->query('limit', 6);
 
         $query = Conteudo::query();
 
@@ -238,8 +284,9 @@ class ConteudoController extends ApiController
     /**
      * Procura um conteúdo por id
      *
-     * @param Integer $id
-     * @return Json
+     * @param $id integer
+     *
+     * @return App\Traits\ApiResponser
      */
     public function getById($id)
     {

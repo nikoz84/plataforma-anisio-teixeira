@@ -10,6 +10,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -77,13 +78,25 @@ class User extends Authenticatable implements JWTSubject
      */
     public function setNameAttribute($value)
     {
-        $this->attributes['name'] = strtolower($value);
+        $this->attributes['name'] = trim(strtolower($value));
+    }
+    /**
+     * Encripta o atributo password
+     *
+     * @param $value string
+     *
+     * @return void
+     */
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['name'] = bcrypt($value);
     }
     /**
      * Atributo nome capitalizado
      *
-     * @param [type] $value
-     * @return void
+     * @param $value string retorna o nome capitalizado
+     *
+     * @return string
      */
     public function getNameAttribute($value)
     {
@@ -91,14 +104,15 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * Atributo email a minusculas
+     * Atributo email a minusculas e tira espaços
      *
-     * @param [type] $value
+     * @param $value string email do usuário
+     *
      * @return void
      */
     public function setEmailAttribute($value)
     {
-        $this->attributes['email'] = strtolower($value);
+        $this->attributes['email'] = trim(strtolower($value));
     }
 
     /**
@@ -137,7 +151,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public static function createVerificationToken()
     {
-        return str_random(40);
+        return Str::ranbom(40);
     }
     /**
      * Relação usuário possui varios conteudos

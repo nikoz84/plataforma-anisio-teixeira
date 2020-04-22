@@ -22,7 +22,7 @@ class AuthController extends ApiController
     /**
      * Login Usuario.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return App\Http\Controllers\AuthController\resp
      */
     public function login()
     {
@@ -43,14 +43,13 @@ class AuthController extends ApiController
         } catch (JWTException $e) {
             return $this->errorResponse([], 'Impossível criar Token de acesso', 422);
         }
-        $data = ['token' => $this->respondWithToken($token)];
-
-        return $this->successResponse($data, "Bem vindo ", 200);
+        
+        return $this->respondWithToken($token);
     }
     /**
-     * Get the authenticated User.
+     * Usuário logado
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return App\Traits\ApiResponser
      */
     public function getAuthUser()
     {
@@ -92,37 +91,47 @@ class AuthController extends ApiController
      */
     public function refresh()
     {
-        $data = ['token' => $this->respondWithToken(auth()->refresh())];
+        $token = auth()->refresh();
 
-        return $this->successResponse($data, "Token renovado", 200);
+        return $this->respondWithToken($token, "Token renovado");
     }
 
     /**
      * Get the token array structure.
      *
-     * @param  string $token
+     * @param $token token gerado pelo JWTAuth
+     * @param $message menssagem retornado para o usuário
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return App\Traits\ApiResponser
      */
-    protected function respondWithToken($token)
+    protected function respondWithToken($token, $message = '')
     {
-        return [
+        $data = [
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
         ];
+
+        return $this->successResponse($data, $message) ;
     }
     /**
      * Registro do usuário.
      *
-     * @return \Illuminate\Http\Response
+     * @return App\Traits\ApiResponser
      */
     public function register()
     {
-        $validator = Validator::make($this->request->all(), config("rules.register"));
+        $validator = Validator::make(
+            $this->request->all(),
+            $this->rulesRegister()
+        );
 
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Verifique os dados fornecidos", 422);
+            return $this->errorResponse(
+                $validator->errors(),
+                "Verifique os dados fornecidos",
+                422
+            );
         }
 
 
@@ -132,15 +141,69 @@ class AuthController extends ApiController
         $user->password = bcrypt($this->request->password);
         $user->verified = User::USER_NOT_VERIFIED;
         $user->verification_token = User::createVerificationToken();
+        $user->options = [
+            "sexo" => null,
+            "birthday" => null,
+            "telefone" => null,
+            "is_active" => false,
+            "neighborhood"=> null
+        ];
 
         $user->save();
 
-        //$this->sendConfirmationEmail();
+        $this->sendConfirmationEmail($user->email);
 
         return $this->successResponse([], "Espere a confirmação na sua conta de email", 200);
     }
-    private function sendConfirmationEmail()
+    /**
+     * Regras de validação
+     *
+     * @return array
+     */
+    public function rulesRegister()
+    {
+        return [
+            'name' => 'required|string|max:255|min:4',
+            'email' => 'required|email|string|max:100|unique:users,email',
+            'password' => 'required|string|min:6|required_with:confirmation|same:confirmation',
+            'confirmation' => 'required'
+        ];
+    }
+    /**
+     * Envia email de verificação
+     *
+     * @param $email
+     *
+     * @return App\Traits\ApiResponser
+     */
+    public function sendConfirmationEmail($email)
     {
         //
+    }
+    public function verify($token)
+    {
+        $validator = Validator::make(
+            $this->request->all(),
+            ['token' => 'required']
+        );
+
+        if ($validator->fails()) {
+            return $this->errorResponse(
+                $validator->errors(),
+                "Token não encontrado",
+                422
+            );
+        }
+
+        $user = User::where('verification_token', $token)->first();
+
+        if (!$user) {
+            $this->errorResponse([], 'Token não existe', 422);
+        }
+        $user->verified = User::USER_VERIFIED;
+        $user->verification_token = null;
+        $user->save();
+
+        return $this->showOne($user, 'Conta verificada com sucesso!', 200);
     }
 }

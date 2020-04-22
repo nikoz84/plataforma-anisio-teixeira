@@ -73,7 +73,7 @@
   border-bottom: 4px double #451e5f;
 }
 /*
- * Quasar Framework v1.9.10
+ * Quasar Framework v1.9.15
  * (c) 2015-present Razvan Stoenescu
  * Released under the MIT License.
  */
@@ -246,6 +246,7 @@ input[type='search']::-webkit-search-decoration {
   position: fixed;
   z-index: 9998;
   transition: transform 0.5s cubic-bezier(0, 0, 0.2, 1), opacity 0.5s;
+  background: #f44336;
 }
 .q-loading-bar--top {
   left: 0 /* rtl:ignore */;
@@ -576,6 +577,11 @@ input[type='search']::-webkit-search-decoration {
 }
 .q-btn__progress--dark .q-btn__progress-indicator {
   background: rgba(0,0,0,0.2);
+}
+.q-btn--flat .q-btn__progress-indicator,
+.q-btn--outline .q-btn__progress-indicator {
+  opacity: 0.2;
+  background: currentColor;
 }
 .q-btn-dropdown--split .q-btn-dropdown__arrow-container {
   border-left: 1px solid rgba(255,255,255,0.3);
@@ -1779,6 +1785,10 @@ body.q-ios-padding .q-dialog__inner > div {
   height: 1px;
   background: rgba(0,0,0,0.12);
 }
+.q-editor__content:empty:not(:focus):before {
+  content: attr(placeholder);
+  opacity: 0.7;
+}
 .q-editor__toolbar {
   border-bottom: 1px solid rgba(0,0,0,0.12);
   min-height: 32px;
@@ -2512,6 +2522,19 @@ body.q-ios-padding .q-dialog__inner > div {
   color: #b05552;
   color: var(--q-color-negative);
 }
+.q-field__focusable-action {
+  opacity: 0.6;
+  cursor: pointer;
+  outline: 0 !important;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  padding: 0;
+}
+.q-field__focusable-action:hover,
+.q-field__focusable-action:focus {
+  opacity: 1;
+}
 .q-field--auto-height .q-field__control {
   height: auto;
 }
@@ -3019,6 +3042,9 @@ body.q-ios-padding .q-layout--standard .q-drawer--top-padding .q-drawer__content
 .q-body--layout-animate .q-page-sticky {
   transition: transform 0.12s, left 0.12s, right 0.12s, top 0.12s, bottom 0.12s !important;
 }
+body:not(.q-body--layout-animate) .q-layout--prevent-focus {
+  visibility: hidden;
+}
 .q-body--drawer-toggle {
   overflow-x: hidden !important;
 }
@@ -3463,10 +3489,12 @@ body.platform-ios:not(.native-mobile) .q-dialog__inner--top .q-select__dialog--f
   margin-bottom: 8px;
 }
 .q-skeleton {
-  cursor: wait;
   background: rgba(0,0,0,0.12);
   border-radius: 1px;
   box-sizing: border-box;
+}
+.q-skeleton--anim {
+  cursor: wait;
 }
 .q-skeleton:before {
   content: '\A0';
@@ -4489,14 +4517,22 @@ body.desktop .q-table > tbody > tr:not(.q-tr--no-hover):hover > td:not(.q-td--no
   top: 3px;
   right: -12px;
 }
-.q-tab__alert {
+.q-tab__alert,
+.q-tab__alert-icon {
   position: absolute;
+}
+.q-tab__alert {
   top: 7px;
   right: -9px;
   height: 10px;
   width: 10px;
   border-radius: 50%;
   background: currentColor;
+}
+.q-tab__alert-icon {
+  top: 2px;
+  right: -12px;
+  font-size: 18px;
 }
 .q-tab__indicator {
   opacity: 0;
@@ -10090,14 +10126,20 @@ img.responsive {
 .q-my-xl {
   margin-bottom: 48px;
 }
-.q-ml-auto {
-  margin-left: auto;
+.q-mt-auto,
+.q-my-auto {
+  margin-top: auto;
 }
-.q-mr-auto {
-  margin-right: auto;
-}
+.q-ml-auto,
 .q-mx-auto {
   margin-left: auto;
+}
+.q-mb-auto,
+.q-my-auto {
+  margin-bottom: auto;
+}
+.q-mr-auto,
+.q-mx-auto {
   margin-right: auto;
 }
 .q-touch {
