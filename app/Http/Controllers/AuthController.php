@@ -26,7 +26,13 @@ class AuthController extends ApiController
      */
     public function login()
     {
-        $validator = Validator::make($this->request->all(), config("rules.login"));
+        $validator = Validator::make(
+            $this->request->all(),
+            [
+                'email' => 'required|string|max:60|email',
+                'password' => 'required|min:6',
+            ]
+        );
 
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Usuário ou senha inválidos", 422);

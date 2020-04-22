@@ -11,24 +11,25 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class UserController extends ApiController
 {
 
-    public function __construct(Request $request)
+    public function __construct()
     {
         $this->middleware('jwt.verify')->except([]);
-        $this->request = $request;
     }
 
     /**
      * Lista de usuários
      *
+     * @param $request \Illuminate\Http\Request
      *
+     * @return App\Traits\ApiResponser
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('index', JWTAuth::user());
 
-        $limit = $this->request->query('limit', 15);
-        $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'name';
-        $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
+        $limit = $request->query('limit', 15);
+        //$orderBy = ($request->has('order')) ? $request->query('order') : 'name';
+        
         $query = User::query();
         $paginator = $query->orderBy('name', 'asc')->paginate($limit);
         $paginator->setPath("/usuarios?limit={$limit}");
@@ -38,8 +39,9 @@ class UserController extends ApiController
     /**
      * Buscar usuário por ID
      *
-     * @param [integer] $id
-     * @return json
+     * @param $id integer
+     *
+     * @return App\Traits\ApiReponser
      */
     public function getById($id)
     {
@@ -52,16 +54,18 @@ class UserController extends ApiController
     /**
      * Atualizar usuário por ID
      *
-     * @param $id 
-     * @return json
+     * @param $request \Illuminate\Http\Request
+     * @param $id integer
+     *
+     * @return App\Traits\ApiResponser
      */
-    public function update($id)
+    public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
 
         $this->authorize('update', $user);
 
-        $user->fill($this->request->all());
+        $user->fill($request->all());
 
         if (!$user->save()) {
             $this->errorResponse([], 'Não foi possível editar o usuário', 422);
@@ -72,8 +76,9 @@ class UserController extends ApiController
     /**
      * Método apagar por id
      *
-     * @param [integer] $id
-     * @return json
+     * @param $id integer
+     *
+     * @return \App\Traits\ApiResponser
      */
     public function delete($id)
     {
@@ -112,7 +117,7 @@ class UserController extends ApiController
      *
      * @return array
      */
-    private function configRules()
+    protected function configRules()
     {
         return [
             'email' => 'required|unique:email',
@@ -120,7 +125,7 @@ class UserController extends ApiController
             'role' => 'required',
             'password' => 'required|min:6|required_with:password_confirmation|same:password_confirmation',
             'password_confirmation' => 'min:6|same:password',
-            'birthday' => 'required|date|date_format:Y-m-d',
+            'optionsbirthday' => 'required|date|date_format:Y-m-d',
         ];
     }
     /**
@@ -132,12 +137,13 @@ class UserController extends ApiController
      */
     public function create(Request $request)
     {
+        $this->authorize('create', User::class);
+
         $validator = Validator::make(
             $request->all(),
             $this->configRules()
         );
 
-        $validator = $this->validar($request->all());
         if ($validator->fails()) {
             $this->errorResponse(
                 $validator->errors(),
@@ -146,7 +152,7 @@ class UserController extends ApiController
             );
         }
 
-        $user = $this->user;
+        $user = new User;
 
         $user->email = $request->get('login');
         $user->name = $request->get('name');

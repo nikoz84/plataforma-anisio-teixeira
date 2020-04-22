@@ -32,19 +32,19 @@ axios.interceptors.response.use(
       case 403:
         // Não Permitido
         router.push("/");
-        Notify.create({ position: "center", color: "accent", message });
+        Notify.create({ position: "top-right", color: "accent", message });
         break;
       case 422:
         // Entidade não processada - não salva ou com outro problema
-        Notify.create({ position: "center", color: "info", message });
+        Notify.create({ position: "top-right", color: "info", message });
         break;
       case 429:
         // Muitas requisições
-        Notify.create({ position: "center", color: "negative", message });
+        Notify.create({ position: "top-right", color: "negative", message });
         break;
       default:
         Notify.create({
-          position: "center",
+          position: "top-right",
           color: "negative",
           message: statusText
         });

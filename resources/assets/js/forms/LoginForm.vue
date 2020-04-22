@@ -109,6 +109,7 @@ export default {
       let data = { email: this.email, password: this.password };
       try {
         let resp = await axios.post("/auth/login", data);
+        console.log(resp)
         this.login(resp.data);
       } catch (response) {
         this.errors = response.errors;
@@ -116,7 +117,7 @@ export default {
     },
     login(resp) {
       this.$q.loading.hide();
-      const jwtToken = resp.metadata.token.access_token;
+      const jwtToken = resp.metadata.access_token;
 
       this.$q.localStorage.set("token", jwtToken);
       this.docodePayloadToken();

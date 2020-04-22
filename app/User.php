@@ -151,7 +151,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public static function createVerificationToken()
     {
-        return Str::ranbom(40);
+        return Str::random(40);
     }
     /**
      * Relação usuário possui varios conteudos

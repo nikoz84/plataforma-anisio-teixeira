@@ -166,7 +166,7 @@ const routes = [
         }
       },
       {
-        path: "confirmar-email/:code",
+        path: "confirmar-email/:token",
         name: "confirmar",
         component: ConfirmationEmail,
         meta: {
