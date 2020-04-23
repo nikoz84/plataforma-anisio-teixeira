@@ -1,9 +1,9 @@
 <template>
-  <div class="toolbar-input-container row no-wrap">
+  <div class="row no-wrap q-gutter-xs">
     <q-select
-      filled
       dense
-      square
+      rounded
+      outlined
       clearable
       v-model="term"
       use-input
@@ -16,14 +16,17 @@
       @new-value="add"
       @input="selectedInput"
       :options="options"
-      text-color="grey-8"
-      color="positive"
-      bg-color="bg-grey-11"
-      class="bg-grey-11 col"
       :label="`Buscar por: ${label}`"
+      :loading="loadingState"
+      style="width:350px;"
+      label-color="pink-5"
+      bg-color="grey-11"
     />
 
     <q-btn
+      rounded
+      outlined
+      dense
       @click="searchTerm"
       class="toolbar-input-btn"
       color="grey-3"
@@ -60,21 +63,25 @@ export default {
       term: null,
       label: "palavra chave",
       options: [],
-      per: "tag"
+      per: "tag",
+      loadingState: false
     };
   },
   methods: {
     searchTerm(val, update, abort) {
+      const self = this;
       update(() => {
-        if (val === "" && val.length < 3) {
-          this.options = [];
+        if (val === "" || val.length <= 3) {
+          self.options = [];
+          self.loadingState = false;
         } else {
-          const self = this;
+          self.loadingState = true;
           axios
             .get(`/autocompletar?termo=${val}&por=${this.per}`)
             .then(resp => {
               if (resp.data.success) {
                 self.options = resp.data.paginator.data;
+                self.loadingState = false;
               }
             });
         }
@@ -110,18 +117,11 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-.toolbar-input-container {
-  min-width: 150px;
-  width: 60%;
-  max-height: 45px;
-}
+
 
 .toolbar-input-btn {
-  border-radius: 0;
-  border-style: solid;
-  border-width: 3px 3px 3px 3px;
   border-color: rgba(0, 0, 0, 0.24);
-  max-width: 50px;
+  max-width: 45px;
   width: 100%;
 }
 </style>

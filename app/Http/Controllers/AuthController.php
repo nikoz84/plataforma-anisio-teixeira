@@ -11,12 +11,15 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendVerificationEmail;
+use Exception;
 
 class AuthController extends ApiController
 {
     public function __construct(Request $request)
     {
-        $this->middleware('jwt.verify')->except(['login', 'register']);
+        $this->middleware('jwt.verify')->except(['login', 'register', 'verify']);
         $this->request = $request;
     }
     /**
@@ -125,10 +128,10 @@ class AuthController extends ApiController
      *
      * @return App\Traits\ApiResponser
      */
-    public function register()
+    public function register(Request $request)
     {
         $validator = Validator::make(
-            $this->request->all(),
+            $request->all(),
             $this->rulesRegister()
         );
 
@@ -142,11 +145,11 @@ class AuthController extends ApiController
 
 
         $user = new User;
-        $user->name = $this->request->name;
-        $user->email = $this->request->email;
-        $user->password = bcrypt($this->request->password);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
         $user->verified = User::USER_NOT_VERIFIED;
-        $user->verification_token = User::createVerificationToken();
+        $user->verification_token = $user->createVerificationToken();
         $user->options = [
             "sexo" => null,
             "birthday" => null,
@@ -157,7 +160,9 @@ class AuthController extends ApiController
 
         $user->save();
 
-        $this->sendConfirmationEmail($user->email);
+        if (!$this->sendConfirmationEmail($user->email)) {
+            return $this->errorResponse([], "Aconteceu algum erro", 422);
+        }
 
         return $this->successResponse([], "Espere a confirmação na sua conta de email", 200);
     }
@@ -178,25 +183,37 @@ class AuthController extends ApiController
     /**
      * Envia email de verificação
      *
-     * @param $email
+     * @param $email string
      *
      * @return App\Traits\ApiResponser
      */
-    public function sendConfirmationEmail($email)
+    protected function sendConfirmationEmail($email)
     {
-        //
+        $user = User::where('email', 'ilike', "%{$email}%")->first();
+        
+        try {
+            Mail::send(new SendVerificationEmail($user));
+        
+            return true;
+        } catch (Exception $ex) {
+            return false;
+        }
     }
-    public function verify($token)
+    public function verify(Request $request, $token)
     {
+        $this->clearLoginAttempts($request);
+
         $validator = Validator::make(
-            $this->request->all(),
-            ['token' => 'required']
+            $request->all(),
+            [
+                'token' => 'required'
+            ]
         );
 
         if ($validator->fails()) {
             return $this->errorResponse(
                 $validator->errors(),
-                "Token não encontrado",
+                "Token não encontrado ou inválido",
                 422
             );
         }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,33 +44,11 @@ Route::get('/docs', function (Request $request) {
 */
 
 
-/**/
-Route::get('/restart-senha', function (\Illuminate\Http\Request $request) {
-    
-    $paginator = DB::table('users')->orderBy('id')->paginate($request->limit);
-    $paginator->currentPage($request->page);
-    $users = collect($paginator);
-    
-    foreach ($users['data'] as $user) {
-        DB::table('users')
-        ->where('id', $user->id)
-        ->update(
-            [
-                'password' => bcrypt('mudat@2020'),
-                'verified' => false
-            ]
-        );
-    }
-    echo "OK {$request->page}";
-});
-Route::get('/teste', function (\Illuminate\Http\Request $request) {
+
+//Route::get('/teste', function (\Illuminate\Http\Request $request) {
 
     
-        $user = App\User::find(2675);
-        
-        $token = Illuminate\Support\Str::random(40);
-        return new App\Mail\SendVerificationEmail($user, $token);
     //if (Crawler::isCrawler()) {}
-});
+//});
 
 Route::get('/{any}', 'ApiController@home')->where('any', '.*');

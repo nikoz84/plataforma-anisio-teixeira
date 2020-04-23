@@ -1,73 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Concert+One&display=swap);@font-face {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 100;
-  font-display: swap;
-  src: local('Roboto'), url("/fonts/vendor/@quasar/extras/roboto-web-KFOkCnqEu92Fr1MmgVxIIzQ.woff?5cb7edfceb233100075dc9a1e12e8da3") format('woff');
-}
-@font-face {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: local('Roboto'), url("/fonts/vendor/@quasar/extras/roboto-web-KFOlCnqEu92Fr1MmSU5fBBc-.woff?b00849e00f4c2331cddd8ffb44a6720b") format('woff');
-}
-@font-face {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: local('Roboto'), url("/fonts/vendor/@quasar/extras/roboto-web-KFOmCnqEu92Fr1Mu4mxM.woff?60fa3c0614b8fb2f394fa29944c21540") format('woff');
-}
-@font-face {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: local('Roboto'), url("/fonts/vendor/@quasar/extras/roboto-web-KFOlCnqEu92Fr1MmEU9fBBc-.woff?87284894879f5b1c229cb49c8ff6decc") format('woff');
-}
-@font-face {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: local('Roboto'), url("/fonts/vendor/@quasar/extras/roboto-web-KFOlCnqEu92Fr1MmWUlfBBc-.woff?adcde98f1d584de52060ad7b16373da3") format('woff');
-}
-@font-face {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 900;
-  font-display: swap;
-  src: local('Roboto'), url("/fonts/vendor/@quasar/extras/roboto-web-KFOlCnqEu92Fr1MmYUtfBBc-.woff?bb1e4dc6333675d11ada2e857e7f95d7") format('woff');
-}
-@font-face {
-  font-family: 'Material Icons';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: local('Roboto'), url("/fonts/vendor/@quasar/extras/material-icons/web-flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2?0509ab09c1b0d2200a4135803c91d6ce") format('woff2'), url("/fonts/vendor/@quasar/extras/material-icons/web-flUhRq6tzZclQEJ-Vdg-IuiaDsNa.woff?29b882f018fa6fe75fd338aaae6235b8") format('woff');
-}
-.material-icons {
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
-  display: inline-block;
-  line-height: 1;
-  text-transform: none;
-  letter-spacing: normal;
-  word-wrap: normal;
-  white-space: nowrap;
-  direction: ltr;
-/* Support for all WebKit browsers. */
-  -webkit-font-smoothing: antialiased;
-/* Support for Safari and Chrome. */
-  text-rendering: optimizeLegibility;
-/* Support for Firefox. */
-  -moz-osx-font-smoothing: grayscale;
-/* Support for IE. */
-  font-feature-settings: 'liga';
-}
-.title-page {
+@import url(https://fonts.googleapis.com/css?family=Concert+One&display=swap);.title-page {
   font-family: 'Concert One', sans-serif, cursive;
   padding-bottom: 5px;
   border-bottom: 4px double #451e5f;
@@ -10335,7 +10266,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-smoothing: antialiased;
   line-height: 1.5;
-  font-size: 16px false;
+  font-size: 14px false;
 }
 h1 {
   font-size: 6rem;

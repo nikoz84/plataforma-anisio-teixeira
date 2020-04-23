@@ -35,7 +35,7 @@ ExpiresDefault A31536000
 
 # Set up 2 Hour caching on commonly updated files
 <FilesMatch "\.(xml|txt|html|js|css|map|ttf|ttc|otf|eot|woff|woff2|font.css)$">
-  Header set Access-Control-Allow-Origin "*"
+  #Header set Access-Control-Allow-Origin "*"
   ExpiresDefault A7200
   Header append Cache-Control "private, must-revalidate"
 </FilesMatch>

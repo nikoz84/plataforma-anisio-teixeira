@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Crypt;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -89,7 +91,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function setPasswordAttribute($value)
     {
-        $this->attributes['name'] = bcrypt($value);
+        $this->attributes['password'] = bcrypt($value);
     }
     /**
      * Atributo nome capitalizado
@@ -149,10 +151,11 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return void
      */
-    public static function createVerificationToken()
+    public function createVerificationToken()
     {
-        return Str::random(40);
+        return  Str::random(40);
     }
+    
     /**
      * Relação usuário possui varios conteudos
      */

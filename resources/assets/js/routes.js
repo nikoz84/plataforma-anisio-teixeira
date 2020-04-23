@@ -7,7 +7,7 @@ import RegisterForm from "./forms/RegisterForm.vue";
 import ListAdmin from "./components/ListAdmin.vue";
 import DenunciaForm from "./forms/DenunciaForm.vue";
 import Gallery from "./components/Gallery.vue";
-import ConfirmationEmail from "./forms/ConfirmationEmailForm.vue";
+import ConfirmationEmailForm from "./forms/ConfirmationEmailForm.vue";
 
 const routes = [
   {
@@ -140,7 +140,7 @@ const routes = [
     children: [
       {
         path: "login",
-        name: "Login",
+        name: "login",
         component: LoginForm,
         meta: {
           requiresAuth: false,
@@ -149,7 +149,7 @@ const routes = [
       },
       {
         path: "recuperar-senha",
-        name: "Recover",
+        name: "Recuperar",
         component: RecoverPassForm,
         meta: {
           requiresAuth: true,
@@ -166,12 +166,12 @@ const routes = [
         }
       },
       {
-        path: "confirmar-email/:token",
+        path: "confirmar-email",
         name: "confirmar",
-        component: ConfirmationEmail,
+        component: ConfirmationEmailForm,
         meta: {
           requiresAuth: false,
-          title: "Código de verificação do E-mail"
+          title: "Confirmar email"
         }
       },
       {

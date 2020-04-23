@@ -51,7 +51,7 @@ trait FileSystemLogic
             return Storage::disk('conteudos-digitais')->url("imagem-associada" . $img_sinopse);
         }
 
-        return Storage::disk('public-path')->url("img/tipo-conteudo/{$tipo}.svg");
+        return Storage::disk('public-path')->url("img/fundo-padrao.svg");
     }
     public function getImagesGallery($rand = false)
     {

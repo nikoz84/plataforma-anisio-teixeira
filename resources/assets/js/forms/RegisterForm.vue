@@ -101,11 +101,12 @@ export default {
       };
 
       try {
-        let resp = await axios.post("/auth/register", data);
+        let resp = await axios.post("/auth/cadastro", data);
         this.$q.loading.hide();
         this.$router.push("/usuario/confirmar-email");
       } catch (response) {
         this.errors = response.errors;
+        
       }
     }
   }

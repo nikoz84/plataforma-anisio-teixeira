@@ -55,9 +55,9 @@ class ConteudoController extends ApiController
             return $q->whereIn("tipo_id", explode(',', $tipos));
         });
         // FILTRO X PUUBLICADOR
-        $query->when($publicador, function ($q, $publicador) {
-            return $q->where('user_id', $publicador);
-        });
+        if ($publicador) {
+            $query->where('user_id', $publicador);
+        }
         // FILTRO BUSCA FULL TEXT SEARCH
         $query->when($busca, function ($q) use ($busca, $por) {
             return $q->search($busca, $por);
@@ -67,24 +67,22 @@ class ConteudoController extends ApiController
             return $q->searchTag($tag);
         });
         // FILTRO X CANAL
-        $query->when($canal != 6, function ($q, $canal) {
-            return $q->where('canal_id', $canal);
-        });
+        if ($canal != 6) {
+            $query->where('canal_id', $canal);
+        };
         // FILTRO X CATEGORIA
-        $query->when($categoria, function ($q, $categoria) {
-            return $q->where('category_id', explode(',', $categoria));
-        });
+        if ($categoria) {
+            $query->where('category_id', explode(',', $categoria));
+        }
         // FILTRO X COMPONENTES
         $query->when($componentes, function ($q, $componentes) {
             return $q->searchByComponent($componentes);
         });
         // FILTRO X LICENÇA
-        $query->when($licencas, function ($q, $licencas) {
-            return $q->whereIn('license_id', explode(',', $licencas));
-        });
+        if ($licencas) {
+            $query->whereIn('license_id', explode(',', $licencas));
+        };
 
-        //$url = "busca={$busca}&limit={$limit}&canal={$canal}&tag={$tag}&publicador=$publicador";
-        //$url .= "&tipos={$tipos}&componentes={$componentes}&categoria={$categoria}&licencas={$licencas}";
         $url = http_build_query($request->all());
 
         $conteudos = $query->where('is_approved', 'true')

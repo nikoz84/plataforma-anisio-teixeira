@@ -4,5 +4,5 @@
 <p>
 
 <p>
-    Por favor <a href="{{$url}}">CLIQUE AQUI</a> para verificar sua conta.
+    Por favor copie este código de verificação, <strong> {{ $user->verification_token }} </strong>
 </p>

@@ -7,6 +7,8 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\User;
+use Illuminate\Support\Facades\URL;
+use Carbon\Carbon;
 
 class SendVerificationEmail extends Mailable
 {
@@ -17,10 +19,9 @@ class SendVerificationEmail extends Mailable
      *
      * @return void
      */
-    public function __construct(User $user, $token = '')
+    public function __construct(User $user)
     {
         $this->user = $user;
-        $this->token = $token;
     }
 
     /**
@@ -32,11 +33,12 @@ class SendVerificationEmail extends Mailable
     {
         return $this->from(env('MAIL_USERNAME'))
             ->to($this->user->email, $this->user->name)
-                ->view('emails.verificationEmail')
-                ->with([
-                    'user' => $this->user,
-                    'token' => $this->token,
-                    'url' => env('APP_URL') . "/usuario/confirmar-email/{$this->token}"
-                ]);
+            ->subject('Email de verificação')
+            ->view('emails.verificationEmail')
+            ->with(
+                [
+                    'user' => $this->user
+                ]
+            );
     }
 }

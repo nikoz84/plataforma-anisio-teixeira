@@ -27,12 +27,7 @@ return [
      */
 
     'env' => env('APP_ENV', 'production'),
-
-    'developers' => [
-        'Nicolás Romero',
-        'Fabiano Muniz',
-    ],
-
+    
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode

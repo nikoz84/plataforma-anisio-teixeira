@@ -1,5 +1,13 @@
 <template>
-  <div class="row q-gutter-sm q-pa-md">
+  <div class="row q-gutter-xs">
+    <q-card class="col-12">
+      <q-btn
+          class="full-width"
+          color="primary"
+          @click="save()"
+          label="Salvar"
+        ></q-btn>
+    </q-card>
     <q-card class="col-sm-5">
       <q-card-section class="q-gutter-sm">
         <q-select
@@ -33,10 +41,7 @@
         </div>
         <q-editor v-model="conteudo.description" min-height="15rem" />
       </q-card-section>
-    </q-card>
-
-    <q-card class="col-sm-6">
-      <q-card-section class="q-gutter-sm">
+      <q-card-section>
         <q-select
           outlined
           v-model="conteudo.tags"
@@ -63,22 +68,14 @@
           placeholder-src="/img/fundo-padrao.svg"
           alt="imagem de destaque"/>
         <q-input
-          @input="
-            val => {
-              file = val[0];
-            }
-          "
+          @input="val => { file = val[0];}"
           outlined
           type="file"
           hint="Imagem de Destaque"
         />
         <q-input
           class="q-mt-md"
-          @input="
-            val => {
-              file = val[0];
-            }
-          "
+          @input="val => {file = val[0];}"
           outlined
           type="file"
           hint="Arquivo para Download"
@@ -105,42 +102,53 @@
         </div>
       </q-card-section>
     </q-card>
-    <q-card class="col-sm-11">
+
+    <q-card class="col-sm-3">
       <q-card-section>
-        <div class="text-center text-h6 q-pa-md">
-          Selecione ao menos 3 componentes curriculares
-        </div>
         <div v-if="componentes">
           <div
-            class="q-my-lg"
             v-for="(component, i) in componentes"
             :key="`c-${i}`"
             :index="component.id"
           >
-            <div class="text-h6 text-negative q-pa-md">
+            <div class="text-center text-negative q-pt-md">
               {{ component.name }}
             </div>
-            <div class="q-gutter-sm">
-              <q-checkbox
-                v-for="(component, i) in component.componentes"
-                :key="`child-com-${i}`"
-                v-model="conteudo.componentes"
-                :val="component.id"
-                :label="component.name"
-                color="negative"
-              />
-            </div>
+            <q-separator class="q-mt-lg" inset color="negative"></q-separator>
+            <q-list>
+              <q-item tag="label" 
+                v-ripple v-for="(component, i) in component.componentes"
+                :key="`child-com-${i}`">
+                <q-item-section avatar>
+                  <q-checkbox
+                    v-model="conteudo.componentes"
+                    :val="component.id"
+                    color="negative"
+                  />
+                </q-item-section>
+                <q-item-label class="q-pt-sm">
+                  {{component.name}}
+                </q-item-label>
+              </q-item>
+            </q-list>
             <q-separator class="q-mt-lg" inset color="negative"></q-separator>
           </div>
         </div>
+        
+      </q-card-section>
+      
+      
+    </q-card>
+    <q-card class="col-sm-3">
+      <q-card-section>
         <div v-if="niveis">
-          <div
-            class="q-my-lg"
+          <div 
             v-for="(nivel, n) in niveis"
             :key="`n-${n}`"
             :index="nivel.id"
           >
-            <div class="text-h6 text-teal q-pa-md">{{ nivel.name }}</div>
+            <div class="text-teal q-pt-md">{{ nivel.name }}</div>
+            <q-separator class="q-mt-lg" inset color="teal"></q-separator>
             <div class="q-gutter-sm">
               <q-checkbox
                 v-for="(component, i) in nivel.componentes"
@@ -154,16 +162,7 @@
             <q-separator class="q-mt-lg" inset color="teal"></q-separator>
           </div>
         </div>
-      
       </q-card-section>
-      <q-card-actions>
-        <q-btn
-          class="full-width"
-          color="primary"
-          @click="save()"
-          label="Salvar"
-        ></q-btn>
-      </q-card-actions>
     </q-card>
   </div>
 </template>

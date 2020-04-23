@@ -109,7 +109,7 @@ export default {
       let data = { email: this.email, password: this.password };
       try {
         let resp = await axios.post("/auth/login", data);
-        console.log(resp)
+        
         this.login(resp.data);
       } catch (response) {
         this.errors = response.errors;
