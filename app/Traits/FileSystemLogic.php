@@ -9,7 +9,13 @@ use Illuminate\Support\Facades\Storage;
 
 trait FileSystemLogic
 {
-    // conteudos/conteudos-digitais/imagem-associada/emitec/img-emitec_disciplina29.png
+    /**
+     * Retorna imagem de destaque do nivel de ensino
+     * 
+     * @param $components array de componentes curriculares
+     * 
+     * 
+     */
     public static function getEmitecImage($components)
     {
         $arrComp = $components->get()->pluck('id')->toArray();
@@ -27,8 +33,15 @@ trait FileSystemLogic
         return ($exist) ? Storage::disk('conteudos-digitais')->url($image) : null;
     }
 
-    // conteudos/conteudos-digitais/imagem-associada/sinopse/9903.01.jpg
-    // conteudos/conteudos-digitais/imagem-associada/9721.jpg
+    /**
+     * Retorna imagem de destque
+     *
+     * @param $tipo tipo de conteúdo
+     *
+     * @param $id ID do conteúdo
+     *
+     * @return Storage
+     */
     public static function getImageFromTipo($tipo, $id)
     {
         $path_assoc = Storage::disk('conteudos-digitais')->path("imagem-associada");
@@ -53,21 +66,36 @@ trait FileSystemLogic
 
         return Storage::disk('public-path')->url("img/fundo-padrao.svg");
     }
+    /**
+     * Retorna galeria de imagens
+     *
+     * @param $rand seleciona se ordena de forma randomica as imagens
+     *
+     * @return Storage
+     */
     public function getImagesGallery($rand = false)
     {
-        $path = $this->storage::disk('conteudos-digitais')->path('galeria');
+        $path = $this->storage::disk('galeria');
         $files = File::allFiles($path);
 
         if (!$rand) {
             return collect($files)->map(function ($file) {
-                return Storage::disk('conteudos-digitais')->url("galeria/{$file->getFilename()}");
+                return Storage::disk('galeria')->url("{$file->getFilename()}");
             });
         }
 
         return collect($files)->map(function ($file) {
-            return Storage::disk('conteudos-digitais')->url("galeria/{$file->getFilename()}");
+            return Storage::disk('galeria')->url("{$file->getFilename()}");
         })->inRandomOrder()->first();
     }
+    /**
+     * Salva arquivo pasta de downloads
+     *
+     * @param $id integer
+     * @param $file laravel request
+     *
+     * @return File
+     */
     public function createFile($id, $file)
     {
         if ($file) {
@@ -75,14 +103,25 @@ trait FileSystemLogic
             $path = Storage::disk('conteudos-digitais')->path("download") . "/{$id}.*";
             $files = $filesystem->glob($path);
             File::delete($files);
-            $arr = [
-                'mime_type' => $file->getMimeType(),
-                'extension' => $file->guessExtension(),
-                'size'      => $file->getSize(),
-                'name'      => $id . '.' . "{$file->guessExtension()}"
-            ];
-            $file->storeAs('download', $arr['name'], 'conteudos-digitais');
-            return $arr;
+            $name = "{$id}.{$file->guessExtension()}";
+            
+            $file->storeAs('download', $name, 'conteudos-digitais');
+            return $file;
         }
+    }
+    /**
+     * Remplaza diretorio de windows C:\\pasta\pasta-filha por C://pasta/pasta-filha
+     *
+     * @param $path diretorio
+     *
+     * @return string
+     */
+    public function windowsDirectory($path)
+    {
+        if (env('APP_SO', 'linux') == 'windows') {
+            return str_replace('\\', '/', $path);
+        }
+
+        return $path;
     }
 }

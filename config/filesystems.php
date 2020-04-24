@@ -101,6 +101,12 @@ return [
             'url' => env('APP_URL') . '/storage/conteudos/conteudos-digitais/imagem-associada/sinopse',
             'visibility' => 'public',
         ],
+        'galeria' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/conteudos/galeria'),
+            'url' => env('APP_URL') . '/storage/conteudos/galeria',
+            'visibility' => 'public',
+        ],
         'fotos-perfil' => [
             'driver' => 'local',
             'root' => storage_path('app/public/conteudos/fotos-perfil'),

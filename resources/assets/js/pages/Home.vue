@@ -1,5 +1,5 @@
 <template>
-  <section class="q-pa-sm">
+  <section class="q-pa-lg">
     <a class="skip-link" href="#tipo-conteudos">Ir a tipos de conteúdos</a>
     <CardHomeIcon
       id="tipo-conteudos"

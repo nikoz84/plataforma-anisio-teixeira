@@ -12,7 +12,6 @@ import {
 import "quasar/dist/quasar.ie.polyfills.umd.min.js";
 import lang from "quasar/lang/pt-br.js";
 import iconSet from "quasar/dist/icon-set/material-icons.umd.min.js";
-import "@quasar/extras/roboto-font/roboto-font.css";
 import "@quasar/extras/material-icons/material-icons.css";
 
 Vue.use(Quasar, {
@@ -31,7 +30,7 @@ Vue.use(Quasar, {
 
 window.axios = require("axios");
 
-window.axios.defaults.baseURL = process.env.MIX_API_URL; //'http://ee7a5f23.ngrok.io/api-v1'
+window.axios.defaults.baseURL = process.env.MIX_API_URL;
 
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 

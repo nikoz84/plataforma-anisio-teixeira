@@ -1,7 +1,9 @@
 <template>
     <div class="q-ma-md">
-      <div class="row text-h6">
-          Sobre a {{layout.title_footer}}
+      <div class="row wrap justify-center">
+        <div class="q-mt-lg text-h6 text-grey-6" v-if="layout && layout.title_footer">
+          {{capitalize}}
+        </div>
       </div>
       <q-separator class="q-mt-md q-mb-lg" />
       <div class="row ">
@@ -50,9 +52,6 @@
         <q-img alt="imagem de marcas" aria-label="imagem" style="max-width: 741px; height: auto;" v-if="layout.marcas.is_active" :src="layout.marcas.url"></q-img>
       </div>
       <q-separator class="q-mt-md q-mb-lg" />
-      <div class="row wrap justify-center text-center" v-if="layout && layout.marcas">
-        <q-btn outline to="/galeria" icon-right="photo" label="Visite nossa galería de Imagens" aria-label="visite a galería de imagens"></q-btn>
-      </div>
       <div class="row wrap justify-center">
         <b class="q-mt-lg">Todos os direitos e conteúdos desta Plataforma são de uso compartilhado, exceto onde indicado de outra forma.</b>
       </div>
@@ -77,7 +76,11 @@ export default {
     };
   },
   computed: {
-    ...mapState(["layout", "links"])
+    ...mapState(["layout", "links"]),
+    capitalize() {
+      let string = 'Sobre a' + this.layout.title_footer;
+      return string.toUpperCase()
+    }
   },
   methods: {}
 };

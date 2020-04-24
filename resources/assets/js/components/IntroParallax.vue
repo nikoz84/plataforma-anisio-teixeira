@@ -1,4 +1,3 @@
-import { QParallax } from 'quasar';
 <template>
   <div class="row">
     <q-parallax :src="`/storage/conteudos/conteudos-digitais/galeria/${randomImg}.jpg`" style="max-height:80vh;">

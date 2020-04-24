@@ -18,9 +18,10 @@
       :options="options"
       :label="`Buscar por: ${label}`"
       :loading="loadingState"
-      style="width:350px;"
       label-color="pink-5"
       bg-color="grey-11"
+
+      style="width:350px;min-width:150px"
     />
 
     <q-btn
@@ -30,12 +31,12 @@
       @click="searchTerm"
       class="toolbar-input-btn"
       color="grey-3"
-      text-color="grey-8"
+      text-color="pink-5"
       icon="search"
       unelevated
       aria-label="pesquisar"
     />
-    <q-btn color="grey-7" round flat icon="more_vert" aria-label="opções de busca">
+    <q-btn color="pink-5" round flat icon="more_vert" aria-label="opções de busca">
       <q-menu cover auto-close>
         <q-list>
           <q-item clickable aria-label="sugerir por palavra chave" @click="recommendationPer('tag')">

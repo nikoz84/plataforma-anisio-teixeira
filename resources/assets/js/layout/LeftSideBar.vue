@@ -36,28 +36,18 @@
         </q-item-section>
       </q-item>
       <q-separator />
-      <!-- SOBRE -->
-      <q-item clickable to="/sobre">
-        <q-item-section avatar>
-          <q-icon name="info" />
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>Sobre</q-item-label>
-        </q-item-section>
-      </q-item>
-      <q-separator />
+      
     </q-list>
     <!-- ADMINISTRAÇÃO-->
     <AdminLeftSideBar v-if="this.$route.name == 'admin'"></AdminLeftSideBar>
     <!-- CANAIS-->
     <q-list v-else>
       <q-item-label class="bg-grey-4" header>
-        <div
-          class="text-h6 text-primary"
-          style="font-family: 'Concert One', sans-serif, cursive;"
+        <strong
+          class="text-accent color-grey-10"
         >
-          CANAIS
-        </div>
+          Canais
+        </strong>
       </q-item-label>
       <div v-for="(link, i) in links" :key="`x-${i}`">
         <q-item
@@ -75,7 +65,7 @@
         </q-item>
         <q-separator />
       </div>
-      <q-item
+      <!--q-item
         :to="`/praticas-pedagogicas`"
         aria-label="`endereço para: Práticas Pedagogicas`"
         :title="`endereço para: práticas pedagogicas`"
@@ -86,7 +76,35 @@
         <q-item-section>
           <q-item-label>Práticas Pedagógicas</q-item-label>
         </q-item-section>
+      </q-item -->
+    </q-list>
+    <q-list>
+      <q-item-label class="bg-grey-4" header>
+        <strong
+          class="text-accent color-grey-10"
+        >
+          Sobre a PAT
+        </strong>
+      </q-item-label>
+      <!-- SOBRE -->
+      <q-item clickable to="/sobre">
+        <q-item-section avatar>
+          <q-icon name="info" />
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>Sobre</q-item-label>
+        </q-item-section>
       </q-item>
+      <!-- GALERIA -->
+      <q-item clickable to="/galeria" aria-label="visite a galería de imagens">
+        <q-item-section avatar>
+          <q-icon name="photo" />
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>Galeria</q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-separator />
     </q-list>
   </nav>
 </template>

@@ -18,15 +18,120 @@ $faded     = #777
 $input-text-color = $primary;
 $input-label-color = $accent;
 
-$generic-border-radius = 1px;
-$body-font-size = 14px !default;
+$generic-border-radius = 15px;
+$body-font-size   ?= 14px
+$quasar-dont-import-fonts = true;
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Ubuntu:wght@400;500;700&display=swap')
 
-@import url('https://fonts.googleapis.com/css?family=Concert\+One&display=swap');
-.title-page {
-  font-family: 'Concert One', sans-serif, cursive;
-  padding-bottom : 5px;
-  border-bottom: 4px double $accent;
+$headings ?= {
+  h1: {
+    size: 4rem,
+    line-height: 4rem,
+    weight: 400,
+    letter-spacing: -.01362em
+  },
+  h2: {
+    size: 3.5rem,
+    line-height: 3.5rem,
+    letter-spacing: -.00833em,
+    weight: 400
+  },
+  h3: {
+    size: 3rem,
+    line-height: 3.125rem,
+    letter-spacing: normal,
+    weight: 500
+  },
+  h4: {
+    size: 2.125rem,
+    line-height: 2.5rem,
+    letter-spacing: .00735em,
+    weight: 500
+  },
+  h5: {
+    size: 1.5rem,
+    line-height: 2rem,
+    letter-spacing: normal,
+    weight: 500
+  },
+  h6: {
+    size: 1.25rem,
+    line-height: 2rem,
+    letter-spacing: .0125em,
+    weight: 500
+  },
+  subtitle1: {
+    size: 1rem,
+    line-height: 1.75rem,
+    letter-spacing: .00937em,
+    weight: 500
+  },
+  subtitle2: {
+    size: .875rem,
+    line-height: 1.375rem,
+    letter-spacing: .00714em,
+    weight: 500
+  },
+  body1: {
+    size: 1rem,
+    line-height: 1.5rem,
+    letter-spacing: .03125em,
+    weight: 400
+  },
+  body2: {
+    size: .875rem,
+    line-height: 1.25rem,
+    letter-spacing: .01786em,
+    weight: 400
+  },
+  overline: {
+    size: .75rem,
+    line-height: 2rem,
+    letter-spacing: .16667em,
+    weight: 500
+  },
+  caption: {
+    size: .75rem,
+    line-height: 1.25rem,
+    letter-spacing: .03333em,
+    weight: 700
+  }
 }
 
+$h-tags ?= {
+  h1: $headings.h1,
+  h2: $headings.h2,
+  h3: $headings.h3,
+  h4: $headings.h4,
+  h5: $headings.h5,
+  h6: $headings.h6
+}
+
+$text-weights ?= {
+  thin: 300,
+  light: 300,
+  regular: 400,
+  medium: 500,
+  bold: 700,
+  bolder: 700
+}
+
+$typography-font-family         ?= 'Ubuntu', '-apple-system', 'Helvetica Neue', Helvetica, Arial, sans-serif
+$toolbar-min-height             ?= 55px
+
+.title-page-tipos {
+  font-family: 'Lato', sans-serif, cursive;
+  font-weight: 700 !default;
+  padding-bottom : 5px;
+  border-bottom: 4px double $accent;
+  font-display: swap;
+}
+
+body {
+  font-family: $typography-font-family;
+  font-weight: 500 !default;
+  font-display: swap;
+  color: $primary;
+}
 
 @import '~quasar/src/css/variables.styl'

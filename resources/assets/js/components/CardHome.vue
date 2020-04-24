@@ -3,16 +3,16 @@
     <transition appear :enter-active-class="`animated ${animation}`">
       <h1
         v-if="show"
-        class="text-h5 title-page text-center q-py-lg text-primary"
+        class="text-h5 title-featured q-py-lg text-primary"
         :id="data.slug"
         v-text="data.title"
       ></h1>
     </transition>
-    <div class="row justify-center q-gutter-sm">
+    <div class="row justify-start q-gutter-sm">
       <q-card
         flat
         bordered
-        class="col-sm-3"
+        class="col-xs-11 col-sm-10 col-md-3 col-lg-2"
         v-for="(item, i) in data.items"
         :key="i"
       >
@@ -59,6 +59,6 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-.border-left {
+.title-featured {
 }
 </style>

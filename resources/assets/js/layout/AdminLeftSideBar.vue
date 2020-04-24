@@ -1,12 +1,11 @@
 <template>
-  <q-list>
+  <q-list >
     <q-item-label class="bg-grey-4" header>
-      <div
-        class="text-h6 text-primary"
-        style="font-family: 'Concert One', sans-serif, cursive;"
+      <strong
+        class="text-accent color-primary"
       >
-        Configurações
-      </div>
+        Painel de Controle
+      </strong>
     </q-item-label>
     <div v-for="(link, i) in links" :key="`admin-${i}`">
       <q-item
