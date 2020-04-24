@@ -1,7 +1,5 @@
-import { updateField } from "vuex-map-fields";
 
 const mutations = {
-  updateField,
   SET_LAYOUT(state, layout) {
     state.layout = layout;
   },
