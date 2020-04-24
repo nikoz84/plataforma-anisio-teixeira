@@ -11,10 +11,10 @@ trait FileSystemLogic
 {
     /**
      * Retorna imagem de destaque do nivel de ensino
-     * 
+     *
      * @param $components array de componentes curriculares
-     * 
-     * 
+     *
+     * @return Storage
      */
     public static function getEmitecImage($components)
     {
