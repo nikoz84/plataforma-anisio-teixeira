@@ -30,7 +30,7 @@ Vue.use(Quasar, {
 
 window.axios = require("axios");
 
-window.axios.defaults.baseURL = "http://073c9022.ngrok.io/api-v1"; //process.env.MIX_API_URL;
+window.axios.defaults.baseURL = process.env.MIX_API_URL;
 
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
