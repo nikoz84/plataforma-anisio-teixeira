@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['cors']], function () {
     Route::get('/ler', 'ConteudoController@lerHD')->name('ler.hd');
-    Route::get('/files/gallery', 'FileController@getGallery')->name('lista.galeria.imagens');
+    Route::get('/files/galeria', 'FileController@getGallery')->name('lista.galeria.imagens');
     Route::get('/files/{id}', 'FileController@getFiles')->name('busca.arquivo');
     Route::post('/files/{id}', 'FileController@createFile')->name('adiciona.arquivo');
     Route::get('/destaques/{slug}', 'HomeController@getHomeData')->name('dados.home');

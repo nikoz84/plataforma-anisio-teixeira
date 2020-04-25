@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 trait FileSystemLogic
 {
@@ -14,7 +15,7 @@ trait FileSystemLogic
      *
      * @param $components array de componentes curriculares
      *
-     * @return Storage
+     * @return string
      */
     public static function getEmitecImage($components)
     {
@@ -34,50 +35,67 @@ trait FileSystemLogic
     }
 
     /**
-     * Retorna imagem de destque
+     * Retorna imagem de destaque
      *
      * @param $tipo tipo de conteúdo
-     *
-     * @param $id ID do conteúdo
+     * @param $id id do conteúdo
      *
      * @return Storage
      */
     public static function getImageFromTipo($tipo, $id)
     {
-        $path_assoc = Storage::disk('conteudos-digitais')->path("imagem-associada");
-
-        $filesystem = new Filesystem;
-        $files = [];
-        $img_assoc = $path_assoc . "/{$id}.*";
-        $file = $filesystem->glob($img_assoc);
-        $img_sinopse = $path_assoc . "/sinopse/{$id}.*.*";
-        $files = $filesystem->glob($img_sinopse);
-
-        if (count($file) > 0) {
-            $img_assoc = array_values($file)[0];
-            $img_assoc = str_replace($path_assoc, "", $img_assoc);
-            return Storage::disk('conteudos-digitais')->url("imagem-associada" . $img_assoc);
-        } elseif ($tipo == 5 && count($files) > 0) {
-            $index = array_rand($files);
-            $img_sinopse = $files[$index];
-            $img_sinopse = str_replace($path_assoc, "", $img_sinopse);
-            return Storage::disk('conteudos-digitais')->url("imagem-associada" . $img_sinopse);
+        $path_assoc = self::windowsDirectory(
+            Storage::disk('conteudos-digitais')->path('imagem-associada')
+        );
+        
+        $file = self::findFiles($path_assoc, $id, $tipo);
+        
+        if ($file) {
+            $replace = Storage::disk('conteudos-digitais')->url("imagem-associada/{$file}");
+            return str_replace('//sinopse', '/sinopse', $replace);
         }
 
         return Storage::disk('public-path')->url("img/fundo-padrao.svg");
     }
     /**
+     * Procura no diretorio os arquivos de imagem associada ou sinopse
+     *
+     * @param $path     diretorio
+     * @param $filename nome do arquivo a ser encontrado
+     * @param $tipo     id do tipo de conteúdo
+     *
+     * @return string
+     */
+    public static function findFiles($path, $filename, $tipo)
+    {
+        $path_sinopse = self::windowsDirectory("{$path}/sinopse/{$filename}.*.*");
+        $path_img_assoc = self::windowsDirectory("{$path}/$filename.*");
+        
+
+        $file = collect(File::glob($path_img_assoc))->first();
+        
+        if ($tipo == 5 && !$file) {
+            $file = collect(File::glob($path_sinopse))->shuffle()->first();
+        }
+
+        return Str::replaceFirst($path, '', $file);
+    }
+
+    /**
      * Retorna galeria de imagens
      *
      * @param $rand seleciona se ordena de forma randomica as imagens
      *
-     * @return Storage
+     * @return array de imagens
      */
     public function getImagesGallery($rand = false)
     {
         $path = $this->storage::disk('galeria');
+        $path = self::windowsDirectory(
+            $path->getDriver()->getAdapter()->getPathPrefix()
+        );
         $files = File::allFiles($path);
-
+        
         if (!$rand) {
             return collect($files)->map(function ($file) {
                 return Storage::disk('galeria')->url("{$file->getFilename()}");
@@ -86,7 +104,7 @@ trait FileSystemLogic
 
         return collect($files)->map(function ($file) {
             return Storage::disk('galeria')->url("{$file->getFilename()}");
-        })->inRandomOrder()->first();
+        })->shuffle();
     }
     /**
      * Salva arquivo pasta de downloads
@@ -110,13 +128,13 @@ trait FileSystemLogic
         }
     }
     /**
-     * Remplaza diretorio de windows C:\\pasta\pasta-filha por C://pasta/pasta-filha
+     * Remplaza diretorio de windows C:\\pasta\pasta-filha por C:/pasta/pasta-filha
      *
      * @param $path diretorio
      *
      * @return string
      */
-    public function windowsDirectory($path)
+    public static function windowsDirectory($path)
     {
         if (env('APP_SO', 'linux') == 'windows') {
             return str_replace('\\', '/', $path);

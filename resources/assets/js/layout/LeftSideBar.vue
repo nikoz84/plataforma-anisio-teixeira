@@ -15,6 +15,7 @@
       <q-item
         v-if="isLogged"
         clickable to="/admin/conteudos/listar"
+        exact
       >
         <q-item-section avatar>
           <q-icon name="settings_applications" />
@@ -27,7 +28,7 @@
       </q-item>
       <q-separator v-if="isLogged" />
       <!-- HOME -->
-      <q-item clickable to="/">
+      <q-item clickable to="/" exact>
         <q-item-section avatar>
           <q-icon name="home" />
         </q-item-section>
@@ -58,6 +59,7 @@
           clickable
           v-close-popup
           tabindex="0"
+          exact
         >
           <q-item-section>
             <q-item-label>{{ link.name }}</q-item-label>
@@ -87,7 +89,7 @@
         </strong>
       </q-item-label>
       <!-- SOBRE -->
-      <q-item clickable to="/sobre">
+      <q-item clickable to="/sobre" exact>
         <q-item-section avatar>
           <q-icon name="info" />
         </q-item-section>
@@ -96,7 +98,7 @@
         </q-item-section>
       </q-item>
       <!-- GALERIA -->
-      <q-item clickable to="/galeria" aria-label="visite a galería de imagens">
+      <q-item clickable to="/galeria" aria-label="visite a galería de imagens" exact>
         <q-item-section avatar>
           <q-icon name="photo" />
         </q-item-section>

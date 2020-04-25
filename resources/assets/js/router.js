@@ -4,6 +4,8 @@ import store from "./store";
 
 const router = new VueRouter({
   mode: "history",
+  linkActiveClass: 'q-router-link--active',
+  linkExactActiveClass: 'q-router-link--exact-active',
   routes
 });
 

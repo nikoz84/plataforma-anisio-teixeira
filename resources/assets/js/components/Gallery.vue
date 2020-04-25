@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     async getImages() {
-      await axios.get("/files/gallery").then(resp => {
+      await axios.get("/files/galeria").then(resp => {
         if (resp.data.success && resp.status == 200) {
           this.images = resp.data.metadata;
           this.title = resp.data.message;
