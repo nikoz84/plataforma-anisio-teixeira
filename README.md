@@ -79,7 +79,7 @@ Valdiney França
 
 David Galvão
 
-<a href="https://github.com/davidgalvao"><img src="https://robohash.org/davidgalvao" title="David Galvão" width="80" height="80"></a>
+<a href="https://github.com/davidgalvao"><img src="https://avatars2.githubusercontent.com/u/22455885?s=400&v=4" title="David Galvão" width="80" height="80"></a>
 
 #### Antigos Colaboradores
 
