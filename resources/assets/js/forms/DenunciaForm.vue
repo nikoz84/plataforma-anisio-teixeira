@@ -73,9 +73,9 @@
                 <ShowErrors :errors="errors.message"></ShowErrors>
               </template>
             </q-input>
-            <div>
+            <!-- div>
               <p>Código de segurança:</p>
-              <vue-recaptcha :id="r_id" :sitekey="siteKey" :loadRecaptchaScript="true" />
+              <vue-recaptcha :id="this.r_id" :sitekey="this.siteKey" :loadRecaptchaScript="true" />
 
               <div
                 bottom-slots
@@ -83,8 +83,8 @@
               >
                 <ShowErrors :errors="errors.recaptcha"></ShowErrors>
               </div>
-            </div>
-
+            </div-->
+            <RecaptchaForm :errors="errors.recaptcha"></RecaptchaForm>
             <div>
               <q-btn
                 class="full-width q-mt-lg"
@@ -103,6 +103,7 @@
 <script>
 import ShowErrors from "../components/ShowErrors.vue";
 import { QCard, QCardSection, QImg, QForm, QInput, QSeparator } from "quasar";
+import RecaptchaForm from './RecaptchaForm.vue';
 
 export default {
   name: "DenunciaForm",
@@ -113,7 +114,8 @@ export default {
     QForm,
     QInput,
     QImg,
-    QSeparator
+    QSeparator,
+    RecaptchaForm
   },
   data() {
     return {
@@ -122,7 +124,8 @@ export default {
       email: "",
       url: this.$route.params.url,
       subject: "",
-      message: ""
+      message: "",
+      recaptcha: null
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -145,6 +148,9 @@ export default {
         case "reportar":
           return "Reportar Problema";
           break;
+        case "sugerencia":
+          return "Sugerência de Conteúdo";
+          break;
         default:
           return "Outros";
           break;
@@ -164,15 +170,16 @@ export default {
         action: this.$route.params.action,
         recaptcha: grecaptcha.getResponse()
       };
+      
       try {
-        let resp = await axios.post("/denuncias", data);
+        let resp = await axios.post("/contato", data);
         this.$q.loading.hide();
         this.errors = {};
         localStorage.removeItem("urlDenuncia");
         this.$router.push("/");
       } catch (response) {
         this.errors = response.errors;
-        grecaptcha.reset();
+        grecaptcha.reset()
       }
     }
   }

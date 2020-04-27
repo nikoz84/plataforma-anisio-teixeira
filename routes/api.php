@@ -29,7 +29,7 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/tipos', 'TipoController@index')->name('listar.tipos');
     Route::get('/tipos/{id}', 'TipoController@getTiposById')->name('lista.tipos.x.id');
     /** DENUNCIA E FALE CONOSCO */
-    Route::post('/denuncias', 'DenunciaController@create')->name('criar.faleconosco.denuncias');
+    Route::post('/contato', 'DenunciaController@create')->name('criar.faleconosco.contato');
     /** CANAIS */
     Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscar.canal.x.url.amigavel');
     /** COMPONENTES */
@@ -52,7 +52,7 @@ Route::group(['middleware' => ['cors']], function () {
     /** AUTENTICACAO */
     Route::post('/auth/login', 'AuthController@login')->name('login.usuario');
     Route::post('/auth/cadastro', 'AuthController@register')->name('registro.usuario');
-    Route::post('/auth/verificar/{token}', 'AuthController@verify')->name('verificar.email');
+    Route::post('/auth/verificar/{token}', 'AuthController@verifyEmail')->name('verificar.email');
     /** OPTIONS  */
     Route::get('/options/{name}', 'OptionsController@getByName')->name('busca.metadata.x.nome');
     Route::get('/options', 'OptionsController@index')->name('listar.opcoes');

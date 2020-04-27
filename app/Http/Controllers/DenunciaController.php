@@ -36,7 +36,17 @@ class DenunciaController extends ApiController
 
         return $this->showAsPaginator($paginator);
     }
-
+    public function configRules()
+    {
+        return [
+            'name' => 'required|min:5',
+            'email' => 'required|email',
+            'url' => 'required',
+            'subject' => 'required',
+            'message' => 'required|min:50|max:300',
+            'recaptcha' => ['required', new \App\Rules\ValidRecaptcha],
+        ];
+    }
     /**
      * Adiciona novas denúncias
      *
@@ -44,7 +54,10 @@ class DenunciaController extends ApiController
      */
     public function create()
     {
-        $validator = Validator::make($this->request->all(), config('rules.denuncia'));
+        $validator = Validator::make(
+            $this->request->all(),
+            $this->configRules()
+        );
         if ($validator->fails()) {
             return $this->errorResponse(
                 $validator->errors(),

@@ -44,6 +44,7 @@
                 <ShowErrors :errors="errors.password"></ShowErrors>
               </template>
             </q-input>
+            <RecaptchaForm :errors="errors.recaptcha"></RecaptchaForm>
             <div>
               <q-btn
                 class="full-width"
@@ -65,6 +66,7 @@
 <script>
 import ShowErrors from "../components/ShowErrors.vue";
 import { mapActions, mapState, mapMutations } from "vuex";
+import RecaptchaForm from './RecaptchaForm.vue';
 import {
   QCard,
   QCardSection,
@@ -86,7 +88,8 @@ export default {
     QForm,
     QInput,
     QSeparator,
-    QSpace
+    QSpace,
+    RecaptchaForm
   },
   data() {
     return {
@@ -106,13 +109,18 @@ export default {
       this.$q.loading.show();
       this.errors = {};
 
-      let data = { email: this.email, password: this.password };
+      let data = { 
+        email: this.email, 
+        password: this.password, 
+        recaptcha: grecaptcha.getResponse()
+      };
       try {
         let resp = await axios.post("/auth/login", data);
         
         this.login(resp.data);
       } catch (response) {
         this.errors = response.errors;
+        grecaptcha.reset()
       }
     },
     login(resp) {

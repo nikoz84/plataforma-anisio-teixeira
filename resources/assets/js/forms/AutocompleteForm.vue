@@ -20,8 +20,8 @@
       :loading="loadingState"
       label-color="pink-5"
       bg-color="grey-11"
-
-      style="width:350px;min-width:150px"
+      
+      style="with:100%;"
     />
 
     <q-btn
@@ -35,6 +35,7 @@
       icon="search"
       unelevated
       aria-label="pesquisar"
+      style="padding: 5px;"
     />
     <q-btn color="pink-5" round flat icon="more_vert" aria-label="opções de busca">
       <q-menu cover auto-close>

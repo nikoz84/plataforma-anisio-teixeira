@@ -66,19 +66,23 @@ trait FileSystemLogic
      *
      * @return string
      */
-    public static function findFiles($path, $filename, $tipo)
+    public static function findFiles($path, $id, $tipo)
     {
-        $path_sinopse = self::windowsDirectory("{$path}/sinopse/{$filename}.*.*");
-        $path_img_assoc = self::windowsDirectory("{$path}/$filename.*");
-        
-
+        $path_img_assoc = self::windowsDirectory("{$path}/$id.*");
         $file = collect(File::glob($path_img_assoc))->first();
         
         if ($tipo == 5 && !$file) {
+            $path_sinopse = self::windowsDirectory("{$path}/sinopse/{$id}.*.*");
             $file = collect(File::glob($path_sinopse))->shuffle()->first();
         }
-
-        return Str::replaceFirst($path, '', $file);
+        
+        if (!$file) {
+            $conteudo = \App\Conteudo::find($id);
+            $path_category = self::windowsDirectory("{$path}/categoria/{$conteudo->category_id}.*");
+            $file = collect(File::glob($path_category))->first();
+        }
+        
+        return Str::replaceFirst($path . '/', '', $file);
     }
 
     /**

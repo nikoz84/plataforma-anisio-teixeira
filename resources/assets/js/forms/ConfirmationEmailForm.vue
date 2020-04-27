@@ -10,6 +10,7 @@
                 <q-card-section>
                     <q-input v-model="token" :loading="loadingState"></q-input>
                 </q-card-section>
+                
                 <q-card-actions align="around">
                     <q-btn color="primary" flat @click="verify" label="Verificar"></q-btn>
                 </q-card-actions>
@@ -19,10 +20,12 @@
 </template>
 <script>
 import { QCard, QCardSection, QCardActions, QBtn, QInput } from 'quasar';
+import ShowErrors from "../components/ShowErrors.vue";
+
 
 export default {
     name:"ConfirmationEmailForm",
-    components: { QCard, QCardSection, QCardActions, QBtn, QInput },
+    components: { QCard, QCardSection, QCardActions, QBtn, QInput, ShowErrors },
     data(){
         return {
             token: null,
@@ -35,7 +38,7 @@ export default {
             if (!this.token) return;
             this.loadingState = true
             try {
-                let resp = await axios.post(`/auth/verificar/${this.token}`);
+                let resp = await axios.post(`/auth/verificar/token/${this.token}`);
                     this.loadingState = false;
                     console.log(resp)
                 

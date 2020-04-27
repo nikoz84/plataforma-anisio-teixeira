@@ -20,7 +20,8 @@
 <script>
 export default {
     name : 'ListComponents',
-    props: ['componentes']
+    props: ['componentes'],
+    
 
 }
 </script>

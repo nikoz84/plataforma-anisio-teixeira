@@ -15,6 +15,9 @@ const mutations = {
   SET_POSTS(state, posts) {
     state.posts = posts;
   },
+  SET_RECAPTCHA(state, recaptcha) {
+    state.recaptcha = recaptcha;
+  },
   SET_POST(state, post) {
     state.post = post;
   },

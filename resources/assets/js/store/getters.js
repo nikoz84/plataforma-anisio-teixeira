@@ -51,6 +51,9 @@ const getters = {
   getFormData: state => {
     return state.formData;
   },
+  getRecaptcha: state => {
+    return state.recaptcha;
+  },
   //getConteudo: state => {
   //return state.conteudo;
   //},

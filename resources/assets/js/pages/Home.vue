@@ -1,5 +1,12 @@
 <template>
   <section class="q-pa-lg">
+    <q-parallax :height="200" :speed="0.5">
+      <template v-slot:media>
+        <img src="/storage/conteudos/slider/banner_ensinosuperior.png">
+      </template>
+
+      <h1 class="text-white">Docks</h1>
+    </q-parallax>
     <a class="skip-link" href="#tipo-conteudos">Ir a tipos de conteúdos</a>
     <CardHomeIcon
       id="tipo-conteudos"

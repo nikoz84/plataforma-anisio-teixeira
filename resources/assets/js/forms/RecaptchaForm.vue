@@ -1,31 +1,36 @@
 <template>
-    <div>
-        <p>Código de segurança:</p>
-        <vue-recaptcha :id="r_id" :sitekey="siteKey" :loadRecaptchaScript="true" />
-        <div bottom-slots
-            :error="errors.recaptcha && errors.recaptcha > 0">
-                <ShowErrors :errors="errors.recaptcha"></ShowErrors>
-        </div>
+  <div ref="recaptchaForm">
+    <p>Código de segurança:</p>
+    <vue-recaptcha :id="r_id" :sitekey="siteKey" :loadRecaptchaScript="loadRecaptcha" />
+    <div bottom-slots
+        :error="errors && errors.length > 0">
+            <ShowErrors :errors="errors"></ShowErrors>
     </div>
+  </div>
 </template>
 
 <script>
 import ShowErrors from "../components/ShowErrors.vue";
 import VueRecaptcha from "vue-recaptcha";
+import { mapGetters, mapMutations } from 'vuex';
+
 export default {
   name: "Recaptcha",
   components: { VueRecaptcha, ShowErrors },
+  props: ['errors'],
   data() {
     return {
-      siteKey: "6LczPtQUAAAAAOcgJ9NP9GXPJmA98rppQbsmzuX5",
-      r_id: 0,
-      gResponse: ""
+      siteKey: process.env.MIX_RECAPTCHA_SITE_KEY,
+      r_id: 'recaptcha_id',
+      gResponse: "",
+      loadRecaptcha: true
     };
   },
   mounted() {
     if (window.grecaptcha) {
-      let container = document.getElementsByClassName("g-recaptcha")[0];
-      if (typeof grecaptcha.render === "function") {
+      
+      let container = document.getElementById(this.r_id);
+      if (typeof grecaptcha.render === "function" && container.length) {
         this.r_id = grecaptcha.render(container, {
           sitekey: this.siteKey
         });
@@ -33,7 +38,7 @@ export default {
     }
   },
   destroyed() {
-    window.grecaptcha.reset();
+    //window.grecaptcha.reset();
   }
 };
 </script>
