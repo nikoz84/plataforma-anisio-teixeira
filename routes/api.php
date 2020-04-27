@@ -52,7 +52,7 @@ Route::group(['middleware' => ['cors']], function () {
     /** AUTENTICACAO */
     Route::post('/auth/login', 'AuthController@login')->name('login.usuario');
     Route::post('/auth/cadastro', 'AuthController@register')->name('registro.usuario');
-    Route::post('/auth/verificar/{token}', 'AuthController@verifyEmail')->name('verificar.email');
+    Route::post('/auth/verificar/{token}', 'AuthController@verifyToken')->name('verificar.token');
     /** OPTIONS  */
     Route::get('/options/{name}', 'OptionsController@getByName')->name('busca.metadata.x.nome');
     Route::get('/options', 'OptionsController@index')->name('listar.opcoes');

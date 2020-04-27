@@ -3,7 +3,7 @@
     <div class="text-h5 title-page q-px-md q-py-lg text-primary" v-text="title"></div>
     <div class="row justify-start q-gutter-md" v-if="items">
       <q-card class="col-xs-5 col-sm-3 col-md-2 col-lg-2" v-for="(item, i) in items" :key="`item-${i}`">
-        <q-card-section style="word-break:break-word;">
+        <q-card-section style="">
         </q-card-section>
           <q-card-section class="row justify-center">
             <q-avatar>

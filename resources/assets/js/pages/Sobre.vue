@@ -78,7 +78,7 @@ export default {
   computed: {
     ...mapState(["layout", "links"]),
     capitalize() {
-      let string = 'Sobre a' + this.layout.title_footer;
+      let string = 'Sobre a ' + this.layout.title_footer;
       return string.toUpperCase()
     }
   },

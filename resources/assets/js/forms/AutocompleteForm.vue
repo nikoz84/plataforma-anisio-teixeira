@@ -1,9 +1,10 @@
 <template>
-  <div class="row no-wrap q-gutter-xs">
+  <div class="YL__toolbar-input-container row no-wrap justify-end" id="autocomplete-form">
+    
     <q-select
       dense
-      rounded
       outlined
+      square
       clearable
       v-model="term"
       use-input
@@ -19,9 +20,10 @@
       :label="`Buscar por: ${label}`"
       :loading="loadingState"
       label-color="pink-5"
-      bg-color="grey-11"
-      
+      bg-color="grey-4"
+      class="grey-11 col"
       style="with:100%;"
+      
     />
 
     <q-btn
@@ -29,13 +31,12 @@
       outlined
       dense
       @click="searchTerm"
-      class="toolbar-input-btn"
+      class="YL__toolbar-input-btn"
       color="grey-3"
       text-color="pink-5"
       icon="search"
       unelevated
       aria-label="pesquisar"
-      style="padding: 5px;"
     />
     <q-btn color="pink-5" round flat icon="more_vert" aria-label="opções de busca">
       <q-menu cover auto-close>
@@ -119,11 +120,19 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
+.YL
+  &__toolbar-input-container
+    min-width: 100px
+    width: 45%
+  &__toolbar-input-btn
+    border-radius: 0
+    border-style: solid
+    border-width: 1px 1px 1px 0
+    border-color: rgba(0,0,0,.24)
+    max-width: 60px
+    width: 100%
+    font-size: 16px !important
+.q-btn
+  font-size: 13px !important
 
-
-.toolbar-input-btn {
-  border-color: rgba(0, 0, 0, 0.24);
-  max-width: 45px;
-  width: 100%;
-}
 </style>

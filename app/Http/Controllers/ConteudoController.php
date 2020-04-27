@@ -30,65 +30,41 @@ class ConteudoController extends ApiController
      * Lista de conteúdos por canal
      *
      * @param $request \Illuminate\Http\Request
-     * 
+     *
      * @return App\Traits\ApiResponder
      */
     public function index(Request $request)
     {
-
-        $limit = $request->query('limit', 6);
-        $orderBy = $request->query('order', 'created_at');
-        $canal = $request->query('canal', 6);
-        $tipos          = $request->query('tipos');
-        $licencas       = $request->query('licencas');
-        $componentes    = $request->query('componentes');
-        $categoria      = $request->query('categoria');
-        $tag      = $request->query('tag');
-        $por      = $request->query('por', 'tag');
-        $busca    = $request->query('busca');
-        $publicador    = $request->query('publicador');
-
         $query = Conteudo::query();
 
         // FILTRO X TIPO
-        $query->when($tipos, function ($q, $tipos) {
-            return $q->whereIn("tipo_id", explode(',', $tipos));
-        });
+        $query->searchByTipo($request->query('tipos'));
         // FILTRO X PUUBLICADOR
-        if ($publicador) {
-            $query->where('user_id', $publicador);
-        }
+        $query->searchByPublicador($request->query('publicador'));
         // FILTRO BUSCA FULL TEXT SEARCH
-        $query->when($busca, function ($q) use ($busca, $por) {
-            return $q->search($busca, $por);
-        });
+        $query->search(
+            $request->query('busca'),
+            $request->query('por', 'tag')
+        );
         // FILTRO X TAG
-        $query->when($tag, function ($q, $tag) {
-            return $q->searchTag($tag);
-        });
+        $query->searchTag($request->query('tag'));
         // FILTRO X CANAL
-        if ($canal != 6) {
-            $query->where('canal_id', $canal);
-        };
+        $query->searchByCanal($request->query('canal', 6));
         // FILTRO X CATEGORIA
-        if ($categoria) {
-            $query->where('category_id', explode(',', $categoria));
-        }
+        $query->searchByCategory($request->query('categoria'));
+        
         // FILTRO X COMPONENTES
-        $query->when($componentes, function ($q, $componentes) {
-            return $q->searchByComponent($componentes);
-        });
+        $query->searchByComponent($request->query('componentes'));
         // FILTRO X LICENÇA
-        if ($licencas) {
-            $query->whereIn('license_id', explode(',', $licencas));
-        };
+        $query->searchByLicense($request->query('licencas'));
+        // ORDENAR POR
+        $query->sortBy($request->query('ordenar', 'created_at'));
 
         $url = http_build_query($request->all());
 
         $conteudos = $query->where('is_approved', 'true')
             ->with(['canal', 'tipo'])
-            ->orderBy($orderBy, 'desc')
-            ->paginate($limit)
+            ->paginate($request->query('limit', 6))
             ->setPath("/conteudos?{$url}");
 
         return $this->showAsPaginator($conteudos);

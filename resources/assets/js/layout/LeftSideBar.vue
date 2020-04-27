@@ -80,7 +80,7 @@
         </q-item-section>
       </q-item -->
     </q-list>
-    <q-list>
+    <q-list dense>
       <q-item-label class="bg-grey-4" header>
         <strong
           class="text-accent color-grey-10"

@@ -201,7 +201,15 @@ class AuthController extends ApiController
             return false;
         }
     }
-    public function verifyEmail(Request $request, $token)
+    /**
+     * Verificar email
+     *
+     * @param $request \Illuminate\Http\Request
+     * @param $token   token de validação
+     *
+     * @return \App\Traits\ApiResponser
+     */
+    public function verifyToken(Request $request, $token)
     {
        
         $validator = Validator::make(

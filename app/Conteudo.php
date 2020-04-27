@@ -325,6 +325,70 @@ class Conteudo extends Model
             return $q->whereIn('id', explode(',', $componentes));
         });
     }
+    public function scopeSearchByPublicador($query, $publicador)
+    {
+        if (!$publicador) {
+            return $query;
+        }
+
+        return $query->where('user_id', $publicador);
+    }
+    public function scopeSearchByCategory($query, $categoria)
+    {
+        if (!$categoria) {
+            return $query;
+        }
+
+        return $query->where('category_id', explode(',', $categoria));
+    }
+    public function scopeSearchByCanal($query, $canal)
+    {
+        if (!$canal || $canal == 6) {
+            return $query;
+        }
+
+        return $query->where('canal_id', $canal);
+    }
+    public function scopeSearchByTipo($query, $tipos)
+    {
+        if (!$tipos) {
+            return $query;
+        }
+
+        return $query->whereIn('tipo_id', explode(',', $tipos));
+    }
+    public function scopeSearchByLicense($query, $licencas)
+    {
+        if (!$licencas) {
+            return $query;
+        }
+
+        return $query->whereIn('license_id', explode(',', $licencas));
+    }
+    public function scopeSortBy($query, $by)
+    {
+        if (!$by) {
+            return $query;
+        }
+        $order_by = null;
+        $sort = 'DESC';
+        switch ($by) {
+            case 'downloads':
+                $order_by = 'qt_downloads';
+                break;
+            case 'access':
+                $order_by = 'qt_access';
+                break;
+            case 'title':
+                $order_by = 'title';
+                $sort = 'ASC';
+                break;
+            default:
+                $order_by = 'created_at';
+                break;
+        }
+        return $query->orderBy($order_by, $sort);
+    }
     public static function tsDocumentoSave($id)
     {
         if (!$id) {
