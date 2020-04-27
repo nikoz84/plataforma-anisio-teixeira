@@ -68,14 +68,13 @@ Nicolás Romero
 
 
 Paulo Vitor Carvalho Santos
-<a href="https://github.com/Paulo25">
-<img src="https://avatars2.githubusercontent.com/u/29576745?s=400&u=e8e26e84e3703941505e735b25cf3cf97a4c60c4&v=4" title="Paulo Vitor Carvalho Santos" width="80" height="80">
-</a>
+
+<a href="https://github.com/Paulo25"><img src="https://avatars2.githubusercontent.com/u/29576745?s=400&u=e8e26e84e3703941505e735b25cf3cf97a4c60c4&v=4" title="Paulo Vitor Carvalho Santos" width="80" height="80"></a>
+
 
 Valdiney França
-<a href="https://github.com/valdiney">
-<img src="https://avatars3.githubusercontent.com/u/3947490?s=460&u=ad7d473034d7f9ced288b13b1755a9df442eee8d&v=4" title="Paulo Vitor Carvalho Santos" width="80" height="80">
-</a>
+
+<a href="https://github.com/valdiney"><img src="https://avatars3.githubusercontent.com/u/3947490?s=460&u=ad7d473034d7f9ced288b13b1755a9df442eee8d&v=4" title="Paulo Vitor Carvalho Santos" width="80" height="80"></a>
 
 
 David Galvão
