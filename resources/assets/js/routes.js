@@ -5,7 +5,7 @@ import LoginForm from "./forms/LoginForm.vue";
 import RecoverPassForm from "./forms/RecoverPassForm.vue";
 import RegisterForm from "./forms/RegisterForm.vue";
 import ListAdmin from "./components/ListAdmin.vue";
-import DenunciaForm from "./forms/DenunciaForm.vue";
+import ContactForm from "./forms/ContactForm.vue";
 import Gallery from "./components/Gallery.vue";
 import ConfirmationEmailForm from "./forms/ConfirmationEmailForm.vue";
 
@@ -176,11 +176,11 @@ const routes = [
       },
       {
         path: "contato/:action",
-        name: "DenunciaForm",
-        component: DenunciaForm,
+        name: "ContactForm",
+        component: ContactForm,
         meta: {
           requiresAuth: false,
-          title: "Enviar denúncia ou Fale conosco"
+          title: "Contatenos"
         }
       }
     ]

@@ -178,7 +178,8 @@ class AuthController extends ApiController
             'name' => 'required|string|max:255|min:4',
             'email' => 'required|email|string|max:100|unique:users,email',
             'password' => 'required|string|min:6|required_with:confirmation|same:confirmation',
-            'confirmation' => 'required'
+            'confirmation' => 'required',
+            'recaptcha' => ['required', new \App\Rules\ValidRecaptcha]
         ];
     }
     /**

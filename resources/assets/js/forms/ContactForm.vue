@@ -106,7 +106,7 @@ import { QCard, QCardSection, QImg, QForm, QInput, QSeparator } from "quasar";
 import RecaptchaForm from './RecaptchaForm.vue';
 
 export default {
-  name: "DenunciaForm",
+  name: "ContactForm",
   components: {
     ShowErrors,
     QCard,
