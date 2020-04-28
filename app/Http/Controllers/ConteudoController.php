@@ -37,28 +37,18 @@ class ConteudoController extends ApiController
     {
         $query = Conteudo::query();
 
-        // FILTRO X TIPO
-        $query->searchByTipo($request->query('tipos'));
-        // FILTRO X PUUBLICADOR
-        $query->searchByPublicador($request->query('publicador'));
-        // FILTRO BUSCA FULL TEXT SEARCH
-        $query->search(
-            $request->query('busca'),
-            $request->query('por', 'tag')
-        );
-        // FILTRO X TAG
-        $query->searchTag($request->query('tag'));
-        // FILTRO X CANAL
-        $query->searchByCanal($request->query('canal', 6));
-        // FILTRO X CATEGORIA
-        $query->searchByCategory($request->query('categoria'));
-        
-        // FILTRO X COMPONENTES
-        $query->searchByComponent($request->query('componentes'));
-        // FILTRO X LICENÇA
-        $query->searchByLicense($request->query('licencas'));
-        // ORDENAR POR
-        $query->sortBy($request->query('ordenar', 'created_at'));
+        $query->searchByColumn('user_id', $request->query('publicador'))
+            ->searchByColumn('category_id', $request->query('categoria'))
+            ->searchByColumn('tipo_id', $request->query('tipos'), true)
+            ->searchByColumn('license_id', $request->query('licencas'), true)
+            ->fullTextSearch(
+                $request->query('busca'),
+                $request->query('por', 'tag')
+            )
+            ->searchTag($request->query('tag'))
+            ->searchByCanal($request->query('canal', 6))
+            ->searchByComponent($request->query('componentes'))
+            ->sortBy($request->query('ordenar', 'created_at'));
 
         $url = http_build_query($request->all());
 
@@ -77,16 +67,17 @@ class ConteudoController extends ApiController
     public function getSitesTematicos(Request $request)
     {
         $limit = $request->query('limit', 10);
-        $orderBy = $request->query('order', 'created_at');
-
-        $sitesTematicos = $this->conteudo::with(['canal'])
+        $query = Conteudo::query();
+        
+        $query::with(['canal'])
             ->where('is_site', 'true')
             ->where('is_approved', 'true')
-            ->orderBy($orderBy, 'desc')
-            ->paginate(10)
+            ->sortBy($request->query('ordenar', 'created_at'));
+        
+        $sites = $query->paginate($limit)
             ->setPath("/conteudos/sites?limit={$limit}");
 
-        return $this->showAsPaginator($sitesTematicos);
+        return $this->showAsPaginator($sites);
     }
     /**
      * Regras de validação

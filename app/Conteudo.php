@@ -285,7 +285,7 @@ class Conteudo extends Model
      * @param [type] $search
      * @return void
      */
-    public function scopeSearch($query, $search, $por)
+    public function scopeFullTextSearch($query, $search, $por)
     {
 
         if (!$search) {
@@ -325,22 +325,20 @@ class Conteudo extends Model
             return $q->whereIn('id', explode(',', $componentes));
         });
     }
-    public function scopeSearchByPublicador($query, $publicador)
+    
+    public function scopeSearchByColumn($query, $column, $data, $multiple = false)
     {
-        if (!$publicador) {
+        if (!$data) {
             return $query;
         }
 
-        return $query->where('user_id', $publicador);
-    }
-    public function scopeSearchByCategory($query, $categoria)
-    {
-        if (!$categoria) {
-            return $query;
+        if ($multiple) {
+            return $query->whereIn($column, explode(',', $data));
         }
 
-        return $query->where('category_id', explode(',', $categoria));
+        return $query->where($column, $data);
     }
+    
     public function scopeSearchByCanal($query, $canal)
     {
         if (!$canal || $canal == 6) {
@@ -349,22 +347,7 @@ class Conteudo extends Model
 
         return $query->where('canal_id', $canal);
     }
-    public function scopeSearchByTipo($query, $tipos)
-    {
-        if (!$tipos) {
-            return $query;
-        }
-
-        return $query->whereIn('tipo_id', explode(',', $tipos));
-    }
-    public function scopeSearchByLicense($query, $licencas)
-    {
-        if (!$licencas) {
-            return $query;
-        }
-
-        return $query->whereIn('license_id', explode(',', $licencas));
-    }
+    
     public function scopeSortBy($query, $by)
     {
         if (!$by) {
@@ -376,10 +359,10 @@ class Conteudo extends Model
             case 'downloads':
                 $order_by = 'qt_downloads';
                 break;
-            case 'access':
+            case 'acessos':
                 $order_by = 'qt_access';
                 break;
-            case 'title':
+            case 'titulo':
                 $order_by = 'title';
                 $sort = 'ASC';
                 break;

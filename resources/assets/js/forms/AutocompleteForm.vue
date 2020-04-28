@@ -12,7 +12,7 @@
       option-label="name"
       stack-label
       hide-dropdown-icon
-      debounce="300"
+      debounce="200"
       @filter="searchTerm"
       @new-value="add"
       @input="selectedInput"
@@ -123,7 +123,7 @@ export default {
 .YL
   &__toolbar-input-container
     min-width: 100px
-    width: 45%
+    width: 39% !important
   &__toolbar-input-btn
     border-radius: 0
     border-style: solid
@@ -134,5 +134,21 @@ export default {
     font-size: 16px !important
 .q-btn
   font-size: 13px !important
+
+@media (max-width: 680px)
+  .YL
+    &__toolbar-input-container
+      min-width: 100px
+      width: 100% !important
+    &__toolbar-input-btn
+      border-radius: 0
+      border-style: solid
+      border-width: 1px 1px 1px 0
+      border-color: rgba(0,0,0,.24)
+      max-width: 60px
+      width: 100%
+      font-size: 16px !important
+  .q-btn 
+    font-size: 13px !important
 
 </style>

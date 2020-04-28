@@ -32,7 +32,7 @@ class GoogleRecaptcha
         $context  = stream_context_create($options);
         $response = file_get_contents($url, false, $context);
         $responseDecode = json_decode($response);
-
-        return $responseDecode->success;
+        $is_debug = env('APP_DEBUG');
+        return $is_debug ? true : $responseDecode->success;
     }
 }
