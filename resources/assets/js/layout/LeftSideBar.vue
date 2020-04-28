@@ -22,7 +22,7 @@
         </q-item-section>
         <q-item-section>
           <q-item-label>
-            Admin
+            Painel de Controle
           </q-item-label>
         </q-item-section>
       </q-item>
