@@ -218,9 +218,9 @@ class Conteudo extends Model
     public function getArquivosAttribute()
     {
         return [
-            'download'      => $this->getMetaDados('download'),
-            'visualizacao'  => $this->getMetaDados('visualizacao'),
-            'guia'          => $this->getMetaDados('guias-pedagogicos'),
+            'download'      => $this->getMetaDados('download', $this['id']),
+            'visualizacao'  => $this->getMetaDados('visualizacao', $this['id']),
+            'guia'          => $this->getMetaDados('guias-pedagogicos', $this['id']),
         ];
     }
     /**

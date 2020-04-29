@@ -86,14 +86,15 @@ trait FileSystemLogic
      * Seleciona os metadados do arquivo
      *
      * @param $directory diretorio a procurar
+     * @param $id        id do conteudo
      *
      * @return array
      */
-    public function getMetaDados($directory)
+    public function getMetaDados($directory, $id)
     {
         $filesystem = new Filesystem;
 
-        $path = Storage::disk('conteudos-digitais')->path($directory) . "/{$this['id']}.*";
+        $path = Storage::disk('conteudos-digitais')->path($directory) . "/{$id}.*";
         $files = $filesystem->glob($path);
         $arr = [];
         foreach ($files as $file) {
