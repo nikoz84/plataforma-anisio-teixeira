@@ -14,7 +14,7 @@ class FileController extends ApiController
 
     public function __construct(File $file, Request $request, Storage $storage)
     {
-        $this->middleware('jwt.verify')->except(['index', 'search', 'getFiles', 'getGallery']);
+        $this->middleware('jwt.verify')->except(['index', 'search', 'getFiles', 'getGallery', 'downloadFile']);
         $this->file = $file;
         $this->request = $request;
         $this->storage = $storage;
@@ -58,8 +58,12 @@ class FileController extends ApiController
 
     public function downloadFile($id)
     {
-        //
+        $file = $this->getMetaDados('download', $id);
+        //dd($file->url);
+        return Storage::disk('conteudos-digitais')->download('download/'.$file->name);
+        //return Storage::download('public/conteudos/conteudos-digitais/download/'.$file->name);
     }
+
     public function getGallery()
     {
         $imagens = collect($this->getImagesGallery(true));

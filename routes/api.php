@@ -62,6 +62,9 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/licencas', 'LicenseController@index')->name('listar.licencas');
     /** TOKEN */
     Route::get('usuarios/verify/{token}', 'UserController@verify')->name('verify.token');
+    
+    /** DOWNLOAD FILE **/
+    Route::get('/downloadFile/{id}', 'FileController@downloadFile')->name('downloadFile.id');
 });
 /**
  *
