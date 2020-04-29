@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-chip dense :label="`${title}:`" color="ligth"></q-chip>
+    <strong >{{title}}:</strong>
     <q-chip flat 
       dense
       color="blue-grey-6" 

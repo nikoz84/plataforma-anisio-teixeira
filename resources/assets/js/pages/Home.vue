@@ -4,9 +4,7 @@
       <template v-slot:media>
         <img src="/storage/conteudos/slider/banner_ensinosuperior.png">
       </template>
-
-      <h1 class="text-pink-10 text-primary">Rotinas de estudo</h1>
-      <span class="text-h6 text-pink">Descrição de teste</span>
+      
     </q-parallax>
     <a class="skip-link" href="#tipo-conteudos">Ir a tipos de conteúdos</a>
     <CardHomeIcon
@@ -14,7 +12,6 @@
       title="Tipos de Conteúdos"
       :items="tipos"
       v-if="tipos"
-      style="min-height: 85vh;"
     ></CardHomeIcon>
     <a class="skip-link" href="#ensino-medio">Ir a disciplinas do ensino medio</a>
     <CardHomeIcon
@@ -22,7 +19,6 @@
        v-if="disciplinas"
       :title="disciplinas.name"
       :items="disciplinas.componentes"
-      style="min-height: 85vh;"
     ></CardHomeIcon>
     <a class="skip-link" href="#temas">Ir a temas transversais</a>
     <CardHomeIcon
@@ -30,7 +26,6 @@
       v-if="temas"
       :title="temas.name"
       :items="temas.componentes"
-      style="min-height: 45vh;"
     ></CardHomeIcon>
     
     

@@ -26,7 +26,7 @@ export default {
       
       let player = await this.$refs.plyr.player;
       player.volume = 0.2;
-      player.play()
+      
       
     }
   }

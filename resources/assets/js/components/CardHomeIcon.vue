@@ -1,11 +1,9 @@
 <template>
   <section>
     <div class="text-h5 title-page q-px-md q-py-lg text-primary" v-text="title"></div>
-    <div class="row justify-start q-gutter-md" v-if="items">
+    <div class="row" v-if="items">
       <q-card class="col-xs-5 col-sm-3 col-md-2 col-lg-2" v-for="(item, i) in items" :key="`item-${i}`">
-        <q-card-section style="">
-        </q-card-section>
-          <q-card-section class="row justify-center">
+        <q-card-section class="row justify-center">
             <q-avatar>
               <q-img
                 :rounded-borders="rounded"
@@ -16,8 +14,8 @@
                 placeholder-src="/img/fundo-padrao.svg"
               />
             </q-avatar>
-          </q-card-section>
-          <q-card-actions vertical align="center">
+        </q-card-section>
+        <q-card-actions vertical align="center">
             <q-btn
               :aria-label="`Buscar por ${item.name}`"
               style="word-break:break-word"
@@ -27,8 +25,8 @@
               color="accent"
               :to="item.search_url"
             ></q-btn>
-          </q-card-actions>
-        </q-card>
+        </q-card-actions>
+      </q-card>
     </div>
   </section>
 </template>

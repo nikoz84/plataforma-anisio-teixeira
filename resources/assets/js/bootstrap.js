@@ -26,10 +26,7 @@ Vue.use(Quasar, {
     Dark,
     Platform,
     LocalStorage
-  },
-  extras: [
-    'material-icons-outlined'
-  ],
+  }
 });
 
 window.axios = require("axios");

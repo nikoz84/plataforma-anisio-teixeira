@@ -17,8 +17,8 @@ $factory->define(App\User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'password' => bcrypt('mundo'), // secret
-        'remember_token' => str_random(10),
+        'password' => '123456',
+        'remember_token' => null,
         'options' => [],
         'verification_token' => null, 
         'verified' => false,
@@ -47,7 +47,7 @@ $factory->define(App\Canal::class, function(Faker $faker){
 });
 $factory->define(App\Tag::class, function(Faker $faker){
     return [
-        'name' => $faker->unique()->word,
+        'name' => $faker->unique()->word . rand(1, 100),
         'searched' => $faker->numberBetween(0, 2500),
         'created_at' => $faker->date()  
     ];

@@ -1,42 +1,26 @@
 <template>
-  <div class="row justify-start q-gutter-sm q-mt-md" v-if="conteudo">
-    <Player class="col-sm-12 col-md-6" :arquivos="conteudo.arquivos" :tipo="conteudo.tipo"></Player>
-    <q-card class="col-sm-12 col-md-5">
-            <q-card-section>
-              <Title :title="conteudo.title"></Title>
-              
-              <small v-if="conteudo.user">
-                Publicador(a): 
-                <q-badge class="cursor-pointer"
-                        color="blue-grey-6"
-                        @click="onClick(`/recursos-educacionais/listar?publicador=${conteudo.user.id}`)">
-                  {{conteudo.user.name}}
-                  <q-icon name="link" size="14px" class="q-ml-xs"/>
-                </q-badge>
-                
-                <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
-                        Outros conteúdos deste publicador
-                </q-tooltip>
-              </small>
-              <q-space></q-space>
-              <small>
-                Publicado em: 
-                <q-badge color="bg-grey">{{conteudo.formated_date}}</q-badge>
-              </small>
-            </q-card-section>
-            <q-card-section>
-              <div v-html="conteudo.description"></div> 
-            </q-card-section>
-            
+  <div class="row q-mt-md" v-if="conteudo">
+    <div class="col-sm-12 col-md-6">
+      <Player :arquivos="conteudo.arquivos" :tipo="conteudo.tipo"></Player>
+      <ConteudoMetadata></ConteudoMetadata>
+    </div>
+    
+    <q-card class="col-sm-12 col-md-6">
+      <q-card-section>
+        <Title :title="conteudo.title"></Title>
+      </q-card-section>
+      <q-card-section>
+        <div v-html="conteudo.description"></div> 
+      </q-card-section>
     </q-card>
   </div>
 </template>
 <script>
-import Player from "../components/Player.vue";
+import Player from "../components/Player";
 import { mapState } from "vuex";
 import { QCard, QCardSection, QSeparator, QChip, Ripple } from "quasar";
-import Title from "./Title.vue";
-
+import Title from "./Title";
+import ConteudoMetadata from './ConteudoMetadata';
 
 export default {
   name: "Conteudo",
@@ -47,7 +31,8 @@ export default {
     QSeparator,
     Player,
     QChip,
-    Title
+    Title,
+    ConteudoMetadata
   },
   created() {},
   computed: {
@@ -58,9 +43,7 @@ export default {
     }
   },
   methods: {
-    onClick(url) {
-      this.$router.push(url);
-    }
+    
   }
 };
 </script>

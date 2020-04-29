@@ -27,10 +27,13 @@ trait FileSystemLogic
             ->whereIn('cc.id', $arrComp)
             ->get()
             ->first();
+        if (!$disciplina) {
+            return Storage::disk('public-path')->url("img/fundo-padrao.svg");
+        }
 
         $image = "/imagem-associada/emitec/img-emitec_disciplina{$disciplina->id}.png";
-        $exist = Storage::disk('conteudos-digitais')->exists($image);
-
+        $exist = self::windowsDirectory(Storage::disk('conteudos-digitais')->exists($image)) ;
+        
         return ($exist) ? Storage::disk('conteudos-digitais')->url($image) : null;
     }
 
@@ -76,15 +79,29 @@ trait FileSystemLogic
             $file = collect(File::glob($path_sinopse))->shuffle()->first();
         }
         
-        if (!$file) {
-            $conteudo = \App\Conteudo::find($id);
-            $path_category = self::windowsDirectory("{$path}/categoria/{$conteudo->category_id}.*");
-            $file = collect(File::glob($path_category))->first();
-        }
-        
+                
         return Str::replaceFirst($path . '/', '', $file);
     }
 
+    public function getMetaDados($pasta)
+    {
+        $filesystem = new Filesystem;
+
+        $path = Storage::disk('conteudos-digitais')->path($pasta) . "/{$this['id']}.*";
+        $files = $filesystem->glob($path);
+        $arr = [];
+        foreach ($files as $file) {
+            $name = $filesystem->name($file) . "." . $filesystem->extension($file);
+            $arr = [
+                'mime_type' => $filesystem->mimeType($file),
+                'extension' => $filesystem->extension($file),
+                'size'      => $filesystem->size($file),
+                'name'      => $name,
+                'url'       => Storage::disk('conteudos-digitais')->url($pasta) . "/{$name}"
+            ];
+        }
+        return (object) $arr;
+    }
     /**
      * Retorna galeria de imagens
      *

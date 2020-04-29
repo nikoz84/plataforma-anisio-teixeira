@@ -48,9 +48,9 @@ class ConteudoController extends ApiController
             ->searchTag($request->query('tag'))
             ->searchByCanal($request->query('canal', 6))
             ->searchByComponent($request->query('componentes'))
-            ->sortBy($request->query('ordenar', 'created_at'));
+            ->sortBy($request->query('ordenar', 'data'));
 
-        $url = http_build_query($request->all());
+        $url = http_build_query($request->except('page'));
 
         $conteudos = $query->where('is_approved', 'true')
             ->with(['canal', 'tipo'])
