@@ -1,11 +1,32 @@
 <template>
   <section class="q-pa-lg">
-    <q-parallax :height="200" :speed="0.8">
-      <template v-slot:media>
-        <img src="/storage/conteudos/slider/banner_ensinosuperior.png">
-      </template>
-      
-    </q-parallax>
+    <q-carousel
+      swipeable
+      animated
+      v-model="slide"
+      controlType="flat"
+      control-color="primary"
+      navigation
+      navigation-icon="radio_button_unchecked"
+      padding
+      infinite
+      autoplay
+      arrows
+      height="250px"
+      class="accent rounded-borders"
+    >
+    <q-carousel-slide :name="1" img-src="/storage/conteudos/slider/banner_ensinosuperior.png">
+      <div class="absolute-bottom custom-caption">
+          <q-btn class="q-px-lg" flat label="Saiba mais"></q-btn>
+      </div>
+    </q-carousel-slide>
+    <q-carousel-slide :name="2" img-src="/storage/conteudos/slider/banner_rotinas-de-estudo.png">
+      <div class="absolute-bottom custom-caption">
+          <q-btn class="q-px-lg" flat label="Saiba mais"></q-btn>
+      </div>
+    </q-carousel-slide>
+    </q-carousel>
+    
     <a class="skip-link" href="#tipo-conteudos">Ir a tipos de conteúdos</a>
     <CardHomeIcon
       id="tipo-conteudos"
@@ -78,6 +99,7 @@ export default {
 
   data() {
     return {
+      slide: 1,
       ids: [
         {
           name: "conteudos-recentes",

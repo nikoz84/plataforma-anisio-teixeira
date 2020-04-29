@@ -82,12 +82,18 @@ trait FileSystemLogic
                 
         return Str::replaceFirst($path . '/', '', $file);
     }
-
-    public function getMetaDados($pasta)
+    /**
+     * Seleciona os metadados do arquivo
+     *
+     * @param $directory diretorio a procurar
+     *
+     * @return array
+     */
+    public function getMetaDados($directory)
     {
         $filesystem = new Filesystem;
 
-        $path = Storage::disk('conteudos-digitais')->path($pasta) . "/{$this['id']}.*";
+        $path = Storage::disk('conteudos-digitais')->path($directory) . "/{$this['id']}.*";
         $files = $filesystem->glob($path);
         $arr = [];
         foreach ($files as $file) {
@@ -97,7 +103,7 @@ trait FileSystemLogic
                 'extension' => $filesystem->extension($file),
                 'size'      => $filesystem->size($file),
                 'name'      => $name,
-                'url'       => Storage::disk('conteudos-digitais')->url($pasta) . "/{$name}"
+                'url'       => Storage::disk('conteudos-digitais')->url($directory) . "/{$name}"
             ];
         }
         return (object) $arr;
