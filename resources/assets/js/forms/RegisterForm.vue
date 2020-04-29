@@ -39,6 +39,7 @@
                       <ShowErrors :errors="errors.confirmation"></ShowErrors>
                     </template>
                   </q-input>
+                  <RecaptchaForm :errors="errors.recaptcha"></RecaptchaForm>
                    <div>
                      <q-btn class="full-width" label="Cadastre-se" type="submit" color="primary"/>
                    </div>
@@ -55,6 +56,7 @@
 </template>
 
 <script>
+import RecaptchaForm from './RecaptchaForm.vue';
 import ShowErrors from "../components/ShowErrors.vue";
 import { mapActions, mapState, mapMutations } from "vuex";
 import {
@@ -77,7 +79,8 @@ export default {
     QForm,
     QImg,
     QSeparator,
-    ShowErrors
+    ShowErrors,
+    RecaptchaForm
   },
   data() {
     return {
@@ -97,7 +100,8 @@ export default {
         name: this.name,
         email: this.email,
         password: this.password,
-        confirmation: this.confirmation
+        confirmation: this.confirmation,
+        recaptcha: grecaptcha.getResponse()
       };
 
       try {
@@ -106,7 +110,7 @@ export default {
         this.$router.push("/usuario/confirmar-email");
       } catch (response) {
         this.errors = response.errors;
-        
+        grecaptcha.reset()
       }
     }
   }

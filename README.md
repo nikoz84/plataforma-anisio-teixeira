@@ -1,6 +1,6 @@
 # PLATAFORMA ANÍSIO TEIXEIRA
 
-O Ambiente Educacional Web – AEW é um projeto de aprendizagem (Baseado em Laravel 5.5) voltado ao compartilhamento de conteúdos digitais através de licenças livres, disponibilizado na internet no endereço (http://pat.educacao.ba.gov.br) para acesso e utilização de todos.
+O Ambiente Educacional Web – AEW é um projeto de aprendizagem (Baseado em Laravel 5.8) voltado ao compartilhamento de conteúdos digitais através de licenças livres, disponibilizado na internet no endereço (http://pat.educacao.ba.gov.br) para acesso e utilização de todos.
 
 Você poderá criar canais dinámicos, conteúdos digitais, aplicativos educacionais, sites temáticos.
 
@@ -12,11 +12,11 @@ Estamos liberando o código da aplicação para cumprir com o propósito para o 
 
 Criamos uma API RESTFUL que se comunica com frontend feito em VUE.js permitindo desacoplar as camadas de frontend do backend:
 
-- Backend - PHP 7+
-- Backend - Laravel Framework 5.5+
+- Backend - PHP 7.1+
+- Backend - Laravel Framework 5.8+
 - Backend - Servidor Apache 2.2
 - Backend - Banco de dados Postgres 9.5+
-- Frontend - VUE JS, BOOTSTRAP, SASS
+- Frontend - VUE JS 2.6, Quasar Framework 1.9+
 
 ## COMO INSTALAR
 
@@ -44,9 +44,6 @@ Instalar as dependências do Vuejs com npm, lembre ter instalado o NODEJS:
 
 `$ npm install`
 
-### node-sass
-
-> Nota: Se tiver algum problema com instalar o modulo node-sass pode forçar a instalação com: `$ npm i node-sass --unsafe-perm=true`
 
 ### crlf
 
@@ -68,15 +65,27 @@ Nicolás Romero
 
 <a href="https://github.com/nikoz84"><img src="https://avatars1.githubusercontent.com/u/6708508?s=460&v=4" title="Nicolás Romero" width="80" height="80"></a>
 
-Marlon Trindade Ferreira
 
-<a href="https://github.com/marlontrin20"><img src="https://avatars0.githubusercontent.com/u/8275515?s=460&v=4" title="Marlon Trindade Ferreira" width="80" height="80"></a>
+
+Paulo Vitor Carvalho Santos
+
+<a href="https://github.com/Paulo25"><img src="https://avatars2.githubusercontent.com/u/29576745?s=400&u=e8e26e84e3703941505e735b25cf3cf97a4c60c4&v=4" title="Paulo Vitor Carvalho Santos" width="80" height="80"></a>
+
+
+Valdiney França
+
+<a href="https://github.com/valdiney"><img src="https://avatars3.githubusercontent.com/u/3947490?s=460&u=ad7d473034d7f9ced288b13b1755a9df442eee8d&v=4" title="Paulo Vitor Carvalho Santos" width="80" height="80"></a>
+
 
 David Galvão
 
-<a href="https://github.com/davidgalvao"><img src="https://robohash.org/davidgalvao" title="David Galvão" width="80" height="80"></a>
+<a href="https://github.com/davidgalvao"><img src="https://avatars2.githubusercontent.com/u/22455885?s=400&v=4" title="David Galvão" width="80" height="80"></a>
 
-#### Antigo Colaborador
+#### Antigos Colaboradores
+
+Marlon Trindade Ferreira
+
+<a href="https://github.com/marlontrin20"><img src="https://avatars0.githubusercontent.com/u/8275515?s=460&v=4" title="Marlon Trindade Ferreira" width="80" height="80"></a>
 
 Fabiano Muniz
 

@@ -1,18 +1,18 @@
 <template>
-    <div>
-        <div class="text-h6" v-html="title"></div>
-        <q-chip flat 
-                color="primary" 
-                text-color="white"
-                icon="local_offer"
-                v-for="(item, i) in items"
-                :key="i"
-                :label="item.name"
-                clickable
-                @click="searchBy(item)"
-                >
-        </q-chip>
-    </div>    
+  <div>
+    <strong >{{title}}:</strong>
+    <q-chip flat 
+      dense
+      color="blue-grey-6" 
+      text-color="white"
+      clickable
+      v-for="(item, i) in items"
+      :key="i"
+      :label="item.name"
+      @click="searchBy(item)"
+    >
+    </q-chip>
+  </div>    
 </template>
 <script>
 export default {

@@ -7,7 +7,7 @@
           dense
           @click="leftDrawerOpenModel = false"
           aria-label="Menu"
-          icon="dehaze"
+          icon="swap_horiz"
         />
         <BtnMarca></BtnMarca>
       </q-item-label>
@@ -15,19 +15,20 @@
       <q-item
         v-if="isLogged"
         clickable to="/admin/conteudos/listar"
+        exact
       >
         <q-item-section avatar>
-          <q-icon name="settings_applications" />
+          <q-icon name="settings_applications_outlined" />
         </q-item-section>
         <q-item-section>
           <q-item-label>
-            Admin
+            Painel de Controle
           </q-item-label>
         </q-item-section>
       </q-item>
       <q-separator v-if="isLogged" />
       <!-- HOME -->
-      <q-item clickable to="/">
+      <q-item clickable to="/" exact>
         <q-item-section avatar>
           <q-icon name="home" />
         </q-item-section>
@@ -58,6 +59,7 @@
           clickable
           v-close-popup
           tabindex="0"
+          exact
         >
           <q-item-section>
             <q-item-label>{{ link.name }}</q-item-label>
@@ -78,7 +80,7 @@
         </q-item-section>
       </q-item -->
     </q-list>
-    <q-list>
+    <q-list dense>
       <q-item-label class="bg-grey-4" header>
         <strong
           class="text-accent color-grey-10"
@@ -87,7 +89,7 @@
         </strong>
       </q-item-label>
       <!-- SOBRE -->
-      <q-item clickable to="/sobre">
+      <q-item clickable to="/sobre" exact>
         <q-item-section avatar>
           <q-icon name="info" />
         </q-item-section>
@@ -96,9 +98,9 @@
         </q-item-section>
       </q-item>
       <!-- GALERIA -->
-      <q-item clickable to="/galeria" aria-label="visite a galería de imagens">
+      <q-item clickable to="/galeria" aria-label="visite a galería de imagens" exact>
         <q-item-section avatar>
-          <q-icon name="photo" />
+          <q-icon name="insert_photo" />
         </q-item-section>
         <q-item-section>
           <q-item-label>Galeria</q-item-label>

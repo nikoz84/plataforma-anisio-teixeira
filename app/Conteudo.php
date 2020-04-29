@@ -142,7 +142,7 @@ class Conteudo extends Model
     public function setApprovingUserIdAttribute($user)
     {
         $id = null;
-
+        
         if ($user->is('admin') || $user->is('super-admin') || $user->is('coordenador')) {
             $id = $user->id;
         }
@@ -201,31 +201,6 @@ class Conteudo extends Model
         return strip_tags(Str::words($this->description, 30));
     }
     /**
-     * Seleciona todos os metadados dos arquivos do conteúdo
-     *
-     * @param [type] $pasta
-     * @return void
-     */
-    public function getMetaDados($pasta)
-    {
-        $filesystem = new Filesystem;
-
-        $path = Storage::disk('conteudos-digitais')->path($pasta) . "/{$this['id']}.*";
-        $files = $filesystem->glob($path);
-        $arr = [];
-        foreach ($files as $file) {
-            $name = $filesystem->name($file) . "." . $filesystem->extension($file);
-            $arr = [
-                'mime_type' => $filesystem->mimeType($file),
-                'extension' => $filesystem->extension($file),
-                'size'      => $filesystem->size($file),
-                'name'      => $name,
-                'url'       => Storage::disk('conteudos-digitais')->url($pasta) . "/{$name}"
-            ];
-        }
-        return (object) $arr;
-    }
-    /**
      * Seleciona e tranforma created-at ao formato (06 setembro de 2019 ás 17:37)
      *
      * @return void
@@ -236,17 +211,17 @@ class Conteudo extends Model
     }
     /**
      * Seleciona os Arquivos de download, visualizaçao e guias pedagógicas
+     * desde o Trait App\Traits\File
      *
-     * @return void
+     * @return array
      */
     public function getArquivosAttribute()
     {
-        $arrAr = [
-            'download'      => $this->getMetaDados('download'),
-            'visualizacao'  => $this->getMetaDados('visualizacao'),
-            'guia'          => $this->getMetaDados('guias-pedagogicos'),
+        return [
+            'download'      => $this->getMetaDados('download', $this['id']),
+            'visualizacao'  => $this->getMetaDados('visualizacao', $this['id']),
+            'guia'          => $this->getMetaDados('guias-pedagogicos', $this['id']),
         ];
-        return $arrAr;
     }
     /**
      * Adiciona atributo imagem associada ao objeto
@@ -281,11 +256,13 @@ class Conteudo extends Model
     /**
      * Filtro para full text search
      *
-     * @param [type] $query
-     * @param [type] $search
-     * @return void
+     * @param $query  Eloquent\Query instance
+     * @param $search termo de busca
+     * @param $por    define se busca é por tag ou título
+     *
+     * @return Eloquent\Query instance
      */
-    public function scopeSearch($query, $search, $por)
+    public function scopeFullTextSearch($query, $search, $por)
     {
 
         if (!$search) {
@@ -299,9 +276,9 @@ class Conteudo extends Model
     /**
      * Filtro de busca por tags e incrementa das veces buscada
      *
-     * @param [type] $query
-     * @param [type] $id
-     * @return void
+     * @param $query Eloquent\Query
+     * @param $id    id da palavra chave
+     * @return App\Conteudo
      */
     public function scopeSearchTag($query, $tag_id)
     {
@@ -314,6 +291,14 @@ class Conteudo extends Model
             return $q->where('id', '=', $tag_id);
         });
     }
+    /**
+     * Buscar por componente curricular
+     *
+     * @param $query       Eloquent\Query
+     * @param $componentes ids dos componentes a buscar
+     *
+     * @return App\Conteudo
+     */
     public function scopeSearchByComponent($query, $componentes)
     {
         if (!$componentes) {
@@ -324,6 +309,69 @@ class Conteudo extends Model
 
             return $q->whereIn('id', explode(',', $componentes));
         });
+    }
+    /**
+     * Buscar por colunas especificas
+     *
+     * @param $query    Eloquent\Query
+     * @param $column   coluna a buscar
+     * @param $data     ids ou id de busca
+     * @param $multiple busca com where in ou where
+     *
+     * @return App\Conteudo
+     */
+    public function scopeSearchByColumn($query, $column, $data, $multiple = false)
+    {
+        if (!$data) {
+            return $query;
+        }
+
+        if ($multiple) {
+            return $query->whereIn($column, explode(',', $data));
+        }
+
+        return $query->where($column, $data);
+    }
+    /**
+     * Busca por canal
+     *
+     * @param $query    Eloquent\Query
+     * @param $canal_id id a procurar canal 6 são a suma de todos os canais
+     *
+     * @return App\Conteudo
+     */
+    public function scopeSearchByCanal($query, $canal_id)
+    {
+        if (!$canal_id || $canal_id == 6) {
+            return $query;
+        }
+
+        return $query->where('canal_id', $canal_id);
+    }
+    
+    public function scopeSortBy($query, $by)
+    {
+        if (!$by) {
+            return $query;
+        }
+        $order_by = null;
+        $sort = 'DESC';
+        switch ($by) {
+            case 'downloads':
+                $order_by = 'qt_downloads';
+                break;
+            case 'acessos':
+                $order_by = 'qt_access';
+                break;
+            case 'titulo':
+                $order_by = 'title';
+                $sort = 'ASC';
+                break;
+            default:
+                $order_by = 'created_at';
+                break;
+        }
+        return $query->orderBy($order_by, $sort);
     }
     public static function tsDocumentoSave($id)
     {

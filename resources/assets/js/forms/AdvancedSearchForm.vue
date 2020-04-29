@@ -9,21 +9,13 @@
   >
     <q-card class="">
       <q-bar>
-        <div>Busca Avançada</div>
-        <q-space />
-        <q-btn
-          aria-label="pesquisar"
-          color="teal"
-          label="Pesquisar"
-          icon="search"
-          @click="onSearch"
-        />
+        <strong>Busca Avançada</strong>
         <q-space />
         <q-btn flat icon="close" v-close-popup aria-label="fechar">
           <q-tooltip content-class="bg-white text-primary">Fechar</q-tooltip>
         </q-btn>
       </q-bar>
-      <q-card-section class="row justify-center q-gutter-sm">
+      <q-card-section class="col-sm-4">
         <q-input
           v-model="term"
           class="input-search"
@@ -37,6 +29,13 @@
           stack-label
           :options="perPageOptions"
           hint="Itens por Página"
+        />
+        <q-btn
+          aria-label="pesquisar"
+          color="teal"
+          label="Pesquisar"
+          icon="search"
+          @click="onSearch"
         />
       </q-card-section>
       <q-card-section class="row justify-center q-gutter-sm">
@@ -63,79 +62,124 @@
         {{ per }} - {{ limit }}
       </q-card-section -->
       <q-card-section>
-        <div class="q-my-lg" v-if="tipos">
-          <div class="text-h6 text-orange q-pa-md">Tipos de Mídia</div>
-          <div class="q-gutter-sm">
-            <q-checkbox
-              v-for="(tipo, i) in tipos"
-              :key="`t-${i}`"
-              v-model="tiposModel"
-              :val="tipo.id"
-              :label="tipo.name"
-              color="orange"
-            />
-          </div>
-          <q-separator class="q-mt-lg" inset color="orange"></q-separator>
-        </div>
-
-        <div class="q-my-lg" v-if="licencas">
-          <div class="text-h6 text-positive q-pa-md">Licenças</div>
-          <div class="q-gutter-sm">
-            <q-checkbox
-              v-for="(license, i) in licencas"
-              :key="`l-${i}`"
-              v-model="licencasModel"
-              :val="license.id"
-              :label="license.name"
-              color="positive"
-            />
-          </div>
-          <q-separator class="q-mt-lg" inset color="positive"></q-separator>
-        </div>
-        <div v-if="componentes">
-          <div
-            class="q-my-lg"
+         <q-list padding bordered class="rounded-borders">
+          <q-expansion-item
+            dense
+            dense-toggle
+            expand-separator
+            label="Tipos de Mídia"
+            v-if="tipos"
+          >
+            <q-card>
+              <q-card-section>
+                <q-checkbox
+                  v-for="(tipo, i) in tipos"
+                  :key="`t-${i}`"
+                  v-model="tiposModel"
+                  :val="tipo.id"
+                  :label="tipo.name"
+                  color="orange"
+                />
+              </q-card-section>
+            </q-card>
+          </q-expansion-item>
+          <q-expansion-item
+            dense
+            dense-toggle
+            expand-separator
+            label="Licenças"
+            v-if="licencas"
+          >
+            <q-card>
+              <q-card-section>
+                <q-checkbox
+                  v-for="(license, i) in licencas"
+                  :key="`l-${i}`"
+                  v-model="licencasModel"
+                  :val="license.id"
+                  :label="license.name"
+                  color="positive"
+                />
+              </q-card-section>
+            </q-card>
+          </q-expansion-item>
+          <!-- Componentes Curriculares -->
+          <q-expansion-item
+            dense
+            dense-toggle
+            expand-separator
             v-for="(component, i) in componentes"
             :key="`c-${i}`"
             :index="component.id"
+            :label="component.name"
           >
-            <div class="text-h6 text-negative q-pa-md">
-              {{ component.name }}
-            </div>
-            <div class="q-gutter-sm">
-              <q-checkbox
-                v-for="(component, i) in component.componentes"
-                :key="`child-com-${i}`"
-                v-model="componentesModel"
-                :val="component.id"
-                :label="component.name"
-                color="negative"
-              />
-            </div>
-            <q-separator class="q-mt-lg" inset color="negative"></q-separator>
-          </div>
-        </div>
-        <div v-if="niveis">
-          <div
-            class="q-my-lg"
+            <q-card>
+              <q-card-section>
+                <q-checkbox
+                  v-for="(component, i) in component.componentes"
+                  :key="`child-com-${i}`"
+                  v-model="componentesModel"
+                  :val="component.id"
+                  :label="component.name"
+                  color="negative"
+                />
+              </q-card-section>
+            </q-card>
+          </q-expansion-item>
+
+          <q-expansion-item
+            dense
+            dense-toggle
+            expand-separator
             v-for="(nivel, n) in niveis"
             :key="`n-${n}`"
             :index="nivel.id"
+            :label="nivel.name"
           >
-            <div class="text-h6 text-teal q-pa-md">{{ nivel.name }}</div>
-            <div class="q-gutter-sm">
-              <q-checkbox
-                v-for="(component, i) in nivel.componentes"
-                :key="`child-com-${i}`"
-                v-model="componentesModel"
-                :val="component.id"
-                :label="component.name"
-                color="teal"
-              />
-            </div>
-            <q-separator class="q-mt-lg" inset color="teal"></q-separator>
-          </div>
-        </div>
+            <q-card>
+              <q-card-section>
+                <q-checkbox
+                  v-for="(component, i) in nivel.componentes"
+                  :key="`child-com-${i}`"
+                  v-model="componentesModel"
+                  :val="component.id"
+                  :label="component.name"
+                  color="teal"
+                />
+              </q-card-section>
+            </q-card>
+          </q-expansion-item>
+        </q-list>
+    </q-card-section>
+    </q-card>
+    <q-card class="my-card" flat bordered>
+      <q-item>
+        <q-item-section avatar>
+          <q-avatar>
+            <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+          </q-avatar>
+        </q-item-section>
+
+        <q-item-section>
+          <q-item-label>Title</q-item-label>
+          <q-item-label caption>
+            Subhead
+          </q-item-label>
+        </q-item-section>
+      </q-item>
+
+      <q-separator />
+
+      <q-card-section horizontal>
+        <q-card-section>
+          asdasdadsd asdasd asda  asdasasd asd sad asds asdas dasdas ds 
+        </q-card-section>
+
+        <q-separator vertical />
+
+        <q-card-section class="col-4">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </q-card-section>
       </q-card-section>
     </q-card>
   </q-dialog>

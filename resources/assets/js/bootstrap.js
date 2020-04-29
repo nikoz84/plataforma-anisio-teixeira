@@ -12,6 +12,7 @@ import {
 import "quasar/dist/quasar.ie.polyfills.umd.min.js";
 import lang from "quasar/lang/pt-br.js";
 import iconSet from "quasar/dist/icon-set/material-icons.umd.min.js";
+//import iconSet from "quasar/dist/icon-set/material-icons-outlined.umd.min.js";
 import "@quasar/extras/material-icons/material-icons.css";
 
 Vue.use(Quasar, {

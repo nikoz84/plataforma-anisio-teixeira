@@ -49,6 +49,20 @@ class Canal extends Model
         return $this->hasMany(Conteudo::class);
     }
     /**
+     * Categoria componente curricular filtros
+     *
+     * @return void
+     */
+    public function filterCategoryCC()
+    {
+        return $this->belongsToMany(
+            CurricularComponentCategory::class,
+            'canal_cc_categories',
+            'canal_id',
+            'category_id'
+        )->orderBy('name');
+    }
+    /**
      * Canal aplicativos educacionais
      *
      * @return void

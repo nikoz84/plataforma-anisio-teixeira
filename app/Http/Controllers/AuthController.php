@@ -19,7 +19,7 @@ class AuthController extends ApiController
 {
     public function __construct(Request $request)
     {
-        $this->middleware('jwt.verify')->except(['login', 'register', 'verify']);
+        $this->middleware('jwt.verify')->except(['login', 'register', 'verifyEmail']);
         $this->request = $request;
     }
     /**
@@ -34,6 +34,7 @@ class AuthController extends ApiController
             [
                 'email' => 'required|string|max:60|email',
                 'password' => 'required|min:6',
+                'recaptcha' => ['required', new \App\Rules\ValidRecaptcha]
             ]
         );
 
@@ -177,7 +178,8 @@ class AuthController extends ApiController
             'name' => 'required|string|max:255|min:4',
             'email' => 'required|email|string|max:100|unique:users,email',
             'password' => 'required|string|min:6|required_with:confirmation|same:confirmation',
-            'confirmation' => 'required'
+            'confirmation' => 'required',
+            'recaptcha' => ['required', new \App\Rules\ValidRecaptcha]
         ];
     }
     /**
@@ -199,17 +201,25 @@ class AuthController extends ApiController
             return false;
         }
     }
-    public function verify(Request $request, $token)
+    /**
+     * Verificar email
+     *
+     * @param $request \Illuminate\Http\Request
+     * @param $token   token de validação
+     *
+     * @return \App\Traits\ApiResponser
+     */
+    public function verifyToken(Request $request, $token)
     {
-        $this->clearLoginAttempts($request);
-
+       
         $validator = Validator::make(
             $request->all(),
             [
-                'token' => 'required'
+                'token' => ['required']
             ]
         );
-
+        
+        return $this->successResponse($validator->fails(), $token, 200);
         if ($validator->fails()) {
             return $this->errorResponse(
                 $validator->errors(),

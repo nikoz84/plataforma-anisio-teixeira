@@ -18,6 +18,7 @@
           label="Listar"
           :to="{ name: 'Listar', params: { slug: $route.params.slug } }"
         />
+        <OrderBy></OrderBy>
         <CategoriasMenu></CategoriasMenu>
         <Filters></Filters>
         
@@ -37,9 +38,10 @@
 </template>
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-import CategoriasMenu from "../components/CategoriasMenu.vue";
-import AdvancedSearchForm from "../forms/AdvancedSearchForm.vue";
-import Filters from "../components/Filters.vue";
+import CategoriasMenu from "../components/CategoriasMenu";
+import AdvancedSearchForm from "../forms/AdvancedSearchForm";
+import Filters from "../components/Filters";
+import OrderBy from "../components/OrderBy"
 
 import {
   QTabs,
@@ -79,7 +81,8 @@ export default {
     AdvancedSearchForm,
     QBreadcrumbs,
     QBreadcrumbsEl,
-    Filters
+    Filters,
+    OrderBy
   },
   data() {
     return {

@@ -30,9 +30,10 @@
             <li>Tente palavras-chave mais genéricas.</li>
             <li>Tente usar menos palavras-chave.</li>
           </ul>
+        <p>Se você precisar de algum conteúdo específico por favor envie sua suagerencia</p>
         <template v-slot:action>
           <q-btn flat color="white" to="/recursos-educacionais/listar" label="Voltar" />
-          <q-btn flat color="white" to="/usuario/contato/faleconosco" label="Fale Conosco" />
+          <q-btn flat color="white" to="/usuario/contato/sugerencia" label="Sugerir Conteúdo" />
         </template>
       </q-banner>
     </q-card>

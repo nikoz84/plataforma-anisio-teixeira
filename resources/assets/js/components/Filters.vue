@@ -1,7 +1,7 @@
 <template>
-    <q-btn-dropdown auto-close stretch flat :label="label(canal.filters.id)" v-if="show">
-        <q-list dense>
-            <q-item clickable dense v-close-popup
+    <q-btn-dropdown auto-close stretch dropdown-icon="arrow_drop_down" flat :label="label(canal.filters.id)" v-if="show">
+        <q-list >
+            <q-item clickable v-close-popup
                 v-for="(filter, i) in canal.filters.componentes" 
                 :key="i"
                 @click="search(filter.id)"

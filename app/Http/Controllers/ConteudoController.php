@@ -30,65 +30,31 @@ class ConteudoController extends ApiController
      * Lista de conteúdos por canal
      *
      * @param $request \Illuminate\Http\Request
-     * 
+     *
      * @return App\Traits\ApiResponder
      */
     public function index(Request $request)
     {
-
-        $limit = $request->query('limit', 6);
-        $orderBy = $request->query('order', 'created_at');
-        $canal = $request->query('canal', 6);
-        $tipos          = $request->query('tipos');
-        $licencas       = $request->query('licencas');
-        $componentes    = $request->query('componentes');
-        $categoria      = $request->query('categoria');
-        $tag      = $request->query('tag');
-        $por      = $request->query('por', 'tag');
-        $busca    = $request->query('busca');
-        $publicador    = $request->query('publicador');
-
         $query = Conteudo::query();
 
-        // FILTRO X TIPO
-        $query->when($tipos, function ($q, $tipos) {
-            return $q->whereIn("tipo_id", explode(',', $tipos));
-        });
-        // FILTRO X PUUBLICADOR
-        if ($publicador) {
-            $query->where('user_id', $publicador);
-        }
-        // FILTRO BUSCA FULL TEXT SEARCH
-        $query->when($busca, function ($q) use ($busca, $por) {
-            return $q->search($busca, $por);
-        });
-        // FILTRO X TAG
-        $query->when($tag, function ($q, $tag) {
-            return $q->searchTag($tag);
-        });
-        // FILTRO X CANAL
-        if ($canal != 6) {
-            $query->where('canal_id', $canal);
-        };
-        // FILTRO X CATEGORIA
-        if ($categoria) {
-            $query->where('category_id', explode(',', $categoria));
-        }
-        // FILTRO X COMPONENTES
-        $query->when($componentes, function ($q, $componentes) {
-            return $q->searchByComponent($componentes);
-        });
-        // FILTRO X LICENÇA
-        if ($licencas) {
-            $query->whereIn('license_id', explode(',', $licencas));
-        };
+        $query->searchByColumn('user_id', $request->query('publicador'))
+            ->searchByColumn('category_id', $request->query('categoria'))
+            ->searchByColumn('tipo_id', $request->query('tipos'), true)
+            ->searchByColumn('license_id', $request->query('licencas'), true)
+            ->fullTextSearch(
+                $request->query('busca'),
+                $request->query('por', 'tag')
+            )
+            ->searchTag($request->query('tag'))
+            ->searchByCanal($request->query('canal', 6))
+            ->searchByComponent($request->query('componentes'))
+            ->sortBy($request->query('ordenar', 'data'));
 
-        $url = http_build_query($request->all());
+        $url = http_build_query($request->except('page'));
 
         $conteudos = $query->where('is_approved', 'true')
             ->with(['canal', 'tipo'])
-            ->orderBy($orderBy, 'desc')
-            ->paginate($limit)
+            ->paginate($request->query('limit', 6))
             ->setPath("/conteudos?{$url}");
 
         return $this->showAsPaginator($conteudos);
@@ -101,16 +67,17 @@ class ConteudoController extends ApiController
     public function getSitesTematicos(Request $request)
     {
         $limit = $request->query('limit', 10);
-        $orderBy = $request->query('order', 'created_at');
-
-        $sitesTematicos = $this->conteudo::with(['canal'])
+        $query = Conteudo::query();
+        
+        $query::with(['canal'])
             ->where('is_site', 'true')
             ->where('is_approved', 'true')
-            ->orderBy($orderBy, 'desc')
-            ->paginate(10)
+            ->sortBy($request->query('ordenar', 'created_at'));
+        
+        $sites = $query->paginate($limit)
             ->setPath("/conteudos/sites?limit={$limit}");
 
-        return $this->showAsPaginator($sitesTematicos);
+        return $this->showAsPaginator($sites);
     }
     /**
      * Regras de validação

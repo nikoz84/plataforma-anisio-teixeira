@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['cors']], function () {
     Route::get('/ler', 'ConteudoController@lerHD')->name('ler.hd');
-    Route::get('/files/gallery', 'FileController@getGallery')->name('lista.galeria.imagens');
+    Route::get('/files/galeria', 'FileController@getGallery')->name('lista.galeria.imagens');
     Route::get('/files/{id}', 'FileController@getFiles')->name('busca.arquivo');
     Route::post('/files/{id}', 'FileController@createFile')->name('adiciona.arquivo');
     Route::get('/destaques/{slug}', 'HomeController@getHomeData')->name('dados.home');
@@ -29,7 +29,7 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/tipos', 'TipoController@index')->name('listar.tipos');
     Route::get('/tipos/{id}', 'TipoController@getTiposById')->name('lista.tipos.x.id');
     /** DENUNCIA E FALE CONOSCO */
-    Route::post('/denuncias', 'DenunciaController@create')->name('criar.faleconosco.denuncias');
+    Route::post('/contato', 'DenunciaController@create')->name('criar.faleconosco.contato');
     /** CANAIS */
     Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscar.canal.x.url.amigavel');
     /** COMPONENTES */
@@ -52,7 +52,7 @@ Route::group(['middleware' => ['cors']], function () {
     /** AUTENTICACAO */
     Route::post('/auth/login', 'AuthController@login')->name('login.usuario');
     Route::post('/auth/cadastro', 'AuthController@register')->name('registro.usuario');
-    Route::post('/auth/verificar/{token}', 'AuthController@verify')->name('verificar.email');
+    Route::post('/auth/verificar/{token}', 'AuthController@verifyToken')->name('verificar.token');
     /** OPTIONS  */
     Route::get('/options/{name}', 'OptionsController@getByName')->name('busca.metadata.x.nome');
     Route::get('/options', 'OptionsController@index')->name('listar.opcoes');

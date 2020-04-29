@@ -66,7 +66,7 @@ return [
             'url' => env('APP_URL') . '/storage/conteudos/conteudos-blog/uploads',
             'visibility' => 'public',
         ],
-
+        
         'conteudos-digitais' => [
             'driver' => 'local',
             'root' => storage_path('app/public/conteudos/conteudos-digitais'),

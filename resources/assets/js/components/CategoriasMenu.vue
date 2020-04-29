@@ -1,6 +1,11 @@
 <template>
-  <q-tab rigth-icon="mail" :label="canal.category_name" v-if="canal && categories && categories.length > 0">
-    <q-menu anchor="bottom middle" self="top middle">
+  <q-btn-dropdown
+        stretch 
+        dropdown-icon="arrow_drop_down" 
+        flat 
+        :label="canal.category_name"
+        v-if="canal && categories && categories.length > 0">
+    
       <q-list dense>
         <q-item clickable dense 
               v-for="(category, i) in categories" 
@@ -28,9 +33,7 @@
           </q-menu>
         </q-item>
       </q-list>
-    </q-menu>
-  </q-tab>
-
+  </q-btn-dropdown>
 </template>
 <script>
 import { QTab, QMenu, QList, QItem, QItemSection, ClosePopup } from "quasar";
@@ -53,9 +56,9 @@ export default {
       let path = `/${this.$route.params.slug}/listar`;
       let categoria = categoryId;
       if (subCategory == "sub") {
-        this.$router.push({ path, query: { categoria } });
+        this.$router.replace({ path, query: { categoria, componentes: this.$route.query.componentes } });
       } else if (subCategory.length == 0) {
-        this.$router.push({ path, query: { categoria } });
+        this.$router.replace({ path, query: { categoria, componentes: this.$route.query.componentes } });
       }
     }
   }

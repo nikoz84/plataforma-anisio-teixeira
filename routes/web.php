@@ -45,10 +45,12 @@ Route::get('/docs', function (Request $request) {
 
 
 
-//Route::get('/teste', function (\Illuminate\Http\Request $request) {
-
+Route::get('/teste', function (\Illuminate\Http\Request $request) {
+    $conteudo = App\Conteudo::find(9983);
+    //$aplicativo = App\Aplicativo::find(31);
     
+    return response()->json([ 'conteudo' => $conteudo ]);
     //if (Crawler::isCrawler()) {}
-//});
+});
 
 Route::get('/{any}', 'ApiController@home')->where('any', '.*');

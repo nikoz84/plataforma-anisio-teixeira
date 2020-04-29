@@ -32,7 +32,8 @@ const state = {
   alertText: "",
   showAlert: false,
   formData: {},
-  action: ""
+  action: "",
+  recapcha: null
 };
 
 export default state;
