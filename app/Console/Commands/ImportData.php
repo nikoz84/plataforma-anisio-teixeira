@@ -77,6 +77,8 @@ class ImportData extends Command
         DB::statement("UPDATE conteudos set canal_id = 5 where is_site = true and canal_id is null;");
         DB::statement("UPDATE canais set is_active = false where  id  IN (4,10,11,13,14,15);");
         DB::statement("UPDATE canais set name = 'Recursos Educacionais' where id = 6;");
+        DB::statement("UPDATE tipos set name = 'Documentos' where id = 1");
+        DB::statement("UPDATE tipos set name = 'Animação' where id = 7");
         $this->info('Adicionando Temas contenporâneos');
         DB::statement("INSERT into curricular_components_categories (id, name) values (7,'Temas Contemporáneos');");
         DB::statement("INSERT into curricular_components (id,category_id,nivel_id,name) values 
