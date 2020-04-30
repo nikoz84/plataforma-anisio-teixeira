@@ -282,6 +282,6 @@ class ConteudoController extends ApiController
         $tipo = $conteudo->tipo->id;
         $download = $arquivos['download'];
 
-        return view('conteudos_digitais.index', compact('download', 'tipo'));
+        return view('conteudos_digitais.index', compact('download', 'tipo', 'id'));
     }
 }
