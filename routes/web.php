@@ -43,7 +43,7 @@ Route::get('/docs', function (Request $request) {
 
 */
 
-
+Route::get('/conteudos-digitais/conteudo/incorporar-conteudo/{id}', 'ConteudoController@incorporarConteudo');
 
 Route::get('/teste', function (\Illuminate\Http\Request $request) {
     $conteudo = App\Conteudo::find(9983);
@@ -54,3 +54,5 @@ Route::get('/teste', function (\Illuminate\Http\Request $request) {
 });
 
 Route::get('/{any}', 'ApiController@home')->where('any', '.*');
+
+

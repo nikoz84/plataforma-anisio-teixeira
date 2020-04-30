@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
  */
-
 Route::group(['middleware' => ['cors']], function () {
     Route::get('/ler', 'ConteudoController@lerHD')->name('ler.hd');
     Route::get('/files/galeria', 'FileController@getGallery')->name('lista.galeria.imagens');
