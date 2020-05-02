@@ -29,7 +29,7 @@ export default {
   methods: {
     search(id) {
       let path = `/${this.$route.params.slug}/listar`;
-
+    
       this.$router.replace({
         path,
         query: { categoria: this.$route.query.categoria, componentes: id }

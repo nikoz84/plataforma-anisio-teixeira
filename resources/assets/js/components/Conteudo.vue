@@ -1,11 +1,11 @@
 <template>
-  <div class="row q-mt-md" v-if="conteudo">
-    <div class="col-sm-12 col-md-6">
+  <div class="row q-gutter-xs q-mt-md" v-if="conteudo">
+    <div class="col-sm-7">
       <Player :arquivos="conteudo.arquivos" :tipo="conteudo.tipo"></Player>
       <ConteudoMetadata></ConteudoMetadata>
     </div>
     
-    <q-card class="col-sm-12 col-md-6">
+    <q-card class="col">
       <q-card-section>
         <Title :title="conteudo.title"></Title>
       </q-card-section>

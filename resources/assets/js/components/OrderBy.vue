@@ -4,7 +4,7 @@
             <q-item clickable v-close-popup
                 v-for="(filter, i) in filters" 
                 :key="i"
-                @click="search(filter.id)"
+                @click="setQueryString('ordenar', filter.id)"
                 >
                 <q-item-section>{{filter.name}}</q-item-section>
             </q-item>
@@ -13,8 +13,11 @@
 </template>
 
 <script>
+import { QueryString } from '../mixins/QueryString';
+
 export default {
     name : "OrderBy",
+    mixins: [QueryString],
     data() {
         return {
             filters : [
@@ -26,14 +29,7 @@ export default {
         }
     },
     methods: {
-        search(id) {
-            let path = `/${this.$route.params.slug}/listar`;
-
-            this.$router.replace({
-                path,
-                query: { ordenar: id }
-            });
-        }
+        
     },
 }
 </script>

@@ -55,6 +55,7 @@ export default {
     showCategory(categoryId, subCategory) {
       let path = `/${this.$route.params.slug}/listar`;
       let categoria = categoryId;
+      
       if (subCategory == "sub") {
         this.$router.replace({ path, query: { categoria, componentes: this.$route.query.componentes } });
       } else if (subCategory.length == 0) {

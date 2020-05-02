@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.9.0",
-    "@quasar/extras": "^1.6.0",
+    "@quasar/extras": "^1.7.0",
     "apexcharts": "^3.19.0",
     "babel-loader": "^8.1.0",
     "fastclick": "^1.0.6",

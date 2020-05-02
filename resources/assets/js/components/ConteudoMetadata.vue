@@ -17,11 +17,15 @@
             <q-btn class="q-ml-md" round color="secondary" icon="share" size="sm" @click="share()" ></q-btn>
             <q-btn round color="secondary" icon="save_alt" size="sm"
                 v-if="conteudo.arquivos && conteudo.arquivos.download.url"
-                @click="download('download')" >
+                @click="download('download', conteudo.id)" >
+            </q-btn>
+            <q-btn round color="secondary" icon="save_alt" size="sm"
+                v-if="conteudo.arquivos && conteudo.arquivos.visualizacao.url"
+                @click="download('visualizacao', conteudo.id)" >
             </q-btn>
             <q-btn round color="secondary" icon="description" size="sm"
                 v-if="conteudo.arquivos && conteudo.arquivos.guia.url" 
-                @click="download('guia')" >
+                @click="download('guia', conteudo.id)" >
             </q-btn>
                 
             <q-separator class="q-my-md"></q-separator>
@@ -107,14 +111,10 @@ export default {
             let url = `/recursos-educacionais/listar?componentes=${id}`;
             this.$router.push(url);
         },
-        download(file) {
-            switch (file) {
+        download(action, id) {
+            switch (action) {
                 case "download":
-                if (this.conteudo.arquivos.download) {
-                    console.info("download");
-                } else {
-                    console.warn("vissualia");
-                }
+                    
                 break;
                 case "guia":
                 console.warn("guia");

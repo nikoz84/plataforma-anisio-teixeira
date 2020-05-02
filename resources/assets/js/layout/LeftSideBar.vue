@@ -90,18 +90,13 @@
       </q-item-label>
       <!-- SOBRE -->
       <q-item clickable to="/sobre" exact>
-        <q-item-section avatar>
-          <q-icon name="info" />
-        </q-item-section>
         <q-item-section>
           <q-item-label>Sobre</q-item-label>
         </q-item-section>
       </q-item>
+      <q-separator/>
       <!-- GALERIA -->
       <q-item clickable to="/galeria" aria-label="visite a galería de imagens" exact>
-        <q-item-section avatar>
-          <q-icon name="insert_photo" />
-        </q-item-section>
         <q-item-section>
           <q-item-label>Galeria</q-item-label>
         </q-item-section>
