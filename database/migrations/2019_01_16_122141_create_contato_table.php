@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDenunciasTable extends Migration
+class CreateContatoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateDenunciasTable extends Migration
      */
     public function up()
     {
-        Schema::create('denuncias', function (Blueprint $table) {
+        Schema::create('contatos', function (Blueprint $table) {
             $table->bigIncrements('id')->comment('Identificador unico e chave primaria');
             $table->string('action', 50)->commet('Ação requisitada, falecosco, denuncia, reportar bug');
             $table->string('name', 100)->comment('Nome do usuário');
@@ -34,6 +34,6 @@ class CreateDenunciasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('denuncias');
+        Schema::dropIfExists('contatos');
     }
 }

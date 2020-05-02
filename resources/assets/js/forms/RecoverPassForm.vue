@@ -3,94 +3,55 @@
     <div class="row no-wrap justify-center">
         <q-card style="min-width:350px;">
             <q-card-section >
-                <div class="text-center text-h5">Mudar Senha</div>
+                <div class="text-center text-h5">Recuperar Senha</div>
             </q-card-section>
             <q-separator inset />
             <q-card-section>
-                <q-form @submit.prevent="onSubmit()" class="q-gutter-md" ref="loginForm">
-                  
-                  <q-input v-model="password" filled :type="isPwd ? 'password' : 'text'" hint="Senha"
-                            bottom-slots :error="errors.password && errors.password.length > 0">
-                    <template v-slot:append>
-                      <q-icon
-                        :name="isPwd ? 'visibility_off' : 'visibility'"
-                        class="cursor-pointer"
-                        @click="isPwd = !isPwd"
-                      />
-                    </template>
-                    <template v-slot:error>
-                      <ShowErrors :errors="errors.password"></ShowErrors>
-                    </template>
-                  </q-input>
-                  <q-input v-model="confirmation" filled type="password" hint="Repita a senha"
-                            bottom-slots :error="errors.confirmation && errors.confirmation.length > 0">
-                    <template v-slot:error>
-                      <ShowErrors :errors="errors.confirmation"></ShowErrors>
-                    </template>
-                  </q-input>
-                   <div>
-                     <q-btn class="full-width" label="Cadastre-se" type="submit" color="primary"/>
-                   </div>
-                </q-form>
-                
+                <q-input filled label="Escreva seu e-mail" v-model="email" type="email"></q-input>
+            </q-card-section>
+            <q-card-section>
+                <RecaptchaForm :errors="errors"></RecaptchaForm>
+            </q-card-section>
+            <q-card-section>
+                <q-btn color="primary" 
+                    class="full-width" 
+                    @click="send()"
+                    label="Enviar" ></q-btn>
             </q-card-section>
         </q-card>
     </div>
   </article>
 </template>
+
 <script>
-import ShowErrors from "../components/ShowErrors.vue";
-import {QCard, QCardSection } from "quasar";
+import RecaptchaForm from "./RecaptchaForm";
 
 export default {
-  name: "RecoverForm",
-  components: {QCard,
-  QCardSection},
-  data() {
-    return {
-      isPwd: false,
-      password: "",
-      confirmation: false,
-      verificationCode: "",
-      errors:{}
-    };
-  },
-  created() {},
-  methods: {
-    async onSubmit() {
-      let data = {
-        password: this.password,
-        code: this.verificationCode
-      };
-      console.warn(data);
+    name : "RecoverPassForm",
+    components:{RecaptchaForm},
+    data(){
+        return {
+            email : null,
+            errors: []
+        }
     },
-    verificationPass() {}
-  }
-};
+    methods: {
+        async send(){
+            let data = {
+                email: this.email,
+                recaptcha: grecaptcha.getResponse()
+            }
+            try {
+                let resp = await axios.post('/auth/recuperar-senha', data);
+                console.log(resp);
+            } catch (error) {
+                
+            }
+        }
+    },
+}
 </script>
 
-<style lang="scss" scoped>
-$break-small: 780px;
-$break-large: 781px;
-$break-extra-large: 1200px;
+<style>
 
-.form-image {
-  display: block;
-  min-height: 100vh;
-  padding: 0;
-  background: url("/storage/conteudos/conteudos-digitais/galeria/11.jpg")
-    no-repeat bottom center scroll;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  -o-background-size: cover;
-
-  form {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-}
-.links {
-  padding-top: 15px;
-}
 </style>

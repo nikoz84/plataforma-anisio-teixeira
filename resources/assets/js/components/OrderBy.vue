@@ -4,7 +4,7 @@
             <q-item clickable v-close-popup
                 v-for="(filter, i) in filters" 
                 :key="i"
-                @click="setQueryString('ordenar', filter.id)"
+                @click="replaceURL('ordenar', filter.id)"
                 >
                 <q-item-section>{{filter.name}}</q-item-section>
             </q-item>

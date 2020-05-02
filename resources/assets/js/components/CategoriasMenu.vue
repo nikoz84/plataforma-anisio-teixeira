@@ -11,7 +11,7 @@
               v-for="(category, i) in categories" 
               :key="i"
               v-close-popup="category.sub_categories.length == 0"
-              @click="showCategory(category.id, category.sub_categories)">
+              @click="showCategory(category, false)">
           <q-item-section>{{category.name}}</q-item-section>
           <q-item-section side v-if="category.sub_categories && category.sub_categories.length > 0">
             <q-icon name="keyboard_arrow_right" />
@@ -24,7 +24,7 @@
                       clickable
                       dense
                       v-close-popup
-                      @click="showCategory(subcategory.id, 'sub')">
+                      @click="showCategory(subcategory, true)">
                 <q-item-section>
                   {{subcategory.name}}
                 </q-item-section>
@@ -38,9 +38,11 @@
 <script>
 import { QTab, QMenu, QList, QItem, QItemSection, ClosePopup } from "quasar";
 import { mapState } from "vuex";
+import { QueryString } from '../mixins/QueryString';
 
 export default {
   name: "CategoriasMenu",
+  mixins: [QueryString],
   directives: { ClosePopup },
   computed: {
     ...mapState(["canal"]),
@@ -52,14 +54,13 @@ export default {
     }
   },
   methods: {
-    showCategory(categoryId, subCategory) {
-      let path = `/${this.$route.params.slug}/listar`;
-      let categoria = categoryId;
-      
-      if (subCategory == "sub") {
-        this.$router.replace({ path, query: { categoria, componentes: this.$route.query.componentes } });
-      } else if (subCategory.length == 0) {
-        this.$router.replace({ path, query: { categoria, componentes: this.$route.query.componentes } });
+    showCategory(category, isSubcategory) {
+      let length = category.sub_categories ? category.sub_categories.length : null;
+
+      if(category.parent_id && isSubcategory && length == null){
+         this.replaceURL('categoria', category.id);
+      } else if(!category.parent_id && !isSubcategory && !length) {
+        this.replaceURL('categoria', category.id);
       }
     }
   }

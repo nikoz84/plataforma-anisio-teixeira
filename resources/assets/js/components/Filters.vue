@@ -4,7 +4,7 @@
             <q-item clickable v-close-popup
                 v-for="(filter, i) in canal.filters.componentes" 
                 :key="i"
-                @click="search(filter.id)"
+                @click="replaceURL('componentes', filter.id)"
                 >
                 <q-item-section avatar>
                     <q-img :src="filter.icon"></q-img>
@@ -17,9 +17,11 @@
 <script>
 import { QTab, QMenu, QList, QItem, QItemSection, ClosePopup } from "quasar";
 import { mapState } from "vuex";
+import { QueryString } from '../mixins/QueryString'
 
 export default {
   name: "Filters",
+  mixins: [QueryString],
   computed: {
     ...mapState(["canal"]),
     show() {
@@ -27,14 +29,6 @@ export default {
     }
   },
   methods: {
-    search(id) {
-      let path = `/${this.$route.params.slug}/listar`;
-    
-      this.$router.replace({
-        path,
-        query: { categoria: this.$route.query.categoria, componentes: id }
-      });
-    },
     label(id) {
       switch (id) {
         case 3:

@@ -40,7 +40,7 @@ class SideBar
             'licencas' => $licencas,
             'componentes' => $componentes,
             'niveis' => $niveis,
-            'tipos' => Tipo::select(['id', 'name'])->get()
+            'tipos' => Tipo::select(['id', 'name'])->orderBy('name')->get()
         ];
     }
     /**
@@ -107,9 +107,9 @@ class SideBar
             ],
             [
                 'label' => 'Fale Conosco',
-                'slug' => 'denuncias',
+                'slug' => 'contato',
                 'hability' => 'index',
-                'class' => \App\Denuncia::class
+                'class' => \App\Contato::class
             ],
             [
                 'label' => 'Licenças',

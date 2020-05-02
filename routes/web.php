@@ -30,13 +30,6 @@ Route::get('/teste', function (Request $request) {
     //return $wordpres->getPosts();
 });
 
-Route::get('/form', function (Request $request) {
-    if ($request->all()) {
-        dd($request->all());
-    }
-    return view('forms.teste');
-});
-
 Route::get('/docs', function (Request $request) {
     return view('docs');
 });
@@ -45,54 +38,18 @@ Route::get('/docs', function (Request $request) {
 
 Route::get('/conteudos-digitais/conteudo/incorporar-conteudo/{id}', 'ConteudoController@incorporarConteudo');
 
-Route::get('/teste', function (\Illuminate\Http\Request $request) {
-    $conteudo = App\Conteudo::find(9983);
-    //$aplicativo = App\Aplicativo::find(31);
-    
-    return response()->json([ 'conteudo' => $conteudo ]);
-    //if (Crawler::isCrawler()) {}
-});
+Route::get(
+    'teste',
+    function () {
+        $user = new \App\User;
 
-Route::get('/item-created', function () {
-    $user = \App\User::find(54);
-    $conteudo = new \App\Conteudo;
-    
-    $conteudo->user_id = $user->id;
-    $conteudo->approving_user_id = $user;
-    $conteudo->is_approved = true;
-    $conteudo->tipo_id = 5;
-    $conteudo->license_id = 3;
-    $conteudo->canal_id = 6;
-    $conteudo->category_id = null;
-    $conteudo->title = 'teste 1522ss';
-    $conteudo->description = 'Descriçao do conteudo digital asdasd';
-    $conteudo->authors = 'UFBA';
-    $conteudo->source = 'UFBA';
-    $conteudo->options = ['site' => 'http://ufba.com'];
-    $conteudo->is_featured = false;
-    $conteudo->is_site = false;
-    $conteudo->qt_downloads = \App\Conteudo::INIT_COUNT;
-    $conteudo->qt_access = \App\Conteudo::INIT_COUNT;
-    
-    $conteudo->save();
-    
-    $conteudo->tags()->attach([11598,6617,744]);
-    $conteudo->componentes()->attach([57,4,10]);
-    $conteudo::tsDocumentoSave($conteudo->id);
+        $user->name = 'Nicolás Romero';
+        $user->password = '123456';
+        $user->email = 'nikoz.1984@gmail.com';
 
-    dd('Item created successfully.');
-
-});
-
-
-
-Route::get('/item-updated', function () {
-
-    \App\Conteudo::find(1)->update(['name'=>'test 3', 'price'=>100]);
-
-    dd('Item updated successfully.');
-
-});
+        $user->save();
+    }
+);
 
 Route::get('/{any}', 'ApiController@home')->where('any', '.*');
 

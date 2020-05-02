@@ -6,7 +6,7 @@ use App\Traits\UserCan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Denuncia extends Model
+class Contato extends Model
 {
     use SoftDeletes, UserCan;
 

@@ -15,24 +15,16 @@ use Illuminate\Support\Facades\Log;
 class UserEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    protected $user;
-    /**
-     * Create a new event instance.
-     *
-     * @return void
-     */
-    public function __construct(User $user)
-    {
-        $this->user = $user;
-    }
+    
     /**
      * Get the channels the event should broadcast on.
      *
      * @return \Illuminate\Broadcasting\Channel|array
      */
-    public function created()
+    public function saved(User $user)
     {
-        Log::info("message: " . $this->user);
+        dd($user);
+        Log::info("message: " . $user);
     }
     
     /**

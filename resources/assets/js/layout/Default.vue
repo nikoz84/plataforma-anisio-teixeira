@@ -58,7 +58,7 @@
 
             <q-item
               v-if="isLogged"
-              to="/usuario/recuperar-senha"
+              to="/usuario/mudar-senha"
               clickable
               v-close-popup
               tabindex="0"

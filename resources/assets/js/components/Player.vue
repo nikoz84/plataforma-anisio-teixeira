@@ -1,5 +1,5 @@
 <template>
-    <q-card v-if="conteudo && conteudo.tipo && conteudo.arquivos">
+    <q-card class="row" v-if="conteudo && conteudo.tipo && conteudo.arquivos">
           <q-card-section class="col-sm-12" v-if="conteudo.tipo.id == 5">
             <PlayerVideo class="row" :download="conteudo.arquivos.download"
                         :visualizacao="conteudo.arquivos.visualizacao"

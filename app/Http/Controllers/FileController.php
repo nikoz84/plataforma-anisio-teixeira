@@ -56,12 +56,14 @@ class FileController extends ApiController
         }
     }
 
-    public function downloadFile($id)
+    public function downloadFile($action, $id)
     {
-        $file = $this->getMetaDados('download', $id);
-        //dd($file->url);
-        return Storage::disk('conteudos-digitais')->download('download/'.$file->name);
-        //return Storage::download('public/conteudos/conteudos-digitais/download/'.$file->name);
+        return $this->successResponse([ 'action' => $action, 'id'=> $id], 'as', 200);
+        $directory = $action;
+
+        $file = $this->getMetaDados($directory, $id);
+        
+        return Storage::disk('conteudos-digitais')->download("{$directory}/".$file->name);
     }
 
     public function getGallery()
