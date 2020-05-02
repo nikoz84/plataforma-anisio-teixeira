@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\FileSystemLogic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ConteudoController extends ApiController
 {
@@ -21,7 +22,8 @@ class ConteudoController extends ApiController
             'search',
             'getById',
             'getByTagId',
-            'getSitesTematicos'
+            'getSitesTematicos',
+            'incorporarConteudo'
         ]);
         $request = $request;
     }
@@ -266,5 +268,16 @@ class ConteudoController extends ApiController
         $conteudo->increment('qt_access', 1);
 
         return $this->showOne($conteudo);
+    }
+
+    public function incorporarConteudo($id)
+    {
+        $conteudo = Conteudo::find($id);
+        $arquivos = $conteudo->getAttribute('arquivos');
+
+        $tipo = $conteudo->tipo->id;
+        $download = $arquivos['download'];
+
+        return view('conteudos_digitais.index', compact('download', 'tipo', 'id'));
     }
 }
