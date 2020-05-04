@@ -24,29 +24,24 @@
                 </q-tooltip>
             </q-btn>
             <q-btn round color="secondary" icon="save_alt" size="sm"
-                v-if="conteudo.arquivos && conteudo.arquivos.download.url"
-                @click="download(
-                    'download', 
-                    conteudo.id, 
-                    conteudo.arquivos.download.mime_type)" >
+                v-if="fileExists('download')"
+                @click="downloadFile('download')" >
                 <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
                     Baixar conteúdo
                 </q-tooltip>
             </q-btn>
             <q-btn round color="secondary" icon="save_alt" size="sm"
-                v-if="conteudo.arquivos && conteudo.arquivos.visualizacao.url"
-                @click="download(
-                    'visualizacao', 
-                    conteudo.id, 
-                    conteudo.arquivos.visualizacao.mime_type)" 
+                v-if="fileExists('visualizacao')"
+                @click="downloadFile('visualizacao')" 
                     >
                 <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
                     Baixar conteúdo
                 </q-tooltip>
             </q-btn>
             <q-btn round color="secondary" icon="description" size="sm"
-                v-if="conteudo.arquivos && conteudo.arquivos.guia.url" 
-                @click="download('guia', conteudo.id, conteudo.arquivos.guia.mime_type)" >
+                v-if="fileExists('guia')" 
+                @click="downloadFile('guia')"
+                    >
                 <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
                     Baixar guia pedagógico
                 </q-tooltip>
@@ -60,13 +55,25 @@ import {mapState} from "vuex";
 
 export default {
     name : "PlayerActions",
+    data() {
+        return {
+            guia : {},
+            download: {},
+            visualizacao: {}
+        }
+    },
     computed: {
-        ...mapState(["conteudo"])
+        ...mapState(["conteudo"]),
+        
     },
     methods: {
-        async download(action, id, mimeType) {
-            console.log(action, id)
-            console.log(mimeType);
+        async downloadFile(file) {
+            console.log(file)
+            console.log(this.guia)
+            console.log(this.visualizacao)
+            console.log(this.download)
+            //console.log(action, id)
+            //console.log(mimeType);
             /*
             axios({ url: `/files/${action}/${id}`,
                 method: 'GET',
@@ -84,6 +91,27 @@ export default {
         share() {
             console.log("compartilhar");
         },
+        fileExists(path) {
+            let files = this.conteudo.arquivos;
+            let hasUrl = files[path].hasOwnProperty('url');
+            console.log(files[path])
+            switch (path) {
+                case 'guia':
+                    this.guia = hasUrl ? files[path] : {};
+                    break;
+                case 'download':
+                    this.donwload = hasUrl ? files[path] : {};
+                    break;
+                case 'visualizacao':
+                    this.visualizacao = hasUrl ? files[path] : {};
+                    break;
+                default:
+                    return;
+                    break;
+            }
+
+            return hasUrl ? true : false;
+        }
     },
 }
 </script>

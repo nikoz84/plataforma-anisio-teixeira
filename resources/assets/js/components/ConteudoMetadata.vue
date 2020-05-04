@@ -23,7 +23,7 @@
                     {{ conteudo.license.name }}
                     <q-tooltip 
                     content-class="bg-grey-10" 
-                    content-style="font-size: 14px, max-width:300px;">
+                    content-style="font-size: 13px; max-width:300px;">
                         {{conteudo.license.description}}
                     </q-tooltip>
                 </q-chip>
@@ -62,7 +62,7 @@
             
             <q-separator class="q-my-md"></q-separator>
 
-            <TagList :items="conteudo.tags" title="Tags" slug="tag"></TagList>
+            <TagList :items="conteudo.tags" title="Palavras Chave" slug="tag"></TagList>
         </q-card-section>
     </q-card>      
 </template>
