@@ -1,8 +1,8 @@
 <template>
   <section>
     <div class="text-h5 title-page q-px-md q-py-lg text-primary" v-text="title"></div>
-    <div class="row justify-center q-gutter-xs">
-      <q-btn
+    <div class="row justify-center q-gutter-lg">
+      <q-btn class="q-py-xl"
         stack
         v-for="(item, i) in items" 
         :key="`item-${i}`" 

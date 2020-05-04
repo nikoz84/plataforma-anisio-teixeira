@@ -1,59 +1,85 @@
 <template>
-  <div class="YL__toolbar-input-container row no-wrap justify-end" id="autocomplete-form">
+  <div class="YL__toolbar-input-container row no-wrap justify-end bg-none" id="autocomplete-form">
     
     <q-select
       dense
-      outlined
-      square
+      
+      rounded standout 
       clearable
+      bottom-slots
       v-model="term"
       use-input
       option-value="id"
       option-label="name"
       stack-label
+      stack-icon
       hide-dropdown-icon
       debounce="200"
       @filter="searchTerm"
       @new-value="add"
       @input="selectedInput"
       :options="options"
-      :label="`Buscar por: ${label}`"
+      :label="`Buscar por ${label}`"
       :loading="loadingState"
-      label-color="pink-5"
+      label-color="primary"
+      :input-style= "{ color: '#000' }"
       bg-color="grey-4"
-      class="grey-11 col"
+      class="col q-mt-md"
       style="with:100%;"
-      
-    />
+    >
+     <template v-slot:append>
+      <q-icon class="cursor-pointer" round flat name="search" @click="searchTerm" color="primary" />
+      <q-btn color="primary" round flat icon="more_vert" aria-label="opções de busca">
+      <q-menu cover auto-close>
+        <q-list>
+          <q-item clickable aria-label="buscar por palavra chave" @click="recommendationPer('tag')">
+            <q-item-section >Buscar por palavra chave</q-item-section>
+          </q-item>
+          <q-item clickable aria-label="buscar por título" @click="recommendationPer('titulo')">
+            <q-item-section >Buscar por título</q-item-section>
+          </q-item>
+          <q-item clickable aria-label="acessar busca avançada" @click="openDialog()">
+            <q-item-section>Acessar busca avançada</q-item-section>
+          </q-item>
+        </q-list>
+      </q-menu>
+    </q-btn>
+     </template>
+    </q-select>
 
-    <q-btn
+<!-- CÓDIGO ANTIGO AGUARDANDO LIVE PARA RESOLUÇÃO DE ERRO NA BUSCA --
+
+    <q-btn 
       rounded
       outlined
       dense
       @click="searchTerm"
       class="YL__toolbar-input-btn"
-      color="grey-3"
-      text-color="pink-5"
+      
+      text-color="$primary"
+      color="$primary"
       icon="search"
       unelevated
       aria-label="pesquisar"
     />
-    <q-btn color="pink-5" round flat icon="more_vert" aria-label="opções de busca">
+    <q-btn color="$primary" round flat icon="more_vert" aria-label="opções de busca">
       <q-menu cover auto-close>
         <q-list>
           <q-item clickable aria-label="sugerir por palavra chave" @click="recommendationPer('tag')">
-            <q-item-section >Sugerência por palavra chave</q-item-section>
+            <q-item-section >Buscar por palavra chave</q-item-section>
           </q-item>
           <q-item clickable aria-label="sugerir por título" @click="recommendationPer('titulo')">
-            <q-item-section >Sugerência por título</q-item-section>
+            <q-item-section >Buscar por título</q-item-section>
           </q-item>
           <q-item clickable aria-label="busca avançada" @click="openDialog()">
-            <q-item-section>Busca avançada</q-item-section>
+            <q-item-section>Acessar busca avançada</q-item-section>
           </q-item>
         </q-list>
       </q-menu>
     </q-btn>
     
+-->
+
   </div>
 </template>
 <script>
