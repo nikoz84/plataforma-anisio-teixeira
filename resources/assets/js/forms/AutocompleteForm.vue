@@ -82,10 +82,12 @@
   </div>
 </template>
 <script>
+import { QSelect } from "quasar";
 import AdvancedSearchForm from "./AdvancedSearchForm.vue";
 
 export default {
   name: "AutocompleteForm",
+  components: { QSelect },
   data() {
     return {
       term: null,
