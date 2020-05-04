@@ -25,14 +25,14 @@
             </q-btn>
             <q-btn round color="secondary" icon="save_alt" size="sm"
                 v-if="fileExists('download')"
-                @click="downloadFile('download')" >
+                @click="downloadFile('download', conteudo.id)" >
                 <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
                     Baixar conteúdo
                 </q-tooltip>
             </q-btn>
             <q-btn round color="secondary" icon="save_alt" size="sm"
                 v-if="fileExists('visualizacao')"
-                @click="downloadFile('visualizacao')" 
+                @click="downloadFile('visualizacao', conteudo.id)" 
                     >
                 <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
                     Baixar conteúdo
@@ -40,7 +40,7 @@
             </q-btn>
             <q-btn round color="secondary" icon="description" size="sm"
                 v-if="fileExists('guia')" 
-                @click="downloadFile('guia')"
+                @click="downloadFile('guia', conteudo.id)"
                     >
                 <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
                     Baixar guia pedagógico
@@ -67,15 +67,9 @@ export default {
         
     },
     methods: {
-        async downloadFile(file) {
-            console.log(file)
-            console.log(this.guia)
-            console.log(this.visualizacao)
-            console.log(this.download)
-            //console.log(action, id)
-            //console.log(mimeType);
-            /*
-            axios({ url: `/files/${action}/${id}`,
+        async downloadFile(directory, id) {
+            
+            axios({ url: `/files/${directory}/${id}`,
                 method: 'GET',
                 responseType: 'blob',
             }).then((response) => {
@@ -86,7 +80,7 @@ export default {
                 document.body.appendChild(fileLink);
                 fileLink.click();
             });
-            */
+            
         },
         share() {
             console.log("compartilhar");
@@ -94,7 +88,6 @@ export default {
         fileExists(path) {
             let files = this.conteudo.arquivos;
             let hasUrl = files[path].hasOwnProperty('url');
-            console.log(files[path])
             switch (path) {
                 case 'guia':
                     this.guia = hasUrl ? files[path] : {};

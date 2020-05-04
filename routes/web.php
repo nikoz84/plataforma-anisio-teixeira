@@ -36,7 +36,7 @@ Route::get('/docs', function (Request $request) {
 
 */
 
-Route::get('/conteudos-digitais/conteudo/incorporar-conteudo/{id}', 'ConteudoController@incorporarConteudo');
+Route::get('/conteudos-digitais/conteudo/incorporar-conteudo/id/{id}', 'ConteudoController@incorporarConteudo');
 
 Route::get(
     'teste',

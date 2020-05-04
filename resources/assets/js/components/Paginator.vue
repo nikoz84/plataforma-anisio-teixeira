@@ -59,7 +59,7 @@ export default {
     async onLoad(index, done) {
       if (this.paginator.next_page_url && this.paginator.data.length > 0) {
         let params = this.queryStringToObject(this.paginator.next_page_url);
-        console.log(params);
+        
         let resp = await axios.get(this.paginator.next_page_url);
 
         this.SET_PAGINATOR(resp.data.paginator);

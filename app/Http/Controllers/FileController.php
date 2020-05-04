@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\ApiController;
 use App\Traits\FileSystemLogic;
+use App\Conteudo;
 
 class FileController extends ApiController
 {
@@ -58,12 +59,14 @@ class FileController extends ApiController
 
     public function downloadFile($action, $id)
     {
-        return $this->successResponse([ 'action' => $action, 'id'=> $id], 'as', 200);
+        $this->successResponse([ 'action' => $action, 'id'=> $id], 'as', 200);
         $directory = $action;
 
         $file = $this->getMetaDados($directory, $id);
-        
-        return Storage::disk('conteudos-digitais')->download("{$directory}/".$file->name);
+        Conteudo::find($id)->increment('qt_downloads');
+
+        $headers = ['Content-Type' => "application/{$file->mime_type}"];
+        return Storage::disk('conteudos-digitais')->download("{$directory}/".$file->name, $file->name, $headers);
     }
 
     public function getGallery()
