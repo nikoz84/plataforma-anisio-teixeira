@@ -94,7 +94,10 @@ trait FileSystemLogic
     {
         $filesystem = new Filesystem;
 
-        $path = Storage::disk('conteudos-digitais')->path($directory) . "/{$id}.*";
+        $path = self::windowsDirectory(
+            Storage::disk('conteudos-digitais')->path($directory) . "/{$id}.*"
+        );
+        
         $files = $filesystem->glob($path);
         $arr = [];
         foreach ($files as $file) {

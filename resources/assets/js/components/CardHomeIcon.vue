@@ -2,16 +2,18 @@
   <section>
     <div class="text-h5 title-page q-px-md q-py-lg text-primary" v-text="title"></div>
     <div class="row q-gutter-md">
-      <q-btn  
+      <q-btn
+        stack
         v-for="(item, i) in items" 
         :key="`item-${i}`" 
         :to="item.search_url"
         :aria-label="item.name" 
-        :label="item.name"
+        style="width: 200px"
         >
-          <q-avatar size="60px">
-            <img class="q-pl-sm" :src="item.icon">
+          <q-avatar left size="60px">
+            <img :src="item.icon">
           </q-avatar>
+          <div>{{item.name}}</div>
       </q-btn>
     </div>
   </section>

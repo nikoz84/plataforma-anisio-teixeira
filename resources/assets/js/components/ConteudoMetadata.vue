@@ -19,8 +19,14 @@
             <q-separator class="q-my-md"></q-separator>
             
             <strong>Licença:</strong>
-                {{conteudo.lincese ? conteudo.license.name : null}}
-
+                <q-chip v-if="conteudo.license">
+                    {{ conteudo.license.name }}
+                    <q-tooltip 
+                    content-class="bg-grey-10" 
+                    content-style="font-size: 14px, max-width:300px;">
+                        {{conteudo.license.description}}
+                    </q-tooltip>
+                </q-chip>
             <q-separator class="q-my-md"></q-separator>
 
             <strong>

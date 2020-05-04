@@ -46,7 +46,7 @@
             </q-btn>
             <q-btn round color="secondary" icon="description" size="sm"
                 v-if="conteudo.arquivos && conteudo.arquivos.guia.url" 
-                @click="download('guia', conteudo.id, conteudo.guia.mime_type)" >
+                @click="download('guia', conteudo.id, conteudo.arquivos.guia.mime_type)" >
                 <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
                     Baixar guia pedagógico
                 </q-tooltip>
@@ -67,20 +67,19 @@ export default {
         async download(action, id, mimeType) {
             console.log(action, id)
             console.log(mimeType);
-            try {
-                let resp = await axios(`/files/${action}/${id}`, null, {responseType: 'arraybuffer'})
-                console.log(resp)
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        forceDownload(response, filename) {
-            const url = window.URL.createObjectURL(new Blob([response.data]))
-            const link = document.createElement('a')
-            link.href = url
-            link.setAttribute('download', filename)
-            document.body.appendChild(link)
-            link.click()
+            /*
+            axios({ url: `/files/${action}/${id}`,
+                method: 'GET',
+                responseType: 'blob',
+            }).then((response) => {
+                var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+                var fileLink = document.createElement('a');
+                fileLink.href = fileURL;
+                fileLink.setAttribute('download', 'file.pdf');
+                document.body.appendChild(fileLink);
+                fileLink.click();
+            });
+            */
         },
         share() {
             console.log("compartilhar");
