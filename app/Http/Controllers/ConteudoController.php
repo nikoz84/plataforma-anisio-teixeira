@@ -280,7 +280,8 @@ class ConteudoController extends ApiController
         $arquivos = $conteudo->getAttribute('arquivos');
 
         $tipo = $conteudo->tipo->id;
-        $download = $arquivos['download'];
+        $download = $arquivos['download']->url;
+        $download = explode('/storage', $download)[1];
 
         return view('conteudos_digitais.index', compact('download', 'tipo', 'id'));
     }
