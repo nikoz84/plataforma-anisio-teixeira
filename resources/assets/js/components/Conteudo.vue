@@ -1,18 +1,20 @@
 <template>
-  <div class="row q-mt-md" v-if="conteudo">
-    <div class="col-sm-12 col-md-6">
+  <div class="row justify-center q-mt-md q-gutter-sm" v-if="conteudo">
+    <div class="col-xs-11 col-sm-6">
       <Player :arquivos="conteudo.arquivos" :tipo="conteudo.tipo"></Player>
-      <ConteudoMetadata></ConteudoMetadata>
+      <PlayerActions class="q-mt-xs"></PlayerActions>
+      <q-card class="q-mt-sm">
+        <q-card-section>
+          <Title :title="conteudo.title"></Title>
+        </q-card-section>
+        <q-card-section>
+          <div v-html="conteudo.description"></div> 
+        </q-card-section>
+      </q-card>
     </div>
-    
-    <q-card class="col-sm-12 col-md-6">
-      <q-card-section>
-        <Title :title="conteudo.title"></Title>
-      </q-card-section>
-      <q-card-section>
-        <div v-html="conteudo.description"></div> 
-      </q-card-section>
-    </q-card>
+    <div class="col-xs-11 col-sm-5">
+      <ConteudoMetadata></ConteudoMetadata> 
+    </div>
   </div>
 </template>
 <script>
@@ -21,6 +23,7 @@ import { mapState } from "vuex";
 import { QCard, QCardSection, QSeparator, QChip, Ripple } from "quasar";
 import Title from "./Title";
 import ConteudoMetadata from './ConteudoMetadata';
+import PlayerActions from "./PlayerActions";
 
 export default {
   name: "Conteudo",
@@ -32,7 +35,8 @@ export default {
     Player,
     QChip,
     Title,
-    ConteudoMetadata
+    ConteudoMetadata,
+    PlayerActions
   },
   created() {},
   computed: {

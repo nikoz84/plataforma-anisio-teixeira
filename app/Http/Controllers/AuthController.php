@@ -19,7 +19,7 @@ class AuthController extends ApiController
 {
     public function __construct(Request $request)
     {
-        $this->middleware('jwt.verify')->except(['login', 'register', 'verifyEmail']);
+        $this->middleware('jwt.verify')->except(['login', 'register', 'verifyEmail', 'recoverPass']);
         $this->request = $request;
     }
     /**
@@ -166,6 +166,17 @@ class AuthController extends ApiController
         }
 
         return $this->successResponse([], "Espere a confirmação na sua conta de email", 200);
+    }
+    /**
+     * Recuperar senha
+     *
+     */
+    public function recoverPass(Request $request)
+    {
+        return $this->successResponse([
+            'email' => $request->email,
+            'recaptcha' => $request->recaptcha
+        ], 'asda', 200);
     }
     /**
      * Regras de validação

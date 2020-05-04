@@ -5,8 +5,13 @@
         {{canal && canal.options ? canal.options.extend_name : canal.name }}
       </div>
     </header>
-    <nav>
-      <q-tabs inline-label class="text-white shadow-3" :style="`background-color:${color}`">
+    <q-tabs inline-label
+          shrink
+          dense
+          stretch 
+          align="center" 
+          class="text-white shadow-3" 
+          :style="`background-color:${color}`">
         <q-route-tab
           name="inicio"
           label="Sobre"
@@ -18,13 +23,16 @@
           label="Listar"
           :to="{ name: 'Listar', params: { slug: $route.params.slug } }"
         />
+        <q-space />
         <OrderBy></OrderBy>
         <CategoriasMenu></CategoriasMenu>
         <Filters></Filters>
         
         <q-space />
-      </q-tabs>
-    </nav>
+    </q-tabs>
+    <q-card class="q-my-sm q-pl-sm">
+      <q-badge v-if="paginator" v-text="totalCount" />
+    </q-card>
     
     <transition
       name="custom-classes-transition"
@@ -106,7 +114,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["canal"]),
+    ...mapState(["canal", "paginator", "isLoading"]),
     goTo() {
       let slug = this.$route.params.slug;
       return `/${slug}/listar`;
@@ -115,6 +123,9 @@ export default {
       return this.canal && this.canal.options
         ? this.canal.options.color
         : "#08275e";
+    },
+    totalCount() {
+      return this.isLoading ? 'carregando' : `${this.paginator.total} - itens encontrados`;
     }
   },
   methods: {
@@ -143,5 +154,7 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
+
+  
 
 </style>

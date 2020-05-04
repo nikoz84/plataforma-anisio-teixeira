@@ -13,8 +13,6 @@ use App\Tag;
 use App\CurricularComponent;
 use App\License;
 use App\Category;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Facades\Storage;
 use App\Helpers\TransformDate;
 use App\Traits\UserCan;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +46,7 @@ class Conteudo extends Model
     protected $appends = ['image', 'excerpt', 'url_exibir', 'user_can', 'arquivos', 'formated_date'];
     protected $casts = ['options' => 'array',];
     protected $hidden = ['ts_documento'];
+
     /**
      * Seleciona o canal do conteúdo sem os campos adicionais
      *

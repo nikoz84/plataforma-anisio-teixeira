@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Denuncia;
+use App\Contato;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -10,15 +10,15 @@ use App\Mail\SendMail;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;
 
-class DenunciaController extends ApiController
+class ContatoController extends ApiController
 {
-    private $denuncia;
+    private $contato;
     protected $request;
 
-    public function __construct(Request $request, Denuncia $denuncia)
+    public function __construct(Request $request, Contato $contato)
     {
         $this->middleware('jwt.verify')->except(['create']);
-        $this->denuncia = $denuncia;
+        $this->contato = $contato;
         $this->request = $request;
     }
     /**
@@ -32,7 +32,7 @@ class DenunciaController extends ApiController
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
 
-        $paginator = $this->denuncia::paginate($limit)->setPath("/denuncias?limit={$limit}");
+        $paginator = $this->contato::paginate($limit)->setPath("/denuncias?limit={$limit}");
 
         return $this->showAsPaginator($paginator);
     }
@@ -66,16 +66,16 @@ class DenunciaController extends ApiController
             );
         }
 
-        $denuncia = $this->denuncia;
+        $contato = $this->contato;
 
-        $denuncia->name = $this->request->get('name');
-        $denuncia->email = $this->request->get('email');
-        $denuncia->action = $this->request->get('action', 'faleconosco');
-        $denuncia->url = $this->request->get('url');
-        $denuncia->subject = $this->request->get('subject');
-        $denuncia->message = $this->request->get('message');
+        $contato->name = $this->request->get('name');
+        $contato->email = $this->request->get('email');
+        $contato->action = $this->request->get('action', 'faleconosco');
+        $contato->url = $this->request->get('url');
+        $contato->subject = $this->request->get('subject');
+        $contato->message = $this->request->get('message');
 
-        if (!$denuncia->save()) {
+        if (!$contato->save()) {
             return $this->errorResponse([], 'Não foi possível enviar', 422);
         }
 
@@ -112,9 +112,9 @@ class DenunciaController extends ApiController
             return $this->errorResponse($validator->errors(), "Não foi possível deletar a licença", 422);
         }
 
-        $denuncia = $this->denuncia::find($id);
+        $contato = $this->contato::find($id);
 
-        if (!$denuncia->delete()) {
+        if (!$contato->delete()) {
             return $this->errorResponse([], "Não foi possível apagar", 422);
         }
 
@@ -128,8 +128,8 @@ class DenunciaController extends ApiController
      */
     public function getById($id)
     {
-        $denuncia = $this->denuncia::findOrFail($id);
+        $contato = $this->contato::findOrFail($id);
 
-        return $this->successResponse($denuncia, "", 200);
+        return $this->successResponse($contato, "", 200);
     }
 }

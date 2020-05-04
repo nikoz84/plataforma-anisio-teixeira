@@ -1,9 +1,5 @@
 <template>
   <div class="" v-if="paginator">
-    <q-card class="q-my-sm q-pl-sm">
-      {{ paginator.total }} - itens encontrados
-    </q-card>
-
     <q-infinite-scroll @load="onLoad" :offset="150">
       <div class="row justify-center q-gutter-x-md q-gutter-y-md">
         <PaginatorCard

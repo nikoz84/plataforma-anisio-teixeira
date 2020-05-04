@@ -2,6 +2,7 @@ import HomeCanal from "./pages/HomeCanal.vue";
 import Listar from "./pages/Listar.vue";
 import Exibir from "./pages/Exibir.vue";
 import LoginForm from "./forms/LoginForm.vue";
+import MudarPassForm from "./forms/MudarPassForm.vue";
 import RecoverPassForm from "./forms/RecoverPassForm.vue";
 import RegisterForm from "./forms/RegisterForm.vue";
 import ListAdmin from "./components/ListAdmin.vue";
@@ -152,8 +153,17 @@ const routes = [
         name: "Recuperar",
         component: RecoverPassForm,
         meta: {
+          requiresAuth: false,
+          title: "Recuperar senha"
+        }
+      },
+      {
+        path: "mudar-senha",
+        name: "MudarSenha",
+        component: MudarPassForm,
+        meta: {
           requiresAuth: true,
-          title: "recuperar senha"
+          title: "Mudar senha"
         }
       },
       {
@@ -162,7 +172,7 @@ const routes = [
         component: RegisterForm,
         meta: {
           requiresAuth: false,
-          title: "faça seu registro"
+          title: "Faça seu registro"
         }
       },
       {

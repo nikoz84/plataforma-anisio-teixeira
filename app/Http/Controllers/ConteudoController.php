@@ -144,31 +144,27 @@ class ConteudoController extends ApiController
         $conteudo->canal_id = $request->canal_id;
         $conteudo->category_id = $request->category_id;
 
-        // INFORMAÇÕES BÁSICAS
         $conteudo->title = $request->title;
         $conteudo->description = $request->description;
         $conteudo->authors = $request->authors;
         $conteudo->source = $request->source;
-        // FL_DESTAQUE, FL_APROVADO, FL_SITE, QT_DOWNLOAD, QT_ACCESS
         $conteudo->options = ['site' => $request->options_site];
         $conteudo->setAttribute('is_featured', $request->is_featured);
         $conteudo->setAttribute('is_site', $request->is_site);
-
-        // QUANTIDADE DE ACESSOS E DOWNLOADS
         $conteudo->qt_downloads = Conteudo::INIT_COUNT;
         $conteudo->qt_access = Conteudo::INIT_COUNT;
 
-
-
-        dd($conteudo);
         if (!$conteudo->save()) {
             return $this->errorResponse([], "Não foi possível cadastrar o conteúdo", 422);
         }
-        // PALAVRAS CHAVE, COMPONENTES CURRICULARES
-
+        
         $conteudo->tags()->attach(explode(',', $request->tags));
         $conteudo->componentes()->attach(explode(',', $request->componentes));
-        Conteudo::tsDocumentoSave($conteudo->id);
+        $conteudo::tsDocumentoSave($conteudo->id);
+
+        
+         // FULL TEXT SEARCH
+
 
         $this->createFile($conteudo->id, $request->download);
 

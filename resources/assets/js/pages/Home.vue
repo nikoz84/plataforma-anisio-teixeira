@@ -7,7 +7,7 @@
       controlType="flat"
       control-color="primary"
       navigation
-      navigation-icon="radio_button_unchecked"
+      navigation-icon="radio_button_checked"
       padding
       infinite
       autoplay
@@ -17,12 +17,12 @@
     >
     <q-carousel-slide :name="1" img-src="/storage/conteudos/slider/banner_ensinosuperior.png">
       <div class="absolute-bottom custom-caption">
-          <q-btn class="q-px-lg" flat label="Saiba mais"></q-btn>
+          <q-btn  color="pink" class="q-px-lg" label="Saiba mais"></q-btn>
       </div>
     </q-carousel-slide>
     <q-carousel-slide :name="2" img-src="/storage/conteudos/slider/banner_rotinas-de-estudo.png">
       <div class="absolute-bottom custom-caption">
-          <q-btn class="q-px-lg" flat label="Saiba mais"></q-btn>
+          <q-btn color="pink" class="q-px-lg" label="Saiba mais"></q-btn>
       </div>
     </q-carousel-slide>
     </q-carousel>
@@ -48,19 +48,6 @@
       :title="temas.name"
       :items="temas.componentes"
     ></CardHomeIcon>
-    
-    
-    <CardHome v-for="(id, index) in ids"
-      :key="index"
-      :data="id.data" 
-      class="load"
-      :show="id.show"
-      :animation="id.animation"
-      v-scroll-fire="getDestaques" 
-      :id="id.name"
-      style="min-height: 55vh;"></CardHome>
-      
-    
   </section>
 </template>
 <script>

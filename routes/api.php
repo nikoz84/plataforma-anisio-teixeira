@@ -28,7 +28,7 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/tipos', 'TipoController@index')->name('listar.tipos');
     Route::get('/tipos/{id}', 'TipoController@getTiposById')->name('lista.tipos.x.id');
     /** DENUNCIA E FALE CONOSCO */
-    Route::post('/contato', 'DenunciaController@create')->name('criar.faleconosco.contato');
+    Route::post('/contato', 'ContatoController@create')->name('criar.faleconosco.contato');
     /** CANAIS */
     Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscar.canal.x.url.amigavel');
     /** COMPONENTES */
@@ -52,6 +52,7 @@ Route::group(['middleware' => ['cors']], function () {
     Route::post('/auth/login', 'AuthController@login')->name('login.usuario');
     Route::post('/auth/cadastro', 'AuthController@register')->name('registro.usuario');
     Route::post('/auth/verificar/{token}', 'AuthController@verifyToken')->name('verificar.token');
+    Route::post('/auth/recuperar-senha', 'AuthController@recoverPass')->name('recuperar.senha');
     /** OPTIONS  */
     Route::get('/options/{name}', 'OptionsController@getByName')->name('busca.metadata.x.nome');
     Route::get('/options', 'OptionsController@index')->name('listar.opcoes');
@@ -63,7 +64,7 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('usuarios/verify/{token}', 'UserController@verify')->name('verify.token');
     
     /** DOWNLOAD FILE **/
-    Route::get('/downloadFile/{id}', 'FileController@downloadFile')->name('downloadFile.id');
+    Route::get('/files/{action}/{id}', 'FileController@downloadFile')->name('downloadFile.id');
 });
 /**
  *

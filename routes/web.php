@@ -30,13 +30,6 @@ Route::get('/teste', function (Request $request) {
     //return $wordpres->getPosts();
 });
 
-Route::get('/form', function (Request $request) {
-    if ($request->all()) {
-        dd($request->all());
-    }
-    return view('forms.teste');
-});
-
 Route::get('/docs', function (Request $request) {
     return view('docs');
 });
@@ -45,13 +38,18 @@ Route::get('/docs', function (Request $request) {
 
 Route::get('/conteudos-digitais/conteudo/incorporar-conteudo/id/{id}', 'ConteudoController@incorporarConteudo');
 
-Route::get('/teste', function (\Illuminate\Http\Request $request) {
-    $conteudo = App\Conteudo::find(9983);
-    //$aplicativo = App\Aplicativo::find(31);
-    
-    return response()->json([ 'conteudo' => $conteudo ]);
-    //if (Crawler::isCrawler()) {}
-});
+Route::get(
+    'teste',
+    function () {
+        $user = new \App\User;
+
+        $user->name = 'Nicolás Romero';
+        $user->password = '123456';
+        $user->email = 'nikoz.1984@gmail.com';
+
+        $user->save();
+    }
+);
 
 Route::get('/{any}', 'ApiController@home')->where('any', '.*');
 

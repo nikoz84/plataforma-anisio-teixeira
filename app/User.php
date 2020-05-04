@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Event;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -71,6 +72,17 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     protected $appends = ['is_admin', 'image', 'user_can'];
+
+    public static function boot()
+    {
+        parent::boot();
+        
+        static::created(
+            function ($user) {
+                Event::dispatch('user.saved', $user);
+            }
+        );
+    }
     /**
      * Converte o atributo nome para minusculas
      *

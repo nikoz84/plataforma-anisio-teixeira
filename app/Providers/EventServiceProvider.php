@@ -16,8 +16,10 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Event' => [
             'App\Listeners\EventListener',
         ],
+        'user.saved' => [
+            'App\Events\UserEvent@saved',
+        ]
     ];
-
     /**
      * Register any events for your application.
      *
@@ -26,7 +28,5 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-
-        //
     }
 }
