@@ -18,7 +18,7 @@
       @new-value="add"
       @input="selectedInput"
       :options="options"
-      :label="`Buscar por ${label}`"
+      :placeholder="`Buscar por ${label}`"
       :loading="loadingState"
       label-color="primary"
       :input-style= "{ color: '#000' }"
