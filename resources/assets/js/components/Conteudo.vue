@@ -1,6 +1,6 @@
 <template>
-  <div class="row q-mt-md" v-if="conteudo">
-    <div class="col-xs-12 col-sm-6">
+  <div class="row justify-center q-mt-md q-gutter-sm" v-if="conteudo">
+    <div class="col-xs-11 col-sm-6">
       <Player :arquivos="conteudo.arquivos" :tipo="conteudo.tipo"></Player>
       <PlayerActions class="q-mt-xs"></PlayerActions>
       <q-card class="q-mt-sm">
@@ -12,9 +12,7 @@
         </q-card-section>
       </q-card>
     </div>
-    
-    
-    <div class="col-xs-12 col-sm-5 q-ml-md">
+    <div class="col-xs-11 col-sm-5">
       <ConteudoMetadata></ConteudoMetadata> 
     </div>
   </div>

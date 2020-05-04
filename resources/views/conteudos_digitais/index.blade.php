@@ -36,7 +36,7 @@
 
 
 	<video style="width:100%" controls>
-	  <source src="{{$download->url}}" type="video/mp4">
+	  <source src="storage/conteudos/conteudos-digitais/download/10409.mp4" type="video/mp4">
 	  Your browser does not support HTML video.
 	</video>
 
