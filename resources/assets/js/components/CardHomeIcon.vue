@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="text-h5 title-page q-px-md q-py-lg text-primary" v-text="title"></div>
-    <div class="row q-gutter-md">
+    <div class="row justify-center q-gutter-xs">
       <q-btn
         stack
         v-for="(item, i) in items" 

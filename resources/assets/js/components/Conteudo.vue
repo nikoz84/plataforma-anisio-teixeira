@@ -1,5 +1,5 @@
 <template>
-  <div class="row q-mt-md q-gutter-sm" v-if="conteudo">
+  <div class="row justify-center q-mt-md q-gutter-sm" v-if="conteudo">
     <div class="col-xs-11 col-sm-6">
       <Player :arquivos="conteudo.arquivos" :tipo="conteudo.tipo"></Player>
       <PlayerActions class="q-mt-xs"></PlayerActions>
