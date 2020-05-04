@@ -65,11 +65,7 @@ class FileController extends ApiController
         $file = $this->getMetaDados($directory, $id);
         Conteudo::find($id)->increment('qt_downloads');
 
-        $headers = [
-          'Content-Type' => 'application/video',
-          'Content-Type' => 'application/audio'
-        ];
-
+        $headers = ['Content-Type' => "application/{$file->mime_type}"];
         return Storage::disk('conteudos-digitais')->download("{$directory}/".$file->name, $file->name, $headers);
     }
 
