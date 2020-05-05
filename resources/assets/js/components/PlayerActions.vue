@@ -91,9 +91,8 @@ export default {
         },
         fileExists(path) {
             let files = this.conteudo.arquivos;
-            let hasUrl = files[path].hasOwnProperty('url');
             
-            return hasUrl ? true : false;
+            return files[path].hasOwnProperty('url');
         }
     },
 }

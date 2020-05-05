@@ -44,9 +44,7 @@
     <!-- CANAIS-->
     <q-list v-else>
       <q-item-label class="bg-grey-4" header>
-        <strong
-          class="text-accent color-grey-10"
-        >
+        <strong class="grey-10">
           Canais
         </strong>
       </q-item-label>
@@ -59,7 +57,7 @@
           clickable
           v-close-popup
           tabindex="0"
-          exact
+          active-class="active-pat"
         >
           <q-item-section>
             <q-item-label>{{ link.name }}</q-item-label>
@@ -135,3 +133,9 @@ export default {
   }
 };
 </script>
+<style lang="stylus" scoped>
+.active-pat
+  background-color: #08275e
+  color: #fff
+
+</style>

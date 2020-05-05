@@ -38,7 +38,7 @@
         <AutocompleteForm></AutocompleteForm>
         <q-space />
 
-        <q-btn-dropdown stretch flat icon="person_outlined" dropdown-icon="arrow_drop_down" aria-label="Opçoes de usuário">
+        <q-btn-dropdown stretch flat icon="person" dropdown-icon="arrow_drop_down" aria-label="Opçoes de usuário">
           <q-list>
             <q-item clickable to="/usuario/contato/faleconosco" aria-label="fale conosco">
               <q-item-section>

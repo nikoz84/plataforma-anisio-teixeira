@@ -19,7 +19,8 @@
             icon="add" 
             color="positive" 
             :to="`/admin/${$route.params.slug}/adicionar`" 
-            title="Adicionar novo item"/>
+            title="Adicionar novo item"
+            v-if="userCan()"/>
     </div>
 </template>
 <script>
@@ -36,7 +37,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["paginator"])
+    ...mapState(["paginator", "isLogged"])
   },
   methods: {
     ...mapMutations(["SET_PAGINATOR", "SET_IS_LOADING"]),
@@ -63,6 +64,11 @@ export default {
           });
         }
       });
+    },
+    userCan(){
+      let user = JSON.parse(localStorage.user);
+      
+      return this.isLogged && user.role === 1 || user.role === 2 || user.role === 3;
     }
   }
 };
