@@ -18,6 +18,7 @@
           class="q-ml-xs"
           aria-label="voltar ao inicio"
           to="/"
+          v-if="$q.screen.gt.xs"
         >
           <img src="/logo.svg" 
                 loading="lazy" 
@@ -26,7 +27,7 @@
                 alt="Marca"
                 title="marca"
                 aria-label="Marca da plataforma Anísio Teixeira"
-                v-if="$q.screen.gt.xs && $q.screen.gt.sm"/>
+                />
 
           <q-toolbar-title shrink v-if="$q.screen.gt.xs" style="font-size:14px;font-weight:600;">
             {{ !$q.screen.gt.sm ? 'PAT' : 'PLATAFORMA ANÍSIO TEIXEIRA'}}

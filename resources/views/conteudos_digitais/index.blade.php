@@ -41,27 +41,36 @@
 	</style>
 </head>
 <body>
-
-	<video style="width:100%" controls>
-	  <source src="storage/conteudos/conteudos-digitais/download/10409.mp4" type="<?php echo $mimeType;?>">
-	  Your browser does not support HTML video.
-	</video>
+	@if ($conteudo->tipo_id == 5)
+		<video style="width:100%" controls>
+			<source src="{{$download}}" type="{{ $mime_type }}">
+			Your browser does not support HTML video.
+	  	</video>
+	@else if ($conteudo->tipo_id == 4)
+	  	<audio style="width:100%" controls>
+			<source src="{{$download}}" type="{{ $mime_type }}">
+			Your browser does not support HTML video.
+		</video>
+	@endif
 
 	<div class="atributos-arquivo">
 		<ul>
-			<li title="Baixar Arquivo!">
-				<a href="{{route('downloadFile.id', ['action' => 'download', 'id' => $id])}}"><i class="fa fa-download"></i> Baixar arquivo</a>
+			<li title="Baixar Arquivo">
+				<a href="{{url("/api-v1/files/download/$conteudo->id")}}">
+					<i class="fa fa-download"></i> 
+					Baixar arquivo
+				</a>
 			</li>
 
-			<li title="Tamanho do Arquivo!"><i class="fas fa-hdd"></i> <?php echo $megaBytes;?> MB</li>
-
-			<li title="Formato .<?php echo $formato;?>">
-				@if ($tipo == 5)
+			<li title="Tamanho do Arquivo"><i class="fas fa-hdd"></i> {{ $mega_bytes }} MB</li>
+			{{$conteudo->tipo_id}}
+			<li title="Formato: {{ $formato }}">
+				@if ($conteudo->tipo_id == 5)
 				    <i class="far fa-file-video"></i>
-				@else
+				@elseif ($conteudo->tipo_id == 4)
 				    <i class="fas fa-file-audio"></i>
 				@endif
-				.<?php echo $formato;?>
+				.{{$formato}}
 			</li>
 		</ul>
 

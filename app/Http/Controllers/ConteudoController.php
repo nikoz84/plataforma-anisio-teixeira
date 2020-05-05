@@ -269,27 +269,25 @@ class ConteudoController extends ApiController
 
         return $this->showOne($conteudo);
     }
-
+    /**
+     * Incopora conteuúdo em páginas externas
+     *
+     * @param $id integer
+     */
     public function incorporarConteudo($id)
     {
         $conteudo = Conteudo::find($id);
         $arquivos = $conteudo->getAttribute('arquivos');
 
-        $tipo = $conteudo->tipo->id;
-
-        $mimeType = $arquivos['download']->mime_type;
+        $download = $arquivos['download']->url;
         $formato = $arquivos['download']->extension;
-        $megaBytes = number_format($arquivos['download']->size / 1024, 2, ',', '.');
-        $download = explode('/storage', $arquivos['download']->url)[1];
+        $mega_bytes = number_format($arquivos['download']->size / 1024, 2, ',', '.');
+        $mime_type = $arquivos['download']->mime_type;
+        
 
-        return view('conteudos_digitais.index', 
-            compact(
-                'download', 
-                'tipo', 
-                'id', 
-                'mimeType',
-                'formato',
-                'megaBytes'
-        ));
+        return view(
+            'conteudos_digitais.index',
+            compact('download', 'formato', 'mega_bytes', 'mime_type', 'conteudo')
+        );
     }
 }

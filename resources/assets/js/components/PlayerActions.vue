@@ -24,29 +24,24 @@
                 </q-tooltip>
             </q-btn>
             <q-btn round color="secondary" icon="save_alt" size="sm"
-                v-if="conteudo.arquivos && conteudo.arquivos.download.url"
-                @click="download(
-                    'download', 
-                    conteudo.id, 
-                    conteudo.arquivos.download.mime_type)" >
+                v-if="fileExists('download')"
+                @click="downloadFile('download', conteudo.id)" >
                 <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
                     Baixar conteúdo
                 </q-tooltip>
             </q-btn>
             <q-btn round color="secondary" icon="save_alt" size="sm"
-                v-if="conteudo.arquivos && conteudo.arquivos.visualizacao.url"
-                @click="download(
-                    'visualizacao', 
-                    conteudo.id, 
-                    conteudo.arquivos.visualizacao.mime_type)" 
+                v-if="fileExists('visualizacao')"
+                @click="downloadFile('visualizacao', conteudo.id)" 
                     >
                 <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
                     Baixar conteúdo
                 </q-tooltip>
             </q-btn>
             <q-btn round color="secondary" icon="description" size="sm"
-                v-if="conteudo.arquivos && conteudo.arquivos.guia.url" 
-                @click="download('guia', conteudo.id, conteudo.arquivos.guia.mime_type)" >
+                v-if="fileExists('guias-pedagogicos')" 
+                @click="downloadFile('guias-pedagogicos', conteudo.id)"
+                    >
                 <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
                     Baixar guia pedagógico
                 </q-tooltip>
@@ -60,30 +55,46 @@ import {mapState} from "vuex";
 
 export default {
     name : "PlayerActions",
+    data() {
+        return {
+            guia : {},
+            download: {},
+            visualizacao: {}
+        }
+    },
     computed: {
-        ...mapState(["conteudo"])
+        ...mapState(["conteudo"]),
+        
     },
     methods: {
-        async download(action, id, mimeType) {
-            console.log(action, id)
-            console.log(mimeType);
-            /*
-            axios({ url: `/files/${action}/${id}`,
-                method: 'GET',
-                responseType: 'blob',
-            }).then((response) => {
-                var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-                var fileLink = document.createElement('a');
-                fileLink.href = fileURL;
-                fileLink.setAttribute('download', 'file.pdf');
-                document.body.appendChild(fileLink);
-                fileLink.click();
-            });
-            */
+        async downloadFile(directory, id) {
+            
+            const file = this.conteudo.arquivos[directory];
+            axios({ 
+                url:`/files/${directory}/${id}`,  
+                method : "GET",
+                responseType: "blob"
+                })
+                .then(response => {
+                    console.log(response)
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', file.name);
+                document.body.appendChild(link);
+                link.click();
+            })
+            
         },
         share() {
             console.log("compartilhar");
         },
+        fileExists(path) {
+            let files = this.conteudo.arquivos;
+            let hasUrl = files[path].hasOwnProperty('url');
+            
+            return hasUrl ? true : false;
+        }
     },
 }
 </script>
