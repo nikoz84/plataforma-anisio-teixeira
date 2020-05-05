@@ -43,7 +43,7 @@ class Conteudo extends Model
         'options',
     ];
 
-    protected $appends = ['image', 'excerpt', 'url_exibir', 'user_can', 'arquivos', 'formated_date'];
+    protected $appends = ['image', 'excerpt', 'url_exibir', 'user_can', 'arquivos', 'formated_date', 'title_slug'];
     protected $casts = ['options' => 'array',];
     protected $hidden = ['ts_documento'];
 
@@ -148,6 +148,7 @@ class Conteudo extends Model
 
         $this->attributes['approving_user_id'] = $id;
     }
+
     /**
      * Muta o valor si o conteúdo é aprovado
      *
@@ -200,6 +201,13 @@ class Conteudo extends Model
         return strip_tags(Str::words($this->description, 30));
     }
     /**
+     * Converte o título para slug ou url amigável
+     */
+    public function getTitleSlugAttribute()
+    {
+        return Str::slug(Str::words($this->title, 50), '-');
+    }
+    /**
      * Seleciona e tranforma created-at ao formato (06 setembro de 2019 ás 17:37)
      *
      * @return void
@@ -219,7 +227,7 @@ class Conteudo extends Model
         return [
             'download'      => $this->getMetaDados('download', $this['id']),
             'visualizacao'  => $this->getMetaDados('visualizacao', $this['id']),
-            'guia'          => $this->getMetaDados('guias-pedagogicos', $this['id']),
+            'guias-pedagogicos'          => $this->getMetaDados('guias-pedagogicos', $this['id']),
         ];
     }
     /**

@@ -57,16 +57,34 @@ class FileController extends ApiController
         }
     }
 
-    public function downloadFile($action, $id)
+    public function downloadFile($directory, $id)
     {
-        $this->successResponse([ 'action' => $action, 'id'=> $id], 'as', 200);
-        $directory = $action;
-
-        $file = $this->getMetaDados($directory, $id);
-        Conteudo::find($id)->increment('qt_downloads');
-
-        $headers = ['Content-Type' => "application/{$file->mime_type}"];
-        return Storage::disk('conteudos-digitais')->download("{$directory}/".$file->name, $file->name, $headers);
+        $conteudo = Conteudo::find($id);
+        $conteudo->increment('qt_downloads');
+        $file = null;
+        switch ($directory) {
+            case 'download':
+                $file = $conteudo->arquivos['download'];
+                break;
+            case 'visualizacao':
+                $file = $conteudo->arquivos['visualizacao'];
+                break;
+            case 'guias-pedagogicos':
+                $file = $conteudo->arquivos['guias-pedagogicos'];
+                break;
+            default:
+                return $this->errorResponse([], 'arquivo não encontrado', 404);
+                break;
+        }
+            
+        $headers = ['Content-Type' => "$file->mime_type",
+            "Content-Disposition: attachment; filename={$file->name}"];
+        
+        $path = self::windowsDirectory(
+            Storage::disk('conteudos-digitais')->path("{$directory}/{$file->name}")
+        );
+        
+        return response()->download($path, $file->name, $headers);
     }
 
     public function getGallery()

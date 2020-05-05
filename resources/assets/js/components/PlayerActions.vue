@@ -39,8 +39,8 @@
                 </q-tooltip>
             </q-btn>
             <q-btn round color="secondary" icon="description" size="sm"
-                v-if="fileExists('guia')" 
-                @click="downloadFile('guia', conteudo.id)"
+                v-if="fileExists('guias-pedagogicos')" 
+                @click="downloadFile('guias-pedagogicos', conteudo.id)"
                     >
                 <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
                     Baixar guia pedagógico
@@ -68,19 +68,32 @@ export default {
     },
     methods: {
         async downloadFile(directory, id) {
+            let file = null;
+            if(directory == 'download'){
+                file = this.download;
+            } else if( directory == 'guias-pedagogicos') {
+                file = this.guia;
+            } else if (directory == 'visualizacao') {
+                file = this.visualizacao;
+            }
+                console.log(file)
             
             axios({ url: `/files/${directory}/${id}`,
                 method: 'GET',
                 responseType: 'blob',
             }).then((response) => {
-                var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+                console.log(response)
+                
+                var fileURL = window.URL.createObjectURL(
+                    new Blob([response.data])
+                );
                 var fileLink = document.createElement('a');
                 fileLink.href = fileURL;
-                fileLink.setAttribute('download', 'file.pdf');
+                fileLink.setAttribute('download', file.name);
                 document.body.appendChild(fileLink);
                 fileLink.click();
+                
             });
-            
         },
         share() {
             console.log("compartilhar");
@@ -89,7 +102,7 @@ export default {
             let files = this.conteudo.arquivos;
             let hasUrl = files[path].hasOwnProperty('url');
             switch (path) {
-                case 'guia':
+                case 'guias-pedagogicos':
                     this.guia = hasUrl ? files[path] : {};
                     break;
                 case 'download':

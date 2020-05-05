@@ -41,21 +41,27 @@
 	</style>
 </head>
 <body>
-
-	<video style="width:100%" controls>
-	  <source src="{{$download}}" type="{{ $mime_type }}">
-	  Your browser does not support HTML video.
-	</video>
+	@if ($tipo == 5)
+		<video style="width:100%" controls>
+			<source src="{{$download}}" type="{{ $mime_type }}">
+			Your browser does not support HTML video.
+	  	</video>
+	@else
+	  	<audio style="width:100%" controls>
+			<source src="{{$download}}" type="{{ $mime_type }}">
+			Your browser does not support HTML video.
+		</video>
+	@endif
 
 	<div class="atributos-arquivo">
 		<ul>
-			<li title="Baixar Arquivo!">
+			<li title="Baixar Arquivo">
 				<a href="{{url("/api-v1/files/download/$id")}}"><i class="fa fa-download"></i> Baixar arquivo</a>
 			</li>
 
-			<li title="Tamanho do Arquivo!"><i class="fas fa-hdd"></i> {{ $mega_bytes }} MB</li>
+			<li title="Tamanho do Arquivo"><i class="fas fa-hdd"></i> {{ $mega_bytes }} MB</li>
 
-			<li title="Formato .{{ $formato }}">
+			<li title="Formato: {{ $formato }}">
 				@if ($tipo == 5)
 				    <i class="far fa-file-video"></i>
 				@else
