@@ -68,32 +68,23 @@ export default {
     },
     methods: {
         async downloadFile(directory, id) {
-            let file = null;
-            if(directory == 'download'){
-                file = this.download;
-            } else if( directory == 'guias-pedagogicos') {
-                file = this.guia;
-            } else if (directory == 'visualizacao') {
-                file = this.visualizacao;
-            }
-                console.log(file)
             
-            axios({ url: `/files/${directory}/${id}`,
-                method: 'GET',
-                responseType: 'blob',
-            }).then((response) => {
-                console.log(response)
-                
-                var fileURL = window.URL.createObjectURL(
-                    new Blob([response.data])
-                );
-                var fileLink = document.createElement('a');
-                fileLink.href = fileURL;
-                fileLink.setAttribute('download', file.name);
-                document.body.appendChild(fileLink);
-                fileLink.click();
-                
-            });
+            const file = this.conteudo.arquivos[directory];
+            axios({ 
+                url:`/files/${directory}/${id}`,  
+                method : "GET",
+                responseType: "blob"
+                })
+                .then(response => {
+                    console.log(response)
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', file.name);
+                document.body.appendChild(link);
+                link.click();
+            })
+            
         },
         share() {
             console.log("compartilhar");
@@ -101,21 +92,7 @@ export default {
         fileExists(path) {
             let files = this.conteudo.arquivos;
             let hasUrl = files[path].hasOwnProperty('url');
-            switch (path) {
-                case 'guias-pedagogicos':
-                    this.guia = hasUrl ? files[path] : {};
-                    break;
-                case 'download':
-                    this.donwload = hasUrl ? files[path] : {};
-                    break;
-                case 'visualizacao':
-                    this.visualizacao = hasUrl ? files[path] : {};
-                    break;
-                default:
-                    return;
-                    break;
-            }
-
+            
             return hasUrl ? true : false;
         }
     },

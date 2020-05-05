@@ -77,8 +77,9 @@ class FileController extends ApiController
                 break;
         }
             
-        $headers = ['Content-Type' => "$file->mime_type",
-            "Content-Disposition: attachment; filename={$file->name}"];
+        $headers = [
+            "Content-Type" => "$file->mime_type"
+        ];
         
         $path = self::windowsDirectory(
             Storage::disk('conteudos-digitais')->path("{$directory}/{$file->name}")

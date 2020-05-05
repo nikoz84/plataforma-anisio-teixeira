@@ -41,12 +41,12 @@
 	</style>
 </head>
 <body>
-	@if ($tipo == 5)
+	@if ($conteudo->tipo_id == 5)
 		<video style="width:100%" controls>
 			<source src="{{$download}}" type="{{ $mime_type }}">
 			Your browser does not support HTML video.
 	  	</video>
-	@else
+	@else if ($conteudo->tipo_id == 4)
 	  	<audio style="width:100%" controls>
 			<source src="{{$download}}" type="{{ $mime_type }}">
 			Your browser does not support HTML video.
@@ -56,15 +56,18 @@
 	<div class="atributos-arquivo">
 		<ul>
 			<li title="Baixar Arquivo">
-				<a href="{{url("/api-v1/files/download/$id")}}"><i class="fa fa-download"></i> Baixar arquivo</a>
+				<a href="{{url("/api-v1/files/download/$conteudo->id")}}">
+					<i class="fa fa-download"></i> 
+					Baixar arquivo
+				</a>
 			</li>
 
 			<li title="Tamanho do Arquivo"><i class="fas fa-hdd"></i> {{ $mega_bytes }} MB</li>
-
+			{{$conteudo->tipo_id}}
 			<li title="Formato: {{ $formato }}">
-				@if ($tipo == 5)
+				@if ($conteudo->tipo_id == 5)
 				    <i class="far fa-file-video"></i>
-				@else
+				@elseif ($conteudo->tipo_id == 4)
 				    <i class="fas fa-file-audio"></i>
 				@endif
 				.{{$formato}}
