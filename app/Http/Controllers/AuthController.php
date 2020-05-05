@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\SideBar;
 use App\Http\Controllers\ApiController;
 use App\User;
+use App\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -173,10 +174,23 @@ class AuthController extends ApiController
      */
     public function recoverPass(Request $request)
     {
-        return $this->successResponse([
-            'email' => $request->email,
-            'recaptcha' => $request->recaptcha
-        ], 'asda', 200);
+        $usuario = User::where('email', $request->email)->first();
+
+        if (is_null($usuario)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Usuário não encontrado!'
+            ]);
+
+        } else {
+            $token = $usuario->createVerificationToken();
+            $reset = PasswordReset::create([
+                'email' => $usuario->email, 
+                'token' => $token,
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
+            //$this->sendConfirmationEmail($usuario->email);
+        }
     }
     /**
      * Regras de validação
