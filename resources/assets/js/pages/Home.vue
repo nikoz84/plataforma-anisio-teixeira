@@ -10,7 +10,7 @@
       navigation-icon="radio_button_checked"
       padding
       infinite
-      autoplay
+      autoplay="8000"
       arrows
       height="250px"
       class="accent rounded-borders"
@@ -26,7 +26,32 @@
       </div>
     </q-carousel-slide>
     </q-carousel>
+
+<!-- BOTÕES DAS MODALIDADES DE ENSINO #INÍCIO -->
+
+    <div class="q-py-xl row q-gutter-md">
     
+      <q-btn size="md" class=" col " rounded="false" color="petecavermelho" text-color="white" label="Ensino Fundamental I" icon="img:img\biblioteca_icon_pb-49.svg" />
+      <q-btn size="md" class=" col " color="petecaamarelo" text-color="white" label="Ensino Fundamental II" icon="img:img\biblioteca_icon_pb-49.svg" />
+      <q-btn size="md" class=" col "  color="petecaazul" text-color="white" label="Ensino Médio" icon="img:img\biblioteca_icon_pb-49.svg" />
+      <q-btn size="md" class=" col " color="petecaverde" text-color="white" label="Ensino Superior" icon="img:img\biblioteca_icon_pb-49.svg" />
+    
+    </div>
+
+<!-- BOTÕES DAS MODALIDADES DE ENSINO #FIM -->    
+
+<!-- SESSÃO ADICINADOS RECENTEMENTE #INÍCIO -->
+
+    <a class="skip-link" href="#tipo-conteudos">Ir a adicionados recentemente</a>
+    <CardHomeIcon
+      id="adicionados-recentemente"
+      title="Adicionados Recentemente"
+      :items="null"
+      v-if="null"
+    ></CardHomeIcon>
+
+<!-- SESSÃO ADICINADOS RECENTEMENTE #FIM -->
+
     <a class="skip-link" href="#tipo-conteudos">Ir a tipos de conteúdos</a>
     <CardHomeIcon
       id="tipo-conteudos"
@@ -64,7 +89,8 @@ import {
   QCardSection,
   QCardActions,
   QBtn,
-  QAvatar
+  QAvatar,
+  QBtnGroup
 } from "quasar";
 
 export default {
@@ -81,7 +107,8 @@ export default {
     QCardActions,
     QBtn,
     QAvatar,
-    CardHomeIcon
+    CardHomeIcon,
+    QBtnGroup
   },
 
   data() {
