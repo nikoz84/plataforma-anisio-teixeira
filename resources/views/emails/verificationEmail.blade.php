@@ -4,5 +4,6 @@
 <p>
 
 <p>
-    Por favor copie este código de verificação, <strong> {{ $user->verification_token }} </strong>
+	Click neste link para criar uma nova senha: 
+	<a href="{{$dominio}}/auth/verificar/{{$token}}">Trocar senha</a>
 </p>

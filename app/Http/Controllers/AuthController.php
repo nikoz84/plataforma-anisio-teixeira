@@ -189,7 +189,22 @@ class AuthController extends ApiController
                 'token' => $token,
                 'created_at' => date('Y-m-d H:i:s')
             ]);
-            //$this->sendConfirmationEmail($usuario->email);
+            
+            // Recupera o teken gerado direto da tabela
+            $tokenGerado = new PasswordReset();
+            $token = $tokenGerado->getTokenByEmail($usuario->email)->token;
+        
+            if ($this->sendConfirmationEmail($usuario->email, $token)) {
+                 return response()->json([
+                    'success' => true,
+                    'message' => 'Email enviado com Sucesso!'
+                ]);
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Erro ao enviar Email!'
+            ]);
         }
     }
     /**
@@ -214,12 +229,12 @@ class AuthController extends ApiController
      *
      * @return App\Traits\ApiResponser
      */
-    protected function sendConfirmationEmail($email)
+    protected function sendConfirmationEmail($email, $token)
     {
         $user = User::where('email', 'ilike', "%{$email}%")->first();
         
         try {
-            Mail::send(new SendVerificationEmail($user));
+            Mail::send(new SendVerificationEmail($user, $token));
         
             return true;
         } catch (Exception $ex) {

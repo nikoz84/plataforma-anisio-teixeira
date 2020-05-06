@@ -14,14 +14,17 @@ class SendVerificationEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    protected $token;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $user, $token)
     {
         $this->user = $user;
+        $this->token = $token;
     }
 
     /**
@@ -31,13 +34,17 @@ class SendVerificationEmail extends Mailable
      */
     public function build()
     {
+        $dominio = getenv('APP_URL');
+
         return $this->from(env('MAIL_USERNAME'))
             ->to($this->user->email, $this->user->name)
             ->subject('Email de verificação')
             ->view('emails.verificationEmail')
             ->with(
                 [
-                    'user' => $this->user
+                    'user' => $this->user,
+                    'token' => $this->token,
+                    'dominio' => $dominio
                 ]
             );
     }
