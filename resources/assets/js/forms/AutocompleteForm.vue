@@ -29,22 +29,22 @@
      <template v-slot:append>
       <q-icon class="cursor-pointer" round flat name="search" @click="searchTerm" color="primary" />
       <q-btn color="primary" round flat icon="more_vert" aria-label="opções de busca">
-      <q-menu cover auto-close>
-        <q-list>
-          <q-item clickable aria-label="buscar por palavra chave" @click="recommendationPer('tag')">
-            <q-item-section >Buscar por palavra chave</q-item-section>
-          </q-item>
-          <q-item clickable aria-label="buscar por título" @click="recommendationPer('titulo')">
-            <q-item-section >Buscar por título</q-item-section>
-          </q-item>
-          <q-item clickable aria-label="acessar busca avançada" @click="openDialog()">
-            <q-item-section>Acessar busca avançada</q-item-section>
-          </q-item>
-        </q-list>
-      </q-menu>
-    </q-btn>
+        <q-menu cover auto-close>
+          <q-list>
+            <q-item clickable aria-label="buscar por palavra chave" @click="recommendationPer('tag')">
+              <q-item-section >Buscar por palavra chave</q-item-section>
+            </q-item>
+            <q-item clickable aria-label="buscar por título" @click="recommendationPer('titulo')">
+              <q-item-section >Buscar por título</q-item-section>
+            </q-item>
+            <q-item clickable aria-label="acessar busca avançada" @click="openDialog()">
+              <q-item-section>Acessar busca avançada</q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
+      </q-btn>
      </template>
-    </q-select>
+  </q-select>
 
 <!-- CÓDIGO ANTIGO AGUARDANDO LIVE PARA RESOLUÇÃO DE ERRO NA BUSCA --
 
@@ -159,8 +159,7 @@ export default {
     max-width: 60px
     width: 100%
     font-size: 16px !important
-.q-btn
-  font-size: 13px !important
+
 
 @media (max-width: 680px)
   .YL
@@ -174,8 +173,6 @@ export default {
       border-color: rgba(0,0,0,.24)
       max-width: 60px
       width: 100%
-      font-size: 16px !important
-  .q-btn 
-    font-size: 13px !important
+      font-size: 14px !important
 
 </style>
