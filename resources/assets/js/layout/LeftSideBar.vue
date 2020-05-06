@@ -11,6 +11,7 @@
         />
         <BtnMarca></BtnMarca>
       </q-item-label>
+      <q-separator />
       <!-- ADMINISTRAÇÃO -->
       <q-item
         v-if="isLogged"
@@ -26,9 +27,9 @@
           </q-item-label>
         </q-item-section>
       </q-item>
-      <q-separator v-if="isLogged" />
+      <q-separator/>
       <!-- HOME -->
-      <q-item clickable to="/" exact>
+      <q-item clickable to="/" exact active-class="active-pat">
         <q-item-section avatar>
           <q-icon name="home" />
         </q-item-section>
@@ -87,14 +88,14 @@
       >
       <q-separator />
       <!-- SOBRE -->
-      <q-item clickable to="/sobre" exact>
+      <q-item clickable to="/sobre" exact active-class="active-pat">
         <q-item-section>
           <q-item-label>Sobre</q-item-label>
         </q-item-section>
       </q-item>
       <q-separator/>
       <!-- GALERIA -->
-      <q-item clickable to="/galeria" aria-label="visite a galería de imagens" exact>
+      <q-item clickable to="/galeria" aria-label="visite a galería de imagens" active-class="active-pat" exact>
         <q-item-section>
           <q-item-label>Galeria</q-item-label>
         </q-item-section>
@@ -121,7 +122,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["isLogged", "links"]),
+    ...mapState(["isLogged", "links", "canal"]),
     leftDrawerOpenModel: {
       get() {
         return this.leftDrawerOpen;

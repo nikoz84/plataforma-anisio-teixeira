@@ -68,7 +68,9 @@
 				@if ($conteudo->tipo_id == 5)
 				    <i class="far fa-file-video"></i>
 				@elseif ($conteudo->tipo_id == 4)
-				    <i class="fas fa-file-audio"></i>
+					<i class="fas fa-file-audio"></i>
+				@else
+				<i class="fas fa-file-audio"></i>
 				@endif
 				.{{$formato}}
 			</li>
