@@ -35,12 +35,14 @@ class PasswordReset extends Model
     public function tokenValidation($token)
     {
     	$dados = $this->getToken($token);
-    	$created_at = date('Y-m-d', strtotime($dados->created_at));
+    	$horaDoTokenGerado = date('Y-m-d H:i:s', strtotime("+1 hours", strtotime(
+    		date('Y-m-d H:i:s', strtotime($dados->created_at))
+    	)));
 
-    	$data = date('Y-m-d', strtotime("-1 days", strtotime(date('Y-m-d'))));
-    	return $data;
+    	$horaDoSistema = date('Y-m-d H:i:s');
+       
 
-    	if ($data > $created_at) {
+    	if ($horaDoSistema > $horaDoTokenGerado) {
     		return false;
     	}
 
