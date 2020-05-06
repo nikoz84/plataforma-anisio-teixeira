@@ -258,19 +258,26 @@ class AuthController extends ApiController
         $passwordReset = new PasswordReset();
         $tokenGerado = $passwordReset->getToken($token);
 
-        dd($passwordReset->tokenValidation($tokenGerado->token));
-        
         // Verifica se o token da rota é o mesmo que foi gerado para o usuário
         if ( ! is_null($tokenGerado) && $token == $tokenGerado->token) {
-            echo 'isso mesmo';
+            
+            // Verifica se o token ainda está valido
+            if ($passwordReset->tokenValidation($token)) {
+                return redirect('usuario/recuperar-senha');
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Este token expirou e não é mais valido!'
+            ]);
 
         } else {
-            echo 'nao é ';
+            return response()->json([
+                'success' => false,
+                'message' => 'Token não encontrado!'
+            ]);
         }
 
-
-     
-       
         /*$validator = Validator::make(
             $request->all(),
             [
