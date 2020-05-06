@@ -20,7 +20,10 @@ class AuthController extends ApiController
 {
     public function __construct(Request $request)
     {
-        $this->middleware('jwt.verify')->except(['login', 'register', 'verifyEmail', 'recoverPass']);
+        $this->middleware('jwt.verify')->except([
+            'login', 'register', 'verifyEmail', 'recoverPass', 'verifyToken'
+        ]);
+
         $this->request = $request;
     }
     /**
@@ -193,7 +196,7 @@ class AuthController extends ApiController
             // Recupera o teken gerado direto da tabela
             $tokenGerado = new PasswordReset();
             $token = $tokenGerado->getTokenByEmail($usuario->email)->token;
-        
+
             if ($this->sendConfirmationEmail($usuario->email, $token)) {
                  return response()->json([
                     'success' => true,
@@ -251,8 +254,24 @@ class AuthController extends ApiController
      */
     public function verifyToken(Request $request, $token)
     {
+        // Recupera o teken gerado direto da tabela
+        $passwordReset = new PasswordReset();
+        $tokenGerado = $passwordReset->getToken($token);
+
+        dd($passwordReset->tokenValidation($tokenGerado->token));
+        
+        // Verifica se o token da rota é o mesmo que foi gerado para o usuário
+        if ( ! is_null($tokenGerado) && $token == $tokenGerado->token) {
+            echo 'isso mesmo';
+
+        } else {
+            echo 'nao é ';
+        }
+
+
+     
        
-        $validator = Validator::make(
+        /*$validator = Validator::make(
             $request->all(),
             [
                 'token' => ['required']
@@ -277,6 +296,6 @@ class AuthController extends ApiController
         $user->verification_token = null;
         $user->save();
 
-        return $this->showOne($user, 'Conta verificada com sucesso!', 200);
+        return $this->showOne($user, 'Conta verificada com sucesso!', 200);*/
     }
 }
