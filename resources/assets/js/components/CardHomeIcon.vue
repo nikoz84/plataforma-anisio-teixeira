@@ -1,7 +1,8 @@
 <template>
   <section>
-    <div class="text-h5 title-page q-px-md q-py-lg text-primary" v-text="title"></div>
-    <div class="row justify-center q-gutter-lg">
+    <div class="text-h5 title-page text-primary separatriz q-pb-md" v-text="title"></div>
+    <div class="separatriz-6"></div>
+    <div class="row justify-center q-py-lg q-gutter-lg">
       <q-btn class="q-py-xl"
         stack
         v-for="(item, i) in items" 
@@ -29,3 +30,20 @@ export default {
   }
 };
 </script>
+
+<!--  STYLE CRIADO PARA A SEPARATRIZ DOS TÍTULOS -->
+
+<style scoped>
+  .separatriz{
+    border: 1px solid;
+    border-color: transparent;
+    border-bottom-color: #c9c9c9;
+  }
+  .separatriz-6{
+    content: " ";
+    border-top: 6px solid;
+    width: 80px;
+    height: 10px;
+    margin-top: -6px;
+  }
+</style>
