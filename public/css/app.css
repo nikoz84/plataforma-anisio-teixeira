@@ -1,4 +1,16 @@
-@import url(https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Ubuntu:wght@400;500;700&display=swap);.title-page-tipos {
+@import url(https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Ubuntu:wght@400;500;700&display=swap);.bg-petecavermelho {
+  background-color: #ed2221 !important;
+}
+.bg-petecaamarelo {
+  background-color: #f9bb00 !important;
+}
+.bg-petecaazul {
+  background-color: #0072c5 !important;
+}
+.bg-petecaverde {
+  background-color: #00ae2e !important;
+}
+.title-page-tipos {
   font-family: 'Lato', sans-serif, cursive;
   font-weight: 700 false;
   padding-bottom: 5px;

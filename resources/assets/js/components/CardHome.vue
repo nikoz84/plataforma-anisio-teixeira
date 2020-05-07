@@ -1,13 +1,13 @@
 <template>
   <section class="q-my-xl">
-    <transition appear :enter-active-class="`animated ${animation}`">
+    
       <h1
         v-if="show"
         class="text-h5 title-featured q-py-lg text-primary"
         :id="data.slug"
         v-text="data.title"
       ></h1>
-    </transition>
+    
     <div class="row justify-start q-gutter-sm">
       <q-card
         flat
