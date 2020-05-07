@@ -284,7 +284,6 @@ class ConteudoController extends ApiController
         $mega_bytes = number_format($arquivos['download']->size / 1024, 2, ',', '.');
         $mime_type = $arquivos['download']->mime_type;
         
-
         return view(
             'conteudos_digitais.index',
             compact('download', 'formato', 'mega_bytes', 'mime_type', 'conteudo')
