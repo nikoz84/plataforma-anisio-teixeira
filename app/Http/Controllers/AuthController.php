@@ -165,7 +165,7 @@ class AuthController extends ApiController
 
         $user->save();
 
-        if (!$this->sendConfirmationEmail($user->email)) {
+        if (!$this->sendConfirmationEmail($user->email, $user->verification_token)) {
             return $this->errorResponse([], "Aconteceu algum erro", 422);
         }
 
@@ -180,16 +180,15 @@ class AuthController extends ApiController
         $usuario = User::where('email', $request->email)->first();
 
         if (is_null($usuario)) {
-            return $this->errorResponse([], 'Usuário não encontrado!');
-
+            return $this->errorResponse([], 'Usuário não encontrado!', 422);
         } else {
             $reset = PasswordReset::create([
-                'email' => $usuario->email, 
+                'email' => $usuario->email,
                 'token' => $usuario->createVerificationToken(),
                 'created_at' => date('Y-m-d H:i:s')
             ]);
             
-            // Recupera o teken gerado direto da tabela
+            // Recupera o token gerado direto da tabela
             $tokenGerado = new PasswordReset();
             $token = $tokenGerado->getTokenByEmail($usuario->email)->token;
             
@@ -198,7 +197,7 @@ class AuthController extends ApiController
                 return $this->successResponse([], 'Email enviado com Sucesso!');
             }
 
-            return $this->errorResponse([], 'Erro ao enviar Email!');
+            return $this->errorResponse([], 'Erro ao enviar Email!', 422);
         }
     }
     /**

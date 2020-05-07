@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Options;
 use Illuminate\Http\Request;
 use JWTAuth;
+use App\Http\Controllers\ApiController;
 
-class OptionsController extends Controller
+class OptionsController extends ApiController
 {
     public function __construct(Options $options)
     {
@@ -37,7 +38,12 @@ class OptionsController extends Controller
     {
         //
     }
+    public function createDestaques(Request $request)
+    {
+        
 
+        return $this->successResponse([$request->all()], 'mensagem', 200);
+    }
     /**
      * Update the specified resource in storage.
      *

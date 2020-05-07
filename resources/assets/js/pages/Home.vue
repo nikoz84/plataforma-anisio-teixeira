@@ -37,7 +37,7 @@
     
     </div>
 
-    <!-- SESSÃO ADICINADOS RECENTEMENTE #INÍCIO -->
+    <!-- SESSÃO ADICINADOS RECENTEMENTE -->
     
     <a class="skip-link" href="#tipo-conteudos">Ir a adicionados recentemente</a>
     <!--CardHomeIcon
