@@ -95,6 +95,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'slider' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/conteudos/slider'),
+            'url' => env('APP_URL') . '/storage/conteudos/slider',
+            'visibility' => 'public',
+        ],
+
         'sinopse' => [
             'driver' => 'local',
             'root' => storage_path('app/public/conteudos/conteudos-digitais/imagem-associada/sinopse'),
