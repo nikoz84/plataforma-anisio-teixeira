@@ -10,6 +10,10 @@
 .bg-petecaverde {
   background-color: #00ae2e !important;
 }
+.active-link-pat {
+  background-color: #08275e;
+  color: #fff !important;
+}
 .title-page-tipos {
   font-family: 'Lato', sans-serif, cursive;
   font-weight: 700 false;

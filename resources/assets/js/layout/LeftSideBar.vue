@@ -16,9 +16,11 @@
       <q-item
         v-if="isLogged"
         clickable to="/admin/conteudos/listar"
-        exact
+        aria-label="Painel de controle"
+        exact 
+        active-class="active-link-pat"
       >
-        <q-item-section avatar>
+        <q-item-section avatar >
           <q-icon name="settings_applications_outlined" />
         </q-item-section>
         <q-item-section>
@@ -29,7 +31,11 @@
       </q-item>
       <q-separator/>
       <!-- HOME -->
-      <q-item clickable to="/" exact active-class="active-pat">
+      <q-item clickable 
+        to="/" 
+        aria-label="Inicio"
+        exact 
+        active-class="active-link-pat">
         <q-item-section avatar>
           <q-icon name="home" />
         </q-item-section>
@@ -58,7 +64,7 @@
           clickable
           v-close-popup
           tabindex="0"
-          active-class="active-pat"
+          active-class="active-link-pat"
         >
           <q-item-section>
             <q-item-label>{{ link.name }}</q-item-label>
@@ -88,14 +94,22 @@
       >
       <q-separator />
       <!-- SOBRE -->
-      <q-item clickable to="/sobre" exact active-class="active-pat">
+      <q-item clickable 
+        to="/sobre" 
+        aria-label="sobre a plataforma"
+        exact 
+        active-class="active-link-pat">
         <q-item-section>
           <q-item-label>Sobre</q-item-label>
         </q-item-section>
       </q-item>
       <q-separator/>
       <!-- GALERIA -->
-      <q-item clickable to="/galeria" aria-label="visite a galería de imagens" active-class="active-pat" exact>
+      <q-item clickable 
+        to="/galeria" 
+        aria-label="visite a galería de imagens" 
+        active-class="active-link-pat" 
+        exact>
         <q-item-section>
           <q-item-label>Galeria</q-item-label>
         </q-item-section>
@@ -134,9 +148,3 @@ export default {
   }
 };
 </script>
-<style lang="stylus" scoped>
-.active-pat
-  background-color: #08275e
-  color: #fff
-
-</style>
