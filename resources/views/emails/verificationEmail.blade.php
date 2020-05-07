@@ -18,11 +18,17 @@
 		margin:0 auto;
 		width:200px;
 	}
+	.logo-projeto h3 {
+		color:#3871c1;
+		padding-bottom:10px;
+		border-bottom:1px solid #cc2726;
+	}
 </style>
 
 <div class="div-center">
 	<div class="logo-projeto">
 		<img src="{{getenv('APP_URL')}}/img/icons-192.png">
+		<h3>{{getenv('APP_NAME')}}</h3>
 	</div>
 	<p>
 	    Olá <strong>{{$user->name}}</strong>, 
