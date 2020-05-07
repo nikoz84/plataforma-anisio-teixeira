@@ -8,11 +8,10 @@ use App\Options;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use JWTAuth;
-use App\Http\Controllers\ApiController;
 
 class OptionsController extends ApiController
 {
-    public function __construct(Request $request, Options $options)
+    public function __construct(OptionsRequest $request, Options $options)
     {
         $this->options = $options;
         $this->request = $request;
@@ -39,7 +38,6 @@ class OptionsController extends ApiController
     {
         $options = $this->options;
         
-
         return $this->successResponse($request->all());
 
         try {
@@ -77,12 +75,7 @@ class OptionsController extends ApiController
     {
         //
     }
-    public function createDestaques(Request $request)
-    {
-        
-
-        return $this->successResponse([$request->all()], 'mensagem', 200);
-    }
+  
     /**
      * Update the specified resource in storage.
      *
