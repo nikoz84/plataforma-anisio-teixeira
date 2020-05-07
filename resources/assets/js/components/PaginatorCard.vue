@@ -9,27 +9,35 @@
       :style="`max-height: 200px; width: 100%;backgroud-color:${color};`"
       placeholder-src="/img/fundo-padrao.svg"
     >
-      <div class="absolute-bottom-right text-subtitle2">
-        {{ getTipo }}
+      
+      <div class="text-lowercase absolute-bottom-right bg-transparent">
+        <q-btn round 
+          no-wrap 
+          style="cursor:default !important;" 
+          class="bg-cinza" 
+          text-color="black" 
+          >
+           <q-avatar v-if="item.tipo && item.tipo.icon">
+             <img :src="item.tipo.icon">
+           </q-avatar>
+        </q-btn>
+        <div v-if="item.category" >{{item.category}}</div>
+        
       </div>
-    </q-img>
-
-    <q-card-section>
+      </q-img>
+      <q-card-section>
+      <!-- removida a borda usando um none no estilo -->
       <div
-        :style="`border-bottom: 2px solid ${color};`"
+        :style="`border-bottom: none ${color}; min-height: 80px; line-height: 1.3;`" 
         class="text-h6 card-heading-inner q-pt-md cursor-pointer"
       >
         <router-link
           tag="div"
-          :to="
-            item.url_exibir
+          :to="item.url_exibir
               ? item.url_exibir
-              : {
-                  name: 'ExibirConteudo',
+              : { name: 'ExibirConteudo',
                   params: { slug: slug, id: item.id, action: 'exibir' }
-                }
-          "
-          :title="item.name ? item.name : item.title"
+              }"
           v-html="title"
         />
       </div>
@@ -39,24 +47,7 @@
         v-html="item.excerpt"
       ></p>
     </q-card-section>
-    <q-card-actions vertical align="center">
-      <QBtn
-        class="absolute-bottom"
-        :to="
-          item.url_exibir
-            ? item.url_exibir
-            : {
-                name: 'ExibirConteudo',
-                params: { slug: slug, id: item.id, action: 'exibir' }
-              }
-        "
-        color="primary"
-        style="font-weight: 900;"
-        flat
-      >
-        Saiba Mais
-      </QBtn>
-    </q-card-actions>
+    
   </q-card>
 </template>
 <script>
@@ -66,7 +57,8 @@ import {
   QCardActions,
   QBtn,
   QImg,
-  QSeparator
+  QSeparator,
+  QIcon
 } from "quasar";
 
 export default {
@@ -74,7 +66,7 @@ export default {
   props: {
     item: Object
   },
-  components: { QCard, QCardSection, QCardActions, QBtn, QImg, QSeparator },
+  components: { QCard, QCardSection, QCardActions, QBtn, QImg, QSeparator, QIcon },
   computed: {
     title() {
       let title = this.item.name ? this.item.name : this.item.title;
@@ -85,13 +77,17 @@ export default {
       return this.item.canal ? this.item.canal.slug : this.item.slug;
     },
     color() {
-      return this.item.canal ? this.item.canal.color : "#08275e";
+      return this.item.canal ? this.item.canal.color : primary;
     },
     getImage() {
       return this.item.image;
     },
     getTipo() {
       return this.item.tipo ? this.item.tipo.name : this.item.category.name;
+    },
+    getIcon() {
+      console.log(this.item);
+      return this.item.tipo.icon ? this.item.tipo.icon : this.item.category.name;
     }
   },
   created() {}
