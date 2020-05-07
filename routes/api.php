@@ -17,7 +17,6 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/files/galeria', 'FileController@getGallery')->name('lista.galeria.imagens');
     Route::get('/files/{id}', 'FileController@getFiles')->name('busca.arquivo');
     Route::post('/files/{id}', 'FileController@createFile')->name('adiciona.arquivo');
-    Route::get('/destaques/{slug}', 'HomeController@getHomeData')->name('dados.home');
     Route::get('/autocompletar', 'HomeController@autocomplete')->name('autocompletar.home');
     Route::get('/layout', 'HomeController@getLayout')->name('lista.links');
     /** CATEGORIAS */

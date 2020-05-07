@@ -20,7 +20,10 @@ class AuthController extends ApiController
 {
     public function __construct(Request $request)
     {
-        $this->middleware('jwt.verify')->except(['login', 'register', 'verifyEmail', 'recoverPass']);
+        $this->middleware('jwt.verify')->except([
+            'login', 'register', 'verifyEmail', 'recoverPass', 'verifyToken'
+        ]);
+
         $this->request = $request;
     }
     /**
@@ -162,7 +165,7 @@ class AuthController extends ApiController
 
         $user->save();
 
-        if (!$this->sendConfirmationEmail($user->email)) {
+        if (!$this->sendConfirmationEmail($user->email, $user->verification_token)) {
             return $this->errorResponse([], "Aconteceu algum erro", 422);
         }
 
@@ -177,34 +180,24 @@ class AuthController extends ApiController
         $usuario = User::where('email', $request->email)->first();
 
         if (is_null($usuario)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Usuário não encontrado!'
-            ]);
-
+            return $this->errorResponse([], 'Usuário não encontrado!', 422);
         } else {
-            $token = $usuario->createVerificationToken();
             $reset = PasswordReset::create([
-                'email' => $usuario->email, 
-                'token' => $token,
+                'email' => $usuario->email,
+                'token' => $usuario->createVerificationToken(),
                 'created_at' => date('Y-m-d H:i:s')
             ]);
             
-            // Recupera o teken gerado direto da tabela
+            // Recupera o token gerado direto da tabela
             $tokenGerado = new PasswordReset();
             $token = $tokenGerado->getTokenByEmail($usuario->email)->token;
-        
+            
+            // Dispara o Email
             if ($this->sendConfirmationEmail($usuario->email, $token)) {
-                 return response()->json([
-                    'success' => true,
-                    'message' => 'Email enviado com Sucesso!'
-                ]);
+                return $this->successResponse([], 'Email enviado com Sucesso!');
             }
 
-            return response()->json([
-                'success' => false,
-                'message' => 'Erro ao enviar Email!'
-            ]);
+            return $this->errorResponse([], 'Erro ao enviar Email!', 422);
         }
     }
     /**
@@ -251,32 +244,28 @@ class AuthController extends ApiController
      */
     public function verifyToken(Request $request, $token)
     {
-       
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'token' => ['required']
-            ]
-        );
-        
-        return $this->successResponse($validator->fails(), $token, 200);
-        if ($validator->fails()) {
-            return $this->errorResponse(
-                $validator->errors(),
-                "Token não encontrado ou inválido",
-                422
-            );
+        // Recupera o teken gerado direto da tabela
+        $passwordReset = new PasswordReset();
+        $tokenGerado = $passwordReset->getToken($token);
+
+        // Verifica se o token da rota é o mesmo que foi gerado para o usuário
+        if ( ! is_null($tokenGerado) && $token == $tokenGerado->token) {
+            
+            // Verifica se o token ainda está valido
+            if ($passwordReset->tokenValidation($token)) {
+                return redirect('usuario/recuperar-senha');
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Este token expirou e não é mais valido!'
+            ]);
+
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Token não encontrado!'
+            ]);
         }
-
-        $user = User::where('verification_token', $token)->first();
-
-        if (!$user) {
-            $this->errorResponse([], 'Token não existe', 422);
-        }
-        $user->verified = User::USER_VERIFIED;
-        $user->verification_token = null;
-        $user->save();
-
-        return $this->showOne($user, 'Conta verificada com sucesso!', 200);
     }
 }

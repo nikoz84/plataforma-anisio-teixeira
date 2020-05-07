@@ -38,6 +38,29 @@
 			color:white!important;
 			text-decoration:none;
 		}
+		.container-audio {
+			margin-top:20px!important;
+			margin-bottom:20px!important;
+			width:50%;
+			margin:0 auto;
+			border-radius:50px;
+			padding:10px;
+		}
+		.container-imagem-ilustracao-outros-arquivos {
+			width:100%;
+			background:#eaeaea;
+		}
+		.container-imagem-ilustracao-outros-arquivos img {
+			display:block;
+			margin:0 auto;
+		}
+		@media only screen and (max-width: 600px) {
+		  .container-audio {
+		  	width:95%;
+		  	padding:3px!important;
+		  	padding-bottom:0;
+		  }
+		}
 	</style>
 </head>
 <body>
@@ -46,11 +69,17 @@
 			<source src="{{$download}}" type="{{ $mime_type }}">
 			Your browser does not support HTML video.
 	  	</video>
-	@else if ($conteudo->tipo_id == 4)
-	  	<audio style="width:100%" controls>
-			<source src="{{$download}}" type="{{ $mime_type }}">
-			Your browser does not support HTML video.
-		</video>
+	@elseif ($conteudo->tipo_id == 4)
+	  	<div class="container-audio">
+	  		<audio style="width:100%" controls>
+				<source src="{{$download}}" type="{{ $mime_type }}">
+				Your browser does not support HTML video.
+		    </audio>
+	  	</div>
+	@else
+	    <div class='container-imagem-ilustracao-outros-arquivos'>
+	    	<img src="{{$conteudo->getImageAttribute()}}">
+	    </div>
 	@endif
 
 	<div class="atributos-arquivo">
@@ -63,12 +92,14 @@
 			</li>
 
 			<li title="Tamanho do Arquivo"><i class="fas fa-hdd"></i> {{ $mega_bytes }} MB</li>
-			{{$conteudo->tipo_id}}
+		
 			<li title="Formato: {{ $formato }}">
 				@if ($conteudo->tipo_id == 5)
 				    <i class="far fa-file-video"></i>
 				@elseif ($conteudo->tipo_id == 4)
-				    <i class="fas fa-file-audio"></i>
+					<i class="fas fa-file-audio"></i>
+				@else
+				<i class="fas fa-file-audio"></i>
 				@endif
 				.{{$formato}}
 			</li>
