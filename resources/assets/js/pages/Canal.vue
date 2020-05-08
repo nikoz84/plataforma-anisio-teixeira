@@ -1,10 +1,46 @@
 <template>
-  <section class="q-pa-sm">
-    <header class="row wrap items-center ">
+  <section class="q-px-sm q-pb-sm">
+    <header class="row wrap items-center q-my-md">
       <div class="text-h5 color-primary">
         {{canal && canal.options ? canal.options.extend_name : canal.name }}
       </div>
     </header>
+
+
+<q-toolbar :style="`background-color:${color}`" class="text-white shadow-3">
+      <q-tabs
+      inline-label
+      align="left">
+        <q-route-tab
+          name="inicio"
+          label="Sobre"
+          :to="{ name: 'Inicio', params: { slug: $route.params.slug } }"
+          v-if="canal && canal.options && canal.options.has_home"
+        />
+        <q-route-tab
+          name="listar"
+          label="Listar"
+          :to="{ name: 'Listar', params: { slug: $route.params.slug } }"
+        />
+        
+      </q-tabs>
+<q-space />
+      <!--
+        notice shrink property since we are placing it
+        as child of QToolbar
+      -->
+      <q-tabs
+      align="right"
+      v-model="tab"
+      shrink
+      stretch>
+        <OrderBy></OrderBy>
+        <CategoriasMenu></CategoriasMenu>
+        <Filters></Filters>
+      </q-tabs>
+    </q-toolbar>
+
+<!--
     <q-tabs inline-label
           shrink
           dense
@@ -30,8 +66,11 @@
         
         <q-space />
     </q-tabs>
+
+-->
+    
     <q-card class="q-my-sm q-pl-sm">
-      <q-badge v-if="paginator" v-text="totalCount" />
+      <q-badge color="white" text-color="dark" v-if="paginator" v-text="totalCount" />
     </q-card>
     
     <transition
