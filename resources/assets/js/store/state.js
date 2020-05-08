@@ -33,6 +33,7 @@ const state = {
   showAlert: false,
   formData: {},
   action: "",
+  destaques: null,
   recapcha: null
 };
 

@@ -18,6 +18,9 @@ const mutations = {
   SET_RECAPTCHA(state, recaptcha) {
     state.recaptcha = recaptcha;
   },
+  SET_DESTAQUES(state, destaques) {
+    state.destaques = destaques;
+  },
   SET_POST(state, post) {
     state.post = post;
   },
