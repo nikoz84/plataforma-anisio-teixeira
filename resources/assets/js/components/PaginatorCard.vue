@@ -28,7 +28,7 @@
       <q-card-section>
       <!-- removida a borda usando um none no estilo -->
       <div
-        :style="`border-bottom: none ${color}; min-height: 80px; line-height: 1.3;`" 
+        :style="`border-bottom: none ${color}; min-height: 95px; line-height: 1.3;`" 
         class="text-h6 card-heading-inner q-pt-md cursor-pointer"
       >
         <router-link
@@ -41,11 +41,13 @@
           v-html="title"
         />
       </div>
+      <!--
       <p
         class="q-pt-lg"
         style="word-break: break-word;"
         v-html="item.excerpt"
       ></p>
+      -->
     </q-card-section>
     
   </q-card>
@@ -71,7 +73,7 @@ export default {
     title() {
       let title = this.item.name ? this.item.name : this.item.title;
 
-      return title.length > 70 ? title.substr(0, 70) + " ..." : title;
+      return title.length > 100 ? title.substr(0, 100) + " ..." : title;
     },
     slug() {
       return this.item.canal ? this.item.canal.slug : this.item.slug;
