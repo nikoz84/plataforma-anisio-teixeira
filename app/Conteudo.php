@@ -76,9 +76,10 @@ class Conteudo extends Model
      */
     public function tipo()
     {
-        Tipo::$without_appends = true;
+        //Tipo::$without_appends = true;
 
-        return $this->hasOne(Tipo::class, 'id', 'tipo_id')->select(['id', 'name']);
+        return $this->hasOne(Tipo::class, 'id', 'tipo_id')
+            ->select(['id', 'name']);
     }
     /**
      * Seleciona as Tags relacionadas
