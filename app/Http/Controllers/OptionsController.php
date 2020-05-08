@@ -57,14 +57,15 @@ class OptionsController extends ApiController
         if (!$path) {
             return $this->errorResponse([], "Falha ao fazer upload!", 500);
         }
-        $options = $this->options;
         
+        $options = $this->options;
+
         $data = $options::create([
-            'name' => $request->name,
+            'name' => 'slider',
             'meta_data' => [
                 'itens'=>[
                     [
-                        'name'=>$request->titulo,
+                        'title'=> $request->titulo,
                         'image'=> str_replace('\\', '/', $path),
                         'url'=> $request->url
                     ]
