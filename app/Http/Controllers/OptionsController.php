@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\OptionsRequest;
 use App\Http\Controllers\ApiController;
 use App\Options;
 use Illuminate\Http\Request;
@@ -11,10 +10,9 @@ use JWTAuth;
 
 class OptionsController extends ApiController
 {
-    public function __construct(OptionsRequest $request, Options $options)
+    public function __construct(Options $options)
     {
         $this->options = $options;
-        $this->request = $request;
 
     }
     /**
@@ -33,29 +31,35 @@ class OptionsController extends ApiController
         ]);
     }
 
- 
+    /**
+     * Método responsável por criar destaques 
+     * 
+     * @return \Illuminate\Http\Response
+     */
     public function createDestaques(Request $request)
     {
         $options = $this->options;
         
-        return $this->successResponse($request->all());
+        $validator = Validator::make($request->all(), ["name" => "required", "url" => "required", "titulo" => "required", "image" => "mimes:jpeg,jpg,png,gif|required|max:10000"]);
+       
+        if ($validator->fails()) 
+            return $this->errorResponse($validator->errors(), "Não foi possível criar o destaque", 201);
 
         try {
             if ($request->hasFile('image') && $request->file('image')->isValid()) {
-                // $name = uniqid(date('His'));
                 $extension = $request->image->extension();
                 $name = $request->image->getClientOriginalName(); 
                 $nameFile = "{$name}.{$extension}";
 
-                $upload = $request->image->storeAs('conteudos\slider', $nameFile);
+                $path = $request->image->storeAs('public\conteudos\slider', $nameFile);
 
-                if (!$upload) {
+                if (!$path) {
                     return $this->errorResponse([], "Falha ao fazer upload!", 500);
                 } else{
-                    $options::create([
+                    $data = $options::create([
                         'name' => $request->name,
-                        'meta_data' => json_encode(['image' => $nameFile, 'url' => $request->url])
-                    ]);
+                        'meta_data' => ['itens'=>[['name'=>$request->titulo, 'image'=> str_replace('\\','/', $path), 'url'=> $request->url]]]
+                      ]);
                 }
             }
 
@@ -63,8 +67,9 @@ class OptionsController extends ApiController
             return $this->errorResponse([], "Não foi possível cadastrar o destaque", 422);
         }
 
-        return $this->successResponse($options, 'Destaque criado com sucesso!', 201);
+        return $this->successResponse($data, 'Destaque criado com sucesso!', 201);
     }
+
 
     /**
      * Show the form for creating a new resource.
