@@ -13,8 +13,8 @@ class OptionsController extends ApiController
     public function __construct(Options $options)
     {
         $this->options = $options;
-
     }
+
     /**
      * Display a indexing of the resource.
      *
@@ -32,7 +32,7 @@ class OptionsController extends ApiController
     }
 
     /**
-     * Método responsável por criar destaques 
+     * Método responsável por criar slider 
      * 
      * @return \Illuminate\Http\Response
      */
@@ -47,9 +47,9 @@ class OptionsController extends ApiController
                 "image" => "mimes:jpeg,jpg,png,gif|required|max:10000"
             ]
         );
-       
+
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível criar o destaque", 201);
+            return $this->errorResponse($validator->errors(), "Não foi possível criar o Slider", 422);
         }
 
         $path = $this->saveFile($request);
@@ -57,26 +57,44 @@ class OptionsController extends ApiController
         if (!$path) {
             return $this->errorResponse([], "Falha ao fazer upload!", 500);
         }
-        $options = $this->options;
-        
-        $data = $options::create([
-            'name' => $request->name,
-            'meta_data' => [
-                'itens'=>[
-                    [
-                        'name'=>$request->titulo,
-                        'image'=> str_replace('\\', '/', $path),
-                        'url'=> $request->url
-                    ]
-                ]
-            ]
-        ]);
+
+        $data = $this->newSlider($request, $path);
 
         if (!$data) {
-            return $this->errorResponse([], 'Não foi possível cadastrar o destaque', 422);
+            return $this->errorResponse([], 'Não foi possível cadastrar o Slider', 422);
         }
 
-        return $this->successResponse($data, 'Destaque criado com sucesso!', 201);
+        return $this->successResponse($data, 'Slider criado com sucesso!', 201);
+    }
+
+    private function newSlider($request, $path = null)
+    {
+        $data = null;
+
+        $slider =  $this->options::where('name', $request->name)->first();
+
+        $arraySlider = [
+            'itens' => [
+                [
+                    'name' => $request->titulo,
+                    'image' => str_replace('\\', '/', $path),
+                    'url' => $request->url
+                ]
+            ]
+        ];
+
+        if (isset($slider->meta_data)) {
+            $data = $this->options::where('name', $request->name)->first();
+            $data->meta_data = [[$arraySlider, $slider->meta_data]];
+            $data->update();
+        } else {
+            $data = $this->options::create([
+                'name' => $request->name,
+                'meta_data' => [$arraySlider]
+            ]);
+        };
+
+        return $data;
     }
 
     public function saveFile($request)
@@ -102,7 +120,7 @@ class OptionsController extends ApiController
     {
         //
     }
-  
+
     /**
      * Update the specified resource in storage.
      *
