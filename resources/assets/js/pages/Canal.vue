@@ -1,5 +1,5 @@
 <template>
-  <section class="q-pa-sm">
+  <section class="q-px-sm q-pb-sm">
     <header class="row wrap items-center q-my-md">
       <div class="text-h5 color-primary">
         {{canal && canal.options ? canal.options.extend_name : canal.name }}
