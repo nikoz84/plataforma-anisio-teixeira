@@ -22,16 +22,16 @@
         >
           <img src="/logo.svg" 
                 loading="lazy" 
-                width="30" 
-                height="30" 
+                width="auto" 
+                height="55" 
                 alt="Marca"
                 title="marca"
                 aria-label="Marca da plataforma Anísio Teixeira"
                 />
 
-          <q-toolbar-title shrink v-if="$q.screen.gt.xs" style="font-size:14px;font-weight:600;">
+          <!--q-toolbar-title shrink v-if="$q.screen.gt.xs" style="font-size:14px;font-weight:600;">
             {{ !$q.screen.gt.sm ? 'PAT' : 'PLATAFORMA ANÍSIO TEIXEIRA'}}
-          </q-toolbar-title>
+          </q-toolbar-title-->
         </q-btn>
 
         <q-space />
