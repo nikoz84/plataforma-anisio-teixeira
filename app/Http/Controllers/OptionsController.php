@@ -40,37 +40,60 @@ class OptionsController extends ApiController
     {
         $options = $this->options;
         
-        $validator = Validator::make($request->all(), ["name" => "required", "url" => "required", "titulo" => "required", "image" => "mimes:jpeg,jpg,png,gif|required|max:10000"]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                "name" => "required",
+                "url" => "required",
+                "titulo" => "required",
+                "image" => "mimes:jpeg,jpg,png,gif|required|max:10000"
+            ]
+        );
        
-        if ($validator->fails()) 
+        if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar o destaque", 201);
-
-        try {
-            if ($request->hasFile('image') && $request->file('image')->isValid()) {
-                $extension = $request->image->extension();
-                $name = $request->image->getClientOriginalName(); 
-                $nameFile = "{$name}.{$extension}";
-
-                $path = $request->image->storeAs('public\conteudos\slider', $nameFile);
-
-                if (!$path) {
-                    return $this->errorResponse([], "Falha ao fazer upload!", 500);
-                } else{
-                    $data = $options::create([
-                        'name' => $request->name,
-                        'meta_data' => ['itens'=>[['name'=>$request->titulo, 'image'=> str_replace('\\','/', $path), 'url'=> $request->url]]]
-                      ]);
-                }
-            }
-
-        } catch (\Exception $e) {
-            return $this->errorResponse([], "Não foi possível cadastrar o destaque", 422);
         }
 
+        $path = $this->saveFile($request);
+
+        if (!$path) {
+            return $this->errorResponse([], "Falha ao fazer upload!", 500);
+        }
+
+        $data = $options::create([
+            'name' => $request->name,
+            'meta_data' => [
+                'itens'=>[
+                    [
+                        'name'=>$request->titulo,
+                        'image'=> str_replace('\\', '/', $path),
+                        'url'=> $request->url
+                    ]
+                ]
+            ]
+        ]);
+
+        if (!$data) {
+            return $this->errorResponse([], 'Não foi possível cadastrar o destaque', 422);
+        }
+        
         return $this->successResponse($data, 'Destaque criado com sucesso!', 201);
     }
 
+    public function saveFile($request)
+    {
+        $path = null;
 
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $extension = $request->image->extension();
+            $name = $request->image->getClientOriginalName();
+            $nameFile = "{$name}.{$extension}";
+
+            $path = $request->image->storeAs('public\conteudos\slider', $nameFile);
+        }
+
+        return $path;
+    }
     /**
      * Show the form for creating a new resource.
      *
