@@ -38,8 +38,6 @@ class OptionsController extends ApiController
      */
     public function createDestaques(Request $request)
     {
-        $options = $this->options;
-        
         $validator = Validator::make(
             $request->all(),
             [
@@ -59,7 +57,8 @@ class OptionsController extends ApiController
         if (!$path) {
             return $this->errorResponse([], "Falha ao fazer upload!", 500);
         }
-
+        $options = $this->options;
+        
         $data = $options::create([
             'name' => $request->name,
             'meta_data' => [
@@ -76,7 +75,7 @@ class OptionsController extends ApiController
         if (!$data) {
             return $this->errorResponse([], 'Não foi possível cadastrar o destaque', 422);
         }
-        
+
         return $this->successResponse($data, 'Destaque criado com sucesso!', 201);
     }
 
