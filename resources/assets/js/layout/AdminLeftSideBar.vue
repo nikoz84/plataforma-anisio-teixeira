@@ -1,9 +1,7 @@
 <template>
-  <q-list >
+  <q-list>
     <q-item-label class="bg-grey-4" header>
-      <strong
-        class="text-accent color-primary"
-      >
+      <strong class="grey-10">
         Painel de Controle
       </strong>
     </q-item-label>
@@ -17,6 +15,8 @@
         v-close-popup
         tabindex="0"
         v-if="link && link.view"
+        exact
+        active-class="active-pat"
       >
         <q-item-section>
           <q-item-label>{{ link.label }}</q-item-label>

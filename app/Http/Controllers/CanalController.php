@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Canal;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-
+use Illuminate\Support\Facades\Validator;
 
 class CanalController extends ApiController
 {
@@ -41,9 +41,27 @@ class CanalController extends ApiController
      *
      * @return json
      */
-    public function create()
+    public function create(Request $request)
     {
         $this->authorize('create', Canal::class);
+        
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required',
+                'description' => 'required',
+                'slug' => 'required',
+                'is_active' => 'required'
+            ]
+        );
+
+        if ($validator->fails()) {
+            return $this->errorResponse(
+                $validator->errors(),
+                "Não foi possível criar o conteúdo",
+                422
+            );
+        }
 
         $canal = $this->canal;
 

@@ -165,7 +165,7 @@ class AuthController extends ApiController
 
         $user->save();
 
-        if (!$this->sendConfirmationEmail($user->email)) {
+        if (!$this->sendConfirmationEmail($user->email, $user->verification_token)) {
             return $this->errorResponse([], "Aconteceu algum erro", 422);
         }
 
@@ -180,34 +180,24 @@ class AuthController extends ApiController
         $usuario = User::where('email', $request->email)->first();
 
         if (is_null($usuario)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Usuário não encontrado!'
-            ]);
-
+            return $this->errorResponse([], 'Usuário não encontrado!', 422);
         } else {
-            $token = $usuario->createVerificationToken();
             $reset = PasswordReset::create([
-                'email' => $usuario->email, 
-                'token' => $token,
+                'email' => $usuario->email,
+                'token' => $usuario->createVerificationToken(),
                 'created_at' => date('Y-m-d H:i:s')
             ]);
             
-            // Recupera o teken gerado direto da tabela
+            // Recupera o token gerado direto da tabela
             $tokenGerado = new PasswordReset();
             $token = $tokenGerado->getTokenByEmail($usuario->email)->token;
-
+            
+            // Dispara o Email
             if ($this->sendConfirmationEmail($usuario->email, $token)) {
-                 return response()->json([
-                    'success' => true,
-                    'message' => 'Email enviado com Sucesso!'
-                ]);
+                return $this->successResponse([], 'Email enviado com Sucesso!');
             }
 
-            return response()->json([
-                'success' => false,
-                'message' => 'Erro ao enviar Email!'
-            ]);
+            return $this->errorResponse([], 'Erro ao enviar Email!', 422);
         }
     }
     /**
@@ -277,32 +267,5 @@ class AuthController extends ApiController
                 'message' => 'Token não encontrado!'
             ]);
         }
-
-        /*$validator = Validator::make(
-            $request->all(),
-            [
-                'token' => ['required']
-            ]
-        );
-        
-        return $this->successResponse($validator->fails(), $token, 200);
-        if ($validator->fails()) {
-            return $this->errorResponse(
-                $validator->errors(),
-                "Token não encontrado ou inválido",
-                422
-            );
-        }
-
-        $user = User::where('verification_token', $token)->first();
-
-        if (!$user) {
-            $this->errorResponse([], 'Token não existe', 422);
-        }
-        $user->verified = User::USER_VERIFIED;
-        $user->verification_token = null;
-        $user->save();
-
-        return $this->showOne($user, 'Conta verificada com sucesso!', 200);*/
     }
 }

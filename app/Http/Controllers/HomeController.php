@@ -32,19 +32,6 @@ class HomeController extends ApiController
         return response()->json(SideBar::getSideBarAdvancedFilter());
     }
 
-
-    /**
-     * Seleciona os destaques da plataforma do helper
-     *
-     * @return void
-     */
-    public function getHomeData($slug)
-    {
-        $destaques = new Destaques();
-        $data = $destaques->getHomeDestaques($slug);
-
-        return $this->successResponse($data, '', 200);
-    }
     /**
      * Método que solicita analitica da aplicação
      *

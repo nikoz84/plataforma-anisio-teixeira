@@ -17,7 +17,6 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/files/galeria', 'FileController@getGallery')->name('lista.galeria.imagens');
     Route::get('/files/{id}', 'FileController@getFiles')->name('busca.arquivo');
     Route::post('/files/{id}', 'FileController@createFile')->name('adiciona.arquivo');
-    Route::get('/destaques/{slug}', 'HomeController@getHomeData')->name('dados.home');
     Route::get('/autocompletar', 'HomeController@autocomplete')->name('autocompletar.home');
     Route::get('/layout', 'HomeController@getLayout')->name('lista.links');
     /** CATEGORIAS */
@@ -72,7 +71,7 @@ Route::group(['middleware' => ['cors']], function () {
  * USUÁRIO DEVE ESTAR LOGADO PARA ACESSAR ESSAS ROTAS
  *
  * */
-Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
+// Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     /** CATEGORIAS DOS CONTEÚDOS*/
     Route::post('/categorias', 'CategoryController@create')->name('criar.categorias');
     // ->middleware('isAdmin');
@@ -143,6 +142,7 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     Route::post('/options', 'OptionsController@create')->name('criar.opcoes');
     Route::put('/options/{name}', 'OptionsController@update')->name('atualizar.opcoes.x.nome');
     Route::delete('/options/{name}', 'OptionsController@delete')->name('apagar.opcoes.x.nome');
+    Route::post('/options/destaques/', 'OptionsController@createDestaques')->name('cria.destaques');
     /** ANALYTICS */
     Route::get('/analytics', 'HomeController@getAnalytics')->name('catalogacao.blog.e.plataforma');
-});
+// });

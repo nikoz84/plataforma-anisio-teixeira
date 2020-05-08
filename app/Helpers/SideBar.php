@@ -34,10 +34,15 @@ class SideBar
                                     FROM canais
                                     WHERE is_active = ?
                                     ORDER BY options->'order_menu';"), [true]);
+        
+        $destaques = new Destaques();
+        $destaques = $destaques->getHomeDestaques('conteudos-recentes');
+
         return [
             'layout' => $layout,
             'links' => $canais,
             'licencas' => $licencas,
+            'destaques' => $destaques,
             'componentes' => $componentes,
             'niveis' => $niveis,
             'tipos' => Tipo::select(['id', 'name'])->orderBy('name')->get()
