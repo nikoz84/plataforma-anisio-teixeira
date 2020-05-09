@@ -15,16 +15,18 @@ class SendVerificationEmail extends Mailable
     use Queueable, SerializesModels;
 
     protected $token;
+    protected $option;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user, $token)
+    public function __construct(User $user, $token, $option = false)
     {
         $this->user = $user;
         $this->token = $token;
+        $this->option = $option;
     }
 
     /**
@@ -44,7 +46,8 @@ class SendVerificationEmail extends Mailable
                 [
                     'user' => $this->user,
                     'token' => $this->token,
-                    'dominio' => $dominio
+                    'dominio' => $dominio,
+                    'option' => $this->option
                 ]
             );
     }
