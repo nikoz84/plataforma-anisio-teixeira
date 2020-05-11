@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh lpR fFf">
     <a class="skip-link" href="#main-content">Pular ao conteúdo</a>
-    <q-header elevated>
+    <q-header elevated dense>
       <q-toolbar >
         <q-btn
           flat
@@ -23,7 +23,7 @@
           <img src="/logo.svg" 
                 loading="lazy" 
                 width="auto" 
-                height="55" 
+                height="50" 
                 alt="Marca"
                 title="marca"
                 aria-label="Marca da plataforma Anísio Teixeira"

@@ -28,12 +28,12 @@
     </q-carousel>
 
     <!-- BOTÕES DAS MODALIDADES DE ENSINO #INÍCIO -->
-    <div class="q-py-xl row justify-center q-gutter-xs">
+    <div class="q-py-xl row justify-center q-gutter-lg">
     
-      <q-btn stack size="md" class="col" color="petecavermelho" text-color="white" label="Ensino Fundamental I" icon="img:img\biblioteca_icon_pb-49.svg" />
-      <q-btn stack size="md" class="col" color="petecaamarelo" text-color="white" label="Ensino Fundamental II" icon="img:img\biblioteca_icon_pb-49.svg" />
-      <q-btn stack size="md" class="col"  color="petecaazul" text-color="white" label="Ensino Médio" icon="img:img\biblioteca_icon_pb-49.svg" />
-      <q-btn stack size="md" class="col" color="petecaverde" text-color="white" label="Ensino Superior" icon="img:img\biblioteca_icon_pb-49.svg" />
+      <q-btn dense stack size="md" class="botoes col" color="petecavermelho" text-color="white" label="Ensino Fundamental I" icon="img:img\biblioteca_icon_pb-49.svg" />
+      <q-btn dense stack size="md" class="botoes col" color="petecaamarelo" text-color="white" label="Ensino Fundamental II" icon="img:img\biblioteca_icon_pb-49.svg" />
+      <q-btn dense stack size="md" class="botoes col"  color="petecaazul" text-color="white" label="Ensino Médio" icon="img:img\biblioteca_icon_pb-49.svg" />
+      <q-btn dense stack size="md" class="botoes col" color="petecaverde" text-color="white" label="Ensino Superior" icon="img:img\biblioteca_icon_pb-49.svg" />
     
     </div>
 
@@ -196,4 +196,12 @@ export default {
   }
 };
 </script>
-<style lang="stylus" scoped></style>
+<style lang="stylus" scoped>
+
+@media (max-width: 669px) {
+  .botoes{
+    font-size: 12px !important;
+  }
+}
+
+</style>

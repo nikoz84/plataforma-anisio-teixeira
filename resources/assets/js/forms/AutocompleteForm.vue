@@ -5,7 +5,6 @@
       rounded 
       standout 
       clearable
-      bottom-slots
       v-model="term"
       use-input
       option-value="id"
@@ -23,7 +22,7 @@
       label-color="primary"
       :input-style= "{ color: '#000' }"
       bg-color="grey-4"
-      class="col q-mt-md"
+      class="col q-my-sm"
       style="with:100%;"
     >
      <template v-slot:append>
