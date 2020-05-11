@@ -5921,7 +5921,7 @@ body.q-ios-padding .q-notifications__list--bottom {
   --q-color-primary: #1a237e;
   --q-color-secondary: #b71c1c;
   --q-color-accent: #f05545;
-  --q-color-positive: #21ba45;
+  --q-color-positive: #00ae2e;
   --q-color-negative: #ed2221;
   --q-color-info: #0072c5;
   --q-color-warning: #f9bb00;
@@ -5960,11 +5960,11 @@ body.q-ios-padding .q-notifications__list--bottom {
   background: var(--q-color-accent) !important;
 }
 .text-positive {
-  color: #21ba45 !important;
+  color: #00ae2e !important;
   color: var(--q-color-positive) !important;
 }
 .bg-positive {
-  background: #21ba45 !important;
+  background: #00ae2e !important;
   background: var(--q-color-positive) !important;
 }
 .text-negative {

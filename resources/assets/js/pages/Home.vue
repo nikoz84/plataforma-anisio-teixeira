@@ -15,12 +15,12 @@
       height="250px"
       class="accent rounded-borders"
     >
-    <q-carousel-slide :name="1" img-src="/storage/conteudos/slider/banner_ensinosuperior.png">
+    <q-carousel-slide class="img-fluid" :name="1" img-src="/storage/conteudos/slider/banner_ensinosuperior.png">
       <div class="absolute-bottom custom-caption">
           <q-btn  color="pink" class="q-px-lg" label="Saiba mais"></q-btn>
       </div>
     </q-carousel-slide>
-    <q-carousel-slide :name="2" img-src="/storage/conteudos/slider/banner_rotinas-de-estudo.png">
+    <q-carousel-slide class="img-fluid" :name="2" img-src="/storage/conteudos/slider/banner_rotinas-de-estudo.png">
       <div class="absolute-bottom custom-caption">
           <q-btn color="pink" class="q-px-lg" label="Saiba mais"></q-btn>
       </div>

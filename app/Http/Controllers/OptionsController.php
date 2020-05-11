@@ -7,14 +7,17 @@ use App\Options;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use JWTAuth;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class OptionsController extends ApiController
 {
     public function __construct(Options $options)
     {
         $this->options = $options;
-
     }
+
     /**
      * Display a indexing of the resource.
      *
@@ -32,7 +35,7 @@ class OptionsController extends ApiController
     }
 
     /**
-     * Método responsável por criar destaques 
+     * Método responsável por criar slider 
      * 
      * @return \Illuminate\Http\Response
      */
@@ -41,58 +44,81 @@ class OptionsController extends ApiController
         $validator = Validator::make(
             $request->all(),
             [
-                "name" => "required",
                 "url" => "required",
-                "titulo" => "required",
+                "title" => "required",
                 "image" => "mimes:jpeg,jpg,png,gif|required|max:10000"
             ]
         );
-       
+
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível criar o destaque", 201);
+            return $this->errorResponse($validator->errors(), "Não foi possível criar o Slider", 422);
         }
 
         $path = $this->saveFile($request);
 
-        if (!$path) {
-            return $this->errorResponse([], "Falha ao fazer upload!", 500);
-        }
         
-        $options = $this->options;
-
-        $data = $options::create([
-            'name' => 'slider',
-            'meta_data' => [
-                'itens'=>[
-                    [
-                        'title'=> $request->titulo,
-                        'image'=> str_replace('\\', '/', $path),
-                        'url'=> $request->url
-                    ]
-                ]
-            ]
-        ]);
+        $data = $this->newSlider($request, $path);
 
         if (!$data) {
-            return $this->errorResponse([], 'Não foi possível cadastrar o destaque', 422);
+            return $this->errorResponse([], 'Não foi possível cadastrar o Slider', 422);
         }
 
-        return $this->successResponse($data, 'Destaque criado com sucesso!', 201);
+        return $this->successResponse($data, 'Slider criado com sucesso!', 201);
     }
 
-    public function saveFile($request)
+    private function newSlider($request, $path = null)
+    {
+        $data = null;
+
+        $newSlide = [
+            'title' => $request->title,
+            'image' => str_replace('\\', '/', $path),
+            'url' => $request->url
+        ];
+
+        $slider =  $this->options::where('name', 'slider')->first();
+        
+        if (!$slider) {
+            $data = $this->options::create([
+                'name' => 'slider',
+                'meta_data' => [ $newSlide ]
+            ]);
+        } else {
+            $data = $this->appendSlide($slider, $newSlide);
+        }
+        dd($data);
+        return $data;
+    }
+
+    private function appendSlide($slider, $newSlide)
+    {
+        $items = $slider->meta_data;
+        $append = Arr::prepend($items, $newSlide);
+        $slider->setAttribute('meta_data', $append);
+        $slider->save();
+
+        return $slider;
+    }
+
+    private function saveFile($request)
     {
         $path = null;
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $extension = $request->image->extension();
-            $name = $request->image->getClientOriginalName();
-            $nameFile = "{$name}.{$extension}";
-
-            $path = $request->image->storeAs('public\conteudos\slider', $nameFile);
+            $fileName = explode('.', $request->image->getClientOriginalName());
+            $filaName = Str::slug($fileName[0], '-');
+            $fileName = "{$filaName}.$extension";
+            
+            $path = $request->image->storeAs(
+                null,
+                $fileName,
+                'slider'
+            );
+            $path = Storage::disk('slider')->url($path);
         }
 
-        return $path;
+        return $path ? $path : $this->errorResponse([], "Falha ao fazer upload!", 500);
     }
     /**
      * Show the form for creating a new resource.
@@ -103,7 +129,7 @@ class OptionsController extends ApiController
     {
         //
     }
-  
+
     /**
      * Update the specified resource in storage.
      *
