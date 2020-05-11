@@ -73,7 +73,8 @@ class OptionsController extends ApiController
         $newSlide = [
             'title' => $request->title,
             'image' => str_replace('\\', '/', $path),
-            'url' => $request->url
+            'url' => $request->url,
+            'filename' => $this->fileName($request)
         ];
 
         $slider =  $this->options::where('name', 'slider')->first();
@@ -86,7 +87,8 @@ class OptionsController extends ApiController
         } else {
             $data = $this->appendSlide($slider, $newSlide);
         }
-        dd($data);
+        
+      
         return $data;
     }
 
@@ -105,10 +107,7 @@ class OptionsController extends ApiController
         $path = null;
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $extension = $request->image->extension();
-            $fileName = explode('.', $request->image->getClientOriginalName());
-            $filaName = Str::slug($fileName[0], '-');
-            $fileName = "{$filaName}.$extension";
+            $fileName = $this->fileName($request);
             
             $path = $request->image->storeAs(
                 null,
@@ -119,6 +118,16 @@ class OptionsController extends ApiController
         }
 
         return $path ? $path : $this->errorResponse([], "Falha ao fazer upload!", 500);
+    }
+
+    private function fileName($request)
+    {
+        $extension = $request->image->extension();
+        $fileName = explode('.', $request->image->getClientOriginalName());
+        $filaName = Str::slug($fileName[0], '-');
+        $fileName = "{$filaName}.$extension";
+
+        return $fileName;
     }
     /**
      * Show the form for creating a new resource.
