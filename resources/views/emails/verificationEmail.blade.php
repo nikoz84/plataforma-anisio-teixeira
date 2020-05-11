@@ -34,13 +34,27 @@
 	    Olá <strong>{{$user->name}}</strong>, 
 	    por segurança da comunidade estamos verificando sua conta de email.
 	<p>
-
-	<p>
-		Click para criar uma nova senha
-	</p> 
-
-	<a href="{{$dominio}}/api-v1/auth/verificar/{{$token}}" style="color:#3871c1!important">Criar nova senha</a>
     
+    @if ($option && $option == 'recoverPass')
+		<p>
+			Click para criar uma nova senha
+		</p> 
+
+		<a href="{{$dominio}}/api-v1/auth/verificar/{{$token}}" style="color:#3871c1!important">
+		    Criar nova senha
+	    </a>
+    @endif
+
+    @if ($option && $option == 'register')
+        <p>
+			Click para confirmar o seu cadastro
+		</p> 
+
+		<a href="{{$dominio}}/api-v1/auth/token/verificar/usuario/{{$token}}" style="color:#3871c1!important">
+		   Confirmar
+	    </a>
+    @endif
+
     <br>
     <br>
     <br>

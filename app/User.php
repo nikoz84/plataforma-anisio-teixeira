@@ -73,7 +73,7 @@ class User extends Authenticatable implements JWTSubject
 
     protected $appends = ['is_admin', 'image', 'user_can'];
 
-    public static function boot()
+    /*public static function boot()
     {
         parent::boot();
         
@@ -82,7 +82,7 @@ class User extends Authenticatable implements JWTSubject
                 Event::dispatch('user.saved', $user);
             }
         );
-    }
+    }*/
     /**
      * Converte o atributo nome para minusculas
      *
@@ -242,5 +242,59 @@ class User extends Authenticatable implements JWTSubject
     public function isOwner($user_id)
     {
         return Auth::user()->id == $user_id;
+    }
+    
+    /**
+    * 
+     * Method usado para validação de token por hora
+     * @param $token | (String) O token que deve ser passado
+     * @param $horaDoTokenCadastradoNoBanco | (Timestamp) da hora que o token foi gerado
+     * @param $horasValidas | (Int) Por quantas horas você deseja que o token seja valido
+     * @return Boolean
+    */
+    public function tokenValidatingByHours(string $token, $horaDoTokenCadastradoNoBanco, int $horasValidas)
+    {
+        $horaDoSistema = date('Y-m-d H:i:s');
+
+        // Formata e valida a hora 
+        $horaDoTokenCadastradoNoBanco = date('Y-m-d H:i:s', strtotime("+{$horasValidas} hours", strtotime(
+            date('Y-m-d H:i:s', strtotime($horaDoTokenCadastradoNoBanco))
+        )));
+
+        //  Verifica se o token está valido
+        if ($horaDoSistema > $horaDoTokenCadastradoNoBanco) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function verifyTokenUserRegister(string $token)
+    {
+        $user = $this->where('verification_token', $token)->first();
+
+        if ( ! is_null($user)) {
+
+            // Verifica se o token da rota é o mesmo que foi gerado para o usuário
+            if ( ! is_null($token) && $token == $user->verification_token) {
+                $user->update(['verified' => 1]);
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Usuário validado com sucesso!'
+                ]);
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Este Token não pertence a este usuário!'
+            ]);
+
+        } else {
+             return response()->json([
+                'success' => false,
+                'message' => 'Token não encontrado!'
+            ]);
+        }
     }
 }

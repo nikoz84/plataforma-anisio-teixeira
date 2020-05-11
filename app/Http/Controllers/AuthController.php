@@ -21,7 +21,7 @@ class AuthController extends ApiController
     public function __construct(Request $request)
     {
         $this->middleware('jwt.verify')->except([
-            'login', 'register', 'verifyEmail', 'recoverPass', 'verifyToken'
+            'login', 'register', 'verifyEmail', 'recoverPass', 'verifyToken', 'verifyTokenUserRegister'
         ]);
 
         $this->request = $request;
@@ -135,7 +135,7 @@ class AuthController extends ApiController
      */
     public function register(Request $request)
     {
-        $validator = Validator::make(
+        /*$validator = Validator::make(
             $request->all(),
             $this->rulesRegister()
         );
@@ -146,15 +146,16 @@ class AuthController extends ApiController
                 "Verifique os dados fornecidos",
                 422
             );
-        }
-
+        }*/
 
         $user = new User;
+        $token = $user->createVerificationToken();
+
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = $request->password;
         $user->verified = User::USER_NOT_VERIFIED;
-        $user->verification_token = $user->createVerificationToken();
+        $user->verification_token = $token;
         $user->options = [
             "sexo" => null,
             "birthday" => null,
@@ -163,13 +164,16 @@ class AuthController extends ApiController
             "neighborhood"=> null
         ];
 
-        $user->save();
+        if ($user->save()) {
 
-        if (!$this->sendConfirmationEmail($user->email, $user->verification_token)) {
-            return $this->errorResponse([], "Aconteceu algum erro", 422);
+            if ($this->sendConfirmationEmail($user->email, $token, 'register')) {
+                return $this->successResponse([], "Espere a confirmação na sua conta de email", 200);
+            }
+
+            return $this->errorResponse([], "Erro ao enviar Email", 422); 
         }
 
-        return $this->successResponse([], "Espere a confirmação na sua conta de email", 200);
+         return $this->errorResponse([], "Erro ao cadastrar Usuário", 422); 
     }
     /**
      * Recuperar senha
@@ -193,8 +197,8 @@ class AuthController extends ApiController
             $token = $tokenGerado->getTokenByEmail($usuario->email)->token;
             
             // Dispara o Email
-            if ($this->sendConfirmationEmail($usuario->email, $token)) {
-                return $this->successResponse([], 'Email enviado com Sucesso!');
+            if ($this->sendConfirmationEmail($usuario->email, $token, 'recoverPass')) {
+                return $this->successResponse([], 'Email enviado com Sucesso!', 200);
             }
 
             return $this->errorResponse([], 'Erro ao enviar Email!', 422);
@@ -209,7 +213,7 @@ class AuthController extends ApiController
     {
         return [
             'name' => 'required|string|max:255|min:4',
-            'email' => 'required|email|string|max:100|unique:users,email',
+            'email' => 'required|email|string|max:100|unique:users',
             'password' => 'required|string|min:6|required_with:confirmation|same:confirmation',
             'confirmation' => 'required',
             'recaptcha' => ['required', new \App\Rules\ValidRecaptcha]
@@ -222,12 +226,12 @@ class AuthController extends ApiController
      *
      * @return App\Traits\ApiResponser
      */
-    protected function sendConfirmationEmail($email, $token)
+    protected function sendConfirmationEmail($email, $token, $option)
     {
         $user = User::where('email', 'ilike', "%{$email}%")->first();
         
         try {
-            Mail::send(new SendVerificationEmail($user, $token));
+            Mail::send(new SendVerificationEmail($user, $token, $option));
         
             return true;
         } catch (Exception $ex) {
@@ -267,5 +271,11 @@ class AuthController extends ApiController
                 'message' => 'Token não encontrado!'
             ]);
         }
+    }
+
+    public function verifyTokenUserRegister(Request $request, $token)
+    {
+        $user = new User();
+        return $user->verifyTokenUserRegister($token);
     }
 }
