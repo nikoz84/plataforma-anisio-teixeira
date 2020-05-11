@@ -86,6 +86,7 @@ class OptionsController extends ApiController
         } else {
             $data = $this->appendSlide($slider, $newSlide);
         }
+		
         dd($data);
         return $data;
     }
