@@ -294,13 +294,14 @@ class ConteudoController extends ApiController
      */
     public function storeFiles(Request $request)
     {
-
+		$mimes = "ppt,pps,odp,link,pdf,epub,doc,docx,odt,swf,exe,zip,rar,swf,wmv,mpg,flv,avi,youtube,mp4,mp3,webm,xls,xml,ods,csv,jpg,jpeg,png,gif,txt";
+		
         $validator = Validator::make(
             $request->all(),
             [
                 "id"   => "required",
                 "local" => "required",
-                "file" => "required|max:10000"
+                "file.*" => "required|mimes:{$mimes}|max:10000"
             ]
         );
 
