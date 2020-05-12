@@ -183,26 +183,26 @@ class AuthController extends ApiController
     {
         $usuario = User::where('email', $request->email)->first();
 
-        if (is_null($usuario)) {
+        if (!$usuario) {
             return $this->errorResponse([], 'Usuário não encontrado!', 422);
-        } else {
-            $reset = PasswordReset::create([
-                'email' => $usuario->email,
-                'token' => $usuario->createVerificationToken(),
-                'created_at' => date('Y-m-d H:i:s')
-            ]);
-            
-            // Recupera o token gerado direto da tabela
-            $tokenGerado = new PasswordReset();
-            $token = $tokenGerado->getTokenByEmail($usuario->email)->token;
-            
-            // Dispara o Email
-            if ($this->sendConfirmationEmail($usuario->email, $token, 'recoverPass')) {
-                return $this->successResponse([], 'Email enviado com Sucesso!', 200);
-            }
-
-            return $this->errorResponse([], 'Erro ao enviar Email!', 422);
         }
+
+        PasswordReset::create([
+            'email' => $usuario->email,
+            'token' => $usuario->createVerificationToken(),
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+        
+        // Recupera o token gerado direto da tabela
+        $tokenGerado = new PasswordReset();
+        $token = $tokenGerado->getTokenByEmail($usuario->email)->token;
+        
+        // Dispara o Email
+        if ($this->sendConfirmationEmail($usuario->email, $token, 'recoverPass')) {
+            return $this->successResponse([], 'Email enviado com Sucesso!', 200);
+        }
+
+        return $this->errorResponse([], 'Erro ao enviar Email!', 422);
     }
     /**
      * Regras de validação

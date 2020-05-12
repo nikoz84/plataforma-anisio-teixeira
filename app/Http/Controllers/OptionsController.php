@@ -10,6 +10,7 @@ use JWTAuth;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class OptionsController extends ApiController
 {
@@ -85,18 +86,9 @@ class OptionsController extends ApiController
                 'meta_data' => [ $newSlide ]
             ]);
         } else {
-			if(count($slider->meta_data) === 5){
-				$isTrue = Storage::disk('slider')->delete($slider->meta_data[0]['filename']);
-				if($isTrue){
-					unset($slider->meta_data[0]);
-				}else{
-                    $this->errorResponse([], "Falha ao tentar deletar arquivo!", 500);
-                }					
-            }
+            $this->deleteLast();
             $data = $this->appendSlide($slider, $newSlide);
         }
-		
-        dd($data);
 
         return $data;
     }
@@ -138,6 +130,21 @@ class OptionsController extends ApiController
 
         return $fileName;
     }
+    private function deleteLast()
+    {
+        $slider = $this->options::
+            selectRaw('jsonb_array_length(meta_data) AS length, id, name, meta_data')
+            ->where('name', 'slider')
+            ->first();
+        
+        if ($slider->length >= 5) {
+            $fileName = Arr::last($slider->meta_data)['filename'];
+            Storage::disk('slider')->delete($fileName);
+            $expression = "meta_data #- '{5}'";
+            DB::statement("UPDATE options SET meta_data = $expression WHERE name = 'slider'");
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *

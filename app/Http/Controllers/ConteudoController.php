@@ -161,11 +161,7 @@ class ConteudoController extends ApiController
         $conteudo->tags()->attach(explode(',', $request->tags));
         $conteudo->componentes()->attach(explode(',', $request->componentes));
         $conteudo::tsDocumentoSave($conteudo->id);
-
         
-         // FULL TEXT SEARCH
-
-
         $this->createFile($conteudo->id, $request->download);
 
         return $this->showOne($conteudo, 'Conteúdo cadastrado com sucesso!!', 200);
