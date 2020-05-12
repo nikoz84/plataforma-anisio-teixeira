@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\User;
-use App\Denuncia;
+use App\Contato;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class DenunciaPolicy
+class ContatoPolicy
 {
     use HandlesAuthorization;
 
@@ -52,7 +52,7 @@ class DenunciaPolicy
      * @param  \App\Denuncia  $denuncia
      * @return mixed
      */
-    public function update(User $user, Denuncia $denuncia)
+    public function update(User $user, Contato $contato)
     {
         return $user->role->name == 'super-admin' ||
             $user->role->name == 'admin' ||
@@ -66,7 +66,7 @@ class DenunciaPolicy
      * @param  \App\Denuncia  $denuncia
      * @return mixed
      */
-    public function delete(User $user, Denuncia $denuncia)
+    public function delete(User $user, Contato $contato)
     {
         return $user->role->name == 'super-admin' ||
             $user->role->name == 'admin' ||
@@ -80,7 +80,7 @@ class DenunciaPolicy
      * @param  \App\Denuncia  $denuncia
      * @return mixed
      */
-    public function restore(User $user, Denuncia $denuncia)
+    public function restore(User $user, Contato $contato)
     {
         return $user->role->name == 'super-admin';
     }
@@ -92,7 +92,7 @@ class DenunciaPolicy
      * @param  \App\Denuncia  $denuncia
      * @return mixed
      */
-    public function forceDelete(User $user, Denuncia $denuncia)
+    public function forceDelete(User $user, Contato $contato)
     {
         return $user->role->name == 'super-admin';
     }

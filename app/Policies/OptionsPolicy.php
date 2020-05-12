@@ -28,9 +28,11 @@ class OptionsPolicy
      * @param  \App\Options  $options
      * @return mixed
      */
-    public function view(User $user, Options $options)
+    public function index(User $user)
     {
-        //
+        return $user->role->name == 'super-admin' ||
+            $user->role->name == 'admin' ||
+            $user->role->name == 'coordenador';
     }
 
     /**

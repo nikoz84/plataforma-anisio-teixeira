@@ -89,7 +89,6 @@ Route::group(['middleware' => ['cors']], function () {
     Route::put('/tipos/{id}', 'TipoController@update')->name('atualizar.tipos');
     /** ROLES */
     Route::get('/roles', 'RoleController@index')->name('role.listar');
-    //->middleware(['isAdmin', 'isSuperAdmin']);
     Route::post('/roles', 'RoleController@create')->name('criar.role');
     Route::put('/roles/{id}', 'RoleController@update')->name('atualizar.role');
     Route::delete('/roles/{id}', 'RoleController@delete')->name('deletar.role');
@@ -138,9 +137,9 @@ Route::group(['middleware' => ['cors']], function () {
     Route::put('/licencas/{id}', 'LicenseController@update')->name('atualizar.licenca');
     Route::delete('/licencas/{id}', 'LicenseController@delete')->name('apagar.licenca');
     /** DENUNCIAS */
-    Route::get('/denuncias', 'DenunciaController@index')->name('listar.faleconosco.denuncias');
-    Route::get('/denuncias/{id}', 'DenunciaController@getById')->name('busca.x.id');
-    Route::delete('/denuncias/{id}', 'DenunciaController@delete')->name('apagar.denuncias');
+    Route::get('/contato', 'ContatoController@index')->name('listar.faleconosco');
+    Route::get('/contato/{id}', 'ContatoController@getById')->name('busca.x.id');
+    Route::delete('/contato/{id}', 'ContatoController@delete')->name('apagar.contato');
     /** OPTIONS */
     Route::post('/options', 'OptionsController@create')->name('criar.opcoes');
     Route::put('/options/{name}', 'OptionsController@update')->name('atualizar.opcoes.x.nome');

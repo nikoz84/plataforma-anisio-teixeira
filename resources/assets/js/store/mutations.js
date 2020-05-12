@@ -6,6 +6,9 @@ const mutations = {
   SET_LINKS(state, links) {
     state.links = links;
   },
+  SET_LINKS_ADMIN(state, linksAdmin) {
+    state.linksAdmin = linksAdmin;
+  },
   SET_LOGIN_USER(state) {
     state.isLogged = true;
   },

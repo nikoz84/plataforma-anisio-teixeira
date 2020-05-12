@@ -26,13 +26,10 @@ class OptionsController extends ApiController
      */
     public function index()
     {
-        $user = JWTAuth::parseToken()->toUser();
-        $options = $this->options::all();
-        return response()->json([
-            'success' => true,
-            'options' => $options,
-            'user' => $user,
-        ]);
+        
+        $options = $this->options::select(['id', 'name'])->paginate(6);
+        
+        return $this->showAsPaginator($options);
     }
 
     /**
@@ -78,7 +75,9 @@ class OptionsController extends ApiController
             'filename' => $this->fileName($request)
         ];
 
-        $slider =  $this->options::where('name', 'slider')->first();
+        $slider =  $this->options::
+            selectRaw('jsonb_array_length(meta_data) AS length, id, name, meta_data')
+            ->where('name', 'slider')->first();
         
         if (!$slider) {
             $data = $this->options::create([
@@ -86,8 +85,8 @@ class OptionsController extends ApiController
                 'meta_data' => [ $newSlide ]
             ]);
         } else {
-            $this->deleteLast();
             $data = $this->appendSlide($slider, $newSlide);
+            $this->deleteLast($slider);
         }
 
         return $data;
@@ -130,18 +129,13 @@ class OptionsController extends ApiController
 
         return $fileName;
     }
-    private function deleteLast()
+    private function deleteLast($slider)
     {
-        $slider = $this->options::
-            selectRaw('jsonb_array_length(meta_data) AS length, id, name, meta_data')
-            ->where('name', 'slider')
-            ->first();
-        
-        if ($slider->length >= 5) {
+        if ($slider->length > 5) {
             $fileName = Arr::last($slider->meta_data)['filename'];
             Storage::disk('slider')->delete($fileName);
-            $expression = "meta_data #- '{5}'";
-            DB::statement("UPDATE options SET meta_data = $expression WHERE name = 'slider'");
+            $expression = "meta_data #- '{-1}'";
+            return DB::statement("UPDATE options SET meta_data = $expression WHERE name = 'slider'");
         }
     }
 

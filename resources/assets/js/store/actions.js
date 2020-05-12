@@ -123,6 +123,7 @@ const actions = {
           commit("SET_LOGOUT_USER");
           localStorage.removeItem("token");
           localStorage.removeItem("user");
+          localStorage.removeItem("linksAdmin");
         });
     } catch (error) {
       commit("SET_LOGOUT_USER");
@@ -148,6 +149,18 @@ const actions = {
     } else {
       commit("SET_SHOW_CONTEUDO", false);
       commit("SET_SHOW_APLICATIVO", true);
+    }
+  },
+  async getLinksAdmin({ commit }) {
+    
+    try {
+      await axios.get("/auth/user").then(resp => {
+        commit("SET_LINKS_ADMIN", resp.data.metadata.links);
+        
+        localStorage.setItem("linksAdmin", JSON.stringify(resp.data.metadata));
+      });
+    } catch (e) {
+      console.log(e);
     }
   }
 };

@@ -32,6 +32,7 @@
               hint="Senha"
               bottom-slots
               :error="errors.password && errors.password.length > 0"
+              autocomplete="on"
             >
               <template v-slot:append>
                 <q-icon

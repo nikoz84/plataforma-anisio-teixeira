@@ -15,6 +15,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendVerificationEmail;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends ApiController
 {
@@ -67,23 +68,12 @@ class AuthController extends ApiController
      */
     public function getAuthUser()
     {
-        try {
-            if (!$user = JWTAuth::parseToken()->authenticate()) {
-                return $this->errorResponse([], 'Usuário não encontrado', 404);
-            }
-        } catch (TokenExpiredException $e) {
-            return $this->errorResponse([], 'Token Expirado', 401);
-        } catch (TokenInvalidException $e) {
-            return $this->errorResponse([], 'Token Inválido', 403);
-        } catch (JWTException $e) {
-            return $this->errorResponse([], 'Token Ausente', 403);
-        }
-
+        $user = Auth::user();
+        
         $sidebar = new SideBar;
 
         return $this->successResponse([
-            'user_data' => compact('user'),
-            'links' => $sidebar->getAdminSidebar(JWTAuth::user())
+            'links' => $sidebar->getAdminSidebar($user)
         ]);
     }
     /**
@@ -165,15 +155,14 @@ class AuthController extends ApiController
         ];
 
         if ($user->save()) {
-
             if ($this->sendConfirmationEmail($user->email, $token, 'register')) {
                 return $this->successResponse([], "Espere a confirmação na sua conta de email", 200);
             }
 
-            return $this->errorResponse([], "Erro ao enviar Email", 422); 
+            return $this->errorResponse([], "Erro ao enviar Email", 422);
         }
 
-         return $this->errorResponse([], "Erro ao cadastrar Usuário", 422); 
+         return $this->errorResponse([], "Erro ao cadastrar Usuário", 422);
     }
     /**
      * Recuperar senha
