@@ -123,6 +123,7 @@ Route::group(['middleware' => ['cors']], function () {
     Route::post('/conteudos', 'ConteudoController@create')->name('adicionar.conteudo');
     Route::put('/conteudos/{id}', 'ConteudoController@update')->name('atualizar.conteudo');
     Route::delete('/conteudos/{id}', 'ConteudoController@delete')->name('apagar.conteudo');
+    Route::post('/conteudos/arquivos', 'ConteudoController@storeFiles')->name('salvar.arquivo.conteudo');
     /** CANAIS */
     Route::get('/canais', 'CanalController@index')->name('listar.canais');
     Route::post('/canais', 'CanalController@create')->name('adicionar.canal');
