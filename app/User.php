@@ -308,13 +308,21 @@ class User extends Authenticatable implements JWTSubject
 
             // Verifica se o token da rota é o mesmo que foi gerado para o usuário
             if ( ! is_null($token) && $token == $user->verification_token) {
+                
+                if ($this->tokenValidatingByHours($token, $user->created_at, 1)) {
+                    // Seta o campo verified como 1, ous seja, usuario validado
+                    $user->verified = 1;
+                    $user->update();
 
-                // Seta o campo verified como 1, ous seja, usuario validado
-                $user->update(['verified' => 1]);
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Usuário validado com sucesso!'
+                    ]);
+                }
 
-                return response()->json([
+                 return response()->json([
                     'success' => true,
-                    'message' => 'Usuário validado com sucesso!'
+                    'message' => 'Este token expirou e não é mais valido!'
                 ]);
             }
 

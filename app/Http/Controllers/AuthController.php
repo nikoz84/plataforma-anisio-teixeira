@@ -135,7 +135,7 @@ class AuthController extends ApiController
      */
     public function register(Request $request)
     {
-        /*$validator = Validator::make(
+        $validator = Validator::make(
             $request->all(),
             $this->rulesRegister()
         );
@@ -146,7 +146,7 @@ class AuthController extends ApiController
                 "Verifique os dados fornecidos",
                 422
             );
-        }*/
+        }
 
         $user = new User;
         $token = $user->createVerificationToken();
