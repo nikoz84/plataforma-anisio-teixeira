@@ -68,12 +68,12 @@ class RoleController extends ApiController
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível deletar.", 201);
         }
-        $role = $this->role;
-        $resp = $this->role::find($id);
-        if (Gate::denies('super-admin', $resp)) {
-            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
-        }
-        if ($resp->delete()) {
+        
+        $role = $this->role::find($id);
+        
+        $this->authorize('delete', $role);
+        
+        if ($role->delete()) {
             return $this->successResponse($role, 'Perfil deletado com sucesso!', 200);
         }
     }
