@@ -295,8 +295,6 @@ class ConteudoController extends ApiController
 
     /**
      * Responsável por criar arquivos de conteúdo
-     *
-     * @return \Illuminate\Http\Response
      */
     private function storeFiles($request, $id = null)
     {
