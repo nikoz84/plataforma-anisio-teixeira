@@ -1,4 +1,37 @@
 <template>
+  <div class="row justify-start" v-if="conteudo">
+    
+    <div class="col-12" style="max-width:1200px">
+      <q-card>
+      <div class="player col-12 q-mt-sm">
+        <Player :arquivos="conteudo.arquivos" :tipo="conteudo.tipo"></Player>
+      </div>
+      <div class="acoes col-12 q-mx-md">
+        <PlayerActions></PlayerActions>
+      </div>
+      <div class="descritivo col-12 q-mx-md">
+            <Title :title="conteudo.title"></Title>
+            <div v-html="conteudo.description"></div> 
+      </div>
+      <div class="metadados col-12 q-mx-0">
+        <q-expansion-item
+          v-model="expanded"
+          dense
+          switch-toggle-side
+          header-class="bg-cinza text-black"
+          label="Ver metados do conteúdo">
+            <ConteudoMetadata></ConteudoMetadata> 
+        </q-expansion-item>
+      </div>
+      </q-card>
+    </div>
+    
+  </div>
+</template>
+
+<!-- código antigo
+
+<template>
   <div class="row justify-center q-mt-md q-gutter-sm" v-if="conteudo">
     <div class="col-xs-11 col-sm-6">
       <Player :arquivos="conteudo.arquivos" :tipo="conteudo.tipo"></Player>
@@ -17,6 +50,9 @@
     </div>
   </div>
 </template>
+
+-->
+
 <script>
 import Player from "../components/Player";
 import { mapState } from "vuex";
@@ -52,5 +88,23 @@ export default {
 };
 </script>
 <style scoped>
+
+@media (max-width: 599px){
+  .player{
+  order: 1;
+}
+
+.descritivo{
+  order: 3;
+}
+
+.acoes{
+  order: 2;
+}
+
+.metadados{
+  order: 4;
+}
+}
 
 </style>

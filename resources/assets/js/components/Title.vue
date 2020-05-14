@@ -1,5 +1,5 @@
 <template>
-    <h1 class="text-h5" v-html="title"></h1>
+    <h1 class="text-h5" color="black" v-html="title"></h1>
 </template>
 <script>
 import { QSeparator } from "quasar";

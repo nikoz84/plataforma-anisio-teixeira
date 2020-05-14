@@ -1,5 +1,5 @@
 <template>
-    <q-card class="row" v-if="conteudo && conteudo.tipo && conteudo.arquivos">
+    <div class="row" v-if="conteudo && conteudo.tipo && conteudo.arquivos">
           <q-card-section class="col-sm-12" v-if="conteudo.tipo.id == 5">
             <PlayerVideo  :download="conteudo.arquivos.download"
                         :visualizacao="conteudo.arquivos.visualizacao"
@@ -20,7 +20,7 @@
           <q-card-section class="col-sm-12" v-else>
             <PlayerImage :image="conteudo.image"></PlayerImage>
           </q-card-section>
-  </q-card>
+    </div>
 </template>
 
 <script>

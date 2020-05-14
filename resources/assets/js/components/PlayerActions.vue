@@ -1,21 +1,23 @@
 <template>
-    <q-card v-if="conteudo && conteudo.tipo && conteudo.qt_access && conteudo.qt_downloads">
-        <q-card-section>
+    <div v-if="conteudo && conteudo.tipo && conteudo.qt_access && conteudo.qt_downloads">
+        <div>
             <small>
                 Tipo de Conteúdo: 
-                <q-badge color="secondary">{{conteudo.tipo.name}}</q-badge>
+                <q-badge class="bg-cinza" text-color="primary">{{conteudo.tipo.name}}</q-badge>
             </small>
             <small>
                 Acessos: 
-                <q-badge color="secondary">{{conteudo.qt_access}}</q-badge>
+                <q-badge class="bg-cinza" text-color="primary">{{conteudo.qt_access}}</q-badge>
             </small>
             <small v-if="conteudo.tipo.id != 8">
                 Downloads: 
-                <q-badge color="secondary">{{conteudo.qt_downloads}}</q-badge>
+                <q-badge class="bg-cinza" text-color="primary">{{conteudo.qt_downloads}}</q-badge>
             </small>
             
-            <q-btn class="q-ml-md" 
-                round color="secondary" 
+            <q-btn class="q-ml-md bg-cinza" 
+                round
+                push
+                text-color="primary"
                 icon="share" 
                 size="sm" 
                 @click="share()" >
@@ -23,31 +25,47 @@
                     Compartilhar
                 </q-tooltip>
             </q-btn>
-            <q-btn round color="secondary" icon="save_alt" size="sm"
+            <q-btn
+                round
+                push
+                class="bg-cinza"
+                text-color="primary"
+                icon="save_alt"
+                size="sm"
                 v-if="fileExists('download')"
                 @click="downloadFile('download', conteudo.id)" >
                 <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
                     Baixar conteúdo
                 </q-tooltip>
             </q-btn>
-            <q-btn round color="secondary" icon="save_alt" size="sm"
+            <q-btn
+                round
+                push
+                class="bg-cinza"
+                text-color="primary"
+                icon="save_alt"
+                size="sm"
                 v-if="fileExists('visualizacao')"
-                @click="downloadFile('visualizacao', conteudo.id)" 
-                    >
+                @click="downloadFile('visualizacao', conteudo.id)" >
                 <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
                     Baixar conteúdo
                 </q-tooltip>
             </q-btn>
-            <q-btn round color="secondary" icon="description" size="sm"
+            <q-btn
+                round
+                push
+                class="bg-cinza"
+                text-color="primary"
+                icon="description"
+                size="sm"
                 v-if="fileExists('guias-pedagogicos')" 
-                @click="downloadFile('guias-pedagogicos', conteudo.id)"
-                    >
+                @click="downloadFile('guias-pedagogicos', conteudo.id)">
                 <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
                     Baixar guia pedagógico
                 </q-tooltip>
             </q-btn>
-        </q-card-section>
-    </q-card>
+        </div>
+    </div>
 </template>
 
 <script>

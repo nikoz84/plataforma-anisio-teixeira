@@ -1,5 +1,5 @@
 <template>
-    <q-card v-if="conteudo">
+    <div v-if="conteudo">
         <q-card-section>
             <strong>Publicado em: </strong>
                 {{conteudo.formated_date}}
@@ -64,7 +64,7 @@
 
             <TagList :items="conteudo.tags" title="Palavras Chave" slug="tag"></TagList>
         </q-card-section>
-    </q-card>      
+    </div>      
 </template>
 
 <script>
