@@ -134,9 +134,9 @@ class ConteudoController extends ApiController
                 422
             );
         }
+        $this->authorize('create', Conteudo::class);
 
         $conteudo = new Conteudo;
-
         $conteudo->user_id = Auth::user()->id;
         $conteudo->setAttribute('approving_user_id', Auth::user());
 
@@ -164,7 +164,6 @@ class ConteudoController extends ApiController
         $conteudo->componentes()->attach(explode(',', $request->componentes));
         $conteudo::tsDocumentoSave($conteudo->id);
 
-        //$this->createFile($conteudo->id, $request->download);
         $this->storeFiles($request);
 
         return $this->showOne($conteudo, 'Conteúdo cadastrado com sucesso!!', 200);

@@ -46,9 +46,8 @@ class RoleController extends ApiController
     {
         $role = $this->role::find($id);
 
-        if (Gate::denies('super-admin', $role)) {
-            return $this->errorResponse([], 'Usuário sem permissão de acesso!', 403);
-        }
+        $this->authorize('delete', $role);
+
         $validator = Validator::make($this->request->all(), ["name" => "required"]);
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar o perfil", 201);
