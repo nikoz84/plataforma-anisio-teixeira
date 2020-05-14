@@ -98,8 +98,8 @@ class ConteudoController extends ApiController
             'description' => 'required|min:140',
             'tipo_id' => 'required',
             'options_site' => ['nullable', new \App\Rules\ValidUrl],
-            'tags' => 'nullable',
-            'componentes' => 'nullable',
+            'tags' => 'required',
+            'componentes' => 'required',
             'authors' => 'required',
             'source' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -136,7 +136,7 @@ class ConteudoController extends ApiController
             );
         }
 
-        //$this->authorize('create', Conteudo::class);
+        $this->authorize('create', Conteudo::class);
 
         $conteudo = new Conteudo;
         $conteudo->user_id = Auth::user()->id;
@@ -162,8 +162,8 @@ class ConteudoController extends ApiController
             return $this->errorResponse([], "Não foi possível cadastrar o conteúdo", 422);
         }
 
-        //$conteudo->tags()->attach(explode(',', $request->tags));
-        //$conteudo->componentes()->attach(explode(',', $request->componentes));
+        $conteudo->tags()->attach(explode(',', $request->tags));
+        $conteudo->componentes()->attach(explode(',', $request->componentes));
         $conteudo::tsDocumentoSave($conteudo->id);
 
         $file = $this->storeFiles($request, $conteudo->id);
