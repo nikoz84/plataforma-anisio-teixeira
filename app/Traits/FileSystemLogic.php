@@ -199,4 +199,17 @@ trait FileSystemLogic
             return $file;
         }
     }
+
+    /**
+     * Retorna tipos de extessões 
+     *
+     */
+    public function mimeTypes()
+    {
+
+        $mimes = "ppt,pps,odp,link,pdf,epub,doc,docx,odt,swf,exe,zip,rar,swf,wmv,mpg,flv,avi,
+        youtube,mp4,mp3,webm,xls,xml,ods,csv,jpg,jpeg,png,gif,txt";
+        
+        return $mimes;
+    }
 }

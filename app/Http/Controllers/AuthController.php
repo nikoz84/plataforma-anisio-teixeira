@@ -121,7 +121,7 @@ class AuthController extends ApiController
      */
     public function register(Request $request)
     {
-        /*$validator = Validator::make(
+        $validator = Validator::make(
             $request->all(),
             $this->rulesRegister()
         );
@@ -132,7 +132,7 @@ class AuthController extends ApiController
                 "Verifique os dados fornecidos",
                 422
             );
-        }*/
+        }
 
         $user = new User;
         $token = $user->createVerificationToken();
@@ -233,29 +233,10 @@ class AuthController extends ApiController
      */
     public function verifyToken(Request $request, $token)
     {
-        // Recupera o teken gerado direto da tabela
         $passwordReset = new PasswordReset();
-        $tokenGerado = $passwordReset->getToken($token);
+        $user = new User();
 
-        // Verifica se o token da rota é o mesmo que foi gerado para o usuário
-        if ( ! is_null($tokenGerado) && $token == $tokenGerado->token) {
-            
-            // Verifica se o token ainda está valido
-            if ($passwordReset->tokenValidation($token)) {
-                return redirect('usuario/recuperar-senha');
-            }
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Este token expirou e não é mais valido!'
-            ]);
-
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Token não encontrado!'
-            ]);
-        }
+        return $user->verifyToken($token, $passwordReset);
     }
 
     public function verifyTokenUserRegister(Request $request, $token)
