@@ -6,7 +6,7 @@
       loading="lazy"
       width="100%"
       height="auto"
-      :style="`max-height: 200px; width: 100%;backgroud-color:${color};`"
+      :style="`height:230px;min-height: 230px; width: 100%;backgroud-color:${color};`"
       placeholder-src="/img/fundo-padrao.svg"
     >
       
