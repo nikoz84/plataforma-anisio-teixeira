@@ -11,7 +11,7 @@ class TagController extends ApiController
 {
     public function __construct(Request $request)
     {
-        $this->middleware('jwt.verify')->except(['index', 'search', 'getById']);
+        $this->middleware('jwt.auth')->except(['index', 'search', 'getById']);
         $this->request = $request;
     }
 

@@ -24,5 +24,6 @@ Vue.use(VueRouter);
 new Vue({
   router,
   store,
+  
   render: h => h(Default)
 }).$mount("#app");

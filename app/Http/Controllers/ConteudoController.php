@@ -14,16 +14,17 @@ use Illuminate\Support\Facades\Storage;
 class ConteudoController extends ApiController
 {
     use FileSystemLogic;
-
+    
     public function __construct(Request $request)
     {
-        $this->middleware('jwt.verify')->except([
+        $this->middleware('auth:api')->except([
             'index',
             'search',
             'getById',
             'getByTagId',
             'getSitesTematicos',
-            'incorporarConteudo'
+            'incorporarConteudo',
+            'storeFiles'
         ]);
         $request = $request;
     }
@@ -70,12 +71,12 @@ class ConteudoController extends ApiController
     {
         $limit = $request->query('limit', 10);
         $query = Conteudo::query();
-        
+
         $query::with(['canal'])
             ->where('is_site', 'true')
             ->where('is_approved', 'true')
             ->sortBy($request->query('ordenar', 'created_at'));
-        
+
         $sites = $query->paginate($limit)
             ->setPath("/conteudos/sites?limit={$limit}");
 
@@ -107,7 +108,8 @@ class ConteudoController extends ApiController
             'is_approved' => 'required|in:true,false',
             'is_site' => 'nullable|in:true,false',
             'download' => 'nullable|file|max:4500000',
-            'guia' => 'nullable|file',
+            'guias-pedagogicos' => 'nullable|file|max:1000000',
+            'imagem-associada' => 'nullable|file|max:2000',
             'visualizacao' => 'nullable|file',
         ];
     }
@@ -132,9 +134,9 @@ class ConteudoController extends ApiController
                 422
             );
         }
+        $this->authorize('create', Conteudo::class);
 
         $conteudo = new Conteudo;
-
         $conteudo->user_id = Auth::user()->id;
         $conteudo->setAttribute('approving_user_id', Auth::user());
 
@@ -157,16 +159,12 @@ class ConteudoController extends ApiController
         if (!$conteudo->save()) {
             return $this->errorResponse([], "Não foi possível cadastrar o conteúdo", 422);
         }
-        
+
         $conteudo->tags()->attach(explode(',', $request->tags));
         $conteudo->componentes()->attach(explode(',', $request->componentes));
         $conteudo::tsDocumentoSave($conteudo->id);
 
-        
-         // FULL TEXT SEARCH
-
-
-        $this->createFile($conteudo->id, $request->download);
+        $this->storeFiles($request);
 
         return $this->showOne($conteudo, 'Conteúdo cadastrado com sucesso!!', 200);
     }
@@ -208,7 +206,7 @@ class ConteudoController extends ApiController
     public function delete($id)
     {
         $conteudo = Conteudo::with(
-            ['tags', 'componentes','niveis']
+            ['tags', 'componentes', 'niveis']
         )->find($id);
 
         $this->authorize('delete', $conteudo);
@@ -222,6 +220,7 @@ class ConteudoController extends ApiController
 
         return $this->successResponse([], "Conteúdo de id: {$id} foi apagado com sucesso!!", 200);
     }
+
     /**
      * Procura conteudos por full text search.
      *
@@ -237,7 +236,7 @@ class ConteudoController extends ApiController
         $query = Conteudo::query();
 
         $query->when($termo, function ($q) use ($termo) {
-            return $q->search($termo, 'tag');
+            return $q->fullTextSearch($termo, 'tag');
         });
         $conteudos = $query->paginate($limit);
 
@@ -283,10 +282,54 @@ class ConteudoController extends ApiController
         $formato = $arquivos['download']->extension;
         $mega_bytes = number_format($arquivos['download']->size / 1024, 2, ',', '.');
         $mime_type = $arquivos['download']->mime_type;
-        
+
         return view(
             'conteudos_digitais.index',
             compact('download', 'formato', 'mega_bytes', 'mime_type', 'conteudo')
         );
+    }
+
+    /**
+     * Responsável por criar arquivos de conteúdo
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function storeFiles(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                "id"   => "required",
+                "local" => "required",
+                "file.*" => "required|mimes:{$this->mimeTypes()}|max:100000"
+            ]
+        );
+
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors(), "Não foi possível salvar arquivo.", 422);
+        }
+
+        $file = null;
+
+        switch ($request->local) {
+            case 'download':
+                $file = $this->saveFile($request->id, $request->file, $request->local);
+                break;
+            case 'guias-pedagogicos':
+                $file = $this->saveFile($request->id, $request->file, $request->local);
+                break;
+            case 'imagem-associada':
+                $file = $this->saveFile($request->id, $request->file, $request->local);
+                break;
+            default:
+                return $this->errorResponse([], 'arquivo não encontrado', 404);
+                break;
+        }
+
+        if ($file) {
+            return $this->successResponse([], 'arquivo criado com sucesso!', 200);
+        } else {
+            return $this->errorResponse([], 'Não foi possível criar arquivo.', 500);
+        }
     }
 }

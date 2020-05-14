@@ -13,7 +13,7 @@ class CategoryController extends ApiController
 
     public function __construct(Request $request)
     {
-        $this->middleware('jwt.verify')->except([
+        $this->middleware('jwt.auth')->except([
             'index', 'search', 'getById', 'getCategoryByCanalId'
         ]);
         $this->request = $request;

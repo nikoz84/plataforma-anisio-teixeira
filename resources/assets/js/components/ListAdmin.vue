@@ -15,7 +15,8 @@ import RoleForm from "../forms/RoleForm.vue";
 import TipoForm from "../forms/TipoForm.vue";
 import Resumo from "../pages/Resumo.vue";
 import Table from "./Table.vue";
-import Denuncia from "./Denuncia.vue";
+import Contato from "./Contato.vue";
+import SliderForm from '../forms/SliderForm.vue';
 
 export default {
   name: "Listar",
@@ -28,9 +29,11 @@ export default {
     tags: TagForm,
     roles: RoleForm,
     tipos: TipoForm,
-    denuncias: Denuncia,
+    contato: Contato,
+    SliderForm,
     Table,
-    Resumo
+    Resumo,
+    
   },
   data() {
     return {
@@ -53,6 +56,10 @@ export default {
         case this.$route.params.slug != "analytics" &&
           this.$route.params.action == "listar":
           this.componentName = "Table";
+          break;
+        case this.$route.params.slug != "options" &&
+          this.$route.params.action == "listar":
+          this.componentName = "SliderForm";
           break;
         case this.$route.params.action == "editar" ||
           this.$route.params.action == "adicionar":

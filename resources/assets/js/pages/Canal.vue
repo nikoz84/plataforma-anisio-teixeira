@@ -8,7 +8,7 @@
 
 
 <q-toolbar :style="`background-color:${color}`" class="text-white shadow-3">
-      <q-tabs
+    <q-tabs
       inline-label
       align="left">
         <q-route-tab
@@ -29,11 +29,9 @@
         notice shrink property since we are placing it
         as child of QToolbar
       -->
-      <q-tabs
-      align="right"
-      v-model="tab"
-      shrink
-      stretch>
+      <q-tabs align="right"
+        shrink
+        stretch>
         <OrderBy></OrderBy>
         <CategoriasMenu></CategoriasMenu>
         <Filters></Filters>

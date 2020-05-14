@@ -35,9 +35,7 @@ window.axios.defaults.baseURL = process.env.MIX_API_URL;
 
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
-const jwtToken = localStorage.token;
-
-window.axios.defaults.headers.common["Authorization"] = jwtToken ? `Bearer ${jwtToken}` : null;
+window.axios.defaults.headers.common.Authorization = `Bearer ${localStorage.token}`;
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that

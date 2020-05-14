@@ -13,7 +13,7 @@ class UserController extends ApiController
 
     public function __construct()
     {
-        $this->middleware('jwt.verify')->except([]);
+        $this->middleware('jwt.auth')->except([]);
     }
 
     /**

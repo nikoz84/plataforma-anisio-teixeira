@@ -6,8 +6,12 @@ const mutations = {
   SET_LINKS(state, links) {
     state.links = links;
   },
-  SET_LOGIN_USER(state) {
+  SET_LINKS_ADMIN(state, linksAdmin) {
+    state.linksAdmin = linksAdmin;
+  },
+  SET_LOGIN_USER(state, token) {
     state.isLogged = true;
+    localStorage.setItem('token', token);
   },
   SET_LOGOUT_USER(state) {
     state.isLogged = false;

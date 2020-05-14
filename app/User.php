@@ -200,7 +200,6 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
-
         return [
             'user' => [
                 'name' => $this['name'],
@@ -268,7 +267,38 @@ class User extends Authenticatable implements JWTSubject
 
         return true;
     }
+    
+    // Metodo valida o token de recuperação de senha
+    public function verifyToken($token, PasswordReset $passwordReset)
+    {
+        // Recupera o teken gerado direto da tabela
+        $tokenGerado = $passwordReset->getToken($token);
 
+        // Verifica se o token da rota é o mesmo que foi gerado para o usuário
+        if ( ! is_null($tokenGerado) && $token == $tokenGerado->token) {
+            
+            // Verifica se o token ainda está valido
+            if ($this->tokenValidatingByHours($token, $tokenGerado->created_at, 1)) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Token valido!'
+                ]);
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Este token expirou e não é mais valido!'
+            ]);
+
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Token não encontrado!'
+            ]);
+        }
+    }
+    
+    // Metodo valida o token de cadastro de usuarios
     public function verifyTokenUserRegister(string $token)
     {
         $user = $this->where('verification_token', $token)->first();
@@ -277,11 +307,21 @@ class User extends Authenticatable implements JWTSubject
 
             // Verifica se o token da rota é o mesmo que foi gerado para o usuário
             if ( ! is_null($token) && $token == $user->verification_token) {
-                $user->update(['verified' => 1]);
+                
+                if ($this->tokenValidatingByHours($token, $user->created_at, 1)) {
+                    // Seta o campo verified como 1, ous seja, usuario validado
+                    $user->verified = 1;
+                    $user->update();
 
-                return response()->json([
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Usuário validado com sucesso!'
+                    ]);
+                }
+
+                 return response()->json([
                     'success' => true,
-                    'message' => 'Usuário validado com sucesso!'
+                    'message' => 'Este token expirou e não é mais valido!'
                 ]);
             }
 

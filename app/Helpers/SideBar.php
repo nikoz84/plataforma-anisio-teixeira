@@ -117,6 +117,12 @@ class SideBar
                 'class' => \App\Contato::class
             ],
             [
+                'label' => 'Options',
+                'slug' => 'options',
+                'hability' => 'index',
+                'class' => \App\Options::class
+            ],
+            [
                 'label' => 'Licenças',
                 'slug' => 'licencas',
                 'hability' => 'index',

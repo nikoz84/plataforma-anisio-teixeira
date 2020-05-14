@@ -1,6 +1,7 @@
 {
   "phpcs.executablePath": "./vendor/bin/phpcs",
   "phpcs.composerJsonPath": "composer.json",
+  "phpSniffer.autoDetect": true,
   "git.path": "/usr/bin/git",
   "phpcs.enable": true,
   "phpcs.standard": "PSR2",

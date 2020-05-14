@@ -15,7 +15,7 @@ class FileController extends ApiController
 
     public function __construct(File $file, Request $request, Storage $storage)
     {
-        $this->middleware('jwt.verify')->except(['index', 'search', 'getFiles', 'getGallery', 'downloadFile']);
+        $this->middleware('jwt.auth')->except(['index', 'search', 'getFiles', 'getGallery', 'downloadFile']);
         $this->file = $file;
         $this->request = $request;
         $this->storage = $storage;

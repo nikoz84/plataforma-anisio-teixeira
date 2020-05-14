@@ -13,7 +13,7 @@ class LicenseController extends ApiController
 {
     public function __construct(Request $request)
     {
-        $this->middleware('jwt.verify')->except(['index', 'search']);
+        $this->middleware('jwt.auth')->except(['index', 'search']);
         $this->request = $request;
     }
     /**

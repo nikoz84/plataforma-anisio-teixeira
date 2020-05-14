@@ -2,6 +2,7 @@ const state = {
   layout: {},
   homeData: {},
   links: [],
+  linksAdmin: [],
   conteudos: [],
   paginator: {},
   conteudo: {},

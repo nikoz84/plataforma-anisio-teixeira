@@ -17,7 +17,7 @@ class ContatoController extends ApiController
 
     public function __construct(Request $request, Contato $contato)
     {
-        $this->middleware('jwt.verify')->except(['create']);
+        $this->middleware('jwt.auth')->except(['create']);
         $this->contato = $contato;
         $this->request = $request;
     }
@@ -32,7 +32,7 @@ class ContatoController extends ApiController
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
 
-        $paginator = $this->contato::paginate($limit)->setPath("/denuncias?limit={$limit}");
+        $paginator = $this->contato::paginate($limit)->setPath("/contato?limit={$limit}");
 
         return $this->showAsPaginator($paginator);
     }
@@ -130,6 +130,6 @@ class ContatoController extends ApiController
     {
         $contato = $this->contato::findOrFail($id);
 
-        return $this->successResponse($contato, "", 200);
+        return $this->showOne($contato);
     }
 }

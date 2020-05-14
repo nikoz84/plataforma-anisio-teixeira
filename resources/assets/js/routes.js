@@ -58,7 +58,6 @@ const routes = [
       import(/* webpackChunkName: "admin" */ "./pages/Admin.vue"),
     meta: {
       requiresAuth: true
-      //is_admin : true
     },
     children: [
       {

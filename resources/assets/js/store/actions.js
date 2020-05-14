@@ -1,3 +1,4 @@
+
 const actions = {
   async getLayout({ commit }) {
     try {
@@ -114,21 +115,42 @@ const actions = {
     }
   },
   async logout({ commit }) {
+    let token  = localStorage.token;
     try {
       await axios
-        .post("/auth/logout", {
-          token: localStorage.token
-        })
+        .post(`/auth/logout?token=${token}`)
         .then(resp => {
+          console.log(resp.data);
           commit("SET_LOGOUT_USER");
           localStorage.removeItem("token");
           localStorage.removeItem("user");
+          localStorage.removeItem("linksAdmin");
         });
     } catch (error) {
       commit("SET_LOGOUT_USER");
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      localStorage.removeItem("linksAdmin");
     }
+  },
+  login({commit, dispatch}, credentials){
+    return axios.post("/auth/login", credentials)
+      .then(({data}) => {
+        commit('SET_LOGIN_USER', data.metadata.access_token);
+        dispatch('payloadToUser');
+        return { redirect: true, errors: {}};
+      })
+      .catch(({errors}) => {
+        return { redirect : false, errors };
+      });
+  },
+  payloadToUser(){
+    let token = localStorage.token;
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace("-", "+").replace("_", "/");
+    let payload = JSON.parse(window.atob(base64));
+
+    localStorage.setItem("user", JSON.stringify(payload.user));
   },
   async getCanalBySlug({ commit }, slug) {
     try {
@@ -148,6 +170,17 @@ const actions = {
     } else {
       commit("SET_SHOW_CONTEUDO", false);
       commit("SET_SHOW_APLICATIVO", true);
+    }
+  },
+  async getLinksAdmin({ commit }) {
+    let token = localStorage.token;
+    try {
+      await axios.get(`/auth/links-admin?token=${token}`).then(resp => {
+        commit("SET_LINKS_ADMIN", resp.data.metadata.links);
+        
+      });
+    } catch (e) {
+      console.log(e);
     }
   }
 };

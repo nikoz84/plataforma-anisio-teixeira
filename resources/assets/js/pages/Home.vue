@@ -1,32 +1,36 @@
 <template>
   <section class="q-pa-lg">
-    <q-carousel
-      swipeable
-      animated
-      v-model="slide"
-      controlType="flat"
-      control-color="primary"
-      navigation
-      navigation-icon="radio_button_checked"
-      padding
-      infinite
-      :autoplay="5000"
-      arrows
-      height="250px"
-      class="accent rounded-borders"
-    >
-    <q-carousel-slide class="img-fluid" :name="1" img-src="/storage/conteudos/slider/banner_ensinosuperior.png">
-      <div class="absolute-bottom custom-caption">
-          <q-btn  color="pink" class="q-px-lg" label="Saiba mais"></q-btn>
-      </div>
-    </q-carousel-slide>
-    <q-carousel-slide class="img-fluid" :name="2" img-src="/storage/conteudos/slider/banner_rotinas-de-estudo.png">
-      <div class="absolute-bottom custom-caption">
-          <q-btn color="pink" class="q-px-lg" label="Saiba mais"></q-btn>
-      </div>
-    </q-carousel-slide>
-    </q-carousel>
-
+    <q-responsive :ratio="1/9" class="col" style="max-height:100vh; height: 35vh;">
+      <q-carousel
+        swipeable
+        animated
+        v-model="slide"
+        controlType="flat"
+        control-color="primary"
+        navigation
+        navigation-icon="radio_button_checked"
+        padding
+        infinite
+        :autoplay="5000"
+        arrows
+        class="accent rounded-borders"
+      >
+        <q-carousel-slide 
+          :name="1" 
+          img-src="/storage/conteudos/slider/banner_ensinosuperior.png">
+          <div class="absolute-bottom custom-caption">
+              <q-btn style="z-index: 10; margin: 0 0 3px 3px;" round outline color="accent" icon="directions"></q-btn>
+          </div>
+        </q-carousel-slide>
+        <q-carousel-slide 
+          :name="2" 
+          img-src="/storage/conteudos/slider/banner_rotinas-de-estudo.png">
+          <div class="absolute-bottom custom-caption">
+              <q-btn style="z-index: 10; margin: 0 0 3px 3px;" round outline color="accent" icon="directions"></q-btn>
+          </div>
+        </q-carousel-slide>
+      </q-carousel>
+    </q-responsive>
     <!-- BOTÕES DAS MODALIDADES DE ENSINO #INÍCIO -->
     <div class="q-py-xl row justify-center q-gutter-lg">
     
@@ -37,7 +41,7 @@
     
     </div>
 
-    <!-- SESSÃO ADICINADOS RECENTEMENTE -->
+    <!-- SESSÃO ADICIONADOS RECENTEMENTE -->
     
     <a class="skip-link" href="#tipo-conteudos">Ir a adicionados recentemente</a>
     <!--CardHomeIcon
@@ -204,4 +208,8 @@ export default {
   }
 }
 
+.q-carousel__slide{
+  width: 100% !important;
+  height : 25vh !important;
+}
 </style>

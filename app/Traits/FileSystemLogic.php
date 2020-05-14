@@ -32,8 +32,8 @@ trait FileSystemLogic
         }
 
         $image = "/imagem-associada/emitec/img-emitec_disciplina{$disciplina->id}.png";
-        $exist = self::windowsDirectory(Storage::disk('conteudos-digitais')->exists($image)) ;
-        
+        $exist = self::windowsDirectory(Storage::disk('conteudos-digitais')->exists($image));
+
         return ($exist) ? Storage::disk('conteudos-digitais')->url($image) : null;
     }
 
@@ -50,9 +50,9 @@ trait FileSystemLogic
         $path_assoc = self::windowsDirectory(
             Storage::disk('conteudos-digitais')->path('imagem-associada')
         );
-        
+
         $file = self::findFiles($path_assoc, $id, $tipo);
-        
+
         if ($file) {
             $replace = Storage::disk('conteudos-digitais')->url("imagem-associada/{$file}");
             return str_replace('//sinopse', '/sinopse', $replace);
@@ -73,13 +73,13 @@ trait FileSystemLogic
     {
         $path_img_assoc = self::windowsDirectory("{$path}/$id.*");
         $file = collect(File::glob($path_img_assoc))->first();
-        
+
         if ($tipo == 5 && !$file) {
             $path_sinopse = self::windowsDirectory("{$path}/sinopse/{$id}.*.*");
             $file = collect(File::glob($path_sinopse))->shuffle()->first();
         }
-        
-                
+
+
         return Str::replaceFirst($path . '/', '', $file);
     }
     /**
@@ -97,7 +97,7 @@ trait FileSystemLogic
         $path = self::windowsDirectory(
             Storage::disk('conteudos-digitais')->path($directory) . "/{$id}.*"
         );
-        
+
         $files = $filesystem->glob($path);
         $arr = [];
         foreach ($files as $file) {
@@ -126,7 +126,7 @@ trait FileSystemLogic
             $path->getDriver()->getAdapter()->getPathPrefix()
         );
         $files = File::allFiles($path);
-        
+
         if (!$rand) {
             return collect($files)->map(function ($file) {
                 return Storage::disk('galeria')->url("{$file->getFilename()}");
@@ -153,11 +153,12 @@ trait FileSystemLogic
             $files = $filesystem->glob($path);
             File::delete($files);
             $name = "{$id}.{$file->guessExtension()}";
-            
+
             $file->storeAs('download', $name, 'conteudos-digitais');
             return $file;
         }
     }
+
     /**
      * Remplaza diretorio de windows C:\\pasta\pasta-filha por C:/pasta/pasta-filha
      *
@@ -172,5 +173,43 @@ trait FileSystemLogic
         }
 
         return $path;
+    }
+
+
+    /**
+     * Armazena arquivo pasta de guias-pedagogicos ou download ou imagem-associada
+     *
+     * @param $id integer
+     * @param $file laravel request
+     *
+     * @return File
+     */
+    public function saveFile($id, $files, $local = null)
+    {
+        if ($files) {
+            foreach ($files as $file) {
+                $filesystem = new Filesystem;
+                $rand = rand(5, 99999);
+                $path = Storage::disk('conteudos-digitais')->path($local) . "/{$id}.*";
+                $files = $filesystem->glob($path);
+                $name = "{$id}.{$rand}.{$file->guessExtension()}";
+
+                $file->storeAs($local, $name, 'conteudos-digitais');
+            }
+            return $file;
+        }
+    }
+
+    /**
+     * Retorna tipos de extessões 
+     *
+     */
+    public function mimeTypes()
+    {
+
+        $mimes = "ppt,pps,odp,link,pdf,epub,doc,docx,odt,swf,exe,zip,rar,swf,wmv,mpg,flv,avi,
+        youtube,mp4,mp3,webm,xls,xml,ods,csv,jpg,jpeg,png,gif,txt";
+        
+        return $mimes;
     }
 }

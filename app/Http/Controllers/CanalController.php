@@ -11,7 +11,7 @@ class CanalController extends ApiController
 {
     public function __construct(Request $request, Canal $canal)
     {
-        $this->middleware('jwt.verify')->except(['getBySlug']);
+        $this->middleware('jwt.auth')->except(['getBySlug']);
         $this->request = $request;
         $this->canal = $canal;
     }

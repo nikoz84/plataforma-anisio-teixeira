@@ -6,22 +6,24 @@
       loading="lazy"
       width="100%"
       height="auto"
-      :style="`max-height: 200px; width: 100%;backgroud-color:${color};`"
+      :style="`height:230px;min-height: 230px; width: 100%;backgroud-color:${color};`"
       placeholder-src="/img/fundo-padrao.svg"
     >
       
-      <div class="text-lowercase absolute-bottom-right bg-transparent">
-        <q-btn round 
+      <div class="text-lowercase absolute-bottom-right">
+        <q-btn 
+          round 
           no-wrap 
           style="cursor:default !important;" 
           class="bg-cinza" 
           text-color="black" 
+          v-if="item.tipo && item.tipo.icon"
           >
-           <q-avatar v-if="item.tipo && item.tipo.icon">
+           <q-avatar size="25px">
              <img :src="item.tipo.icon">
            </q-avatar>
         </q-btn>
-        <div v-if="item.category" >{{item.category}}</div>
+        <div v-if="item.category" >{{item.category.name}}</div>
         
       </div>
       </q-img>
@@ -41,13 +43,6 @@
           v-html="title"
         />
       </div>
-      <!--
-      <p
-        class="q-pt-lg"
-        style="word-break: break-word;"
-        v-html="item.excerpt"
-      ></p>
-      -->
     </q-card-section>
     
   </q-card>
@@ -79,17 +74,13 @@ export default {
       return this.item.canal ? this.item.canal.slug : this.item.slug;
     },
     color() {
-      return this.item.canal ? this.item.canal.color : primary;
+      return this.item.canal ? this.item.canal.color : 'primary';
     },
     getImage() {
       return this.item.image;
     },
     getTipo() {
       return this.item.tipo ? this.item.tipo.name : this.item.category.name;
-    },
-    getIcon() {
-      console.log(this.item);
-      return this.item.tipo.icon ? this.item.tipo.icon : this.item.category.name;
     }
   },
   created() {}

@@ -5,7 +5,7 @@
         Painel de Controle
       </strong>
     </q-item-label>
-    <div v-for="(link, i) in links" :key="`admin-${i}`">
+    <div v-for="(link, i) in linksAdmin" :key="`admin-${i}`">
       <q-item
         tag="div"
         :to="{ name: link.view, params: link.params, path: '/admin' }"
@@ -27,23 +27,19 @@
   </q-list>
 </template>
 <script>
+import {mapState, mapActions} from 'vuex';
+
 export default {
   name: "AdminLeftSideBar",
-  data() {
-    return {
-      links: []
-    };
+  computed: {
+    ...mapState(['linksAdmin', 'isLogged'])
   },
   mounted() {
-    this.getUser();
+    this.getLinksAdmin();
   },
   methods: {
-    async getUser() {
-      let resp = await axios.get("/auth/user");
-      if (resp.data.success) {
-        this.links = resp.data.metadata.links;
-      }
-    }
+    ...mapActions(['getLinksAdmin']),
+    
   }
 };
 </script>
