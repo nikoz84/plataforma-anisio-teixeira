@@ -10335,7 +10335,7 @@ h5 {
 h6 {
   font-size: 1.25rem;
   font-weight: 500;
-  line-height: 2rem;
+  line-height: 1.75rem;
   letter-spacing: 0.0125em;
 }
 p {
@@ -10374,7 +10374,7 @@ p {
 .text-h6 {
   font-size: 1.25rem;
   font-weight: 500;
-  line-height: 2rem;
+  line-height: 1.75rem;
   letter-spacing: 0.0125em;
 }
 .text-subtitle1 {
