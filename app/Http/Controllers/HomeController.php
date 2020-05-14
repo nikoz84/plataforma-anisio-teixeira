@@ -18,7 +18,7 @@ class HomeController extends ApiController
      */
     public function __construct(Request $request)
     {
-        $this->middleware('jwt.verify')->except(['index', 'getLayout', 'getHomeData', 'autocomplete']);
+        $this->middleware('auth:api')->except(['index', 'getLayout', 'getHomeData', 'autocomplete']);
         $this->request = $request;
     }
 

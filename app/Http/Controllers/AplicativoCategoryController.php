@@ -11,7 +11,7 @@ class AplicativoCategoryController extends ApiController
 {
     public function __construct(Request $request)
     {
-        $this->middleware('jwt.verify')->except(['index', 'getById']);
+        $this->middleware('jwt.auth')->except(['index', 'getById']);
 
         $this->request = $request;
     }

@@ -14,7 +14,7 @@ class RoleController extends ApiController
 
     public function __construct(Request $request, Role $role)
     {
-        $this->middleware('jwt.verify')->except([
+        $this->middleware('jwt.auth')->except([
             'index', 'search', 'getById',
         ]);
         $this->role = $role;

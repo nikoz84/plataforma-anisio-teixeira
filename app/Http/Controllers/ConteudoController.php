@@ -17,7 +17,7 @@ class ConteudoController extends ApiController
 
     public function __construct(Request $request)
     {
-        $this->middleware('jwt.verify')->except([
+        $this->middleware('auth:api')->except([
             'index',
             'search',
             'getById',
@@ -108,7 +108,8 @@ class ConteudoController extends ApiController
             'is_approved' => 'required|in:true,false',
             'is_site' => 'nullable|in:true,false',
             'download' => 'nullable|file|max:4500000',
-            'guia' => 'nullable|file',
+            'guias-pedagogicos' => 'nullable|file|max:1000000',
+            'imagem-associada' => 'nullable|file|max:2000',
             'visualizacao' => 'nullable|file',
         ];
     }
@@ -163,7 +164,8 @@ class ConteudoController extends ApiController
         $conteudo->componentes()->attach(explode(',', $request->componentes));
         $conteudo::tsDocumentoSave($conteudo->id);
 
-        $this->createFile($conteudo->id, $request->download);
+        //$this->createFile($conteudo->id, $request->download);
+        $this->storeFiles($request);
 
         return $this->showOne($conteudo, 'Conteúdo cadastrado com sucesso!!', 200);
     }
@@ -234,7 +236,7 @@ class ConteudoController extends ApiController
         $query = Conteudo::query();
 
         $query->when($termo, function ($q) use ($termo) {
-            return $q->search($termo, 'tag');
+            return $q->fullTextSearch($termo, 'tag');
         });
         $conteudos = $query->paginate($limit);
 
@@ -288,14 +290,14 @@ class ConteudoController extends ApiController
     }
 
     /**
-     * function responsável por criar arquivos de conteúdo 
-     * 
+     * Responsável por criar arquivos de conteúdo
+     *
      * @return \Illuminate\Http\Response
      */
     public function storeFiles(Request $request)
     {
-		$mimes = "ppt,pps,odp,link,pdf,epub,doc,docx,odt,swf,exe,zip,rar,swf,wmv,mpg,flv,avi,youtube,mp4,mp3,webm,xls,xml,ods,csv,jpg,jpeg,png,gif,txt";
-		
+        $mimes = "ppt,pps,odp,link,pdf,epub,doc,docx,odt,swf,exe,zip,rar,swf,wmv,mpg,flv,avi,youtube,mp4,mp3,webm,xls,xml,ods,csv,jpg,jpeg,png,gif,txt";
+
         $validator = Validator::make(
             $request->all(),
             [
@@ -310,7 +312,7 @@ class ConteudoController extends ApiController
         }
 
         $file = null;
-		
+
         switch ($request->local) {
             case 'download':
                 $file = $this->saveFile($request->id, $request->file, $request->local);

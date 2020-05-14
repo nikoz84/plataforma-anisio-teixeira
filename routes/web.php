@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
@@ -36,18 +37,17 @@ Route::get('/docs', function (Request $request) {
 
 */
 
+
+
 Route::get('/conteudos-digitais/conteudo/incorporar-conteudo/id/{id}', 'ConteudoController@incorporarConteudo');
 
 Route::get(
     'teste',
     function () {
-        $user = new \App\User;
-
-        $user->name = 'Nicolás Romero';
-        $user->password = '123456';
-        $user->email = 'nikoz.1984@gmail.com';
-
-        $user->save();
+        $user = Auth::user();
+        dd($user);
+        $sidebar = new App\Helpers\SideBar;
+        $sidebar->getAdminSidebar($user);
     }
 );
 

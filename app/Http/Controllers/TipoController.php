@@ -15,7 +15,7 @@ class TipoController extends ApiController
 
     public function __construct(Request $request)
     {
-        $this->middleware('jwt.verify')->except(['index']);
+        $this->middleware('jwt.auth')->except(['index']);
         $this->request = $request;
     }
 

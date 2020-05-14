@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
  */
-Route::group(['middleware' => ['cors']], function () {
+
     Route::get('/ler', 'ConteudoController@lerHD')->name('ler.hd');
     Route::get('/files/galeria', 'FileController@getGallery')->name('lista.galeria.imagens');
     Route::get('/files/{id}', 'FileController@getFiles')->name('busca.arquivo');
@@ -49,6 +49,7 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('busca.x.aplicativo.id');
     /** AUTENTICACAO */
     Route::post('/auth/login', 'AuthController@login')->name('login.usuario');
+    
     Route::post('/auth/cadastro', 'AuthController@register')->name('registro.usuario');
     Route::get('/auth/verificar/{token}', 'AuthController@verifyToken')->name('verificar.token');
     Route::post('/auth/recuperar-senha', 'AuthController@recoverPass')->name('recuperar.senha');
@@ -67,23 +68,22 @@ Route::group(['middleware' => ['cors']], function () {
     
     /** DOWNLOAD FILE **/
     Route::get('/files/{action}/{id}', 'FileController@downloadFile')->name('downloadFile.id');
-});
+
 /**
  *
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN
  * USUÁRIO DEVE ESTAR LOGADO PARA ACESSAR ESSAS ROTAS
  *
  * */
-// Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
+Route::group(['middleware' => ['jwt.auth']], function () {
     /** CATEGORIAS DOS CONTEÚDOS*/
     Route::post('/categorias', 'CategoryController@create')->name('criar.categorias');
-    // ->middleware('isAdmin');
     Route::put('/categorias/{id}', 'CategoryController@update')->name('atualizar.categorias');
     Route::delete('/categorias/{id}', 'CategoryController@delete')->name('categorias.apagar');
     /** AUTENTICACAO */
     Route::post('/auth/logout', 'AuthController@logout')->name('sair');
     Route::post('/auth/refresh', 'AuthController@refresh')->name('refrescar.token');
-    Route::get('/auth/user', 'AuthController@getAuthUser')->name('usuario.logado');
+    Route::get('/auth/links-admin', 'AuthController@linksAdmin')->name('links.admin');
     /** TIPOS */
     Route::post('/tipos', 'TipoController@create')->name('criar.tipos');
     Route::put('/tipos/{id}', 'TipoController@update')->name('atualizar.tipos');
@@ -148,4 +148,4 @@ Route::group(['middleware' => ['cors']], function () {
     Route::post('/options/destaques/', 'OptionsController@createDestaques')->name('cria.destaques');
     /** ANALYTICS */
     Route::get('/analytics', 'HomeController@getAnalytics')->name('catalogacao.blog.e.plataforma');
-// });
+});

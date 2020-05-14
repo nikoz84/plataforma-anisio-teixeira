@@ -14,7 +14,7 @@ class AplicativoController extends ApiController
 {
     public function __construct(Aplicativo $aplicativo, Request $request, Storage $storage)
     {
-        $this->middleware('jwt.verify')->except(['index', 'search', 'getById', 'categories']);
+        $this->middleware('jwt.auth')->except(['index', 'search', 'getById', 'categories']);
         $this->aplicativo = $aplicativo;
         $this->request = $request;
         $this->storage = $storage;
@@ -92,7 +92,8 @@ class AplicativoController extends ApiController
             ->storeAs('imagem-associada', $fileName, 'aplicativos-educacionais');
         $image = new ResizeImage();
         $filePath = $this->storage::disk('aplicativos-educacionais')->url($path);
-        $dir = $this->storage::disk('aplicativos-educacionais')->getDriver()->getAdapter()->getPathPrefix() . "imagem-associada/";
+        $dir = $this->storage::disk('aplicativos-educacionais')
+            ->getDriver()->getAdapter()->getPathPrefix() . "imagem-associada/";
         $image->resize($filePath, $fileName, $dir);
     }
     /**

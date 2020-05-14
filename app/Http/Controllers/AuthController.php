@@ -9,9 +9,6 @@ use App\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Exceptions\TokenExpiredException;
-use Tymon\JWTAuth\Exceptions\TokenInvalidException;
-use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendVerificationEmail;
 use Exception;
@@ -21,8 +18,9 @@ class AuthController extends ApiController
 {
     public function __construct(Request $request)
     {
-        $this->middleware('jwt.verify')->except([
-            'login', 'register', 'verifyEmail', 'recoverPass', 'verifyToken', 'verifyTokenUserRegister'
+        $this->middleware('jwt.auth')->except([
+            'login', 'register', 'verifyEmail', 'recoverPass',
+            'verifyToken', 'verifyTokenUserRegister', 'linksAdmin'
         ]);
 
         $this->request = $request;
@@ -51,14 +49,11 @@ class AuthController extends ApiController
 
         $token = null;
 
-        try {
-            if (!$token = JWTAuth::attempt($credentials)) {
-                return $this->errorResponse([], 'E-mail ou Senha inválidos', 422);
-            }
-        } catch (JWTException $e) {
-            return $this->errorResponse([], 'Impossível criar Token de acesso', 422);
-        }
         
+        if (!$token = JWTAuth::attempt($credentials)) {
+            return $this->errorResponse([], 'E-mail ou Senha inválidos', 422);
+        }
+       
         return $this->respondWithToken($token);
     }
     /**
@@ -66,13 +61,14 @@ class AuthController extends ApiController
      *
      * @return App\Traits\ApiResponser
      */
-    public function getAuthUser()
+    public function linksAdmin()
     {
-        $user = Auth::user();
+        $user = auth('api')->user();
         
         $sidebar = new SideBar;
 
         return $this->successResponse([
+            
             'links' => $sidebar->getAdminSidebar($user)
         ]);
     }
@@ -95,7 +91,7 @@ class AuthController extends ApiController
      */
     public function refresh()
     {
-        $token = auth()->refresh();
+        $token = auth('api')->refresh();
 
         return $this->respondWithToken($token, "Token renovado");
     }

@@ -1,39 +1,42 @@
 <template>
   <section class="q-pa-lg">
-    <q-carousel
-      swipeable
-      animated
-      v-model="slide"
-      controlType="flat"
-      control-color="primary"
-      navigation
-      navigation-icon="radio_button_checked"
-      padding
-      infinite
-      :autoplay="5000"
-      arrows
-      height="250px"
-      class="accent rounded-borders"
-    >
-    <q-carousel-slide class="img-fluid" :name="1" img-src="/storage/conteudos/slider/banner_ensinosuperior.png">
-      <div class="absolute-bottom custom-caption">
-          <q-btn  color="pink" class="q-px-lg" label="Saiba mais"></q-btn>
-      </div>
-    </q-carousel-slide>
-    <q-carousel-slide class="img-fluid" :name="2" img-src="/storage/conteudos/slider/banner_rotinas-de-estudo.png">
-      <div class="absolute-bottom custom-caption">
-          <q-btn color="pink" class="q-px-lg" label="Saiba mais"></q-btn>
-      </div>
-    </q-carousel-slide>
-    </q-carousel>
-
+    <q-responsive :ratio="1/9" class="col" style="max-height:100vh; height: 35vh;">
+      <q-carousel
+        swipeable
+        animated
+        v-model="slide"
+        controlType="flat"
+        control-color="primary"
+        navigation
+        navigation-icon="radio_button_checked"
+        padding
+        infinite
+        :autoplay="5000"
+        arrows
+        class="accent rounded-borders"
+      >
+        <q-carousel-slide 
+          :name="1" 
+          img-src="/storage/conteudos/slider/banner_ensinosuperior.png">
+          <div class="absolute-bottom custom-caption">
+              <q-btn style="z-index: 10; margin: 0 0 3px 3px;" round outline color="accent" icon="directions"></q-btn>
+          </div>
+        </q-carousel-slide>
+        <q-carousel-slide 
+          :name="2" 
+          img-src="/storage/conteudos/slider/banner_rotinas-de-estudo.png">
+          <div class="absolute-bottom custom-caption">
+              <q-btn style="z-index: 10; margin: 0 0 3px 3px;" round outline color="accent" icon="directions"></q-btn>
+          </div>
+        </q-carousel-slide>
+      </q-carousel>
+    </q-responsive>
     <!-- BOTÕES DAS MODALIDADES DE ENSINO #INÍCIO -->
     <div class="q-py-xl row justify-center q-gutter-xs">
     
-      <q-btn stack size="md" class="col" color="petecavermelho" text-color="white" label="Ensino Fundamental I" icon="img:img\biblioteca_icon_pb-49.svg" />
-      <q-btn stack size="md" class="col" color="petecaamarelo" text-color="white" label="Ensino Fundamental II" icon="img:img\biblioteca_icon_pb-49.svg" />
-      <q-btn stack size="md" class="col"  color="petecaazul" text-color="white" label="Ensino Médio" icon="img:img\biblioteca_icon_pb-49.svg" />
-      <q-btn stack size="md" class="col" color="petecaverde" text-color="white" label="Ensino Superior" icon="img:img\biblioteca_icon_pb-49.svg" />
+      <q-btn stack size="sm" class="col-xs-5 col-sm-2" color="petecavermelho" text-color="white" label="Ensino Fundamental I" icon="img:img\biblioteca_icon_pb-49.svg" />
+      <q-btn stack size="sm" class="col-xs-5 col-sm-2" color="petecaamarelo" text-color="white" label="Ensino Fundamental II" icon="img:img\biblioteca_icon_pb-49.svg" />
+      <q-btn stack size="sm" class="col-xs-5 col-sm-2"  color="petecaazul" text-color="white" label="Ensino Médio" icon="img:img\biblioteca_icon_pb-49.svg" />
     
     </div>
 
@@ -196,4 +199,9 @@ export default {
   }
 };
 </script>
-<style lang="stylus" scoped></style>
+<style lang="stylus" scoped>
+.q-carousel__slide{
+  width: 100% !important;
+  height : 25vh !important;
+}
+</style>

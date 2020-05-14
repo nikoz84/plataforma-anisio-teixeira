@@ -35,9 +35,10 @@
               class="text-center"
               v-html="row.name ? row.name : row.title"
             ></td>
-            <td class="text-center" style="width:150px;">
+            <td class="text-center" style="width:50px;">
               <q-btn-group spread>
                 <q-btn
+                  size="sm"
                   color="primary"
                   title="Editar item"
                   icon="edit"
@@ -45,6 +46,7 @@
                   :to="`/admin/${$route.params.slug}/editar/${row.id}`"
                 />
                 <q-btn
+                  size="sm"
                   color="negative"
                   title="Deletar item"
                   icon="delete"

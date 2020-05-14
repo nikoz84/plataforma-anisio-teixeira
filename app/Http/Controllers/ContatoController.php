@@ -17,7 +17,7 @@ class ContatoController extends ApiController
 
     public function __construct(Request $request, Contato $contato)
     {
-        $this->middleware('jwt.verify')->except(['create']);
+        $this->middleware('jwt.auth')->except(['create']);
         $this->contato = $contato;
         $this->request = $request;
     }

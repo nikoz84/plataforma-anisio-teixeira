@@ -11,7 +11,7 @@ class WordpressController extends ApiController
 {
     public function __construct(Storage $storage, Request $request)
     {
-        $this->middleware('jwt.verify')->except(['index', 'search', 'getById', 'getEstatisticas']);
+        $this->middleware('jwt.auth')->except(['index', 'search', 'getById', 'getEstatisticas']);
         $this->storage = $storage;
         $this->request = $request;
     }

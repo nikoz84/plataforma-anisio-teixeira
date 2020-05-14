@@ -66,7 +66,7 @@
 </template>
 <script>
 import ShowErrors from "../components/ShowErrors.vue";
-import { mapActions, mapState, mapMutations } from "vuex";
+import { mapActions, mapState } from "vuex";
 import RecaptchaForm from './RecaptchaForm.vue';
 import {
   QCard,
@@ -105,43 +105,25 @@ export default {
   },
   methods: {
     ...mapActions(["login"]),
-    ...mapMutations(["SET_LOGIN_USER"]),
     async onSubmit() {
       this.$q.loading.show();
       this.errors = {};
 
-      let data = { 
+      let credentials = { 
         email: this.email, 
         password: this.password, 
         recaptcha: grecaptcha.getResponse()
       };
-      try {
-        let resp = await axios.post("/auth/login", data);
-        
-        this.login(resp.data);
-      } catch (response) {
-        this.errors = response.errors;
-        grecaptcha.reset()
+
+      let {redirect, errors} = await this.login(credentials);
+      if(redirect){
+        this.$q.loading.hide();
+        axios.defaults.headers.common.Authorization = `Bearer ${localStorage.token}`;
+        this.$router.replace("/admin/conteudos/listar");
       }
-    },
-    login(resp) {
+      this.errors = errors;
       this.$q.loading.hide();
-      const jwtToken = resp.metadata.access_token;
-
-      this.$q.localStorage.set("token", jwtToken);
-      this.docodePayloadToken();
-      this.SET_LOGIN_USER(true);
-      axios.defaults.headers.common["Authorization"] = `Bearer ${jwtToken}`;
-
-      this.$router.replace("/admin/conteudos/listar");
-    },
-    docodePayloadToken() {
-      const base64Url = localStorage.token.split(".")[1];
-      const base64 = base64Url.replace("-", "+").replace("_", "/");
-      let payload = JSON.parse(window.atob(base64));
-
-      localStorage.setItem("user", JSON.stringify(payload.user));
-
+      grecaptcha.reset();
       
     }
   }
