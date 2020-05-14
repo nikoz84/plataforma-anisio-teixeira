@@ -1,4 +1,4 @@
-<template>
+<template> 
   <vue-plyr ref="plyr" style="width:100%;" class="absolute-bottom">
     <audio autoplay>
       <source :src="visualizacao.url" :type="visualizacao.mime_type" />
