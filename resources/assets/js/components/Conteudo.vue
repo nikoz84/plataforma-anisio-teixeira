@@ -15,7 +15,6 @@
       </div>
       <div class="metadados col-12 q-mx-0">
         <q-expansion-item
-          v-model="expanded"
           dense
           switch-toggle-side
           header-class="bg-cinza text-black"

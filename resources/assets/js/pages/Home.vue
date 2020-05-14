@@ -1,47 +1,16 @@
 <template>
   <section class="q-pa-lg">
-    <q-responsive :ratio="1/9" class="col" style="max-height:100vh; height: 35vh;">
-      <q-carousel
-        swipeable
-        animated
-        v-model="slide"
-        controlType="flat"
-        control-color="primary"
-        navigation
-        navigation-icon="radio_button_checked"
-        padding
-        infinite
-        :autoplay="5000"
-        arrows
-        class="accent rounded-borders"
-      >
-        <q-carousel-slide 
-          :name="1" 
-          img-src="/storage/conteudos/slider/banner_ensinosuperior.png">
-          <div class="absolute-bottom custom-caption">
-              <q-btn style="z-index: 10; margin: 0 0 3px 3px;" round outline color="accent" icon="directions"></q-btn>
-          </div>
-        </q-carousel-slide>
-        <q-carousel-slide 
-          :name="2" 
-          img-src="/storage/conteudos/slider/banner_rotinas-de-estudo.png">
-          <div class="absolute-bottom custom-caption">
-              <q-btn style="z-index: 10; margin: 0 0 3px 3px;" round outline color="accent" icon="directions"></q-btn>
-          </div>
-        </q-carousel-slide>
-      </q-carousel>
-    </q-responsive>
+    <CarouselHome></CarouselHome>
     <!-- BOTÕES DAS MODALIDADES DE ENSINO #INÍCIO -->
-    <div class="q-py-xl row justify-center q-gutter-lg">
+    <div class="q-py-xl row justify-center q-gutter-xs">
     
-      <q-btn dense stack size="md" class="botoes col" color="petecavermelho" text-color="white" label="Ensino Fundamental I" icon="img:img\biblioteca_icon_pb-49.svg" />
-      <q-btn dense stack size="md" class="botoes col" color="petecaamarelo" text-color="white" label="Ensino Fundamental II" icon="img:img\biblioteca_icon_pb-49.svg" />
-      <q-btn dense stack size="md" class="botoes col"  color="petecaazul" text-color="white" label="Ensino Médio" icon="img:img\biblioteca_icon_pb-49.svg" />
-      <q-btn dense stack size="md" class="botoes col" color="petecaverde" text-color="white" label="Ensino Superior" icon="img:img\biblioteca_icon_pb-49.svg" />
+      <q-btn stack size="sm" class="col-xs-5 col-sm-2" color="petecavermelho" text-color="white" label="Ensino Fundamental I" icon="img:img\biblioteca_icon_pb-49.svg" />
+      <q-btn stack size="sm" class="col-xs-5 col-sm-2" color="petecaamarelo" text-color="white" label="Ensino Fundamental II" icon="img:img\biblioteca_icon_pb-49.svg" />
+      <q-btn stack size="sm" class="col-xs-5 col-sm-2"  color="petecaazul" text-color="white" label="Ensino Médio" icon="img:img\biblioteca_icon_pb-49.svg" />
     
     </div>
 
-    <!-- SESSÃO ADICIONADOS RECENTEMENTE -->
+    <!-- SESSÃO ADICINADOS RECENTEMENTE -->
     
     <a class="skip-link" href="#tipo-conteudos">Ir a adicionados recentemente</a>
     <!--CardHomeIcon
@@ -84,6 +53,7 @@ import { mapState, mapMutations } from "vuex";
 import CardHome from "../components/CardHome.vue";
 import CardHomeIcon from "../components/CardHomeIcon.vue";
 import { ClosePopup } from "quasar";
+import CarouselHome from "../components/CarouselHome.vue";
 
 import {
   QParallax,
@@ -112,12 +82,12 @@ export default {
     QBtn,
     QAvatar,
     CardHomeIcon,
-    QBtnGroup
+    QBtnGroup,
+    CarouselHome
   },
 
   data() {
     return {
-      slide: 1,
       ids: [
         {
           name: "conteudos-recentes",
@@ -201,13 +171,6 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-
-@media (max-width: 669px) {
-  .botoes{
-    font-size: 12px !important;
-  }
-}
-
 .q-carousel__slide{
   width: 100% !important;
   height : 25vh !important;
