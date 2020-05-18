@@ -36,7 +36,12 @@ class TipoController extends ApiController
 
     public function create()
     {
-        $validator = Validator::make($this->request->all(), config("rules.tipos"));
+        $validator = Validator::make(
+            $this->request->all(),
+            [
+                'name' => 'required'
+            ]
+        );
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar o tipo", 422);
         }
@@ -56,14 +61,19 @@ class TipoController extends ApiController
 
     public function update($id)
     {
-        $validator = Validator::make($this->request->all(), config("rules.tipos"));
+        $validator = Validator::make(
+            $this->request->all(),
+            [
+                'name' => 'required'
+            ]
+        );
 
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Preencha o formulário corretamente", 422);
         }
 
         $tipo = Tipo::findOrFail($id);
-
+        return $this->successResponse($tipo);
         $this->authorize('update', $tipo);
 
         $tipo->name = $this->request->name;
@@ -96,9 +106,13 @@ class TipoController extends ApiController
 
         return $this->successResponse($tipo, 'Tipo deletado com sucesso!', 200);
     }
+    /**
+     * Seleciona tipo por ID
+     */
     public function getTiposById($id)
     {
-        $tipo = $this->tipo::find($id);
+        $tipo = Tipo::find($id);
+        
         return $this->showOne($tipo);
     }
 }
