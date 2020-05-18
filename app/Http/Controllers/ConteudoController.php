@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Storage;
 class ConteudoController extends ApiController
 {
     use FileSystemLogic;
-    
+
     public function __construct(Request $request)
     {
         $this->middleware('auth:api')->except([
@@ -107,10 +107,11 @@ class ConteudoController extends ApiController
             'is_featured' => 'nullable|in:true,false',
             'is_approved' => 'required|in:true,false',
             'is_site' => 'nullable|in:true,false',
-            'download' => 'nullable|file|max:4500000',
-            'guias-pedagogicos' => 'nullable|file|max:1000000',
-            'imagem-associada' => 'nullable|file|max:2000',
-            'visualizacao' => 'nullable|file',
+            'download.*' => "nullable|mimes:{$this->mimeTypes()}|max:4500000",
+            'guias_pedagogicos' => "nullable|mimes:{$this->mimeTypes()}|max:1000000",
+            'imagem_associada' => 'nullable|mimes:jpeg,jpg,png,gif|max:2000',
+            'visualizacao' => 'nullable|file'
+
         ];
     }
     /**
@@ -134,6 +135,7 @@ class ConteudoController extends ApiController
                 422
             );
         }
+
         $this->authorize('create', Conteudo::class);
 
         $conteudo = new Conteudo;
@@ -164,7 +166,9 @@ class ConteudoController extends ApiController
         $conteudo->componentes()->attach(explode(',', $request->componentes));
         $conteudo::tsDocumentoSave($conteudo->id);
 
-        $this->storeFiles($request);
+        $file = $this->storeFiles($request, $conteudo->id);
+
+        if(!$file) return $this->errorResponse([], 'Não foi possível fazer upload de arquivos.', 500);
 
         return $this->showOne($conteudo, 'Conteúdo cadastrado com sucesso!!', 200);
     }
@@ -291,45 +295,25 @@ class ConteudoController extends ApiController
 
     /**
      * Responsável por criar arquivos de conteúdo
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function storeFiles(Request $request)
+    private function storeFiles($request, $id = null)
     {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                "id"   => "required",
-                "local" => "required",
-                "file.*" => "required|mimes:{$this->mimeTypes()}|max:100000"
-            ]
-        );
-
-        if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível salvar arquivo.", 422);
-        }
-
         $file = null;
 
-        switch ($request->local) {
-            case 'download':
-                $file = $this->saveFile($request->id, $request->file, $request->local);
-                break;
-            case 'guias-pedagogicos':
-                $file = $this->saveFile($request->id, $request->file, $request->local);
-                break;
-            case 'imagem-associada':
-                $file = $this->saveFile($request->id, $request->file, $request->local);
-                break;
-            default:
-                return $this->errorResponse([], 'arquivo não encontrado', 404);
-                break;
+        if ($id) {
+            if (isset($request->download) && !is_null($request->download)) {
+                $file = $this->saveFile($id, $request->download, 'download');
+            }
+            if (isset($request->guias_pedagogicos) && !is_null($request->guias_pedagogicos)) {
+                $file = $this->saveFile($id, [$request->guias_pedagogicos], 'guias-pedagogicos');
+            }
+            if (isset($request->imagem_associada) && !is_null($request->imagem_associada)) {
+                $file = $this->saveFile($id, [$request->imagem_associada], 'imagem-associada');
+            }
         }
 
-        if ($file) {
-            return $this->successResponse([], 'arquivo criado com sucesso!', 200);
-        } else {
-            return $this->errorResponse([], 'Não foi possível criar arquivo.', 500);
-        }
+        return $file;
     }
+
+
 }
