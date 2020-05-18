@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Route;
     Route::get('/conteudos/search/{term}', 'ConteudoController@search')->name('busca.conteudo');
     Route::get('/conteudos/{id}', 'ConteudoController@getById')->name('busca.x.conteudo.id');
     Route::get('/conteudos/tag/{id}', 'ConteudoController@getByTagId')->name('busca.x.tag.id');
+    Route::get('/conteudos/relacionados/{id}', 'ConteudoController@conteudosRelacionados')->name('busca.x.id');
     /** BLOG */
     Route::get('/posts', 'WordpressController@index')->name('lista.postagens');
     Route::get('/posts/{id}', 'WordpressController@getById')->name('busca.postagen.x.id');

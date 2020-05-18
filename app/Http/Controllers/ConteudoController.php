@@ -24,7 +24,8 @@ class ConteudoController extends ApiController
             'getByTagId',
             'getSitesTematicos',
             'incorporarConteudo',
-            'storeFiles'
+            'storeFiles',
+            'conteudosRelacionados'
         ]);
         $request = $request;
     }
@@ -315,5 +316,11 @@ class ConteudoController extends ApiController
         return $file;
     }
 
+    public function conteudosRelacionados($id)
+    {
+        $conteudo = new Conteudo();
+        $conteudos = $conteudo->conteudosRelacionadosPorId($id);
 
+        return $this->showAll($conteudos);
+    }
 }
