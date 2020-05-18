@@ -33,17 +33,19 @@ export default {
 
 <!--  STYLE CRIADO PARA A SEPARATRIZ DOS TÍTULOS -->
 
-<style scoped>
-  .separatriz{
-    border: 1px solid;
-    border-color: transparent;
-    border-bottom-color: #c9c9c9;
-  }
-  .separatriz-6{
-    content: " ";
-    border-top: 6px solid;
-    width: 80px;
-    height: 10px;
-    margin-top: -6px;
-  }
+<style scoped lang="stylus">
+
+  .separatriz
+    border 1px solid
+    border-color transparent
+    border-bottom-color #c9c9c9
+  
+  .separatriz-6
+    content " "
+    border-top 6px solid
+    border-top-color #066ab1
+    width 80px
+    height 10px
+    margin-top -6px
+  
 </style>

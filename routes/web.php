@@ -41,15 +41,7 @@ Route::get('/docs', function (Request $request) {
 
 Route::get('/conteudos-digitais/conteudo/incorporar-conteudo/id/{id}', 'ConteudoController@incorporarConteudo');
 
-Route::get(
-    'teste',
-    function () {
-        $user = Auth::user();
-        dd($user);
-        $sidebar = new App\Helpers\SideBar;
-        $sidebar->getAdminSidebar($user);
-    }
-);
+
 
 Route::get('/{any}', 'ApiController@home')->where('any', '.*');
 

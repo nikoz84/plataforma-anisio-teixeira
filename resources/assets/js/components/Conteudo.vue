@@ -1,29 +1,43 @@
 <template>
   <div class="row justify-start" v-if="conteudo">
     
-    <div class="col-12" style="max-width:1200px">
+    <div class="col-9" style="max-width:1200px">
       <q-card>
-      <div class="player col-12 q-mt-sm">
-        <Player :arquivos="conteudo.arquivos" :tipo="conteudo.tipo"></Player>
-      </div>
-      <div class="acoes col-12 q-mx-md">
-        <PlayerActions></PlayerActions>
-      </div>
-      <div class="descritivo col-12 q-mx-md">
-            <Title :title="conteudo.title"></Title>
-            <div v-html="conteudo.description"></div> 
-      </div>
-      <div class="metadados col-12 q-mx-0">
-        <q-expansion-item
-          dense
-          switch-toggle-side
-          header-class="bg-cinza text-black"
-          label="Ver metados do conteúdo">
-            <ConteudoMetadata></ConteudoMetadata> 
-        </q-expansion-item>
-      </div>
+        <div class="player col-12 q-mt-sm">
+          <Player :arquivos="conteudo.arquivos" :tipo="conteudo.tipo"></Player>
+        </div>
+        <div class="acoes col-12 q-mx-md">
+          <PlayerActions></PlayerActions>
+        </div>
+        <div class="descritivo col-12 q-mx-md q-mb-sm">
+              <Title :title="conteudo.title"></Title>
+              <div class="q-mt-lg  conteudo-descricao" v-html="conteudo.description"></div> 
+        </div>
+        <div class="ficha-tecnica col-12 q-mx-0">
+          <q-expansion-item
+            dense
+            switch-toggle-side
+            header-class="bg-cinza text-black"
+            label="Ver ficha técnica">
+              <ConteudoMetadata></ConteudoMetadata> 
+          </q-expansion-item>
+        </div>
       </q-card>
     </div>
+
+    <div class="col-3">
+      <q-card class="q-mt-sm q-ml-sm">
+        <q-list bordered>
+          <q-item clickable v-ripple>
+            <q-item-section thumbnail>
+              <img src="https://cdn.quasar.dev/img/mountains.jpg">
+            </q-item-section>
+            <q-item-section>List item</q-item-section>
+          </q-item>
+        </q-list>
+      </q-card>
+    </div>
+
     
   </div>
 </template>
@@ -88,6 +102,15 @@ export default {
 </script>
 <style scoped>
 
+.conteudo-descricao::before{
+  content:"Descrição: "
+}
+
+.conteudo-descricao{
+  font-size: 1rem;
+  line-height: 1.3rem;
+}
+
 @media (max-width: 599px){
   .player{
   order: 1;
@@ -101,7 +124,7 @@ export default {
   order: 2;
 }
 
-.metadados{
+.ficha-tecnica{
   order: 4;
 }
 }

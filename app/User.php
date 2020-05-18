@@ -244,7 +244,6 @@ class User extends Authenticatable implements JWTSubject
     }
     
     /**
-    * 
      * Method usado para validação de token por hora
      * @param $token | (String) O token que deve ser passado
      * @param $horaDoTokenCadastradoNoBanco | (Timestamp) da hora que o token foi gerado

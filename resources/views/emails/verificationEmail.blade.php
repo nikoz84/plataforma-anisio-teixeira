@@ -47,12 +47,12 @@
 
     @if ($option && $option == 'register')
         <p>
-			Click para confirmar o seu cadastro
+			Com o seguinte código cole no campo de verificação
 		</p> 
-
-		<a href="{{$dominio}}/api-v1/auth/token/verificar/usuario/{{$token}}" style="color:#3871c1!important">
-		   Confirmar
-	    </a>
+		Código de verificação:
+		<strong style="color:#3871c1!important">
+		    {{ $token }}
+	    </strong>
     @endif
 
     <br>

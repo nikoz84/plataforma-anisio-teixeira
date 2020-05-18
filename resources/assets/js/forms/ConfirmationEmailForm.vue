@@ -8,7 +8,7 @@
                     </div>
                 </q-card-section>
                 <q-card-section>
-                    <q-input v-model="token" :loading="loadingState"></q-input>
+                    <q-input v-model="token" :loading="loadingState" :hint="hint"></q-input>
                 </q-card-section>
                 
                 <q-card-actions align="around">
@@ -30,23 +30,24 @@ export default {
         return {
             token: null,
             loadingState : false,
-            errors: {}
+            errors: {},
+            hint: 'Espere em sua conta de e-mail pelo código de verificação, e cole aquí'
         }
     },
     methods: {
         async verify() {
             if (!this.token) return;
             this.loadingState = true
-            try {
-                let resp = await axios.post(`/auth/verificar/token/${this.token}`);
-                    this.loadingState = false;
-                    console.log(resp)
-                
-            } catch (response) {
-                this.errors = response.errors;
+
+            await axios.get(`/auth/verificar/email/${this.token}`)
+            .then(({data})=>{
                 this.loadingState = false;
-            }
-                
+                if(data.success){
+                    this.$router.push('/usuario/login');
+                } else {
+                    this.hint = 'Código incorreto, tente seu cadastro novamente'
+                }
+            }); 
         }
     }
 }

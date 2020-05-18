@@ -9,7 +9,6 @@
       :style="`height:230px;min-height: 230px; width: 100%;backgroud-color:${color};`"
       placeholder-src="/img/fundo-padrao.svg"
     >
-      
       <div class="text-lowercase absolute-bottom-right">
         <q-btn 
           round 
@@ -24,7 +23,6 @@
            </q-avatar>
         </q-btn>
         <div v-if="item.category" >{{item.category.name}}</div>
-        
       </div>
       </q-img>
       <q-card-section>
@@ -44,7 +42,6 @@
         />
       </div>
     </q-card-section>
-    
   </q-card>
 </template>
 <script>

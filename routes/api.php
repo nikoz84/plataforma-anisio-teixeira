@@ -54,7 +54,7 @@ use Illuminate\Support\Facades\Route;
     Route::get('/auth/verificar/{token}', 'AuthController@verifyToken')->name('verificar.token');
     Route::post('/auth/recuperar-senha', 'AuthController@recoverPass')->name('recuperar.senha');
 
-    Route::get('/auth/token/verificar/usuario/{token}', 'AuthController@verifyTokenUserRegister')
+    Route::get('/auth/verificar/email/{token}', 'AuthController@verifyTokenUserRegister')
     ->name('verificar.usuario.token');
     /** OPTIONS  */
     Route::get('/options/{name}', 'OptionsController@getByName')->name('busca.metadata.x.nome');
@@ -63,9 +63,6 @@ use Illuminate\Support\Facades\Route;
     Route::get('/tags/{id}', 'TagController@getById')->name('busca.x.tag.id');
     /** LICENÇAS */
     Route::get('/licencas', 'LicenseController@index')->name('listar.licencas');
-    /** TOKEN */
-    Route::get('usuarios/verify/{token}', 'UserController@verify')->name('verify.token');
-    
     /** DOWNLOAD FILE **/
     Route::get('/files/{action}/{id}', 'FileController@downloadFile')->name('downloadFile.id');
 
