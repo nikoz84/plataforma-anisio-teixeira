@@ -410,4 +410,33 @@ class Conteudo extends Model
 
         DB::update('update conteudos set ts_documento = ? where id = ?', [$fullTextSearch->ts_documento, $id]);
     }
+
+    public function conteudosRelacionadosPorId($id)
+    {
+        $ids = $this->with('tags')->find($id)->tags()->pluck('id');
+    
+        $stringDeIds = false;
+        foreach ($ids as $id) {
+            $stringDeIds .= $id.',';
+        }
+
+        // Retira a ultima (,) virgula da string
+        $ids = substr($stringDeIds, 0, -1);
+
+        $query = DB::select("with related_tags as (
+            select string_agg(' ', name) as query_string 
+            from tags
+            where id in ({$ids}) 
+            ) select conteudos.id, 
+                conteudos.title,
+                conteudos.ts_documento, 
+                related_tags.query_string
+            from conteudos, related_tags
+            where conteudos.ts_documento @@ 
+            plainto_tsquery('portuguese', lower(unaccent(related_tags.query_string)))
+            limit 100"
+        );
+
+        return collect($query);
+    }
 }

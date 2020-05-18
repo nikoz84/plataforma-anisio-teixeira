@@ -255,7 +255,7 @@ class ConteudoController extends ApiController
      *
      * @return App\Traits\ApiResponser
      */
-    public function getById($id)
+    public function getById(Request $request, $id)
     {
         $conteudo = Conteudo::with([
             'tipo',
