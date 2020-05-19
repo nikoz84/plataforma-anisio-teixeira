@@ -2,28 +2,40 @@
   <article class="q-pa-md">
     <div class="row no-wrap justify-center">
       <q-card class="col-sm-6">
-        <q-form v-on:submit.prevent="save()">
-          <q-card-section>
-            <q-input label="Nome" v-model="tipo.name"></q-input>
+        <q-card-section>
+            <q-input label="Nome" 
+              v-model="tipo.name"
+              bottom-slots
+              :error="errors.name && errors.name.length > 0"
+            >
+              <template v-slot:error>
+                <ShowErrors :errors="errors.name"></ShowErrors>
+              </template>
+            </q-input>
             <q-select label="Extensões" v-model="tipo.options.formatos" 
               use-chips
-              multiple >
+              multiple 
+              :options="extensions">
             </q-select>
           </q-card-section>
           <q-card-section>
             {{ errors }}
           </q-card-section>
           <q-card-section>
-            <q-btn class="full-width q-mt-md" label="Salvar" type="submit" color="primary"/>
+            <q-btn @click.prevent="save()" class="full-width q-mt-md" label="Salvar" type="submit" color="primary"/>
           </q-card-section>
-        </q-form>
-      </q-card>
+        </q-card>
     </div>
   </article>
 </template>
 <script>
+import ShowErrors from "../components/ShowErrors.vue";
+
 export default {
   name: "TipoForm",
+  components: {
+    ShowErrors
+  },
   data() {
     return { 
       tipo: {
@@ -32,6 +44,10 @@ export default {
           formatos : []
         }
       },
+      extensions: [
+        'ppt','pps','odp','link','pdf','epub','doc','docx','odt','zip',
+        'rar','mp4','mp3','webm','xls','xml','ods','csv','jpg','jpeg','png','gif','txt'
+      ],
       errors: {}
     }
   },
@@ -40,21 +56,22 @@ export default {
   },
   methods: {
     async getTipo() {
+      if(!this.$route.params.id) return;
+
       let {data} = await axios.get(`/tipos/${this.$route.params.id}`);
       this.tipo = data.metadata;
     },
     async save(){
-      console.log(this.tipo);
-      const form = new FormData();
-      form.append('name', this.tipo.name);
-      form.append('formatos', this.tipo.options.formatos);
-
-      if (this.$route.params.action == "editar") {
-        form.append("id", this.$route.params.id);
-        form.append("_method", "PUT");
+      const url = this.$route.params.id ? `/tipos/${this.$route.params.id}` : '/tipos';
+      const method = this.$route.params.id ? 'PUT' : 'POST';
+      let data = {
+        name : this.tipo.name,
+        options: this.options
       }
-
-      await axios.post(`/tipos/${this.$route.params.id}`).then(
+      await axios({
+        method,
+        url
+        }, data).then(
         resp => {
           console.log(resp)
         }

@@ -27,45 +27,11 @@
 
     <div class="col-3">
       <q-card class="q-mt-sm q-ml-sm">
-        <q-list bordered>
-          <q-item clickable v-ripple>
-            <q-item-section thumbnail>
-              <img src="https://cdn.quasar.dev/img/mountains.jpg">
-            </q-item-section>
-            <q-item-section>List item</q-item-section>
-          </q-item>
-        </q-list>
+        <ConteudoRelated></ConteudoRelated>
       </q-card>
-    </div>
-
-    
-  </div>
-</template>
-
-<!-- código antigo
-
-<template>
-  <div class="row justify-center q-mt-md q-gutter-sm" v-if="conteudo">
-    <div class="col-xs-11 col-sm-6">
-      <Player :arquivos="conteudo.arquivos" :tipo="conteudo.tipo"></Player>
-      <PlayerActions class="q-mt-xs"></PlayerActions>
-      <q-card class="q-mt-sm">
-        <q-card-section>
-          <Title :title="conteudo.title"></Title>
-        </q-card-section>
-        <q-card-section>
-          <div v-html="conteudo.description"></div> 
-        </q-card-section>
-      </q-card>
-    </div>
-    <div class="col-xs-11 col-sm-5">
-      <ConteudoMetadata></ConteudoMetadata> 
     </div>
   </div>
 </template>
-
--->
-
 <script>
 import Player from "../components/Player";
 import { mapState } from "vuex";
@@ -73,6 +39,7 @@ import { QCard, QCardSection, QSeparator, QChip, Ripple } from "quasar";
 import Title from "./Title";
 import ConteudoMetadata from './ConteudoMetadata';
 import PlayerActions from "./PlayerActions";
+import ConteudoRelated from "./ConteudoRelated";
 
 export default {
   name: "Conteudo",
@@ -85,18 +52,15 @@ export default {
     QChip,
     Title,
     ConteudoMetadata,
-    PlayerActions
+    PlayerActions,
+    ConteudoRelated
   },
-  created() {},
   computed: {
     ...mapState(["conteudo"]),
     backgroundColor() {
       let color = this.conteudo.canal.color;
       return `background-color: ${color}`;
     }
-  },
-  methods: {
-    
   }
 };
 </script>

@@ -45,6 +45,7 @@ class TipoController extends ApiController
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar o tipo", 422);
         }
+        return $this->successResponse($this->request->all(), $this->request->id);
         $tipo = new Tipo;
 
         $this->authorize('create', JWTAuth::user());
@@ -59,8 +60,9 @@ class TipoController extends ApiController
         return $this->successResponse($tipo, 'Tipo criado com sucesso!', 200);
     }
 
-    public function update($id)
+    public function update(Request $request, $id)
     {
+        $this->successResponse($request->all());
         $validator = Validator::make(
             $this->request->all(),
             [

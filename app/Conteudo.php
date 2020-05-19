@@ -43,7 +43,7 @@ class Conteudo extends Model
         'options',
     ];
 
-    protected $appends = ['image', 'excerpt', 'url_exibir', 'user_can', 'arquivos', 'formated_date', 'title_slug'];
+    protected $appends = ['image', 'excerpt', 'short_title', 'url_exibir', 'user_can', 'arquivos', 'formated_date', 'title_slug'];
     protected $casts = ['options' => 'array',];
     protected $hidden = ['ts_documento'];
 
@@ -200,6 +200,15 @@ class Conteudo extends Model
     public function getExcerptAttribute()
     {
         return strip_tags(Str::words($this->description, 30));
+    }
+    /**
+     * Adiciona novo atributo ao objeto que limita o tamanho da descrição
+     *
+     * @return void
+     */
+    public function getShortTitleAttribute()
+    {
+        return Str::words($this->title, 5);
     }
     /**
      * Converte o título para slug ou url amigável
@@ -411,32 +420,21 @@ class Conteudo extends Model
         DB::update('update conteudos set ts_documento = ? where id = ?', [$fullTextSearch->ts_documento, $id]);
     }
 
-    public function conteudosRelacionadosPorId($id)
+    public function scopeRelacionados($query, $id)
     {
-        $ids = $this->with('tags')->find($id)->tags()->pluck('id');
-    
-        $stringDeIds = false;
-        foreach ($ids as $id) {
-            $stringDeIds .= $id.',';
+        if (!$id) {
+            return $query;
         }
-
-        // Retira a ultima (,) virgula da string
-        $ids = substr($stringDeIds, 0, -1);
-
-        $query = DB::select("with related_tags as (
-            select string_agg(' ', name) as query_string 
-            from tags
-            where id in ({$ids}) 
-            ) select conteudos.id, 
-                conteudos.title,
-                conteudos.ts_documento, 
-                related_tags.query_string
-            from conteudos, related_tags
-            where conteudos.ts_documento @@ 
-            plainto_tsquery('portuguese', lower(unaccent(related_tags.query_string)))
-            limit 100"
-        );
-
-        return collect($query);
+        $tags_query = function ($q) {
+            return $q->limit(2);
+        };
+        $conteudo = parent::with(['tags'=> $tags_query])->find($id);
+        $tags = $conteudo->tags->implode('name', ', ');
+        
+        return parent::whereRaw(
+            "conteudos.ts_documento @@ plainto_tsquery('portuguese', lower(unaccent('{$tags}')))"
+        )->orWhereRaw(
+            "conteudos.ts_documento @@ plainto_tsquery('simple', lower(unaccent('{$tags}')))"
+        )->where('id', '!=', $id);
     }
 }

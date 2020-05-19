@@ -24,7 +24,6 @@ class ConteudoController extends ApiController
             'getByTagId',
             'getSitesTematicos',
             'incorporarConteudo',
-            'storeFiles',
             'conteudosRelacionados'
         ]);
         $request = $request;
@@ -169,7 +168,9 @@ class ConteudoController extends ApiController
 
         $file = $this->storeFiles($request, $conteudo->id);
 
-        if(!$file) return $this->errorResponse([], 'Não foi possível fazer upload de arquivos.', 500);
+        if (!$file) {
+            return $this->errorResponse([], 'Não foi possível fazer upload de arquivos.', 500);
+        }
 
         return $this->showOne($conteudo, 'Conteúdo cadastrado com sucesso!!', 200);
     }
@@ -316,11 +317,17 @@ class ConteudoController extends ApiController
         return $file;
     }
 
-    public function conteudosRelacionados($id)
+    public function conteudosRelacionados(Request $request, $id)
     {
-        $conteudo = new Conteudo();
-        $conteudos = $conteudo->conteudosRelacionadosPorId($id);
+        $limit = $request->query('limit', 6);
 
-        return $this->showAll($conteudos);
+        $query = Conteudo::query();
+        
+        $conteudos = $query
+            ->relacionados($id)
+            ->where('is_approved', 'true')
+            ->limit($limit)->get();
+        
+        return $this->successResponse($conteudos);
     }
 }
