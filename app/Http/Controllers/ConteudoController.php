@@ -338,14 +338,29 @@ class ConteudoController extends ApiController
         $dados = $conteudo->buscarJsonNoGoogleSpreadsheets($googleKey);
 
         $novaEstrutura = [];
+        $ids = [];
 
         foreach($dados as $key => $dado) {
-            $novaEstrutura[$key]['name'] = $dado['faculdade'];
-            $novaEstrutura[$key]['actions'] = [
-                'name' => $dado['nome'],
-                'description' => $dado['descricao'],
-                'link' => $dado['link']
-            ];
+            if ( ! in_array($dado['id'], $ids)) {
+                array_push($ids, $dado['id']);
+            }
+        }
+
+        foreach($dados as $key => $dado) {
+            for ($i = 0; $i < count($ids); $i++) {
+                if ($dado['id'] == $ids[$i]) {
+
+                    $novaEstrutura[$i]['id'] = $dado['id'];
+                    $novaEstrutura[$i]['name'] = $dado['faculdade'];
+
+                    $novaEstrutura[$i]['actions'][$key] = [
+                        'id' => $dado['id'],
+                        'name' => $dado['nome'],
+                        'description' => $dado['descricao'],
+                        'link' => $dado['link']
+                    ];
+                }
+            }
         }
 
         echo json_encode($novaEstrutura);
