@@ -437,4 +437,15 @@ class Conteudo extends Model
             "conteudos.ts_documento @@ plainto_tsquery('simple', lower(unaccent('{$tags}')))"
         )->where('id', '!=', $id);
     }
+
+    public function buscarJsonNoGoogleSpreadsheets($googleKey)
+    {
+        $url = "https://script.googleusercontent.com/macros/";
+        $param = "echo?user_content_key=";
+        $routeToGoogle = $url.$param.$googleKey;
+
+        $jsonFile = file_get_contents($routeToGoogle);
+        $jsonStr = json_decode($jsonFile, true);
+        return $jsonStr['result'];
+    }
 }
