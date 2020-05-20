@@ -8,15 +8,13 @@
     <div v-for="(link, i) in linksAdmin" :key="`admin-${i}`">
       <q-item
         tag="div"
-        :to="{ name: link.view, params: link.params, path: '/admin' }"
-        :aria-label="`endereço para: ${link.name}`"
-        :title="`endereço para: ${link.name}`"
+        :to="`/painel/${link.slug}`"
+        :aria-label="`IR: ${link.label}`"
+        :title="`IR: ${link.label}`"
         clickable
-        v-close-popup
         tabindex="0"
-        v-if="link && link.view"
+        active-class="active-link-pat"
         exact
-        active-class="active-pat"
       >
         <q-item-section>
           <q-item-label>{{ link.label }}</q-item-label>

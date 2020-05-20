@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import ShowErrors from "../components/ShowErrors.vue";
+import ShowErrors from "@/forms/ShowErrors.vue";
 import VueRecaptcha from "vue-recaptcha";
 import { mapGetters, mapMutations } from 'vuex';
 

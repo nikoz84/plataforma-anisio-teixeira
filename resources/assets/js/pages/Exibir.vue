@@ -2,10 +2,9 @@
     <component :is="exibirId"></component>
 </template>
 <script>
-import Conteudo from "../components/Conteudo.vue";
-import Aplicativo from "../components/Aplicativo.vue";
-import Post from "../components/Post.vue";
-import NotFound from "../components/NotFound.vue";
+import { Conteudo, Aplicativo } from "@/components/exibir";
+import { Post } from "@/components/blog";
+import NotFound from "@/components/NotFound.vue";
 import { mapState, mapActions } from "vuex";
 
 export default {

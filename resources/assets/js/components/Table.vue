@@ -81,14 +81,13 @@
   </div>
 </template>
 <script>
-import SearchForm from "../forms/SearchForm.vue";
+import { SearchForm } from "@/forms/search";
 import { mapMutations, mapState } from "vuex";
 import {
   QMarkupTable,
   QDialog,
   ClosePopup,
-  QPagination,
-  QParallax
+  QPagination
 } from "quasar";
 
 export default {
@@ -149,12 +148,16 @@ export default {
     },
     async getData() {
       this.$q.loading.show();
-      let resp = await axios.get(`/${this.$route.params.slug}`);
-
-      if (resp.data.success && resp.data.paginator) {
-        this.$q.loading.hide();
-        this.SET_PAGINATOR(resp.data.paginator);
+      let path = `/${this.$route.path.split("/")[2]}`;
+      if(path){
+        let resp = await axios.get(path);
+        if (resp.data.success && resp.data.paginator) {
+          this.$q.loading.hide();
+          this.SET_PAGINATOR(resp.data.paginator);
+        }
       }
+      
+      this.$q.loading.hide();
     }
   }
 };

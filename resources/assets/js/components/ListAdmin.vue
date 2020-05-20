@@ -5,18 +5,22 @@
 </template>
 <script>
 import { mapMutations, mapState } from "vuex";
-import ConteudoForm from "../forms/ConteudoForm.vue";
-import AplicativoForm from "../forms/AplicativoForm.vue";
-import CanalForm from "../forms/CanalForm.vue";
-import UserForm from "../forms/UserForm.vue";
-import LicenseForm from "../forms/LicenseForm.vue";
-import TagForm from "../forms/TagForm.vue";
-import RoleForm from "../forms/RoleForm.vue";
-import TipoForm from "../forms/TipoForm.vue";
-import Resumo from "../pages/Resumo.vue";
+import { 
+  ConteudoForm,
+  AplicativoForm,
+  CanalForm,
+  UserForm,
+  LicenseForm,
+  TagForm,
+  RoleForm,
+  TipoForm,
+  } from "@/forms/models";
+
+import SliderForm from '@/forms/SliderForm.vue';
+import Resumo from "@/pages/Resumo.vue";
 import Table from "./Table.vue";
-import Contato from "./Contato.vue";
-import SliderForm from '../forms/SliderForm.vue';
+import { Contato }  from "@/components/exibir";
+
 
 export default {
   name: "Listar",
@@ -31,7 +35,7 @@ export default {
     tipos: TipoForm,
     contato: Contato,
     SliderForm,
-    Table,
+    listar: Table,
     Resumo,
     
   },
@@ -55,11 +59,7 @@ export default {
       switch (true) {
         case this.$route.params.slug != "analytics" &&
           this.$route.params.action == "listar":
-          this.componentName = "Table";
-          break;
-        case this.$route.params.slug != "options" &&
-          this.$route.params.action == "listar":
-          this.componentName = "SliderForm";
+          this.componentName = "listar";
           break;
         case this.$route.params.action == "editar" ||
           this.$route.params.action == "adicionar":

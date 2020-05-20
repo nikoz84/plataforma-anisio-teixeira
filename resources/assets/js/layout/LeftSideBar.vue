@@ -15,17 +15,16 @@
       <!-- ADMINISTRAÇÃO -->
       <q-item
         v-if="isLogged"
-        clickable to="/admin/conteudos/listar"
+        clickable :to="{ name: 'IndexConteudos' }"
         aria-label="Painel de controle"
-        exact 
-        active-class="active-link-pat"
-      >
+        @click="isPanel = !isPanel"
+        >
         <q-item-section avatar >
           <q-icon name="settings_applications_outlined" />
         </q-item-section>
         <q-item-section>
           <q-item-label>
-            Painel de Controle
+            {{ isPanel ? 'Links Canais': 'Painel de Controle' }}
           </q-item-label>
         </q-item-section>
       </q-item>
@@ -47,7 +46,7 @@
       
     </q-list>
     <!-- ADMINISTRAÇÃO-->
-    <AdminLeftSideBar v-if="this.$route.name == 'admin'"></AdminLeftSideBar>
+    <AdminLeftSideBar v-if="isPanel"></AdminLeftSideBar>
     <!-- CANAIS-->
     <q-list v-else>
       <q-item-label class="bg-grey-4" header>
@@ -59,8 +58,8 @@
         <q-item
           tag="div"
           :to="`/${link.slug}/listar`"
-          :aria-label="`endereço para: ${link.name}`"
-          :title="`endereço para: ${link.name}`"
+          :aria-label="`IR: ${link.name}`"
+          :title="`IR: ${link.name}`"
           clickable
           v-close-popup
           tabindex="0"
@@ -131,8 +130,8 @@ export default {
   props: ["leftDrawerOpen"],
   data() {
     return {
-      admin: false,
-      text: ""
+      isPanel: false,
+      
     };
   },
   computed: {
@@ -145,6 +144,17 @@ export default {
         this.$emit("update:leftDrawerOpen", val);
       }
     }
-  }
+  },
+  mounted() {
+    this.isAdminPanel();
+  },
+  methods: {
+    isAdminPanel(){
+      let path = this.$route.path.split("/")[0];
+      if(path === 'painel'){
+        this.isPanel = true;
+      }
+    }
+  },
 };
 </script>

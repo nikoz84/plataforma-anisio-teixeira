@@ -9,6 +9,7 @@
 
 <q-toolbar :style="`background-color:${color}`" class="text-white shadow-3">
     <q-tabs
+      dense
       inline-label
       align="left">
         <q-route-tab
@@ -24,7 +25,7 @@
         />
         
       </q-tabs>
-<q-space />
+      <q-space />
       <!--
         notice shrink property since we are placing it
         as child of QToolbar
@@ -83,10 +84,9 @@
 </template>
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-import CategoriasMenu from "../components/CategoriasMenu";
-import AdvancedSearchForm from "../forms/AdvancedSearchForm";
-import Filters from "../components/Filters";
-import OrderBy from "../components/OrderBy"
+import { AdvancedSearchForm } from "@/forms/search";
+import  { Filters, OrderBy, CategoriasMenu } from "@/components/canais";
+
 
 import {
   QTabs,
