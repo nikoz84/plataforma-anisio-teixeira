@@ -24,7 +24,8 @@ class ConteudoController extends ApiController
             'getByTagId',
             'getSitesTematicos',
             'incorporarConteudo',
-            'conteudosRelacionados'
+            'conteudosRelacionados',
+            'conteudosPlanilha'
         ]);
         $request = $request;
     }
@@ -329,5 +330,24 @@ class ConteudoController extends ApiController
             ->limit($limit)->get();
         
         return $this->successResponse($conteudos);
+    }
+
+    public function conteudosPlanilha($googleKey)
+    {
+        $conteudo = new Conteudo();
+        $dados = $conteudo->buscarJsonNoGoogleSpreadsheets($googleKey);
+
+        $novaEstrutura = [];
+
+        foreach($dados as $key => $dado) {
+            $novaEstrutura[$key]['name'] = $dado['faculdade'];
+            $novaEstrutura[$key]['actions'] = [
+                'name' => $dado['nome'],
+                'description' => $dado['descricao'],
+                'link' => $dado['link']
+            ];
+        }
+
+        echo json_encode($novaEstrutura);
     }
 }
