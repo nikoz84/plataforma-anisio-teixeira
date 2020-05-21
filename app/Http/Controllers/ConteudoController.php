@@ -348,8 +348,8 @@ class ConteudoController extends ApiController
 
         foreach($dados as $key => $dado) {
             for ($i = 0; $i < count($ids); $i++) {
-                if ($dado['id'] == $ids[$i]) {
 
+                if ($dado['id'] == $ids[$i]) {
                     $novaEstrutura[$i]['id'] = $dado['id'];
                     $novaEstrutura[$i]['name'] = $dado['faculdade'];
 
