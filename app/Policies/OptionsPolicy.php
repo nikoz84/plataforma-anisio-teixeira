@@ -31,8 +31,7 @@ class OptionsPolicy
     public function index(User $user)
     {
         return $user->role->name == 'super-admin' ||
-            $user->role->name == 'admin' ||
-            $user->role->name == 'coordenador';
+            $user->role->name == 'admin';
     }
 
     /**
@@ -43,7 +42,8 @@ class OptionsPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->role->name == 'super-admin' ||
+            $user->role->name == 'admin';
     }
 
     /**
@@ -55,9 +55,14 @@ class OptionsPolicy
      */
     public function update(User $user, Options $options)
     {
-        //
+        return $user->role->name == 'super-admin' ||
+            $user->role->name == 'admin';
     }
-
+    public function destaques(User $user, Options $options)
+    {
+        return $user->role->name == 'super-admin' ||
+            $user->role->name == 'admin';
+    }
     /**
      * Determine whether the user can delete the options.
      *
@@ -67,7 +72,8 @@ class OptionsPolicy
      */
     public function delete(User $user, Options $options)
     {
-        //
+        return $user->role->name == 'super-admin' ||
+            $user->role->name == 'admin';
     }
 
     /**
@@ -79,7 +85,8 @@ class OptionsPolicy
      */
     public function restore(User $user, Options $options)
     {
-        //
+        return $user->role->name == 'super-admin' ||
+            $user->role->name == 'admin';
     }
 
     /**

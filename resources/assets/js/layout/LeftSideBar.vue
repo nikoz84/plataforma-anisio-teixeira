@@ -17,9 +17,7 @@
         v-if="isLogged"
         clickable to="/admin/conteudos/listar"
         aria-label="Painel de controle"
-        exact 
-        active-class="active-link-pat"
-      >
+        >
         <q-item-section avatar >
           <q-icon name="settings_applications_outlined" />
         </q-item-section>
@@ -47,7 +45,7 @@
       
     </q-list>
     <!-- ADMINISTRAÇÃO-->
-    <AdminLeftSideBar v-if="this.$route.name == 'admin'"></AdminLeftSideBar>
+    <AdminLeftSideBar v-if="$route.name == 'admin'"></AdminLeftSideBar>
     <!-- CANAIS-->
     <q-list v-else>
       <q-item-label class="bg-grey-4" header>
@@ -59,8 +57,8 @@
         <q-item
           tag="div"
           :to="`/${link.slug}/listar`"
-          :aria-label="`endereço para: ${link.name}`"
-          :title="`endereço para: ${link.name}`"
+          :aria-label="`IR: ${link.name}`"
+          :title="`IR: ${link.name}`"
           clickable
           v-close-popup
           tabindex="0"
@@ -131,8 +129,8 @@ export default {
   props: ["leftDrawerOpen"],
   data() {
     return {
-      admin: false,
-      text: ""
+      isPanel: false,
+      
     };
   },
   computed: {
@@ -145,6 +143,9 @@ export default {
         this.$emit("update:leftDrawerOpen", val);
       }
     }
-  }
+  },
+  mounted() {
+    console.warn(this.$route)
+  },
 };
 </script>
