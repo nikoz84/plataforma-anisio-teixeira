@@ -15,16 +15,15 @@
       <!-- ADMINISTRAÇÃO -->
       <q-item
         v-if="isLogged"
-        clickable :to="{ name: 'IndexConteudos' }"
+        clickable to="/admin/conteudos/listar"
         aria-label="Painel de controle"
-        @click="isPanel = !isPanel"
         >
         <q-item-section avatar >
           <q-icon name="settings_applications_outlined" />
         </q-item-section>
         <q-item-section>
           <q-item-label>
-            {{ isPanel ? 'Links Canais': 'Painel de Controle' }}
+            Painel de Controle
           </q-item-label>
         </q-item-section>
       </q-item>
@@ -46,7 +45,7 @@
       
     </q-list>
     <!-- ADMINISTRAÇÃO-->
-    <AdminLeftSideBar v-if="isPanel"></AdminLeftSideBar>
+    <AdminLeftSideBar v-if="$route.name == 'admin'"></AdminLeftSideBar>
     <!-- CANAIS-->
     <q-list v-else>
       <q-item-label class="bg-grey-4" header>
@@ -146,15 +145,7 @@ export default {
     }
   },
   mounted() {
-    this.isAdminPanel();
-  },
-  methods: {
-    isAdminPanel(){
-      let path = this.$route.path.split("/")[0];
-      if(path === 'painel'){
-        this.isPanel = true;
-      }
-    }
+    console.warn(this.$route)
   },
 };
 </script>

@@ -100,14 +100,14 @@ class SideBar
             [
                 'label' => 'Aplicativos',
                 'name' => 'IndexAplicativos',
-                'slug' => [],
+                'slug' => 'aplicativos',
                 'hability' => 'index',
                 'class' => \App\Aplicativo::class
             ],
             [
                 'label' => 'Conteúdos',
                 'name' => 'IndexConteudos',
-                'slug' => 'conteudos-listar',
+                'slug' => 'conteudos',
                 'hability' => 'index',
                 'class' => \App\Conteudo::class
             ],

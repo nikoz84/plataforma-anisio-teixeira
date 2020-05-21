@@ -8,7 +8,7 @@
     <div v-for="(link, i) in linksAdmin" :key="`admin-${i}`">
       <q-item
         tag="div"
-        :to="`/painel/${link.slug}`"
+        :to="`/admin/${link.slug}/listar`"
         :aria-label="`IR: ${link.label}`"
         :title="`IR: ${link.label}`"
         clickable

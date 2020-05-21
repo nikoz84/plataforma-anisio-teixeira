@@ -148,7 +148,7 @@ export default {
     },
     async getData() {
       this.$q.loading.show();
-      let path = `/${this.$route.path.split("/")[2]}`;
+      let path = `/${this.$route.params.slug}`;
       if(path){
         let resp = await axios.get(path);
         if (resp.data.success && resp.data.paginator) {

@@ -7,10 +7,19 @@
             </q-card-section>
             <q-separator inset />
             <q-card-section>
-                <q-input filled label="Escreva seu e-mail" v-model="email" type="email"></q-input>
+                <q-input filled 
+                    label="Escreva seu e-mail" 
+                    v-model="email" 
+                    type="email"
+                    :error="errors.email && errors.email.length > 0"
+                    bottom-slots>
+                    <template v-slot:error>
+                        <ShowErrors :errors="errors.email"></ShowErrors>
+                    </template>
+                </q-input>
             </q-card-section>
             <q-card-section>
-                <RecaptchaForm :errors="errors"></RecaptchaForm>
+                <RecaptchaForm :errors="errors.recaptcha"></RecaptchaForm>
             </q-card-section>
             <q-card-section>
                 <q-btn color="primary" 
@@ -24,11 +33,11 @@
 </template>
 
 <script>
-import { RecaptchaForm } from "@forms/shared";
+import { RecaptchaForm, ShowErrors } from "@forms/shared";
 
 export default {
     name : "RecoverPassForm",
-    components:{RecaptchaForm},
+    components:{RecaptchaForm, ShowErrors},
     data(){
         return {
             email : null,
@@ -44,8 +53,8 @@ export default {
             try {
                 let resp = await axios.post('/auth/recuperar-senha', data);
                 console.log(resp);
-            } catch (error) {
-                
+            } catch (e) {
+                this.errors = e.errors;
             }
         }
     },

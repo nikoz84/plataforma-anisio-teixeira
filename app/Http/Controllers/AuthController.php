@@ -166,6 +166,22 @@ class AuthController extends ApiController
      */
     public function recoverPass(Request $request)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'email' => 'required|email',
+                'recaptcha' => ['required', new \App\Rules\ValidRecaptcha]
+            ]
+        );
+
+        if ($validator->fails()) {
+            return $this->errorResponse(
+                $validator->errors(),
+                "Verifique os dados fornecidos",
+                422
+            );
+        }
+        
         $usuario = User::where('email', $request->email)->first();
 
         if (!$usuario) {
