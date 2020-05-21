@@ -84,8 +84,8 @@
 </template>
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-import { AdvancedSearchForm } from "@/forms/search";
-import  { Filters, OrderBy, CategoriasMenu } from "@/components/canais";
+import { AdvancedSearchForm } from "@forms/search";
+import  { Filters, OrderBy, CategoriasMenu } from "@components/canais";
 
 
 import {

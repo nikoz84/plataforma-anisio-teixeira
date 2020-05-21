@@ -114,7 +114,7 @@
 
 <script>
 import { QForm, QInput, QEditor, QSelect, QCard, QCardSection } from "quasar";
-import ShowErrors from "../ShowErrors.vue";
+import { ShowErrors } from "@forms/shared";
 import { prototype } from "stream";
 
 export default {

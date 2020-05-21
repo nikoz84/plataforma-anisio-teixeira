@@ -51,7 +51,7 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import { ClosePopup } from "quasar";
-import { CarouselHome, CardHome, CardHomeIcon } from "@/components/home";
+import { CarouselHome, CardHome, CardHomeIcon } from "@components/home";
 import {
   QParallax,
   ScrollFire,

@@ -38,7 +38,7 @@
   </article>
 </template>
 <script>
-import ShowErrors from "@/forms/ShowErrors.vue";
+import { ShowErrors } from "@forms/shared";
 import {QCard, QCardSection } from "quasar";
 
 export default {

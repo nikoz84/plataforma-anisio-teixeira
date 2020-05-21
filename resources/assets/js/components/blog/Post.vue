@@ -27,8 +27,7 @@
 <script>
 import { mapState } from "vuex";
 import { QCard, QCardSection, QCardActions, QChip } from "quasar";
-import Title from "@/components/Title.vue";
-import TagList from "@/components/TagList.vue";
+import { Title, TagList } from "@components/shared";
 
 export default {
   name: "Post",

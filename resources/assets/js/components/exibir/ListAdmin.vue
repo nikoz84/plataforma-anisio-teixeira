@@ -14,12 +14,11 @@ import {
   TagForm,
   RoleForm,
   TipoForm,
-  } from "@/forms/models";
+  } from "@forms/models";
 
-import SliderForm from '@/forms/SliderForm.vue';
-import Resumo from "@/pages/Resumo.vue";
-import Table from "./Table.vue";
-import { Contato }  from "@/components/exibir";
+import { SliderForm } from '@/forms/models';
+import Resumo from "@pages/Resumo.vue";
+import { Contato, Table }  from "@components/exibir";
 
 
 export default {

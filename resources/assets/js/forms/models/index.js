@@ -10,6 +10,7 @@ import RoleForm from './RoleForm';
 import TagForm from './TagForm';
 import TipoForm from './TipoForm';
 import UserForm from './UserForm';
+import SliderForm from './SliderForm';
 
 export {
     AplicativoForm,
@@ -24,6 +25,7 @@ export {
     TagForm,
     TipoForm,
     UserForm,
+    SliderForm
 };
 
 

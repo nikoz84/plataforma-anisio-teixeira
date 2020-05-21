@@ -81,7 +81,7 @@
   </div>
 </template>
 <script>
-import { SearchForm } from "@/forms/search";
+import { SearchForm } from "@forms/search";
 import { mapMutations, mapState } from "vuex";
 import {
   QMarkupTable,

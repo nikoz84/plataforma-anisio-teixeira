@@ -20,7 +20,7 @@
 </template>
 <script>
 import { QCard, QCardSection, QCardActions, QBtn, QInput } from 'quasar';
-import ShowErrors from "@/forms/ShowErrors.vue";
+import { ShowErrors } from "@forms/shared";
 
 
 export default {

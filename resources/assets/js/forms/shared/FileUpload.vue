@@ -12,7 +12,7 @@
     </q-input>
 </template>
 <script>
-import ShowErrors from "@/forms/ShowErrors.vue";
+import { ShowErrors } from "@forms/shared";
 
 export default {
   name: "FileUpload",

@@ -169,7 +169,7 @@
 
 <script>
 import { mapGetters, mapActions, mapState, mapMutations } from "vuex";
-import ShowErrors from "../ShowErrors.vue";
+import { ShowErrors } from "@forms/shared";
 import {
   QInput,
   QEditor,

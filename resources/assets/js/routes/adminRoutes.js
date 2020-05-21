@@ -1,10 +1,10 @@
-import ListAdmin from "@/components/ListAdmin.vue";
+import { ListAdmin } from "@components/exibir";
 
 const adminRoutes = {
   path: "/admin",
   name: "admin-home",
   component: () =>
-    import(/* webpackChunkName: "admin" */ "@/pages/Admin.vue"),
+    import(/* webpackChunkName: "admin" */ "@pages/Admin.vue"),
   meta: {
     requiresAuth: true
   },

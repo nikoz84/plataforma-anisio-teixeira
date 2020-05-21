@@ -56,8 +56,7 @@
 </template>
 
 <script>
-import RecaptchaForm from '../RecaptchaForm.vue';
-import ShowErrors from "@/forms/ShowErrors.vue";
+import { RecaptchaForm, ShowErrors } from "@forms/shared";
 import { mapActions, mapState, mapMutations } from "vuex";
 import {
   QCard,

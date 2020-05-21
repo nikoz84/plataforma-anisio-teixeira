@@ -7,7 +7,7 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import PaginatorCard from "@/components/PaginatorCard.vue";
+import { PaginatorCard } from "@components/paginator";
 
 export default {
   name: "Posts",

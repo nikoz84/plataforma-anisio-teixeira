@@ -66,7 +66,7 @@
 
 <script>
 import { QInput, QRadio, QDate, QBtn, date, QUploader } from "quasar";
-import FileUpload from "../FileUpload.vue";
+import { FileUpload } from "@forms/shared";
 
 export default {
   name: "UserForm",

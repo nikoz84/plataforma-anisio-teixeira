@@ -7,8 +7,8 @@
   </div>
 </template>
 <script>
-import Paginator from "../components/Paginator.vue";
-import { Posts } from "@/components/blog";
+import { Paginator }from "@components/paginator";
+import { Posts } from "@components/blog";
 import { mapState, mapActions } from "vuex";
 import { QSpinnerTail } from "quasar";
 

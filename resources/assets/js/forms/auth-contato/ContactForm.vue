@@ -91,9 +91,9 @@
 </template>
 
 <script>
-import ShowErrors from "@/forms/ShowErrors.vue";
+import { ShowErrors } from "@forms/shared";
 import { QCard, QCardSection, QImg, QForm, QInput, QSeparator } from "quasar";
-import RecaptchaForm from '@/forms/RecaptchaForm.vue';
+import { RecaptchaForm } from "@forms/shared";
 
 export default {
   name: "ContactForm",

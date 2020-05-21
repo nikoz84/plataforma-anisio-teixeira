@@ -5,7 +5,7 @@ import {
   MudarPassForm,
   ContactForm,
   ConfirmationEmailForm
-} from "@/forms/auth-contato";
+} from "@forms/auth-contato";
 
 
 
@@ -14,7 +14,7 @@ import {
 const usuarioRoutes = {
     path: "/usuario",
     name: "User",
-    component: () => import(/* webpackChunkName: "user" */ "@/pages/User.vue"),
+    component: () => import(/* webpackChunkName: "user" */ "@pages/User.vue"),
     meta: {
       requiresAuth: false
     },

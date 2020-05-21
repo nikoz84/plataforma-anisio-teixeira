@@ -69,7 +69,7 @@
 
 <script>
 import { mapState } from "vuex"
-import TagList from "@/components/TagList.vue";
+import { TagList } from "@components/shared";
 
 export default {
     name : "ConteudoMetadata",

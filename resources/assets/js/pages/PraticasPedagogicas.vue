@@ -11,7 +11,7 @@
 </template>
 <script>
 import GoogleMapsApiLoader from "google-maps-api-loader";
-import Title from "../components/Title.vue";
+import { Title } from "@components/shared";
 
 export default {
   name: "PraticasPedagogicas",

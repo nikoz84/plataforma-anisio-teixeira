@@ -2,7 +2,7 @@
 const homeRoute = {
     path: "/",
     name: "Home",
-    component: () => import(/* webpackChunkName: "home" */ "@/pages/Home.vue"),
+    component: () => import(/* webpackChunkName: "home" */ "@pages/Home.vue"),
     meta: {
       requiresAuth: false,
       title: "Inicio"
@@ -12,7 +12,7 @@ const homeRoute = {
 const galeriaRoute = {
     path: "/galeria",
     name: "Galeria",
-    component: () => import(/* webpackChunkName: "galeria" */ "@/components/home/Gallery.vue"),
+    component: () => import(/* webpackChunkName: "galeria" */ "@components/home/Gallery.vue"),
     meta: {
       requiresAuth: false,
       title: "Galeria de Imagens"
@@ -22,7 +22,7 @@ const sobreRoute = {
     path: "/sobre",
     name: "Sobre",
     component: () =>
-      import(/* webpackChunkName: "sobre" */ "@/pages/Sobre.vue"),
+      import(/* webpackChunkName: "sobre" */ "@pages/Sobre.vue"),
     meta: {
       requiresAuth: false,
       title: "Sobre a Plataforma"

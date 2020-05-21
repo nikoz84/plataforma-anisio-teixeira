@@ -29,7 +29,7 @@
   </article>
 </template>
 <script>
-import ShowErrors from "../ShowErrors.vue";
+import { ShowErrors } from "@forms/shared";
 
 export default {
   name: "TipoForm",

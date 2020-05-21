@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import RecaptchaForm from "../RecaptchaForm";
+import { RecaptchaForm } from "@forms/shared";
 
 export default {
     name : "RecoverPassForm",

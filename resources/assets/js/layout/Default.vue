@@ -98,7 +98,7 @@
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
-import { AutocompleteForm } from "@/forms/search";
+import { AutocompleteForm } from "@forms/search";
 import LeftSideBar from "./LeftSideBar.vue";
 import {
   QLayout,

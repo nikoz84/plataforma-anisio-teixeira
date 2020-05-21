@@ -35,10 +35,11 @@
 <script>
 import { mapState } from "vuex";
 import { QCard, QCardSection, QSeparator, QChip, Ripple } from "quasar";
-import { Player, PlayerActions } from "@/components/player";
-import Title from "@/components/Title";
-import ConteudoMetadata from './ConteudoMetadata';
-import ConteudoRelated from "./ConteudoRelated";
+import { Player, PlayerActions } from "@components/player";
+import { Title } from "@components/shared";
+import ConteudoMetadata from "@components/exibir/ConteudoMetadata";
+import ConteudoRelated from "@components/exibir/ConteudoRelated";
+
 
 export default {
   name: "Conteudo",
