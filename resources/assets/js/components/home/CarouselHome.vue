@@ -9,7 +9,7 @@
                 navigation
                 navigation-icon="radio_button_checked"
                 infinite
-                :autoplay="1000000"
+                :autoplay="10000"
                 arrows
                 height="250px"
                 class="accent rounded-borders"
