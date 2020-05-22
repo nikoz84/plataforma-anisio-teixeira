@@ -28,21 +28,19 @@ class ConteudoPlanilhaController extends ApiController
     public function buscarJsonNoGoogleSpreadsheets($googleKey)
     {
         $conteudoPlanilha = new ConteudoPlanilha();
-        $dados = $conteudoPlanilha->buscarJsonNoGoogleSpreadsheets($googleKey);
-
-        //dd($conteudoPlanilha->formatarJson($dados));
-        $this->create($conteudoPlanilha->formatarJson($dados));
+        $this->create($conteudoPlanilha->formatarJsonEmArray(
+            $conteudoPlanilha->buscarJsonNoGoogleSpreadsheets($googleKey)
+        ));
     }
 
     public function create($dados)
     {
-    	$conteudoPlanilha = new ConteudoPlanilha();
-    	$conteudoPlanilha->name = 'teste';
-    	$conteudoPlanilha->document = ['teste' => 'testando'];
+        foreach ($dados as $dado) {
+            $conteudoPlanilha = new ConteudoPlanilha();
+            $conteudoPlanilha->name = $dado['name'];
+            $conteudoPlanilha->document = ['actions' => $dado['actions']];
 
-    	$conteudoPlanilha->save();
-
-    	
-
+            $conteudoPlanilha->save();
+        }
     }
 }

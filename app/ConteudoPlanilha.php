@@ -16,12 +16,16 @@ class ConteudoPlanilha extends Model
     use SoftDeletes, UserCan;
 
     protected $table = 'conteudos_planilha';
+    protected $casts = ['document' => 'array']; 
 
     protected $fillable = [
         'name',
         'document'
     ];
-
+    
+    /**
+    * Metodo usado para 
+    */
     public function buscarJsonNoGoogleSpreadsheets($googleKey)
     {
         $url = "https://script.googleusercontent.com/macros/";
@@ -33,7 +37,7 @@ class ConteudoPlanilha extends Model
         return $jsonStr['result'];
     }
 
-    public function formatarJson($dados)
+    public function formatarJsonEmArray($dados)
     {
         $novaEstrutura = [];
         $ids = [];
@@ -51,7 +55,7 @@ class ConteudoPlanilha extends Model
                     //$novaEstrutura[$i]['id'] = $dado['id'];
                     $novaEstrutura[$i]['name'] = $dado['faculdade'];
 
-                    $novaEstrutura[$i]['actions'][$key] = [
+                    $novaEstrutura[$i]['actions'][] = [
                         //'id' => $dado['id'],
                         'name' => $dado['nome'],
                         'description' => $dado['descricao'],
