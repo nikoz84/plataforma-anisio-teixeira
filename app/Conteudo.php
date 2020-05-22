@@ -291,7 +291,7 @@ class Conteudo extends Model
             ->orderByRaw('ts_rank(ts_documento, plainto_tsquery(?, lower(unaccent(?)))) DESC', [$type, $search]);
     }
     /**
-     * Filtro de busca por tags e incrementa das veces buscada
+     * Filtro de busca por tags e incrementa as veces buscada
      *
      * @param $query Eloquent\Query
      * @param $id    id da palavra chave

@@ -60,7 +60,13 @@ class SideBar
 
         return $links->map(function ($link) use ($user) {
             if ($user->can($link['hability'], $link['class'])) {
-                return $this->createMenu($link['label'], $link['slug']);
+                return $this->createMenu(
+                    $link['label'],
+                    $link['name'],
+                    $link['slug']
+                );
+            } else {
+                return;
             }
         });
     }
@@ -74,14 +80,13 @@ class SideBar
      * @param string $action
      * @return void
      */
-    public function createMenu($label, $slug, $name = '', $view = 'admin', $action = 'listar')
+    public function createMenu($label, $name, $slug)
     {
 
         return [
             "label" => $label,
-            "name" => $name ? $name : $slug,
-            "view" => $view,
-            "params" => ["slug" => $slug, "action" => $action]
+            "name" => $name,
+            "slug" => $slug
         ];
     }
     /**
@@ -94,66 +99,77 @@ class SideBar
         return collect([
             [
                 'label' => 'Aplicativos',
+                'name' => 'IndexAplicativos',
                 'slug' => 'aplicativos',
                 'hability' => 'index',
                 'class' => \App\Aplicativo::class
             ],
             [
-                'label' => 'Conteudos',
+                'label' => 'Conteúdos',
+                'name' => 'IndexConteudos',
                 'slug' => 'conteudos',
                 'hability' => 'index',
                 'class' => \App\Conteudo::class
             ],
             [
                 'label' => 'Canais',
+                'name' => 'IndexCanais',
                 'slug' => 'canais',
                 'hability' => 'index',
                 'class' => \App\Canal::class
             ],
             [
                 'label' => 'Fale Conosco',
+                'name' => 'IndexContatos',
                 'slug' => 'contato',
                 'hability' => 'index',
                 'class' => \App\Contato::class
             ],
             [
                 'label' => 'Options',
+                'name' => 'IndexOptions',
                 'slug' => 'options',
                 'hability' => 'index',
                 'class' => \App\Options::class
             ],
             [
                 'label' => 'Licenças',
+                'name' => 'IndexLicencas',
                 'slug' => 'licencas',
                 'hability' => 'index',
                 'class' => \App\License::class
             ],
             [
                 'label' => 'Tipo de Usuário',
+                'name' => 'IndexRoles',
                 'slug' => 'roles',
                 'hability' => 'index',
                 'class' => \App\Role::class
             ],
             [
                 'label' => 'Palavras Chaves',
+                'name' => 'IndexTags',
                 'slug' => 'tags',
                 'hability' => 'index',
                 'class' => \App\Tag::class
             ],
             [
                 'label' => 'Tipos de Conteúdos',
+                'name' => 'IndexTipos',
                 'slug' => 'tipos',
                 'hability' => 'index',
                 'class' => \App\Tipo::class
             ],
             [
                 'label' => 'Usuários',
+                'name' => 'IndexUsuarios',
                 'slug' => 'usuarios',
                 'hability' => 'index',
                 'class' => \App\User::class
             ],
             [
                 'label' => 'Categorias',
+                'name' => 'IndexCategorias',
                 'slug' => 'categorias',
                 'hability' => 'index',
                 'class' => \App\Category::class

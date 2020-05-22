@@ -34,8 +34,8 @@ class OptionsController extends ApiController
     }
 
     /**
-     * Método responsável por criar slider 
-     * 
+     * Método responsável por criar slider
+     *
      * @return \Illuminate\Http\Response
      */
     public function createDestaques(Request $request)
@@ -52,6 +52,8 @@ class OptionsController extends ApiController
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar o Slider", 422);
         }
+        
+        $this->authorize('destaques', Options::class);
 
         $path = $this->saveFile($request);
 

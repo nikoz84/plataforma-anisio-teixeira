@@ -50,11 +50,8 @@
 </template>
 <script>
 import { mapState, mapMutations } from "vuex";
-import CardHome from "../components/CardHome.vue";
-import CardHomeIcon from "../components/CardHomeIcon.vue";
 import { ClosePopup } from "quasar";
-import CarouselHome from "../components/CarouselHome.vue";
-
+import { CarouselHome, CardHome, CardHomeIcon } from "@components/home";
 import {
   QParallax,
   ScrollFire,

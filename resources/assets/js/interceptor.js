@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Notify, Dialog, Loading } from "quasar";
-import router from "./router";
+import router from "./routes";
 import store from "./store";
 
 axios.interceptors.response.use(

@@ -24,7 +24,8 @@ class ConteudoController extends ApiController
             'getByTagId',
             'getSitesTematicos',
             'incorporarConteudo',
-            'conteudosRelacionados'
+            'conteudosRelacionados',
+            'conteudosPlanilha'
         ]);
         $request = $request;
     }

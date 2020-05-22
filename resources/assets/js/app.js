@@ -2,7 +2,7 @@ import "./bootstrap";
 import Vue from "vue";
 
 import VueRouter from "vue-router";
-import router from "./router";
+import router from "./routes/index.js";
 import VueApexCharts from "vue-apexcharts";
 import VuePlyr from "vue-plyr";
 import Vuex from "vuex";
