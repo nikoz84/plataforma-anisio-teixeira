@@ -67,4 +67,9 @@ class ConteudoPlanilha extends Model
 
         return $novaEstrutura;
     }
+
+    public function conteudos()
+    {
+    	return $this->select();
+    }
 }

@@ -20,7 +20,8 @@ class ConteudoPlanilhaController extends ApiController
     public function __construct(Request $request)
     {
         $this->middleware('auth:api')->except([
-            'buscarJsonNoGoogleSpreadsheets'
+            'buscarJsonNoGoogleSpreadsheets',
+            'conteudos'
         ]);
         $request = $request;
     }
@@ -42,5 +43,11 @@ class ConteudoPlanilhaController extends ApiController
 
             $conteudoPlanilha->save();
         }
+    }
+
+    public function conteudos(Request $request)
+    {
+        $conteudoPlanilha = new ConteudoPlanilha();
+        echo json_encode($conteudoPlanilha->conteudos()->paginate($request->query('page')));
     }
 }
