@@ -1,12 +1,12 @@
 <template>
     <q-list bordered>
         <q-item clickable v-ripple v-for="(relacionado, i) in relacionados" :key="i">
-            <q-item-section thumbnail>
+            <q-item-section thumbnail class="q-px-sm" >
                 <img :src="relacionado.image">
             </q-item-section>
-            <q-item-section>
-                <strong :title="relacionado.title">
-                    {{ relacionado.short_title }}
+            <q-item-section top>
+                <strong class="related-title" :title="relacionado.title">
+                    {{ relacionado.title }}
                 </strong>
             </q-item-section>
             <q-separator />
@@ -41,6 +41,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+.related-title{
+    line-height: 1.3;
+    font-size: 0.9em;
+}
 
 </style>

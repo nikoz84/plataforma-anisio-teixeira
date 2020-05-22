@@ -1,7 +1,7 @@
 <template>
   <div class="row justify-start" v-if="conteudo">
     
-    <div class="col-9" >
+    <div class="col-md-8 col-sm-12" >
       <q-card>
         <div class="player col-12 q-mt-sm">
           <Player :arquivos="conteudo.arquivos" :tipo="conteudo.tipo"></Player>
@@ -25,8 +25,9 @@
       </q-card>
     </div>
 
-    <div class="col-3">
-      <q-card class="q-mt-sm q-ml-sm">
+    <div class="col-md-4 col-sm-12">
+      <q-card class="q-mt-sm q-ml-sm q-pt-xs">
+        <strong class="q-pa-sm" >Conteúdo Relacionado</strong>
         <ConteudoRelated></ConteudoRelated>
       </q-card>
     </div>
@@ -73,24 +74,6 @@ export default {
 .conteudo-descricao{
   font-size: 1rem;
   line-height: 1.3rem;
-}
-
-@media (max-width: 599px){
-  .player{
-  order: 1;
-}
-
-.descritivo{
-  order: 3;
-}
-
-.acoes{
-  order: 2;
-}
-
-.ficha-tecnica{
-  order: 4;
-}
 }
 
 </style>
