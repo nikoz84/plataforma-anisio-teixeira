@@ -1,6 +1,5 @@
 <template>
     <div>
-        <q-responsive :ratio="1/9" class="col" style="max-height:100vh; height: 35vh;">
             <q-carousel
                 swipeable
                 animated
@@ -9,24 +8,24 @@
                 control-color="primary"
                 navigation
                 navigation-icon="radio_button_checked"
-                padding
                 infinite
-                :autoplay="5000"
+                :autoplay="1000000"
                 arrows
+                height="250px"
                 class="accent rounded-borders"
             >
-                <q-carousel-slide 
-                :name="1" 
+                <q-carousel-slide style="background-size: contain; background-repeat: no-repeat;"
+                :name="1"
                 img-src="/storage/conteudos/slider/banner_ensinosuperior.png">
                 <div class="absolute-bottom custom-caption">
-                    <q-btn style="z-index: 10; margin: 0 0 3px 3px;" round outline color="accent" icon="directions"></q-btn>
+                    <q-btn style="z-index: 10;" class="q-ma-md" round outline color="accent" icon="directions"></q-btn>
                 </div>
                 </q-carousel-slide>
-                <q-carousel-slide 
+                <q-carousel-slide style="background-size: contain; background-repeat: no-repeat;"
                 :name="2" 
                 img-src="/storage/conteudos/slider/banner_rotinas-de-estudo.png">
                 <div class="absolute-bottom custom-caption">
-                    <q-btn style="z-index: 10; margin: 0 0 3px 3px;" round outline color="accent" icon="directions"></q-btn>
+                    <q-btn style="z-index: 10;" class="q-ma-md" round outline color="accent" icon="directions"></q-btn>
                 </div>
                 </q-carousel-slide>
                 <q-carousel-slide 
@@ -40,7 +39,6 @@
                 </q-carousel-slide>
 
             </q-carousel>
-        </q-responsive>
     </div>
 </template>
 <script>
@@ -65,3 +63,9 @@ export default {
     }
 }
 </script>
+<style lang="stylus" scoped>
+.q-carousel__slide{
+  width: 100% !important;
+  height : 25vh !important;
+}
+</style>
