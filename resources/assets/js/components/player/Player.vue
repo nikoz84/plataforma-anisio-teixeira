@@ -1,35 +1,32 @@
 <template>
-    <div class="row" v-if="conteudo && conteudo.tipo && conteudo.arquivos">
-          <q-card-section class="col-sm-12" v-if="conteudo.tipo.id == 5">
-            <PlayerVideo  :download="conteudo.arquivos.download"
-                        :visualizacao="conteudo.arquivos.visualizacao"
-                        :image="conteudo.image">
-            </PlayerVideo>
-          </q-card-section>
-          <q-card-section class="col-sm-12" v-else-if="conteudo.tipo.id == 4">
-            <q-img style="max-height: 380px; max-width: 640px;" :src="conteudo.image">
-              <PlayerAudio :download="conteudo.arquivos.download"
-                          :visualizacao="conteudo.arquivos.visualizacao"
-                          :image="conteudo.image">
-              </PlayerAudio>
-            </q-img>
-          </q-card-section>
-          <q-card-section class="col-sm-12" v-else-if="conteudo.tipo.id == 6">
-            <PlayerImage :image="showImage"></PlayerImage>
-          </q-card-section>
-          <q-card-section class="col-sm-12" v-else>
-            <PlayerImage :image="conteudo.image"></PlayerImage>
-          </q-card-section>
-    </div>
+  <q-card-section class="row" v-if="conteudo && conteudo.tipo && conteudo.arquivos">
+    <q-media-player
+      type="video"
+      :sources="sources"
+      autoplay
+      :poster="showImage"
+      :volume="25"
+      v-if="tipo.id == 5"
+    ></q-media-player>
+
+    <q-media-player
+      type="audio"
+      :sources="sources"
+      autoplay
+      :poster="showImage"
+      :volume="25"
+      v-else-if="tipo.id == 4"
+    ></q-media-player>
+
+    <q-img v-else :src="showImage"
+        placeholder-src="/img/fundo-padrao.svg" 
+        style="height: 380px; max-width: 680px;">
+    </q-img>
+  </q-card-section>  
 </template>
 
 <script>
 import { mapState } from "vuex";
-import PlayerVideo from "./PlayerVideo.vue";
-import PlayerAudio from "./PlayerAudio.vue";
-import PlayerImage from "./PlayerImage.vue";
-
-
 import {
   QCard,
   QCardActions,
@@ -49,18 +46,15 @@ export default {
     QBtn,
     QBtnGroup,
     QImg,
-    QSpace,
-    PlayerVideo,
-    PlayerAudio,
-    PlayerImage
+    QSpace
   },
+  props: ["arquivos", "tipo"],
   data() {
     return {
-      //
+      image: null,
+      selectPlayer: null,
+      type: null
     };
-  },
-  mounted() {
-    //
   },
   computed: {
     ...mapState(["conteudo"]),
@@ -72,11 +66,36 @@ export default {
       } else {
         return this.conteudo.image;
       }
-    }
+    },
+    sources() {
+      if(this.conteudo.arquivos){
+        return [
+          { 
+            src: this.arquivos.download.url, 
+            type: this.arquivos.download.mime_type
+          },
+          { 
+            src: this.arquivos.visualizacao.url, 
+            type: this.arquivos.visualizacao.mime_type
+          }
+        ]
+      }
+      
+    },
   },
-
   methods: {
     
+    fileExists(file){
+      if(file.hasOwnProperty('url'))
+      {
+        this.sources.push({
+          src: file.url,
+          type: file.mime_type
+        })
+      }
+      
+    }
+
   }
 };
 </script>

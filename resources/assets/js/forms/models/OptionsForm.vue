@@ -1,15 +1,21 @@
 <template>
-    <div>
-        {{name}} {{options}}
-    </div>
+  <article class="q-pa-md">
+    <div :is="componentForm" :item="item"></div>
+  </article>
 </template>
 <script>
+
 export default {
   name: "OptionsForm",
+  components: {
+    slider : () => import('./SliderForm.vue'),
+    layout: () => import('./LayoutForm.vue'),
+    estados: () => import('./EstadosForm.vue')
+  },
   data() {
     return {
-      name: "",
-      options: []
+      componentForm: '',
+      item: null
     };
   },
   mounted() {
@@ -17,10 +23,9 @@ export default {
   },
   methods: {
     async getOptions() {
-      let resp = await axios.get(`/options`, { name: this.name });
-
-      console.warn(resp.data);
-      this.options = resp.data.options;
+      let { data } = await axios.get(`/options/id/${this.$route.params.id}`);
+      this.componentForm = data.metadata.name;
+      this.item = data.metadata;
     }
   }
 };

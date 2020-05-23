@@ -143,9 +143,6 @@ export default {
         this.$emit("update:leftDrawerOpen", val);
       }
     }
-  },
-  mounted() {
-    console.warn(this.$route)
-  },
+  }
 };
 </script>

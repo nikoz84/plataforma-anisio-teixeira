@@ -19,7 +19,8 @@ mix.webpackConfig({
       '@': __dirname + '/resources/assets/js',
       '@components': __dirname + '/resources/assets/js/components',
       '@forms': __dirname + '/resources/assets/js/forms',
-      '@pages': __dirname + '/resources/assets/js/pages'
+      '@pages': __dirname + '/resources/assets/js/pages',
+      '@mixins': __dirname + '/resources/assets/js/mixins'
       
     },
   },

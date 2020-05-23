@@ -1,4 +1,4 @@
-import { ListAdmin } from "@components/exibir";
+import { LoaderAdmin } from "@components/exibir";
 
 const adminRoutes = {
   path: "/admin",
@@ -13,8 +13,8 @@ const adminRoutes = {
       path: ":slug/:action/:id?",
       name: "admin",
       components: {
-        default: ListAdmin,
-        admin: ListAdmin
+        default: LoaderAdmin,
+        admin: LoaderAdmin
       },
       meta: {
         requiresAuth: true,

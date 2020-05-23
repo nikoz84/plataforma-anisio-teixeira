@@ -35,7 +35,6 @@ export default {
             
             const {data} = await axios.get('/conteudos/relacionados/' + this.$route.params.id);
             this.relacionados = data.metadata;
-            console.log(this.relacionados)
         }
     }
 }

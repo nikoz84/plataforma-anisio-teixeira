@@ -146,6 +146,7 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::put('/options/{name}', 'OptionsController@update')->name('atualizar.opcoes.x.nome');
     Route::delete('/options/{name}', 'OptionsController@delete')->name('apagar.opcoes.x.nome');
     Route::post('/options/destaques/', 'OptionsController@createDestaques')->name('cria.destaques');
+    Route::get('/options/id/{id}', 'OptionsController@getById')->name('opcao.x.id');
     /** ANALYTICS */
     Route::get('/analytics', 'HomeController@getAnalytics')->name('catalogacao.blog.e.plataforma');
 });

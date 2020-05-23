@@ -14,9 +14,9 @@ import {
   TagForm,
   RoleForm,
   TipoForm,
+  OptionsForm
   } from "@forms/models";
 
-import { SliderForm } from '@/forms/models';
 import Resumo from "@pages/Resumo.vue";
 import { Contato, Table }  from "@components/exibir";
 
@@ -32,11 +32,10 @@ export default {
     tags: TagForm,
     roles: RoleForm,
     tipos: TipoForm,
+    options: OptionsForm,
     contato: Contato,
-    SliderForm,
     listar: Table,
-    Resumo,
-    
+    resumo: Resumo,
   },
   data() {
     return {
@@ -65,7 +64,7 @@ export default {
           this.componentName = this.$route.params.slug;
           break;
         case this.$route.params.slug == "analytics":
-          this.componentName = "Resumo";
+          this.componentName = "resumo";
           break;
       }
     }

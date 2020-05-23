@@ -17,7 +17,7 @@
 <script>
 import { QTab, QMenu, QList, QItem, QItemSection, ClosePopup } from "quasar";
 import { mapState } from "vuex";
-import { QueryString } from '../../mixins/QueryString'
+import { QueryString } from '@/mixins/QueryString';
 
 export default {
   name: "Filters",

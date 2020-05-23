@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { QueryString } from '../../mixins/QueryString';
+import { QueryString } from '@/mixins/QueryString';
 
 export default {
     name : "OrderBy",

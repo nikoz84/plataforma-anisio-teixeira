@@ -16,7 +16,7 @@ class OptionsController extends ApiController
 {
     public function __construct(Options $options)
     {
-        $this->middleware('jwt.auth')->except(['getByName']);
+        $this->middleware('jwt.auth')->except(['getByName', 'getById']);
         $this->options = $options;
     }
 
@@ -182,5 +182,11 @@ class OptionsController extends ApiController
             'success' => true,
             'options' => $option,
         ]);
+    }
+    public function getById($id)
+    {
+        $option = $this->options::findOrFail($id);
+
+        return $this->showOne($option);
     }
 }

@@ -5,7 +5,7 @@ import Aplicativo from './Aplicativo';
 import Contato from './Contato';
 import Table from './Table';
 import NotFound from './NotFound';
-import ListAdmin from './ListAdmin';
+import LoaderAdmin from './LoaderAdmin';
 
 export {
     Conteudo,
@@ -14,6 +14,6 @@ export {
     Aplicativo,
     Contato,
     Table,
-    ListAdmin,
+    LoaderAdmin,
     NotFound
 };

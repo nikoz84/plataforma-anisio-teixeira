@@ -51,8 +51,10 @@ export default {
                 recaptcha: grecaptcha.getResponse()
             }
             try {
-                let resp = await axios.post('/auth/recuperar-senha', data);
-                console.log(resp);
+                let {data} = await axios.post('/auth/recuperar-senha', data);
+                if(data.success){
+                    console.log(data)
+                }
             } catch (e) {
                 this.errors = e.errors;
             }
