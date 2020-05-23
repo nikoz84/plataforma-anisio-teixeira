@@ -24,8 +24,7 @@ class ConteudoController extends ApiController
             'getByTagId',
             'getSitesTematicos',
             'incorporarConteudo',
-            'conteudosRelacionados',
-            'conteudosPlanilha'
+            'conteudosRelacionados'
         ]);
         $request = $request;
     }
@@ -330,39 +329,5 @@ class ConteudoController extends ApiController
             ->limit($limit)->get();
         
         return $this->successResponse($conteudos);
-    }
-
-    public function conteudosPlanilha($googleKey)
-    {
-        $conteudo = new Conteudo();
-        $dados = $conteudo->buscarJsonNoGoogleSpreadsheets($googleKey);
-
-        $novaEstrutura = [];
-        $ids = [];
-
-        foreach($dados as $key => $dado) {
-            if ( ! in_array($dado['id'], $ids)) {
-                array_push($ids, $dado['id']);
-            }
-        }
-
-        foreach($dados as $key => $dado) {
-            for ($i = 0; $i < count($ids); $i++) {
-                if ($dado['id'] == $ids[$i]) {
-
-                    $novaEstrutura[$i]['id'] = $dado['id'];
-                    $novaEstrutura[$i]['name'] = $dado['faculdade'];
-
-                    $novaEstrutura[$i]['actions'][$key] = [
-                        'id' => $dado['id'],
-                        'name' => $dado['nome'],
-                        'description' => $dado['descricao'],
-                        'link' => $dado['link']
-                    ];
-                }
-            }
-        }
-
-        echo json_encode($novaEstrutura);
     }
 }

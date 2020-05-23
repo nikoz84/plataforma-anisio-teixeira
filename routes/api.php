@@ -39,7 +39,6 @@ use Illuminate\Support\Facades\Route;
     Route::get('/conteudos/{id}', 'ConteudoController@getById')->name('busca.x.conteudo.id');
     Route::get('/conteudos/tag/{id}', 'ConteudoController@getByTagId')->name('busca.x.tag.id');
     Route::get('/conteudos/relacionados/{id}', 'ConteudoController@conteudosRelacionados')->name('busca.x.id');
-    Route::get('/conteudos/planilha/{googleKey}', 'ConteudoController@conteudosPlanilha')->name('busca.planilha');
 
     /** BLOG */
     Route::get('/posts', 'WordpressController@index')->name('lista.postagens');
@@ -68,6 +67,13 @@ use Illuminate\Support\Facades\Route;
     Route::get('/licencas', 'LicenseController@index')->name('listar.licencas');
     /** DOWNLOAD FILE **/
     Route::get('/files/{action}/{id}', 'FileController@downloadFile')->name('downloadFile.id');
+    
+    /** CONTEUDO PLANILHA **/
+    Route::get('/planilha/buscar/{googleKey}', 
+        'ConteudoPlanilhaController@buscarJsonNoGoogleSpreadsheets')->name('busca.planilha');
+
+    Route::get('/planilha', 'ConteudoPlanilhaController@conteudos')->name('conteudo.planilha');
+    
 
 /**
  *

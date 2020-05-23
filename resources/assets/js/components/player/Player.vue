@@ -80,22 +80,7 @@ export default {
           }
         ]
       }
-      
-    },
-  },
-  methods: {
-    
-    fileExists(file){
-      if(file.hasOwnProperty('url'))
-      {
-        this.sources.push({
-          src: file.url,
-          type: file.mime_type
-        })
-      }
-      
     }
-
   }
 };
 </script>

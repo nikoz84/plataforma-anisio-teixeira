@@ -2,11 +2,11 @@
   <section class="q-pa-lg">
     <CarouselHome></CarouselHome>
     <!-- BOTÕES DAS MODALIDADES DE ENSINO #INÍCIO -->
-    <div class="q-py-xl row justify-center q-gutter-xs">
+    <div class="q-py-xl row justify-center q-gutter-lg">
     
-      <q-btn stack size="sm" class="col-xs-5 col-sm-2" color="petecavermelho" text-color="white" label="Ensino Fundamental I" icon="img:img\biblioteca_icon_pb-49.svg" />
-      <q-btn stack size="sm" class="col-xs-5 col-sm-2" color="petecaamarelo" text-color="white" label="Ensino Fundamental II" icon="img:img\biblioteca_icon_pb-49.svg" />
-      <q-btn stack size="sm" class="col-xs-5 col-sm-2"  color="petecaazul" text-color="white" label="Ensino Médio" icon="img:img\biblioteca_icon_pb-49.svg" />
+      <q-btn stack size="md" class="col-xs-5 col-sm-3" color="petecavermelho" text-color="white" label="Ensino Fundamental I" icon="img:img\biblioteca_icon_pb-49.svg" />
+      <q-btn stack size="md" class="col-xs-5 col-sm-3" color="petecaamarelo" text-color="white" label="Ensino Fundamental II" icon="img:img\biblioteca_icon_pb-49.svg" />
+      <q-btn stack size="md" class="col-xs-5 col-sm-3"  color="petecaazul" text-color="white" label="Ensino Médio" icon="img:img\biblioteca_icon_pb-49.svg" />
     
     </div>
 
@@ -167,9 +167,4 @@ export default {
   }
 };
 </script>
-<style lang="stylus" scoped>
-.q-carousel__slide{
-  width: 100% !important;
-  height : 25vh !important;
-}
-</style>
+
