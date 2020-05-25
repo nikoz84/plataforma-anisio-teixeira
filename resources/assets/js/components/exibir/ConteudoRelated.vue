@@ -6,7 +6,7 @@
             </q-item-section>
             <q-item-section top>
                 <strong class="related-title" :title="relacionado.title">
-                    {{ relacionado.title }}
+                    {{ relacionado.short_title }}
                 </strong>
             </q-item-section>
             <q-separator />

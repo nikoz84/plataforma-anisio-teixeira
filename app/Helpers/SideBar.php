@@ -126,7 +126,7 @@ class SideBar
                 'class' => \App\Contato::class
             ],
             [
-                'label' => 'Options',
+                'label' => 'Opções de sistema',
                 'name' => 'IndexOptions',
                 'slug' => 'options',
                 'hability' => 'index',

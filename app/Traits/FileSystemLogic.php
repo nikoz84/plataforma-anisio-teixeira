@@ -36,7 +36,18 @@ trait FileSystemLogic
 
         return ($exist) ? Storage::disk('conteudos-digitais')->url($image) : null;
     }
-
+    public static function getCategoryImage($category_id)
+    {
+        $path_category = self::windowsDirectory(
+            Storage::disk('conteudos-digitais')->path("imagem-associada/categoria/{$category_id}.*")
+        );
+        
+        $file = self::windowsDirectory(collect(File::glob($path_category))->first());
+        $filename = basename($file);
+        
+        return $filename ? Storage::disk('conteudos-digitais')
+            ->url("imagem-associada/categoria/{$filename}") : null;
+    }
     /**
      * Retorna imagem de destaque
      *
@@ -52,7 +63,7 @@ trait FileSystemLogic
         );
 
         $file = self::findFiles($path_assoc, $id, $tipo);
-
+        
         if ($file) {
             $replace = Storage::disk('conteudos-digitais')->url("imagem-associada/{$file}");
             return str_replace('//sinopse', '/sinopse', $replace);

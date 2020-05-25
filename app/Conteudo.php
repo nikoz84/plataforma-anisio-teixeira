@@ -208,7 +208,7 @@ class Conteudo extends Model
      */
     public function getShortTitleAttribute()
     {
-        return Str::words($this->title, 5);
+        return Str::words($this->title, 7);
     }
     /**
      * Converte o título para slug ou url amigável
@@ -235,9 +235,9 @@ class Conteudo extends Model
     public function getArquivosAttribute()
     {
         return [
-            'download'      => $this->getMetaDados('download', $this['id']),
-            'visualizacao'  => $this->getMetaDados('visualizacao', $this['id']),
-            'guias-pedagogicos'          => $this->getMetaDados('guias-pedagogicos', $this['id']),
+            'download'           => $this->getMetaDados('download', $this['id']),
+            'visualizacao'       => $this->getMetaDados('visualizacao', $this['id']),
+            'guias-pedagogicos'  => $this->getMetaDados('guias-pedagogicos', $this['id']),
         ];
     }
     /**
@@ -250,13 +250,17 @@ class Conteudo extends Model
         $id = $this['id'];
         $canal = $this['canal_id'];
         $tipo = $this['tipo_id'];
-        $components = $this->componentes();
-
+        $category_id = $this['category_id'];
+        
         if ($canal == 2) {
-            return $this::getEmitecImage($components);
-        } else {
-            return $this::getImageFromTipo($tipo, $id);
+            return $this::getEmitecImage($this->componentes());
+        } elseif ($canal == 1) {
+            $category_img = $this::getCategoryImage($category_id);
+            
+            return isset($category_img) ? $category_img : $this::getImageFromTipo($tipo, $id);
         }
+        
+        return $this::getImageFromTipo($tipo, $id);
     }
 
     /**
