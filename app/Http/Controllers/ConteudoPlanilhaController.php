@@ -21,7 +21,8 @@ class ConteudoPlanilhaController extends ApiController
     {
         $this->middleware('auth:api')->except([
             'buscarJsonNoGoogleSpreadsheets',
-            'conteudos'
+            'conteudos',
+            'buscarJsonRotinaDeEstudosNoGoogleSpreadsheets'
         ]);
         $request = $request;
     }
@@ -49,5 +50,13 @@ class ConteudoPlanilhaController extends ApiController
     {
         $conteudoPlanilha = new ConteudoPlanilha();
         echo json_encode($conteudoPlanilha->conteudos()->paginate($request->query('page')));
+    }
+
+    public function buscarJsonRotinaDeEstudosNoGoogleSpreadsheets($googleKey)
+    {
+        $conteudoPlanilha = new ConteudoPlanilha();
+       
+        dd($conteudoPlanilha->buscarJsonNoGoogleSpreadsheets($googleKey));
+        
     }
 }

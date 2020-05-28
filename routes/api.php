@@ -72,7 +72,11 @@ use Illuminate\Support\Facades\Route;
     Route::get('/planilha/buscar/{googleKey}', 
         'ConteudoPlanilhaController@buscarJsonNoGoogleSpreadsheets')->name('busca.planilha');
 
-    Route::get('/planilha', 'ConteudoPlanilhaController@conteudos')->name('conteudo.planilha');
+    Route::get('/planilha/buscar/rotina/de/estudos/{googleKey}', 
+        'ConteudoPlanilhaController@buscarJsonRotinaDeEstudosNoGoogleSpreadsheets')
+    ->name('busca.planilha.rotina.de.estudos');
+
+    Route::get('/planilhas', 'ConteudoPlanilhaController@conteudos')->name('conteudo.planilha');
     
 
 /**
