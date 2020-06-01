@@ -50,13 +50,9 @@ class ConteudoPlanilha extends Model
 
         foreach($dados as $key => $dado) {
             for ($i = 0; $i < count($ids); $i++) {
-
                 if ($dado['id'] == $ids[$i]) {
-                    //$novaEstrutura[$i]['id'] = $dado['id'];
                     $novaEstrutura[$i]['name'] = $dado['faculdade'];
-
                     $novaEstrutura[$i]['actions'][] = [
-                        //'id' => $dado['id'],
                         'name' => $dado['nome'],
                         'description' => $dado['descricao'],
                         'link' => $dado['link']

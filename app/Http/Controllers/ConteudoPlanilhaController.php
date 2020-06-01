@@ -56,7 +56,47 @@ class ConteudoPlanilhaController extends ApiController
     {
         $conteudoPlanilha = new ConteudoPlanilha();
        
-        dd($conteudoPlanilha->buscarJsonNoGoogleSpreadsheets($googleKey));
+        $dados = $conteudoPlanilha->buscarJsonNoGoogleSpreadsheets($googleKey);
+
+        $novaEstrutura = [];
+        $semanas = [];
+        $dias = [
+            'segunda-feira',
+            'terca-feira',
+            'quarta-feira',
+            'quinta-feira',
+            'sexta-feira'
+        ];
+
+        foreach ($dados['semanas'] as $semana) {
+            array_push($semanas, $semana['slug']);
+        }
+
+        //dd($semanas);
+
+        foreach ($dados['semanas'] as $semana) {
+
+            //$novaEstrutura['semana'][] = $semana['semana'];
+
+            foreach ($dados['rotinas'] as $k => $rotina) {
+
+                if (in_array($semana['slug'], $semanas) &&  in_array($rotina['dia'], $dias)) {
+
+                    $novaEstrutura['semanas'][$semana['slug']][$rotina['dia']] = [
+                        'dia' => $rotina['dia'],
+                        'atividade' => $rotina['atividade'],
+                        'descricao' => $rotina['descricao'],
+                        'sugestao' => $rotina['sugestao'],
+                        'link' => $rotina['link'],
+                        'nivel-ensino' => $rotina['nivel-ensino']                    ];
+                }
+            }
+
+        }
+
+        //dd($novaEstrutura);
+
+        echo json_encode($novaEstrutura);
         
     }
 }
