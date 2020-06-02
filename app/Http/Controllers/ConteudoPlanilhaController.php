@@ -20,19 +20,30 @@ class ConteudoPlanilhaController extends ApiController
     public function __construct(Request $request)
     {
         $this->middleware('auth:api')->except([
-            'buscarJsonNoGoogleSpreadsheets',
+            'buscarJsonFaculdadesDaBahiaNoGoogleSpreadsheets',
             'conteudos',
             'buscarJsonRotinaDeEstudosNoGoogleSpreadsheets'
         ]);
         $request = $request;
     }
 
-    public function buscarJsonNoGoogleSpreadsheets($googleKey)
+    public function buscarJsonFaculdadesDaBahiaNoGoogleSpreadsheets($googleKey)
     {
         $conteudoPlanilha = new ConteudoPlanilha();
-        $this->create($conteudoPlanilha->formatarJsonEmArray(
+        $this->create($conteudoPlanilha->formatarJsonFaculdadesDaBahia(
             $conteudoPlanilha->buscarJsonNoGoogleSpreadsheets($googleKey)
         ));
+    }
+
+    public function buscarJsonRotinaDeEstudosNoGoogleSpreadsheets($googleKey)
+    {
+        $conteudoPlanilha = new ConteudoPlanilha();
+        $dados = $conteudoPlanilha->buscarJsonNoGoogleSpreadsheets($googleKey);
+
+        $json = $conteudoPlanilha->formatarJsonRotinasDeEstudo($dados);
+
+        dd($json);
+        
     }
 
     public function create($dados)
@@ -50,53 +61,5 @@ class ConteudoPlanilhaController extends ApiController
     {
         $conteudoPlanilha = new ConteudoPlanilha();
         echo json_encode($conteudoPlanilha->conteudos()->paginate($request->query('page')));
-    }
-
-    public function buscarJsonRotinaDeEstudosNoGoogleSpreadsheets($googleKey)
-    {
-        $conteudoPlanilha = new ConteudoPlanilha();
-       
-        $dados = $conteudoPlanilha->buscarJsonNoGoogleSpreadsheets($googleKey);
-
-        $novaEstrutura = [];
-        $semanas = [];
-        $dias = [
-            'segunda-feira',
-            'terca-feira',
-            'quarta-feira',
-            'quinta-feira',
-            'sexta-feira'
-        ];
-
-        foreach ($dados['semanas'] as $semana) {
-            array_push($semanas, $semana['slug']);
-        }
-
-        //dd($semanas);
-
-        foreach ($dados['semanas'] as $semana) {
-
-            //$novaEstrutura['semana'][] = $semana['semana'];
-
-            foreach ($dados['rotinas'] as $k => $rotina) {
-
-                if (in_array($semana['slug'], $semanas) &&  in_array($rotina['dia'], $dias)) {
-
-                    $novaEstrutura['semanas'][$semana['slug']][$rotina['dia']] = [
-                        'dia' => $rotina['dia'],
-                        'atividade' => $rotina['atividade'],
-                        'descricao' => $rotina['descricao'],
-                        'sugestao' => $rotina['sugestao'],
-                        'link' => $rotina['link'],
-                        'nivel-ensino' => $rotina['nivel-ensino']                    ];
-                }
-            }
-
-        }
-
-        //dd($novaEstrutura);
-
-        echo json_encode($novaEstrutura);
-        
     }
 }

@@ -69,8 +69,8 @@ use Illuminate\Support\Facades\Route;
     Route::get('/files/{action}/{id}', 'FileController@downloadFile')->name('downloadFile.id');
     
     /** CONTEUDO PLANILHA **/
-    Route::get('/planilha/buscar/{googleKey}', 
-        'ConteudoPlanilhaController@buscarJsonNoGoogleSpreadsheets')->name('busca.planilha');
+    Route::get('/planilha/buscar/faculdades/da/bahia{googleKey}', 
+        'ConteudoPlanilhaController@buscarJsonFaculdadesDaBahiaNoGoogleSpreadsheets')->name('busca.planilha');
 
     Route::get('/planilha/buscar/rotina/de/estudos/{googleKey}', 
         'ConteudoPlanilhaController@buscarJsonRotinaDeEstudosNoGoogleSpreadsheets')
