@@ -37,7 +37,7 @@ class ConteudoPlanilha extends Model
         return $jsonStr['result'];
     }
 
-    public function formatarJsonEmArray($dados)
+    public function formatarJsonFaculdadesDaBahia($dados)
     {
         $novaEstrutura = [];
         $ids = [];
@@ -50,13 +50,9 @@ class ConteudoPlanilha extends Model
 
         foreach($dados as $key => $dado) {
             for ($i = 0; $i < count($ids); $i++) {
-
                 if ($dado['id'] == $ids[$i]) {
-                    //$novaEstrutura[$i]['id'] = $dado['id'];
                     $novaEstrutura[$i]['name'] = $dado['faculdade'];
-
                     $novaEstrutura[$i]['actions'][] = [
-                        //'id' => $dado['id'],
                         'name' => $dado['nome'],
                         'description' => $dado['descricao'],
                         'link' => $dado['link']
@@ -66,6 +62,37 @@ class ConteudoPlanilha extends Model
         }
 
         return $novaEstrutura;
+    }
+
+    public function formatarJsonRotinasDeEstudo($dados)
+    {
+        $novaEstrutura = [];
+        $semanas = [];
+        $dias = [
+            'segunda-feira',
+            'terca-feira',
+            'quarta-feira',
+            'quinta-feira',
+            'sexta-feira'
+        ];
+
+        foreach ($dados['semanas'] as $semana) {
+            array_push($semanas, $semana['slug']);
+        }
+
+        foreach ($dados['semanas'] as $semana) {
+            foreach ($dados['rotinas'] as $k => $rotina) {
+                if (in_array($semana['slug'], $semanas) && in_array($rotina['dia'], $dias)) {
+                    $novaEstrutura['rotinas'][$semana['slug']][$rotina['dia']][$rotina['nivel-ensino']]['atividades'][] = [
+                        'descricao' => $rotina['descricao'],
+                        'link' => $rotina['link'],
+                        'sugestao' => $rotina['sugestao']                
+                    ];
+                }
+            }
+        }
+
+        return json_encode($novaEstrutura);
     }
 
     public function conteudos()
