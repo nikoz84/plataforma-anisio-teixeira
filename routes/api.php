@@ -159,4 +159,7 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::get('/options/id/{id}', 'OptionsController@getById')->name('opcao.x.id');
     /** ANALYTICS */
     Route::get('/analytics', 'HomeController@getAnalytics')->name('catalogacao.blog.e.plataforma');
+    /** RELATÓRIOS */
+    Route::get('/usuarios/role/{role_id}', 'RelatorioController@buscarUsuariosPorRole')->name('view.relatorio.usuario');
+    Route::get('/relatorio/usuarios/role/{role_id}/{is_active?}', 'RelatorioController@gerarPdf')->name('gerar.relatorio.usuario');
 });
