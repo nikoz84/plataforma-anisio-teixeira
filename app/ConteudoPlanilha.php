@@ -68,22 +68,16 @@ class ConteudoPlanilha extends Model
     {
         $novaEstrutura = [];
         $semanas = [];
-        $dias = [
-            'segunda-feira',
-            'terca-feira',
-            'quarta-feira',
-            'quinta-feira',
-            'sexta-feira'
-        ];
+        $dias = $this->diasDaSemanaPorExtenso();
 
         foreach ($dados['semanas'] as $semana) {
             array_push($semanas, $semana['slug']);
         }
 
-        foreach ($dados['semanas'] as $semana) {
-            foreach ($dados['rotinas'] as $k => $rotina) {
+        foreach ($dados['semanas'] as $key => $semana) {
+            foreach ($dados['rotinas'] as $rotina) {
                 if (in_array($semana['slug'], $semanas) && in_array($rotina['dia'], $dias)) {
-                    $novaEstrutura['rotinas'][$semana['slug']][$rotina['dia']][$rotina['nivel-ensino']]['atividades'][] = [
+                    $novaEstrutura['rotinas'][$key][$semana['slug']][$rotina['dia']][$rotina['nivel-ensino']]['atividades'][] = [
                         'descricao' => $rotina['descricao'],
                         'link' => $rotina['link'],
                         'sugestao' => $rotina['sugestao']                
@@ -92,11 +86,22 @@ class ConteudoPlanilha extends Model
             }
         }
 
-        return json_encode($novaEstrutura);
+        return $novaEstrutura;
     }
 
     public function conteudos()
     {
     	return $this->select();
+    }
+
+    public function diasDaSemanaPorExtenso()
+    {
+        return  [
+            'segunda-feira',
+            'terca-feira',
+            'quarta-feira',
+            'quinta-feira',
+            'sexta-feira'
+        ];
     }
 }

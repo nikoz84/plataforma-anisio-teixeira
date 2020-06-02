@@ -30,7 +30,7 @@ class ConteudoPlanilhaController extends ApiController
     public function buscarJsonFaculdadesDaBahiaNoGoogleSpreadsheets($googleKey)
     {
         $conteudoPlanilha = new ConteudoPlanilha();
-        $this->create($conteudoPlanilha->formatarJsonFaculdadesDaBahia(
+        $this->createFaculdadesDaBahia($conteudoPlanilha->formatarJsonFaculdadesDaBahia(
             $conteudoPlanilha->buscarJsonNoGoogleSpreadsheets($googleKey)
         ));
     }
@@ -38,15 +38,12 @@ class ConteudoPlanilhaController extends ApiController
     public function buscarJsonRotinaDeEstudosNoGoogleSpreadsheets($googleKey)
     {
         $conteudoPlanilha = new ConteudoPlanilha();
-        $dados = $conteudoPlanilha->buscarJsonNoGoogleSpreadsheets($googleKey);
-
-        $json = $conteudoPlanilha->formatarJsonRotinasDeEstudo($dados);
-
-        dd($json);
-        
+        $this->createRotinasDeEstudo($conteudoPlanilha->formatarJsonRotinasDeEstudo(
+            $conteudoPlanilha->buscarJsonNoGoogleSpreadsheets($googleKey)
+        )); 
     }
 
-    public function create($dados)
+    public function createFaculdadesDaBahia($dados)
     {
         foreach ($dados as $dado) {
             $conteudoPlanilha = new ConteudoPlanilha();
@@ -54,6 +51,19 @@ class ConteudoPlanilhaController extends ApiController
             $conteudoPlanilha->document = ['actions' => $dado['actions']];
 
             $conteudoPlanilha->save();
+        }
+    }
+
+    public function createRotinasDeEstudo($dados)
+    {
+        $i = 0;
+        dd(count($dados['rotinas']));
+        foreach ($dados['rotinas'] as $dado) {
+            
+            $conteudoPlanilha = new ConteudoPlanilha();
+          
+            echo array_keys($dado[$i]);
+            echo $i++;
         }
     }
 
