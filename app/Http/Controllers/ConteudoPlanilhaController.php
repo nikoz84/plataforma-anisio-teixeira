@@ -56,14 +56,16 @@ class ConteudoPlanilhaController extends ApiController
 
     public function createRotinasDeEstudo($dados)
     {
-        $i = 0;
-        dd(count($dados['rotinas']));
-        foreach ($dados['rotinas'] as $dado) {
-            
+        foreach ($dados['rotinas'] as $arrayDados) {
             $conteudoPlanilha = new ConteudoPlanilha();
-          
-            echo array_keys($dado[$i]);
-            echo $i++;
+            $semanas = array_keys($arrayDados)[0];
+            $conteudoPlanilha->name = $semanas;
+
+            foreach ($arrayDados as $dado) {
+                $conteudoPlanilha->document = ['actions' => $dado];
+            }
+
+            $conteudoPlanilha->save(); 
         }
     }
 
