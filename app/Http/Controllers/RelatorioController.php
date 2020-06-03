@@ -26,7 +26,7 @@ class RelatorioController extends ApiController
      *
      * @return pdf
      */
-    public function gerarPdf($role_id, $is_active)
+    public function gerarPdfUsuarios($role_id, $is_active)
     {
         $user = new User();
         $users = $user->users_role_content($role_id, $is_active);
