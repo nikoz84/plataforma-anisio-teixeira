@@ -447,10 +447,11 @@ class Conteudo extends Model
 
         $contents = DB::select("SELECT 
             max(con.qt_downloads) as quantity, 
-            tip.name as type, con.title, con.description, con.authors, con.is_approved
+            tip.name as type, con.title, con.description, use.name as creator, con.is_approved
             FROM public.conteudos con
             INNER JOIN tipos tip on con.tipo_id = tip.id
-            GROUP BY (con.qt_downloads, tip.name, con.title, con.description, con.authors, con.is_approved)
+            INNER JOIN users use on use.id = con.user_id
+            GROUP BY (con.qt_downloads, tip.name, con.title, con.description, use.name, con.is_approved)
             ORDER BY (con.qt_downloads) DESC
             LIMIT 100");
 
@@ -461,10 +462,11 @@ class Conteudo extends Model
 
         $contents = DB::select("SELECT 
             max(con.qt_access) as quantity, 
-            tip.name as type, con.title, con.description, con.authors, con.is_approved
+            tip.name as type, con.title, con.description, use.name as creator, con.is_approved
             FROM public.conteudos con
             INNER JOIN tipos tip on con.tipo_id = tip.id
-            GROUP BY (con.qt_access, tip.name, con.title, con.description, con.authors, con.is_approved)
+            INNER JOIN users use on use.id = con.user_id
+            GROUP BY (con.qt_access, tip.name, con.title, con.description, use.name, con.is_approved)
             ORDER BY (con.qt_access) DESC
             LIMIT 100");
 

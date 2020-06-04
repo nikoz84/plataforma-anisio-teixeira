@@ -51,7 +51,7 @@
                                                                       <tr>
                                                                                 <th>TÍTULO</th>
                                                                                 <th>TIPO</th>
-                                                                                <th>AUTOR</th>
+                                                                                <th>CRIADOR</th>
                                                                                 <th>QTD. {{$flag}}</th>
                                                                       </tr>
                                                             </thead>
@@ -62,7 +62,7 @@
                                                                                 <?php ?>
                                                                                 <td>{{mb_strimwidth($content->title, 0, 50, "...")}}</td>
                                                                                 <td>{{$content->type}}</td>
-                                                                                <td>{{$content->authors}}</td>
+                                                                                <td>{{$content->creator}}</td>
                                                                                 <td>{{number_format($content->quantity,0,".",".")}}</td>
                                                                       </tr>
                                                                       @endforeach
