@@ -44,8 +44,11 @@ class RelatorioController extends ApiController
     {
         $content = new Conteudo();
 
-        if(is_null($flag) && $flag != 'baixados' && $flag != 'vizualizados')
-            return $this->errorResponse([], " Falta passar segundo parâmentro, '/baixados ou /vizualizados' ", 422);
+        $contents = [];
+        $title = null;
+
+        if ((is_null($flag) || ($flag != 'baixados' && $flag != 'vizualizados')))
+            return $this->errorResponse([], " Falta passar segundo paramentro, '/baixados ou /vizualizados' ", 422);
 
         if ($flag == 'baixados') {
             $contents = $content->contents_max_downlaoad();
