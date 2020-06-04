@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Conteudo;
 use App\User;
 use Barryvdh\DomPDF\Facade as PDF;
 
@@ -26,11 +27,38 @@ class RelatorioController extends ApiController
      *
      * @return pdf
      */
-    public function gerarPdfUsuarios($role_id, $is_active)
+    public function gerarPdfUsuario($role_id, $is_active = null)
     {
         $user = new User();
         $users = $user->users_role_content($role_id, $is_active);
 
         return PDF::loadView('relatorios.pdf-usuarios', compact('users'))->setPaper('a4')->stream('relatório_usuários.pdf');
+    }
+
+    /**
+     * Gerador de relatório de conteúdo (.pdf)
+     *
+     * @return pdf
+     */
+    public function gerarPdfConteudo($flag = null)
+    {
+        $content = new Conteudo();
+
+        if(is_null($flag) && $flag != 'baixados' && $flag != 'vizualizados')
+            return $this->errorResponse([], " Falta passar segundo parâmentro, '/baixados ou /vizualizados' ", 422);
+
+        if ($flag == 'baixados') {
+            $contents = $content->contents_max_downlaoad();
+            $title = 'LISTA DE 100 CONTEÚDOS DIGITAIS MAIS BAIXADOS';
+            $flag = 'DOWNLOAD';
+        }
+
+        if ($flag == 'vizualizados') {
+            $contents = $content->contents_max_access();
+            $title = 'LISTA DE 100 CONTEÚDOS DIGITAIS MAIS VIZUALIZADOS';
+            $flag = 'ACESSOS';
+        }
+
+        return PDF::loadView('relatorios.pdf-conteudo', compact('contents', 'title', 'flag'))->setPaper('a4')->stream('relatório_conteúdos.pdf');
     }
 }

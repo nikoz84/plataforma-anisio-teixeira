@@ -3,7 +3,7 @@
 
 <head>
           <meta charset="UTF-8">
-          <title>PDF de usuários</title>
+          <title>PDF de conteúdos digitais</title>
 
           <style>
                     table,
@@ -40,7 +40,7 @@
           <div class="container">
                     <div class="">
                               <header>
-                                        <h2 style=" text-align: center">LISTA DE USUÁRIOS</h2>
+                                        <h2 style=" text-align: center">{{$title}}</h2>
                               </header>
                               <br><br>
 
@@ -49,26 +49,26 @@
                                                   <table class="table">
                                                             <thead>
                                                                       <tr>
-                                                                                <th>NOME</th>
-                                                                                <th>FUNÇÃO</th>
-                                                                                <th>QTD. CONTEÚDOS GERADOS</th>
-                                                                                <th>STATUS</th>
+                                                                                <th>TÍTULO</th>
+                                                                                <th>TIPO</th>
+                                                                                <th>AUTOR</th>
+                                                                                <th>QTD. {{$flag}}</th>
                                                                       </tr>
                                                             </thead>
                                                             <tbody>
-                                                                      @if(count($users))
-                                                                      @foreach($users as $user)
+                                                                      @if(count($contents))
+                                                                      @foreach($contents as $content)
                                                                       <tr>
                                                                                 <?php ?>
-                                                                                <td>{{$user->usuario}}</td>
-                                                                                <td>{{$user->funcao}}</td>
-                                                                                <td>{{$user->total_conteudo}}</td>
-                                                                                <td>{{$user->is_active == 'true' ? 'ativo' : 'inativo'}}</td>
+                                                                                <td>{{mb_strimwidth($content->title, 0, 50, "...")}}</td>
+                                                                                <td>{{$content->type}}</td>
+                                                                                <td>{{$content->authors}}</td>
+                                                                                <td>{{number_format($content->quantity,0,".",".")}}</td>
                                                                       </tr>
                                                                       @endforeach
                                                                       @else
                                                                       <tr>
-                                                                                <td colspan="4">Nenhum resgistro encontrado...</td>
+                                                                                <td colspan="5">Nenhum resgistro encontrado...</td>
                                                                       </tr>
                                                                       @endif
                                                             </tbody>

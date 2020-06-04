@@ -78,6 +78,8 @@ use Illuminate\Support\Facades\Route;
 
     Route::get('/planilhas', 'ConteudoPlanilhaController@conteudos')->name('conteudo.planilha');
     
+    Route::get('/relatorio/conteudos/{flag}', 'RelatorioController@gerarPdfConteudo')->name('gerar.relatorio.conteudo');
+    Route::get('/relatorio/usuarios/role/{role_id}/{is_active?}', 'RelatorioController@gerarPdfUsuario')->name('gerar.relatorio.usuario');
 
 /**
  *
@@ -161,5 +163,4 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::get('/analytics', 'HomeController@getAnalytics')->name('catalogacao.blog.e.plataforma');
     /** RELATÓRIOS */
     Route::get('/usuarios/role/{role_id}', 'RelatorioController@buscarUsuariosPorRole')->name('view.relatorio.usuario');
-    Route::get('/relatorio/usuarios/role/{role_id}/{is_active?}', 'RelatorioController@gerarPdfUsuarios')->name('gerar.relatorio.usuario');
 });
