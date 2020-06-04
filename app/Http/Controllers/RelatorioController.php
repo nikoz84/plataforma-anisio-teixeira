@@ -47,7 +47,7 @@ class RelatorioController extends ApiController
         $contents = [];
         $title = null;
 
-        if ((is_null($flag) || ($flag != 'baixados' && $flag != 'vizualizados')))
+        if ((is_null($flag) || ($flag != 'baixados' && $flag != 'visualizados')))
             return $this->errorResponse([], " Falta passar segundo paramentro, '/baixados ou /vizualizados' ", 422);
 
         if ($flag == 'baixados') {
@@ -56,9 +56,9 @@ class RelatorioController extends ApiController
             $flag = 'DOWNLOAD';
         }
 
-        if ($flag == 'vizualizados') {
+        if ($flag == 'visualizados') {
             $contents = $content->contents_max_access();
-            $title = 'LISTA DE 100 CONTEÚDOS DIGITAIS MAIS VIZUALIZADOS';
+            $title = 'LISTA DE 100 CONTEÚDOS DIGITAIS MAIS VISUALIZADOS';
             $flag = 'ACESSOS';
         }
 
