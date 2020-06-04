@@ -51,7 +51,7 @@
                                                                       <tr>
                                                                                 <th>TÍTULO</th>
                                                                                 <th>TIPO</th>
-                                                                                <th>CRIADOR</th>
+                                                                                <th>PUBLICADOR</th>
                                                                                 <th>QTD. {{$flag}}</th>
                                                                       </tr>
                                                             </thead>
