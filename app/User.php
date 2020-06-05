@@ -348,7 +348,8 @@ class User extends Authenticatable implements JWTSubject
         inner join roles rol on rol.id = use.role_id
         left join conteudos con on con.user_id = use.id
         where use.role_id = {$role_id} {$aux}
-        group By (use.id, use.options, use.name, use.email, rol.name)");
+        group By (use.id, use.options, use.name, use.email, rol.name)
+        order by (use.name) asc");
 
         return $users;
     }

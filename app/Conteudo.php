@@ -441,4 +441,35 @@ class Conteudo extends Model
             "conteudos.ts_documento @@ plainto_tsquery('simple', lower(unaccent('{$tags}')))"
         )->where('id', '!=', $id);
     }
+
+
+    public function contents_max_downlaoad(){
+
+        $contents = DB::select("SELECT 
+            max(con.qt_downloads) as quantity, 
+            tip.name as type, con.title, con.description, use.name as creator, con.is_approved
+            FROM public.conteudos con
+            INNER JOIN tipos tip on con.tipo_id = tip.id
+            INNER JOIN users use on use.id = con.user_id
+            GROUP BY (con.qt_downloads, tip.name, con.title, con.description, use.name, con.is_approved)
+            ORDER BY (con.qt_downloads) DESC
+            LIMIT 100");
+
+        return $contents;
+    }
+
+    public function contents_max_access(){
+
+        $contents = DB::select("SELECT 
+            max(con.qt_access) as quantity, 
+            tip.name as type, con.title, con.description, use.name as creator, con.is_approved
+            FROM public.conteudos con
+            INNER JOIN tipos tip on con.tipo_id = tip.id
+            INNER JOIN users use on use.id = con.user_id
+            GROUP BY (con.qt_access, tip.name, con.title, con.description, use.name, con.is_approved)
+            ORDER BY (con.qt_access) DESC
+            LIMIT 100");
+
+        return $contents;
+    }
 }
