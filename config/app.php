@@ -172,6 +172,8 @@ return [
         Jenssegers\Date\DateServiceProvider::class,
         Jaybizzle\LaravelCrawlerDetect\LaravelCrawlerDetectServiceProvider::class,
         Buglinjo\LaravelWebp\WebpServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -234,6 +236,7 @@ return [
         'Webp' => Buglinjo\LaravelWebp\Facades\Webp::class,
         'Date' => Jenssegers\Date\Date::class,
         'Crawler'   => Jaybizzle\LaravelCrawlerDetect\Facades\LaravelCrawlerDetect::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

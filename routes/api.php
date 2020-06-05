@@ -69,11 +69,17 @@ use Illuminate\Support\Facades\Route;
     Route::get('/files/{action}/{id}', 'FileController@downloadFile')->name('downloadFile.id');
     
     /** CONTEUDO PLANILHA **/
-    Route::get('/planilha/buscar/{googleKey}', 
-        'ConteudoPlanilhaController@buscarJsonNoGoogleSpreadsheets')->name('busca.planilha');
+    Route::get('/planilha/buscar/faculdades/da/bahia/{googleKey}', 
+        'ConteudoPlanilhaController@buscarJsonFaculdadesDaBahiaNoGoogleSpreadsheets')->name('busca.planilha');
 
-    Route::get('/planilha', 'ConteudoPlanilhaController@conteudos')->name('conteudo.planilha');
+    Route::get('/planilha/buscar/rotina/de/estudos/{googleKey}', 
+        'ConteudoPlanilhaController@buscarJsonRotinaDeEstudosNoGoogleSpreadsheets')
+    ->name('busca.planilha.rotina.de.estudos');
+
+    Route::get('/planilhas', 'ConteudoPlanilhaController@conteudos')->name('conteudo.planilha');
     
+    Route::get('/relatorio/conteudos/{flag}', 'RelatorioController@gerarPdfConteudo')->name('gerar.relatorio.conteudo');
+    Route::get('/relatorio/usuarios/role/{role_id}/{is_active?}', 'RelatorioController@gerarPdfUsuario')->name('gerar.relatorio.usuario');
 
 /**
  *
@@ -155,4 +161,6 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::get('/options/id/{id}', 'OptionsController@getById')->name('opcao.x.id');
     /** ANALYTICS */
     Route::get('/analytics', 'HomeController@getAnalytics')->name('catalogacao.blog.e.plataforma');
+    /** RELATÓRIOS */
+    Route::get('/usuarios/role/{role_id}', 'RelatorioController@buscarUsuariosPorRole')->name('view.relatorio.usuario');
 });

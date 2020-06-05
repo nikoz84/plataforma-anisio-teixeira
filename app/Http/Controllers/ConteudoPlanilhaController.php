@@ -20,21 +20,30 @@ class ConteudoPlanilhaController extends ApiController
     public function __construct(Request $request)
     {
         $this->middleware('auth:api')->except([
-            'buscarJsonNoGoogleSpreadsheets',
-            'conteudos'
+            'buscarJsonFaculdadesDaBahiaNoGoogleSpreadsheets',
+            'conteudos',
+            'buscarJsonRotinaDeEstudosNoGoogleSpreadsheets'
         ]);
         $request = $request;
     }
 
-    public function buscarJsonNoGoogleSpreadsheets($googleKey)
+    public function buscarJsonFaculdadesDaBahiaNoGoogleSpreadsheets($googleKey)
     {
         $conteudoPlanilha = new ConteudoPlanilha();
-        $this->create($conteudoPlanilha->formatarJsonEmArray(
+        $this->createFaculdadesDaBahia($conteudoPlanilha->formatarJsonFaculdadesDaBahia(
             $conteudoPlanilha->buscarJsonNoGoogleSpreadsheets($googleKey)
         ));
     }
 
-    public function create($dados)
+    public function buscarJsonRotinaDeEstudosNoGoogleSpreadsheets($googleKey)
+    {
+        $conteudoPlanilha = new ConteudoPlanilha();
+        $this->createRotinasDeEstudo($conteudoPlanilha->formatarJsonRotinasDeEstudo(
+            $conteudoPlanilha->buscarJsonNoGoogleSpreadsheets($googleKey)
+        )); 
+    }
+
+    public function createFaculdadesDaBahia($dados)
     {
         foreach ($dados as $dado) {
             $conteudoPlanilha = new ConteudoPlanilha();
@@ -42,6 +51,21 @@ class ConteudoPlanilhaController extends ApiController
             $conteudoPlanilha->document = ['actions' => $dado['actions']];
 
             $conteudoPlanilha->save();
+        }
+    }
+
+    public function createRotinasDeEstudo($dados)
+    {
+        foreach ($dados['rotinas'] as $arrayDados) {
+            $conteudoPlanilha = new ConteudoPlanilha();
+            $semanas = array_keys($arrayDados)[0];
+            $conteudoPlanilha->name = $semanas;
+
+            foreach ($arrayDados as $dado) {
+                $conteudoPlanilha->document = ['actions' => $dado];
+            }
+
+            $conteudoPlanilha->save(); 
         }
     }
 
