@@ -447,7 +447,7 @@ class Conteudo extends Model
 
         $contents = DB::select("SELECT 
             max(con.qt_downloads) as quantity, 
-            tip.name as type, con.title, con.description, use.name as creator, con.is_approved
+            tip.name as type, con.title, con.description, use.name as publisher, con.is_approved
             FROM public.conteudos con
             INNER JOIN tipos tip on con.tipo_id = tip.id
             INNER JOIN users use on use.id = con.user_id
@@ -462,7 +462,7 @@ class Conteudo extends Model
 
         $contents = DB::select("SELECT 
             max(con.qt_access) as quantity, 
-            tip.name as type, con.title, con.description, use.name as creator, con.is_approved
+            tip.name as type, con.title, con.description, use.name as publisher, con.is_approved
             FROM public.conteudos con
             INNER JOIN tipos tip on con.tipo_id = tip.id
             INNER JOIN users use on use.id = con.user_id
