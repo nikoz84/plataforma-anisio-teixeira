@@ -90,8 +90,21 @@ trait FileSystemLogic
             $file = collect(File::glob($path_sinopse))->shuffle()->first();
         }
 
-
         return Str::replaceFirst($path . '/', '', $file);
+    }
+
+    public static function getAplicativoImage($id)
+    {
+        $image = self::windowsDirectory(Storage::disk('aplicativos-educacionais')
+        ->path("imagem-associada/") . "{$id}.*");
+        
+        $file = collect(File::glob($image))->first();
+
+        $filename = basename($file);
+        
+        return $filename ? Storage::disk('aplicativos-educacionais')
+            ->url("imagem-associada/{$filename}") : null;
+        
     }
     /**
      * Seleciona os metadados do arquivo

@@ -11,8 +11,10 @@
         :aria-label="item.name" 
         style="width: 200px"
         >
-          <q-avatar left size="60px">
-            <img :src="item.icon">
+          <q-avatar left square>
+            <svg class="icon-pat" height="45" width="45">
+              <use v-bind="{'xlink:href':'#'+ item.icon}"></use> 
+            </svg>
           </q-avatar>
           <div>{{item.name}}</div>
       </q-btn>
@@ -33,7 +35,7 @@ export default {
 
 <!--  STYLE CRIADO PARA A SEPARATRIZ DOS TÍTULOS -->
 
-<style scoped lang="stylus">
+<style lang="stylus">
 
   .separatriz
     border 1px solid

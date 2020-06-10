@@ -35,10 +35,9 @@ body {
   font-weight: 500 false;
   font-display: swap;
   color: #263238;
-/*BLUE-GREY-10*/
 }
 /*
- * Quasar Framework v1.11.3
+ * Quasar Framework v1.12.3
  * (c) 2015-present Razvan Stoenescu
  * Released under the MIT License.
  */
@@ -1715,6 +1714,9 @@ body.q-ios-padding .q-dialog__inner > div {
 .q-dialog-plugin {
   width: 400px;
 }
+.q-dialog-plugin__form {
+  max-height: 50vh;
+}
 .q-dialog-plugin .q-card__section + .q-card__section {
   padding-top: 0;
 }
@@ -2293,6 +2295,9 @@ body.q-ios-padding .q-dialog__inner > div {
 }
 .q-field--outlined.q-field--rounded .q-field__control {
   border-radius: 28px;
+}
+.q-field--outlined.q-field--focused .q-field__control:hover:before {
+  border-color: transparent;
 }
 .q-field--outlined.q-field--focused .q-field__control:after {
   border-color: currentColor;
@@ -3446,38 +3451,37 @@ body.platform-ios:not(.native-mobile) .q-dialog__inner--top .q-select__dialog--f
 .q-separator--horizontal {
   display: block;
   height: 1px;
-  min-height: 1px;
   width: 100%;
 }
-.q-separator--horizontal.q-separator--spaced {
+.q-separator--horizontal-spaced {
   margin-top: 8px;
   margin-bottom: 8px;
 }
-.q-separator--horizontal.q-separator--inset {
+.q-separator--horizontal-inset {
   margin-left: 16px;
   margin-right: 16px;
   width: calc(100% - 32px);
 }
-.q-separator--horizontal.q-separator--item-inset {
+.q-separator--horizontal-item-inset {
   margin-left: 72px;
   margin-right: 0;
   width: calc(100% - 72px);
 }
-.q-separator--horizontal.q-separator--item-thumbnail-inset {
+.q-separator--horizontal-item-thumbnail-inset {
   margin-left: 116px;
   margin-right: 0;
   width: calc(100% - 116px);
 }
 .q-separator--vertical {
   width: 1px;
-  min-width: 1px;
   height: inherit;
+  align-self: stretch;
 }
-.q-separator--vertical.q-separator--spaced {
+.q-separator--vertical-spaced {
   margin-left: 8px;
   margin-right: 8px;
 }
-.q-separator--vertical.q-separator--inset {
+.q-separator--vertical-inset {
   margin-top: 8px;
   margin-bottom: 8px;
 }
@@ -4331,7 +4335,7 @@ body.desktop .q-slider.q-slider--editable:hover .q-slider__arrow--v {
   max-width: 100%;
 }
 .q-table__bottom {
-  min-height: 48px;
+  min-height: 50px;
   padding: 4px 14px 4px 16px;
   font-size: 12px;
 }

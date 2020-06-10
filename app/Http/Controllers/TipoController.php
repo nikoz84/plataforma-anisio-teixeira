@@ -34,10 +34,11 @@ class TipoController extends ApiController
         return $this->showAsPaginator($paginator);
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        //dd($request->all());
         $validator = Validator::make(
-            $this->request->all(),
+            $request->all(),
             [
                 'name' => 'required'
             ]
@@ -45,13 +46,14 @@ class TipoController extends ApiController
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar o tipo", 422);
         }
-        return $this->successResponse($this->request->all(), $this->request->id);
+
+        return $this->successResponse($request->all());
         $tipo = new Tipo;
 
         $this->authorize('create', JWTAuth::user());
 
-        $tipo->name = $this->request->name;
-        $tipo->options = json_decode($this->request->options, true);
+        $tipo->name = $request->name;
+        $tipo->options = json_decode($request->options, true);
 
         if (!$tipo->save()) {
             return $this->errorResponse($tipo, 'Não foi possível editar o tipo de conteúdo', 422);

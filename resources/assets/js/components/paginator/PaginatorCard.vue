@@ -9,7 +9,7 @@
       :style="`height:230px;min-height: 230px; width: 100%;backgroud-color:${color};`"
       placeholder-src="/img/fundo-padrao.svg"
     >
-      <div class="text-lowercase absolute-bottom-right">
+      <div class="absolute-bottom-right">
         <q-btn 
           round 
           no-wrap 
@@ -17,12 +17,18 @@
           class="bg-cinza" 
           text-color="black" 
           v-if="item.tipo && item.tipo.icon"
+          :title="item.tipo.name"
           >
            <q-avatar size="25px">
-             <img :src="item.tipo.icon">
+             <svg class="icon-pat" height="20" width="20">
+              <use v-bind="{'xlink:href':'#'+ item.tipo.icon}"></use> 
+            </svg>
            </q-avatar>
         </q-btn>
-        <div v-if="item.category" >{{item.category.name}}</div>
+        <div v-if="item.category" 
+          :title="`Categoria: ${item.category.name}`">
+            {{ item.category.name }}
+        </div>
       </div>
       </q-img>
       <q-card-section>
@@ -39,6 +45,7 @@
                   params: { slug: slug, id: item.id, action: 'exibir' }
               }"
           v-html="title"
+          :title="`Título: ${title}`"
         />
       </div>
     </q-card-section>
