@@ -5,69 +5,30 @@
         {{canal && canal.options ? canal.options.extend_name : canal.name }}
       </div>
     </header>
-
-
-<q-toolbar :style="`background-color:${color}`" class="text-white shadow-3">
     <q-tabs
+      :style="`background-color:${color}`" 
+      class="text-white shadow-3"
       dense
+      shrink
+      no-caps
       inline-label
-      align="left">
-        <q-route-tab
-          name="inicio"
-          label="Sobre"
-          :to="{ name: 'Inicio', params: { slug: $route.params.slug } }"
-          v-if="canal && canal.options && canal.options.has_home"
-        />
-        <q-route-tab
-          name="listar"
-          label="Listar"
-          :to="{ name: 'Listar', params: { slug: $route.params.slug } }"
-        />
-        
-      </q-tabs>
+      >
+      <q-route-tab
+        name="inicio"
+        label="SOBRE"
+        :to="{ name: 'Inicio', params: { slug: $route.params.slug } }"
+        v-if="canal && canal.options && canal.options.has_home"
+      />
+      <q-route-tab
+        name="listar"
+        label="LISTAR"
+        :to="{ name: 'Listar', params: { slug: $route.params.slug } }"
+      />
       <q-space />
-      <!--
-        notice shrink property since we are placing it
-        as child of QToolbar
-      -->
-      <q-tabs align="right"
-        shrink
-        stretch>
-        <OrderBy></OrderBy>
-        <CategoriasMenu></CategoriasMenu>
-        <Filters></Filters>
-      </q-tabs>
-    </q-toolbar>
-
-<!--
-    <q-tabs inline-label
-          shrink
-          dense
-          stretch 
-          align="center" 
-          class="text-white shadow-3" 
-          :style="`background-color:${color}`">
-        <q-route-tab
-          name="inicio"
-          label="Sobre"
-          :to="{ name: 'Inicio', params: { slug: $route.params.slug } }"
-          v-if="canal && canal.options && canal.options.has_home"
-        />
-        <q-route-tab
-          name="listar"
-          label="Listar"
-          :to="{ name: 'Listar', params: { slug: $route.params.slug } }"
-        />
-        <q-space />
-        <OrderBy></OrderBy>
-        <CategoriasMenu></CategoriasMenu>
-        <Filters></Filters>
-        
-        <q-space />
+      <OrderBy></OrderBy>
+      <CategoriasMenu></CategoriasMenu>
+      <Filters></Filters>
     </q-tabs>
-
--->
-    
     <q-card class="q-my-sm q-pl-sm">
       <q-badge color="white" text-color="dark" v-if="paginator" v-text="totalCount" />
     </q-card>
@@ -86,15 +47,13 @@
 import { mapState, mapActions, mapMutations } from "vuex";
 import { AdvancedSearchForm } from "@forms/search";
 import  { Filters, OrderBy, CategoriasMenu } from "@components/canais";
-
-
 import {
   QTabs,
+  QTab,
   QRouteTab,
   QSeparator,
   QSpace,
   QSelect,
-  QTab,
   QInput,
   QCard,
   QMenu,
@@ -190,8 +149,25 @@ export default {
   }
 };
 </script>
-<style lang="stylus" scoped>
+<style lang="stylus">
+$text-color = #004081
+$background-cinza = #e1e2e1
 
-  
-
+.q-tabs__arrow--right {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  color: $text-color;
+  background-color: $background-cinza !important;
+}
+.q-tabs__arrow--left {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  color: $text-color;
+  background-color: $background-cinza !important;
+}
+.q-tabs__arrow--faded {
+  display: none;
+}
 </style>

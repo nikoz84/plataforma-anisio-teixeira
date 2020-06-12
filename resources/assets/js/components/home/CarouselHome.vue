@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="q-mb-xl">
         <q-carousel
             swipeable
             animated
@@ -22,13 +22,14 @@
                 :img-src="slide.image">
             </q-carousel-slide>
         </q-carousel>
-        <transition name="fade" mode="out-in" tag="div">
-            <q-card class="featured" v-show="showTitle" flat bordered>
-                <q-card-actions @click="goTo(activeSlide.url)">
-                    {{ activeSlide.title }}
-                </q-card-actions>
+        <transition name="fade" mode="out-in">
+            <q-card class="featured" v-show="showTitle" flat>
+                <q-card-section class="text-right bg-blue-grey-1 color-grey-9" @click="goTo(activeSlide.url)">
+                    SAIBA MAIS
+                </q-card-section>
             </q-card>
         </transition>
+        <q-separator ></q-separator>
     </div>
 </template>
 <script>
@@ -81,10 +82,9 @@ export default {
 }
 .featured {
   font-family: Ubuntu, Arial;
-  font-size: 20px;
-  letter-spacing: 0.6px;
-  word-spacing: 0.4px;
-  color: #1E6ED3;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  word-spacing: 0.3px;
   font-weight: 700;
   cursor: pointer;
   font-style: italic;

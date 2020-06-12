@@ -21,6 +21,10 @@
         <link rel="prefetch" as="style" onload="this.rel='stylesheet'" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     </head>
     <body>
+        <noscript>
+            A Plataforma Anísio Teixeira utiliza Javascript para ser executada, 
+            por favor, habilite o javascript no navegador.
+        </noscript>
         @include('svg')
 
         <div id="app">
@@ -35,9 +39,5 @@
         <script src="/js/js/vendor.js"></script>
         <script src="/js/js/app.js"></script>
         @endif
-        <noscript>
-            A Plataforma Anísio Teixeira utiliza Javascript para ser executada, 
-            por favor, habilite o javascript no navegador.
-        </noscript>
     </body>
 </html>

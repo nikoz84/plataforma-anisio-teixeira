@@ -21,7 +21,7 @@ class ConteudosPlanilhaTable extends Migration
             $table->timestamps();
             // campo de data deleted_at
             $table->softDeletes();
-        }
+        });
     }
 
     /**
