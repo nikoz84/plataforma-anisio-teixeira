@@ -83,11 +83,7 @@ Route::get('/planilhas', 'ConteudoPlanilhaController@conteudos')->name('conteudo
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN
  * USUÁRIO DEVE ESTAR LOGADO PARA ACESSAR ESSAS ROTAS
  *
-<<<<<<< HEAD
  ********************************************************/
-=======
- * */
->>>>>>> 6127dd317631192ea996ca6bd754440eda684aa3
 Route::group(
     ['middleware' => ['jwt.auth']],
     function () {
