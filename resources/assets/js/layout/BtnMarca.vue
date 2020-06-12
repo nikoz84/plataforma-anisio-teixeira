@@ -1,16 +1,9 @@
 <template>
   <div class="row justify-center q-my-lg">
-    <img
-      src="/logo.svg"
-      alt="marca"
-      title="marca"
-      width="35"
-      height="35"
-      loading="lazy"
-      aria-label="marca da plataforma Anísio Teixeira"
-    />
-    <div class="q-pt-md">
-      PLATAFORMA ANÍSIO TEIXEIRA
+    <div style="width: 200px;height: 44px;fill: currentColor;">
+      <svg class="icon-pat" height="38" width="200" style="color:white;">
+        <use v-bind="{'xlink:href':'#logo'}"></use> 
+      </svg>
     </div>
   </div>
 </template>

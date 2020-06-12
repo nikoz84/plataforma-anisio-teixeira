@@ -40,7 +40,7 @@ class ConteudoPlanilhaController extends ApiController
         $conteudoPlanilha = new ConteudoPlanilha();
         $this->createRotinasDeEstudo($conteudoPlanilha->formatarJsonRotinasDeEstudo(
             $conteudoPlanilha->buscarJsonNoGoogleSpreadsheets($googleKey)
-        )); 
+        ));
     }
 
     public function createFaculdadesDaBahia($dados)
@@ -65,7 +65,7 @@ class ConteudoPlanilhaController extends ApiController
                 $conteudoPlanilha->document = ['actions' => $dado];
             }
 
-            $conteudoPlanilha->save(); 
+            $conteudoPlanilha->save();
         }
     }
 

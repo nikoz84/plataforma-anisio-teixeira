@@ -12,8 +12,10 @@
         <q-form v-on:submit.prevent="save()">
           <q-card-section class="row flex flex-start q-gutter-md">
           <!-- NOME -->
-            <q-input class="col-sm-5" v-model="aplicativo.name" label="Nome do aplicativo" 
-            :error="errors.name && errors.name.length > 0">
+            <q-input class="col-sm-5" 
+              v-model="aplicativo.name" 
+              label="Nome do aplicativo" 
+              :error="errors.name && errors.name.length > 0">
               <template v-slot:error>
                 <ShowErrors :errors="errors.name"></ShowErrors>
               </template>
@@ -96,6 +98,8 @@
                 <q-editor v-model="aplicativo.description" 
                   class="col-sm-10"
                   min-height="15rem"
+                  ref="editor_ref"
+                  @paste.native="evt => pasteCapture(evt)"
                   >
                 </q-editor>
                 <div class="col-sm-10" v-if="errors.description && errors.description.length > 0">
@@ -223,6 +227,25 @@ export default {
           });
         }
       });
+    },
+    pasteCapture (evt) {
+      let text, onPasteStripFormattingIEPaste
+      evt.preventDefault()
+      if (evt.originalEvent && evt.originalEvent.clipboardData.getData) {
+        text = evt.originalEvent.clipboardData.getData('text/plain')
+        this.$refs.editor_ref.runCmd('insertText', text)
+      }
+      else if (evt.clipboardData && evt.clipboardData.getData) {
+        text = evt.clipboardData.getData('text/plain')
+        this.$refs.editor_ref.runCmd('insertText', text)
+      }
+      else if (window.clipboardData && window.clipboardData.getData) {
+        if (!onPasteStripFormattingIEPaste) {
+          onPasteStripFormattingIEPaste = true
+          this.$refs.editor_ref.runCmd('ms-pasteTextOnly', text)
+        }
+        onPasteStripFormattingIEPaste = false
+      }
     }
   }
 };

@@ -1,10 +1,15 @@
-// It's highly recommended to change the default colors
-// to match your app's branding.
-
-
-/*$primary   = #08275e
+/*
+$primary   = #08275e
 $secondary = #424242
-$accent    = #451e5f */
+$accent    = #451e5f
+$positive  = #4BBEAB
+$negative  = #B05552
+$info      = #35586A
+$warning   = #D6B476
+$light     = #bdbdbd
+$dark      = #04091f
+$faded     = #777
+*/
 
 $primary   = #066ab1
 $secondary = #5698e3
@@ -16,17 +21,15 @@ $dark      = #004081
 /* cinza #c5cae9*/
 $faded     = #e1e2e1
 
-.bg-cinza{
+.bg-cinza
   background: $faded !important 
-}
 
-.bg-light{
+.bg-light
   background-color: $light !important
-}
 
-.bg-dark{
+.bg-dark
   background-color: $dark !important
-}
+
 
 $petecavermelho  = #ed2221
 $petecaamarelo   = #F9BB00
@@ -38,30 +41,21 @@ $negative  = $petecavermelho
 $info      = $petecaazul
 $warning   = $petecaamarelo
 
-.bg-petecavermelho{
+.bg-petecavermelho
   background-color: $petecavermelho !important;
-}
-.bg-petecaamarelo{
+
+.bg-petecaamarelo
   background-color: $petecaamarelo !important;
-}
-.bg-petecaazul{
+
+.bg-petecaazul
   background-color: $petecaazul !important;
-}
-.bg-petecaverde{
+
+.bg-petecaverde
   background-color: $petecaverde !important;
-}
-.active-link-pat{
+
+.active-link-pat
   background-color: $primary
   color: #fff !important
-}
-/*$positive  = #4BBEAB
-$negative  = #B05552
-$info      = #35586A
-$warning   = #D6B476*/
-
-/*$light     = #bdbdbd
-$dark      = #04091f
-$faded     = #777*/
 
 $input-text-color         = $primary;
 $input-label-color        = $accent;
@@ -167,18 +161,17 @@ $text-weights ?= {
 $typography-font-family         ?= 'Ubuntu', '-apple-system', 'Helvetica Neue', Helvetica, Arial, sans-serif
 $toolbar-min-height             ?= 55px
 
-.title-page-tipos{
+.title-page-tipos
   font-family: 'Lato', sans-serif, cursive;
   font-weight: 700 !default;
   padding-bottom : 5px;
   border-bottom: 4px double $accent;
   font-display: swap;
-}
-body {
+
+body
   font-family: $typography-font-family;
   font-weight: 500 !default;
   font-display: swap;
-  color: #263238; /*BLUE-GREY-10*/
-}
+  color: #263238;
 
 @import '~quasar/src/css/variables.styl'

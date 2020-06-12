@@ -3,7 +3,7 @@
     <q-infinite-scroll @load="onLoad" :offset="150">
       <div class="row justify-center q-gutter-x-md q-gutter-y-md">
         <PaginatorCard
-          class="col-xs-10 col-sm-4 col-md-4 col-lg-3 col-xl-2"
+          class="col-xs-10 col-sm-4 col-md-4 col-lg-4 col-xl-2"
           v-for="(item, i) in infiniteSrollData"
           :key="i"
           v-bind:item="item"

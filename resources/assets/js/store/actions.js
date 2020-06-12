@@ -5,13 +5,11 @@ const actions = {
       let resp = await axios("/layout");
 
       commit("SET_LAYOUT", resp.data.layout.meta_data);
-      commit("SET_LAYOUT", resp.data.layout.meta_data);
       commit("SET_LINKS", resp.data.links);
       commit("SET_TIPOS", resp.data.tipos);
       commit("SET_LICENCAS", resp.data.licencas);
       commit("SET_COMPONENTES", resp.data.componentes);
       commit("SET_NIVEIS", resp.data.niveis);
-      commit("SET_DESTAQUES", resp.data.destaques);
     } catch (e) {
       commit("SET_IS_LOADING", false);
       commit("SET_IS_ERROR", true);

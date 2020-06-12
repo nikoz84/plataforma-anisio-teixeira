@@ -11,10 +11,12 @@ use App\Helpers\TransformDate;
 use App\Tag;
 use App\AplicativoCategory;
 use App\Traits\UserCan;
+use Illuminate\Support\Facades\File;
+use App\Traits\FileSystemLogic;
 
 class Aplicativo extends Conteudo
 {
-    use SoftDeletes, UserCan;
+    use SoftDeletes, UserCan, FileSystemLogic;
 
     const CANAL_ID = 9;
     const QT_ACCESS_INIT = 0;
@@ -91,9 +93,7 @@ class Aplicativo extends Conteudo
      */
     public function getImageAttribute()
     {
-        $image = "{$this['id']}.jpg";
-        return Storage::disk('aplicativos-educacionais')
-            ->url("imagem-associada/{$image}");
+        return $this->getAplicativoImage($this['id']);
     }
     /**
      * Cria url exibir

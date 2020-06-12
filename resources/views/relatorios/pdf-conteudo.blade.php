@@ -62,7 +62,7 @@
                                                                                 <?php ?>
                                                                                 <td>{{mb_strimwidth($content->title, 0, 50, "...")}}</td>
                                                                                 <td>{{$content->type}}</td>
-                                                                                <td>{{$content->creator}}</td>
+                                                                                <td>{{$content->publisher}}</td>
                                                                                 <td>{{number_format($content->quantity,0,".",".")}}</td>
                                                                       </tr>
                                                                       @endforeach

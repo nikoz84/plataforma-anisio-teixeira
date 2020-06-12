@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Canal;
 use App\Traits\UserCan;
 use App\Traits\WithoutAppends;
+use Illuminate\Support\Str;
 
 class Tipo extends Model
 {
@@ -21,7 +22,8 @@ class Tipo extends Model
 
     public function getIconAttribute()
     {
-        return Storage::disk('public-path')->url("img/tipo-conteudo/{$this['id']}.svg");
+        //return Storage::disk('public-path')->url("img/tipo-conteudo/{$slug}.svg");
+        return Str::slug($this['name'], '-');
     }
     public function getSearchUrlAttribute()
     {

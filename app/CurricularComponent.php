@@ -5,6 +5,7 @@ namespace App;
 use App\Traits\UserCan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class CurricularComponent extends Model
 {
@@ -29,11 +30,17 @@ class CurricularComponent extends Model
     }
     public function getIconAttribute()
     {
+        return Str::slug($this['name'], '-');
+        /*
+        $icone = null;
         if ($this['nivel_id'] == 5) {
-            return Storage::disk('public-path')->url("img/emitec/{$this['id']}.svg");
+            $icone = Storage::disk('public-path')->url("img/emitec/{$slug}.svg");
         } elseif ($this['category_id'] == 3) {
-            return Storage::disk('public-path')->url("img/temas-transversais/{$this['id']}.svg");
+            $icone = Storage::disk('public-path')->url("img/temas-transversais/{$slug}.svg");
         }
+
+        return $icone;
+        */
     }
     public function getSearchUrlAttribute()
     {

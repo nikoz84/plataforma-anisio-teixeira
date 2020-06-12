@@ -21,6 +21,8 @@
         <link rel="prefetch" as="style" onload="this.rel='stylesheet'" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     </head>
     <body>
+        @include('svg')
+
         <div id="app">
             <main-app></main-app>
         </div>
