@@ -68,11 +68,8 @@ Route::get('/licencas', 'LicenseController@index')->name('listar.licencas');
 /** DOWNLOAD FILE **/
 Route::get('/files/{action}/{id}', 'FileController@downloadFile')->name('downloadFile.id');
 
-/** CONTEUDO PLANILHA **/
-Route::get(
-    '/planilha/buscar/faculdades/da/bahia/{googleKey}',
-    'ConteudoPlanilhaController@buscarJsonFaculdadesDaBahiaNoGoogleSpreadsheets'
-)->name('busca.planilha');
+
+    
 
 Route::get(
     '/planilha/buscar/rotina/de/estudos/{googleKey}',
@@ -86,7 +83,11 @@ Route::get('/planilhas', 'ConteudoPlanilhaController@conteudos')->name('conteudo
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN
  * USUÁRIO DEVE ESTAR LOGADO PARA ACESSAR ESSAS ROTAS
  *
+<<<<<<< HEAD
  ********************************************************/
+=======
+ * */
+>>>>>>> 6127dd317631192ea996ca6bd754440eda684aa3
 Route::group(
     ['middleware' => ['jwt.auth']],
     function () {
