@@ -78,6 +78,10 @@ Route::get(
 
 Route::get('/planilhas', 'ConteudoPlanilhaController@conteudos')->name('conteudo.planilha');
 
+
+/** COMENTARIOS **/
+        Route::post('/comentario/create', 'ComentarioController@create')->name('comentario.create');
+
 /***********************************************
  *
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN
@@ -177,5 +181,7 @@ Route::group(
             '/relatorio/usuarios/role/{role_id}/{is_active?}',
             'RelatorioController@gerarPdfUsuario'
         )->name('gerar.relatorio.usuario');
+
+        
     }
 );
