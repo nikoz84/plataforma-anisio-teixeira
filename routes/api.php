@@ -67,22 +67,22 @@ Route::get('/tags/{id}', 'TagController@getById')->name('busca.x.tag.id');
 Route::get('/licencas', 'LicenseController@index')->name('listar.licencas');
 /** DOWNLOAD FILE **/
 Route::get('/files/{action}/{id}', 'FileController@downloadFile')->name('downloadFile.id');
-
-
-    
-
+/** MIGRAR PLANILHAS */
 Route::get(
     '/planilha/buscar/rotina/de/estudos/{googleKey}',
     'ConteudoPlanilhaController@buscarJsonRotinaDeEstudosNoGoogleSpreadsheets'
 )->name('busca.planilha.rotina.de.estudos');
-
 Route::get('/planilhas', 'ConteudoPlanilhaController@conteudos')->name('conteudo.planilha');
 
-/*********************************************************
-|                                                        |
-| ROTAS PROTEGIDAS COM JSON WEB TOKEN                    |
-| USUÁRIO DEVE ESTAR LOGADO PARA ACESSAR ESSAS ROTAS     |
-|                                                        |
+
+/** COMENTARIOS **/
+Route::post('/comentario/create', 'ComentarioController@create')->name('comentario.create');
+
+/***********************************************
+ *
+ * ROTAS PROTEGIDAS COM JSON WEB TOKEN
+ * USUÁRIO DEVE ESTAR LOGADO PARA ACESSAR ESSAS ROTAS
+ *
  ********************************************************/
 Route::group(
     ['middleware' => ['jwt.auth']],
