@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Ubuntu:wght@400;500;700&display=swap);.bg-cinza {
+.bg-cinza {
   background: #e1e2e1 !important;
 }
 .bg-light {
@@ -23,6 +23,16 @@
   background-color: #066ab1;
   color: #fff !important;
 }
+@font-face {
+  font-family: 'Ubuntu';
+  font-display: swap;
+  src: url(/fonts/Ubuntu-Regular.woff2?0d865b07d66f0efa0d5dedba23a34ba8);
+}
+@font-face {
+  font-family: 'Lato';
+  font-display: swap;
+  src: url(/fonts/Lato-Regular.woff2?0ebc78e6767e52d7af91269e61c7e36b);
+}
 .title-page-tipos {
   font-family: 'Lato', sans-serif, cursive;
   font-weight: 700 false;
@@ -31,7 +41,7 @@
   font-display: swap;
 }
 body {
-  font-family: 'Ubuntu', '-apple-system', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Ubuntu', '-apple-system', Helvetica, Arial, sans-serif;
   font-weight: 500 false;
   font-display: swap;
   color: #263238;
@@ -10409,7 +10419,7 @@ img.responsive {
 body {
   min-width: 100px;
   min-height: 100%;
-  font-family: 'Ubuntu', '-apple-system', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Ubuntu', '-apple-system', Helvetica, Arial, sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;

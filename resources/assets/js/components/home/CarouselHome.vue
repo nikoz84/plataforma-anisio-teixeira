@@ -25,7 +25,7 @@
         <transition name="fade" mode="out-in">
             <q-card class="featured" v-show="showTitle" flat>
                 <q-card-section class="text-right bg-blue-grey-1 color-grey-9" @click="goTo(activeSlide.url)">
-                    SAIBA MAIS
+                     SAIBA MAIS
                 </q-card-section>
             </q-card>
         </transition>

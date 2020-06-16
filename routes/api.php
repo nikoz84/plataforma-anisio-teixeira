@@ -68,17 +68,13 @@ Route::get('/licencas', 'LicenseController@index')->name('listar.licencas');
 /** DOWNLOAD FILE **/
 Route::get('/files/{action}/{id}', 'FileController@downloadFile')->name('downloadFile.id');
 
-
-/** CONTEUDO PLANILHAS**/
+/** MIGRAR PLANILHAS */
 Route::get(
     '/planilha/buscar/rotina/de/estudos/{googleKey}',
     'ConteudoPlanilhaController@buscarJsonRotinaDeEstudosNoGoogleSpreadsheets'
 )->name('busca.planilha.rotina.de.estudos');
-
 Route::get('/planilhas', 'ConteudoPlanilhaController@conteudos')->name('conteudo.planilha');
 
-
-/** COMENTARIOS **/
 Route::post('/comentarios/create', 'ComentarioController@create')->name('comentario.create');
 Route::post('/comentarios/update/{id}', 'ComentarioController@create')->name('comentario.update');
 Route::get('/comentarios/{id}', 'ComentarioController@comentarios')->name('comentario.comentarios');
@@ -182,7 +178,5 @@ Route::group(
             '/relatorio/usuarios/role/{role_id}/{is_active?}',
             'RelatorioController@gerarPdfUsuario'
         )->name('gerar.relatorio.usuario');
-
-        
     }
 );
