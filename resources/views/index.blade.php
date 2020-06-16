@@ -34,9 +34,9 @@
         @if (env('APP_ENV') === 'development')
         <script async defer src="/js/app.js"></script>
         @elseif (env('APP_ENV') === 'production')
-        <script async defer  src="/js/manifest.js"></script>
-        <script async defer  src="/js/js/vendor.js"></script>
-        <script async defer  src="/js/js/app.js"></script>
+        <script async defer src="/js/manifest.js"></script>
+        <script async defer src="/js/js/vendor.js"></script>
+        <script async defer src="/js/js/app.js"></script>
         @endif
     </body>
 </html>
