@@ -41,6 +41,7 @@ export default {
     border 1px solid
     border-color transparent
     border-bottom-color #c9c9c9
+    font-family: 'Lato', sans-serif, cursive;
   
   .separatriz-6
     content " "

@@ -28,7 +28,10 @@ Vue.use(Quasar, {
     Dark,
     Platform,
     LocalStorage
-  }
+  },
+  extras: [
+    'roboto-font'
+  ]
 });
 
 window.axios = require("axios");

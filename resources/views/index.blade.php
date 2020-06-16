@@ -6,19 +6,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         
-        <title>Plataforma Anísio Teixeira</title>
-        <meta name="description" content="Plataforma Anísio Teixeira projeto da Secretaria da Educação do Estado da Bahia(SEC)">
-        <meta name="keywords" content="educação, emitec, plataforma anísio teixeira, conteúdos digitais, secretaria da educação, software livre">
+        <title>{{env('APP_NAME')}}</title>
+        <meta name="description" content="{{env('APP_NAME')}} projeto da Secretaria da Educação do Estado da Bahia (SEC)">
+        <meta name="keywords" content="plataforma anísio teixeira, recursos educacionais, educação, conteúdos digitais, software livre">
         <link rel="canonical" href="{{env('APP_URL')}}">
-        <link rel="manifest" href="/manifest.json">
-        <link rel="apple-touch-icon" href="/img/icons-192.png">
+        <link rel="manifest" href="/manifest.json" preload>
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" preload>
+        <meta name="msapplication-TileColor" content="#08275e">
         <meta name="theme-color" content="#08275e">
-        
-        <link rel="prefetch" href="/css/app.css"  as="style" onload="this.rel='stylesheet'">
+        <link href="/css/app.css" as="style" rel='stylesheet' preload>
         <noscript>
-            <link rel="stylesheet" href="/css/app.css" />
+            <link rel="stylesheet" href="/css/app.css" preload/>
         </noscript>
-        <link rel="prefetch" as="style" onload="this.rel='stylesheet'" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     </head>
     <body>
         <noscript>
@@ -33,11 +32,11 @@
         
         
         @if (env('APP_ENV') === 'development')
-        <script src="/js/app.js"></script>
+        <script async defer src="/js/app.js"></script>
         @elseif (env('APP_ENV') === 'production')
-        <script src="/js/manifest.js"></script>
-        <script src="/js/js/vendor.js"></script>
-        <script src="/js/js/app.js"></script>
+        <script async defer  src="/js/manifest.js"></script>
+        <script async defer  src="/js/js/vendor.js"></script>
+        <script async defer  src="/js/js/app.js"></script>
         @endif
     </body>
 </html>

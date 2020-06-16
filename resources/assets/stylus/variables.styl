@@ -61,7 +61,18 @@ $input-label-color        = $accent;
 $generic-border-radius    = 3px;
 $body-font-size          ?= 14px
 $quasar-dont-import-fonts = true;
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Ubuntu:wght@400;500;700&display=swap')
+//@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Ubuntu:wght@400;500;700&display=swap')
+@font-face {
+  font-family: 'Ubuntu';
+  font-display: swap;
+  src: url(./fonts/Ubuntu-Regular.woff2);
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-display: swap;
+  src: url(./fonts/Lato-Regular.woff2);
+}
 
 $headings ?= {
   h1: {
@@ -156,7 +167,7 @@ $text-weights ?= {
   bolder: 700
 }
 
-$typography-font-family         ?= 'Ubuntu', '-apple-system', 'Helvetica Neue', Helvetica, Arial, sans-serif
+$typography-font-family         ?= 'Ubuntu', '-apple-system', Helvetica, Arial, sans-serif
 $toolbar-min-height             ?= 55px
 
 .title-page-tipos

@@ -99,6 +99,32 @@ class ImportData extends Command
             (132,7,null,'Saúde'),
             (133,7,null,'Educação Alimentar e Nutricional');
         ");
+        
+        $this->createInitSlider();
+
         $this->info('Processo finalizado com sucesso');
+    }
+
+    private function createInitSlider()
+    {
+        $url = env('APP_URL');
+
+        \App\Options::create([
+            'name' => 'slider',
+            'meta_data' => [
+                [
+                    'image' => "{$url}/storage/conteudos/slider/banner-rotinas-de-estudo.png",
+                    'filename' => 'banner-rotinas-de-estudo.png',
+                    'url' => "http://{$url}/rotinas-de-estudo",
+                    'title' => 'Canal de rotinas de estudo'
+                ],
+                [
+                    'image' => "{$url}/storage/conteudos/slider/banner-ensino-superior.png",
+                    'filename' => 'banner-ensinosuperior.png',
+                    'url' => "http://{$url}/ipes",
+                    'title' => 'Canal de ensino superior'
+                ]
+            ]
+        ]);
     }
 }
