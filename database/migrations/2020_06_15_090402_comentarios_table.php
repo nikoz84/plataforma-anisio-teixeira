@@ -17,12 +17,12 @@ class ComentariosTable extends Migration
             $table->bigIncrements('id')->comment('Chave primaria');
 
             $table->bigInteger('user_id');
-            $table->bigInteger('conteudo_id');
-            $table->bigInteger('aplicativo_id');
+            $table->bigInteger('conteudo_id')->nullable();
+            $table->bigInteger('aplicativo_id')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('conteudo_id')->references('id')->on('conteudos')->nullable();
-            $table->foreign('aplicativo_id')->references('id')->on('aplicativos')->nullable();
+            $table->foreign('conteudo_id')->references('id')->on('conteudos');
+            $table->foreign('aplicativo_id')->references('id')->on('aplicativos');
 
             $table->text('body')->comment('Nome identificador do conteudo');
           

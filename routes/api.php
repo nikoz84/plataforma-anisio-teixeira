@@ -69,8 +69,7 @@ Route::get('/licencas', 'LicenseController@index')->name('listar.licencas');
 Route::get('/files/{action}/{id}', 'FileController@downloadFile')->name('downloadFile.id');
 
 
-    
-
+/** CONTEUDO PLANILHAS**/
 Route::get(
     '/planilha/buscar/rotina/de/estudos/{googleKey}',
     'ConteudoPlanilhaController@buscarJsonRotinaDeEstudosNoGoogleSpreadsheets'
@@ -80,7 +79,9 @@ Route::get('/planilhas', 'ConteudoPlanilhaController@conteudos')->name('conteudo
 
 
 /** COMENTARIOS **/
-        Route::post('/comentario/create', 'ComentarioController@create')->name('comentario.create');
+Route::post('/comentarios/create', 'ComentarioController@create')->name('comentario.create');
+Route::post('/comentarios/update/{id}', 'ComentarioController@create')->name('comentario.update');
+Route::get('/comentarios/{id}', 'ComentarioController@comentarios')->name('comentario.comentarios');
 
 /***********************************************
  *
