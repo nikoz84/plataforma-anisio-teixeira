@@ -21,6 +21,33 @@ class Comentario extends Model
         'user_id',
         'conteudo_id',
         'aplicativo_id',
-        'body'
+        'body',
+        'tipo'
     ];
+
+    public function getComentariosByIdUsuario($userId, $tipo = false)
+    {
+    	$comentarios = $this->where('user_id', $userId);
+    	if ($tipo) {
+    		$comentarios->where('tipo', $tipo);
+    	}
+
+    	return $comentarios->get();
+    }
+
+    public function getComentarioById($id)
+    {
+    	//return $this->
+
+    }
+
+    public function getComentariosByTipo($tipo)
+    {
+    	return $this->where('tipo', $tipo)->get();
+    }
+
+    public function delete($id)
+    {
+    	return $this->where('id', $id)->delete();
+    }
 }

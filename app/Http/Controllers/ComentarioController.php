@@ -17,7 +17,10 @@ class ComentarioController extends ApiController
         $this->request = $request;
 
         $this->middleware('auth:api')->except([
-            'create', 'teste', 'comentarios'
+            'create', 
+            'comentarios', 
+            'getComentariosByIdUsuario', 
+            'delete'
         ]);
         $request = $request;
     }
@@ -41,7 +44,6 @@ class ComentarioController extends ApiController
         $comentario = $comentario->find($request->id);
 
         return $this->successResponse($comentario);
-
     }
 
     public function comentarios($id)
@@ -54,5 +56,27 @@ class ComentarioController extends ApiController
         }
 
         return $this->errorResponse([], 'Comentário não encontrado!', 422);
+    }
+
+    public function getComentariosByIdUsuario($idUsuario, $tipo = false)
+    {
+        $comentario = new Comentario();
+        $comentarios = $comentario->getComentariosByIdUsuario($idUsuario, $tipo);
+
+        if (count($comentarios) > 0) {
+            return $this->successResponse($comentarios);
+        }
+
+        return $this->errorResponse([], 'Comentários não encontrados!', 422);
+    }
+
+    public function delete($id)
+    {
+        $comentario = new Comentario();
+        if ($comentario->delete($id)) {
+            return $this->successResponse([], 'Comentario deletado com Sucesso!', 200);
+        }
+
+        return $this->errorResponse([], 'Erro ao deletar comentario!', 422);
     }
 }

@@ -79,6 +79,12 @@ Route::post('/comentarios/create', 'ComentarioController@create')->name('comenta
 Route::post('/comentarios/update/{id}', 'ComentarioController@create')->name('comentario.update');
 Route::get('/comentarios/{id}', 'ComentarioController@comentarios')->name('comentario.comentarios');
 
+Route::get('/comentarios/usuario/{idUsuario}/{tipo?}', 'ComentarioController@getComentariosByIdUsuario')
+->name('comentario.usuario');
+
+Route::get('/comentarios/delete/{id}', 'ComentarioController@delete')
+->name('comentario.delete');
+
 /***********************************************
  *
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN
