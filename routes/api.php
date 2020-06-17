@@ -82,7 +82,7 @@ Route::get('/comentarios/{id}', 'ComentarioController@comentarios')->name('comen
 Route::get('/comentarios/usuario/{idUsuario}/{tipo?}', 'ComentarioController@getComentariosByIdUsuario')
 ->name('comentario.usuario');
 
-Route::get('/comentarios/delete/{id}', 'ComentarioController@delete')
+Route::get('/comentarios/delete/{id}', 'ComentarioController@deletar')
 ->name('comentario.delete');
 
 /***********************************************

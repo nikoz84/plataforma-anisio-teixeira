@@ -46,7 +46,7 @@ class Comentario extends Model
     	return $this->where('tipo', $tipo)->get();
     }
 
-    public function delete($id)
+    public function deletar($id)
     {
     	return $this->where('id', $id)->delete();
     }

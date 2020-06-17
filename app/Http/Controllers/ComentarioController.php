@@ -20,17 +20,15 @@ class ComentarioController extends ApiController
             'create', 
             'comentarios', 
             'getComentariosByIdUsuario', 
-            'delete'
+            'deletar'
         ]);
         $request = $request;
     }
 
     public function create(Request $request)
     {
-    	$comentario = new Comentario();
-    	
     	try {
-    		$comentario->create($request->all());
+    		$this->comentario->create($request->all());
     		return $this->successResponse([], 'Comentário criado com sucesso!', 200);
 
     	} catch(\Exception $e) {
@@ -40,16 +38,14 @@ class ComentarioController extends ApiController
 
     public function update(Request $request)
     {
-        $comentario = new Comentario();
-        $comentario = $comentario->find($request->id);
-
+        $comentario = $this->comentario->find($request->id);
         return $this->successResponse($comentario);
     }
-
-    public function comentarios($id)
+    
+    # Retorna os comentarios sobre uma determinada postagem
+    public function getComentariosByIdPostagem($idPostagem)
     {
-    	$comentario = new Comentario();
-        $comentario = $comentario->find($id);
+        $comentario = $this->comentario->find($id);
 
         if ( ! is_null($comentario)) {
             return $this->successResponse($comentario);
@@ -57,11 +53,11 @@ class ComentarioController extends ApiController
 
         return $this->errorResponse([], 'Comentário não encontrado!', 422);
     }
-
+    
+    # Retorna os comentarios por id do usuario e pelo tipo
     public function getComentariosByIdUsuario($idUsuario, $tipo = false)
     {
-        $comentario = new Comentario();
-        $comentarios = $comentario->getComentariosByIdUsuario($idUsuario, $tipo);
+        $comentarios = $this->comentario->getComentariosByIdUsuario($idUsuario, $tipo);
 
         if (count($comentarios) > 0) {
             return $this->successResponse($comentarios);
@@ -70,10 +66,9 @@ class ComentarioController extends ApiController
         return $this->errorResponse([], 'Comentários não encontrados!', 422);
     }
 
-    public function delete($id)
+    public function deletar($id)
     {
-        $comentario = new Comentario();
-        if ($comentario->delete($id)) {
+        if ($this->comentario->deletar($id)) {
             return $this->successResponse([], 'Comentario deletado com Sucesso!', 200);
         }
 
