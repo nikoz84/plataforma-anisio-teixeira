@@ -75,12 +75,17 @@ Route::get(
 )->name('busca.planilha.rotina.de.estudos');
 Route::get('/planilhas', 'ConteudoPlanilhaController@conteudos')->name('conteudo.planilha');
 
+
+/** COMENTARIOS */
 Route::post('/comentarios/create', 'ComentarioController@create')->name('comentario.create');
-Route::post('/comentarios/update/{id}', 'ComentarioController@create')->name('comentario.update');
-Route::get('/comentarios/{id}', 'ComentarioController@comentarios')->name('comentario.comentarios');
+Route::post('/comentarios/update/{id}', 'ComentarioController@update')->name('comentario.update');
+Route::get('/comentarios/{id}', 'ComentarioController@getComentarioById')->name('comentario.id');
 
 Route::get('/comentarios/usuario/{idUsuario}/{tipo?}', 'ComentarioController@getComentariosByIdUsuario')
 ->name('comentario.usuario');
+
+Route::get('/comentarios/postagem/{id}/{tipo}', 'ComentarioController@getComentariosByIdPostagem')
+->name('comentario.postagem');
 
 Route::get('/comentarios/delete/{id}', 'ComentarioController@deletar')
 ->name('comentario.delete');

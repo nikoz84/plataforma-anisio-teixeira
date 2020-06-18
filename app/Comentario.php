@@ -32,13 +32,37 @@ class Comentario extends Model
     		$comentarios->where('tipo', $tipo);
     	}
 
-    	return $comentarios->get();
+        if ($comentarios->exists()) {
+            return $comentarios;
+        }
+
+        return false;
+    }
+
+    public function getComentariosByIdPostagem($idPostagem, $tipo)
+    {
+        $comentarios = false;
+        if ($tipo == 'conteudo') {
+            $comentarios = $this->where('conteudo_id', $idPostagem);
+        } else if ($tipo == 'aplicativo') {
+            $comentarios = $this->where('aplicativo_id', $idPostagem);
+        } 
+
+        if ($comentarios) {
+            return $comentarios;
+        }
+
+        return false;
     }
 
     public function getComentarioById($id)
     {
-    	//return $this->
+    	$comentario = $this->find($id);
+        if ( ! is_null($comentario)) {
+            return $comentario;
+        }
 
+        return false;
     }
 
     public function getComentariosByTipo($tipo)
