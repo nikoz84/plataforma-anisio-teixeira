@@ -19,6 +19,7 @@ class ComentariosTable extends Migration
             $table->bigInteger('user_id');
             $table->bigInteger('conteudo_id')->nullable();
             $table->bigInteger('aplicativo_id')->nullable();
+            $table->string('tipo', 50);
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('conteudo_id')->references('id')->on('conteudos');
