@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
+
 //Route::get('/ler', 'ConteudoController@lerHD')->name('ler.hd');
 Route::get('/files/galeria', 'FileController@getGallery')->name('lista.galeria.imagens');
 Route::get('/files/{id}', 'FileController@getFiles')->name('busca.arquivo');
@@ -178,5 +179,8 @@ Route::group(
             '/relatorio/usuarios/role/{role_id}/{is_active?}',
             'RelatorioController@gerarPdfUsuario'
         )->name('gerar.relatorio.usuario');
+        /** SISTEMA DE PASTA */
+        Route::get('/informacoes-pasta/{path}/{path2?}/{path3?}', 'FileController@getInfoFolder')->name('file.getInfoFolder');
+
     }
 );

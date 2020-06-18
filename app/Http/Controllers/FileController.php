@@ -15,7 +15,7 @@ class FileController extends ApiController
 
     public function __construct(File $file, Request $request, Storage $storage)
     {
-        $this->middleware('jwt.auth')->except(['index', 'search', 'getFiles', 'getGallery', 'downloadFile']);
+        $this->middleware('jwt.auth')->except(['index', 'search', 'getFiles', 'getGallery', 'downloadFile', 'getInfoFolder']);
         $this->file = $file;
         $this->request = $request;
         $this->storage = $storage;
@@ -76,22 +76,59 @@ class FileController extends ApiController
                 return $this->errorResponse([], 'arquivo não encontrado', 404);
                 break;
         }
-            
+
         $headers = [
             "Content-Type" => "$file->mime_type"
         ];
-        
+
         $path = self::windowsDirectory(
             Storage::disk('conteudos-digitais')->path("{$directory}/{$file->name}")
         );
-        
+
         return response()->download($path, $file->name, $headers);
     }
 
     public function getGallery()
     {
         $imagens = collect($this->getImagesGallery(true));
-        
+
         return $this->showAll($imagens);
+    }
+
+
+    public function getInfoFolder($directory, $directory2 = null, $directory3 = null)
+    {
+        if ($directory == 'public')
+            $path = storage_path('app' . DIRECTORY_SEPARATOR . $directory . DIRECTORY_SEPARATOR . $directory2 . DIRECTORY_SEPARATOR . $directory3);
+        else
+            $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $directory . DIRECTORY_SEPARATOR . $directory2 . DIRECTORY_SEPARATOR . $directory3);
+
+        $files = scandir($path);
+
+        $qtdFiles = count($files) - 2;
+
+        $dirFiles = array();
+
+        foreach ($files as $file) {
+            if (($file == '.') || ($file == '..')) continue;
+
+            $filename = $path . DIRECTORY_SEPARATOR . $file;
+            $dirName = explode('\public', $filename);
+
+            $info = pathinfo($filename);
+            $info["dirname"] = $dirName[1];
+            $info["size"] = filesize($filename);
+            $info["modified"] = date("d/m/Y H:i:s", filemtime($filename));
+
+            array_push($dirFiles, $info);
+        }
+
+        $arrayFiles = array();
+
+        foreach ($dirFiles as $file) {
+            array_push($arrayFiles, ["Name: " . $file["basename"], "Size: " . $file["size"] . "KByte", "Modified: " . $file["modified"], "Directory: " . $file["dirname"]]);
+        }
+
+        return $this->successResponse(['quantidade de conteúdos: ' . $qtdFiles, $arrayFiles], 'sucesso!', 200);
     }
 }
