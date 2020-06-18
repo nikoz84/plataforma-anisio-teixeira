@@ -29,10 +29,19 @@ class ComentarioController extends ApiController
         $request = $request;
     }
 
-    public function create(Request $request)
+    public function create()
     {
+        $validator = Validator::make(
+            $this->request->all(),
+            ['recaptcha' => ['required', new \App\Rules\ValidRecaptcha]]
+        );
+
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors(), "Usuário não validado", 422);
+        }
+
     	try {
-    		$this->comentario->create($request->all());
+    		$this->comentario->create($this->request->all());
     		return $this->successResponse([], 'Comentário criado com sucesso!', 200);
 
     	} catch(\Exception $e) {
@@ -53,6 +62,15 @@ class ComentarioController extends ApiController
 
     public function update($id)
     {
+        $validator = Validator::make(
+            $this->request->all(),
+            ['recaptcha' => ['required', new \App\Rules\ValidRecaptcha]]
+        );
+
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors(), "Usuário não validado", 422);
+        }
+
         $comentario = $this->comentario->find($id);
         $body = $this->request->only(['body']);
 
