@@ -193,7 +193,7 @@ Route::group(
             'RelatorioController@gerarPdfUsuario'
         )->name('gerar.relatorio.usuario');
         /** SISTEMA DE PASTA */
-        Route::get('/informacoes-pasta/{path}/{path2?}/{path3?}', 'FileController@getInfoFolder')->name('file.getInfoFolder');
-
+        Route::get('/informacoes-pasta', 'FileController@getInfoFolder')->name('file.getInfoFolder');
+        Route::get('/arquivos-existe', 'FileController@fileExistInBase')->name('file.fileExistInBase');
     }
 );
