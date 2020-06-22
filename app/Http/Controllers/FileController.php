@@ -15,7 +15,7 @@ class FileController extends ApiController
 
     public function __construct(File $file, Request $request, Storage $storage)
     {
-        $this->middleware('jwt.auth')->except(['index', 'search', 'getFiles', 'getGallery', 'downloadFile', 'getInfoFolder']);
+        $this->middleware('jwt.auth')->except(['index', 'search', 'getFiles', 'getGallery', 'downloadFile', 'getInfoFolder', 'fileExistInBase']);
         $this->file = $file;
         $this->request = $request;
         $this->storage = $storage;
@@ -95,13 +95,15 @@ class FileController extends ApiController
         return $this->showAll($imagens);
     }
 
-
-    public function getInfoFolder($directory, $directory2 = null, $directory3 = null)
+    /**
+     * função responsável por exibir informações de um diretório passado por parametro. 
+     */
+    public function getInfoFolder(Request $request)
     {
-        if ($directory == 'public')
-            $path = storage_path('app' . DIRECTORY_SEPARATOR . $directory . DIRECTORY_SEPARATOR . $directory2 . DIRECTORY_SEPARATOR . $directory3);
+        if ($request->path == 'public')
+            $path = storage_path('app' . DIRECTORY_SEPARATOR . $request->path);
         else
-            $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $directory . DIRECTORY_SEPARATOR . $directory2 . DIRECTORY_SEPARATOR . $directory3);
+            $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $request->path);
 
         $files = scandir($path);
 
@@ -130,5 +132,39 @@ class FileController extends ApiController
         }
 
         return $this->successResponse(['quantidade de conteúdos: ' . $qtdFiles, $arrayFiles], 'sucesso!', 200);
+    }
+
+    /**
+     * Função responsável por verificar na base de dados se 
+     * existe arquivos de um diretório passado por parametro.  
+     */
+    public function fileExistInBase(Request $request)
+    {
+        $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $request->path);
+
+        $files = scandir($path);
+
+        $arrayExist = array();
+        $arrayNotExist = array();
+
+        foreach ($files as $file) {
+            if (($file == '.') || ($file == '..')) continue;
+
+            $dirFile = $path . DIRECTORY_SEPARATOR . $file;
+
+            if (!is_dir($dirFile)) {
+                $info = pathinfo($dirFile);
+
+                $fileName = explode('.', $info["filename"]);
+
+                if (Conteudo::where('id', $fileName[0])->count() > 0) {
+                    array_push($arrayExist, $info["basename"] . ' Existe na base de dados');
+                } else {
+                    array_push($arrayNotExist, $info["basename"] . ' Nao existe na base de dados');
+                }
+            }
+        }
+
+        return $this->successResponse(['Existe' => $arrayExist, 'Nao existe' => $arrayNotExist], 'sucesso!', 200);
     }
 }
