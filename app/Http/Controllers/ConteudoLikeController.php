@@ -29,12 +29,18 @@ class ConteudoLikeController extends ApiController
     		return $this->successResponse([], 'Ação realizada com sucesso!', 200);
 
     	} catch(\Exception $e) {
-    		return $this->errorResponse([], 'Não foi possível criar o comentário!', 422);
+    		return $this->errorResponse([], 'Não foi possível realizar a operação!', 422);
     	}
     }
 
     public function deslike()
     {
+        try {
+            $this->conteudoLike->deslike($this->request);
+            return $this->successResponse([], 'Ação realizada com sucesso!', 200);
 
+        } catch(\Exception $e) {
+            return $this->errorResponse([], 'Não foi possível realizar a operação!', 422);
+        }
     }
 }

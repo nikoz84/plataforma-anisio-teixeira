@@ -93,6 +93,9 @@ Route::get('/comentarios/delete/{id}', 'ComentarioController@deletar')
 Route::post('/like', 'ConteudoLikeController@like')
 ->name('like');
 
+Route::post('/deslike', 'ConteudoLikeController@deslike')
+->name('deslike');
+
 /***********************************************
  *
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN
