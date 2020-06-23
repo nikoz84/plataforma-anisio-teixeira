@@ -17,7 +17,8 @@ class ConteudoLikeController extends ApiController
 
         $this->middleware('auth:api')->except([
             'like', 
-            'deslike'
+            'deslike',
+            'getLikesPorIdUsuarioEtipo'
         ]);
         $request = $request;
     }
@@ -42,5 +43,11 @@ class ConteudoLikeController extends ApiController
         } catch(\Exception $e) {
             return $this->errorResponse([], 'Não foi possível realizar a operação!', 422);
         }
+    }
+
+    public function getLikesPorIdUsuarioEtipo($idUsuario, $tipo = false)
+    {
+        $limit = $this->request->query('limit');
+        return $this->successResponse($this->conteudoLike->getLikesPorIdUsuarioEtipo($idUsuario, $tipo, $limit));
     }
 }

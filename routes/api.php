@@ -96,6 +96,9 @@ Route::post('/like', 'ConteudoLikeController@like')
 Route::post('/deslike', 'ConteudoLikeController@deslike')
 ->name('deslike');
 
+Route::get('/likes/usuario/{idUsuario}/{tipo?}', 'ConteudoLikeController@getLikesPorIdUsuarioEtipo')
+->name('likes.usuario');
+
 /***********************************************
  *
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN
