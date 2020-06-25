@@ -1,24 +1,16 @@
 <template>
-  <section class="q-pa-lg">
+  <section class="q-pa-md">
+    <!-- BOTÕES CAROUSEL -->
     <CarouselHome></CarouselHome>
-    <!-- BOTÕES DAS MODALIDADES DE ENSINO #INÍCIO -->
-    <div class="q-py-xl row justify-center q-gutter-lg">
     
-      <q-btn stack size="md" class="col-xs-5 col-sm-3" color="petecavermelho" text-color="white" label="Ensino Fundamental I" icon="img:img\biblioteca_icon_pb-49.svg" />
-      <q-btn stack size="md" class="col-xs-5 col-sm-3" color="petecaamarelo" text-color="white" label="Ensino Fundamental II" icon="img:img\biblioteca_icon_pb-49.svg" />
-      <q-btn stack size="md" class="col-xs-5 col-sm-3"  color="petecaazul" text-color="white" label="Ensino Médio" icon="img:img\biblioteca_icon_pb-49.svg" />
-    
-    </div>
+    <!-- BOTÕES ROTINAS DE ESTUDO -->
+    <a class="skip-link" href="#rotinas-de-estudo">Ir a rotinas de estudo</a>
+    <HomeLinksRotinas id="rotinas-de-estudo"></HomeLinksRotinas>
 
     <!-- SESSÃO ADICINADOS RECENTEMENTE -->
     
-    <a class="skip-link" href="#tipo-conteudos">Ir a adicionados recentemente</a>
-    <!--CardHomeIcon
-      id="adicionados-recentemente"
-      title="Adicionados Recentemente"
-      :items="null"
-      v-if="null"
-    ></CardHomeIcon-->
+    <a class="skip-link" href="#conteudos-recentes">Ir a adicionados recentemente</a>
+    <CardHome id="conteudos-recentes"></CardHome>
     
     <!-- TIPOS DE CONTEUDO -->
     <a class="skip-link" href="#tipo-conteudos">Ir a tipos de conteúdos</a>
@@ -39,9 +31,9 @@
     ></CardHomeIcon>
     
     <!-- TEMAS TRANSVERSAIS -->
-    <a class="skip-link" href="#temas">Ir a temas transversais</a>
+    <a class="skip-link" href="#temas-transversais">Ir a temas transversais</a>
     <CardHomeIcon
-      id="temas"
+      id="temas-transversais"
       v-if="temas"
       :title="temas.name"
       :items="temas.componentes"
@@ -51,7 +43,7 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import { ClosePopup } from "quasar";
-import { CarouselHome, CardHome, CardHomeIcon } from "@components/home";
+import { CarouselHome, CardHome, CardHomeIcon, HomeLinksRotinas } from "@components/home";
 import {
   QParallax,
   ScrollFire,
@@ -70,8 +62,6 @@ export default {
     ScrollFire
   },
   components: {
-    QParallax,
-    CardHome,
     QBanner,
     QCard,
     QCardSection,
@@ -80,50 +70,9 @@ export default {
     QAvatar,
     CardHomeIcon,
     QBtnGroup,
-    CarouselHome
-  },
-
-  data() {
-    return {
-      ids: [
-        {
-          name: "conteudos-recentes",
-          animation: "bounceInLeft",
-          show: false,
-          data: []
-        },
-        {
-          name: "conteudos-destacados",
-          animation: "slideInRight",
-          show: false,
-          data: []
-        },
-        {
-          name: "conteudos-mais-baixados",
-          animation: "bounceInLeft",
-          show: false,
-          data: []
-        },
-        {
-          name: "conteudos-mais-acessados",
-          animation: "bounceInRight",
-          show: false,
-          data: []
-        },
-        {
-          name: "aplicativos-recentes",
-          animation: "bounceInLeft",
-          show: false,
-          data: []
-        },
-        {
-          name: "aplicativos-destacados",
-          animation: "bounceInRight",
-          show: false,
-          data: []
-        }
-      ]
-    };
+    CarouselHome,
+    HomeLinksRotinas,
+    CardHome,
   },
   computed: {
     ...mapState(["tipos", "componentes", "niveis"]),
@@ -142,27 +91,6 @@ export default {
         });
         return componentes[0];
       }
-    }
-  },
-  methods: {
-    async getDestaques(el) {
-      let slug = "/destaques/" + el.id;
-
-      if (el.classList.contains("load")) {
-        this.$q.loading.show();
-        let resp = await axios.get(slug);
-        if (resp.status == 200 && resp.data.success) {
-          this.pushData(el.id, resp.data.metadata, el);
-          this.$q.loading.hide();
-        }
-        el.classList.remove("load");
-      }
-    },
-    pushData(find, data, el) {
-      const element = this.ids.find(item => item.name === find);
-      element.show = true;
-      el.classList.add(element.animation);
-      element.data = data;
     }
   }
 };

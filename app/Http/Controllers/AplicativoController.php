@@ -51,7 +51,10 @@ class AplicativoController extends ApiController
     {
         $this->authorize('create', Aplicativo::class);
 
-        $validator = Validator::make($this->request->all(), config("rules.aplicativo"));
+        $validator = Validator::make(
+            $this->request->all(),
+            $this->configRules()
+        );
 
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível adicionar o aplicativo", 422);
@@ -82,12 +85,27 @@ class AplicativoController extends ApiController
         return $this->successResponse($aplicativo, 'Aplicativo cadastrado com sucesso!', 200);
     }
     /**
+     * Regras de validação
+     */
+    private function configRules()
+    {
+        return [
+            'name' => 'required|min:2|max:255',
+            'description' => 'required|min:140',
+            'url' => ['required', new \App\Rules\ValidUrl],
+            'category_id' => 'required',
+            'tags' => 'required|array|between:3,10',
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
+            'options_is_featured' => 'required|in:true,false',
+        ];
+    }
+    /**
      * Cria Arquivo de imagem
      */
     private function createFile($id, $image)
     {
         $fileName = "{$id}.{$image->guessExtension()}";
-        return $this->successResponse($fileName, 'teste', 200);
+        
         $path = $this->request->file('image')
             ->storeAs('imagem-associada', $fileName, 'aplicativos-educacionais');
         $image = new ResizeImage();
@@ -106,10 +124,13 @@ class AplicativoController extends ApiController
     public function update($id)
     {
         $aplicativo = Aplicativo::findOrFail($id);
-
+        
         $this->authorize('update', [$aplicativo]);
 
-        $validator = Validator::make($this->request->all(), config("rules.aplicativo"));
+        $validator = Validator::make(
+            $this->request->all(),
+            $this->configRules()
+        );
 
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível atualizar o aplicativo", 422);

@@ -24,7 +24,8 @@ class ConteudoController extends ApiController
             'getByTagId',
             'getSitesTematicos',
             'incorporarConteudo',
-            'conteudosRelacionados'
+            'conteudosRelacionados',
+            'getConteudosRecentes'
         ]);
         $request = $request;
     }
@@ -329,5 +330,11 @@ class ConteudoController extends ApiController
             ->limit($limit)->get();
         
         return $this->successResponse($conteudos);
+    }
+    public function getConteudosRecentes($slug)
+    {
+        $destaques = new \App\Helpers\Destaques(3);
+
+        return $this->successResponse($destaques->getHomeDestaques($slug));
     }
 }

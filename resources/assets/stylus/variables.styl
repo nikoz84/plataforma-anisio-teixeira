@@ -1,10 +1,15 @@
-// It's highly recommended to change the default colors
-// to match your app's branding.
-
-
-/*$primary   = #08275e
+/*
+$primary   = #08275e
 $secondary = #424242
-$accent    = #451e5f */
+$accent    = #451e5f
+$positive  = #4BBEAB
+$negative  = #B05552
+$info      = #35586A
+$warning   = #D6B476
+$light     = #bdbdbd
+$dark      = #04091f
+$faded     = #777
+*/
 
 $primary   = #066ab1
 $secondary = #5698e3
@@ -12,56 +17,43 @@ $accent    = #004081
 
 $light     = #5698e3
 $dark      = #004081
-
-/* cinza #c5cae9*/
+$positive  = #3cac3d
+$negative  = #cc2726
+$info      = #3871c1
+$warning   = #e9ba1a
+$light     = #bdbdbd
 $faded     = #e1e2e1
 
-.bg-cinza{
+$petecavermelho  = $negative
+$petecaamarelo   = $warning
+$petecaazul      = $info 
+$petecaverde     = $positive
+
+
+.bg-cinza
   background: $faded !important 
-}
 
-.bg-light{
+.bg-light
   background-color: $light !important
-}
 
-.bg-dark{
+.bg-dark
   background-color: $dark !important
-}
 
-$petecavermelho  = #ed2221
-$petecaamarelo   = #F9BB00
-$petecaazul      = #0072c5
-$petecaverde     = #00ae2e
-
-$positive  = $petecaverde
-$negative  = $petecavermelho
-$info      = $petecaazul
-$warning   = $petecaamarelo
-
-.bg-petecavermelho{
+.bg-petecavermelho
   background-color: $petecavermelho !important;
-}
-.bg-petecaamarelo{
+
+.bg-petecaamarelo
   background-color: $petecaamarelo !important;
-}
-.bg-petecaazul{
+
+.bg-petecaazul
   background-color: $petecaazul !important;
-}
-.bg-petecaverde{
+
+.bg-petecaverde
   background-color: $petecaverde !important;
-}
-.active-link-pat{
+
+.active-link-pat
   background-color: $primary
   color: #fff !important
-}
-/*$positive  = #4BBEAB
-$negative  = #B05552
-$info      = #35586A
-$warning   = #D6B476*/
-
-/*$light     = #bdbdbd
-$dark      = #04091f
-$faded     = #777*/
 
 $input-text-color         = $primary;
 $input-label-color        = $accent;
@@ -69,7 +61,18 @@ $input-label-color        = $accent;
 $generic-border-radius    = 3px;
 $body-font-size          ?= 14px
 $quasar-dont-import-fonts = true;
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Ubuntu:wght@400;500;700&display=swap')
+
+@font-face {
+  font-family: 'Ubuntu';
+  font-display: swap;
+  src: url(./fonts/Ubuntu-Regular.woff2);
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-display: swap;
+  src: url(./fonts/Lato-Regular.woff2);
+}
 
 $headings ?= {
   h1: {
@@ -164,21 +167,20 @@ $text-weights ?= {
   bolder: 700
 }
 
-$typography-font-family         ?= 'Ubuntu', '-apple-system', 'Helvetica Neue', Helvetica, Arial, sans-serif
+$typography-font-family         ?= 'Ubuntu', '-apple-system', Helvetica, Arial, sans-serif
 $toolbar-min-height             ?= 55px
 
-.title-page-tipos{
+.title-page-tipos
   font-family: 'Lato', sans-serif, cursive;
   font-weight: 700 !default;
   padding-bottom : 5px;
   border-bottom: 4px double $accent;
   font-display: swap;
-}
-body {
+
+body
   font-family: $typography-font-family;
   font-weight: 500 !default;
   font-display: swap;
-  color: #263238; /*BLUE-GREY-10*/
-}
+  color: #263238;
 
 @import '~quasar/src/css/variables.styl'

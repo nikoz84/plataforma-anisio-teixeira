@@ -15,7 +15,7 @@ class FileController extends ApiController
 
     public function __construct(File $file, Request $request, Storage $storage)
     {
-        $this->middleware('jwt.auth')->except(['index', 'search', 'getFiles', 'getGallery', 'downloadFile']);
+        $this->middleware('jwt.auth')->except(['index', 'search', 'getFiles', 'getGallery', 'downloadFile', 'getInfoFolder', 'fileExistInBase']);
         $this->file = $file;
         $this->request = $request;
         $this->storage = $storage;
@@ -76,22 +76,95 @@ class FileController extends ApiController
                 return $this->errorResponse([], 'arquivo não encontrado', 404);
                 break;
         }
-            
+
         $headers = [
             "Content-Type" => "$file->mime_type"
         ];
-        
+
         $path = self::windowsDirectory(
             Storage::disk('conteudos-digitais')->path("{$directory}/{$file->name}")
         );
-        
+
         return response()->download($path, $file->name, $headers);
     }
 
     public function getGallery()
     {
         $imagens = collect($this->getImagesGallery(true));
-        
+
         return $this->showAll($imagens);
+    }
+
+    /**
+     * função responsável por exibir informações de um diretório passado por parametro. 
+     */
+    public function getInfoFolder(Request $request)
+    {
+        if ($request->path == 'public')
+            $path = storage_path('app' . DIRECTORY_SEPARATOR . $request->path);
+        else
+            $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $request->path);
+
+        $files = scandir($path);
+
+        $qtdFiles = count($files) - 2;
+
+        $dirFiles = array();
+
+        foreach ($files as $file) {
+            if (($file == '.') || ($file == '..')) continue;
+
+            $filename = $path . DIRECTORY_SEPARATOR . $file;
+            $dirName = explode('\public', $filename);
+
+            $info = pathinfo($filename);
+            $info["dirname"] = $dirName[1];
+            $info["size"] = filesize($filename);
+            $info["modified"] = date("d/m/Y H:i:s", filemtime($filename));
+
+            array_push($dirFiles, $info);
+        }
+
+        $arrayFiles = array();
+
+        foreach ($dirFiles as $file) {
+            array_push($arrayFiles, ["Name: " . $file["basename"], "Size: " . $file["size"] . "KByte", "Modified: " . $file["modified"], "Directory: " . $file["dirname"]]);
+        }
+
+        return $this->successResponse(['quantidade de conteúdos: ' . $qtdFiles, $arrayFiles], 'sucesso!', 200);
+    }
+
+    /**
+     * Função responsável por verificar na base de dados se 
+     * existe arquivos de um diretório passado por parametro.  
+     */
+    public function fileExistInBase(Request $request)
+    {
+        $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $request->path);
+
+        $files = scandir($path);
+
+        $arrayExist = array();
+        $arrayNotExist = array();
+
+        foreach ($files as $file) {
+            if (($file == '.') || ($file == '..')) continue;
+
+            $dirFile = $path . DIRECTORY_SEPARATOR . $file;
+
+            if (!is_dir($dirFile)) {
+                $info = pathinfo($dirFile);
+
+                $fileName = explode('.', $info["filename"]);
+
+                if (Conteudo::where('id', $fileName[0])->count() > 0) {
+                    array_push($arrayExist, $info["basename"] . ' Existe na base de dados');
+                } else {
+                    array_push($arrayNotExist, $info["basename"] . ' Nao existe na base de dados');
+                }
+            }
+        }
+
+        return $this->successResponse(['Existe' => $arrayExist, 'Nao existe' => $arrayNotExist], 'sucesso!', 200);
     }
 }

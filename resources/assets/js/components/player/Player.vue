@@ -1,28 +1,31 @@
 <template>
-  <q-card-section class="row" v-if="conteudo && conteudo.tipo && conteudo.arquivos">
-    <q-media-player
-      type="video"
-      :sources="sources"
-      autoplay
-      :poster="showImage"
-      :volume="25"
-      v-if="tipo.id == 5"
-    ></q-media-player>
-
-    <q-media-player
-      type="audio"
-      :sources="sources"
-      autoplay
-      :poster="showImage"
-      :volume="25"
-      v-else-if="tipo.id == 4"
-    ></q-media-player>
-
-    <q-img v-else :src="showImage"
-        placeholder-src="/img/fundo-padrao.svg" 
-        style="height: 380px; max-width: 680px;">
-    </q-img>
-  </q-card-section>  
+  <div v-if="conteudo && conteudo.tipo && conteudo.arquivos">
+    
+      <q-media-player
+        type="video"
+        :sources="sources"
+        autoplay
+        :poster="showImage"
+        :volume="25"
+        v-if="tipo.id == 5"
+      ></q-media-player>
+    
+      <q-media-player
+        type="audio"
+        :sources="sources"
+        autoplay
+        :poster="showImage"
+        :volume="25"
+        v-else-if="tipo.id == 4"
+      ></q-media-player>
+    
+    
+      <q-img v-else :src="showImage"
+          placeholder-src="/img/fundo-padrao.svg" 
+          style="height: 380px; max-width: 680px;">
+      </q-img>
+ 
+  </div>  
 </template>
 
 <script>

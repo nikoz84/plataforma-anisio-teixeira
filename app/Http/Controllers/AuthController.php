@@ -12,7 +12,6 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendVerificationEmail;
 use Exception;
-use Illuminate\Support\Facades\Auth;
 
 class AuthController extends ApiController
 {

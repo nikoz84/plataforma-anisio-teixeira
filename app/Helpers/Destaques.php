@@ -12,7 +12,10 @@ use App\Tipo;
 class Destaques
 {
     public $limit = 6;
-
+    public function __construct($limit = 6)
+    {
+        $this->limit = $limit;
+    }
     /**
      * Retorna por demanda requisição
      *

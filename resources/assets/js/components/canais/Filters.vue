@@ -6,8 +6,12 @@
                 :key="i"
                 @click="replaceURL('componentes', filter.id)"
                 >
-                <q-item-section avatar>
-                    <q-img :src="filter.icon"></q-img>
+                <q-item-section avatar v-if="filter.icon">
+                    <q-avatar left square>
+                      <svg class="icon-pat" height="20" width="20">
+                        <use v-bind="{'xlink:href':'#'+ filter.icon}"></use> 
+                      </svg>
+                    </q-avatar>
                 </q-item-section>
                 <q-item-section>{{filter.name}}</q-item-section>
             </q-item>

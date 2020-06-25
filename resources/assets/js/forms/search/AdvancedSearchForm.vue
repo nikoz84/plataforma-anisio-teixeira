@@ -7,180 +7,152 @@
     transition-show="slide-up"
     transition-hide="slide-down"
   >
-    <q-card class="">
-      <q-bar>
-        <strong>Busca Avançada</strong>
+    <q-card>
+      <q-bar class="bg-dark text-white">
+        Busca avançada de recursos educacionais
         <q-space />
         <q-btn flat icon="close" v-close-popup aria-label="fechar">
-          <q-tooltip content-class="bg-white text-primary">Fechar</q-tooltip>
+          <q-tooltip content-class="bg-dark text-white">Fechar</q-tooltip>
         </q-btn>
       </q-bar>
-      <q-card-section class="col-sm-4">
+      <q-card-section class="row justify-center q-gutter-sm">
+        <!-- BUSCA -->
         <q-input
+          class="col-sm-4 input-search"
           v-model="term"
-          class="input-search"
           filled
           dense
-          hint="Pesquisar"
-        ></q-input>
+          clearable
+          clear-icon="close"
+          :hint="hintSearch"
+          bottom-slots
+        >
+          <template v-slot:prepend>
+            <q-icon name="article" />
+          </template>
+          <template v-slot:append>
+            <q-icon color="secondary" name="search" @click="onSearch" class="cursor-pointer" label="Pesquisar"/>
+          </template>
+        </q-input>
+        <!-- QUANTIDADE -->
         <q-select
+          class="col-sm-1"
           dense
           v-model="limit"
           stack-label
           :options="perPageOptions"
           hint="Itens por Página"
         />
-        <q-btn
-          aria-label="pesquisar"
-          color="teal"
-          label="Pesquisar"
-          icon="search"
-          @click="onSearch"
+        <!-- SUGERÊNCIA -->
+        <q-select
+          class="col-sm-2"
+          dense
+          v-model="per"
+          stack-label
+          :options="perSearchOptions"
+          hint="Sugerência por"
         />
+        
       </q-card-section>
-      <q-card-section class="row justify-center q-gutter-sm">
-        <div class="q-gutter-sm">
-          <q-radio
-            dense
-            color="teal"
-            v-model="per"
-            val="tag"
-            label="Palavra chave"
-          />
-          <q-radio
-            dense
-            color="teal"
-            v-model="per"
-            val="titulo"
-            label="Título"
-          />
-        </div>
-        <div class="q-gutter-sm"></div>
-      </q-card-section>
-      <!--q-card-section>
-        {{ tiposModel }} - {{ licencasModel }} - {{ componentesModel }} -
-        {{ per }} - {{ limit }}
-      </q-card-section -->
-      <q-card-section>
-         <q-list padding bordered class="rounded-borders">
-          <q-expansion-item
-            dense
-            dense-toggle
-            expand-separator
-            label="Tipos de Mídia"
-            v-if="tipos"
-          >
-            <q-card>
-              <q-card-section>
-                <q-checkbox
-                  v-for="(tipo, i) in tipos"
-                  :key="`t-${i}`"
-                  v-model="tiposModel"
-                  :val="tipo.id"
-                  :label="tipo.name"
-                  color="orange"
-                />
-              </q-card-section>
-            </q-card>
-          </q-expansion-item>
-          <q-expansion-item
-            dense
-            dense-toggle
-            expand-separator
-            label="Licenças"
-            v-if="licencas"
-          >
-            <q-card>
-              <q-card-section>
-                <q-checkbox
-                  v-for="(license, i) in licencas"
-                  :key="`l-${i}`"
-                  v-model="licencasModel"
-                  :val="license.id"
-                  :label="license.name"
-                  color="positive"
-                />
-              </q-card-section>
-            </q-card>
-          </q-expansion-item>
-          <!-- Componentes Curriculares -->
-          <q-expansion-item
-            dense
-            dense-toggle
-            expand-separator
+      <q-card-section horizontal>
+        <!-- COMPONENTES -->
+        <q-card-section class="col-4">
+          <!-- TIPOS DE CONTEUDOS -->
+          <div class="row flex-center q-mt-xs bg-secondary text-white cursor-pointer open-sidebar-menu">
+            Tipos de Conteúdos
+            <q-menu anchor="bottom middle" self="top middle">
+              <div class="row no-wrap q-pa-md">
+                <div class="column">
+                    <q-checkbox
+                      tag="label"
+                      v-for="(tipo, i) in tipos"
+                      :key="`t-${i}`"
+                      v-model="tiposModel"
+                      :val="tipo.id"
+                      :label="tipo.name"
+                      color="orange"
+                    />
+                </div>
+              </div>
+            </q-menu>
+          </div>
+          <q-separator></q-separator>
+          <!-- LICENCAS -->
+          <div class="row flex-center q-mt-xs bg-secondary text-white cursor-pointer open-sidebar-menu">
+            Licenças
+            <q-menu anchor="bottom middle" self="top middle">
+              <div class="row no-wrap q-pa-md">
+                <div class="column">
+                    <q-checkbox
+                      tag="label"
+                      v-for="(license, l) in licencas"
+                      :key="`l-${l}`"
+                      v-model="licencasModel"
+                      :val="license.id"
+                      :label="license.name"
+                      color="orange"
+                    />
+                </div>
+              </div>
+            </q-menu>
+          </div>
+          <q-separator></q-separator>
+          <!-- COMPONENTES CURRICULARES -->
+          <div class="row flex-center q-mt-xs bg-secondary text-white cursor-pointer open-sidebar-menu"
             v-for="(component, i) in componentes"
             :key="`c-${i}`"
             :index="component.id"
-            :label="component.name"
-          >
-            <q-card>
-              <q-card-section>
-                <q-checkbox
-                  v-for="(component, i) in component.componentes"
-                  :key="`child-com-${i}`"
-                  v-model="componentesModel"
-                  :val="component.id"
-                  :label="component.name"
-                  color="negative"
-                />
-              </q-card-section>
-            </q-card>
-          </q-expansion-item>
-
-          <q-expansion-item
-            dense
-            dense-toggle
-            expand-separator
+            >
+            {{ component.name }}
+          
+            <q-menu anchor="bottom middle" self="top middle">
+              <div class="row no-wrap q-pa-md">
+                <div class="column">
+                    <q-checkbox
+                      dense
+                      class="q-my-sm"
+                      v-for="(component, i) in component.componentes"
+                      :key="`child-com-${i}`"
+                      v-model="componentesModel"
+                      :val="component.id"
+                      :label="component.name"
+                    />
+                </div>
+              </div>
+            </q-menu>
+          </div>
+          <!-- NIVEIS DE ENSINO -->
+          <div class="row flex-center q-mt-xs bg-secondary text-white cursor-pointer open-sidebar-menu"
             v-for="(nivel, n) in niveis"
-            :key="`n-${n}`"
-            :index="nivel.id"
-            :label="nivel.name"
-          >
-            <q-card>
-              <q-card-section>
-                <q-checkbox
-                  v-for="(component, i) in nivel.componentes"
-                  :key="`child-com-${i}`"
-                  v-model="componentesModel"
-                  :val="component.id"
-                  :label="component.name"
-                  color="teal"
-                />
-              </q-card-section>
-            </q-card>
-          </q-expansion-item>
-        </q-list>
-    </q-card-section>
-    </q-card>
-    <q-card class="my-card" flat bordered>
-      <q-item>
-        <q-item-section avatar>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/img/boy-avatar.png">
-          </q-avatar>
-        </q-item-section>
-
-        <q-item-section>
-          <q-item-label>Title</q-item-label>
-          <q-item-label caption>
-            Subhead
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-
-      <q-separator />
-
-      <q-card-section horizontal>
-        <q-card-section>
-          asdasdadsd asdasd asda  asdasasd asd sad asds asdas dasdas ds 
+              :key="`n-${n}`"
+              :index="nivel.id"
+            >
+            {{ nivel.name }}
+          
+            <q-menu anchor="bottom middle" self="top middle">
+              <div class="row no-wrap q-pa-md">
+                <div class="column">
+                    <q-checkbox
+                      dense
+                      class="q-my-sm"
+                      v-for="(component, i) in nivel.componentes"
+                      :key="`child-com-${i}`"
+                      v-model="componentesModel"
+                      :val="component.id"
+                      :label="component.name"
+                      color="teal"
+                    />
+                </div>
+              </div>
+            </q-menu>
+          </div>
         </q-card-section>
-
         <q-separator vertical />
-
-        <q-card-section class="col-4">
+        <q-card-section class="col-6">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </q-card-section>
       </q-card-section>
+
     </q-card>
   </q-dialog>
 </template>
@@ -220,12 +192,17 @@ export default {
   data() {
     return {
       term: "",
-      per: "tag",
+      hintSearch: 'Procure por uma palavra chave',
+      per: {label: 'Palavra Chave', value: 'tag' },
       limit: { label: "15 itens", value: 15 },
       perPageOptions: [
         { label: "15 itens", value: 15 },
         { label: "30 itens", value: 30 },
         { label: "45 itens", value: 45 }
+      ],
+      perSearchOptions: [
+        {label: 'Palavra Chave', value: 'tag' },
+        {label: 'Título', value: 'titulo' }
       ],
       maximizedToggle: true,
       tiposModel: [],
@@ -235,11 +212,16 @@ export default {
     };
   },
   computed: {
-    ...mapState(["tipos", "licencas", "componentes", "niveis"])
+    ...mapState(["tipos", "licencas", "componentes", "niveis"]),
   },
   methods: {
     show() {
       this.$refs.dialog.show();
+    },
+    searchBy(per){
+      let title = per == 'tag' ? 'por uma palavra chave' : 'por um título';
+      this.per = per;
+      this.hintSearch = `Procure ${title}`;
     },
     hide() {
       this.$refs.dialog.hide();
@@ -269,11 +251,6 @@ export default {
 
       this.hide();
     },
-    processData(append, data) {
-      for (var i = 0; i < tags.length; i++) {
-        form.append("tags[]", tags[i]);
-      }
-    },
     onCancelClick() {
       this.$parent.$router.replace(`/recursos-educacionais/listar`);
       this.hide();
@@ -285,8 +262,8 @@ export default {
 .input-search {
   width: 50%;
 }
-
-.btn-input {
-  padding: 2px;
+.open-sidebar-menu{
+  width: 100%; 
+  min-height: 45px;
 }
 </style>

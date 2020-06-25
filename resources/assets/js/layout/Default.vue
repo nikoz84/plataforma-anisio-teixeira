@@ -13,25 +13,21 @@
         />
         <q-btn
           flat
-          no-caps
-          no-wrap
           class="q-ml-xs"
           aria-label="voltar ao inicio"
           to="/"
           v-if="$q.screen.gt.xs"
+          size="sm"
         >
-          <img src="/logo.svg" 
-                loading="lazy" 
-                width="auto" 
-                height="50" 
-                alt="Marca"
-                title="marca"
-                aria-label="Marca da plataforma Anísio Teixeira"
-                />
-
-          <!--q-toolbar-title shrink v-if="$q.screen.gt.xs" style="font-size:14px;font-weight:600;">
-            {{ !$q.screen.gt.sm ? 'PAT' : 'PLATAFORMA ANÍSIO TEIXEIRA'}}
-          </q-toolbar-title-->
+          <q-avatar
+            style="width: 200px;height: 44px;fill: currentColor;border-radius: 0%;"
+            alt="Marca"
+            title="marca"
+            aria-label="Marca da plataforma Anísio Teixeira">
+              <svg class="icon-pat" height="38" width="200" style="color:white;">
+                <use v-bind="{'xlink:href':'#logo'}"></use> 
+              </svg>
+          </q-avatar>
         </q-btn>
 
         <q-space />

@@ -10,9 +10,10 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-object-rest-spread": "^7.9.6",
+    "websocket-extensions": ">=0.1.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.10.1",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
-    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-env": "^7.10.2",
     "axios": "^0.19.2",
     "babel-plugin-dynamic-import-webpack": "^1.1.0",
     "browser-sync": "^2.26.7",
@@ -26,14 +27,14 @@
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
     "vue": "^2.6.11",
-    "vue-router": "^3.2.0",
+    "vue-router": "^3.3.4",
     "vue-template-compiler": "^2.6.11",
     "vuex": "^3.4.0",
     "webpack-chunk-rename-plugin": "^1.0.3"
   },
   "dependencies": {
-    "@babel/core": "^7.9.6",
-    "@quasar/extras": "^1.8.1",
+    "@babel/core": "^7.10.2",
+    "@quasar/extras": "^1.8.2",
     "@quasar/quasar-ui-qmediaplayer": "^1.0.24",
     "apexcharts": "^3.19.2",
     "babel-loader": "^8.1.0",
@@ -41,11 +42,9 @@
     "google-maps-api-loader": "^1.1.1",
     "moment": "^2.26.0",
     "node-sass": "^4.14.1",
-    "plyr": "^3.6.2",
-    "quasar": "^1.11.3",
+    "quasar": "^1.12.5",
     "vue-apexcharts": "^1.5.3",
     "vue-loader": "^15.9.2",
-    "vue-plyr": "^6.0.4",
     "vue-recaptcha": "^1.3.0",
     "vue-social-sharing": "^2.4.7",
     "webpack": "^4.43.0"

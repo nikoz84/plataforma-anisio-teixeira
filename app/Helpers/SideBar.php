@@ -19,14 +19,17 @@ class SideBar
             $q->orderBy('name');
         }])->get();
 
-        $licencas = License::select(['id', 'name'])->whereRaw('parent_id is null')->get();
-        $niveis = NivelEnsino::with(['componentes' => function ($q) {
-            $q->where('curricular_components.id', '!=', 13)
-                ->where('curricular_components.id', '!=', 12)
-                ->where('curricular_components.id', '!=', 31)
-                ->orderBy('name');
-        }])->get();
-        $layout = (object) Options::select("meta_data")->where("name", "like", "layout")->get()->first();
+        $licencas = License::select(['id', 'name'])
+        ->whereRaw('parent_id is null')->get();
+
+        $niveis = NivelEnsino::with(['componentes'])
+        ->where('id', '<>', 13)
+        ->where('id', '<>', 12)
+        ->get();
+
+        $layout = (object) Options::select("meta_data")
+        ->where("name", "like", "layout")->get()->first();
+
         $canais =  DB::select(DB::raw("SELECT name,
                                     slug,
                                     options->'order_menu' AS order,
@@ -35,14 +38,10 @@ class SideBar
                                     WHERE is_active = ?
                                     ORDER BY options->'order_menu';"), [true]);
         
-        $destaques = new Destaques();
-        $destaques = $destaques->getHomeDestaques('conteudos-recentes');
-
         return [
             'layout' => $layout,
             'links' => $canais,
             'licencas' => $licencas,
-            'destaques' => $destaques,
             'componentes' => $componentes,
             'niveis' => $niveis,
             'tipos' => Tipo::select(['id', 'name'])->orderBy('name')->get()

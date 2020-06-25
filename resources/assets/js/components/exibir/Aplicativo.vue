@@ -3,27 +3,30 @@
     <q-card>
       <q-card-section>
         <section class="row">
-          <div class="col-xs-12 col-sm-7 col-md-7">
+          <div class="col-xs-12 col-sm-6 col-md-6">
             <Title :title="aplicativo.name"></Title>
-            <section class="text-center">
-              <small>
-                Publicador(a): 
-                <q-badge :bg-color="aplicativo.canal.color">{{aplicativo.user.name}}</q-badge>
-              </small> 
-              <small>
-                  Publicado em: 
-                  <q-badge color="secondary">{{aplicativo.formated_date}}</q-badge>
-                </small> 
-              <small v-if="aplicativo.options">
-                Acessos: 
-                <q-badge color="secondary">{{aplicativo.options.qt_access}}</q-badge>
-              </small>
-            </section>
             <div class="q-pt-lg q-pr-lg" v-html="aplicativo.description"></div>
+            <section class="q-mt-lg">
+              <strong>Categoria: </strong>
+                {{aplicativo.category.name}}
+              <q-separator class="q-my-md"></q-separator>
+              <strong>Publicador(a): </strong>
+                {{aplicativo.user.name}}
+                
+              <q-separator class="q-my-md"></q-separator>
+              <strong>Publicado em: </strong>
+                {{aplicativo.formated_date}}
+                
+              <q-separator class="q-my-md"></q-separator>
+              <strong>Acessos: </strong>
+                {{aplicativo.options.qt_access}}
+                
+              <q-separator class="q-my-md"></q-separator>
+            </section>
           </div>
-          <q-separator class="q-mb-lg" />
+          
           <div class="col-xs-12 col-sm-5 col-md-5">
-            <figure class="row">
+            <figure>
               <q-img :src="aplicativo.image"
                   v-if="aplicativo.canal"
                   :placeholder-src="`/img/fundo-padrao.svg`" 
