@@ -8,12 +8,12 @@ use App\Comentario;
 
 class ComentarioController extends ApiController
 {
-    private $comentario;
-    private $request;
+    protected $comentario;
+    protected $request;
 
-	public function __construct(Request $request, Comentario $comentario)
+    public function __construct(Request $request, Comentario $comentario)
     {
-        $this->comentario = $comentario; 
+        $this->comentario = $comentario;
         $this->request = $request;
 
         $this->middleware('auth:api')->except([
@@ -24,15 +24,14 @@ class ComentarioController extends ApiController
 
     public function create(Request $request)
     {
-    	$comentario = new Comentario();
-    	
-    	try {
-    		$comentario->create($request->all());
-    		return $this->successResponse([], 'Comentário criado com sucesso!', 200);
-
-    	} catch(\Exception $e) {
-    		return $this->errorResponse([], 'Não foi possível criar o comentário!', 422);
-    	}
+        $comentario = new Comentario();
+        
+        try {
+            $comentario->create($request->all());
+            return $this->successResponse([], 'Comentário criado com sucesso!', 200);
+        } catch (\Exception $e) {
+            return $this->errorResponse([], 'Não foi possível criar o comentário!', 422);
+        }
     }
 
     public function update(Request $request)
@@ -41,15 +40,14 @@ class ComentarioController extends ApiController
         $comentario = $comentario->find($request->id);
 
         return $this->successResponse($comentario);
-
     }
 
     public function comentarios($id)
     {
-    	$comentario = new Comentario();
+        $comentario = new Comentario();
         $comentario = $comentario->find($id);
 
-        if ( ! is_null($comentario)) {
+        if (!is_null($comentario)) {
             return $this->successResponse($comentario);
         }
 
