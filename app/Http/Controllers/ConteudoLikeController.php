@@ -10,13 +10,13 @@ class ConteudoLikeController extends ApiController
     private $conteudoLike;
     private $request;
 
-	public function __construct(Request $request, ConteudoLike $conteudoLike)
+    public function __construct(Request $request, ConteudoLike $conteudoLike)
     {
-        $this->conteudoLike = $conteudoLike; 
+        $this->conteudoLike = $conteudoLike;
         $this->request = $request;
 
         $this->middleware('auth:api')->except([
-            'like', 
+            'like',
             'deslike',
             'getLikesPorIdUsuarioEtipo'
         ]);
@@ -25,13 +25,12 @@ class ConteudoLikeController extends ApiController
 
     public function like()
     {
-    	try {
-    		$this->conteudoLike->like($this->request);
-    		return $this->successResponse([], 'Ação realizada com sucesso!', 200);
-
-    	} catch(\Exception $e) {
-    		return $this->errorResponse([], 'Não foi possível realizar a operação!', 422);
-    	}
+        try {
+            $this->conteudoLike->like($this->request);
+            return $this->successResponse([], 'Ação realizada com sucesso!', 200);
+        } catch (\Exception $e) {
+            return $this->errorResponse([], 'Não foi possível realizar a operação!', 422);
+        }
     }
 
     public function deslike()
@@ -39,8 +38,7 @@ class ConteudoLikeController extends ApiController
         try {
             $this->conteudoLike->deslike($this->request);
             return $this->successResponse([], 'Ação realizada com sucesso!', 200);
-
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return $this->errorResponse([], 'Não foi possível realizar a operação!', 422);
         }
     }

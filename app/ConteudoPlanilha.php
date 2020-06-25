@@ -24,15 +24,15 @@ class ConteudoPlanilha extends Model
     ];
     
     /**
-    * Metodo usado para 
+    * Consulta ao Google Scripts
     */
-    public function buscarJsonNoGoogleSpreadsheets($googleKey)
+    public function buscarJsonNoGoogleSpreadsheets($url)
     {
-        $url = "https://script.googleusercontent.com/macros/";
-        $param = "echo?user_content_key=";
-        $routeToGoogle = $url.$param.$googleKey;
-
-        $jsonFile = file_get_contents($routeToGoogle);
+        if (!$url) {
+            return;
+        }
+        $baseUrl = "https://script.google.com/macros/s/" . $url;
+        $jsonFile = file_get_contents($baseUrl);
         $jsonStr = json_decode($jsonFile, true);
         return $jsonStr['result'];
     }
@@ -42,13 +42,13 @@ class ConteudoPlanilha extends Model
         $novaEstrutura = [];
         $ids = [];
 
-        foreach($dados as $key => $dado) {
-            if ( ! in_array($dado['id'], $ids)) {
+        foreach ($dados as $key => $dado) {
+            if (! in_array($dado['id'], $ids)) {
                 array_push($ids, $dado['id']);
             }
         }
 
-        foreach($dados as $key => $dado) {
+        foreach ($dados as $key => $dado) {
             for ($i = 0; $i < count($ids); $i++) {
                 if ($dado['id'] == $ids[$i]) {
                     $novaEstrutura[$i]['name'] = 'ipes-faculdade';
@@ -81,7 +81,7 @@ class ConteudoPlanilha extends Model
                     $novaEstrutura['rotinas'][$key][$semana['slug']][$rotina['dia']][$rotina['nivel-ensino']]['atividades'][] = [
                         'descricao' => $rotina['descricao'],
                         'link' => $rotina['link'],
-                        'sugestao' => $rotina['sugestao']                
+                        'sugestao' => $rotina['sugestao']
                     ];
                 }
             }
@@ -92,7 +92,7 @@ class ConteudoPlanilha extends Model
 
     public function conteudos()
     {
-    	return $this->select();
+        return $this->select();
     }
 
     public function diasDaSemanaPorExtenso()
