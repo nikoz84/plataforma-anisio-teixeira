@@ -1,12 +1,5 @@
 {
-<<<<<<< HEAD
-    "/js/app.js": "/js/app.js?id=f4926517fe1b2917f046",
-    "/css/app.css": "/css/app.css?id=c802447ca666dbc894c3",
-    "/css/app-copy.css": "/css/app-copy.css?id=c802447ca666dbc894c3"
-=======
-    "/js//js/vendor.js": "/js//js/vendor.js",
-    "/js//js/app.js": "/js//js/app.js",
-    "/js/manifest.js": "/js/manifest.js",
-    "/css/app.css": "/css/app.css"
->>>>>>> 9b41587d814673c28ac5775179190f9c2ea03297
+    "/js/app.js": "/js/app.js?id=bdafa3ecb8b76e453d0e",
+    "/css/app.css": "/css/app.css?id=4edc20fbb86bfa187ba0",
+    "/css/app-copy.css": "/css/app-copy.css?id=4edc20fbb86bfa187ba0"
 }
