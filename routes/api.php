@@ -71,9 +71,15 @@ Route::get('/files/{action}/{id}', 'FileController@downloadFile')->name('downloa
 
 /** MIGRAR PLANILHAS */
 Route::get(
-    '/planilha/buscar/rotina/de/estudos/{googleKey}',
-    'ConteudoPlanilhaController@buscarJsonRotinaDeEstudosNoGoogleSpreadsheets'
-)->name('busca.planilha.rotina.de.estudos');
+    '/planilhas/rotinas/{semana}',
+    'ConteudoPlanilhaController@getRotinaDeEstudos'
+)->name('busca.rotina.de.estudos');
+Route::get(
+    '/planilhas/faculdades/',
+    'ConteudoPlanilhaController@getFaculdadesDaBahia'
+)->name('busca.faculdades');
+
+
 Route::get('/planilhas', 'ConteudoPlanilhaController@conteudos')->name('conteudo.planilha');
 
 

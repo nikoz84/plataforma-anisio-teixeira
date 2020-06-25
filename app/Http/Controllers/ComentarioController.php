@@ -9,24 +9,23 @@ use App\Comentario;
 
 class ComentarioController extends ApiController
 {
-    private $comentario;
-    private $request;
+    protected $comentario;
+    protected $request;
 
-	public function __construct(Request $request, Comentario $comentario)
+    public function __construct(Request $request, Comentario $comentario)
     {
-        $this->comentario = $comentario; 
+        $this->comentario = $comentario;
         $this->request = $request;
 
         $this->middleware('auth:api')->except([
-            'create', 
+            'create',
             'update',
-            'comentarios', 
-            'getComentariosByIdUsuario', 
+            'comentarios',
+            'getComentariosByIdUsuario',
             'getComentariosByIdPostagem',
             'getComentarioById',
             'deletar'
         ]);
-        $request = $request;
     }
 
     public function create()
@@ -40,18 +39,17 @@ class ComentarioController extends ApiController
             return $this->errorResponse($validator->errors(), "Usuário não validado", 422);
         }
 
-    	try {
-    		$this->comentario->create($this->request->all());
-    		return $this->successResponse([], 'Comentário criado com sucesso!', 200);
-
-    	} catch(\Exception $e) {
-    		return $this->errorResponse([], 'Não foi possível criar o comentário!', 422);
-    	}
+        try {
+            $this->comentario->create($this->request->all());
+            return $this->successResponse([], 'Comentário criado com sucesso!', 200);
+        } catch (\Exception $e) {
+            return $this->errorResponse([], 'Não foi possível criar o comentário!', 422);
+        }
     }
     
     # Retorna o comentario pelo seu id, ou seja, chave primaria
     public function getComentarioById($id)
-    { 
+    {
         $comentario = $this->comentario->getComentarioById($id);
         if ($comentario) {
             return $this->successResponse($comentario);
@@ -77,8 +75,7 @@ class ComentarioController extends ApiController
         try {
             $comentario->update($body);
             return $this->successResponse([], 'Comentário editado com sucesso!', 200);
-
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return $this->errorResponse([], 'Não foi possível editar o comentário!', 422);
         }
     }

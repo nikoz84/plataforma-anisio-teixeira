@@ -52,6 +52,12 @@
                   icon="delete"
                   v-if="row.user_can && row.user_can.delete"
                 />
+                <q-btn
+                  size="sm"
+                  color="primary"
+                  title="Visualizar"
+                  icon="visibility"
+                />
               </q-btn-group>
             </td>
           </tr>
