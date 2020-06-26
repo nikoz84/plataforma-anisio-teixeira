@@ -55,19 +55,22 @@
         
       </q-card-section>
       <q-card-section horizontal>
-        <q-card-section class="col-3">
+        <q-card-section class="col-4">
+          <div class="text-h6 q-my-md">Filtros de busca</div>
           <!-- TIPO DE CONTEÚDOS -->
           <q-select
             option-value="id"
             option-label="name"
-            ransition-show="scale"
+            transition-show="scale"
             transition-hide="scale"
             v-model="tiposModel"
             :options="tipos"
             multiple
             use-chips
             stack-label
-            use-input
+            clearable
+            hide-dropdown-icon
+            standout="bg-primary text-white"
             label="Tipo de Conteúdo"
             behavior="dialog"
           />
@@ -76,14 +79,16 @@
           <q-select
             option-value="id"
             option-label="name"
-            ransition-show="scale"
+            transition-show="scale"
             transition-hide="scale"
             v-model="licencasModel"
             :options="licencas"
             multiple
             use-chips
             stack-label
-            use-input
+            clearable
+            hide-dropdown-icon
+            standout="bg-primary text-white"
             label="Licenças"
             behavior="dialog"
           />
