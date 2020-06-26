@@ -1246,16 +1246,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v6.18.19",
+            "version": "v6.18.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "69321afec31f4a908112e5dc8995fc91024fd971"
+                "reference": "9e5226ecc28f960cba1bd38b6d1d82a52e072dc3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/69321afec31f4a908112e5dc8995fc91024fd971",
-                "reference": "69321afec31f4a908112e5dc8995fc91024fd971",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/9e5226ecc28f960cba1bd38b6d1d82a52e072dc3",
+                "reference": "9e5226ecc28f960cba1bd38b6d1d82a52e072dc3",
                 "shasum": ""
             },
             "require": {
@@ -2053,6 +2053,18 @@
         },
         {
             "name": "opis/closure",
+<<<<<<< HEAD
+            "version": "3.5.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/opis/closure.git",
+                "reference": "cac47092144043d5d676e2e7cf8d0d2f83fc89ca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/opis/closure/zipball/cac47092144043d5d676e2e7cf8d0d2f83fc89ca",
+                "reference": "cac47092144043d5d676e2e7cf8d0d2f83fc89ca",
+=======
             "version": "3.5.4",
             "source": {
                 "type": "git",
@@ -2063,6 +2075,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/opis/closure/zipball/1d0deef692f66dae5d70663caee2867d0971306b",
                 "reference": "1d0deef692f66dae5d70663caee2867d0971306b",
+>>>>>>> 9b41587d814673c28ac5775179190f9c2ea03297
                 "shasum": ""
             },
             "require": {
@@ -2110,7 +2123,11 @@
                 "serialization",
                 "serialize"
             ],
+<<<<<<< HEAD
+            "time": "2020-05-25T09:32:45+00:00"
+=======
             "time": "2020-06-07T11:41:29+00:00"
+>>>>>>> 9b41587d814673c28ac5775179190f9c2ea03297
         },
         {
             "name": "orbitale/imagemagick-php",
@@ -2907,7 +2924,11 @@
         },
         {
             "name": "symfony/console",
+<<<<<<< HEAD
+            "version": "v4.4.9",
+=======
             "version": "v4.4.10",
+>>>>>>> 9b41587d814673c28ac5775179190f9c2ea03297
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
@@ -2998,7 +3019,11 @@
         },
         {
             "name": "symfony/css-selector",
+<<<<<<< HEAD
+            "version": "v5.1.0",
+=======
             "version": "v5.1.1",
+>>>>>>> 9b41587d814673c28ac5775179190f9c2ea03297
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
@@ -3065,7 +3090,11 @@
         },
         {
             "name": "symfony/debug",
+<<<<<<< HEAD
+            "version": "v4.4.9",
+=======
             "version": "v4.4.10",
+>>>>>>> 9b41587d814673c28ac5775179190f9c2ea03297
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
@@ -3136,7 +3165,11 @@
         },
         {
             "name": "symfony/error-handler",
+<<<<<<< HEAD
+            "version": "v4.4.9",
+=======
             "version": "v4.4.10",
+>>>>>>> 9b41587d814673c28ac5775179190f9c2ea03297
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/error-handler.git",
@@ -3207,7 +3240,11 @@
         },
         {
             "name": "symfony/event-dispatcher",
+<<<<<<< HEAD
+            "version": "v4.4.9",
+=======
             "version": "v4.4.10",
+>>>>>>> 9b41587d814673c28ac5775179190f9c2ea03297
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
@@ -3349,7 +3386,11 @@
         },
         {
             "name": "symfony/finder",
+<<<<<<< HEAD
+            "version": "v4.4.9",
+=======
             "version": "v4.4.10",
+>>>>>>> 9b41587d814673c28ac5775179190f9c2ea03297
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
@@ -3412,7 +3453,11 @@
         },
         {
             "name": "symfony/http-foundation",
+<<<<<<< HEAD
+            "version": "v4.4.9",
+=======
             "version": "v4.4.10",
+>>>>>>> 9b41587d814673c28ac5775179190f9c2ea03297
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
@@ -3481,6 +3526,18 @@
         },
         {
             "name": "symfony/http-kernel",
+<<<<<<< HEAD
+            "version": "v4.4.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/http-kernel.git",
+                "reference": "54526b598d7fc86a67850488b194a88a79ab8467"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/54526b598d7fc86a67850488b194a88a79ab8467",
+                "reference": "54526b598d7fc86a67850488b194a88a79ab8467",
+=======
             "version": "v4.4.10",
             "source": {
                 "type": "git",
@@ -3491,6 +3548,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/http-kernel/zipball/81d42148474e1852a333ed7a732f2a014af75430",
                 "reference": "81d42148474e1852a333ed7a732f2a014af75430",
+>>>>>>> 9b41587d814673c28ac5775179190f9c2ea03297
                 "shasum": ""
             },
             "require": {
@@ -3582,6 +3640,22 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
+            "time": "2020-05-31T05:25:51+00:00"
+        },
+        {
+            "name": "symfony/mime",
+            "version": "v5.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/mime.git",
+                "reference": "56261f89385f9d13cf843a5101ac72131190bc91"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/mime/zipball/56261f89385f9d13cf843a5101ac72131190bc91",
+                "reference": "56261f89385f9d13cf843a5101ac72131190bc91",
+=======
             "time": "2020-06-12T11:15:37+00:00"
         },
         {
@@ -3596,6 +3670,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/mime/zipball/c0c418f05e727606e85b482a8591519c4712cf45",
                 "reference": "c0c418f05e727606e85b482a8591519c4712cf45",
+>>>>>>> 9b41587d814673c28ac5775179190f9c2ea03297
                 "shasum": ""
             },
             "require": {
@@ -3659,7 +3734,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
+            "time": "2020-05-25T12:33:44+00:00"
+=======
             "time": "2020-06-09T15:07:35+00:00"
+>>>>>>> 9b41587d814673c28ac5775179190f9c2ea03297
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -4310,7 +4389,11 @@
         },
         {
             "name": "symfony/process",
+<<<<<<< HEAD
+            "version": "v4.4.9",
+=======
             "version": "v4.4.10",
+>>>>>>> 9b41587d814673c28ac5775179190f9c2ea03297
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
@@ -4373,7 +4456,11 @@
         },
         {
             "name": "symfony/routing",
+<<<<<<< HEAD
+            "version": "v4.4.9",
+=======
             "version": "v4.4.10",
+>>>>>>> 9b41587d814673c28ac5775179190f9c2ea03297
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/routing.git",
@@ -4535,7 +4622,11 @@
         },
         {
             "name": "symfony/translation",
+<<<<<<< HEAD
+            "version": "v4.4.9",
+=======
             "version": "v4.4.10",
+>>>>>>> 9b41587d814673c28ac5775179190f9c2ea03297
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
@@ -4696,7 +4787,11 @@
         },
         {
             "name": "symfony/var-dumper",
+<<<<<<< HEAD
+            "version": "v4.4.9",
+=======
             "version": "v4.4.10",
+>>>>>>> 9b41587d814673c28ac5775179190f9c2ea03297
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
@@ -4916,6 +5011,18 @@
         },
         {
             "name": "vlucas/phpdotenv",
+<<<<<<< HEAD
+            "version": "v3.6.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vlucas/phpdotenv.git",
+                "reference": "8b64814b356b96a90d2bc942b152c80d8888b8d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/8b64814b356b96a90d2bc942b152c80d8888b8d4",
+                "reference": "8b64814b356b96a90d2bc942b152c80d8888b8d4",
+=======
             "version": "v3.6.6",
             "source": {
                 "type": "git",
@@ -4926,6 +5033,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/4669484ccbc38fe7c4e0c50456778f2010566aad",
                 "reference": "4669484ccbc38fe7c4e0c50456778f2010566aad",
+>>>>>>> 9b41587d814673c28ac5775179190f9c2ea03297
                 "shasum": ""
             },
             "require": {
@@ -4985,7 +5093,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
+            "time": "2020-05-23T09:42:03+00:00"
+=======
             "time": "2020-06-02T14:08:54+00:00"
+>>>>>>> 9b41587d814673c28ac5775179190f9c2ea03297
         }
     ],
     "packages-dev": [
