@@ -117,7 +117,8 @@ Route::group(
         /** CATEGORIAS DOS CONTEÚDOS*/
         Route::post('/categorias', 'CategoryController@create')->name('criar.categorias');
         Route::put('/categorias/{id}', 'CategoryController@update')->name('atualizar.categorias');
-        Route::delete('/categorias/{id}', 'CategoryController@delete')->name('categorias.apagar');
+        Route::delete('/categorias/{id}', 'CategoryController@delete')->name('apagar.categorias');
+        Route::post('/categorias', 'CategoryController@create')->name('adicionar.categorias');
         /** AUTENTICACAO */
         Route::post('/auth/logout', 'AuthController@logout')->name('sair');
         Route::post('/auth/refresh', 'AuthController@refresh')->name('refrescar.token');
