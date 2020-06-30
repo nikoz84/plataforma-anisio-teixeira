@@ -22,7 +22,7 @@ Route::get('/autocompletar', 'HomeController@autocomplete')->name('autocompletar
 Route::get('/layout', 'HomeController@getLayout')->name('lista.links');
 /** CATEGORIAS */
 Route::get('/categorias', 'CategoryController@index')->name('lista.categorias');
-Route::get('/categorias/{id}', 'CategoryController@getCategoryById')->name('lista.categoria.x.id');
+Route::get('/categorias/{id}', 'CategoryController@getById')->name('lista.categoria.x.id');
 Route::get('/categorias/canal/{id}', 'CategoryController@getCategoryByCanalId')->name('lista.categoria.x.canal.id');
 /** TIPOS */
 Route::get('/tipos', 'TipoController@index')->name('listar.tipos');

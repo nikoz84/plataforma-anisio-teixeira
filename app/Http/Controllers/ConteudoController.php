@@ -321,14 +321,11 @@ class ConteudoController extends ApiController
     public function conteudosRelacionados(Request $request, $id)
     {
         $limit = $request->query('limit', 6);
-
         $query = Conteudo::query();
-        
         $conteudos = $query
             ->relacionados($id)
             ->where('is_approved', 'true')
             ->limit($limit)->get();
-        
         return $this->successResponse($conteudos);
     }
     public function getConteudosRecentes($slug)
