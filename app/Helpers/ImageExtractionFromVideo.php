@@ -61,15 +61,15 @@ class ImageExtractionFromVideo
     */
 	public function extract()
 	{
-		# To execute the command three times and extract three images in diferentes seconds
+		# Executa o comando três vezes e extrai uma imagem em momentos diferentes após o inicio do video
 		$this->realXtract('30');
 		$this->realXtract('40');
 		$this->realXtract('50');
 	}
     
     /**
-    * Internal method that execute the extract command
-    * @param $seconds: To Extract the image after some seconds later of the video beginning
+    * Metodo interno que executa o comando FFmpeg
+    * @param $seconds: Representa a quantos segunos após o inicio do video as imagens serão extraidas
     */
 	private function realXtract($seconds)
 	{
