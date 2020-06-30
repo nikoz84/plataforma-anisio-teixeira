@@ -61,7 +61,19 @@ class ImageExtractionFromVideo
     */
 	public function extract()
 	{
-		return shell_exec("ffmpeg -i {$this->videoPath} -r 1 -s {$this->imageSize} -f image2 -vframes 1 {$this->imagePathDestination}/{$this->createImageName()}-%03d.jpeg");
+		# To execute the command three times and extract three images in diferentes seconds
+		$this->realXtract('30');
+		$this->realXtract('40');
+		$this->realXtract('50');
+	}
+    
+    /**
+    * Internal method that execute the extract command
+    * @param $seconds: To Extract the image after some seconds later of the video beginning
+    */
+	private function realXtract($seconds)
+	{
+		shell_exec("ffmpeg -itsoffset -{$seconds} -i {$this->videoPath} -r 1 -s {$this->imageSize} -f image2 -vframes 1 {$this->imagePathDestination}/{$this->createImageName()}-%03d.jpeg");
 	}
     
     /**
