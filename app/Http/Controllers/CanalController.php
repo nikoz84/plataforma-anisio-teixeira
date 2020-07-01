@@ -23,17 +23,14 @@ class CanalController extends ApiController
     public function index()
     {
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 15;
-
         if ($this->request->has('select')) {
             $select = $this->canal::whereRaw('is_active = true AND id <> 9 AND id <> 7 AND id <> 8')
                 ->orderBy('id')
                 ->get(['id', 'name']);
             return $this->fetchForSelect(collect($select));
         }
-
         $canais = $this->canal::paginate($limit);
         $canais->setPath("/canais?limit={$limit}");
-
         return $this->showAsPaginator($canais);
     }
     /**
