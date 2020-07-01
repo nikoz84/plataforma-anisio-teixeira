@@ -72,6 +72,7 @@
                         <q-input
                         @input="val => { file = val[0];}"
                         outlined
+                        @change="onFileChange"
                         accept=".png, .webp, .svg, .jpeg, .jpg"
                         type="file"
                         hint="Imagem de Destaque"
@@ -107,8 +108,10 @@ export default {
         return {
             category: {
                 name:"",
+                canal:null,
                 canal_id: null,
-                image: "",
+                image:"imagemAssociada",
+                imagemAssociada: "",
                 options: {
                     description:"",
                     is_active:true,
@@ -124,14 +127,19 @@ export default {
         this.getData();
     },
     methods: {
+        onFileChange(e) {
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                return;
+            console.log("file:", files);
+            this.category.imagemAssociada = files[0];
+        },
         async getData() {
             const canais  = axios.get("/canais?select");
             const categorias = axios.get("/categorias?select");
             let responses = await axios.all([canais,categorias]);
             this.canais = responses[0].data.metadata;
             this.categorias = responses[1].data.paginator.data;
-            console.log("responses[0]",responses[0]);
-            console.log("responses[1]",responses[1]);
             if (this.$route.params.id) {
                 let category = await axios.get("/categorias/" + this.$route.params.id);
                 this.category = category.data;
@@ -144,33 +152,18 @@ export default {
             form.append("name", this.category.name);
             form.append("options", JSON.stringify(this.category.options));
             form.append("canal_id", this.category.canal.id);
+            form.append("imagemAssociada", this.category.imagemAssociada);
             if (this.$route.params.action == "editar") 
             {
                 form.append("id", this.category.id);    
                 form.append("_method", "PUT");
-                let resp = await axios.put(this.$route.params.slug +"/"+ this.category.id, form);
-                console.log(this.$route.params.slug+"/"+ this.category.id);
+                let resp = await axios.post(this.$route.params.slug +"/"+ this.category.id, form);
+                
             }
             else
             {
                 let resp = await axios.post(this.$route.params.slug , form);
             }
-            console.log(resp.data)
-            // if (resp.data.success) {
-            //     this.$q.notify({
-            //     message: resp.data.message,
-            //     color: "grey-4",
-            //     textColor: "primary",
-            //     possition: "center"
-            //     });
-            // } else {
-            //     this.$q.notify({
-            //     message: resp.data.message,
-            //     color: "grey-4",
-            //     textColor: "primary",
-            //     possition: "center"
-            //     });
-            // }
          }
     }
 }

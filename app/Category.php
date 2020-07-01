@@ -5,6 +5,7 @@ namespace App;
 use App\Traits\UserCan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property Canal $canal
@@ -23,7 +24,16 @@ class Category extends Model
         return $this->hasMany('App\Category', 'parent_id', 'id')
             ->selectRaw("id, parent_id, name")
             ->where('options->is_active', 'true');
+    }
 
+    function getImageAttribute(){
+        $urlPath = Storage::disk("conteudos-digitais")->path("imagem-associada");
+        $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.".*";
+        $fileRef = glob($urlPath)[0];
+        $filename = basename($fileRef);
+        //return $urlPath;
+        return Storage::disk("conteudos-digitais")->url("imagem-associada/".$filename);
+        
     }
 
     /**

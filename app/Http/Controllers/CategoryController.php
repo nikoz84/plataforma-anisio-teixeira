@@ -6,9 +6,11 @@ use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ApiController;
+use App\Traits\FileSystemLogic;
 
 class CategoryController extends ApiController
 {
+    use FileSystemLogic;
     protected $request;
 
     public function rules()
@@ -16,7 +18,7 @@ class CategoryController extends ApiController
         return [
             'canal_id' => 'required',
             'name'=> 'required|min:10|max:255',
-            'options.description'=> 'required|min:20|max:1024'
+            'options'=> 'required|min:20|max:1024'
         ];
     }
     public function __construct(Request $request)
@@ -47,7 +49,6 @@ class CategoryController extends ApiController
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar a categoria", 422);
         }
-
         $category           = new Category;
         $category->name     = $this->request->name;
         $category->canal_id = $this->request->canal_id;
@@ -57,6 +58,7 @@ class CategoryController extends ApiController
             return $this->errorResponse([], 'Não foi possível cadastrar a categoria', 422);
         }
 
+        $file = $this->saveFile($category->id, [$this->request->imagemAssociada], 'imagem-associada');
         return $this->successResponse($category, 'Categoria criada com sucesso!', 200);
     }
 
@@ -68,8 +70,10 @@ class CategoryController extends ApiController
      */
     public function update($id)
     {
+        print_r($this->request->all());
         $validator = Validator::make($this->request->all(), $this->rules());
-        if ($validator->fails()) {
+        if ($validator->fails()) 
+        {
             return $this->errorResponse($validator->errors(), "Não foi possível atualizar a categoria", 404);
         }
         $category = Category::findOrFail($id);
