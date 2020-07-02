@@ -13,6 +13,8 @@ class FileController extends ApiController
 {
     use FileSystemLogic;
 
+    private $_imagick;
+
     public function __construct(File $file, Request $request, Storage $storage)
     {
         $this->middleware('jwt.auth')->except(['index', 'search', 'getFiles', 'getGallery', 'downloadFile', 'getInfoFolder', 'fileExistInBase']);
@@ -166,5 +168,114 @@ class FileController extends ApiController
         }
 
         return $this->successResponse(['Existe' => $arrayExist, 'Nao existe' => $arrayNotExist], 'sucesso!', 200);
+    }
+
+    /**
+     * Convert PDF to image JPG
+     *
+     * @param string $filePath
+     * @param string $customPath
+     *
+     * @return void
+     */
+    public function convertPdfToImage(Request $request)
+    {
+        if (!extension_loaded('imagick'))
+            return response()->json(['Extensao Imagick Nao está habilitada para uso!']);
+
+        $extension = 'jpg';
+
+        $file = $request->file('file');
+
+        $filePath =  storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'conteudos' . DIRECTORY_SEPARATOR . 'conteudos-digitais' . DIRECTORY_SEPARATOR . 'pdf-imagens' . DIRECTORY_SEPARATOR . $file->getClientOriginalName());
+
+        if (!file_exists($filePath)) {
+            $filePath = $this->storeFile($request);
+        }
+
+        $_imagick = new \Imagick(str_replace('\\', '/', $filePath));
+
+        $noOfPagesInPDF = $_imagick->getNumberImages();
+
+        // if ($noOfPagesInPDF) {
+        //     for ($i = 0; $i < $noOfPagesInPDF; $i++) {
+
+                $fileNameWithoutExtension = $this->_getFileName($filePath, $this->_getFileExtension($filePath));
+
+                $filePath = $this->_getFileDirectory($filePath);
+
+                $newFile = $filePath . DIRECTORY_SEPARATOR . $fileNameWithoutExtension . "." . $extension;
+
+                $_imagick->setImageFormat($extension);
+
+                $_imagick->writeImage($newFile);
+        //     }
+        // }
+
+        if (file_exists($newFile)) {
+            return $this->successResponse([$fileNameWithoutExtension . "." . $extension], 'Arquivo convertido para imagem com sucesso!', 200);
+        } else {
+            return $this->successResponse([], 'Houve algum erro ao tentar fazer a conversão!', 200);
+        }
+    }
+
+    /**
+     * Return file name with extension or without extension
+     *
+     * @param string $filePath
+     * @param string $extension - Extension to be removed from file name
+     *
+     * @return string
+     */
+    private function _getFileName($filePath, $extension = null)
+    {
+        if ($extension == null) {
+            $name = basename($filePath);
+            return $name;
+        } else {
+            $name = basename($filePath, $extension);
+            return $name;
+        }
+    }
+
+    /**
+     * Return file extension from file path
+     *
+     * @param string $filePath
+     *
+     * @return string
+     */
+    private function _getFileExtension($filePath)
+    {
+        $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+        return "." . $extension;
+    }
+
+    /**
+     * Return path from file path
+     *
+     * @param string $filePath
+     *
+     * @return string
+     */
+    private function _getFileDirectory($filePath)
+    {
+        $extension = pathinfo($filePath, PATHINFO_DIRNAME);
+        return $extension;
+    }
+
+    private function storeFile($request)
+    {
+        $path = null;
+
+        if ($request->hasFile('file') && $request->file('file')->isValid()) {
+            $fileName = $request->file->getClientOriginalName();
+
+            $path = $request->file->storeAs('conteudo-digitais\\pdf-imagens', $fileName);
+
+            $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $path);
+        }
+
+        return $path ? $path : $this->errorResponse([], "Falha ao fazer upload!", 500);
     }
 }
