@@ -279,3 +279,30 @@ class FileController extends ApiController
         return $path ? $path : $this->errorResponse([], "Falha ao fazer upload!", 500);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+Link tutorial instalação e integração imagick ao php no windows:
+https://ourcodeworld.com/articles/read/349/how-to-install-and-enable-the-imagick-extension-in-xampp-for-windows
+
+Ferramentas necessária para instalação imagick:
+
+#1 Image Magick:     https://www.imagemagick.org/script/download.php
+
+#2 Imagick for PHP:  https://pecl.php.net/package/imagick
+
+#3 Imagick Binaries: https://windows.php.net/downloads/pecl/deps/
+
+#install ghostscript:https://www.ghostscript.com/download/gsdnld.html
+ */
