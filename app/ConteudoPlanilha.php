@@ -16,7 +16,7 @@ class ConteudoPlanilha extends Model
     use SoftDeletes, UserCan;
 
     protected $table = 'conteudos_planilha';
-    protected $casts = ['document' => 'array']; 
+    protected $casts = ['document' => 'array'];
 
     protected $fillable = [
         'name',
@@ -47,14 +47,15 @@ class ConteudoPlanilha extends Model
                 array_push($ids, $dado['id']);
             }
         }
-
+        
         foreach ($dados as $key => $dado) {
             for ($i = 0; $i < count($ids); $i++) {
                 if ($dado['id'] == $ids[$i]) {
-                    $novaEstrutura[$i]['name'] = 'ipes-faculdade';
+                    $novaEstrutura[$i]['name'] = 'ipes';
+                    $novaEstrutura[$i]['slug'] = Str::slug($dado['faculdade'], '-');
+                    $novaEstrutura[$i]['faculdade'] =  $dado['faculdade'];
                     $novaEstrutura[$i]['actions'][] = [
-                        'nome' => $dado['faculdade'],
-                        'titulo' => $dado['nome'],
+                        'name' => $dado['nome'],
                         'description' => $dado['descricao'],
                         'link' => $dado['link']
                     ];

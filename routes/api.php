@@ -83,28 +83,6 @@ Route::get(
 Route::get('/planilhas', 'ConteudoPlanilhaController@conteudos')->name('conteudo.planilha');
 
 
-/** COMENTARIOS */
-Route::post('/comentarios/create', 'ComentarioController@create')->name('comentario.create');
-Route::post('/comentarios/update/{id}', 'ComentarioController@update')->name('comentario.update');
-Route::get('/comentarios/{id}', 'ComentarioController@getComentarioById')->name('comentario.id');
-Route::get('/comentarios/usuario/{idUsuario}/{tipo?}', 'ComentarioController@getComentariosByIdUsuario')
-->name('comentario.usuario');
-Route::get('/comentarios/postagem/{id}/{tipo}', 'ComentarioController@getComentariosByIdPostagem')
-->name('comentario.postagem');
-Route::get('/comentarios/delete/{id}', 'ComentarioController@deletar')
-->name('comentario.delete');
-
-
-/** Like e Deslike */
-Route::post('/like', 'ConteudoLikeController@like')
-->name('like');
-
-Route::post('/deslike', 'ConteudoLikeController@deslike')
-->name('deslike');
-
-Route::get('/likes/usuario/{idUsuario}/{tipo?}', 'ConteudoLikeController@getLikesPorIdUsuarioEtipo')
-->name('likes.usuario');
-
 /***********************************************
  *
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN
@@ -207,5 +185,22 @@ Route::group(
         /** SISTEMA DE PASTA */
         Route::get('/informacoes-pasta', 'FileController@getInfoFolder')->name('file.getInfoFolder');
         Route::get('/arquivos-existe', 'FileController@fileExistInBase')->name('file.fileExistInBase');
+        /** COMENTARIOS */
+        Route::post('/comentarios/create', 'ComentarioController@create')->name('comentario.create');
+        Route::post('/comentarios/update/{id}', 'ComentarioController@update')->name('comentario.update');
+        Route::get('/comentarios/{id}', 'ComentarioController@getComentarioById')->name('comentario.id');
+        Route::get('/comentarios/usuario/{idUsuario}/{tipo?}', 'ComentarioController@getComentariosByIdUsuario')
+        ->name('comentario.usuario');
+        Route::get('/comentarios/postagem/{id}/{tipo}', 'ComentarioController@getComentariosByIdPostagem')
+        ->name('comentario.postagem');
+        Route::get('/comentarios/delete/{id}', 'ComentarioController@deletar')
+        ->name('comentario.delete');
+        /** LIKE e DISLIKE */
+        Route::post('/like', 'ConteudoLikeController@like')
+        ->name('like');
+        Route::post('/deslike', 'ConteudoLikeController@deslike')
+        ->name('deslike');
+        Route::get('/likes/usuario/{idUsuario}/{tipo?}', 'ConteudoLikeController@getLikesPorIdUsuarioEtipo')
+        ->name('likes.usuario');
     }
 );
