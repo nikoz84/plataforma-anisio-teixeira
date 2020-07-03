@@ -69,7 +69,7 @@ return [
         
         'conteudos-digitais' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/conteudos/conteudos-digitais'),
+            'root' => storage_path('app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'conteudos'.DIRECTORY_SEPARATOR.'conteudos-digitais'),
             'url' => env('APP_URL') . '/storage/conteudos/conteudos-digitais',
             'visibility' => 'public',
         ],

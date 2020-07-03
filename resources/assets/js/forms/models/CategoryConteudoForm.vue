@@ -1,58 +1,170 @@
 <template>
-    <div class="conteiner">
+    <div class="row q-gutter-xs">
+        <form class="col-sm-12" v-on:submit.prevent="save()">
 
-        <form>
-            
-            <div class="form-group">
-                <label for="titulo">Titulo:*</label>
-                <input type="text" class="form-control" id="titulo">
+            <div class="row">
+                <q-card class="col-12">
+                    <q-btn
+                        class="full-width"
+                        color="primary"
+                        @click="save()"
+                        label="Salvar"
+                        ></q-btn>
+                </q-card>
+                <q-card class="col-sm-12">
+                    <q-card-section class="q-gutter-sm">
+                        <q-input filled v-model.trim="category.name" label="Nome:*" hint="Nome da Categoria por extenso"></q-input>
+                        <div class="q-mt-sm">
+                            <label class="text-left bold"><strong>Descrição categoria :*</strong></label>
+                        </div>
+                        <q-editor v-model="category.options.description" min-height="15rem" hint="Escreva uma descrição do conteúdo" />
+                    </q-card-section>
+                    <q-card-section>
+                        <q-select
+                            outlined
+                            option-value="id"
+                            option-label="name"
+                            ransition-show="scale"
+                            transition-hide="scale"
+                            v-model="category.canal"
+                            :options="canais"
+                            label="Escolha um Canal"
+                            hint="Canal ao qual pertence a categoria"
+                            behavior="dialog"
+                            />
+                    </q-card-section>
+                    <q-card-section>
+                        <q-select
+                            outlined
+                            option-value="id"
+                            option-label="name"
+                            ransition-show="scale"
+                            transition-hide="scale"
+                            v-model="category.subCategories"
+                            :options="categorias"
+                            label="Categoria relacionada"
+                            hint="Selecione uma categoria se precisar agrupar por sub-categorias"
+                            behavior="dialog"
+                            />
+                    </q-card-section>
+                    <q-card-section>
+                        <div class="q-gutter-sm">
+                        <q-checkbox
+                            v-model="category.options.is_active"
+                            label="Aprovar conteúdo"
+                            color="pink"
+                        />
+                        <q-checkbox
+                            v-model="category.options.is_featured"
+                            label="Marcar como destaque"
+                            color="pink"
+                        />
+                        </div>
+                    </q-card-section>
+                    <q-card-section>
+                        <q-img 
+                        loading="lazy" 
+                        width="100%" 
+                        height="200" 
+                        :src="category.image"
+                        placeholder-src="/img/fundo-padrao.svg"
+                        alt=" Icone da categoria :"/>
+                        <q-input
+                        @input="val => { file = val[0];}"
+                        outlined
+                        @change="onFileChange"
+                        accept=".png, .webp, .svg, .jpeg, .jpg"
+                        type="file"
+                        hint="Imagem de Destaque"
+                        />
+
+                        <q-input
+                        class="q-mt-md"
+                        @input="val => {file = val[0];}"
+                        outlined
+                        type="file"
+                        filled
+                        counter
+                        accept=".webm"
+                        max-file-size="102400000"
+                        hint="Vídeo no formato .webm, tamanho máximo: 50MB"
+                        />
+                    </q-card-section>
+                </q-card>
             </div>
-
-            <div class="form-group">
-                <label for="desc-categoria">Descrição categoria:*</label>
-                <textarea id="desc-categoria" name="desc-categoria" class="form-control"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="canal">Canal:</label>
-                <select class="form-control form-control-lg" id="canal" aria-describedby="canal">
-                    <option value="">« SELECIONE UM CANAL »</option>
-                </select>
-                <small id="canal" class="form-text text-muted">Selecione uma categoria se precisar agrupar por sub-categorias</small>               
-            </div>
-
-            <div class="form-group">
-                <label for="categoria-relacionada">Categoria relacionada:*</label>
-                <input type="text" class="form-control" id="categoria-relacionada">
-            </div>
-
-            <div class="form-group">
-                <label for="ativo">Ativo:*</label>
-                <input type="checkbox" class="form-control" id="ativo">
-            </div>
-
-            <div class="form-group">
-                <label for="fldestaque">Destacado:*</label>
-                <input type="checkbox" class="form-control" id="fldestaque">
-            </div>
-
-            <div class="form-group">
-                <label for="icone-categoria">Icone da categoria:*</label>
-                <input type="file" class="form-control" id="icone-categoria" aria-describedby="icone-categoria">
-                <small id="icone-categoria" class="form-text text-muted">Imagem no formato .png, jpg, dimensão: 400px x 220px, tamanho máximo: 2MB</small>               
-            </div>
-
-            <div class="form-group">
-                <label for="video-destaque">Vídeo destaque:</label>
-                <input type="file" class="form-control" id="video-destaque" aria-describedby="video-destaque">
-                <small id="video-destaque" class="form-text text-muted">Vídeo no formato .webm, tamanho máximo: 50MB</small>               
-            </div>
-
-            <div class="form-group">
-                <button class="btn btn-default">Enviar</button>
-            </div>
-
         </form>
-
     </div>
 </template>
+<script>
+export default {
+    name: "CategoryConteudoForm",
+    computed: {
+        url() 
+        {
+            return `http://${window.location.hostname}/${slug}`;
+        }
+    },
+    data() {
+        return {
+            category: {
+                name:"",
+                canal:null,
+                canal_id: null,
+                image:"imagemAssociada",
+                imagemAssociada: "",
+                options: {
+                    description:"",
+                    is_active:true,
+                    is_featured:true
+                },
+                subCategories:[]
+            },
+            canais: [],
+            categorias:[]
+        }
+    },
+    mounted() {
+        this.getData();
+    },
+    methods: {
+        onFileChange(e) {
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                return;
+            console.log("file:", files);
+            this.category.imagemAssociada = files[0];
+        },
+        async getData() {
+            const canais  = axios.get("/canais?select");
+            const categorias = axios.get("/categorias?select");
+            let responses = await axios.all([canais,categorias]);
+            this.canais = responses[0].data.metadata;
+            this.categorias = responses[1].data.paginator.data;
+            if (this.$route.params.id) {
+                let category = await axios.get("/categorias/" + this.$route.params.id);
+                this.category = category.data;
+            }
+            
+        },
+        async save() {
+            console.log(this.category);
+            const form = new FormData();
+            form.append("name", this.category.name);
+            form.append("options", JSON.stringify(this.category.options));
+            form.append("canal_id", this.category.canal.id);
+            form.append("imagemAssociada", this.category.imagemAssociada);
+            if (this.$route.params.action == "editar") 
+            {
+                form.append("id", this.category.id);    
+                form.append("_method", "PUT");
+                let resp = await axios.post(this.$route.params.slug +"/"+ this.category.id, form);
+                
+            }
+            else
+            {
+                let resp = await axios.post(this.$route.params.slug , form);
+            }
+         }
+    }
+}
+</script>

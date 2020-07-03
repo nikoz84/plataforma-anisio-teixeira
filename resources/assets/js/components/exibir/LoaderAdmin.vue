@@ -14,7 +14,8 @@ import {
   TagForm,
   RoleForm,
   TipoForm,
-  OptionsForm
+  OptionsForm,
+  CategoryConteudoForm
   } from "@forms/models";
 
 import Resumo from "@pages/Resumo.vue";
@@ -36,6 +37,7 @@ export default {
     contato: Contato,
     listar: Table,
     resumo: Resumo,
+    categorias:CategoryConteudoForm,
   },
   data() {
     return {

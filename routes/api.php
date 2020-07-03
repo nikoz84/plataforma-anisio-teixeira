@@ -22,7 +22,7 @@ Route::get('/autocompletar', 'HomeController@autocomplete')->name('autocompletar
 Route::get('/layout', 'HomeController@getLayout')->name('lista.links');
 /** CATEGORIAS */
 Route::get('/categorias', 'CategoryController@index')->name('lista.categorias');
-Route::get('/categorias/{id}', 'CategoryController@getCategoryById')->name('lista.categoria.x.id');
+Route::get('/categorias/{id}', 'CategoryController@getById')->name('lista.categoria.x.id');
 Route::get('/categorias/canal/{id}', 'CategoryController@getCategoryByCanalId')->name('lista.categoria.x.canal.id');
 /** TIPOS */
 Route::get('/tipos', 'TipoController@index')->name('listar.tipos');
@@ -67,7 +67,7 @@ Route::get('/tags/{id}', 'TagController@getById')->name('busca.x.tag.id');
 /** LICENÇAS */
 Route::get('/licencas', 'LicenseController@index')->name('listar.licencas');
 /** DOWNLOAD FILE **/
-Route::get('/files/{action}/{id}', 'FileController@downloadFile')->name('downloadFile.id');
+Route::get('/files/{directory}/{id}', 'FileController@downloadFile')->name('downloadFile.id');
 
 /** MIGRAR PLANILHAS */
 Route::get(
@@ -95,7 +95,8 @@ Route::group(
         /** CATEGORIAS DOS CONTEÚDOS*/
         Route::post('/categorias', 'CategoryController@create')->name('criar.categorias');
         Route::put('/categorias/{id}', 'CategoryController@update')->name('atualizar.categorias');
-        Route::delete('/categorias/{id}', 'CategoryController@delete')->name('categorias.apagar');
+        Route::delete('/categorias/{id}', 'CategoryController@delete')->name('apagar.categorias');
+        Route::post('/categorias', 'CategoryController@create')->name('adicionar.categorias');
         /** AUTENTICACAO */
         Route::post('/auth/logout', 'AuthController@logout')->name('sair');
         Route::post('/auth/refresh', 'AuthController@refresh')->name('refrescar.token');
