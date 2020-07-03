@@ -17,7 +17,7 @@ class Category extends Model
     protected $table = 'categories';
     public $fillable = ['name', 'parent_id', 'options', 'canal_id'];
     protected $casts = ['options' => 'array'];
-    protected $appends = ['user_can'];
+    protected $appends = ['user_can', 'image', 'video'];
 
     public function subCategories()
     {
@@ -26,14 +26,42 @@ class Category extends Model
             ->where('options->is_active', 'true');
     }
 
-    function getImageAttribute(){
+    function refenciaImagemAssociada()
+    {
+        if(!$this->id)
+        return null;
         $urlPath = Storage::disk("conteudos-digitais")->path("imagem-associada");
         $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.".*";
-        $fileRef = glob($urlPath)[0];
-        $filename = basename($fileRef);
+        $info = glob($urlPath);
+        if(sizeof($info)>0)
+        return $info[0]; 
+        return null;
+    }
+
+    function refenciaVideoDestaque()
+    {
+        if(!$this->id)
+        return null;
+        $urlPath = Storage::disk("conteudos-digitais")->path("visualizacao");
+        $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.".*";
+        $info = glob($urlPath);
+        if(sizeof($info)>0)
+        return $info[0]; 
+        return null;
+    }
+
+    function getImageAttribute(){
         //return $urlPath;
-        return Storage::disk("conteudos-digitais")->url("imagem-associada/".$filename);
-        
+        $filename = basename($this->refenciaImagemAssociada());
+        return Storage::disk("conteudos-digitais")->url("imagem-associada/".$filename); 
+    }
+
+    function getVideoAttribute(){
+        //return $urlPath;
+        $filename = basename($this->refenciaVideoDestaque());
+        if(trim($filename))
+        return Storage::disk("visualizacao")->url($filename); 
+        return null;
     }
 
     /**
