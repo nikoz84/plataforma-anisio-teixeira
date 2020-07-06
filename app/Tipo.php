@@ -25,6 +25,7 @@ class Tipo extends Model
         //return Storage::disk('public-path')->url("img/tipo-conteudo/{$slug}.svg");
         return Str::slug($this['name'], '-');
     }
+    
     public function getSearchUrlAttribute()
     {
         $canal = Canal::find(6);

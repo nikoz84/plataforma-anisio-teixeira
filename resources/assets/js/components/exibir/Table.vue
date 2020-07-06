@@ -50,7 +50,7 @@
                   color="negative"
                   title="Deletar item"
                   icon="delete"
-                  v-on:click="deleteCategory(row.id)"
+                  @click="confirm(row.name ? row.name : row.title, row.id)"
                   v-if="row.user_can && row.user_can.delete"
                 />
                 <q-btn
@@ -58,6 +58,7 @@
                   color="primary"
                   title="Visualizar"
                   icon="visibility"
+                  
                 />
               </q-btn-group>
             </td>
@@ -109,7 +110,7 @@ export default {
   data() {
     return {
       current: this.paginator ? this.paginator.current_page : 1,
-      confirm: false,
+      //confirm: false,
       text: ""
     };
   },
@@ -166,13 +167,42 @@ export default {
       
       this.$q.loading.hide();
     },
-    async deleteItem(id)
-    {
-        if(!confirm("Tem certeza que irá deletar este item? Processo não pode ser revertido."))
-        return;
-        axios.delete(`/${this.$route.params.slug}/${id}`)
 
-    }
+    confirm (title, id) {
+      const context = this;
+      this.$q.dialog({
+       
+        title: 'Confirmar',
+        message: `<b>Realmente deseja apagar este item </b> <em>${title}</em>?`,
+        cancel: true,
+        html: true,
+        persistent: true,
+        ok: 
+        {
+          color: 'negative',
+          label: 'Apagar'
+        }
+        }).onOk(() =>   
+        {
+            try
+            {
+                axios.delete(`/${this.$route.params.slug}/${id}`, {data:{delete_confirmation: true}});
+                //this.$router.push('/admin/categorias/listar/'+this.$route.params.slug);
+                var paginatorUpdate = JSON.parse(JSON.stringify(this.paginator));
+                (paginatorUpdate.data = []);
+                this.paginator.data.forEach(element => {
+                  if(element.id !== id)
+                  paginatorUpdate.data.push(element)
+                });
+                this.SET_PAGINATOR(paginatorUpdate);
+                console.log(paginatorUpdate.data);
+            }
+            catch(ex)
+            {
+                console.log(ex);
+            }
+        })
+      }
   }
 };
 </script>

@@ -75,7 +75,7 @@ Route::get('/tags/{id}', 'TagController@getById')->name('busca.x.tag.id');
 /** LICENÇAS */
 Route::get('/licencas', 'LicenseController@index')->name('listar.licencas');
 /** DOWNLOAD FILE **/
-Route::get('/files/{action}/{id}', 'FileController@downloadFile')->name('downloadFile.id');
+Route::get('/files/{directory}/{id}', 'FileController@downloadFile')->name('downloadFile.id');
 
 /** MIGRAR PLANILHAS */
 Route::get(
@@ -208,5 +208,22 @@ Route::group(
         Route::get('/informacoes-pasta', 'FileController@getInfoFolder')->name('file.getInfoFolder');
         Route::get('/arquivos-existe', 'FileController@fileExistInBase')->name('file.fileExistInBase');
         Route::post('/converter-para-imagem', 'FileController@convertPdfToImage')->name('file.convertPdfToImage');
+        /** COMENTARIOS */
+        Route::post('/comentarios/create', 'ComentarioController@create')->name('comentario.create');
+        Route::post('/comentarios/update/{id}', 'ComentarioController@update')->name('comentario.update');
+        Route::get('/comentarios/{id}', 'ComentarioController@getComentarioById')->name('comentario.id');
+        Route::get('/comentarios/usuario/{idUsuario}/{tipo?}', 'ComentarioController@getComentariosByIdUsuario')
+        ->name('comentario.usuario');
+        Route::get('/comentarios/postagem/{id}/{tipo}', 'ComentarioController@getComentariosByIdPostagem')
+        ->name('comentario.postagem');
+        Route::get('/comentarios/delete/{id}', 'ComentarioController@deletar')
+        ->name('comentario.delete');
+        /** LIKE e DISLIKE */
+        Route::post('/like', 'ConteudoLikeController@like')
+        ->name('like');
+        Route::post('/deslike', 'ConteudoLikeController@deslike')
+        ->name('deslike');
+        Route::get('/likes/usuario/{idUsuario}/{tipo?}', 'ConteudoLikeController@getLikesPorIdUsuarioEtipo')
+        ->name('likes.usuario');
     }
 );

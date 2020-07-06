@@ -197,6 +197,7 @@ export default {
                 {
                     let resp = await axios.post(this.$route.params.slug , form);
                 }
+                this.$router.push(`/admin/categorias/listar`);
             }
             catch(ex)
             {
@@ -204,8 +205,6 @@ export default {
                 console.log("Exceção:",ex.errors);
                 this.errors = ex.errors;
             }
-            
-            this.$router.push(`/admin/categorias/listar/this.$route.params.slug`);
          }
     }
 }

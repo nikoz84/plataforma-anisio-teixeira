@@ -33,16 +33,15 @@ class CategoryController extends ApiController
     public function index()
     {
         $limit = $this->request->get('limit', 15);
-
         $categories = Category::whereNull('parent_id')
             ->where('options->is_active', 'true')
             ->with('subCategories')
             ->limit($limit)
             ->orderBy('name', 'asc')
             ->paginate($limit);
-
         return $this->showAsPaginator($categories);
     }
+
     public function create()
     {
         
@@ -125,14 +124,20 @@ class CategoryController extends ApiController
         if (!$category->delete()) {
             return $this->errorResponse([], 'Não foi possível deletar a categoria', 422);
         }
+        if($category->refenciaImagemAssociada())
+            unlink($category->refenciaImagemAssociada());
+        if($category->refenciaVideoDestaque())
+        unlink($category->refenciaVideoDestaque());
         return $this->successResponse($category, 'Categoria deletada com sucesso!', 200);
     }
+
     public function getById($id)
     {
         $category = Category::findOrFail($id);
         $category->canal;
         return  $category;
     }
+
     public function getCategoryByCanalId($id)
     {
         $categories = Category::where('canal_id', $id)->get();
@@ -141,10 +146,8 @@ class CategoryController extends ApiController
 
     /**
      * Procura categoria pelo nome
-     *
      * @param $request \Illuminate\Http\Request
      * @param $termo string de busca
-     *
      * @return App\Traits\ApiResponser
      */
     public function search(Request $request, $termo)

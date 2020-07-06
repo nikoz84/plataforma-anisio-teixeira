@@ -32,15 +32,34 @@ const praticasRoute = {
     path: "/praticas-pedagogicas",
     name: "PraticasPedagogicas",
     component: () =>
-      import(/* webpackChunkName: "praticas" */ "../pages/PraticasPedagogicas.vue"),
+      import(/* webpackChunkName: "praticas" */ "@pages/PraticasPedagogicas.vue"),
     meta: {
       requiresAuth: false,
       title: "Pŕaticas pedagógicas"
     }
 };
-
+const ipesRoute = {
+  path: "/ipes",
+  name: "IpesFaculdades",
+  component: () => import(/* webpackChunkName: "ipes" */ "@pages/Ipes.vue"),
+  meta: {
+      requiresAuth: false,
+      title: "Faculdades da Bahia"
+    }
+};
+const rotinasRoute = {
+  path: "/rotinas-de-estudo",
+  name: "RotinasEstudo",
+  component: () => import(/* webpackChunkName: "rotinas" */ "@pages/RotinasDeEstudo.vue"),
+  meta: {
+      requiresAuth: false,
+      title: "Rotinas de Estudo"
+    }
+};
 export {
     homeRoute,
     galeriaRoute,
-    sobreRoute
+    sobreRoute,
+    ipesRoute,
+    rotinasRoute
 };

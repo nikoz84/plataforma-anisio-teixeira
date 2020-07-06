@@ -116,7 +116,6 @@ class TipoController extends ApiController
     public function getTiposById($id)
     {
         $tipo = Tipo::find($id);
-        
         return $this->showOne($tipo);
     }
 }

@@ -6,8 +6,8 @@ namespace App\Helpers;
 * Forma da extração: Extrai um frame por video de forma aleatória, ou seja, extrai qualquer frame do vídeo.
 * Obs: É necessário ter o FFmpeg instalado e configurado no seu embiente de execução
 */
-class ImageExtractionFromVideo 
-{   
+class ImageExtractionFromVideo
+{
 	protected $imageSize;
 	protected $videoPath;
 	protected $imagePathDestination;

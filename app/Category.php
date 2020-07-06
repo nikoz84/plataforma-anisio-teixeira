@@ -26,11 +26,11 @@ class Category extends Model
             ->where('options->is_active', 'true');
     }
 
-    function refenciaImagemAssociada()
+    function refenciaVideoDestaque()
     {
         if(!$this->id)
         return null;
-        $urlPath = Storage::disk("conteudos-digitais")->path("imagem-associada");
+        $urlPath = Storage::disk("conteudos-digitais")->path("visualizacao");
         $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.".*";
         $info = glob($urlPath);
         if(sizeof($info)>0)
@@ -38,11 +38,11 @@ class Category extends Model
         return null;
     }
 
-    function refenciaVideoDestaque()
+    function refenciaImagemAssociada()
     {
         if(!$this->id)
         return null;
-        $urlPath = Storage::disk("conteudos-digitais")->path("visualizacao");
+        $urlPath = Storage::disk("conteudos-digitais")->path("imagem-associada");
         $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.".*";
         $info = glob($urlPath);
         if(sizeof($info)>0)
@@ -62,6 +62,7 @@ class Category extends Model
         if(trim($filename))
         return Storage::disk("visualizacao")->url($filename); 
         return null;
+        return Storage::disk("conteudos-digitais")->url("imagem-associada/".$filename);
     }
 
     /**

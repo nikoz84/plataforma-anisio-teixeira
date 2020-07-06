@@ -98,15 +98,15 @@ class FileController extends ApiController
     }
 
     /**
-     * função responsável por exibir informações de um diretório passado por parametro. 
+     * Função responsável por exibir informações de um diretório passado por parametro.
      */
     public function getInfoFolder(Request $request)
     {
-        if ($request->path == 'public')
+        if ($request->path == 'public') {
             $path = storage_path('app' . DIRECTORY_SEPARATOR . $request->path);
-        else
+        } else {
             $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $request->path);
-
+        }
         $files = scandir($path);
 
         $qtdFiles = count($files) - 2;
@@ -137,8 +137,8 @@ class FileController extends ApiController
     }
 
     /**
-     * Função responsável por verificar na base de dados se 
-     * existe arquivos de um diretório passado por parametro.  
+     * Função responsável por verificar na base de dados se
+     * existe arquivos de um diretório passado por parametro.
      */
     public function fileExistInBase(Request $request)
     {
