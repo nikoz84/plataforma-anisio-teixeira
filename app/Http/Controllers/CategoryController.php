@@ -98,7 +98,8 @@ class CategoryController extends ApiController
                 return $this->errorResponse([], 'Não foi possível salvar imagem associada', 422);
             } 
         }
-        if ($this->request->videoDestaque) {
+        if ($this->request->videoDestaque) 
+        {
             if($category->refenciaVideoDestaque())
             unlink($category->refenciaVideoDestaque());
             $fileVideo = $this->saveFile($category->id, [$this->request->videoDestaque], 'visualizacao');
@@ -136,5 +137,22 @@ class CategoryController extends ApiController
     {
         $categories = Category::where('canal_id', $id)->get();
         return $this->showAll($categories);
+    }
+
+    /**
+     * Procura categoria pelo nome
+     *
+     * @param $request \Illuminate\Http\Request
+     * @param $termo string de busca
+     *
+     * @return App\Traits\ApiResponser
+     */
+    public function search(Request $request, $termo)
+    {
+        $limit = ($request->has('limit')) ? $request->query('limit') : 20;
+        $search = "%{$termo}%";
+        $paginator = Category::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search])->paginate($limit);
+        $paginator->setPath("/categorias/search/{$termo}?limit={$limit}");
+        return $this->showAsPaginator($paginator, '', 200);
     }
 }

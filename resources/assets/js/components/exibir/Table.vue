@@ -50,6 +50,7 @@
                   color="negative"
                   title="Deletar item"
                   icon="delete"
+                  v-on:click="deleteCategory(row.id)"
                   v-if="row.user_can && row.user_can.delete"
                 />
                 <q-btn
@@ -164,6 +165,13 @@ export default {
       }
       
       this.$q.loading.hide();
+    },
+    async deleteItem(id)
+    {
+        if(!confirm("Tem certeza que irá deletar este item? Processo não pode ser revertido."))
+        return;
+        axios.delete(`/${this.$route.params.slug}/${id}`)
+
     }
   }
 };

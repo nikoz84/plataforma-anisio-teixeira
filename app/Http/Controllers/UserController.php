@@ -120,7 +120,7 @@ class UserController extends ApiController
     protected function configRules()
     {
         return [
-            'email' => 'required|unique:email',
+            'email' => 'required|unique:users,email',
             'name' => 'required|min:2|max:255',
             'role' => 'required',
             'password' => 'required|min:6|required_with:password_confirmation|same:password_confirmation',
@@ -128,11 +128,10 @@ class UserController extends ApiController
             'optionsbirthday' => 'required|date|date_format:Y-m-d',
         ];
     }
+
     /**
      * Cria novo usuário
-     *
      * @param $request
-     *
      * @return App\Traits\ApiResponser
      */
     public function create(Request $request)
