@@ -1,6 +1,9 @@
 .bg-cinza {
   background: #e1e2e1 !important;
 }
+.texto-cinza {
+  color: #e1e2e1 !important;
+}
 .bg-light {
   background-color: #bdbdbd !important;
 }
@@ -10,14 +13,26 @@
 .bg-petecavermelho {
   background-color: #cc2726 !important;
 }
+.texto-vermelho {
+  color: #cc2726 !important;
+}
 .bg-petecaamarelo {
   background-color: #e9ba1a !important;
+}
+.texto-amarelo {
+  color: #e9ba1a !important;
 }
 .bg-petecaazul {
   background-color: #3871c1 !important;
 }
+.texto-azul {
+  color: #3871c1 !important;
+}
 .bg-petecaverde {
   background-color: #3cac3d !important;
+}
+.texto-verde {
+  color: #3cac3d !important;
 }
 .active-link-pat {
   background-color: #066ab1;
