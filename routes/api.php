@@ -186,6 +186,7 @@ Route::group(
         /** SISTEMA DE PASTA */
         Route::get('/informacoes-pasta', 'FileController@getInfoFolder')->name('file.getInfoFolder');
         Route::get('/arquivos-existe', 'FileController@fileExistInBase')->name('file.fileExistInBase');
+        Route::post('/converter-para-imagem', 'FileController@convertPdfToImage')->name('file.convertPdfToImage');
         /** COMENTARIOS */
         Route::post('/comentarios/create', 'ComentarioController@create')->name('comentario.create');
         Route::post('/comentarios/update/{id}', 'ComentarioController@update')->name('comentario.update');
