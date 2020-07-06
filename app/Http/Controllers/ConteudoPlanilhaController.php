@@ -51,7 +51,11 @@ class ConteudoPlanilhaController extends ApiController
         foreach ($dados as $dado) {
             $conteudoPlanilha = new ConteudoPlanilha();
             $conteudoPlanilha->name = $dado['name'];
-            $conteudoPlanilha->document = ['actions' => $dado['actions']];
+            
+            $conteudoPlanilha->document = [
+                'faculdade' => $dado['faculdade'],
+                'slug' => $dado['slug'],
+                'actions' => $dado['actions']];
 
             $conteudoPlanilha->save();
         }
@@ -74,7 +78,9 @@ class ConteudoPlanilhaController extends ApiController
 
     public function conteudos(Request $request)
     {
-        $conteudoPlanilha = new ConteudoPlanilha();
-        echo json_encode($conteudoPlanilha->conteudos()->paginate($request->query('page')));
+        $query = ConteudoPlanilha::query();
+        $conteudoPlanilha = $query->where('name', $request->slug)->paginate(15);
+        
+        return $this->showAsPaginator($conteudoPlanilha);
     }
 }

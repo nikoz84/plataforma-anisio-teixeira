@@ -25,17 +25,18 @@ class Category extends Model
             ->selectRaw("id, parent_id, name")
             ->where('options->is_active', 'true');
     }
-
-    function getImageAttribute(){
+    /**
+     * Atributo de imagem
+     */
+    public function getImageAttribute()
+    {
         $urlPath = Storage::disk("conteudos-digitais")->path("imagem-associada");
         $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.".*";
         $fileRef = glob($urlPath)[0];
         $filename = basename($fileRef);
         //return $urlPath;
         return Storage::disk("conteudos-digitais")->url("imagem-associada/".$filename);
-        
     }
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
     */

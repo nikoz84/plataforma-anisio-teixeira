@@ -70,6 +70,30 @@
         </q-item>
         <q-separator />
       </div>
+      <q-item
+        :to="{ name: 'RotinasEstudo' }"
+        aria-label="IR: Rotinas de estudo"
+        title="IR: Rotinas de estudo"
+        clickable
+        v-close-popup
+        tabindex="0"
+      >
+        <q-item-section>
+          <q-item-label>Rotinas de Estudo</q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-item
+        :to="{ name: 'IpesFaculdades' }"
+        aria-label="IR: Ações de Faculdades da Bahia"
+        title="IR: Ações de Faculdades da Bahia"
+        clickable
+        v-close-popup
+        tabindex="0"
+      >
+        <q-item-section>
+          <q-item-label>IPES</q-item-label>
+        </q-item-section>
+      </q-item>
       <!--q-item
         :to="`/praticas-pedagogicas`"
         aria-label="`endereço para: Práticas Pedagogicas`"

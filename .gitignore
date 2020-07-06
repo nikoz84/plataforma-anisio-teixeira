@@ -3,7 +3,7 @@
 /public/storage
 /public/img/producao
 /storage/*.key
-/storage/dumps
+/storage/dumps/*
 /vendor
 /.idea
 /.vagrant
@@ -14,3 +14,4 @@ yarn-error.log
 .env
 /app/Console/Commands/ImportData.php
 /public/js/*.js
+/migra_sql

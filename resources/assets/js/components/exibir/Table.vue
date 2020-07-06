@@ -50,6 +50,7 @@
                   color="negative"
                   title="Deletar item"
                   icon="delete"
+                  @click="confirm(row.name ? row.name : row.title, row.id)"
                   v-if="row.user_can && row.user_can.delete"
                 />
                 <q-btn
@@ -57,6 +58,7 @@
                   color="primary"
                   title="Visualizar"
                   icon="visibility"
+                  
                 />
               </q-btn-group>
             </td>
@@ -108,7 +110,7 @@ export default {
   data() {
     return {
       current: this.paginator ? this.paginator.current_page : 1,
-      confirm: false,
+      //confirm: false,
       text: ""
     };
   },
@@ -164,6 +166,27 @@ export default {
       }
       
       this.$q.loading.hide();
+    },
+    confirm (title, id) {
+      this.$q.dialog({
+       
+        title: 'Confirmar',
+        message: `<b>Realmente deseja apagar este item?</b> <em>${title}</em>`,
+        cancel: true,
+        html: true,
+        persistent: true,
+        ok: {
+          color: 'negative',
+          label: 'Apagar'
+        }
+      }).onOk(() => {
+        console.log('>>>> OK ' + id)
+        console.log(this.$route.params.slug)
+        /**
+         * aqui vai a requisição com o axios e o metodo delete
+         * 
+         */
+      })
     }
   }
 };
