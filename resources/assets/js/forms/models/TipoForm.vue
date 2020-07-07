@@ -19,23 +19,16 @@
             </q-select>
           </q-card-section>
           <q-card-section>
-              <q-item-label style="margin-bottom:10px" ><q-icon name="image" style="padding-bottom: 3px;" /><strong>Imagem Associada</strong></q-item-label>
+              <q-item-label style="margin-bottom:10px" >
+                <q-icon name="image" style="padding-bottom: 3px;" /><strong>Icone</strong>
+              </q-item-label>
               <q-img 
               loading="lazy" 
               style="height:150px; width:150px"
               :src="tipo.icon"
               placeholder-src="/img/fundo-padrao.svg"
               alt=" Icone da categoria :"/>
-              <q-input
-              @input="val => { file = val[0];}"
-              outlined
-              bottom-slots 
-              :error="errors.imagemAssociada && errors.imagemAssociada.length > 0"
-              @change="onFileChange"
-              accept=".png, .webp, .svg, .jpeg, .jpg"
-              type="file"
-              hint="Imagem de Destaque"
-              />
+              
           </q-card-section>
           <q-card-section>
             <q-btn @click.prevent="save()" class="full-width q-mt-md" label="Salvar" type="submit" color="primary"/>
@@ -56,11 +49,9 @@ export default {
     return { 
       tipo :{
         name: null,
-        imagemAssociada:null,
-        formatos : [],
         icon: null,
         options: {
-          formator:[]
+          formatos:[]
         }
       },
       optsFormatos: [
@@ -74,13 +65,7 @@ export default {
     this.getTipo()
   },
   methods: {
-    onFileChange(e) {
-            var files = e.target.files || e.dataTransfer.files;
-            if (!files.length)
-                return;
-            console.log("file:", files);
-            this.tipo.imagemAssociada = files[0];
-    },
+   
     async getTipo(){
       if (!this.$route.params.id) return; 
       
@@ -93,21 +78,29 @@ export default {
       const method = this.$route.params.id ? 'PUT' : 'POST';
       
       const form = new FormData();
-      
-      if (this.$route.params.action === "editar") {
-        form.append("id", this.$route.params.id);
-        form.append("_method", "PUT");
-      }
-      form.append('name', this.name);
-      form.append('formatos', this.tipo.formatos);
-      
-      await axios({ method, url }, form).then(
-        resp => {
-          console.log(resp)
+      form.append('name', this.tipo.name);
+      form.append('options', JSON.stringify(this.tipo.options));
+      try
+      {
+        if (this.$route.params.action === "editar") 
+        {
+          form.append("id", this.$route.params.id);
+          form.append("_method", "PUT");
+          let resp = await axios.post(this.$route.params.slug +"/"+ this.tipo.id, form);
         }
-      ).catch(e => {
-        this.errors = e.errors
-      });
+        else
+        {
+            let resp = await axios.post(this.$route.params.slug , form);
+        }
+        this.$router.push(`/admin/tipos/listar`);
+      }
+      catch(ex)
+      {
+        console.log("Exceção:",ex);
+        console.log("Exceção:",ex.errors);
+        this.errors = ex.errors;
+      }
+      
     }
 
   }

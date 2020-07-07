@@ -23,11 +23,12 @@ Route::get('/layout', 'HomeController@getLayout')->name('lista.links');
 Route::get('/categorias', 'CategoryController@index')->name('lista.categorias');
 Route::get('/categorias/{id}', 'CategoryController@getById')->name('lista.categoria.x.id');
 Route::get('/categorias/canal/{id}', 'CategoryController@getCategoryByCanalId')->name('lista.categoria.x.canal.id');
-Route::get('/categorias/search/{term}', 'CategoryController@search')->name('busca.category');
+Route::get('/categorias/search/{term}', 'CategoryController@search')->name('buscar.category');
 
 /** TIPOS */
 Route::get('/tipos', 'TipoController@index')->name('listar.tipos');
-Route::get('/tipos/{id}', 'TipoController@getTiposById')->name('lista.tipos.x.id');
+Route::get('/tipos/{id}', 'TipoController@getTiposById')->name('listar.tipos.x.id');
+Route::get('/tipos/search/{term}', 'TipoController@search')->name('buscar.tipo');
 
 /** DENUNCIA E FALE CONOSCO */
 Route::post('/contato', 'ContatoController@create')->name('criar.faleconosco.contato');
@@ -127,7 +128,8 @@ Route::group(
         Route::put('/tipos/{id}', 'TipoController@update')->name('atualizar.tipos');
         Route::delete('/tipos/{id}', 'TipoController@delete')->name('deletar.tipos');
         /** ROLES */
-        Route::get('/roles', 'RoleController@index')->name('role.listar');
+        Route::get('/roles', 'RoleController@index')->name('listar.roles');
+        Route::get('/roles/{id}', 'RoleController@getById')->name('obter.roles');
         Route::post('/roles', 'RoleController@create')->name('criar.role');
         Route::put('/roles/{id}', 'RoleController@update')->name('atualizar.role');
         Route::delete('/roles/{id}', 'RoleController@delete')->name('deletar.role');

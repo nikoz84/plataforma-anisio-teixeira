@@ -33,6 +33,7 @@ class TagController extends ApiController
         return $this->showAsPaginator($tags, '', 200);
     }
 
+
     /**
      * Show the form for creating a new resource
      *
@@ -40,7 +41,10 @@ class TagController extends ApiController
      */
     public function create()
     {
-        $validator = Validator::make($this->request->all(), config("rules.conteudo"));
+        $validator = Validator::make($this->request->all(), 
+            [
+                'name' => 'required'
+            ]);
 
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível atualizar o conteúdo", 422);
@@ -50,7 +54,7 @@ class TagController extends ApiController
             'searched' => TAG::INIT_SEARCHED
         ]);
 
-        if (!$tag) {
+        if (!$tag->save()) {
             return $this->errorResponse([], "Não foi possivel adicionar a palavra chave", 422);
         }
 
@@ -67,6 +71,10 @@ class TagController extends ApiController
     public function update($id)
     {
         $tag = TAG::findOrFail($id);
+        $validator = Validator::make($this->request->all(), ["name" => "required"]);
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors(), "Não foi possível editar o tag", 422);
+        }
         $tag->name = $this->request->name;
 
         if (!$tag->save()) {
@@ -97,7 +105,6 @@ class TagController extends ApiController
         $tags = TAG::select(['id', 'name'])
             ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
             ->get(['id', 'name']);
-
         return $this->showAll(collect($tags));
     }
     /**
