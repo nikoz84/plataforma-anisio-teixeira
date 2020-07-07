@@ -168,6 +168,7 @@ export default {
       this.$q.loading.hide();
     },
     confirm (title, id) {
+      
       this.$q.dialog({
        
         title: 'Confirmar',
@@ -182,6 +183,7 @@ export default {
       }).onOk(() => {
         console.log('>>>> OK ' + id)
         console.log(this.$route.params.slug)
+        
         /**
          * aqui vai a requisição com o axios e o metodo delete
          * 
