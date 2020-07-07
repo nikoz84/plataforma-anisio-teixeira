@@ -12,27 +12,32 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
  */
-
-
 //Route::get('/ler', 'ConteudoController@lerHD')->name('ler.hd');
 Route::get('/files/galeria', 'FileController@getGallery')->name('lista.galeria.imagens');
 Route::get('/files/{id}', 'FileController@getFiles')->name('busca.arquivo');
 Route::post('/files/{id}', 'FileController@createFile')->name('adiciona.arquivo');
 Route::get('/autocompletar', 'HomeController@autocomplete')->name('autocompletar.home');
 Route::get('/layout', 'HomeController@getLayout')->name('lista.links');
+
 /** CATEGORIAS */
 Route::get('/categorias', 'CategoryController@index')->name('lista.categorias');
 Route::get('/categorias/{id}', 'CategoryController@getById')->name('lista.categoria.x.id');
 Route::get('/categorias/canal/{id}', 'CategoryController@getCategoryByCanalId')->name('lista.categoria.x.canal.id');
+Route::get('/categorias/search/{term}', 'CategoryController@search')->name('busca.category');
+
 /** TIPOS */
 Route::get('/tipos', 'TipoController@index')->name('listar.tipos');
 Route::get('/tipos/{id}', 'TipoController@getTiposById')->name('lista.tipos.x.id');
+
 /** DENUNCIA E FALE CONOSCO */
 Route::post('/contato', 'ContatoController@create')->name('criar.faleconosco.contato');
+
 /** CANAIS */
 Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscar.canal.x.url.amigavel');
+
 /** COMPONENTES */
 Route::get('/componentes', 'ComponentesController@index')->name('lista.componentes.curriculares');
+
 /** CONTEUDOS */
 Route::get('/conteudos', 'ConteudoController@index')->name('lista.conteudo');
 Route::get('/conteudos/sites', 'ConteudoController@getSitesTematicos')->name('lista.sites.tematicos');
@@ -41,27 +46,30 @@ Route::get('/conteudos/{id}', 'ConteudoController@getById')->name('busca.x.conte
 Route::get('/conteudos/tag/{id}', 'ConteudoController@getByTagId')->name('busca.x.tag.id');
 Route::get('/conteudos/relacionados/{id}', 'ConteudoController@conteudosRelacionados')->name('busca.x.id');
 Route::get('/conteudos/destaques/{slug}', 'ConteudoController@getConteudosRecentes')->name('lista.recentes');
+
 /** BLOG */
 Route::get('/posts', 'WordpressController@index')->name('lista.postagens');
 Route::get('/posts/{id}', 'WordpressController@getById')->name('busca.postagen.x.id');
 Route::get('/posts/estatisticas', 'WordpressController@getEstatisticas')->name('estatisticas.blog');
+
 /** APLICATIVOS */
 Route::get('/aplicativos', 'AplicativoController@index')->name('lista.aplicativo');
 Route::get('/aplicativos/categories', 'AplicativoCategoryController@index')->name('lista.categorias');
 Route::get('/aplicativos/search/{term}', 'AplicativoController@search')->name('busca.aplicativo');
 Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('busca.x.aplicativo.id');
+
 /** AUTENTICACAO */
 Route::post('/auth/login', 'AuthController@login')->name('login.usuario');
 
 Route::post('/auth/cadastro', 'AuthController@register')->name('registro.usuario');
 Route::get('/auth/verificar/{token}', 'AuthController@verifyToken')->name('verificar.token');
 Route::post('/auth/recuperar-senha', 'AuthController@recoverPass')->name('recuperar.senha');
+Route::get('/auth/verificar/email/{token}', 'AuthController@verifyTokenUserRegister')->name('verificar.usuario.token');
 
-Route::get('/auth/verificar/email/{token}', 'AuthController@verifyTokenUserRegister')
-->name('verificar.usuario.token');
 /** OPTIONS  */
 Route::get('/options/{name}', 'OptionsController@getByName')->name('busca.metadata.x.nome');
 Route::get('/options', 'OptionsController@index')->name('listar.opcoes');
+
 /** TAGS */
 Route::get('/tags/{id}', 'TagController@getById')->name('busca.x.tag.id');
 /** LICENÇAS */
@@ -79,9 +87,22 @@ Route::get(
     'ConteudoPlanilhaController@getFaculdadesDaBahia'
 )->name('busca.faculdades');
 
-
 Route::get('/planilhas', 'ConteudoPlanilhaController@conteudos')->name('conteudo.planilha');
 
+/** COMENTARIOS */
+Route::post('/comentarios/create', 'ComentarioController@create')->name('comentario.create');
+Route::post('/comentarios/update/{id}', 'ComentarioController@update')->name('comentario.update');
+Route::get('/comentarios/{id}', 'ComentarioController@getComentarioById')->name('comentario.id');
+Route::get('/comentarios/usuario/{idUsuario}/{tipo?}', 'ComentarioController@getComentariosByIdUsuario')->name('comentario.usuario');
+Route::get('/comentarios/postagem/{id}/{tipo}', 'ComentarioController@getComentariosByIdPostagem')->name('comentario.postagem');
+Route::get('/comentarios/delete/{id}', 'ComentarioController@deletar')->name('comentario.delete');
+
+/** Like e Deslike */
+Route::post('/like', 'ConteudoLikeController@like')->name('like');
+
+Route::post('/deslike', 'ConteudoLikeController@deslike')->name('deslike');
+
+Route::get('/likes/usuario/{idUsuario}/{tipo?}', 'ConteudoLikeController@getLikesPorIdUsuarioEtipo')->name('likes.usuario');
 
 /***********************************************
  *
@@ -95,7 +116,7 @@ Route::group(
         /** CATEGORIAS DOS CONTEÚDOS*/
         Route::post('/categorias', 'CategoryController@create')->name('criar.categorias');
         Route::put('/categorias/{id}', 'CategoryController@update')->name('atualizar.categorias');
-        Route::delete('/categorias/{id}', 'CategoryController@delete')->name('apagar.categorias');
+        Route::delete('/categorias/{id}', 'CategoryController@delete')->name('deletar.categorias');
         Route::post('/categorias', 'CategoryController@create')->name('adicionar.categorias');
         /** AUTENTICACAO */
         Route::post('/auth/logout', 'AuthController@logout')->name('sair');

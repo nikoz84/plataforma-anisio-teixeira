@@ -217,7 +217,6 @@ trait FileSystemLogic
                 $path = Storage::disk('conteudos-digitais')->path($local) . "/{$id}.*";
                 $files = $filesystem->glob($path);
                 $name = "{$id}.{$rand}.{$file->guessExtension()}";
-
                 $file->storeAs($local, $name, 'conteudos-digitais');
             }
             return $file;

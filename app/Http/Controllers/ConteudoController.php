@@ -40,7 +40,6 @@ class ConteudoController extends ApiController
     public function index(Request $request)
     {
         $query = Conteudo::query();
-
         $query->searchByColumn('user_id', $request->query('publicador'))
             ->searchByColumn('category_id', $request->query('categoria'))
             ->searchByColumn('tipo_id', $request->query('tipos'), true)
