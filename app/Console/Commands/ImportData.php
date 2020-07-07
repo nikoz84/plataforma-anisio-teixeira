@@ -43,7 +43,7 @@ class ImportData extends Command
             return $file->getFilename();
         });
         $this->info('Importando dados esper um momento...');
-
+        /*
         foreach ($files as $file) {
             if ($file->getExtension() == 'json') {
                 $filename = pathinfo($file, PATHINFO_FILENAME);
@@ -57,6 +57,7 @@ class ImportData extends Command
                 $this->line("Tabela: $tabela copiada com successo!!");
             }
         }
+        */
         $this->info('Reiniciando sequencias');
         DB::statement("ALTER SEQUENCE users_id_seq RESTART WITH 2675;");
         DB::statement("ALTER SEQUENCE canais_id_seq RESTART WITH 16;");
