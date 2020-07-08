@@ -25,7 +25,8 @@ class Tipo extends Model
     {
         if ($this->name) {
             $iconeNome = ReplaceStr::replace($this->name);
-            return Storage::disk('public-path')->url("img/tipo-conteudo/".strtolower($iconeNome).".svg");
+            //return Storage::disk('public-path')->url("img/tipo-conteudo/".strtolower($iconeNome).".svg");
+            return strtolower($iconeNome);
         }
         return "";
     }
