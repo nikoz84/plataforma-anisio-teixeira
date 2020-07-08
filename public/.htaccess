@@ -50,11 +50,6 @@ ExpiresDefault A31536000
   Header set Pragma "no-cache"
 </FilesMatch>
 
-
-AddOutputFilterByType DEFLATE text/plain
-
-
-
 <IfModule mod_mime.c>
     AddType application/javascript          js
     AddType application/vnd.ms-fontobject   eot
