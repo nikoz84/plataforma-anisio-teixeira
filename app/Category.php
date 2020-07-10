@@ -26,6 +26,11 @@ class Category extends Model
             ->where('options->is_active', 'true');
     }
 
+    /**
+     * obtem referencia do arquivo de video destaque
+     * da categoria do conteudo em questão
+     * @return string
+     */
     function refenciaVideoDestaque()
     {
         if(!$this->id)
@@ -38,6 +43,11 @@ class Category extends Model
         return null;
     }
 
+    /**
+     * obtem referencia do arquivo de imgame associada
+     * da categoria do conteudo em questão
+     * @return string
+     */
     function refenciaImagemAssociada()
     {
         if(!$this->id)
@@ -50,12 +60,20 @@ class Category extends Model
         return null;
     }
 
+    /**
+     * obtem url da imagem associada
+     * @return string
+     */
     function getImageAttribute(){
         //return $urlPath;
         $filename = basename($this->refenciaImagemAssociada());
         return Storage::disk("conteudos-digitais")->url("imagem-associada/".$filename); 
     }
 
+    /**
+     * obtem url do video destaque da categoria
+     * @return string
+     */
     function getVideoAttribute(){
         //return $urlPath;
         $filename = basename($this->refenciaVideoDestaque());
@@ -63,6 +81,7 @@ class Category extends Model
     }
 
     /**
+     * canal associado à categoria de conteudo
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
     */
     public function canal()

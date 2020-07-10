@@ -9,12 +9,20 @@
                      loading="lazy"
                       style="width:150px;height:150px;" 
                       placeholder-src="/img/fundo-padrao.svg" 
+                      
                       :ratio="1">
                 </q-img>
-                <FileUpload :file="file" hint="Imagem de perfil"></FileUpload>
+                <q-input
+                        class="q-mt-md"
+                        @input="val => {file = val[0];}"
+                        outlined
+                        accept=".png, .webp, .svg, .jpeg, .jpg"
+                        type="file"
+                        @change="onFileChange" hint="Imagem de perfil"></q-input>
               </div>
-               
-                <q-input filled v-model.trim="user.name" label="Usuário" hint="Nome Completo" style="margin-bottom:15px;"></q-input>
+                <ShowErrors :errors="errors.name"></ShowErrors>
+                <q-input filled v-model.trim="user.name" :error="errors.name && errors.name.length > 0" 
+                         label="Usuário" hint="Nome Completo" style="margin-bottom:15px;"></q-input>
                 <q-input filled v-model.trim="user.email" label="E-mail" hint="Correio eletrónico" style="margin-bottom:15px;"></q-input>
                 <q-input filled v-model.trim="user.options.neighborhood" label="Bairro" hint="Bairro" style="margin-bottom:15px;"></q-input>
                 <q-select filled 
@@ -51,6 +59,7 @@
                     hint="DDD: (##) # #### - ####"
                 />
                 <q-date v-model="user.options.birthday"
+                        v-model.trim="user.options.birthday" :error="errors.birthday && errors.birthday.length > 0" 
                         mask="YYYY-MM-DD" 
                         landscape
                         style="margin-bottom:15px;"/>
@@ -65,20 +74,26 @@
 </template>
 
 <script>
+
+
 import { QInput, QRadio, QDate, QBtn, date, QUploader } from "quasar";
-import { FileUpload } from "@forms/shared";
+import { FileUpload, ShowErrors } from "@forms/shared";
 
 export default {
   name: "UserForm",
-  components: { QInput, QRadio, QDate, QBtn, date, QUploader, FileUpload },
+  components: { QInput, QRadio, QDate, QBtn, date, QUploader, FileUpload, ShowErrors },
   data() {
     return {
       user: {
         name: "",
         email: "",
+        arquivoImagem:null,
         canais: [],
         created_at: null,
         image: "",
+        role:{
+
+        },
         role_id: null,
         options: {
           sexo: null,
@@ -90,7 +105,8 @@ export default {
       },
       file: null,
       roles: [],
-      canais: []
+      canais: [],
+      errors:{}
     };
   },
 
@@ -105,24 +121,36 @@ export default {
     }
   },
   methods: {
+    onFileChange(e) {
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                return;
+            console.log("file:", files);
+            this.user.arquivoImagem = files[0];
+        },
     async save() {
       let id = this.$route.params.id ? `/${this.$route.params.id}` : "";
       let form = new FormData();
       form.append("name", this.user.name);
       form.append("email", this.user.email);
       form.append("role_id", this.user.role.id);
-      form.append("options", JSON.stringify(this.options));
+      form.append("options", JSON.stringify(this.user.options));
+      if(this.user.arquivoImagem)
+      form.append("arquivoImagem", this.user.arquivoImagem);
       if (this.$route.params.action == "editar") {
         form.append("_method", "PUT");
       }
       if (this.file) {
         form.append("file", this.file, this.file.name);
       }
-
-      let resp = await axios.post(this.$route.params.slug + id, form);
-
-      if (resp.data.success) {
-        console.log(resp.message);
+      try
+      {
+        let resp = await axios.post(this.$route.params.slug + id, form);
+        this.$router.push(`/admin/usuarios/listar`);
+      }
+      catch(ex)
+      {
+        this.errors = ex.errors;
       }
     },
     async getUser() {

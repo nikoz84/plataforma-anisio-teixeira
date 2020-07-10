@@ -46,17 +46,20 @@ export default {
     },
     methods: {
         async send(){
-            let data = {
-                email: this.email,
-                recaptcha: grecaptcha.getResponse()
-            }
-            try {
-                let {data} = await axios.post('/auth/recuperar-senha', data);
+            const form = new FormData();
+            form.append("email", this.email);
+            form.append("recaptcha",grecaptcha.getResponse());
+            try 
+            {
+                let {data} = await axios.post('/auth/recuperar-senha', form);
+                this.$router.push(`/usuario/login`);
                 if(data.success){
                     console.log(data)
                 }
             } catch (e) {
+                console.log(e);
                 this.errors = e.errors;
+
             }
         }
     },
