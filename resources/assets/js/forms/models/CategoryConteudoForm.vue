@@ -152,7 +152,6 @@ export default {
             var files = e.target.files || e.dataTransfer.files;
             if (!files.length)
                 return;
-            console.log("file:", files);
             this.category.imagemAssociada = files[0];
         },
         onFileVideoChange(e){
@@ -199,8 +198,6 @@ export default {
             }
             catch(ex)
             {
-                console.log("Exceção:",ex);
-                console.log("Exceção:",ex.errors);
                 this.errors = ex.errors;
             }
          }

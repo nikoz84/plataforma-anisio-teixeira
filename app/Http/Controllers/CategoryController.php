@@ -44,7 +44,6 @@ class CategoryController extends ApiController
 
     public function create()
     {
-        
         $validator = Validator::make($this->request->all(), $this->rules());
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar a categoria", 422);
@@ -88,7 +87,8 @@ class CategoryController extends ApiController
         $category->name = $this->request->name;
         $category->canal_id = $this->request->canal_id;
         $category->options = json_decode($this->request->options);
-         if ($this->request->imagemAssociada) {
+        if ($this->request->imagemAssociada) 
+        {
             if($category->refenciaImagemAssociada())
             unlink($category->refenciaImagemAssociada());
             $file = $this->saveFile($category->id, [$this->request->imagemAssociada], 'imagem-associada');
