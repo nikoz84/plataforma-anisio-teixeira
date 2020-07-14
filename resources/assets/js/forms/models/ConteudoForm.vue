@@ -1,13 +1,5 @@
 <template>
   <div class="row q-gutter-xs">
-    <q-card class="col-12">
-      <q-btn
-          class="full-width"
-          color="primary"
-          @click="save()"
-          label="Salvar"
-        ></q-btn>
-    </q-card>
     <q-card class="col-sm-5">
       <q-card-section class="q-gutter-sm">
         <q-select
@@ -101,6 +93,14 @@
           />
         </div>
       </q-card-section>
+      <q-card-section>
+        <q-btn
+          class="full-width"
+          color="primary"
+          @click="save()"
+          label="Salvar"
+        ></q-btn>
+      </q-card-section>
     </q-card>
 
     <q-card class="col-sm-3">
@@ -121,7 +121,7 @@
                 :key="`child-com-${i}`">
                 <q-item-section avatar>
                   <q-checkbox
-                    v-model="conteudo.componentes"
+                    v-model="componentesCurriculares"
                     :val="component.id"
                     color="negative"
                   />
@@ -142,24 +142,32 @@
     <q-card class="col-sm-3">
       <q-card-section>
         <div v-if="niveis">
-          <div 
+          <div
             v-for="(nivel, n) in niveis"
             :key="`n-${n}`"
             :index="nivel.id"
           >
-            <div class="text-teal q-pt-md">{{ nivel.name }}</div>
-            <q-separator class="q-mt-lg" inset color="teal"></q-separator>
-            <div class="q-gutter-sm">
-              <q-checkbox
-                v-for="(component, i) in nivel.componentes"
-                :key="`child-com-${i}`"
-                v-model="conteudo.componentes"
-                :val="component.id"
-                :label="component.name"
-                color="teal"
-              />
+            <div class="text-center text-positive q-pt-md">
+              {{ nivel.name }}
             </div>
-            <q-separator class="q-mt-lg" inset color="teal"></q-separator>
+            <q-separator class="q-mt-lg" inset color="positive"></q-separator>
+            <q-list>
+              <q-item tag="label" 
+                v-ripple v-for="(component, i) in nivel.componentes"
+                :key="`child-com-${i}`">
+                <q-item-section avatar>
+                  <q-checkbox
+                    v-model="componentesCurriculares"
+                    :val="component.id"
+                    color="teal"
+                  />
+                </q-item-section>
+                <q-item-label class="q-pt-sm">
+                  {{component.name}}
+                </q-item-label>
+              </q-item>
+            </q-list>
+            <q-separator class="q-mt-lg" inset color="positive"></q-separator>
           </div>
         </div>
       </q-card-section>
@@ -226,6 +234,7 @@ export default {
       },
       canais: [],
       tipos: [],
+      componentesCurriculares: [],
       licencas: [],
       autocompleteTags: [],
       categories: [],
@@ -245,7 +254,7 @@ export default {
   },
   methods: {
     save() {
-      console.log(this.conteudo);
+      
       const form = new FormData();
       form.append(
         "license_id",
@@ -260,7 +269,7 @@ export default {
         "category_id",
         this.conteudo.category ? this.conteudo.category.id : null
       );
-
+      console.log(this.componentesCurriculares);
       form.append("title", this.conteudo.title);
       form.append("description", this.conteudo.description);
       form.append("source", this.conteudo.source);
@@ -268,7 +277,7 @@ export default {
       form.append("options_site", this.conteudo.options.site);
       form.append("image", this.conteudo.image);
       form.append("tags", this.conteudo.tags);
-      form.append("componentes", this.conteudo.componentes);
+      form.append("componentes", this.componentesCurriculares);
       form.append("terms", this.terms);
       form.append("is_approved", this.conteudo.is_approved);
       form.append("is_featured", this.conteudo.is_featured);
@@ -287,10 +296,10 @@ export default {
       this.canais = responses[0].data.metadata;
       this.tipos = responses[1].data.metadata;
       this.licencas = responses[2].data.metadata;
-      console.warn(responses);
       if (this.$route.params.id) {
-        let conteudo = await axios.get("/conteudos/" + this.$route.params.id);
-        this.conteudo = conteudo.data.metadata;
+        let { data } = await axios.get("/conteudos/" + this.$route.params.id);
+        this.conteudo = data.metadata;
+        this.componentesCurriculares = data.metadata.componentes.map(a => a.id);
       }
     },
     addTag(val, done) {

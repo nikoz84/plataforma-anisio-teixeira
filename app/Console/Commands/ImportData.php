@@ -43,7 +43,7 @@ class ImportData extends Command
             return $file->getFilename();
         });
         $this->info('Importando dados esper um momento...');
-        /*
+        
         foreach ($files as $file) {
             if ($file->getExtension() == 'json') {
                 $filename = pathinfo($file, PATHINFO_FILENAME);
@@ -57,7 +57,7 @@ class ImportData extends Command
                 $this->line("Tabela: $tabela copiada com successo!!");
             }
         }
-        */
+        
         $this->info('Reiniciando sequencias');
         DB::statement("ALTER SEQUENCE users_id_seq RESTART WITH 2675;");
         DB::statement("ALTER SEQUENCE canais_id_seq RESTART WITH 16;");
@@ -91,21 +91,21 @@ class ImportData extends Command
 
     private function createInitSlider()
     {
-        $url = env('APP_URL');
+        //$url = env('APP_URL');
 
         \App\Options::create([
             'name' => 'slider',
             'meta_data' => [
                 [
-                    'image' => "{$url}/storage/conteudos/slider/banner-rotinas-de-estudo.png",
+                    'image' => "/storage/conteudos/slider/banner-rotinas-de-estudo.png",
                     'filename' => 'banner-rotinas-de-estudo.png',
-                    'url' => "http://{$url}/rotinas-de-estudo",
+                    'url' => "/rotinas-de-estudo",
                     'title' => 'Canal de rotinas de estudo'
                 ],
                 [
-                    'image' => "{$url}/storage/conteudos/slider/banner-ensino-superior.png",
+                    'image' => "/storage/conteudos/slider/banner-ensino-superior.png",
                     'filename' => 'banner-ensinosuperior.png',
-                    'url' => "http://{$url}/ipes",
+                    'url' => "/ipes",
                     'title' => 'Canal de ensino superior'
                 ]
             ]

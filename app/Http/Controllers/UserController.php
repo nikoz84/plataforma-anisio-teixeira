@@ -10,10 +10,12 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserController extends ApiController
 {
+    protected $request;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
         $this->middleware('jwt.auth')->except([]);
+        $this->request = $request;
     }
 
     /**
@@ -26,21 +28,17 @@ class UserController extends ApiController
     public function index(Request $request)
     {
         $this->authorize('index', JWTAuth::user());
-
         $limit = $request->query('limit', 15);
         //$orderBy = ($request->has('order')) ? $request->query('order') : 'name';
-        
         $query = User::query();
         $paginator = $query->orderBy('name', 'asc')->paginate($limit);
         $paginator->setPath("/usuarios?limit={$limit}");
-
         return $this->showAsPaginator($paginator, '', 200);
     }
+
     /**
      * Buscar usuário por ID
-     *
      * @param $id integer
-     *
      * @return App\Traits\ApiReponser
      */
     public function getById($id)
@@ -61,9 +59,21 @@ class UserController extends ApiController
     {
         $user = User::findOrFail($id);
         $this->authorize('update', $user);
-        $user->fill($request->all());
+        $validator = Validator::make($this->request->all(), $this->updateRules());
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors(), "Erro no preenchimento do formulário", 422);
+        }
+        $validator = Validator::make(json_decode($this->request->options, true), $this->optionsRules());
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors(), "Não foi possível editar usuário", 422);
+        }
+        $user->fill($this->request->all());
+        $user->options = json_decode($this->request->options);
         if (!$user->save()) {
             $this->errorResponse([], 'Não foi possível editar o usuário', 422);
+        }
+        
+        if ($this->request->arquivoImagem) {
         }
         return $this->successResponse($user, 'Usuário editado com sucesso!', 200);
     }
@@ -115,6 +125,31 @@ class UserController extends ApiController
     }
 
     /**
+     * validação de atualização de usuários
+     * @return array
+     */
+    protected function updateRules()
+    {
+        return [
+            'email' => 'required|unique:users,email',
+            'name' => 'required|min:2|max:255',
+            'role_id' => 'required'
+        ];
+        
+    }
+
+    /**
+     * valida os campos da propriedade options
+     * @return array
+     */
+    protected function optionsRules()
+    {
+        return [
+            'birthday' => 'required|date|date_format:Y-m-d',
+        ];
+    }
+
+    /**
      * Cria novo usuário
      * @param $request
      * @return App\Traits\ApiResponser
@@ -146,13 +181,10 @@ class UserController extends ApiController
             "neighborhood"=> null
         ];
 
-
         if (!$user->save()) {
             $this->errorResponse([], 'não foi possível registrar o usuário', 422);
         }
 
         return $this->successResponse([], 'Usuário registrado com sucesso!', 200);
     }
-
-    
 }

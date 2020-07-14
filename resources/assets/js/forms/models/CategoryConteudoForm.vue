@@ -26,7 +26,6 @@
                             transition-hide="scale"
                             v-model="category.canal"
                             :options="canais"
-                            
                             label="Escolha um Canal"
                             hint="Canal ao qual pertence a categoria"
                             behavior="dialog"
@@ -176,7 +175,6 @@ export default {
         },
 
         async save() {
-            console.log(this.category);
             const form = new FormData();
             form.append("name", this.category.name);
             form.append("options", JSON.stringify(this.category.options));

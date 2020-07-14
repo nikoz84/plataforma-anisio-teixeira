@@ -38,11 +38,11 @@ const usuarioRoutes = {
         }
       },
       {
-        path: "mudar-senha",
+        path: "mudar-senha/:token",
         name: "MudarSenha",
         component: MudarPassForm,
         meta: {
-          requiresAuth: true,
+          //requiresAuth: true,
           title: "Mudar senha"
         }
       },

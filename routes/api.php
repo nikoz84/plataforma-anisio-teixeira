@@ -65,6 +65,7 @@ Route::post('/auth/login', 'AuthController@login')->name('login.usuario');
 Route::post('/auth/cadastro', 'AuthController@register')->name('registro.usuario');
 Route::get('/auth/verificar/{token}', 'AuthController@verifyToken')->name('verificar.token');
 Route::post('/auth/recuperar-senha', 'AuthController@recoverPass')->name('recuperar.senha');
+Route::post('/auth/modificar-senha/{token}', 'AuthController@modificarSenha')->name('modificar.senha');
 Route::get('/auth/verificar/email/{token}', 'AuthController@verifyTokenUserRegister')->name('verificar.usuario.token');
 
 /** OPTIONS  */
@@ -212,9 +213,7 @@ Route::group(
         Route::get('/comentarios/delete/{id}', 'ComentarioController@deletar')->name('comentario.delete');
         /** LIKE - DESLIKE */
         Route::post('/like', 'ConteudoLikeController@like')->name('like');
-
         Route::post('/deslike', 'ConteudoLikeController@deslike')->name('deslike');
-
         Route::get(
             '/likes/usuario/{idUsuario}/{tipo?}',
             'ConteudoLikeController@getLikesPorIdUsuarioEtipo'
