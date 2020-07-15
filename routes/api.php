@@ -166,6 +166,7 @@ Route::group(
         Route::get('/canais/search/{term}', 'CanalController@search')->name('buscar.canal');
         /** LICENCAS */
         Route::get('/licencas/search/{term}', 'LicenseController@search')->name('buscar.licenca');
+        Route::get('/licencas/{id}', 'LicenseController@getById')->name('obter.licenca');
         Route::post('/licencas', 'LicenseController@create')->name('adicionar.licenca');
         Route::put('/licencas/{id}', 'LicenseController@update')->name('atualizar.licenca');
         Route::delete('/licencas/{id}', 'LicenseController@delete')->name('apagar.licenca');

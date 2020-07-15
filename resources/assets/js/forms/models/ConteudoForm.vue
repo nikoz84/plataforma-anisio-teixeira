@@ -2,6 +2,7 @@
   <div class="row q-gutter-xs">
     <q-card class="col-sm-5">
       <q-card-section class="q-gutter-sm">
+        <!-- CANAL --> 
         <q-select
           outlined
           option-value="id"
@@ -12,7 +13,48 @@
           :options="canais"
           label="Escolha um Canal"
           behavior="dialog"
+          @input="getCategories"
         />
+        <!-- CATEGORIAS --> 
+        <q-btn-dropdown
+            class="full-width q-py-sm bg-light"
+            stretch 
+            dropdown-icon="arrow_drop_down" 
+            flat 
+            :label="categoryName"
+            v-if="categories && categories.length > 0">
+          <q-list dense>
+            <q-item clickable dense 
+                  v-for="(category, i) in categories" 
+                  :key="i"
+                  v-close-popup="category.sub_categories.length == 0"
+                  @click="selectCategory(category)">
+              <q-item-section>{{category.name}}</q-item-section>
+              <q-item-section side v-if="category.sub_categories && category.sub_categories.length > 0">
+                <q-icon name="keyboard_arrow_right" />
+              </q-item-section>
+              <!-- SUBCATEGORIAS --> 
+              <q-menu anchor="center middle" self="center middle" v-if="category.sub_categories">
+                <q-list>
+                  <q-item v-for="(subcategory,n) in category.sub_categories" 
+                          :key="n" 
+                          clickable
+                          dense
+                          v-close-popup
+                          @click="selectCategory(subcategory)">
+                    <q-item-section>
+                      {{subcategory.name}}
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
+        <strong class="text-center">
+          {{  selectedCategory ? `Escolha: ${selectedCategory}` : '' }}
+        </strong>
+        <!-- TIPO DE MIDIA --> 
         <q-select
           outlined
           stack-label
@@ -25,15 +67,20 @@
           label="Tipo de Mídia"
           behavior="dialog"
         />
+        <!-- TITULO --> 
         <q-input outlined v-model="conteudo.title" label="Título do conteúdo" />
+        <!-- AUTORES --> 
         <q-input outlined v-model="conteudo.authors" label="Autores" />
+        <!-- FONTE --> 
         <q-input outlined v-model="conteudo.source" label="Fonte" />
+        <!-- DESCRIÇÃO --> 
         <div class="q-mt-md">
           <p class="text-center">Escreva uma descrição do conteúdo</p>
         </div>
         <q-editor v-model="conteudo.description" min-height="15rem" />
       </q-card-section>
       <q-card-section>
+        <!-- TAGS --> 
         <q-select
           outlined
           v-model="conteudo.tags"
@@ -59,12 +106,14 @@
           :src="conteudo.image"
           placeholder-src="/img/fundo-padrao.svg"
           alt="imagem de destaque"/>
+          <!-- IMAGEM DE DESTAQUE --> 
         <q-input
           @input="val => { file = val[0];}"
           outlined
           type="file"
           hint="Imagem de Destaque"
         />
+        <!-- ARQUIVO DE UPLOAD --> 
         <q-input
           class="q-mt-md"
           @input="val => {file = val[0];}"
@@ -72,6 +121,7 @@
           type="file"
           hint="Arquivo para Download"
         />
+        <!-- ENVIAR SITE --> 
         <q-input
           outlined
           v-model="conteudo.options.site"
@@ -80,12 +130,14 @@
         />
       </q-card-section>
       <q-card-section>
+        <!-- CONTEUDO APROVADO --> 
         <div class="q-gutter-sm">
           <q-checkbox
             v-model="conteudo.is_approved"
             label="Aprovar conteúdo"
             color="pink"
           />
+          <!-- MARCAR COMO DESTAQUE --> 
           <q-checkbox
             v-model="conteudo.is_featured"
             label="Marcar como destaque"
@@ -94,6 +146,7 @@
         </div>
       </q-card-section>
       <q-card-section>
+        <!-- SALVAR --> 
         <q-btn
           class="full-width"
           color="primary"
@@ -105,6 +158,7 @@
 
     <q-card class="col-sm-3">
       <q-card-section>
+        <!-- COMPONENTES CURRICULARES --> 
         <div v-if="componentes">
           <div
             v-for="(component, i) in componentes"
@@ -141,6 +195,7 @@
     </q-card>
     <q-card class="col-sm-3">
       <q-card-section>
+        <!-- NIVEIS DE ENSINO --> 
         <div v-if="niveis">
           <div
             v-for="(nivel, n) in niveis"
@@ -234,9 +289,12 @@ export default {
       },
       canais: [],
       tipos: [],
+      tipo_id: null,
       componentesCurriculares: [],
       licencas: [],
       autocompleteTags: [],
+      categoryName: null,
+      selectedCategory: '',
       categories: [],
       dialog: {
         text: "",
@@ -269,8 +327,9 @@ export default {
         "category_id",
         this.conteudo.category ? this.conteudo.category.id : null
       );
-      console.log(this.componentesCurriculares);
+      console.log(this.conteudo);
       form.append("title", this.conteudo.title);
+      
       form.append("description", this.conteudo.description);
       form.append("source", this.conteudo.source);
       form.append("authors", this.conteudo.authors);
@@ -287,6 +346,26 @@ export default {
         form.append("_method", "PUT");
       }
     },
+    async getCategories(val) {
+      const id = val.id;
+      const { data } = await axios.get(`/categorias/canal/${id}`);
+      
+      this.categories = data.metadata.categories;
+      this.categoryName = data.metadata.category_name;
+    },
+    selectCategory(category) {
+      if(category.parent_id === null && category.sub_categories.length > 0){
+        return;
+      } else if(category.parent_id != null && !category.sub_categories){
+        this.conteudo.category_id = category.id;
+        this.selectedCategory = category.name;
+      } else {
+        console.log(category)
+        this.conteudo.category_id = category.id;
+        this.selectedCategory = category.name;
+      }
+      
+    },
     async getData() {
       const canais = axios.get("/canais?select");
       const tipos = axios.get("/tipos?select");
@@ -296,10 +375,17 @@ export default {
       this.canais = responses[0].data.metadata;
       this.tipos = responses[1].data.metadata;
       this.licencas = responses[2].data.metadata;
+      
       if (this.$route.params.id) {
         let { data } = await axios.get("/conteudos/" + this.$route.params.id);
         this.conteudo = data.metadata;
         this.componentesCurriculares = data.metadata.componentes.map(a => a.id);
+      }
+
+      if(this.conteudo.category){
+        this.getCategories(this.conteudo.canal);
+        const category = this.conteudo.category
+        this.selectedCategory = category.name;
       }
     },
     addTag(val, done) {
@@ -307,7 +393,11 @@ export default {
       const http = axios;
 
       if (this.autocompleteTags.length == 0) {
-        this.$q.notify({
+        this.showTagModal(val);
+      }
+    },
+    showTagModal(val){
+      this.$q.notify({
           message: `Essa palavra chave não existe deseja adicionar ${val}?`,
           multiLine: true,
           color: "grey-4",
@@ -320,10 +410,10 @@ export default {
               color: "positive",
               handler: async () => {
                 form.append("name", val);
-                let resp = await http.post("/tags", form);
-                if (resp.data.success) {
-                  let id = resp.data.metadata.id;
-                  let label = resp.data.metadata.name;
+                let { data } = await http.post("/tags", form);
+                if (data.success) {
+                  let id = data.metadata.id;
+                  let label = data.metadata.name;
                   done({ id, label });
                 }
               }
@@ -337,7 +427,6 @@ export default {
             }
           ]
         });
-      }
     },
     getTags(val, update, abort) {
       update(() => {

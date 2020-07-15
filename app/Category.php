@@ -21,9 +21,10 @@ class Category extends Model
 
     public function subCategories()
     {
-        return $this->hasMany('App\Category', 'parent_id', 'id')
+        return $this->hasMany(\App\Category::class, 'parent_id', 'id')
             ->selectRaw("id, parent_id, name")
-            ->where('options->is_active', 'true');
+            ->where('options->is_active', true)
+            ->orderBy('name');
     }
 
     /**
@@ -31,7 +32,7 @@ class Category extends Model
      * da categoria do conteudo em questão
      * @return string
      */
-    function refenciaVideoDestaque()
+    public function refenciaVideoDestaque()
     {
         if(!$this->id)
         return null;
@@ -39,7 +40,7 @@ class Category extends Model
         $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.".*";
         $info = glob($urlPath);
         if(sizeof($info)>0)
-        return $info[0]; 
+        return $info[0];
         return null;
     }
 
@@ -48,7 +49,7 @@ class Category extends Model
      * da categoria do conteudo em questão
      * @return string
      */
-    function refenciaImagemAssociada()
+    public function refenciaImagemAssociada()
     {
         if(!$this->id)
         return null;
@@ -56,7 +57,7 @@ class Category extends Model
         $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.".*";
         $info = glob($urlPath);
         if(sizeof($info)>0)
-        return $info[0]; 
+        return $info[0];
         return null;
     }
 
@@ -64,7 +65,7 @@ class Category extends Model
      * obtem url da imagem associada
      * @return string
      */
-    function getImageAttribute(){
+    public function getImageAttribute(){
         //return $urlPath;
         $filename = basename($this->refenciaImagemAssociada());
         return Storage::disk("conteudos-digitais")->url("imagem-associada/".$filename); 
@@ -74,7 +75,7 @@ class Category extends Model
      * obtem url do video destaque da categoria
      * @return string
      */
-    function getVideoAttribute(){
+    public function getVideoAttribute(){
         //return $urlPath;
         $filename = basename($this->refenciaVideoDestaque());
         return Storage::disk("conteudos-digitais")->url("visualizacao/".$filename);
