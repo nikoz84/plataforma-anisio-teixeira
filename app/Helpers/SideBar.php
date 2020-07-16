@@ -56,18 +56,21 @@ class SideBar
     public function getAdminSidebar(User $user)
     {
         $links = $this->getlinks();
-
-        return $links->map(function ($link) use ($user) {
-            if ($user->can($link['hability'], $link['class'])) {
-                return $this->createMenu(
-                    $link['label'],
-                    $link['name'],
-                    $link['slug']
+        $linksArr = [];
+        foreach ($links as $link) {
+            if ($user->can('index', $link['class'])) {
+                array_push(
+                    $linksArr,
+                    $this->createMenu(
+                        $link['label'],
+                        $link['name'],
+                        $link['slug']
+                    )
                 );
-            } else {
-                return;
             }
-        });
+        }
+        
+        return (object) $linksArr;
     }
     /**
      * Cria json para Links de administração
@@ -177,3 +180,4 @@ class SideBar
         ]);
     }
 }
+
