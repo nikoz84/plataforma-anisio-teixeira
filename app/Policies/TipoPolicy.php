@@ -30,8 +30,7 @@ class TipoPolicy
      */
     public function index(User $user)
     {
-        return $user->role->name == 'super-admin' || $user->role->name == 'admin'
-            || $user->role->name == 'coordenador';
+        return $user->role->name == 'super-admin' || $user->role->name == 'admin';
     }
 
     /**
