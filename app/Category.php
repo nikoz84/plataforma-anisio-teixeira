@@ -77,7 +77,9 @@ class Category extends Model
     function getVideoAttribute(){
         //return $urlPath;
         $filename = basename($this->refenciaVideoDestaque());
+        if($filename)
         return Storage::disk("conteudos-digitais")->url("visualizacao/".$filename);
+        return null;
     }
 
     /**

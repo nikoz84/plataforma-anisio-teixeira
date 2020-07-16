@@ -91,9 +91,7 @@ export default {
         canais: [],
         created_at: null,
         image: "",
-        role:{
-
-        },
+        role:null,
         role_id: null,
         options: {
           sexo: null,

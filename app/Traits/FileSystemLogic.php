@@ -156,7 +156,6 @@ trait FileSystemLogic
                 return Storage::disk('galeria')->url("{$file->getFilename()}");
             });
         }
-
         return collect($files)->map(function ($file) {
             return Storage::disk('galeria')->url("{$file->getFilename()}");
         })->shuffle();
@@ -208,16 +207,17 @@ trait FileSystemLogic
      *
      * @return File
      */
-    public function saveFile($id, $files, $local = null)
+    public function saveFile($id, $files,  $local = null, $disk="conteudos-digitais")
     {
         if ($files) {
             foreach ($files as $file) {
                 $filesystem = new Filesystem;
                 $rand = rand(5, 99999);
-                $path = Storage::disk('conteudos-digitais')->path($local) . "/{$id}.*";
+                $path = Storage::disk($disk)->path($local) . "/{$id}.*";
                 $files = $filesystem->glob($path);
                 $name = "{$id}.{$rand}.{$file->guessExtension()}";
-                $file->storeAs($local, $name, 'conteudos-digitais');
+                $file->storeAs($local, $name, $disk);
+                
             }
             return $file;
         }
@@ -225,7 +225,7 @@ trait FileSystemLogic
 
     /**
      * Retorna tipos de extessões 
-     *
+     *@return string $mimes
      */
     public function mimeTypes()
     {
