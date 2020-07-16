@@ -79,7 +79,7 @@ class User extends Authenticatable implements JWTSubject
     /*public static function boot()
     {
         parent::boot();
-        
+
         static::created(
             function ($user) {
                 Event::dispatch('user.saved', $user);
