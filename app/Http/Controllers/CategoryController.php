@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ApiController;
 use App\Traits\FileSystemLogic;
+use App\Canal;
 
 class CategoryController extends ApiController
 {
@@ -79,7 +80,7 @@ class CategoryController extends ApiController
     public function update($id)
     {
         $validator = Validator::make($this->request->all(), $this->rules());
-        if ($validator->fails()) 
+        if ($validator->fails())
         {
             return $this->errorResponse($validator->errors(), "Não foi possível atualizar a categoria", 422);
         }
@@ -87,7 +88,7 @@ class CategoryController extends ApiController
         $category->name = $this->request->name;
         $category->canal_id = $this->request->canal_id;
         $category->options = json_decode($this->request->options);
-        if ($this->request->imagemAssociada) 
+        if ($this->request->imagemAssociada)
         {
             if($category->refenciaImagemAssociada())
             unlink($category->refenciaImagemAssociada());
@@ -95,7 +96,7 @@ class CategoryController extends ApiController
             if(!$file)
             {
                 return $this->errorResponse([], 'Não foi possível salvar imagem associada', 422);
-            } 
+            }
         }
         if ($this->request->videoDestaque) 
         {
@@ -140,8 +141,17 @@ class CategoryController extends ApiController
 
     public function getCategoryByCanalId($id)
     {
-        $categories = Category::where('canal_id', $id)->get();
-        return $this->showAll($categories);
+        $categories = Category::with('subCategories')->where('canal_id', $id)
+        ->where('options->is_active', 'true')
+        ->whereNull('parent_id')->get();
+        $canal = Canal::where('id', $id)->get();
+        
+        $data = collect([
+            'category_name' => $canal->pluck('category_name')->first(),
+            'categories' => $categories
+        ]);
+
+        return $this->showAll($data);
     }
 
     /**
