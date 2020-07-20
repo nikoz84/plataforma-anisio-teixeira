@@ -4,8 +4,8 @@
       <!-- LISTA DE ITENS -->
       <div class="q-pa-sm">
         
-        <div class="flex" v-for="(rotina, i) in rotinas" :key="i">
-          <q-card class="col-3" v-for="(atividade, d) in rotina" :key="d">
+        <div class="column" v-for="(rotina, i) in rotinas" :key="i">
+          <q-card class="flex-break" v-for="(atividade, d) in rotina" :key="d">
             <q-card-section>
               {{ getDay(d) }}
             </q-card-section>
