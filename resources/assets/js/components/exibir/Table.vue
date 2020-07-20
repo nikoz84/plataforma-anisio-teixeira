@@ -12,9 +12,11 @@
         @input="getPage"
       >
       </q-pagination>
-      <div v-if="paginator && paginator.total == 0">
-        <p class="text-h6">Sem resultados</p>
-      </div>
+      <q-card v-if="paginator && paginator.total == 0">
+        <q-card-section class="text-center">
+          <p class="text-h6">Sem resultados</p>
+        </q-card-section>
+      </q-card>
     </div>
     <div class="col-lg-12" v-if="paginator && paginator.total > 0">
       <q-markup-table

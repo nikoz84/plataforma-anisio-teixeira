@@ -15,3 +15,4 @@ yarn-error.log
 /app/Console/Commands/ImportData.php
 /public/js/*.js
 /migra_sql
+/documentation/node_modules

@@ -26,7 +26,7 @@ class ConteudoPlanilha extends Model
     /**
     * Consulta ao Google Scripts
     */
-    public function buscarJsonNoGoogleSpreadsheets($url)
+    public function getGoogleSpreadsheetsData($url)
     {
         if (!$url) {
             return;
@@ -69,25 +69,19 @@ class ConteudoPlanilha extends Model
     public function formatarJsonRotinasDeEstudo($dados)
     {
         $novaEstrutura = [];
-        $semanas = [];
         $dias = $this->diasDaSemanaPorExtenso();
+        $niveis = $this->niveisEnsino();
 
-        foreach ($dados['semanas'] as $semana) {
-            array_push($semanas, $semana['slug']);
-        }
-
-        foreach ($dados['semanas'] as $key => $semana) {
-            foreach ($dados['rotinas'] as $rotina) {
-                if (in_array($semana['slug'], $semanas) && in_array($rotina['dia'], $dias)) {
-                    $novaEstrutura['rotinas'][$key][$semana['slug']][$rotina['dia']][$rotina['nivel-ensino']]['atividades'][] = [
-                        'descricao' => $rotina['descricao'],
-                        'link' => $rotina['link'],
-                        'sugestao' => $rotina['sugestao']
-                    ];
-                }
+        foreach ($dados['rotinas'] as $key => $rotina) {
+            if (in_array($rotina['dia'], $dias) && in_array($rotina['nivel-ensino'], $niveis)) {
+                $novaEstrutura['rotinas'][$rotina['dia']][$rotina['nivel-ensino']][] = [
+                    'descricao' => $rotina['descricao'],
+                    'link' => $rotina['link'],
+                    'sugestao' => $rotina['sugestao']
+                ];
             }
         }
-
+        
         return $novaEstrutura;
     }
 
@@ -95,7 +89,14 @@ class ConteudoPlanilha extends Model
     {
         return $this->select();
     }
-
+    public function niveisEnsino()
+    {
+        return [
+            'ensino-medio',
+            'ensino-fundamental-1',
+            'ensino-fundamental-2',
+        ];
+    }
     public function diasDaSemanaPorExtenso()
     {
         return  [
