@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
+
 //Route::get('/ler', 'ConteudoController@lerHD')->name('ler.hd');
 Route::get('/files/galeria', 'FileController@getGallery')->name('lista.galeria.imagens');
 Route::get('/files/{id}', 'FileController@getFiles')->name('busca.arquivo');
@@ -75,12 +76,17 @@ Route::get(
 )->name('busca.planilha.rotina.de.estudos');
 Route::get('/planilhas', 'ConteudoPlanilhaController@conteudos')->name('conteudo.planilha');
 
+
+/** COMENTARIOS */
 Route::post('/comentarios/create', 'ComentarioController@create')->name('comentario.create');
-Route::post('/comentarios/update/{id}', 'ComentarioController@create')->name('comentario.update');
-Route::get('/comentarios/{id}', 'ComentarioController@comentarios')->name('comentario.comentarios');
+Route::post('/comentarios/update/{id}', 'ComentarioController@update')->name('comentario.update');
+Route::get('/comentarios/{id}', 'ComentarioController@getComentarioById')->name('comentario.id');
 
 Route::get('/comentarios/usuario/{idUsuario}/{tipo?}', 'ComentarioController@getComentariosByIdUsuario')
 ->name('comentario.usuario');
+
+Route::get('/comentarios/postagem/{id}/{tipo}', 'ComentarioController@getComentariosByIdPostagem')
+->name('comentario.postagem');
 
 Route::get('/comentarios/delete/{id}', 'ComentarioController@deletar')
 ->name('comentario.delete');
@@ -184,5 +190,8 @@ Route::group(
             '/relatorio/usuarios/role/{role_id}/{is_active?}',
             'RelatorioController@gerarPdfUsuario'
         )->name('gerar.relatorio.usuario');
+        /** SISTEMA DE PASTA */
+        Route::get('/informacoes-pasta/{path}/{path2?}/{path3?}', 'FileController@getInfoFolder')->name('file.getInfoFolder');
+
     }
 );
