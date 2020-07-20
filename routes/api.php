@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
  */
-//Route::get('/ler', 'ConteudoController@lerHD')->name('ler.hd');
+
 Route::get('/files/galeria', 'FileController@getGallery')->name('lista.galeria.imagens');
 Route::get('/files/{id}', 'FileController@getFiles')->name('busca.arquivo');
 Route::post('/files/{id}', 'FileController@createFile')->name('adiciona.arquivo');
@@ -60,7 +60,7 @@ Route::get('/aplicativos/search/{term}', 'AplicativoController@search')->name('b
 Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('busca.x.aplicativo.id');
 
 /** AUTENTICACAO */
-Route::post('/auth/login', 'AuthController@login')->name('login.usuario');
+Route::post('/auth/login', 'AuthController@login')->name('login');
 
 Route::post('/auth/cadastro', 'AuthController@register')->name('registro.usuario');
 Route::get('/auth/verificar/{token}', 'AuthController@verifyToken')->name('verificar.token');
@@ -81,15 +81,18 @@ Route::get('/files/{directory}/{id}', 'FileController@downloadFile')->name('down
 
 /** MIGRAR PLANILHAS */
 Route::get(
-    '/planilhas/rotinas/{semana}',
+    '/planilhas/load-rotinas/',
     'ConteudoPlanilhaController@getRotinaDeEstudos'
 )->name('busca.rotina.de.estudos');
 Route::get(
-    '/planilhas/faculdades/',
+    '/planilhas/load-faculdades/',
     'ConteudoPlanilhaController@getFaculdadesDaBahia'
 )->name('busca.faculdades');
 
-Route::get('/planilhas', 'ConteudoPlanilhaController@conteudos')->name('conteudo.planilha');
+Route::get('/planilhas', 'ConteudoPlanilhaController@getDocumentByName')->name('docs.planilhas');
+
+Route::get('/rotinas/{nivel}/{semana}', 'ConteudoPlanilhaController@rotinasPerNivel')
+->name('rotinas.estudos.x.nivel');
 
 /***********************************************
  *

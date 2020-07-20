@@ -1,0 +1,20 @@
+{
+  "name": "docs_pat",
+  "version": "0.0.1",
+  "description": "Documentação da plataforma Anísio Teixeira",
+  "authors": {
+    "name": "Equipe de desenvolvimento Plataforma Anísio Teixeira",
+    "email": "plataforma.anisio.teixeira@gmail.com"
+  },
+  "repository": "/documentation",
+  "scripts": {
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@vuepress/plugin-back-to-top": "^1.3.1",
+    "@vuepress/plugin-medium-zoom": "^1.3.1",
+    "vuepress": "^1.5.2"
+  }
+}

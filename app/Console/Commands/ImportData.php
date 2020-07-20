@@ -74,8 +74,8 @@ class ImportData extends Command
 
 
         $this->info('Atualizando Canais');
-        DB::statement("UPDATE conteudos set canal_id = 6 where is_site = false and canal_id is null;");
-        DB::statement("UPDATE conteudos set canal_id = 5 where is_site = true and canal_id is null;");
+        //DB::statement("UPDATE conteudos set canal_id = 6 where is_site = false and canal_id is null;");
+        //DB::statement("UPDATE conteudos set canal_id = 5 where is_site = true and canal_id is null;");
         DB::statement("UPDATE canais set is_active = false where  id  IN (4,10,11,13,14,15);");
         DB::statement("UPDATE canais set name = 'Recursos Educacionais' where id = 6;");
         DB::statement("UPDATE tipos set name = 'Documento' where id = 1");
