@@ -68,7 +68,9 @@ class Category extends Model
     public function getImageAttribute(){
         //return $urlPath;
         $filename = basename($this->refenciaImagemAssociada());
+        if($filename)
         return Storage::disk("conteudos-digitais")->url("imagem-associada/".$filename); 
+        return null;
     }
 
     /**
@@ -78,7 +80,9 @@ class Category extends Model
     public function getVideoAttribute(){
         //return $urlPath;
         $filename = basename($this->refenciaVideoDestaque());
+        if($filename)
         return Storage::disk("conteudos-digitais")->url("visualizacao/".$filename);
+        return null;
     }
 
     /**

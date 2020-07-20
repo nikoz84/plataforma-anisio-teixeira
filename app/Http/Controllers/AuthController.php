@@ -41,20 +41,14 @@ class AuthController extends ApiController
                 'recaptcha' => ['required', new \App\Rules\ValidRecaptcha]
             ]
         );
-
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Usuário ou senha inválidos", 422);
         }
-
         $credentials = $this->request->only('email', 'password');
-
         $token = null;
-
-        
         if (!$token = JWTAuth::attempt($credentials)) {
             return $this->errorResponse([], 'E-mail ou Senha inválidos', 422);
         }
-       
         return $this->respondWithToken($token);
     }
     /**
@@ -174,6 +168,7 @@ class AuthController extends ApiController
                 'recaptcha' => ['required', new \App\Rules\ValidRecaptcha]
             ]
         );
+        $data = [];
         // Dispara o Email
         try 
         {
@@ -191,16 +186,13 @@ class AuthController extends ApiController
             $token = $tokenGerado->getTokenByEmail($usuario->email)->token;
             $this->sendConfirmationEmail($usuario->email, $token, 'recoverPass');
             if ($validator->fails()) {
-                return $this->errorResponse(
-                    $validator->errors(),
-                    "Verifique os dados fornecidos",
-                    422
-                );
+                $data = $validator->errors();
+                throw new Exception("Verifique os dados fornecidos");
             }
         }
         catch(Exception $ex)
         {
-            return $this->errorResponse([], $ex->getMessage(), 422);
+            return $this->errorResponse($data, $ex->getMessage(), 422);
         }
         return $this->successResponse([], 'Email enviado com Sucesso!', 200);     
     }

@@ -134,7 +134,7 @@ Route::group(
         Route::put('/usuarios/reset-password', 'UserController@resetPass')->name('senha.atualizar');
         Route::post('/usuarios', 'UserController@create')->name('adicionar.usuario');
         /** APLICATIVOS */
-        Route::post('/aplicativos', 'AplicativoController@create')->name('aplicativo.adicionar');
+        Route::post('/aplicativos', 'AplicativoController@create')->name('adicionar.aplicativo');
         Route::put('/aplicativos/{id}', 'AplicativoController@update')->name('aplicativo.editar');
         Route::delete('/aplicativos/{id}', 'AplicativoController@delete')->name('aplicativo.apagar');
         /** APLICATIVOS CATEGORIES */
