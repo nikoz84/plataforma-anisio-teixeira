@@ -98,7 +98,7 @@ class LicenseController extends ApiController
         try
         {
             $license = License::find($id);
-            //$this->authorize('update', $id);
+            $this->authorize('update', $id);
             $validator = Validator::make($this->request->all(), $this->config());
             if ($validator->fails()) {
                 throw new Exception('Não foi possível salvar imagem associada');
