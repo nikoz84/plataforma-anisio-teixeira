@@ -1,28 +1,35 @@
 <template>
   <div class="q-pa-md">
+    <header class="row wrap items-center q-my-md">
+      <div class="text-h5 color-primary">
+        Rotinas de Estudo
+      </div>
+    </header>
     <div class="row justify-center q-gutter-md">
       <q-select
-        v-model="option"
-        :options="options"
+        v-model="nivel"
+        :options="niveisModel"
         style="min-width: 250px"
+        @input="changeNivel" 
       ></q-select>
       <q-select
         v-model="semana"
-        :options="semanas"
+        :options="semanasModel"
+        @input="changeSemana"
         style="min-width: 200px"
       ></q-select>
     </div>
     <div v-if="rotinas">
-      <div class="row justify-center q-mt-md q-gutter-md" v-for="(rotina, i) in rotinas" :key="i">
+      <div class="row justify-start q-mt-md q-gutter-md" v-for="(rotina, i) in rotinas" :key="i">
         <div class="col-sm-2" v-for="(atividade, d) in rotina" :key="d">
           <b class="text-center" v-if="i == 0">
             {{ getDay(d) }}
           </b>
           <q-card v-if="d == 'segunda'">
             <q-card-section >
-              {{ toJson(atividade).sugestao }} 
-              <q-space class="q-mt-md"></q-space>
               {{ toJson(atividade).descricao }}
+              <q-space class="q-mt-md"></q-space>
+              {{ toJson(atividade).sugestao }} 
             </q-card-section>
             <q-card-actions>
               <a target="_blank" :href="toJson(atividade).link">
@@ -32,9 +39,9 @@
           </q-card>
           <q-card v-if="d == 'terca'">
             <q-card-section >
-              {{ toJson(atividade).sugestao }} 
-              <q-space class="q-mt-md"></q-space>
               {{ toJson(atividade).descricao }}
+              <q-space class="q-mt-md"></q-space>
+              {{ toJson(atividade).sugestao }} 
             </q-card-section>
             <q-card-actions>
               <a target="_blank" :href="toJson(atividade).link">
@@ -44,9 +51,9 @@
           </q-card>
           <q-card v-if="d == 'quarta'">
             <q-card-section >
-              {{ toJson(atividade).sugestao }} 
-              <q-space class="q-mt-md"></q-space>
               {{ toJson(atividade).descricao }}
+              <q-space class="q-mt-md"></q-space>
+              {{ toJson(atividade).sugestao }} 
             </q-card-section>
             <q-card-actions>
               <a target="_blank" :href="toJson(atividade).link">
@@ -56,9 +63,9 @@
           </q-card>
           <q-card v-if="d == 'quinta'">
             <q-card-section >
-              {{ toJson(atividade).sugestao }} 
-              <q-space class="q-mt-md"></q-space>
               {{ toJson(atividade).descricao }}
+              <q-space class="q-mt-md"></q-space>
+              {{ toJson(atividade).sugestao }} 
             </q-card-section>
             <q-card-actions>
               <a target="_blank" :href="toJson(atividade).link">
@@ -68,9 +75,9 @@
           </q-card>
           <q-card v-if="d == 'sexta'">
             <q-card-section >
-              {{ toJson(atividade).sugestao }} 
-              <q-space class="q-mt-md"></q-space>
               {{ toJson(atividade).descricao }}
+              <q-space class="q-mt-md"></q-space>
+              {{ toJson(atividade).sugestao }} 
             </q-card-section>
             <q-card-actions>
               <a target="_blank" :href="toJson(atividade).link">
@@ -90,16 +97,16 @@ export default {
     data() {
       return {
         rotinas: [],
-        semanas: [],
+        semanasModel: [],
         semana: {
           value : 'semana-1',
           label : 'Semana 1'
         },
-        option: {
+        nivel: {
           value: 'ensino-fundamental-1',
           label: 'Ensino Fundamental 1',
         },
-        options:[
+        niveisModel:[
           {
             value: 'ensino-fundamental-1',
             label: 'Ensino Fundamental 1'
@@ -116,19 +123,31 @@ export default {
       }
     },
     created() {
+      if (this.$route.params.nivel){
+        this.nivel = this.niveisModel.filter((item)=>{
+          return item.value === this.$route.params.nivel
+        }).reduce(obj => obj);
+      }
       this.getRotinas();
     },
     methods: {
       async getRotinas(){
-        let nivel = this.$route.params.nivel;
-        let semana = this.$route.params.semana;
-
+        let nivel = this.nivel.value ? this.nivel.value : 'ensino-fundamental-1';
+        let semana = this.semana.value ? this.semana.value : 'semana-1';
         const { data } = await axios.get(`/rotinas/${nivel}/${semana}`);
         
         this.rotinas = data.metadata.rotinas;
-        this.semanas = data.metadata.semanas;
+        this.semanasModel = data.metadata.semanas;
         console.log(data.metadata)
         
+      },
+      changeSemana(value){
+        this.semana = value;
+        this.getRotinas();
+      },
+      changeNivel(value){
+        this.nivel = value;
+        this.getRotinas();
       },
       toJson(data){
         return JSON.parse(data);

@@ -13,7 +13,7 @@ Todos os controladores herdam da clase `App\Http\Controllers\ApiController`, ass
 ## Lista conteúdos digitais
 
 - método: `GET`
-- endpoint: `/conteudos`
+- endpoint: `/api-v1/conteudos`
 
 Resposta de conteúdos paginados:
 
@@ -101,4 +101,4 @@ Resposta de conteúdos paginados:
 ## Lista aplicativos educacionais
 
 - método: `GET`
-- endpoint: `/aplicativos`
+- endpoint: `/api-v1/aplicativos`
