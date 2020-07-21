@@ -48,7 +48,7 @@ const ipesRoute = {
     }
 };
 const rotinasRoute = {
-  path: "/rotinas-de-estudo",
+  path: "/rotinas-de-estudo/:nivel?/:semana?",
   name: "RotinasEstudo",
   component: () => import(/* webpackChunkName: "rotinas" */ "@pages/RotinasDeEstudo.vue"),
   meta: {
