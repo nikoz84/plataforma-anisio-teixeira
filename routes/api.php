@@ -94,8 +94,6 @@ Route::get('/planilhas', 'ConteudoPlanilhaController@getDocumentByName')->name('
 Route::get('/rotinas/{nivel}/{semana}', 'ConteudoPlanilhaController@rotinasPerNivel')
 ->name('rotinas.estudos.x.nivel');
 
-
-
 /***********************************************
  *
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN

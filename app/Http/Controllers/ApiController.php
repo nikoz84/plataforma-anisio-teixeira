@@ -19,4 +19,17 @@ class ApiController extends Controller
     {
         return view('index');
     }
+
+    /**
+     * retorna mensagens de validações padrão para os formulários em geral
+     * @return array conjunto de mensagens para as validações dos formulários em geral
+     */
+    protected function messagesRules(){
+        return [
+            'required' => 'O campo :attribute é obrigatório',
+            'min' => "O número mínimo de caracteres para este campo é :min",
+            'max' => "O número máximo de caracteres para este campo é de :max",
+            'mimes' => "Formato do arquivo é incorreto"
+        ];
+    }
 }

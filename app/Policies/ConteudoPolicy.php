@@ -42,8 +42,7 @@ class ConteudoPolicy
     public function create(User $user, Conteudo $conteudo)
     {
         return $user->role->name === 'super-admin' ||
-            $user->role->name === 'admin' || $user->role->name === 'coordenador' ||
-            $user->id === $conteudo->user_id;
+            $user->role->name === 'admin' || $user->role->name === 'coordenador';
     }
 
     /**

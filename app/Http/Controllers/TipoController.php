@@ -6,6 +6,7 @@ use App\Http\Controllers\ApiController;
 use App\Tipo;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\ApiResponser;
+use App\User;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -34,19 +35,21 @@ class TipoController extends ApiController
         return $this->showAsPaginator($paginator);
     }
 
+
+
     public function create(Request $request)
     {
         $validator = Validator::make(
             $request->all(),
             [
                 'name' => 'required'
-            ]
+            ], $this->rulesMessages()
         );
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar o tipo", 422);
         }
         $tipo = new Tipo;
-        $this->authorize('create', JWTAuth::user());
+        $this->authorize('create', User::class);
         $tipo->name = $request->name;
         $tipo->options = json_decode($request->options, true);
         if (!$tipo->save()) {

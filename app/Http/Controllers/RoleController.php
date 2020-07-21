@@ -32,7 +32,7 @@ class RoleController extends ApiController
     }
     public function create()
     {
-        $validator = Validator::make($this->request->all(), ["name" => "required"]);
+        $validator = Validator::make($this->request->all(), ["name" => "required"], $this->rulesMessages());
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar o perfil", 422);
         }

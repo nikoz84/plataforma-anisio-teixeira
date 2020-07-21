@@ -8,6 +8,7 @@ use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\FileSystemLogic;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -95,8 +96,7 @@ class ConteudoController extends ApiController
             'tipo_id' => 'required',
             'category_id' => 'nullable',
             'title' => 'required|min:10|max:255',
-            'description' => 'required|min:140',
-            'tipo_id' => 'required',
+            'description' => 'required|min:140|max:1024',
             'options_site' => ['nullable', new \App\Rules\ValidUrl],
             'tags' => 'required',
             'componentes' => 'required',
@@ -114,6 +114,18 @@ class ConteudoController extends ApiController
 
         ];
     }
+
+    /**
+     * retorna mensagens de validações expecificas para o formulario de conteudo digital
+     * @return array conjunto de mensagens para as validações do formulário de conteudo digital
+     */
+    protected function messagesRules(){
+        $mensagens = [
+            'componentes.required' => 'Selecione ao menos 1 componente curricular para este conteúdo'
+            
+        ];
+        return array_merge(parent::messagesRules(), $mensagens);
+    }
     /**
      * Adiciona e valida novo conteúdo
      *
@@ -123,55 +135,41 @@ class ConteudoController extends ApiController
      */
     public function create(Request $request)
     {
+        $conteudo = new Conteudo;
+        $this->authorize('create', $conteudo);
         $validator = Validator::make(
             $request->all(),
-            $this->configRules()
+            $this->configRules(),
+            $this->messagesRules()
         );
+        $data = [];
+        try {
+            if ($validator->fails()) {
+                $data =  $validator->errors();
+                throw new Exception("Não foi possível criar o conteúdo",422);
+            }
+            $conteudo->fill($request->all());
+            $conteudo->options = ['site' => $request->options_site];
+            $conteudo->setAttribute('is_featured', $request->is_featured);
+            $conteudo->setAttribute('is_site', $request->is_site);
+            $conteudo->qt_downloads = Conteudo::INIT_COUNT;
+            $conteudo->qt_access = Conteudo::INIT_COUNT;
 
-        if ($validator->fails()) {
-            return $this->errorResponse(
-                $validator->errors(),
-                "Não foi possível criar o conteúdo",
-                422
-            );
+            if (!$conteudo->save()) {
+                throw new Exception("Não foi possível cadastrar o conteúdo", 422);
+            }
+            $conteudo->tags()->attach(explode(',', $request->tags));
+            $conteudo->componentes()->attach(explode(',', $request->componentes));
+            $conteudo::tsDocumentoSave($conteudo->id);
+            $file = $this->storeFiles($request, $conteudo->id);
+            if (!$file) {
+                throw new Exception('Não foi possível fazer upload de arquivos.', 422);
+            }
         }
-
-        $this->authorize('create', Conteudo::class);
-
-        $conteudo = new Conteudo;
-        $conteudo->user_id = Auth::user()->id;
-        $conteudo->setAttribute('approving_user_id', Auth::user());
-
-        $conteudo->is_approved = $request->is_approved;
-        $conteudo->tipo_id = $request->tipo_id;
-        $conteudo->license_id = $request->license_id;
-        $conteudo->canal_id = $request->canal_id;
-        $conteudo->category_id = $request->category_id;
-
-        $conteudo->title = $request->title;
-        $conteudo->description = $request->description;
-        $conteudo->authors = $request->authors;
-        $conteudo->source = $request->source;
-        $conteudo->options = ['site' => $request->options_site];
-        $conteudo->setAttribute('is_featured', $request->is_featured);
-        $conteudo->setAttribute('is_site', $request->is_site);
-        $conteudo->qt_downloads = Conteudo::INIT_COUNT;
-        $conteudo->qt_access = Conteudo::INIT_COUNT;
-
-        if (!$conteudo->save()) {
-            return $this->errorResponse([], "Não foi possível cadastrar o conteúdo", 422);
+        catch(Exception $ex)
+        {
+            return $this->errorResponse($data, $ex->getMessage(), $ex->getCode());
         }
-
-        $conteudo->tags()->attach(explode(',', $request->tags));
-        $conteudo->componentes()->attach(explode(',', $request->componentes));
-        $conteudo::tsDocumentoSave($conteudo->id);
-
-        $file = $this->storeFiles($request, $conteudo->id);
-
-        if (!$file) {
-            return $this->errorResponse([], 'Não foi possível fazer upload de arquivos.', 500);
-        }
-
         return $this->showOne($conteudo, 'Conteúdo cadastrado com sucesso!!', 200);
     }
     /**
@@ -182,11 +180,9 @@ class ConteudoController extends ApiController
      */
     public function update(Request $request, $id)
     {
-        $conteudo = $this->conteudo::find($id);
-
+        $conteudo = Conteudo::find($id);
         $this->authorize('update', $conteudo);
-
-        $validator = Validator::make($request->all(), config("rules.conteudo"));
+        $validator = Validator::make($request->all(), $this->configRules(), $this->messagesRules());
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível atualizar o conteúdo", 422);
         }
@@ -195,10 +191,10 @@ class ConteudoController extends ApiController
         if (!$conteudo->save()) {
             return $this->errorResponse([], 'Não foi possível atualizar o conteúdo', 422);
         }
-        $conteudo->tags()->sync(explode(',', $request->tags));
+        $conteudo->tags()->sync($request->tags);
         $conteudo->componentes()->sync(explode(',', $request->componentes));
         Conteudo::tsDocumentoSave($conteudo->id);
-        $this->createFile($conteudo->id, $request->download);
+        $file = $this->storeFiles($request, $conteudo->id);
 
         return $this->showOne($conteudo, 'Conteúdo editado com sucesso!!', 200);
     }

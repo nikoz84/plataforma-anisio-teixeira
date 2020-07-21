@@ -9,51 +9,28 @@
           option-label="name"
           ransition-show="scale"
           transition-hide="scale"
+          :error="errors.canal_id && errors.canal_id.length > 0"
           v-model="conteudo.canal"
           :options="canais"
           label="Escolha um Canal"
           behavior="dialog"
           @input="getCategories"
         />
-        <!-- CATEGORIAS --> 
-        <q-btn-dropdown
-            class="full-width q-py-sm bg-light"
-            stretch 
-            dropdown-icon="arrow_drop_down" 
-            flat 
-            :label="categoryName"
-            v-if="categories && categories.length > 0">
-          <q-list dense>
-            <q-item clickable dense 
-                  v-for="(category, i) in categories" 
-                  :key="i"
-                  v-close-popup="category.sub_categories.length == 0"
-                  @click="selectCategory(category)">
-              <q-item-section>{{category.name}}</q-item-section>
-              <q-item-section side v-if="category.sub_categories && category.sub_categories.length > 0">
-                <q-icon name="keyboard_arrow_right" />
-              </q-item-section>
-              <!-- SUBCATEGORIAS --> 
-              <q-menu anchor="center middle" self="center middle" v-if="category.sub_categories">
-                <q-list>
-                  <q-item v-for="(subcategory,n) in category.sub_categories" 
-                          :key="n" 
-                          clickable
-                          dense
-                          v-close-popup
-                          @click="selectCategory(subcategory)">
-                    <q-item-section>
-                      {{subcategory.name}}
-                    </q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
-            </q-item>
-          </q-list>
-        </q-btn-dropdown>
-        <strong class="text-center">
-          {{  selectedCategory ? `Escolha: ${selectedCategory}` : '' }}
-        </strong>
+        <!-- CATEGORIA -->
+            <q-select outlined 
+              class="col-sm-5"
+              v-model="conteudo.category" 
+              :options="categoriesList"
+              option-value="id"
+              option-label="name"
+              use-input
+              label="Escolha uma Categoria" 
+              bottom-slots
+              :error="errors.category_id && errors.category_id.length > 0">
+              <template v-slot:error>
+                <ShowErrors :errors="errors.category_id"></ShowErrors>
+              </template>
+            </q-select>
         <!-- TIPO DE MIDIA --> 
         <q-select
           outlined
@@ -68,21 +45,27 @@
           behavior="dialog"
         />
         <!-- TITULO --> 
-        <q-input outlined v-model="conteudo.title" label="Título do conteúdo" />
+        <ShowErrors :errors="errors.title"></ShowErrors>
+        <q-input outlined v-model="conteudo.title" :error="errors.title && errors.title.length > 0" label="Título do conteúdo" />
         <!-- AUTORES --> 
-        <q-input outlined v-model="conteudo.authors" label="Autores" />
+        <ShowErrors :errors="errors.authors"></ShowErrors>
+        <q-input outlined v-model="conteudo.authors" :error="errors.authors && errors.authors.length > 0" label="Autores" />
         <!-- FONTE --> 
-        <q-input outlined v-model="conteudo.source" label="Fonte" />
+        <ShowErrors :errors="errors.source"></ShowErrors>
+        <q-input outlined v-model="conteudo.source" :error="errors.source && errors.source.length > 0" label="Fonte" />
         <!-- DESCRIÇÃO --> 
         <div class="q-mt-md">
           <p class="text-center">Escreva uma descrição do conteúdo</p>
         </div>
-        <q-editor v-model="conteudo.description" min-height="15rem" />
+        <ShowErrors :errors="errors.description"></ShowErrors>
+        <q-editor v-model="conteudo.description" :error="errors.description && errors.description.length > 0" min-height="15rem" />
       </q-card-section>
       <q-card-section>
         <!-- TAGS --> 
+         <ShowErrors :errors="errors.tags"></ShowErrors>
         <q-select
           outlined
+          :error="errors.tags && errors.tags.length > 0"
           v-model="conteudo.tags"
           use-input
           multiple
@@ -99,6 +82,7 @@
         />
       </q-card-section>
       <q-card-section>
+        {{conteudo.image}}
         <q-img 
           loading="lazy" 
           width="100%" 
@@ -107,9 +91,13 @@
           placeholder-src="/img/fundo-padrao.svg"
           alt="imagem de destaque"/>
           <!-- IMAGEM DE DESTAQUE --> 
+          <ShowErrors :errors="errors.image"></ShowErrors>
         <q-input
           @input="val => { file = val[0];}"
           outlined
+          
+          :error="errors.image && errors.image.length > 0"
+          @change="onImageFileChange"
           type="file"
           hint="Imagem de Destaque"
         />
@@ -118,12 +106,14 @@
           class="q-mt-md"
           @input="val => {file = val[0];}"
           outlined
+          @change="onDownloadFileChange"
           type="file"
           hint="Arquivo para Download"
         />
         <!-- ENVIAR SITE --> 
         <q-input
           outlined
+          :error="errors.options_site && errors.options_site.length > 0"
           v-model="conteudo.options.site"
           label="URL do Site"
           hint="Exemplo: http://dominio.com.br"
@@ -146,6 +136,21 @@
         </div>
       </q-card-section>
       <q-card-section>
+        <!-- TERMOS DE USO --> 
+        <div class="q-gutter-sm">
+          <ShowErrors :errors="errors.terms"></ShowErrors>
+          <q-item-label>
+            Li e concordo com os <a href="#terms">termos e condições de uso</a> :
+          
+          <q-checkbox
+            v-model="conteudo.terms"
+            :error="errors.terms && errors.terms.length > 0"
+            color="pink"
+          />
+          </q-item-label>
+        </div>
+      </q-card-section>
+      <q-card-section>
         <!-- SALVAR --> 
         <q-btn
           class="full-width"
@@ -160,21 +165,28 @@
       <q-card-section>
         <!-- COMPONENTES CURRICULARES --> 
         <div v-if="componentes">
+           <ShowErrors :errors="errors.componentes"></ShowErrors>
           <div
             v-for="(component, i) in componentes"
             :key="`c-${i}`"
             :index="component.id"
           >
-            <div class="text-center text-negative q-pt-md">
+          
+            
+            <div class="text-center text-negative q-pt-md" >
               {{ component.name }}
+             
             </div>
             <q-separator class="q-mt-lg" inset color="negative"></q-separator>
-            <q-list>
+            <q-list
+             
+            >
               <q-item tag="label" 
                 v-ripple v-for="(component, i) in component.componentes"
                 :key="`child-com-${i}`">
                 <q-item-section avatar>
                   <q-checkbox
+                     
                     v-model="componentesCurriculares"
                     :val="component.id"
                     color="negative"
@@ -277,6 +289,7 @@ export default {
         options: {
           site: null
         },
+        category:{},
         authors: "",
         source: "",
         image: "",
@@ -287,6 +300,7 @@ export default {
         is_featured: false,
         is_site: false
       },
+      categoriesList: [],
       canais: [],
       tipos: [],
       tipo_id: null,
@@ -296,6 +310,9 @@ export default {
       categoryName: null,
       selectedCategory: '',
       categories: [],
+      imagem_associada:null,
+      download_file:null,
+      errors:{},
       dialog: {
         text: "",
         open: false,
@@ -306,12 +323,31 @@ export default {
   },
   mounted() {
     this.getData();
+    this.getCategories();
   },
   computed: {
     ...mapState(["componentes", "niveis"])
   },
   methods: {
-    save() {
+     async getCategories() {
+      let resp = await axios.get("/aplicativos/categories");
+      if (resp.data.success) {
+        this.categoriesList = resp.data.metadata;
+      }
+    },
+    onImageFileChange(e) {
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                return;
+            this.imagem_associada = files[0];
+        },
+    onDownloadFileChange(e) {
+        var files = e.target.files || e.dataTransfer.files;
+        if (!files.length)
+            return;
+        this.download_file = files[0];
+    },
+    async save() {
       
       const form = new FormData();
       form.append(
@@ -323,48 +359,50 @@ export default {
         "canal_id",
         this.conteudo.canal ? this.conteudo.canal.id : null
       );
-      form.append(
-        "category_id",
-        this.conteudo.category ? this.conteudo.category.id : null
-      );
-      console.log(this.conteudo);
+      if(this.conteudo.category)
+      form.append("category_id",  this.conteudo.category.id );
       form.append("title", this.conteudo.title);
-      
       form.append("description", this.conteudo.description);
       form.append("source", this.conteudo.source);
       form.append("authors", this.conteudo.authors);
       form.append("options_site", this.conteudo.options.site);
       form.append("image", this.conteudo.image);
-      form.append("tags", this.conteudo.tags);
+      if (this.conteudo.tags.length) {
+        let tags = this.conteudo.tags.map(item => item.id);
+        for (var i = 0; i < tags.length; i++) {
+          form.append("tags[]", tags[i]);
+        }
+      }
       form.append("componentes", this.componentesCurriculares);
-      form.append("terms", this.terms);
+      if(this.conteudo.terms)
+      form.append("terms", this.conteudo.terms);
       form.append("is_approved", this.conteudo.is_approved);
       form.append("is_featured", this.conteudo.is_featured);
       form.append("is_site", this.conteudo.is_site);
+      if(this.imagem_associada)
+      form.append("image", this.imagem_associada);
+      if(this.download_file)
+      form.append("download", this.download_file);
+      let url = "/conteudos/";
       if (this.$route.params.action == "editar") {
         form.append("id", this.conteudo.id);
         form.append("_method", "PUT");
+        url = url + this.conteudo.id; 
+      }
+      try{
+        let response = await axios.post(url, form);
+        console.log(response);
+      }
+      catch(ex)
+      {
+        this.errors = ex.errors;
       }
     },
-    async getCategories(val) {
-      const id = val.id;
-      const { data } = await axios.get(`/categorias/canal/${id}`);
-      
-      this.categories = data.metadata.categories;
-      this.categoryName = data.metadata.category_name;
-    },
-    selectCategory(category) {
-      if(category.parent_id === null && category.sub_categories.length > 0){
-        return;
-      } else if(category.parent_id != null && !category.sub_categories){
-        this.conteudo.category_id = category.id;
-        this.selectedCategory = category.name;
-      } else {
-        console.log(category)
-        this.conteudo.category_id = category.id;
-        this.selectedCategory = category.name;
+    async getCategories() {
+      let resp = await axios.get("/aplicativos/categories");
+      if (resp.data.success) {
+        this.categoriesList = resp.data.metadata;
       }
-      
     },
     async getData() {
       const canais = axios.get("/canais?select");
