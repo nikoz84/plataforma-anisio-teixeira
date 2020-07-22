@@ -364,7 +364,6 @@ input[type='search']::-webkit-search-decoration {
 .q-bar > .q-icon {
   margin-left: 2px;
 }
-
 .q-bar > div,
 .q-bar > div + .q-icon {
   margin-left: 8px;

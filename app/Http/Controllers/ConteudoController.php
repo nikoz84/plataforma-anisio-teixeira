@@ -103,22 +103,16 @@ class ConteudoController extends ApiController
             'authors' => 'required',
             'source' => 'required',
             'terms' => 'required|in:true,false',
-            'is_featured' => 'sometimes|in:true,false',
+            'is_featured' => 'nullable|in:true,false',
             'is_approved' => 'required|in:true,false',
-<<<<<<< HEAD
-            'is_site' => 'nullable|in:true,false',
             'download.*' => "nullable|mimes:{$this->mimeTypes()}|max:4500000",
             'guias_pedagogicos' => "nullable|mimes:{$this->mimeTypes()}|max:1000000",
             'imagem_associada' => 'nullable|mimes:png,svg,jpeg,jpg|max:1000',
-            'visualizacao' => 'nullable|file'
-=======
-            'is_site' => 'sometimes|in:true,false',
-            'download' => "nullable|sometimes|mimes:{$this->mimeTypes()}|max:4500000",
-            'guias_pedagogicos' => "sometimes|mimes:{$this->mimeTypes()}|max:1000000",
-            'imagem_associada' => 'sometimes|mimes:jpeg,jpg,png,gif|max:2000',
+            'visualizacao' => 'nullable|file',
+            'is_site' => 'nullable|in:true,false',
+            'download' => "nullable|mimes:{$this->mimeTypes()}|max:4500000",
+            'guias_pedagogicos' => "mimes:{$this->mimeTypes()}|max:1000000",
             'visualizacao' => 'sometimes|file'
->>>>>>> 415a445e88b2f0eeb7ad8a19e5976c8cf8946bda
-
         ];
     }
 
@@ -149,18 +143,8 @@ class ConteudoController extends ApiController
             $this->configRules(),
             //$this->messagesRules() ver em resources/lang/pt_BR/validation
         );
-        //return $this->successResponse($request->all());
-        if ($validator->fails()) {
-            return $this->errorResponse(
-                $validator->errors(),
-                "Não foi possível criar o conteúdo",
-                422
-            );
-        }
-
-        
+        $data = [];
         try {
-<<<<<<< HEAD
             $this->authorize('create', $conteudo);
             if ($validator->fails()) {
                 $data =  $validator->errors();
@@ -178,13 +162,11 @@ class ConteudoController extends ApiController
             
             $conteudo->options = json_decode($request->options_site);
             //$conteudo->is_featured = $request->is_featured ?  true : false;
-            $conteudo->is_site = $request->is_site ? true : false;
-=======
+            //$conteudo->is_site = $request->is_site ? true : false;
             //$conteudo->fill($request->all());
             $conteudo->options = ['site' => $request->options_site];
             $conteudo->setAttribute('is_featured', $request->is_featured);
             $conteudo->setAttribute('is_site', $request->is_site);
->>>>>>> 415a445e88b2f0eeb7ad8a19e5976c8cf8946bda
             $conteudo->qt_downloads = Conteudo::INIT_COUNT;
             $conteudo->qt_access = Conteudo::INIT_COUNT;
             

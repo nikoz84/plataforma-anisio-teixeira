@@ -257,7 +257,6 @@ class Conteudo extends Model
             return $this::getEmitecImage($this->componentes());
         } elseif ($canal == 1) {
             $category_img = $this::getCategoryImage($category_id);
-            
             return isset($category_img) ? $category_img : $this::getImageFromTipo($tipo, $id);
         }
         

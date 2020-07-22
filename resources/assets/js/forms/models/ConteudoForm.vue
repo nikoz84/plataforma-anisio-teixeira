@@ -47,6 +47,7 @@
           option-label="name"
           transition-show="flip-up"
           transition-hide="flip-down"
+          :error="errors.tipo_id && errors.tipo_id.length > 0"
           v-model="conteudo.tipo"
           :options="tipos"
           label="Tipo de Mídia"
@@ -138,7 +139,7 @@
         <q-item-label >
           Baixar Arquivo Download:
         </q-item-label>
-         <a :href="conteudo.download">{{conteudo.download.split('/').pop()}}</a>
+         <a v-if="conteudo.download" :href="conteudo.download" :download="conteudo.download" >{{conteudo.download.split('/').pop()}}</a>
         <ShowErrors :errors="errors.download"></ShowErrors>
         <q-input
           class="q-mt-md"
@@ -193,7 +194,6 @@
       </q-card-section>
       <q-card-section>
         <!-- SALVAR --> 
-        {{ this.errors }}
         <q-btn
           class="full-width"
           color="primary"
@@ -340,7 +340,7 @@ export default {
     return {
       step: 1,
       conteudo: {
-        download:'',
+        download:"",
         license_id: null,
         canal_id: null,
         category_id: null,
@@ -348,6 +348,7 @@ export default {
         site: "",
         title: "",
         description: "",
+        canal: null,
         options: {
           site: ""
         },
@@ -364,7 +365,6 @@ export default {
       },
       categoriesList: [],
       canais: [],
-      //canal: {},
       tipos: [],
       componentesCurriculares: [],
       licencas: [],
@@ -386,7 +386,7 @@ export default {
   mounted() {
     this.getData();
     this.getCategoriesList();
-    this.getCategories();
+    this.getCategories(this.conteudo.canal);
   },
   computed: {
     ...mapState(["componentes", "niveis"])
@@ -398,14 +398,7 @@ export default {
         this.categoriesList = resp.data.metadata;
       }
     },
-    async getCategories(val) {
-      const id = val.id;
-      const { data } = await axios.get(`/categorias/canal/${id}`);
-      
-      this.categories = data.metadata.categories;
-      this.categoryName = data.metadata.category_name;
-    },
-     
+    
     onImageFileChange(e) {
             var files = e.target.files || e.dataTransfer.files;
             if (!files.length)
@@ -438,8 +431,13 @@ export default {
       form.append("authors", this.conteudo.authors);
       if(this.conteudo.options.site)
       {
+        console.log(this.conteudo.options.site)
           form.append("options_site", JSON.stringify(this.conteudo.options.site));
-           
+          form.append("is_site", true) ;
+      }
+      else
+      {
+        form.append("is_site", false);
       }
       console.log(this.conteudo)
       form.append("tipo_id", this.conteudo.tipo ? this.conteudo.tipo.id : "");
@@ -451,8 +449,6 @@ export default {
       form.append("description", this.conteudo.description ? this.conteudo.description : "");
       form.append("source", this.conteudo.source ? this.conteudo.source : "");
       form.append("authors", this.conteudo.authors ? this.conteudo.authors : "");
-      form.append("options_site", this.conteudo.options.site);
-      form.append("image", this.conteudo.image);
       if (this.conteudo.tags.length) {
         let tags = this.conteudo.tags.map(item => item.id);
         for (var i = 0; i < tags.length; i++) {
@@ -462,11 +458,12 @@ export default {
       form.append("componentes", this.componentesCurriculares);
       if(this.conteudo.terms)
       form.append("terms", this.conteudo.terms);
-      form.append("is_approved", this.conteudo.is_approved ? 1 : '');
-      form.append("is_featured", this.conteudo.is_featured ? 1 : '');
-      form.append("is_site", this.conteudo.is_site ? 1 : '');
-      form.append("image", this.imagem_associada ? this.imagem_associada : '');
-      form.append("download", this.download_file ? this.download_file : '');
+      form.append("is_approved", this.conteudo.is_approved ? true : false);
+      form.append("is_featured", this.conteudo.is_featured ? true : false);
+      if(this.imagem_associada)
+      form.append("imagem_associada", this.imagem_associada );
+      if(this.download_file)
+      form.append("download", this.download_file );
       let url = "/conteudos";
       if (this.$route.params.action == "editar") {
         form.append("id", this.conteudo.id);
@@ -474,11 +471,9 @@ export default {
         url = url + '/' + this.conteudo.id; 
       }
       try{
-        let response = await axios.post(url, form);
-        this.$router.push(`/admin/conteudos/listar`);
-        console.log(response);
         let { data } = await axios.post(url, form);
         console.log('ok',data)
+        this.$router.push(`/admin/conteudos/listar`);
       }
       catch(ex)
       {
@@ -487,6 +482,10 @@ export default {
       }
     },
     async getCategories(val) {
+      if(!val || !val.id)
+      {
+        return;
+      }
       const id = val.id;
       this.conteudo.canal = val;
       const { data } = await axios.get(`/categorias/canal/${id}`);
