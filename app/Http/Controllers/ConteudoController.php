@@ -102,15 +102,14 @@ class ConteudoController extends ApiController
             'componentes' => 'required',
             'authors' => 'required',
             'source' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'terms' => 'required|in:true,false',
-            'is_featured' => 'nullable|in:true,false',
+            'is_featured' => 'sometimes|in:true,false',
             'is_approved' => 'required|in:true,false',
-            'is_site' => 'nullable|in:true,false',
-            'download.*' => "nullable|mimes:{$this->mimeTypes()}|max:4500000",
-            'guias_pedagogicos' => "nullable|mimes:{$this->mimeTypes()}|max:1000000",
-            'imagem_associada' => 'nullable|mimes:jpeg,jpg,png,gif|max:2000',
-            'visualizacao' => 'nullable|file'
+            'is_site' => 'sometimes|in:true,false',
+            'download' => "nullable|sometimes|mimes:{$this->mimeTypes()}|max:4500000",
+            'guias_pedagogicos' => "sometimes|mimes:{$this->mimeTypes()}|max:1000000",
+            'imagem_associada' => 'sometimes|mimes:jpeg,jpg,png,gif|max:2000',
+            'visualizacao' => 'sometimes|file'
 
         ];
     }
@@ -143,13 +142,18 @@ class ConteudoController extends ApiController
             $this->configRules(),
             //$this->messagesRules() ver em resources/lang/pt_BR/validation
         );
-        $data = [];
+        //return $this->successResponse($request->all());
+        if ($validator->fails()) {
+            return $this->errorResponse(
+                $validator->errors(),
+                "Não foi possível criar o conteúdo",
+                422
+            );
+        }
+
+        
         try {
-            if ($validator->fails()) {
-                $data =  $validator->errors();
-                throw new Exception("Não foi possível criar o conteúdo", 422);
-            }
-            $conteudo->fill($request->all());
+            //$conteudo->fill($request->all());
             $conteudo->options = ['site' => $request->options_site];
             $conteudo->setAttribute('is_featured', $request->is_featured);
             $conteudo->setAttribute('is_site', $request->is_site);
@@ -183,7 +187,7 @@ class ConteudoController extends ApiController
     {
         $conteudo = Conteudo::find($id);
         $this->authorize('update', $conteudo);
-        $validator = Validator::make($request->all(), $this->configRules(), $this->messagesRules());
+        $validator = Validator::make($request->all(), $this->configRules());
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível atualizar o conteúdo", 422);
         }

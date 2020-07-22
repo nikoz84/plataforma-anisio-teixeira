@@ -340,10 +340,10 @@ export default {
         title: "",
         description: "",
         options: {
-          site: null
+          site: ""
         },
-        authors: "",
-        source: "",
+        authors: null,
+        source: null,
         image: "",
         tags: [],
         componentes: [],
@@ -354,9 +354,8 @@ export default {
       },
       categoriesList: [],
       canais: [],
+      //canal: {},
       tipos: [],
-      tipo_id: null,
-      canal_id: null,
       componentesCurriculares: [],
       licencas: [],
       autocompleteTags: [],
@@ -398,19 +397,15 @@ export default {
       
       const form = new FormData();
       console.log(this.conteudo)
-      form.append("tipo_id", this.conteudo.tipo ? this.conteudo.tipo.id : null);
-      /*
-      form.append(
-        "canal_id",
-        this.conteudo.canal_id
-      );
-      */
-      form.append("license_id",this.conteudo.license_id);
-      form.append("category_id",  this.conteudo.category_id );
-      form.append("title", this.conteudo.title);
-      form.append("description", this.conteudo.description);
-      form.append("source", this.conteudo.source);
-      form.append("authors", this.conteudo.authors);
+      form.append("tipo_id", this.conteudo.tipo ? this.conteudo.tipo.id : "");
+      form.append("canal_id", this.conteudo.canal ? this.conteudo.canal.id : "");
+      
+      form.append("license_id", this.conteudo.license_id ? this.conteudo.license_id : "");
+      form.append("category_id",  this.conteudo.category_id ? this.conteudo.category_id : "" );
+      form.append("title", this.conteudo.title ? this.conteudo.title : "");
+      form.append("description", this.conteudo.description ? this.conteudo.description : "");
+      form.append("source", this.conteudo.source ? this.conteudo.source : "");
+      form.append("authors", this.conteudo.authors ? this.conteudo.authors : "");
       form.append("options_site", this.conteudo.options.site);
       form.append("image", this.conteudo.image);
       if (this.conteudo.tags.length) {
@@ -422,13 +417,11 @@ export default {
       form.append("componentes", this.componentesCurriculares);
       if(this.conteudo.terms)
       form.append("terms", this.conteudo.terms);
-      form.append("is_approved", this.conteudo.is_approved);
-      form.append("is_featured", this.conteudo.is_featured);
-      form.append("is_site", this.conteudo.is_site);
-      if(this.imagem_associada)
-      form.append("image", this.imagem_associada);
-      if(this.download_file)
-      form.append("download", this.download_file);
+      form.append("is_approved", this.conteudo.is_approved ? 1 : '');
+      form.append("is_featured", this.conteudo.is_featured ? 1 : '');
+      form.append("is_site", this.conteudo.is_site ? 1 : '');
+      form.append("image", this.imagem_associada ? this.imagem_associada : '');
+      form.append("download", this.download_file ? this.download_file : '');
       let url = "/conteudos";
       if (this.$route.params.action == "editar") {
         form.append("id", this.conteudo.id);
@@ -437,7 +430,7 @@ export default {
       }
       try{
         let { data } = await axios.post(url, form);
-        console.log('da',data)
+        console.log('ok',data)
       }
       catch(ex)
       {
@@ -447,7 +440,7 @@ export default {
     },
     async getCategories(val) {
       const id = val.id;
-      
+      this.conteudo.canal = val;
       const { data } = await axios.get(`/categorias/canal/${id}`);
       
       this.categories = data.metadata.categories;
