@@ -162,82 +162,89 @@
     </q-card>
 
     <q-card class="col-sm-3">
-      <q-card-section>
-        <!-- COMPONENTES CURRICULARES --> 
-        <div v-if="componentes">
-           <ShowErrors :errors="errors.componentes"></ShowErrors>
-          <div
-            v-for="(component, i) in componentes"
-            :key="`c-${i}`"
-            :index="component.id"
-          >
-          
-            
-            <div class="text-center text-negative q-pt-md" >
-              {{ component.name }}
-             
-            </div>
-            <q-separator class="q-mt-lg" inset color="negative"></q-separator>
-            <q-list
-             
+      <q-scroll-area
+        style="height: 100vh;"
+      >
+        <q-card-section>
+          <!-- COMPONENTES CURRICULARES --> 
+          <div v-if="componentes">
+            <ShowErrors :errors="errors.componentes"></ShowErrors>
+            <div
+              v-for="(component, i) in componentes"
+              :key="`c-${i}`"
+              :index="component.id"
             >
-              <q-item tag="label" 
-                v-ripple v-for="(component, i) in component.componentes"
-                :key="`child-com-${i}`">
-                <q-item-section avatar>
-                  <q-checkbox
-                     
-                    v-model="componentesCurriculares"
-                    :val="component.id"
-                    color="negative"
-                  />
-                </q-item-section>
-                <q-item-label class="q-pt-sm">
-                  {{component.name}}
-                </q-item-label>
-              </q-item>
-            </q-list>
-            <q-separator class="q-mt-lg" inset color="negative"></q-separator>
+            
+              
+              <div class="text-center text-negative q-pt-md" >
+                {{ component.name }}
+              
+              </div>
+              <q-separator class="q-mt-lg" inset color="negative"></q-separator>
+              <q-list
+              
+              >
+                <q-item tag="label" 
+                  v-ripple v-for="(component, i) in component.componentes"
+                  :key="`child-com-${i}`">
+                  <q-item-section avatar>
+                    <q-checkbox
+                      
+                      v-model="componentesCurriculares"
+                      :val="component.id"
+                      color="negative"
+                    />
+                  </q-item-section>
+                  <q-item-label class="q-pt-sm">
+                    {{component.name}}
+                  </q-item-label>
+                </q-item>
+              </q-list>
+              <q-separator class="q-mt-lg" inset color="negative"></q-separator>
+            </div>
           </div>
-        </div>
-        
-      </q-card-section>
-      
+          
+        </q-card-section>
+      </q-scroll-area>
       
     </q-card>
     <q-card class="col-sm-3">
-      <q-card-section>
-        <!-- NIVEIS DE ENSINO --> 
-        <div v-if="niveis">
-          <div
-            v-for="(nivel, n) in niveis"
-            :key="`n-${n}`"
-            :index="nivel.id"
-          >
-            <div class="text-center text-positive q-pt-md">
-              {{ nivel.name }}
+      <q-scroll-area
+        style="height: 100vh;"
+      >
+        <q-card-section>
+          <!-- NIVEIS DE ENSINO --> 
+          <div v-if="niveis">
+            <div
+              v-for="(nivel, n) in niveis"
+              :key="`n-${n}`"
+              :index="nivel.id"
+            >
+              <div class="text-center text-positive q-pt-md">
+                {{ nivel.name }}
+              </div>
+              <q-separator class="q-mt-lg" inset color="positive"></q-separator>
+              <q-list>
+                <q-item tag="label" 
+                  v-ripple v-for="(component, i) in nivel.componentes"
+                  :key="`child-com-${i}`">
+                  <q-item-section avatar>
+                    <q-checkbox
+                      v-model="componentesCurriculares"
+                      :val="component.id"
+                      color="teal"
+                    />
+                  </q-item-section>
+                  <q-item-label class="q-pt-sm">
+                    {{component.name}}
+                  </q-item-label>
+                </q-item>
+              </q-list>
+              <q-separator class="q-mt-lg" inset color="positive"></q-separator>
             </div>
-            <q-separator class="q-mt-lg" inset color="positive"></q-separator>
-            <q-list>
-              <q-item tag="label" 
-                v-ripple v-for="(component, i) in nivel.componentes"
-                :key="`child-com-${i}`">
-                <q-item-section avatar>
-                  <q-checkbox
-                    v-model="componentesCurriculares"
-                    :val="component.id"
-                    color="teal"
-                  />
-                </q-item-section>
-                <q-item-label class="q-pt-sm">
-                  {{component.name}}
-                </q-item-label>
-              </q-item>
-            </q-list>
-            <q-separator class="q-mt-lg" inset color="positive"></q-separator>
           </div>
-        </div>
-      </q-card-section>
+        </q-card-section>
+      </q-scroll-area>
     </q-card>
   </div>
 </template>
