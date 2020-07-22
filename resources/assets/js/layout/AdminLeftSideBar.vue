@@ -34,7 +34,6 @@ export default {
   },
   mounted() {
     this.getLinksAdmin();
-    console.log('linksAdmin')
   },
   methods: {
     ...mapActions(['getLinksAdmin']),

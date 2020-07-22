@@ -12,6 +12,7 @@
                 class="col-xs-5 col-sm-3" 
                 :color="button.color" 
                 text-color="white"
+                :to="`/rotinas-de-estudo/${button.slug}`"
                 :title="`Rotinas de estudo ${button.label}`"
                 :label="button.label">
                 <q-avatar 
@@ -35,9 +36,9 @@ export default {
     data() {
         return {
             buttons: [
-                {'color':'petecavermelho', 'label':'Ensino Fundamental I'},
-                {'color':'petecaamarelo', 'label':'Ensino Fundamental II'},
-                {'color':'petecaazul', 'label':'Ensino Médio'}
+                {color:'petecavermelho', label:'Ensino Fundamental I', slug: 'ensino-fundamental-1'},
+                {color:'petecaamarelo', label:'Ensino Fundamental II', slug: 'ensino-fundamental-2'},
+                {color:'petecaazul', label:'Ensino Médio', slug: 'ensino-medio'}
             ]
         }
     }

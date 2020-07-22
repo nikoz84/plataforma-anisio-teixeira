@@ -30,12 +30,11 @@ trait FileSystemLogic
         if (!$disciplina) {
             return Storage::disk('public-path')->url("img/fundo-padrao.svg");
         }
-
         $image = "/imagem-associada/emitec/img-emitec_disciplina{$disciplina->id}.png";
         $exist = self::windowsDirectory(Storage::disk('conteudos-digitais')->exists($image));
-
         return ($exist) ? Storage::disk('conteudos-digitais')->url($image) : null;
     }
+
     public static function getCategoryImage($category_id)
     {
         $path_category = self::windowsDirectory(
@@ -135,11 +134,10 @@ trait FileSystemLogic
         }
         return (object) $arr;
     }
+
     /**
      * Retorna galeria de imagens
-     *
      * @param $rand seleciona se ordena de forma randomica as imagens
-     *
      * @return array de imagens
      */
     public function getImagesGallery($rand = false)
@@ -241,8 +239,8 @@ trait FileSystemLogic
     public function mimeTypes()
     {
 
-        $mimes = "ppt,pps,odp,link,pdf,epub,doc,docx,odt,swf,exe,zip,rar,swf,wmv,mpg,flv,avi,
-        youtube,mp4,mp3,webm,xls,xml,ods,csv,jpg,jpeg,png,gif,txt";
+        $mimes = "ppt,pps,odp,link,pdf,epub,doc,docx,odt,swf,exe,zip,rar,swf,wmv,mpg,flv,";
+        $mimes .= "avi,youtube,mp4,mp3,webm,xls,xml,ods,csv,jpg,jpeg,png,gif,txt";
         
         return $mimes;
     }

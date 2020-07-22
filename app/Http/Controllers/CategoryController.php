@@ -143,7 +143,10 @@ class CategoryController extends ApiController
     {
         $categories = Category::with('subCategories')->where('canal_id', $id)
         ->where('options->is_active', 'true')
-        ->whereNull('parent_id')->get();
+        ->whereNull('parent_id')
+        ->orderBy('name')
+        ->get();
+        
         $canal = Canal::where('id', $id)->get();
         
         $data = collect([
