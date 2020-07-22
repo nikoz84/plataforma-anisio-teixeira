@@ -385,17 +385,13 @@ export default {
   },
   mounted() {
     this.getData();
-<<<<<<< HEAD
     this.getCategoriesList();
     this.getCategories();
-=======
->>>>>>> 415a445e88b2f0eeb7ad8a19e5976c8cf8946bda
   },
   computed: {
     ...mapState(["componentes", "niveis"])
   },
   methods: {
-<<<<<<< HEAD
      async getCategoriesList() {
       let resp = await axios.get("/aplicativos/categories");
       if (resp.data.success) {
@@ -409,9 +405,7 @@ export default {
       this.categories = data.metadata.categories;
       this.categoryName = data.metadata.category_name;
     },
-=======
      
->>>>>>> 415a445e88b2f0eeb7ad8a19e5976c8cf8946bda
     onImageFileChange(e) {
             var files = e.target.files || e.dataTransfer.files;
             if (!files.length)
@@ -427,7 +421,6 @@ export default {
     async save() {
       
       const form = new FormData();
-<<<<<<< HEAD
       form.append(
         "license_id",
         this.conteudo.license ? this.conteudo.license.id : null
@@ -448,7 +441,6 @@ export default {
           form.append("options_site", JSON.stringify(this.conteudo.options.site));
            
       }
-=======
       console.log(this.conteudo)
       form.append("tipo_id", this.conteudo.tipo ? this.conteudo.tipo.id : "");
       form.append("canal_id", this.conteudo.canal ? this.conteudo.canal.id : "");
@@ -461,7 +453,6 @@ export default {
       form.append("authors", this.conteudo.authors ? this.conteudo.authors : "");
       form.append("options_site", this.conteudo.options.site);
       form.append("image", this.conteudo.image);
->>>>>>> 415a445e88b2f0eeb7ad8a19e5976c8cf8946bda
       if (this.conteudo.tags.length) {
         let tags = this.conteudo.tags.map(item => item.id);
         for (var i = 0; i < tags.length; i++) {
@@ -471,37 +462,23 @@ export default {
       form.append("componentes", this.componentesCurriculares);
       if(this.conteudo.terms)
       form.append("terms", this.conteudo.terms);
-<<<<<<< HEAD
-      form.append("is_approved", this.conteudo.is_approved);
-      form.append("is_featured", this.conteudo.is_featured);
-      form.append("is_site", this.conteudo.is_site);
-      if(this.imagem_associada)
-      form.append("imagem_associada", this.imagem_associada);
-      if(this.download_file)
-      form.append("download", this.download_file);
-      let url = "/conteudos/";
-=======
       form.append("is_approved", this.conteudo.is_approved ? 1 : '');
       form.append("is_featured", this.conteudo.is_featured ? 1 : '');
       form.append("is_site", this.conteudo.is_site ? 1 : '');
       form.append("image", this.imagem_associada ? this.imagem_associada : '');
       form.append("download", this.download_file ? this.download_file : '');
       let url = "/conteudos";
->>>>>>> 415a445e88b2f0eeb7ad8a19e5976c8cf8946bda
       if (this.$route.params.action == "editar") {
         form.append("id", this.conteudo.id);
         form.append("_method", "PUT");
         url = url + '/' + this.conteudo.id; 
       }
       try{
-<<<<<<< HEAD
         let response = await axios.post(url, form);
         this.$router.push(`/admin/conteudos/listar`);
         console.log(response);
-=======
         let { data } = await axios.post(url, form);
         console.log('ok',data)
->>>>>>> 415a445e88b2f0eeb7ad8a19e5976c8cf8946bda
       }
       catch(ex)
       {
