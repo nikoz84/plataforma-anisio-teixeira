@@ -43,7 +43,7 @@ class Conteudo extends Model
         'options',
     ];
 
-    protected $appends = ['image', 'excerpt', 'short_title', 'url_exibir', 'user_can', 'arquivos', 'formated_date', 'title_slug'];
+    protected $appends = ['image', 'excerpt', 'short_title', 'url_exibir', 'user_can', 'arquivos', 'formated_date', 'title_slug', 'download'];
     protected $casts = ['options' => 'array',];
     protected $hidden = ['ts_documento'];
 
@@ -105,18 +105,18 @@ class Conteudo extends Model
             'curricular_component_id'
         )->orderBy('name');
     }
+
     /**
      * Seleciona a categoria do conteúdo
-     *
      * @return void
      */
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
+
     /**
      * Seleciona niveis de ensino
-     *
      * @return void
      */
     public function niveis()
@@ -125,15 +125,16 @@ class Conteudo extends Model
             ->whereRaw('nivel_id IS NOT NULL')
             ->with('niveis');
     }
+
     /**
      * Seleciona a licença relacionada
-     *
      * @return void
      */
     public function license()
     {
         return $this->hasOne(License::class, 'id', 'license_id');
     }
+
     /**
      * Muta o valor do usuário que aprova o conteúdo
      * @param [type] $user
@@ -166,9 +167,9 @@ class Conteudo extends Model
 
         $this->attributes['is_approved'] = $approved;
     }
+
     /**
      * Muta o valor si o conteúdo é site
-     *
      * @param [type] $value
      * @return void
      */
@@ -180,7 +181,7 @@ class Conteudo extends Model
             $is_site = $value;
         }
 
-        $this->attributes['is_site'] =  (bool) $is_site;
+        $this->is_site =  (bool) $is_site;
     }
     /**
      * Muta o valor si o conteúdo é marcado como destaque
@@ -190,7 +191,7 @@ class Conteudo extends Model
      */
     public function setIsFeaturedAttribute($value)
     {
-        $this->attributes['is_featured'] = (bool) $value;
+        $this->is_featured = (bool) $value;
     }
     /**
      * Adiciona novo atributo ao objeto que limita o tamanho da descrição
@@ -240,9 +241,9 @@ class Conteudo extends Model
             'guias-pedagogicos'  => $this->getMetaDados('guias-pedagogicos', $this['id']),
         ];
     }
+
     /**
      * Adiciona atributo imagem associada ao objeto
-     *
      * @return void
      */
     public function getImageAttribute()
@@ -261,6 +262,15 @@ class Conteudo extends Model
         }
         
         return $this::getImageFromTipo($tipo, $id);
+    }
+
+    /**
+     * Adiciona atributo imagem associada ao objeto
+     * @return string
+     */
+    public function getDownloadAttribute()
+    {
+        return $this->downloadFileConteudo($this->id);
     }
 
     /**

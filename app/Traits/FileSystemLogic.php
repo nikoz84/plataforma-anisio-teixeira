@@ -71,19 +71,18 @@ trait FileSystemLogic
 
         return Storage::disk('public-path')->url("img/fundo-padrao.svg");
     }
+
     /**
      * Procura no diretorio os arquivos de imagem associada ou sinopse
-     *
      * @param $path     diretorio
      * @param $filename nome do arquivo a ser encontrado
      * @param $tipo     id do tipo de conteúdo
-     *
      * @return string
      */
     public static function findFiles($path, $id, $tipo)
     {
         $path_img_assoc = self::windowsDirectory("{$path}/$id.*");
-        $file = collect(File::glob($path_img_assoc))->first();
+        $file = collect(File::glob($path_img_assoc))->last();
 
         if ($tipo == 5 && !$file) {
             $path_sinopse = self::windowsDirectory("{$path}/sinopse/{$id}.*.*");
@@ -182,6 +181,17 @@ trait FileSystemLogic
         }
     }
 
+    public function downloadFileConteudo($id)
+    {
+        $urlPath = Storage::disk('conteudos-digitais')->path("download");
+        $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.".*";
+        $file = collect(File::glob( $urlPath))->first();
+        $filename = basename($file);
+        return $filename ? Storage::disk('conteudos-digitais')
+            ->url("download/{$filename}") : null;
+        
+    }
+
     /**
      * Remplaza diretorio de windows C:\\pasta\pasta-filha por C:/pasta/pasta-filha
      *
@@ -209,11 +219,12 @@ trait FileSystemLogic
      */
     public function saveFile($id, $files,  $local = null, $disk="conteudos-digitais")
     {
+        $file = null;
         if ($files) {
             foreach ($files as $file) {
                 $filesystem = new Filesystem;
                 $rand = rand(5, 99999);
-                $path = Storage::disk($disk)->path($local) . "/{$id}.*";
+                $path = Storage::disk($disk)->path($local) .DIRECTORY_SEPARATOR. "{$id}.*";
                 $files = $filesystem->glob($path);
                 $name = "{$id}.{$rand}.{$file->guessExtension()}";
                 $file->storeAs($local, $name, $disk);

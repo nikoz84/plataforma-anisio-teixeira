@@ -16,22 +16,45 @@
           behavior="dialog"
           @input="getCategories"
         />
-        <!-- CATEGORIA -->
-            <q-select outlined 
-              class="col-sm-5"
-              v-model="conteudo.category" 
-              :options="categoriesList"
-              option-value="id"
-              option-label="name"
-              use-input
-              label="Escolha uma Categoria" 
-              bottom-slots
-              :error="errors.category_id && errors.category_id.length > 0">
-              <template v-slot:error>
-                <ShowErrors :errors="errors.category_id"></ShowErrors>
-              </template>
-            </q-select>
-        <!-- TIPO DE MIDIA --> 
+                <!-- CATEGORIAS --> 
+        <q-btn-dropdown
+            class="full-width q-py-sm bg-light"
+            stretch 
+            dropdown-icon="arrow_drop_down" 
+            flat 
+            :label="categoryName"
+            v-if="categories && categories.length > 0">
+          <q-list dense>
+            <q-item clickable dense 
+                  v-for="(category, i) in categories" 
+                  :key="i"
+                  v-close-popup="category.sub_categories.length == 0"
+                  @click="selectCategory(category)">
+              <q-item-section>{{category.name}}</q-item-section>
+              <q-item-section side v-if="category.sub_categories && category.sub_categories.length > 0">
+                <q-icon name="keyboard_arrow_right" />
+              </q-item-section>
+              <!-- SUBCATEGORIAS --> 
+              <q-menu anchor="center middle" self="center middle" v-if="category.sub_categories">
+                <q-list>
+                  <q-item v-for="(subcategory,n) in category.sub_categories" 
+                          :key="n" 
+                          clickable
+                          dense
+                          v-close-popup
+                          @click="selectCategory(subcategory)">
+                    <q-item-section>
+                      {{subcategory.name}}
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
+        <strong class="text-center">
+          {{  selectedCategory ? `Escolha: ${selectedCategory}` : '' }}
+        </strong>
         <q-select
           outlined
           stack-label
@@ -82,7 +105,6 @@
         />
       </q-card-section>
       <q-card-section>
-        {{conteudo.image}}
         <q-img 
           loading="lazy" 
           width="100%" 
@@ -91,7 +113,7 @@
           placeholder-src="/img/fundo-padrao.svg"
           alt="imagem de destaque"/>
           <!-- IMAGEM DE DESTAQUE --> 
-          <ShowErrors :errors="errors.image"></ShowErrors>
+          <ShowErrors :errors="errors.imagem_associada"></ShowErrors>
         <q-input
           @input="val => { file = val[0];}"
           outlined
@@ -102,6 +124,12 @@
           hint="Imagem de Destaque"
         />
         <!-- ARQUIVO DE UPLOAD --> 
+        <br>
+        <q-item-label >
+          Baixar Arquivo Download:
+        </q-item-label>
+         <a :href="conteudo.download">{{conteudo.download.split('/').pop()}}</a>
+        <ShowErrors :errors="errors.download"></ShowErrors>
         <q-input
           class="q-mt-md"
           @input="val => {file = val[0];}"
@@ -110,7 +138,10 @@
           type="file"
           hint="Arquivo para Download"
         />
+        
+        
         <!-- ENVIAR SITE --> 
+        <ShowErrors :errors="errors.options_site"></ShowErrors>
         <q-input
           outlined
           :error="errors.options_site && errors.options_site.length > 0"
@@ -279,6 +310,7 @@ export default {
     return {
       step: 1,
       conteudo: {
+        download:'',
         license_id: null,
         canal_id: null,
         category_id: null,
@@ -289,7 +321,7 @@ export default {
         options: {
           site: null
         },
-        category:{},
+        category:null,
         authors: "",
         source: "",
         image: "",
@@ -323,17 +355,25 @@ export default {
   },
   mounted() {
     this.getData();
+    this.getCategoriesList();
     this.getCategories();
   },
   computed: {
     ...mapState(["componentes", "niveis"])
   },
   methods: {
-     async getCategories() {
+     async getCategoriesList() {
       let resp = await axios.get("/aplicativos/categories");
       if (resp.data.success) {
         this.categoriesList = resp.data.metadata;
       }
+    },
+    async getCategories(val) {
+      const id = val.id;
+      const { data } = await axios.get(`/categorias/canal/${id}`);
+      
+      this.categories = data.metadata.categories;
+      this.categoryName = data.metadata.category_name;
     },
     onImageFileChange(e) {
             var files = e.target.files || e.dataTransfer.files;
@@ -365,8 +405,11 @@ export default {
       form.append("description", this.conteudo.description);
       form.append("source", this.conteudo.source);
       form.append("authors", this.conteudo.authors);
-      form.append("options_site", this.conteudo.options.site);
-      form.append("image", this.conteudo.image);
+      if(this.conteudo.options.site)
+      {
+          form.append("options_site", JSON.stringify(this.conteudo.options.site));
+           
+      }
       if (this.conteudo.tags.length) {
         let tags = this.conteudo.tags.map(item => item.id);
         for (var i = 0; i < tags.length; i++) {
@@ -380,7 +423,7 @@ export default {
       form.append("is_featured", this.conteudo.is_featured);
       form.append("is_site", this.conteudo.is_site);
       if(this.imagem_associada)
-      form.append("image", this.imagem_associada);
+      form.append("imagem_associada", this.imagem_associada);
       if(this.download_file)
       form.append("download", this.download_file);
       let url = "/conteudos/";
@@ -391,6 +434,7 @@ export default {
       }
       try{
         let response = await axios.post(url, form);
+        this.$router.push(`/admin/conteudos/listar`);
         console.log(response);
       }
       catch(ex)
