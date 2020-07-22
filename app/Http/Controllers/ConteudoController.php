@@ -95,7 +95,7 @@ class ConteudoController extends ApiController
             'canal_id' => 'required',
             'tipo_id' => 'required',
             'category_id' => 'nullable',
-            'title' => 'required|min:10|max:255',
+            'title' => 'required|min:10|max:100',
             'description' => 'required|min:140|max:1024',
             'options_site' => ['nullable', new \App\Rules\ValidUrl],
             'tags' => 'required',
@@ -119,7 +119,8 @@ class ConteudoController extends ApiController
      * retorna mensagens de validações expecificas para o formulario de conteudo digital
      * @return array conjunto de mensagens para as validações do formulário de conteudo digital
      */
-    protected function messagesRules(){
+    protected function messagesRules()
+    {
         $mensagens = [
             'componentes.required' => 'Selecione ao menos 1 componente curricular para este conteúdo'
             
@@ -140,13 +141,13 @@ class ConteudoController extends ApiController
         $validator = Validator::make(
             $request->all(),
             $this->configRules(),
-            $this->messagesRules()
+            //$this->messagesRules() ver em resources/lang/pt_BR/validation
         );
         $data = [];
         try {
             if ($validator->fails()) {
                 $data =  $validator->errors();
-                throw new Exception("Não foi possível criar o conteúdo",422);
+                throw new Exception("Não foi possível criar o conteúdo", 422);
             }
             $conteudo->fill($request->all());
             $conteudo->options = ['site' => $request->options_site];
