@@ -179,15 +179,9 @@
       <q-card-section>
         <!-- TERMOS DE USO --> 
         <div class="q-gutter-sm">
-          
           <q-item-label>
             Li e concordo com os <a href="#terms">termos e condições de uso</a> :
-          
-          <q-checkbox
-            v-model="conteudo.terms"
-           
-            color="pink"
-          />
+          <q-checkbox v-model="terms" color="pink" />
           </q-item-label>
         </div>
       </q-card-section>
@@ -357,14 +351,13 @@ export default {
         image: "",
         tags: [],
         componentes: [],
-        terms: false,
         is_approved: false,
         is_featured: false,
         is_site: false
       },
       categoriesList: [],
       canais: [],
-      //canal: {},
+      terms: false,
       tipos: [],
       componentesCurriculares: [],
       licencas: [],
@@ -385,23 +378,11 @@ export default {
   },
   mounted() {
     this.getData();
-<<<<<<< HEAD
-    this.getCategoriesList();
-    this.getCategories();
-=======
->>>>>>> 415a445e88b2f0eeb7ad8a19e5976c8cf8946bda
   },
   computed: {
     ...mapState(["componentes", "niveis"])
   },
   methods: {
-<<<<<<< HEAD
-     async getCategoriesList() {
-      let resp = await axios.get("/aplicativos/categories");
-      if (resp.data.success) {
-        this.categoriesList = resp.data.metadata;
-      }
-    },
     async getCategories(val) {
       const id = val.id;
       const { data } = await axios.get(`/categorias/canal/${id}`);
@@ -409,9 +390,6 @@ export default {
       this.categories = data.metadata.categories;
       this.categoryName = data.metadata.category_name;
     },
-=======
-     
->>>>>>> 415a445e88b2f0eeb7ad8a19e5976c8cf8946bda
     onImageFileChange(e) {
             var files = e.target.files || e.dataTransfer.files;
             if (!files.length)
@@ -427,28 +405,6 @@ export default {
     async save() {
       
       const form = new FormData();
-<<<<<<< HEAD
-      form.append(
-        "license_id",
-        this.conteudo.license ? this.conteudo.license.id : null
-      );
-      form.append("tipo_id", this.conteudo.tipo ? this.conteudo.tipo.id : null);
-      form.append(
-        "canal_id",
-        this.conteudo.canal ? this.conteudo.canal.id : null
-      );
-      if(this.conteudo.category)
-      form.append("category_id",  this.conteudo.category.id );
-      form.append("title", this.conteudo.title);
-      form.append("description", this.conteudo.description);
-      form.append("source", this.conteudo.source);
-      form.append("authors", this.conteudo.authors);
-      if(this.conteudo.options.site)
-      {
-          form.append("options_site", JSON.stringify(this.conteudo.options.site));
-           
-      }
-=======
       console.log(this.conteudo)
       form.append("tipo_id", this.conteudo.tipo ? this.conteudo.tipo.id : "");
       form.append("canal_id", this.conteudo.canal ? this.conteudo.canal.id : "");
@@ -461,7 +417,6 @@ export default {
       form.append("authors", this.conteudo.authors ? this.conteudo.authors : "");
       form.append("options_site", this.conteudo.options.site);
       form.append("image", this.conteudo.image);
->>>>>>> 415a445e88b2f0eeb7ad8a19e5976c8cf8946bda
       if (this.conteudo.tags.length) {
         let tags = this.conteudo.tags.map(item => item.id);
         for (var i = 0; i < tags.length; i++) {
@@ -469,44 +424,29 @@ export default {
         }
       }
       form.append("componentes", this.componentesCurriculares);
-      if(this.conteudo.terms)
-      form.append("terms", this.conteudo.terms);
-<<<<<<< HEAD
-      form.append("is_approved", this.conteudo.is_approved);
-      form.append("is_featured", this.conteudo.is_featured);
-      form.append("is_site", this.conteudo.is_site);
-      if(this.imagem_associada)
-      form.append("imagem_associada", this.imagem_associada);
-      if(this.download_file)
-      form.append("download", this.download_file);
-      let url = "/conteudos/";
-=======
-      form.append("is_approved", this.conteudo.is_approved ? 1 : '');
-      form.append("is_featured", this.conteudo.is_featured ? 1 : '');
-      form.append("is_site", this.conteudo.is_site ? 1 : '');
+      console.log(this.terms)
+      form.append("terms", this.terms ? 1 : 0);
+      form.append("is_approved", this.conteudo.is_approved ? 1 : 0);
+      form.append("is_featured", this.conteudo.is_featured ? 1 : 0);
+      form.append("is_site", this.conteudo.is_site ? 1 : 0);
       form.append("image", this.imagem_associada ? this.imagem_associada : '');
       form.append("download", this.download_file ? this.download_file : '');
-      let url = "/conteudos";
->>>>>>> 415a445e88b2f0eeb7ad8a19e5976c8cf8946bda
-      if (this.$route.params.action == "editar") {
-        form.append("id", this.conteudo.id);
-        form.append("_method", "PUT");
-        url = url + '/' + this.conteudo.id; 
-      }
-      try{
-<<<<<<< HEAD
-        let response = await axios.post(url, form);
-        this.$router.push(`/admin/conteudos/listar`);
-        console.log(response);
-=======
-        let { data } = await axios.post(url, form);
-        console.log('ok',data)
->>>>>>> 415a445e88b2f0eeb7ad8a19e5976c8cf8946bda
-      }
-      catch(ex)
-      {
-        console.log('err',ex)
-        this.errors = ex.errors;
+      if(this.terms){
+        let url = "/conteudos";
+        if (this.$route.params.action == "editar") {
+          form.append("id", this.conteudo.id);
+          form.append("_method", "PUT");
+          url = url + '/' + this.conteudo.id; 
+        }
+        try{
+          let { data } = await axios.post(url, form);
+          console.log('ok',data)
+        }
+        catch(ex)
+        {
+          console.log('err',ex)
+          this.errors = ex.errors;
+        }
       }
     },
     async getCategories(val) {

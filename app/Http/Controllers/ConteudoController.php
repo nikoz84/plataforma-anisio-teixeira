@@ -97,27 +97,19 @@ class ConteudoController extends ApiController
             'category_id' => 'nullable',
             'title' => 'required|min:10|max:100',
             'description' => 'required|min:140|max:1024',
-            'options_site' => ['nullable', new \App\Rules\ValidUrl],
+            'options_site' => ['nullable','active_url', new \App\Rules\ValidUrl],
             'tags' => 'required',
             'componentes' => 'required',
             'authors' => 'required',
             'source' => 'required',
-            'terms' => 'required|in:true,false',
-            'is_featured' => 'sometimes|in:true,false',
-            'is_approved' => 'required|in:true,false',
-<<<<<<< HEAD
-            'is_site' => 'nullable|in:true,false',
-            'download.*' => "nullable|mimes:{$this->mimeTypes()}|max:4500000",
-            'guias_pedagogicos' => "nullable|mimes:{$this->mimeTypes()}|max:1000000",
-            'imagem_associada' => 'nullable|mimes:png,svg,jpeg,jpg|max:1000',
-            'visualizacao' => 'nullable|file'
-=======
-            'is_site' => 'sometimes|in:true,false',
+            'terms' => 'required|boolean',
+            'is_featured' => 'sometimes|boolean',
+            'is_approved' => 'required|boolean',
+            'is_site' => 'sometimes|boolean',
             'download' => "nullable|sometimes|mimes:{$this->mimeTypes()}|max:4500000",
-            'guias_pedagogicos' => "sometimes|mimes:{$this->mimeTypes()}|max:1000000",
+            'guias_pedagogicos' => "sometimes|mimes:pdf,doc,docx,epub|max:1000000",
             'imagem_associada' => 'sometimes|mimes:jpeg,jpg,png,gif|max:2000',
             'visualizacao' => 'sometimes|file'
->>>>>>> 415a445e88b2f0eeb7ad8a19e5976c8cf8946bda
 
         ];
     }
@@ -144,10 +136,11 @@ class ConteudoController extends ApiController
     public function create(Request $request)
     {
         $conteudo = new Conteudo;
+        $this->authorize('create', $conteudo);
+
         $validator = Validator::make(
             $request->all(),
-            $this->configRules(),
-            //$this->messagesRules() ver em resources/lang/pt_BR/validation
+            $this->configRules()
         );
         //return $this->successResponse($request->all());
         if ($validator->fails()) {
@@ -158,52 +151,37 @@ class ConteudoController extends ApiController
             );
         }
 
+        $conteudo->user_id = Auth::user()->id;
+        $conteudo->canal_id = $request->canal_id;
+        $conteudo->tipo_id = $request->tipo_id;
+        $conteudo->license_id = $request->license_id;
+        $conteudo->category_id = $request->category_id;
+        $conteudo->title = $request->title;
+        $conteudo->description = $request->description;
+        $conteudo->source = $request->source;
+        $conteudo->authors = $request->authors;
         
-        try {
-<<<<<<< HEAD
-            $this->authorize('create', $conteudo);
-            if ($validator->fails()) {
-                $data =  $validator->errors();
-                throw new Exception("Não foi possível criar o conteúdo",422);
-            }
-            $conteudo->user_id = Auth::user()->id;
-            $conteudo->canal_id = $request->canal_id;
-            $conteudo->tipo_id = $request->tipo_id;
-            $conteudo->license_id = $request->license_id;
-            $conteudo->category_id = $request->category_id;
-            $conteudo->title = $request->title;
-            $conteudo->description = $request->description;
-            $conteudo->source = $request->source;
-            $conteudo->authors = $request->authors;
+        $conteudo->options = json_decode($request->options_site);
+        $conteudo->options = ['site' => $request->options_site];
+        $conteudo->setAttribute('is_featured', $request->is_featured);
+        $conteudo->setAttribute('is_site', $request->is_site);
+        $conteudo->qt_downloads = Conteudo::INIT_COUNT;
+        $conteudo->qt_access = Conteudo::INIT_COUNT;
             
-            $conteudo->options = json_decode($request->options_site);
-            //$conteudo->is_featured = $request->is_featured ?  true : false;
-            $conteudo->is_site = $request->is_site ? true : false;
-=======
-            //$conteudo->fill($request->all());
-            $conteudo->options = ['site' => $request->options_site];
-            $conteudo->setAttribute('is_featured', $request->is_featured);
-            $conteudo->setAttribute('is_site', $request->is_site);
->>>>>>> 415a445e88b2f0eeb7ad8a19e5976c8cf8946bda
-            $conteudo->qt_downloads = Conteudo::INIT_COUNT;
-            $conteudo->qt_access = Conteudo::INIT_COUNT;
-            
-            if (!$conteudo->save()) {
-                throw new Exception("Não foi possível cadastrar o conteúdo", 422);
-            }
-            $conteudo->tags()->attach($request->tags);
-            $conteudo->componentes()->attach(explode(',',$request->componentes));
-            $conteudo::tsDocumentoSave($conteudo->id);
+        if (!$conteudo->save()) {
+            return $this->errorResponse([], "Não foi possível cadastrar o conteúdo", 422);
+        }
 
-            $file = $this->storeFiles($request, $conteudo->id);
-            if (!$file) {
-                throw new Exception('Não foi possível fazer upload de arquivos.', 422);
-            }
+        $conteudo->tags()->attach($request->tags);
+        $conteudo->componentes()->attach(explode(',', $request->componentes));
+        $conteudo::tsDocumentoSave($conteudo->id);
+
+        $file = $this->storeFiles($request, $conteudo->id);
+        if (!$file) {
+            return $this->errorResponse([], 'Não foi possível fazer upload de arquivos.', 422);
         }
-        catch(Exception $ex)
-        {
-            return $this->errorResponse($data, $ex->getMessage(), $ex->getCode() > 99 ? $ex->getCode(): 500);
-        }
+        
+        
         return $this->showOne($conteudo, 'Conteúdo cadastrado com sucesso!!', 200);
     }
     /**

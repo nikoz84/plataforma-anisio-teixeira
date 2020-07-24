@@ -15,7 +15,6 @@ use App\License;
 use App\Category;
 use App\Helpers\TransformDate;
 use App\Traits\UserCan;
-use Illuminate\Support\Facades\Auth;
 
 class Conteudo extends Model
 {
@@ -72,7 +71,7 @@ class Conteudo extends Model
     /**
      * Conteúdo tipo
      *
-     * @return void
+     * @return App\Tipo
      */
     public function tipo()
     {
@@ -84,7 +83,7 @@ class Conteudo extends Model
     /**
      * Seleciona as Tags relacionadas
      *
-     * @return void
+     * @return App\Tag
      */
     public function tags()
     {
@@ -94,7 +93,7 @@ class Conteudo extends Model
     /**
      * Seleciona os componentes curriculares
      *
-     * @return void
+     * @return App\CurricularComponent
      */
     public function componentes()
     {
@@ -108,7 +107,7 @@ class Conteudo extends Model
 
     /**
      * Seleciona a categoria do conteúdo
-     * @return void
+     * @return App\Category
      */
     public function category()
     {
@@ -117,7 +116,7 @@ class Conteudo extends Model
 
     /**
      * Seleciona niveis de ensino
-     * @return void
+     * @return App\NivelEnsino
      */
     public function niveis()
     {
@@ -128,7 +127,7 @@ class Conteudo extends Model
 
     /**
      * Seleciona a licença relacionada
-     * @return void
+     * @return App\License
      */
     public function license()
     {

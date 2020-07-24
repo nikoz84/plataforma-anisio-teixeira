@@ -23,7 +23,7 @@
 <script>
 export default {
   name: 'ParentAndChildSelect',
-  props: ['parent', 'label', 'selectedId', 'selectLabel'],
+  props: ['parent', 'label', 'selectedId'],
   data(){
     return { 
       selectText: ''
