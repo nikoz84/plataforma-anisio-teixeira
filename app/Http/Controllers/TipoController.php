@@ -35,15 +35,11 @@ class TipoController extends ApiController
         return $this->showAsPaginator($paginator);
     }
 
-
-
     public function create(Request $request)
     {
         $validator = Validator::make(
             $request->all(),
-            [
-                'name' => 'required'
-            ], $this->rulesMessages()
+            ['name' => 'required']
         );
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar o tipo", 422);

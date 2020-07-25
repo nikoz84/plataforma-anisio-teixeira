@@ -20,7 +20,6 @@ trait FileSystemLogic
     public static function getEmitecImage($components)
     {
         $arrComp = $components->get()->pluck('id')->toArray();
-
         $disciplina = DB::table('curricular_components as cc')
             ->select(["cc.id"])
             ->join('niveis_ensino as ne', 'ne.id', '=', 'cc.nivel_id')
@@ -30,7 +29,7 @@ trait FileSystemLogic
         if (!$disciplina) {
             return Storage::disk('public-path')->url("img/fundo-padrao.svg");
         }
-        $image = "/imagem-associada/emitec/img-emitec_disciplina{$disciplina->id}.png";
+        $image = DIRECTORY_SEPARATOR."imagem-associada". DIRECTORY_SEPARATOR ."emitec". DIRECTORY_SEPARATOR ."img-emitec_disciplina{$disciplina->id}.png";
         $exist = self::windowsDirectory(Storage::disk('conteudos-digitais')->exists($image));
         return ($exist) ? Storage::disk('conteudos-digitais')->url($image) : null;
     }
@@ -38,10 +37,8 @@ trait FileSystemLogic
     public static function getCategoryImage($category_id)
     {
         $path_category =  Storage::disk('conteudos-digitais')->path("imagem-associada". DIRECTORY_SEPARATOR ."categoria". DIRECTORY_SEPARATOR ."{$category_id}.*");
-        
         $file = collect(File::glob($path_category))->first();
         $filename = basename($file);
-        
         return $filename ? Storage::disk('conteudos-digitais')
             ->url("imagem-associada". DIRECTORY_SEPARATOR ."categoria". DIRECTORY_SEPARATOR ."{$filename}") : null;
     }
@@ -57,12 +54,12 @@ trait FileSystemLogic
     {
         $path_assoc = Storage::disk('conteudos-digitais')->path('imagem-associada');
         $file = self::findFiles($path_assoc, $id, $tipo);
-        
         if ($file) 
         {
-            $basename = basename($file);
-            $replace = Storage::disk('conteudos-digitais')->url("imagem-associada/{$basename}");
-            return str_replace('//sinopse', '/sinopse', $replace);
+            $file = str_replace(Storage::disk('conteudos-digitais')->path(""),"",$file);
+            $file = str_replace("\\","/", $file);
+            $replace = Storage::disk('conteudos-digitais')->url("{$file}");
+            return $replace;
         }
         return Storage::disk('public-path')->url("img/fundo-padrao.svg");
     }
@@ -78,25 +75,23 @@ trait FileSystemLogic
     {
         $path_img_assoc = "{$path}". DIRECTORY_SEPARATOR ."$id.*";
         $file = collect(File::glob($path_img_assoc))->last();
-        if ($tipo == 5 && !$file) {
-            
-            $path_sinopse = "{$path}". DIRECTORY_SEPARATOR ."sinopse". DIRECTORY_SEPARATOR ."{$id}.*.*";
+        if ($tipo == 5 && !$file) 
+        {
+            $path_sinopse = "{$path}". DIRECTORY_SEPARATOR ."sinopse". DIRECTORY_SEPARATOR."$id.*";
             $file = collect(File::glob($path_sinopse))->shuffle()->first();
+            return $file;
         }
+        
         return Str::replaceFirst($path . '/', '', $file);
     }
 
     public static function getAplicativoImage($id)
     {
-        $image = self::windowsDirectory(Storage::disk('aplicativos-educacionais')
-        ->path("imagem-associada/") . "{$id}.*");
-        
+        $image = Storage::disk('aplicativos-educacionais')->path("imagem-associada"). DIRECTORY_SEPARATOR . "{$id}.*";
         $file = collect(File::glob($image))->first();
-
         $filename = basename($file);
-        
-        return $filename ? Storage::disk('aplicativos-educacionais')
-            ->url("imagem-associada/{$filename}") : null;
+       
+        return $filename ? Storage::disk('aplicativos-educacionais')->url("imagem-associada/{$filename}") : null;
         
     }
     /**
@@ -152,23 +147,22 @@ trait FileSystemLogic
             return Storage::disk('galeria')->url("{$file->getFilename()}");
         })->shuffle();
     }
+
     /**
      * Salva arquivo pasta de downloads
-     *
      * @param $id integer
      * @param $file laravel request
-     *
      * @return File
      */
     public function createFile($id, $file)
     {
-        if ($file) {
+        if ($file) 
+        {
             $filesystem = new Filesystem;
-            $path = Storage::disk('conteudos-digitais')->path("download") . "/{$id}.*";
+            $path = Storage::disk('conteudos-digitais')->path("download") . DIRECTORY_SEPARATOR ."{$id}.*";
             $files = $filesystem->glob($path);
             File::delete($files);
             $name = "{$id}.{$file->guessExtension()}";
-
             $file->storeAs('download', $name, 'conteudos-digitais');
             return $file;
         }
@@ -180,16 +174,21 @@ trait FileSystemLogic
         $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.".*";
         $file = collect(File::glob( $urlPath))->first();
         $filename = basename($file);
-        return $filename ? Storage::disk('conteudos-digitais')
-            ->url("download/{$filename}") : null;
-        
+        return $filename ? Storage::disk('conteudos-digitais')->url("download/{$filename}") : null;
+    }
+
+    public function guiaPedagogicoFileConteudo($id)
+    {
+        $urlPath = Storage::disk('conteudos-digitais')->path("guias-pedagogicos");
+        $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.".*";
+        $file = collect(File::glob( $urlPath))->first();
+        $filename = basename($file);
+        return $filename ? Storage::disk('conteudos-digitais')->url("guias-pedagogicos/{$filename}") : null;
     }
 
     /**
      * Remplaza diretorio de windows C:\\pasta\pasta-filha por C:/pasta/pasta-filha
-     *
      * @param $path diretorio
-     *
      * @return string
      */
     public static function windowsDirectory($path)
@@ -197,17 +196,13 @@ trait FileSystemLogic
         if (env('APP_SO', 'linux') == 'windows') {
             return str_replace('\\', '/', $path);
         }
-
         return $path;
     }
 
-
     /**
      * Armazena arquivo pasta de guias-pedagogicos ou download ou imagem-associada
-     *
      * @param $id integer
      * @param $file laravel request
-     *
      * @return File
      */
     public function saveFile($id, $files,  $local = null, $disk="conteudos-digitais")
@@ -221,7 +216,6 @@ trait FileSystemLogic
                 $files = $filesystem->glob($path);
                 $name = "{$id}.{$rand}.{$file->guessExtension()}";
                 $file->storeAs($local, $name, $disk);
-                
             }
             return $file;
         }
@@ -233,10 +227,8 @@ trait FileSystemLogic
      */
     public function mimeTypes()
     {
-
-        $mimes = "ppt,pps,odp,link,pdf,epub,doc,docx,odt,swf,exe,zip,rar,swf,wmv,mpg,flv,";
-        $mimes .= "avi,youtube,mp4,mp3,webm,xls,xml,ods,csv,jpg,jpeg,png,gif,txt";
-        
+        $mimes  = "ppt,pps,odp,link,pdf,epub,doc,docx,odt,swf,exe,zip,rar,swf,wmv,mpg,flv,";
+        $mimes .= "avi,youtube,mp4,mp3,webm,xls,xlsx,xml,ods,csv,jpg,jpeg,png,gif,txt,csv";
         return $mimes;
     }
 }

@@ -117,6 +117,7 @@
         </q-select>
       </q-card-section>
       <q-card-section>
+        
         <q-img 
           loading="lazy" 
           width="100%" 
@@ -129,14 +130,14 @@
         <q-input
           @input="val => { file = val[0];}"
           outlined
-          
+          accept=".png,.jpeg,.jpg,.svg,.webp"
           @change="onImageFileChange"
           type="file"
           hint="Imagem de Destaque"
         />
         <!-- ARQUIVO DE UPLOAD --> 
         <br>
-        <q-item-label >
+        <q-item-label v-if="conteudo.download" >
           Baixar Arquivo Download:
         </q-item-label>
          <a v-if="conteudo.download" :href="conteudo.download" :download="conteudo.download" >{{conteudo.download.split('/').pop()}}</a>
@@ -147,9 +148,24 @@
           outlined
           @change="onDownloadFileChange"
           type="file"
-          hint="Arquivo para Download"
+          hint="Arquivo para Guia Pedagógico"
         />
         
+        <!-- ARQUIVO DE UPLOAD --> 
+        <br>
+        <q-item-label v-if="conteudo.guiaPedagogico">
+          Baixar Arquivo Guia Pedagógico:
+        </q-item-label>
+         <a v-if="conteudo.guiaPedagogico" :href="conteudo.guiaPedagogico" :download="conteudo.guiaPedagogico" >{{conteudo.guiaPedagogico.split('/').pop()}}</a>
+        <ShowErrors :errors="errors.guiaPedagogico"></ShowErrors>
+        <q-input
+          class="q-mt-md"
+          @input="val => {file = val[0];}"
+          outlined
+          @change="onguiaPedagogicoFileChange"
+          type="file"
+          hint="Arquivo para Download"
+        />
         
         <!-- ENVIAR SITE --> 
         <ShowErrors :errors="errors.options_site"></ShowErrors>
@@ -179,6 +195,7 @@
       </q-card-section>
       <q-card-section>
         <!-- TERMOS DE USO --> 
+        <ShowErrors :errors="errors.terms"></ShowErrors>
         <div class="q-gutter-sm">
           
           <q-item-label>
@@ -217,8 +234,6 @@
               :key="`c-${i}`"
               :index="component.id"
             >
-            
-              
               <div class="text-center text-negative q-pt-md" >
                 {{ component.name }}
               
@@ -341,6 +356,7 @@ export default {
       step: 1,
       conteudo: {
         download:"",
+        guiaPedagogico:"",
         license_id: null,
         canal_id: null,
         category_id: null,
@@ -374,6 +390,7 @@ export default {
       categories: [],
       imagem_associada:null,
       download_file:null,
+      guias_pedagogicos: null,
       errors:{},
       dialog: {
         text: "",
@@ -411,6 +428,12 @@ export default {
             return;
         this.download_file = files[0];
     },
+    onguiaPedagogicoFileChange(e){
+       var files = e.target.files || e.dataTransfer.files;
+        if (!files.length)
+            return;
+        this.guias_pedagogicos = files[0];
+    },
     async save() {
       
       const form = new FormData();
@@ -431,8 +454,8 @@ export default {
       form.append("authors", this.conteudo.authors);
       if(this.conteudo.options.site)
       {
-        console.log(this.conteudo.options.site)
-          form.append("options_site", JSON.stringify(this.conteudo.options.site));
+        
+          form.append("options_site", this.conteudo.options.site);
           form.append("is_site", true) ;
       }
       else
@@ -464,6 +487,8 @@ export default {
       form.append("imagem_associada", this.imagem_associada );
       if(this.download_file)
       form.append("download", this.download_file );
+      if(this.guias_pedagogicos)
+      form.append("guias_pedagogicos", this.guias_pedagogicos );
       let url = "/conteudos";
       if (this.$route.params.action == "editar") {
         form.append("id", this.conteudo.id);

@@ -97,7 +97,7 @@ class ConteudoController extends ApiController
             'category_id' => 'nullable',
             'title' => 'required|min:10|max:100',
             'description' => 'required|min:140|max:1024',
-            'options_site' => ['nullable', new \App\Rules\ValidUrl],
+            'options_site' => ['nullable','active_url'],
             'tags' => 'required',
             'componentes' => 'required',
             'authors' => 'required',
@@ -117,22 +117,8 @@ class ConteudoController extends ApiController
     }
 
     /**
-     * retorna mensagens de validações expecificas para o formulario de conteudo digital
-     * @return array conjunto de mensagens para as validações do formulário de conteudo digital
-     */
-    protected function messagesRules()
-    {
-        $mensagens = [
-            'componentes.required' => 'Selecione ao menos 1 componente curricular para este conteúdo'
-            
-        ];
-        return array_merge(parent::messagesRules(), $mensagens);
-    }
-    /**
      * Adiciona e valida novo conteúdo
-     *
      * @param $request \Illuminate\Http\Request
-     *
      * @return App\Traits\ApiReponser
      */
     public function create(Request $request)
@@ -140,11 +126,11 @@ class ConteudoController extends ApiController
         $conteudo = new Conteudo;
         $validator = Validator::make(
             $request->all(),
-            $this->configRules(),
-            //$this->messagesRules() ver em resources/lang/pt_BR/validation
+            $this->configRules()
         );
         $data = [];
-        try {
+        try 
+        {
             $this->authorize('create', $conteudo);
             if ($validator->fails()) {
                 $data =  $validator->errors();
@@ -160,13 +146,10 @@ class ConteudoController extends ApiController
             $conteudo->source = $request->source;
             $conteudo->authors = $request->authors;
             
-            $conteudo->options = json_decode($request->options_site);
-            //$conteudo->is_featured = $request->is_featured ?  true : false;
-            //$conteudo->is_site = $request->is_site ? true : false;
-            //$conteudo->fill($request->all());
-            $conteudo->options = ['site' => $request->options_site];
-            $conteudo->setAttribute('is_featured', $request->is_featured);
-            $conteudo->setAttribute('is_site', $request->is_site);
+            $conteudo->options = ['site' => $request->options_site ? $request->options_site: null];
+            $conteudo->is_featured = $request->is_featured ?  true : false;
+            $conteudo->is_site = $request->is_site ? true : false;
+            $conteudo->is_approved = $request->is_approved ? true : false;
             $conteudo->qt_downloads = Conteudo::INIT_COUNT;
             $conteudo->qt_access = Conteudo::INIT_COUNT;
             
@@ -203,16 +186,16 @@ class ConteudoController extends ApiController
             return $this->errorResponse($validator->errors(), "Não foi possível atualizar o conteúdo", 422);
         }
         $conteudo->fill($request->all());
-
-        if (!$conteudo->save()) {
-
-            return $this->errorResponse([], 'Não foi possível atualizar o conteúdo', 422);
-        }
+        if($request->options_site)
+        $conteudo->options = ['site' => $request->options_site ];
         $conteudo->tags()->sync($request->tags);
         $conteudo->componentes()->sync(explode(',', $request->componentes));
+        if (!$conteudo->save()) 
+        {
+            return $this->errorResponse([], 'Não foi possível atualizar o conteúdo', 422);
+        }
         Conteudo::tsDocumentoSave($conteudo->id);
         $file = $this->storeFiles($request, $conteudo->id);
-
         return $this->showOne($conteudo, 'Conteúdo editado com sucesso!!', 200);
     }
     /**

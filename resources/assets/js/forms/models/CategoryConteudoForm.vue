@@ -139,9 +139,7 @@ export default {
             },
             canais: [],
             categorias:[],
-            errors:{
-                
-            }
+            errors:{}
         }
     },
     mounted() {
