@@ -47,6 +47,7 @@
           option-label="name"
           transition-show="flip-up"
           transition-hide="flip-down"
+          :error="errors.tipo_id && errors.tipo_id.length > 0"
           v-model="conteudo.tipo"
           :options="tipos"
           label="Tipo de Mídia"
@@ -138,7 +139,7 @@
         <q-item-label >
           Baixar Arquivo Download:
         </q-item-label>
-         <a :href="conteudo.download">{{conteudo.download.split('/').pop()}}</a>
+         <a v-if="conteudo.download" :href="conteudo.download" :download="conteudo.download" >{{conteudo.download.split('/').pop()}}</a>
         <ShowErrors :errors="errors.download"></ShowErrors>
         <q-input
           class="q-mt-md"
@@ -187,7 +188,6 @@
       </q-card-section>
       <q-card-section>
         <!-- SALVAR --> 
-        {{ this.errors }}
         <q-btn
           class="full-width"
           color="primary"
@@ -334,7 +334,7 @@ export default {
     return {
       step: 1,
       conteudo: {
-        download:'',
+        download:"",
         license_id: null,
         canal_id: null,
         category_id: null,
@@ -342,6 +342,7 @@ export default {
         site: "",
         title: "",
         description: "",
+        canal: null,
         options: {
           site: ""
         },
@@ -450,6 +451,10 @@ export default {
       }
     },
     async getCategories(val) {
+      if(!val || !val.id)
+      {
+        return;
+      }
       const id = val.id;
       this.conteudo.canal = val;
       const { data } = await axios.get(`/categorias/canal/${id}`);

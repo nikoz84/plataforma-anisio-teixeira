@@ -37,15 +37,13 @@ trait FileSystemLogic
 
     public static function getCategoryImage($category_id)
     {
-        $path_category = self::windowsDirectory(
-            Storage::disk('conteudos-digitais')->path("imagem-associada/categoria/{$category_id}.*")
-        );
+        $path_category =  Storage::disk('conteudos-digitais')->path("imagem-associada". DIRECTORY_SEPARATOR ."categoria". DIRECTORY_SEPARATOR ."{$category_id}.*");
         
-        $file = self::windowsDirectory(collect(File::glob($path_category))->first());
+        $file = collect(File::glob($path_category))->first();
         $filename = basename($file);
         
         return $filename ? Storage::disk('conteudos-digitais')
-            ->url("imagem-associada/categoria/{$filename}") : null;
+            ->url("imagem-associada". DIRECTORY_SEPARATOR ."categoria". DIRECTORY_SEPARATOR ."{$filename}") : null;
     }
     /**
      * Retorna imagem de destaque
@@ -57,17 +55,15 @@ trait FileSystemLogic
      */
     public static function getImageFromTipo($tipo, $id)
     {
-        $path_assoc = self::windowsDirectory(
-            Storage::disk('conteudos-digitais')->path('imagem-associada')
-        );
-
+        $path_assoc = Storage::disk('conteudos-digitais')->path('imagem-associada');
         $file = self::findFiles($path_assoc, $id, $tipo);
         
-        if ($file) {
-            $replace = Storage::disk('conteudos-digitais')->url("imagem-associada/{$file}");
+        if ($file) 
+        {
+            $basename = basename($file);
+            $replace = Storage::disk('conteudos-digitais')->url("imagem-associada/{$basename}");
             return str_replace('//sinopse', '/sinopse', $replace);
         }
-
         return Storage::disk('public-path')->url("img/fundo-padrao.svg");
     }
 
@@ -80,14 +76,13 @@ trait FileSystemLogic
      */
     public static function findFiles($path, $id, $tipo)
     {
-        $path_img_assoc = self::windowsDirectory("{$path}/$id.*");
+        $path_img_assoc = "{$path}". DIRECTORY_SEPARATOR ."$id.*";
         $file = collect(File::glob($path_img_assoc))->last();
-
         if ($tipo == 5 && !$file) {
-            $path_sinopse = self::windowsDirectory("{$path}/sinopse/{$id}.*.*");
+            
+            $path_sinopse = "{$path}". DIRECTORY_SEPARATOR ."sinopse". DIRECTORY_SEPARATOR ."{$id}.*.*";
             $file = collect(File::glob($path_sinopse))->shuffle()->first();
         }
-
         return Str::replaceFirst($path . '/', '', $file);
     }
 
