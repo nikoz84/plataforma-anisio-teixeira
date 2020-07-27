@@ -42,7 +42,7 @@ class Conteudo extends Model
         'options',
     ];
 
-    protected $appends = ['image', 'excerpt', 'short_title', 'url_exibir', 'user_can', 'arquivos', 'formated_date', 'title_slug', 'download'];
+    protected $appends = ['image', 'excerpt', 'short_title', 'url_exibir', 'user_can', 'arquivos', 'formated_date', 'title_slug', 'download', 'guiaPedagogico'];
     protected $casts = ['options' => 'array',];
     protected $hidden = ['ts_documento'];
 
@@ -151,50 +151,7 @@ class Conteudo extends Model
     }
 
     /**
-     * Muta o valor si o conteúdo é aprovado
-     *
-     * @param [type] $value
-     * @return void
-     */
-    public function setIsApprovedAttribute($value)
-    {
-        $approved = self::IS_APPROVED;
-
-        if ($this->getAttribute('approving_user_id') !== null) {
-            $approved = (bool) $value;
-        }
-
-        $this->attributes['is_approved'] = $approved;
-    }
-
-    /**
-     * Muta o valor si o conteúdo é site
-     * @param [type] $value
-     * @return void
-     */
-    public function setIsSiteAttribute($value)
-    {
-        $is_site = self::IS_SITE;
-
-        if ($this['options']['site'] && $this->getAttribute('tipo_id') === 8) {
-            $is_site = $value;
-        }
-
-        $this->is_site =  (bool) $is_site;
-    }
-    /**
-     * Muta o valor si o conteúdo é marcado como destaque
-     *
-     * @param [type] $value
-     * @return void
-     */
-    public function setIsFeaturedAttribute($value)
-    {
-        $this->is_featured = (bool) $value;
-    }
-    /**
      * Adiciona novo atributo ao objeto que limita o tamanho da descrição
-     *
      * @return void
      */
     public function getExcerptAttribute()
@@ -248,17 +205,7 @@ class Conteudo extends Model
     public function getImageAttribute()
     {
         $id = $this['id'];
-        $canal = $this['canal_id'];
         $tipo = $this['tipo_id'];
-        $category_id = $this['category_id'];
-        
-        if ($canal == 2) {
-            return $this::getEmitecImage($this->componentes());
-        } elseif ($canal == 1) {
-            $category_img = $this::getCategoryImage($category_id);
-            return isset($category_img) ? $category_img : $this::getImageFromTipo($tipo, $id);
-        }
-        
         return $this::getImageFromTipo($tipo, $id);
     }
 
@@ -269,6 +216,15 @@ class Conteudo extends Model
     public function getDownloadAttribute()
     {
         return $this->downloadFileConteudo($this->id);
+    }
+
+    /**
+     * Adiciona atributo imagem associada ao objeto
+     * @return string
+     */
+    public function getGuiaPedagogicoAttribute()
+    {
+        return $this->guiaPedagogicoFileConteudo($this->id);
     }
 
     /**
@@ -284,27 +240,23 @@ class Conteudo extends Model
 
     /**
      * Filtro para full text search
-     *
      * @param $query  Eloquent\Query instance
      * @param $search termo de busca
      * @param $por    define se busca é por tag ou título
-     *
      * @return Eloquent\Query instance
      */
     public function scopeFullTextSearch($query, $search, $por)
     {
-
         if (!$search) {
             return $query;
         }
-
         $type = ($por == 'tag') ? "simple" : "portuguese";
         return $query->whereRaw('ts_documento @@ plainto_tsquery(?, lower(unaccent(?)))', [$type, $search])
             ->orderByRaw('ts_rank(ts_documento, plainto_tsquery(?, lower(unaccent(?)))) DESC', [$type, $search]);
     }
+
     /**
      * Filtro de busca por tags e incrementa as veces buscada
-     *
      * @param $query Eloquent\Query
      * @param $id    id da palavra chave
      * @return App\Conteudo

@@ -48,7 +48,7 @@ export default {
   data() {
     return { 
       tipo :{
-        name: null,
+        name: '',
         icon: null,
         options: {
           formatos:[]

@@ -102,17 +102,15 @@ class ConteudoController extends ApiController
             'componentes' => 'required',
             'authors' => 'required',
             'source' => 'required',
-            'terms' => 'required|in:true,false',
-            'is_featured' => 'nullable|in:true,false',
-            'is_approved' => 'required|in:true,false',
-            'download.*' => "nullable|mimes:{$this->mimeTypes()}|max:4500000",
-            'guias_pedagogicos' => "nullable|mimes:{$this->mimeTypes()}|max:1000000",
-            'imagem_associada' => 'nullable|mimes:png,svg,jpeg,jpg|max:1000',
-            'visualizacao' => 'nullable|file',
-            'is_site' => 'nullable|in:true,false',
-            'download' => "nullable|mimes:{$this->mimeTypes()}|max:4500000",
-            'guias_pedagogicos' => "mimes:{$this->mimeTypes()}|max:1000000",
+            'terms' => 'required|boolean',
+            'is_featured' => 'sometimes|boolean',
+            'is_approved' => 'required|boolean',
+            'is_site' => 'sometimes|boolean',
+            'download' => "nullable|sometimes|mimes:{$this->mimeTypes()}|max:4500000",
+            'guias_pedagogicos' => "sometimes|mimes:pdf,doc,docx,epub|max:1000000",
+            'imagem_associada' => 'sometimes|mimes:jpeg,jpg,png,gif|max:2000',
             'visualizacao' => 'sometimes|file'
+
         ];
     }
 
@@ -144,7 +142,7 @@ class ConteudoController extends ApiController
             $request->all(),
             $this->configRules()
         );
-        // return $this->successResponse($request->all());
+        //return $this->successResponse($request->all());
         if ($validator->fails()) {
             return $this->errorResponse(
                 $validator->errors(),

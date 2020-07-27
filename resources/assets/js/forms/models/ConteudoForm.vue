@@ -117,6 +117,7 @@
         </q-select>
       </q-card-section>
       <q-card-section>
+        
         <q-img 
           loading="lazy" 
           width="100%" 
@@ -129,14 +130,14 @@
         <q-input
           @input="val => { file = val[0];}"
           outlined
-          
+          accept=".png,.jpeg,.jpg,.svg,.webp"
           @change="onImageFileChange"
           type="file"
           hint="Imagem de Destaque"
         />
         <!-- ARQUIVO DE UPLOAD --> 
         <br>
-        <q-item-label >
+        <q-item-label v-if="conteudo.download" >
           Baixar Arquivo Download:
         </q-item-label>
          <a v-if="conteudo.download" :href="conteudo.download" :download="conteudo.download" >{{conteudo.download.split('/').pop()}}</a>
@@ -147,9 +148,24 @@
           outlined
           @change="onDownloadFileChange"
           type="file"
-          hint="Arquivo para Download"
+          hint="Arquivo para Guia Pedagógico"
         />
         
+        <!-- ARQUIVO DE UPLOAD --> 
+        <br>
+        <q-item-label v-if="conteudo.guiaPedagogico">
+          Baixar Arquivo Guia Pedagógico:
+        </q-item-label>
+         <a v-if="conteudo.guiaPedagogico" :href="conteudo.guiaPedagogico" :download="conteudo.guiaPedagogico" >{{conteudo.guiaPedagogico.split('/').pop()}}</a>
+        <ShowErrors :errors="errors.guiaPedagogico"></ShowErrors>
+        <q-input
+          class="q-mt-md"
+          @input="val => {file = val[0];}"
+          outlined
+          @change="onguiaPedagogicoFileChange"
+          type="file"
+          hint="Arquivo para Download"
+        />
         
         <!-- ENVIAR SITE --> 
         <ShowErrors :errors="errors.options_site"></ShowErrors>
@@ -179,6 +195,7 @@
       </q-card-section>
       <q-card-section>
         <!-- TERMOS DE USO --> 
+        <ShowErrors :errors="errors.terms"></ShowErrors>
         <div class="q-gutter-sm">
           <q-item-label>
             Li e concordo com os <a href="#terms">termos e condições de uso</a> :
@@ -211,8 +228,6 @@
               :key="`c-${i}`"
               :index="component.id"
             >
-            
-              
               <div class="text-center text-negative q-pt-md" >
                 {{ component.name }}
               
@@ -335,6 +350,7 @@ export default {
       step: 1,
       conteudo: {
         download:"",
+        guiaPedagogico:"",
         license_id: null,
         canal_id: null,
         category_id: null,
@@ -368,6 +384,7 @@ export default {
       categories: [],
       imagem_associada:null,
       download_file:null,
+      guias_pedagogicos: null,
       errors:{},
       dialog: {
         text: "",
@@ -403,9 +420,40 @@ export default {
             return;
         this.download_file = files[0];
     },
+    onguiaPedagogicoFileChange(e){
+       var files = e.target.files || e.dataTransfer.files;
+        if (!files.length)
+            return;
+        this.guias_pedagogicos = files[0];
+    },
     async save() {
       
       const form = new FormData();
+      form.append(
+        "license_id",
+        this.conteudo.license ? this.conteudo.license.id : null
+      );
+      form.append("tipo_id", this.conteudo.tipo ? this.conteudo.tipo.id : null);
+      form.append(
+        "canal_id",
+        this.conteudo.canal ? this.conteudo.canal.id : null
+      );
+      if(this.conteudo.category)
+      form.append("category_id",  this.conteudo.category.id );
+      form.append("title", this.conteudo.title);
+      form.append("description", this.conteudo.description);
+      form.append("source", this.conteudo.source);
+      form.append("authors", this.conteudo.authors);
+      if(this.conteudo.options.site)
+      {
+        
+          form.append("options_site", this.conteudo.options.site);
+          form.append("is_site", true) ;
+      }
+      else
+      {
+        form.append("is_site", false);
+      }
       console.log(this.conteudo)
       form.append("tipo_id", this.conteudo.tipo ? this.conteudo.tipo.id : "");
       form.append("canal_id", this.conteudo.canal ? this.conteudo.canal.id : "");
@@ -425,29 +473,31 @@ export default {
         }
       }
       form.append("componentes", this.componentesCurriculares);
-      console.log(this.terms)
-      form.append("terms", this.terms ? 1 : 0);
-      form.append("is_approved", this.conteudo.is_approved ? 1 : 0);
-      form.append("is_featured", this.conteudo.is_featured ? 1 : 0);
-      form.append("is_site", this.conteudo.is_site ? 1 : 0);
-      form.append("image", this.imagem_associada ? this.imagem_associada : '');
-      form.append("download", this.download_file ? this.download_file : '');
-      if(this.terms){
-        let url = "/conteudos";
-        if (this.$route.params.action == "editar") {
-          form.append("id", this.conteudo.id);
-          form.append("_method", "PUT");
-          url = url + '/' + this.conteudo.id; 
-        }
-        try{
-          let { data } = await axios.post(url, form);
-          console.log('ok',data)
-        }
-        catch(ex)
-        {
-          console.log('err',ex)
-          this.errors = ex.errors;
-        }
+      if(this.conteudo.terms)
+      form.append("terms", this.conteudo.terms);
+      form.append("is_approved", this.conteudo.is_approved ? true : false);
+      form.append("is_featured", this.conteudo.is_featured ? true : false);
+      if(this.imagem_associada)
+      form.append("imagem_associada", this.imagem_associada );
+      if(this.download_file)
+      form.append("download", this.download_file );
+      if(this.guias_pedagogicos)
+      form.append("guias_pedagogicos", this.guias_pedagogicos );
+      let url = "/conteudos";
+      if (this.$route.params.action == "editar") {
+        form.append("id", this.conteudo.id);
+        form.append("_method", "PUT");
+        url = url + '/' + this.conteudo.id; 
+      }
+      try{
+        let { data } = await axios.post(url, form);
+        console.log('ok',data)
+        this.$router.push(`/admin/conteudos/listar`);
+      }
+      catch(ex)
+      {
+        console.log('err',ex)
+        this.errors = ex.errors;
       }
     },
     async getCategories(val) {
