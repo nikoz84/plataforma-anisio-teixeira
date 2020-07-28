@@ -16,6 +16,7 @@ use App\Category;
 use App\Helpers\TransformDate;
 use App\Traits\UserCan;
 
+
 class Conteudo extends Model
 {
     use FileSystemLogic, SoftDeletes, UserCan;
@@ -205,8 +206,7 @@ class Conteudo extends Model
     public function getImageAttribute()
     {
         $id = $this['id'];
-        $tipo = $this['tipo_id'];
-        return $this::getImageFromTipo($tipo, $id);
+        return $this::getImageFromTipo($this->tipo, $id);
     }
 
     /**
