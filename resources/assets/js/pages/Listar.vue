@@ -1,8 +1,12 @@
 <template>
   <div>
     <component :is="componentId" v-if="!isLoading"></component>
-    <div v-else class="q-mt-lg row justify-center" style="font-size: 8em">
-       <q-spinner-tail color="blue-grey" />
+    <div v-else class="q-mt-lg row justify-center">
+      <q-spinner-pie
+          style="margin-top:80px;"
+          color="primary"
+          size="5em"
+        />
     </div>
   </div>
 </template>
@@ -10,11 +14,11 @@
 import { Paginator }from "@components/paginator";
 import { Posts } from "@components/blog";
 import { mapState, mapActions } from "vuex";
-import { QSpinnerTail } from "quasar";
+import { QSpinnerPie } from "quasar";
 
 export default {
   name: "Listar",
-  components: { Paginator, Posts, QSpinnerTail },
+  components: { Paginator, Posts, QSpinnerPie },
   computed: {
     ...mapState(["componentId", "canal", "isLoading"])
   }
