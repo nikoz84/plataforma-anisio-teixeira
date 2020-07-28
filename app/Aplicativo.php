@@ -115,4 +115,20 @@ class Aplicativo extends Conteudo
     {
         return TransformDate::format($this['created_at']);
     }
+
+    /**
+     * obtem referencia do arquivo de imgame associada
+     * @return string
+     */
+    function refenciaImagemAssociada()
+    {
+        if(!$this->id)
+        return null;
+        $urlPath = Storage::disk("aplicativos-educacionais")->path("imagem-associada");
+        $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.".*";
+        $info = glob($urlPath);
+        if(sizeof($info)>0)
+        return $info[0]; 
+        return null;
+    }
 }

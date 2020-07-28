@@ -2,44 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Conteudo;
-use App\Helpers\Autocomplete;
 use App\Http\Controllers\ApiController;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use App\Traits\FileSystemLogic;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-
 use App\ConteudoPlanilha;
+use Illuminate\Support\Facades\DB;
 
 class ConteudoPlanilhaController extends ApiController
 {
-    use FileSystemLogic;
 
     public function __construct(Request $request)
     {
         $this->middleware('auth:api')->except([
-            'buscarJsonFaculdadesDaBahiaNoGoogleSpreadsheets',
-            'conteudos',
-            'buscarJsonRotinaDeEstudosNoGoogleSpreadsheets'
+            'getFaculdadesDaBahia',
+            'getDocumentByName',
+            'getRotinaDeEstudos',
+            'rotinasPerNivel'
         ]);
         $request = $request;
     }
 
-    public function buscarJsonFaculdadesDaBahiaNoGoogleSpreadsheets($googleKey)
+    public function getFaculdadesDaBahia()
     {
+        $url = "AKfycbyewWsCp5HdbrkQwRSMyeRAsQiRc8PtjeyOrS07drrzxdpjb7HA/exec";
+
         $conteudoPlanilha = new ConteudoPlanilha();
         $this->createFaculdadesDaBahia($conteudoPlanilha->formatarJsonFaculdadesDaBahia(
-            $conteudoPlanilha->buscarJsonNoGoogleSpreadsheets($googleKey)
-        ));
-    }
-
-    public function buscarJsonRotinaDeEstudosNoGoogleSpreadsheets($googleKey)
-    {
-        $conteudoPlanilha = new ConteudoPlanilha();
-        $this->createRotinasDeEstudo($conteudoPlanilha->formatarJsonRotinasDeEstudo(
-            $conteudoPlanilha->buscarJsonNoGoogleSpreadsheets($googleKey)
+            $conteudoPlanilha->getGoogleSpreadsheetsData($url)
         ));
     }
 
@@ -48,30 +36,95 @@ class ConteudoPlanilhaController extends ApiController
         foreach ($dados as $dado) {
             $conteudoPlanilha = new ConteudoPlanilha();
             $conteudoPlanilha->name = $dado['name'];
-            $conteudoPlanilha->document = ['actions' => $dado['actions']];
+            
+            $conteudoPlanilha->document = [
+                'faculdade' => $dado['faculdade'],
+                'slug' => $dado['slug'],
+                'actions' => $dado['actions']];
 
             $conteudoPlanilha->save();
         }
     }
-
-    public function createRotinasDeEstudo($dados)
+    public function getRotinaDeEstudos()
     {
-        foreach ($dados['rotinas'] as $arrayDados) {
-            $conteudoPlanilha = new ConteudoPlanilha();
-            $semanas = array_keys($arrayDados)[0];
-            $conteudoPlanilha->name = $semanas;
+        $semanas = [1,2,3,4,5,6,7,8,9,10,11,12,13,14];
+        
+        foreach ($semanas as $semana) {
+            $semana = 'semana-' . $semana;
+            $url = "AKfycbzwTW7RUANw0j8CjCIxnWLCQ3QHjiTbCbYapV5frwXyn8UmBdh2/exec?semana={$semana}";
+            
+            $documento = new ConteudoPlanilha();
+            
+            $data = $documento->formatarJsonRotinasDeEstudo(
+                $documento->getGoogleSpreadsheetsData($url)
+            );
 
-            foreach ($arrayDados as $dado) {
-                $conteudoPlanilha->document = ['actions' => $dado];
-            }
-
-            $conteudoPlanilha->save();
+            $this->createRotinasDeEstudo($semana, $data);
         }
     }
 
-    public function conteudos(Request $request)
+    public function createRotinasDeEstudo($semana, $data)
     {
         $conteudoPlanilha = new ConteudoPlanilha();
-        echo json_encode($conteudoPlanilha->conteudos()->paginate($request->query('page')));
+        
+        $conteudoPlanilha->name = $semana;
+        $conteudoPlanilha->document = $data['rotinas'];
+        
+        $conteudoPlanilha->save();
+    }
+
+    public function getDocumentByName(Request $request)
+    {
+        $query = ConteudoPlanilha::query();
+        $url = http_build_query($request->except('page'));
+
+        if ($request->slug === 'rotinas') {
+            $conteudoPlanilha = $query->where(
+                'name',
+                'like',
+                'semana%'
+            )->paginate(10)->setPath("/planilhas?{$url}");
+        } else {
+            $conteudoPlanilha = $query->where('name', $request->slug)
+            ->paginate(10)
+            ->setPath("/planilhas?{$url}");
+        }
+
+        return $this->showAsPaginator($conteudoPlanilha);
+    }
+    /** teste */
+    public function rotinasPerNivel(Request $request, $nivel, $semana)
+    {
+        $query = ConteudoPlanilha::query();
+        //$url = http_build_query($request->except('page'));
+        
+        $conteudoPlanilha = $query->select(
+            DB::raw("
+                jsonb_array_elements(
+                    document->'segunda-feira'->'{$nivel}'
+                ) as segunda
+                ,
+                jsonb_array_elements(
+                    document->'terca-feira'->'{$nivel}'
+                ) as terca
+                ,
+                jsonb_array_elements(
+                    document->'quarta-feira'->'{$nivel}'
+                ) as quarta
+                ,
+                jsonb_array_elements(
+                    document->'quinta-feira'->'{$nivel}'
+                ) as quinta
+                ,
+                jsonb_array_elements(
+                    document->'sexta-feira'->'{$nivel}'
+                ) as sexta")
+        )->where(
+            'name',
+            'like',
+            $semana
+        )->get();
+        
+        return $this->successResponse($conteudoPlanilha);
     }
 }

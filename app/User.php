@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\DB;
 
@@ -38,6 +39,7 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'verification_token',
         'verified',
+        'role_id'
     ];
 
     /**
@@ -77,16 +79,16 @@ class User extends Authenticatable implements JWTSubject
     /*public static function boot()
     {
         parent::boot();
-        
+
         static::created(
             function ($user) {
                 Event::dispatch('user.saved', $user);
             }
         );
     }*/
+
     /**
      * Converte o atributo nome para minusculas
-     *
      * @param [type] $value
      * @return void
      */
@@ -94,20 +96,19 @@ class User extends Authenticatable implements JWTSubject
     {
         $this->attributes['name'] = trim(strtolower($value));
     }
+
     /**
      * Encripta o atributo password
-     *
      * @param $value string
-     *
      * @return void
      */
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
     }
+
     /**
      * Atributo nome capitalizado
-     *
      * @param $value string retorna o nome capitalizado
      *
      * @return string
@@ -119,9 +120,7 @@ class User extends Authenticatable implements JWTSubject
 
     /**
      * Atributo email a minusculas e tira espaços
-     *
      * @param $value string email do usuário
-     *
      * @return void
      */
     public function setEmailAttribute($value)
@@ -131,7 +130,6 @@ class User extends Authenticatable implements JWTSubject
 
     /**
      * Comprova se o email do usuário foi verificado
-     *
      * @return boolean
      */
     public function isVerified()
@@ -140,23 +138,35 @@ class User extends Authenticatable implements JWTSubject
     }
     /**
      * Undocumented function
-     *
      * @return void
      */
     public function getImageAttribute()
     {
-        $filesystem = new Filesystem;
-        $path_assoc = Storage::disk('fotos-perfil')->path('usuario');
-
-        $img_assoc = $path_assoc . "/{$this->id}.*";
-
-        $file = $filesystem->glob($img_assoc);
-        if (count($file)) {
-            $img_assoc = array_values($file)[0];
-            $img_assoc = str_replace($path_assoc, "", $img_assoc);
-
+        $path_assoc = $this->referenciaImagem();
+        if ($path_assoc) {
+            $img_assoc = str_replace($path_assoc, "", $path_assoc);
             return Storage::disk('fotos-perfil')->url("usuario" . $img_assoc);
         }
+        return null;
+    }
+
+    /**
+     * obtem a referencia do arquivo de imagem
+     * do usuário se esta existir
+     * @return string
+     */
+    public function referenciaImagem()
+    {
+        $filesystem = new Filesystem;
+        $imagemRef = null;
+        $path_assoc = Storage::disk('fotos-perfil')->path('usuario');
+        $img_assoc = $path_assoc . "/{$this->id}.*";
+        $file = $filesystem->glob($img_assoc);
+        if (count($file)) 
+        {
+            $imagemRef = array_values($file)[0];
+        }    
+        return $imagemRef;
     }
     /**
      * Undocumented function
@@ -260,7 +270,6 @@ class User extends Authenticatable implements JWTSubject
             date('Y-m-d H:i:s', strtotime($horaDoTokenCadastradoNoBanco))
         )));
 
-        //  Verifica se o token está valido
         if ($horaDoSistema > $horaDoTokenCadastradoNoBanco) {
             return false;
         }
@@ -273,29 +282,19 @@ class User extends Authenticatable implements JWTSubject
     {
         // Recupera o teken gerado direto da tabela
         $tokenGerado = $passwordReset->getToken($token);
-
         // Verifica se o token da rota é o mesmo que foi gerado para o usuário
         if ( ! is_null($tokenGerado) && $token == $tokenGerado->token) {
             
             // Verifica se o token ainda está valido
-            if ($this->tokenValidatingByHours($token, $tokenGerado->created_at, 1)) {
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Token valido!'
-                ]);
+            if (!$this->tokenValidatingByHours($token, $tokenGerado->created_at, 1)) {
+                throw new Exception("Token expirou.");
             }
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Este token expirou e não é mais valido!'
-            ]);
-
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Token não encontrado!'
-            ]);
+        } 
+        else 
+        {
+            throw new Exception("Token não encontrado!");
         }
+        return true ;
     }
     
     // Metodo valida o token de cadastro de usuarios

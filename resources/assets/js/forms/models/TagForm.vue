@@ -2,7 +2,8 @@
     <div class="row q-pa-md">
         <div class="col-sm-6 q-pa-md">
             <form v-on:submit.prevent="save()">
-                <q-input filled v-model.trim="tag.name" label="Palavra Chave"/>
+                <ShowErrors :errors="errors.name"></ShowErrors>
+                <q-input filled v-model.trim="tag.name" :error="errors.name && errors.name.length > 0" label="Palavra Chave"/>
                 <q-card v-if="tag.id">
                     <q-card-section>
                         <p>Vezes pesquisada: {{ tag.searched }}</p> 
@@ -41,7 +42,9 @@ export default {
   data() {
     return {
       busca: "",
-      tag: {},
+      tag: {
+        name:''
+      },
       tags: [],
       errors: {}
     };
@@ -60,20 +63,27 @@ export default {
     this.getTag();
   },
   methods: {
-    async save() {
+    async save() 
+    {
       let id = this.$route.params.id ? `/${this.$route.params.id}` : "";
       let form = new FormData();
       form.append("name", this.tag.name.toLowerCase());
 
-      if (this.$route.params.action == "editar") {
+      if (this.$route.params.action == "editar") 
+      {
         form.append("id", this.$route.params.id);
         form.append("_method", "PUT");
       }
-      try {
-        await axios.post(this.$route.params.slug + id, form);
-      } catch (response) {
+      try 
+      {
+        let response = await axios.post(this.$route.params.slug + id, form);
+        this.$router.push(`/admin/tags/listar`);
+      } 
+      catch (response) 
+      {
         this.errors = response.errors;
       }
+      
     },
     format(data) {
       return date.formatDate(data, "DD/MM/YYYY");

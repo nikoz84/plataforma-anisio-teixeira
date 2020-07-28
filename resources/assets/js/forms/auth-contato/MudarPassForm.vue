@@ -9,7 +9,8 @@
             <q-card-section>
                 <q-form @submit.prevent="onSubmit()" class="q-gutter-md" ref="loginForm">
                   <q-input v-model="password" filled :type="isPwd ? 'password' : 'text'" hint="Senha"
-                            bottom-slots :error="errors.password && errors.password.length > 0">
+                            bottom-slots :error="errors.password && errors.password.length > 0"
+                            >
                     <template v-slot:append>
                       <q-icon
                         :name="isPwd ? 'visibility_off' : 'visibility'"
@@ -22,6 +23,7 @@
                     </template>
                   </q-input>
                   <q-input v-model="confirmation" filled type="password" hint="Repita a senha"
+                           :rules="[passwordConfirmationRule]"
                             bottom-slots :error="errors.confirmation && errors.confirmation.length > 0">
                     <template v-slot:error>
                       <ShowErrors :errors="errors.confirmation"></ShowErrors>
@@ -55,15 +57,50 @@ export default {
       errors:{}
     };
   },
+   mounted() {
+     this.validaToken();
+  },
+  computed: {
+    
+    passwordConfirmationRule() {
+        return () => (this.password === this.confirmation) || 'Senhas devem combinar'
+    }
+  },
   methods: {
-    async onSubmit() {
-      let data = {
-        password: this.password,
-        code: this.verificationCode
-      };
-      console.warn(data);
+    async onSubmit() 
+    {
+      const form = new FormData();
+      form.append("password", this.password);
+      form.append("confirmation", this.confirmation);
+        try
+        {
+          let {data} = await axios.post('/auth/modificar-senha/'+this.$route.params.token, form);
+          this.$router.push(`/usuario/login`);
+          console.log(data)
+        }
+        catch(ex)
+        {
+           console.log(ex.errors);
+           this.errors = ex.errors;
+        }
     },
-    verificationPass() {}
+
+    async validaToken()
+    {
+        try
+        {
+            let {data} = await axios.get('/auth/verificar/'+this.$route.params.token);
+        }
+        catch(ex)
+        {
+            this.errors = ex.errors;
+            this.$router.push(`/usuario/login`);
+            console.log(ex)
+        }
+    },
+    verificationPass() {
+
+    }
   }
 };
 </script>

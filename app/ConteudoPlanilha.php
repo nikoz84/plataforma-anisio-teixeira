@@ -16,7 +16,7 @@ class ConteudoPlanilha extends Model
     use SoftDeletes, UserCan;
 
     protected $table = 'conteudos_planilha';
-    protected $casts = ['document' => 'array']; 
+    protected $casts = ['document' => 'array'];
 
     protected $fillable = [
         'name',
@@ -24,15 +24,15 @@ class ConteudoPlanilha extends Model
     ];
     
     /**
-    * Metodo usado para 
+    * Consulta ao Google Scripts
     */
-    public function buscarJsonNoGoogleSpreadsheets($googleKey)
+    public function getGoogleSpreadsheetsData($url)
     {
-        $url = "https://script.googleusercontent.com/macros/";
-        $param = "echo?user_content_key=";
-        $routeToGoogle = $url.$param.$googleKey;
-
-        $jsonFile = file_get_contents($routeToGoogle);
+        if (!$url) {
+            return;
+        }
+        $baseUrl = "https://script.google.com/macros/s/" . $url;
+        $jsonFile = file_get_contents($baseUrl);
         $jsonStr = json_decode($jsonFile, true);
         return $jsonStr['result'];
     }
@@ -42,19 +42,20 @@ class ConteudoPlanilha extends Model
         $novaEstrutura = [];
         $ids = [];
 
-        foreach($dados as $key => $dado) {
-            if ( ! in_array($dado['id'], $ids)) {
+        foreach ($dados as $key => $dado) {
+            if (! in_array($dado['id'], $ids)) {
                 array_push($ids, $dado['id']);
             }
         }
-
-        foreach($dados as $key => $dado) {
+        
+        foreach ($dados as $key => $dado) {
             for ($i = 0; $i < count($ids); $i++) {
                 if ($dado['id'] == $ids[$i]) {
-                    $novaEstrutura[$i]['name'] = 'ipes-faculdade';
+                    $novaEstrutura[$i]['name'] = 'ipes';
+                    $novaEstrutura[$i]['slug'] = Str::slug($dado['faculdade'], '-');
+                    $novaEstrutura[$i]['faculdade'] =  $dado['faculdade'];
                     $novaEstrutura[$i]['actions'][] = [
-                        'nome' => $dado['faculdade'],
-                        'titulo' => $dado['nome'],
+                        'name' => $dado['nome'],
                         'description' => $dado['descricao'],
                         'link' => $dado['link']
                     ];
@@ -68,33 +69,34 @@ class ConteudoPlanilha extends Model
     public function formatarJsonRotinasDeEstudo($dados)
     {
         $novaEstrutura = [];
-        $semanas = [];
         $dias = $this->diasDaSemanaPorExtenso();
+        $niveis = $this->niveisEnsino();
 
-        foreach ($dados['semanas'] as $semana) {
-            array_push($semanas, $semana['slug']);
-        }
-
-        foreach ($dados['semanas'] as $key => $semana) {
-            foreach ($dados['rotinas'] as $rotina) {
-                if (in_array($semana['slug'], $semanas) && in_array($rotina['dia'], $dias)) {
-                    $novaEstrutura['rotinas'][$key][$semana['slug']][$rotina['dia']][$rotina['nivel-ensino']]['atividades'][] = [
-                        'descricao' => $rotina['descricao'],
-                        'link' => $rotina['link'],
-                        'sugestao' => $rotina['sugestao']                
-                    ];
-                }
+        foreach ($dados['rotinas'] as $key => $rotina) {
+            if (in_array($rotina['dia'], $dias) && in_array($rotina['nivel-ensino'], $niveis)) {
+                $novaEstrutura['rotinas'][$rotina['dia']][$rotina['nivel-ensino']][] = [
+                    'descricao' => $rotina['descricao'],
+                    'link' => $rotina['link'],
+                    'sugestao' => $rotina['sugestao']
+                ];
             }
         }
-
+        
         return $novaEstrutura;
     }
 
     public function conteudos()
     {
-    	return $this->select();
+        return $this->select();
     }
-
+    public function niveisEnsino()
+    {
+        return [
+            'ensino-medio',
+            'ensino-fundamental-1',
+            'ensino-fundamental-2',
+        ];
+    }
     public function diasDaSemanaPorExtenso()
     {
         return  [

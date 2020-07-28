@@ -24,7 +24,7 @@ class PasswordReset extends Model
      */
     public function getTokenByEmail($email)
     {
-        return $this->where('email', $email)->first();
+        return $this->where('email', $email)->orderBy("created_at","desc")->first();
     }
     
     /**

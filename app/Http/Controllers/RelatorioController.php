@@ -6,7 +6,6 @@ use App\Conteudo;
 use App\User;
 use Barryvdh\DomPDF\Facade as PDF;
 
-
 class RelatorioController extends ApiController
 {
 
@@ -17,7 +16,10 @@ class RelatorioController extends ApiController
      */
     public function buscarUsuariosPorRole($role_id)
     {
-        $user = User::with('role')->where('role_id', $role_id)->orderBy('role_id', 'asc')->paginate('15');
+        $user = User::with('role')
+            ->where('role_id', $role_id)
+            ->orderBy('role_id', 'asc')
+            ->paginate('15');
 
         return $this->showAsPaginator($user);
     }
@@ -32,7 +34,10 @@ class RelatorioController extends ApiController
         $user = new User();
         $users = $user->users_role_content($role_id, $is_active);
 
-        return PDF::loadView('relatorios.pdf-usuarios', compact('users'))->setPaper('a4')->stream('relatório_usuários.pdf');
+        return PDF::loadView(
+            'relatorios.pdf-usuarios',
+            compact('users')
+        )->setPaper('a4')->stream('relatório_usuários.pdf');
     }
 
     /**
@@ -48,7 +53,11 @@ class RelatorioController extends ApiController
         $title = null;
 
         if ((is_null($flag) || ($flag != 'baixados' && $flag != 'visualizados')))
-            return $this->errorResponse([], " Falta passar segundo paramentro, '/baixados ou /visualizados' ", 422);
+            return $this->errorResponse(
+                [],
+                "Falta passar segundo paramentro, '/baixados ou /visualizados' ",
+                422
+            );
 
         if ($flag == 'baixados') {
             $contents = $content->contents_max_downlaoad();
@@ -62,6 +71,9 @@ class RelatorioController extends ApiController
             $flag = 'ACESSOS';
         }
 
-        return PDF::loadView('relatorios.pdf-conteudo', compact('contents', 'title', 'flag'))->setPaper('a4')->stream('relatório_conteúdos.pdf');
+        return PDF::loadView(
+            'relatorios.pdf-conteudo',
+            compact('contents', 'title', 'flag')
+        )->setPaper('a4')->stream('relatório_conteúdos.pdf');
     }
 }

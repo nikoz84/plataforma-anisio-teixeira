@@ -135,15 +135,24 @@ class Analytics
         switch ($this->option) {
             case 'per_user':
                 $this->render_graph = true;
-                return $this->getSeries($this->postsPerUser(), "Catalogação por usuário publicador na PAT entre as datas {$d_inicio} - {$d_fim}");
+                return $this->getSeries(
+                    $this->postsPerUser(),
+                    "Catalogação por usuário publicador na PAT entre as datas {$d_inicio} - {$d_fim}"
+                );
                 break;
             case 'wordpress_data':
                 $this->render_graph = false;
-                return collect($wordpress->getCatalogacao(), "Catalogação por usuário publicador no Blog entre as datas {$d_inicio} - {$d_fim}");
+                return collect(
+                    $wordpress->getCatalogacao(),
+                    "Catalogação por usuário publicador no Blog entre as datas {$d_inicio} - {$d_fim}"
+                );
                 break;
             case 'per_chanel':
                 $this->render_graph = true;
-                return $this->getSeries($this->postsPerCanal(), "Catalogação por canais entre as datas {$d_inicio} - {$d_fim}");
+                return $this->getSeries(
+                    $this->postsPerCanal(),
+                    "Catalogação por canais entre as datas {$d_inicio} - {$d_fim}"
+                );
                 break;
             case 'user_montly':
                 $this->render_graph = false;
@@ -175,9 +184,7 @@ class Analytics
     public function getSeries($data, $title = "")
     {
         $collect = collect($data);
-
         if (!$collect->contains('month')) {
-
             return [
                 'title' => $title,
                 'render' => $this->render_graph,

@@ -55,57 +55,55 @@
         
       </q-card-section>
       <q-card-section horizontal>
-        <!-- COMPONENTES -->
         <q-card-section class="col-4">
-          <!-- TIPOS DE CONTEUDOS -->
-          <div class="row flex-center q-mt-xs bg-secondary text-white cursor-pointer open-sidebar-menu">
-            Tipos de Conteúdos
-            <q-menu anchor="bottom middle" self="top middle">
-              <div class="row no-wrap q-pa-md">
-                <div class="column">
-                    <q-checkbox
-                      tag="label"
-                      v-for="(tipo, i) in tipos"
-                      :key="`t-${i}`"
-                      v-model="tiposModel"
-                      :val="tipo.id"
-                      :label="tipo.name"
-                      color="orange"
-                    />
-                </div>
-              </div>
-            </q-menu>
-          </div>
+          <div class="text-h6 q-my-md">Filtros de busca</div>
+          <!-- TIPO DE CONTEÚDOS -->
+          <q-select
+            option-value="id"
+            option-label="name"
+            transition-show="scale"
+            transition-hide="scale"
+            v-model="tiposModel"
+            :options="tipos"
+            multiple
+            use-chips
+            stack-label
+            clearable
+            hide-dropdown-icon
+            standout="bg-primary text-white"
+            label="Tipo de Conteúdo"
+            behavior="dialog"
+          />
           <q-separator></q-separator>
-          <!-- LICENCAS -->
-          <div class="row flex-center q-mt-xs bg-secondary text-white cursor-pointer open-sidebar-menu">
-            Licenças
-            <q-menu anchor="bottom middle" self="top middle">
-              <div class="row no-wrap q-pa-md">
-                <div class="column">
-                    <q-checkbox
-                      tag="label"
-                      v-for="(license, l) in licencas"
-                      :key="`l-${l}`"
-                      v-model="licencasModel"
-                      :val="license.id"
-                      :label="license.name"
-                      color="orange"
-                    />
-                </div>
-              </div>
-            </q-menu>
-          </div>
+          <!-- LICENÇAS -->
+          <q-select
+            option-value="id"
+            option-label="name"
+            transition-show="scale"
+            transition-hide="scale"
+            v-model="licencasModel"
+            :options="licencas"
+            multiple
+            use-chips
+            stack-label
+            clearable
+            hide-dropdown-icon
+            standout="bg-primary text-white"
+            label="Licenças"
+            behavior="dialog"
+          />
           <q-separator></q-separator>
           <!-- COMPONENTES CURRICULARES -->
-          <div class="row flex-center q-mt-xs bg-secondary text-white cursor-pointer open-sidebar-menu"
+          <div class="q-my-md">Componentes Curriculares</div>
+          <q-separator></q-separator>
+          <div class="q-my-xs q-pt-sm q-pl-xs bg-dark text-white cursor-pointer open-sidebar-menu"
             v-for="(component, i) in componentes"
             :key="`c-${i}`"
             :index="component.id"
             >
             {{ component.name }}
           
-            <q-menu anchor="bottom middle" self="top middle">
+            <q-menu anchor="top right" self="top left">
               <div class="row no-wrap q-pa-md">
                 <div class="column">
                     <q-checkbox
@@ -121,15 +119,18 @@
               </div>
             </q-menu>
           </div>
+          <q-separator></q-separator>
           <!-- NIVEIS DE ENSINO -->
-          <div class="row flex-center q-mt-xs bg-secondary text-white cursor-pointer open-sidebar-menu"
+          <div class="q-my-md">Níveis de Ensino</div>
+          <q-separator></q-separator>
+          <div class="q-my-xs q-pt-sm q-pl-xs bg-dark text-white cursor-pointer open-sidebar-menu"
             v-for="(nivel, n) in niveis"
               :key="`n-${n}`"
               :index="nivel.id"
             >
             {{ nivel.name }}
           
-            <q-menu anchor="bottom middle" self="top middle">
+            <q-menu anchor="top right" self="top left">
               <div class="row no-wrap q-pa-md">
                 <div class="column">
                     <q-checkbox
@@ -148,8 +149,40 @@
           </div>
         </q-card-section>
         <q-separator vertical />
-        <q-card-section class="col-6">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        <q-card-section class="col-9">
+          <!-- PAGINATOR -->
+          <div class="q-pa-sm flex flex-center">
+            <q-pagination
+              v-if="results.length > 0"
+              v-model="current"
+              :max="last"
+              :input="true"
+              @input="onSearch"
+            >
+          </q-pagination>
+          </div>
+          <!-- LISTA DE ITENS -->
+          <div class="q-pa-sm">
+            <q-card class="q-mt-sm" v-for="(item, i) in results" :key="`result-${i}`">
+              <q-card-section>
+                <a class="paginator-link" :href="item.url_exibir">
+                  <h5 class="text-dark" v-html="item.title"></h5>
+                </a>
+                <p class="paginator-excerpt" v-html="item.excerpt"></p>
+              </q-card-section>
+            </q-card>
+          </div>
+          <!-- PAGINATOR -->
+          <div class="q-pa-lg flex flex-center">
+            <q-pagination
+              v-if="results.length > 0"
+              v-model="current"
+              :max="last"
+              :input="true"
+              @input="onSearch"
+            >
+          </q-pagination>
+        </div>
         </q-card-section>
       </q-card-section>
 
@@ -194,11 +227,11 @@ export default {
       term: "",
       hintSearch: 'Procure por uma palavra chave',
       per: {label: 'Palavra Chave', value: 'tag' },
-      limit: { label: "15 itens", value: 15 },
+      limit: { label: "15 itens", value: 10 },
       perPageOptions: [
+        { label: "10 itens", value: 10 },
         { label: "15 itens", value: 15 },
-        { label: "30 itens", value: 30 },
-        { label: "45 itens", value: 45 }
+        { label: "20 itens", value: 20 }
       ],
       perSearchOptions: [
         {label: 'Palavra Chave', value: 'tag' },
@@ -208,11 +241,17 @@ export default {
       tiposModel: [],
       licencasModel: [],
       componentesModel: [],
-      niveisModel: []
+      niveisModel: [],
+      results: [],
+      current: 0,
+      last: 0
     };
   },
   computed: {
     ...mapState(["tipos", "licencas", "componentes", "niveis"]),
+  },
+  created() {
+    this.onSearch();
   },
   methods: {
     show() {
@@ -229,27 +268,25 @@ export default {
     onDialogHide() {
       this.$emit("hide");
     },
-    onSearch() {
-      this.$emit("ok");
+    async onSearch() {
+      //this.$emit("ok");
 
-      let params = {
-        tipos: this.tiposModel,
-        componentes: this.componentesModel,
-        licencas: this.licencasModel
-      };
+      
       let search = new URLSearchParams(location.search);
       search.set("tipos", this.tiposModel);
       search.set("licencas", this.licencasModel);
       search.set("componentes", this.componentesModel);
-      search.set("per", this.per);
+      search.set("per", this.per.value);
+      search.set("page", this.current);
       search.set("busca", this.term);
       search.set("limit", this.limit.value);
-
-      this.$parent.$router.replace(
-        `/recursos-educacionais/listar?${search.toString()}`
-      );
-
-      this.hide();
+      const {data} = await axios.get(`/conteudos?${search.toString()}`);
+      this.results = data.paginator.data;
+      this.last = data.paginator.last_page;
+      this.current = data.paginator.current_page;
+      console.log(data.paginator)
+      
+      //this.hide();
     },
     onCancelClick() {
       this.$parent.$router.replace(`/recursos-educacionais/listar`);
@@ -264,6 +301,16 @@ export default {
 }
 .open-sidebar-menu{
   width: 100%; 
-  min-height: 45px;
+  min-height: 35px;
+}
+.paginator-link{
+  font-size: 18px;
+  font-weight: bold;
+  &:hover{
+    color: #066ab1;
+  }
+}
+.paginator-excerpt{
+  font-size: 18px;
 }
 </style>

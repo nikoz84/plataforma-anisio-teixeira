@@ -6,11 +6,23 @@ use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ApiController;
+use App\Traits\FileSystemLogic;
+use App\Canal;
 
 class CategoryController extends ApiController
 {
+    use FileSystemLogic;
     protected $request;
 
+    public function rules()
+    {
+        return [
+            'canal_id' => 'required',
+            'name'=> 'required|min:2|max:255',
+            'imagemAssociada' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048|nullable',
+            'videoDestaque' => 'mimes:webpM,mp4|max:51200|nullable'
+        ];
+    }
     public function __construct(Request $request)
     {
         $this->middleware('jwt.auth')->except([
@@ -22,32 +34,40 @@ class CategoryController extends ApiController
     public function index()
     {
         $limit = $this->request->get('limit', 15);
-
         $categories = Category::whereNull('parent_id')
             ->where('options->is_active', 'true')
             ->with('subCategories')
             ->limit($limit)
             ->orderBy('name', 'asc')
             ->paginate($limit);
-
         return $this->showAsPaginator($categories);
     }
+
     public function create()
     {
-        $validator = Validator::make($this->request->all(), config("rules.categoria"));
+        $validator = Validator::make($this->request->all(), $this->rules());
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar a categoria", 422);
         }
-
         $category           = new Category;
         $category->name     = $this->request->name;
         $category->canal_id = $this->request->canal_id;
-        $category->options  = $this->request->options;
+        $category->options  = json_decode($this->request->options);
 
         if (!$category->save()) {
             return $this->errorResponse([], 'Não foi possível cadastrar a categoria', 422);
         }
-
+        $fileImg = $this->saveFile($category->id, [$this->request->imagemAssociada], 'imagem-associada');
+        if(!$fileImg)
+        {
+            return $this->errorResponse([], 'Não foi possível salvar imagem associada', 422);
+        }   
+        if ($this->request->videoDestaque) {
+            $fileVideo = $this->saveFile($category->id, [$this->request->videoDestaque], 'visualizacao');
+            if (!$fileVideo) {
+                return $this->errorResponse([], 'Não foi possível salvar video de destaque', 422);
+            }
+        }
         return $this->successResponse($category, 'Categoria criada com sucesso!', 200);
     }
 
@@ -59,24 +79,40 @@ class CategoryController extends ApiController
      */
     public function update($id)
     {
-        $validator = Validator::make($this->request->all(), config("rules.categoria"));
-
-        if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível atualizar a categoria", 201);
+        $validator = Validator::make($this->request->all(), $this->rules());
+        if ($validator->fails())
+        {
+            return $this->errorResponse($validator->errors(), "Não foi possível atualizar a categoria", 422);
         }
-
         $category = Category::findOrFail($id);
-
         $category->name = $this->request->name;
         $category->canal_id = $this->request->canal_id;
-        $category->options = $this->request->options;
-
+        $category->options = json_decode($this->request->options);
+        if ($this->request->imagemAssociada)
+        {
+            if($category->refenciaImagemAssociada())
+            unlink($category->refenciaImagemAssociada());
+            $file = $this->saveFile($category->id, [$this->request->imagemAssociada], 'imagem-associada');
+            if(!$file)
+            {
+                return $this->errorResponse([], 'Não foi possível salvar imagem associada', 422);
+            }
+        }
+        if ($this->request->videoDestaque) 
+        {
+            if($category->refenciaVideoDestaque())
+            unlink($category->refenciaVideoDestaque());
+            $fileVideo = $this->saveFile($category->id, [$this->request->videoDestaque], 'visualizacao');
+            if (!$fileVideo) {
+                return $this->errorResponse([], 'Não foi possível salvar imagem associada', 422);
+            }
+        }
         if (!$category->update()) {
             return $this->errorResponse([], 'Não foi possível editar', 422);
         }
-
         return $this->successResponse($category, 'Categoria atualizada com sucesso!', 200);
     }
+
     public function delete($id)
     {
         $validator = Validator::make($this->request->all(), [
@@ -85,23 +121,51 @@ class CategoryController extends ApiController
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível deletar.", 422);
         }
-
         $category = Category::findOrFail($id);
-
         if (!$category->delete()) {
             return $this->errorResponse([], 'Não foi possível deletar a categoria', 422);
         }
-
+        if($category->refenciaImagemAssociada())
+            unlink($category->refenciaImagemAssociada());
+        if($category->refenciaVideoDestaque())
+        unlink($category->refenciaVideoDestaque());
         return $this->successResponse($category, 'Categoria deletada com sucesso!', 200);
     }
+
     public function getById($id)
     {
-        return Category::findOrFail($id);
+        $category = Category::findOrFail($id);
+        $category->canal;
+        return  $category;
     }
+
     public function getCategoryByCanalId($id)
     {
-        $categories = Category::where('canal_id', $id)->get();
+        $categories = Category::with('subCategories')->where('canal_id', $id)
+        ->where('options->is_active', 'true')
+        ->whereNull('parent_id')->get();
+        $canal = Canal::where('id', $id)->get();
+        
+        $data = collect([
+            'category_name' => $canal->pluck('category_name')->first(),
+            'categories' => $categories
+        ]);
 
-        return $this->showAll($categories);
+        return $this->showAll($data);
+    }
+
+    /**
+     * Procura categoria pelo nome
+     * @param $request \Illuminate\Http\Request
+     * @param $termo string de busca
+     * @return App\Traits\ApiResponser
+     */
+    public function search(Request $request, $termo)
+    {
+        $limit = ($request->has('limit')) ? $request->query('limit') : 20;
+        $search = "%{$termo}%";
+        $paginator = Category::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search])->paginate($limit);
+        $paginator->setPath("/categorias/search/{$termo}?limit={$limit}");
+        return $this->showAsPaginator($paginator, '', 200);
     }
 }

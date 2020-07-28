@@ -12,6 +12,8 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendVerificationEmail;
 use Exception;
+use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends ApiController
 {
@@ -19,7 +21,7 @@ class AuthController extends ApiController
     {
         $this->middleware('jwt.auth')->except([
             'login', 'register', 'verifyEmail', 'recoverPass',
-            'verifyToken', 'verifyTokenUserRegister', 'linksAdmin'
+            'verifyToken', 'verifyTokenUserRegister', 'linksAdmin', 'modificarSenha'
         ]);
 
         $this->request = $request;
@@ -39,20 +41,14 @@ class AuthController extends ApiController
                 'recaptcha' => ['required', new \App\Rules\ValidRecaptcha]
             ]
         );
-
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Usuário ou senha inválidos", 422);
         }
-
         $credentials = $this->request->only('email', 'password');
-
         $token = null;
-
-        
         if (!$token = JWTAuth::attempt($credentials)) {
             return $this->errorResponse([], 'E-mail ou Senha inválidos', 422);
         }
-       
         return $this->respondWithToken($token);
     }
     /**
@@ -172,37 +168,33 @@ class AuthController extends ApiController
                 'recaptcha' => ['required', new \App\Rules\ValidRecaptcha]
             ]
         );
-
-        if ($validator->fails()) {
-            return $this->errorResponse(
-                $validator->errors(),
-                "Verifique os dados fornecidos",
-                422
-            );
-        }
-        
-        $usuario = User::where('email', $request->email)->first();
-
-        if (!$usuario) {
-            return $this->errorResponse([], 'Usuário não encontrado!', 422);
-        }
-
-        PasswordReset::create([
-            'email' => $usuario->email,
-            'token' => $usuario->createVerificationToken(),
-            'created_at' => date('Y-m-d H:i:s')
-        ]);
-        
-        // Recupera o token gerado direto da tabela
-        $tokenGerado = new PasswordReset();
-        $token = $tokenGerado->getTokenByEmail($usuario->email)->token;
-        
+        $data = [];
         // Dispara o Email
-        if ($this->sendConfirmationEmail($usuario->email, $token, 'recoverPass')) {
-            return $this->successResponse([], 'Email enviado com Sucesso!', 200);
+        try 
+        {
+            $usuario = User::where('email', 'like', "%".trim($request->email)."%")->get()->first();
+            if (!$usuario) {
+                throw new Exception("Usuário não existe.");
+            }
+            PasswordReset::create([
+                'email' => $usuario->email,
+                'token' => $usuario->createVerificationToken(),
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
+                // Recupera o token gerado direto da tabela
+            $tokenGerado = new PasswordReset();
+            $token = $tokenGerado->getTokenByEmail($usuario->email)->token;
+            $this->sendConfirmationEmail($usuario->email, $token, 'recoverPass');
+            if ($validator->fails()) {
+                $data = $validator->errors();
+                throw new Exception("Verifique os dados fornecidos");
+            }
         }
-
-        return $this->errorResponse([], 'Erro ao enviar Email!', 422);
+        catch(Exception $ex)
+        {
+            return $this->errorResponse($data, $ex->getMessage(), 422);
+        }
+        return $this->successResponse([], 'Email enviado com Sucesso!', 200);     
     }
     /**
      * Regras de validação
@@ -219,24 +211,17 @@ class AuthController extends ApiController
             'recaptcha' => ['required', new \App\Rules\ValidRecaptcha]
         ];
     }
+
     /**
      * Envia email de verificação
-     *
      * @param $email string
-     *
      * @return App\Traits\ApiResponser
      */
     protected function sendConfirmationEmail($email, $token, $option)
     {
         $user = User::where('email', 'ilike', "%{$email}%")->first();
-        
-        try {
-            Mail::send(new SendVerificationEmail($user, $token, $option));
-        
-            return true;
-        } catch (Exception $ex) {
-            return false;
-        }
+        Mail::send(new SendVerificationEmail($user, $token, $option));
+        return true;
     }
     /**
      * Verificar email
@@ -250,13 +235,71 @@ class AuthController extends ApiController
     {
         $passwordReset = new PasswordReset();
         $user = new User();
-
-        return $user->verifyToken($token, $passwordReset);
+        try {
+            $user->verifyToken($token, $passwordReset);
+        }
+        catch(Exception $ex)
+        {
+            return $this->errorResponse([], $ex->getMessage(), 404);
+        }
+        return $this->successResponse(null, "Token válido", 200);
+        
     }
 
+    /**
+     * 
+     */
     public function verifyTokenUserRegister(Request $request, $token)
     {
         $user = new User();
         return $user->verifyTokenUserRegister($token);
+    }
+
+    /**
+     * modifica senha de usuario
+     * @param string $token token gerado pela aplicação e enviado posteriormente
+     * pelo usuário para comprovação de autorização
+     * @return string
+     */
+    public function modificarSenha(string $token)
+    {
+        $passwordReset = new PasswordReset();
+        $user = new User();
+        $data = [];
+        $validator = Validator::make(
+            $this->request->all(),
+            [
+                'password' => 'required|min:8',
+                'confirmation' => 'required|min:8'
+            ]
+        );
+        try{
+            $user->verifyToken($token, $passwordReset);
+            if ($validator->fails()) {
+                $data = $validator->errors();
+                throw new Exception("Erro ao submeter formulário.");
+            }
+            if($this->request->senha != $this->request->confirmacao)
+            {
+                throw new Exception("Senha e confirmação são imcompaiveis.");
+            }
+            $user = $this->getUserByToken($token);
+            $user->password = $this->request->password;
+            if(!$user->save())
+            throw new Exception("Erro ao tenytar salvar modificação. Tente novamente mais tarde.");
+        }
+        catch(Exception $ex)
+        {
+            return $this->errorResponse($data, $ex->getMessage(), 422);
+        }
+        return $this->successResponse($data, "Senha Modificada com sucesso!", 200);
+    }
+
+    private function getUserByToken($token)
+    {
+        $resetPass = new PasswordReset();
+        $token = $resetPass->getToken($token);
+        $user = User::where("email", $token->email)->first();
+        return $user;
     }
 }

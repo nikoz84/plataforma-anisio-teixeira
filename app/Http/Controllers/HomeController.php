@@ -29,7 +29,11 @@ class HomeController extends ApiController
      */
     public function getLayout()
     {
-        return response()->json(SideBar::getSideBarAdvancedFilter());
+        $from_cache = cache()->remember('layout', now()->addMinutes(1440), function () {
+            return SideBar::getSideBarAdvancedFilter();
+        });
+
+        return response()->json($from_cache);
     }
 
     /**

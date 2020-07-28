@@ -32,33 +32,32 @@ class RoleController extends ApiController
     }
     public function create()
     {
-        $validator = Validator::make($this->request->all(), ["name" => "required"]);
+        $validator = Validator::make($this->request->all(), ["name" => "required"], $this->rulesMessages());
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível criar o perfil", 201);
+            return $this->errorResponse($validator->errors(), "Não foi possível criar o perfil", 422);
         }
         $role = $this->role;
         $role->name = $this->request->name;
         if ($role->save()) {
             return $this->successResponse($role, 'Perfil criado com sucesso!', 200);
         }
+        return $this->errorResponse($validator->errors(), "Não foi possível criar o perfil", 501);
     }
     public function update(Request $request, $id)
     {
         $role = $this->role::find($id);
-
         $this->authorize('delete', $role);
-
         $validator = Validator::make($this->request->all(), ["name" => "required"]);
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível criar o perfil", 201);
+            return $this->errorResponse($validator->errors(), "Não foi possível criar o perfil", 422);
         }
         $role = $this->role;
         $role->name = $this->request->name;
-
-        $role->fill($this->request->all());
-        if ($role->update()) {
-            return $this->successResponse($role, 'Perfil editado com sucesso!', 200);
+        if (!$role->save()) {
+            return $this->errorResponse($validator->errors(), "Erro interno servidor. Não foi possível criar o perfil", 500);
+            
         }
+        return $this->successResponse($role, 'Perfil editado com sucesso!', 200);
     }
     public function delete($id)
     {
@@ -68,7 +67,7 @@ class RoleController extends ApiController
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível deletar.", 201);
         }
-        
+   
         $role = $this->role::find($id);
         
         $this->authorize('delete', $role);
@@ -90,5 +89,14 @@ class RoleController extends ApiController
             'success' => true,
             'paginator' => $roles,
         ]);
+    }
+
+    /**
+     * Seleciona tipo por ID
+     */
+    public function getById($id)
+    {
+        $tipo = Role::find($id);
+        return $this->showOne($tipo);
     }
 }

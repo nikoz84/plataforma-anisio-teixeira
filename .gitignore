@@ -1,9 +1,12 @@
 /node_modules
 /public/hot
 /public/storage
+/public/css
+/public/js
+/public/mix-manifest.json
 /public/img/producao
 /storage/*.key
-/storage/dumps
+/storage/dumps/*
 /vendor
 /.idea
 /.vagrant
@@ -13,4 +16,5 @@ npm-debug.log
 yarn-error.log
 .env
 /app/Console/Commands/ImportData.php
-/public/js/*.js
+/migra_sql
+/documentation/node_modules

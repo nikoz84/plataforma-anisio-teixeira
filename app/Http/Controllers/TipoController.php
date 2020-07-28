@@ -6,6 +6,7 @@ use App\Http\Controllers\ApiController;
 use App\Tipo;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\ApiResponser;
+use App\User;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -34,31 +35,26 @@ class TipoController extends ApiController
         return $this->showAsPaginator($paginator);
     }
 
+
+
     public function create(Request $request)
     {
-        //dd($request->all());
         $validator = Validator::make(
             $request->all(),
             [
                 'name' => 'required'
-            ]
+            ], $this->rulesMessages()
         );
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar o tipo", 422);
         }
-
-        return $this->successResponse($request->all());
         $tipo = new Tipo;
-
-        $this->authorize('create', JWTAuth::user());
-
+        $this->authorize('create', User::class);
         $tipo->name = $request->name;
         $tipo->options = json_decode($request->options, true);
-
         if (!$tipo->save()) {
             return $this->errorResponse($tipo, 'Não foi possível editar o tipo de conteúdo', 422);
         }
-
         return $this->successResponse($tipo, 'Tipo criado com sucesso!', 200);
     }
 
@@ -75,21 +71,15 @@ class TipoController extends ApiController
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Preencha o formulário corretamente", 422);
         }
-
         $tipo = Tipo::findOrFail($id);
-        return $this->successResponse($tipo);
         $this->authorize('update', $tipo);
-
         $tipo->name = $this->request->name;
-
         $tipo->options = json_decode($this->request->options, true);
-        $tipo->options = $this->request->options;
-
         if (!$tipo->save()) {
             return $this->errorResponse([], 'Não foi possível editar', 422);
         }
 
-        $this->successResponse($tipo, 'Tipo de conteúdo editado com sucesso!', 200);
+        return $this->successResponse($tipo, 'Tipo de conteúdo editado com sucesso!', 200);
     }
     public function delete($id)
     {
@@ -116,7 +106,21 @@ class TipoController extends ApiController
     public function getTiposById($id)
     {
         $tipo = Tipo::find($id);
-        
         return $this->showOne($tipo);
+    }
+
+    /**
+     * Procura categoria pelo nome
+     * @param $request \Illuminate\Http\Request
+     * @param $termo string de busca
+     * @return App\Traits\ApiResponser
+     */
+    public function search(Request $request, $termo)
+    {
+        $limit = ($request->has('limit')) ? $request->query('limit') : 20;
+        $search = "%{$termo}%";
+        $paginator = Tipo::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search])->paginate($limit);
+        $paginator->setPath("/tipos/search/{$termo}?limit={$limit}");
+        return $this->showAsPaginator($paginator, '', 200);
     }
 }

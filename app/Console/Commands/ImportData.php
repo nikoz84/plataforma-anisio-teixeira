@@ -43,7 +43,7 @@ class ImportData extends Command
             return $file->getFilename();
         });
         $this->info('Importando dados esper um momento...');
-
+        
         foreach ($files as $file) {
             if ($file->getExtension() == 'json') {
                 $filename = pathinfo($file, PATHINFO_FILENAME);
@@ -57,6 +57,7 @@ class ImportData extends Command
                 $this->line("Tabela: $tabela copiada com successo!!");
             }
         }
+        
         $this->info('Reiniciando sequencias');
         DB::statement("ALTER SEQUENCE users_id_seq RESTART WITH 2675;");
         DB::statement("ALTER SEQUENCE canais_id_seq RESTART WITH 16;");
@@ -73,32 +74,15 @@ class ImportData extends Command
 
 
         $this->info('Atualizando Canais');
-        DB::statement("UPDATE conteudos set canal_id = 6 where is_site = false and canal_id is null;");
-        DB::statement("UPDATE conteudos set canal_id = 5 where is_site = true and canal_id is null;");
+        //DB::statement("UPDATE conteudos set canal_id = 6 where is_site = false and canal_id is null;");
+        //DB::statement("UPDATE conteudos set canal_id = 5 where is_site = true and canal_id is null;");
         DB::statement("UPDATE canais set is_active = false where  id  IN (4,10,11,13,14,15);");
         DB::statement("UPDATE canais set name = 'Recursos Educacionais' where id = 6;");
         DB::statement("UPDATE tipos set name = 'Documento' where id = 1");
         DB::statement("UPDATE canais set is_active = false where id = 8");
         DB::statement("UPDATE tipos set name = 'Animação' where id = 7");
         $this->info('Adicionando Temas contenporâneos');
-        DB::statement("INSERT into curricular_components_categories (id, name) values (7,'Temas Contemporáneos');");
-        DB::statement("INSERT into curricular_components (id,category_id,nivel_id,name) values 
-            (119,7,null,'Educação para o Trânsito'),
-            (120,7,null,'Vida Familiar e Social'),
-            (121,7,null,'Educação em Direitos Humanos'),
-            (122,7,null,'Direitos da Criança e do Adolescente'),
-            (123,7,null,'Processo de Envelhecimento, Respeito e Valorização do Idoso'),
-            (124,7,null,'Ciência e Tecnologia'),
-            (125,7,null,'Trabalho'),
-            (126,7,null,'Educação Financeira'),
-            (127,7,null,'Educação Fiscal'),
-            (128,7,null,'Educação Ambiental'),
-            (129,7,null,'Educação para o Consumo'),
-            (130,7,null,'Diversidade Cultural'),
-            (131,7,null,'Educação para Valorização do Muliculturalismo nas Matrizes Históricas e Culturais Brasileiras'),
-            (132,7,null,'Saúde'),
-            (133,7,null,'Educação Alimentar e Nutricional');
-        ");
+        
         
         $this->createInitSlider();
 
@@ -107,21 +91,21 @@ class ImportData extends Command
 
     private function createInitSlider()
     {
-        $url = env('APP_URL');
+        //$url = env('APP_URL');
 
         \App\Options::create([
             'name' => 'slider',
             'meta_data' => [
                 [
-                    'image' => "{$url}/storage/conteudos/slider/banner-rotinas-de-estudo.png",
+                    'image' => "/storage/conteudos/slider/banner-rotinas-de-estudo.png",
                     'filename' => 'banner-rotinas-de-estudo.png',
-                    'url' => "http://{$url}/rotinas-de-estudo",
+                    'url' => "/rotinas-de-estudo",
                     'title' => 'Canal de rotinas de estudo'
                 ],
                 [
-                    'image' => "{$url}/storage/conteudos/slider/banner-ensino-superior.png",
+                    'image' => "/storage/conteudos/slider/banner-ensino-superior.png",
                     'filename' => 'banner-ensinosuperior.png',
-                    'url' => "http://{$url}/ipes",
+                    'url' => "/ipes",
                     'title' => 'Canal de ensino superior'
                 ]
             ]
