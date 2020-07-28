@@ -40,7 +40,7 @@ class CanalPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user, Canal $canal)
     {
         return ($user->role->name === 'super-admin' ||
             $user->role->name === 'admin');

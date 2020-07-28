@@ -96,7 +96,6 @@ class ConteudoPlanilhaController extends ApiController
     public function rotinasPerNivel(Request $request, $nivel, $semana)
     {
         $query = ConteudoPlanilha::query();
-        //$url = http_build_query($request->except('page'));
         
         $conteudoPlanilha = $query->select(
             DB::raw("
@@ -125,6 +124,26 @@ class ConteudoPlanilhaController extends ApiController
             $semana
         )->get();
         
-        return $this->successResponse($conteudoPlanilha);
+        
+
+        return $this->successResponse([
+            'rotinas' => $conteudoPlanilha,
+            'semanas' => $this->getSemanas()
+        ]);
+    }
+
+    public function getSemanas()
+    {
+        $total = ConteudoPlanilha::where('name', 'like', 'semana%')->get();
+        
+        $semanas = [];
+        for ($i=1; $i <= $total->count(); $i++) {
+            array_push($semanas, [
+                'value' => "semana-{$i}",
+                'label' => "Semana {$i}"
+            ]);
+        }
+
+        return $semanas;
     }
 }

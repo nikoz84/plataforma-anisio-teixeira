@@ -18,6 +18,16 @@
         <noscript>
             <link rel="stylesheet" href="/css/app.css" preload/>
         </noscript>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-16522376-3"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-16522376-3');
+        </script>
+
     </head>
     <body>
         <noscript>

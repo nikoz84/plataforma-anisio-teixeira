@@ -17,16 +17,16 @@
       @new-value="add"
       @input="selectedInput"
       :options="options"
-      :placeholder="`Buscar por ${label}`"
+      :label="labelText()"
       :loading="loadingState"
       label-color="primary"
-      :input-style= "{ color: '#000' }"
+      :input-style="{ color: '#263238' }"
       bg-color="grey-4"
       class="col q-my-sm"
       style="with:100%;"
     >
      <template v-slot:append>
-      <q-icon class="cursor-pointer" round flat name="search" @click="searchTerm" color="primary" />
+      <q-icon class="cursor-pointer" round flat name="search" @click="searchIcon()" color="primary" />
       <q-btn color="primary" round flat icon="more_vert" aria-label="opções de busca">
         <q-menu cover auto-close>
           <q-list>
@@ -44,40 +44,6 @@
       </q-btn>
      </template>
   </q-select>
-
-<!-- CÓDIGO ANTIGO AGUARDANDO LIVE PARA RESOLUÇÃO DE ERRO NA BUSCA --
-
-    <q-btn 
-      rounded
-      outlined
-      dense
-      @click="searchTerm"
-      class="YL__toolbar-input-btn"
-      
-      text-color="$primary"
-      color="$primary"
-      icon="search"
-      unelevated
-      aria-label="pesquisar"
-    />
-    <q-btn color="$primary" round flat icon="more_vert" aria-label="opções de busca">
-      <q-menu cover auto-close>
-        <q-list>
-          <q-item clickable aria-label="sugerir por palavra chave" @click="recommendationPer('tag')">
-            <q-item-section >Buscar por palavra chave</q-item-section>
-          </q-item>
-          <q-item clickable aria-label="sugerir por título" @click="recommendationPer('titulo')">
-            <q-item-section >Buscar por título</q-item-section>
-          </q-item>
-          <q-item clickable aria-label="busca avançada" @click="openDialog()">
-            <q-item-section>Acessar busca avançada</q-item-section>
-          </q-item>
-        </q-list>
-      </q-menu>
-    </q-btn>
-    
--->
-
   </div>
 </template>
 <script>
@@ -99,8 +65,11 @@ export default {
   methods: {
     searchTerm(val, update, abort) {
       const self = this;
+      const label = this.label;
+      this.term = val;
       update(() => {
         if (val === "" || val.length <= 3) {
+          this.label = '';
           self.options = [];
           self.loadingState = false;
         } else {
@@ -111,12 +80,21 @@ export default {
               if (resp.data.success) {
                 self.options = resp.data.paginator.data;
                 self.loadingState = false;
+                self.label = label;
               }
             });
         }
       });
     },
+    searchIcon(){
+      if(this.term && this.term.length > 2){
+        this.$router.replace(
+          `/recursos-educacionais/listar?busca=${this.term}`
+        );
+      }
+    },
     selectedInput(value) {
+      console.log(value)
       if (value) {
         this.$router.replace(
           `/recursos-educacionais/listar?busca=${value.name}`
@@ -125,7 +103,11 @@ export default {
         this.$router.replace(`/recursos-educacionais/listar`);
       }
     },
+    labelText() {
+      return this.label ? `Buscar por ${this.label}` : '';
+    },
     add(details) {
+      console.log(details)
       console.log(details);
     },
     recommendationPer(per) {

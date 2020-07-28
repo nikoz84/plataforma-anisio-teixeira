@@ -142,9 +142,10 @@ return [
         'confirmation' => 'confirmação da senha',
         'birthday' => 'nascimento',
         'delete_confirmation' => 'confirmação',
-        'download' => 'arquivo de download'
+        'download' => 'arquivo de download',
+        'componentes' => 'componentes curriculares'
     ],
     'options' => [
-        'lang' => 'pt-BR',
+        'lang' => 'pt_BR',
     ],
 ];

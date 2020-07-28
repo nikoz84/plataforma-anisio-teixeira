@@ -1,7 +1,7 @@
 
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
-        Options +FollowSymLinks -MultiViews +Indexes
+        Options +FollowSymLinks -MultiViews -Indexes
     </IfModule>
 
     RewriteEngine On

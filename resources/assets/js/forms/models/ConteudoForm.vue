@@ -1,5 +1,5 @@
 <template>
-  <div class="row q-gutter-xs">
+  <div class="q-pa-md row justify-center q-gutter-xs">
     <q-card class="col-sm-5">
       <q-card-section class="q-gutter-sm">
         <!-- CANAL --> 
@@ -9,28 +9,36 @@
           option-label="name"
           ransition-show="scale"
           transition-hide="scale"
-          :error="errors.canal_id && errors.canal_id.length > 0"
           v-model="conteudo.canal"
           :options="canais"
           label="Escolha um Canal"
           behavior="dialog"
           @input="getCategories"
-        />
+          bottom-slots
+          :error="errors.canal_id && errors.canal_id.length > 0"
+        >
+          <template v-slot:error>
+            <ShowErrors :errors="errors.canal_id"></ShowErrors>
+          </template>
+        </q-select>
+        {{   }}
         <!-- CATEGORIA -->
-            <q-select outlined 
-              class="col-sm-5"
-              v-model="conteudo.category" 
-              :options="categoriesList"
-              option-value="id"
-              option-label="name"
-              use-input
-              label="Escolha uma Categoria" 
-              bottom-slots
-              :error="errors.category_id && errors.category_id.length > 0">
-              <template v-slot:error>
-                <ShowErrors :errors="errors.category_id"></ShowErrors>
-              </template>
-            </q-select>
+        <ParentAndChildSelect :parent="categories" 
+          :label="categoryName"
+          :selectedId="conteudo.category_id"
+          @click="setCategory"
+        ></ParentAndChildSelect>
+        <!--ShowErrors v-if="errors.category_id && errors.category_id.length > 0" 
+            :errors="errors.category_id"></ShowErrors-->
+        <!-- LICENÇAS -->
+        <ParentAndChildSelect :parent="licencas" 
+          label="Licença"
+          :selectedId="conteudo.license_id"
+          @click="setLicense"
+        ></ParentAndChildSelect>
+        <!--ShowErrors v-if="errors.license_id && errors.license_id.length > 0" 
+          :errors="errors.license_id"></ShowErrors-->
+          
         <!-- TIPO DE MIDIA --> 
         <q-select
           outlined
@@ -39,33 +47,54 @@
           option-label="name"
           transition-show="flip-up"
           transition-hide="flip-down"
+          :error="errors.tipo_id && errors.tipo_id.length > 0"
           v-model="conteudo.tipo"
           :options="tipos"
           label="Tipo de Mídia"
           behavior="dialog"
         />
         <!-- TITULO --> 
-        <ShowErrors :errors="errors.title"></ShowErrors>
-        <q-input outlined v-model="conteudo.title" :error="errors.title && errors.title.length > 0" label="Título do conteúdo" />
+        <q-input outlined v-model="conteudo.title" 
+           label="Título do conteúdo"
+           bottom-slots
+          :error="errors.title && errors.title.length > 0"
+           >
+           <template v-slot:error>
+            <ShowErrors :errors="errors.title"></ShowErrors>
+          </template>
+        </q-input>
         <!-- AUTORES --> 
-        <ShowErrors :errors="errors.authors"></ShowErrors>
-        <q-input outlined v-model="conteudo.authors" :error="errors.authors && errors.authors.length > 0" label="Autores" />
+        <q-input outlined v-model="conteudo.authors" 
+          label="Autores"
+          bottom-slots
+          :error="errors.authors && errors.authors.length > 0">
+           <template v-slot:error>
+            <ShowErrors :errors="errors.authors"></ShowErrors>
+          </template>
+        </q-input>
         <!-- FONTE --> 
-        <ShowErrors :errors="errors.source"></ShowErrors>
-        <q-input outlined v-model="conteudo.source" :error="errors.source && errors.source.length > 0" label="Fonte" />
+        <q-input outlined v-model="conteudo.source" 
+          label="Fonte" 
+          bottom-slots
+          :error="errors.source && errors.source.length > 0">
+           <template v-slot:error>
+            <ShowErrors :errors="errors.source"></ShowErrors>
+          </template>
+        </q-input>
         <!-- DESCRIÇÃO --> 
         <div class="q-mt-md">
           <p class="text-center">Escreva uma descrição do conteúdo</p>
         </div>
-        <ShowErrors :errors="errors.description"></ShowErrors>
-        <q-editor v-model="conteudo.description" :error="errors.description && errors.description.length > 0" min-height="15rem" />
+        <q-editor v-model="conteudo.description" min-height="15rem" />
+        <ShowErrors 
+          :error="errors.description && errors.description.length > 0" 
+          :errors="errors.description">
+        </ShowErrors>
       </q-card-section>
       <q-card-section>
         <!-- TAGS --> 
-         <ShowErrors :errors="errors.tags"></ShowErrors>
         <q-select
           outlined
-          :error="errors.tags && errors.tags.length > 0"
           v-model="conteudo.tags"
           use-input
           multiple
@@ -79,10 +108,16 @@
           @new-value="addTag"
           :options="autocompleteTags"
           @filter="getTags"
-        />
+          bottom-slots
+          :error="errors.tags && errors.tags.length > 0"
+          >
+           <template v-slot:error>
+            <ShowErrors :errors="errors.tags"></ShowErrors>
+          </template>
+        </q-select>
       </q-card-section>
       <q-card-section>
-        {{conteudo.image}}
+        
         <q-img 
           loading="lazy" 
           width="100%" 
@@ -91,29 +126,52 @@
           placeholder-src="/img/fundo-padrao.svg"
           alt="imagem de destaque"/>
           <!-- IMAGEM DE DESTAQUE --> 
-          <ShowErrors :errors="errors.image"></ShowErrors>
+          <ShowErrors :errors="errors.imagem_associada"></ShowErrors>
         <q-input
           @input="val => { file = val[0];}"
           outlined
-          
-          :error="errors.image && errors.image.length > 0"
+          accept=".png,.jpeg,.jpg,.svg,.webp"
           @change="onImageFileChange"
           type="file"
           hint="Imagem de Destaque"
         />
         <!-- ARQUIVO DE UPLOAD --> 
+        <br>
+        <q-item-label v-if="conteudo.download" >
+          Baixar Arquivo Download:
+        </q-item-label>
+         <a v-if="conteudo.download" :href="conteudo.download" :download="conteudo.download" >{{conteudo.download.split('/').pop()}}</a>
+        <ShowErrors :errors="errors.download"></ShowErrors>
         <q-input
           class="q-mt-md"
           @input="val => {file = val[0];}"
           outlined
           @change="onDownloadFileChange"
           type="file"
+          hint="Arquivo para Guia Pedagógico"
+        />
+        
+        <!-- ARQUIVO DE UPLOAD --> 
+        <br>
+        <q-item-label v-if="conteudo.guiaPedagogico">
+          Baixar Arquivo Guia Pedagógico:
+        </q-item-label>
+         <a v-if="conteudo.guiaPedagogico" :href="conteudo.guiaPedagogico" :download="conteudo.guiaPedagogico" >{{conteudo.guiaPedagogico.split('/').pop()}}</a>
+        <ShowErrors :errors="errors.guiaPedagogico"></ShowErrors>
+        <q-input
+          class="q-mt-md"
+          @input="val => {file = val[0];}"
+          outlined
+          @change="onguiaPedagogicoFileChange"
+          type="file"
           hint="Arquivo para Download"
         />
+        
         <!-- ENVIAR SITE --> 
+        <ShowErrors :errors="errors.options_site"></ShowErrors>
         <q-input
           outlined
-          :error="errors.options_site && errors.options_site.length > 0"
+          
           v-model="conteudo.options.site"
           label="URL do Site"
           hint="Exemplo: http://dominio.com.br"
@@ -137,16 +195,11 @@
       </q-card-section>
       <q-card-section>
         <!-- TERMOS DE USO --> 
+        <ShowErrors :errors="errors.terms"></ShowErrors>
         <div class="q-gutter-sm">
-          <ShowErrors :errors="errors.terms"></ShowErrors>
           <q-item-label>
             Li e concordo com os <a href="#terms">termos e condições de uso</a> :
-          
-          <q-checkbox
-            v-model="conteudo.terms"
-            :error="errors.terms && errors.terms.length > 0"
-            color="pink"
-          />
+          <q-checkbox v-model="terms" color="pink" />
           </q-item-label>
         </div>
       </q-card-section>
@@ -162,81 +215,97 @@
     </q-card>
 
     <q-card class="col-sm-3">
-      <q-card-section>
-        <!-- COMPONENTES CURRICULARES --> 
-        <div v-if="componentes">
-           <ShowErrors :errors="errors.componentes"></ShowErrors>
-          <div
-            v-for="(component, i) in componentes"
-            :key="`c-${i}`"
-            :index="component.id"
-          >
-          
-            
-            <div class="text-center text-negative q-pt-md" >
-              {{ component.name }}
-             
-            </div>
-            <q-separator class="q-mt-lg" inset color="negative"></q-separator>
-            <q-list
-             
-            >
-              <q-item tag="label" 
-                v-ripple v-for="(component, i) in component.componentes"
-                :key="`child-com-${i}`">
-                <q-item-section avatar>
-                  <q-checkbox
-                     
-                    v-model="componentesCurriculares"
-                    :val="component.id"
-                    color="negative"
-                  />
-                </q-item-section>
-                <q-item-label class="q-pt-sm">
-                  {{component.name}}
-                </q-item-label>
-              </q-item>
-            </q-list>
-            <q-separator class="q-mt-lg" inset color="negative"></q-separator>
-          </div>
-        </div>
-        
-      </q-card-section>
       
+      <q-scroll-area
+        style="height: 100vh;" visible
+      >
+        <q-card-section>
+          <!-- COMPONENTES CURRICULARES --> 
+          <div v-if="componentes">
+            
+            <div
+              v-for="(component, i) in componentes"
+              :key="`c-${i}`"
+              :index="component.id"
+            >
+              <div class="text-center text-negative q-pt-md" >
+                {{ component.name }}
+              
+              </div>
+              <q-separator class="q-mt-lg" inset color="negative"></q-separator>
+              <q-list
+                dense bordered 
+              >
+                <q-item tag="label" 
+                  v-ripple v-for="(component, i) in component.componentes"
+                  :key="`child-com-${i}`">
+                  <q-item-section avatar>
+                    <q-checkbox
+                      
+                      v-model="componentesCurriculares"
+                      :val="component.id"
+                      color="negative"
+                    />
+                  </q-item-section>
+                  <q-item-label class="q-pt-sm">
+                    {{component.name}}
+                  </q-item-label>
+                </q-item>
+              </q-list>
+              <q-separator class="q-mt-lg" inset color="negative"></q-separator>
+            </div>
+          </div>
+          
+        </q-card-section>
+      </q-scroll-area>
+      <q-card-section>
+        <ShowErrors 
+        :error="errors.componentes && errors.componentes.length > 0" 
+        :errors="errors.componentes"></ShowErrors>
+      </q-card-section>
       
     </q-card>
     <q-card class="col-sm-3">
-      <q-card-section>
-        <!-- NIVEIS DE ENSINO --> 
-        <div v-if="niveis">
-          <div
-            v-for="(nivel, n) in niveis"
-            :key="`n-${n}`"
-            :index="nivel.id"
-          >
-            <div class="text-center text-positive q-pt-md">
-              {{ nivel.name }}
+      <q-scroll-area
+        style="height: 100vh;" visible
+      >
+        <q-card-section>
+          <!-- NIVEIS DE ENSINO --> 
+          <div v-if="niveis">
+            <div
+              v-for="(nivel, n) in niveis"
+              :key="`n-${n}`"
+              :index="nivel.id"
+            >
+              <div class="text-center text-positive q-pt-md">
+                {{ nivel.name }}
+              </div>
+              <q-separator class="q-mt-lg" inset color="positive"></q-separator>
+              <q-list dense bordered>
+                <q-item tag="label" 
+                  v-ripple v-for="(component, i) in nivel.componentes"
+                  :key="`child-com-${i}`">
+                  <q-item-section avatar>
+                    <q-checkbox
+                      v-model="componentesCurriculares"
+                      :val="component.id"
+                      color="teal"
+                    />
+                  </q-item-section>
+                  <q-item-label class="q-pt-sm">
+                    {{component.name}}
+                  </q-item-label>
+                </q-item>
+              </q-list>
+              <q-separator class="q-mt-lg" inset color="positive"></q-separator>
             </div>
-            <q-separator class="q-mt-lg" inset color="positive"></q-separator>
-            <q-list>
-              <q-item tag="label" 
-                v-ripple v-for="(component, i) in nivel.componentes"
-                :key="`child-com-${i}`">
-                <q-item-section avatar>
-                  <q-checkbox
-                    v-model="componentesCurriculares"
-                    :val="component.id"
-                    color="teal"
-                  />
-                </q-item-section>
-                <q-item-label class="q-pt-sm">
-                  {{component.name}}
-                </q-item-label>
-              </q-item>
-            </q-list>
-            <q-separator class="q-mt-lg" inset color="positive"></q-separator>
           </div>
-        </div>
+        </q-card-section>
+      </q-scroll-area>
+      <q-card-section>
+        <ShowErrors 
+        :error="errors.componentes && errors.componentes.length > 0" 
+        :errors="errors.componentes"></ShowErrors>
       </q-card-section>
     </q-card>
   </div>
@@ -244,7 +313,7 @@
 
 <script>
 import { mapGetters, mapActions, mapState, mapMutations } from "vuex";
-import { ShowErrors } from "@forms/shared";
+import { ShowErrors, ParentAndChildSelect } from "@forms/shared";
 import {
   QInput,
   QEditor,
@@ -273,12 +342,15 @@ export default {
     QStep,
     QStepperNavigation,
     ShowErrors,
-    QDialog
+    QDialog,
+    ParentAndChildSelect
   },
   data() {
     return {
       step: 1,
       conteudo: {
+        download:"",
+        guiaPedagogico:"",
         license_id: null,
         canal_id: null,
         category_id: null,
@@ -286,24 +358,24 @@ export default {
         site: "",
         title: "",
         description: "",
+        canal: null,
         options: {
-          site: null
+          site: ""
         },
-        category:{},
+        category:null,
         authors: "",
         source: "",
         image: "",
         tags: [],
         componentes: [],
-        terms: false,
         is_approved: false,
         is_featured: false,
         is_site: false
       },
       categoriesList: [],
       canais: [],
+      terms: false,
       tipos: [],
-      tipo_id: null,
       componentesCurriculares: [],
       licencas: [],
       autocompleteTags: [],
@@ -312,6 +384,7 @@ export default {
       categories: [],
       imagem_associada:null,
       download_file:null,
+      guias_pedagogicos: null,
       errors:{},
       dialog: {
         text: "",
@@ -323,17 +396,17 @@ export default {
   },
   mounted() {
     this.getData();
-    this.getCategories();
   },
   computed: {
     ...mapState(["componentes", "niveis"])
   },
   methods: {
-     async getCategories() {
-      let resp = await axios.get("/aplicativos/categories");
-      if (resp.data.success) {
-        this.categoriesList = resp.data.metadata;
-      }
+    async getCategories(val) {
+      const id = val.id;
+      const { data } = await axios.get(`/categorias/canal/${id}`);
+      
+      this.categories = data.metadata.categories;
+      this.categoryName = data.metadata.category_name;
     },
     onImageFileChange(e) {
             var files = e.target.files || e.dataTransfer.files;
@@ -346,6 +419,12 @@ export default {
         if (!files.length)
             return;
         this.download_file = files[0];
+    },
+    onguiaPedagogicoFileChange(e){
+       var files = e.target.files || e.dataTransfer.files;
+        if (!files.length)
+            return;
+        this.guias_pedagogicos = files[0];
     },
     async save() {
       
@@ -365,6 +444,26 @@ export default {
       form.append("description", this.conteudo.description);
       form.append("source", this.conteudo.source);
       form.append("authors", this.conteudo.authors);
+      if(this.conteudo.options.site)
+      {
+        
+          form.append("options_site", this.conteudo.options.site);
+          form.append("is_site", true) ;
+      }
+      else
+      {
+        form.append("is_site", false);
+      }
+      console.log(this.conteudo)
+      form.append("tipo_id", this.conteudo.tipo ? this.conteudo.tipo.id : "");
+      form.append("canal_id", this.conteudo.canal ? this.conteudo.canal.id : "");
+      
+      form.append("license_id", this.conteudo.license_id ? this.conteudo.license_id : "");
+      form.append("category_id",  this.conteudo.category_id ? this.conteudo.category_id : "" );
+      form.append("title", this.conteudo.title ? this.conteudo.title : "");
+      form.append("description", this.conteudo.description ? this.conteudo.description : "");
+      form.append("source", this.conteudo.source ? this.conteudo.source : "");
+      form.append("authors", this.conteudo.authors ? this.conteudo.authors : "");
       form.append("options_site", this.conteudo.options.site);
       form.append("image", this.conteudo.image);
       if (this.conteudo.tags.length) {
@@ -376,33 +475,43 @@ export default {
       form.append("componentes", this.componentesCurriculares);
       if(this.conteudo.terms)
       form.append("terms", this.conteudo.terms);
-      form.append("is_approved", this.conteudo.is_approved);
-      form.append("is_featured", this.conteudo.is_featured);
-      form.append("is_site", this.conteudo.is_site);
+      form.append("is_approved", this.conteudo.is_approved ? true : false);
+      form.append("is_featured", this.conteudo.is_featured ? true : false);
       if(this.imagem_associada)
-      form.append("image", this.imagem_associada);
+      form.append("imagem_associada", this.imagem_associada );
       if(this.download_file)
-      form.append("download", this.download_file);
-      let url = "/conteudos/";
+      form.append("download", this.download_file );
+      if(this.guias_pedagogicos)
+      form.append("guias_pedagogicos", this.guias_pedagogicos );
+      let url = "/conteudos";
       if (this.$route.params.action == "editar") {
         form.append("id", this.conteudo.id);
         form.append("_method", "PUT");
-        url = url + this.conteudo.id; 
+        url = url + '/' + this.conteudo.id; 
       }
       try{
-        let response = await axios.post(url, form);
-        console.log(response);
+        let { data } = await axios.post(url, form);
+        console.log('ok',data)
+        this.$router.push(`/admin/conteudos/listar`);
       }
       catch(ex)
       {
+        console.log('err',ex)
         this.errors = ex.errors;
       }
     },
-    async getCategories() {
-      let resp = await axios.get("/aplicativos/categories");
-      if (resp.data.success) {
-        this.categoriesList = resp.data.metadata;
+    async getCategories(val) {
+      if(!val || !val.id)
+      {
+        return;
       }
+      const id = val.id;
+      this.conteudo.canal = val;
+      const { data } = await axios.get(`/categorias/canal/${id}`);
+      
+      this.categories = data.metadata.categories;
+      this.categoryName = data.metadata.category_name;
+      
     },
     async getData() {
       const canais = axios.get("/canais?select");
@@ -417,14 +526,21 @@ export default {
       if (this.$route.params.id) {
         let { data } = await axios.get("/conteudos/" + this.$route.params.id);
         this.conteudo = data.metadata;
+        console.log(this.conteudo)
         this.componentesCurriculares = data.metadata.componentes.map(a => a.id);
       }
 
-      if(this.conteudo.category){
+      if(this.conteudo.category && this.conteudo.canal){
         this.getCategories(this.conteudo.canal);
         const category = this.conteudo.category
         this.selectedCategory = category.name;
       }
+    },
+    setCategory(id){
+      this.conteudo.category_id = id
+    },
+    setLicense(id){
+      this.conteudo.license_id = id
     },
     addTag(val, done) {
       const form = new FormData();

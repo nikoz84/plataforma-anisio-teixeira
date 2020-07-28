@@ -23,6 +23,9 @@
       <q-img v-else :src="showImage"
           placeholder-src="/img/fundo-padrao.svg" 
           style="height: 380px; max-width: 680px;">
+          <div class="absolute-bottom text-subtitle1 text-center">
+            Default
+          </div>
       </q-img>
  
   </div>  
@@ -74,12 +77,12 @@ export default {
       if(this.conteudo.arquivos){
         return [
           { 
-            src: this.arquivos.download.url, 
-            type: this.arquivos.download.mime_type
-          },
-          { 
             src: this.arquivos.visualizacao.url, 
             type: this.arquivos.visualizacao.mime_type
+          },
+          { 
+            src: this.arquivos.download.url, 
+            type: this.arquivos.download.mime_type
           }
         ]
       }

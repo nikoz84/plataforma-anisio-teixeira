@@ -1,24 +1,93 @@
 <template>
   <div class="q-pa-md">
-    <q-card v-if="rotinas">
-      <!-- LISTA DE ITENS -->
-      <div class="q-pa-sm">
-        
-        <div class="column" v-for="(rotina, i) in rotinas" :key="i">
-          <q-card class="flex-break" v-for="(atividade, d) in rotina" :key="d">
-            <q-card-section>
-              {{ getDay(d) }}
-            </q-card-section>
+    <header class="row wrap items-center q-my-md">
+      <div class="text-h5 color-primary">
+        Rotinas de Estudo
+      </div>
+    </header>
+    <div class="row justify-center q-gutter-md">
+      <q-select
+        v-model="nivel"
+        :options="niveisModel"
+        style="min-width: 250px"
+        @input="changeNivel" 
+      ></q-select>
+      <q-select
+        v-model="semana"
+        :options="semanasModel"
+        @input="changeSemana"
+        style="min-width: 200px"
+      ></q-select>
+    </div>
+    <div v-if="rotinas">
+      <div class="row justify-start q-mt-md q-gutter-md" v-for="(rotina, i) in rotinas" :key="i">
+        <div class="col-sm-2" v-for="(atividade, d) in rotina" :key="d">
+          <b class="text-center" v-if="i == 0">
+            {{ getDay(d) }}
+          </b>
+          <q-card v-if="d == 'segunda'">
             <q-card-section >
-              
-              {{ toJson(atividade).sugestao }}
               {{ toJson(atividade).descricao }}
+              <q-space class="q-mt-md"></q-space>
+              {{ toJson(atividade).sugestao }} 
             </q-card-section>
+            <q-card-actions>
+              <a target="_blank" :href="toJson(atividade).link">
+                Visitar
+              </a>
+            </q-card-actions>
+          </q-card>
+          <q-card v-if="d == 'terca'">
+            <q-card-section >
+              {{ toJson(atividade).descricao }}
+              <q-space class="q-mt-md"></q-space>
+              {{ toJson(atividade).sugestao }} 
+            </q-card-section>
+            <q-card-actions>
+              <a target="_blank" :href="toJson(atividade).link">
+                Visitar
+              </a>
+            </q-card-actions>
+          </q-card>
+          <q-card v-if="d == 'quarta'">
+            <q-card-section >
+              {{ toJson(atividade).descricao }}
+              <q-space class="q-mt-md"></q-space>
+              {{ toJson(atividade).sugestao }} 
+            </q-card-section>
+            <q-card-actions>
+              <a target="_blank" :href="toJson(atividade).link">
+                Visitar
+              </a>
+            </q-card-actions>
+          </q-card>
+          <q-card v-if="d == 'quinta'">
+            <q-card-section >
+              {{ toJson(atividade).descricao }}
+              <q-space class="q-mt-md"></q-space>
+              {{ toJson(atividade).sugestao }} 
+            </q-card-section>
+            <q-card-actions>
+              <a target="_blank" :href="toJson(atividade).link">
+                Visitar
+              </a>
+            </q-card-actions>
+          </q-card>
+          <q-card v-if="d == 'sexta'">
+            <q-card-section >
+              {{ toJson(atividade).descricao }}
+              <q-space class="q-mt-md"></q-space>
+              {{ toJson(atividade).sugestao }} 
+            </q-card-section>
+            <q-card-actions>
+              <a target="_blank" :href="toJson(atividade).link">
+                Visitar
+              </a>
+            </q-card-actions>
           </q-card>
         </div>
-        
       </div>
-    </q-card>
+    </div>
   </div>
 </template>
 
@@ -28,30 +97,57 @@ export default {
     data() {
       return {
         rotinas: [],
-        paginator: {},
-        current: 0,
-        last: 0,
-        total: 0
+        semanasModel: [],
+        semana: {
+          value : 'semana-1',
+          label : 'Semana 1'
+        },
+        nivel: {
+          value: 'ensino-fundamental-1',
+          label: 'Ensino Fundamental 1',
+        },
+        niveisModel:[
+          {
+            value: 'ensino-fundamental-1',
+            label: 'Ensino Fundamental 1'
+          },
+          {
+            value: 'ensino-fundamental-2',
+            label: 'Ensino Fundamental 2'
+          },
+          {
+            value: 'ensino-medio',
+            label: 'Ensino Médio'
+          }
+        ]
       }
     },
     created() {
+      if (this.$route.params.nivel){
+        this.nivel = this.niveisModel.filter((item)=>{
+          return item.value === this.$route.params.nivel
+        }).reduce(obj => obj);
+      }
       this.getRotinas();
     },
     methods: {
       async getRotinas(){
-        const { data } = await axios.get('/rotinas/ensino-medio/semana-2');
+        let nivel = this.nivel.value ? this.nivel.value : 'ensino-fundamental-1';
+        let semana = this.semana.value ? this.semana.value : 'semana-1';
+        const { data } = await axios.get(`/rotinas/${nivel}/${semana}`);
         
-        this.rotinas = data.metadata
-
-        /*
-        this.paginator = data.paginator
-        this.total = data.paginator.total 
-        this.current = data.paginator.current_page
-        this.last = data.paginator.last_page
-    */
+        this.rotinas = data.metadata.rotinas;
+        this.semanasModel = data.metadata.semanas;
+        console.log(data.metadata)
         
-        console.log(data)
-        
+      },
+      changeSemana(value){
+        this.semana = value;
+        this.getRotinas();
+      },
+      changeNivel(value){
+        this.nivel = value;
+        this.getRotinas();
       },
       toJson(data){
         return JSON.parse(data);
@@ -74,7 +170,6 @@ export default {
               return 'Sexta Feira';
             break;
           default:
-            return '';
             break;
         }
       }

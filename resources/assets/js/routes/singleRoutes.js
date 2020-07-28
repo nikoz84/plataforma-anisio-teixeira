@@ -21,8 +21,7 @@ const galeriaRoute = {
 const sobreRoute = {
     path: "/sobre",
     name: "Sobre",
-    component: () =>
-      import(/* webpackChunkName: "sobre" */ "@pages/Sobre.vue"),
+    component: () => import(/* webpackChunkName: "sobre" */ "@pages/Sobre.vue"),
     meta: {
       requiresAuth: false,
       title: "Sobre a Plataforma"
@@ -31,8 +30,7 @@ const sobreRoute = {
 const praticasRoute = {
     path: "/praticas-pedagogicas",
     name: "PraticasPedagogicas",
-    component: () =>
-      import(/* webpackChunkName: "praticas" */ "@pages/PraticasPedagogicas.vue"),
+    component: () => import(/* webpackChunkName: "praticas" */ "@pages/PraticasPedagogicas.vue"),
     meta: {
       requiresAuth: false,
       title: "Pŕaticas pedagógicas"
@@ -48,7 +46,7 @@ const ipesRoute = {
     }
 };
 const rotinasRoute = {
-  path: "/rotinas-de-estudo",
+  path: "/rotinas-de-estudo/:nivel?/:semana?",
   name: "RotinasEstudo",
   component: () => import(/* webpackChunkName: "rotinas" */ "@pages/RotinasDeEstudo.vue"),
   meta: {
