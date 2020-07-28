@@ -101,10 +101,9 @@ Resposta de conteúdos paginados:
 ## Lista aplicativos educacionais
 
 - método: `GET`
-<<<<<<< HEAD
 - endpoint: `/aplicativos`
   
-Resposta de conteúdos paginados:
+Resposta de aplicativos educacionais paginados:
 
 ```json
 
@@ -149,539 +148,135 @@ Resposta de conteúdos paginados:
       "color": "#009245"
             }
         },
-      {
-      "id": 18,
-      "user_id": 2,
-      "category_id": 11,
-      "canal_id": 9,
-      "name": "Scribus",
-      "description": "<p>O Scribus é um aplicativo de Desktop Publishing de código aberto. Versões nativas do programa estão disponíveis para Linux, Unix, Mac OS X , OS/2 e Windows, possuindo recursos avançados de layout, similares aos encontrados no Adobe PageMaker, QuarkXPress e no Adobe InDesign.</p><p>O Scribus foi desenvolvido para um layout flexibilizado e para o controle de caracteres, com a habilidade de preparar arquivos para equipamentos de qualidade profissional de imagem, sendo disponível em mais de 24 idiomas.</p><p>O Scribus também pode criar apresentações e formulários PDF animados e interativos. Os exemplos de uso incluem jornais, brochuras, cartazes e livros.</p>",
-      "url": "http://wiki.softwarelivre.org/Scribus/Download",
-      "options": {
-      "qt_access": 2818,
-      "is_featured": false
-      },
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "image": null,
-      "excerpt": "O Scribus é um aplicativo de Desktop Publishing de código aberto. Versões nativas do programa estão disponíveis para Linux, Unix, Mac OS X , OS/2 e Windows, possuindo recursos avançados...",
-      "url_exibir": "/aplicativos-educacionais/aplicativo/exibir/18",
-      "formated_date": "12 de setembro de 2019 ás 16:51",
-      "user_can": null,
-      "category": {
-      "id": 11,
-      "canal_id": 9,
-      "name": "Aplicativos para Escritório",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-        },
-      "canal": {
-      "id": 9,
-      "name": "Aplicativos Educacionais",
-      "slug": "aplicativos-educacionais",
-      "color": "#009245"
-              }
-          },
-      {
-      "id": 43,
-      "user_id": 2,
-      "category_id": 22,
-      "canal_id": 9,
-      "name": "Drupal",
-      "description":"<p>Drupal é um framework modular e um sistema de gerenciamento de conteúdo (CMS) escrito em PHP. Da mesma forma que os sistemas de gerenciamento de conteúdo mais modernos, o Drupal permite criar e organizar conteúdo, manipular a aparência, automatizar tarefas administrativas e definir permissões e papéis para usuários e colaboradores.</p>Por ser desenvolvido em PHP, o Drupal é independente de sistema operacional, no entanto requer um servidor HTTP compatível com PHP e um Servidor de Banco de Dados para funcionar.</p>O Drupal é comumente descrito como um Framework de Gerenciamento de Conteúdo, pois além de oferecer as funcionalidades básicas de um CMS ele também implementa uma série de APIs robustas e apresenta uma estrutura modular que facilita o desenvolvimento de módulos extensivos.</p>",
-      "url": "http://drupal.org/download",
-      "options": {
-      "qt_access": 1220,
-      "is_featured": false
-      },
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "image": null,
-      "excerpt": "Drupal é um framework modular e um sistema de gerenciamento de conteúdo (CMS) escrito em PHP. Da mesma forma que os sistemas de gerenciamento de conteúdo mais modernos, o Drupal...",
-      "url_exibir": "/aplicativos-educacionais/aplicativo/exibir/43",
-      "formated_date": "12 de setembro de 2019 ás 16:51",
-      "user_can": null,
-      "category": {
-      "id": 22,
-      "canal_id": 9,
-      "name": "Gerenciador de Conteúdo",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-      },
-      "canal": {
-      "id": 9,
-      "name": "Aplicativos Educacionais",
-      "slug": "aplicativos-educacionais",
-      "color": "#009245"
-              }
-          },
-      { 
-      "id": 67,
-      "user_id": 2,
-      "category_id": 8,
-      "canal_id": 9,
-      "name": "Pysycache",
-      "description": "<p>Programa educacional para crianças pequenas (de quatro a sete anos), cujo propósito é ensiná-las a manipular o mouse descobrindo uma imagem com os movimentos.</p> Possui seis temas (animais, comida, plantas, esportes, veículos e paisagens), totalizando 52 imagens. No entanto, qualquer imagem poderá ser utilizada.Roda em Windows 95, 98, NT, 2000, Millenium, XP alem de possui versão para Linux e para Mac. O site encontra-se em inglês.",
-      "url": "http://download.tuxfamily.org/py4childs/pysycache/v3.1/pysycache-src-3.1c.zip",
-      "options": {
-      "qt_access": 936,
-      "is_featured": false
-      },
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "image": null,
-      "excerpt": "<p>Programa educacional para crianças pequenas (de quatro a sete anos), cujo propósito é ensiná-las a manipular o mouse descobrindo uma imagem com os movimentos. Possui seis temas (animais, comida, plantas,...</p>",
-      "url_exibir": "/aplicativos-educacionais/aplicativo/exibir/67",
-      "formated_date": "12 de setembro de 2019 ás 16:51",
-      "user_can": null,
-      "category": {
-      "id": 8,
-      "canal_id": 9,
-      "name": "Ambiente de Aprendizagem",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-      },
-      "canal": {
-      "id": 9,
-      "name": "Aplicativos Educacionais",
-      "slug": "aplicativos-educacionais",
-      "color": "#009245"
-          }
-        },
-      {
-      "id": 101,
-      "user_id": 2,
-      "category_id": 23,
-      "canal_id": 9,
-      "name": "Cambito",
-      "description": "<p>Projeto da organização Viva Favela que tem como objetivo a diminuição da exclusão digital, especialmente entre a população de baixa renda.</p>",
-      "url": "http://www.cambito.com.br/",
-      "options": {
-      "qt_access": 420,
-      "is_featured": false
-      },
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "image": null,
-      "excerpt": "<p>Projeto da organização Viva Favela que tem como objetivo a diminuição da exclusão digital, especialmente entre a população de baixa renda.</p>",
-      "url_exibir": "/aplicativos-educacionais/aplicativo/exibir/101",
-      "formated_date": "12 de setembro de 2019 ás 16:51",
-      "user_can": null,
-      "category": {
-      "id": 23,
-      "canal_id": 9,
-      "name": "Portais Educacionais",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-      },
-      "canal": {
-      "id": 9,
-      "name": "Aplicativos Educacionais",
-      "slug": "aplicativos-educacionais",
-      "color": "#009245"
-           }
-        },
-      {
-      "id": 96,
-      "user_id": 2,
-      "category_id": 11,
-      "canal_id": 9,
-      "name": "Gnumeric",
-      "description": "<p>Seu objetivo é competir com os similares comerciais, usuários do Excel deverão estar familiarizados com suas características avançadas e um sistema de plugins permite que você estenda suas capacidades com extensões GPL e opcionalmente plugins em Python, Guile e Perl permite a definição de complexas funções. É capaz de ler e gravar planilhas do Excel e diversos outros formatos. Roda em Ambiente gráfico Gnome.</p>",
-      "url": "http://linux.softpedia.com/get/Office/Groupware/Gnumeric-2602.shtml",
-      "options": {
-      "qt_access": 891,
-      "is_featured": false
-      },
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "image": null,
-      "excerpt": "<p>Seu objetivo é competir com os similares comerciais, usuários do Excel deverão estar familiarizados com suas características avançadas e um sistema de plugins permite que você estenda suas capacidades com...</p>",
-      "url_exibir": "/aplicativos-educacionais/aplicativo/exibir/96",
-      "formated_date": "12 de setembro de 2019 ás 16:51",
-      "user_can": null,
-      "category": {
-      "id": 11,
-      "canal_id": 9,
-      "name": "Aplicativos para Escritório",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-      },
-      "canal": {
-      "id": 9,
-      "name": "Aplicativos Educacionais",
-      "slug": "aplicativos-educacionais",
-      "color": "#009245"
-            }
-          }
-      ],
-      "first_page_url": "/aplicativos?categoria=&limit=6&page=1",
-      "from": 1,
-      "last_page": 14,
-      "last_page_url": "/aplicativos?categoria=&limit=6&page=14",
-      "next_page_url": "/aplicativos?categoria=&limit=6&page=2",
-      "path": "/aplicativos?categoria=&limit=6",
-      "per_page": 6,
-      "prev_page_url": null,
-      "to": 6,
-      "total": 84
-      },
-      "message": "",
-      "success": true
-    }
-
-
-    {
-      "metadata": [
-      {
-      "id": 8,
-      "canal_id": 9,
-      "name": "Ambiente de Aprendizagem",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-    },
-      {
-      "id": 21,
-      "canal_id": 9,
-      "name": "Sistemas Operacionais Livres",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-    },
-      {
-      "id": 9,
-      "canal_id": 9,
-      "name": "Ambiente de Programação",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-    },
-      {
-      "id": 10,
-      "canal_id": 9,
-      "name": "Aplicativos Educacionais",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-    },
-      {   
-      "id": 11,
-      "canal_id": 9,
-      "name": "Aplicativos para Escritório",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-    },
-     {
-      "id": 12,
-      "canal_id": 9,
-      "name": "Editor de Animação",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-    },
-     {
-      "id": 13,
-      "canal_id": 9,
-      "name": "Editor de Imagem",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-    },
-      {
-      "id": 20,
-      "canal_id": 9,
-      "name": "Editor de Vídeo",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-    },
-      {
-      "id": 22,
-      "canal_id": 9,
-      "name": "Gerenciador de Conteúdo",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-    },
-      {
-      "id": 14,
-      "canal_id": 9,
-      "name": "Gerenciador de Projetos",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-    },
-      {
-      "id": 18,
-      "canal_id": 9,
-      "name": "Gerenciador de Revistas",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-    },
-      {
-      "id": 23,
-      "canal_id": 9,
-      "name": "Portais Educacionais",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-    },
-      {
-      "id": 36,
-      "canal_id": 9,
-      "name": "Biblioteca",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-    },
-      {
-      "id": 37,
-      "canal_id": 9,
-      "name": "Editor de Áudio",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-    },
-     {
-      "id": 38,
-      "canal_id": 9,
-      "name": "Internet",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-      }
-      ],
-      "message": "",
-      "success": true
-    }
-
-
-    {
-    "metadata": [
-      {
-      "id": 8,
-      "canal_id": 9,
-      "name": "Ambiente de Aprendizagem",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-    },
-      {
-      "id": 21,
-      "canal_id": 9,
-      "name": "Sistemas Operacionais Livres",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-  },
-      {
-      "id": 9,
-      "canal_id": 9,
-      "name": "Ambiente de Programação",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-  },
-      {
-      "id": 10,
-      "canal_id": 9,
-      "name": "Aplicativos Educacionais",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-  },
-      {
-      "id": 11,
-      "canal_id": 9,
-      "name": "Aplicativos para Escritório",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-  },
-      {
-      "id": 12,
-      "canal_id": 9,
-      "name": "Editor de Animação",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-  },
-      {
-      "id": 13,
-      "canal_id": 9,
-      "name": "Editor de Imagem",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-  },
-      {
-      "id": 20,
-      "canal_id": 9,
-      "name": "Editor de Vídeo",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-  },
-      {
-      "id": 22,
-      "canal_id": 9,
-      "name": "Gerenciador de Conteúdo",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-  },
-      {
-      "id": 14,
-      "canal_id": 9,
-      "name": "Gerenciador de Projetos",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-  },
-     {
-      "id": 18,
-      "canal_id": 9,
-      "name": "Gerenciador de Revistas",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-  },
-      {
-      "id": 23,
-      "canal_id": 9,
-      "name": "Portais Educacionais",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-  },
-     {
-      "id": 36,
-      "canal_id": 9,
-      "name": "Biblioteca",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-  },
-      {
-      "id": 37,
-      "canal_id": 9,
-      "name": "Editor de Áudio",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-  },
-      {
-      "id": 38,
-      "canal_id": 9,
-      "name": "Internet",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-  }
     ],
-    "message": "",
-    "success": true
-}
-
+    "first_page_url": "/aplicativos?categoria=&limit=6&page=1",
+    "from": 1,
+    "last_page": 14,
+    "last_page_url": "/aplicativos?categoria=&limit=6&page=14",
+    "next_page_url": "/aplicativos?categoria=&limit=6&page=2",
+    "path": "/aplicativos?categoria=&limit=6",
+    "per_page": 6,
+    "prev_page_url": null,
+    "to": 6,
+    "total": 84
+  },
+  "message": "",
+  "success": true
 ```
-## Lista de Aplicativos
+
+## Lista do aplicativo educacional por ID
 
 - método: `GET`
 - endpoint: `/aplicativos/{id}`
-  
 
-## Lista de Autenticação
+Resposta:
+```json
+
+{
+  "metadata": {
+    "id": 83,
+    "user_id": 2,
+    "category_id": 23,
+    "canal_id": 9,
+    "name": "Webeduc",
+    "description": "Neste portal você encontrará material de pesquisa, objetos de aprendizagem e outros conteúdos educacionais de livre acesso.",
+    "url": "http://webeduc.mec.gov.br/",
+    "options": {
+      "qt_access": 512,
+      "is_featured": false
+    },
+    "created_at": "2019-09-12 16:51:17",
+    "updated_at": "2020-07-28 17:35:02",
+    "deleted_at": null,
+    "image": "http://pat.des/storage/conteudos/aplicativos-educacionais/imagem-associada/83.jpg",
+    "excerpt": "Neste portal você encontrará material de pesquisa, objetos de aprendizagem e outros conteúdos educacionais de livre acesso.",
+    "url_exibir": "/aplicativos-educacionais/aplicativo/exibir/83",
+    "formated_date": "12 de setembro de 2019 ás 16:51",
+    "user_can": null,
+    "tags": [
+      {
+        "id": 261,
+        "name": "aprendizagem",
+        "user_can": null
+      },
+      {
+        "id": 316,
+        "name": "conteúdos",
+        "user_can": null
+      },
+      {
+        "id": 180,
+        "name": "educacionais",
+        "user_can": null
+      },
+      {
+        "id": 321,
+        "name": "livre",
+        "user_can": null
+      },
+      {
+        "id": 320,
+        "name": "objeto",
+        "user_can": null
+      },
+      {
+        "id": 319,
+        "name": "pesquisa",
+        "user_can": null
+      }
+    ],
+    "category": {
+      "id": 23,
+      "canal_id": 9,
+      "name": "Portais Educacionais",
+      "created_at": "2019-09-12 16:51:17",
+      "updated_at": null,
+      "deleted_at": null,
+      "sub_categories": [
+        
+      ],
+      "user_can": null
+    },
+    "user": {
+      "id": 2,
+      "name": "Rede Anísio Teixeira",
+      "is_admin": false,
+      "image": "http://pat.des/storage/conteudos/fotos-perfil/usuario",
+      "user_can": null
+    },
+    "canal": {
+      "id": 9,
+      "name": "Aplicativos Educacionais",
+      "slug": "aplicativos-educacionais",
+      "color": "#009245"
+    }
+  },
+  "message": "",
+  "success": true
+}
+
+```
+
+## Login
 - método: `POST`
 - endpoint: `/auth/login`
+- keys : `email`, `password`, `recaptcha`
+
+## Cadastro
+- método: `POST`
 - endpoint: `/auth/cadastro`
+- keys: `email`, `password`, `confirmation` ,`recaptcha`
+
+## Recuperar senha
 - endpoint: `/auth/recuperar-senha`
+
+## Modificar senha
 - endpoint: `/auth/modificar-senha/{token}`
 
-- método: `GET`
+## Verificar token
 - endpoint:  `/auth/verificar/{token}`
+
+## Verificar email
 - endpoint:  `/auth/verificar/email/{token}`
   
 ## Lista de Options
@@ -701,6 +296,3 @@ Resposta de conteúdos paginados:
 - método: `GET`
 - endpoint: `/tags/{id}`
   
-=======
-- endpoint: `/api-v1/aplicativos`
->>>>>>> ed70259ae14bd2c52ad17388cabf33e2972caf85
