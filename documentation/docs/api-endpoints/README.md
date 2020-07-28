@@ -101,4 +101,198 @@ Resposta de conteúdos paginados:
 ## Lista aplicativos educacionais
 
 - método: `GET`
-- endpoint: `/api-v1/aplicativos`
+- endpoint: `/aplicativos`
+  
+Resposta de aplicativos educacionais paginados:
+
+```json
+
+{
+ "paginator": {
+   "current_page": 1,
+   "data": [
+       {
+      "id": 31,
+      "user_id": 2,
+      "category_id": 20,
+      "canal_id": 9,
+      "name": "Kdenlive",
+      "description": "<p>Kdenlive é um editor de vídeo não-linear.</p> **Obs.:** Disponivel para plataformas Linux e Mac.",
+      "url": "https://kdenlive.org",
+      "options": {
+      "qt_access": 4598,
+      "is_featured": false
+          },
+      "created_at": "2019-09-12 16:51:17",
+      "updated_at": null,
+      "deleted_at": null,
+      "image": null,
+      "excerpt": "<p>Kdenlive é um editor de vídeo não-linear.</p>**Obs.:** Disponivel para plataformas Linux e Mac.",
+      "url_exibir": "/aplicativos-educacionais/aplicativo/exibir/31",
+      "formated_date": "12 de setembro de 2019 ás 16:51",
+      "user_can": null,
+      "category": {
+      "id": 20,
+      "canal_id": 9,
+      "name": "Editor de Vídeo",
+      "created_at": "2019-09-12 16:51:17",
+      "updated_at": null,
+      "deleted_at": null,
+      "sub_categories": [],
+      "user_can": null
+            },
+      "canal": {
+      "id": 9,
+      "name": "Aplicativos Educacionais",
+      "slug": "aplicativos-educacionais",
+      "color": "#009245"
+            }
+        },
+    ],
+    "first_page_url": "/aplicativos?categoria=&limit=6&page=1",
+    "from": 1,
+    "last_page": 14,
+    "last_page_url": "/aplicativos?categoria=&limit=6&page=14",
+    "next_page_url": "/aplicativos?categoria=&limit=6&page=2",
+    "path": "/aplicativos?categoria=&limit=6",
+    "per_page": 6,
+    "prev_page_url": null,
+    "to": 6,
+    "total": 84
+  },
+  "message": "",
+  "success": true
+```
+
+## Lista do aplicativo educacional por ID
+
+- método: `GET`
+- endpoint: `/aplicativos/{id}`
+
+Resposta:
+```json
+
+{
+  "metadata": {
+    "id": 83,
+    "user_id": 2,
+    "category_id": 23,
+    "canal_id": 9,
+    "name": "Webeduc",
+    "description": "Neste portal você encontrará material de pesquisa, objetos de aprendizagem e outros conteúdos educacionais de livre acesso.",
+    "url": "http://webeduc.mec.gov.br/",
+    "options": {
+      "qt_access": 512,
+      "is_featured": false
+    },
+    "created_at": "2019-09-12 16:51:17",
+    "updated_at": "2020-07-28 17:35:02",
+    "deleted_at": null,
+    "image": "http://pat.des/storage/conteudos/aplicativos-educacionais/imagem-associada/83.jpg",
+    "excerpt": "Neste portal você encontrará material de pesquisa, objetos de aprendizagem e outros conteúdos educacionais de livre acesso.",
+    "url_exibir": "/aplicativos-educacionais/aplicativo/exibir/83",
+    "formated_date": "12 de setembro de 2019 ás 16:51",
+    "user_can": null,
+    "tags": [
+      {
+        "id": 261,
+        "name": "aprendizagem",
+        "user_can": null
+      },
+      {
+        "id": 316,
+        "name": "conteúdos",
+        "user_can": null
+      },
+      {
+        "id": 180,
+        "name": "educacionais",
+        "user_can": null
+      },
+      {
+        "id": 321,
+        "name": "livre",
+        "user_can": null
+      },
+      {
+        "id": 320,
+        "name": "objeto",
+        "user_can": null
+      },
+      {
+        "id": 319,
+        "name": "pesquisa",
+        "user_can": null
+      }
+    ],
+    "category": {
+      "id": 23,
+      "canal_id": 9,
+      "name": "Portais Educacionais",
+      "created_at": "2019-09-12 16:51:17",
+      "updated_at": null,
+      "deleted_at": null,
+      "sub_categories": [
+        
+      ],
+      "user_can": null
+    },
+    "user": {
+      "id": 2,
+      "name": "Rede Anísio Teixeira",
+      "is_admin": false,
+      "image": "http://pat.des/storage/conteudos/fotos-perfil/usuario",
+      "user_can": null
+    },
+    "canal": {
+      "id": 9,
+      "name": "Aplicativos Educacionais",
+      "slug": "aplicativos-educacionais",
+      "color": "#009245"
+    }
+  },
+  "message": "",
+  "success": true
+}
+
+```
+
+## Login
+- método: `POST`
+- endpoint: `/auth/login`
+- keys : `email`, `password`, `recaptcha`
+
+## Cadastro
+- método: `POST`
+- endpoint: `/auth/cadastro`
+- keys: `email`, `password`, `confirmation` ,`recaptcha`
+
+## Recuperar senha
+- endpoint: `/auth/recuperar-senha`
+
+## Modificar senha
+- endpoint: `/auth/modificar-senha/{token}`
+
+## Verificar token
+- endpoint:  `/auth/verificar/{token}`
+
+## Verificar email
+- endpoint:  `/auth/verificar/email/{token}`
+  
+## Lista de Options
+- método: `GET`
+- endpoint: `/options/{name}`
+- endpoint: `/options`
+
+- Resposta de Conteúdo Paginado  
+
+  ```json
+  {
+    "success": true,
+    "options": null
+  }                        
+  ```
+## Lista de Tags
+- método: `GET`
+- endpoint: `/tags/{id}`
+  

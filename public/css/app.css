@@ -1,9 +1,12 @@
 .bg-cinza {
   background: #e1e2e1 !important;
 }
+<<<<<<< HEAD
+=======
 .texto-cinza {
   color: #e1e2e1 !important;
 }
+>>>>>>> a2356938d17f691ddc818987158b8c0ab96748df
 .bg-light {
   background-color: #bdbdbd !important;
 }
@@ -13,6 +16,17 @@
 .bg-petecavermelho {
   background-color: #cc2726 !important;
 }
+<<<<<<< HEAD
+.bg-petecaamarelo {
+  background-color: #e9ba1a !important;
+}
+.bg-petecaazul {
+  background-color: #3871c1 !important;
+}
+.bg-petecaverde {
+  background-color: #3cac3d !important;
+}
+=======
 .texto-vermelho {
   color: #cc2726 !important;
 }
@@ -34,6 +48,7 @@
 .texto-verde {
   color: #3cac3d !important;
 }
+>>>>>>> a2356938d17f691ddc818987158b8c0ab96748df
 .active-link-pat {
   background-color: #066ab1;
   color: #fff !important;

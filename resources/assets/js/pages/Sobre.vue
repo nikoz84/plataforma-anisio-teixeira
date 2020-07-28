@@ -90,9 +90,7 @@
       <q-card class="my-card" flat >
       <q-card-section horizontal>
         <q-icon class="col-2" color="accent" size="5rem">
-          <svg class="icon anisio" viewBox="0 0 24 24">
-            <use xlink:href="#anisioteixeira2"></use>
-          </svg>
+          <img src="/img/sprite/anisioteixeira2.svg">
         </q-icon>
         <q-card-section>
           <div  class="texto-azul text-h6 q-mb-md" style="text-decoration: underline">Você Sabia?</div>

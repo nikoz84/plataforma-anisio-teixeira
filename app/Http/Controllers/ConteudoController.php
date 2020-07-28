@@ -142,7 +142,7 @@ class ConteudoController extends ApiController
             $request->all(),
             $this->configRules()
         );
-        //return $this->successResponse($request->all());
+        
         if ($validator->fails()) {
             return $this->errorResponse(
                 $validator->errors(),
@@ -201,7 +201,6 @@ class ConteudoController extends ApiController
         $conteudo->fill($request->all());
 
         if (!$conteudo->save()) {
-
             return $this->errorResponse([], 'Não foi possível atualizar o conteúdo', 422);
         }
         $conteudo->tags()->sync($request->tags);
