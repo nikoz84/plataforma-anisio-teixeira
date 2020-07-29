@@ -92,7 +92,7 @@
         tabindex="0"
       >
         <q-item-section>
-          <q-item-label>Canal das Faculdades</q-item-label>
+          <q-item-label>Canal das Universidades</q-item-label>
         </q-item-section>
       </q-item>
       <!--q-item
