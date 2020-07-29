@@ -1,6 +1,6 @@
 # Mudanças versão 2.0.1
 
-- Fix: icone de carregamento em lista do paginador
-- Fix: icone anisio teixera em página sobre
-- Fix: canal das faculdades por canal das universidades
-- Fix: prioridade para arquivo de visualização em player de video
+- Correção: icone de carregamento em lista do paginador
+- Correção: icone anisio teixera em página sobre
+- Correção: canal das faculdades por canal das universidades
+- Correção: prioridade para arquivo de visualização em player de video
