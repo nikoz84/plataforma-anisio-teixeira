@@ -7,6 +7,8 @@
 - Icone anisio teixera em página sobre
 - Canal das Faculdades por Canal das Universidades
 - Mudança do posicionamento do menu dos canais para dar destaque
+- Mudança sobre a PAT
+- Ortografia de palavras chaves ifenizadas palavras-chave
 
 ## Correções
 
