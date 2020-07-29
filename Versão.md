@@ -4,3 +4,5 @@
 - Correção: icone anisio teixera em página sobre
 - Correção: canal das faculdades por canal das universidades
 - Correção: prioridade para arquivo de visualização em player de video
+- Correção: ortografia na data de publicação ás por às
+- Correção: mudança de menu de canal de posicionamento para dar destaque
