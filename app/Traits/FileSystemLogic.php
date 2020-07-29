@@ -7,6 +7,7 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Helpers\ReplaceStr;
 
 trait FileSystemLogic
 {
@@ -54,6 +55,10 @@ trait FileSystemLogic
     {
         $path_assoc = Storage::disk('conteudos-digitais')->path('imagem-associada');
         $file = self::findFiles($path_assoc, $id, $tipo);
+        if(strpos($file,"http")!==false)
+        {
+            return $file;
+        }
         if ($file) 
         {
             $file = str_replace(Storage::disk('conteudos-digitais')->path(""),"",$file);
@@ -61,6 +66,7 @@ trait FileSystemLogic
             $replace = Storage::disk('conteudos-digitais')->url("{$file}");
             return $replace;
         }
+        
         return Storage::disk('public-path')->url("img/fundo-padrao.svg");
     }
 
@@ -75,13 +81,17 @@ trait FileSystemLogic
     {
         $path_img_assoc = "{$path}". DIRECTORY_SEPARATOR ."$id.*";
         $file = collect(File::glob($path_img_assoc))->last();
-        if ($tipo == 5 && !$file) 
+        if ($tipo->id == 5 && !$file) 
         {
             $path_sinopse = "{$path}". DIRECTORY_SEPARATOR ."sinopse". DIRECTORY_SEPARATOR."$id.*";
             $file = collect(File::glob($path_sinopse))->shuffle()->first();
             return $file;
-        }
-        
+        }/*
+        else if(!$file)
+        {
+            $iconeNome = ReplaceStr::replace($tipo->name);
+            return Storage::disk('public-path')->url("img/tipo-conteudo/".strtolower($iconeNome).".svg");
+        }*/
         return Str::replaceFirst($path . '/', '', $file);
     }
 

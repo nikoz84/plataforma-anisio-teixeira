@@ -117,7 +117,6 @@
         </q-select>
       </q-card-section>
       <q-card-section>
-        
         <q-img 
           loading="lazy" 
           width="100%" 
@@ -179,6 +178,8 @@
       </q-card-section>
       <q-card-section>
         <!-- CONTEUDO APROVADO --> 
+        <ShowErrors :errors="errors.is_approved"></ShowErrors>
+        <ShowErrors :errors="errors.is_featured"></ShowErrors>
         <div class="q-gutter-sm">
           <q-checkbox
             v-model="conteudo.is_approved"
@@ -186,6 +187,7 @@
             color="pink"
           />
           <!-- MARCAR COMO DESTAQUE --> 
+
           <q-checkbox
             v-model="conteudo.is_featured"
             label="Marcar como destaque"
@@ -448,11 +450,11 @@ export default {
       {
         
           form.append("options_site", this.conteudo.options.site);
-          form.append("is_site", true) ;
+          form.append("is_site", 1) ;
       }
       else
       {
-        form.append("is_site", false);
+        form.append("is_site", 0);
       }
       console.log(this.conteudo)
       form.append("tipo_id", this.conteudo.tipo ? this.conteudo.tipo.id : "");
@@ -473,10 +475,11 @@ export default {
         }
       }
       form.append("componentes", this.componentesCurriculares);
-      if(this.conteudo.terms)
-      form.append("terms", this.conteudo.terms);
-      form.append("is_approved", this.conteudo.is_approved ? true : false);
-      form.append("is_featured", this.conteudo.is_featured ? true : false);
+     
+      if( this.terms )
+      form.append("terms", 1);
+      form.append("is_featured", this.conteudo.is_featured ? 1 : 0);
+      form.append("is_approved", this.conteudo.is_approved ? 1 : 0);
       if(this.imagem_associada)
       form.append("imagem_associada", this.imagem_associada );
       if(this.download_file)

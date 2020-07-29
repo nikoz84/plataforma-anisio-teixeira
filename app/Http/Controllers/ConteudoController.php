@@ -96,7 +96,7 @@ class ConteudoController extends ApiController
             'tipo_id' => 'required',
             'category_id' => 'nullable',
             'title' => 'required|min:10|max:100',
-            'description' => 'required|min:140|max:1024',
+            'description' => 'required|min:140|max:5012',
             'options_site' => ['nullable','active_url', new \App\Rules\ValidUrl],
             'tags' => 'required',
             'componentes' => 'required',
@@ -108,7 +108,7 @@ class ConteudoController extends ApiController
             'is_site' => 'sometimes|boolean',
             'download' => "nullable|sometimes|mimes:{$this->mimeTypes()}|max:4500000",
             'guias_pedagogicos' => "sometimes|mimes:pdf,doc,docx,epub|max:1000000",
-            'imagem_associada' => 'sometimes|mimes:jpeg,jpg,png,gif|max:2000',
+            'imagem_associada' => 'sometimes|mimes:jpeg,jpg,png,gif,svg|max:2000',
             'visualizacao' => 'sometimes|file'
 
         ];
