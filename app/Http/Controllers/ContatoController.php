@@ -21,6 +21,7 @@ class ContatoController extends ApiController
         $this->contato = $contato;
         $this->request = $request;
     }
+
     /**
      * Lista de denúncias
      *
@@ -36,6 +37,7 @@ class ContatoController extends ApiController
 
         return $this->showAsPaginator($paginator);
     }
+    
     public function configRules()
     {
         return [
@@ -120,6 +122,7 @@ class ContatoController extends ApiController
 
         return $this->successResponse([], "Apagado com sucesso!", 200);
     }
+
     /**
      * Seleciona uma denuncia pelo ID
      *

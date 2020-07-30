@@ -1,24 +1,29 @@
 <template>
   <div class="q-pa-md">
-      <div class="q-mt-lg" v-for="(item, i) in items" :key="i" :id="item.document.slug">
-            <div class="text-h5 title-page text-primary separatriz q-pb-md" 
-                v-text="item.document.faculdade">
-            </div>
-            <div class="separatriz-6"></div>
-            <div class="q-gutter-sm">
-                <q-card v-for="(action, a) in item.document.actions" :key="a">
-                    <q-card-section>
-                        <strong>Ação:</strong> {{ action.name }} <q-space></q-space>
-                        <strong>descrição:</strong> {{ action.description }}
-                    </q-card-section>
-                    <q-card-actions>
-                        <q-btn>
-                            SAIBA MAIS
-                        </q-btn>
-                    </q-card-actions>
-                </q-card>
-            </div>
+    <header class="row wrap items-center q-my-md">
+      <div class="text-h5 color-primary">
+        Canal das Universidades
       </div>
+    </header>
+    <div class="q-mt-lg" v-for="(item, i) in items" :key="i" :id="item.document.slug">
+        <div class="text-h5 title-page text-primary separatriz q-pb-md" 
+            v-text="item.document.faculdade">
+        </div>
+        <div class="separatriz-6"></div>
+        <div class="q-gutter-sm">
+            <q-card v-for="(action, a) in item.document.actions" :key="a">
+                <q-card-section>
+                    <strong>Ação:</strong> {{ action.name }} <q-space></q-space>
+                    <strong>descrição:</strong> {{ action.description }}
+                </q-card-section>
+                <q-card-actions>
+                    <a target="_blank" :href="action.link">
+                        SAIBA MAIS
+                    </a>
+                </q-card-actions>
+            </q-card>
+        </div>
+    </div>
   </div>
 </template>
 

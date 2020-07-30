@@ -13,12 +13,8 @@
       no-caps
       inline-label
       >
-      <q-route-tab
-        name="inicio"
-        label="SOBRE"
-        :to="{ name: 'Inicio', params: { slug: $route.params.slug } }"
-        v-if="canal && canal.options && canal.options.has_home"
-      />
+      <CategoriasMenu></CategoriasMenu>
+      <Filters></Filters>
       <q-route-tab
         name="listar"
         label="LISTAR"
@@ -26,8 +22,12 @@
       />
       <q-space />
       <OrderBy></OrderBy>
-      <CategoriasMenu></CategoriasMenu>
-      <Filters></Filters>
+      <q-route-tab
+        name="inicio"
+        label="SOBRE"
+        :to="{ name: 'Inicio', params: { slug: $route.params.slug } }"
+        v-if="canal && canal.options && canal.options.has_home"
+      />
     </q-tabs>
     <q-card class="q-my-sm q-pl-sm">
       <q-badge color="white" text-color="dark" v-if="paginator" v-text="totalCount" />

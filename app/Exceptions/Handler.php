@@ -63,11 +63,11 @@ class Handler extends ExceptionHandler
     {
         if (!env("APP_DEBUG")) {
             if ($exception instanceof TokenExpiredException) {
-                return $this->errorResponse([], 'Token Expirado', 401);
+                return $this->errorResponse([], 'Token expirado', 401);
             } elseif ($exception instanceof TokenInvalidException) {
-                return $this->errorResponse([], 'Token Inválido', 401);
+                return $this->errorResponse([], 'Token inválido', 401);
             } elseif ($exception instanceof JWTException) {
-                return $this->errorResponse([], 'Não Autorizado', 403);
+                return $this->errorResponse([], 'Token não autorizado', 401);
             }
             if ($exception instanceof ModelNotFoundException) {
                 return $this->errorResponse([], "Modelo não encontrado", 404);

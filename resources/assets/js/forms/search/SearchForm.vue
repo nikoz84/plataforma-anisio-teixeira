@@ -39,10 +39,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(["paginator", "isLogged"])
+    ...mapState(["paginator", "isLogged", "paginator.data"])
   },
   methods: {
-    ...mapMutations(["SET_PAGINATOR", "SET_IS_LOADING"]),
+    ...mapMutations(["SET_PAGINATOR", "SET_IS_LOADING", 'SET_DATA']),
     async onSearch() {
       if (!this.termo) return;
 

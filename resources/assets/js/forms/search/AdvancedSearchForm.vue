@@ -227,11 +227,11 @@ export default {
       term: "",
       hintSearch: 'Procure por uma palavra chave',
       per: {label: 'Palavra Chave', value: 'tag' },
-      limit: { label: "15 itens", value: 15 },
+      limit: { label: "15 itens", value: 10 },
       perPageOptions: [
+        { label: "10 itens", value: 10 },
         { label: "15 itens", value: 15 },
-        { label: "30 itens", value: 30 },
-        { label: "45 itens", value: 45 }
+        { label: "20 itens", value: 20 }
       ],
       perSearchOptions: [
         {label: 'Palavra Chave', value: 'tag' },

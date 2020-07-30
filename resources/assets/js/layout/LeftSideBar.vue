@@ -82,6 +82,7 @@
           <q-item-label>Rotinas de Estudo</q-item-label>
         </q-item-section>
       </q-item>
+      <q-separator />
       <q-item
         :to="{ name: 'IpesFaculdades' }"
         aria-label="IR: Ações de Faculdades da Bahia"
@@ -91,7 +92,7 @@
         tabindex="0"
       >
         <q-item-section>
-          <q-item-label>IPES</q-item-label>
+          <q-item-label>Canal das Universidades</q-item-label>
         </q-item-section>
       </q-item>
       <!--q-item

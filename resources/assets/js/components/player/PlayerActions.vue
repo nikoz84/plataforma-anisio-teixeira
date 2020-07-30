@@ -38,7 +38,7 @@
                     Baixar conteúdo
                 </q-tooltip>
             </q-btn>
-            <q-btn
+            <!--q-btn
                 round
                 push
                 class="bg-cinza"
@@ -50,7 +50,7 @@
                 <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
                     Baixar conteúdo
                 </q-tooltip>
-            </q-btn>
+            </q-btn-->
             <q-btn
                 round
                 push
@@ -94,7 +94,7 @@ export default {
                 responseType: "blob"
                 })
                 .then(response => {
-                    console.log(response)
+                
                 const url = window.URL.createObjectURL(new Blob([response.data]));
                 const link = document.createElement('a');
                 link.href = url;

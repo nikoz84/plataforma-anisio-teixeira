@@ -40,7 +40,7 @@
 			Click para criar uma nova senha
 		</p> 
 
-		<a href="{{$dominio}}/api-v1/auth/verificar/{{$token}}" style="color:#3871c1!important">
+		<a href="{{$dominio}}/usuario/mudar-senha/{{$token}}" style="color:#3871c1!important">
 		    Criar nova senha
 	    </a>
     @endif

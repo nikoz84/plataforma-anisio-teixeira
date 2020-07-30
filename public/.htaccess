@@ -1,9 +1,7 @@
-Options +FollowSymLinks
-Options +Indexes
 
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
-        Options -MultiViews -Indexes
+        Options +FollowSymLinks -MultiViews -Indexes
     </IfModule>
 
     RewriteEngine On
@@ -49,11 +47,6 @@ ExpiresDefault A31536000
   Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
   Header set Pragma "no-cache"
 </FilesMatch>
-
-
-AddOutputFilterByType DEFLATE text/plain
-
-
 
 <IfModule mod_mime.c>
     AddType application/javascript          js

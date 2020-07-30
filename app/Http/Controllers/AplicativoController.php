@@ -7,11 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ApiController;
 use App\Aplicativo;
+use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use App\Traits\FileSystemLogic;
 
 class AplicativoController extends ApiController
 {
+    use FileSystemLogic;
     public function __construct(Aplicativo $aplicativo, Request $request, Storage $storage)
     {
         $this->middleware('jwt.auth')->except(['index', 'search', 'getById', 'categories']);
@@ -50,38 +53,37 @@ class AplicativoController extends ApiController
     public function create()
     {
         $this->authorize('create', Aplicativo::class);
-
         $validator = Validator::make(
             $this->request->all(),
             $this->configRules()
         );
-
-        if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível adicionar o aplicativo", 422);
+        $data = [];
+        try 
+        {
+            if ($validator->fails()) {
+                $data = $validator->errors();
+                throw new  Exception("Erro no preenchimento dos dados");
+            }
+            $aplicativo = $this->aplicativo;
+            $aplicativo->user_id = Auth::user()->id;
+            $aplicativo->fill($this->request->all());
+            $aplicativo->options  = json_decode($this->request->options);
+            if (!$aplicativo->save()) {
+                throw new  Exception("Erro no preenchimento dos dados");
+            }
+            $aplicativo->tags()->attach($this->request->tags);
+            if ($this->request->imagemAssociada) 
+            {
+                $fileImg = $this->saveFile($aplicativo->id, [$this->request->imagemAssociada], 'imagem-associada', 'aplicativos-educacionais');
+                if (!$fileImg) {
+                    throw new Exception("Não foi possível salvar imagem. Tente novamente mais tarde.", 501);
+                }
+            }
         }
-        $aplicativo = $this->aplicativo;
-
-        $aplicativo->name = $this->request->name;
-        $aplicativo->canal_id =  $this->aplicativo::CANAL_ID;
-        $aplicativo->category_id = $this->request->category_id;
-        $aplicativo->user_id = Auth::user()->id;
-        $aplicativo->url = $this->request->url;
-        $aplicativo->description = $this->request->description;
-
-        $is_featured = $this->request->options_is_featured === 'true' ? true : false;
-        $aplicativo->setAttribute('options->is_featured', $is_featured);
-        $aplicativo->setAttribute('options->qt_access', $this->aplicativo::QT_ACCESS_INIT);
-
-        if (!$aplicativo->save()) {
-            return $this->errorResponse([], "Não foi possível criar o aplicativo", 422);
+        catch(Exception $ex)
+        {
+            return $this->errorResponse($data, $ex->getMessage(), 422);
         }
-
-        $aplicativo->tags()->attach($this->request->tags);
-
-        if ($this->request->has('image')) {
-            $this->createFile($this->aplicativo->id, $this->request->file('image'));
-        }
-
         return $this->successResponse($aplicativo, 'Aplicativo cadastrado com sucesso!', 200);
     }
     /**
@@ -95,8 +97,7 @@ class AplicativoController extends ApiController
             'url' => ['required', new \App\Rules\ValidUrl],
             'category_id' => 'required',
             'tags' => 'required|array|between:3,10',
-            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
-            'options_is_featured' => 'required|in:true,false',
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:1024'            
         ];
     }
     /**
@@ -105,10 +106,10 @@ class AplicativoController extends ApiController
     private function createFile($id, $image)
     {
         $fileName = "{$id}.{$image->guessExtension()}";
-        
-        $path = $this->request->file('image')
+        $path = $image
             ->storeAs('imagem-associada', $fileName, 'aplicativos-educacionais');
         $image = new ResizeImage();
+
         $filePath = $this->storage::disk('aplicativos-educacionais')->url($path);
         $dir = $this->storage::disk('aplicativos-educacionais')
             ->getDriver()->getAdapter()->getPathPrefix() . "imagem-associada/";
@@ -124,18 +125,14 @@ class AplicativoController extends ApiController
     public function update($id)
     {
         $aplicativo = Aplicativo::findOrFail($id);
-        
         $this->authorize('update', [$aplicativo]);
-
         $validator = Validator::make(
             $this->request->all(),
             $this->configRules()
         );
-
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível atualizar o aplicativo", 422);
         }
-
         $aplicativo->name = $this->request->name;
         $aplicativo->canal_id = $aplicativo::CANAL_ID;
         $aplicativo->description = $this->request->description;
@@ -148,8 +145,14 @@ class AplicativoController extends ApiController
         if (!$aplicativo->save()) {
             return $this->errorResponse([], "Não foi possível atualizar o aplicativo", 422);
         }
-        if ($this->request->has('image')) {
-            $this->createFile($aplicativo->id, $this->request->file('image'));
+        if ($this->request->imagemAssociada) {
+            if ($aplicativo->refenciaImagemAssociada()) {
+                unlink($aplicativo->refenciaImagemAssociada());
+            }
+            $fileImg = $this->saveFile($aplicativo->id, [$this->request->imagemAssociada], 'imagem-associada', 'aplicativos-educacionais');
+            if (!$fileImg) {
+                throw new Exception("Não foi possível salvar imagem. Tente novamente mais tarde.", 501);
+            }
         }
 
         return $this->successResponse($aplicativo, "Aplicativo atualizado com sucesso!!", 200);
@@ -195,15 +198,11 @@ class AplicativoController extends ApiController
     {
         $aplicativo = $this->aplicativo::with(['tags', 'category', 'user', 'canal'])
             ->find($id);
-        //$canal = \App\Canal::find(9);
-        //$canal->setAttribute('options->has_categories', true);
-        //$canal->save();
         $increment = $aplicativo->options['qt_access'] + 1;
-
         $aplicativo->setAttribute('options->qt_access', $increment); // json attribute
         $aplicativo->save();
-
-        if (!$aplicativo) {
+        if (!$aplicativo) 
+        {
             $this->errorResponse([], 'Não encontrado', 422);
         }
 

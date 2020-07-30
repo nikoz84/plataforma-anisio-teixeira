@@ -12,9 +12,11 @@
         @input="getPage"
       >
       </q-pagination>
-      <div v-if="paginator && paginator.total == 0">
-        <p class="text-h6">Sem resultados</p>
-      </div>
+      <q-card v-if="paginator && paginator.total == 0">
+        <q-card-section class="text-center">
+          <p class="text-h6">Sem resultados</p>
+        </q-card-section>
+      </q-card>
     </div>
     <div class="col-lg-12" v-if="paginator && paginator.total > 0">
       <q-markup-table
@@ -167,27 +169,42 @@ export default {
       
       this.$q.loading.hide();
     },
+
     confirm (title, id) {
+      const context = this;
       this.$q.dialog({
        
         title: 'Confirmar',
-        message: `<b>Realmente deseja apagar este item?</b> <em>${title}</em>`,
+        message: `<b>Realmente deseja apagar este item </b> <em>${title}</em>?`,
         cancel: true,
         html: true,
         persistent: true,
-        ok: {
+        ok: 
+        {
           color: 'negative',
           label: 'Apagar'
         }
-      }).onOk(() => {
-        console.log('>>>> OK ' + id)
-        console.log(this.$route.params.slug)
-        /**
-         * aqui vai a requisição com o axios e o metodo delete
-         * 
-         */
-      })
-    }
+        }).onOk(() =>   
+        {
+            try
+            {
+                axios.delete(`/${this.$route.params.slug}/${id}`, {data:{delete_confirmation: true}});
+                //this.$router.push('/admin/categorias/listar/'+this.$route.params.slug);
+                var paginatorUpdate = JSON.parse(JSON.stringify(this.paginator));
+                (paginatorUpdate.data = []);
+                this.paginator.data.forEach(element => {
+                  if(element.id !== id)
+                  paginatorUpdate.data.push(element)
+                });
+                this.SET_PAGINATOR(paginatorUpdate);
+                console.log(paginatorUpdate.data);
+            }
+            catch(ex)
+            {
+                console.log(ex);
+            }
+        })
+      }
   }
 };
 </script>

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use App\Canal;
+use App\Helpers\ReplaceStr;
 use App\Traits\UserCan;
 use App\Traits\WithoutAppends;
 use Illuminate\Support\Str;
@@ -22,9 +23,15 @@ class Tipo extends Model
 
     public function getIconAttribute()
     {
-        //return Storage::disk('public-path')->url("img/tipo-conteudo/{$slug}.svg");
-        return Str::slug($this['name'], '-');
+        if ($this->name) {
+            //$iconeNome = ReplaceStr::replace($this->name);
+            //return Storage::disk('public-path')->url("img/tipo-conteudo/".strtolower($iconeNome).".svg");
+            return Str::slug($this->name, '-'); //strtolower($iconeNome);
+        }
+        return "";
     }
+    
+
     public function getSearchUrlAttribute()
     {
         $canal = Canal::find(6);

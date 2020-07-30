@@ -23,6 +23,9 @@
       <q-img v-else :src="showImage"
           placeholder-src="/img/fundo-padrao.svg" 
           style="height: 380px; max-width: 680px;">
+          <div class="absolute-bottom text-subtitle1 text-center">
+            Default
+          </div>
       </q-img>
  
   </div>  
@@ -62,24 +65,30 @@ export default {
   computed: {
     ...mapState(["conteudo"]),
     showImage() {
+      if(this.conteudo && this.conteudo.image) 
+      {
+         return this.conteudo.image;
+      }
       if (this.conteudo && this.conteudo.arquivos.visualizacao.url) {
         return this.conteudo.arquivos.visualizacao.url;
-      } else if (this.conteudo && this.conteudo.arquivos.download.url) {
+      } 
+      else if (this.conteudo && this.conteudo.arquivos.download.url) 
+      {
+        alert(this.conteudo.arquivos.download.url)
         return this.conteudo.arquivos.visualizacao.url;
-      } else {
-        return this.conteudo.image;
-      }
+      } 
+      
     },
     sources() {
       if(this.conteudo.arquivos){
         return [
           { 
-            src: this.arquivos.download.url, 
-            type: this.arquivos.download.mime_type
-          },
-          { 
             src: this.arquivos.visualizacao.url, 
             type: this.arquivos.visualizacao.mime_type
+          },
+          { 
+            src: this.arquivos.download.url, 
+            type: this.arquivos.download.mime_type
           }
         ]
       }

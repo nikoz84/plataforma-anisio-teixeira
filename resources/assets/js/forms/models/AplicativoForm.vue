@@ -6,8 +6,6 @@
           <div class="text-h5 q-mt-sm q-mb-xs" >
             {{ $route.params.action == 'adicionar' ? 'Adicionar Aplicativo' : 'Editar Aplicativo' }}
           </div>
-          
-          <q-img class="q-mt-xl" style="max-width:100%;max-height:200px;" loading="lazy" :src="aplicativo.image" placeholder-src="/img/fundo-padrao.svg"/>
         </q-card-section>
         <q-form v-on:submit.prevent="save()">
           <q-card-section class="row flex flex-start q-gutter-md">
@@ -27,13 +25,40 @@
                 <ShowErrors :errors="errors.url"></ShowErrors>
               </template>
             </q-input>
+           
           </q-card-section>
+           <q-card-section class="row flex flex-start q-gutter-md">
+             <div class="col-sm-5" style="text-align: center;" >
+              <q-img class="center centered"
+              loading="lazy" 
+              style="height:150px; width:150px"
+              :src="aplicativo.image"
+              placeholder-src="/img/fundo-padrao.svg"
+              alt=" Icone da categoria :"/>
+            </div>
+              <q-select class="col-sm-5" 
+                outlined
+
+                option-value="id"
+                option-label="name"
+                ransition-show="scale"
+                transition-hide="scale"
+                v-model="aplicativo.canal"
+                :options="canais"
+                label="Escolha um Canal"
+                hint="Canal ao qual pertence a categoria"
+                behavior="dialog"
+                />
+           </q-card-section>
+           
           <q-card-section class="row flex flex-start q-gutter-md">
             <!-- IMAGEM DESTAQUE -->
+           
             <q-input class="col-sm-5" @input="val => { image = val[0] }"
               type="file"
               hint="Imagem de destaque"
               bottom-slots
+              @change="onFileChange"
               :error="errors && errors.image && errors.image.length > 0"
                 >
               <template v-slot:error>
@@ -132,22 +157,28 @@ export default {
     QCardSection,
     ShowErrors
   },
+
   data() {
     return {
       aplicativo: {
         name: "",
         description: "",
         url: "",
+        canal:null,
         tags: [],
         options: {
-          is_featured: false
+          is_featured: false,
+          qt_access: 0
+
         },
         image: null,
         category_id: null
       },
+      
       categoriesList: [],
       tagsList: [],
-      image: null,
+      canais:[],
+      imagemAssociada: null,
       count: 0,
       errors: {}
     };
@@ -155,11 +186,19 @@ export default {
   created() {
     this.getCategories();
     this.getAplicativo();
+    this.getCanais();
   },
   methods: {
+    onFileChange(e) {
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                return;
+            this.imagemAssociada = files[0];
+        },
     save() {
       let form = new FormData();
-
+      if(this.aplicativo.canal)
+            form.append("canal_id", this.aplicativo.canal.id);
       if (this.$route.params.action === "editar") {
         form.append("id", this.$route.params.id);
         form.append("_method", "PUT");
@@ -170,9 +209,9 @@ export default {
         form.append("category_id", this.aplicativo.category.id);
       }
       form.append("url", this.aplicativo.url);
-      form.append("options.is_featured", this.aplicativo.options.is_featured);
-      if (this.image && this.image.name) {
-        form.append("image", this.image, this.image.name);
+       form.append("options", JSON.stringify(this.aplicativo.options));
+      if (this.imagemAssociada) {
+        form.append("imagemAssociada", this.imagemAssociada);
       }
       if (this.aplicativo.tags.length) {
         let tags = this.aplicativo.tags.map(item => item.id);
@@ -180,7 +219,7 @@ export default {
           form.append("tags[]", tags[i]);
         }
       }
-
+      
       this.sendData(form);
     },
     async sendData(form) {
@@ -193,7 +232,8 @@ export default {
           this.$router.push("/admin/aplicativos/listar");
         }
       } catch (response) {
-        this.errors = response.errors;
+        console.log(response);
+        //this.errors = response.errors;
       }
     },
     async getCategories() {
@@ -201,6 +241,10 @@ export default {
       if (resp.data.success) {
         this.categoriesList = resp.data.metadata;
       }
+    },
+    async getCanais(){
+      const canais  = await axios.get("/canais?select");
+      this.canais = canais.data.metadata;
     },
     countCaracters(e) {
       if (e.target.value.length > 140) {
