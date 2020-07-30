@@ -184,11 +184,13 @@
         <q-img alt="imagem de marcas" aria-label="imagem" style="max-width: 741px; height: auto;" v-if="layout.marcas.is_active" :src="layout.marcas.url"></q-img>
       </div>
       <q-separator class="q-mt-md q-mb-lg" />
-      <div class="row wrap justify-center">
-        <b class="q-mt-lg">Todos os direitos e conteúdos desta Plataforma são de uso compartilhado, exceto onde indicado de outra forma.</b>
-      </div>
-      <div class="row wrap justify-center" v-if="layout && layout.marcas">
-        <q-img alt="creative commond imagem" aria-label="imagem" style="max-width: 180px; height: auto;" src="img/creative-commons.svg"></q-img>
+      <div style="text-align:center" class="row wrap justify-center q-mt-lg">
+        <p class="col-12"><b>Todos os direitos e conteúdos desta Plataforma são de uso compartilhado, exceto onde indicado de outra forma.</b></p>
+        <p class="col-12"><q-icon style="font-size: 10em; margin-top:-50px">
+          <svg class="icon">
+            <use xlink:href="#creative-commons"></use>
+          </svg>
+        </q-icon></p>
       </div>
   </div>
 </div>

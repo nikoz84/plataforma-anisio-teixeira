@@ -149,7 +149,7 @@
           </div>
         </q-card-section>
         <q-separator vertical />
-        <q-card-section class="col-9">
+        <q-card-section class="col-8">
           <!-- PAGINATOR -->
           <div class="q-pa-sm flex flex-center">
             <q-pagination
@@ -163,12 +163,12 @@
           </div>
           <!-- LISTA DE ITENS -->
           <div class="q-pa-sm">
-            <q-card class="q-mt-sm" v-for="(item, i) in results" :key="`result-${i}`">
-              <q-card-section>
+            <q-card flat class="q-mt-sm" v-for="(item, i) in results" :key="`result-${i}`">
+              <q-card-section class="q-px-sm">
                 <a class="paginator-link" :href="item.url_exibir">
-                  <h5 class="text-dark" v-html="item.title"></h5>
+                  <h5 class="text-dark q-my-xs" v-html="item.title"></h5>
                 </a>
-                <p class="paginator-excerpt" v-html="item.excerpt"></p>
+                <div class="paginator-excerpt" v-html="item.excerpt"></div>
               </q-card-section>
             </q-card>
           </div>
