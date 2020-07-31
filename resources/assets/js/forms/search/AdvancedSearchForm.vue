@@ -313,4 +313,9 @@ export default {
 .paginator-excerpt{
   font-size: 18px;
 }
+
+a{
+  text-decoration-color : rgb(0, 64, 129);
+  -moz-text-decoration-color : rgb(0, 64, 129);
+}
 </style>

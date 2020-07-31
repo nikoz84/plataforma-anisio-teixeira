@@ -62,7 +62,7 @@ body {
   color: #263238;
 }
 /*
- * Quasar Framework v1.12.12
+ * Quasar Framework v1.12.13
  * (c) 2015-present Razvan Stoenescu
  * Released under the MIT License.
  */
@@ -189,6 +189,7 @@ input[type='search']::-webkit-search-decoration {
   direction: ltr;
   text-align: center;
   position: relative;
+  box-sizing: content-box;
   fill: currentColor;
 }
 .q-icon:before,
@@ -2058,6 +2059,10 @@ body.q-ios-padding .q-dialog__inner > div {
 .q-field {
   font-size: 14px;
 }
+.q-field ::-ms-clear,
+.q-field ::-ms-reveal {
+  display: none;
+}
 .q-field--with-bottom {
   padding-bottom: 20px;
 }
@@ -3107,9 +3112,6 @@ body.platform-ios .q-layout--containerized {
   color: #066ab1;
   color: var(--q-color-primary);
 }
-.q-linear-progress--reverse {
-  transform: scale3d(-1, 1, 1);
-}
 .q-linear-progress__model,
 .q-linear-progress__track {
   transform-origin: 0 0;
@@ -3117,6 +3119,10 @@ body.platform-ios .q-layout--containerized {
 .q-linear-progress__model--with-transition,
 .q-linear-progress__track--with-transition {
   transition: transform 0.3s;
+}
+.q-linear-progress--reverse .q-linear-progress__model,
+.q-linear-progress--reverse .q-linear-progress__track {
+  transform-origin: 0 100%;
 }
 .q-linear-progress__model--determinate {
   background: currentColor;
@@ -3210,6 +3216,7 @@ body.platform-ios .q-layout--containerized {
   min-width: 100%;
   min-height: 100%;
   will-change: transform;
+  display: none;
 }
 .q-popup-edit {
   padding: 8px 16px;
@@ -3485,10 +3492,6 @@ body.platform-ios:not(.native-mobile) .q-dialog__inner--top .q-select__dialog--f
   height: 1px;
   width: 100%;
 }
-.q-separator--horizontal-spaced {
-  margin-top: 8px;
-  margin-bottom: 8px;
-}
 .q-separator--horizontal-inset {
   margin-left: 16px;
   margin-right: 16px;
@@ -3508,10 +3511,6 @@ body.platform-ios:not(.native-mobile) .q-dialog__inner--top .q-select__dialog--f
   width: 1px;
   height: inherit;
   align-self: stretch;
-}
-.q-separator--vertical-spaced {
-  margin-left: 8px;
-  margin-right: 8px;
 }
 .q-separator--vertical-inset {
   margin-top: 8px;
@@ -5900,7 +5899,8 @@ body.q-ios-padding .q-notifications__list--bottom {
 }
 .q-notification__icon {
   font-size: 24px;
-  padding-right: 16px;
+  margin-right: 16px;
+  flex: 0 0 1em;
 }
 .q-notification__avatar {
   font-size: 32px;
@@ -11043,9 +11043,6 @@ body.body--dark {
   .q-field__suffix {
     flex: 1 0 auto;
   }
-  .q-field ::-ms-clear {
-    display: none;
-  }
   .q-field__bottom--stale .q-field__messages {
     left: 12px;
   }
@@ -11210,9 +11207,6 @@ body.body--dark {
   .q-field__prefix,
   .q-field__suffix {
     flex: 1 0 auto;
-  }
-  .q-field ::-ms-clear {
-    display: none;
   }
   .q-field__bottom--stale .q-field__messages {
     left: 12px;

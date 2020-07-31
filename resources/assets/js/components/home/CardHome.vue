@@ -7,7 +7,7 @@
     <div class="row justify-center q-py-lg q-gutter-lg">
       <PaginatorCard 
         v-for="(item, i) in items" :key="i"
-        class="col-xs-10 col-sm-4 col-md-3 col-lg-2 col-xl-2"
+        class="col-sm-11 col-md-3"
         :item="item">
       </PaginatorCard>
     </div>
