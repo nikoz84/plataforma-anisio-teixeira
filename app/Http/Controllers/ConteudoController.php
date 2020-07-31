@@ -97,7 +97,7 @@ class ConteudoController extends ApiController
             'category_id' => 'nullable',
             'title' => 'required|min:10|max:100',
             'description' => 'required|min:140|max:5012',
-            'options_site' => ['nullable','active_url', new \App\Rules\ValidUrl],
+            'options_site' => 'nullable|active_url',
             'tags' => 'required',
             'componentes' => 'required',
             'authors' => 'required',

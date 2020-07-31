@@ -147,7 +147,7 @@
           outlined
           @change="onDownloadFileChange"
           type="file"
-          hint="Arquivo para Guia Pedagógico"
+          hint="Arquivo para Download"
         />
         
         <!-- ARQUIVO DE UPLOAD --> 
@@ -156,14 +156,14 @@
           Baixar Arquivo Guia Pedagógico:
         </q-item-label>
          <a v-if="conteudo.guiaPedagogico" :href="conteudo.guiaPedagogico" :download="conteudo.guiaPedagogico" >{{conteudo.guiaPedagogico.split('/').pop()}}</a>
-        <ShowErrors :errors="errors.guiaPedagogico"></ShowErrors>
+        <ShowErrors :errors="errors.guias_pedagogicos"></ShowErrors>
         <q-input
           class="q-mt-md"
           @input="val => {file = val[0];}"
           outlined
           @change="onguiaPedagogicoFileChange"
           type="file"
-          hint="Arquivo para Download"
+          hint="Arquivo para Guia Pedagógico"          
         />
         
         <!-- ENVIAR SITE --> 
@@ -424,7 +424,7 @@ export default {
     },
     onguiaPedagogicoFileChange(e){
        var files = e.target.files || e.dataTransfer.files;
-        if (!files.length)
+       if (!files.length)
             return;
         this.guias_pedagogicos = files[0];
     },
@@ -459,14 +459,12 @@ export default {
       console.log(this.conteudo)
       form.append("tipo_id", this.conteudo.tipo ? this.conteudo.tipo.id : "");
       form.append("canal_id", this.conteudo.canal ? this.conteudo.canal.id : "");
-      
       form.append("license_id", this.conteudo.license_id ? this.conteudo.license_id : "");
       form.append("category_id",  this.conteudo.category_id ? this.conteudo.category_id : "" );
       form.append("title", this.conteudo.title ? this.conteudo.title : "");
       form.append("description", this.conteudo.description ? this.conteudo.description : "");
       form.append("source", this.conteudo.source ? this.conteudo.source : "");
       form.append("authors", this.conteudo.authors ? this.conteudo.authors : "");
-      form.append("options_site", this.conteudo.options.site);
       form.append("image", this.conteudo.image);
       if (this.conteudo.tags.length) {
         let tags = this.conteudo.tags.map(item => item.id);
@@ -483,7 +481,7 @@ export default {
       if(this.imagem_associada)
       form.append("imagem_associada", this.imagem_associada );
       if(this.download_file)
-      form.append("download", this.download_file );
+      form.append("download", this.download_file);
       if(this.guias_pedagogicos)
       form.append("guias_pedagogicos", this.guias_pedagogicos );
       let url = "/conteudos";
