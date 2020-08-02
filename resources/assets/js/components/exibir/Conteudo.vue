@@ -27,7 +27,7 @@
 
     <div class="col-md-4 col-sm-12">
       <q-card class="q-mt-sm q-ml-sm q-pt-xs">
-        <strong class="q-pa-sm" >Conteúdo Relacionado</strong>
+        <strong class="q-pa-sm" >Conteúdo(s) Relacionado(s)</strong>
         <ConteudoRelated></ConteudoRelated>
       </q-card>
     </div>

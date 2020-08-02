@@ -2,7 +2,7 @@
   <div class="q-pa-md">
     <header class="row wrap items-center q-my-md">
       <div class="text-h5 color-primary">
-        Rotinas de Estudo
+        Rotinas de Estudo - {{ this.nivel.label }}
       </div>
     </header>
     <div class="row justify-center q-gutter-md">
@@ -25,7 +25,7 @@
           <b class="text-center" v-if="i == 0">
             {{ getDay(d) }}
           </b>
-          <q-card v-if="d == 'segunda'">
+          <q-card :class="{'segunda' : d == 'segunda'}" v-if="d == 'segunda'">
             <q-card-section >
               {{ toJson(atividade).descricao }}
               <q-space class="q-mt-md"></q-space>

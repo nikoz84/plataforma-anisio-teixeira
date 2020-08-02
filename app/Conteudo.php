@@ -144,13 +144,21 @@ class Conteudo extends Model
     {
         $id = null;
         
-        if ($user->is('admin') || $user->is('super-admin') || $user->is('coordenador')) {
+        if ($user->role_id == 1 || $user->role_id == 2 || $user->role_id == 3) {
             $id = $user->id;
         }
 
         $this->attributes['approving_user_id'] = $id;
     }
 
+    public function setIsApproved($is_approved)
+    {
+        if (!$is_approved) {
+            $this->attributes['is_approved'] = $is_approved;
+        } else {
+            $this->attributes['is_approved'] = false;
+        }
+    }
     /**
      * Adiciona novo atributo ao objeto que limita o tamanho da descrição
      * @return void

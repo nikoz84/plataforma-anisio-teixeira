@@ -41,13 +41,15 @@ class TagController extends ApiController
      */
     public function create()
     {
-        $validator = Validator::make($this->request->all(), 
+        $validator = Validator::make(
+            $this->request->all(),
             [
-                'name' => 'required'
-            ]);
+                'name' => 'required|unique:tags'
+            ]
+        );
 
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível atualizar o conteúdo", 422);
+            return $this->errorResponse($validator->errors(), "Não foi possível atualizar a palavra-chave", 422);
         }
         $tag = TAG::firstOrCreate([
             'name' => $this->request->name,
@@ -55,10 +57,10 @@ class TagController extends ApiController
         ]);
 
         if (!$tag->save()) {
-            return $this->errorResponse([], "Não foi possivel adicionar a palavra chave", 422);
+            return $this->errorResponse([], "Não foi possivel adicionar a palavra-chave", 422);
         }
 
-        return $this->successResponse($tag, "Palavra chave - {$tag->name} - adicionada com sucesso!!", 200);
+        return $this->successResponse($tag, "Palavra-chave - {$tag->name} - adicionada com sucesso!!", 200);
     }
 
     /**
@@ -73,7 +75,7 @@ class TagController extends ApiController
         $tag = TAG::findOrFail($id);
         $validator = Validator::make($this->request->all(), ["name" => "required"]);
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível editar o tag", 422);
+            return $this->errorResponse($validator->errors(), "Não foi possível editar o palavra-chave", 422);
         }
         $tag->name = $this->request->name;
 
@@ -81,7 +83,7 @@ class TagController extends ApiController
             return $this->errorResponse([], 'Não foi possível editar', 422);
         }
 
-        return $this->showOne($tag, 'Palavra chave atualizada com sucesso!!', 200);
+        return $this->showOne($tag, 'Palavra-chave atualizada com sucesso!!', 200);
     }
 
     public function search($termo)
@@ -118,10 +120,10 @@ class TagController extends ApiController
         $tag = TAG::findOrFail($id);
 
         if (!$tag->delete()) {
-            $this->errorResponse([], "Impossível deletar tag", 422);
+            $this->errorResponse([], "Impossível deletar a palavra-chave", 422);
         }
 
-        $this->successResponse([], "Tag apagada com sucesso!", 200);
+        $this->successResponse([], "Palavra-chave apagada com sucesso!", 200);
     }
 
     public function getById($id)

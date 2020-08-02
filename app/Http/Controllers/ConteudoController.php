@@ -63,6 +63,17 @@ class ConteudoController extends ApiController
 
         return $this->showAsPaginator($conteudos);
     }
+
+    public function getAprovados(Request $request)
+    {
+        $query = Conteudo::query();
+        $url = http_build_query($request->except('page'));
+
+        $conteudos = $query->where('is_approved', 'false')
+            ->with(['canal', 'tipo'])
+            ->paginate($request->query('limit', 6))
+            ->setPath("/conteudos?{$url}");
+    }
     /**
      * Lista de sites temáticos
      *
@@ -95,9 +106,9 @@ class ConteudoController extends ApiController
             'canal_id' => 'required',
             'tipo_id' => 'required',
             'category_id' => 'nullable',
-            'title' => 'required|min:10|max:100',
+            'title' => 'required|min:5|max:120',
             'description' => 'required|min:140|max:5012',
-            'options_site' => ['nullable','active_url', new \App\Rules\ValidUrl],
+            'options_site' => ['nullable', 'active_url'],
             'tags' => 'required',
             'componentes' => 'required',
             'authors' => 'required',
@@ -150,8 +161,17 @@ class ConteudoController extends ApiController
                 422
             );
         }
-
-        $conteudo->user_id = Auth::user()->id;
+        $user = Auth::user();
+        $conteudo->user_id = $user->id;
+        
+        if ($user->role->is('super-admin') ||
+            $user->role->is('admin') ||
+            $user->role->is('coordenador')) {
+            $conteudo->setAttribute('approving_user_id', $user->id);
+            $conteudo->setAttribute('is_approved', true);
+            $conteudo->setAttribute('is_featured', $request->is_featured);
+        }
+        
         $conteudo->canal_id = $request->canal_id;
         $conteudo->tipo_id = $request->tipo_id;
         $conteudo->license_id = $request->license_id;
@@ -160,10 +180,7 @@ class ConteudoController extends ApiController
         $conteudo->description = $request->description;
         $conteudo->source = $request->source;
         $conteudo->authors = $request->authors;
-        
-        $conteudo->options = json_decode($request->options_site);
         $conteudo->options = ['site' => $request->options_site];
-        $conteudo->setAttribute('is_featured', $request->is_featured);
         $conteudo->setAttribute('is_site', $request->is_site);
         $conteudo->qt_downloads = Conteudo::INIT_COUNT;
         $conteudo->qt_access = Conteudo::INIT_COUNT;
@@ -198,7 +215,26 @@ class ConteudoController extends ApiController
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível atualizar o conteúdo", 422);
         }
-        $conteudo->fill($request->all());
+        
+        $conteudo->fill(
+            $request->except(
+                [ 'approving_user_id',
+                'is_approved',
+                'is_featured',
+                'options_site']
+            )
+        );
+
+        $user = Auth::user();
+        dd($user);
+        if ($user->role_id == 1 ||
+            $user->role_id == 2 ||
+            $user->role_id == 3) {
+            $conteudo->setAttribute('approving_user_id', $user->id);
+            $conteudo->setAttribute('is_approved', true);
+            $conteudo->setAttribute('is_featured', $request->is_featured);
+        }
+        
 
         if (!$conteudo->save()) {
             return $this->errorResponse([], 'Não foi possível atualizar o conteúdo', 422);

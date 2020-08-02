@@ -14,31 +14,32 @@
           label="Escolha um Canal"
           behavior="dialog"
           @input="getCategories"
-          bottom-slots
           :error="errors.canal_id && errors.canal_id.length > 0"
+          bottom-slots
         >
           <template v-slot:error>
             <ShowErrors :errors="errors.canal_id"></ShowErrors>
           </template>
         </q-select>
-        {{   }}
+        
         <!-- CATEGORIA -->
         <ParentAndChildSelect :parent="categories" 
           :label="categoryName"
           :selectedId="conteudo.category_id"
           @click="setCategory"
         ></ParentAndChildSelect>
-        <!--ShowErrors v-if="errors.category_id && errors.category_id.length > 0" 
-            :errors="errors.category_id"></ShowErrors-->
+        <div class="q-my-md" v-if="errors.category_id && errors.category_id.length > 0">
+          <ShowErrors :errors="errors.category_id"></ShowErrors>
+        </div>
         <!-- LICENÇAS -->
         <ParentAndChildSelect :parent="licencas" 
           label="Licença"
           :selectedId="conteudo.license_id"
           @click="setLicense"
         ></ParentAndChildSelect>
-        <!--ShowErrors v-if="errors.license_id && errors.license_id.length > 0" 
-          :errors="errors.license_id"></ShowErrors-->
-          
+        <div class="q-my-md" v-if="errors.license_id && errors.license_id.length > 0">
+          <ShowErrors :errors="errors.license_id"></ShowErrors>
+        </div>
         <!-- TIPO DE MIDIA --> 
         <q-select
           outlined
@@ -47,15 +48,21 @@
           option-label="name"
           transition-show="flip-up"
           transition-hide="flip-down"
-          :error="errors.tipo_id && errors.tipo_id.length > 0"
           v-model="conteudo.tipo"
           :options="tipos"
           label="Tipo de Mídia"
           behavior="dialog"
-        />
+          :error="errors.tipo_id && errors.tipo_id.length > 0"
+          bottom-slots
+        >
+          <template v-slot:error>
+            <ShowErrors :errors="errors.tipo_id"></ShowErrors>
+          </template>
+        </q-select>
         <!-- TITULO --> 
         <q-input outlined v-model="conteudo.title" 
            label="Título do conteúdo"
+           autogrow
            bottom-slots
           :error="errors.title && errors.title.length > 0"
            >
@@ -66,6 +73,7 @@
         <!-- AUTORES --> 
         <q-input outlined v-model="conteudo.authors" 
           label="Autores"
+          autogrow
           bottom-slots
           :error="errors.authors && errors.authors.length > 0">
            <template v-slot:error>
@@ -74,7 +82,8 @@
         </q-input>
         <!-- FONTE --> 
         <q-input outlined v-model="conteudo.source" 
-          label="Fonte" 
+          label="Fonte"
+          autogrow
           bottom-slots
           :error="errors.source && errors.source.length > 0">
            <template v-slot:error>
@@ -100,10 +109,12 @@
           multiple
           option-value="id"
           option-label="name"
-          hint="Palavras chave"
+          hint="Pesquise pelo menos 3 palavras-chave para melhorar as buscas"
           use-chips
           stack-label
-          input-debounce="300"
+          hide-dropdown-icon
+          label="Escreva aqui uma palavra para sugestões"
+          input-debounce="200"
           new-value-mode="add-unique"
           @new-value="addTag"
           :options="autocompleteTags"
@@ -124,85 +135,104 @@
           :src="conteudo.image"
           placeholder-src="/img/fundo-padrao.svg"
           alt="imagem de destaque"/>
-          <!-- IMAGEM DE DESTAQUE --> 
-          <ShowErrors :errors="errors.imagem_associada"></ShowErrors>
+        <!-- IMAGEM DE DESTAQUE --> 
         <q-input
           @input="val => { file = val[0];}"
           outlined
           accept=".png,.jpeg,.jpg,.svg,.webp"
           @change="onImageFileChange"
           type="file"
-          hint="Imagem de Destaque"
-        />
-        <!-- ARQUIVO DE UPLOAD --> 
-        <br>
-        <q-item-label v-if="conteudo.download" >
+          hint="IMAGEM de destaque"
+          bottom-slots
+          :error="errors.imagem_associada && errors.imagem_associada.length > 0"
+          >
+           <template v-slot:error>
+            <ShowErrors :errors="errors.imagem_associada"></ShowErrors>
+          </template>
+        </q-input>
+      </q-card-section>
+        <!-- ARQUIVO DE DOWNLOAD --> 
+      <q-card-section>
+        <div v-if="conteudo.download" >
           Baixar Arquivo Download:
-        </q-item-label>
+        </div>
          <a v-if="conteudo.download" :href="conteudo.download" :download="conteudo.download" >{{conteudo.download.split('/').pop()}}</a>
-        <ShowErrors :errors="errors.download"></ShowErrors>
         <q-input
           class="q-mt-md"
           @input="val => {file = val[0];}"
           outlined
           @change="onDownloadFileChange"
           type="file"
-          hint="Arquivo para Guia Pedagógico"
-        />
-        
-        <!-- ARQUIVO DE UPLOAD --> 
-        <br>
-        <q-item-label v-if="conteudo.guiaPedagogico">
+          hint="Arquivo de DOWNLOAD"
+          bottom-slots
+          :error="errors.download && errors.download.length > 0"
+          >
+           <template v-slot:error>
+            <ShowErrors :errors="errors.download"></ShowErrors>
+          </template>
+        </q-input>
+      </q-card-section>
+        <!-- ARQUIVO GUIA PEDAGÓGICO --> 
+      <q-card-section>
+        <div v-if="conteudo.guiaPedagogico">
           Baixar Arquivo Guia Pedagógico:
-        </q-item-label>
-         <a v-if="conteudo.guiaPedagogico" :href="conteudo.guiaPedagogico" :download="conteudo.guiaPedagogico" >{{conteudo.guiaPedagogico.split('/').pop()}}</a>
-        <ShowErrors :errors="errors.guiaPedagogico"></ShowErrors>
+        </div>
+        <a v-if="conteudo.guiaPedagogico" :href="conteudo.guiaPedagogico" :download="conteudo.guiaPedagogico" >{{conteudo.guiaPedagogico.split('/').pop()}}</a>
         <q-input
           class="q-mt-md"
           @input="val => {file = val[0];}"
           outlined
           @change="onguiaPedagogicoFileChange"
           type="file"
-          hint="Arquivo para Download"
-        />
-        
-        <!-- ENVIAR SITE --> 
-        <ShowErrors :errors="errors.options_site"></ShowErrors>
-        <q-input
-          outlined
-          
-          v-model="conteudo.options.site"
-          label="URL do Site"
-          hint="Exemplo: http://dominio.com.br"
-        />
+          hint="Escolha um arquivo para GUIA PEDAGÓGICO"
+          bottom-slots
+          :error="errors.guias_pedagogicos && errors.guias_pedagogicos.length > 0"
+          >
+           <template v-slot:error>
+            <ShowErrors :errors="errors.guias_pedagogicos"></ShowErrors>
+          </template>
+        </q-input>
+      </q-card-section>
+        <!-- ENVIAR SITE -->
+      <q-card-section>
+          <q-input
+            outlined
+            type="url"
+            v-model="conteudo.options.site"
+            label="URL do Site"
+            hint="Exemplo: http://dominio.com.br"
+            :error="errors.options_site && errors.options_site.length > 0"
+            bottom-slots
+          >
+            <template v-slot:error>
+              <ShowErrors :errors="errors.options_site"></ShowErrors>
+            </template>
+          </q-input>
       </q-card-section>
       <q-card-section>
-        <!-- CONTEUDO APROVADO --> 
-        <ShowErrors :errors="errors.is_approved"></ShowErrors>
-        <ShowErrors :errors="errors.is_featured"></ShowErrors>
         <div class="q-gutter-sm">
+          <!-- CONTEUDO APROVADO --> 
           <q-checkbox
             v-model="conteudo.is_approved"
             label="Aprovar conteúdo"
             color="pink"
           />
+          <ShowErrors :errors="errors.is_approved"></ShowErrors>
           <!-- MARCAR COMO DESTAQUE --> 
-
           <q-checkbox
             v-model="conteudo.is_featured"
             label="Marcar como destaque"
             color="pink"
           />
+          <ShowErrors :errors="errors.is_featured"></ShowErrors>
         </div>
       </q-card-section>
       <q-card-section>
         <!-- TERMOS DE USO --> 
-        <ShowErrors :errors="errors.terms"></ShowErrors>
         <div class="q-gutter-sm">
-          <q-item-label>
-            Li e concordo com os <a href="#terms">termos e condições de uso</a> :
+          Li e concordo com os <a href="#terms">termos e condições de uso</a> :
           <q-checkbox v-model="terms" color="pink" />
-          </q-item-label>
+          <ShowErrors :errors="errors.terms"></ShowErrors>
         </div>
       </q-card-section>
       <q-card-section>
@@ -217,11 +247,7 @@
     </q-card>
 
     <q-card class="col-sm-3">
-      
-      <q-scroll-area
-        style="height: 100vh;" visible
-      >
-        <q-card-section>
+      <q-card-section>
           <!-- COMPONENTES CURRICULARES --> 
           <div v-if="componentes">
             
@@ -257,10 +283,9 @@
               <q-separator class="q-mt-lg" inset color="negative"></q-separator>
             </div>
           </div>
-          
-        </q-card-section>
-      </q-scroll-area>
-      <q-card-section>
+      </q-card-section>
+      
+      <q-card-section class="q-mt-lg">
         <ShowErrors 
         :error="errors.componentes && errors.componentes.length > 0" 
         :errors="errors.componentes"></ShowErrors>
@@ -268,10 +293,7 @@
       
     </q-card>
     <q-card class="col-sm-3">
-      <q-scroll-area
-        style="height: 100vh;" visible
-      >
-        <q-card-section>
+      <q-card-section>
           <!-- NIVEIS DE ENSINO --> 
           <div v-if="niveis">
             <div
@@ -303,8 +325,8 @@
             </div>
           </div>
         </q-card-section>
-      </q-scroll-area>
-      <q-card-section>
+      
+      <q-card-section class="q-mt-lg">
         <ShowErrors 
         :error="errors.componentes && errors.componentes.length > 0" 
         :errors="errors.componentes"></ShowErrors>
@@ -353,18 +375,18 @@ export default {
       conteudo: {
         download:"",
         guiaPedagogico:"",
-        license_id: null,
-        canal_id: null,
-        category_id: null,
-        tipo_id: null,
+        license_id: "",
+        canal_id: "",
+        category_id: "",
+        tipo_id: "",
         site: "",
         title: "",
         description: "",
-        canal: null,
+        canal: "",
         options: {
           site: ""
         },
-        category:null,
+        category:"",
         authors: "",
         source: "",
         image: "",
@@ -376,6 +398,7 @@ export default {
       },
       categoriesList: [],
       canais: [],
+      canal_id: null,
       terms: false,
       tipos: [],
       componentesCurriculares: [],
@@ -387,7 +410,10 @@ export default {
       imagem_associada:null,
       download_file:null,
       guias_pedagogicos: null,
-      errors:{},
+      errors:{
+        tipo_id: [],
+        canal_id: []
+      },
       dialog: {
         text: "",
         open: false,
@@ -403,13 +429,6 @@ export default {
     ...mapState(["componentes", "niveis"])
   },
   methods: {
-    async getCategories(val) {
-      const id = val.id;
-      const { data } = await axios.get(`/categorias/canal/${id}`);
-      
-      this.categories = data.metadata.categories;
-      this.categoryName = data.metadata.category_name;
-    },
     onImageFileChange(e) {
             var files = e.target.files || e.dataTransfer.files;
             if (!files.length)
@@ -431,42 +450,31 @@ export default {
     async save() {
       
       const form = new FormData();
-      form.append(
-        "license_id",
-        this.conteudo.license ? this.conteudo.license.id : null
-      );
-      form.append("tipo_id", this.conteudo.tipo ? this.conteudo.tipo.id : null);
-      form.append(
-        "canal_id",
-        this.conteudo.canal ? this.conteudo.canal.id : null
-      );
-      if(this.conteudo.category)
-      form.append("category_id",  this.conteudo.category.id );
-      form.append("title", this.conteudo.title);
-      form.append("description", this.conteudo.description);
-      form.append("source", this.conteudo.source);
-      form.append("authors", this.conteudo.authors);
+      
+      if(this.conteudo.category) {
+        form.append("category_id",  this.conteudo.category.id );
+      }
+      
       if(this.conteudo.options.site)
       {
         
-          form.append("options_site", this.conteudo.options.site);
+          form.append("options.site", this.conteudo.options.site);
           form.append("is_site", 1) ;
       }
       else
       {
         form.append("is_site", 0);
       }
-      console.log(this.conteudo)
-      form.append("tipo_id", this.conteudo.tipo ? this.conteudo.tipo.id : "");
-      form.append("canal_id", this.conteudo.canal ? this.conteudo.canal.id : "");
       
+      form.append("canal_id", this.conteudo.canal && this.conteudo.canal.id ? this.conteudo.canal.id : "");
+      form.append("tipo_id", this.conteudo.tipo ? this.conteudo.tipo.id : "");
       form.append("license_id", this.conteudo.license_id ? this.conteudo.license_id : "");
       form.append("category_id",  this.conteudo.category_id ? this.conteudo.category_id : "" );
       form.append("title", this.conteudo.title ? this.conteudo.title : "");
       form.append("description", this.conteudo.description ? this.conteudo.description : "");
       form.append("source", this.conteudo.source ? this.conteudo.source : "");
       form.append("authors", this.conteudo.authors ? this.conteudo.authors : "");
-      form.append("options_site", this.conteudo.options.site);
+      //form.append("options.site", this.conteudo.options.site);
       form.append("image", this.conteudo.image);
       if (this.conteudo.tags.length) {
         let tags = this.conteudo.tags.map(item => item.id);
@@ -529,11 +537,12 @@ export default {
       if (this.$route.params.id) {
         let { data } = await axios.get("/conteudos/" + this.$route.params.id);
         this.conteudo = data.metadata;
-        console.log(this.conteudo)
+        
         this.componentesCurriculares = data.metadata.componentes.map(a => a.id);
       }
 
       if(this.conteudo.category && this.conteudo.canal){
+        
         this.getCategories(this.conteudo.canal);
         const category = this.conteudo.category
         this.selectedCategory = category.name;
@@ -555,7 +564,7 @@ export default {
     },
     showTagModal(val){
       this.$q.notify({
-          message: `Essa palavra chave não existe deseja adicionar ${val}?`,
+          message: `Essa palavra-chave não existe deseja adicionar ${val}?`,
           multiLine: true,
           color: "grey-4",
           textColor: "primary",
