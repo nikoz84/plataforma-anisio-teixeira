@@ -37,37 +37,50 @@ trait FileSystemLogic
 
     public static function getCategoryImage($category_id)
     {
-        $path_category =  Storage::disk('conteudos-digitais')->path("imagem-associada". DIRECTORY_SEPARATOR ."categoria". DIRECTORY_SEPARATOR ."{$category_id}.*");
+        $path_category =  Storage::disk('conteudos-digitais')->path("imagem-associada". DIRECTORY_SEPARATOR ."categorias". DIRECTORY_SEPARATOR ."{$category_id}.*");
         $file = collect(File::glob($path_category))->first();
-        $filename = basename($file);
-        return $filename ? Storage::disk('conteudos-digitais')
-            ->url("imagem-associada". DIRECTORY_SEPARATOR ."categoria". DIRECTORY_SEPARATOR ."{$filename}") : null;
+        if ($file) {
+            $filename = basename($file);
+            return  Storage::disk('conteudos-digitais')->url("imagem-associada/categorias/{$filename}");
+        }
+        return null;
     }
+
     /**
      * Retorna imagem de destaque
-     *
      * @param $tipo tipo de conteúdo
      * @param $id id do conteúdo
-     *
      * @return Storage
      */
     public static function getImageFromTipo($tipo, $id)
     {
-        $path_assoc = Storage::disk('conteudos-digitais')->path('imagem-associada');
-        $file = self::findFiles($path_assoc, $id, $tipo);
-        if (strpos($file, "http") !== false) {
-            return $file;
+        $path = Storage::disk('conteudos-digitais')->path("imagem-associada");
+        if ($tipo->id == 5) 
+        {
+            $path_sinopse = "{$path}". DIRECTORY_SEPARATOR ."sinopse". DIRECTORY_SEPARATOR."$id.*";
+            $file = collect(File::glob($path_sinopse))->shuffle()->first();
+            if($file)
+            return Storage::disk('conteudos-digitais')->url("imagem-associada/sinopse/".basename($file));
         }
-        if ($file) {
-            $file = str_replace(Storage::disk('conteudos-digitais')->path(""), "", $file);
-            $file = str_replace("\\", "/", $file);
-            $replace = Storage::disk('conteudos-digitais')->url("{$file}");
-            return $replace;
+        else
+        {
+            $iconeNome = ReplaceStr::replace($tipo->name);
+            $file = Storage::disk('public-path')->url("img/tipo-conteudo/".strtolower($iconeNome).".svg");
         }
-        
-        return Storage::disk('public-path')->url("img/fundo-padrao.svg");
+        return $file;
+
     }
 
+    public static function getImageFromConteudo($id)
+    {
+        $path_assoc = Storage::disk('conteudos-digitais')->path('imagem-associada');
+        $file = self::findFiles($path_assoc, $id);
+        if($file)
+        {
+            return Storage::disk('conteudos-digitais')->url("imagem-associada/".basename($file));
+        }
+        return $file;
+    }
     /**
      * Procura no diretorio os arquivos de imagem associada ou sinopse
      * @param $path     diretorio
@@ -75,21 +88,10 @@ trait FileSystemLogic
      * @param $tipo     id do tipo de conteúdo
      * @return string
      */
-    public static function findFiles($path, $id, $tipo)
+    public static function findFiles($path, $id)
     {
         $path_img_assoc = "{$path}". DIRECTORY_SEPARATOR ."$id.*";
         $file = collect(File::glob($path_img_assoc))->last();
-        if ($tipo->id == 5 && !$file) 
-        {
-            $path_sinopse = "{$path}". DIRECTORY_SEPARATOR ."sinopse". DIRECTORY_SEPARATOR."$id.*";
-            $file = collect(File::glob($path_sinopse))->shuffle()->first();
-            return $file;
-        }/*
-        else if(!$file)
-        {
-            $iconeNome = ReplaceStr::replace($tipo->name);
-            return Storage::disk('public-path')->url("img/tipo-conteudo/".strtolower($iconeNome).".svg");
-        }*/
         return Str::replaceFirst($path . '/', '', $file);
     }
 

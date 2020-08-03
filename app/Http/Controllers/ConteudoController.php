@@ -3,14 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Conteudo;
-use App\Helpers\Autocomplete;
+use App\Helpers\ImageExtractionFromVideo;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\FileSystemLogic;
-use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ConteudoController extends ApiController
 {
@@ -341,6 +339,11 @@ class ConteudoController extends ApiController
         if ($id) {
             if (isset($request->download) && !is_null($request->download)) {
                 $file = $this->saveFile($id, [$request->download], 'download');
+                if($file &&(!isset($request->imagem_associada)))
+                {
+                    $imageExtraction = new ImageExtractionFromVideo($file, $id);
+                    
+                }
             }
             if (isset($request->guias_pedagogicos) && !is_null($request->guias_pedagogicos)) {
                 $file = $this->saveFile($id, [$request->guias_pedagogicos], 'guias-pedagogicos');
