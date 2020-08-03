@@ -7,12 +7,9 @@
           outlined
           option-value="id"
           option-label="name"
-          ransition-show="scale"
-          transition-hide="scale"
           v-model="conteudo.canal"
           :options="canais"
           label="Escolha um Canal"
-          behavior="dialog"
           @input="getCategories"
           :error="errors && errors.canal_id && errors.canal_id.length > 0"
           bottom-slots
@@ -46,12 +43,9 @@
           stack-label
           option-value="id"
           option-label="name"
-          transition-show="flip-up"
-          transition-hide="flip-down"
           v-model="conteudo.tipo"
           :options="tipos"
           label="Tipo de Mídia"
-          behavior="dialog"
           :error="errors && errors.tipo_id && errors.tipo_id.length > 0"
           bottom-slots
         >
