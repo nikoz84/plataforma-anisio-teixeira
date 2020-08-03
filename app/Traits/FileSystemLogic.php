@@ -55,14 +55,12 @@ trait FileSystemLogic
     {
         $path_assoc = Storage::disk('conteudos-digitais')->path('imagem-associada');
         $file = self::findFiles($path_assoc, $id, $tipo);
-        if(strpos($file,"http")!==false)
-        {
+        if (strpos($file, "http") !== false) {
             return $file;
         }
-        if ($file) 
-        {
-            $file = str_replace(Storage::disk('conteudos-digitais')->path(""),"",$file);
-            $file = str_replace("\\","/", $file);
+        if ($file) {
+            $file = str_replace(Storage::disk('conteudos-digitais')->path(""), "", $file);
+            $file = str_replace("\\", "/", $file);
             $replace = Storage::disk('conteudos-digitais')->url("{$file}");
             return $replace;
         }
@@ -166,8 +164,7 @@ trait FileSystemLogic
      */
     public function createFile($id, $file)
     {
-        if ($file) 
-        {
+        if ($file) {
             $filesystem = new Filesystem;
             $path = Storage::disk('conteudos-digitais')->path("download") . DIRECTORY_SEPARATOR ."{$id}.*";
             $files = $filesystem->glob($path);
@@ -182,7 +179,7 @@ trait FileSystemLogic
     {
         $urlPath = Storage::disk('conteudos-digitais')->path("download");
         $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.".*";
-        $file = collect(File::glob( $urlPath))->first();
+        $file = collect(File::glob($urlPath))->first();
         $filename = basename($file);
         return $filename ? Storage::disk('conteudos-digitais')->url("download/{$filename}") : null;
     }
@@ -191,7 +188,7 @@ trait FileSystemLogic
     {
         $urlPath = Storage::disk('conteudos-digitais')->path("guias-pedagogicos");
         $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.".*";
-        $file = collect(File::glob( $urlPath))->first();
+        $file = collect(File::glob($urlPath))->first();
         $filename = basename($file);
         return $filename ? Storage::disk('conteudos-digitais')->url("guias-pedagogicos/{$filename}") : null;
     }

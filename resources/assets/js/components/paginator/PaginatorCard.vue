@@ -9,6 +9,7 @@
       :style="`height:230px;min-height: 230px; width: 100%;backgroud-color:${color};`"
       placeholder-src="/img/fundo-padrao.svg"
     >
+<!--
       <div class="absolute-bottom-right">
         <q-btn 
           round 
@@ -30,6 +31,7 @@
             {{ item.category.name }}
         </div>
       </div>
+-->
       </q-img>
       <q-card-section>
       <!-- removida a borda usando um none no estilo -->
@@ -106,5 +108,10 @@ export default {
   & .absolute-full {
     background-color: black;
   }
+}
+
+.text-h6{
+  font-size:16px;
+  font-weight : 600;
 }
 </style>

@@ -78,16 +78,16 @@ Route::get('/licencas', 'LicenseController@index')->name('listar.licencas');
 /** DOWNLOAD FILE **/
 Route::get('/files/{directory}/{id}', 'FileController@downloadFile')->name('downloadFile.id');
 
-/** MIGRAR PLANILHAS */
-Route::get(
-    '/planilhas/load-rotinas/',
-    'ConteudoPlanilhaController@getRotinaDeEstudos'
-)->name('busca.rotina.de.estudos');
-Route::get(
-    '/planilhas/load-faculdades/',
-    'ConteudoPlanilhaController@getFaculdadesDaBahia'
-)->name('busca.faculdades');
-
+/**
+*Route::get(
+*    '/planilhas/load-rotinas/',
+*    'ConteudoPlanilhaController@getRotinaDeEstudos'
+*)->name('busca.rotina.de.estudos');
+*Route::get(
+*    '/planilhas/load-faculdades/',
+*    'ConteudoPlanilhaController@getFaculdadesDaBahia'
+*)->name('busca.faculdades');
+*/
 Route::get('/planilhas', 'ConteudoPlanilhaController@getDocumentByName')->name('docs.planilhas');
 
 Route::get('/rotinas/{nivel}/{semana}', 'ConteudoPlanilhaController@rotinasPerNivel')

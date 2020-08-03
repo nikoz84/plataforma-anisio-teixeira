@@ -1,90 +1,72 @@
 <template>
   <div class="q-pa-md">
-    <header class="row wrap items-center q-my-md">
-      <div class="text-h5 color-primary">
-        Rotinas de Estudo
+    <q-banner class="bg-primary text-white">
+      <header class="row wrap items-center q-my-md">
+        <div class="text-h5 color-primary">
+          Rotinas de Estudo do {{ this.nivel.label }}
+        </div>
+      </header>
+    </q-banner>
+    <q-banner dense class="bg-grey-3">
+      <div class="row justify-left q-gutter-md">
+        <q-select
+          v-model="nivel"
+          :options="niveisModel"
+          style="min-width: 250px"
+          @input="changeNivel" 
+        ></q-select>
+        <q-select
+          v-model="semana"
+          :options="semanasModel"
+          @input="changeSemana"
+          style="min-width: 200px"
+        ></q-select>
       </div>
-    </header>
-    <div class="row justify-center q-gutter-md">
-      <q-select
-        v-model="nivel"
-        :options="niveisModel"
-        style="min-width: 250px"
-        @input="changeNivel" 
-      ></q-select>
-      <q-select
-        v-model="semana"
-        :options="semanasModel"
-        @input="changeSemana"
-        style="min-width: 200px"
-      ></q-select>
-    </div>
+    </q-banner>
+    <q-badge removable outline class="q-mt-lg q-mb-sm" color="primary" label="Dica: Interaja com cards coloridos para acessar o conteúdo sugerido" />
     <div v-if="rotinas">
-      <div class="row justify-start q-mt-md q-gutter-md" v-for="(rotina, i) in rotinas" :key="i">
+      <div class="row justify-start q-gutter-md" v-for="(rotina, i) in rotinas" :key="i">
         <div class="col-sm-2" v-for="(atividade, d) in rotina" :key="d">
-          <b class="text-center" v-if="i == 0">
-            {{ getDay(d) }}
-          </b>
-          <q-card v-if="d == 'segunda'">
-            <q-card-section >
+          <q-chip class="q-ml-none" square outline color="grey-7" icon="event" v-if="i == 0">
+            <i>
+              {{ getDay(d) }}
+            </i>
+          </q-chip>
+          <q-btn no-caps align="left" type="a" target="__blank" :href="toJson(atividade).link" class="bg-amarelo text-left q-py-md q-mb-md" v-if="d == 'segunda'">
+            <div class="text-left">  
               {{ toJson(atividade).descricao }}
               <q-space class="q-mt-md"></q-space>
-              {{ toJson(atividade).sugestao }} 
-            </q-card-section>
-            <q-card-actions>
-              <a target="_blank" :href="toJson(atividade).link">
-                Visitar
-              </a>
-            </q-card-actions>
-          </q-card>
-          <q-card v-if="d == 'terca'">
-            <q-card-section >
+              Sugestão: {{ toJson(atividade).sugestao }} 
+            </div>
+          </q-btn>
+          <q-btn no-caps align="left" type="a" target="__blank" :href="toJson(atividade).link" class="bg-rosa text-left q-py-md q-mb-md" v-if="d == 'terca'">
+            <div class="text-left">  
               {{ toJson(atividade).descricao }}
               <q-space class="q-mt-md"></q-space>
-              {{ toJson(atividade).sugestao }} 
-            </q-card-section>
-            <q-card-actions>
-              <a target="_blank" :href="toJson(atividade).link">
-                Visitar
-              </a>
-            </q-card-actions>
-          </q-card>
-          <q-card v-if="d == 'quarta'">
-            <q-card-section >
+              Sugestão: {{ toJson(atividade).sugestao }} 
+            </div>
+          </q-btn>
+          <q-btn no-caps align="left" type="a" target="__blank" :href="toJson(atividade).link" class="bg-turquesa text-left q-py-md q-mb-md" v-if="d == 'quarta'">
+            <div class="text-left">  
               {{ toJson(atividade).descricao }}
               <q-space class="q-mt-md"></q-space>
-              {{ toJson(atividade).sugestao }} 
-            </q-card-section>
-            <q-card-actions>
-              <a target="_blank" :href="toJson(atividade).link">
-                Visitar
-              </a>
-            </q-card-actions>
-          </q-card>
-          <q-card v-if="d == 'quinta'">
-            <q-card-section >
+              Sugestão: {{ toJson(atividade).sugestao }} 
+            </div>
+          </q-btn>
+          <q-btn no-caps align="left" type="a" target="__blank" :href="toJson(atividade).link" class="bg-verde text-left q-py-md q-mb-md" v-if="d == 'quinta'">
+            <div class="text-left">  
               {{ toJson(atividade).descricao }}
               <q-space class="q-mt-md"></q-space>
-              {{ toJson(atividade).sugestao }} 
-            </q-card-section>
-            <q-card-actions>
-              <a target="_blank" :href="toJson(atividade).link">
-                Visitar
-              </a>
-            </q-card-actions>
-          </q-card>
-          <q-card v-if="d == 'sexta'">
-            <q-card-section >
+              Sugestão: {{ toJson(atividade).sugestao }} 
+            </div>
+          </q-btn>
+          <q-btn no-caps align="left" type="a" target="__blank" :href="toJson(atividade).link" class="bg-lilas text-left q-py-md q-mb-md" v-if="d == 'sexta'">
+            <div class="text-left">  
               {{ toJson(atividade).descricao }}
               <q-space class="q-mt-md"></q-space>
-              {{ toJson(atividade).sugestao }} 
-            </q-card-section>
-            <q-card-actions>
-              <a target="_blank" :href="toJson(atividade).link">
-                Visitar
-              </a>
-            </q-card-actions>
-          </q-card>
+              Sugestão: {{ toJson(atividade).sugestao }} 
+            </div>
+          </q-btn>
         </div>
       </div>
     </div>
@@ -92,6 +74,14 @@
 </template>
 
 <script>
+import {
+  Quasar,
+  QChip,
+  QBanner,
+  QBadge,
+  QBtn
+} from 'quasar'
+
 export default {
     name: "RotinasDeEstudo",
     data() {
@@ -177,6 +167,26 @@ export default {
 }
 </script>
 
-<style>
+<style lang="stylus" scoped>
+
+.bg-amarelo{
+  background-color : #ffecb3!important; /* amber 2 na pallete do quasar */
+}
+
+.bg-rosa{
+  background-color : #f8bbd0!important; /* pink 2 */
+}
+
+.bg-turquesa{
+  background-color : #b2ebf2!important; /* cyan 2 */
+}
+
+.bg-verde{
+  background-color : #dcedc8!important; /* light-green 2 */
+}
+
+.bg-lilas{
+  background-color : #e1bee7!important; /* purple 2 */
+}
 
 </style>
