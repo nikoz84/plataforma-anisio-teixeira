@@ -62,7 +62,7 @@ body {
   color: #263238;
 }
 /*
- * Quasar Framework v1.12.12
+ * Quasar Framework v1.12.13
  * (c) 2015-present Razvan Stoenescu
  * Released under the MIT License.
  */
@@ -3112,9 +3112,6 @@ body.platform-ios .q-layout--containerized {
   color: #066ab1;
   color: var(--q-color-primary);
 }
-.q-linear-progress--reverse {
-  transform: scale3d(-1, 1, 1);
-}
 .q-linear-progress__model,
 .q-linear-progress__track {
   transform-origin: 0 0;
@@ -3122,6 +3119,10 @@ body.platform-ios .q-layout--containerized {
 .q-linear-progress__model--with-transition,
 .q-linear-progress__track--with-transition {
   transition: transform 0.3s;
+}
+.q-linear-progress--reverse .q-linear-progress__model,
+.q-linear-progress--reverse .q-linear-progress__track {
+  transform-origin: 0 100%;
 }
 .q-linear-progress__model--determinate {
   background: currentColor;
