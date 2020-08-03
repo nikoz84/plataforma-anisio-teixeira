@@ -190,7 +190,6 @@ class ConteudoController extends ApiController
             return $this->errorResponse([], 'Não foi possível fazer upload de arquivos.', 422);
         }
         
-        
         return $this->showOne($conteudo, 'Conteúdo cadastrado com sucesso!!', 200);
     }
     /**
