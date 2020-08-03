@@ -181,10 +181,10 @@ export default {
       this.$q.loading.show();
       let path = `/${this.$route.params.slug}`;
       if(path){
-        let resp = await axios.get(path);
-        if (resp.data.success && resp.data.paginator) {
+        let { data } = await axios.get(path);
+        if (data.success && data.paginator) {
           this.$q.loading.hide();
-          this.SET_PAGINATOR(resp.data.paginator);
+          this.SET_PAGINATOR(data.paginator);
         }
       }
       
@@ -192,12 +192,17 @@ export default {
     },
     goTo(item){
       if(item.hasOwnProperty('url_exibir')){
-        console.log(this.$route)
-        //window.open(routeData.href, '_blank');
+        let host = window.location.host;
+        let protocol = window.location.protocol;
+        let url = `${protocol}//${host}${item.url_exibir}`;
+        window.open(url, '_blank');
       }
     },
     async aprovar(){
-      const {data} = await axios.get('/conteudos/aprovados')
+      this.$q.loading.show();
+      const {data} = await axios.get('/conteudos?aprovados=false')
+      this.SET_PAGINATOR(data.paginator);
+      this.$q.loading.hide();
     },
     userCan(){
       let can = null;
@@ -213,9 +218,6 @@ export default {
       }
       
       return can;
-      
-      
-      
     },
     confirm (title, id) {
       const context = this;

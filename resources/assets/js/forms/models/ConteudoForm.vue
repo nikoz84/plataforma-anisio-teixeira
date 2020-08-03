@@ -14,7 +14,7 @@
           label="Escolha um Canal"
           behavior="dialog"
           @input="getCategories"
-          :error="errors.canal_id && errors.canal_id.length > 0"
+          :error="errors && errors.canal_id && errors.canal_id.length > 0"
           bottom-slots
         >
           <template v-slot:error>
@@ -28,7 +28,7 @@
           :selectedId="conteudo.category_id"
           @click="setCategory"
         ></ParentAndChildSelect>
-        <div class="q-my-md" v-if="errors.category_id && errors.category_id.length > 0">
+        <div class="q-my-md" v-if="errors && errors.category_id && errors.category_id.length > 0">
           <ShowErrors :errors="errors.category_id"></ShowErrors>
         </div>
         <!-- LICENÇAS -->
@@ -37,7 +37,7 @@
           :selectedId="conteudo.license_id"
           @click="setLicense"
         ></ParentAndChildSelect>
-        <div class="q-my-md" v-if="errors.license_id && errors.license_id.length > 0">
+        <div class="q-my-md" v-if="errors && errors.license_id && errors.license_id.length > 0">
           <ShowErrors :errors="errors.license_id"></ShowErrors>
         </div>
         <!-- TIPO DE MIDIA --> 
@@ -52,7 +52,7 @@
           :options="tipos"
           label="Tipo de Mídia"
           behavior="dialog"
-          :error="errors.tipo_id && errors.tipo_id.length > 0"
+          :error="errors && errors.tipo_id && errors.tipo_id.length > 0"
           bottom-slots
         >
           <template v-slot:error>
@@ -64,7 +64,7 @@
            label="Título do conteúdo"
            autogrow
            bottom-slots
-          :error="errors.title && errors.title.length > 0"
+          :error="errors && errors.title && errors.title.length > 0"
            >
            <template v-slot:error>
             <ShowErrors :errors="errors.title"></ShowErrors>
@@ -75,7 +75,7 @@
           label="Autores"
           autogrow
           bottom-slots
-          :error="errors.authors && errors.authors.length > 0">
+          :error="errors && errors.authors && errors.authors.length > 0">
            <template v-slot:error>
             <ShowErrors :errors="errors.authors"></ShowErrors>
           </template>
@@ -85,7 +85,7 @@
           label="Fonte"
           autogrow
           bottom-slots
-          :error="errors.source && errors.source.length > 0">
+          :error="errors && errors.source && errors.source.length > 0">
            <template v-slot:error>
             <ShowErrors :errors="errors.source"></ShowErrors>
           </template>
@@ -94,9 +94,8 @@
         <div class="q-mt-md">
           <p class="text-center">Escreva uma descrição do conteúdo</p>
         </div>
-        <q-editor v-model="conteudo.description" min-height="15rem" />
-        <ShowErrors 
-          :error="errors.description && errors.description.length > 0" 
+        <q-editor v-model="conteudo.description" min-height="18rem" />
+        <ShowErrors v-if="errors && errors.description && errors.description.length > 0" 
           :errors="errors.description">
         </ShowErrors>
       </q-card-section>
@@ -109,7 +108,7 @@
           multiple
           option-value="id"
           option-label="name"
-          hint="Pesquise pelo menos 3 palavras-chave para melhorar as buscas"
+          hint="Pesquise pelo menos 3 palavras-chave para melhorar as buscas, se não achar a palavra escreva uma palavra e adicione apertando enter"
           use-chips
           stack-label
           hide-dropdown-icon
@@ -120,7 +119,7 @@
           :options="autocompleteTags"
           @filter="getTags"
           bottom-slots
-          :error="errors.tags && errors.tags.length > 0"
+          :error="errors && errors.tags && errors.tags.length > 0"
           >
            <template v-slot:error>
             <ShowErrors :errors="errors.tags"></ShowErrors>
@@ -144,7 +143,7 @@
           type="file"
           hint="IMAGEM de destaque"
           bottom-slots
-          :error="errors.imagem_associada && errors.imagem_associada.length > 0"
+          :error="errors && errors.imagem_associada && errors.imagem_associada.length > 0"
           >
            <template v-slot:error>
             <ShowErrors :errors="errors.imagem_associada"></ShowErrors>
@@ -165,7 +164,7 @@
           type="file"
           hint="Arquivo de DOWNLOAD"
           bottom-slots
-          :error="errors.download && errors.download.length > 0"
+          :error="errors && errors.download && errors.download.length > 0"
           >
            <template v-slot:error>
             <ShowErrors :errors="errors.download"></ShowErrors>
@@ -186,7 +185,7 @@
           type="file"
           hint="Escolha um arquivo para GUIA PEDAGÓGICO"
           bottom-slots
-          :error="errors.guias_pedagogicos && errors.guias_pedagogicos.length > 0"
+          :error="errors && errors.guias_pedagogicos && errors.guias_pedagogicos.length > 0"
           >
            <template v-slot:error>
             <ShowErrors :errors="errors.guias_pedagogicos"></ShowErrors>
@@ -201,7 +200,7 @@
             v-model="conteudo.options.site"
             label="URL do Site"
             hint="Exemplo: http://dominio.com.br"
-            :error="errors.options_site && errors.options_site.length > 0"
+            :error="errors && errors.options_site && errors.options_site.length > 0"
             bottom-slots
           >
             <template v-slot:error>
@@ -217,14 +216,19 @@
             label="Aprovar conteúdo"
             color="pink"
           />
-          <ShowErrors :errors="errors.is_approved"></ShowErrors>
+          <div v-if="errors && errors.is_approved && errors.is_approved.length > 0">
+            <ShowErrors :errors="errors.is_approved"></ShowErrors>
+          </div>
+          
           <!-- MARCAR COMO DESTAQUE --> 
           <q-checkbox
             v-model="conteudo.is_featured"
             label="Marcar como destaque"
             color="pink"
           />
-          <ShowErrors :errors="errors.is_featured"></ShowErrors>
+          <div v-if="errors && errors.is_featured && errors.is_featured.length > 0">
+            <ShowErrors :errors="errors.is_featured"></ShowErrors>
+          </div>
         </div>
       </q-card-section>
       <q-card-section>
@@ -232,7 +236,9 @@
         <div class="q-gutter-sm">
           Li e concordo com os <a href="#terms">termos e condições de uso</a> :
           <q-checkbox v-model="terms" color="pink" />
-          <ShowErrors :errors="errors.terms"></ShowErrors>
+          <div v-if="errors && errors.terms && errors.terms.length > 0">
+            <ShowErrors :errors="errors.terms"></ShowErrors>
+          </div>
         </div>
       </q-card-section>
       <q-card-section>
@@ -287,7 +293,7 @@
       
       <q-card-section class="q-mt-lg">
         <ShowErrors 
-        :error="errors.componentes && errors.componentes.length > 0" 
+          v-if="errors && errors.componentes && errors.componentes.length > 0" 
         :errors="errors.componentes"></ShowErrors>
       </q-card-section>
       
@@ -328,7 +334,7 @@
       
       <q-card-section class="q-mt-lg">
         <ShowErrors 
-        :error="errors.componentes && errors.componentes.length > 0" 
+        v-if="errors && errors.componentes && errors.componentes.length > 0" 
         :errors="errors.componentes"></ShowErrors>
       </q-card-section>
     </q-card>
@@ -398,7 +404,6 @@ export default {
       },
       categoriesList: [],
       canais: [],
-      canal_id: null,
       terms: false,
       tipos: [],
       componentesCurriculares: [],
@@ -410,10 +415,7 @@ export default {
       imagem_associada:null,
       download_file:null,
       guias_pedagogicos: null,
-      errors:{
-        tipo_id: [],
-        canal_id: []
-      },
+      errors: {},
       dialog: {
         text: "",
         open: false,
@@ -466,7 +468,7 @@ export default {
         form.append("is_site", 0);
       }
       
-      form.append("canal_id", this.conteudo.canal && this.conteudo.canal.id ? this.conteudo.canal.id : "");
+      form.append("canal_id", this.conteudo.canal ? this.conteudo.canal.id : "");
       form.append("tipo_id", this.conteudo.tipo ? this.conteudo.tipo.id : "");
       form.append("license_id", this.conteudo.license_id ? this.conteudo.license_id : "");
       form.append("category_id",  this.conteudo.category_id ? this.conteudo.category_id : "" );
@@ -474,7 +476,7 @@ export default {
       form.append("description", this.conteudo.description ? this.conteudo.description : "");
       form.append("source", this.conteudo.source ? this.conteudo.source : "");
       form.append("authors", this.conteudo.authors ? this.conteudo.authors : "");
-      //form.append("options.site", this.conteudo.options.site);
+      
       form.append("image", this.conteudo.image);
       if (this.conteudo.tags.length) {
         let tags = this.conteudo.tags.map(item => item.id);
@@ -500,15 +502,13 @@ export default {
         form.append("_method", "PUT");
         url = url + '/' + this.conteudo.id; 
       }
-      try{
+      try {
         let { data } = await axios.post(url, form);
-        console.log('ok',data)
+        console.log(data)
         this.$router.push(`/admin/conteudos/listar`);
-      }
-      catch(ex)
-      {
-        console.log('err',ex)
-        this.errors = ex.errors;
+      } catch(e) {
+        this.errors = e.errors;
+        console.log(e)
       }
     },
     async getCategories(val) {
@@ -575,12 +575,14 @@ export default {
               label: "Confirmar",
               color: "positive",
               handler: async () => {
+                let form = new FormData();
+                
                 form.append("name", val);
-                let { data } = await http.post("/tags", form);
+                let { data } = await axios.post("/tags", form);
                 if (data.success) {
-                  let id = data.metadata.id;
+                  
                   let label = data.metadata.name;
-                  done({ id, label });
+                  //done({ id, label });
                 }
               }
             },

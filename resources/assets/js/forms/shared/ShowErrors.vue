@@ -6,6 +6,7 @@
 <script>
 export default {
   name: "ShowErrors",
-  props: ["errors"]
+  props: ["errors"],
+  
 };
 </script>
