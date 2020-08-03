@@ -1,19 +1,9 @@
+################################################################################################
 # Versão 2.0.2
+################################################################################################
 
 ## Mudanças (layout, correção ortográfica, mudança de código)
-- Mudança no google recatpcha
-- Tirar botão adicionar em panel de controle no fale conosco
 - Organização no formulário de conteúdo digital, melhoras em respostas de erros
-
-## Correções (bugs)
--
-
-## Novas Funcionalidades
--
-
-# Versão 2.0.1
-
-## Mudanças
 - Ajuste da cor de decoração dos links na Busca Avançada
 - Ajuste na edibição do dia da semana nas Rotinas de Estudo
 - Ajustes de cores nos cards dos dias da semana nas Rotinas de Estudo
@@ -21,18 +11,24 @@
 - Ajustada a exibição do topo das Rotinas de Estudo
 - Ajustada a exibição dos filtros das Rotinas de Estudo
 - Ajustes nos Cards  de chamada para conteúdo
+- Adicionar licenças no formulario de conteúdos
+- Tirar botão de adicionar item em fale conosco em panel de controle
+- Adicionado botão para aprovar conteúdos
+- Adicionadas as mensagens de erros para formulário de conteúdo digital
+- Mudança no google recatpcha
+- Ajuste de botão de adicionar item em panel de controle
+- Ajuste de link no botão de visualizar no panel de controle 
 
-## Correções
+## Correções (bugs, código)
 - Corrigido o problema da barra de rolagem horizontal na Busca Avançada
 - Corrigido o funcionamento dos cards nas Rotinas de Estudo
 
 ## Novas Funcionalidades
-
 -
-
+################################################################################################
 # Versão 2.0.1
-
-## Mudanças
+################################################################################################
+## Mudanças (layout, correção ortográfica, mudança de código)
 - Prioridade para arquivo de visualização em player de video
 - Ortografia na data de publicação ás por às
 - Icone de carregamento em lista do paginador
@@ -43,7 +39,7 @@
 - Ortografia de palavras chaves ifenizadas palavras-chave
 - Habilitar sinopse para canal emitec
 
-## Correções (bugs)
+## Correções (bugs, código)
 -
 
 ## Novas Funcionalidades
