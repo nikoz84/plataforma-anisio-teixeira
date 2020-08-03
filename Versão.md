@@ -13,9 +13,6 @@
 
 # Versão 2.0.1
 
-<<<<<<< HEAD
-## Mudanças (layout, correção ortográfica)
-=======
 ## Mudanças
 - Ajuste da cor de decoração dos links na Busca Avançada
 - Ajuste na edibição do dia da semana nas Rotinas de Estudo
@@ -36,7 +33,6 @@
 # Versão 2.0.1
 
 ## Mudanças
->>>>>>> 92a564e30d2400e198b56bafa749051117e022e9
 - Prioridade para arquivo de visualização em player de video
 - Ortografia na data de publicação ás por às
 - Icone de carregamento em lista do paginador

@@ -29,6 +29,7 @@ class ConteudoController extends ApiController
             'getConteudosRecentes'
         ]);
         $request = $request;
+        
     }
 
     /**
@@ -103,11 +104,7 @@ class ConteudoController extends ApiController
             'title' => 'required|min:5|max:120',
             'description' => 'required|min:140|max:5012',
             'options_site' => 'nullable|active_url',
-<<<<<<< HEAD
-            'tags' => 'required',
-=======
             'tags' => 'required|array|min:3|max:8',
->>>>>>> 211519b8cda568c393a33b10b3919d32d2bb412c
             'componentes' => 'required',
             'authors' => 'required',
             'source' => 'required',
