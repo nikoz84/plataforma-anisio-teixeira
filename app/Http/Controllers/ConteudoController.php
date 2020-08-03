@@ -29,6 +29,7 @@ class ConteudoController extends ApiController
             'getConteudosRecentes'
         ]);
         $request = $request;
+        
     }
 
     /**

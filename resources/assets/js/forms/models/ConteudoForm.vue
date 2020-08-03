@@ -156,51 +156,34 @@
           outlined
           @change="onDownloadFileChange"
           type="file"
-          hint="Arquivo de DOWNLOAD"
-          bottom-slots
-          :error="errors && errors.download && errors.download.length > 0"
-          >
-           <template v-slot:error>
-            <ShowErrors :errors="errors.download"></ShowErrors>
-          </template>
-        </q-input>
-      </q-card-section>
-        <!-- ARQUIVO GUIA PEDAGÓGICO --> 
-      <q-card-section>
-        <div v-if="conteudo.guiaPedagogico">
+          hint="Arquivo para Download"
+        />
+        
+        <!-- ARQUIVO DE UPLOAD --> 
+        <br>
+        <q-item-label v-if="conteudo.guiaPedagogico">
           Baixar Arquivo Guia Pedagógico:
-        </div>
-        <a v-if="conteudo.guiaPedagogico" :href="conteudo.guiaPedagogico" :download="conteudo.guiaPedagogico" >{{conteudo.guiaPedagogico.split('/').pop()}}</a>
+        </q-item-label>
+         <a v-if="conteudo.guiaPedagogico" :href="conteudo.guiaPedagogico" :download="conteudo.guiaPedagogico" >{{conteudo.guiaPedagogico.split('/').pop()}}</a>
+        <ShowErrors :errors="errors.guias_pedagogicos"></ShowErrors>
         <q-input
           class="q-mt-md"
           @input="val => {file = val[0];}"
           outlined
           @change="onguiaPedagogicoFileChange"
           type="file"
-          hint="Escolha um arquivo para GUIA PEDAGÓGICO"
-          bottom-slots
-          :error="errors && errors.guias_pedagogicos && errors.guias_pedagogicos.length > 0"
-          >
-           <template v-slot:error>
-            <ShowErrors :errors="errors.guias_pedagogicos"></ShowErrors>
-          </template>
-        </q-input>
-      </q-card-section>
-        <!-- ENVIAR SITE -->
-      <q-card-section>
-          <q-input
-            outlined
-            type="url"
-            v-model="conteudo.options.site"
-            label="URL do Site"
-            hint="Exemplo: http://dominio.com.br"
-            :error="errors && errors.options_site && errors.options_site.length > 0"
-            bottom-slots
-          >
-            <template v-slot:error>
-              <ShowErrors :errors="errors.options_site"></ShowErrors>
-            </template>
-          </q-input>
+          hint="Arquivo para Guia Pedagógico"          
+        />
+        
+        <!-- ENVIAR SITE --> 
+        <ShowErrors :errors="errors.options_site"></ShowErrors>
+        <q-input
+          outlined
+          
+          v-model="conteudo.options.site"
+          label="URL do Site"
+          hint="Exemplo: http://dominio.com.br"
+        />
       </q-card-section>
       <q-card-section>
         <div class="q-gutter-sm">
@@ -439,7 +422,7 @@ export default {
     },
     onguiaPedagogicoFileChange(e){
        var files = e.target.files || e.dataTransfer.files;
-        if (!files.length)
+       if (!files.length)
             return;
         this.guias_pedagogicos = files[0];
     },
@@ -461,16 +444,15 @@ export default {
       {
         form.append("is_site", 0);
       }
-      
-      form.append("canal_id", this.conteudo.canal ? this.conteudo.canal.id : "");
+      console.log(this.conteudo)
       form.append("tipo_id", this.conteudo.tipo ? this.conteudo.tipo.id : "");
+      form.append("canal_id", this.conteudo.canal ? this.conteudo.canal.id : "");
       form.append("license_id", this.conteudo.license_id ? this.conteudo.license_id : "");
       form.append("category_id",  this.conteudo.category_id ? this.conteudo.category_id : "" );
       form.append("title", this.conteudo.title ? this.conteudo.title : "");
       form.append("description", this.conteudo.description ? this.conteudo.description : "");
       form.append("source", this.conteudo.source ? this.conteudo.source : "");
       form.append("authors", this.conteudo.authors ? this.conteudo.authors : "");
-      
       form.append("image", this.conteudo.image);
       if (this.conteudo.tags.length) {
         let tags = this.conteudo.tags.map(item => item.id);
@@ -487,7 +469,7 @@ export default {
       if(this.imagem_associada)
       form.append("imagem_associada", this.imagem_associada );
       if(this.download_file)
-      form.append("download", this.download_file );
+      form.append("download", this.download_file);
       if(this.guias_pedagogicos)
       form.append("guias_pedagogicos", this.guias_pedagogicos );
       let url = "/conteudos";
