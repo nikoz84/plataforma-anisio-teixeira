@@ -1,12 +1,13 @@
 <template>
   <div v-if="conteudo && conteudo.tipo && conteudo.arquivos">
-    
+      
       <q-media-player
         type="video"
         :sources="sources"
         autoplay
         :poster="showImage"
         :volume="25"
+        :show-big-play-button="true"
         v-if="tipo.id == 5"
       ></q-media-player>
     

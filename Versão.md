@@ -2,9 +2,10 @@
 # Versão 2.0.3
 ################################################################################################
 ## Mudanças (layout, correção ortográfica, mudança de código)
-
+- Full screen para player
 ## Correções (bugs, código)
 - Correção de upload de arquivo de download
+- Upload de arquivos max filesize e 
 
 ## Novas Funcionalidades
 -
