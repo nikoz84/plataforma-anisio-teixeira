@@ -236,6 +236,10 @@ class ConteudoController extends ApiController
         Conteudo::tsDocumentoSave($conteudo->id);
         $file = $this->storeFiles($request, $conteudo->id);
 
+        if (!$file) {
+            return $this->errorResponse([], 'falha ao fazer o upload do arquivo', 422);
+        }
+
         return $this->showOne($conteudo, 'Conteúdo editado com sucesso!!', 200);
     }
     /**
