@@ -158,14 +158,16 @@
           type="file"
           hint="Arquivo para Download"
         />
-        
+        <ShowErrors v-if="errors && errors.download && errors.download.length > 0" 
+          :errors="errors.download">
+        </ShowErrors>
         <!-- ARQUIVO DE UPLOAD --> 
         <br>
         <q-item-label v-if="conteudo.guiaPedagogico">
           Baixar Arquivo Guia Pedagógico:
         </q-item-label>
          <a v-if="conteudo.guiaPedagogico" :href="conteudo.guiaPedagogico" :download="conteudo.guiaPedagogico" >{{conteudo.guiaPedagogico.split('/').pop()}}</a>
-        <ShowErrors :errors="errors.guias_pedagogicos"></ShowErrors>
+        
         <q-input
           class="q-mt-md"
           @input="val => {file = val[0];}"
@@ -174,9 +176,10 @@
           type="file"
           hint="Arquivo para Guia Pedagógico"          
         />
-        
+        <ShowErrors v-if="errors && errors.guias_pedagogicos && errors.guias_pedagogicos.length > 0" 
+          :errors="errors.guias_pedagogicos">
+        </ShowErrors>
         <!-- ENVIAR SITE --> 
-        <ShowErrors :errors="errors.options_site"></ShowErrors>
         <q-input
           outlined
           
@@ -184,6 +187,8 @@
           label="URL do Site"
           hint="Exemplo: http://dominio.com.br"
         />
+        <ShowErrors v-if="errors && errors.options_site && errors.options_site.length > 0" 
+          :errors="errors.options_site"></ShowErrors>
       </q-card-section>
       <q-card-section>
         <div class="q-gutter-sm">

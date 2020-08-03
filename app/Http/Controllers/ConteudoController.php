@@ -112,8 +112,8 @@ class ConteudoController extends ApiController
             'is_featured' => 'sometimes|boolean',
             'is_approved' => 'required|boolean',
             'is_site' => 'sometimes|boolean',
-            'download' => "nullable|sometimes|mimes:{$this->mimeTypes()}|max:4500000",
-            'guias_pedagogicos' => "sometimes|mimes:pdf,doc,docx,epub|max:1000000",
+            'download' => "nullable|sometimes|mimes:{$this->mimeTypes()}|max:800000",
+            'guias_pedagogicos' => "sometimes|mimes:pdf,doc,docx,epub|max:1200000",
             'imagem_associada' => 'sometimes|mimes:jpeg,jpg,png,gif,svg|max:2000',
             'visualizacao' => 'sometimes|file'
 
