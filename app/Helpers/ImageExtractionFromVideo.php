@@ -71,7 +71,7 @@ class ImageExtractionFromVideo
 	 */
 	private function verificaVideo()
 	{
-		if(in_array( mime_content_type($this->videoPath),$this->video_mime_types))
+		if(in_array( mime_content_type($this->videoPath), self::$video_mime_types))
 		{
 			return true;
 		}
@@ -136,9 +136,9 @@ class ImageExtractionFromVideo
     
     /**
     * Metodo que executa o comando FFmpeg
-    * @param $seconds: Representa a quantos segunos após o inicio do video as imagens serão extraidas
+    * @param $second: Representa a quantos segunos após o inicio do video as imagens serão extraidas
     */
-	public function realXtract($seconds)
+	public function realXtract($second)
 	{
         if(!is_file($this->videoPath))
 		{
@@ -148,7 +148,13 @@ class ImageExtractionFromVideo
 		{
 			throw new Exception("Arquivo:".$this->videoPath." não é um arquivo de video.", 501);
 		}
-		shell_exec("ffmpeg -itsoffset -{$seconds} -i {$this->videoPath} -r 1 -s {$this->imageSize} -f image2 -vframes 1 {$this->imagePathDestination}/{$this->createImageName()}-%03d.jpeg");
+		if(!is_dir($this->imagePathDestination))
+		{
+			throw new Exception("Caminho:".$this->imagePathDestination." não é um diretório de destino válido para salvar frame de video.", 501);
+		}
+		$command = "ffmpeg -itsoffset -{$second} -i {$this->videoPath} -r 1 -s {$this->imageSize} -f image2 -vframes 1 {$this->imagePathDestination}". DIRECTORY_SEPARATOR ."{$this->createImageName()}-%03d.jpeg";
+		shell_exec($command);
+		
 	}
     
     /**

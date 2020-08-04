@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\FileSystemLogic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ConteudoController extends ApiController
 {
@@ -184,7 +185,7 @@ class ConteudoController extends ApiController
         $conteudo->componentes()->attach(explode(',', $request->componentes));
         $conteudo::tsDocumentoSave($conteudo->id);
 
-        $file = $this->storeFiles($request, $conteudo->id);
+        $file = $this->storeFiles($request, $conteudo);
         if (!$file) {
             return $this->errorResponse([], 'Não foi possível fazer upload de arquivos.', 422);
         }
@@ -232,19 +233,13 @@ class ConteudoController extends ApiController
         $conteudo->tags()->sync($request->tags);
         $conteudo->componentes()->sync(explode(',', $request->componentes));
         Conteudo::tsDocumentoSave($conteudo->id);
-        $file = $this->storeFiles($request, $conteudo->id);
-
-        if (!$file) {
-            return $this->errorResponse([], 'falha ao fazer o upload do arquivo', 422);
-        }
-
+        $file = $this->storeFiles($request, $conteudo);
         return $this->showOne($conteudo, 'Conteúdo editado com sucesso!!', 200);
     }
+
     /**
      * Apaga o conteúdo do banco de dados, com tags, componentes
-     *
      * @param $id integer
-     *
      * @return App\Traits\ApiResponser
      */
     public function delete($id)
@@ -332,24 +327,31 @@ class ConteudoController extends ApiController
     /**
      * Responsável por criar arquivos de conteúdo
      */
-    private function storeFiles($request, $id = null)
+    private function storeFiles($request, $conteudo = null)
     {
         $file = null;
 
-        if ($id) {
-            if (isset($request->download) && !is_null($request->download)) {
-                $file = $this->saveFile($id, [$request->download], 'download');
+        if ($conteudo && $conteudo->id) 
+        {
+            if (isset($request->download) && !is_null($request->download)) 
+            {
+                $this->deleteFile("download", $conteudo->id);
+                $file = $this->saveFile($conteudo->id, [$request->download], 'download');
+                if($conteudo->tipo->id == 5)
                 if($file &&(!isset($request->imagem_associada)))
                 {
-                    $imageExtraction = new ImageExtractionFromVideo($file, $id);
-                    
+                    $this->deleteFile("imagem-associada", $conteudo->id);
+                    $imagemPath =  Storage::disk('conteudos-digitais')->path("imagem-associada");
+                    $imageExtraction = new ImageExtractionFromVideo($this->downloadFileConteudoReferencia($conteudo->id),$conteudo->id, $imagemPath);
+                    $imageExtraction->realXtract(10);
                 }
             }
             if (isset($request->guias_pedagogicos) && !is_null($request->guias_pedagogicos)) {
-                $file = $this->saveFile($id, [$request->guias_pedagogicos], 'guias-pedagogicos');
+                $file = $this->saveFile($conteudo->id, [$request->guias_pedagogicos], 'guias-pedagogicos');
             }
             if (isset($request->imagem_associada) && !is_null($request->imagem_associada)) {
-                $file = $this->saveFile($id, [$request->imagem_associada], 'imagem-associada');
+                $this->deleteFile("imagem-associada", $conteudo->id);
+                $file = $this->saveFile($conteudo->id, [$request->imagem_associada], 'imagem-associada');
             }
         }
 

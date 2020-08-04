@@ -58,7 +58,7 @@ trait FileSystemLogic
         if ($tipo->id == 5) 
         {
             $path_sinopse = "{$path}". DIRECTORY_SEPARATOR ."sinopse". DIRECTORY_SEPARATOR."$id.*";
-            $file = collect(File::glob($path_sinopse))->shuffle()->first();
+            $file = collect(File::glob($path_sinopse))->shuffle()->last();
             if($file)
             return Storage::disk('conteudos-digitais')->url("imagem-associada/sinopse/".basename($file));
         }
@@ -100,9 +100,7 @@ trait FileSystemLogic
         $image = Storage::disk('aplicativos-educacionais')->path("imagem-associada"). DIRECTORY_SEPARATOR . "{$id}.*";
         $file = collect(File::glob($image))->first();
         $filename = basename($file);
-       
         return $filename ? Storage::disk('aplicativos-educacionais')->url("imagem-associada/{$filename}") : null;
-        
     }
     /**
      * Seleciona os metadados do arquivo
@@ -177,11 +175,24 @@ trait FileSystemLogic
         }
     }
 
-    public function downloadFileConteudo($id)
+    function deleteFile($path, $id, $disk="conteudos-digitais")
+    {
+        $filesystem = new Filesystem;
+        $path = Storage::disk($disk)->path($path) . DIRECTORY_SEPARATOR ."{$id}.*";
+        $files = $filesystem->glob($path);
+        return File::delete($files);
+    }
+
+    public function downloadFileConteudoReferencia($id)
     {
         $urlPath = Storage::disk('conteudos-digitais')->path("download");
-        $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.".*";
-        $file = collect(File::glob($urlPath))->first();
+        $urlPath = $urlPath.DIRECTORY_SEPARATOR.$id.".*";
+        $file = collect(File::glob($urlPath))->last();
+        return $file;
+    }
+    public function downloadFileConteudo($id)
+    {
+        $file = $this->downloadFileConteudoReferencia($id);
         $filename = basename($file);
         return $filename ? Storage::disk('conteudos-digitais')->url("download/{$filename}") : null;
     }
@@ -189,8 +200,8 @@ trait FileSystemLogic
     public function guiaPedagogicoFileConteudo($id)
     {
         $urlPath = Storage::disk('conteudos-digitais')->path("guias-pedagogicos");
-        $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.".*";
-        $file = collect(File::glob($urlPath))->first();
+        $urlPath = $urlPath.DIRECTORY_SEPARATOR.$id.".*";
+        $file = collect(File::glob($urlPath))->last();
         $filename = basename($file);
         return $filename ? Storage::disk('conteudos-digitais')->url("guias-pedagogicos/{$filename}") : null;
     }
