@@ -8,6 +8,7 @@ import {
   Dark,
   Platform,
   LocalStorage,
+  AppFullscreen,
   QSpinnerGears
 } from "quasar";
 import "quasar/dist/quasar.ie.polyfills.umd.min.js";
@@ -32,7 +33,8 @@ Vue.use(Quasar, {
     Dialog,
     Dark,
     Platform,
-    LocalStorage
+    LocalStorage,
+    AppFullscreen
   },
   extras: [
     'roboto-font'

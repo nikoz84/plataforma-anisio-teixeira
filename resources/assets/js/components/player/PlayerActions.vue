@@ -1,5 +1,5 @@
 <template>
-    <div v-if="conteudo && conteudo.tipo && conteudo.qt_access && conteudo.qt_downloads">
+    <div v-if="conteudo">
         <div>
             <small>
                 Tipo de Conteúdo: 

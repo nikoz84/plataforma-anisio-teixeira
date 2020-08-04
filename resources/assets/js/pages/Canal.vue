@@ -97,12 +97,14 @@ export default {
   },
   mounted() {
     this.getCanalBySlug(this.$route.params.slug).then(() => {
+      this.$ga.page(this.$route.params.slug);
       this.fetchData();
     });
   },
   watch: {
     $route(to, from) {
       if (to.fullPath != from.fullPath) {
+        this.$ga.page(this.$route.params.slug);
         this.getCanalBySlug(this.$route.params.slug).then(() => {
           this.fetchData();
         });
