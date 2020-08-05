@@ -149,7 +149,7 @@ class SideBar
                 'class' => \App\Role::class
             ],
             [
-                'label' => 'Palavras Chaves',
+                'label' => 'Palavras-Chaves',
                 'name' => 'IndexTags',
                 'slug' => 'tags',
                 'hability' => 'index',

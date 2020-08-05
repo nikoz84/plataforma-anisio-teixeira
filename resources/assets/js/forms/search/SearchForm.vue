@@ -2,31 +2,26 @@
     <div class="row q-pa-md">
       <q-select
         filled 
-        v-model="termo" 
+        v-model="termo"
+        hide-dropdown-icon
+        dense
         use-input
         stack-input
         clearable
         fill-input
         :options="options" 
         label="Pesquisar" 
-        input-debounce="300"
+        input-debounce="200"
         style="width:250px;"
         @filter="filterFn"
         bottom-slots
         >
     </q-select>
-      
-    <q-space></q-space>
-    <q-btn size="15px"
-        icon="add" 
-        color="positive" 
-        :to="`/admin/${$route.params.slug}/adicionar`" 
-        title="Adicionar novo item"
-        v-if="userCan()"/>
+    
   </div>
 </template>
 <script>
-import { QSelect, QItem, QItemSection, QSpace, LocalStorage } from "quasar";
+import { QSelect, QItem, QItemSection, QSpace } from "quasar";
 import { mapMutations, mapState } from "vuex";
 
 export default {
@@ -39,7 +34,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["paginator", "isLogged", "paginator.data"])
+    ...mapState(["paginator", "isLogged"])
   },
   methods: {
     ...mapMutations(["SET_PAGINATOR", "SET_IS_LOADING", 'SET_DATA']),
@@ -66,16 +61,6 @@ export default {
           });
         }
       });
-    },
-    userCan(){
-      let can = null;
-      if(LocalStorage.has('user')){
-        const user = JSON.parse(LocalStorage.getItem('user'));
-        let role = user.role;
-        can = this.isLogged && role === 1 || role === 2 || role === 3;
-      }
-      
-      return can;
     }
   }
 };

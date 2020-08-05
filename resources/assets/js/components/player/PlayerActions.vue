@@ -1,5 +1,5 @@
 <template>
-    <div v-if="conteudo && conteudo.tipo && conteudo.qt_access && conteudo.qt_downloads">
+    <div v-if="conteudo">
         <div>
             <small>
                 Tipo de Conteúdo: 
@@ -14,7 +14,7 @@
                 <q-badge class="bg-cinza" text-color="primary">{{conteudo.qt_downloads}}</q-badge>
             </small>
             
-            <!--q-btn class="q-ml-md bg-cinza" 
+            <q-btn class="q-ml-md bg-cinza" 
                 round
                 push
                 text-color="primary"
@@ -24,7 +24,7 @@
                 <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
                     Compartilhar
                 </q-tooltip>
-            </q-btn-->
+            </q-btn>
             <q-btn
                 round
                 push

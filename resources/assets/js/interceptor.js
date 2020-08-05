@@ -13,9 +13,10 @@ axios.interceptors.response.use(
     return response;
   },
   function(error) {
-    let status = error.response.status;
-    let message = error.response.data.message;
-    let statusText = status ? message : "Erro desconhecido " + status;
+    
+    const status = error.response && error.response.status ? error.response.status : '';
+    const message = error.response && error.response.data.message ? error.response.data.message : '';
+    const statusText = status ? message : "Erro desconhecido " + status;
     switch (status) {
       case 404:
         // Não encontrado
@@ -51,7 +52,10 @@ axios.interceptors.response.use(
         break;
     }
     Loading.hide();
-    let data = error.response.data;
+    let data = error && error.response ? error.response.data : {
+      message : 'Erro indefinido',
+      status: 500
+    };
     return Promise.reject(data);
   }
 );

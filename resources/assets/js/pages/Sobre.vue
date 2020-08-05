@@ -8,7 +8,9 @@
     <div class="col-12 separatriz-6">
     </div>
     <div class="q-py-md text-left wrap">
-      <p>A Plataforma Anísio Teixeira, desenvolvida pela Secretaria da Educação do Estado da Bahia, por meio do Instituto Anísio Teixeira (IAT), através do Programa de Difusão de Mídias e Tecnologias Educacionais – Rede Anísio Teixeira, integra um conjunto de serviços, softwares livres e Recursos Educacionais Abertos (REA) relacionados à mediação de práticas pedagógicas e à gestão de acervos on-line, voltados para a Educação Básica e para a Formação Continuada dos Profissionais da Educação Básica das redes públicas de ensino do estado da Bahia.</p>
+      <p>
+        A Plataforma Anísio Teixeira, desenvolvida pela Secretaria da Educação do Estado da Bahia, por meio do Instituto Anísio Teixeira (IAT), através do Programa de Difusão de Mídias e Tecnologias Educacionais – Rede Anísio Teixeira, integra um conjunto de serviços, softwares livres e Recursos Educacionais Abertos (REA) relacionados à mediação de práticas pedagógicas e à gestão de acervos on-line, voltados para a Educação Básica e para a Formação Continuada dos Profissionais da Educação Básica das redes públicas de ensino do estado da Bahia. O Programa Rede Anísio Teixeira foi instituído pela PORTARIA Nº 9.004/08, publicada no Diário Oficial do Estado da Bahia em 20 de agosto de 2008.
+      </p>
       <p>A Plataforma Anísio Teixeira é constituída por um repositório de Recursos Educacionais Abertos, como sequências didáticas, animações, simulações, jogos, vídeos, áudios, imagens e textos das mais variadas disciplinas e níveis de ensino, acompanhados de documentação e de orientação pedagógica, que podem ser pesquisados por nível de ensino, áreas do conhecimento, disciplinas, temas transversais, formatos, entre outras opções de busca.</p>
       <p>Conta com o espaço Colaborativus, ambiente de ensino e aprendizagem colaborativa, mantido pelo Núcleo de Inovação em Ambientes Virtuais de Aprendizagem (NIAVA), no qual serão mediadas as turmas, as formações e os Cursos Abertos desenvolvidos pela Secretaria da Educação, pelo IAT, Universidades e demais instituições parceiras.</p>
       <p>Além disso, disponibiliza Sites Temáticos, Aplicativos e softwares livres de apoio a produção e a colaboração; canais de mídias nos quais os professores e estudantes da rede pública estadual poderão interagir e compartilhar suas produções; as produções multimídia do Blog, os programas da TV Anísio Teixeira, da Rádio Anísio Teixeira, dos Projetos Artísticos (Ave, Face, Prove e Tal) e as videoaulas do Ensino Médio com Intermediação Tecnológica - EMITec; com conteúdos prioritários do ensino médio; produções artísticas e científicas dos estudantes e professores; práticas pedagógicas exitosas; conteúdos de outros órgãos públicos e instituições parceiras.</p>
@@ -182,11 +184,13 @@
         <q-img alt="imagem de marcas" aria-label="imagem" style="max-width: 741px; height: auto;" v-if="layout.marcas.is_active" :src="layout.marcas.url"></q-img>
       </div>
       <q-separator class="q-mt-md q-mb-lg" />
-      <div class="row wrap justify-center">
-        <b class="q-mt-lg">Todos os direitos e conteúdos desta Plataforma são de uso compartilhado, exceto onde indicado de outra forma.</b>
-      </div>
-      <div class="row wrap justify-center" v-if="layout && layout.marcas">
-        <q-img alt="creative commond imagem" aria-label="imagem" style="max-width: 180px; height: auto;" src="img/creative-commons.svg"></q-img>
+      <div style="text-align:center" class="row wrap justify-center q-mt-lg">
+        <p class="col-12"><b>Todos os direitos e conteúdos desta Plataforma são de uso compartilhado, exceto onde indicado de outra forma.</b></p>
+        <p class="col-12"><q-icon style="font-size: 10em; margin-top:-50px">
+          <svg class="icon">
+            <use xlink:href="#creative-commons"></use>
+          </svg>
+        </q-icon></p>
       </div>
   </div>
 </div>

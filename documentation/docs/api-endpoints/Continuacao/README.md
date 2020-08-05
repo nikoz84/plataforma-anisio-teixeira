@@ -21,8 +21,62 @@
     "image": "http://127.0.0.1:8000/storage/conteudos/conteudos-digitais/imagem-associada/licencas/",
     "childs": []
     },
+<<<<<<< HEAD
    
 },
+=======
+    {
+        "id": 2,
+        "parent_id": null,
+        "name": "Creative Commons",
+        "description": "Qualquer pessoa poderá copiar e distribuir essa obra, desde que atribuam o crédito da mesma. O arquivo desse conteúdo será disponibilizado para download na página",
+        "site": "https://creativecommons.org",
+        "created_at": "2019-09-12 16:51:17",
+        "updated_at": "2019-09-12 16:51:17",
+        "deleted_at": null,
+        "user_can": null,
+        "image": "http://127.0.0.1:8000/storage/conteudos/conteudos-digitais/imagem-associada/licencas/",
+        "childs": [
+        {
+            "id": 6,
+            "parent_id": 2,
+            "name": "Atribuição CC BY",
+            "description": "Esta licença permite que outros distribuam, remixem, adaptem e criem a partir do seu trabalho, mesmo para fins comerciais, desde que lhe atribuam o devido crédito pela criação original. É a licença mais flexível de todas as licenças disponíveis. É recomendada para maximizar a disseminação e uso dos materiais licenciados.",
+            "site": "http://creativecommons.org/licenses/by/4.0",
+            "created_at": "2019-09-12 16:51:17",
+            "updated_at": "2019-09-12 16:51:17",
+            "deleted_at": null,
+            "user_can": null,
+            "image": "http://127.0.0.1:8000/storage/conteudos/conteudos-digitais/imagem-associada/licencas/"
+        },
+        {
+            "id": 7,
+            "parent_id": 2,
+            "name": "Atribuição-CompartilhaIgual CC BY-SA",
+            "description": "Esta licença permite que outros remixem, adaptem e criem a partir do seu trabalho, mesmo para fins comerciais, desde que lhe atribuam o devido crédito e que licenciem as novas criações sob termos idênticos. Esta licença costuma ser comparada com as licenças de software livre e de código aberto CopyLeft. Todos os trabalhos novos baseados no seu terão a mesma licença, portanto quaisquer trabalhos derivados também permitirão o uso comercial. Esta é a licença usada pela Wikipédia e é recomendada para materiais que seriam beneficiados com a incorporação de conteúdos da Wikipédia e de outros projetos com licenciamento semelhante.",
+            "site": "http://creativecommons.org/licenses/by-sa/4.0",
+            "created_at": "2019-09-12 16:51:17",
+            "updated_at": "2019-09-12 16:51:17",
+            "deleted_at": null,
+            "user_can": null,
+            "image": "http://127.0.0.1:8000/storage/conteudos/conteudos-digitais/imagem-associada/licencas/"
+            },
+        {
+    }
+    ]
+    ,
+        "first_page_url": "http://127.0.0.1:8000/api-v1/licencas?page=1",
+        "from": 1,
+        "last_page": 1,
+        "last_page_url": "http://127.0.0.1:8000/api-v1/licencas?page=1",
+        "next_page_url": null,
+        "path": "http://127.0.0.1:8000/api-v1/licencas",
+        "per_page": 15,
+        "prev_page_url": null,
+        "to": 6,
+        "total": 6
+    },
+>>>>>>> 239d1c7da7fc518486f4bea3b47695401ebabca1
 "message": "",
 "success": true
 }

@@ -19,16 +19,14 @@
             </q-select>
           </q-card-section>
           <q-card-section>
+            {{tipo.icone}}
               <q-item-label style="margin-bottom:10px" >
                 <q-icon name="image" style="padding-bottom: 3px;" /><strong>Icone</strong>
               </q-item-label>
-              <q-img 
-              loading="lazy" 
-              style="height:150px; width:150px"
-              :src="tipo.icon"
-              placeholder-src="/img/fundo-padrao.svg"
-              alt=" Icone da categoria :"/>
               
+              <svg class="icon-pat">
+                <use v-bind="{'xlink:href':'#'+ tipo.icon}"></use> 
+              </svg>
           </q-card-section>
           <q-card-section>
             <q-btn @click.prevent="save()" class="full-width q-mt-md" label="Salvar" type="submit" color="primary"/>

@@ -53,7 +53,7 @@ class Category extends Model
     {
         if(!$this->id)
         return null;
-        $urlPath = Storage::disk("conteudos-digitais")->path("imagem-associada");
+        $urlPath = Storage::disk("conteudos-digitais")->path("imagem-associada". DIRECTORY_SEPARATOR . "categorias");
         $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.".*";
         $info = glob($urlPath);
         if(sizeof($info)>0)
@@ -69,7 +69,7 @@ class Category extends Model
         //return $urlPath;
         $filename = basename($this->refenciaImagemAssociada());
         if($filename)
-        return Storage::disk("conteudos-digitais")->url("imagem-associada/".$filename); 
+        return Storage::disk("conteudos-digitais")->url("imagem-associada/categorias/".$filename); 
         return null;
     }
 

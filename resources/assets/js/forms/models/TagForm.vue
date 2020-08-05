@@ -2,8 +2,13 @@
     <div class="row q-pa-md">
         <div class="col-sm-6 q-pa-md">
             <form v-on:submit.prevent="save()">
-                <ShowErrors :errors="errors.name"></ShowErrors>
-                <q-input filled v-model.trim="tag.name" :error="errors.name && errors.name.length > 0" label="Palavra Chave"/>
+                <q-input filled v-model.trim="tag.name" label="Adicionar palavra-chave"
+                  :error="errors.name && errors.name.length > 0"
+                  bottom-slots>
+                  <template v-slot:error>
+                    <ShowErrors :errors="errors.name"></ShowErrors>
+                  </template>
+                </q-input>
                 <q-card v-if="tag.id">
                     <q-card-section>
                         <p>Vezes pesquisada: {{ tag.searched }}</p> 
@@ -16,9 +21,9 @@
             </form>
         </div>
         <div class="col-sm-6 q-pa-md">
-            <q-input filled v-model.trim="busca" label="Pesquisa"/>
+            <q-input filled v-model.trim="busca" label="Pesquisa de palavras-chave"/>
             <div v-if="busca.length > 2" style="margin-top:30px;"> 
-                <p>Palavras chave semelhantes à <b>{{busca}}</b></p>
+                <p>Palavras chave semelhantes à <b>{{busca}}, clique em uma palavra para poder editar</b></p>
                 <div v-if="tags && tags.length">
                     <q-chip icon="bookmark" 
                             clickable 
@@ -35,10 +40,11 @@
 <script>
 import { QInput, QChip, QCard, QCardSection, date } from "quasar";
 import { debounce } from "lodash";
+import { ShowErrors } from "@forms/shared";
 
 export default {
   name: "TagForm",
-  components: { QInput, QChip, QCard, QCardSection },
+  components: { QInput, QChip, QCard, QCardSection, ShowErrors },
   data() {
     return {
       busca: "",

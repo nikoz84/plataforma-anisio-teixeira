@@ -12,7 +12,7 @@
       @click="searchBy(item)"
     >
       <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
-        Procurar por palavra chave: {{item.name}}
+        Procurar por palavra-chave: {{item.name}}
       </q-tooltip>
     </q-chip>
   </div>    

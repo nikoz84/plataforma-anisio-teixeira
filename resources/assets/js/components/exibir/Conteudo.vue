@@ -5,9 +5,7 @@
       <q-card>
         <q-card-section class="player col-12">
           <Player :arquivos="conteudo.arquivos" :tipo="conteudo.tipo"></Player>
-        </q-card-section>
-        <q-card-section class="acoes col-12 q-mx-md">
-          <PlayerActions></PlayerActions>
+          <PlayerActions class="q-mt-sm"></PlayerActions>
         </q-card-section>
         <q-card-section class="descritivo col-12 q-mx-md q-mb-sm">
               <Title :title="conteudo.title"></Title>
@@ -27,7 +25,7 @@
 
     <div class="col-md-4 col-sm-12">
       <q-card class="q-mt-sm q-ml-sm q-pt-xs">
-        <strong class="q-pa-sm" >Conteúdo Relacionado</strong>
+        <strong class="q-pa-sm" >Conteúdo(s) Relacionado(s)</strong>
         <ConteudoRelated></ConteudoRelated>
       </q-card>
     </div>

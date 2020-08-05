@@ -16,6 +16,7 @@ use App\Category;
 use App\Helpers\TransformDate;
 use App\Traits\UserCan;
 
+
 class Conteudo extends Model
 {
     use FileSystemLogic, SoftDeletes, UserCan;
@@ -139,17 +140,23 @@ class Conteudo extends Model
      * @param [type] $user
      * @return void
      */
-    public function setApprovingUserIdAttribute($user)
+    public function setApprovingUserIdAttribute($id)
     {
-        $id = null;
-        
-        if ($user->is('admin') || $user->is('super-admin') || $user->is('coordenador')) {
-            $id = $user->id;
+        if ($id) {
+            $this->attributes['approving_user_id'] = $id;
+        } else {
+            $this->attributes['approving_user_id'] = null;
         }
-
-        $this->attributes['approving_user_id'] = $id;
     }
 
+    public function setIsApproved($is_approved)
+    {
+        if ($is_approved) {
+            $this->attributes['is_approved'] = $is_approved;
+        } else {
+            $this->attributes['is_approved'] = false;
+        }
+    }
     /**
      * Adiciona novo atributo ao objeto que limita o tamanho da descrição
      * @return void
@@ -205,9 +212,16 @@ class Conteudo extends Model
     public function getImageAttribute()
     {
         $id = $this['id'];
-        $tipo = $this['tipo_id'];
-        return $this::getImageFromTipo($tipo, $id);
+        $image = $this::getImageFromConteudo($id);
+        if (!$image) {
+            $image = $this->getCategoryImage($this->category_id);
+        }
+        if (!$image) {
+            $image = $this->getImageFromTipo($this->tipo, $this->id);
+        }
+        return $image;
     }
+    
 
     /**
      * Adiciona atributo imagem associada ao objeto
@@ -230,14 +244,23 @@ class Conteudo extends Model
     /**
      * Adiciona atributo url_exibir
      *
-     * @return void
+     * @return string
      */
     public function getUrlExibirAttribute()
     {
         $slug = $this->canal()->pluck('slug')->first();
         return "/{$slug}/conteudo/exibir/" . $this['id'];
     }
-
+    /**
+     * Filtro para conteúdos Aprovados
+     */
+    public function scopeAprovados($query, $is_approved)
+    {
+        if (!$is_approved) {
+            return $query;
+        }
+        return $query->where('is_approved', $is_approved);
+    }
     /**
      * Filtro para full text search
      * @param $query  Eloquent\Query instance

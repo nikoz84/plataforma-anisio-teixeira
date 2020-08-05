@@ -59,7 +59,6 @@
                         />
                         </div>
                     </q-card-section>
-
                     <q-card-section>
                         <q-item-label style="margin-bottom:10px" ><q-icon name="image" style="padding-bottom: 3px;" /><strong>Imagem Associada</strong></q-item-label>
                         <q-img 

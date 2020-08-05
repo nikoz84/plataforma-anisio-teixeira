@@ -14,6 +14,6 @@ class TransformDate
         $date = new Date($date_to_format, $timezone);
         $date::setLocale($locale);
 
-        return $date->format('d \d\e F \d\e Y \á\s H:i');
+        return $date->format('d \d\e F \d\e Y \à\s H:i');
     }
 }

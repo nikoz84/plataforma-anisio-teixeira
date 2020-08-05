@@ -3,7 +3,24 @@
     <div class="col-lg-12">
       <SearchForm></SearchForm>
     </div>
-    <div class="col-lg-12 flex flex-center q-mt-xs">
+    <div class="col-lg-12 flex flex-center q-gutter-sm">
+      <!-- ADICIONAR -->
+      <q-btn icon="add" 
+        color="positive" 
+        size="xs"
+        :to="`/admin/${$route.params.slug}/adicionar`" 
+        title="Adicionar novo item"
+        label="adicionar item"
+        v-if="userCan()"/>
+        <!-- LISTAR CONTEÚDOS APROVADOS -->
+        <q-btn icon="checked" 
+        color="primary" 
+        size="xs"
+        label="Aprovar"
+        @click="aprovar"
+        v-if="$route.params.slug == 'conteudos' && isLogged"/>
+        <q-space></q-space>
+        <!-- PAGINAÇÃO -->
       <q-pagination
         v-if="paginator && paginator.total > paginator.per_page"
         v-model="current"
@@ -18,7 +35,8 @@
         </q-card-section>
       </q-card>
     </div>
-    <div class="col-lg-12" v-if="paginator && paginator.total > 0">
+    <div class="col-lg-12 q-mt-xs" v-if="paginator && paginator.total > 0">
+      <!-- LISTA -->
       <q-markup-table
         separator="horizontal"
         flat
@@ -60,7 +78,8 @@
                   color="primary"
                   title="Visualizar"
                   icon="visibility"
-                  
+                  v-if="$route.params.slug == 'conteudos' || $route.params.slug == 'aplicativos'"
+                  @click="goTo(row)"
                 />
               </q-btn-group>
             </td>
@@ -97,7 +116,8 @@ import {
   QMarkupTable,
   QDialog,
   ClosePopup,
-  QPagination
+  QPagination,
+  LocalStorage
 } from "quasar";
 
 export default {
@@ -107,7 +127,8 @@ export default {
     QMarkupTable,
     QDialog,
     ClosePopup,
-    QPagination
+    QPagination,
+    LocalStorage
   },
   data() {
     return {
@@ -117,7 +138,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["paginator"]),
+    ...mapState(["paginator", "isLogged"]),
     last() {
       return this.paginator ? this.paginator.last_page : 1;
     }
@@ -160,16 +181,44 @@ export default {
       this.$q.loading.show();
       let path = `/${this.$route.params.slug}`;
       if(path){
-        let resp = await axios.get(path);
-        if (resp.data.success && resp.data.paginator) {
+        let { data } = await axios.get(path);
+        if (data.success && data.paginator) {
           this.$q.loading.hide();
-          this.SET_PAGINATOR(resp.data.paginator);
+          this.SET_PAGINATOR(data.paginator);
         }
       }
       
       this.$q.loading.hide();
     },
-
+    goTo(item){
+      if(item.hasOwnProperty('url_exibir')){
+        let host = window.location.host;
+        let protocol = window.location.protocol;
+        let url = `${protocol}//${host}${item.url_exibir}`;
+        window.open(url, '_blank');
+      }
+    },
+    async aprovar(){
+      this.$q.loading.show();
+      const {data} = await axios.get('/conteudos?aprovados=false')
+      this.SET_PAGINATOR(data.paginator);
+      this.$q.loading.hide();
+    },
+    userCan(){
+      let can = null;
+      if(LocalStorage.has('user')){
+        const user = JSON.parse(LocalStorage.getItem('user'));
+        let role = user.role;
+        can = this.isLogged && role === 1 || role === 2 || role === 3;
+      }
+      
+      const slug = this.$route.params.slug;
+      if(slug == 'contato'){
+        return false;
+      }
+      
+      return can;
+    },
     confirm (title, id) {
       const context = this;
       this.$q.dialog({
