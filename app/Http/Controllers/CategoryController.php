@@ -57,7 +57,7 @@ class CategoryController extends ApiController
         if (!$category->save()) {
             return $this->errorResponse([], 'Não foi possível cadastrar a categoria', 422);
         }
-        $fileImg = $this->saveFile($category->id, [$this->request->imagemAssociada], 'imagem-associada');
+        $fileImg = $this->saveFile($category->id, [$this->request->imagemAssociada], 'imagem-associada/categorias');
         if(!$fileImg)
         {
             return $this->errorResponse([], 'Não foi possível salvar imagem associada', 422);
@@ -92,7 +92,7 @@ class CategoryController extends ApiController
         {
             if($category->refenciaImagemAssociada())
             unlink($category->refenciaImagemAssociada());
-            $file = $this->saveFile($category->id, [$this->request->imagemAssociada], 'imagem-associada');
+            $file = $this->saveFile($category->id, [$this->request->imagemAssociada], 'imagem-associada/categorias');
             if(!$file)
             {
                 return $this->errorResponse([], 'Não foi possível salvar imagem associada', 422);

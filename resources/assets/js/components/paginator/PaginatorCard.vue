@@ -9,6 +9,7 @@
       :style="`height:230px;min-height: 230px; width: 100%;backgroud-color:${color};`"
       placeholder-src="/img/fundo-padrao.svg"
     >
+    
 <!--
       <div class="absolute-bottom-right">
         <q-btn 

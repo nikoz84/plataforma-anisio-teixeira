@@ -212,8 +212,16 @@ class Conteudo extends Model
     public function getImageAttribute()
     {
         $id = $this['id'];
-        return $this::getImageFromTipo($this->tipo, $id);
+        $image = $this::getImageFromConteudo($id);
+        if (!$image) {
+            $image = $this->getCategoryImage($this->category_id);
+        }
+        if (!$image) {
+            $image = $this->getImageFromTipo($this->tipo, $this->id);
+        }
+        return $image;
     }
+    
 
     /**
      * Adiciona atributo imagem associada ao objeto
