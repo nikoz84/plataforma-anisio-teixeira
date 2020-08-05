@@ -179,10 +179,10 @@
         <ShowErrors v-if="errors && errors.guias_pedagogicos && errors.guias_pedagogicos.length > 0" 
           :errors="errors.guias_pedagogicos">
         </ShowErrors>
-        <!-- ENVIAR SITE --> 
+        <!-- ENVIAR SITE -->
+        <br>
         <q-input
           outlined
-          
           v-model="conteudo.options.site"
           label="URL do Site"
           hint="Exemplo: http://dominio.com.br"
@@ -449,7 +449,7 @@ export default {
       {
         form.append("is_site", 0);
       }
-      console.log(this.conteudo)
+      //console.log(this.conteudo)
       form.append("tipo_id", this.conteudo.tipo ? this.conteudo.tipo.id : "");
       form.append("canal_id", this.conteudo.canal ? this.conteudo.canal.id : "");
       form.append("license_id", this.conteudo.license_id ? this.conteudo.license_id : "");
@@ -484,12 +484,14 @@ export default {
         url = url + '/' + this.conteudo.id; 
       }
       try {
-        let { data } = await axios.post(url, form);
-        console.log(data)
-        this.$router.push(`/admin/conteudos/listar`);
+        const { data } = await axios.post(url, form);
+        if(data.success == true){
+          this.$router.push(`/admin/conteudos/listar`);
+        }
+        
       } catch(e) {
         this.errors = e.errors;
-        console.log(e)
+
       }
     },
     async getCategories(val) {

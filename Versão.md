@@ -5,7 +5,8 @@
 - Full screen para player
 ## Correções (bugs, código)
 - Correção de upload de arquivo de download
-- Upload de arquivos max filesize e 
+- Upload de arquivos max_file_size e post_max_size para 800MB (mod_php7)
+- 
 
 ## Novas Funcionalidades
 -
@@ -49,6 +50,21 @@
 - Mudança sobre a PAT - solicitada pela equipe gestora
 - Ortografia de palavras chaves ifenizadas palavras-chave
 - Habilitar sinopse para canal emitec
+
+## Correções (bugs, código)
+-
+
+## Novas Funcionalidades
+-
+
+################################################################################################
+# Versão 2.0.0
+################################################################################################
+## Mudanças (layout, correção ortográfica, mudança de código)
+- Instalação em produção Plataforma Anísio Teixeira
+- Instalação e configuração de servidor em produção
+- Migração de banco de dados
+- Compilação do código
 
 ## Correções (bugs, código)
 -

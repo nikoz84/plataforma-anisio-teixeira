@@ -40,9 +40,9 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\CacheControl::class
         ],
-
+        'throttle' => ['throttle:120,1'],
         'api' => [
-            'throttle:70,1',
+            'throttle:200,1',
             'bindings',
         ],
     ];
