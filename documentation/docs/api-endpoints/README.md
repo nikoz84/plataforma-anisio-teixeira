@@ -106,49 +106,44 @@ Resposta de conteúdos paginados:
 Resposta de aplicativos educacionais paginados:
 
 ```json
-
 {
- "paginator": {
-   "current_page": 1,
-   "data": [
-       {
-      "id": 31,
+      "id": 86,
       "user_id": 2,
       "category_id": 20,
       "canal_id": 9,
-      "name": "Kdenlive",
-      "description": "<p>Kdenlive é um editor de vídeo não-linear.</p> **Obs.:** Disponivel para plataformas Linux e Mac.",
-      "url": "https://kdenlive.org",
+      "name": "xVideoServiceThief",
+      "description": "Com xVideoServiceThief você baixa vídeos de mais de 40 servidores e os salva nos formatos mais populares de serem visualizados em praticamente todos os players existentes, além de poder fazer downloads simultâneos de diferentes sites. Converte nos seguintes formatos: AVI, MPEG1, MPEG2, WMV, MP4, 3GP; Extrai o áudio dos arquivos para MP3; Acessa sites de música como o MP3tube; Configurações personalizáveis; Gratuito e com código aberto. Possui Versões para Mac, Linux e Windows.\r\nObs.: Site oficial explicativo em inglês.",
+      "url": "http://xviservicethief.sourceforge.net/index.php?action=downloads",
       "options": {
-      "qt_access": 4598,
-      "is_featured": false
-          },
+          "qt_access": 2089,
+          "is_featured": false
+      },
       "created_at": "2019-09-12 16:51:17",
       "updated_at": null,
       "deleted_at": null,
       "image": null,
-      "excerpt": "<p>Kdenlive é um editor de vídeo não-linear.</p>**Obs.:** Disponivel para plataformas Linux e Mac.",
-      "url_exibir": "/aplicativos-educacionais/aplicativo/exibir/31",
+      "excerpt": "Com xVideoServiceThief você baixa vídeos de mais de 40 servidores e os salva nos formatos mais populares de serem visualizados em praticamente todos os players existentes, além de poder fazer...",
+      "url_exibir": "/aplicativos-educacionais/aplicativo/exibir/86",
       "formated_date": "12 de setembro de 2019 ás 16:51",
       "user_can": null,
       "category": {
-      "id": 20,
-      "canal_id": 9,
-      "name": "Editor de Vídeo",
-      "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
-      "deleted_at": null,
-      "sub_categories": [],
-      "user_can": null
-            },
+          "id": 20,
+          "canal_id": 9,
+          "name": "Editor de Vídeo",
+          "created_at": "2019-09-12 16:51:17",
+          "updated_at": null,
+          "deleted_at": null,
+          "sub_categories": [],
+          "user_can": null
+      },
       "canal": {
-      "id": 9,
-      "name": "Aplicativos Educacionais",
-      "slug": "aplicativos-educacionais",
-      "color": "#009245"
-            }
-        },
-    ],
+          "id": 9,
+          "name": "Aplicativos Educacionais",
+          "slug": "aplicativos-educacionais",
+          "color": "#009245"
+      }
+    }
+  ],
     "first_page_url": "/aplicativos?categoria=&limit=6&page=1",
     "from": 1,
     "last_page": 14,
@@ -159,100 +154,106 @@ Resposta de aplicativos educacionais paginados:
     "prev_page_url": null,
     "to": 6,
     "total": 84
-  },
-  "message": "",
-  "success": true
+    },
+    "message": "",
+    "success": true
+    }
 ```
 
 ## Lista do aplicativo educacional por ID
 
 - método: `GET`
 - endpoint: `/aplicativos/{id}`
-
-Resposta:
 ```json
 
-{
-  "metadata": {
-    "id": 83,
-    "user_id": 2,
-    "category_id": 23,
-    "canal_id": 9,
-    "name": "Webeduc",
-    "description": "Neste portal você encontrará material de pesquisa, objetos de aprendizagem e outros conteúdos educacionais de livre acesso.",
-    "url": "http://webeduc.mec.gov.br/",
-    "options": {
-      "qt_access": 512,
-      "is_featured": false
-    },
-    "created_at": "2019-09-12 16:51:17",
-    "updated_at": "2020-07-28 17:35:02",
-    "deleted_at": null,
-    "image": "http://pat.des/storage/conteudos/aplicativos-educacionais/imagem-associada/83.jpg",
-    "excerpt": "Neste portal você encontrará material de pesquisa, objetos de aprendizagem e outros conteúdos educacionais de livre acesso.",
-    "url_exibir": "/aplicativos-educacionais/aplicativo/exibir/83",
-    "formated_date": "12 de setembro de 2019 ás 16:51",
-    "user_can": null,
-    "tags": [
-      {
-        "id": 261,
-        "name": "aprendizagem",
-        "user_can": null
-      },
-      {
-        "id": 316,
-        "name": "conteúdos",
-        "user_can": null
-      },
-      {
-        "id": 180,
-        "name": "educacionais",
-        "user_can": null
-      },
-      {
-        "id": 321,
-        "name": "livre",
-        "user_can": null
-      },
-      {
-        "id": 320,
-        "name": "objeto",
-        "user_can": null
-      },
-      {
-        "id": 319,
-        "name": "pesquisa",
-        "user_can": null
-      }
-    ],
-    "category": {
-      "id": 23,
+"metadata": {
+      "id": 84,
+      "user_id": 2,
+      "category_id": 23,
       "canal_id": 9,
-      "name": "Portais Educacionais",
+      "name": "Portal do Professor",
+      "description": "O Portal do Professor disponibilizado na rede pelo MEC possui grande quantidade de recursos tecnológicos além de aulas, softwares, jornais, e conteúdos pedagógicos.\r\nE ajuda a todas os professores a fazerem um plano de aula para que os seus alunos estejam bem informados e consigam entender melhor as matérias. O portal do professor web proporciona dicas que melhoram o desempenho dos alunos que possuem dificuldades de aprendizagem.",
+      "url": "http://portaldoprofessor.mec.gov.br/index.html",
+      "options": {
+        "qt_access": 2907,
+        "is_featured": false
+      },
       "created_at": "2019-09-12 16:51:17",
-      "updated_at": null,
+      "updated_at": "2020-07-30 14:49:45",
       "deleted_at": null,
-      "sub_categories": [
-        
+      "image": null,
+      "excerpt": "O Portal do Professor disponibilizado na rede pelo MEC possui grande quantidade de recursos tecnológicos além de aulas, softwares, jornais, e conteúdos pedagógicos.\r\nE ajuda a todas os professores a...",
+      "url_exibir": "/aplicativos-educacionais/aplicativo/exibir/84",
+      "formated_date": "12 de setembro de 2019 ás 16:51",
+      "user_can": null,
+      "tags": [
+        {
+            "id": 261,
+            "name": "aprendizagem",
+            "user_can": null
+        },
+        {
+            "id": 324,
+            "name": "aula",
+            "user_can": null
+        },
+        {
+            "id": 843,
+            "name": "jornais",
+            "user_can": null
+        },
+        {
+            "id": 325,
+            "name": "mec",
+            "user_can": null
+        },
+        {
+            "id": 326,
+            "name": "pedagógicos",
+            "user_can": null
+        },
+        {
+            "id": 323,
+            "name": "plano",
+            "user_can": null
+        },
+        {
+            "id": 322,
+            "name": "prefessor",
+            "user_can": null
+        },
+        {
+            "id": 179,
+            "name": "softwares",
+            "user_can": null
+        }
       ],
-      "user_can": null
+      "category": {
+        "id": 23,
+        "canal_id": 9,
+        "name": "Portais Educacionais",
+        "created_at": "2019-09-12 16:51:17",
+        "updated_at": null,
+        "deleted_at": null,
+        "sub_categories": [],
+        "user_can": null
+      },
+      "user": {
+        "id": 2,
+        "name": "Rede Anísio Teixeira",
+        "is_admin": false,
+        "image": null,
+        "user_can": null
+      },
+      "canal": {
+        "id": 9,
+        "name": "Aplicativos Educacionais",
+        "slug": "aplicativos-educacionais",
+        "color": "#009245"
+      }
     },
-    "user": {
-      "id": 2,
-      "name": "Rede Anísio Teixeira",
-      "is_admin": false,
-      "image": "http://pat.des/storage/conteudos/fotos-perfil/usuario",
-      "user_can": null
-    },
-    "canal": {
-      "id": 9,
-      "name": "Aplicativos Educacionais",
-      "slug": "aplicativos-educacionais",
-      "color": "#009245"
-    }
-  },
-  "message": "",
-  "success": true
+    "message": "",
+    "success": true
 }
 
 ```
@@ -260,12 +261,40 @@ Resposta:
 ## Login
 - método: `POST`
 - endpoint: `/auth/login`
-- keys : `email`, `password`, `recaptcha`
+- keys: `email`, `password`, `recaptcha`
+
+```json
+
+{
+"metadata": {
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpLXYxXC9hdXRoXC9sb2dpbiIsImlhdCI6MTU5NjE0MDEzNiwiZXhwIjoxNTk2MTYxNzM2LCJuYmYiOjE1OTYxNDAxMzYsImp0aSI6IlAxbUg5aDVlSnFzWk1rOVYiLCJzdWIiOjExMzEsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEiLCJ1c2VyIjp7Im5hbWUiOiJOaWNvbFx1MDBlMXMgRGFuaWVsIFJvbWVybyBIZXJuXHUwMGUxbmRleiIsImlkIjoxMTMxLCJyb2xlIjoxLCJpc19hZG1pbiI6ZmFsc2V9fQ.JCSqGmniow8p8RMxQNex-KC2XYiOE46M9QB4JM93LlQ",
+    "token_type": "bearer",
+    "expires_in": 21600
+},
+"message": "",
+"success": true
+}
+
+```
 
 ## Cadastro
 - método: `POST`
 - endpoint: `/auth/cadastro`
 - keys: `email`, `password`, `confirmation` ,`recaptcha`
+
+```json
+
+{
+    "errors": {
+        "email": [
+            "E-mail já está em uso."
+        ]
+    },
+    "message": "Verifique os dados fornecidos",
+    "success": false
+}
+
+```
 
 ## Recuperar senha
 - endpoint: `/auth/recuperar-senha`
@@ -284,7 +313,7 @@ Resposta:
 - endpoint: `/options/{name}`
 - endpoint: `/options`
 
-- Resposta de Conteúdo Paginado  
+- Resposta de Conteúdo Lista de Options Paginado:  
 
   ```json
   {
@@ -296,3 +325,19 @@ Resposta:
 - método: `GET`
 - endpoint: `/tags/{id}`
   
+```json
+{
+    "metadata": {
+        "id": 84,
+        "name": "web",
+        "searched": 4109,
+        "created_at": "2019-09-12 16:51:17",
+        "updated_at": "2019-09-07 02:09:28",
+        "deleted_at": null,
+        "user_can": null
+    },
+    "message": "",
+    "success": true
+}
+
+```

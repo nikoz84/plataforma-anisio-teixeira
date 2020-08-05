@@ -11,6 +11,13 @@ use App\Canal;
 
 class CategoryController extends ApiController
 {
+    /**
+     * Cria, atualiza e deleta informacoes no banco de dados
+     * 
+     * @param int $id identificador único
+     * @param  \App\Controller\CategoryController\ApiResponser
+     * retorna json
+     */
     use FileSystemLogic;
     protected $request;
 
@@ -23,6 +30,11 @@ class CategoryController extends ApiController
             'videoDestaque' => 'mimes:webpM,mp4|max:51200|nullable'
         ];
     }
+    /**
+     * Undocumented function
+     * Método Construtor
+     * @param Request $request
+     */
     public function __construct(Request $request)
     {
         $this->middleware('jwt.auth')->except([
@@ -42,7 +54,11 @@ class CategoryController extends ApiController
             ->paginate($limit);
         return $this->showAsPaginator($categories);
     }
-
+   /**
+    * Undocumented function
+    * Criando e validando informações para ser adicionadas no banco de dados
+    * @return void
+    */
     public function create()
     {
         $validator = Validator::make($this->request->all(), $this->rules());
@@ -73,7 +89,8 @@ class CategoryController extends ApiController
 
     /**
      * Undocumented function
-     *
+     * Método que atualiza informações da categoria por id listando informações do banco de dados
+     * Usando as respectivas exception com seus status code de seguranca
      * @param [type] $id
      * @return void
      */
@@ -112,6 +129,9 @@ class CategoryController extends ApiController
         }
         return $this->successResponse($category, 'Categoria atualizada com sucesso!', 200);
     }
+    /**
+     * Metodo delete informacoces que podem ser deletadas no banco de dados
+     */
 
     public function delete($id)
     {

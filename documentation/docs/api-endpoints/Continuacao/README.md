@@ -2,7 +2,7 @@
 
 - método: `GET`
 - endpoint: `/licencas`
-- Resposta do Conteúdo Paginado
+- Resposta do Conteúdo Paginado:
 
 ```json
 "paginator": {
@@ -21,6 +21,10 @@
     "image": "http://127.0.0.1:8000/storage/conteudos/conteudos-digitais/imagem-associada/licencas/",
     "childs": []
     },
+<<<<<<< HEAD
+   
+},
+=======
     {
         "id": 2,
         "parent_id": null,
@@ -72,6 +76,7 @@
         "to": 6,
         "total": 6
     },
+>>>>>>> 239d1c7da7fc518486f4bea3b47695401ebabca1
 "message": "",
 "success": true
 }
@@ -88,21 +93,43 @@
 - endpoint: `/planilhas/load-rotinas/`
 - endpoint: `/planilhas/load-faculdades`
 - endpoint: `/planilhas`
-  
-
-
- - Resposta de Conteúdo Paginado
-  
 - endpoint: `/rotinas/{nivel}/{semana}`
-
-```json
-
-{
-"metadata": [],
-"message": "",
-"success": true
+- Resposta de Conteúdo Paginado:
+  ```json
+    {
+    "paginator": {
+        "current_page": 1,
+        "data": [],
+        "first_page_url": "/planilhas?&page=1",
+        "from": null,
+        "last_page": 1,
+        "last_page_url": "/planilhas?&page=1",
+        "next_page_url": null,
+        "path": "/planilhas?",
+        "per_page": 10,
+        "prev_page_url": null,
+        "to": null,
+        "total": 0
+     },
+    "message": "",
+    "success": true
+    }
+    ```json
+    "metadata": {
+        "rotinas": [],
+        "semanas": [
+            {
+                "value": "semana-1",
+                "label": "Semana 1"
+            },
+            
+        ]
+    },
+    "message": "",
+    "success": true
 }
-```
+  
+
 
 ## ROTAS PROTEGIDAS COM JSON WEB TOKEN
 ## USUÁRIO DEVE ESTAR LOGADO PARA ACESSAR ESSAS ROTAS.
