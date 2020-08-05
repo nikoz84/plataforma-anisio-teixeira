@@ -1,10 +1,4 @@
 ################################################################################################
-# Versão 2.0.4
-################################################################################################
-## Correções (bugs, código)
-- Imagem associada de conteudo emitec referencia corrigida
-
-################################################################################################
 # Versão 2.0.3
 ################################################################################################
 ## Mudanças (layout, correção ortográfica, mudança de código)
@@ -12,6 +6,7 @@
 ## Correções (bugs, código)
 - Correção de upload de arquivo de download
 - Upload de arquivos max filesize e 
+- Imagem associada de conteudo emitec referencia corrigida
 
 ## Novas Funcionalidades
 -
