@@ -7,6 +7,8 @@
 - Correção de upload de arquivo de download
 - Upload de arquivos max filesize e 
 - Imagem associada de conteudo emitec referencia corrigida
+- frame do video para imagem associada (usando ffmpeg)
+- Referencias de imagem associada de conteudo dinâmica por exceções (conteudo, tipo, categoria e canal)
 
 ## Novas Funcionalidades
 -
