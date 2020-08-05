@@ -508,14 +508,14 @@ export default {
       
     },
     async getData() {
-      const canais = axios.get("/canais?select");
-      const tipos = axios.get("/tipos?select");
-      const licencas = axios.get("/licencas?select");
-      let responses = await axios.all([canais, tipos, licencas]);
+      const canais = await axios.get("/canais?select");
+      const tipos = await axios.get("/tipos?select");
+      const licencas = await axios.get("/licencas?select");
+      //let responses = await axios.all([canais, tipos, licencas]);
 
-      this.canais = responses[0].data.metadata;
-      this.tipos = responses[1].data.metadata;
-      this.licencas = responses[2].data.metadata;
+      this.canais = canais.data.metadata;
+      this.tipos = tipos.data.metadata;
+      this.licencas = licencas.data.metadata;
       
       if (this.$route.params.id) {
         let { data } = await axios.get("/conteudos/" + this.$route.params.id);
