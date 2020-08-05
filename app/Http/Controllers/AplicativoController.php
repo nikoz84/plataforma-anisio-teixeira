@@ -13,8 +13,18 @@ use Illuminate\Support\Facades\Auth;
 use App\Traits\FileSystemLogic;
 
 class AplicativoController extends ApiController
-{
+{ /**
+ * Criacao de aplicativos adicionando imagem com arquivos no banco de dados
+ * @param int $id e $image identificadores 
+ * @param \App\Http\Controllers\AplicativoController 
+ * retorna json
+ * 
+ */
+
     use FileSystemLogic;
+    /**
+     * Metodo construtor com passagem de tres parametros
+     */
     public function __construct(Aplicativo $aplicativo, Request $request, Storage $storage)
     {
         $this->middleware('jwt.auth')->except(['index', 'search', 'getById', 'categories']);

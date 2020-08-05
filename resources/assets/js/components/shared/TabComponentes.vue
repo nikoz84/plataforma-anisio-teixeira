@@ -1,25 +1,58 @@
 <template>
-  <q-tab-panels v-model="panel" animated class="shadow-2 rounded-borders">
-        <q-tab-panel name="mails">
-          <div class="text-h6">Mails</div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        </q-tab-panel>
+  <div>
+    <q-tabs
+      v-model="tab"
+      dense
+      class="text-grey"
+      active-color="primary"
+      indicator-color="primary"
+      align="justify"
+      narrow-indicator
+    >
+      <q-tab name="mails" label="Mails" />
+      <q-tab name="alarms" label="Alarms" />
+      <q-tab name="movies" label="Movies" />
+    </q-tabs>
 
-        <q-tab-panel name="alarms">
-          <div class="text-h6">Alarms</div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        </q-tab-panel>
+    <q-separator />
 
-        <q-tab-panel name="movies">
-          <div class="text-h6">Movies</div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        </q-tab-panel>
-      </q-tab-panels>
+    <q-tab-panels v-model="tab" animated>
+      <q-tab-panel name="tipos">
+        <div class="text-h6">Tipos</div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </q-tab-panel>
+
+      <q-tab-panel name="licencas">
+        <div class="text-h6">Licenças</div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </q-tab-panel>
+
+      <q-tab-panel name="componentes">
+        <div class="text-h6">Componentes Curriculares</div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </q-tab-panel>
+      <q-tab-panel name="niveis">
+        <div class="text-h6">Niveis de Ensino</div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </q-tab-panel>
+    </q-tab-panels>
+  </div>
 </template>
 
 <script>
+import {mapState} from 'vuex';
 import { QTabPanels, QTabPanel } from "quasar"
+
 export default {
-    name: "TabComponentes"
+    name: "TabComponentes",
+    components: { QTabPanels, QTabPanel},
+    data() {
+      return {
+        tab: 'movies'
+      }
+    },
+    computed: {
+      ...mapState(["tipos", "licencas", "componentes", "niveis"]),
+    },
 }
 </script>

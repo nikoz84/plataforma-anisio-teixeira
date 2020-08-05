@@ -68,8 +68,14 @@ class Category extends Model
     public function getImageAttribute(){
         //return $urlPath;
         $filename = basename($this->refenciaImagemAssociada());
-        if($filename)
-        return Storage::disk("conteudos-digitais")->url("imagem-associada/categorias/".$filename); 
+        if($this->canal_id == 2)
+        {
+            return Storage::disk('conteudos-digitais')->url("imagem-associada/sinopse/".$filename);
+        }
+        if ($filename) {
+            return Storage::disk("conteudos-digitais")->url("imagem-associada/categorias/".$filename);
+        }
+       
         return null;
     }
 

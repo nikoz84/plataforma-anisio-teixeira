@@ -54,10 +54,22 @@ const rotinasRoute = {
       title: "Rotinas de Estudo"
     }
 };
+
+const advancedSearch = {
+  path: "/busca-avancada",
+  name: "BuscaAvancada",
+  component: () => import(/* webpackChunkName: "busca" */ "@pages/AdvancedSearch.vue"),
+  meta: {
+      requiresAuth: false,
+      title: "Busca Avançada"
+    }
+};
+
 export {
     homeRoute,
     galeriaRoute,
     sobreRoute,
     ipesRoute,
-    rotinasRoute
+    rotinasRoute,
+    advancedSearch
 };

@@ -3,15 +3,17 @@
 ################################################################################################
 ## Mudanças (layout, correção ortográfica, mudança de código)
 - Full screen para player
-- Diminuir do espaçõ das informações embaixo do player
+- Minimizar espaço das informações embaixo do player
 ## Correções (bugs, código)
 - Correção de upload de arquivo de download
 - Upload de arquivos max_file_size e post_max_size para 800MB (mod_php7)
 - Formulario de canal OK
-- Correção em imagens por tipo, destaque, categoria, sinopse, canal categoria
 - Correção de muitas requisições throttle:130
-- Sinopse de video
-
+- Imagem associada de conteudo emitec referencia corrigida
+- frame do video para imagem associada (usando ffmpeg)
+- Referencias de imagem associada de conteudo dinâmica por exceções (conteudo, tipo, categoria e canal)
+- Correção de urls nas rotinas de estudo, para pegar as imagens do novo padrao
+- Tirar momentaneamente a validação de tipos de conteudo em formulario de conteudo digital
 ## Novas Funcionalidades
 -
 ################################################################################################

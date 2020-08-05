@@ -8,7 +8,20 @@ use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;
 
 class AplicativoCategoryController extends ApiController
-{
+   {  
+    /**
+     * Lista, cria, atualiza e remove informações no banco de dados.
+     * Validações de erros usando exception e status code.
+     * @param int $id identificador único.
+     * @param \App\Controllers\AplicativoCategoryController
+     * $aplicativo_category
+     * retorna json 
+     */
+     
+     /**
+      * Metodo construtor
+      */
+
     public function __construct(Request $request)
     {
         $this->middleware('jwt.auth')->except(['index', 'getById']);
@@ -22,6 +35,11 @@ class AplicativoCategoryController extends ApiController
 
         return $this->successResponse($categories, '', 200);
     }
+    /**
+     * Undocumented function
+     * Metodo que cria informacoes e validacoes com status code. 
+     * @return void
+     */
     public function create()
     {
         $validator = Validator::make($this->request->all(), config("rules.aplicativo_categoria"));
@@ -36,6 +54,13 @@ class AplicativoCategoryController extends ApiController
         }
         return $this->successResponse($aplicativo_category, 'Categoria criada com sucesso!', 200);
     }
+    /**
+     * Undocumented function
+     * Atualiza usando o metodo update e faz a listagens no banco de dados como o metodo all().
+     * @param Request $request
+     * @param [type] $id
+     * @return void
+     */
     public function update(Request $request, $id)
     {
         $validator = Validator::make($this->request->all(), config("rules.aplicativo_categoria"));
@@ -53,6 +78,12 @@ class AplicativoCategoryController extends ApiController
             return $this->errorResponse($aplicativo_category, 'Não existe essa categoria para ser atualizada', 200);
         }
     }
+    /**
+     * Undocumented function
+     * Metodo delete informações listada no banco de dados e status code. 
+     * @param [type] $id
+     * @return void
+     */
     public function delete($id)
     {
         $validator = Validator::make($this->request->all(), [
@@ -69,7 +100,12 @@ class AplicativoCategoryController extends ApiController
             return $this->successResponse($category, 'Categoria deletada com sucesso!', 200);
         }
     }
-
+    /**
+     * Undocumented function
+     * Metodo que retorna uma colecao de modelos que correspondem a uma consulta
+     * @param [type] $id
+     * @return void
+     */  
     public function getById($id)
     {
         $category = $this->category::findOrFail($id);

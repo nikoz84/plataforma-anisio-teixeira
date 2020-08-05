@@ -36,7 +36,8 @@
             <q-item clickable aria-label="buscar por título" @click="recommendationPer('titulo')">
               <q-item-section >Buscar por título</q-item-section>
             </q-item>
-            <q-item clickable aria-label="acessar busca avançada" @click="openDialog()">
+            <q-item clickable aria-label="acessar busca avançada" 
+              @click="$router.push({name: 'BuscaAvancada'} )">
               <q-item-section>Acessar busca avançada</q-item-section>
             </q-item>
           </q-list>
@@ -118,11 +119,8 @@ export default {
         this.label = "título";
       }
     },
-    openDialog() {
-      this.$q.dialog({
-        component: AdvancedSearchForm,
-        parent: this
-      });
+    openBusca() {
+      window.open('/busca-avancada')
     }
   }
 };

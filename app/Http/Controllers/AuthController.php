@@ -16,6 +16,11 @@ use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\DB;
 
 class AuthController extends ApiController
+/**
+ * Criacao e atualizacao de login e logout usando email
+ * @param $int $id cadastro verificacao de login e senha
+ * @param \Http\Controllers\AuthController
+ */
 {
     public function __construct(Request $request)
     {
