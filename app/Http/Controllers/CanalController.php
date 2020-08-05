@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\Validator;
 
 class CanalController extends ApiController
 {
+    /**
+     * Criando atualizando e deletando aplicativo
+     * Undocumented function
+     * Metodo Construtor
+     * @param Request $request
+     * @param Canal $canal
+     * @param \App\Http\Controllers\CanalController
+     */
     public function __construct(Request $request, Canal $canal)
     {
         $this->middleware('jwt.auth')->except(['getBySlug']);
