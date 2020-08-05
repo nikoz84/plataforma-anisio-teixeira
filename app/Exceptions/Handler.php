@@ -69,16 +69,16 @@ class Handler extends ExceptionHandler
             return $this->errorResponse([], 'Token não autorizado', 401);
         }
         if ($exception instanceof ModelNotFoundException) {
-            return $this->errorResponse([], "Modelo não encontrado", 404);
+            return $this->errorResponse([], "Não encontrado", 404);
         }
         if ($exception instanceof QueryException) {
-            //return $this->errorResponse([], "Modelo não encontrado", 404);
+            return $this->errorResponse([], "Não encontrado", 404);
         }
         if ($exception instanceof AuthorizationException) {
-            return $this->errorResponse([], "Ação não autorizada", 403);
+            return $this->errorResponse([], "Ação não autorizada, sem permissões", 403);
         }
         if ($exception instanceof HttpException) {
-            return $this->errorResponse([], "Muitas requisições, espere um minuto", 429);
+            return $this->errorResponse([], $exception->getMessage(), $exception->getCode());
         }
 
         if ($exception instanceof KernelException) {

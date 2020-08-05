@@ -70,7 +70,7 @@ export default {
             
         },
         goTo(url) {
-            console.log(url);
+            window.location.href= url
         }
     }
 }

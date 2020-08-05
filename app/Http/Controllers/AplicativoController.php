@@ -120,7 +120,7 @@ class AplicativoController extends ApiController
      *
      * @param int $id identificador único
      * @param  \App\Aplicativo  $aplicativo
-     * @return \Illuminate\Http\Response
+     * @return \App\Traits\ApiResponser retorna json
      */
     public function update($id)
     {

@@ -3,10 +3,14 @@
 ################################################################################################
 ## Mudanças (layout, correção ortográfica, mudança de código)
 - Full screen para player
+- Diminuir do espaçõ das informações embaixo do player
 ## Correções (bugs, código)
 - Correção de upload de arquivo de download
 - Upload de arquivos max_file_size e post_max_size para 800MB (mod_php7)
-- 
+- Formulario de canal OK
+- Correção em imagens por tipo, destaque, categoria, sinopse, canal categoria
+- Correção de muitas requisições throttle:130
+- Sinopse de video
 
 ## Novas Funcionalidades
 -

@@ -40,7 +40,8 @@ class CanalController extends ApiController
      */
     public function create(Request $request)
     {
-        $this->authorize('create', Canal::class);
+        $canal = new Canal;
+        $this->authorize('create', $canal);
         
         $validator = Validator::make(
             $request->all(),
@@ -59,8 +60,6 @@ class CanalController extends ApiController
                 422
             );
         }
-
-        $canal = $this->canal;
 
         $canal->name = $this->request->name;
         $canal->slug = $this->request->slug;
@@ -83,9 +82,9 @@ class CanalController extends ApiController
      */
     public function update($id)
     {
-        $canal = $this->canal::findOrFail($id);
-
-        $this->authorize('update', [$canal]);
+        $canal = Canal::findOrFail($id);
+        
+        $this->authorize('update', $canal);
 
         $canal->name = $this->request->name;
         $canal->slug = $this->request->slug;
