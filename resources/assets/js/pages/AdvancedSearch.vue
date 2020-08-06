@@ -94,7 +94,7 @@
             <div class="paginator-excerpt" v-html="item.excerpt"></div>
             </q-card-section>
             <q-card-actions vertical align="right">
-                <q-btn color="pink-9" type="a" target="__blank" :href="item.url_exibir">Visualizar</q-btn>
+                <q-btn color="pink-9" type="a" target="_blank" :href="item.url_exibir">Visualizar</q-btn>
             </q-card-actions>
         </q-card>
         </div>
