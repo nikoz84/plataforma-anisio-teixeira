@@ -1,33 +1,62 @@
 <template>
-  <div class="q-pa-md">
-    <header class="row wrap items-center q-my-md">
-      <div class="text-h5 color-primary">
-        Canal das Universidades
-      </div>
-    </header>
-    <div class="q-mt-lg" v-for="(item, i) in items" :key="i" :id="item.document.slug">
-        <div class="text-h5 title-page text-primary separatriz q-pb-md" 
-            v-text="item.document.faculdade">
-        </div>
-        <div class="separatriz-6"></div>
-        <div class="q-gutter-sm">
-            <q-card v-for="(action, a) in item.document.actions" :key="a">
-                <q-card-section>
-                    <strong>Ação:</strong> {{ action.name }} <q-space></q-space>
-                    <strong>descrição:</strong> {{ action.description }}
-                </q-card-section>
-                <q-card-actions>
-                    <a target="_blank" :href="action.link">
-                        SAIBA MAIS
-                    </a>
-                </q-card-actions>
-            </q-card>
-        </div>
-    </div>
+  <div class="q-pa-md q-pb-xl">
+    
+    <q-banner class="bg-primary text-white">
+        <header class="row wrap items-center q-my-md">
+            <div class="text-h5 color-primary">
+                Canal das Universidades
+            </div>
+        </header>
+    </q-banner>
+
+        <q-list bordered class="q-mt-md q-mb-xl">
+        
+            <q-expansion-item
+            expand-separator
+            dense-toggle
+            group="ipes"
+            icon="bookmarks"
+            v-for="(item, i) in items" :key="i" :id="item.document.slug"
+            :v-text="item.document.faculdade"
+            class="ipes-label text-primary"
+            :label="item.document.faculdade" 
+            >
+            
+                    <q-card bordered class="ipes-atividade q-py-md" v-for="(action, a) in item.document.actions" :key="a">
+                        <q-card-section>
+                            <strong>Ação:</strong> {{ action.name }} <q-space></q-space>
+                            <strong>Descrição:</strong> {{ action.description }}
+                        </q-card-section>
+                        <q-card-actions>
+                            
+                            <q-btn
+                            color="primary"
+                            icon-right="open_in_new"
+                            label="Acessar conteúdo"
+                            :to="goTo(action.link)"
+                            target="_blank"
+                            size="13px"
+                            padding="13px" />
+
+                        </q-card-actions>
+                    </q-card>
+
+            </q-expansion-item>
+
+        </q-list>
+
   </div>
 </template>
 
 <script>
+
+import {
+  Quasar,
+  QBanner,
+  QBtn,
+  QExpansionItem
+} from 'quasar'
+
 export default {
     name: "Ipes",
     data(){
@@ -43,11 +72,36 @@ export default {
             const { data } = await axios.get('/planilhas?slug=ipes');
             
             this.items = data.paginator.data;
+        },
+        gotTo(url){
+            window.open(url, "_blank")
         }
     },
 }
 </script>
 
-<style>
+<style lang="stylus" scoped>
+
+.ipes-label{
+    font-size: 16 px;
+    text-transform uppercase;
+}
+
+.ipes-label:nth-child(odd){
+    background-color #eceff1 /** blue-grey-1 */
+}
+
+.ipes-label:hover{
+    background-color #cfd8dc /** blue-grey-2 */
+}
+
+.ipes-label{
+    background-color transparent
+}
+
+.ipes-atividade{
+    font-size 16 px
+    text-transform none;
+}
 
 </style>
