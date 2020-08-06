@@ -54,7 +54,10 @@
               <div class="q-mt-md">
                 <p class="text-center">Escreva uma descrição do canal</p>
               </div>
-              <q-editor v-model="canal.description" min-height="15rem" id="editor"/>
+              <q-editor v-model="canal.description" min-height="15rem" id="editor"
+              ref="editor_ref"
+              @paste.native="evt => pasteCapture(evt)"
+              :toolbar="[['bold', 'italic', 'strike', 'underline']]"/>
               <div class="q-mt-md">
                 <p class="text-center">Complementos da descrição</p>
               </div>
@@ -172,6 +175,7 @@
     </div>
 </template>
 <script>
+import { PasteCapture } from "@mixins/RemoveFormat";
 import {
   QInput,
   QEditor,
@@ -188,6 +192,7 @@ import { ShowErrors } from '@forms/shared'
 
 export default {
   name: "CanalForm",
+  mixins: [PasteCapture],
   components: {
     QInput,
     QEditor,

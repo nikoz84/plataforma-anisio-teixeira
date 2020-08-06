@@ -88,7 +88,10 @@
         <div class="q-mt-md">
           <p class="text-center">Escreva uma descrição do conteúdo</p>
         </div>
-        <q-editor v-model="conteudo.description" min-height="18rem" />
+        <q-editor v-model="conteudo.description" min-height="18rem"
+          ref="editor_ref"
+          @paste.native="evt => pasteCapture(evt)"
+          :toolbar="[['bold', 'italic', 'strike', 'underline']]"/>
         <ShowErrors v-if="errors && errors.description && errors.description.length > 0" 
           :errors="errors.description">
         </ShowErrors>
@@ -326,6 +329,7 @@
 <script>
 import { mapGetters, mapActions, mapState, mapMutations } from "vuex";
 import { ShowErrors, ParentAndChildSelect } from "@forms/shared";
+import { PasteCapture } from "@mixins/RemoveFormat";
 import {
   QInput,
   QEditor,
@@ -341,6 +345,7 @@ import {
 
 export default {
   name: "ConteudoForm",
+  mixins: [PasteCapture],
   directives: {
     ClosePopup
   },

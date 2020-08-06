@@ -73,45 +73,44 @@
     <q-card v-if="showFiltros">
         <TabComponentes @setFiltros="setFiltros"></TabComponentes>
     </q-card>
-    <q-card>
-        <q-card-section >
-          <!-- PAGINATOR -->
-          <div class="q-pa-sm flex flex-center">
+    <div class="q-pa-lg">
+        <!-- PAGINATOR -->
+        <div class="q-pa-sm flex flex-center">
             <q-pagination
-              v-if="results.length > 0"
-              v-model="current"
-              :max="last"
-              :input="true"
-              @input="onSearch"
+                v-if="results.length > 0"
+                v-model="current"
+                :max="last"
+                :input="true"
+                @input="onSearch"
             >
-          </q-pagination>
-          </div>
-          <!-- LISTA DE ITENS -->
-          <div class="q-pa-sm">
-            <q-card class="q-mt-sm" v-for="(item, i) in results" :key="`result-${i}`">
-              <q-card-section class="q-px-sm">
-                <h5 class="text-dark q-my-xs" v-html="item.title"></h5>
-                <q-separator class="q-my-md"></q-separator>
-                <div class="paginator-excerpt" v-html="item.excerpt"></div>
-              </q-card-section>
-              <q-card-actions vertical align="right">
-                  <q-btn color="pink-9" type="a" target="__blank" :href="item.url_exibir">Visualizar</q-btn>
-              </q-card-actions>
-            </q-card>
-          </div>
-          <!-- PAGINATOR -->
-          <div class="q-pa-lg flex flex-center">
-            <q-pagination
-              v-if="results.length > 0"
-              v-model="current"
-              :max="last"
-              :input="true"
-              @input="onSearch"
-            >
-          </q-pagination>
+            </q-pagination>
         </div>
-        </q-card-section>
-    </q-card>
+          <!-- LISTA DE ITENS -->
+        <div class="q-pa-sm">
+        <q-card class="q-mt-sm" v-for="(item, i) in results" :key="`result-${i}`">
+            <q-card-section class="q-px-sm">
+                {{ item }}
+            <h5 class="text-dark q-my-xs" v-html="item.title"></h5>
+            <q-separator class="q-my-md"></q-separator>
+            <div class="paginator-excerpt" v-html="item.excerpt"></div>
+            </q-card-section>
+            <q-card-actions vertical align="right">
+                <q-btn color="pink-9" type="a" target="__blank" :href="item.url_exibir">Visualizar</q-btn>
+            </q-card-actions>
+        </q-card>
+        </div>
+        <!-- PAGINATOR -->
+        <div class="q-pa-lg flex flex-center">
+            <q-pagination
+                v-if="results.length > 0"
+                v-model="current"
+                :max="last"
+                :input="true"
+                @input="onSearch"
+            >
+            </q-pagination>
+        </div>
+    </div>
   </div>
 </template>
 

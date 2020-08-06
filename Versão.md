@@ -14,8 +14,10 @@
 - Referencias de imagem associada de conteudo dinâmica por exceções (conteudo, tipo, categoria e canal)
 - Correção de urls nas rotinas de estudo, para pegar as imagens do novo padrao
 - Tirar momentaneamente a validação de tipos de conteudo em formulario de conteudo digital
+- Remove o formato para os campos de descrição e limita toolbar da descrição
 ## Novas Funcionalidades
 - Nova busca avançada - com marcação de filtros, página diferenciada de busca, filtros encapsulados
+
 
 ################################################################################################
 # Versão 2.0.2
