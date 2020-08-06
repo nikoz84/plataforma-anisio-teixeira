@@ -18,6 +18,7 @@
           <q-item-label>Resumo</q-item-label>
         </q-item-section>
     </q-item>
+    <q-separator />
     <div v-for="(link, i) in linksAdmin" :key="`admin-${i}`">
       <q-item
         tag="div"

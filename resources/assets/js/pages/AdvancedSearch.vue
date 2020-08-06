@@ -89,7 +89,6 @@
         <div class="q-pa-sm">
         <q-card class="q-mt-sm" v-for="(item, i) in results" :key="`result-${i}`">
             <q-card-section class="q-px-sm">
-                {{ item }}
             <h5 class="text-dark q-my-xs" v-html="item.title"></h5>
             <q-separator class="q-my-md"></q-separator>
             <div class="paginator-excerpt" v-html="item.excerpt"></div>
