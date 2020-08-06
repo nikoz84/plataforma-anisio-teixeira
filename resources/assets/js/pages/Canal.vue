@@ -20,6 +20,12 @@
         label="LISTAR"
         :to="{ name: 'Listar', params: { slug: $route.params.slug } }"
       />
+      <q-route-tab
+        name="busca"
+        label="BUSCA AVANÇADA"
+        :to="{ name: 'BuscaAvancada' }"
+        v-if="$route.params.slug == 'recursos-educacionais'"
+      />
       <q-space />
       <OrderBy></OrderBy>
       <q-route-tab
@@ -45,7 +51,6 @@
 </template>
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-import { AdvancedSearchForm } from "@forms/search";
 import  { Filters, OrderBy, CategoriasMenu } from "@components/canais";
 import {
   QTabs,
@@ -82,7 +87,6 @@ export default {
     QItem,
     QItemSection,
     CategoriasMenu,
-    AdvancedSearchForm,
     QBreadcrumbs,
     QBreadcrumbsEl,
     Filters,

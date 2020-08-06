@@ -242,7 +242,7 @@ trait FileSystemLogic
     }
 
     /**
-     * Retorna tipos de extessões 
+     * Retorna tipos de extessões
      *@return string $mimes
      */
     public function mimeTypes()

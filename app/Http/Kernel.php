@@ -40,9 +40,9 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\CacheControl::class
         ],
-
+        //'throttle' => ['throttle:120,1'],
         'api' => [
-            'throttle:70,1',
+            'throttle:130,1',
             'bindings',
         ],
     ];
@@ -62,8 +62,8 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'cors' => \Fruitcake\Cors\HandleCors::class,
-        'isAdmin' => \App\Http\Middleware\CheckIsAdmin::class,
-        'isSuperAdmin' => \App\Http\Middleware\CheckIsSuperAdmin::class,
+        //'isAdmin' => \App\Http\Middleware\CheckIsAdmin::class,
+        //'isSuperAdmin' => \App\Http\Middleware\CheckIsSuperAdmin::class,
         'jwt.auth' => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
         'jwt.refresh' => \Tymon\JWTAuth\Http\Middleware\RefreshToken::class,
     ];

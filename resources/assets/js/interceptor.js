@@ -32,7 +32,6 @@ axios.interceptors.response.use(
         break;
       case 403:
         // Não Permitido
-        router.push("/");
         Notify.create({ position: "top-right", color: "accent", message });
         break;
       case 422:
@@ -44,6 +43,10 @@ axios.interceptors.response.use(
         Notify.create({ position: "top-right", color: "negative", message });
         break;
       default:
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        store.commit('SET_LOGOUT_USER');
+        document.reload('/');
         Notify.create({
           position: "top-right",
           color: "negative",

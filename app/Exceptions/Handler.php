@@ -61,34 +61,33 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if (!env("APP_DEBUG")) {
-            if ($exception instanceof TokenExpiredException) {
-                return $this->errorResponse([], 'Token expirado', 401);
-            } elseif ($exception instanceof TokenInvalidException) {
-                return $this->errorResponse([], 'Token inválido', 401);
-            } elseif ($exception instanceof JWTException) {
-                return $this->errorResponse([], 'Token não autorizado', 401);
-            }
-            if ($exception instanceof ModelNotFoundException) {
-                return $this->errorResponse([], "Modelo não encontrado", 404);
-            }
-            if ($exception instanceof QueryException) {
-                //return $this->errorResponse([], "Modelo não encontrado", 404);
-            }
-            if ($exception instanceof AuthorizationException) {
-                return $this->errorResponse([], "Ação não autorizada", 403);
-            }
-            if ($exception instanceof HttpException) {
-                return $this->errorResponse([], "Muitas requisições, espere um minuto", 429);
-            }
-    
-            if ($exception instanceof KernelException) {
-                return $this->errorResponse([], 'Erro no servidor', 500);
-            }
-            if ($exception instanceof ValidationException) {
-                return $this->errorResponse([], 'Erro de validação', 500);
-            }
+        if ($exception instanceof TokenExpiredException) {
+            return $this->errorResponse([], 'Token expirado', 401);
+        } elseif ($exception instanceof TokenInvalidException) {
+            return $this->errorResponse([], 'Token inválido', 401);
+        } elseif ($exception instanceof JWTException) {
+            return $this->errorResponse([], 'Token não autorizado', 401);
         }
+        if ($exception instanceof ModelNotFoundException) {
+            return $this->errorResponse([], "Não encontrado", 404);
+        }
+        if ($exception instanceof QueryException) {
+            return $this->errorResponse([], "Não encontrado", 404);
+        }
+        if ($exception instanceof AuthorizationException) {
+            return $this->errorResponse([], "Ação não autorizada, sem permissões", 403);
+        }
+        if ($exception instanceof HttpException) {
+            return $this->errorResponse([], $exception->getMessage(), $exception->getCode());
+        }
+
+        if ($exception instanceof KernelException) {
+            return $this->errorResponse([], 'Erro no servidor', 500);
+        }
+        if ($exception instanceof ValidationException) {
+            return $this->errorResponse([], 'Erro de validação', 500);
+        }
+        
         
 
 

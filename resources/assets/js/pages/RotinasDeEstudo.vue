@@ -32,35 +32,35 @@
               {{ getDay(d) }}
             </i>
           </q-chip>
-          <q-btn no-caps align="left" type="a" target="__blank" :href="toJson(atividade).link" class="bg-amarelo text-left q-py-md q-mb-md" v-if="d == 'segunda'">
+          <q-btn no-caps align="left" type="a" target="__blank" :href="goTo(toJson(atividade).link)" class="bg-amarelo text-left q-py-md q-mb-md" v-if="d == 'segunda'">
             <div class="text-left">  
               {{ toJson(atividade).descricao }}
               <q-space class="q-mt-md"></q-space>
               Sugestão: {{ toJson(atividade).sugestao }} 
             </div>
           </q-btn>
-          <q-btn no-caps align="left" type="a" target="__blank" :href="toJson(atividade).link" class="bg-rosa text-left q-py-md q-mb-md" v-if="d == 'terca'">
+          <q-btn no-caps align="left" type="a" target="__blank" :href="goTo(toJson(atividade).link)" class="bg-rosa text-left q-py-md q-mb-md" v-if="d == 'terca'">
             <div class="text-left">  
               {{ toJson(atividade).descricao }}
               <q-space class="q-mt-md"></q-space>
               Sugestão: {{ toJson(atividade).sugestao }} 
             </div>
           </q-btn>
-          <q-btn no-caps align="left" type="a" target="__blank" :href="toJson(atividade).link" class="bg-turquesa text-left q-py-md q-mb-md" v-if="d == 'quarta'">
+          <q-btn no-caps align="left" type="a" target="__blank" :href="goTo(toJson(atividade).link)" class="bg-turquesa text-left q-py-md q-mb-md" v-if="d == 'quarta'">
             <div class="text-left">  
               {{ toJson(atividade).descricao }}
               <q-space class="q-mt-md"></q-space>
               Sugestão: {{ toJson(atividade).sugestao }} 
             </div>
           </q-btn>
-          <q-btn no-caps align="left" type="a" target="__blank" :href="toJson(atividade).link" class="bg-verde text-left q-py-md q-mb-md" v-if="d == 'quinta'">
+          <q-btn no-caps align="left" type="a" target="__blank" :href="goTo(toJson(atividade).link)" class="bg-verde text-left q-py-md q-mb-md" v-if="d == 'quinta'">
             <div class="text-left">  
               {{ toJson(atividade).descricao }}
               <q-space class="q-mt-md"></q-space>
               Sugestão: {{ toJson(atividade).sugestao }} 
             </div>
           </q-btn>
-          <q-btn no-caps align="left" type="a" target="__blank" :href="toJson(atividade).link" class="bg-lilas text-left q-py-md q-mb-md" v-if="d == 'sexta'">
+          <q-btn no-caps align="left" type="a" target="__blank" :href="goTo(toJson(atividade).link)" class="bg-lilas text-left q-py-md q-mb-md" v-if="d == 'sexta'">
             <div class="text-left">  
               {{ toJson(atividade).descricao }}
               <q-space class="q-mt-md"></q-space>
@@ -122,13 +122,14 @@ export default {
     },
     methods: {
       async getRotinas(){
+        this.$q.loading.show();
         let nivel = this.nivel.value ? this.nivel.value : 'ensino-fundamental-1';
         let semana = this.semana.value ? this.semana.value : 'semana-1';
         const { data } = await axios.get(`/rotinas/${nivel}/${semana}`);
-        
+        this.$q.loading.hide();
         this.rotinas = data.metadata.rotinas;
         this.semanasModel = data.metadata.semanas;
-        console.log(data.metadata)
+        
         
       },
       changeSemana(value){
@@ -162,8 +163,33 @@ export default {
           default:
             break;
         }
+      },
+      goTo(url) {
+        const host = window.location.host;
+        const protocol = window.location.protocol;
+        const parser = document.createElement('a');
+        parser.href = url;
+        
+        if(parser.host === 'pat.educacao.ba.gov.br'){
+          const pathname = parser.pathname;
+          const slugCanal = pathname.split('/')[1];
+          const idConteudo = pathname.substr(pathname.lastIndexOf('/') + 1);
+          
+          return this.renameCanal(slugCanal, idConteudo);
+        }
+        return url.trim();
+      },
+      renameCanal(slug, id){
+        switch (slug) {
+          case 'conteudos-digitais':
+            return `/recursos-educacionais/conteudo/exibir/${id}`;
+            break;
+          default:
+            return `/${slug}/conteudo/exibir/${id}`;
+            break;
+        }
       }
-    },
+    }
 }
 </script>
 

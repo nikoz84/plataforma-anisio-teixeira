@@ -13,9 +13,18 @@
               title="Nome do Canal, Url Amigável, URL da API"
               icon="settings"
               :done="step > 1"
+              @click="step = 1"
             >
-              <q-input filled v-model.trim="canal.options.extend_name" label="Nome do canal em extenso" hint="Verdadeiro nome do canal em extenso"></q-input>
-              <q-input filled v-model.trim="canal.name" label="Nome do Canal" hint="Nome abreviado ou reduzido"></q-input>
+              <q-input filled v-model.trim="canal.options.extend_name" label="Nome do canal em extenso" hint="Nome do canal em extenso"></q-input>
+              <q-input filled v-model.trim="canal.name" label="Nome do Canal" 
+                hint="Nome abreviado ou reduzido"
+                :error="errors && errors.name && errors.name.length > 0"
+                bottom-slot
+              >
+              <template v-slot:error>
+                <ShowErrors :errors="errors.name"></ShowErrors>
+              </template>
+              </q-input>
               <q-input filled v-model.trim="canal.slug" label="Url Amigável" hint="Url amigável separado por ifens e em minusculas sem espaços"></q-input>
               <q-input filled v-model.trim="canal.options.back_url" label="URL da API" hint="BackEnd URL"></q-input>
               <q-select filled 
@@ -40,11 +49,15 @@
               title="Descrição e complementos da descrição"
               icon="settings"
               :done="step > 2"
+              @click="step = 2"
             >
               <div class="q-mt-md">
                 <p class="text-center">Escreva uma descrição do canal</p>
               </div>
-              <q-editor v-model="canal.description" min-height="15rem" id="editor"/>
+              <q-editor v-model="canal.description" min-height="15rem" id="editor"
+              ref="editor_ref"
+              @paste.native="evt => pasteCapture(evt)"
+              :toolbar="[['bold', 'italic', 'strike', 'underline']]"/>
               <div class="q-mt-md">
                 <p class="text-center">Complementos da descrição</p>
               </div>
@@ -81,6 +94,7 @@
               title="Ativar: Canal, Possui Home, Possui Categorias, Possui Acesso Rápido, Possui Sobre"
               icon="settings"
               :done="step > 2"
+              @click="step = 3"
             >
             <q-toggle
                   class="q-mt-md"
@@ -161,6 +175,7 @@
     </div>
 </template>
 <script>
+import { PasteCapture } from "@mixins/RemoveFormat";
 import {
   QInput,
   QEditor,
@@ -173,9 +188,11 @@ import {
   QStep,
   QStepperNavigation
 } from "quasar";
+import { ShowErrors } from '@forms/shared'
 
 export default {
   name: "CanalForm",
+  mixins: [PasteCapture],
   components: {
     QInput,
     QEditor,
@@ -186,7 +203,8 @@ export default {
     QColor,
     QStepper,
     QStep,
-    QStepperNavigation
+    QStepperNavigation,
+    ShowErrors
   },
   data() {
     return {
@@ -213,7 +231,8 @@ export default {
             porque: ""
           }
         }
-      }
+      },
+      errors: []
     };
   },
   created() {
@@ -228,48 +247,40 @@ export default {
   },
   methods: {
     async save() {
-      let id = this.$route.params.id ? `/${this.$route.params.id}` : "";
-      let form = new FormData();
+      const id = this.$route.params.id ? `/${this.$route.params.id}` : "";
+      const form = new FormData();
 
-      this.canal.options.tipo_conteudo = this.canal.tipos.map(i => i.id);
+      this.canal.options.tipo_conteudo = this.canal.tipos ? this.canal.tipos.map(i => i.id): [];
       form.append("name", this.canal.name);
       form.append("is_active", this.canal.is_active);
       form.append("options", JSON.stringify(this.canal.options));
       form.append("slug", this.canal.slug);
       form.append("description", this.canal.description);
-      if (this.$route.params.action == "editar") {
+      if (this.$route.params.id) {
         form.append("_method", "PUT");
       }
-
-      let resp = await axios.post(this.$route.params.slug + id, form);
-      if (resp.data.success) {
-        this.$q.notify({
-          message: resp.data.message,
-          color: "grey-4",
-          textColor: "primary",
-          possition: "center"
-        });
-      } else {
-        this.$q.notify({
-          message: resp.data.message,
-          color: "grey-4",
-          textColor: "primary",
-          possition: "center"
-        });
+      try {
+        let {data} = await axios.post(`/${this.$route.params.slug}`+ id, form);
+        if(data.success){
+          this.$router.push(`/admin/${this.$route.params.slug}/listar`);
+        }
+      } catch(ex) {
+        this.errors = ex.errors;
       }
     },
     formatTrueFalse(data) {
       return data ? "Sim" : "Não";
     },
     async getTipos() {
-      let resp = await axios.get("tipos");
+      let resp = await axios.get("/tipos?select");
+      
       if (resp.data.success) {
         this.tipos = resp.data.metadata;
       }
     },
     async getCanal() {
       if (!this.$route.params.id) return;
-      let resp = await axios.get(`canais/${this.$route.params.id}`);
+      let resp = await axios.get(`/canais/${this.$route.params.id}`);
       if (resp.data.success) {
         this.canal = resp.data.metadata;
       }

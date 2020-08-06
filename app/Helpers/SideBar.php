@@ -94,7 +94,7 @@ class SideBar
     /**
      * Configurações de links
      *
-     * @return void
+     * @return array de configuração
      */
     public function getlinks()
     {

@@ -157,9 +157,8 @@ Route::group(
         /** CANAIS */
         Route::get('/canais', 'CanalController@index')->name('listar.canais');
         Route::post('/canais', 'CanalController@create')->name('adicionar.canal');
-        Route::put('/canais/{id}', 'CanalController@update')
-            ->name('atualizar.canal')
-            ->middleware('can:update,canal');
+        Route::put('/canais/{id}', 'CanalController@update')->name('atualizar.canal');
+            //->middleware('can:update,canal');
         Route::delete('/canais/{id}', 'CanalController@delete')->name('apagar.canal');
         Route::get('/canais/{id}', 'CanalController@getById')->name('listar.canal.x.id');
         Route::get('/canais/search/{term}', 'CanalController@search')->name('buscar.canal');
@@ -180,7 +179,7 @@ Route::group(
         Route::post('/options/destaques/', 'OptionsController@createDestaques')->name('cria.destaques');
         Route::get('/options/id/{id}', 'OptionsController@getById')->name('opcao.x.id');
         /** ANALYTICS */
-        Route::get('/analytics', 'HomeController@getAnalytics')->name('catalogacao.blog.e.plataforma');
+        Route::get('/resumo', 'HomeController@getAnalytics')->name('catalogacao.blog.e.plataforma');
         /** RELATÓRIOS */
         Route::get(
             '/usuarios/role/{role_id}',

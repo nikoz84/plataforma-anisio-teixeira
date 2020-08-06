@@ -1,7 +1,7 @@
 import canalRoutes from "./canalRoutes";
 import usuarioRoutes from "./usuarioRoutes";
 import adminRoutes from "./adminRoutes";
-import { homeRoute, galeriaRoute, sobreRoute, ipesRoute, rotinasRoute }  from "./singleRoutes";
+import { homeRoute, galeriaRoute, sobreRoute, ipesRoute, rotinasRoute, advancedSearch }  from "./singleRoutes";
 
 const routes = [
   homeRoute,
@@ -10,6 +10,7 @@ const routes = [
   rotinasRoute,
   ipesRoute,
   adminRoutes,
+  advancedSearch,
   canalRoutes,
   usuarioRoutes
 ];

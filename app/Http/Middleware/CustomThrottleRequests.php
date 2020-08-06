@@ -19,6 +19,6 @@ class CustomThrottleRequests extends ThrottleRequests
             $retryAfter
         );
 
-        return $this->errorResponse([], 'Muitas requisições', 429, $headers);
+        //return $this->errorResponse([], 'Muitas requisições', 429, $headers);
     }
 }

@@ -36,7 +36,8 @@
             <q-item clickable aria-label="buscar por título" @click="recommendationPer('titulo')">
               <q-item-section >Buscar por título</q-item-section>
             </q-item>
-            <q-item clickable aria-label="acessar busca avançada" @click="openDialog()">
+            <q-item clickable aria-label="acessar busca avançada" 
+              @click="$router.push({name: 'BuscaAvancada'} )">
               <q-item-section>Acessar busca avançada</q-item-section>
             </q-item>
           </q-list>
@@ -48,7 +49,6 @@
 </template>
 <script>
 import { QSelect } from "quasar";
-import AdvancedSearchForm from "./AdvancedSearchForm.vue";
 
 export default {
   name: "AutocompleteForm",
@@ -94,7 +94,7 @@ export default {
       }
     },
     selectedInput(value) {
-      console.log(value)
+      //console.log(value)
       if (value) {
         this.$router.replace(
           `/recursos-educacionais/listar?busca=${value.name}`
@@ -107,8 +107,7 @@ export default {
       return this.label ? `Buscar por ${this.label}` : '';
     },
     add(details) {
-      console.log(details)
-      console.log(details);
+      //console.log(details);
     },
     recommendationPer(per) {
       this.per = per;
@@ -117,12 +116,6 @@ export default {
       } else {
         this.label = "título";
       }
-    },
-    openDialog() {
-      this.$q.dialog({
-        component: AdvancedSearchForm,
-        parent: this
-      });
     }
   }
 };

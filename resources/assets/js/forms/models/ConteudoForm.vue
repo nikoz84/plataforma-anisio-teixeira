@@ -88,7 +88,10 @@
         <div class="q-mt-md">
           <p class="text-center">Escreva uma descrição do conteúdo</p>
         </div>
-        <q-editor v-model="conteudo.description" min-height="18rem" />
+        <q-editor v-model="conteudo.description" min-height="18rem"
+          ref="editor_ref"
+          @paste.native="evt => pasteCapture(evt)"
+          :toolbar="[['bold', 'italic', 'strike', 'underline']]"/>
         <ShowErrors v-if="errors && errors.description && errors.description.length > 0" 
           :errors="errors.description">
         </ShowErrors>
@@ -179,10 +182,10 @@
         <ShowErrors v-if="errors && errors.guias_pedagogicos && errors.guias_pedagogicos.length > 0" 
           :errors="errors.guias_pedagogicos">
         </ShowErrors>
-        <!-- ENVIAR SITE --> 
+        <!-- ENVIAR SITE -->
+        <br>
         <q-input
           outlined
-          
           v-model="conteudo.options.site"
           label="URL do Site"
           hint="Exemplo: http://dominio.com.br"
@@ -326,6 +329,7 @@
 <script>
 import { mapGetters, mapActions, mapState, mapMutations } from "vuex";
 import { ShowErrors, ParentAndChildSelect } from "@forms/shared";
+import { PasteCapture } from "@mixins/RemoveFormat";
 import {
   QInput,
   QEditor,
@@ -341,6 +345,7 @@ import {
 
 export default {
   name: "ConteudoForm",
+  mixins: [PasteCapture],
   directives: {
     ClosePopup
   },
@@ -449,7 +454,7 @@ export default {
       {
         form.append("is_site", 0);
       }
-      console.log(this.conteudo)
+      //console.log(this.conteudo)
       form.append("tipo_id", this.conteudo.tipo ? this.conteudo.tipo.id : "");
       form.append("canal_id", this.conteudo.canal ? this.conteudo.canal.id : "");
       form.append("license_id", this.conteudo.license_id ? this.conteudo.license_id : "");
@@ -484,12 +489,14 @@ export default {
         url = url + '/' + this.conteudo.id; 
       }
       try {
-        let { data } = await axios.post(url, form);
-        console.log(data)
-        this.$router.push(`/admin/conteudos/listar`);
+        const { data } = await axios.post(url, form);
+        if(data.success == true){
+          this.$router.push(`/admin/conteudos/listar`);
+        }
+        
       } catch(e) {
         this.errors = e.errors;
-        console.log(e)
+
       }
     },
     async getCategories(val) {
@@ -506,14 +513,14 @@ export default {
       
     },
     async getData() {
-      const canais = axios.get("/canais?select");
-      const tipos = axios.get("/tipos?select");
-      const licencas = axios.get("/licencas?select");
-      let responses = await axios.all([canais, tipos, licencas]);
+      const canais = await axios.get("/canais?select");
+      const tipos = await axios.get("/tipos?select");
+      const licencas = await axios.get("/licencas?select");
+      //let responses = await axios.all([canais, tipos, licencas]);
 
-      this.canais = responses[0].data.metadata;
-      this.tipos = responses[1].data.metadata;
-      this.licencas = responses[2].data.metadata;
+      this.canais = canais.data.metadata;
+      this.tipos = tipos.data.metadata;
+      this.licencas = licencas.data.metadata;
       
       if (this.$route.params.id) {
         let { data } = await axios.get("/conteudos/" + this.$route.params.id);

@@ -42,8 +42,8 @@ class CanalPolicy
      */
     public function create(User $user, Canal $canal)
     {
-        return ($user->role->name === 'super-admin' ||
-            $user->role->name === 'admin');
+        return $user->role->name === 'super-admin' ||
+        $user->role->name === 'admin';
     }
 
     /**
@@ -55,9 +55,8 @@ class CanalPolicy
      */
     public function update(User $user, Canal $canal)
     {
-        return ($user->role->name === 'super-admin' ||
-            $user->role->name === 'admin' ||
-            $user->role->name === 'coordenador');
+        return $user->role->name === 'super-admin' ||
+        $user->role->name === 'admin';
     }
 
     /**

@@ -27,7 +27,7 @@ class LicensePolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function index(User $user)
+    public function getAnalytics(User $user)
     {
         return $user->role->name == 'super-admin';
     }
