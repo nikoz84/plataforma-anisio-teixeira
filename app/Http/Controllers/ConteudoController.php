@@ -93,9 +93,9 @@ class ConteudoController extends ApiController
      *
      * @return array
      */
-    public function configRules()
+    public function configRules($conteudo)
     {
-        return [
+        $configRules = [
             'license_id' => 'required',
             'canal_id' => 'required',
             'tipo_id' => 'required',
@@ -111,12 +111,36 @@ class ConteudoController extends ApiController
             'is_featured' => 'sometimes|boolean',
             'is_approved' => 'required|boolean',
             'is_site' => 'sometimes|boolean',
-            'download' => "nullable|sometimes|mimes:{$this->mimeTypes()}|max:800000",
+            
             'guias_pedagogicos' => "sometimes|mimes:pdf,doc,docx,epub|max:1200000",
             'imagem_associada' => 'sometimes|mimes:jpeg,jpg,png,gif,svg|max:2000',
             'visualizacao' => 'sometimes|file'
-
         ];
+        switch($conteudo->tipo_id)
+        {
+            //DOCUMENTOS
+            case 1 : $configRules["download"] = "nullable|sometimes|mimes:{$this->docsMimeTypes()}|max:1024"; break;
+            //PLANILHA
+            case 2 : $configRules["download"] = "nullable|sometimes|mimes:{$this->planilhasMimeTypes()}|max:1024"; break;
+            //APRESENTAÇÃO
+            case 3 : $configRules["download"] = "nullable|sometimes|mimes:{$this->slidesMimeTypes()}|max:800000"; break;
+            //AUDIO
+            case 4 : $configRules["download"] = "nullable|sometimes|mimes:mp3|max:1024"; break;
+            //VIDEO
+            case 5 : $configRules["download"] = "nullable|sometimes|mimes:{$this->videoMimeTypes()}|max:800000"; break;
+            //IMAGE
+            case 6 : $configRules["download"] = "nullable|sometimes|mimes:{$this->imageMimeTypes()}|max:2048"; break;
+            //ANIMAÇÃO
+            case 7 : $configRules["download"] = "nullable|sometimes|mimes:{$this->mimeTypes()}|max:800000"; break;
+            //SITE
+            case 8 : $configRules["download"] = "nullable|sometimes|mimes:site"; break;
+            //SOFTWARE
+            case 9 : $configRules["download"] = "nullable|sometimes|mimes:exe,bin,rar,".$this->planilhasMimeTypes()."|max:64000"; break;
+            //LIVROS
+            case 17 : $configRules["download"] = "nullable|sometimes|mimes:{$this->docsMimeTypes()}|max:5512"; break;
+            default : $configRules["download"] = "nullable|sometimes|mimes:{$this->mimeTypes()}|max:800000"; 
+        }
+        return $configRules;
     }
 
     /**
@@ -142,10 +166,10 @@ class ConteudoController extends ApiController
     {
         $conteudo = new Conteudo;
         $this->authorize('create', $conteudo);
-
+        $conteudo->tipo_id = $request->tipo_id;
         $validator = Validator::make(
             $request->all(),
-            $this->configRules()
+            $this->configRules($conteudo)
         );
         
         if ($validator->fails()) {
@@ -165,7 +189,6 @@ class ConteudoController extends ApiController
         }
         $conteudo->user_id = Auth::user()->id;
         $conteudo->canal_id = $request->canal_id;
-        $conteudo->tipo_id = $request->tipo_id;
         $conteudo->license_id = $request->license_id;
         $conteudo->category_id = $request->category_id;
         $conteudo->title = $request->title;
@@ -202,7 +225,7 @@ class ConteudoController extends ApiController
     {
         $conteudo = Conteudo::find($id);
         $this->authorize('update', $conteudo);
-        $validator = Validator::make($request->all(), $this->configRules());
+        $validator = Validator::make($request->all(), $this->configRules($conteudo));
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível atualizar o conteúdo", 422);
         }
