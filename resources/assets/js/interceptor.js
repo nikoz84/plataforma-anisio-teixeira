@@ -28,7 +28,7 @@ axios.interceptors.response.use(
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         store.commit('SET_LOGOUT_USER');
-        document.reload('/');
+        location.reload('/');
         break;
       case 403:
         // Não Permitido
@@ -46,7 +46,7 @@ axios.interceptors.response.use(
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         store.commit('SET_LOGOUT_USER');
-        document.reload('/');
+        location.reload('/');
         Notify.create({
           position: "top-right",
           color: "negative",
