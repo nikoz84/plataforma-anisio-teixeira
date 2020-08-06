@@ -24,7 +24,8 @@
 - Correção de urls nas rotinas de estudo, para pegar as imagens do novo padrao
 - Tirar momentaneamente a validação de tipos de conteudo em formulario de conteudo digital
 ## Novas Funcionalidades
--
+- Nova busca avançada - com marcação de filtros, página diferenciada de busca, filtros encapsulados
+
 ################################################################################################
 # Versão 2.0.2
 ################################################################################################
