@@ -3,8 +3,9 @@
 ################################################################################################
 ## Mudanças (layout, correção ortográfica, mudança de código)
 - Novo Layout do Canal das Universidades
+
 ## Correções (bugs, código)
--
+- Exceções/validações de arquivos de download para conteudo dinâmicos em relação ao tipo
 ## Novas Funcionalidades
 -
 ################################################################################################
