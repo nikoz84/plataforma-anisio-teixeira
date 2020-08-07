@@ -12,6 +12,7 @@
     RedirectMatch 301 ^/home/rotinas-de-estudo /rotinas-de-estudo
     RedirectMatch 301 ^/tv-anisio-teixeira/programas/exibir/id/(.*) /tv-anisio-teixeira/conteudo/exibir/$1
     RedirectMatch 301 ^/emitec/disciplinas/exibir/id/(.*) /emitec/conteudo/exibir/$1
+    RedirectMatch 301 ^/conteudos-digitais/conteudo/exibir/id/(.*) /recursos-educacionais/conteudo/exibir/$1
     # Handle Authorization Header
     #RewriteCond %{HTTP:Authorization} .
     #RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
