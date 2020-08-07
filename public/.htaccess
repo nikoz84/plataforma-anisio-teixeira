@@ -33,7 +33,7 @@ ExpiresDefault A31536000
 
 # Set up caching on media files for 1 month
 <FilesMatch "\.(ico|gif|jpg|jpeg|png|mp4|webm|pdf|mp3|wmv|ppt)$">
-  ExpiresDefault A25920000
+  ExpiresDefault A29030400
   Header append Cache-Control "public"
 </FilesMatch>
 
@@ -71,3 +71,23 @@ ExpiresDefault A31536000
   AddOutputFilterByType DEFLATE text/css
   AddOutputFilterByType DEFLATE application/rss+xml
 </Ifmodule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpg "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/gif "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/pdf "access plus 1 month"
+  ExpiresByType text/x-javascript "access plus 1 month"
+  ExpiresByType application/x-shockwave-flash "access plus 1 month"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresDefault "access plus 2 days"
+</IfModule>
+
+
+RedirectMatch 301 ^/home/ipes /ipes
+RedirectMatch 301 ^/home/rotinas-de-estudo /rotinas-de-estudo
+RedirectMatch 301 ^/tv-anisio-teixeira/programas/exibir/id/(.*) /tv-anisio-teixeira/conteudo/exibir/$1
+RedirectMatch 301 ^/emitec/disciplinas/exibir/id/(.*) /emitec/conteudo/exibir/$1

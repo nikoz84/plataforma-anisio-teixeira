@@ -1,19 +1,10 @@
 ################################################################################################
-# Versão 2.0.4
-################################################################################################
-## Mudanças (layout, correção ortográfica, mudança de código)
-- Novo Layout do Canal das Universidades
-
-## Correções (bugs, código)
-- Exceções/validações de arquivos de download para conteudo dinâmicos em relação ao tipo
-## Novas Funcionalidades
--
-################################################################################################
 # Versão 2.0.3
 ################################################################################################
 ## Mudanças (layout, correção ortográfica, mudança de código)
 - Full screen para player
 - Minimizar espaço das informações embaixo do player
+- Novo Layout do Canal das Universidades
 ## Correções (bugs, código)
 - Correção de upload de arquivo de download
 - Upload de arquivos max_file_size e post_max_size para 800MB (mod_php7)
@@ -27,7 +18,8 @@
 - Remove o formato para os campos de descrição e limita toolbar da descrição
 ## Novas Funcionalidades
 - Nova busca avançada - com marcação de filtros, página diferenciada de busca, filtros encapsulados
-
+- Exceções/validações de arquivos de download para conteudo dinâmicos em relação ao tipo
+- Resumo de catalogação de conteúdos (quantidade de publicações por usuario, por canal e outras opções)
 
 ################################################################################################
 # Versão 2.0.2
