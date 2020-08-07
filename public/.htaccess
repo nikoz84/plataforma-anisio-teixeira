@@ -90,3 +90,12 @@ ExpiresDefault A31536000
 </IfModule>
 
 
+<IfModule mod_headers.c>
+  Header add Link "</css/app.css>; as=style rel=preload;"
+  Header add Link "</js/app.js>; as=script rel=preload;"
+  Header add Link "</fonts/Lato-Regular.woff2>; as=fonts rel=preload;"
+  Header add Link "</fonts/Ubuntu-Regular.woff>; as=fonts rel=preload;"
+  Header add Link "</fonts/Ubuntu-Regular.woff2>; as=fonts rel=preload;"
+  Header add Link "</fonts/vendor/@quasar/extras/material-icons/web-flUhRq6tzZclQEJ-Vdg-IuiaDsNa.woff>; as=fonts rel=preload;"
+  Header add Link "</fonts/vendor/@quasar/extras/material-icons/web-flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2>; as=fonts rel=preload;"
+</IfModule>
