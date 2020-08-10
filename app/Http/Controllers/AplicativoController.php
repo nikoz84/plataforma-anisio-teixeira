@@ -13,13 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Traits\FileSystemLogic;
 
 class AplicativoController extends ApiController
-{ /**
- * Criacao de aplicativos adicionando imagem com arquivos no banco de dados
- * @param int $id e $image identificadores 
- * @param \App\Http\Controllers\AplicativoController 
- * retorna json
- * 
- */
+{ 
 
     use FileSystemLogic;
     /**
@@ -34,7 +28,8 @@ class AplicativoController extends ApiController
     }
     /**
      * Display a listing of the resource.
-     *
+     * Lista Informações do palicativo no banco de dados
+     * @param\App\Aplicativo $aplicativo
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -56,9 +51,10 @@ class AplicativoController extends ApiController
     }
 
     /**
-     * Cria um novo aplicativo.
-     *
-     *
+     * Cria um novo aplicativo no banco de dados
+     * 
+     *@param \App\Aplicativo $aplicativo
+     *@return \App\Controller\ApiResponser retorna jsonS
      */
     public function create()
     {

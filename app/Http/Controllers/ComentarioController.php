@@ -27,7 +27,12 @@ class ComentarioController extends ApiController
             'deletar'
         ]);
     }
-
+     /**
+      * Metodo que cria retorna uma listagem do banco de dados e valida
+      * @param \App\Comentario $comentario
+      * @return \App\Controllers\ComentarioController\ApiResponser
+      * retorna json 
+      */
     public function create()
     {
         $validator = Validator::make(
@@ -46,8 +51,14 @@ class ComentarioController extends ApiController
             return $this->errorResponse([], 'Não foi possível criar o comentário!', 422);
         }
     }
+    /**
+     * Retorna o comentario pelo seu id, ou seja, chave primaria
+     * @param [type] $id
+     * @param \App\Comentario $comentario
+     * @return \App\Controllers\ApiResponser
+     * retorna json
+     */
     
-    # Retorna o comentario pelo seu id, ou seja, chave primaria
     public function getComentarioById($id)
     {
         $comentario = $this->comentario->getComentarioById($id);
@@ -57,6 +68,13 @@ class ComentarioController extends ApiController
 
         return $this->errorResponse([], 'Comentário não encontrado!', 422);
     }
+    /**
+     * Atualiza o Aplicativo no banco de dados
+     * @param int $id identificador único
+     * @param \App\Comentario $comentario
+     * @return \App\Controller\ApiResponser 
+     * retorna json
+     */
 
     public function update($id)
     {
@@ -79,8 +97,15 @@ class ComentarioController extends ApiController
             return $this->errorResponse([], 'Não foi possível editar o comentário!', 422);
         }
     }
+    /**
+     * Undocumented function
+     * Retorna os comentarios sobre uma determinada postagem
+     * @param [type] $idPostagem
+     * @param \App\Comentario
+     * @return \App\Controller\ApiResponser
+     * retorna Json
+     */
     
-    # Retorna os comentarios sobre uma determinada postagem
     public function getComentariosByIdPostagem($idPostagem, $tipo)
     {
         $limit = $this->request->query('limit');
@@ -93,7 +118,13 @@ class ComentarioController extends ApiController
         return $this->errorResponse([], 'Comentários não encontrado!', 422);
     }
     
-    # Retorna os comentarios por id do usuario e pelo tipo
+    /**
+     * Undocumented function
+     * Retorna os comentarios por id do usuario e pelo tipo
+     * @param [type] $idUsuario
+     * @param boolean $tipo
+     * @return void
+     */
     public function getComentariosByIdUsuario($idUsuario, $tipo = false)
     {
         $limit = $this->request->query('limit');
@@ -105,6 +136,14 @@ class ComentarioController extends ApiController
 
         return $this->errorResponse([], 'Comentários não encontrados!', 422);
     }
+    /**
+     * 
+     * Deleta aplicativo no banco de dados
+     * @param int $id identificador único
+     * @param \App\Comentario $comentario
+     * @return \App\Controller\ApiResponser 
+     * retorna json
+     */
 
     public function deletar($id)
     {

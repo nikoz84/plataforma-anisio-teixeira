@@ -22,6 +22,9 @@ class ConteudoLikeController extends ApiController
         ]);
         $request = $request;
     }
+    /**
+     * Lista as curtidas de forma positiva do aplicativo
+     */
 
     public function like()
     {
@@ -33,6 +36,10 @@ class ConteudoLikeController extends ApiController
         }
     }
 
+    /**
+     * Lista as curtidas de forma negativa do aplicativo.
+     */
+
     public function deslike()
     {
         try {
@@ -42,6 +49,10 @@ class ConteudoLikeController extends ApiController
             return $this->errorResponse([], 'Não foi possível realizar a operação!', 422);
         }
     }
+
+    /**
+     * Lista as curtidas por usuário.
+     */
 
     public function getLikesPorIdUsuarioEtipo($idUsuario, $tipo = false)
     {

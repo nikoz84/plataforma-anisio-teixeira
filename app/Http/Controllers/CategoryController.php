@@ -12,7 +12,7 @@ use App\Canal;
 class CategoryController extends ApiController
 {
     /**
-     * Cria, atualiza e deleta informacoes no banco de dados
+     * Cria imagem no banco de dados
      * 
      * @param int $id identificador único
      * @param  \App\Controller\CategoryController\ApiResponser
@@ -43,6 +43,12 @@ class CategoryController extends ApiController
         $this->request = $request;
     }
 
+    /**
+     * Lista as informações do aplicativo 
+     * @param \App\Category $categories
+     * @return \App\Controllers\ApiResponser
+     */ 
+
     public function index()
     {
         $limit = $this->request->get('limit', 15);
@@ -55,7 +61,7 @@ class CategoryController extends ApiController
         return $this->showAsPaginator($categories);
     }
    /**
-    * Undocumented function
+    * 
     * Criando e validando informações para ser adicionadas no banco de dados
     * @return void
     */
@@ -88,11 +94,11 @@ class CategoryController extends ApiController
     }
 
     /**
-     * Undocumented function
-     * Método que atualiza informações da categoria por id listando informações do banco de dados
-     * Usando as respectivas exception com seus status code de seguranca
-     * @param [type] $id
-     * @return void
+     * Atualiza aplicativo no banco de dados
+     * 
+     * @param int id identificador único
+     * @param  \App\Category $categories
+     * @return  \App\Controllers\ApiResponser retorna json
      */
     public function update($id)
     {
@@ -130,7 +136,11 @@ class CategoryController extends ApiController
         return $this->successResponse($category, 'Categoria atualizada com sucesso!', 200);
     }
     /**
-     * Metodo delete informacoces que podem ser deletadas no banco de dados
+     * Deleta aplicativo do banco de dados
+     * 
+     * @param int $id identificador único
+     * @param \App\Category $categories
+     * @return \App\Controllers\ApiResponser retorna json
      */
 
     public function delete($id)
@@ -151,6 +161,12 @@ class CategoryController extends ApiController
         unlink($category->refenciaVideoDestaque());
         return $this->successResponse($category, 'Categoria deletada com sucesso!', 200);
     }
+     /**
+      * 
+      * Lista id do aplicativo no banco de dados
+      * @param \App\Category $categories
+      * @return \App\Controllers\ApiResponser retorna json
+      */
 
     public function getById($id)
     {
@@ -159,6 +175,12 @@ class CategoryController extends ApiController
         return  $category;
     }
 
+/**
+ * 
+ * Lista a categoria do canal por id
+ * @param [type] $id
+ * @return void
+ */
     public function getCategoryByCanalId($id)
     {
         $categories = Category::with('subCategories')->where('canal_id', $id)
