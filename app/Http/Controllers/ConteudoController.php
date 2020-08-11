@@ -334,7 +334,7 @@ class ConteudoController extends ApiController
     {
         $conteudo = Conteudo::find($id);
         $arquivos = $conteudo->getAttribute('arquivos');
-        dd($arquivos['visualizacao']);
+        dd($arquivos);
         $download = $arquivos['download']->url;
         $formato = $arquivos['download']->extension;
         $mega_bytes = number_format($arquivos['download']->size / 1024, 2, ',', '.');

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"> 
+  <url>
+    <loc>http://pat.educacao.ba.gov.br/</loc>
+    <priority>1.00</priority>
+    <changefreq>monthly</changefreq> 
+  </url>
+  <url>
+    <loc>http://pat.educacao.ba.gov.br/sobre</loc>
+    <priority>0.50</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://pat.educacao.ba.gov.br/recursos-educacionais/listar</loc>
+    <priority>0.90</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://pat.educacao.ba.gov.br/recursos-educacionais/listar</loc>
+    <priority>0.50</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://pat.educacao.ba.gov.br/tv-anisio-teixeira</loc>
+    <priority>0.90</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://pat.educacao.ba.gov.br/tv-anisio-teixeira/listar</loc>
+    <priority>0.50</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://pat.educacao.ba.gov.br/emitec</loc>
+    <priority>0.90</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://pat.educacao.ba.gov.br/emitec/listar</loc>
+    <priority>0.50</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://pat.educacao.ba.gov.br/sites-tematicos</loc>
+    <priority>0.90</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://pat.educacao.ba.gov.br/sites-tematicos/listar</loc>
+    <priority>0.50</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://pat.educacao.ba.gov.br/radio-anisio-teixeira</loc>
+    <priority>0.50</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://pat.educacao.ba.gov.br/radio-anisio-teixeira/listar</loc>
+    <priority>0.50</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://pat.educacao.ba.gov.br/aplicativos-educacionais</loc>
+    <priority>0.90</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://pat.educacao.ba.gov.br/aplicativos-educacionais/listar</loc>
+    <priority>0.90</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://pat.educacao.ba.gov.br/projetos-artisticos</loc>
+    <priority>0.90</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>http://pat.educacao.ba.gov.br/projetos-artisticos/listar</loc>
+    <priority>0.90</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+</urlset>
+
+
+
+
+
+
+
+

@@ -21,9 +21,7 @@
                     alt="Marca"
                     title="marca"
                     aria-label="Marca da plataforma Anísio Teixeira">
-                    <svg class="icon-pat" height="25" width="25">
-                        <use v-bind="{'xlink:href':'#peteca-icon-branco'}"></use> 
-                    </svg>
+                    <img class="q-pa-sm" lazyload src="/img/sprite/peteca-icon-branco.svg" alt="icone">
                 </q-avatar>
             </q-btn>
         </div>

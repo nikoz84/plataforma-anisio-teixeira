@@ -13,7 +13,7 @@
         style="width: 200px"
         >
           <q-avatar left square>
-            <img lazyload :src="item.icon" alt="">
+            <img lazyload :src="item.icon" alt="icone">
           </q-avatar>
           <div>{{item.name}}</div>
       </q-btn>
