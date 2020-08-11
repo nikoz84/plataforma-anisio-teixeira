@@ -30,7 +30,7 @@ class CurricularComponent extends Model
     }
     public function getIconAttribute()
     {
-        return Str::slug($this['name'], '-');
+        return "/img/sprite/" . Str::slug($this['name'], '-') . ".svg";
         /*
         $icone = null;
         if ($this['nivel_id'] == 5) {

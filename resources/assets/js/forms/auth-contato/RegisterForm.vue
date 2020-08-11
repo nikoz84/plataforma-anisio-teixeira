@@ -9,19 +9,22 @@
             <q-card-section>
                 <q-form @submit.prevent="onSubmit()" class="q-gutter-md" ref="loginForm">
                   <q-input filled v-model="name" label="Seu Nome *" hint="Nome" type="text"
-                                bottom-slots :error="errors.name && errors.name.length > 0">
+                                bottom-slots 
+                                :error="errors && errors.name && errors.name.length > 0">
                     <template v-slot:error>
                       <ShowErrors :errors="errors.name"></ShowErrors>
                     </template>
                   </q-input>
                   <q-input filled v-model="email" label="Seu E-mail *" hint="E-mail" type="email"
-                                bottom-slots :error="errors.email && errors.email.length > 0">
+                                bottom-slots :error="errors && errors.email && errors.email.length > 0">
                     <template v-slot:error>
                       <ShowErrors :errors="errors.email"></ShowErrors>
                     </template>
                   </q-input>
-                  <q-input v-model="password" filled :type="isPwd ? 'password' : 'text'" hint="Senha"
-                            bottom-slots :error="errors.password && errors.password.length > 0">
+                  <q-input v-model="password" filled :type="isPwd ? 'password' : 'text'" 
+                      hint="Senha"
+                      bottom-slots 
+                      :error="errors && errors.password && errors.password.length > 0">
                     <template v-slot:append>
                       <q-icon
                         :name="isPwd ? 'visibility_off' : 'visibility'"
@@ -33,13 +36,17 @@
                       <ShowErrors :errors="errors.password"></ShowErrors>
                     </template>
                   </q-input>
-                  <q-input v-model="confirmation" filled type="password" hint="Repita a senha"
-                            bottom-slots :error="errors.confirmation && errors.confirmation.length > 0">
+                  <q-input v-model="confirmation" filled type="password" 
+                      hint="Repita a senha"
+                      bottom-slots 
+                      :error="errors && errors.confirmation && errors.confirmation.length > 0">
                     <template v-slot:error>
                       <ShowErrors :errors="errors.confirmation"></ShowErrors>
                     </template>
                   </q-input>
-                  <RecaptchaForm :errors="errors.recaptcha"></RecaptchaForm>
+                  <RecaptchaForm></RecaptchaForm>
+                  <ShowErrors v-if="errors && errors.confirmation && errors.confirmation.length > 0" 
+                    :errors="errors.recaptcha"></ShowErrors>
                    <div>
                      <q-btn class="full-width" label="Cadastre-se" type="submit" color="primary"/>
                    </div>

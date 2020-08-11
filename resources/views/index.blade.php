@@ -8,15 +8,15 @@
         
         <title>{{env('APP_NAME')}}</title>
         <meta name="description" content="{{env('APP_NAME')}} projeto da Secretaria da Educação do Estado da Bahia (SEC)">
-        <meta name="keywords" content="plataforma anísio teixeira, recursos educacionais, educação, conteúdos digitais, software livre">
+        <meta name="keywords" content="plataforma anísio teixeira, recursos educacionais, educação, conteúdos digitais, software livre, emitec, tv anísio teixeira">
         <link rel="canonical" href="{{env('APP_URL')}}">
         <link rel="manifest" href="/manifest.json" preload>
-        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" preload>
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
         <meta name="msapplication-TileColor" content="#08275e">
         <meta name="theme-color" content="#08275e">
-        <link href="/css/app.css" as="style" rel='stylesheet' preload>
+        <link href="/css/app.css" as="style" rel='stylesheet' preload async>
         <noscript>
-            <link rel="stylesheet" href="/css/app.css" preload/>
+            <link rel="stylesheet" href="/css/app.css" as="style" preload/>
         </noscript>
     </head>
     <body>
@@ -24,12 +24,10 @@
             A Plataforma Anísio Teixeira utiliza Javascript para ser executada, 
             por favor, habilite o javascript no navegador.
         </noscript>
-        @include('svg')
-
+        
         <div id="app">
             <main-app></main-app>
         </div>
-        
         
         @if (env('APP_ENV') === 'development')
         <script async defer src="/js/app.js"></script>

@@ -44,5 +44,3 @@ Route::get('/conteudos-digitais/conteudo/incorporar-conteudo/id/{id}', 'Conteudo
 
 
 Route::get('/{any}', 'ApiController@home')->where('any', '.*');
-
-

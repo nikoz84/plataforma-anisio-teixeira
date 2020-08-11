@@ -8,9 +8,7 @@
                 >
                 <q-item-section avatar v-if="filter.icon">
                     <q-avatar left square>
-                      <svg class="icon-pat" height="20" width="20">
-                        <use v-bind="{'xlink:href':'#'+ filter.icon}"></use> 
-                      </svg>
+                      <img lazyload :src="filter.icon"/>
                     </q-avatar>
                 </q-item-section>
                 <q-item-section>{{filter.name}}</q-item-section>

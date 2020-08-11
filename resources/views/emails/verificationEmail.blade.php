@@ -27,7 +27,7 @@
 
 <div class="div-center">
 	<div class="logo-projeto">
-		<img src="{{getenv('APP_URL')}}/img/icons-192.png">
+		<img src="{{env('APP_URL')}}/img/icons-192.png">
 		<h3>{{getenv('APP_NAME')}}</h3>
 	</div>
 	<p>
@@ -60,6 +60,6 @@
     <br>
     <br>
 	<div class="logo-projeto-rodape">
-		<img src="{{getenv('APP_URL')}}/img/img-logomarca-rodape.png">
+		<img src="{{env('APP_URL')}}/img/img-logomarca-rodape.png">
 	</div>
 </div>
