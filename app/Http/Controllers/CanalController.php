@@ -153,7 +153,7 @@ class CanalController extends ApiController
     }
     /**
      * Procura canal pelo termo
-     *
+     * Faz a Busca do termo
      * @param [type] $termo
      * @return void
      */

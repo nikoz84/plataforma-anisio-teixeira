@@ -26,7 +26,14 @@ class WordpressController extends ApiController
 
         return $this->showAsPaginator($wordpress->getPosts());
     }
-
+     /**
+     *  Busca informações do Banco de Dados
+     *
+     * @param string $termo identificador único
+     * @param \App\Wordpress $wordpress
+     * @return \App\Controller\ApiResponser 
+     * retorna Json
+     */
     public function search($termo)
     {
         $limit = $this->request->query('limit', 6);

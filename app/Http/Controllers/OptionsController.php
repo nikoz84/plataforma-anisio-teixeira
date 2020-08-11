@@ -174,6 +174,12 @@ class OptionsController extends ApiController
     {
         //
     }
+    /**
+     * Função que aciona o as informações por nome
+     *
+     * @param [type] $name
+     * @return void
+     */
     public function getByName($name)
     {
         $option = $this->options::where('name', 'like', $name)->first();
@@ -183,6 +189,12 @@ class OptionsController extends ApiController
             'options' => $option,
         ]);
     }
+    /**
+     * Função que seleciona as informações por id no Banco de Dados.
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function getById($id)
     {
         $option = $this->options::findOrFail($id);

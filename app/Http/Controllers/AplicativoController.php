@@ -165,7 +165,8 @@ class AplicativoController extends ApiController
     }
     /**
      * Remove the specified resource from storage.
-     * @return \Illuminate\Http\Response json
+     * Remove o aplicativo e retorna um erro.
+     * @return \Illuminate\Http\Response json.
      */
     public function delete($id)
     {
@@ -177,6 +178,11 @@ class AplicativoController extends ApiController
         }
         return $this->successResponse([], 'Aplicativo deletado com sucesso!!', 200);
     }
+    /**
+     * Metodo que faz uma busca de reposta no banco de dados.
+     * @param \App\Aplicativo $aplicativo
+     * @return \App\Controller\ApiResponser retorna json.
+     */
 
     public function search(Request $request, $termo)
     {

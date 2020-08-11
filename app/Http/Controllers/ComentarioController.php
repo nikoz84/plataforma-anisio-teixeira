@@ -119,7 +119,7 @@ class ComentarioController extends ApiController
     }
     
     /**
-     * Undocumented function
+     * 
      * Retorna os comentarios por id do usuario e pelo tipo
      * @param [type] $idUsuario
      * @param boolean $tipo
