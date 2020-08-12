@@ -68,21 +68,23 @@ class Handler extends ExceptionHandler
         } elseif ($exception instanceof JWTException) {
             return $this->errorResponse([], 'Token não autorizado', 401);
         }
+        
         if ($exception instanceof ModelNotFoundException) {
-            return $this->errorResponse([], "Não encontrado", 404);
+            return $this->errorResponse([], "Erro em modelo", 404);
         }
         if ($exception instanceof QueryException) {
-            return $this->errorResponse([], "Não encontrado", 404);
+            return $this->errorResponse([], "Erro em query", 404);
         }
+        
         if ($exception instanceof AuthorizationException) {
             return $this->errorResponse([], "Ação não autorizada, sem permissões", 403);
         }
         if ($exception instanceof HttpException) {
-            return $this->errorResponse([], $exception->getMessage(), $exception->getCode());
+            return $this->errorResponse([], $exception->getMessage(), 404);
         }
 
         if ($exception instanceof KernelException) {
-            return $this->errorResponse([], 'Erro no servidor', 500);
+            return $this->errorResponse([], $exception->getMessage(), 500);
         }
         if ($exception instanceof ValidationException) {
             return $this->errorResponse([], 'Erro de validação', 500);

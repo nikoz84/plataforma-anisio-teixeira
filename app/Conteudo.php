@@ -136,28 +136,6 @@ class Conteudo extends Model
     }
 
     /**
-     * Muta o valor do usuário que aprova o conteúdo
-     * @param [type] $user
-     * @return void
-     */
-    public function setApprovingUserIdAttribute($id)
-    {
-        if ($id) {
-            $this->attributes['approving_user_id'] = $id;
-        } else {
-            $this->attributes['approving_user_id'] = null;
-        }
-    }
-
-    public function setIsApproved($is_approved)
-    {
-        if ($is_approved) {
-            $this->attributes['is_approved'] = $is_approved;
-        } else {
-            $this->attributes['is_approved'] = false;
-        }
-    }
-    /**
      * Adiciona novo atributo ao objeto que limita o tamanho da descrição
      * @return void
      */

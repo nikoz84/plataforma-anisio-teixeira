@@ -8,11 +8,13 @@
     </IfModule>
 
     RewriteEngine On
-    RedirectMatch 301 ^/home/ipes /ipes
-    RedirectMatch 301 ^/home/rotinas-de-estudo /rotinas-de-estudo
+    
+    RedirectMatch 301 ^/conteudos-digitais/conteudos/listar/tag/(.*) /recursos-educacionais/listar?tag=$1
     RedirectMatch 301 ^/tv-anisio-teixeira/programas/exibir/id/(.*) /tv-anisio-teixeira/conteudo/exibir/$1
     RedirectMatch 301 ^/emitec/disciplinas/exibir/id/(.*) /emitec/conteudo/exibir/$1
     RedirectMatch 301 ^/conteudos-digitais/conteudo/exibir/id/(.*) /recursos-educacionais/conteudo/exibir/$1
+    RedirectMatch 301 ^/conteudos-digitais/conteudo/incorporar-conteudo/id/(.*) /incorporar-conteudo/$1
+    
     # Handle Authorization Header
     #RewriteCond %{HTTP:Authorization} .
     #RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
@@ -31,6 +33,16 @@
 </IfModule>
 
 
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(ico|gif|jpg|jpeg|png)$">
+          Header set Cache-Control "access plus 1 year"
+          Header set Set-Cookie: "ACookieAvailableCrossSite; SameSite=None; Secure"
+    </FilesMatch>
+    <FilesMatch "\.(css|js)$">
+          Header set Cache-Control "max-age=31536000"
+    </FilesMatch>
+</IfModule>
 # Turn on Expires and set default expires to 1 year
 ExpiresActive On
 ExpiresDefault A31536000
@@ -44,7 +56,7 @@ ExpiresDefault A31536000
 # Set up 2 Hour caching on commonly updated files
 <FilesMatch "\.(xml|txt|html|js|css|map|ttf|ttc|otf|eot|woff|woff2|font.css)$">
   #Header set Access-Control-Allow-Origin "*"
-  ExpiresDefault A720000
+  ExpiresDefault "access 2 days"
   Header append Cache-Control "private, must-revalidate"
 </FilesMatch>
 
@@ -60,7 +72,7 @@ ExpiresDefault A31536000
     AddType application/vnd.ms-fontobject   eot
     AddType application/x-font-ttf          ttf ttc
     AddType font/opentype                   otf
-    AddType application/x-font-woff         woff
+    AddType application/x-font-woff         woff woff2
     AddType image/svg+xml                   svg svgz 
     AddEncoding gzip                        svgz
 </Ifmodule>

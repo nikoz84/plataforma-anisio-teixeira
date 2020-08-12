@@ -225,7 +225,7 @@ trait FileSystemLogic
      * @param $file laravel request
      * @return File
      */
-    public function saveFile($id, $files,  $local = null, $disk="conteudos-digitais")
+    public function saveFile($id, $files, $local = null, $disk = "conteudos-digitais")
     {
         $file = null;
         if ($files) {
@@ -234,7 +234,7 @@ trait FileSystemLogic
                 $rand = rand(5, 99999);
                 $path = Storage::disk($disk)->path($local) .DIRECTORY_SEPARATOR. "{$id}.*";
                 $files = $filesystem->glob($path);
-                $name = "{$id}.{$rand}.{$file->guessExtension()}";
+                $name = "{$id}.{$rand}.{$file->getClientOriginalExtension()}";
                 $file->storeAs($local, $name, $disk);
             }
             return $file;

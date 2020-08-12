@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,11 +37,10 @@ Route::get('/docs', function (Request $request) {
 });
 
 */
+Route::permanentRedirect('/home/ipes', '/ipes');
+Route::permanentRedirect('/home/rotinas-de-estudo', '/rotinas-de-estudo');
+Route::permanentRedirect('/conteudos-digitais', '/recursos-educacionais');
 
-
-
-Route::get('/conteudos-digitais/conteudo/incorporar-conteudo/id/{id}', 'ConteudoController@incorporarConteudo');
-
-
+Route::get('/incorporar-conteudo/{id}', 'ConteudoController@incorporarConteudo');
 
 Route::get('/{any}', 'ApiController@home')->where('any', '.*');
