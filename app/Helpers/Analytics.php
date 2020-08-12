@@ -56,13 +56,13 @@ class Analytics
     }
     public function perTypeOfMidia()
     {
-        $sql = "SELECT (SELECT upper(name) FROM tipos WHERE id = cast(c.options->>'tipo' as int)) AS name,
-                COUNT (cast(c.options->>'tipo' as int)) as total,
+        $sql = "SELECT (SELECT upper(name)
+                FROM tipos AS t WHERE t.id = c.tipo_id) as name,
+                COUNT (c.tipo_id) as total,
                 row_number() OVER () AS id
                 FROM
-                conteudos as c
-                GROUP BY
-                name";
+                conteudos AS c
+                GROUP BY name";
 
         return DB::select(DB::raw($sql));
     }

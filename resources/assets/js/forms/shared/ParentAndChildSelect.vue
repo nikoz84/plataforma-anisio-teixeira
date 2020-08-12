@@ -3,7 +3,7 @@
   <p class="text-center q-mt-lg">
    {{ label }}:  <i>{{ selectText  }} </i>
   </p>
-  <q-scroll-area style="height: 200px;" id="parent-items" 
+  <q-scroll-area style="height: 200px;"
     visible>
     <div
       v-for="(item, i) in parent" :key="i" >

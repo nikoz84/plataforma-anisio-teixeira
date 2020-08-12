@@ -179,7 +179,7 @@ Route::group(
         Route::post('/options/destaques/', 'OptionsController@createDestaques')->name('cria.destaques');
         Route::get('/options/id/{id}', 'OptionsController@getById')->name('opcao.x.id');
         /** ANALYTICS */
-        Route::get('/analytics', 'HomeController@getAnalytics')->name('catalogacao.blog.e.plataforma');
+        Route::get('/resumo', 'HomeController@getAnalytics')->name('catalogacao.blog.e.plataforma');
         /** RELATÓRIOS */
         Route::get(
             '/usuarios/role/{role_id}',

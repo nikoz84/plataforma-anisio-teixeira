@@ -18,7 +18,7 @@
         size="xs"
         label="Aprovar"
         @click="aprovar"
-        v-if="$route.params.slug == 'conteudos' && isLogged"/>
+        v-if="$route.params.slug == 'conteudos' && userCan()"/>
         <q-space></q-space>
         <!-- PAGINAÇÃO -->
       <q-pagination

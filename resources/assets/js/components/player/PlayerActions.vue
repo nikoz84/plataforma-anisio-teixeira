@@ -1,15 +1,15 @@
 <template>
     <div v-if="conteudo">
         <div>
-            <small>
+            <small v-if="conteudo.tipo">
                 Tipo de Conteúdo: 
                 <q-badge class="bg-cinza" text-color="primary">{{conteudo.tipo.name}}</q-badge>
             </small>
-            <small>
+            <small v-if="conteudo.qt_access">
                 Acessos: 
                 <q-badge class="bg-cinza" text-color="primary">{{conteudo.qt_access}}</q-badge>
             </small>
-            <small v-if="conteudo.tipo.id != 8">
+            <small v-if="conteudo.qt_downloads && conteudo.tipo.id != 8">
                 Downloads: 
                 <q-badge class="bg-cinza" text-color="primary">{{conteudo.qt_downloads}}</q-badge>
             </small>
@@ -18,7 +18,7 @@
                 round
                 push
                 text-color="primary"
-                icon="share" 
+                icon="share"
                 size="sm" 
                 @click="share()" >
                 <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
@@ -32,7 +32,7 @@
                 text-color="primary"
                 icon="save_alt"
                 size="sm"
-                v-if="fileExists('download')"
+                v-if="fileExists('download') && conteudo.id"
                 @click="downloadFile('download', conteudo.id)" >
                 <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
                     Baixar conteúdo
@@ -110,7 +110,7 @@ export default {
         fileExists(path) {
             let files = this.conteudo.arquivos;
             
-            return files[path].hasOwnProperty('url');
+            return files[`${path}`].hasOwnProperty('url');
         }
     },
 }

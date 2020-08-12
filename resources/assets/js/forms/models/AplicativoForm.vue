@@ -125,6 +125,7 @@
                   min-height="15rem"
                   ref="editor_ref"
                   @paste.native="evt => pasteCapture(evt)"
+                  :toolbar="[['bold', 'italic', 'strike', 'underline']]"
                   >
                 </q-editor>
                 <div class="col-sm-10" v-if="errors.description && errors.description.length > 0">
@@ -145,9 +146,11 @@
 import { QForm, QInput, QEditor, QSelect, QCard, QCardSection } from "quasar";
 import { ShowErrors } from "@forms/shared";
 import { prototype } from "stream";
+import { PasteCapture } from "@mixins/RemoveFormat";
 
 export default {
   name: "AplicativoForm",
+  mixins: [PasteCapture],
   components: {
     QForm,
     QInput,
@@ -272,25 +275,7 @@ export default {
         }
       });
     },
-    pasteCapture (evt) {
-      let text, onPasteStripFormattingIEPaste
-      evt.preventDefault()
-      if (evt.originalEvent && evt.originalEvent.clipboardData.getData) {
-        text = evt.originalEvent.clipboardData.getData('text/plain')
-        this.$refs.editor_ref.runCmd('insertText', text)
-      }
-      else if (evt.clipboardData && evt.clipboardData.getData) {
-        text = evt.clipboardData.getData('text/plain')
-        this.$refs.editor_ref.runCmd('insertText', text)
-      }
-      else if (window.clipboardData && window.clipboardData.getData) {
-        if (!onPasteStripFormattingIEPaste) {
-          onPasteStripFormattingIEPaste = true
-          this.$refs.editor_ref.runCmd('ms-pasteTextOnly', text)
-        }
-        onPasteStripFormattingIEPaste = false
-      }
-    }
+    
   }
 };
 </script>

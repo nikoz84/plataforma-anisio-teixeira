@@ -20,13 +20,12 @@
           size="sm"
         >
           <q-avatar
-            style="width: 200px;height: 44px;fill: currentColor;border-radius: 0%;"
+            style="width: 200px;height: 44px;"
             alt="Marca"
+            square
             title="marca"
             aria-label="Marca da plataforma Anísio Teixeira">
-              <svg class="icon-pat" height="38" width="200" style="color:white;">
-                <use v-bind="{'xlink:href':'#logo'}"></use> 
-              </svg>
+              <img src="/img/sprite/logo.svg">
           </q-avatar>
         </q-btn>
 

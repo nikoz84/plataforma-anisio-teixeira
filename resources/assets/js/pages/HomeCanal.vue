@@ -19,7 +19,7 @@
                 <q-img src="/img/sobre/o-que.svg" alt=""/>
               </div>
               <div class="col-11 col-sm-10 q-pl-md">
-                <div class="text-h5">O QUÊ? </div>
+                <div class="text-h5">O Quê? </div>
                 <div
                   class="q-pt-md">
                   {{canal.options.complement_description.que}}
@@ -32,7 +32,7 @@
                 <q-img src="/img/sobre/porque.svg" alt=""/>
               </div>
               <div class="col-11 col-sm-10 q-pl-md">
-                <div class="text-h5">POR QUÊ? </div>
+                <div class="text-h5">Por Quê? </div>
                 <div class="q-pt-md">
                   {{canal.options.complement_description.porque}}
                 </div>
@@ -44,7 +44,7 @@
                 <q-img src="/img/sobre/como.svg" alt=""/>
               </div>
               <div class="col-11 col-sm-10 q-pl-md">
-                <div class="text-h5">COMO? </div>
+                <div class="text-h5">Como? </div>
                 <div class="q-pt-md">{{canal.options.complement_description.como}}</div>
               </div>
               <q-separator inset="item-thumbnail" color="orange" class="q-my-lg"/>

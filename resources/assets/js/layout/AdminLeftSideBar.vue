@@ -5,6 +5,20 @@
         Painel de Controle
       </strong>
     </q-item-label>
+    <q-item
+        to="/admin/resumo/listar"
+        aria-label="Resumo da pat"
+        title="Resumo da pat"
+        clickable
+        tabindex="0"
+        active-class="active-link-pat"
+        exact
+      >
+        <q-item-section>
+          <q-item-label>Resumo</q-item-label>
+        </q-item-section>
+    </q-item>
+    <q-separator />
     <div v-for="(link, i) in linksAdmin" :key="`admin-${i}`">
       <q-item
         tag="div"

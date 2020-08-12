@@ -25,6 +25,7 @@ import { Contato, Table }  from "@components/exibir";
 export default {
   name: "Listar",
   components: {
+    resumo: Resumo,
     aplicativos: AplicativoForm,
     conteudos: ConteudoForm,
     canais: CanalForm,
@@ -68,7 +69,7 @@ export default {
     ...mapMutations(["SET_LOGOUT_USER"]),
     getAction() {
       switch (true) {
-        case this.$route.params.slug != "analytics" &&
+        case this.$route.params.slug != "resumo" &&
           this.$route.params.action == "listar":
           this.componentName = "listar";
           break;
@@ -76,7 +77,7 @@ export default {
           this.$route.params.action == "adicionar":
           this.componentName = this.$route.params.slug;
           break;
-        case this.$route.params.slug == "analytics":
+        case this.$route.params.slug == "resumo":
           this.componentName = "resumo";
           break;
       }

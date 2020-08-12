@@ -16,13 +16,13 @@ class SendVerificationEmail extends Mailable
 
     protected $token;
     protected $option;
-
+    protected $user;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user, $token, $option = false)
+    public function __construct(User $user, $token, $option = null)
     {
         $this->user = $user;
         $this->token = $token;
@@ -36,11 +36,11 @@ class SendVerificationEmail extends Mailable
      */
     public function build()
     {
-        $dominio = getenv('APP_URL');
-
+        $dominio = env('APP_URL');
+        
         return $this->from(env('MAIL_USERNAME'))
             ->to($this->user->email, $this->user->name)
-            ->subject('Email de verificação')
+            ->subject('Email de verificação Plataforma Anísio Teixeira')
             ->view('emails.verificationEmail')
             ->with(
                 [

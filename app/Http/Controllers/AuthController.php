@@ -175,8 +175,7 @@ class AuthController extends ApiController
         );
         $data = [];
         // Dispara o Email
-        try 
-        {
+        try {
             $usuario = User::where('email', 'like', "%".trim($request->email)."%")->get()->first();
             if (!$usuario) {
                 throw new Exception("Usuário não existe.");
@@ -194,12 +193,10 @@ class AuthController extends ApiController
                 $data = $validator->errors();
                 throw new Exception("Verifique os dados fornecidos");
             }
-        }
-        catch(Exception $ex)
-        {
+        } catch (Exception $ex) {
             return $this->errorResponse($data, $ex->getMessage(), 422);
         }
-        return $this->successResponse([], 'Email enviado com Sucesso!', 200);     
+        return $this->successResponse([], 'Email enviado com Sucesso!', 200);
     }
     /**
      * Regras de validação
@@ -224,9 +221,14 @@ class AuthController extends ApiController
      */
     protected function sendConfirmationEmail($email, $token, $option)
     {
-        $user = User::where('email', 'ilike', "%{$email}%")->first();
-        Mail::send(new SendVerificationEmail($user, $token, $option));
-        return true;
+        $user = User::where('email', $email)->get()->first();
+        
+        try {
+            Mail::send(new SendVerificationEmail($user, $token, $option));
+            return true;
+        } catch (Exception $ex) {
+            dd($ex);
+        }
     }
     /**
      * Verificar email
@@ -242,17 +244,14 @@ class AuthController extends ApiController
         $user = new User();
         try {
             $user->verifyToken($token, $passwordReset);
-        }
-        catch(Exception $ex)
-        {
+        } catch (Exception $ex) {
             return $this->errorResponse([], $ex->getMessage(), 404);
         }
         return $this->successResponse(null, "Token válido", 200);
-        
     }
 
     /**
-     * 
+     *
      */
     public function verifyTokenUserRegister(Request $request, $token)
     {
@@ -278,23 +277,21 @@ class AuthController extends ApiController
                 'confirmation' => 'required|min:8'
             ]
         );
-        try{
+        try {
             $user->verifyToken($token, $passwordReset);
             if ($validator->fails()) {
                 $data = $validator->errors();
                 throw new Exception("Erro ao submeter formulário.");
             }
-            if($this->request->senha != $this->request->confirmacao)
-            {
+            if ($this->request->senha != $this->request->confirmacao) {
                 throw new Exception("Senha e confirmação são imcompaiveis.");
             }
             $user = $this->getUserByToken($token);
             $user->password = $this->request->password;
-            if(!$user->save())
-            throw new Exception("Erro ao tenytar salvar modificação. Tente novamente mais tarde.");
-        }
-        catch(Exception $ex)
-        {
+            if (!$user->save()) {
+                throw new Exception("Erro ao tentar salvar modificação. Tente novamente mais tarde.");
+            }
+        } catch (Exception $ex) {
             return $this->errorResponse($data, $ex->getMessage(), 422);
         }
         return $this->successResponse($data, "Senha Modificada com sucesso!", 200);

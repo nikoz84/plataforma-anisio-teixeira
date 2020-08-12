@@ -20,30 +20,26 @@
     <div class="col-6 separatriz q-my-lg">
     </div>
   </div>
-  <div class="row q-my-lg q-pt-md q-gutter-lg justify-start">
-    <div class="col-5" id="o-que">
-      <q-card class="my-card" flat >
-      <q-card-section horizontal>
-      <q-icon class="col-5" color="accent" size="5rem">
-        <svg class="icon texto-cinza" viewBox="0 0 24 24">
-          <use xlink:href="#oque"></use>
-        </svg>
-      </q-icon>
-        <q-card-section>
-          <div class="texto-amarelo text-h6 q-mb-md" style="text-decoration: underline">O Quê?</div>
-          <div>É a plataforma educacional das escolas públicas baianas, na qual estudantes e professores podem ter acesso a novas formas de aprender, ensinar, construir e compartilhar conhecimentos em rede.</div>
+  <div class="row q-my-lg q-pt-md q-gutter-xs justify-start">
+    <div class="col-sm-12 col-md-5" id="o-que">
+      <q-card class="my-card" flat>
+        <q-card-section horizontal>
+          <q-icon class="col-4" color="accent">
+            <img alt="imagem descritiva" aria-label="imagem descritiva" src="/img/sprite/oque.svg">
+          </q-icon>
+          <q-card-section>
+            <div class="texto-amarelo text-h6 q-mb-md" style="text-decoration: underline">O Quê?</div>
+            <div>É a plataforma educacional das escolas públicas baianas, na qual estudantes e professores podem ter acesso a novas formas de aprender, ensinar, construir e compartilhar conhecimentos em rede.</div>
+          </q-card-section>
         </q-card-section>
-      </q-card-section>
-    </q-card>
+      </q-card>
     </div>
-    <div class="col-5" id="por-que">
+    <div class="col-sm-12 col-md-5" id="por-que">
       <q-card class="my-card" flat >
       <q-card-section horizontal>
-        <q-icon class="col-5" color="accent" size="5rem">
-        <svg class="icon texto-cinza" viewBox="0 0 24 24">
-          <use xlink:href="#porque2"></use>
-        </svg>
-      </q-icon>
+        <q-icon class="col-4" color="accent">
+          <img alt="imagem descritiva" aria-label="imagem descritiva" src="/img/sprite/porque.svg">
+        </q-icon>
         <q-card-section>
           <div class="texto-vermelho text-h6 q-mb-md" style="text-decoration: underline">Por Quê?</div>
           <div>A Plataforma Anísio Teixeira visa contribuir para a melhoria da Educação Básica e da Formação de Professores do Estado da Bahia, por meio do estímulo às apropriações tecnológicas éticas, críticas, lúdicas, contextualizadas e colaborativas nos processos de ensino e de aprendizagem.</div>
@@ -51,36 +47,32 @@
       </q-card-section>
     </q-card>
     </div>
-    <div class="col-5" id="como">
+    <div class="col-sm-12 col-md-5" id="como">
       <q-card class="my-card" flat >
-      <q-card-section horizontal>
-        <q-icon class="col-5" color="accent" size="5rem">
-          <svg class="icon texto-cinza" viewBox="0 0 24 24">
-            <use xlink:href="#como"></use>
-          </svg>
-      </q-icon>
-        <q-card-section>
-          <div class="texto-verde text-h6 q-mb-md" style="text-decoration: underline">Como?</div>
-          <div>O desenvolvimento, a curadoria de conteúdos e a gestão pedagógica da Plataforma Anísio Teixeira contam com o trabalho e a dedicação de uma equipe de professores e técnicos da Rede Pública Estadual de Ensino, preparados para produzir, compartilhar e mediar cursos, mídias e tecnologias educacionais livres.</div>
+        <q-card-section horizontal>
+          <q-icon class="col-4" color="accent">
+            <img alt="imagem descritiva" aria-label="imagem descritiva" src="/img/sprite/como.svg">
+          </q-icon>
+          <q-card-section>
+            <div class="texto-verde text-h6 q-mb-md" style="text-decoration: underline">Como?</div>
+            <div>O desenvolvimento, a curadoria de conteúdos e a gestão pedagógica da Plataforma Anísio Teixeira contam com o trabalho e a dedicação de uma equipe de professores e técnicos da Rede Pública Estadual de Ensino, preparados para produzir, compartilhar e mediar cursos, mídias e tecnologias educacionais livres.</div>
+          </q-card-section>
         </q-card-section>
-      </q-card-section>
-    </q-card>
+      </q-card>
     </div>
-    <div class="col-5" id="contato">
+    <div class="col-sm-12 col-md-5" id="contato">
       <q-card class="my-card" flat >
-      <q-card-section horizontal>
-        <q-icon class="col-5" color="accent" size="5rem">
-          <svg class="icon texto-cinza" viewBox="0 0 24 24">
-            <use xlink:href="#informacoes"></use>
-          </svg>
-      </q-icon>
-        <q-card-section>
-          <div class="texto-azul text-h6 q-mb-md" style="text-decoration: underline">Informações de Contato:</div>
-          <div>+55 (71) 3116-9061/3116-1795</div>
-          <div>plataforma.anisio@educacao.ba.gov.br</div>
+        <q-card-section horizontal>
+          <q-icon class="col-4 q-pa-md" color="accent">
+            <img alt="imagem informações de contato" aria-label="imagem informações de contato" src="/img/sprite/informacoes.svg">
+          </q-icon>
+          <q-card-section class="flex justify-content-center">
+            <div class="texto-azul text-h6 q-mb-md" style="text-decoration: underline">Informações de Contato:</div>
+            <div>+55 (71) 3116-9061/3116-1795</div>
+            <div>plataforma.anisio@educacao.ba.gov.br</div>
+          </q-card-section>
         </q-card-section>
-      </q-card-section>
-    </q-card>
+      </q-card>
     </div>
   </div>
   <div class="row justify-center">
@@ -112,45 +104,37 @@
     <div class="col-12 separatriz-6">
     </div>
   </div>
-  <div class="row q-mt-xl justify-center">
-    <div class="col-6 col-md-3">
+  <div class="row wrap justify-center q-mt-lg">
+    <div class="col-sm-12 col-md-3">
       <q-icon class="indicadores-icone" color="negative" >
-        <svg class="icon">
-          <use xlink:href="#pessoasatendidas"></use>
-        </svg>
+        <img alt="imagem pessoas atendidas" aria-label="imagem pessoas atendidas" height="390px" width="100%" src="/img/sprite/pessoasatendidas.svg">
       </q-icon>
       <div class="dados-consolidados" id="pessoas-atendidas">
         <i style="font-size:2em">+4 mil</i>
         <p>pessoas atendidas em formação</p>
       </div>
     </div>
-    <div class="col-6 col-md-3">
+    <div class="col-sm-12 col-md-3">
       <q-icon class="indicadores-icone" color="warning" >
-        <svg class="icon">
-          <use xlink:href="#midiasproduzidas"></use>
-        </svg>
+        <img alt="imagem mídias produzidas" aria-label="imagem mídias produzidas" height="390px" width="100%" src="/img/sprite/midiasproduzidas.svg">
       </q-icon>
       <div class="dados-consolidados" id="pessoas-atendidas">
         <i style="font-size:2em">+9 mil</i>
         <p>mídias educacionais produzidas</p>
       </div>
     </div>
-    <div class="col-6 col-md-3">
+    <div class="col-sm-12 col-md-3">
       <q-icon class="indicadores-icone" color="info" >
-        <svg class="icon">
-          <use xlink:href="#midiasdisponibilizadas"></use>
-        </svg>
+        <img alt="imagem mídias disponibilizas" aria-label="imagem mídias disponibilizas" height="380px" width="100%" src="/img/sprite/midiasdisponibilizadas.svg">
       </q-icon>
       <div class="dados-consolidados" id="pessoas-atendidas">
         <i style="font-size:2em">+8 mil</i>
         <p>mídias educacionais disponíveis</p>
       </div>
     </div>
-    <div class="col-6 col-md-3">
+    <div class="col-sm-12 col-md-3">
       <q-icon class="indicadores-icone" color="positive" >
-        <svg class="icon">
-          <use xlink:href="#midiasacessadas"></use>
-        </svg>
+        <img alt="imagem midias acessadas" aria-label="imagem midias acessadas" height="380px" width="100%" src="/img/sprite/midiasacessadas.svg">
       </q-icon>
       <div class="dados-consolidados" id="pessoas-atendidas">
         <i style="font-size:2em">+5 </i><i style="font-size:1.5em">milhões</i>
@@ -158,109 +142,36 @@
       </div>
     </div>
   </div>
-  <div class="row justify-center">
-    <div class="col-6 separatriz q-my-lg">
-    </div>
+  <div class="row wrap justify-center">
+    <div class="text-h6 text-grey-6">SECRETARIA DA EDUCAÇÃO DO ESTADO DA BAHIA</div>
   </div>
   <div class="row wrap justify-center">
-    <div class="row wrap justify-center">
-        <div class="text-h6 text-grey-6">SECRETARIA DA EDUCAÇÃO DO ESTADO DA BAHIA</div>
-      </div>
-      <div class="row wrap justify-center">
-        <small>5ª Avenida Nº550, Centro Administrativo da Bahia - CAB, Salvador, Bahia, Brasil, CEP: 41.745-004 | Tel. (+55) 71 3115-8933, 3115-9033 e 3115-1401</small>
-      </div>
-      <div class="row wrap justify-center items-start content-start q-gutter-x-md q-gutter-y-md">
-        <a target="_blank"
-                v-for="(link, i) in layout.secretaria"
-                :key="`links-${i}`" 
-                :href="link.url" 
-                v-text="link.title"
-                :title="`endereço do portal da educação para:  ${link.title}`"
-                style="color:#0071bc;">
-          </a>
-      </div>
-      <q-separator class="q-mt-md q-mb-lg" />
-      <div class="row wrap justify-center" v-if="layout && layout.marcas">
-        <q-img alt="imagem de marcas" aria-label="imagem" style="max-width: 741px; height: auto;" v-if="layout.marcas.is_active" :src="layout.marcas.url"></q-img>
-      </div>
-      <q-separator class="q-mt-md q-mb-lg" />
-      <div style="text-align:center" class="row wrap justify-center q-mt-lg">
-        <p class="col-12"><b>Todos os direitos e conteúdos desta Plataforma são de uso compartilhado, exceto onde indicado de outra forma.</b></p>
-        <p class="col-12"><q-icon style="font-size: 10em; margin-top:-50px">
-          <svg class="icon">
-            <use xlink:href="#creative-commons"></use>
-          </svg>
-        </q-icon></p>
-      </div>
+    <small>5ª Avenida Nº550, Centro Administrativo da Bahia - CAB, Salvador, Bahia, Brasil, CEP: 41.745-004 | Tel. (+55) 71 3115-8933, 3115-9033 e 3115-1401</small>
+  </div>
+  <div class="row wrap justify-center items-start content-start q-gutter-x-md q-gutter-y-md">
+    <a target="_blank"
+            v-for="(link, i) in layout.secretaria"
+            :key="`links-${i}`" 
+            :href="link.url" 
+            v-text="link.title"
+            :title="`endereço do portal da educação para:  ${link.title}`"
+            style="color:#0071bc;">
+      </a>
+  </div>
+  <q-separator class="q-mt-md q-mb-lg" />
+  <div class="row wrap justify-center" v-if="layout && layout.marcas">
+    <q-img alt="imagem de marcas" aria-label="imagem" style="max-width: 741px; height: auto;" v-if="layout.marcas.is_active" :src="layout.marcas.url"></q-img>
+  </div>
+  <q-separator class="q-mt-md q-mb-lg" />
+  <div style="text-align:center" class="row wrap justify-center q-mt-lg">
+    <p class="col-12"><b>Todos os direitos e conteúdos desta Plataforma são de uso compartilhado, exceto onde indicado de outra forma.</b></p>
+    <p class="col-12">
+      <q-icon style="font-size: 10em; margin-top:-50px">
+        <img alt="imagem creative commons" aria-label="imagem creative commons" width="100%" src="/img/sprite/creative-commons.svg">
+      </q-icon>
+    </p>
   </div>
 </div>
-
-    <!-- SOBRE #ANTIGA
-    <div class="q-ma-md">
-      <div class="row wrap justify-center">
-        <div class="q-mt-lg text-h6 text-grey-6" v-if="layout && layout.title_footer">
-          {{capitalize}}
-        </div>
-      </div>
-      <q-separator class="q-mt-md q-mb-lg" />
-      <div class="row ">
-        {{layout.description_footer}}
-      </div>
-      <q-separator class="q-mt-md q-mb-lg" />
-      <div class="row wrap justify-center">
-        <div class="text-h6 text-grey-6">CANAIS DA PLATAFORMA</div>
-      </div>
-      <div class="row wrap justify-center items-start content-start q-gutter-x-md q-gutter-y-md">
-        <a v-for="(link, i) in links"
-                :key="`links-${i}`" 
-                :href="`/${link.slug}/listar`" 
-                v-text="link.name"
-                :title="`endereço para o canal:  ${link.name}`"
-                style="color:#0071bc;">
-          </a>
-      </div>
-      <q-separator class="q-mt-md q-mb-lg" />
-      <div class="row wrap justify-center">
-        <div class="text-h6 text-grey-6">INSTITUTO ANÍSIO TEIXEIRA</div>
-      </div>
-      <div class="row wrap justify-center" v-if="layout && layout.contact">
-        <small>Estrada da muriçoca S/Nº, {{layout.contact.city}} | Tel. {{layout.contact.phone}}</small>
-      </div>
-      <q-separator class="q-mt-md q-mb-lg" />
-      <div class="row wrap justify-center">
-        <div class="text-h6 text-grey-6">SECRETARIA DA EDUCAÇÃO DO ESTADO DA BAHIA</div>
-      </div>
-      <div class="row wrap justify-center">
-        <small>5ª Avenida Nº550, Centro Administrativo da Bahia - CAB, Salvador, Bahia, Brasil, CEP: 41.745-004 | Tel. (+55) 71 3115-8933, 3115-9033 e 3115-1401</small>
-      </div>
-      <div class="row wrap justify-center items-start content-start q-gutter-x-md q-gutter-y-md">
-        <a target="_blank"
-                v-for="(link, i) in layout.secretaria"
-                :key="`links-${i}`" 
-                :href="link.url" 
-                v-text="link.title"
-                :title="`endereço do portal da educação para:  ${link.title}`"
-                style="color:#0071bc;">
-          </a>
-        
-      </div>
-      <q-separator class="q-mt-md q-mb-lg" />
-      <div class="row wrap justify-center" v-if="layout && layout.marcas">
-        <q-img alt="imagem de marcas" aria-label="imagem" style="max-width: 741px; height: auto;" v-if="layout.marcas.is_active" :src="layout.marcas.url"></q-img>
-      </div>
-      <q-separator class="q-mt-md q-mb-lg" />
-      <div class="row wrap justify-center">
-        <b class="q-mt-lg">Todos os direitos e conteúdos desta Plataforma são de uso compartilhado, exceto onde indicado de outra forma.</b>
-      </div>
-      <div class="row wrap justify-center" v-if="layout && layout.marcas">
-        <q-img alt="creative commond imagem" aria-label="imagem" style="max-width: 180px; height: auto;" src="/img/creative-commons.svg"></q-img>
-      </div>
-      
-    </div>
-    SOBRE #ANTIGA #FIM -->
-
-
-
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
@@ -271,19 +182,9 @@ export default {
   components: {
     QImg, QCard, QCardSection, QCardActions, QIcon
   },
-  data() {
-    return {
-      title: "Sobre"
-    };
-  },
   computed: {
     ...mapState(["layout", "links"]),
-    capitalize() {
-      let string = 'Sobre a ' + this.layout.title_footer;
-      return string.toUpperCase()
-    }
-  },
-  methods: {}
+  }
 };
 </script>
 <style lang="stylus" scoped>

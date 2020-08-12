@@ -247,8 +247,53 @@ trait FileSystemLogic
      */
     public function mimeTypes()
     {
-        $mimes  = "ppt,pps,odp,link,pdf,epub,doc,docx,odt,swf,exe,zip,rar,swf,wmv,mpg,flv,";
-        $mimes .= "avi,youtube,mp4,mp3,webm,xls,xlsx,xml,ods,csv,jpg,jpeg,png,gif,txt,csv";
+        $mimes  = "link,exe,zip,rar,youtube,mp3,".$this->videoMimeTypes().",".$this->imageMimeTypes().",".$this->docsMimeTypes().",".$this->planilhasMimeTypes();
+        return $mimes;
+    }
+
+    /**
+     * mimetype de arquivos de video
+     * @return string string de mimetypes separada por vírgulas
+     */
+    public function videoMimeTypes()
+    {
+        $mimes = "avi,mp4,webm,flv,swf,wmv,mpg";
+        return $mimes;
+    }
+
+    /**
+     * mimetype de arquivos de imagem
+     * @return string string de mimetypes separada por vírgulas
+     */
+    public function imageMimeTypes()
+    {
+        $mimes = "jpg,jpeg,png,gif,svg";
+        return $mimes;
+    }
+
+    /**
+     * retorna mimetype de documentos em geral
+     * @return string string de mimetypes separada por vírgulas
+     */
+    public function docsMimeTypes()
+    {
+        $mimes = "doc,docx,odt,pdf,xml,csv,epub";
+        return $mimes;
+    }
+
+    /**
+     * retorna mimetypes de planilhas eletrônicas
+     * @return string string de mimetypes separada por vírgulas
+     */
+    public function planilhasMimeTypes()
+    {
+        $mimes = "xls,xlsx,ods";
+        return $mimes;
+    }
+
+    public function slidesMimeTypes()
+    {
+        $mimes = "ppt,pps,odp";
         return $mimes;
     }
 }

@@ -24,9 +24,7 @@ class Tipo extends Model
     public function getIconAttribute()
     {
         if ($this->name) {
-            //$iconeNome = ReplaceStr::replace($this->name);
-            //return Storage::disk('public-path')->url("img/tipo-conteudo/".strtolower($iconeNome).".svg");
-            return Str::slug($this->name, '-'); //strtolower($iconeNome);
+            return "/img/sprite/" . Str::slug($this->name, '-') . ".svg";
         }
         return "";
     }

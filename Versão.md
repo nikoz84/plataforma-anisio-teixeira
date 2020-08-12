@@ -4,6 +4,7 @@
 ## Mudanças (layout, correção ortográfica, mudança de código)
 - Full screen para player
 - Minimizar espaço das informações embaixo do player
+- Novo Layout do Canal das Universidades
 ## Correções (bugs, código)
 - Correção de upload de arquivo de download
 - Upload de arquivos max_file_size e post_max_size para 800MB (mod_php7)
@@ -14,8 +15,12 @@
 - Referencias de imagem associada de conteudo dinâmica por exceções (conteudo, tipo, categoria e canal)
 - Correção de urls nas rotinas de estudo, para pegar as imagens do novo padrao
 - Tirar momentaneamente a validação de tipos de conteudo em formulario de conteudo digital
+- Remove o formato para os campos de descrição e limita toolbar da descrição
 ## Novas Funcionalidades
--
+- Nova busca avançada - com marcação de filtros, página diferenciada de busca, filtros encapsulados
+- Exceções/validações de arquivos de download para conteudo dinâmicos em relação ao tipo
+- Resumo de catalogação de conteúdos (quantidade de publicações por usuario, por canal e outras opções)
+
 ################################################################################################
 # Versão 2.0.2
 ################################################################################################

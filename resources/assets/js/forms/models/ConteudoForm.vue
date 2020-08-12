@@ -2,8 +2,16 @@
   <div class="q-pa-md row justify-center q-gutter-xs">
     <q-card class="col-sm-5">
       <q-card-section class="q-gutter-sm">
-        <!-- CANAL --> 
-        <q-select
+        <!-- CANAL -->
+        <ParentAndChildSelect :parent="canais" 
+          label="Canais"
+          :selectedId="conteudo.canal_id"
+          @click="setCanal"
+        ></ParentAndChildSelect>
+        <div class="q-my-md" v-if="errors && errors.canal_id && errors.canal_id.length > 0">
+          <ShowErrors :errors="errors.canal_id"></ShowErrors>
+        </div>
+        <!--q-select
           outlined
           option-value="id"
           option-label="name"
@@ -17,7 +25,7 @@
           <template v-slot:error>
             <ShowErrors :errors="errors.canal_id"></ShowErrors>
           </template>
-        </q-select>
+        </q-select-->
         
         <!-- CATEGORIA -->
         <ParentAndChildSelect :parent="categories" 
@@ -37,8 +45,16 @@
         <div class="q-my-md" v-if="errors && errors.license_id && errors.license_id.length > 0">
           <ShowErrors :errors="errors.license_id"></ShowErrors>
         </div>
-        <!-- TIPO DE MIDIA --> 
-        <q-select
+        <!-- TIPO DE MIDIA -->
+        <ParentAndChildSelect :parent="tipos" 
+          label="Tipos"
+          :selectedId="conteudo.tipo_id"
+          @click="setTipo"
+        ></ParentAndChildSelect>
+        <div class="q-my-md" v-if="errors && errors.tipo_id && errors.tipo_id.length > 0">
+          <ShowErrors :errors="errors.tipo_id"></ShowErrors>
+        </div>
+        <!-- q-select
           outlined
           stack-label
           option-value="id"
@@ -52,7 +68,7 @@
           <template v-slot:error>
             <ShowErrors :errors="errors.tipo_id"></ShowErrors>
           </template>
-        </q-select>
+        </q-select-->
         <!-- TITULO --> 
         <q-input outlined v-model="conteudo.title" 
            label="Título do conteúdo"
@@ -88,7 +104,10 @@
         <div class="q-mt-md">
           <p class="text-center">Escreva uma descrição do conteúdo</p>
         </div>
-        <q-editor v-model="conteudo.description" min-height="18rem" />
+        <q-editor v-model="conteudo.description" min-height="18rem"
+          ref="editor_ref"
+          @paste.native="evt => pasteCapture(evt)"
+          :toolbar="[['bold', 'italic', 'strike', 'underline']]"/>
         <ShowErrors v-if="errors && errors.description && errors.description.length > 0" 
           :errors="errors.description">
         </ShowErrors>
@@ -326,6 +345,7 @@
 <script>
 import { mapGetters, mapActions, mapState, mapMutations } from "vuex";
 import { ShowErrors, ParentAndChildSelect } from "@forms/shared";
+import { PasteCapture } from "@mixins/RemoveFormat";
 import {
   QInput,
   QEditor,
@@ -341,6 +361,7 @@ import {
 
 export default {
   name: "ConteudoForm",
+  mixins: [PasteCapture],
   directives: {
     ClosePopup
   },
@@ -450,8 +471,8 @@ export default {
         form.append("is_site", 0);
       }
       //console.log(this.conteudo)
-      form.append("tipo_id", this.conteudo.tipo ? this.conteudo.tipo.id : "");
-      form.append("canal_id", this.conteudo.canal ? this.conteudo.canal.id : "");
+      form.append("tipo_id", this.conteudo.tipo_id ? this.conteudo.tipo_id : "");
+      form.append("canal_id", this.conteudo.canal_id ? this.conteudo.canal_id : "");
       form.append("license_id", this.conteudo.license_id ? this.conteudo.license_id : "");
       form.append("category_id",  this.conteudo.category_id ? this.conteudo.category_id : "" );
       form.append("title", this.conteudo.title ? this.conteudo.title : "");
@@ -536,6 +557,14 @@ export default {
     },
     setLicense(id){
       this.conteudo.license_id = id
+    },
+    setCanal(id){
+      this.conteudo.canal_id = id
+      this.getCategories({id})
+    },
+    setTipo(id){
+      
+      this.conteudo.tipo_id = id
     },
     addTag(val, done) {
       const form = new FormData();

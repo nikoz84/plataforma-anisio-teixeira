@@ -35,7 +35,7 @@ class GoogleRecaptcha
         
         $is_debug = env('APP_DEBUG');
         
-        if ($is_debug) {
+        if ($is_debug == true) {
             return true;
         }
 

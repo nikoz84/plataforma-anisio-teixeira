@@ -13,9 +13,7 @@
         style="width: 200px"
         >
           <q-avatar left square>
-            <svg class="icon-pat" height="45" width="45">
-              <use v-bind="{'xlink:href':'#'+ item.icon}"></use> 
-            </svg>
+            <img lazyload :src="item.icon" alt="icone">
           </q-avatar>
           <div>{{item.name}}</div>
       </q-btn>
