@@ -83,10 +83,11 @@ class CanalController extends ApiController
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * 
+     * Atualiza aplicativo no banco de dados
+     * @param  int  $id identificador único
+     * @param \App\Canal $canal
+     * @return \App\Canal\Api Responser retorna json
      */
     public function update($id)
     {
@@ -110,7 +111,7 @@ class CanalController extends ApiController
      * Apaga um canal pelo ID.
      *
      * @param  \App\Canal  $canal
-     * @return \Illuminate\Http\Response
+     * @return \App\Canal\Responser Retorna Json
      */
     public function delete($id)
     {
@@ -152,7 +153,7 @@ class CanalController extends ApiController
     }
     /**
      * Procura canal pelo termo
-     *
+     * Faz a Busca do termo
      * @param [type] $termo
      * @return void
      */

@@ -20,7 +20,13 @@ class RoleController extends ApiController
         $this->role = $role;
         $this->request = $request;
     }
-
+    /**
+     * Lista as informações do Banco de Dados.
+     * @param string $name
+     * @param \App\Role $role
+     * @return \App\Controller\ApiResponser
+     * retorna Json
+     */
     public function index()
     {
         if ($this->request->has('select')) {
@@ -30,6 +36,15 @@ class RoleController extends ApiController
         $roles = $this->role::paginate();
         return $this->showAsPaginator($roles, '', 200);
     }
+    /**
+     * Cria informações no Banco de Dados
+     *
+     * @param string $name
+     * @param \App\Role $role
+     * @return \App\Controller\ApiResponser
+     * retorna Json
+     * 
+     */
     public function create()
     {
         $validator = Validator::make($this->request->all(), ["name" => "required"], $this->rulesMessages());
@@ -43,6 +58,13 @@ class RoleController extends ApiController
         }
         return $this->errorResponse($validator->errors(), "Não foi possível criar o perfil", 501);
     }
+    /**
+     * Atualiza as informações do aplicativo no Banco de Dados.
+     *
+     * @param int $id identificador único
+     * @param  \App\Role $role
+     * @return  \App\Controller\ApiResponser retorna Json
+     */
     public function update(Request $request, $id)
     {
         $role = $this->role::find($id);
@@ -59,6 +81,13 @@ class RoleController extends ApiController
         }
         return $this->successResponse($role, 'Perfil editado com sucesso!', 200);
     }
+    /**
+     * Deleta o aplicativo no banco de dados
+     * @param int $id identificador único
+     * @param  \App\RoleController $role
+     * @return \App\Controller\ApiResponser
+     * retorna Json
+     */
     public function delete($id)
     {
         $validator = Validator::make($this->request->all(), [
@@ -76,6 +105,14 @@ class RoleController extends ApiController
             return $this->successResponse($role, 'Perfil deletado com sucesso!', 200);
         }
     }
+    /**
+     * Busca informações do Banco de Dados
+     *
+     * @param string $termo identificador único
+     * @param \App\RoleController $role
+     * @return \App\Controller\ApiResponser 
+     * retorna Json
+     */
     public function search($termo)
     {
 
@@ -93,6 +130,10 @@ class RoleController extends ApiController
 
     /**
      * Seleciona tipo por ID
+     * @param int $id idetificador único
+     * @param \App\Role\ $role
+     * @return \App\Controller\ApiResponser 
+     * retorna json
      */
     public function getById($id)
     {

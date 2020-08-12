@@ -19,7 +19,14 @@ class TipoController extends ApiController
         $this->middleware('jwt.auth')->except(['index']);
         $this->request = $request;
     }
-
+     /**
+     * Lista as Informações do Aplicativo
+     * 
+     * @param int $id identificador único
+     * @param \App\tipo $tipo
+     * @return \App\Controller\ApiResponser 
+     * retorna Json
+     */
     public function index()
     {
         $limit = $this->request->query('limit', 15);
@@ -34,6 +41,15 @@ class TipoController extends ApiController
 
         return $this->showAsPaginator($paginator);
     }
+
+    /**
+     * Cria as Informações do Aplicativo
+     * 
+     * @param string Request
+     * @param \App\tipo $tipo
+     * @return \App\Controller\ApiResponser 
+     * retorna Json
+     */
 
     public function create(Request $request)
     {
@@ -53,6 +69,14 @@ class TipoController extends ApiController
         }
         return $this->successResponse($tipo, 'Tipo criado com sucesso!', 200);
     }
+    /**
+     * Atualiza as informações do aplicativo
+     * 
+     * @param int $id identificador único
+     * @param \App\tipo $tipo
+     * @return \App\Controller\ApiResponser 
+     * retorna Json
+     */
 
     public function update(Request $request, $id)
     {
@@ -77,6 +101,14 @@ class TipoController extends ApiController
 
         return $this->successResponse($tipo, 'Tipo de conteúdo editado com sucesso!', 200);
     }
+    /**
+     * Deleta as Informações do Aplicativo
+     * 
+     * @param int $id identificador único
+     * @param \App\tipo $tipo
+     * @return \App\Controller\ApiResponser 
+     * retorna Json
+     */
     public function delete($id)
     {
         $validator = Validator::make($this->request->all(), [

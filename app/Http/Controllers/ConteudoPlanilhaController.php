@@ -8,7 +8,8 @@ use App\ConteudoPlanilha;
 use Illuminate\Support\Facades\DB;
 
 class ConteudoPlanilhaController extends ApiController
-{
+{ 
+    
 
     public function __construct(Request $request)
     {
@@ -20,7 +21,11 @@ class ConteudoPlanilhaController extends ApiController
         ]);
         $request = $request;
     }
-
+     /**
+      * Seleciona e lista a faculdade por id.
+      *
+      * @return void
+      */
     public function getFaculdadesDaBahia()
     {
         $url = "AKfycbyewWsCp5HdbrkQwRSMyeRAsQiRc8PtjeyOrS07drrzxdpjb7HA/exec";
@@ -30,7 +35,12 @@ class ConteudoPlanilhaController extends ApiController
             $conteudoPlanilha->getGoogleSpreadsheetsData($url)
         ));
     }
-
+      /**
+       * Cria Aplicativo no Banco de Dados.
+       *
+       * @param [type] $dados
+       * @return void
+       */
     public function createFaculdadesDaBahia($dados)
     {
         foreach ($dados as $dado) {
@@ -45,6 +55,11 @@ class ConteudoPlanilhaController extends ApiController
             $conteudoPlanilha->save();
         }
     }
+    /**
+     * Seleciona as Rotinas de Estudos e Lista.
+     *
+     * @return void
+     */
     public function getRotinaDeEstudos()
     {
         $semanas = [1,2,3,4,5,6,7,8,9,10,11,12,13,14];
@@ -62,7 +77,13 @@ class ConteudoPlanilhaController extends ApiController
             $this->createRotinasDeEstudo($semana, $data);
         }
     }
-
+     /**
+      * Cria Rotinas de Estudo do Aplicativo no Banco de Dados
+      *
+      * @param [type] $semana
+      * @param [type] $data
+      * @return void
+      */
     public function createRotinasDeEstudo($semana, $data)
     {
         $conteudoPlanilha = new ConteudoPlanilha();
@@ -72,6 +93,9 @@ class ConteudoPlanilhaController extends ApiController
         
         $conteudoPlanilha->save();
     }
+    /**
+     * Seleciona e requisita a Resposta por nome no Banco de Dados.
+     */
 
     public function getDocumentByName(Request $request)
     {
@@ -131,7 +155,11 @@ class ConteudoPlanilhaController extends ApiController
             'semanas' => $this->getSemanas()
         ]);
     }
-
+     /**
+      * Seleciona por semana.
+      *
+      * @return void
+      */
     public function getSemanas()
     {
         $total = ConteudoPlanilha::where('name', 'like', 'semana%')->get();

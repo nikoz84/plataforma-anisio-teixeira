@@ -22,6 +22,9 @@ class FileController extends ApiController
         $this->request = $request;
         $this->storage = $storage;
     }
+    /**
+     * Seleciona os arquivos por id.
+     */
 
     public function getFiles($id)
     {
@@ -30,7 +33,12 @@ class FileController extends ApiController
 
         return response(['exist' => $exists], 200, ['Content-Type' => 'image/png']);
     }
-
+     /**
+      *Função Cria o arquivo no Banco de dados usando id.
+      *
+      * @param [type] $id
+      * @return void
+      */
     public function createFile($id)
     {
         if ($this->request->hasFile('image')) {
@@ -51,6 +59,9 @@ class FileController extends ApiController
             'message' => 'Erro no envio do arquivo'
         ]);
     }
+    /**
+     * Função Recursos anihados por rotas.
+     */
 
     public function store()
     {
@@ -58,7 +69,13 @@ class FileController extends ApiController
             $this->request->file('imagem');
         }
     }
-
+    /**
+     * Função que executa Download de arquivos no banco de dados.
+     *
+     * @param [type] $directory
+     * @param [type] $id
+     * @return void
+     */
     public function downloadFile($directory, $id)
     {
         $conteudo = Conteudo::find($id);
@@ -89,6 +106,9 @@ class FileController extends ApiController
 
         return response()->download($path, $file->name, $headers);
     }
+    /**
+     * Função que Requisita informações da Galeria 
+     */
 
     public function getGallery()
     {

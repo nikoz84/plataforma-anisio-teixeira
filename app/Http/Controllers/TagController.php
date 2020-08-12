@@ -85,6 +85,14 @@ class TagController extends ApiController
 
         return $this->showOne($tag, 'Palavra-chave atualizada com sucesso!!', 200);
     }
+    /**
+     *  Busca informações do Banco de Dados
+     *
+     * @param string $termo identificador único
+     * @param \App\Tag $tag
+     * @return \App\Controller\ApiResponser 
+     * retorna Json
+     */
 
     public function search($termo)
     {
@@ -100,6 +108,14 @@ class TagController extends ApiController
 
         return $this->showAsPaginator($tags);
     }
+    /**
+     * Auto-Completação
+     * 
+     * @param string $term identificador único
+     * @param \App\Tag $tag
+     * @return \App\Controller\ApiResponser 
+     * retorna Json
+     */
     public function autocomplete($term)
     {
         $search = "%{$term}%";
@@ -110,10 +126,12 @@ class TagController extends ApiController
         return $this->showAll(collect($tags));
     }
     /**
-     * Remove the specified resource from storage.
+     * Deleta informações no Banco de Dados
      *
-     * @param  \App\Tag  $tag
-     * @return \Illuminate\Http\Response
+     * @param int $id identificador único
+     * @param \App\tag $tag
+     * @return \App\Controller\ApiResponser 
+     * retorna Json
      */
     public function delete($id)
     {
@@ -125,6 +143,14 @@ class TagController extends ApiController
 
         $this->successResponse([], "Palavra-chave apagada com sucesso!", 200);
     }
+    /**
+     * Requisita as informações no Banco de Dados
+     * 
+     * @param int $id identificador único
+     * @param \App\tag $tag
+     * @return \App\Controller\ApiResponser 
+     * retorna Json
+     */
 
     public function getById($id)
     {
