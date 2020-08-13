@@ -106,6 +106,9 @@ Route::group(
         Route::put('/categorias/{id}', 'CategoryController@update')->name('atualizar.categorias');
         Route::delete('/categorias/{id}', 'CategoryController@delete')->name('deletar.categorias');
         Route::post('/categorias', 'CategoryController@create')->name('adicionar.categorias');
+        /** COMPONENTES */
+        Route::post('/componentes', 'ComponentesController@create')->name('criar.componentes.curriculares');
+
         /** AUTENTICACAO */
         Route::post('/auth/logout', 'AuthController@logout')->name('sair');
         Route::post('/auth/refresh', 'AuthController@refresh')->name('refrescar.token');

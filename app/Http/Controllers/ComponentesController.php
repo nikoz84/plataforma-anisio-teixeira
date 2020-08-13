@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Traits\ApiResponser;
 use App\CurricularComponent as Componente;
+use App\CurricularComponent;
 use App\CurricularComponentCategory as Category;
 use Illuminate\Http\Request;
 
@@ -14,6 +15,7 @@ class ComponentesController
     {
         $this->request = $request;
     }
+
     /**
      * Mostra toda as informações do Aplicativo no banco de dados.
      * 
@@ -25,6 +27,18 @@ class ComponentesController
      */
     public function index()
     {
-        return $this->showAll(Category::with('componentes')->get());
+        return $this->showAll(CurricularComponent::with('categories')->get());
+    }
+
+    public function create(Componente $componente)
+    {
+        print_r($componente);
+    }
+
+    public function rules()
+    {
+        return [
+
+        ];
     }
 }

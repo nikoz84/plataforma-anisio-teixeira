@@ -22,6 +22,17 @@ class CurricularComponentPolicy
     }
 
     /**
+     * Determine whether the user can view the tipo.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function index(User $user)
+    {
+        return $user->role->name == 'super-admin' || $user->role->name == 'admin';
+    }
+
+    /**
      * Determine whether the user can view the curricular component.
      *
      * @param  \App\User  $user
