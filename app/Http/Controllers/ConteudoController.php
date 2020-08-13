@@ -292,9 +292,9 @@ class ConteudoController extends ApiController
     {
         $limit = $request->query('limit', 6);
         $query = Conteudo::query();
-        $query->when($termo, function ($q) use ($termo) {
-            return $q->fullTextSearch($termo, 'tag');
-        });
+        
+        $query->fullTextSearch($termo, 'tag');
+        
         $conteudos = $query->paginate($limit);
         $conteudos->setPath("/conteudos/search/{$termo}?limit={$limit}");
         return $this->showAsPaginator($conteudos);

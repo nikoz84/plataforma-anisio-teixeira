@@ -393,10 +393,10 @@ class Conteudo extends Model
         $tags_query = function ($q) {
             return $q->limit(2);
         };
-        $conteudo = parent::with(['tags'=> $tags_query])->find($id);
+        $conteudo = Conteudo::with(['tags'=> $tags_query])->findOrFail($id);
         $tags = $conteudo->tags->implode('name', ', ');
         
-        return parent::whereRaw(
+        return Conteudo::whereRaw(
             "conteudos.ts_documento @@ plainto_tsquery('portuguese', lower(unaccent('{$tags}')))"
         )->orWhereRaw(
             "conteudos.ts_documento @@ plainto_tsquery('simple', lower(unaccent('{$tags}')))"
