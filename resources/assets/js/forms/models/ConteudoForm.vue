@@ -506,7 +506,7 @@ export default {
         
       } catch(e) {
         this.errors = e.errors;
-
+        this.loading = false;
       }
     },
     async getCategories(val) {
