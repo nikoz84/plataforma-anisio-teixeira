@@ -68,7 +68,7 @@ class LicenseController extends ApiController
                 $data = $validator->errors();
                 throw new Exception("Não foi possível criar a licença", 422);
             }
-            $this->authorize('update', JWTAuth::user());   
+            $this->authorize('create', JWTAuth::user());   
             $license->fill($this->request->all());
             if (!$license->save()) {
                 

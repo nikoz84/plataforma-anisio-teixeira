@@ -175,6 +175,13 @@ class SideBar
                 'slug' => 'categorias',
                 'hability' => 'index',
                 'class' => \App\Category::class
+            ],
+            [
+                'label' => 'Componentes',
+                'name' => 'IndexComponentes',
+                'slug' => 'componentes',
+                'hability' => 'index',
+                'class' => \App\CurricularComponent::class
             ]
 
         ]);

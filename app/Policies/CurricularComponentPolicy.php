@@ -22,6 +22,17 @@ class CurricularComponentPolicy
     }
 
     /**
+     * Determine whether the user can view the tipo.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function index(User $user)
+    {
+        return $user->role->name == 'super-admin' || $user->role->name == 'admin';
+    }
+
+    /**
      * Determine whether the user can view the curricular component.
      *
      * @param  \App\User  $user
@@ -30,7 +41,7 @@ class CurricularComponentPolicy
      */
     public function view(User $user, CurricularComponent $curricularComponent)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -41,7 +52,7 @@ class CurricularComponentPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -53,7 +64,7 @@ class CurricularComponentPolicy
      */
     public function update(User $user, CurricularComponent $curricularComponent)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -65,7 +76,7 @@ class CurricularComponentPolicy
      */
     public function delete(User $user, CurricularComponent $curricularComponent)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -77,7 +88,7 @@ class CurricularComponentPolicy
      */
     public function restore(User $user, CurricularComponent $curricularComponent)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -89,6 +100,6 @@ class CurricularComponentPolicy
      */
     public function forceDelete(User $user, CurricularComponent $curricularComponent)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 }

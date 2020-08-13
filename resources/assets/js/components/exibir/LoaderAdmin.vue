@@ -20,6 +20,7 @@ import {
 
 import Resumo from "@pages/Resumo.vue";
 import { Contato, Table }  from "@components/exibir";
+import CurricularComponentsFormVue from '../../forms/models/CurricularComponentsForm.vue';
 
 
 export default {
@@ -38,7 +39,7 @@ export default {
     contato: Contato,
     listar: Table,
     resumo: Resumo,
-    categorias:CategoryConteudoForm,
+    categorias:CategoryConteudoForm
   },
   data() {
     return {

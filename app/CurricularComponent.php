@@ -14,6 +14,7 @@ class CurricularComponent extends Model
     protected $table = 'curricular_components';
     protected $hidden = ['pivot'];
     protected $appends = ['icon', 'user_can', 'search_url'];
+    public $fillable = ['name',  'canal_id', 'category_id', 'nivel_id'];
 
     public function categories()
     {

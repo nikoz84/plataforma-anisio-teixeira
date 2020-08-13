@@ -8,7 +8,6 @@ import VueApexCharts from "vue-apexcharts";
 import Vuex from "vuex";
 import store from "./store/index.js";
 import Default from "./layout/Default.vue";
-
 import "./interceptor.js";
 
 Vue.use(VueAnalytics, {
