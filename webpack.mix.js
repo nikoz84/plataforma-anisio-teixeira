@@ -39,10 +39,10 @@ if (!mix.inProduction()) {
   };
   mix
     .js("resources/assets/js/app.js", "public/js")
-    .stylus("resources/assets/stylus/app.styl", "public/css")
-    .version();
+    .stylus("resources/assets/stylus/app.styl", "public/css");
+    //.version();
 
-  mix.copy("public/css/app.css", "public/css/app-copy.css");
+  //mix.copy("public/css/app.css", "public/css/app-copy.css");
 } else {
   mix
     .webpackConfig({
@@ -54,5 +54,5 @@ if (!mix.inProduction()) {
     .js(["resources/assets/js/app.js"], "public/js")
     .extract();
   //mix.copy("public/js/js/app.vendor.js", "public/js/");
-  mix.styles(["public/css/app-copy.css"], "public/css/app.css");
+  //mix.styles(["public/css/app-copy.css"], "public/css/app.css");
 }

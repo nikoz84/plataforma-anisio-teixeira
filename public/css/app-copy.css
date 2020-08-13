@@ -41,12 +41,12 @@
 @font-face {
   font-family: 'Ubuntu';
   font-display: swap;
-  src: url(/fonts/Ubuntu-Regular.woff2?0d865b07d66f0efa0d5dedba23a34ba8);
+  src: url(/fonts/Ubuntu-Regular.woff2);
 }
 @font-face {
   font-family: 'Lato';
   font-display: swap;
-  src: url(/fonts/Lato-Regular.woff2?0ebc78e6767e52d7af91269e61c7e36b);
+  src: url(/fonts/Lato-Regular.woff2);
 }
 .title-page-tipos {
   font-family: 'Lato', sans-serif, cursive;

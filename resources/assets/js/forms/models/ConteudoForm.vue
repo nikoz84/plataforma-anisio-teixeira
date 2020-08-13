@@ -102,7 +102,10 @@
         </q-input>
         <!-- DESCRIÇÃO --> 
         <div class="q-mt-md">
-          <p class="text-center">Escreva uma descrição do conteúdo</p>
+          <p class="text-center">Escreva uma descrição 
+            <b>(Para melhorar a qualidade de nossa oferta e busca de conteúdos 
+            deve escrever um texto como mínimo de 140 caracteres)</b>
+          </p>
         </div>
         <q-editor v-model="conteudo.description" min-height="18rem"
           ref="editor_ref"
