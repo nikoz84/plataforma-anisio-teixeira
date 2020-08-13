@@ -4,28 +4,39 @@
         <q-card style="min-width:350px;">
             <q-card-section >
                 <div class="text-center text-h5">Recuperar Senha</div>
+                <div class="q-mt-md text-center">Por favor, verifique na sua conta de email 
+                    um correio de verificação para recuperar sua senha, 
+                    <b class="text-info">é possível achar esse email no spam</b>
+                </div>
             </q-card-section>
             <q-separator inset />
-            <q-card-section>
+            <q-card-section v-if="show">
                 <q-input filled 
                     label="Escreva seu e-mail" 
                     v-model="email" 
                     type="email"
-                    :error="errors.email && errors.email.length > 0"
+                    :error="errors && errors.email && errors.email.length > 0"
                     bottom-slots>
                     <template v-slot:error>
                         <ShowErrors :errors="errors.email"></ShowErrors>
                     </template>
                 </q-input>
             </q-card-section>
-            <q-card-section>
+            <q-card-section v-if="show">
                 <RecaptchaForm :errors="errors.recaptcha"></RecaptchaForm>
+                
             </q-card-section>
-            <q-card-section>
+            <q-card-section v-if="show">
                 <q-btn color="primary" 
                     class="full-width" 
                     @click="send()"
+                    :loading="loading"
                     label="Enviar" ></q-btn>
+            </q-card-section>
+            <q-card-section v-else>
+                <div class="text-center text-h6"> 
+                    Obrigado, no email enviaremos um link para recuperar sua senha.
+                </div>
             </q-card-section>
         </q-card>
     </div>
@@ -41,25 +52,27 @@ export default {
     data(){
         return {
             email : null,
-            errors: []
+            errors: [],
+            show: true,
+            loading: false
         }
     },
     methods: {
         async send(){
+            this.loading = true;
             const form = new FormData();
             form.append("email", this.email);
             form.append("recaptcha",grecaptcha.getResponse());
             try 
             {
                 let {data} = await axios.post('/auth/recuperar-senha', form);
-                this.$router.push(`/usuario/login`);
+                this.loading = false;
                 if(data.success){
-                    console.log(data)
+                    this.show = false;
                 }
             } catch (e) {
-                console.log(e);
                 this.errors = e.errors;
-
+                this.loading = false;
             }
         }
     },
