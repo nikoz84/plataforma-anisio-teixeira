@@ -3,19 +3,19 @@
         <div class="flex justify-center q-gutter-sm">
             <p v-if="conteudo.tipo">
                 Tipo de Conteúdo: 
-                <q-badge class="bg-cinza" text-color="primary">{{conteudo.tipo.name}}</q-badge>
+                <q-badge class="bg-grey-10" text-color="white">{{conteudo.tipo.name}}</q-badge>
             </p>
             <p v-if="conteudo.qt_access">
                 Acessos: 
-                <q-badge class="bg-cinza" text-color="primary">{{conteudo.qt_access}}</q-badge>
+                <q-badge class="bg-grey-10" text-color="white">{{conteudo.qt_access}}</q-badge>
             </p>
             <p v-if="conteudo.qt_downloads && conteudo.tipo.id != 8">
                 Downloads: 
-                <q-badge class="bg-cinza" text-color="primary">{{conteudo.qt_downloads}}</q-badge>
+                <q-badge class="bg-grey-10" text-color="white">{{conteudo.qt_downloads}}</q-badge>
             </p>
             <q-space></q-space>
-            <q-btn class="bg-cinza" 
-                text-color="primary"
+            <q-btn class="bg-grey-10" 
+                text-color="white"
                 icon="share"
                 size="xs"
                 @click="show = !show" >
@@ -24,8 +24,8 @@
                 </q-tooltip>
             </q-btn>
             <q-btn
-                class="bg-cinza"
-                text-color="primary"
+                class="bg-grey-10"
+                text-color="white"
                 icon="save_alt"
                 size="xs"
                 v-if="fileExists('download') && conteudo.id"
@@ -37,8 +37,8 @@
             <!--q-btn
                 round
                 push
-                class="bg-cinza"
-                text-color="primary"
+                class="bg-grey-10"
+                text-color="white"
                 icon="save_alt"
                 size="sm"
                 v-if="fileExists('visualizacao')"
@@ -48,8 +48,8 @@
                 </q-tooltip>
             </q-btn-->
             <q-btn
-                class="bg-cinza"
-                text-color="primary"
+                class="bg-grey-10"
+                text-color="white"
                 icon="description"
                 size="xs"
                 v-if="fileExists('guias-pedagogicos')" 
