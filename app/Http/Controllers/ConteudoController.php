@@ -332,13 +332,22 @@ class ConteudoController extends ApiController
     {
         $conteudo = Conteudo::findOrFail($id);
         $arquivos = $conteudo->getAttribute('arquivos');
-        
-        dd($arquivos['download']);
-        $download = $arquivos['download']->url;
-        $formato = $arquivos['download']->extension;
-        $mega_bytes = number_format($arquivos['download']->size / 1024, 2, ',', '.');
-        $mime_type = $arquivos['download']->mime_type;
+        $download = null;
+        $formato = null;
+        $mega_bytes = null;
+        $mime_type = null;
 
+        if (isset($arquivos['download']->url)) {
+            $download = $arquivos['download']->url;
+            $formato = $arquivos['download']->extension;
+            $mega_bytes = number_format($arquivos['download']->size / 1024, 2, ',', '.');
+            $mime_type = $arquivos['download']->mime_type;
+        } elseif (isset($arquivos['visualizacao']->url)) {
+            $download = $arquivos['visualizacao']->url;
+            $formato = $arquivos['visualizacao']->extension;
+            $mega_bytes = number_format($arquivos['visualizacao']->size / 1024, 2, ',', '.');
+            $mime_type = $arquivos['visualizacao']->mime_type;
+        }
         return view(
             'incorporar.index',
             compact('download', 'formato', 'mega_bytes', 'mime_type', 'conteudo')

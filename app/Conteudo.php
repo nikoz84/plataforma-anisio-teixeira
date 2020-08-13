@@ -137,7 +137,7 @@ class Conteudo extends Model
 
     /**
      * Adiciona novo atributo ao objeto que limita o tamanho da descrição
-     * @return void
+     * @return string cadena de caracteres
      */
     public function getExcerptAttribute()
     {
@@ -157,7 +157,7 @@ class Conteudo extends Model
      */
     public function getTitleSlugAttribute()
     {
-        return Str::slug(Str::words($this->title, 50), '-');
+        return Str::slug(Str::words($this->title, 25), '-');
     }
     /**
      * Seleciona e tranforma created-at ao formato (06 setembro de 2019 ás 17:37)

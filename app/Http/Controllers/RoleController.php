@@ -24,8 +24,7 @@ class RoleController extends ApiController
      * Lista as informações do Banco de Dados.
      * @param string $name
      * @param \App\Role $role
-     * @return \App\Controller\ApiResponser
-     * retorna Json
+     * @return \App\Controller\ApiResponser retorna Json
      */
     public function index()
     {
@@ -41,9 +40,7 @@ class RoleController extends ApiController
      *
      * @param string $name
      * @param \App\Role $role
-     * @return \App\Controller\ApiResponser
-     * retorna Json
-     * 
+     * @return \App\Controller\ApiResponser retorna Json
      */
     public function create()
     {
@@ -76,8 +73,11 @@ class RoleController extends ApiController
         $role = $this->role;
         $role->name = $this->request->name;
         if (!$role->save()) {
-            return $this->errorResponse($validator->errors(), "Erro interno servidor. Não foi possível criar o perfil", 500);
-            
+            return $this->errorResponse(
+                $validator->errors(),
+                "Não foi possível criar o perfil",
+                422
+            );
         }
         return $this->successResponse($role, 'Perfil editado com sucesso!', 200);
     }

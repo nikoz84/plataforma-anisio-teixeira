@@ -31,7 +31,7 @@ class ComentarioController extends ApiController
       * Metodo que cria retorna uma listagem do banco de dados e valida
       * @param \App\Comentario $comentario
       * @return \App\Controllers\ComentarioController\ApiResponser
-      * retorna json 
+      * retorna json
       */
     public function create()
     {
@@ -72,7 +72,7 @@ class ComentarioController extends ApiController
      * Atualiza o Aplicativo no banco de dados
      * @param int $id identificador único
      * @param \App\Comentario $comentario
-     * @return \App\Controller\ApiResponser 
+     * @return \App\Controller\ApiResponser
      * retorna json
      */
 
@@ -98,7 +98,6 @@ class ComentarioController extends ApiController
         }
     }
     /**
-     * Undocumented function
      * Retorna os comentarios sobre uma determinada postagem
      * @param [type] $idPostagem
      * @param \App\Comentario
@@ -119,7 +118,6 @@ class ComentarioController extends ApiController
     }
     
     /**
-     * 
      * Retorna os comentarios por id do usuario e pelo tipo
      * @param [type] $idUsuario
      * @param boolean $tipo
@@ -137,11 +135,10 @@ class ComentarioController extends ApiController
         return $this->errorResponse([], 'Comentários não encontrados!', 422);
     }
     /**
-     * 
      * Deleta aplicativo no banco de dados
      * @param int $id identificador único
      * @param \App\Comentario $comentario
-     * @return \App\Controller\ApiResponser 
+     * @return \App\Controller\ApiResponser
      * retorna json
      */
 

@@ -3,16 +3,14 @@
   <p class="text-center q-mt-lg">
    {{ label }}:  <i>{{ selectText  }} </i>
   </p>
-  <q-scroll-area style="height: 200px;"
-    visible>
-    <div
-      v-for="(item, i) in parent" :key="i" >
+  <q-scroll-area style="height: 200px;border: solid 1px" visible>
+    <div v-for="(item, i) in parent" :key="i" >
       <div :class="{'cursor-pointer': hasChildrens(item), 'highlight': item.id == selectItemId }"
         @click="select(item, $event)">
-        <b class="q-mt-md" v-text="item.name"></b>
-        <div class="q-pl-sm cursor-pointer" :class="{'highlight': sub.id == selectItemId}"
+        <b v-text="item.name"></b>
+        <div class="cursor-pointer" :class="{'highlight': sub.id == selectItemId}"
           v-for="(sub, e) in childrens(item)" :key="e" @click="select(sub, $event)">
-          <b class="q-mt-md" v-text="sub.name"></b>
+          <b class="q-pl-sm q-my-md" v-text="`- ${sub.name}`"></b>
         </div>
       </div>
     </div>

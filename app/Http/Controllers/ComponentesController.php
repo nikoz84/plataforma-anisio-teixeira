@@ -16,12 +16,11 @@ class ComponentesController
     }
     /**
      * Mostra toda as informações do Aplicativo no banco de dados.
-     * 
+     *
      * @param \App\Componentes $componentes
      * @param \App\Controller\Api Responser
      * retorna json
-     * @return
-     * 
+     * @return App\Traits\ApiResponse
      */
     public function index()
     {

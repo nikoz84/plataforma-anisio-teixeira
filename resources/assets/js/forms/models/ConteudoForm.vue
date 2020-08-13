@@ -253,7 +253,7 @@
       </q-card-section>
     </q-card>
 
-    <q-card class="col-sm-3">
+    <q-card class="col-sm-3"  :class="{'error-card' : errors && errors.componentes && errors.componentes.length > 0 }">
       <q-card-section>
           <!-- COMPONENTES CURRICULARES --> 
           <div v-if="componentes">
@@ -299,7 +299,7 @@
       </q-card-section>
       
     </q-card>
-    <q-card class="col-sm-3">
+    <q-card class="col-sm-3" :class="{'error-card' : errors && errors.componentes && errors.componentes.length > 0 }">
       <q-card-section>
           <!-- NIVEIS DE ENSINO --> 
           <div v-if="niveis">
@@ -623,4 +623,8 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="stylus" scoped>
+.error-card {
+  border: solid 2px #a54a54;
+}
+</style>
