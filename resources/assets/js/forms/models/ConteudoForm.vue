@@ -179,15 +179,18 @@
           @change="onDownloadFileChange"
           type="file"
           hint="Arquivo para Download"
-        />
-        <ShowErrors v-if="errors && errors.download && errors.download.length > 0" 
-          :errors="errors.download">
-        </ShowErrors>
+          bottom-slots
+          :error="errors && errors.download && errors.download.length > 0"
+        >
+          <template v-slot:error>
+            <ShowErrors :errors="errors.download"></ShowErrors>
+          </template>
+        </q-input>
         <!-- ARQUIVO DE UPLOAD --> 
         <br>
-        <q-item-label v-if="conteudo.guiaPedagogico">
+        <div v-if="conteudo.guiaPedagogico">
           Baixar Arquivo Guia Pedagógico:
-        </q-item-label>
+        </div>
          <a v-if="conteudo.guiaPedagogico" :href="conteudo.guiaPedagogico" :download="conteudo.guiaPedagogico" >{{conteudo.guiaPedagogico.split('/').pop()}}</a>
         
         <q-input
@@ -196,11 +199,14 @@
           outlined
           @change="onguiaPedagogicoFileChange"
           type="file"
-          hint="Arquivo para Guia Pedagógico"          
-        />
-        <ShowErrors v-if="errors && errors.guias_pedagogicos && errors.guias_pedagogicos.length > 0" 
-          :errors="errors.guias_pedagogicos">
-        </ShowErrors>
+          hint="Arquivo para Guia Pedagógico"
+           bottom-slots
+          :error="errors && errors.guias_pedagogicos && errors.guias_pedagogicos.length > 0"
+          >
+           <template v-slot:error>
+            <ShowErrors :errors="errors.guias_pedagogicos"></ShowErrors>
+          </template>
+        </q-input>
         <!-- ENVIAR SITE -->
         <br>
         <q-input
@@ -208,9 +214,13 @@
           v-model="conteudo.options.site"
           label="URL do Site"
           hint="Exemplo: http://dominio.com.br"
-        />
-        <ShowErrors v-if="errors && errors.options_site && errors.options_site.length > 0" 
-          :errors="errors.options_site"></ShowErrors>
+          bottom-slots
+          :error="errors && errors.options_site && errors.options_site.length > 0" 
+        >
+          <template v-slot:error>
+            <ShowErrors :errors="errors.options_site"></ShowErrors>
+          </template>
+        </q-input>
       </q-card-section>
       <q-card-section>
         <div class="q-gutter-sm">
@@ -252,6 +262,7 @@
           color="primary"
           @click="save()"
           label="Salvar"
+          :loading="loading"
         ></q-btn>
       </q-card-section>
     </q-card>
@@ -317,10 +328,8 @@
           </div>
         </q-card-section>
       
-      <q-card-section class="q-mt-lg">
-        <ShowErrors 
-        v-if="errors && errors.componentes && errors.componentes.length > 0" 
-        :errors="errors.componentes"></ShowErrors>
+      <q-card-section class="q-mt-lg"  v-if="errors && errors.componentes && errors.componentes.length > 0">
+        <ShowErrors :errors="errors.componentes"></ShowErrors>
       </q-card-section>
     </q-card>
   </div>
@@ -438,6 +447,7 @@ export default {
         this.guias_pedagogicos = files[0];
     },
     async save() {
+      this.loading = true;
       const form = new FormData();
   
       if(this.conteudo.category) {
@@ -484,10 +494,15 @@ export default {
         url = url + '/' + this.conteudo.id; 
       }
       try {
-        const { data } = await axios.post(url, form);
+        const { data } = await axios.post(url, form, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+        });
+        this.loading = false;
         if(data.success == true){
           this.$router.push(`/admin/conteudos/listar`);
-        }
+        } 
         
       } catch(e) {
         this.errors = e.errors;
@@ -508,11 +523,12 @@ export default {
       
     },
     async getData() {
+      this.$q.loading.show();
       const canais = await axios.get("/canais?select");
       const tipos = await axios.get("/tipos?select");
       const licencas = await axios.get("/licencas?select");
       //let responses = await axios.all([canais, tipos, licencas]);
-
+      
       this.canais = canais.data.metadata;
       this.tipos = tipos.data.metadata;
       this.licencas = licencas.data.metadata;
@@ -523,7 +539,7 @@ export default {
         
         this.componentesCurriculares = data.metadata.componentes.map(a => a.id);
       }
-
+      this.$q.loading.hide();
       if(this.conteudo.category && this.conteudo.canal){
         
         this.getCategories(this.conteudo.canal);
