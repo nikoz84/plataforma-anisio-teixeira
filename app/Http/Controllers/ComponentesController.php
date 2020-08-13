@@ -39,10 +39,35 @@ class ComponentesController extends ApiController
         return $this->showAsPaginator($componentes);
     }
 
+    public function update($id)
+    {
+        try
+        {
+            $component = CurricularComponent::find($id);
+            $this->authorize('update', $id);
+            $validator = Validator::make($this->request->all(), $this->config());
+            if ($validator->fails()) {
+                throw new Exception('Não foi possível atualizar componente. Erro no preenchimento do formulário.');
+            }
+            
+            $component->fill($this->request->all());
+            if($component->save())
+            {
+
+            }
+        }
+        catch(Exception $ex)
+        {
+            return $this->errorResponse([], $ex->getMessage(), 422);
+        }
+        return $this->showOne($component, 'Componente Curricular atualizada com sucesso!!', 200);
+    }
+
     public function create(Componente $componente)
     {
         $validator = Validator::make($this->request->all(), $this->rules());
         $data = [];
+        
         try {
             if ($validator->fails()) {
                 $data = $validator->errors();
@@ -57,7 +82,8 @@ class ComponentesController extends ApiController
         catch(Exception $ex)
         {
             return $this->errorResponse($data, $ex->getMessage(), 422);
-        }
+        }       
+        return $this->successResponse($componente, 'Componente curricular registrada com sucesso!!', 200);
     }
 
     public function rules()

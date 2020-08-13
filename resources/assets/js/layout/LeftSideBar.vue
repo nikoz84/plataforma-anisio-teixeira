@@ -1,5 +1,5 @@
 <template>
-  <nav id="left-nav-menu">
+  <nav>
     <q-list>
       <q-item-label v-if="!$q.screen.gt.xs || !$q.screen.gt.sm">
         <q-btn

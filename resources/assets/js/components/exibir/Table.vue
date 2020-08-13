@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md" id="table-list-content">
+  <div class="q-pa-md">
     <div class="col-lg-12">
       <SearchForm></SearchForm>
     </div>
