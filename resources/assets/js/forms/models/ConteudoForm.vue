@@ -257,33 +257,22 @@
     </q-card>
 
     <q-card class="col-sm-3"  :class="{'error-card' : errors && errors.componentes && errors.componentes.length > 0 }">
+      <q-card-section v-if="errors && errors.componentes && errors.componentes.length > 0">
+        <ShowErrors :errors="errors.componentes"></ShowErrors>
+      </q-card-section>
       <q-card-section>
           <!-- COMPONENTES CURRICULARES --> 
           <div v-if="componentes">
-            
-            <div
-              v-for="(component, i) in componentes"
-              :key="`c-${i}`"
-              :index="component.id"
-            >
+            <div v-for="(component, i) in componentes" :key="`c-${i}`" :index="component.id">
               <div class="text-center text-negative q-pt-md" >
                 {{ component.name }}
-              
               </div>
               <q-separator class="q-mt-lg" inset color="negative"></q-separator>
-              <q-list
-                dense bordered 
-              >
-                <q-item tag="label" 
-                  v-ripple v-for="(component, i) in component.componentes"
-                  :key="`child-com-${i}`">
+              <q-list dense bordered>
+                <q-item tag="label" v-ripple 
+                v-for="(component, i) in component.componentes" :key="`child-com-${i}`">
                   <q-item-section avatar>
-                    <q-checkbox
-                      
-                      v-model="componentesCurriculares"
-                      :val="component.id"
-                      color="negative"
-                    />
+                    <q-checkbox v-model="componentesCurriculares" :val="component.id" color="negative"/>
                   </q-item-section>
                   <q-item-label class="q-pt-sm">
                     {{component.name}}
@@ -295,36 +284,28 @@
           </div>
       </q-card-section>
       
-      <q-card-section class="q-mt-lg">
-        <ShowErrors 
-          v-if="errors && errors.componentes && errors.componentes.length > 0" 
-        :errors="errors.componentes"></ShowErrors>
+      <q-card-section class="q-mt-lg" v-if="errors && errors.componentes && errors.componentes.length > 0">
+        <ShowErrors :errors="errors.componentes"></ShowErrors>
       </q-card-section>
       
     </q-card>
     <q-card class="col-sm-3" :class="{'error-card' : errors && errors.componentes && errors.componentes.length > 0 }">
+      <q-card-section class="q-mt-lg" v-if="errors && errors.componentes && errors.componentes.length > 0">
+        <ShowErrors :errors="errors.componentes"></ShowErrors>
+      </q-card-section>
       <q-card-section>
           <!-- NIVEIS DE ENSINO --> 
           <div v-if="niveis">
-            <div
-              v-for="(nivel, n) in niveis"
-              :key="`n-${n}`"
-              :index="nivel.id"
-            >
+            <div v-for="(nivel, n) in niveis" :key="`n-${n}`" :index="nivel.id">
               <div class="text-center text-positive q-pt-md">
                 {{ nivel.name }}
               </div>
               <q-separator class="q-mt-lg" inset color="positive"></q-separator>
               <q-list dense bordered>
-                <q-item tag="label" 
-                  v-ripple v-for="(component, i) in nivel.componentes"
-                  :key="`child-com-${i}`">
+                <q-item v-for="(component, i) in nivel.componentes" :key="`child-com-${i}`"
+                  tag="label" v-ripple>
                   <q-item-section avatar>
-                    <q-checkbox
-                      v-model="componentesCurriculares"
-                      :val="component.id"
-                      color="teal"
-                    />
+                    <q-checkbox v-model="componentesCurriculares" :val="component.id" color="teal"/>
                   </q-item-section>
                   <q-item-label class="q-pt-sm">
                     {{component.name}}
@@ -421,6 +402,7 @@ export default {
       imagem_associada:null,
       download_file:null,
       guias_pedagogicos: null,
+      loading: false,
       errors: {},
       dialog: {
         text: "",
@@ -456,21 +438,15 @@ export default {
         this.guias_pedagogicos = files[0];
     },
     async save() {
-      
       const form = new FormData();
-      
+  
       if(this.conteudo.category) {
         form.append("category_id",  this.conteudo.category.id );
       }
-      
-      if(this.conteudo.options.site)
-      {
-        
-          form.append("options.site", this.conteudo.options.site);
-          form.append("is_site", 1) ;
-      }
-      else
-      {
+      if(this.conteudo.options.site) {
+        form.append("options.site", this.conteudo.options.site);
+        form.append("is_site", 1) ;
+      } else {
         form.append("is_site", 0);
       }
       //console.log(this.conteudo)
