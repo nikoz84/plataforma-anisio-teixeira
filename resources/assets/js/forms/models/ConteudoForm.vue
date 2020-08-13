@@ -102,7 +102,10 @@
         </q-input>
         <!-- DESCRIÇÃO --> 
         <div class="q-mt-md">
-          <p class="text-center">Escreva uma descrição do conteúdo</p>
+          <p class="text-center">Escreva uma descrição 
+            <b>(Para melhorar a qualidade de nossa oferta e busca de conteúdos 
+            deve escrever um texto como mínimo de 140 caracteres)</b>
+          </p>
         </div>
         <q-editor v-model="conteudo.description" min-height="18rem"
           ref="editor_ref"
@@ -253,7 +256,7 @@
       </q-card-section>
     </q-card>
 
-    <q-card class="col-sm-3">
+    <q-card class="col-sm-3"  :class="{'error-card' : errors && errors.componentes && errors.componentes.length > 0 }">
       <q-card-section>
           <!-- COMPONENTES CURRICULARES --> 
           <div v-if="componentes">
@@ -299,7 +302,7 @@
       </q-card-section>
       
     </q-card>
-    <q-card class="col-sm-3">
+    <q-card class="col-sm-3" :class="{'error-card' : errors && errors.componentes && errors.componentes.length > 0 }">
       <q-card-section>
           <!-- NIVEIS DE ENSINO --> 
           <div v-if="niveis">
@@ -623,4 +626,8 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="stylus" scoped>
+.error-card {
+  border: solid 2px #a54a54;
+}
+</style>

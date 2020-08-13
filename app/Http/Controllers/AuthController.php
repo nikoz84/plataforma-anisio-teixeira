@@ -227,7 +227,7 @@ class AuthController extends ApiController
             Mail::send(new SendVerificationEmail($user, $token, $option));
             return true;
         } catch (Exception $ex) {
-            dd($ex);
+            return false;
         }
     }
     /**

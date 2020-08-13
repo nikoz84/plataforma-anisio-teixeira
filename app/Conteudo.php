@@ -136,30 +136,8 @@ class Conteudo extends Model
     }
 
     /**
-     * Muta o valor do usuário que aprova o conteúdo
-     * @param [type] $user
-     * @return void
-     */
-    public function setApprovingUserIdAttribute($id)
-    {
-        if ($id) {
-            $this->attributes['approving_user_id'] = $id;
-        } else {
-            $this->attributes['approving_user_id'] = null;
-        }
-    }
-
-    public function setIsApproved($is_approved)
-    {
-        if ($is_approved) {
-            $this->attributes['is_approved'] = $is_approved;
-        } else {
-            $this->attributes['is_approved'] = false;
-        }
-    }
-    /**
      * Adiciona novo atributo ao objeto que limita o tamanho da descrição
-     * @return void
+     * @return string cadena de caracteres
      */
     public function getExcerptAttribute()
     {
@@ -179,7 +157,7 @@ class Conteudo extends Model
      */
     public function getTitleSlugAttribute()
     {
-        return Str::slug(Str::words($this->title, 50), '-');
+        return Str::slug(Str::words($this->title, 25), '-');
     }
     /**
      * Seleciona e tranforma created-at ao formato (06 setembro de 2019 ás 17:37)
@@ -415,10 +393,10 @@ class Conteudo extends Model
         $tags_query = function ($q) {
             return $q->limit(2);
         };
-        $conteudo = parent::with(['tags'=> $tags_query])->find($id);
+        $conteudo = Conteudo::with(['tags'=> $tags_query])->findOrFail($id);
         $tags = $conteudo->tags->implode('name', ', ');
         
-        return parent::whereRaw(
+        return Conteudo::whereRaw(
             "conteudos.ts_documento @@ plainto_tsquery('portuguese', lower(unaccent('{$tags}')))"
         )->orWhereRaw(
             "conteudos.ts_documento @@ plainto_tsquery('simple', lower(unaccent('{$tags}')))"

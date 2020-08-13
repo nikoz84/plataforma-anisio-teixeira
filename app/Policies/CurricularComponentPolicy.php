@@ -41,7 +41,7 @@ class CurricularComponentPolicy
      */
     public function view(User $user, CurricularComponent $curricularComponent)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -52,7 +52,7 @@ class CurricularComponentPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -64,7 +64,7 @@ class CurricularComponentPolicy
      */
     public function update(User $user, CurricularComponent $curricularComponent)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -76,7 +76,7 @@ class CurricularComponentPolicy
      */
     public function delete(User $user, CurricularComponent $curricularComponent)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -88,7 +88,7 @@ class CurricularComponentPolicy
      */
     public function restore(User $user, CurricularComponent $curricularComponent)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -100,6 +100,6 @@ class CurricularComponentPolicy
      */
     public function forceDelete(User $user, CurricularComponent $curricularComponent)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 }

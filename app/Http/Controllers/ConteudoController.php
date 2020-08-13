@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Traits\FileSystemLogic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class ConteudoController extends ApiController
 {
@@ -23,12 +24,11 @@ class ConteudoController extends ApiController
             'getById',
             'getByTagId',
             'getSitesTematicos',
-            'incorporarConteudo',
             'conteudosRelacionados',
-            'getConteudosRecentes'
+            'getConteudosRecentes',
+            'incorporarConteudo'
         ]);
         $request = $request;
-        
     }
 
     /**
@@ -93,7 +93,7 @@ class ConteudoController extends ApiController
      *
      * @return array
      */
-    public function configRules($conteudo)
+    public function configRules(Request $request)
     {
         $configRules = [
             'license_id' => 'required',
@@ -111,34 +111,12 @@ class ConteudoController extends ApiController
             'is_featured' => 'sometimes|boolean',
             'is_approved' => 'required|boolean',
             'is_site' => 'sometimes|boolean',
-            'guias_pedagogicos' => "sometimes|mimes:pdf,doc,docx,epub|max:120000",
-            'imagem_associada' => 'sometimes|mimes:jpeg,jpg,png,gif,svg|max:2000',
-            'visualizacao' => 'sometimes|file'
+            'download' => ["sometimes","file", new \App\Rules\ValidExtensions($request)],
+            'guias_pedagogicos' => ["sometimes|file|mimes:pdf,doc,docx,epub|max:120000"],
+            'imagem_associada' => 'sometimes|image|mimes:jpeg,jpg,webp,png,gif,svg|max:2048',
+            'visualizacao' => ["sometimes","file", new \App\Rules\ValidExtensions($request)]
         ];
-        switch($conteudo->tipo_id)
-        {
-            //DOCUMENTOS
-            case 1 : $configRules["download"] = "nullable|sometimes|mimes:{$this->docsMimeTypes()}|max:1024"; break;
-            //PLANILHA
-            case 2 : $configRules["download"] = "nullable|sometimes|mimes:{$this->planilhasMimeTypes()}|max:1024"; break;
-            //APRESENTAÇÃO
-            case 3 : $configRules["download"] = "nullable|sometimes|mimes:{$this->slidesMimeTypes()}|max:800000"; break;
-            //AUDIO
-            case 4 : $configRules["download"] = "nullable|sometimes|mimes:mp3|max:1024"; break;
-            //VIDEO
-            case 5 : $configRules["download"] = "nullable|sometimes|mimes:{$this->videoMimeTypes()}|max:800000"; break;
-            //IMAGE
-            case 6 : $configRules["download"] = "nullable|sometimes|mimes:{$this->imageMimeTypes()}|max:2048"; break;
-            //ANIMAÇÃO
-            case 7 : $configRules["download"] = "nullable|sometimes|mimes:{$this->mimeTypes()}|max:800000"; break;
-            //SITE
-            case 8 : $configRules["download"] = "nullable|sometimes|mimes:site"; break;
-            //SOFTWARE
-            case 9 : $configRules["download"] = "nullable|sometimes|mimes:exe,bin,rar,".$this->planilhasMimeTypes()."|max:64000"; break;
-            //LIVROS
-            case 17 : $configRules["download"] = "nullable|sometimes|mimes:{$this->docsMimeTypes()}|max:5512"; break;
-            default : $configRules["download"] = "nullable|sometimes|mimes:{$this->mimeTypes()}|max:800000"; 
-        }
+        
         return $configRules;
     }
 
@@ -165,10 +143,10 @@ class ConteudoController extends ApiController
     {
         $conteudo = new Conteudo;
         $this->authorize('create', $conteudo);
-        $conteudo->tipo_id = $request->tipo_id;
+        
         $validator = Validator::make(
             $request->all(),
-            $this->configRules($conteudo)
+            $this->configRules($request)
         );
         
         if ($validator->fails()) {
@@ -182,12 +160,17 @@ class ConteudoController extends ApiController
         $role_id = Auth::user()->role->id;
         
         if ($role_id == 1 || $role_id == 2 || $role_id == 3) {
-            $conteudo->setAttribute('approving_user_id', Auth::user()->id);
-            $conteudo->setAttribute('is_approved', true);
-            $conteudo->setAttribute('is_featured', $request->is_featured);
+            $conteudo->approving_user_id = Auth::user()->id;
+            $conteudo->is_approved = $request->input('is_approved', false);
+            $conteudo->is_featured = $request->input('is_featured', false);
+        } else {
+            $conteudo->setAttribute('approving_user_id', null);
+            $conteudo->setAttribute('is_approved', false);
+            $conteudo->setAttribute('is_featured', false);
         }
         $conteudo->user_id = Auth::user()->id;
         $conteudo->canal_id = $request->canal_id;
+        $conteudo->tipo_id = $request->tipo_id;
         $conteudo->license_id = $request->license_id;
         $conteudo->category_id = $request->category_id;
         $conteudo->title = $request->title;
@@ -195,10 +178,10 @@ class ConteudoController extends ApiController
         $conteudo->source = $request->source;
         $conteudo->authors = $request->authors;
         $conteudo->options = ['site' => $request->options_site];
-        $conteudo->setAttribute('is_site', $request->is_site);
+        $conteudo->setAttribute('is_site', $request->input('is_site', false));
         $conteudo->qt_downloads = Conteudo::INIT_COUNT;
         $conteudo->qt_access = Conteudo::INIT_COUNT;
-            
+        
         if (!$conteudo->save()) {
             return $this->errorResponse([], "Não foi possível cadastrar o conteúdo", 422);
         }
@@ -224,7 +207,10 @@ class ConteudoController extends ApiController
     {
         $conteudo = Conteudo::find($id);
         $this->authorize('update', $conteudo);
-        $validator = Validator::make($request->all(), $this->configRules($conteudo));
+        $validator = Validator::make(
+            $request->all(),
+            $this->configRules($request)
+        );
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível atualizar o conteúdo", 422);
         }
@@ -243,11 +229,16 @@ class ConteudoController extends ApiController
         $role_id = Auth::user()->role->id;
         
         if ($role_id == 1 || $role_id == 2 || $role_id == 3) {
-            $conteudo->setAttribute('approving_user_id', Auth::user()->id);
-            $conteudo->setAttribute('is_approved', true);
-            $conteudo->setAttribute('is_featured', $request->is_featured);
+            $conteudo->approving_user_id = Auth::user()->id;
+            $conteudo->is_approved = $request->input('is_approved', false);
+            $conteudo->is_featured = $request->input('is_featured', false);
+        } else {
+            $conteudo->setAttribute('approving_user_id', null);
+            $conteudo->setAttribute('is_approved', false);
+            $conteudo->setAttribute('is_featured', false);
         }
         $conteudo->options = ['site' => $request->options_site];
+        $conteudo->is_site = $request->input('is_site', false);
 
         if (!$conteudo->save()) {
             return $this->errorResponse([], 'Não foi possível atualizar o conteúdo', 422);
@@ -255,7 +246,14 @@ class ConteudoController extends ApiController
         $conteudo->tags()->sync($request->tags);
         $conteudo->componentes()->sync(explode(',', $request->componentes));
         Conteudo::tsDocumentoSave($conteudo->id);
-        $file = $this->storeFiles($request, $conteudo);
+
+        if ($request->has('download') || $request->has('guias_pedagogicos') ||
+            $request->has('imagem_associada') || $request->has('visualizacao')) {
+            if (!$this->storeFiles($request, $conteudo)) {
+                return $this->errorResponse([], 'Não foi possível fazer upload de arquivos.', 422);
+            }
+        }
+
         return $this->showOne($conteudo, 'Conteúdo editado com sucesso!!', 200);
     }
 
@@ -294,9 +292,9 @@ class ConteudoController extends ApiController
     {
         $limit = $request->query('limit', 6);
         $query = Conteudo::query();
-        $query->when($termo, function ($q) use ($termo) {
-            return $q->fullTextSearch($termo, 'tag');
-        });
+        
+        $query->fullTextSearch($termo, 'tag');
+        
         $conteudos = $query->paginate($limit);
         $conteudos->setPath("/conteudos/search/{$termo}?limit={$limit}");
         return $this->showAsPaginator($conteudos);
@@ -326,26 +324,36 @@ class ConteudoController extends ApiController
         return $this->showOne($conteudo);
     }
     /**
-     * Incopora conteuúdo em páginas externas
+     * Incopora conteúdo em páginas externas
      *
      * @param $id integer
      */
     public function incorporarConteudo($id)
     {
-        $conteudo = Conteudo::find($id);
+        $conteudo = Conteudo::findOrFail($id);
         $arquivos = $conteudo->getAttribute('arquivos');
-        dd($arquivos);
-        $download = $arquivos['download']->url;
-        $formato = $arquivos['download']->extension;
-        $mega_bytes = number_format($arquivos['download']->size / 1024, 2, ',', '.');
-        $mime_type = $arquivos['download']->mime_type;
+        $download = null;
+        $formato = null;
+        $mega_bytes = null;
+        $mime_type = null;
 
+        if (isset($arquivos['download']->url)) {
+            $download = $arquivos['download']->url;
+            $formato = $arquivos['download']->extension;
+            $mega_bytes = number_format($arquivos['download']->size / 1024, 2, ',', '.');
+            $mime_type = $arquivos['download']->mime_type;
+        } elseif (isset($arquivos['visualizacao']->url)) {
+            $download = $arquivos['visualizacao']->url;
+            $formato = $arquivos['visualizacao']->extension;
+            $mega_bytes = number_format($arquivos['visualizacao']->size / 1024, 2, ',', '.');
+            $mime_type = $arquivos['visualizacao']->mime_type;
+        }
         return view(
-            'conteudos_digitais.index',
+            'incorporar.index',
             compact('download', 'formato', 'mega_bytes', 'mime_type', 'conteudo')
         );
     }
-
+    
     /**
      * Responsável por criar arquivos de conteúdo
      */
@@ -353,25 +361,27 @@ class ConteudoController extends ApiController
     {
         $file = null;
 
-        if ($conteudo && $conteudo->id) 
-        {
-            if (isset($request->download) && !is_null($request->download)) 
-            {
+        if ($conteudo && $conteudo->id) {
+            if ($request->has('download') && !is_null($request->download)) {
                 $this->deleteFile("download", $conteudo->id);
                 $file = $this->saveFile($conteudo->id, [$request->download], 'download');
-                if($conteudo->tipo->id == 5)
-                if($file &&(!isset($request->imagem_associada)))
-                {
-                    $this->deleteFile("imagem-associada", $conteudo->id);
-                    $imagemPath =  Storage::disk('conteudos-digitais')->path("imagem-associada");
-                    $imageExtraction = new ImageExtractionFromVideo($this->downloadFileConteudoReferencia($conteudo->id),$conteudo->id, $imagemPath);
-                    $imageExtraction->realXtract(10);
+                if ($conteudo->tipo->id == 5) {
+                    if ($file && !$request->has('imagem_associada')) {
+                        $this->deleteFile("imagem-associada", $conteudo->id);
+                        $imagemPath =  Storage::disk('conteudos-digitais')->path("imagem-associada");
+                        $imageExtraction = new ImageExtractionFromVideo(
+                            $this->downloadFileConteudoReferencia($conteudo->id),
+                            $conteudo->id,
+                            $imagemPath
+                        );
+                        $imageExtraction->realXtract(10);
+                    }
                 }
             }
-            if (isset($request->guias_pedagogicos) && !is_null($request->guias_pedagogicos)) {
+            if ($request->has('guias_pedagogicos') && !is_null($request->guias_pedagogicos)) {
                 $file = $this->saveFile($conteudo->id, [$request->guias_pedagogicos], 'guias-pedagogicos');
             }
-            if (isset($request->imagem_associada) && !is_null($request->imagem_associada)) {
+            if ($request->has('imagem_associada') && !is_null($request->imagem_associada)) {
                 $this->deleteFile("imagem-associada", $conteudo->id);
                 $file = $this->saveFile($conteudo->id, [$request->imagem_associada], 'imagem-associada');
             }

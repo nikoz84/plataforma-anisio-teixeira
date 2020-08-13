@@ -12,7 +12,7 @@ use Imagick;
  */
 class ConversorImg
 {
-    public function converterImg($urlImg, $deleteOriginalFile="", $urlDestino="")
+    public function converterImg($urlImg, $deleteOriginalFile = "", $urlDestino = "")
     {
         if (is_file($urlImg)) {
             
@@ -23,33 +23,38 @@ class ConversorImg
                     $urlDestino= $caminhoImg;
                 }
                 switch ($ext) {
-                    case 'png': $this->converterPngParaWebp($urlImg, $urlDestino, $deleteOriginalFile); break;
-                    case 'jpeg': $this->converterJpegParaWebp($urlImg, $urlDestino, $deleteOriginalFile); break;
-                    case "gif": $this->converterGifParaWebp($urlImg, $urlDestino, $deleteOriginalFile); break;
-                    case "svg+xml": $this->converterSvgParaWebp($urlImg, $urlDestino, $deleteOriginalFile); break;
-                    case "svg": $this->converterSvgParaWebp($urlImg, $urlDestino, $deleteOriginalFile); break;
-                    default: echo "default img\n";
+                    case 'png':
+                        $this->converterPngParaWebp($urlImg, $urlDestino, $deleteOriginalFile);
+                        break;
+                    case 'jpeg':
+                        $this->converterJpegParaWebp($urlImg, $urlDestino, $deleteOriginalFile);
+                        break;
+                    case "gif":
+                        $this->converterGifParaWebp($urlImg, $urlDestino, $deleteOriginalFile);
+                        break;
+                    case "svg+xml":
+                        $this->converterSvgParaWebp($urlImg, $urlDestino, $deleteOriginalFile);
+                        break;
+                    case "svg":
+                        $this->converterSvgParaWebp($urlImg, $urlDestino, $deleteOriginalFile);
+                        break;
+                    default:
+                        echo "default img\n";
                 }
                 
                 return true;
             }
-        }
-        else if(is_dir($urlImg))
-        {
+        } elseif (is_dir($urlImg)) {
             $i=1;
             foreach (scandir($urlImg) as $url) {
-                if (($url) != "." && ($url) != "..") 
-                {
+                if (($url) != "." && ($url) != "..") {
                     $this->converterImg($urlImg.DIRECTORY_SEPARATOR.$url, $urlDestino);
                     $i++;
                     echo "{".$url."}"."\n";
-                    
                 }
             }
             return true;
-        }
-        else
-        {
+        } else {
             echo "url não é nada:".$urlImg;
         }
         return false;
@@ -57,13 +62,12 @@ class ConversorImg
 
     public function confereUrl($urlImg)
     {
-        if(!file_exists($urlImg))
-        {
+        if (!file_exists($urlImg)) {
             throw new Exception();
         }
         $mimetype = mime_content_type($urlImg);
         echo $mimetype."\n";
-        if (strpos($mimetype, "image") === false ) {
+        if (strpos($mimetype, "image") === false) {
             return false;
         }
         return true;
@@ -75,17 +79,16 @@ class ConversorImg
      */
     public function extensaoImagem($urlImagem)
     {
-        if($this->confereUrl($urlImagem))
-        {
+        if ($this->confereUrl($urlImagem)) {
             $mimetype = mime_content_type($urlImagem);
-            return str_replace("image/","", $mimetype);
+            return str_replace("image/", "", $mimetype);
         }
         return false;
     }
 
     public function caminhoImagem($urlImg)
     {
-        $urlimage = str_replace(basename($urlImg),"",$urlImg);
+        $urlimage = str_replace(basename($urlImg), "", $urlImg);
         return $urlimage;
     }
 
@@ -93,27 +96,27 @@ class ConversorImg
     {
         $nomeBase = basename($urlImg);
         $ext = $this->extensaoImagem($urlImg);
-        if($ext == "svg+xml")
-        $ext = "svg";
+        if ($ext == "svg+xml") {
+            $ext = "svg";
+        }
         $nomeBase = str_replace(".".$ext, "", $nomeBase);
         return $nomeBase;
     }
 
-    private function imageCreate($urlImagemOrigem,$urlDestino, $img, $deleteOriginalFile)
+    private function imageCreate($urlImagemOrigem, $urlDestino, $img, $deleteOriginalFile)
     {
         imagepalettetotruecolor($img);
         imagealphablending($img, true);
         imagesavealpha($img, true);
         $realpath = $this->getRelativePath(__DIR__, $urlDestino);
-        $realpath = str_replace("../../","", $realpath);
+        $realpath = str_replace("../../", "", $realpath);
         $nomebase = $this->nomeBase($urlImagemOrigem);
         echo " nomebase:".$nomebase;
         $newName = $nomebase.".webp";
         echo "\nnewfile:[".$realpath.$newName."]";
         fopen($realpath.$newName, "w");
         imagewebp($img, $realpath.$newName);
-        if($deleteOriginalFile == "y")
-        {
+        if ($deleteOriginalFile == "y") {
             unlink($urlImagemOrigem);
         }
     }
@@ -121,12 +124,9 @@ class ConversorImg
     public function converterPngParaWebp($urlImagemOrigem, $urlDestino, $deleteOriginalFile)
     {
         try {
-            
             $img = imagecreatefrompng($urlImagemOrigem);
-            $this->imageCreate($urlImagemOrigem, $urlDestino , $img, $deleteOriginalFile);
-        }
-        catch(Exception $e)
-        {
+            $this->imageCreate($urlImagemOrigem, $urlDestino, $img, $deleteOriginalFile);
+        } catch (Exception $e) {
             echo $e;
         }
     }
@@ -135,10 +135,8 @@ class ConversorImg
     {
         try {
             $img = imagecreatefromjpeg($urlImagemOrigem);
-            $this->imageCreate($urlImagemOrigem, $urlDestino , $img, $deleteOriginalFile);
-        }
-        catch(Exception $e)
-        {
+            $this->imageCreate($urlImagemOrigem, $urlDestino, $img, $deleteOriginalFile);
+        } catch (Exception $e) {
             echo $e;
         }
     }
@@ -147,7 +145,7 @@ class ConversorImg
     {
         try {
             $realpath = $this->getRelativePath(__DIR__, $urlDestino);
-            $realpath = str_replace("../../","", $realpath);
+            $realpath = str_replace("../../", "", $realpath);
             $nomebase = $this->nomeBase($urlImagemOrigem);
             $newName = $nomebase.".webp";
             $command = new Command('C:\Program Files\ImageMagick-7.0.10-Q16-HDRI\magick.exe');
@@ -155,13 +153,10 @@ class ConversorImg
             echo " \nto:".$realpath.$newName." \n";
             //fopen($realpath.$newName, "w+");
             exec("magick convert ".$urlImagemOrigem." ".$realpath.$newName);
-            if($deleteOriginalFile == "y")
-            {
+            if ($deleteOriginalFile == "y") {
                 unlink($urlImagemOrigem);
             }
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             echo $e;
         }
     }
@@ -170,15 +165,13 @@ class ConversorImg
     {
         try {
             $img = imagecreatefromwbmp($urlImagemOrigem);
-            $this->imageCreate($urlImagemOrigem, $urlDestino , $img, $deleteOriginalFile);
-        }
-        catch(Exception $e)
-        {
+            $this->imageCreate($urlImagemOrigem, $urlDestino, $img, $deleteOriginalFile);
+        } catch (Exception $e) {
             echo $e;
         }
     }
 
-    function getRelativePath($from, $to)
+    public function getRelativePath($from, $to)
     {
         // some compatibility fixes for Windows paths
         $from = is_dir($from) ? rtrim($from, '\/') . '/' : $from;
@@ -190,15 +183,15 @@ class ConversorImg
         $to       = explode('/', $to);
         $relPath  = $to;
 
-        foreach($from as $depth => $dir) {
+        foreach ($from as $depth => $dir) {
             // find first non-matching dir
-            if($dir === $to[$depth]) {
+            if ($dir === $to[$depth]) {
                 // ignore this directory
                 array_shift($relPath);
             } else {
                 // get number of remaining dirs to $from
                 $remaining = count($from) - $depth;
-                if($remaining > 1) {
+                if ($remaining > 1) {
                     // add traversals up to first matching dir
                     $padLength = (count($relPath) + $remaining - 1) * -1;
                     $relPath = array_pad($relPath, $padLength, '..');

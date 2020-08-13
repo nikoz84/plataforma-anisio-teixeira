@@ -1,4 +1,24 @@
 ################################################################################################
+# Versão 2.0.4
+################################################################################################
+## Mudanças (layout, correção ortográfica, mudança de código)
+- Layout página sobre corregida para mobile
+- Para mobile adiciona logo marca no sidebar
+- Se adiciona marcador quando usuário não seleciona um componente curricular
+- Adicionado redirecionamento '/home/ipes' para '/ipes' em arquivo routes/web.php
+- Adicionado redirecionamento '/home/rotinas-de-estudo' para '/rotinas-de-estudo'
+- Adicionado redirecionamento '/conteudos-digitais' para '/recursos-educacionais'
+- Adicionado redirecionamento (.htaccess) /conteudos-digitais/conteudos/listar/tag/(.*) /recursos-educacionais/listar?tag=$1
+- Adicionado redirecionamento (.htaccess) ^/tv-anisio-teixeira/programas/exibir/id/(.*) /tv-anisio-teixeira/conteudo/exibir/$1
+- Adicionado redirecionamento (.htaccess) ^/emitec/disciplinas/exibir/id/(.*) /emitec/conteudo/exibir/$1
+- Adicionado redirecionamento (.htaccess) ^/conteudos-digitais/conteudo/incorporar-conteudo/id/(.*) /incorporar-conteudo/$1
+## Correções (bugs, código)
+- Correção problema de cadastrar conteúdo
+- Correção no componente PlayerActions
+## Novas Funcionalidades
+- Incorporar conteúdo e redireção das antigas URL's 
+- Validação de tipos de arquivos em formulário de conteúdo digital
+################################################################################################
 # Versão 2.0.3
 ################################################################################################
 ## Mudanças (layout, correção ortográfica, mudança de código)

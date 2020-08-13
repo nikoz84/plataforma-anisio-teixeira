@@ -52,7 +52,7 @@ class AplicativoController extends ApiController
 
     /**
      * Cria um novo aplicativo no banco de dados
-     * 
+     *
      *@param \App\Aplicativo $aplicativo
      *@return \App\Controller\ApiResponser retorna jsonS
      */
@@ -64,30 +64,26 @@ class AplicativoController extends ApiController
             $this->configRules()
         );
         $data = [];
-        try 
-        {
+        try {
             if ($validator->fails()) {
                 $data = $validator->errors();
                 throw new  Exception("Erro no preenchimento dos dados");
             }
             $aplicativo = $this->aplicativo;
+            $aplicativo->canal_id = Aplicativo::CANAL_ID;
             $aplicativo->user_id = Auth::user()->id;
-            $aplicativo->fill($this->request->all());
-            $aplicativo->options  = json_decode($this->request->options);
+            $aplicativo->options  = json_decode($this->request->options, true);
             if (!$aplicativo->save()) {
                 throw new  Exception("Erro no preenchimento dos dados");
             }
             $aplicativo->tags()->attach($this->request->tags);
-            if ($this->request->imagemAssociada) 
-            {
+            if ($this->request->imagemAssociada) {
                 $fileImg = $this->saveFile($aplicativo->id, [$this->request->imagemAssociada], 'imagem-associada', 'aplicativos-educacionais');
                 if (!$fileImg) {
                     throw new Exception("Não foi possível salvar imagem. Tente novamente mais tarde.", 501);
                 }
             }
-        }
-        catch(Exception $ex)
-        {
+        } catch (Exception $ex) {
             return $this->errorResponse($data, $ex->getMessage(), 422);
         }
         return $this->successResponse($aplicativo, 'Aplicativo cadastrado com sucesso!', 200);
@@ -103,7 +99,7 @@ class AplicativoController extends ApiController
             'url' => ['required', new \App\Rules\ValidUrl],
             'category_id' => 'required',
             'tags' => 'required|array|between:3,10',
-            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:1024'            
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:1024'
         ];
     }
     /**

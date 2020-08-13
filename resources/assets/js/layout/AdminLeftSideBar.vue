@@ -23,6 +23,7 @@
       <q-item
         tag="div"
         :to="`/admin/${link.slug}/listar`"
+        
         :aria-label="`IR: ${link.label}`"
         :title="`IR: ${link.label}`"
         clickable
