@@ -39,7 +39,8 @@ export default {
     contato: Contato,
     listar: Table,
     resumo: Resumo,
-    categorias:CategoryConteudoForm
+    categorias:CategoryConteudoForm,
+    componentes: CurricularComponentsFormVue
   },
   data() {
     return {

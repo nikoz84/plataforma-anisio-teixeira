@@ -31,9 +31,9 @@ class AuthController extends ApiController
 
         $this->request = $request;
     }
+
     /**
      * Login Usuario.
-     *
      * @return App\Http\Controllers\AuthController\resp
      */
     public function login()
