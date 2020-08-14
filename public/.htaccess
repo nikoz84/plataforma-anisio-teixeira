@@ -4,8 +4,9 @@
   php_value memory_limit 500M
   php_value max_execution_time 18000
 </IfModule>
-<Files ".user.ini"> 
-    Require all denied
+<Files ".user.ini">
+  # Configurações para php-fpm
+  Require all denied
 </Files>
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
