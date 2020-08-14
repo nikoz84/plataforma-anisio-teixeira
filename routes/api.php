@@ -108,6 +108,7 @@ Route::group(
         Route::post('/categorias', 'CategoryController@create')->name('adicionar.categorias');
         /** COMPONENTES */
         Route::post('/componentes', 'ComponentesController@create')->name('criar.componentes.curriculares');
+        Route::get('/componentes/{id}', 'ComponentesController@getById')->name('obter.componentes');
 
         /** AUTENTICACAO */
         Route::post('/auth/logout', 'AuthController@logout')->name('sair');

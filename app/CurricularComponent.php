@@ -14,7 +14,12 @@ class CurricularComponent extends Model
     protected $table = 'curricular_components';
     protected $hidden = ['pivot'];
     protected $appends = ['icon', 'user_can', 'search_url'];
-    public $fillable = ['name',  'canal_id', 'category_id', 'nivel_id'];
+    public $fillable = ['name', 'category_id', 'nivel_id'];
+
+    public function category()
+    {
+        return $this->hasOne("App\Category", "id", "category_id");
+    }
 
     public function categories()
     {
@@ -29,6 +34,7 @@ class CurricularComponent extends Model
     {
         return $this->belongsToMany('App\Conteudo');
     }
+
     public function getIconAttribute()
     {
         return "/img/sprite/" . Str::slug($this['name'], '-') . ".svg";

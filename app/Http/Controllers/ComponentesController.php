@@ -63,6 +63,20 @@ class ComponentesController extends ApiController
         return $this->showOne($component, 'Componente Curricular atualizada com sucesso!!', 200);
     }
 
+    public function getById($id)
+    {
+        $component = new Componente();
+        try{
+            $component =  Componente::findOrFail($id);
+            $component->category();
+        }
+        catch(Exception $ex)
+        {
+            return $this->errorResponse([], 'Não foi possível deletar a categoria', 422);
+        }
+        return $component;
+    }
+
     public function create(Componente $componente)
     {
         $validator = Validator::make($this->request->all(), $this->rules());
