@@ -5,18 +5,13 @@
 - Layout página sobre corregida para mobile
 - Para mobile adiciona logo marca no sidebar
 - Se adiciona marcador quando usuário não seleciona um componente curricular
-- Adicionado redirecionamento '/home/ipes' para '/ipes' em arquivo routes/web.php
-- Adicionado redirecionamento '/home/rotinas-de-estudo' para '/rotinas-de-estudo'
-- Adicionado redirecionamento '/conteudos-digitais' para '/recursos-educacionais'
-- Adicionado redirecionamento (.htaccess) /conteudos-digitais/conteudos/listar/tag/(.*) /recursos-educacionais/listar?tag=$1
-- Adicionado redirecionamento (.htaccess) ^/tv-anisio-teixeira/programas/exibir/id/(.*) /tv-anisio-teixeira/conteudo/exibir/$1
-- Adicionado redirecionamento (.htaccess) ^/emitec/disciplinas/exibir/id/(.*) /emitec/conteudo/exibir/$1
-- Adicionado redirecionamento (.htaccess) ^/conteudos-digitais/conteudo/incorporar-conteudo/id/(.*) /incorporar-conteudo/$1
+- Adicionado redirecionamento de antigas urls para novo padrao
+- Adicionada imagem de governo e marcas na página sobre
 ## Correções (bugs, código)
-- Correção problema de cadastrar conteúdo
+- Correção problema ao cadastrar conteúdo
 - Correção no componente PlayerActions
 ## Novas Funcionalidades
-- Incorporar conteúdo e redireção das antigas URL's 
+- Incorporar conteúdo
 - Validação de tipos de arquivos em formulário de conteúdo digital
 ################################################################################################
 # Versão 2.0.3
@@ -27,7 +22,6 @@
 - Novo Layout do Canal das Universidades
 ## Correções (bugs, código)
 - Correção de upload de arquivo de download
-- Upload de arquivos max_file_size e post_max_size para 800MB (mod_php7)
 - Formulario de canal OK
 - Correção de muitas requisições throttle:130
 - Imagem associada de conteudo emitec referencia corrigida
