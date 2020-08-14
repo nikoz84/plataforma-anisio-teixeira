@@ -252,8 +252,8 @@ class Conteudo extends Model
             return $query;
         }
         $type = ($por == 'tag') ? "simple" : "portuguese";
-        return $query->whereRaw('ts_documento @@ plainto_tsquery(?, lower(unaccent(?)))', [$type, $search])
-            ->orderByRaw('ts_rank(ts_documento, plainto_tsquery(?, lower(unaccent(?)))) DESC', [$type, $search]);
+        return $query->whereRaw("ts_documento @@ plainto_tsquery(?, lower(unaccent(?)))", [$type, $search])
+            ->orderByRaw("ts_rank(ts_documento, plainto_tsquery(?, lower(unaccent(?)))) DESC", [$type, $search]);
     }
 
     /**
@@ -397,10 +397,12 @@ class Conteudo extends Model
         $tags = $conteudo->tags->implode('name', ', ');
         
         return Conteudo::whereRaw(
-            "conteudos.ts_documento @@ plainto_tsquery('portuguese', lower(unaccent('{$tags}')))"
+            "conteudos.ts_documento @@ plainto_tsquery('portuguese', lower(unaccent(?)))",
+            [$tags]
         )->orWhereRaw(
-            "conteudos.ts_documento @@ plainto_tsquery('simple', lower(unaccent('{$tags}')))"
-        )->where('id', '!=', $id);
+            "conteudos.ts_documento @@ plainto_tsquery('simple', lower(unaccent(?)))",
+            [$tags]
+        )->where('id', '<>', $id);
     }
 
 

@@ -135,6 +135,10 @@ class CanalController extends ApiController
     {
         $canal = $this->canal::with(['categories', 'appsCategories'])
             ->where('slug', $slug)->get()->first();
+        
+        if (!$canal) {
+            return $this->errorResponse([], 'Não encontrado', 404);
+        }
 
         return $this->showOne($canal, '', 200);
     }

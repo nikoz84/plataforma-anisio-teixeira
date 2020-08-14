@@ -55,28 +55,24 @@ trait FileSystemLogic
     public static function getImageFromTipo($tipo, $id)
     {
         $path = Storage::disk('conteudos-digitais')->path("imagem-associada");
-        if ($tipo->id == 5) 
-        {
+        if ($tipo->id == 5) {
             $path_sinopse = "{$path}". DIRECTORY_SEPARATOR ."sinopse". DIRECTORY_SEPARATOR."$id.*";
             $file = collect(File::glob($path_sinopse))->shuffle()->last();
-            if($file)
-            return Storage::disk('conteudos-digitais')->url("imagem-associada/sinopse/".basename($file));
-        }
-        else
-        {
+            if ($file) {
+                return Storage::disk('conteudos-digitais')->url("imagem-associada/sinopse/".basename($file));
+            }
+        } else {
             $iconeNome = ReplaceStr::replace($tipo->name);
             $file = Storage::disk('public-path')->url("img/tipo-conteudo/".strtolower($iconeNome).".svg");
         }
         return $file;
-
     }
 
     public static function getImageFromConteudo($id)
     {
         $path_assoc = Storage::disk('conteudos-digitais')->path('imagem-associada');
         $file = self::findFiles($path_assoc, $id);
-        if($file)
-        {
+        if ($file) {
             return Storage::disk('conteudos-digitais')->url("imagem-associada/".basename($file));
         }
         return $file;

@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Traits\FileSystemLogic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class ConteudoController extends ApiController
 {
@@ -189,11 +190,16 @@ class ConteudoController extends ApiController
         $conteudo->tags()->attach($request->tags);
         $conteudo->componentes()->attach(explode(',', $request->componentes));
         $conteudo::tsDocumentoSave($conteudo->id);
-
-        $file = $this->storeFiles($request, $conteudo);
-        if (!$file) {
-            return $this->errorResponse([], 'Não foi possível fazer upload de arquivos.', 422);
+        try {
+            $file = $this->storeFiles($request, $conteudo);
+            if (!$file) {
+                throw new Exception('Não foi possível fazer upload de arquivos.');
+            }
+        } catch (Exception $ex) {
+            Log::notice($ex->getMessage());
+            return $this->errorResponse([], $ex->getMessage(), 422);
         }
+        
         
         return $this->showOne($conteudo, 'Conteúdo cadastrado com sucesso!!', 200);
     }
@@ -317,8 +323,8 @@ class ConteudoController extends ApiController
             'category',
             'componentes',
             'niveis',
-        ])->find($id);
-
+        ])->findOrFail($id);
+        
         $conteudo->increment('qt_access', 1);
 
         return $this->showOne($conteudo);

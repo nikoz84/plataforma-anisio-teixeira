@@ -15,12 +15,13 @@ import {
   RoleForm,
   TipoForm,
   OptionsForm,
-  CategoryConteudoForm
+  CategoryConteudoForm,
+  CurricularComponentsForm
   } from "@forms/models";
 
 import Resumo from "@pages/Resumo.vue";
 import { Contato, Table }  from "@components/exibir";
-import CurricularComponentsFormVue from '../../forms/models/CurricularComponentsForm.vue';
+
 
 
 export default {
@@ -40,7 +41,7 @@ export default {
     listar: Table,
     resumo: Resumo,
     categorias:CategoryConteudoForm,
-    componentes: CurricularComponentsFormVue
+    componentes: CurricularComponentsForm
   },
   data() {
     return {

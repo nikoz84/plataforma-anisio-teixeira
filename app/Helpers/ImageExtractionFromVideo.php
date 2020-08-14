@@ -2,6 +2,7 @@
 namespace App\Helpers;
 
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 /*
 * Esta classe é usada para extrair frame de um vídeo utilizando comandos do Software FFmpeg
@@ -139,17 +140,20 @@ class ImageExtractionFromVideo
     public function realXtract($second)
     {
         if (!is_file($this->videoPath)) {
-            throw new Exception("Caminho fornecido:".$this->videoPath." não é um arquivo, tão pouco de video.", 501);
+            throw new Exception("Caminho fornecido: ".$this->videoPath." não é um arquivo, tão pouco de video.", 501);
         }
         if (!$this->verificaVideo($this->videoPath)) {
-            throw new Exception("Arquivo:".$this->videoPath." não é um arquivo de video.", 501);
+            throw new Exception("Arquivo: ".$this->videoPath." não é um arquivo de video.", 501);
         }
         if (!is_dir($this->imagePathDestination)) {
-            throw new Exception("Caminho:".$this->imagePathDestination." não é um diretório de destino válido para salvar frame de video.", 501);
+            throw new Exception("Caminho: ".$this->imagePathDestination." não é um diretório de destino válido para salvar frame de video.", 501);
         }
-        $command = "ffmpeg -itsoffset -{$second} -i {$this->videoPath} -r 1 -s {$this->imageSize} -f image2 -vframes 1 {$this->imagePathDestination}". DIRECTORY_SEPARATOR ."{$this->createImageName()}-%03d.jpeg";
-        
-        shell_exec($command);
+        try {
+            $command = "ffmpeg -itsoffset -{$second} -i {$this->videoPath} -r 1 -s {$this->imageSize} -f image2 -vframes 1 {$this->imagePathDestination}". DIRECTORY_SEPARATOR ."{$this->createImageName()}-%03d.jpeg";
+            shell_exec($command);
+        } catch (Exception $ex) {
+            Log::notice($ex->getMessage());
+        }
     }
     
     /**
