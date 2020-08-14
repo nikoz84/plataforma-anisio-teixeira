@@ -153,7 +153,7 @@ class AuthController extends ApiController
                 throw new Exception("Erro ao enviar os cadastrar usuário");
             }
             if (!$this->sendConfirmationEmail($user->email, $token, 'register')) {
-                throw new Exception("Espere a confirmação na sua conta de email");
+                throw new Exception("Erro ao enviar email");
             }
         } catch (Exception $ex) {
             return $this->errorResponse([], $ex->getMessage(), 422);
@@ -161,7 +161,7 @@ class AuthController extends ApiController
         
         return $this->successResponse(
             [],
-            "Usuário cadastrado com sucesso! Espere a confirmação na sua conta de email",
+            "Usuário cadastrado com sucesso! Espere o código de ativação em sua conta de email",
             200
         );
     }
