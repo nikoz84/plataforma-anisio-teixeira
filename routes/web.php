@@ -40,6 +40,21 @@ Route::get('/docs', function (Request $request) {
 Route::permanentRedirect('/home/ipes', '/ipes');
 Route::permanentRedirect('/home/rotinas-de-estudo', '/rotinas-de-estudo');
 Route::permanentRedirect('/conteudos-digitais', '/recursos-educacionais');
+Route::get('/conteudos-digitais/conteudos/listar/tag/{id}', function ($id) {
+    return redirect("/recursos-educacionais/listar?tag={$id}");
+});
+Route::get('/tv-anisio-teixeira/programas/exibir/id/{id}', function ($id) {
+    return redirect("/tv-anisio-teixeira/conteudo/exibir/{$id}");
+});
+Route::get('/emitec/disciplinas/exibir/id/{id}', function ($id) {
+    return redirect("/emitec/conteudo/exibir/{$id}");
+});
+Route::get('/conteudos-digitais/conteudo/exibir/id/{id}', function ($id) {
+    return redirect("/recursos-educacionais/conteudo/exibir/{$id}");
+});
+Route::get('/conteudos-digitais/conteudo/incorporar-conteudo/id/{id}', function ($id) {
+    return redirect("/incorporar-conteudo/{$id}");
+});
 
 Route::get('/incorporar-conteudo/{id}', 'ConteudoController@incorporarConteudo');
 

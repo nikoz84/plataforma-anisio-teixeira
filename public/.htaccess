@@ -1,19 +1,18 @@
 <IfModule mod_php7.c>
   php_value upload_max_filesize 800M
   php_value post_max_size 800M
+  php_value memory_limit 500M
+  php_value max_execution_time 18000
 </IfModule>
+<Files ".user.ini"> 
+    Require all denied
+</Files>
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options +FollowSymLinks -MultiViews -Indexes
     </IfModule>
 
     RewriteEngine On
-    
-    RedirectMatch 301 ^/conteudos-digitais/conteudos/listar/tag/(.*) /recursos-educacionais/listar?tag=$1
-    RedirectMatch 301 ^/tv-anisio-teixeira/programas/exibir/id/(.*) /tv-anisio-teixeira/conteudo/exibir/$1
-    RedirectMatch 301 ^/emitec/disciplinas/exibir/id/(.*) /emitec/conteudo/exibir/$1
-    RedirectMatch 301 ^/conteudos-digitais/conteudo/exibir/id/(.*) /recursos-educacionais/conteudo/exibir/$1
-    RedirectMatch 301 ^/conteudos-digitais/conteudo/incorporar-conteudo/id/(.*) /incorporar-conteudo/$1
     
     # Handle Authorization Header
     #RewriteCond %{HTTP:Authorization} .
