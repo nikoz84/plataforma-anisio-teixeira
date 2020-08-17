@@ -6,13 +6,14 @@
         <h5 v-if="curricularComponent.id != null">Edição Componente Curricular <b>{{curricularComponent.name}}</b></h5>
         <h5 v-if="curricularComponent.id == null">Cadastro de Componente Curricular</h5>
         <form v-on:submit.prevent="save()">
+            <ShowErrors :errors="errors.name"></ShowErrors>
             <q-input filled v-model.trim="curricularComponent.name" label="Nome do Componente" 
                     hint="Nome abreviado ou reduzido"
                     :error="errors && errors.name && errors.name.length > 0"
                     bottom-slot
                 />
                 <q-select outlined option-value="id" option-label="name" ransition-show="scale" transition-hide="scale"
-                    v-model="curricularComponent.category_id" :options="categorias" label="Categoria relacionada"
+                    v-model="curricularComponent.category" :options="categorias" label="Categoria relacionada"
                     hint="Selecione uma categoria se precisar agrupar por sub-categorias"
                     behavior="dialog"
                 />
@@ -76,9 +77,9 @@ export default {
         async save() {
             const form = new FormData();
             form.append("name", this.curricularComponent.name);
-            if(this.curricularComponent.canal)
+            if(this.curricularComponent.category)
             {
-                form.append("canal_id", this.category.canal.id);
+                form.append("category_id", this.curricularComponent.category.id);
             }
             try
             {
@@ -86,7 +87,7 @@ export default {
                 {
                     form.append("id", this.curricularComponent.id);    
                     form.append("_method", "PUT");
-                    let resp = await axios.post(this.$route.params.slug +"/"+ this.category.id, form);
+                    let resp = await axios.post(this.$route.params.slug +"/"+ this.curricularComponent.id, form);
                 }
                 else
                 {
@@ -100,10 +101,10 @@ export default {
             }
          },
          async getCategories() {
-            let resp = await axios.get("/aplicativos/categories");
+            let resp = await axios.get("/componentescategorias");
             console.log("resp", resp)
             if (resp.data.success) {
-                this.categorias = resp.data.metadata;
+                this.categorias = resp.data.paginator.data;
             }
         },
         async getComponente() 
@@ -114,6 +115,7 @@ export default {
             }
             let resp = await axios.get(`/componentes/${this.$route.params.id}`);
             this.curricularComponent = resp.data;
+            console.log("curricularComponent",this.curricularComponent);
         }
      }
 }

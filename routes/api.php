@@ -38,6 +38,9 @@ Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscar.can
 /** COMPONENTES */
 Route::get('/componentes', 'ComponentesController@index')->name('lista.componentes.curriculares');
 
+/** CATEGORIAS COMPONENTES */
+Route::get('/componentescategorias', 'CurricularComponentCategoryController@index')->name('lista.categorias.componentes.curriculares');
+
 /** CONTEUDOS */
 Route::get('/conteudos', 'ConteudoController@index')->name('lista.conteudo');
 Route::get('/conteudos/sites', 'ConteudoController@getSitesTematicos')->name('lista.sites.tematicos');
@@ -109,6 +112,10 @@ Route::group(
         /** COMPONENTES */
         Route::post('/componentes', 'ComponentesController@create')->name('criar.componentes.curriculares');
         Route::get('/componentes/{id}', 'ComponentesController@getById')->name('obter.componentes');
+        Route::put('/componentes/{id}', 'ComponentesController@update')->name('atualizar.componentes');
+        /** COMPONENTES CATEGORIAS*/
+        Route::post('/componentes-categoria', 'CurricularComponentCategoryController@create')->name('criar.componentes-categoria.curriculares');
+        Route::get('/componentes-categoria/{id}', 'CurricularComponentCategoryController@getById')->name('obter.componentes-categoria');
 
         /** AUTENTICACAO */
         Route::post('/auth/logout', 'AuthController@logout')->name('sair');

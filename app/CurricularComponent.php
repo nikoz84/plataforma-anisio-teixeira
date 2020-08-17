@@ -18,7 +18,7 @@ class CurricularComponent extends Model
 
     public function category()
     {
-        return $this->hasOne("App\Category", "id", "category_id");
+        return $this->belongsTo("App\Category", "category_id", "id");
     }
 
     public function categories()

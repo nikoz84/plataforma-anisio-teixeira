@@ -21,24 +21,24 @@ class ComponentesController extends ApiController
     }
 
     /**
-     * Mostra toda as informações do Aplicativo no banco de dados.
-     *
-     * @param \App\Componentes $componentes
-     * @param \App\Controller\Api Responser
-     * retorna json
-     * @return App\Traits\ApiResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
         $limit = $this->request->get('limit', 15);
         $componentes = CurricularComponent::select("*")->with('niveis')
             ->with("categories")
+            ->with("category")
             ->limit($limit)
             ->orderBy('name', 'asc')
             ->paginate($limit);
         return $this->showAsPaginator($componentes);
     }
 
+    /**
+     * @param $id
+     * @return CurricularComponent
+     */
     public function update($id)
     {
         try
@@ -47,22 +47,26 @@ class ComponentesController extends ApiController
             $this->authorize('update', $id);
             $validator = Validator::make($this->request->all(), $this->config());
             if ($validator->fails()) {
-                throw new Exception('Não foi possível atualizar componente. Erro no preenchimento do formulário.');
+                throw new Exception('Não foi possível atualizar componente. Erro no preenchimento do formulário.',404);
             }
             
             $component->fill($this->request->all());
             if($component->save())
             {
-
+                throw new Exception('Não foi possível atualizar componente. Tente novamente mais tarde', 501);
             }
         }
         catch(Exception $ex)
         {
-            return $this->errorResponse([], $ex->getMessage(), 422);
+            return $this->errorResponse([], $ex->getMessage(), $ex->getCode() > 0 ? $ex->getCode() : 500 );
         }
         return $this->showOne($component, 'Componente Curricular atualizada com sucesso!!', 200);
     }
 
+    /**
+     * @param $id
+     * @return CurricularComponent
+     */
     public function getById($id)
     {
         $component = new Componente();
@@ -77,7 +81,7 @@ class ComponentesController extends ApiController
         return $component;
     }
 
-    public function create(Componente $componente)
+    public function create()
     {
         $validator = Validator::make($this->request->all(), $this->rules());
         $data = [];
@@ -87,15 +91,17 @@ class ComponentesController extends ApiController
                 $data = $validator->errors();
                 throw new Exception("Não foi possível criar componente. Erro no preenchimento do formulário de cadastro.", 501);
             }
+            $componente = new Componente();
             $this->authorize('create', JWTAuth::user());   
+            $componente->fill($this->request->all());
             if (!$componente->save()) {
                 
-                throw new Exception('Não foi possível salvar imagem associada', 422);
+                throw new Exception('Não foi possível salvar componente', 422);
             }
         }
         catch(Exception $ex)
         {
-            return $this->errorResponse($data, $ex->getMessage(), 422);
+            return $this->errorResponse($data, $ex->getMessage(), $ex->getCode() > 0 &&  $ex->getCode() <505 ? $ex->getCode() : 500);
         }       
         return $this->successResponse($componente, 'Componente curricular registrada com sucesso!!', 200);
     }

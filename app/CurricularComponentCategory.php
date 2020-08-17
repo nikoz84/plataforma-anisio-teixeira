@@ -12,7 +12,7 @@ class CurricularComponentCategory extends Model
 
     protected $table = 'curricular_components_categories';
     protected $appends = ['user_can', 'search_url'];
-    public $fillable = ['name', 'category_id', 'nivel_id'];
+    public $fillable = ['name'];
 
     /**
      * obtem os componetes relacionados a este componente
@@ -22,7 +22,7 @@ class CurricularComponentCategory extends Model
     {
         return $this->hasMany(\App\CurricularComponent::class, 'category_id', 'id');
     }
-
+    
     /**
      * obtem string url de busca de eatributos da cateroria do componente
      * @return string
