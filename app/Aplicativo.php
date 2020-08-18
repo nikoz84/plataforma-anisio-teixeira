@@ -102,9 +102,9 @@ class Aplicativo extends Conteudo
      */
     public function getUrlExibirAttribute()
     {
-        $slug = $this->canal()->pluck('slug')->first();
+        //$slug = $this->canal()->pluck('slug')->first();
 
-        return "/{$slug}/aplicativo/exibir/" . $this['id'];
+        return "/aplicativos-educacionais/aplicativo/exibir/" . $this['id'];
     }
     /**
      * Seleciona e tranforma created-at ao formato (06 setembro de 2019 ás 17:37)
@@ -120,15 +120,20 @@ class Aplicativo extends Conteudo
      * obtem referencia do arquivo de imgame associada
      * @return string
      */
-    function refenciaImagemAssociada()
+    public function refenciaImagemAssociada()
     {
-        if(!$this->id)
-        return null;
+        if (!$this->id) {
+            return null;
+        }
+        
         $urlPath = Storage::disk("aplicativos-educacionais")->path("imagem-associada");
         $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.".*";
         $info = glob($urlPath);
-        if(sizeof($info)>0)
-        return $info[0]; 
+        if (sizeof($info)>0) {
+            return $info[0];
+        }
+        
         return null;
     }
+    
 }

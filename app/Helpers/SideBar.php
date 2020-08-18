@@ -176,6 +176,7 @@ class SideBar
                 'hability' => 'index',
                 'class' => \App\Category::class
             ],
+            /*
             [
                 'label' => 'Componentes',
                 'name' => 'IndexComponentes',
@@ -183,7 +184,7 @@ class SideBar
                 'hability' => 'index',
                 'class' => \App\CurricularComponent::class
             ]
-
+            */
         ]);
     }
 }

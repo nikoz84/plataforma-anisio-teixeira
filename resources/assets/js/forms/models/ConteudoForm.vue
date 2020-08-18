@@ -459,7 +459,7 @@ export default {
       } else {
         form.append("is_site", 0);
       }
-      //console.log(this.conteudo)
+      
       form.append("tipo_id", this.conteudo.tipo_id ? this.conteudo.tipo_id : "");
       form.append("canal_id", this.conteudo.canal_id ? this.conteudo.canal_id : "");
       form.append("license_id", this.conteudo.license_id ? this.conteudo.license_id : "");
