@@ -6,7 +6,6 @@
         <h5 v-if="curricularComponent.id != null">Edição Componente Curricular <b>{{curricularComponent.name}}</b></h5>
         <h5 v-if="curricularComponent.id == null">Cadastro de Componente Curricular</h5>
         <form v-on:submit.prevent="save()">
-            <ShowErrors :errors="errors.name"></ShowErrors>
             <q-input filled v-model.trim="curricularComponent.name" label="Nome do Componente" 
                     hint="Nome abreviado ou reduzido"
                     :error="errors && errors.name && errors.name.length > 0"
@@ -14,7 +13,12 @@
                 />
                 <q-select outlined option-value="id" option-label="name" ransition-show="scale" transition-hide="scale"
                     v-model="curricularComponent.category" :options="categorias" label="Categoria relacionada"
-                    hint="Selecione uma categoria se precisar agrupar por sub-categorias"
+                    hint="Selecione uma categoria ao qual este componente curricular pertence"
+                    behavior="dialog"
+                />
+            <q-select outlined option-value="id" option-label="name" ransition-show="scale" transition-hide="scale"
+                    v-model="curricularComponent.nivel" :options="niveisEnsino" label="Nível Ensino relacionado"
+                    hint="Selecione uma categoria ao qual este componente curricular pertence"
                     behavior="dialog"
                 />
             <q-img 
@@ -49,9 +53,12 @@ import {
   QStep,
   QStepperNavigation
 } from "quasar";
-import { ShowErrors } from '@forms/shared'
+import { ShowErrors } from '@forms/shared';
 export default {
     name: 'CurricularComponentsForm',
+    components: {
+        ShowErrors
+    },
     data() 
     {
         return {
@@ -60,8 +67,7 @@ export default {
                 id:null,
                 name:"",
                 nivel_id:null,
-                nivel:null,
-                category:null
+                nivel:null
             },
             errors: [],
             categorias:[]
@@ -71,10 +77,20 @@ export default {
      {
         this.getComponente();
         this.getCategories();
+        this.getNiveisEnsino();
      },
      methods: 
      {
-        async save() {
+         async getNiveisEnsino()
+         {
+              if (!this.$route.params.id) 
+              {
+                 return;
+              }
+              //let resp = await axios.get(`/niveis/${this.$route.params.id}`);
+              //this.curricularComponent = resp.data;
+         },
+         async save() {
             const form = new FormData();
             form.append("name", this.curricularComponent.name);
             if(this.curricularComponent.category)
@@ -104,7 +120,7 @@ export default {
             let resp = await axios.get("/componentescategorias");
             console.log("resp", resp)
             if (resp.data.success) {
-                this.categorias = resp.data.paginator.data;
+               this.categorias = resp.data.paginator.data;
             }
         },
         async getComponente() 

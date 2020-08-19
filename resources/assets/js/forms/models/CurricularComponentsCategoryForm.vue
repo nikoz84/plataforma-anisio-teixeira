@@ -3,9 +3,21 @@
     <div class="row q-pa-md">
 
         <div class="col-sm-12">
-            <h5 v-if="curricularComponent.id != null">Edição Componente Curricular <b>{{curricularComponent.name}}</b></h5>
-            <h5 v-if="curricularComponent.id == null">Cadastro de Componente Curricular</h5>
-            <form v-on:submit.prevent="save()">
+            <h5 v-if="curricularComponentCategory.id != null">Edição da Categoria Componente Curricular <b>{{this.categoryName}}</b></h5>
+            <h5 v-if="curricularComponentCategory.id == null">Cadastro da Categoria Componente Curricular</h5>
+             <form v-on:submit.prevent="save()">
+                 <ShowErrors :errors="errors.name"></ShowErrors>
+                 <q-input filled v-model.trim="curricularComponentCategory.name" label="Nome da Categoria do Componente" 
+                    hint="Nome abreviado ou reduzido"
+                    :error="errors && errors.name && errors.name.length > 0"
+                    bottom-slot
+                />
+                 <q-btn
+                    class="full-width"
+                    color="primary"
+                    @click="save()"
+                    label="Salvar"
+                    ></q-btn>
             </form>
         </div>
     </div>
@@ -25,8 +37,12 @@ import {
   QStepperNavigation
 } from "quasar";
 
+import { ShowErrors } from '@forms/shared';
 export default {
     name: 'CurricularComponentsCategoryForm',
+    components: {
+        ShowErrors
+    },
     data() 
     {
         return {
@@ -34,8 +50,14 @@ export default {
             curricularComponentCategory:{
                 id:null,
                 name:"",
-            }
+            },
+            categoryName:"",
+            errors:[]
         }
+    },
+    created(){
+        this.getComponenteCategoria() ;
+        
     },
     methods: 
      {
@@ -54,13 +76,23 @@ export default {
                 {
                     let resp = await axios.post(this.$route.params.slug , form);
                 }
-                this.$router.push(`/admin/componentes/listar`);
+                this.$router.push(`/admin/componentescategorias/listar`);
             }
             catch(ex)
             {
                 this.errors = ex.errors;
             }
          },
+         async getComponenteCategoria() 
+        {
+            if (!this.$route.params.id) 
+            {
+                return;
+            }
+            let resp = await axios.get(`/componentescategorias/${this.$route.params.id}`);
+            this.curricularComponentCategory = resp.data;
+            this.categoryName = this.curricularComponentCategory.name;
+        }
     }
 }
 

@@ -190,7 +190,6 @@ class SideBar
                 'hability' => 'index',
                 'class' => \App\CurricularComponentCategory::class
             ],
-
         ]);
     }
 }

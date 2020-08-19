@@ -113,10 +113,14 @@ Route::group(
         Route::post('/componentes', 'ComponentesController@create')->name('criar.componentes.curriculares');
         Route::get('/componentes/{id}', 'ComponentesController@getById')->name('obter.componentes');
         Route::put('/componentes/{id}', 'ComponentesController@update')->name('atualizar.componentes');
+        Route::get('/componentes/search/{termo}', 'ComponentesController@search')->name('buscar.componentes');
+        
         /** COMPONENTES CATEGORIAS*/
-        Route::post('/componentes-categoria', 'CurricularComponentCategoryController@create')->name('criar.componentes-categoria.curriculares');
-        Route::get('/componentes-categoria/{id}', 'CurricularComponentCategoryController@getById')->name('obter.componentes-categoria');
-
+        Route::post('/componentescategorias', 'CurricularComponentCategoryController@create')->name('criar.componentes-categoria.curriculares');
+        Route::get('/componentescategorias/{id}', 'CurricularComponentCategoryController@getById')->name('obter.componentes-categoria');
+        Route::get('/componentescategorias/search/{termo}', 'CurricularComponentCategoryController@search')->name('buscar.componentescategorias');
+        Route::put('/componentescategorias/{id}', 'CurricularComponentCategoryController@update')->name('atualizar.componentescategorias');
+        Route::delete('/componentescategorias/{id}', 'CurricularComponentCategoryController@delete')->name('deletar.componentescategorias');
         /** AUTENTICACAO */
         Route::post('/auth/logout', 'AuthController@logout')->name('sair');
         Route::post('/auth/refresh', 'AuthController@refresh')->name('refrescar.token');

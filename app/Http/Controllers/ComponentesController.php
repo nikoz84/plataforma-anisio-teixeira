@@ -28,6 +28,7 @@ class ComponentesController extends ApiController
         $limit = $this->request->get('limit', 15);
         $componentes = CurricularComponent::select("*")->with('niveis')
             ->with("categories")
+            ->with("nivel")
             ->with("category")
             ->limit($limit)
             ->orderBy('name', 'asc')
@@ -44,14 +45,12 @@ class ComponentesController extends ApiController
         try
         {
             $component = CurricularComponent::find($id);
-            $this->authorize('update', $id);
-            $validator = Validator::make($this->request->all(), $this->config());
+            $validator = Validator::make($this->request->all(), $this->rules());
             if ($validator->fails()) {
                 throw new Exception('Não foi possível atualizar componente. Erro no preenchimento do formulário.',404);
-            }
-            
+            }           
             $component->fill($this->request->all());
-            if($component->save())
+            if(!$component->save())
             {
                 throw new Exception('Não foi possível atualizar componente. Tente novamente mais tarde', 501);
             }
@@ -72,11 +71,11 @@ class ComponentesController extends ApiController
         $component = new Componente();
         try{
             $component =  Componente::findOrFail($id);
-            $component->category();
+            $component->category;
         }
         catch(Exception $ex)
         {
-            return $this->errorResponse([], 'Não foi possível deletar a categoria', 422);
+            return $this->errorResponse([], 'Componente não encontrado', 422);
         }
         return $component;
     }
@@ -104,6 +103,26 @@ class ComponentesController extends ApiController
             return $this->errorResponse($data, $ex->getMessage(), $ex->getCode() > 0 &&  $ex->getCode() <505 ? $ex->getCode() : 500);
         }       
         return $this->successResponse($componente, 'Componente curricular registrada com sucesso!!', 200);
+    }
+
+     /**
+     * Procura conteudos por full text search.
+     *
+     * @param $request \Illuminate\Http\Request
+     * @param $termo   string termo de busca
+     *
+     * @return App\Traits\ApiResponser
+     */
+    public function search(Request $request, $termo)
+    {
+        $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 20;
+        $search = "%{$termo}%";
+        $paginator = Componente::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search])
+            ->paginate($limit);
+
+        $paginator->setPath("/licenses/search/{$termo}?limit={$limit}");
+
+        return $this->showAsPaginator($paginator, 'Resultado da busca...', 200);
     }
 
     public function rules()
