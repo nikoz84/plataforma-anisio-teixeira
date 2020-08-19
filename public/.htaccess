@@ -36,11 +36,11 @@
   Header unset ETag
   Header add Link "</css/app.css>; as=style rel=preload;"
   Header add Link "</js/app.js>; as=script rel=preload;"
-  Header add Link "</fonts/Lato-Regular.woff2>; as=font crossorigin=anonymous rel=preload;"
-  Header add Link "</fonts/Ubuntu-Regular.woff>; as=font crossorigin=anonymous rel=preload;"
-  Header add Link "</fonts/Ubuntu-Regular.woff2>; as=font crossorigin=anonymous rel=preload;"
-  Header add Link "</fonts/vendor/@quasar/extras/material-icons/web-flUhRq6tzZclQEJ-Vdg-IuiaDsNa.woff>; as=font crossorigin=anonymous rel=preload;"
-  Header add Link "</fonts/vendor/@quasar/extras/material-icons/web-flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2>; as=font crossorigin=anonymous rel=preload;"
+  #Header add Link "</fonts/Lato-Regular.woff2>; as=font crossorigin=anonymous rel=preload;"
+  #Header add Link "</fonts/Ubuntu-Regular.woff>; as=font crossorigin=anonymous rel=preload;"
+  #Header add Link "</fonts/Ubuntu-Regular.woff2>; as=font crossorigin=anonymous rel=preload;"
+  #Header add Link "</fonts/vendor/@quasar/extras/material-icons/web-flUhRq6tzZclQEJ-Vdg-IuiaDsNa.woff>; as=font crossorigin=anonymous rel=preload;"
+  #Header add Link "</fonts/vendor/@quasar/extras/material-icons/web-flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2>; as=font crossorigin=anonymous rel=preload;"
 </IfModule>
 
 FileETag None
