@@ -72,7 +72,12 @@ class AplicativoController extends ApiController
             $aplicativo = $this->aplicativo;
             $aplicativo->canal_id = Aplicativo::CANAL_ID;
             $aplicativo->user_id = Auth::user()->id;
+            $aplicativo->url = $this->request->url;
             $aplicativo->options  = json_decode($this->request->options, true);
+            $aplicativo->options = [
+                'qt_access' => Aplicativo::QT_ACCESS_INIT,
+                'is_featured' => $this->request->options_is_featured
+            ];
             if (!$aplicativo->save()) {
                 throw new  Exception("Erro no preenchimento dos dados");
             }
@@ -96,8 +101,8 @@ class AplicativoController extends ApiController
         return [
             'name' => 'required|min:2|max:255',
             'description' => 'required|min:140',
-            'url' => ['required', new \App\Rules\ValidUrl],
-            'category_id' => 'required',
+            'url' => 'required|active_url',
+            'options_is_featured' => 'boolean',
             'tags' => 'required|array|between:3,10',
             'image' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:1024'
         ];
@@ -127,7 +132,8 @@ class AplicativoController extends ApiController
     public function update($id)
     {
         $aplicativo = Aplicativo::findOrFail($id);
-        $this->authorize('update', [$aplicativo]);
+        
+        $this->authorize('update', $aplicativo);
         $validator = Validator::make(
             $this->request->all(),
             $this->configRules()
@@ -137,10 +143,12 @@ class AplicativoController extends ApiController
         }
         $aplicativo->name = $this->request->name;
         $aplicativo->canal_id = $aplicativo::CANAL_ID;
+        $aplicativo->url = $this->request->url;
         $aplicativo->description = $this->request->description;
-        $is_featured = $this->request->options_is_featured === 'true' ? true : false;
+        //dd($this->request->options_is_featured);
+        $is_featured = $this->request->options_is_featured == '1' ? true : false;
         $aplicativo->setAttribute('options->is_featured', $is_featured);
-        $aplicativo->category_id = $this->request->category_id;
+        $aplicativo->category_id = Aplicativo::CANAL_ID;
 
         $aplicativo->tags()->sync($this->request->tags);
 
@@ -209,8 +217,7 @@ class AplicativoController extends ApiController
         $increment = $aplicativo->options['qt_access'] + 1;
         $aplicativo->setAttribute('options->qt_access', $increment); // json attribute
         $aplicativo->save();
-        if (!$aplicativo) 
-        {
+        if (!$aplicativo) {
             $this->errorResponse([], 'Não encontrado', 422);
         }
 

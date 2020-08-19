@@ -197,6 +197,7 @@ export default {
       if (this.aplicativo.category) {
         form.append("category_id", this.aplicativo.category.id);
       }
+      
       form.append("url", this.aplicativo.url);
        form.append("options", JSON.stringify(this.aplicativo.options));
       if (this.imagemAssociada) {
