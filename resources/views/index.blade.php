@@ -14,7 +14,8 @@
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
         <meta name="msapplication-TileColor" content="#08275e">
         <meta name="theme-color" content="#08275e">
-        <link href="/css/app.css" rel="preload" as="style" onload="this.rel='stylesheet'" async>
+        <!--  rel="preload" as="style" onload="this.rel='stylesheet'" async -->
+        <link rel="stylesheet" href="/css/app.css" async >
         <noscript>
             <link rel="stylesheet" href="/css/app.css"/>
         </noscript>

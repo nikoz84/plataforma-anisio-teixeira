@@ -34,8 +34,8 @@
 
 <IfModule mod_headers.c>
   Header unset ETag
-  Header add Link "</css/app.css>; as=style rel=preload;"
-  Header add Link "</js/app.js>; as=script rel=preload;"
+  #Header add Link "</css/app.css>; as=style rel=preload;"
+  #Header add Link "</js/app.js>; as=script rel=preload;"
   #Header add Link "</fonts/Lato-Regular.woff2>; as=font crossorigin=anonymous rel=preload;"
   #Header add Link "</fonts/Ubuntu-Regular.woff>; as=font crossorigin=anonymous rel=preload;"
   #Header add Link "</fonts/Ubuntu-Regular.woff2>; as=font crossorigin=anonymous rel=preload;"
