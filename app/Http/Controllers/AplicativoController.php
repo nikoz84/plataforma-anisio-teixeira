@@ -145,7 +145,6 @@ class AplicativoController extends ApiController
         $aplicativo->canal_id = $aplicativo::CANAL_ID;
         $aplicativo->url = $this->request->url;
         $aplicativo->description = $this->request->description;
-        //dd($this->request->options_is_featured);
         $is_featured = $this->request->options_is_featured == '1' ? true : false;
         $aplicativo->setAttribute('options->is_featured', $is_featured);
         $aplicativo->category_id = Aplicativo::CANAL_ID;
