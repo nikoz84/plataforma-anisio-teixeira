@@ -12,8 +12,13 @@
                     bottom-slot
                 />
                 <q-select outlined option-value="id" option-label="name" ransition-show="scale" transition-hide="scale"
-                    v-model="curricularComponent.category_id" :options="categorias" label="Categoria relacionada"
-                    hint="Selecione uma categoria se precisar agrupar por sub-categorias"
+                    v-model="curricularComponent.category" :options="categorias" label="Categoria relacionada"
+                    hint="Selecione uma categoria ao qual este componente curricular pertence"
+                    behavior="dialog"
+                />
+            <q-select outlined option-value="id" option-label="name" ransition-show="scale" transition-hide="scale"
+                    v-model="curricularComponent.nivel" :options="niveisEnsino" label="Nível Ensino relacionado"
+                    hint="Selecione uma categoria ao qual este componente curricular pertence"
                     behavior="dialog"
                 />
             <q-img 
@@ -48,9 +53,12 @@ import {
   QStep,
   QStepperNavigation
 } from "quasar";
-import { ShowErrors } from '@forms/shared'
+import { ShowErrors } from '@forms/shared';
 export default {
     name: 'CurricularComponentsForm',
+    components: {
+        ShowErrors
+    },
     data() 
     {
         return {
@@ -59,8 +67,7 @@ export default {
                 id:null,
                 name:"",
                 nivel_id:null,
-                nivel:null,
-                category:null
+                nivel:null
             },
             errors: [],
             categorias:[]
@@ -70,15 +77,25 @@ export default {
      {
         this.getComponente();
         this.getCategories();
+        this.getNiveisEnsino();
      },
      methods: 
      {
-        async save() {
+         async getNiveisEnsino()
+         {
+              if (!this.$route.params.id) 
+              {
+                 return;
+              }
+              //let resp = await axios.get(`/niveis/${this.$route.params.id}`);
+              //this.curricularComponent = resp.data;
+         },
+         async save() {
             const form = new FormData();
             form.append("name", this.curricularComponent.name);
-            if(this.curricularComponent.canal)
+            if(this.curricularComponent.category)
             {
-                form.append("canal_id", this.category.canal.id);
+                form.append("category_id", this.curricularComponent.category.id);
             }
             try
             {
@@ -86,7 +103,7 @@ export default {
                 {
                     form.append("id", this.curricularComponent.id);    
                     form.append("_method", "PUT");
-                    let resp = await axios.post(this.$route.params.slug +"/"+ this.category.id, form);
+                    let resp = await axios.post(this.$route.params.slug +"/"+ this.curricularComponent.id, form);
                 }
                 else
                 {
@@ -100,10 +117,10 @@ export default {
             }
          },
          async getCategories() {
-            let resp = await axios.get("/aplicativos/categories");
+            let resp = await axios.get("/componentescategorias");
             console.log("resp", resp)
             if (resp.data.success) {
-                this.categorias = resp.data.metadata;
+               this.categorias = resp.data.paginator.data;
             }
         },
         async getComponente() 
@@ -114,6 +131,7 @@ export default {
             }
             let resp = await axios.get(`/componentes/${this.$route.params.id}`);
             this.curricularComponent = resp.data;
+            console.log("curricularComponent",this.curricularComponent);
         }
      }
 }

@@ -176,15 +176,20 @@ class SideBar
                 'hability' => 'index',
                 'class' => \App\Category::class
             ],
-            /*
             [
-                'label' => 'Componentes',
+                'label' => 'Componentes Curriculares',
                 'name' => 'IndexComponentes',
                 'slug' => 'componentes',
                 'hability' => 'index',
                 'class' => \App\CurricularComponent::class
-            ]
-            */
+            ],
+            [
+                'label' => 'Categorias dos Componentes Curriculares',
+                'name' => 'IndexComponentesCategorias',
+                'slug' => 'componentescategorias',
+                'hability' => 'index',
+                'class' => \App\CurricularComponentCategory::class
+            ],
         ]);
     }
 }
