@@ -17,7 +17,8 @@ import {
   OptionsForm,
   CategoryConteudoForm,
   CurricularComponentsForm,
-  CurricularComponentsCategoryForm
+  CurricularComponentsCategoryForm,
+  NivelEnsinoForm
   } from "@forms/models";
 
 import Resumo from "@pages/Resumo.vue";
@@ -43,7 +44,8 @@ export default {
     resumo: Resumo,
     categorias:CategoryConteudoForm,
     componentes: CurricularComponentsForm,
-    componentescategorias:CurricularComponentsCategoryForm
+    componentescategorias:CurricularComponentsCategoryForm,
+    nivelensino:NivelEnsinoForm
   },
   data() {
     return {

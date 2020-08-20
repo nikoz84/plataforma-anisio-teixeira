@@ -29,6 +29,7 @@ class NivelEnsinoPolicy
     public function viewAny(User $user)
     {
         //
+        return $user->role->name == 'super-admin' || $user->role->name == 'admin';
     }
 
     /**
@@ -41,6 +42,7 @@ class NivelEnsinoPolicy
     public function view(User $user, NivelEnsino $nivelEnsino)
     {
         //
+        return $user->role->name == 'super-admin' || $user->role->name == 'admin';
     }
 
     /**
@@ -52,6 +54,7 @@ class NivelEnsinoPolicy
     public function create(User $user)
     {
         //
+        return $user->role->name == 'super-admin' || $user->role->name == 'admin';
     }
 
     /**
@@ -64,6 +67,7 @@ class NivelEnsinoPolicy
     public function update(User $user, NivelEnsino $nivelEnsino)
     {
         //
+        return $user->role->name == 'super-admin' || $user->role->name == 'admin';
     }
 
     /**
@@ -76,6 +80,7 @@ class NivelEnsinoPolicy
     public function delete(User $user, NivelEnsino $nivelEnsino)
     {
         //
+        return $user->role->name == 'super-admin' ;
     }
 
     /**
@@ -88,6 +93,7 @@ class NivelEnsinoPolicy
     public function restore(User $user, NivelEnsino $nivelEnsino)
     {
         //
+        return $user->role->name == 'super-admin' ;
     }
 
     /**
@@ -100,5 +106,6 @@ class NivelEnsinoPolicy
     public function forceDelete(User $user, NivelEnsino $nivelEnsino)
     {
         //
+        return $user->role->name == 'super-admin' ;
     }
 }

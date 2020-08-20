@@ -89,6 +89,10 @@ class CurricularComponentCategoryController extends ApiController
         return $this->showAsPaginator($componentesCategoria);
     }
 
+    /**
+     * @return string json de objetos de categorias de componentes curriculares
+     * 
+     */
     public function search($termo)
     {
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 20;
@@ -98,8 +102,6 @@ class CurricularComponentCategoryController extends ApiController
         $paginator->setPath("/componentescategorias/search/{$termo}?limit={$limit}");
         return $this->showAsPaginator($paginator, 'Resultado da busca...', 200);
     }
-
-    
 
     public function getById($id)
     {
@@ -111,7 +113,7 @@ class CurricularComponentCategoryController extends ApiController
         }
         catch(Exception $ex)
         {
-
+            return $this->errorResponse([], $ex->getMessage(), $ex->getCode() > 0 &&  $ex->getCode() <505 ? $ex->getCode() : 500);
         }
         return $componentesCategoria;
     }
