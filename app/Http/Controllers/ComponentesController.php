@@ -125,6 +125,21 @@ class ComponentesController extends ApiController
         return $this->showAsPaginator($paginator, 'Resultado da busca...', 200);
     }
 
+    /**
+     * Auto-Completação
+     * @param string $term identificador único
+     * @return string json
+     */
+    public function autocomplete($term)
+    {
+        $search = "%{$term}%";
+        $limit = $this->request->query('limit', 100);
+        $tags = Componente::select(['id', 'name'])
+            ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
+            ->get(['id', 'name']);
+        return $this->showAll(collect($tags));
+    }
+
     public function rules()
     {
         return [

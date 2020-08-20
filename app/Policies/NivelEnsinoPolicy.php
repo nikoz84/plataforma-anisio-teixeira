@@ -11,6 +11,16 @@ class NivelEnsinoPolicy
     use HandlesAuthorization;
     
     /**
+     * Determine whether the user can view.
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function index(User $user)
+    {
+        return $user->role->name == 'super-admin' || $user->role->name == 'admin';
+    }
+    
+    /**
      * Determine whether the user can view any nivel ensinos.
      *
      * @param  \App\User  $user

@@ -190,6 +190,13 @@ class SideBar
                 'hability' => 'index',
                 'class' => \App\CurricularComponentCategory::class
             ],
+            [
+                'label' => 'Níveis de Ensino',
+                'name' => 'IndexNiveisEnsino',
+                'slug' => 'nivelensino',
+                'hability' => 'index',
+                'class' => \App\NivelEnsino::class
+            ],
         ]);
     }
 }

@@ -11,6 +11,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Log;
 
 class CurricularComponentCategoryController extends ApiController
 {
@@ -30,14 +31,15 @@ class CurricularComponentCategoryController extends ApiController
         try
         {
             $data = [];
-            $component = CurricularComponentCategory::find($id);
+            $componentCategory = CurricularComponentCategory::find($id);
             $validator = Validator::make($this->request->all(), $this->rules());
             if ($validator->fails()) {
                 $data = $validator->errors();
                 throw new Exception('Não foi possível atualizar a categoria do componente. Erro no preenchimento do formulário.',404);
             }           
-            $component->fill($this->request->all());
-            if(!$component->save())
+            $componentCategory->fill($this->request->all());
+            //$componentCategory->componentes()->updateOrCreate($this->request->componentes);
+            if(!$componentCategory->save())
             {
                 throw new Exception('Não foi possível atualizar a categoria do componente. Tente novamente mais tarde', 501);
             }
@@ -46,7 +48,7 @@ class CurricularComponentCategoryController extends ApiController
         {
             return $this->errorResponse($data, $ex->getMessage(), $ex->getCode() > 0  && $ex->getCode() < 506 ? $ex->getCode() : 500 );
         }
-        return $this->showOne($component, 'Componente Curricular atualizada com sucesso!!', 200);
+        return $this->showOne($componentCategory, 'Componente Curricular atualizada com sucesso!!', 200);
     }
 
     public function create()
@@ -97,12 +99,15 @@ class CurricularComponentCategoryController extends ApiController
         return $this->showAsPaginator($paginator, 'Resultado da busca...', 200);
     }
 
+    
+
     public function getById($id)
     {
         $componentesCategoria = new CurricularComponentCategory();
         try
         {
             $componentesCategoria = CurricularComponentCategory::findOrFail($id);
+            $componentesCategoria->componentes;
         }
         catch(Exception $ex)
         {
@@ -130,7 +135,7 @@ class CurricularComponentCategoryController extends ApiController
             $category = CurricularComponentCategory::findOrFail($id);
             $this->authorize('delete', $category);
             if (!$category->delete()) {
-               
+               throw new Exception("Erro ao deletar a categoria: ".$category->name." Tente novamente em seguida.");
             }
         }
         catch(Exception $ex)
