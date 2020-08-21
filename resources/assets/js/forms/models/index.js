@@ -4,6 +4,8 @@ import CategoryAplicativoForm from './CategoryAplicativoForm';
 import CategoryConteudoForm from './CategoryConteudoForm';
 import ConteudoForm from './ConteudoForm';
 import CurricularComponentsForm from './CurricularComponentsForm';
+import CurricularComponentsCategoryForm from './CurricularComponentsCategoryForm';
+import NivelEnsinoForm from './NivelEnsinoForm';
 import LicenseForm from './LicenseForm';
 import OptionsForm from './OptionsForm';
 import RoleForm from './RoleForm';
@@ -19,6 +21,8 @@ export {
     CategoryConteudoForm,
     ConteudoForm,
     CurricularComponentsForm,
+    CurricularComponentsCategoryForm,
+    NivelEnsinoForm,
     LicenseForm,
     OptionsForm,
     RoleForm,

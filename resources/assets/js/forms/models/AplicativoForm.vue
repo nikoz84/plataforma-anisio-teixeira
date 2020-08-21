@@ -197,8 +197,9 @@ export default {
       if (this.aplicativo.category) {
         form.append("category_id", this.aplicativo.category.id);
       }
+      
       form.append("url", this.aplicativo.url);
-       form.append("options", JSON.stringify(this.aplicativo.options));
+      form.append("options", JSON.stringify(this.aplicativo.options));
       if (this.imagemAssociada) {
         form.append("imagemAssociada", this.imagemAssociada);
       }
@@ -220,9 +221,8 @@ export default {
         if (resp.data.success) {
           this.$router.push("/admin/aplicativos/listar");
         }
-      } catch (response) {
-        console.log(response);
-        //this.errors = response.errors;
+      } catch (ex) {
+        this.errors = ex.errors;
       }
     },
     async getCategories() {

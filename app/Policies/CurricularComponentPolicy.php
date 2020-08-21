@@ -64,7 +64,7 @@ class CurricularComponentPolicy
      */
     public function update(User $user, CurricularComponent $curricularComponent)
     {
-        return $user->role->name == 'super-admin';
+        return $user->role->name == 'super-admin' || $user->role->name == 'admin';
     }
 
     /**

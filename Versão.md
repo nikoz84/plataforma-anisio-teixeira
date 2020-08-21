@@ -26,6 +26,7 @@
 ## Novas Funcionalidades
 - Incorporar conteúdo
 - Validação de tipos de arquivos em formulário de conteúdo digital
+- Manutenção dos registros referentes a Categoria do Componentes Curriculares
 ################################################################################################
 # Versão 2.0.3
 ################################################################################################

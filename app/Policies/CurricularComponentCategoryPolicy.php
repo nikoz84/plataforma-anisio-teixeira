@@ -9,6 +9,17 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class CurricularComponentCategoryPolicy
 {
     use HandlesAuthorization;
+
+    /**
+     * Determine whether the user can view.
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function index(User $user)
+    {
+        return $user->role->name == 'super-admin' || $user->role->name == 'admin';
+    }
+
     
     /**
      * Determine whether the user can view any curricular component categories.
@@ -30,7 +41,7 @@ class CurricularComponentCategoryPolicy
      */
     public function view(User $user, CurricularComponentCategory $curricularComponentCategory)
     {
-        //
+        return $user->role->name == 'admin';
     }
 
     /**
@@ -41,7 +52,7 @@ class CurricularComponentCategoryPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->role->name == 'super-admin' || $user->role->name == 'admin';
     }
 
     /**
@@ -53,7 +64,7 @@ class CurricularComponentCategoryPolicy
      */
     public function update(User $user, CurricularComponentCategory $curricularComponentCategory)
     {
-        //
+        return $user->role->name == 'super-admin' || $user->role->name == 'admin';
     }
 
     /**
@@ -65,7 +76,7 @@ class CurricularComponentCategoryPolicy
      */
     public function delete(User $user, CurricularComponentCategory $curricularComponentCategory)
     {
-        //
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -77,7 +88,7 @@ class CurricularComponentCategoryPolicy
      */
     public function restore(User $user, CurricularComponentCategory $curricularComponentCategory)
     {
-        //
+        return $user->role->name == 'super-admin' || $user->role->name == 'admin';
     }
 
     /**
@@ -89,6 +100,6 @@ class CurricularComponentCategoryPolicy
      */
     public function forceDelete(User $user, CurricularComponentCategory $curricularComponentCategory)
     {
-        //
+        return $user->role->name == 'super-admin' ;
     }
 }
