@@ -4,7 +4,7 @@
         <q-card-section>
             <Title title="Busca Avançada de Recursos Educacionais"></Title>
         </q-card-section>
-        <q-card-section class="row justify-center q-gutter-sm">
+        <q-card-section class="row justify-center q-gutter-md">
             <q-input
                 class="col-sm-4 input-search"
                 v-model="term"
@@ -39,40 +39,49 @@
           stack-label
           :options="perSearchOptions"
           hint="Sugerência por"
-        />
-        <q-btn size="sm" @click="showFiltros = !showFiltros">
-            {{ showFiltros ? 'Esconder Filtros' : 'Filtros' }}
+        >
+        </q-select>
+        <q-btn
+            icon-right="filter_list"
+            size="md"
+            color="primary"
+            class="text-dark"
+            stack
+            glossy
+            @click="showFiltros = !showFiltros">
+                {{ showFiltros ? 'Esconder Filtros' : 'Exibir Filtros' }}
         </q-btn>
         </q-card-section>
     </q-card>
+    <q-card class="q-mb-xs" v-if="showFiltros">
+        <TabComponentes @setFiltros="setFiltros"></TabComponentes>
+    </q-card>
     <q-card class="q-mb-xs" v-if="filtros">
         <q-card-section>
-            Termo: <q-chip size="sm">{{ term ? term : 'Faça uma pesquisa' }}</q-chip> 
-            Sugerir por: <q-chip size="sm">{{ per.label }}</q-chip> 
-            Quantidade de itens por página: <q-chip size="sm">{{limit.value}}</q-chip>
+            Termo: <q-chip size="md">{{ term ? term : 'Faça uma pesquisa' }}</q-chip> 
+            Sugerir por: <q-chip size="md">{{ per.label }}</q-chip> 
+            Quantidade de itens por página: <q-chip size="md">{{limit.value}}</q-chip>
         </q-card-section>
         <q-card-section v-if="filtros && filtros.tipos && filtros.tipos.length > 0">
             Tipo de Conteúdo:
-            <q-chip size="sm" v-for="(tipo, i) in filtros.tipos" :key="`${i}-filtro-tipo`">
+            <q-chip removable size="md" v-for="(tipo, i) in filtros.tipos" :key="`${i}-filtro-tipo`">
                 {{ tipo.name }}
             </q-chip>
         </q-card-section>
         <q-card-section v-if="filtros && filtros.licencas && filtros.licencas.length > 0">
             Tipo de Licença:
-            <q-chip size="sm" v-for="(licenca, i) in filtros.licencas" :key="`${i}-filtro-licenca`">
+            <q-chip removable size="md" v-for="(licenca, i) in filtros.licencas" :key="`${i}-filtro-licenca`">
                 {{ licenca.name }}
             </q-chip>
         </q-card-section>
         <q-card-section v-if="filtros && filtros.componentes && filtros.componentes.length > 0">
             Componentes Curriculares:
-            <q-chip size="sm" v-for="(componente, i) in filtros.componentes" :key="`${i}-filtro-componente`">
+            <q-chip removable size="md" v-for="(componente, i) in filtros.componentes" :key="`${i}-filtro-componente`">
                 {{ componente.name }}
             </q-chip>
         </q-card-section>
     </q-card>
-    <q-card v-if="showFiltros">
-        <TabComponentes @setFiltros="setFiltros"></TabComponentes>
-    </q-card>
+    
     <div class="q-pa-lg">
         <!-- PAGINATOR -->
         <div class="q-pa-sm flex flex-center">
@@ -89,12 +98,14 @@
         <div class="q-pa-sm">
         <q-card class="q-mt-sm" v-for="(item, i) in results" :key="`result-${i}`">
             <q-card-section class="q-px-sm">
-            <h5 class="text-dark q-my-xs" v-html="item.title"></h5>
+                <a :href="item.url_exibir" target="new" class="text-dark">
+                    <h5 class="q-my-xs" v-html="item.title"></h5>
+                </a>
             <q-separator class="q-my-md"></q-separator>
-            <div class="paginator-excerpt" v-html="item.excerpt"></div>
+            <div class="paginator-excerpt" v-html="item.description"></div>
             </q-card-section>
             <q-card-actions vertical align="right">
-                <q-btn color="pink-9" type="a" target="_blank" :href="item.url_exibir">Visualizar</q-btn>
+                <!--q-btn color="pink-9" type="a" target="_blank" :href="item.url_exibir">Visualizar</q-btn-->
             </q-card-actions>
         </q-card>
         </div>
@@ -233,3 +244,8 @@ export default {
     }
 }
 </script>
+<style lang="stylus" scoped>
+    a:visited{
+        color: rgb(123, 31, 162) !important /** purple-8 na collor pallete do quasar */
+    }
+</style>

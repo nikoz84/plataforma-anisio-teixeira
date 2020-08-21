@@ -1,7 +1,7 @@
 <template>
-  <q-btn-dropdown auto-close stretch dropdown-icon="arrow_drop_down" flat label="Ordenar Por">
+  <q-btn-dropdown auto-close stretch dropdown-icon="arrow_drop_down" icon="list_alt" flat label="Ordenar Por">
         <q-list >
-            <q-item clickable v-close-popup
+            <q-item clickable v-close-popup 
                 v-for="(filter, i) in filters" 
                 :key="i"
                 @click="replaceURL('ordenar', filter.id)"
