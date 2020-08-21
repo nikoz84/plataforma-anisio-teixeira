@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Contato extends Model
+/**
+ * Metodos Protegidos
+ */
 {
     use SoftDeletes, UserCan;
 

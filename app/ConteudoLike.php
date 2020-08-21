@@ -20,7 +20,12 @@ class ConteudoLike extends Model
         'tipo',
         'like'
     ];
-
+       /**
+        * Verifica os comentários no aplicativo
+        *
+        * @param [string] $request
+        * @return void
+        */
     public function like($request)
     {
         # Verifica se o like ou deslike é para um (conteudo ou aplicativo) e retorna o id
@@ -52,10 +57,12 @@ class ConteudoLike extends Model
         $request->request->add(['like' => true]);
         return $this->create($request->all());
     }
-
+     /**
+      * Função que verifica o deslike do conteudo do aplicativo
+      */
     public function deslike($request)
     {
-        # Verifica se o like ou deslike é para um (conteudo ou aplicativo) e rtorna o id
+        # Verifica se o like ou deslike é para um (conteudo ou aplicativo) e retorna o id
         $idPostagem = $this->retornaOIdDaPostagemCorretaBaseandoseNoTipo($request);
 
         $seExisteLike = $this->seExisteLikeOuDeslikeDoUsuarioParaAPostagem(

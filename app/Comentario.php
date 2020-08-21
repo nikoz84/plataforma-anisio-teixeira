@@ -23,7 +23,10 @@ class Comentario extends Model
         'body',
         'tipo'
     ];
-
+     /**
+      * Retorna Comentário do Id do Usuário
+      * 
+      */
     public function getComentariosByIdUsuario($userId, $tipo = false)
     {
         $comentarios = $this->where('user_id', $userId);
@@ -37,7 +40,13 @@ class Comentario extends Model
 
         return false;
     }
-
+      /**
+       * Retorna Postagem com Id da Postagem
+       *
+       * @param [type] $idPostagem
+       * @param [type] $tipo
+       * @return void
+       */
     public function getComentariosByIdPostagem($idPostagem, $tipo)
     {
         $comentarios = false;
@@ -53,7 +62,12 @@ class Comentario extends Model
 
         return false;
     }
-
+      /**
+       * Retorna Comentário Por id
+       *
+       * @param [int] $id
+       * @return void
+       */
     public function getComentarioById($id)
     {
         $comentario = $this->find($id);
@@ -63,12 +77,22 @@ class Comentario extends Model
 
         return false;
     }
-
+      /**
+       * Retorna Comentário Por Tipo.
+       *
+       * @param [int] $tipo
+       * @return void
+       */
     public function getComentariosByTipo($tipo)
     {
         return $this->where('tipo', $tipo)->get();
     }
-
+       /**
+        * Deleta Informações
+        *
+        * @param [int] $id
+        * @return void
+        */
     public function deletar($id)
     {
         return $this->where('id', $id)->delete();

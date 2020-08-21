@@ -18,7 +18,13 @@ class Category extends Model
     public $fillable = ['name', 'parent_id', 'options', 'canal_id'];
     protected $casts = ['options' => 'array'];
     protected $appends = ['user_can', 'image', 'video'];
-
+     
+    /**
+     * Ordena o arquivo por nome 
+     * @param \App\Category $category
+     * @return \App\Model\ApiResponser retorna json
+     * @return void
+     */
     public function subCategories()
     {
         return $this->hasMany(\App\Category::class, 'parent_id', 'id')
@@ -30,6 +36,8 @@ class Category extends Model
     /**
      * obtem referencia do arquivo de video destaque
      * da categoria do conteudo em questão
+     * @param \App\Category $category
+     * @return \App\Model\ApiResponser retorna json
      * @return string
      */
     public function refenciaVideoDestaque()
@@ -47,6 +55,8 @@ class Category extends Model
     /**
      * obtem referencia do arquivo de imgame associada
      * da categoria do conteudo em questão
+     * @param \App\Category $category
+     * @return \App\Model\ApiResponser retorna json
      * @return string
      */
     public function refenciaImagemAssociada()
@@ -63,6 +73,8 @@ class Category extends Model
 
     /**
      * obtem url da imagem associada
+     * @param \App\Category $category
+     * @return \App\Model\ApiResponser retorna json
      * @return string
      */
     public function getImageAttribute(){
@@ -81,6 +93,8 @@ class Category extends Model
 
     /**
      * obtem url do video destaque da categoria
+     * @param \App\Category $category
+     * @return \App\Model\ApiResponser retorna json
      * @return string
      */
     public function getVideoAttribute(){
@@ -93,6 +107,8 @@ class Category extends Model
 
     /**
      * canal associado à categoria de conteudo
+     * @param \App\Category $category
+     * @return \App\Model\ApiResponser retorna json
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
     */
     public function canal()

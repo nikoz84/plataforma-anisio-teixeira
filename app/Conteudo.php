@@ -49,7 +49,8 @@ class Conteudo extends Model
 
     /**
      * Seleciona o canal do conteúdo sem os campos adicionais
-     *
+     * @param \App\Conteudo $conteufo
+     * @return \App\Model\ApiResponser retorna json
      * @return boolean
      */
     public function canal()
@@ -61,7 +62,8 @@ class Conteudo extends Model
     }
     /**
      * Seleciona usuário publicador
-     *
+     * @param \App\Conteudo $conteudo
+     * @return \App\Model\ApiResponser retorna json
      * @return void
      */
     public function user()
@@ -71,7 +73,8 @@ class Conteudo extends Model
     }
     /**
      * Conteúdo tipo
-     *
+     * @param \App\Conteudo $conteudo
+     * @return \App\Model\ApiResponser retorna json
      * @return App\Tipo
      */
     public function tipo()
@@ -83,7 +86,8 @@ class Conteudo extends Model
     }
     /**
      * Seleciona as Tags relacionadas
-     *
+     * @param \App\Conteudo $conteudo
+     * @return \App\Model\ApiResponser retorna json
      * @return App\Tag
      */
     public function tags()
@@ -93,7 +97,8 @@ class Conteudo extends Model
     }
     /**
      * Seleciona os componentes curriculares
-     *
+     * @param \App\Contedudo $conteudo
+     * @return \App\Model\ApiResponser retorna json
      * @return App\CurricularComponent
      */
     public function componentes()
@@ -108,6 +113,8 @@ class Conteudo extends Model
 
     /**
      * Seleciona a categoria do conteúdo
+     * @param \App\Conteudo $conteudo
+     * @return \App\Model\ApiResponser retorna json
      * @return App\Category
      */
     public function category()
@@ -117,6 +124,8 @@ class Conteudo extends Model
 
     /**
      * Seleciona niveis de ensino
+     * @param \App\Conteudo $conteudo
+     * @return \App\Model\ApiResponser retorna json
      * @return App\NivelEnsino
      */
     public function niveis()
@@ -128,6 +137,8 @@ class Conteudo extends Model
 
     /**
      * Seleciona a licença relacionada
+     * @param \App\Conteudo $conteudo
+     * @return \App\Model\ApiResponser retorna json
      * @return App\License
      */
     public function license()
@@ -137,7 +148,9 @@ class Conteudo extends Model
 
     /**
      * Muta o valor do usuário que aprova o conteúdo
-     * @param [type] $user
+     * @param \App\Conteudo $conteudo
+     * @return \App\Model\ApiResponser retorna json
+     * @param [id] integer $user
      * @return void
      */
     public function setApprovingUserIdAttribute($id)
@@ -148,7 +161,7 @@ class Conteudo extends Model
             $this->attributes['approving_user_id'] = null;
         }
     }
-
+      
     public function setIsApproved($is_approved)
     {
         if ($is_approved) {
@@ -159,6 +172,8 @@ class Conteudo extends Model
     }
     /**
      * Adiciona novo atributo ao objeto que limita o tamanho da descrição
+     * @param \App\Conteudo $conteudo
+     * @return \App\Model\ApiResponser retorna json
      * @return void
      */
     public function getExcerptAttribute()
@@ -167,7 +182,8 @@ class Conteudo extends Model
     }
     /**
      * Adiciona novo atributo ao objeto que limita o tamanho da descrição
-     *
+     * @param \App\Conteudo $conteudo
+     * @return \App\Model\ApiResponser retorna json
      * @return void
      */
     public function getShortTitleAttribute()
@@ -183,7 +199,8 @@ class Conteudo extends Model
     }
     /**
      * Seleciona e tranforma created-at ao formato (06 setembro de 2019 ás 17:37)
-     *
+     * @param \App\Conteudo $conteudo
+     * @return \App\Model\ApiResponser retorna json
      * @return void
      */
     public function getFormatedDateAttribute()
@@ -193,6 +210,8 @@ class Conteudo extends Model
     /**
      * Seleciona os Arquivos de download, visualizaçao e guias pedagógicas
      * desde o Trait App\Traits\File
+     * @param \App\Conteudo $conteudo
+     * @return \App\Model\ApiResponser retorna json
      *
      * @return array
      */
@@ -207,6 +226,8 @@ class Conteudo extends Model
 
     /**
      * Adiciona atributo imagem associada ao objeto
+     * @param \App\Conteudo $conteudo
+     * @return \App\Model\ApiResponser retorna json
      * @return void
      */
     public function getImageAttribute()
@@ -225,6 +246,8 @@ class Conteudo extends Model
 
     /**
      * Adiciona atributo imagem associada ao objeto
+     * @param \App\Conteudo $conteudo
+     * @return \App\Model\ApiResponser retorna json
      * @return string
      */
     public function getDownloadAttribute()
@@ -234,6 +257,8 @@ class Conteudo extends Model
 
     /**
      * Adiciona atributo imagem associada ao objeto
+     * @param \App\Conteudo $conteudo
+     * @return \App\Model\ApiResponser retorna json
      * @return string
      */
     public function getGuiaPedagogicoAttribute()
@@ -243,7 +268,8 @@ class Conteudo extends Model
 
     /**
      * Adiciona atributo url_exibir
-     *
+     * @param \App\Conteudo $conteudo
+     * @return \App\Model\ApiResponser retorna json
      * @return string
      */
     public function getUrlExibirAttribute()
@@ -253,6 +279,8 @@ class Conteudo extends Model
     }
     /**
      * Filtro para conteúdos Aprovados
+     * @param \App\Conteudo $conteudo
+     * @return \App\Model\ApiResponser retorna json
      */
     public function scopeAprovados($query, $is_approved)
     {
@@ -316,7 +344,8 @@ class Conteudo extends Model
     }
     /**
      * Buscar por colunas especificas
-     *
+     * @param \App\Conteudo $conteudo
+     * @return \App\Model\ApiResponser retorna json
      * @param $query    Eloquent\Query
      * @param $column   coluna a buscar
      * @param $data     ids ou id de busca
@@ -338,7 +367,8 @@ class Conteudo extends Model
     }
     /**
      * Busca por canal
-     *
+     * @param \App\Conteudo $conteudo
+     * @return \App\Model\ApiResponser retorna json
      * @param $query    Eloquent\Query
      * @param $canal_id id a procurar canal 6 são a suma de todos os canais
      *
@@ -352,7 +382,14 @@ class Conteudo extends Model
 
         return $query->where('canal_id', $canal_id);
     }
-    
+     /**
+      * Função que retorna scopo sorteado por id
+      * @param \App\Conteudo $conteudo
+      * @return \App\Model\ApiResponser retorna json
+      * @param [type] $query
+      * @param [type] $by
+      * @return void
+      */
     public function scopeSortBy($query, $by)
     {
         if (!$by) {
@@ -376,7 +413,14 @@ class Conteudo extends Model
                 break;
         }
         return $query->orderBy($order_by, $sort);
-    }
+    }  
+    /**
+     * Função Statica retorna documento salvo
+     * @param \App\Conteudo $conteudo
+     * @return \App\Model\ApiResponser retorna json
+     * @param [type] $id
+     * @return void
+     */
     public static function tsDocumentoSave($id)
     {
         if (!$id) {
@@ -406,7 +450,11 @@ class Conteudo extends Model
 
         DB::update('update conteudos set ts_documento = ? where id = ?', [$fullTextSearch->ts_documento, $id]);
     }
-
+      /**
+      * Retorna Scopo relacionado
+      * @param \App\Conteudo $conteudo
+      * @return \App\Model\ApiResponser retorna json
+      */
     public function scopeRelacionados($query, $id)
     {
         if (!$id) {
@@ -425,7 +473,11 @@ class Conteudo extends Model
         )->where('id', '!=', $id);
     }
 
-
+     /**
+      * Retorna Maximo de conteundo por downlaoad
+      * @param \App\Conteudo $conteudo
+      * @return \App\Model\ApiResponser retorna json
+      */
     public function contents_max_downlaoad(){
 
         $contents = DB::select("SELECT 
@@ -440,7 +492,11 @@ class Conteudo extends Model
 
         return $contents;
     }
-
+     /**
+      * Retorna Maximo de conteundo por acesso
+      *  @param \App\Conteudo $conteudo
+      * @return \App\Model\ApiResponser retorna json
+      */
     public function contents_max_access(){
 
         $contents = DB::select("SELECT 
