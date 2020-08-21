@@ -1,16 +1,17 @@
 <template>
-  <section class="q-px-sm q-pb-sm">
-    <header class="row wrap items-center q-my-md">
-      <div class="text-h5 color-primary">
-        {{canal && canal.options ? canal.options.extend_name : canal.name }}
-      </div>
-    </header>
+  <section class="q-pa-md q-pb-xl">
+    <q-banner class="bg-primary text-white">  
+      <header class="row wrap items-center q-my-md">
+        <div class="text-h5 color-primary">
+          {{canal && canal.options ? canal.options.extend_name : canal.name }}
+        </div>
+      </header>
+    </q-banner>
     <q-tabs
       :style="`background-color:${color}`" 
       class="text-white shadow-3"
-      dense
-      shrink
       no-caps
+      ripple
       inline-label
       >
       <CategoriasMenu></CategoriasMenu>
@@ -18,19 +19,22 @@
       <q-route-tab
         name="listar"
         label="LISTAR"
+        icon="view_list"
         :to="{ name: 'Listar', params: { slug: $route.params.slug } }"
       />
+      <OrderBy></OrderBy>
+      <q-space />
       <q-route-tab
         name="busca"
         label="BUSCA AVANÇADA"
+        icon="search"
         :to="{ name: 'BuscaAvancada' }"
         v-if="$route.params.slug == 'recursos-educacionais'"
       />
-      <q-space />
-      <OrderBy></OrderBy>
       <q-route-tab
         name="inicio"
         label="SOBRE"
+        icon="info"
         :to="{ name: 'Inicio', params: { slug: $route.params.slug } }"
         v-if="canal && canal.options && canal.options.has_home"
       />

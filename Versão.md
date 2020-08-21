@@ -1,4 +1,17 @@
 ################################################################################################
+# Versão 2.0.5
+################################################################################################
+## Mudanças (layout, correção ortográfica, mudança de código)
+- Ajuste no título da exibição de componentes internos (recursos educacionais, tv, emitec, etc...)
+- Inserção de ícones nas opções de interação de componentes internos (ordenar, busca avançada, categorias, programas, etc...)
+- Ajustes de layout nos cards de resultados da busca avançada
+- Ajustes de layout nas opções de busca avançada
+- Melhorias de usabilidade na busca avançada
+## Correções (bugs, código)
+- 
+## Novas Funcionalidades
+- 
+################################################################################################
 # Versão 2.0.4
 ################################################################################################
 ## Mudanças (layout, correção ortográfica, mudança de código)
