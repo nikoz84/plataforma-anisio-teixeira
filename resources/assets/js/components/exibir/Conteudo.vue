@@ -3,18 +3,18 @@
     
     <div class="col-md-8 col-sm-12" >
       <q-card>
-        <q-card-section class="player col-12">
+        <q-card-section class="player">
           <Player :arquivos="conteudo.arquivos" :tipo="conteudo.tipo"></Player>
           <PlayerActions class="q-mt-sm"></PlayerActions>
         </q-card-section>
-        <q-card-section class="descritivo col-12 q-mx-md q-mb-sm">
+        <q-card-section class="descritivo q-mx-md q-mb-sm">
               <Title :title="conteudo.title"></Title>
-              <div class="q-mt-lg  conteudo-descricao" v-html="conteudo.description"></div> 
+              <div class="q-mt-md  conteudo-descricao" v-html="conteudo.description"></div> 
         </q-card-section>
-        <q-card-section class="ficha-tecnica col-12 q-mt-lg">
+        <q-card-section class="ficha-tecnica col-sm-12 q-mt-lg">
           <q-expansion-item
             dense
-            :default-opened="isMobile"
+            :default-opened="isLargestScreen"
             header-class="bg-cinza text-black"
             label="Ficha Técnica">
               <ConteudoMetadata></ConteudoMetadata> 
@@ -23,10 +23,14 @@
       </q-card>
     </div>
 
-    <div class="col-md-4 col-sm-12">
-      <q-card class="q-mt-sm q-ml-sm q-pt-xs">
-        <strong class="q-pa-sm" >Conteúdo(s) Relacionado(s)</strong>
-        <ConteudoRelated></ConteudoRelated>
+    <div class="col-md-4 col-sm-12" :class="{'q-mt-sm': !isLargestScreen }">
+      <q-card class="" :class="{'q-ml-sm': isLargestScreen }">
+        <q-card-section>
+          <strong class="q-pa-sm" >Conteúdo(s) Relacionado(s)</strong>
+        </q-card-section>
+        <q-card-section>
+          <ConteudoRelated></ConteudoRelated>
+        </q-card-section>
       </q-card>
     </div>
   </div>
@@ -60,9 +64,9 @@ export default {
       let color = this.conteudo.canal.color;
       return `background-color: ${color}`;
     },
-    isMobile() {
-      let is_mobile = this.$q.screen.gt.xs || this.$q.screen.gt.sm;
-      return  is_mobile;
+    isLargestScreen() {
+      let isLargest = this.$q.screen.gt.xs || this.$q.screen.gt.sm;
+      return  isLargest;
     }
   },
   methods: {

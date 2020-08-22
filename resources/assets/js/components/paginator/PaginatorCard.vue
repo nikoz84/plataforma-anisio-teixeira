@@ -1,57 +1,36 @@
 <template>
-  <q-card v-bind:id="item.id">
+  <q-card v-bind:id="item.id" v-if="item">
     <q-img
+      clickable
+      class="cursor-pointer"
+      v-ripple
+      @click="goTo(item)"
       alt="imagem destacada"
       :src="getImage"
       loading="lazy"
       width="100%"
       height="auto"
-      :style="`height:230px;min-height: 230px; width: 100%;backgroud-color:${color};`"
+      :style="`height:230px;min-height: 230px; width: 100%;border: solid 1px ${color};`"
       placeholder-src="/img/fundo-padrao.svg"
     >
-    
-<!--
-      <div class="absolute-bottom-right">
-        <q-btn 
-          round 
-          no-wrap 
-          style="cursor:default !important;" 
-          class="bg-cinza" 
-          text-color="black" 
-          v-if="item.tipo && item.tipo.icon"
-          :title="item.tipo.name"
-          >
-           <q-avatar size="25px">
-             <svg class="icon-pat" height="20" width="20">
-              <use v-bind="{'xlink:href':'#'+ item.tipo.icon}"></use> 
-            </svg>
-           </q-avatar>
-        </q-btn>
-        <div v-if="item.category" 
-          :title="`Categoria: ${item.category.name}`">
-            {{ item.category.name }}
-        </div>
-      </div>
--->
-      </q-img>
-      <q-card-section>
-      <!-- removida a borda usando um none no estilo -->
-      <div
-        :style="`border-bottom: none ${color}; min-height: 95px; line-height: 1.3;`" 
-        class="text-h6 card-heading-inner q-pt-md cursor-pointer"
-      >
-        <router-link
-          tag="div"
-          :to="item.url_exibir
-              ? item.url_exibir
-              : { name: 'ExibirConteudo',
-                  params: { slug: slug, id: item.id, action: 'exibir' }
-              }"
-          v-html="title"
-          :title="`Título: ${title}`"
-        />
-      </div>
+    </q-img>
+    <q-card-section class="q-mb-md">
+      <h6 class="text-h6 q-mt-md" :title="`Título: ${title}`" v-html="title"></h6>
+      
     </q-card-section>
+    <q-card-actions class="flex justify-end absolute-bottom">
+      <q-btn
+          @click="$router.push(item.url_exibir)"
+          label="Visualizar"
+          title="Visualizar recurso"
+        />
+      <q-btn
+          v-ripple 
+          @click="showDialog(item)"
+          icon="toc"
+          title="Mais informações"
+        />
+    </q-card-actions>
   </q-card>
 </template>
 <script>
@@ -90,7 +69,21 @@ export default {
       return this.item.tipo ? this.item.tipo.name : this.item.category.name;
     }
   },
-  created() {}
+  methods: {
+    goTo(item) {
+      if(item && item.url_exibir) {
+         this.$router.push(item.url_exibir) 
+      } else {
+        this.$router.push( { 
+          name: 'ExibirConteudo',
+          params: { slug: item.slug, id: item.id, action: 'exibir' }
+        })
+      }
+    },
+    showDialog(item){
+      console.log(item)
+    }
+  }
 };
 </script>
 <style lang="stylus" scoped>

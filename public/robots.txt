@@ -1,8 +1,4 @@
-﻿# Group 1
-User-agent: Googlebot
-
-# Group 2
-User-agent: *
+﻿User-agent: *
 Allow: /
 Disallow: /admin/*
 Disallow: /fisicaecotidiano/*

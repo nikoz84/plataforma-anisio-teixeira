@@ -1,8 +1,13 @@
 <template>
-    <q-list bordered>
+    <q-list>
         <q-item @click="goTo(relacionado.url_exibir)" clickable v-ripple v-for="(relacionado, i) in relacionados" :key="i">
             <q-item-section thumbnail>
-            <img :src="relacionado.image">
+                <img alt="imagem destacada"
+                    height="auto"
+                    loading="lazy"
+                    width="100%"
+                    :src="getImage(relacionado.image)" 
+                >
             </q-item-section>
             <q-item-section>
                 <strong class="related-title" :title="relacionado.title">
@@ -44,6 +49,9 @@ export default {
         },
         goTo(url) {
             this.$router.push(url);
+        },
+        getImage(image) {
+            return image ? image : '/img/fundo-padrao.svg';
         }
     }
 }
