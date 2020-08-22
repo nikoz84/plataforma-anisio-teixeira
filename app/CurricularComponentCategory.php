@@ -16,7 +16,7 @@ class CurricularComponentCategory extends Model
 
     /**
      * obtem os componetes relacionados a este componente
-     * @return Illuminate\Database\Eloquent\Concerns\HasRelationships::hasMany componentes relacionados
+     * @return Illuminate\Database\Eloquent\Concerns\HasMany
      */
     public function componentes()
     {

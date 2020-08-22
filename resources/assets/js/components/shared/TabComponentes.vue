@@ -22,9 +22,17 @@
         <div class="flex justify-start">
           <div class="text-h6">Tipos de Mídias</div>
           <q-space></q-space>
-          <q-btn @click="clean()" size="md" label="Limpar filtros"></q-btn>
+          <q-btn
+            icon-right="layers_clear"
+            size="md"
+            color="primary"
+            class="text-dark"
+            stack
+            glossy
+            @click="clean()"
+            label="Limpar filtros"></q-btn>
         </div>
-        <div class="flex justify-end q-mt-md q-gutter-sm">
+        <div class="flex justify-end q-mt-md q-gutter-md">
           <q-btn :class="'tipos'" size="sm" color="pink-9" v-for="(tipo, i) in tipos" :key="`${i}-tipo`" 
             @click="addTipo($event, tipo)">
             {{ tipo.name }}
@@ -36,9 +44,17 @@
         <div class="flex justify-start">
           <div class="text-h6">Licenças</div>
           <q-space></q-space>
-          <q-btn @click="clean()" size="md" label="Limpar filtros"></q-btn>
+          <q-btn
+            icon-right="layers_clear"
+            size="md"
+            color="primary"
+            class="text-dark"
+            stack
+            glossy
+            @click="clean()"
+            label="Limpar filtros"></q-btn>
         </div>
-        <div class="flex justify-end q-mt-md q-gutter-sm">
+        <div class="flex justify-end q-mt-md q-gutter-md">
           <q-btn class="licencas" size="sm" color="teal" v-for="(licenca, i) in licencas" :key="`${i}-licenca`" 
             @click="addLicenca($event, licenca)"
             >
@@ -51,7 +67,15 @@
         <div class="flex justify-start">
           <div class="text-h6">Componentes Curriculares</div>
           <q-space></q-space>
-          <q-btn @click="clean()" size="md" label="Limpar filtros"></q-btn>
+          <q-btn
+            icon-right="layers_clear"
+            size="md"
+            color="primary"
+            class="text-dark"
+            stack
+            glossy
+            @click="clean()"
+            label="Limpar filtros"></q-btn>
         </div>
         
         <div class="q-my-md" v-for="(component, i) in componentes"
@@ -60,7 +84,7 @@
             >
             <b v-text="component.name"></b>
             <q-separator></q-separator>
-            <div class="flex justify-end q-mt-md q-gutter-sm">
+            <div class="flex justify-end q-mt-md q-gutter-md">
               <q-btn class="componentes" size="sm" color="deep-purple-9"
                   v-for="(component, i) in component.componentes"
                   :key="`componente-child-${i}`"
@@ -74,7 +98,15 @@
         <div class="flex justify-start">
           <div class="text-h6">Outros Níveis e/ou Modalidades de Ensino</div>
           <q-space></q-space>
-          <q-btn @click="clean()" size="md" label="Limpar filtros"></q-btn>
+          <q-btn
+            icon-right="layers_clear"
+            size="md"
+            color="primary"
+            class="text-dark"
+            stack
+            glossy
+            @click="clean()"
+            label="Limpar filtros"></q-btn>
         </div>
         
         <div class="q-my-lg" v-for="(nivel, i) in niveis"
@@ -83,7 +115,7 @@
             >
             <b v-text="nivel.name"></b>
             <q-separator class="q-mb-lg"></q-separator>
-            <div class="flex justify-end q-mt-md q-gutter-sm">
+            <div class="flex justify-end q-mt-md q-gutter-md">
               <q-btn class="niveis" size="sm" color="cyan-10"
                   v-for="(component, i) in nivel.componentes"
                   :key="`nivel-child-${i}`"

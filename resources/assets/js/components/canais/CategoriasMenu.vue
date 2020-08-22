@@ -2,7 +2,8 @@
   <q-btn-dropdown
         stretch 
         dropdown-icon="arrow_drop_down" 
-        flat 
+        flat
+        :icon="icone(canal.category_name)"
         :label="canal.category_name"
         v-if="canal && categories && categories.length > 0">
     
@@ -61,6 +62,20 @@ export default {
          this.replaceURL('categoria', category.id);
       } else if(!category.parent_id && !isSubcategory && !length) {
         this.replaceURL('categoria', category.id);
+      }
+    },
+    icone(id) {
+      switch (id) {
+        case 'Nível de Ensino':
+          return "account_tree";
+        case 'Programas':
+          return "cast_for_education";
+        case 'Projetos':
+          return "design_services";
+        case 'Categorias':
+          return "category";
+        default:
+          break;
       }
     }
   }

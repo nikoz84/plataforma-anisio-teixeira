@@ -12,7 +12,7 @@
                     bottom-slot
                 />
                 <q-select outlined option-value="id" option-label="name" ransition-show="scale" transition-hide="scale"
-                    v-model="curricularComponent.category" :options="categorias" label="Categoria relacionada"
+                    v-model="curricularComponent.category" :options="categories" label="Categoria relacionada"
                     hint="Selecione uma categoria ao qual este componente curricular pertence"
                     behavior="dialog"
                 />
@@ -21,12 +21,50 @@
                     hint="Selecione uma categoria ao qual este componente curricular pertence"
                     behavior="dialog"
                 />
+            <!--q-item-label  style="margin-bottom:5px" >
+                <q-icon name="list" style="padding-bottom: 3px; padding-top: 3px; height:15px; width:15px" />
+                <strong>Categorias relacionadas</strong>
+            </!--q-item-label>
+            <q-select class="col-sm-10"
+                        filled
+                        v-model="curricularComponent.categories"
+                        use-input
+                        multiple
+                        option-value="id"
+                        option-label="name"
+                        use-chips
+                        hint="Adicione as Categorias deste Componente Curricular"
+                        input-debounce="300"
+                        new-value-mode="add-unique"
+                        :options="categories"
+                        @filter="searchCategories"
+                        bottom-slots
+                        :error="errors.categories && errors.categories.length > 0" />
+            <q-item-label  style="margin-bottom:5px" >
+                <q-icon name="list" style="padding-bottom: 3px; padding-top: 3px; height:15px; width:15px" />
+                <strong>Néveis de Ensino relacionados</strong>
+            </q-item-label>
+            <q-select class="col-sm-10"
+                        filled
+                        v-model="curricularComponent.niveis"
+                        use-input
+                        multiple
+                        option-value="id"
+                        option-label="name"
+                        use-chips
+                        hint="Adicione os Níveis de Ensino deste Componente Curricular"
+                        input-debounce="300"
+                        new-value-mode="add-unique"
+                        :options="niveisEnsino"
+                        @filter="searchNiveis"
+                        bottom-slots
+                        :error="errors.niveis && errors.niveis.length > 0" />
             <q-img 
                 loading="lazy" 
                 style="height:150px; width:150px"
                 :src="curricularComponent.icon"
                 placeholder-src="/img/fundo-padrao.svg"
-                alt=" Icone da categoria :"/>
+                alt=" Icone da categoria :"/-->
                 
             <br>
             <q-btn
@@ -67,10 +105,13 @@ export default {
                 id:null,
                 name:"",
                 nivel_id:null,
-                nivel:null
+                nivel:null,
+                categories:[],
+                niveis:[]
             },
             errors: [],
-            categorias:[]
+            categories:[],
+            niveisEnsino:[]
         }  
     },
      created() 
@@ -83,16 +124,18 @@ export default {
      {
          async getNiveisEnsino()
          {
-              if (!this.$route.params.id) 
-              {
-                 return;
-              }
-              //let resp = await axios.get(`/niveis/${this.$route.params.id}`);
+              let resp = await axios.get(`/nivelensino`);
+              this.niveisEnsino = resp.data.paginator.data
+              console.log("niesensinos", this.niveisEnsino);
               //this.curricularComponent = resp.data;
          },
          async save() {
             const form = new FormData();
             form.append("name", this.curricularComponent.name);
+            if(this.curricularComponent.nivel)
+            {
+                form.append("nivel_id", this.curricularComponent.nivel.id);
+            }
             if(this.curricularComponent.category)
             {
                 form.append("category_id", this.curricularComponent.category.id);
@@ -120,7 +163,7 @@ export default {
             let resp = await axios.get("/componentescategorias");
             console.log("resp", resp)
             if (resp.data.success) {
-               this.categorias = resp.data.paginator.data;
+               this.categories = resp.data.paginator.data;
             }
         },
         async getComponente() 
@@ -132,6 +175,34 @@ export default {
             let resp = await axios.get(`/componentes/${this.$route.params.id}`);
             this.curricularComponent = resp.data;
             console.log("curricularComponent",this.curricularComponent);
+        },
+        searchCategories(val, update, abort) 
+         {
+            update(() => 
+            {
+                if (val === "" && val.length < 2) {
+                this.categories = [];
+                } else {
+                const self = this;
+                axios.get(`componentescategorias/autocomplete/${val}`).then(resp => {
+                    self.categories = resp.data.metadata;
+                });
+                }
+            });
+        },
+        searchNiveis(val, update, abort) 
+         {
+            update(() => 
+            {
+                if (val === "" && val.length < 2) {
+                this.niveis = [];
+                } else {
+                const self = this;
+                axios.get(`nivelensino/autocomplete/${val}`).then(resp => {
+                    self.niveisEnsino = resp.data.metadata;
+                });
+                }
+            });
         }
      }
 }
