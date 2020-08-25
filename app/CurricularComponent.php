@@ -26,6 +26,11 @@ class CurricularComponent extends Model
         return $this->belongsTo("App\NivelEnsino", "nivel_id", "id");
     }
 
+    public function niveis()
+    {
+        return $this->hasMany('App\NivelEnsino', 'id', 'nivel_id');
+    }
+    
     public function conteudos()
     {
         return $this->belongsToMany('App\Conteudo');

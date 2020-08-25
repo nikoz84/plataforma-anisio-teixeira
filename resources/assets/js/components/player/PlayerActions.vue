@@ -14,6 +14,7 @@
                 <q-badge class="bg-grey-10" text-color="white">{{conteudo.qt_downloads}}</q-badge>
             </p>
             <q-space></q-space>
+            <ThumbsMenu></ThumbsMenu>
             <q-btn class="bg-grey-10" 
                 text-color="white"
                 icon="share"
@@ -73,10 +74,11 @@
 <script>
 import {mapState} from "vuex";
 import { Dialog } from "quasar";
-import { DialogShare } from "@components/shared";
+import { DialogShare, ThumbsMenu } from "@components/shared";
 
 export default {
     name : "PlayerActions",
+    components: { ThumbsMenu },
     data() {
         return {
             guia : {},
