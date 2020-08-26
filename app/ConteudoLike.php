@@ -25,7 +25,7 @@ class ConteudoLike extends Model
         # Verifica se o like ou deslike é para um (conteudo ou aplicativo) e retorna o id
         $idPostagem = $this->retornaOIdDaPostagemCorretaBaseandoseNoTipo($request);
         
-        $seExisteLike = $this->seExisteLikeOuDeslikeDoUsuarioParaAPostagem(
+        $seExisteLike = $this->seExisteLikeOuDislikeDoUsuarioParaAPostagem(
             $request->user_id,
             $idPostagem,
             $request->tipo
@@ -52,12 +52,12 @@ class ConteudoLike extends Model
         return $this->create($request->all());
     }
 
-    public function deslike($request)
+    public function dislike($request)
     {
-        # Verifica se o like ou deslike é para um (conteudo ou aplicativo) e rtorna o id
+        # Verifica se o like ou dislike é para um (conteudo ou aplicativo) e rtorna o id
         $idPostagem = $this->retornaOIdDaPostagemCorretaBaseandoseNoTipo($request);
 
-        $seExisteLike = $this->seExisteLikeOuDeslikeDoUsuarioParaAPostagem(
+        $seExisteLike = $this->seExisteLikeOuDislikeDoUsuarioParaAPostagem(
             $request->user_id,
             $idPostagem,
             $request->tipo
@@ -111,7 +111,7 @@ class ConteudoLike extends Model
     * @param tipo, se é conteudo ou aplicativo
     * @return bool
     */
-    protected function seExisteLikeOuDeslikeDoUsuarioParaAPostagem($idUsuario, $idPostagem, $tipo)
+    protected function seExisteLikeOuDislikeDoUsuarioParaAPostagem($idUsuario, $idPostagem, $tipo)
     {
         $like = $this->where('user_id', $idUsuario);
         if ($tipo == 'conteudo') {

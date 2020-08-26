@@ -1,9 +1,13 @@
 <?php
-
 namespace App\Http\Controllers;
-use App\Http\Controllers\ApiController;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+use App\Http\Controllers\ApiController;
 use App\ConteudoLike;
+use Exception;
 
 class ConteudoLikeController extends ApiController
 {
@@ -12,15 +16,12 @@ class ConteudoLikeController extends ApiController
 
     public function __construct(Request $request, ConteudoLike $conteudoLike)
     {
+        $this->middleware('auth:api')->except([
+            'getLikesPorIdUsuarioEtipo',
+            'getLikesByConteudoAplicativo'
+        ]);
         $this->conteudoLike = $conteudoLike;
         $this->request = $request;
-
-        $this->middleware('auth:api')->except([
-            'like',
-            'deslike',
-            'getLikesPorIdUsuarioEtipo'
-        ]);
-        $request = $request;
     }
     /**
      * Lista as curtidas de forma positiva do aplicativo
@@ -28,11 +29,14 @@ class ConteudoLikeController extends ApiController
 
     public function like()
     {
+        
+        $this->request['user_id'] =  Auth::user()->id;
         try {
+            $this->request->user_id =  Auth::user()->id;
             $this->conteudoLike->like($this->request);
             return $this->successResponse([], 'Ação realizada com sucesso!', 200);
         } catch (\Exception $e) {
-            return $this->errorResponse([], 'Não foi possível realizar a operação!', 422);
+            return $this->errorResponse([], 'userid:'.Auth::user()->id.'Não foi possível realizar a operação! '.$e->getMessage(), 422);
         }
     }
 
@@ -40,10 +44,12 @@ class ConteudoLikeController extends ApiController
      * Lista as curtidas de forma negativa do aplicativo.
      */
 
-    public function deslike()
+    public function dislike()
     {
+        
+        $this->request['user_id'] =  Auth::user()->id;
         try {
-            $this->conteudoLike->deslike($this->request);
+            $this->conteudoLike->dislike($this->request);
             return $this->successResponse([], 'Ação realizada com sucesso!', 200);
         } catch (\Exception $e) {
             return $this->errorResponse([], 'Não foi possível realizar a operação!', 422);
@@ -54,9 +60,43 @@ class ConteudoLikeController extends ApiController
      * Lista as curtidas por usuário.
      */
 
-    public function getLikesPorIdUsuarioEtipo($idUsuario, $tipo = false)
+    public function getLikesPorIdUsuarioEtipo()
     {
         $limit = $this->request->query('limit');
-        return $this->successResponse($this->conteudoLike->getLikesPorIdUsuarioEtipo($idUsuario, $tipo, $limit));
+        return $this->successResponse($this->conteudoLike->getLikesPorIdUsuarioEtipo(Auth::user()->id, $this->request->tipo, $limit));
     }
+
+    public function getUsuarioLikesConteudoAplicativo($conteudoid, $tipo)
+    {
+        if ($tipo == "conteudo") {
+            $likes = ConteudoLike::where("conteudo_id", $conteudoid)->where("tipo", $tipo)->get()->first();
+        }
+        else if($tipo == "aplicativo")
+        {
+            $likes = ConteudoLike::where("aplicativo_id", $conteudoid)->where("tipo", $tipo)->get()->first();
+        }
+        return $this->showOne($likes);
+    }
+
+    public function getLikesByConteudoAplicativo($condudoAplicativoId , $tipo)
+    {
+        try{
+            if ($tipo == "conteudo") {
+                $likes = ConteudoLike::select(DB::raw('count(case when "like" = true then 1 end) AS likes'), DB::raw('count(case when "like" = false then 1 end) AS dislikes'))
+                    ->where("conteudo_id", $condudoAplicativoId)->where("tipo", $tipo)->get()->first();
+            }
+            else if($tipo == "aplicativo")
+            {
+                $likes = ConteudoLike::select(DB::raw('count(case when "like" = true then 1 end) AS likes'), DB::raw('count(case when "like" = false then 1 end) AS dislikes'))
+                ->where("aplicativo_id", $condudoAplicativoId)->where("tipo", $tipo)->get()->first();
+            }
+        }
+        catch(Exception $ex)
+        {
+            return $this->errorResponse([], $ex->getMessage(), 501);
+        }
+        
+        return $this->showOne($likes);
+    }
+
 }

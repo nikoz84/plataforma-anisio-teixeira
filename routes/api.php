@@ -84,6 +84,8 @@ Route::get('/licencas', 'LicenseController@index')->name('listar.licencas');
 /** DOWNLOAD FILE **/
 Route::get('/files/{directory}/{id}', 'FileController@downloadFile')->name('downloadFile.id');
 
+/**LIKES - DISLIKES */
+Route::get('/likes/count/{conteudoid}/{tipo}', 'ConteudoLikeController@getLikesByConteudoAplicativo')->name('likes.conteudo');
 /**
 *Route::get(
 *    '/planilhas/load-rotinas/',
@@ -96,8 +98,7 @@ Route::get('/files/{directory}/{id}', 'FileController@downloadFile')->name('down
 */
 Route::get('/planilhas', 'ConteudoPlanilhaController@getDocumentByName')->name('docs.planilhas');
 
-Route::get('/rotinas/{nivel}/{semana}', 'ConteudoPlanilhaController@rotinasPerNivel')
-->name('rotinas.estudos.x.nivel');
+Route::get('/rotinas/{nivel}/{semana}', 'ConteudoPlanilhaController@rotinasPerNivel')->name('rotinas.estudos.x.nivel');
 /***********************************************
  *
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN
@@ -240,8 +241,9 @@ Route::group(
 
         /** LIKE - DESLIKE */
         Route::post('/like', 'ConteudoLikeController@like')->name('like');
-        Route::post('/deslike', 'ConteudoLikeController@deslike')->name('deslike');
-        Route::delete('/like', 'ConteudoLikeController@delete')->name('deletar.like');
+        Route::post('/dislike', 'ConteudoLikeController@dislike')->name('dislike');
         Route::get('/likes/usuario/{idUsuario}/{tipo?}', 'ConteudoLikeController@getLikesPorIdUsuarioEtipo')->name('likes.usuario');
+        Route::get('/likes/conteudo/{conteudoid}/{tipo}', 'ConteudoLikeController@getUsuarioLikesConteudoAplicativo')->name('likes.usuario.conteudo.aplicativo');
+        
     }
 );

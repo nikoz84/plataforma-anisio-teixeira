@@ -18,13 +18,54 @@
                 outlineThumbsUp:true,
                 outlineThumbsDown:true,
                 countThumbsDown:0,
-                countThumbsUp:0
+                countThumbsUp:0,
+                likeOrNot:null,
+                countLikes:null
             }
         },
+         created() 
+        {
+            this.getUserLike();
+            this.getCountLikes();
+        },
         methods:{
+            async getUserLike(){
+                let resp = await axios.get("/likes/conteudo/"+this.$route.params.id+"/"+this.getTipo());
+                if (resp.data.success) {
+                    this.likeOrNot = resp.data.metadata;
+                }
+                if( this.likeOrNot.like)
+                {
+                    this.outlineThumbsUp = false;
+                }
+                if(this.likeOrNot.like === false)
+                {
+                    this.outlineThumbsDown = false;
+                }
+            },
+            async getCountLikes()
+            {
+                 let resp = await axios.get("/likes/count/"+this.$route.params.id+"/"+this.getTipo());
+                 if (resp.data.success) {
+                    this.countLikes = resp.data.metadata;
+                    this.countThumbsDown = this.countLikes.dislikes;
+                    this.countThumbsUp =   this.countLikes.likes;
+                }
+            },
+            getTipo()
+            {
+                if(this.$route.path.indexOf("/conteudo/")>=0)
+                {
+                    return "conteudo";
+                }
+                else if(this.$route.path.indexOf("/aplicativo/")>=0)
+                {
+                    return "aplicativo";
+                }
+            },
             thumbsUp() 
             {
-                if(this.save())
+                if(this.save(true))
                 {
                     this.outlineThumbsUp = !this.outlineThumbsUp;
                     if(!this.outlineThumbsUp)
@@ -42,7 +83,7 @@
             },
             async thumbsDown()
             {
-                if(this.save())
+                if(this.save(false))
                 {
                     this.outlineThumbsDown = !this.outlineThumbsDown;
                     if(!this.countThumbsDown)
@@ -62,10 +103,24 @@
             {
                 this.loaddingIcon = true;
                 const form = new FormData();
-                form.append("conteudo_id", this.$route.params.id);
+                if(this.$route.path.indexOf("/conteudo/")>=0)
+                {
+                    form.append("conteudo_id", this.$route.params.id);
+                    form.append("tipo", "conteudo");
+                }
+                else if((this.$route.path.indexOf("/aplivativo/")>=0))
+                {
+                    form.append("aplicativo_id", this.$route.params.id);
+                    form.append("tipo", "aplicativo");
+                }
+                form.append("user_id", "");
                 if(likeordislike)
                 {
                     form.append("like", 1 );
+                }
+                else if(likeordislike)
+                {
+                    form.append("like", 0 );
                 }
                 try
                 {
@@ -79,11 +134,12 @@
                     }
                     else if(likeordislike==null)
                     {
-                        let resp = await axios.post("/dislike" , form);
+                        let resp = await axios.delete("/dislike" , form);
                     }
                 }
                 catch(ex)
                 {
+                    this.errors = ex.errors;
                 }
                 finally
                 {
