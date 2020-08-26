@@ -6,7 +6,6 @@ use App\Traits\UserCan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-
 class CurricularComponent extends Model
 {
     use UserCan;

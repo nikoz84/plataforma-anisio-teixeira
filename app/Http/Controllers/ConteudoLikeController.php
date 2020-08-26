@@ -49,10 +49,11 @@ class ConteudoLikeController extends ApiController
         
         $this->request['user_id'] =  Auth::user()->id;
         try {
+            $this->request->user_id =  Auth::user()->id;
             $this->conteudoLike->dislike($this->request);
             return $this->successResponse([], 'Ação realizada com sucesso!', 200);
         } catch (\Exception $e) {
-            return $this->errorResponse([], 'Não foi possível realizar a operação!', 422);
+            return $this->errorResponse([], 'Não foi possível realizar a operação! '.$e->getMessage(), 422);
         }
     }
 
@@ -75,7 +76,9 @@ class ConteudoLikeController extends ApiController
         {
             $likes = ConteudoLike::where("aplicativo_id", $conteudoid)->where("tipo", $tipo)->get()->first();
         }
+        if($likes)
         return $this->showOne($likes);
+        return "{}";
     }
 
     public function getLikesByConteudoAplicativo($condudoAplicativoId , $tipo)
