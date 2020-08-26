@@ -20,16 +20,31 @@ class License extends Model
         'name', 'description', 'site', 'parent_id',
     ];
     protected $appends = ['user_can', 'image'];
+    /**
+     * Função Pertence a Conteudo
+     * 
+     * @param \App\License $license
+     * @return \App\Model\ApiResponser retorna json
+     */
+
     public function conteudo()
     {
         return $this->belongsTo(Conteudo::class, 'license_id');
     }
-
+     /**
+     * Função criança Pertence a muitos
+     * @param \App\Licence $license
+     * @return \App\Model\ApiResponser retorna json
+     */
     public function childs()
     {
         return $this->hasMany(\App\License::class, 'parent_id', 'id');
     }
-
+     /**
+      * Função Mãe Tem um
+      * @param \App\Licence $license
+      * @return \App\Model\ApiResponser retorna json
+      */
     public function parent()
     {
         return $this->hasOne(\App\License::class, 'id', 'parent_id');

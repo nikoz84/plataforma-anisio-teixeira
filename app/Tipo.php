@@ -21,6 +21,11 @@ class Tipo extends Model
         'options' => 'array',
     ];
 
+    /**
+     * Seleciona o iconde do atributo
+     *
+     * @return void
+     */
     public function getIconAttribute()
     {
         if ($this->name) {
@@ -29,7 +34,11 @@ class Tipo extends Model
         return "";
     }
     
-
+    /**
+     * Seleciona a busca do atributa por meio da url
+     *
+     * @return void
+     */
     public function getSearchUrlAttribute()
     {
         $canal = Canal::find(6);

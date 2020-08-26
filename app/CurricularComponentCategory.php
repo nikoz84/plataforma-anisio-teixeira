@@ -12,9 +12,11 @@ class CurricularComponentCategory extends Model
 
     protected $table = 'curricular_components_categories';
     protected $appends = ['user_can', 'search_url'];
-    public $fillable = ['name'];
-
+     
     /**
+     * Função Componentes tem Muitos
+     * @param \App\CurricularComponentCategory $curricularComponentCategory
+     * @return \App\Model\ApiResponser retorna jso
      * obtem os componetes relacionados a este componente
      * @return Illuminate\Database\Eloquent\Concerns\HasMany
      */
@@ -22,8 +24,9 @@ class CurricularComponentCategory extends Model
     {
         return $this->hasMany(\App\CurricularComponent::class, 'category_id', 'id');
     }
-    
-    /**
+
+     /**
+     * Função Obtém a Pesquisa do Atribuito pela URL
      * obtem string url de busca de eatributos da cateroria do componente
      * @return string
      */

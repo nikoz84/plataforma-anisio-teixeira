@@ -14,10 +14,20 @@ class NivelEnsino extends Model
     protected $appends = ['user_can', 'search_url'];
     public $fillable = ['name'];
 
+    /**
+     * Função Retorna Componentes tem muitos
+     * @param \App\NivelEnsino $nivelEnsion
+     * @return \App\Model\ApiResponser retorna json
+     */
     public function componentes()
     {
         return $this->hasMany(\App\CurricularComponent::class, 'nivel_id', 'id');
     }
+      /**
+       * Função Faz uma pesquisa do Atributo pela Url
+       *@param \App\NivelEnsino $nivelEnsion
+       * @return \App\Model\ApiResponser retorna json
+       */
     public function getSearchUrlAttribute()
     {
         $canal = Canal::find(6);

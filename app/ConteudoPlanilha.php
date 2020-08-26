@@ -36,7 +36,12 @@ class ConteudoPlanilha extends Model
         $jsonStr = json_decode($jsonFile, true);
         return $jsonStr['result'];
     }
-
+      /**
+       * Retorna dados Formatados em Json 
+       *
+       * @param [String] $dados
+       * @return void
+       */
     public function formatarJsonFaculdadesDaBahia($dados)
     {
         $novaEstrutura = [];
@@ -65,7 +70,12 @@ class ConteudoPlanilha extends Model
 
         return $novaEstrutura;
     }
-
+       /**
+        * Retorna Rotinas de estudo Com Json Formatado 
+        *
+        * @param [String] $dados
+        * @return void
+        */
     public function formatarJsonRotinasDeEstudo($dados)
     {
         $novaEstrutura = [];
@@ -84,11 +94,20 @@ class ConteudoPlanilha extends Model
         
         return $novaEstrutura;
     }
-
+     /**
+      * Retorna conteudos Listados
+      *
+      * @return void
+      */
     public function conteudos()
     {
         return $this->select();
     }
+    /**
+     * Retorna Niveis de Ensino
+     *
+     * @return void
+     */
     public function niveisEnsino()
     {
         return [
@@ -97,6 +116,11 @@ class ConteudoPlanilha extends Model
             'ensino-fundamental-2',
         ];
     }
+    /**
+     * Retorna Dias da semana
+     *
+     * @return void
+     */
     public function diasDaSemanaPorExtenso()
     {
         return  [
