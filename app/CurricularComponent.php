@@ -33,6 +33,7 @@ class CurricularComponent extends Model
         return $this->belongsTo("App\NivelEnsino", "nivel_id", "id");
     }
 
+<<<<<<< HEAD
 >>>>>>> 59fafea095472a7b96e5e8137d18ca03da6dc9ba
     public function categories()
     {
@@ -56,6 +57,8 @@ class CurricularComponent extends Model
      * @param \App\CurricularComponentes $curricular
      * @return \App\Model\ApiResponser retorna json
      */
+=======
+>>>>>>> f648f09e61b0e7bb104b0e00960e799137cc5477
     public function conteudos()
     {
         return $this->belongsToMany('App\Conteudo');

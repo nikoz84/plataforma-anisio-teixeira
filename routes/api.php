@@ -119,6 +119,7 @@ Route::group(
         Route::put('/componentes/{id}', 'ComponentesController@update')->name('atualizar.componentes');
         Route::get('/componentes/search/{termo}', 'ComponentesController@search')->name('buscar.componentes');
         Route::get('/componentes/autocomplete/{term}', 'ComponentesController@autocomplete')->name('autocompletar.componentes');
+        Route::delete('/componentes/{id}', 'ComponentesController@delete')->name('deletar.componentes');
 
         /** COMPONENTES CATEGORIAS*/
         Route::post('/componentescategorias', 'CurricularComponentCategoryController@create')->name('criar.componentes-categoria.curriculares');
@@ -126,14 +127,14 @@ Route::group(
         Route::get('/componentescategorias/search/{termo}', 'CurricularComponentCategoryController@search')->name('buscar.componentescategorias');
         Route::put('/componentescategorias/{id}', 'CurricularComponentCategoryController@update')->name('atualizar.componentescategorias');
         Route::delete('/componentescategorias/{id}', 'CurricularComponentCategoryController@delete')->name('deletar.componentescategorias');
-        Route::get('/componentescategorias/autocomplete/{term}', 'CurricularComponentCategoryController@autocomplete')->name('autocompletar.tag');
+        Route::get('/componentescategorias/autocomplete/{term}', 'CurricularComponentCategoryController@autocomplete')->name('autocompletar.componentescategorias');
 
         /**NIVEL ENSINO**/
         Route::get('/nivelensino/search/{termo}', 'NivelEnsinoController@search')->name('buscar.nivelensino');
         Route::get('/nivelensino/{id}', 'NivelEnsinoController@getById')->name('obter.nivelensino');
         Route::post('/nivelensino', 'NivelEnsinoController@create')->name('criar.nivelensino');
         Route::put('/nivelensino/{id}', 'NivelEnsinoController@update')->name('atualizar.nivelensino');
-        Route::get('/nivelensino/search/{termo}', 'NivelEnsinoController@search')->name('buscar.nivelensino');
+        Route::get('/nivelensino/autocomplete/{term}', 'NivelEnsinoController@autocomplete')->name('autocompletar.nivelensino');
         Route::delete('/nivelensino/{id}', 'NivelEnsinoController@delete')->name('deletar.nivelensino');
 
         /** AUTENTICACAO */
@@ -196,12 +197,14 @@ Route::group(
         Route::delete('/canais/{id}', 'CanalController@delete')->name('apagar.canal');
         Route::get('/canais/{id}', 'CanalController@getById')->name('listar.canal.x.id');
         Route::get('/canais/search/{term}', 'CanalController@search')->name('buscar.canal');
+
         /** LICENCAS */
         Route::get('/licencas/search/{term}', 'LicenseController@search')->name('buscar.licenca');
         Route::get('/licencas/{id}', 'LicenseController@getById')->name('obter.licenca');
         Route::post('/licencas', 'LicenseController@create')->name('adicionar.licenca');
         Route::put('/licencas/{id}', 'LicenseController@update')->name('atualizar.licenca');
         Route::delete('/licencas/{id}', 'LicenseController@delete')->name('apagar.licenca');
+
         /** DENUNCIAS */
         Route::get('/contato', 'ContatoController@index')->name('listar.faleconosco');
         Route::get('/contato/{id}', 'ContatoController@getById')->name('busca.x.id');

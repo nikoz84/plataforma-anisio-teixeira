@@ -124,6 +124,21 @@ class NivelEnsinoController extends ApiController
         return $this->successResponse($nivel, 'Nível de Ensino foi removido com sucesso!', 200);
     }
 
+     /**
+     * Auto-Completação
+     * @param string $term identificador único
+     * @return string json
+     */
+    public function autocomplete($term)
+    {
+        $search = "%{$term}%";
+        $limit = $this->request->query('limit', 100);
+        $niveis = NivelEnsino::select(['id', 'name'])
+            ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
+            ->get(['id', 'name']);
+        return $this->showAll(collect($niveis));
+    }
+
     /**
      * obtem array com o par chave|valor com regras de preenchimento dos dados de niveis de ensino
      * @return array regras do nivel de ensino ao popular base de dados

@@ -118,6 +118,21 @@ class CurricularComponentCategoryController extends ApiController
         return $componentesCategoria;
     }
 
+     /**
+     * Auto-Completação
+     * @param string $term identificador único
+     * @return string json
+     */
+    public function autocomplete($term)
+    {
+        $search = "%{$term}%";
+        $limit = $this->request->query('limit', 100);
+        $categories = CurricularComponentCategory::select(['id', 'name'])
+            ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
+            ->get(['id', 'name']);
+        return $this->showAll(collect($categories));
+    }
+
     /**
      * Deleta o aplicativo no banco de dados
      * @param int $id identificador único

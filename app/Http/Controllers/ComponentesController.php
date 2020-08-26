@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Traits\ApiResponser;
 use App\CurricularComponent as Componente;
 use App\CurricularComponent;
-use App\CurricularComponentCategory as Category;
+use App\CurricularComponentcomponent as component;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -26,8 +26,7 @@ class ComponentesController extends ApiController
     public function index()
     {
         $limit = $this->request->get('limit', 15);
-        $componentes = CurricularComponent::select("*")->with('niveis')
-            ->with("categories")
+        $componentes = CurricularComponent::select("*")
             ->with("nivel")
             ->with("category")
             ->limit($limit)
@@ -71,7 +70,8 @@ class ComponentesController extends ApiController
         $component = new Componente();
         try{
             $component =  Componente::findOrFail($id);
-            $component->category;
+            $component->component;
+            $component->nivel;
         }
         catch(Exception $ex)
         {
@@ -93,6 +93,7 @@ class ComponentesController extends ApiController
             $componente = new Componente();
             $this->authorize('create', JWTAuth::user());   
             $componente->fill($this->request->all());
+
             if (!$componente->save()) {
                 
                 throw new Exception('Não foi possível salvar componente', 422);
@@ -138,6 +139,35 @@ class ComponentesController extends ApiController
             ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
             ->get(['id', 'name']);
         return $this->showAll(collect($tags));
+    }
+
+    /**
+     * Deleta o aplicativo no banco de dados
+     * @param int $id identificador único
+     * @return \App\Controller\ApiResponser
+     * retorna Json
+     */
+    public function delete($id)
+    {
+        $validator = Validator::make($this->request->all(), [
+            'delete_confirmation' => ['required', new \App\Rules\ValidBoolean]
+        ]);
+        try{
+            if ($validator->fails()) {
+                $data = $validator->errors();
+                return $this->errorResponse($validator->errors(), "Não foi possível deletar.", 201);
+            }
+            $component = CurricularComponent::findOrFail($id);
+            $this->authorize('delete', $component);
+            if (!$component->delete()) {
+               throw new Exception("Erro ao deletar a categoria: ".$component->name." Tente novamente em seguida.");
+            }
+        }
+        catch(Exception $ex)
+        {
+            return $this->errorResponse([], $ex->getMessage(), $ex->getCode() > 0 &&  $ex->getCode() <505 ? $ex->getCode() : 500);
+        }
+        return $this->successResponse($component, 'Categoria do componente deletada com sucesso!', 200);
     }
 
     public function rules()
