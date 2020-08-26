@@ -1,18 +1,20 @@
 <IfModule mod_php7.c>
   php_value upload_max_filesize 800M
   php_value post_max_size 800M
+  php_value memory_limit 500M
+  php_value max_execution_time 18000
 </IfModule>
+<Files ".user.ini">
+  # Configurações para php-fpm
+  Require all denied
+</Files>
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options +FollowSymLinks -MultiViews -Indexes
     </IfModule>
 
     RewriteEngine On
-    RedirectMatch 301 ^/home/ipes /ipes
-    RedirectMatch 301 ^/home/rotinas-de-estudo /rotinas-de-estudo
-    RedirectMatch 301 ^/tv-anisio-teixeira/programas/exibir/id/(.*) /tv-anisio-teixeira/conteudo/exibir/$1
-    RedirectMatch 301 ^/emitec/disciplinas/exibir/id/(.*) /emitec/conteudo/exibir/$1
-    RedirectMatch 301 ^/conteudos-digitais/conteudo/exibir/id/(.*) /recursos-educacionais/conteudo/exibir/$1
+    
     # Handle Authorization Header
     #RewriteCond %{HTTP:Authorization} .
     #RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
@@ -30,37 +32,64 @@
     RewriteRule ^ index.php [L]
 </IfModule>
 
+<IfModule mod_headers.c>
+  Header unset ETag
+  Header add Link "</css/app.css>; as=style rel=preload;"
+  Header add Link "</js/app.js>; as=script rel=preload;"
+  Header add Link "</fonts/Lato-Regular.woff2>; as=font crossorigin=anonymous rel=preload;"
+  Header add Link "</fonts/Ubuntu-Regular.woff>; as=font crossorigin=anonymous rel=preload;"
+  Header add Link "</fonts/Ubuntu-Regular.woff2>; as=font crossorigin=anonymous rel=preload;"
+  Header add Link "</fonts/vendor/@quasar/extras/material-icons/web-flUhRq6tzZclQEJ-Vdg-IuiaDsNa.woff>; as=font crossorigin=anonymous rel=preload;"
+  Header add Link "</fonts/vendor/@quasar/extras/material-icons/web-flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2>; as=font crossorigin=anonymous rel=preload;"
+</IfModule>
 
-# Turn on Expires and set default expires to 1 year
-ExpiresActive On
-ExpiresDefault A31536000
+FileETag None
 
-# Set up caching on media files for 1 month
-<FilesMatch "\.(ico|gif|jpg|jpeg|png|mp4|webm|pdf|mp3|wmv|ppt)$">
-  ExpiresDefault A29030400
-  Header append Cache-Control "public"
-</FilesMatch>
-
-# Set up 2 Hour caching on commonly updated files
-<FilesMatch "\.(xml|txt|html|js|css|map|ttf|ttc|otf|eot|woff|woff2|font.css)$">
-  #Header set Access-Control-Allow-Origin "*"
-  ExpiresDefault A720000
-  Header append Cache-Control "private, must-revalidate"
-</FilesMatch>
-
-# Force no caching for dynamic files
-<FilesMatch "\.(php|cgi|pl|htm)$">
-  ExpiresDefault A0
-  Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
-  Header set Pragma "no-cache"
-</FilesMatch>
+<IfModule mod_expires.c>
+  ExpiresActive on
+  ExpiresDefault "access plus 1 month"
+  ExpiresByType text/cache-manifest "access plus 0 seconds"
+  # Html
+  ExpiresByType text/html "access plus 0 seconds"
+  # Data
+  ExpiresByType text/xml "access plus 0 seconds"
+  ExpiresByType application/xml "access plus 0 seconds"
+  ExpiresByType application/json "access plus 0 seconds"
+  # Feed
+  ExpiresByType application/rss+xml "access plus 1 hour"
+  ExpiresByType application/atom+xml "access plus 1 hour"
+  # Favicon
+  ExpiresByType image/x-icon "access plus 1 week"
+  # Media: images, video, audio
+  ExpiresByType image/gif "access plus 6 month"
+  ExpiresByType image/png "access plus 6 month"
+  ExpiresByType image/jpg "access plus 6 month"
+  ExpiresByType image/jpeg "access plus 6 month"
+  ExpiresByType video/ogg "access plus 6 month"
+  ExpiresByType audio/ogg "access plus 6 month"
+  ExpiresByType video/mp4 "access plus 6 month"
+  ExpiresByType video/webm "access plus 6 month"
+  # HTC files
+  ExpiresByType text/x-component "access plus 1 month"
+  # Webfonts
+  ExpiresByType application/x-font-ttf "access plus 6 month"
+  ExpiresByType font/opentype "access plus 6 month"
+  ExpiresByType application/x-font-woff "access plus 6 month"
+  ExpiresByType application/x-font-woff2 "access plus 6 month"
+  ExpiresByType image/svg+xml "access plus 6 month"
+  ExpiresByType application/vnd.ms-fontobject "access plus 6 month"
+  # CSS / JS
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType application/x-javascript "access plus 1 year"
+</IfModule>
 
 <IfModule mod_mime.c>
     AddType application/javascript          js
     AddType application/vnd.ms-fontobject   eot
     AddType application/x-font-ttf          ttf ttc
     AddType font/opentype                   otf
-    AddType application/x-font-woff         woff
+    AddType application/x-font-woff         woff woff2
     AddType image/svg+xml                   svg svgz 
     AddEncoding gzip                        svgz
 </Ifmodule>
@@ -76,27 +105,9 @@ ExpiresDefault A31536000
   AddOutputFilterByType DEFLATE application/rss+xml
 </Ifmodule>
 
-<IfModule mod_expires.c>
-  ExpiresActive On
-  ExpiresByType image/jpg "access plus 1 month"
-  ExpiresByType image/jpeg "access plus 1 month"
-  ExpiresByType image/gif "access plus 1 month"
-  ExpiresByType image/png "access plus 1 month"
-  ExpiresByType text/css "access plus 1 month"
-  ExpiresByType application/pdf "access plus 1 month"
-  ExpiresByType text/x-javascript "access plus 1 month"
-  ExpiresByType application/x-shockwave-flash "access plus 1 month"
-  ExpiresByType image/x-icon "access plus 1 year"
-  ExpiresDefault "access plus 2 days"
-</IfModule>
-
-
 <IfModule mod_headers.c>
-  Header add Link "</css/app.css>; as=style rel=preload;"
-  Header add Link "</js/app.js>; as=script rel=preload;"
-  Header add Link "</fonts/Lato-Regular.woff2>; as=font crossorigin=anonymous rel=preload;"
-  Header add Link "</fonts/Ubuntu-Regular.woff>; as=font crossorigin=anonymous rel=preload;"
-  Header add Link "</fonts/Ubuntu-Regular.woff2>; as=font crossorigin=anonymous rel=preload;"
-  Header add Link "</fonts/vendor/@quasar/extras/material-icons/web-flUhRq6tzZclQEJ-Vdg-IuiaDsNa.woff>; as=font crossorigin=anonymous rel=preload;"
-  Header add Link "</fonts/vendor/@quasar/extras/material-icons/web-flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2>; as=font crossorigin=anonymous rel=preload;"
+  Header set X-UA-Compatible "IE=Edge,chrome=1"
+  <FilesMatch "\.(js|css|gif|png|jpeg|pdf|xml|oga|ogg|m4a|ogv|mp4|m4v|webm|svg|svgz|eot|ttf|otf|woff|ico|webp|appcache|manifest|htc|crx|oex|xpi|safariextz|vcf)$" >
+    Header unset X-UA-Compatible
+  </FilesMatch>
 </IfModule>

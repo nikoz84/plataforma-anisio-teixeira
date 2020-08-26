@@ -1,37 +1,33 @@
 <template>
     <div v-if="conteudo">
-        <div>
-            <small v-if="conteudo.tipo">
+        <div class="flex justify-center q-gutter-sm">
+            <p v-if="conteudo.tipo">
                 Tipo de Conteúdo: 
-                <q-badge class="bg-cinza" text-color="primary">{{conteudo.tipo.name}}</q-badge>
-            </small>
-            <small v-if="conteudo.qt_access">
+                <q-badge class="bg-grey-10" text-color="white">{{conteudo.tipo.name}}</q-badge>
+            </p>
+            <p v-if="conteudo.qt_access">
                 Acessos: 
-                <q-badge class="bg-cinza" text-color="primary">{{conteudo.qt_access}}</q-badge>
-            </small>
-            <small v-if="conteudo.qt_downloads && conteudo.tipo.id != 8">
+                <q-badge class="bg-grey-10" text-color="white">{{conteudo.qt_access}}</q-badge>
+            </p>
+            <p v-if="conteudo.qt_downloads && conteudo.tipo.id != 8">
                 Downloads: 
-                <q-badge class="bg-cinza" text-color="primary">{{conteudo.qt_downloads}}</q-badge>
-            </small>
-            
-            <q-btn class="q-ml-md bg-cinza" 
-                round
-                push
-                text-color="primary"
+                <q-badge class="bg-grey-10" text-color="white">{{conteudo.qt_downloads}}</q-badge>
+            </p>
+            <q-space></q-space>
+            <q-btn class="bg-grey-10" 
+                text-color="white"
                 icon="share"
-                size="sm" 
-                @click="share()" >
+                size="xs"
+                @click="show = !show" >
                 <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
                     Compartilhar
                 </q-tooltip>
             </q-btn>
             <q-btn
-                round
-                push
-                class="bg-cinza"
-                text-color="primary"
+                class="bg-grey-10"
+                text-color="white"
                 icon="save_alt"
-                size="sm"
+                size="xs"
                 v-if="fileExists('download') && conteudo.id"
                 @click="downloadFile('download', conteudo.id)" >
                 <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
@@ -41,8 +37,8 @@
             <!--q-btn
                 round
                 push
-                class="bg-cinza"
-                text-color="primary"
+                class="bg-grey-10"
+                text-color="white"
                 icon="save_alt"
                 size="sm"
                 v-if="fileExists('visualizacao')"
@@ -52,12 +48,10 @@
                 </q-tooltip>
             </q-btn-->
             <q-btn
-                round
-                push
-                class="bg-cinza"
-                text-color="primary"
+                class="bg-grey-10"
+                text-color="white"
                 icon="description"
-                size="sm"
+                size="xs"
                 v-if="fileExists('guias-pedagogicos')" 
                 @click="downloadFile('guias-pedagogicos', conteudo.id)">
                 <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
@@ -65,11 +59,21 @@
                 </q-tooltip>
             </q-btn>
         </div>
+        <div class="q-mt-md" v-if="show">
+            <q-btn @click="incorporar" color="pink" label="Incorporar"></q-btn>
+
+            <q-separator></q-separator>
+            <q-input v-if="stringShare" v-model="stringShare" 
+                hint="Copie e cole esse código para adicionar na sua página web" 
+                autogrow readonly />
+        </div>
     </div>
 </template>
 
 <script>
 import {mapState} from "vuex";
+import { Dialog } from "quasar";
+import { DialogShare } from "@components/shared";
 
 export default {
     name : "PlayerActions",
@@ -77,7 +81,11 @@ export default {
         return {
             guia : {},
             download: {},
-            visualizacao: {}
+            visualizacao: {},
+            urlShare: null,
+            stringShare: '',
+            show: false,
+            loading: false
         }
     },
     computed: {
@@ -104,13 +112,25 @@ export default {
             })
             
         },
-        share() {
-            console.log("compartilhar");
+        incorporar() {
+            const id = this.conteudo.id
+            const port = location.port ? `:${location.port}` : '';
+            const url = 'http://' + location.hostname + `${port}` + `/incorporar-conteudo/${id}`;
+            this.stringShare = `
+                <iframe width="560" height="315" src="${url}"
+                        frameborder="0" 
+                        allowfullscreen>
+                </iframe>
+            `;
+            
         },
         fileExists(path) {
-            let files = this.conteudo.arquivos;
+            let files = this.conteudo ? this.conteudo.arquivos : null;
             
-            return files[`${path}`].hasOwnProperty('url');
+            if(path && files != null){
+                return files[`${path}`].hasOwnProperty('url');
+            }
+            return false
         }
     },
 }

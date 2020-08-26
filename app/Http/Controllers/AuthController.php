@@ -14,6 +14,7 @@ use App\Mail\SendVerificationEmail;
 use Exception;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends ApiController
 /**
@@ -31,9 +32,9 @@ class AuthController extends ApiController
 
         $this->request = $request;
     }
+
     /**
      * Login Usuario.
-     *
      * @return App\Http\Controllers\AuthController\resp
      */
     public function login()
@@ -98,10 +99,8 @@ class AuthController extends ApiController
 
     /**
      * Get the token array structure.
-     *
      * @param $token token gerado pelo JWTAuth
      * @param $message menssagem retornado para o usuário
-     *
      * @return App\Traits\ApiResponser
      */
     protected function respondWithToken($token, $message = '')
@@ -133,32 +132,38 @@ class AuthController extends ApiController
                 422
             );
         }
+        try {
+            $user = new User;
+            $token = $user->createVerificationToken();
 
-        $user = new User;
-        $token = $user->createVerificationToken();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = $request->password;
+            $user->verified = User::USER_NOT_VERIFIED;
+            $user->verification_token = $token;
+            $user->options = [
+                "sexo" => null,
+                "birthday" => null,
+                "telefone" => null,
+                "is_active" => false,
+                "neighborhood"=> null
+            ];
 
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $request->password;
-        $user->verified = User::USER_NOT_VERIFIED;
-        $user->verification_token = $token;
-        $user->options = [
-            "sexo" => null,
-            "birthday" => null,
-            "telefone" => null,
-            "is_active" => false,
-            "neighborhood"=> null
-        ];
-
-        if ($user->save()) {
-            if ($this->sendConfirmationEmail($user->email, $token, 'register')) {
-                return $this->successResponse([], "Espere a confirmação na sua conta de email", 200);
+            if (!$user->save()) {
+                throw new Exception("Erro ao enviar os cadastrar usuário");
             }
-
-            return $this->errorResponse([], "Erro ao enviar Email", 422);
+            if (!$this->sendConfirmationEmail($user->email, $token, 'register')) {
+                throw new Exception("Erro ao enviar email");
+            }
+        } catch (Exception $ex) {
+            return $this->errorResponse([], $ex->getMessage(), 422);
         }
-
-         return $this->errorResponse([], "Erro ao cadastrar Usuário", 422);
+        
+        return $this->successResponse(
+            [],
+            "Usuário cadastrado com sucesso! Espere o código de ativação em sua conta de email",
+            200
+        );
     }
     /**
      * Recuperar senha
@@ -176,7 +181,12 @@ class AuthController extends ApiController
         $data = [];
         // Dispara o Email
         try {
-            $usuario = User::where('email', 'like', "%".trim($request->email)."%")->get()->first();
+            if ($validator->fails()) {
+                $data = $validator->errors();
+                throw new Exception("Verifique os dados fornecidos");
+            }
+
+            $usuario = User::where('email', $request->email)->get()->first();
             if (!$usuario) {
                 throw new Exception("Usuário não existe.");
             }
@@ -185,13 +195,12 @@ class AuthController extends ApiController
                 'token' => $usuario->createVerificationToken(),
                 'created_at' => date('Y-m-d H:i:s')
             ]);
-                // Recupera o token gerado direto da tabela
+            // Recupera o token gerado direto da tabela
             $tokenGerado = new PasswordReset();
             $token = $tokenGerado->getTokenByEmail($usuario->email)->token;
-            $this->sendConfirmationEmail($usuario->email, $token, 'recoverPass');
-            if ($validator->fails()) {
-                $data = $validator->errors();
-                throw new Exception("Verifique os dados fornecidos");
+            $email = $this->sendConfirmationEmail($usuario->email, $token, 'recoverPass');
+            if (!$email) {
+                throw new Exception("Erro ao enviar email.");
             }
         } catch (Exception $ex) {
             return $this->errorResponse($data, $ex->getMessage(), 422);
@@ -227,7 +236,8 @@ class AuthController extends ApiController
             Mail::send(new SendVerificationEmail($user, $token, $option));
             return true;
         } catch (Exception $ex) {
-            dd($ex);
+            Log::notice($ex->getMessage());
+            return false;
         }
     }
     /**
@@ -245,6 +255,7 @@ class AuthController extends ApiController
         try {
             $user->verifyToken($token, $passwordReset);
         } catch (Exception $ex) {
+            Log::notice($ex->getMessage());
             return $this->errorResponse([], $ex->getMessage(), 404);
         }
         return $this->successResponse(null, "Token válido", 200);

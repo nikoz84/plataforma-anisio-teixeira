@@ -33,7 +33,8 @@ class ContatoController extends ApiController
         $orderBy = ($this->request->has('order')) ? $this->request->query('order') : 'created_at';
         $page = ($this->request->has('page')) ? $this->request->query('page') : 1;
 
-        $paginator = $this->contato::paginate($limit)->setPath("/contato?limit={$limit}");
+        $paginator = $this->contato::orderBy('created_at', 'desc')
+            ->paginate($limit)->setPath("/contato?limit={$limit}");
 
         return $this->showAsPaginator($paginator);
     }

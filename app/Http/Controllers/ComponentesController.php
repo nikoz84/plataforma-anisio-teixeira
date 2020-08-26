@@ -4,27 +4,146 @@ namespace App\Http\Controllers;
 
 use App\Traits\ApiResponser;
 use App\CurricularComponent as Componente;
+use App\CurricularComponent;
 use App\CurricularComponentCategory as Category;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
-class ComponentesController
+class ComponentesController extends ApiController
 {
     use ApiResponser;
     public function __construct(Request $request)
     {
+        $this->middleware('jwt.auth')->except(['index', 'search']);
         $this->request = $request;
     }
+
     /**
-     * Mostra toda as informações do Aplicativo no banco de dados.
-     * 
-     * @param \App\Componentes $componentes
-     * @param \App\Controller\Api Responser
-     * retorna json
-     * @return
-     * 
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        return $this->showAll(Category::with('componentes')->get());
+        $limit = $this->request->get('limit', 15);
+        $componentes = CurricularComponent::select("*")->with('niveis')
+            ->with("categories")
+            ->with("nivel")
+            ->with("category")
+            ->limit($limit)
+            ->orderBy('name', 'asc')
+            ->paginate($limit);
+        return $this->showAsPaginator($componentes);
+    }
+
+    /**
+     * @param $id
+     * @return CurricularComponent
+     */
+    public function update($id)
+    {
+        try
+        {
+            $component = CurricularComponent::find($id);
+            $validator = Validator::make($this->request->all(), $this->rules());
+            if ($validator->fails()) {
+                throw new Exception('Não foi possível atualizar componente. Erro no preenchimento do formulário.',404);
+            }           
+            $component->fill($this->request->all());
+            if(!$component->save())
+            {
+                throw new Exception('Não foi possível atualizar componente. Tente novamente mais tarde', 501);
+            }
+        }
+        catch(Exception $ex)
+        {
+            return $this->errorResponse([], $ex->getMessage(), $ex->getCode() > 0 ? $ex->getCode() : 500 );
+        }
+        return $this->showOne($component, 'Componente Curricular atualizada com sucesso!!', 200);
+    }
+
+    /**
+     * @param $id
+     * @return CurricularComponent
+     */
+    public function getById($id)
+    {
+        $component = new Componente();
+        try{
+            $component =  Componente::findOrFail($id);
+            $component->category;
+        }
+        catch(Exception $ex)
+        {
+            return $this->errorResponse([], 'Componente não encontrado', 422);
+        }
+        return $component;
+    }
+
+    public function create()
+    {
+        $validator = Validator::make($this->request->all(), $this->rules());
+        $data = [];
+        
+        try {
+            if ($validator->fails()) {
+                $data = $validator->errors();
+                throw new Exception("Não foi possível criar componente. Erro no preenchimento do formulário de cadastro.", 501);
+            }
+            $componente = new Componente();
+            $this->authorize('create', JWTAuth::user());   
+            $componente->fill($this->request->all());
+            if (!$componente->save()) {
+                
+                throw new Exception('Não foi possível salvar componente', 422);
+            }
+        }
+        catch(Exception $ex)
+        {
+            return $this->errorResponse($data, $ex->getMessage(), $ex->getCode() > 0 &&  $ex->getCode() <505 ? $ex->getCode() : 500);
+        }       
+        return $this->successResponse($componente, 'Componente curricular registrada com sucesso!!', 200);
+    }
+
+     /**
+     * Procura conteudos por full text search.
+     *
+     * @param $request \Illuminate\Http\Request
+     * @param $termo   string termo de busca
+     *
+     * @return App\Traits\ApiResponser
+     */
+    public function search(Request $request, $termo)
+    {
+        $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 20;
+        $search = "%{$termo}%";
+        $paginator = Componente::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search])
+            ->paginate($limit);
+
+        $paginator->setPath("/licenses/search/{$termo}?limit={$limit}");
+
+        return $this->showAsPaginator($paginator, 'Resultado da busca...', 200);
+    }
+
+    /**
+     * Auto-Completação
+     * @param string $term identificador único
+     * @return string json
+     */
+    public function autocomplete($term)
+    {
+        $search = "%{$term}%";
+        $limit = $this->request->query('limit', 100);
+        $tags = Componente::select(['id', 'name'])
+            ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
+            ->get(['id', 'name']);
+        return $this->showAll(collect($tags));
+    }
+
+    public function rules()
+    {
+        return [
+            'name'=> 'required|min:2|max:255'
+        ];
     }
 }

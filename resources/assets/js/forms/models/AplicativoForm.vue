@@ -36,19 +36,6 @@
               placeholder-src="/img/fundo-padrao.svg"
               alt=" Icone da categoria :"/>
             </div>
-              <q-select class="col-sm-5" 
-                outlined
-
-                option-value="id"
-                option-label="name"
-                ransition-show="scale"
-                transition-hide="scale"
-                v-model="aplicativo.canal"
-                :options="canais"
-                label="Escolha um Canal"
-                hint="Canal ao qual pertence a categoria"
-                behavior="dialog"
-                />
            </q-card-section>
            
           <q-card-section class="row flex flex-start q-gutter-md">
@@ -189,7 +176,6 @@ export default {
   created() {
     this.getCategories();
     this.getAplicativo();
-    this.getCanais();
   },
   methods: {
     onFileChange(e) {
@@ -211,8 +197,9 @@ export default {
       if (this.aplicativo.category) {
         form.append("category_id", this.aplicativo.category.id);
       }
+      
       form.append("url", this.aplicativo.url);
-       form.append("options", JSON.stringify(this.aplicativo.options));
+      form.append("options", JSON.stringify(this.aplicativo.options));
       if (this.imagemAssociada) {
         form.append("imagemAssociada", this.imagemAssociada);
       }
@@ -234,9 +221,8 @@ export default {
         if (resp.data.success) {
           this.$router.push("/admin/aplicativos/listar");
         }
-      } catch (response) {
-        console.log(response);
-        //this.errors = response.errors;
+      } catch (ex) {
+        this.errors = ex.errors;
       }
     },
     async getCategories() {
@@ -244,10 +230,6 @@ export default {
       if (resp.data.success) {
         this.categoriesList = resp.data.metadata;
       }
-    },
-    async getCanais(){
-      const canais  = await axios.get("/canais?select");
-      this.canais = canais.data.metadata;
     },
     countCaracters(e) {
       if (e.target.value.length > 140) {

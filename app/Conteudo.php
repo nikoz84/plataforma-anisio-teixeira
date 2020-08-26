@@ -147,6 +147,7 @@ class Conteudo extends Model
     }
 
     /**
+<<<<<<< HEAD
      * Muta o valor do usuário que aprova o conteúdo
      * @param \App\Conteudo $conteudo
      * @return \App\Model\ApiResponser retorna json
@@ -175,6 +176,10 @@ class Conteudo extends Model
      * @param \App\Conteudo $conteudo
      * @return \App\Model\ApiResponser retorna json
      * @return void
+=======
+     * Adiciona novo atributo ao objeto que limita o tamanho da descrição
+     * @return string cadena de caracteres
+>>>>>>> 59fafea095472a7b96e5e8137d18ca03da6dc9ba
      */
     public function getExcerptAttribute()
     {
@@ -195,7 +200,7 @@ class Conteudo extends Model
      */
     public function getTitleSlugAttribute()
     {
-        return Str::slug(Str::words($this->title, 50), '-');
+        return Str::slug(Str::words($this->title, 25), '-');
     }
     /**
      * Seleciona e tranforma created-at ao formato (06 setembro de 2019 ás 17:37)
@@ -302,8 +307,8 @@ class Conteudo extends Model
             return $query;
         }
         $type = ($por == 'tag') ? "simple" : "portuguese";
-        return $query->whereRaw('ts_documento @@ plainto_tsquery(?, lower(unaccent(?)))', [$type, $search])
-            ->orderByRaw('ts_rank(ts_documento, plainto_tsquery(?, lower(unaccent(?)))) DESC', [$type, $search]);
+        return $query->whereRaw("ts_documento @@ plainto_tsquery(?, lower(unaccent(?)))", [$type, $search])
+            ->orderByRaw("ts_rank(ts_documento, plainto_tsquery(?, lower(unaccent(?)))) DESC", [$type, $search]);
     }
 
     /**
@@ -463,14 +468,16 @@ class Conteudo extends Model
         $tags_query = function ($q) {
             return $q->limit(2);
         };
-        $conteudo = parent::with(['tags'=> $tags_query])->find($id);
+        $conteudo = Conteudo::with(['tags'=> $tags_query])->findOrFail($id);
         $tags = $conteudo->tags->implode('name', ', ');
         
-        return parent::whereRaw(
-            "conteudos.ts_documento @@ plainto_tsquery('portuguese', lower(unaccent('{$tags}')))"
+        return Conteudo::whereRaw(
+            "conteudos.ts_documento @@ plainto_tsquery('portuguese', lower(unaccent(?)))",
+            [$tags]
         )->orWhereRaw(
-            "conteudos.ts_documento @@ plainto_tsquery('simple', lower(unaccent('{$tags}')))"
-        )->where('id', '!=', $id);
+            "conteudos.ts_documento @@ plainto_tsquery('simple', lower(unaccent(?)))",
+            [$tags]
+        )->where('id', '<>', $id);
     }
 
      /**

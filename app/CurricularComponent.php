@@ -14,20 +14,39 @@ class CurricularComponent extends Model
     protected $table = 'curricular_components';
     protected $hidden = ['pivot'];
     protected $appends = ['icon', 'user_can', 'search_url'];
+<<<<<<< HEAD
     /**
      * Consulta as Categorias tem Muitos
      * @param \App\CurricularComponentes $curricular
      * @return \App\Model\ApiResponser retorna json
      */
+=======
+    public $fillable = ['name', 'category_id', 'nivel_id'];
+
+    public function category()
+    {
+        return $this->belongsTo("App\CurricularComponentCategory", "category_id", "id");
+    }
+
+    public function nivel()
+    {
+        return $this->belongsTo("App\NivelEnsino", "nivel_id", "id");
+    }
+
+>>>>>>> 59fafea095472a7b96e5e8137d18ca03da6dc9ba
     public function categories()
     {
         return $this->hasMany('App\CurricularComponentCategory', 'id', 'category_id');
     }
+<<<<<<< HEAD
     /**
      * Consulta as Niveis tem Muitos
      * @param \App\CurricularComponentes $curricular
      * @return \App\Model\ApiResponser retorna json
      */
+=======
+
+>>>>>>> 59fafea095472a7b96e5e8137d18ca03da6dc9ba
     public function niveis()
     {
         return $this->hasMany('App\NivelEnsino', 'id', 'nivel_id');
@@ -41,11 +60,15 @@ class CurricularComponent extends Model
     {
         return $this->belongsToMany('App\Conteudo');
     }
+<<<<<<< HEAD
      /**
      * Função Obtem um icone do Atributo
      * @param \App\CurricularComponentes $curricular
      * @return \App\Model\ApiResponser retorna json
      */
+=======
+
+>>>>>>> 59fafea095472a7b96e5e8137d18ca03da6dc9ba
     public function getIconAttribute()
     {
         return "/img/sprite/" . Str::slug($this['name'], '-') . ".svg";

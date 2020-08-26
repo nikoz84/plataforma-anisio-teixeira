@@ -38,6 +38,12 @@ Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscar.can
 /** COMPONENTES */
 Route::get('/componentes', 'ComponentesController@index')->name('lista.componentes.curriculares');
 
+/** CATEGORIAS COMPONENTES */
+Route::get('/componentescategorias', 'CurricularComponentCategoryController@index')->name('lista.categorias.componentes.curriculares');
+
+ /**NIVEL ENSINO**/
+ Route::get('/nivelensino', 'NivelEnsinoController@index')->name('lista.nevelensino');
+
 /** CONTEUDOS */
 Route::get('/conteudos', 'ConteudoController@index')->name('lista.conteudo');
 Route::get('/conteudos/sites', 'ConteudoController@getSitesTematicos')->name('lista.sites.tematicos');
@@ -106,14 +112,40 @@ Route::group(
         Route::put('/categorias/{id}', 'CategoryController@update')->name('atualizar.categorias');
         Route::delete('/categorias/{id}', 'CategoryController@delete')->name('deletar.categorias');
         Route::post('/categorias', 'CategoryController@create')->name('adicionar.categorias');
+
+        /** COMPONENTES */
+        Route::post('/componentes', 'ComponentesController@create')->name('criar.componentes.curriculares');
+        Route::get('/componentes/{id}', 'ComponentesController@getById')->name('obter.componentes');
+        Route::put('/componentes/{id}', 'ComponentesController@update')->name('atualizar.componentes');
+        Route::get('/componentes/search/{termo}', 'ComponentesController@search')->name('buscar.componentes');
+        Route::get('/componentes/autocomplete/{term}', 'ComponentesController@autocomplete')->name('autocompletar.componentes');
+
+        /** COMPONENTES CATEGORIAS*/
+        Route::post('/componentescategorias', 'CurricularComponentCategoryController@create')->name('criar.componentes-categoria.curriculares');
+        Route::get('/componentescategorias/{id}', 'CurricularComponentCategoryController@getById')->name('obter.componentes-categoria');
+        Route::get('/componentescategorias/search/{termo}', 'CurricularComponentCategoryController@search')->name('buscar.componentescategorias');
+        Route::put('/componentescategorias/{id}', 'CurricularComponentCategoryController@update')->name('atualizar.componentescategorias');
+        Route::delete('/componentescategorias/{id}', 'CurricularComponentCategoryController@delete')->name('deletar.componentescategorias');
+        Route::get('/componentescategorias/autocomplete/{term}', 'CurricularComponentCategoryController@autocomplete')->name('autocompletar.tag');
+
+        /**NIVEL ENSINO**/
+        Route::get('/nivelensino/search/{termo}', 'NivelEnsinoController@search')->name('buscar.nivelensino');
+        Route::get('/nivelensino/{id}', 'NivelEnsinoController@getById')->name('obter.nivelensino');
+        Route::post('/nivelensino', 'NivelEnsinoController@create')->name('criar.nivelensino');
+        Route::put('/nivelensino/{id}', 'NivelEnsinoController@update')->name('atualizar.nivelensino');
+        Route::get('/nivelensino/search/{termo}', 'NivelEnsinoController@search')->name('buscar.nivelensino');
+        Route::delete('/nivelensino/{id}', 'NivelEnsinoController@delete')->name('deletar.nivelensino');
+
         /** AUTENTICACAO */
         Route::post('/auth/logout', 'AuthController@logout')->name('sair');
         Route::post('/auth/refresh', 'AuthController@refresh')->name('refrescar.token');
         Route::get('/auth/links-admin', 'AuthController@linksAdmin')->name('links.admin');
+
         /** TIPOS */
         Route::post('/tipos', 'TipoController@create')->name('criar.tipos');
         Route::put('/tipos/{id}', 'TipoController@update')->name('atualizar.tipos');
         Route::delete('/tipos/{id}', 'TipoController@delete')->name('deletar.tipos');
+
         /** ROLES */
         Route::get('/roles', 'RoleController@index')->name('listar.roles');
         Route::get('/roles/{id}', 'RoleController@getById')->name('obter.roles');
@@ -121,6 +153,7 @@ Route::group(
         Route::put('/roles/{id}', 'RoleController@update')->name('atualizar.role');
         Route::delete('/roles/{id}', 'RoleController@delete')->name('deletar.role');
         Route::get('/roles/search/{term}', 'RoleController@search')->name('busca.role');
+
         /** USUARIOS */
         Route::get('/usuarios/search/{termo}', 'UserController@search')->name('usuario.buscar');
         Route::delete('/usuarios/{id}', 'UserController@delete')->name('usuario.apagar');
@@ -129,19 +162,17 @@ Route::group(
         Route::put('/usuarios/{id}', 'UserController@update');
         Route::put('/usuarios/reset-password', 'UserController@resetPass')->name('senha.atualizar');
         Route::post('/usuarios', 'UserController@create')->name('adicionar.usuario');
+
         /** APLICATIVOS */
         Route::post('/aplicativos', 'AplicativoController@create')->name('adicionar.aplicativo');
         Route::put('/aplicativos/{id}', 'AplicativoController@update')->name('aplicativo.editar');
         Route::delete('/aplicativos/{id}', 'AplicativoController@delete')->name('aplicativo.apagar');
+
         /** APLICATIVOS CATEGORIES */
-        Route::post(
-            '/aplicativos/categories',
-            'AplicativoCategoryController@create'
-        )->name('criar.aplicativo.categorias');
-        Route::put('/aplicativos/categories/{id}', 'AplicativoCategoryController@update')
-            ->name('atualizar.aplicativo.categorias');
-        Route::delete('/aplicativos/categories/{id}', 'AplicativoCategoryController@delete')
-            ->name('apagar.aplicativo.categorias');
+        Route::post('/aplicativos/categories','AplicativoCategoryController@create')->name('criar.aplicativo.categorias');
+        Route::put('/aplicativos/categories/{id}', 'AplicativoCategoryController@update')->name('atualizar.aplicativo.categorias');
+        Route::delete('/aplicativos/categories/{id}', 'AplicativoCategoryController@delete')->name('apagar.aplicativo.categorias');
+
         /** TAGS */
         Route::get('/tags', 'TagController@index')->name('lista.tag');
         Route::post('/tags', 'TagController@create')->name('adicionar.tag');
@@ -149,15 +180,18 @@ Route::group(
         Route::get('/tags/autocomplete/{term}', 'TagController@autocomplete')->name('autocompletar.tag');
         Route::put('/tags/{id}', 'TagController@update')->name('atualizar.tag');
         Route::delete('/tags/{id}', 'TagController@delete')->name('apagar.tag');
+
         /** CONTEUDOS */
         Route::post('/conteudos', 'ConteudoController@create')->name('adicionar.conteudo');
         Route::put('/conteudos/{id}', 'ConteudoController@update')->name('atualizar.conteudo');
         Route::delete('/conteudos/{id}', 'ConteudoController@delete')->name('apagar.conteudo');
         Route::post('/conteudos/arquivos', 'ConteudoController@storeFiles')->name('salvar.arquivo.conteudo');
+
         /** CANAIS */
         Route::get('/canais', 'CanalController@index')->name('listar.canais');
         Route::post('/canais', 'CanalController@create')->name('adicionar.canal');
         Route::put('/canais/{id}', 'CanalController@update')->name('atualizar.canal');
+
             //->middleware('can:update,canal');
         Route::delete('/canais/{id}', 'CanalController@delete')->name('apagar.canal');
         Route::get('/canais/{id}', 'CanalController@getById')->name('listar.canal.x.id');

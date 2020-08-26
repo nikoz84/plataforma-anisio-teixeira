@@ -40,15 +40,13 @@ export default {
     ...mapMutations(["SET_PAGINATOR", "SET_IS_LOADING", 'SET_DATA']),
     async onSearch() {
       if (!this.termo) return;
-
-      let url = `${this.$route.params.slug}/search/${this.termo}`;
       this.$q.loading.show();
-      let resp = await axios.get(url);
-
-      if (resp.status == 200 && resp.data.paginator) {
-        this.$q.loading.hide();
-        this.SET_PAGINATOR(resp.data.paginator);
-      }
+      let url = `${this.$route.params.slug}/search/${this.termo}`;
+      
+      let { data }  = await axios.get(url);
+      this.$q.loading.hide();
+      this.SET_PAGINATOR(resp.data.paginator);
+      
     },
     filterFn(val, update, abort) {
       update(() => {

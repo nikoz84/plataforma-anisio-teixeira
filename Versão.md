@@ -1,4 +1,20 @@
 ################################################################################################
+# Versão 2.0.4
+################################################################################################
+## Mudanças (layout, correção ortográfica, mudança de código)
+- Layout página sobre corregida para mobile
+- Para mobile adiciona logo marca no sidebar
+- Se adiciona marcador quando usuário não seleciona um componente curricular
+- Adicionado redirecionamento de antigas urls para novo padrao
+- Adicionada imagem de governo e marcas na página sobre
+## Correções (bugs, código)
+- Correção problema ao cadastrar conteúdo
+- Correção no componente PlayerActions
+## Novas Funcionalidades
+- Incorporar conteúdo
+- Validação de tipos de arquivos em formulário de conteúdo digital
+- Manutenção dos registros referentes a Categoria do Componentes Curriculares
+################################################################################################
 # Versão 2.0.3
 ################################################################################################
 ## Mudanças (layout, correção ortográfica, mudança de código)
@@ -7,7 +23,6 @@
 - Novo Layout do Canal das Universidades
 ## Correções (bugs, código)
 - Correção de upload de arquivo de download
-- Upload de arquivos max_file_size e post_max_size para 800MB (mod_php7)
 - Formulario de canal OK
 - Correção de muitas requisições throttle:130
 - Imagem associada de conteudo emitec referencia corrigida

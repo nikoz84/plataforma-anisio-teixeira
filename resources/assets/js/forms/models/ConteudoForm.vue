@@ -102,7 +102,10 @@
         </q-input>
         <!-- DESCRIÇÃO --> 
         <div class="q-mt-md">
-          <p class="text-center">Escreva uma descrição do conteúdo</p>
+          <p class="text-center">Escreva uma descrição 
+            <b>(Para melhorar a qualidade de nossa oferta e busca de conteúdos 
+            deve escrever um texto como mínimo de 140 caracteres)</b>
+          </p>
         </div>
         <q-editor v-model="conteudo.description" min-height="18rem"
           ref="editor_ref"
@@ -176,15 +179,18 @@
           @change="onDownloadFileChange"
           type="file"
           hint="Arquivo para Download"
-        />
-        <ShowErrors v-if="errors && errors.download && errors.download.length > 0" 
-          :errors="errors.download">
-        </ShowErrors>
+          bottom-slots
+          :error="errors && errors.download && errors.download.length > 0"
+        >
+          <template v-slot:error>
+            <ShowErrors :errors="errors.download"></ShowErrors>
+          </template>
+        </q-input>
         <!-- ARQUIVO DE UPLOAD --> 
         <br>
-        <q-item-label v-if="conteudo.guiaPedagogico">
+        <div v-if="conteudo.guiaPedagogico">
           Baixar Arquivo Guia Pedagógico:
-        </q-item-label>
+        </div>
          <a v-if="conteudo.guiaPedagogico" :href="conteudo.guiaPedagogico" :download="conteudo.guiaPedagogico" >{{conteudo.guiaPedagogico.split('/').pop()}}</a>
         
         <q-input
@@ -193,11 +199,14 @@
           outlined
           @change="onguiaPedagogicoFileChange"
           type="file"
-          hint="Arquivo para Guia Pedagógico"          
-        />
-        <ShowErrors v-if="errors && errors.guias_pedagogicos && errors.guias_pedagogicos.length > 0" 
-          :errors="errors.guias_pedagogicos">
-        </ShowErrors>
+          hint="Arquivo para Guia Pedagógico"
+           bottom-slots
+          :error="errors && errors.guias_pedagogicos && errors.guias_pedagogicos.length > 0"
+          >
+           <template v-slot:error>
+            <ShowErrors :errors="errors.guias_pedagogicos"></ShowErrors>
+          </template>
+        </q-input>
         <!-- ENVIAR SITE -->
         <br>
         <q-input
@@ -205,9 +214,13 @@
           v-model="conteudo.options.site"
           label="URL do Site"
           hint="Exemplo: http://dominio.com.br"
-        />
-        <ShowErrors v-if="errors && errors.options_site && errors.options_site.length > 0" 
-          :errors="errors.options_site"></ShowErrors>
+          bottom-slots
+          :error="errors && errors.options_site && errors.options_site.length > 0" 
+        >
+          <template v-slot:error>
+            <ShowErrors :errors="errors.options_site"></ShowErrors>
+          </template>
+        </q-input>
       </q-card-section>
       <q-card-section>
         <div class="q-gutter-sm">
@@ -249,38 +262,28 @@
           color="primary"
           @click="save()"
           label="Salvar"
+          :loading="loading"
         ></q-btn>
       </q-card-section>
     </q-card>
 
-    <q-card class="col-sm-3">
+    <q-card class="col-sm-3"  :class="{'error-card' : errors && errors.componentes && errors.componentes.length > 0 }">
+      <q-card-section v-if="errors && errors.componentes && errors.componentes.length > 0">
+        <ShowErrors :errors="errors.componentes"></ShowErrors>
+      </q-card-section>
       <q-card-section>
           <!-- COMPONENTES CURRICULARES --> 
           <div v-if="componentes">
-            
-            <div
-              v-for="(component, i) in componentes"
-              :key="`c-${i}`"
-              :index="component.id"
-            >
+            <div v-for="(component, i) in componentes" :key="`c-${i}`" :index="component.id">
               <div class="text-center text-negative q-pt-md" >
                 {{ component.name }}
-              
               </div>
               <q-separator class="q-mt-lg" inset color="negative"></q-separator>
-              <q-list
-                dense bordered 
-              >
-                <q-item tag="label" 
-                  v-ripple v-for="(component, i) in component.componentes"
-                  :key="`child-com-${i}`">
+              <q-list dense bordered>
+                <q-item tag="label" v-ripple 
+                v-for="(component, i) in component.componentes" :key="`child-com-${i}`">
                   <q-item-section avatar>
-                    <q-checkbox
-                      
-                      v-model="componentesCurriculares"
-                      :val="component.id"
-                      color="negative"
-                    />
+                    <q-checkbox v-model="componentesCurriculares" :val="component.id" color="negative"/>
                   </q-item-section>
                   <q-item-label class="q-pt-sm">
                     {{component.name}}
@@ -292,36 +295,28 @@
           </div>
       </q-card-section>
       
-      <q-card-section class="q-mt-lg">
-        <ShowErrors 
-          v-if="errors && errors.componentes && errors.componentes.length > 0" 
-        :errors="errors.componentes"></ShowErrors>
+      <q-card-section class="q-mt-lg" v-if="errors && errors.componentes && errors.componentes.length > 0">
+        <ShowErrors :errors="errors.componentes"></ShowErrors>
       </q-card-section>
       
     </q-card>
-    <q-card class="col-sm-3">
+    <q-card class="col-sm-3" :class="{'error-card' : errors && errors.componentes && errors.componentes.length > 0 }">
+      <q-card-section class="q-mt-lg" v-if="errors && errors.componentes && errors.componentes.length > 0">
+        <ShowErrors :errors="errors.componentes"></ShowErrors>
+      </q-card-section>
       <q-card-section>
           <!-- NIVEIS DE ENSINO --> 
           <div v-if="niveis">
-            <div
-              v-for="(nivel, n) in niveis"
-              :key="`n-${n}`"
-              :index="nivel.id"
-            >
+            <div v-for="(nivel, n) in niveis" :key="`n-${n}`" :index="nivel.id">
               <div class="text-center text-positive q-pt-md">
                 {{ nivel.name }}
               </div>
               <q-separator class="q-mt-lg" inset color="positive"></q-separator>
               <q-list dense bordered>
-                <q-item tag="label" 
-                  v-ripple v-for="(component, i) in nivel.componentes"
-                  :key="`child-com-${i}`">
+                <q-item v-for="(component, i) in nivel.componentes" :key="`child-com-${i}`"
+                  tag="label" v-ripple>
                   <q-item-section avatar>
-                    <q-checkbox
-                      v-model="componentesCurriculares"
-                      :val="component.id"
-                      color="teal"
-                    />
+                    <q-checkbox v-model="componentesCurriculares" :val="component.id" color="teal"/>
                   </q-item-section>
                   <q-item-label class="q-pt-sm">
                     {{component.name}}
@@ -333,10 +328,8 @@
           </div>
         </q-card-section>
       
-      <q-card-section class="q-mt-lg">
-        <ShowErrors 
-        v-if="errors && errors.componentes && errors.componentes.length > 0" 
-        :errors="errors.componentes"></ShowErrors>
+      <q-card-section class="q-mt-lg"  v-if="errors && errors.componentes && errors.componentes.length > 0">
+        <ShowErrors :errors="errors.componentes"></ShowErrors>
       </q-card-section>
     </q-card>
   </div>
@@ -418,6 +411,7 @@ export default {
       imagem_associada:null,
       download_file:null,
       guias_pedagogicos: null,
+      loading: false,
       errors: {},
       dialog: {
         text: "",
@@ -453,24 +447,19 @@ export default {
         this.guias_pedagogicos = files[0];
     },
     async save() {
-      
+      this.loading = true;
       const form = new FormData();
-      
+  
       if(this.conteudo.category) {
         form.append("category_id",  this.conteudo.category.id );
       }
-      
-      if(this.conteudo.options.site)
-      {
-        
-          form.append("options.site", this.conteudo.options.site);
-          form.append("is_site", 1) ;
-      }
-      else
-      {
+      if(this.conteudo.options.site) {
+        form.append("options.site", this.conteudo.options.site);
+        form.append("is_site", 1) ;
+      } else {
         form.append("is_site", 0);
       }
-      //console.log(this.conteudo)
+      
       form.append("tipo_id", this.conteudo.tipo_id ? this.conteudo.tipo_id : "");
       form.append("canal_id", this.conteudo.canal_id ? this.conteudo.canal_id : "");
       form.append("license_id", this.conteudo.license_id ? this.conteudo.license_id : "");
@@ -505,14 +494,19 @@ export default {
         url = url + '/' + this.conteudo.id; 
       }
       try {
-        const { data } = await axios.post(url, form);
+        const { data } = await axios.post(url, form, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+        });
+        this.loading = false;
         if(data.success == true){
           this.$router.push(`/admin/conteudos/listar`);
-        }
+        } 
         
       } catch(e) {
         this.errors = e.errors;
-
+        this.loading = false;
       }
     },
     async getCategories(val) {
@@ -529,11 +523,12 @@ export default {
       
     },
     async getData() {
+      this.$q.loading.show();
       const canais = await axios.get("/canais?select");
       const tipos = await axios.get("/tipos?select");
       const licencas = await axios.get("/licencas?select");
       //let responses = await axios.all([canais, tipos, licencas]);
-
+      
       this.canais = canais.data.metadata;
       this.tipos = tipos.data.metadata;
       this.licencas = licencas.data.metadata;
@@ -544,7 +539,7 @@ export default {
         
         this.componentesCurriculares = data.metadata.componentes.map(a => a.id);
       }
-
+      this.$q.loading.hide();
       if(this.conteudo.category && this.conteudo.canal){
         
         this.getCategories(this.conteudo.canal);
@@ -623,4 +618,8 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="stylus" scoped>
+.error-card {
+  border: solid 2px #a54a54;
+}
+</style>

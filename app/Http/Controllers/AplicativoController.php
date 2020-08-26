@@ -52,7 +52,7 @@ class AplicativoController extends ApiController
 
     /**
      * Cria um novo aplicativo no banco de dados
-     * 
+     *
      *@param \App\Aplicativo $aplicativo
      *@return \App\Controller\ApiResponser retorna jsonS
      */
@@ -64,30 +64,31 @@ class AplicativoController extends ApiController
             $this->configRules()
         );
         $data = [];
-        try 
-        {
+        try {
             if ($validator->fails()) {
                 $data = $validator->errors();
                 throw new  Exception("Erro no preenchimento dos dados");
             }
             $aplicativo = $this->aplicativo;
+            $aplicativo->canal_id = Aplicativo::CANAL_ID;
             $aplicativo->user_id = Auth::user()->id;
-            $aplicativo->fill($this->request->all());
-            $aplicativo->options  = json_decode($this->request->options);
+            $aplicativo->url = $this->request->url;
+            $aplicativo->options  = json_decode($this->request->options, true);
+            $aplicativo->options = [
+                'qt_access' => Aplicativo::QT_ACCESS_INIT,
+                'is_featured' => $this->request->options_is_featured
+            ];
             if (!$aplicativo->save()) {
                 throw new  Exception("Erro no preenchimento dos dados");
             }
             $aplicativo->tags()->attach($this->request->tags);
-            if ($this->request->imagemAssociada) 
-            {
+            if ($this->request->imagemAssociada) {
                 $fileImg = $this->saveFile($aplicativo->id, [$this->request->imagemAssociada], 'imagem-associada', 'aplicativos-educacionais');
                 if (!$fileImg) {
                     throw new Exception("Não foi possível salvar imagem. Tente novamente mais tarde.", 501);
                 }
             }
-        }
-        catch(Exception $ex)
-        {
+        } catch (Exception $ex) {
             return $this->errorResponse($data, $ex->getMessage(), 422);
         }
         return $this->successResponse($aplicativo, 'Aplicativo cadastrado com sucesso!', 200);
@@ -100,10 +101,10 @@ class AplicativoController extends ApiController
         return [
             'name' => 'required|min:2|max:255',
             'description' => 'required|min:140',
-            'url' => ['required', new \App\Rules\ValidUrl],
-            'category_id' => 'required',
+            'url' => 'required|active_url',
+            'options_is_featured' => 'boolean',
             'tags' => 'required|array|between:3,10',
-            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:1024'            
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:1024'
         ];
     }
     /**
@@ -131,7 +132,8 @@ class AplicativoController extends ApiController
     public function update($id)
     {
         $aplicativo = Aplicativo::findOrFail($id);
-        $this->authorize('update', [$aplicativo]);
+        
+        $this->authorize('update', $aplicativo);
         $validator = Validator::make(
             $this->request->all(),
             $this->configRules()
@@ -141,10 +143,11 @@ class AplicativoController extends ApiController
         }
         $aplicativo->name = $this->request->name;
         $aplicativo->canal_id = $aplicativo::CANAL_ID;
+        $aplicativo->url = $this->request->url;
         $aplicativo->description = $this->request->description;
-        $is_featured = $this->request->options_is_featured === 'true' ? true : false;
+        $is_featured = $this->request->options_is_featured == '1' ? true : false;
         $aplicativo->setAttribute('options->is_featured', $is_featured);
-        $aplicativo->category_id = $this->request->category_id;
+        $aplicativo->category_id = Aplicativo::CANAL_ID;
 
         $aplicativo->tags()->sync($this->request->tags);
 
@@ -213,8 +216,7 @@ class AplicativoController extends ApiController
         $increment = $aplicativo->options['qt_access'] + 1;
         $aplicativo->setAttribute('options->qt_access', $increment); // json attribute
         $aplicativo->save();
-        if (!$aplicativo) 
-        {
+        if (!$aplicativo) {
             $this->errorResponse([], 'Não encontrado', 422);
         }
 

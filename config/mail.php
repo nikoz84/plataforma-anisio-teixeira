@@ -60,7 +60,7 @@ return [
     //     'name' => env('MAIL_FROM_NAME', 'Plataforma IAT'),
     // ],
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'robemarlon@gmail.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'pat.iat@enova.educacao.ba.gov.br'),
         'name' => env('MAIL_FROM_NAME', 'Plataforma IAT'),
     ],
 

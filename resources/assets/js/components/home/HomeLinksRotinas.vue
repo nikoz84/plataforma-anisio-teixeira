@@ -17,7 +17,6 @@
                 :label="button.label">
                 <q-avatar 
                     left
-                    style="fill: currentColor;border-radius: 0%;"
                     alt="Marca"
                     title="marca"
                     aria-label="Marca da plataforma Anísio Teixeira">

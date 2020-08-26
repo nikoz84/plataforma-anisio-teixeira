@@ -15,11 +15,15 @@ import {
   RoleForm,
   TipoForm,
   OptionsForm,
-  CategoryConteudoForm
+  CategoryConteudoForm,
+  CurricularComponentsForm,
+  CurricularComponentsCategoryForm,
+  NivelEnsinoForm
   } from "@forms/models";
 
 import Resumo from "@pages/Resumo.vue";
 import { Contato, Table }  from "@components/exibir";
+
 
 
 export default {
@@ -39,6 +43,9 @@ export default {
     listar: Table,
     resumo: Resumo,
     categorias:CategoryConteudoForm,
+    componentes: CurricularComponentsForm,
+    componentescategorias:CurricularComponentsCategoryForm,
+    nivelensino:NivelEnsinoForm
   },
   data() {
     return {

@@ -134,7 +134,11 @@ class CanalController extends ApiController
     public function getBySlug($slug)
     {
         $canal = $this->canal::with(['categories', 'appsCategories'])
-            ->where('slug', 'ilike', $slug)->first();
+            ->where('slug', $slug)->get()->first();
+        
+        if (!$canal) {
+            return $this->errorResponse([], 'Não encontrado', 404);
+        }
 
         return $this->showOne($canal, '', 200);
     }

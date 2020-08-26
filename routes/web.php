@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,10 +38,30 @@ Route::get('/docs', function (Request $request) {
 
 */
 
+/** Redireção de páginas antigas */
+Route::permanentRedirect('/home/ipes', '/ipes');
+Route::permanentRedirect('/home/rotinas-de-estudo', '/rotinas-de-estudo');
+Route::permanentRedirect('/conteudos-digitais', '/recursos-educacionais');
+Route::get('/conteudos-digitais/conteudos/listar/tag/{id}', function ($id) {
+    return redirect("/recursos-educacionais/listar?tag={$id}");
+});
+Route::get('/tv-anisio-teixeira/programas/exibir/id/{id}', function ($id) {
+    return redirect("/tv-anisio-teixeira/conteudo/exibir/{$id}");
+});
+Route::get('/emitec/disciplinas/exibir/id/{id}', function ($id) {
+    return redirect("/emitec/conteudo/exibir/{$id}");
+});
+Route::get('/emitec/disciplinas/aulas/id/{id}/disciplina/{disciplina}', function ($id, $disciplina) {
+    return redirect("/emitec/listar?canal=2&componentes=$disciplina&categoria=$id");
+});
 
+Route::get('/conteudos-digitais/conteudo/exibir/id/{id}', function ($id) {
+    return redirect("/recursos-educacionais/conteudo/exibir/{$id}");
+});
+Route::get('/conteudos-digitais/conteudo/incorporar-conteudo/id/{id}', function ($id) {
+    return redirect("/incorporar-conteudo/{$id}");
+});
 
-Route::get('/conteudos-digitais/conteudo/incorporar-conteudo/id/{id}', 'ConteudoController@incorporarConteudo');
-
-
+Route::get('/incorporar-conteudo/{id}', 'ConteudoController@incorporarConteudo');
 
 Route::get('/{any}', 'ApiController@home')->where('any', '.*');

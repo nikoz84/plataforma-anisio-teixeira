@@ -35,7 +35,8 @@
                   alt="Imagem de destaque">
                   <div class="absolute-bottom text-subtitle1 text-center q-pa-xs bg-secondary">
                      <q-btn 
-                      v-bind:href="aplicativo.url"
+                      :href="aplicativo.url"
+                      type="a" 
                       target="_blank"
                       flat>
                       Ir ao site

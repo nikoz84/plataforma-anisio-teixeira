@@ -52,13 +52,13 @@ class RelatorioController extends ApiController
         $contents = [];
         $title = null;
 
-        if ((is_null($flag) || ($flag != 'baixados' && $flag != 'visualizados')))
+        if ((is_null($flag) || ($flag != 'baixados' && $flag != 'visualizados'))) {
             return $this->errorResponse(
                 [],
                 "Falta passar segundo paramentro, '/baixados ou /visualizados' ",
                 422
             );
-
+        }
         if ($flag == 'baixados') {
             $contents = $content->contents_max_downlaoad();
             $title = 'LISTA DE 100 CONTEÚDOS DIGITAIS MAIS BAIXADOS';
