@@ -21,8 +21,17 @@ class Aplicativo extends Conteudo
     const CANAL_ID = 9;
     const QT_ACCESS_INIT = 0;
 
+    /**
+     * Cria a tabela aplicativo no Bancode dados Protegida
+     * @param \App\Aplicativo $aplicativo
+     * @return \App\Model\ApiResponser retorna json
+     */
     protected $table = 'aplicativos';
-
+     /**
+      * Tabela com os campos definidos
+      * @param \App\Aplicativo $aplicativo
+      * @return \App\Model\ApiResponser retorna json
+      */
     protected $fillable = [
         'name',
         'user_id',
@@ -33,6 +42,12 @@ class Aplicativo extends Conteudo
         'is_featured',
         'options'
     ];
+      
+      /**
+      * Tabela com os campos definidos
+      * @param \App\Aplicativo $aplicativo
+      * @return \App\Model\ApiResponser retorna json
+      */
     protected $appends = [
         'image',
         'excerpt',
@@ -40,15 +55,30 @@ class Aplicativo extends Conteudo
         'formated_date',
         'user_can'
     ];
+      /**
+      * Tabela com os campos definidos
+      * @param \App\Aplicativo $aplicativo
+      * @return \App\Model\ApiResponser retorna json
+      */
     protected $dates = [
         'created_at',
         'updated_at',
         'deleted_at'
     ];
+      /**
+      * Tabela com os campos definidos
+      * @param \App\Aplicativo $aplicativo
+      * @return \App\Model\ApiResponser retorna json
+      */
     protected $casts = [
         'options' => 'array',
     ];
-
+       /**
+      * Método canal 
+      * 
+      * @param \App\Aplicativo $aplicativo
+      * @return \App\Model\ApiResponser retorna json
+      */
     public function canal()
     {
         Canal::$without_appends = true;
@@ -59,8 +89,9 @@ class Aplicativo extends Conteudo
     }
     /**
      * Conjunto de tags do aplicativo
-     *
-     * @return void
+     * @param \App\Aplicativo $aplicativo
+     * @return \App\Model\ApiResponser retorna json
+     * 
      */
     public function tags()
     {
@@ -69,8 +100,9 @@ class Aplicativo extends Conteudo
     }
     /**
      * Conjunto de categorias do aplicativo
-     *
-     * @return void
+     * @param \App\Aplicativo $aplicativo
+     * @return \App\Model\ApiResponser retorna json
+     *  
      */
     public function category()
     {
@@ -79,8 +111,9 @@ class Aplicativo extends Conteudo
 
     /**
      * Descrição abreviada
-     *
-     * @return void
+     * @param \App\Aplicativo $aplicativo
+     * @return \App\Model\ApiResponser retorna json
+     * 
      */
     public function getExcerptAttribute()
     {
@@ -88,8 +121,9 @@ class Aplicativo extends Conteudo
     }
     /**
      * Imagem de destaque do aplicativo
-     *
-     * @return void
+     * 
+     * @param \App\Aplicativo $aplicativo
+     * @return \App\Model\ApiResponser retorna json
      */
     public function getImageAttribute()
     {
@@ -97,8 +131,9 @@ class Aplicativo extends Conteudo
     }
     /**
      * Cria url exibir
-     *
-     * @return void
+     * @param \App\Aplicativo $aplicativo
+     * @return \App\Model\ApiResponser retorna json
+     * 
      */
     public function getUrlExibirAttribute()
     {
@@ -108,8 +143,8 @@ class Aplicativo extends Conteudo
     }
     /**
      * Seleciona e tranforma created-at ao formato (06 setembro de 2019 ás 17:37)
-     *
-     * @return void
+     * @param \App\Aplicativo $aplicativo
+     * @return \App\Model\ApiResponser retorna json
      */
     public function getFormatedDateAttribute()
     {
@@ -118,9 +153,15 @@ class Aplicativo extends Conteudo
 
     /**
      * obtem referencia do arquivo de imgame associada
+     * @param \App\Aplicativo $aplicativo
+     * @return \App\Model\ApiResponser retorna json
      * @return string
      */
+<<<<<<< HEAD
+     public function refenciaImagemAssociada()
+=======
     public function refenciaImagemAssociada()
+>>>>>>> 59fafea095472a7b96e5e8137d18ca03da6dc9ba
     {
         if (!$this->id) {
             return null;

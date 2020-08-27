@@ -84,6 +84,8 @@ Route::get('/licencas', 'LicenseController@index')->name('listar.licencas');
 /** DOWNLOAD FILE **/
 Route::get('/files/{directory}/{id}', 'FileController@downloadFile')->name('downloadFile.id');
 
+/**LIKES - DISLIKES */
+Route::get('/likes/count/{conteudoid}/{tipo}', 'ConteudoLikeController@getLikesByConteudoAplicativo')->name('likes.conteudo');
 /**
 *Route::get(
 *    '/planilhas/load-rotinas/',
@@ -96,8 +98,7 @@ Route::get('/files/{directory}/{id}', 'FileController@downloadFile')->name('down
 */
 Route::get('/planilhas', 'ConteudoPlanilhaController@getDocumentByName')->name('docs.planilhas');
 
-Route::get('/rotinas/{nivel}/{semana}', 'ConteudoPlanilhaController@rotinasPerNivel')
-->name('rotinas.estudos.x.nivel');
+Route::get('/rotinas/{nivel}/{semana}', 'ConteudoPlanilhaController@rotinasPerNivel')->name('rotinas.estudos.x.nivel');
 /***********************************************
  *
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN
@@ -242,50 +243,40 @@ Route::group(
         Route::get('/contato', 'ContatoController@index')->name('listar.faleconosco');
         Route::get('/contato/{id}', 'ContatoController@getById')->name('busca.x.id');
         Route::delete('/contato/{id}', 'ContatoController@delete')->name('apagar.contato');
+
         /** OPTIONS */
         Route::post('/options', 'OptionsController@create')->name('criar.opcoes');
         Route::put('/options/{name}', 'OptionsController@update')->name('atualizar.opcoes.x.nome');
         Route::delete('/options/{name}', 'OptionsController@delete')->name('apagar.opcoes.x.nome');
         Route::post('/options/destaques/', 'OptionsController@createDestaques')->name('cria.destaques');
         Route::get('/options/id/{id}', 'OptionsController@getById')->name('opcao.x.id');
+
         /** ANALYTICS */
         Route::get('/resumo', 'HomeController@getAnalytics')->name('catalogacao.blog.e.plataforma');
+
         /** RELATÓRIOS */
-        Route::get(
-            '/usuarios/role/{role_id}',
-            'RelatorioController@buscarUsuariosPorRole'
-        )->name('view.relatorio.usuario');
-        Route::get(
-            '/relatorio/conteudos/{flag}',
-            'RelatorioController@gerarPdfConteudo'
-        )->name('gerar.relatorio.conteudo');
-        Route::get(
-            '/relatorio/usuarios/role/{role_id}/{is_active?}',
-            'RelatorioController@gerarPdfUsuario'
-        )->name('gerar.relatorio.usuario');
+        Route::get('/usuarios/role/{role_id}','RelatorioController@buscarUsuariosPorRole')->name('view.relatorio.usuario');
+        Route::get('/relatorio/conteudos/{flag}','RelatorioController@gerarPdfConteudo')->name('gerar.relatorio.conteudo');
+        Route::get('/relatorio/usuarios/role/{role_id}/{is_active?}', 'RelatorioController@gerarPdfUsuario')->name('gerar.relatorio.usuario');
+
         /** SISTEMA DE PASTA */
         Route::get('/informacoes-pasta', 'FileController@getInfoFolder')->name('file.getInfoFolder');
         Route::get('/arquivos-existe', 'FileController@fileExistInBase')->name('file.fileExistInBase');
         Route::post('/converter-para-imagem', 'FileController@convertPdfToImage')->name('file.convertPdfToImage');
+
         /** COMENTARIOS */
         Route::post('/comentarios/create', 'ComentarioController@create')->name('comentario.create');
         Route::post('/comentarios/update/{id}', 'ComentarioController@update')->name('comentario.update');
         Route::get('/comentarios/{id}', 'ComentarioController@getComentarioById')->name('comentario.id');
-        Route::get(
-            '/comentarios/usuario/{idUsuario}/{tipo?}',
-            'ComentarioController@getComentariosByIdUsuario'
-        )->name('comentario.usuario');
-        Route::get(
-            '/comentarios/postagem/{id}/{tipo}',
-            'ComentarioController@getComentariosByIdPostagem'
-        )->name('comentario.postagem');
+        Route::get('/comentarios/usuario/{idUsuario}/{tipo?}','ComentarioController@getComentariosByIdUsuario')->name('comentario.usuario');
+        Route::get('/comentarios/postagem/{id}/{tipo}', 'ComentarioController@getComentariosByIdPostagem')->name('comentario.postagem');
         Route::get('/comentarios/delete/{id}', 'ComentarioController@deletar')->name('comentario.delete');
+
         /** LIKE - DESLIKE */
         Route::post('/like', 'ConteudoLikeController@like')->name('like');
-        Route::post('/deslike', 'ConteudoLikeController@deslike')->name('deslike');
-        Route::get(
-            '/likes/usuario/{idUsuario}/{tipo?}',
-            'ConteudoLikeController@getLikesPorIdUsuarioEtipo'
-        )->name('likes.usuario');
+        Route::post('/dislike', 'ConteudoLikeController@dislike')->name('dislike');
+        Route::get('/likes/usuario/{idUsuario}/{tipo?}', 'ConteudoLikeController@getLikesPorIdUsuarioEtipo')->name('likes.usuario');
+        Route::get('/likes/conteudo/{conteudoid}/{tipo}', 'ConteudoLikeController@getUsuarioLikesConteudoAplicativo')->name('likes.usuario.conteudo.aplicativo');
+        
     }
 );

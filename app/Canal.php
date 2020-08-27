@@ -19,6 +19,8 @@ class Canal extends Model
     protected $table = 'canais';
     /**
      * $fillable São todos os atributos que podem ser asignavéis
+     * @param \App\Canal $canal
+     * @return \App\Model\ApiResponser retorna json
      */
     protected $fillable = [
         'name',
@@ -41,8 +43,9 @@ class Canal extends Model
     ];
     /**
      * Conteúdos digitais
+     * @param \App\Canal $canal
+     * @return \App\Model\ApiResponser retorna json
      *
-     * @return void
      */
     public function conteudos()
     {
@@ -50,8 +53,9 @@ class Canal extends Model
     }
     /**
      * Categoria componente curricular filtros
-     *
-     * @return void
+     * @param \App\Canal $canal
+     * @return \App\Model\ApiResponser retorna json
+     * 
      */
     public function filterCategoryCC()
     {
@@ -64,8 +68,9 @@ class Canal extends Model
     }
     /**
      * Canal aplicativos educacionais
-     *
-     * @return void
+     * @param \App\Canal $canal
+     * @return \App\Model\ApiResponser retorna json
+     * 
      */
     public function aplicativos()
     {
@@ -73,8 +78,9 @@ class Canal extends Model
     }
     /**
      * Categorias conteúdos digitais
-     *
-     * @return void
+     * @param \App\Canal $canal
+     * @return \App\Model\ApiResponser retorna json
+     * 
      */
     public function categories()
     {
@@ -86,8 +92,9 @@ class Canal extends Model
     }
     /**
      * Categorias dos aplicativos educacionais
-     *
-     * @return void
+     * @param \App\Canal $canal
+     * @return \App\Model\ApiResponser retorna json
+     * 
      */
     public function appsCategories()
     {
@@ -96,8 +103,9 @@ class Canal extends Model
     }
     /**
      * Tipo de conteudos do canal
-     *
-     * @return void
+     * @param \App\Canal $canal
+     * @return \App\Model\ApiResponser retorna json
+     * 
      */
     public function getTiposAttribute()
     {
@@ -113,8 +121,9 @@ class Canal extends Model
     }
     /**
      * Nome da categoria
-     *
-     * @return void
+     * @param \App\Canal $canal
+     * @return \App\Model\ApiResponser retorna json
+     * 
      */
     public function getCategoryNameAttribute()
     {
@@ -137,6 +146,11 @@ class Canal extends Model
                 break;
         }
     }
+    /**
+     * Categoria de Filtro do Atributo.
+     * @param \App\Canal $canal
+     * @return \App\Model\ApiResponser retorna json
+     */
     public function getFiltersAttribute()
     {
         switch ($this['id']) {
