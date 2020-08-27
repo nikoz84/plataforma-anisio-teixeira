@@ -9,6 +9,7 @@
     </div>
 </template>
 <script>
+    import { Notify } from 'quasar';
     export default {
         name : "ThumbsMenu",
         data () 
@@ -25,10 +26,25 @@
         },
          created() 
         {
-            this.getUserLike();
+            if(localStorage.user)
+            {
+                const userLikes = JSON.parse(localStorage.user);
+                this.getUserLike();
+            }
             this.getCountLikes();
         },
         methods:{
+            testeUsuarioLogado(){
+                if(!localStorage.user)
+                {
+                    Notify.create({
+                        message: 'Você precisa estar logado para realizar esta ação',
+                        position: 'top-right',
+                        color:'red'
+                    })
+                    return false;
+                }
+            },
             async getUserLike(){
                 let resp = await axios.get("/likes/conteudo/"+this.$route.params.id+"/"+this.getTipo());
                 if (resp.data.success) {
@@ -65,42 +81,44 @@
             },
             thumbsUp() 
             {
-                if(this.save(true))
+                if(!this.testeUsuarioLogado())
+                return;
+                this.save(true);
+                this.outlineThumbsUp = !this.outlineThumbsUp;
+                if(!this.outlineThumbsUp)
                 {
-                    this.outlineThumbsUp = !this.outlineThumbsUp;
-                    if(!this.outlineThumbsUp)
-                    {
-                        this.outlineThumbsDown = true;
-                        if( this.countThumbsDown>0)
-                        this.countThumbsDown--;
-                        this.countThumbsUp++;
-                    }
-                    else
-                    {
-                        this.countThumbsUp--;
-                    }
+                    this.outlineThumbsDown = true;
+                    if( this.countThumbsDown>0)
+                    this.countThumbsDown--;
+                    this.countThumbsUp++;
+                }
+                else
+                {
+                    this.countThumbsUp--;
                 }
             },
             async thumbsDown()
             {
-                if(this.save(false))
+                if(!this.testeUsuarioLogado())
+                return;
+                this.save(false)
+                this.outlineThumbsDown = !this.outlineThumbsDown;
+                if(!this.countThumbsDown)
                 {
-                    this.outlineThumbsDown = !this.outlineThumbsDown;
-                    if(!this.countThumbsDown)
-                    {
-                        this.outlineThumbsUp = true;
-                        if( this.countThumbsUp>0)
-                        this.countThumbsUp--;
-                        this.countThumbsDown++;
-                    }
-                    else
-                    {
-                        this.countThumbsDown--;
-                    }
+                    this.outlineThumbsUp = true;
+                    if( this.countThumbsUp>0)
+                    this.countThumbsUp--;
+                    this.countThumbsDown++;
+                }
+                else
+                {
+                    this.countThumbsDown--;
                 }
             },
             async save(likeordislike)
             {
+                
+                const userLikes = JSON.parse(localStorage.user);
                 this.loaddingIcon = true;
                 const form = new FormData();
                 if(this.$route.path.indexOf("/conteudo/")>=0)
