@@ -10,7 +10,7 @@
       loading="lazy"
       width="100%"
       height="auto"
-      :style="`height:230px;min-height: 230px; width: 100%;border: solid 1px ${color};`"
+      :style="`height:230px;min-height: 230px; width: 100%;border-bottom: solid 2px #264b8f;`"
       placeholder-src="/img/fundo-padrao.svg"
     >
     </q-img>
@@ -21,7 +21,7 @@
     <q-card-actions class="flex justify-end absolute-bottom">
       <q-btn
           @click="$router.push(item.url_exibir)"
-          label="Visualizar"
+          icon="visibility"
           title="Visualizar recurso"
         />
       <q-btn

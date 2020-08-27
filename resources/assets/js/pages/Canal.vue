@@ -1,6 +1,6 @@
 <template>
-  <section class="q-pa-md q-pb-xl">
-    <q-banner class="bg-primary text-white">  
+  <section class="q-pa-xs q-pb-lg">
+    <q-banner class="bg-grey-4">  
       <header class="row wrap items-center q-my-md">
         <div class="text-h5 color-primary">
           {{canal && canal.options ? canal.options.extend_name : canal.name }}
@@ -12,6 +12,7 @@
       class="text-white shadow-3"
       no-caps
       ripple
+      dense
       inline-label
       >
       <CategoriasMenu></CategoriasMenu>
@@ -43,14 +44,8 @@
       <q-badge color="white" text-color="dark" v-if="paginator" v-text="totalCount" />
     </q-card>
     
-    <transition
-      name="custom-classes-transition"
-      enter-active-class="animated fadeIn"
-      leave-active-class="animated fadeOut"
-      mode="out-in"
-    >
-      <router-view></router-view>
-    </transition>
+    <router-view></router-view>
+    
   </section>
 </template>
 <script>
@@ -180,4 +175,5 @@ $background-cinza = #e1e2e1
 .q-tabs__arrow--faded {
   display: none;
 }
+
 </style>

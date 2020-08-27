@@ -40,21 +40,18 @@ class GenerateModelFromDb extends Command
         $tablename = $this->argument('tablename');
         $tableschema = $this->argument('tableschema');
         $where = "";
-        if($tablename)
-        {
+        if ($tablename) {
             $where = "where table_name='".$tablename."'";
         }
-        if($tableschema)
-        {
+        if ($tableschema) {
             $where .= " and table_schema = '".$tableschema."'";
         }
         $selectSchema = "select * from information_schema.tables ".$where;
         $tables = DB::select($selectSchema); // nomes das tabelas que quer exportar
-    	foreach ($tables as $table_schema) 
-    	{
-	        $this->info($table_schema->table_name);
+        foreach ($tables as $table_schema) {
+            $this->info($table_schema->table_name);
             $model = ucfirst($table_schema->table_name);
-	        echo $model.'-';
+            echo $model.'-';
             $this->call("krlove:generate:model", [
                 "class-name" => $model,
                 "-tn" => 'escola.'.$table_schema->table_name,

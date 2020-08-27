@@ -16,6 +16,7 @@
         <meta name="theme-color" content="#08275e">
         <!--  rel="preload" as="style" onload="this.rel='stylesheet'" async -->
         <link rel="stylesheet" href="/css/app.css" async >
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" crossorigin="anonymous" async>
         <noscript>
             <link rel="stylesheet" href="/css/app.css"/>
         </noscript>

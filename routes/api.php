@@ -118,23 +118,47 @@ Route::group(
         Route::get('/componentes/{id}', 'ComponentesController@getById')->name('obter.componentes');
         Route::put('/componentes/{id}', 'ComponentesController@update')->name('atualizar.componentes');
         Route::get('/componentes/search/{termo}', 'ComponentesController@search')->name('buscar.componentes');
-        Route::get('/componentes/autocomplete/{term}', 'ComponentesController@autocomplete')->name('autocompletar.componentes');
+        Route::get(
+            '/componentes/autocomplete/{term}',
+            'ComponentesController@autocomplete'
+        )->name('autocompletar.componentes');
         Route::delete('/componentes/{id}', 'ComponentesController@delete')->name('deletar.componentes');
 
         /** COMPONENTES CATEGORIAS*/
-        Route::post('/componentescategorias', 'CurricularComponentCategoryController@create')->name('criar.componentes-categoria.curriculares');
-        Route::get('/componentescategorias/{id}', 'CurricularComponentCategoryController@getById')->name('obter.componentes-categoria');
-        Route::get('/componentescategorias/search/{termo}', 'CurricularComponentCategoryController@search')->name('buscar.componentescategorias');
-        Route::put('/componentescategorias/{id}', 'CurricularComponentCategoryController@update')->name('atualizar.componentescategorias');
-        Route::delete('/componentescategorias/{id}', 'CurricularComponentCategoryController@delete')->name('deletar.componentescategorias');
-        Route::get('/componentescategorias/autocomplete/{term}', 'CurricularComponentCategoryController@autocomplete')->name('autocompletar.componentescategorias');
+        Route::post(
+            '/componentescategorias',
+            'CurricularComponentCategoryController@create'
+        )->name('criar.componentes-categoria.curriculares');
+        Route::get(
+            '/componentescategorias/{id}',
+            'CurricularComponentCategoryController@getById'
+        )->name('obter.componentes-categoria');
+        Route::get(
+            '/componentescategorias/search/{termo}',
+            'CurricularComponentCategoryController@search'
+        )->name('buscar.componentescategorias');
+        Route::put(
+            '/componentescategorias/{id}',
+            'CurricularComponentCategoryController@update'
+        )->name('atualizar.componentescategorias');
+        Route::delete(
+            '/componentescategorias/{id}',
+            'CurricularComponentCategoryController@delete'
+        )->name('deletar.componentescategorias');
+        Route::get(
+            '/componentescategorias/autocomplete/{term}',
+            'CurricularComponentCategoryController@autocomplete'
+        )->name('autocompletar.componentescategorias');
 
         /**NIVEL ENSINO**/
         Route::get('/nivelensino/search/{termo}', 'NivelEnsinoController@search')->name('buscar.nivelensino');
         Route::get('/nivelensino/{id}', 'NivelEnsinoController@getById')->name('obter.nivelensino');
         Route::post('/nivelensino', 'NivelEnsinoController@create')->name('criar.nivelensino');
         Route::put('/nivelensino/{id}', 'NivelEnsinoController@update')->name('atualizar.nivelensino');
-        Route::get('/nivelensino/autocomplete/{term}', 'NivelEnsinoController@autocomplete')->name('autocompletar.nivelensino');
+        Route::get(
+            '/nivelensino/autocomplete/{term}',
+            'NivelEnsinoController@autocomplete'
+        )->name('autocompletar.nivelensino');
         Route::delete('/nivelensino/{id}', 'NivelEnsinoController@delete')->name('deletar.nivelensino');
 
         /** AUTENTICACAO */
@@ -170,9 +194,18 @@ Route::group(
         Route::delete('/aplicativos/{id}', 'AplicativoController@delete')->name('aplicativo.apagar');
 
         /** APLICATIVOS CATEGORIES */
-        Route::post('/aplicativos/categories','AplicativoCategoryController@create')->name('criar.aplicativo.categorias');
-        Route::put('/aplicativos/categories/{id}', 'AplicativoCategoryController@update')->name('atualizar.aplicativo.categorias');
-        Route::delete('/aplicativos/categories/{id}', 'AplicativoCategoryController@delete')->name('apagar.aplicativo.categorias');
+        Route::post(
+            '/aplicativos/categories',
+            'AplicativoCategoryController@create'
+        )->name('criar.aplicativo.categorias');
+        Route::put(
+            '/aplicativos/categories/{id}',
+            'AplicativoCategoryController@update'
+        )->name('atualizar.aplicativo.categorias');
+        Route::delete(
+            '/aplicativos/categories/{id}',
+            'AplicativoCategoryController@delete'
+        )->name('apagar.aplicativo.categorias');
 
         /** TAGS */
         Route::get('/tags', 'TagController@index')->name('lista.tag');

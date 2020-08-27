@@ -39,10 +39,10 @@ class License extends Model
      * obtem url da imagem associada
      * @return string
      */
-    function getImageAttribute(){
+    public function getImageAttribute() {
         //return $urlPath;
         $filename = basename($this->refenciaImagemAssociada());
-        return Storage::disk("conteudos-digitais")->url("imagem-associada/licencas/".$filename); 
+        return Storage::disk("conteudos-digitais")->url("imagem-associada/licencas/".$filename);
     }
 
     /**
@@ -50,15 +50,19 @@ class License extends Model
      * da categoria do conteudo em questão
      * @return string
      */
-    function refenciaImagemAssociada()
+    public function refenciaImagemAssociada()
     {
-        if(!$this->id)
-        return null;
+        if (!$this->id) {
+            return null;
+        }
+        
         $urlPath = Storage::disk("conteudos-digitais")->path("imagem-associada".DIRECTORY_SEPARATOR."licencas");
         $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.".*";
         $info = glob($urlPath);
-        if(sizeof($info)>0)
-        return $info[0]; 
+        if (sizeof($info)>0) {
+            return $info[0];
+        }
+        
         return null;
     }
 }

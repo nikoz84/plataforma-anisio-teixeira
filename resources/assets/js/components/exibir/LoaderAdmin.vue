@@ -1,5 +1,6 @@
 <template>
   <article>
+    <!--keep-alive -->
     <div :is="componentName"></div>
   </article>
 </template>

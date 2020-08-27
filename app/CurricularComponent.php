@@ -21,7 +21,7 @@ class CurricularComponent extends Model
         return $this->belongsTo("App\CurricularComponentCategory", "category_id", "id");
     }
 
-    public function nivel()
+    public function niveis()
     {
         return $this->belongsTo("App\NivelEnsino", "nivel_id", "id");
     }
