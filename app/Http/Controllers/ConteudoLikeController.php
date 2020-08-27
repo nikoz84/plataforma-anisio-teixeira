@@ -70,11 +70,13 @@ class ConteudoLikeController extends ApiController
     public function getUsuarioLikesConteudoAplicativo($conteudoid, $tipo)
     {
         if ($tipo == "conteudo") {
-            $likes = ConteudoLike::where("conteudo_id", $conteudoid)->where("tipo", $tipo)->get()->first();
+            $likes = ConteudoLike::where("conteudo_id", $conteudoid)->where("tipo", $tipo)->where("user_id", Auth::user()->id)
+                ->get()->first();
         }
         else if($tipo == "aplicativo")
         {
-            $likes = ConteudoLike::where("aplicativo_id", $conteudoid)->where("tipo", $tipo)->get()->first();
+            $likes = ConteudoLike::where("aplicativo_id", $conteudoid)->where("tipo", $tipo)->where("user_id", Auth::user()->id)
+                ->get()->first();
         }
         if($likes)
         return $this->showOne($likes);

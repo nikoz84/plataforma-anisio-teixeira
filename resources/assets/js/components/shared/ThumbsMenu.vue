@@ -44,20 +44,22 @@
                     })
                     return false;
                 }
+                return true;
             },
             async getUserLike(){
                 let resp = await axios.get("/likes/conteudo/"+this.$route.params.id+"/"+this.getTipo());
                 if (resp.data.success) {
                     this.likeOrNot = resp.data.metadata;
+                    if( this.likeOrNot.like)
+                    {
+                        this.outlineThumbsUp = false;
+                    }
+                    if(this.likeOrNot.like === false)
+                    {
+                        this.outlineThumbsDown = false;
+                    }
                 }
-                if( this.likeOrNot.like)
-                {
-                    this.outlineThumbsUp = false;
-                }
-                if(this.likeOrNot.like === false)
-                {
-                    this.outlineThumbsDown = false;
-                }
+                console.log("likeornot", this.likeOrNot);
             },
             async getCountLikes()
             {
@@ -87,9 +89,9 @@
                 this.outlineThumbsUp = !this.outlineThumbsUp;
                 if(!this.outlineThumbsUp)
                 {
-                    this.outlineThumbsDown = true;
-                    if( this.countThumbsDown>0)
+                    if(!this.outlineThumbsDown)
                     this.countThumbsDown--;
+                    this.outlineThumbsDown = true;
                     this.countThumbsUp++;
                 }
                 else
@@ -105,12 +107,12 @@
                 this.outlineThumbsDown = !this.outlineThumbsDown;
                 if(!this.countThumbsDown)
                 {
-                    this.outlineThumbsUp = true;
-                    if( this.countThumbsUp>0)
+                    if(!this.outlineThumbsUp)
                     this.countThumbsUp--;
+                    this.outlineThumbsUp = true;
                     this.countThumbsDown++;
                 }
-                else
+                else 
                 {
                     this.countThumbsDown--;
                 }
