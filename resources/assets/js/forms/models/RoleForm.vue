@@ -1,6 +1,8 @@
 <template>
     <div class="row q-pa-md">
         <div class="col-sm-6 q-pa-md">
+            <h5 v-if="role.id != null">Edição de Tipo de Usuário <b>{{this.roleName}}</b></h5>
+            <h5 v-if="role.id == null">Cadastro de Tipo de Usuário</h5>
             <form v-on:submit.prevent="send()">
                 <!-- NOME -->
                 
@@ -35,15 +37,15 @@ export default {
     this.getRole()
   },
   methods:{
-      send(){
-          console.log("hola")
-      },
-      async getRole(){
-          if (!this.$route.params.id) return; 
-          const { data } = await axios.get(`/roles/${this.$route.params.id}`);
+        send(){
+            console.log("hola")
+        },
+        async getRole(){
+            if (!this.$route.params.id) return; 
+            const { data } = await axios.get(`/roles/${this.$route.params.id}`);
             this.role = data.metadata;
-            console.log(this.role);
-      },
+            this.roleName = this.role.name;
+        },
         async save()
         {
             const url = this.$route.params.id ? `/tipos/${this.$route.params.id}` : '/tipos';

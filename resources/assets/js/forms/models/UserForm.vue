@@ -1,16 +1,17 @@
 <template>
     <div class="row q-pa-md">
         <div class="col-sm-12">
+            <h5 v-if="user.id != null">Edição de dados do Usuário(a) <b>{{this.userName}}</b></h5>
+            <h5 v-if="user.id == null">Cadastro de Novo Usuário(a)</h5>
             <form @submit.prevent="save()">
               <div class="col-4">
                 <q-img :src="user.image" 
-                      width="150px"
-                      height="150px"
-                     loading="lazy"
-                      style="width:150px;height:150px;" 
-                      placeholder-src="/img/fundo-padrao.svg" 
-                      
-                      :ratio="1">
+                       width="150px"
+                       height="150px"
+                       loading="lazy"
+                       style="width:150px;height:150px;" 
+                       placeholder-src="/img/fundo-padrao.svg" 
+                       :ratio="1">
                 </q-img>
                 <q-input
                         class="q-mt-md"
@@ -157,6 +158,7 @@ export default {
       let resp = await axios.get(url);
       if (resp.data.success) {
         this.user = resp.data.metadata;
+        this.userName = this.user.name;
       }
     },
     async getRoles() {

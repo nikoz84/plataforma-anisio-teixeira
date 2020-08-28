@@ -62,7 +62,7 @@ body {
   color: #263238;
 }
 /*
- * Quasar Framework v1.12.13
+ * Quasar Framework v1.13.1
  * (c) 2015-present Razvan Stoenescu
  * Released under the MIT License.
  */
@@ -1447,7 +1447,6 @@ body.desktop .q-chip--clickable:focus {
   opacity: 1;
 }
 .q-date__header-subtitle {
-  height: 24px;
   font-size: 14px;
   line-height: 1.75;
   letter-spacing: 0.00938em;
@@ -1491,15 +1490,28 @@ body.desktop .q-chip--clickable:focus {
   width: 14.285% !important;
   height: 12.5% !important;
   position: relative;
+  padding: 1px;
+}
+.q-date__calendar-item:after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  top: 1px;
+  right: 0;
+  bottom: 1px;
+  left: 0;
+  border-style: dashed;
+  border-color: transparent;
+  border-width: 1px;
 }
 .q-date__calendar-item > div,
 .q-date__calendar-item button {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
 }
 .q-date__calendar-item > div {
-  line-height: 32px;
+  line-height: 30px;
   text-align: center;
 }
 .q-date__calendar-item--out {
@@ -1507,6 +1519,65 @@ body.desktop .q-chip--clickable:focus {
 }
 .q-date__calendar-item--fill {
   visibility: hidden;
+}
+.q-date__range:before,
+.q-date__range-from:before,
+.q-date__range-to:before {
+  content: '';
+  background-color: currentColor;
+  position: absolute;
+  top: 1px;
+  bottom: 1px;
+  left: 0;
+  right: 0;
+  opacity: 0.3;
+}
+.q-date__range:nth-child(7n-6):before,
+.q-date__range-from:nth-child(7n-6):before,
+.q-date__range-to:nth-child(7n-6):before {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.q-date__range:nth-child(7n):before,
+.q-date__range-from:nth-child(7n):before,
+.q-date__range-to:nth-child(7n):before {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.q-date__range-from:before {
+  left: 50%;
+}
+.q-date__range-to:before {
+  right: 50%;
+}
+.q-date__edit-range:after {
+  border-color: currentColor transparent;
+}
+.q-date__edit-range:nth-child(7n-6):after {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.q-date__edit-range:nth-child(7n):after {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.q-date__edit-range-from:after,
+.q-date__edit-range-from-to:after {
+  left: 4px;
+  border-left-color: currentColor;
+  border-top-color: currentColor;
+  border-bottom-color: currentColor;
+  border-top-left-radius: 28px;
+  border-bottom-left-radius: 28px;
+}
+.q-date__edit-range-to:after,
+.q-date__edit-range-from-to:after {
+  right: 4px;
+  border-right-color: currentColor;
+  border-top-color: currentColor;
+  border-bottom-color: currentColor;
+  border-top-right-radius: 28px;
+  border-bottom-right-radius: 28px;
 }
 .q-date__calendar-days-container {
   height: 75%;
@@ -3891,12 +3962,12 @@ body.desktop .q-slider.q-slider--editable:hover .q-slider__track {
 .q-slider--active.q-slider--label .q-slider__thumb {
   transform: scale(0) !important;
 }
-body.desktop .q-slider.q-slider--editable:hover .q-slider__pin--h,
-body.desktop .q-slider.q-slider--editable:hover .q-slider__arrow--h {
+body.desktop .q-slider.q-slider--enabled:hover .q-slider__pin--h,
+body.desktop .q-slider.q-slider--enabled:hover .q-slider__arrow--h {
   transform: scale(1) translateY(-25px);
 }
-body.desktop .q-slider.q-slider--editable:hover .q-slider__pin--v,
-body.desktop .q-slider.q-slider--editable:hover .q-slider__arrow--v {
+body.desktop .q-slider.q-slider--enabled:hover .q-slider__pin--v,
+body.desktop .q-slider.q-slider--enabled:hover .q-slider__arrow--v {
   transform: scale(1) translateX(5px);
 }
 .q-slider--label.q-slider--active .q-slider__pin--h,
@@ -5777,8 +5848,8 @@ body.desktop .q-toggle--dense:not(.disabled):hover .q-toggle__thumb:before {
   outline: 0;
 }
 .q-virtual-scroll__padding {
-  background: linear-gradient(transparent, transparent 20%, rgba(128,128,128,0.03) 20%, rgba(128,128,128,0.08) 50%, rgba(128,128,128,0.03) 80%, transparent 80%, transparent);
-  background-size: 100% 50px;
+  background: linear-gradient(transparent, transparent 20%, rgba(128,128,128,0.03) 20%, rgba(128,128,128,0.08) 50%, rgba(128,128,128,0.03) 80%, transparent 80%, transparent) /* rtl:ignore */;
+  background-size: 100% 50px /* rtl:ignore */;
 }
 .q-table .q-virtual-scroll__padding tr {
   height: 0 !important;
@@ -5803,8 +5874,8 @@ body.desktop .q-toggle--dense:not(.disabled):hover .q-toggle__thumb:before {
   flex: 0 0 auto;
 }
 .q-virtual-scroll--horizontal .q-virtual-scroll__padding {
-  background: linear-gradient(to left, transparent, transparent 20%, rgba(128,128,128,0.03) 20%, rgba(128,128,128,0.08) 50%, rgba(128,128,128,0.03) 80%, transparent 80%, transparent);
-  background-size: 50px 100%;
+  background: linear-gradient(to left, transparent, transparent 20%, rgba(128,128,128,0.03) 20%, rgba(128,128,128,0.08) 50%, rgba(128,128,128,0.03) 80%, transparent 80%, transparent) /* rtl:ignore */;
+  background-size: 50px 100% /* rtl:ignore */;
 }
 .q-ripple {
   position: absolute;
@@ -5835,6 +5906,14 @@ body.desktop .q-toggle--dense:not(.disabled):hover .q-toggle__thumb:before {
 }
 .q-ripple__inner--leave {
   transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.q-morph--invisible,
+.q-morph--internal {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  position: fixed !important;
+  right: 200vw !important;
+  bottom: 200vh !important;
 }
 .q-loading {
   color: #000;
@@ -9850,6 +9929,9 @@ img.responsive {
 }
 .rotate-205 {
   transform: rotate(205deg) /* rtl:ignore */;
+}
+.rotate-225 {
+  transform: rotate(225deg) /* rtl:ignore */;
 }
 .rotate-270 {
   transform: rotate(270deg) /* rtl:ignore */;

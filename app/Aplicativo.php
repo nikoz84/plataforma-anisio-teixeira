@@ -157,11 +157,7 @@ class Aplicativo extends Conteudo
      * @return \App\Model\ApiResponser retorna json
      * @return string
      */
-<<<<<<< HEAD
-     public function refenciaImagemAssociada()
-=======
     public function refenciaImagemAssociada()
->>>>>>> 59fafea095472a7b96e5e8137d18ca03da6dc9ba
     {
         if (!$this->id) {
             return null;

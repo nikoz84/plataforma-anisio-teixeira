@@ -1,15 +1,16 @@
 <template>
     <div>
         <q-btn :outline="outlineThumbsUp" :loading="loaddingIcon"  @click="thumbsUp()"  round color="green" icon="thumb_up" >
-            <q-badge v-if="this.countThumbsUp>0" color="light-green-12"  floating>{{this.countThumbsUp}}</q-badge>
+            <q-badge v-if="this.countThumbsUp>0" color="light-green-12"  floating>{{this.shortNum(this.countThumbsUp)}}</q-badge>
         </q-btn>
         <q-btn :outline="outlineThumbsDown" :loading="loaddingIcon" @click="thumbsDown()"  round color="red" icon="thumb_down">
-            <q-badge  v-if="this.countThumbsDown>0" color="orange-4" floating>{{this.countThumbsDown}}</q-badge>
+            <q-badge  v-if="this.countThumbsDown>0" color="orange-4" floating>{{this.shortNum(this.countThumbsDown)}}</q-badge>
         </q-btn>
     </div>
 </template>
 <script>
     import { Notify } from 'quasar';
+    import shorener from 'number-shortener';
     export default {
         name : "ThumbsMenu",
         data () 
@@ -21,11 +22,13 @@
                 countThumbsDown:0,
                 countThumbsUp:0,
                 likeOrNot:null,
-                countLikes:null
+                countLikes:null,
+                shortNum:{}
             }
         },
-         created() 
+        created() 
         {
+            this.shortNum = require('number-shortener')
             if(localStorage.user)
             {
                 const userLikes = JSON.parse(localStorage.user);

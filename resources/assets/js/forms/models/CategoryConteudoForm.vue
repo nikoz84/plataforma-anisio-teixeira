@@ -1,5 +1,7 @@
 <template>
     <div class="row q-gutter-xs">
+        <h5 v-if="category.id != null">Edição de Categoria de Conteúdo <b>{{this.categoryNome}}</b></h5>
+        <h5 v-if="category.id == null">Cadastro de Categoria de Conteúdo</h5>
         <form class="col-sm-12" v-on:submit.prevent="save()">
             
             <div class="row">
@@ -167,7 +169,9 @@ export default {
                 let category = await axios.get("/categorias/" + this.$route.params.id);
                 this.category = category.data;
                 console.log( this.category)
+                this.categoryNome = this.category.name;
             }
+            
         },
 
         async save() {
