@@ -16,7 +16,7 @@ use App\Traits\FileSystemLogic;
 
 class Aplicativo extends Conteudo
 {
-    use SoftDeletes, UserCan, FileSystemLogic;
+   // use SoftDeletes, UserCan, FileSystemLogic;
 
     const CANAL_ID = 9;
     const QT_ACCESS_INIT = 0;
@@ -29,8 +29,6 @@ class Aplicativo extends Conteudo
     protected $table = 'aplicativos';
      /**
       * Tabela com os campos definidos
-      * @param \App\Aplicativo $aplicativo
-      * @return \App\Model\ApiResponser retorna json
       */
     protected $fillable = [
         'name',
@@ -45,8 +43,6 @@ class Aplicativo extends Conteudo
       
       /**
       * Tabela com os campos definidos
-      * @param \App\Aplicativo $aplicativo
-      * @return \App\Model\ApiResponser retorna json
       */
     protected $appends = [
         'image',
@@ -57,8 +53,6 @@ class Aplicativo extends Conteudo
     ];
       /**
       * Tabela com os campos definidos
-      * @param \App\Aplicativo $aplicativo
-      * @return \App\Model\ApiResponser retorna json
       */
     protected $dates = [
         'created_at',
@@ -66,19 +60,14 @@ class Aplicativo extends Conteudo
         'deleted_at'
     ];
       /**
-      * Tabela com os campos definidos
-      * @param \App\Aplicativo $aplicativo
-      * @return \App\Model\ApiResponser retorna json
+      * Força atributo options ser um array
       */
     protected $casts = [
         'options' => 'array',
     ];
-       /**
-      * Método canal 
-      * 
-      * @param \App\Aplicativo $aplicativo
-      * @return \App\Model\ApiResponser retorna json
-      */
+    /**
+    * Relação com canal
+    */
     public function canal()
     {
         Canal::$without_appends = true;
@@ -88,10 +77,7 @@ class Aplicativo extends Conteudo
             ->where('id', 9);
     }
     /**
-     * Conjunto de tags do aplicativo
-     * @param \App\Aplicativo $aplicativo
-     * @return \App\Model\ApiResponser retorna json
-     * 
+     * Relação com tabela de tags
      */
     public function tags()
     {
@@ -99,10 +85,7 @@ class Aplicativo extends Conteudo
             ->select(['id', 'name'])->orderBy('name');
     }
     /**
-     * Conjunto de categorias do aplicativo
-     * @param \App\Aplicativo $aplicativo
-     * @return \App\Model\ApiResponser retorna json
-     *  
+     * Relação com categoria
      */
     public function category()
     {
@@ -110,10 +93,7 @@ class Aplicativo extends Conteudo
     }
 
     /**
-     * Descrição abreviada
-     * @param \App\Aplicativo $aplicativo
-     * @return \App\Model\ApiResponser retorna json
-     * 
+     * Descrição abreviada com 30 palavras e sem html
      */
     public function getExcerptAttribute()
     {
@@ -121,9 +101,6 @@ class Aplicativo extends Conteudo
     }
     /**
      * Imagem de destaque do aplicativo
-     * 
-     * @param \App\Aplicativo $aplicativo
-     * @return \App\Model\ApiResponser retorna json
      */
     public function getImageAttribute()
     {
@@ -131,9 +108,6 @@ class Aplicativo extends Conteudo
     }
     /**
      * Cria url exibir
-     * @param \App\Aplicativo $aplicativo
-     * @return \App\Model\ApiResponser retorna json
-     * 
      */
     public function getUrlExibirAttribute()
     {
@@ -152,16 +126,10 @@ class Aplicativo extends Conteudo
     }
 
     /**
-     * obtem referencia do arquivo de imgame associada
-     * @param \App\Aplicativo $aplicativo
-     * @return \App\Model\ApiResponser retorna json
+     * Obtem referencia do arquivo de imgame associada
      * @return string
      */
-<<<<<<< HEAD
-     public function refenciaImagemAssociada()
-=======
     public function refenciaImagemAssociada()
->>>>>>> 59fafea095472a7b96e5e8137d18ca03da6dc9ba
     {
         if (!$this->id) {
             return null;
@@ -176,5 +144,4 @@ class Aplicativo extends Conteudo
         
         return null;
     }
-    
 }

@@ -54,7 +54,7 @@ class AplicativoController extends ApiController
      * Cria um novo aplicativo no banco de dados
      *
      *@param \App\Aplicativo $aplicativo
-     *@return \App\Controller\ApiResponser retorna jsonS
+     *@return \App\Controller\ApiResponser retorna json
      */
     public function create()
     {

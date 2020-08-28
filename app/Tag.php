@@ -18,30 +18,22 @@ class Tag extends Model
     protected $hidden = ['pivot'];
     protected $appends = ['user_can'];
     /**
-     * Função conteúdo Pertence a Muitos
-     * Variavel protegida com os campos a ser adcionado e array associativo
-     * @param \App\Role $role
-     * @return \App\Model\ApiResponser retorna json
+     * Relação de tag com tabela conteudos
      */
     public function conteudos()
     {
         return $this->belongsToMany(Conteudo::class);
     }
     /**
-     * Função aplicativos Pertence a Muitos
-     * Variavel protegida com os campos a ser adcionado e array associativo
-     * @param \App\Role $role
-     * @return \App\Model\ApiResponser retorna json
+     * Relação de tag com tabela aplicativos
      */
     public function aplicativos()
     {
         return $this->belongsToMany(Aplicativo::class);
     }
     /**
-     * Função seleciona o nome do Atributo Pertence a Muitos
-     * Variavel protegida com os campos a ser adcionado e array associativo
-     * @param \App\Role $role
-     * @return \App\Model\ApiResponser retorna json
+     * Seta o atributo name em caixa baixa
+     * @param $name cadena de caracteres
      */
     public function setNameAttribute($value)
     {

@@ -51,7 +51,9 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token', 'email', 'verification_token',
     ];
     /**
-     * Datas
+     * Atributos de data
+     *
+     * @var array
      */
     protected $dates = [
         'created_at',
@@ -59,7 +61,7 @@ class User extends Authenticatable implements JWTSubject
         'deleted_at',
     ];
     /**
-     * Converte coluna jsonb a array.
+     * Molde ou força que as variaveis asignadas sejam de um determinado tipo
      *
      * @var array
      */
@@ -73,7 +75,11 @@ class User extends Authenticatable implements JWTSubject
         'verification_token' => 'string',
         'verified' => 'boolean'
     ];
-
+    /**
+     * Adiciona atributos ao objeto
+     *
+     * @var array
+     */
     protected $appends = ['is_admin', 'image', 'user_can'];
 
     /*public static function boot()
@@ -89,7 +95,7 @@ class User extends Authenticatable implements JWTSubject
 
     /**
      * Converte o atributo nome para minusculas
-     * @param [type] $value
+     * @param string $value
      * @return void
      */
     public function setNameAttribute($value)
@@ -108,8 +114,8 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * Atributo nome capitalizado
-     * @param $value string retorna o nome capitalizado
+     * Retorna atributo nome capitalizado (primeira letra em maiuscula)
+     * @param string $value retorna o nome capitalizado
      *
      * @return string
      */

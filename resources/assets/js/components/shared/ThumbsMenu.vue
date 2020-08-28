@@ -25,7 +25,12 @@
         },
          created() 
         {
-            this.getUserLike();
+            if(localStorage.user){
+                const user = JSON.parse(localStorage.user);
+                console.log(user)
+            }
+            
+            //this.getUserLike();
             this.getCountLikes();
         },
         methods:{

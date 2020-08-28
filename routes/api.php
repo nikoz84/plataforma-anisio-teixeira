@@ -39,7 +39,10 @@ Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscar.can
 Route::get('/componentes', 'ComponentesController@index')->name('lista.componentes.curriculares');
 
 /** CATEGORIAS COMPONENTES */
-Route::get('/componentescategorias', 'CurricularComponentCategoryController@index')->name('lista.categorias.componentes.curriculares');
+Route::get(
+    '/componentescategorias',
+    'CurricularComponentCategoryController@index'
+)->name('lista.categorias.componentes.curriculares');
 
  /**NIVEL ENSINO**/
  Route::get('/nivelensino', 'NivelEnsinoController@index')->name('lista.nevelensino');
@@ -85,7 +88,10 @@ Route::get('/licencas', 'LicenseController@index')->name('listar.licencas');
 Route::get('/files/{directory}/{id}', 'FileController@downloadFile')->name('downloadFile.id');
 
 /**LIKES - DISLIKES */
-Route::get('/likes/count/{conteudoid}/{tipo}', 'ConteudoLikeController@getLikesByConteudoAplicativo')->name('likes.conteudo');
+Route::get(
+    '/likes/count/{conteudoid}/{tipo}',
+    'ConteudoLikeController@getLikesByConteudoAplicativo'
+)->name('likes.conteudo');
 /**
 *Route::get(
 *    '/planilhas/load-rotinas/',
@@ -255,9 +261,18 @@ Route::group(
         Route::get('/resumo', 'HomeController@getAnalytics')->name('catalogacao.blog.e.plataforma');
 
         /** RELATÓRIOS */
-        Route::get('/usuarios/role/{role_id}','RelatorioController@buscarUsuariosPorRole')->name('view.relatorio.usuario');
-        Route::get('/relatorio/conteudos/{flag}','RelatorioController@gerarPdfConteudo')->name('gerar.relatorio.conteudo');
-        Route::get('/relatorio/usuarios/role/{role_id}/{is_active?}', 'RelatorioController@gerarPdfUsuario')->name('gerar.relatorio.usuario');
+        Route::get(
+            '/usuarios/role/{role_id}',
+            'RelatorioController@buscarUsuariosPorRole'
+        )->name('view.relatorio.usuario');
+        Route::get(
+            '/relatorio/conteudos/{flag}',
+            'RelatorioController@gerarPdfConteudo'
+        )->name('gerar.relatorio.conteudo');
+        Route::get(
+            '/relatorio/usuarios/role/{role_id}/{is_active?}',
+            'RelatorioController@gerarPdfUsuario'
+        )->name('gerar.relatorio.usuario');
 
         /** SISTEMA DE PASTA */
         Route::get('/informacoes-pasta', 'FileController@getInfoFolder')->name('file.getInfoFolder');
@@ -268,15 +283,26 @@ Route::group(
         Route::post('/comentarios/create', 'ComentarioController@create')->name('comentario.create');
         Route::post('/comentarios/update/{id}', 'ComentarioController@update')->name('comentario.update');
         Route::get('/comentarios/{id}', 'ComentarioController@getComentarioById')->name('comentario.id');
-        Route::get('/comentarios/usuario/{idUsuario}/{tipo?}','ComentarioController@getComentariosByIdUsuario')->name('comentario.usuario');
-        Route::get('/comentarios/postagem/{id}/{tipo}', 'ComentarioController@getComentariosByIdPostagem')->name('comentario.postagem');
+        Route::get(
+            '/comentarios/usuario/{idUsuario}/{tipo?}',
+            'ComentarioController@getComentariosByIdUsuario'
+        )->name('comentario.usuario');
+        Route::get(
+            '/comentarios/postagem/{id}/{tipo}',
+            'ComentarioController@getComentariosByIdPostagem'
+        )->name('comentario.postagem');
         Route::get('/comentarios/delete/{id}', 'ComentarioController@deletar')->name('comentario.delete');
 
         /** LIKE - DESLIKE */
         Route::post('/like', 'ConteudoLikeController@like')->name('like');
         Route::post('/dislike', 'ConteudoLikeController@dislike')->name('dislike');
-        Route::get('/likes/usuario/{idUsuario}/{tipo?}', 'ConteudoLikeController@getLikesPorIdUsuarioEtipo')->name('likes.usuario');
-        Route::get('/likes/conteudo/{conteudoid}/{tipo}', 'ConteudoLikeController@getUsuarioLikesConteudoAplicativo')->name('likes.usuario.conteudo.aplicativo');
-        
+        Route::get(
+            '/likes/usuario/{idUsuario}/{tipo?}', 
+            'ConteudoLikeController@getLikesPorIdUsuarioEtipo'
+        )->name('likes.usuario');
+        Route::get(
+            '/likes/conteudo/{conteudoid}/{tipo}',
+            'ConteudoLikeController@getUsuarioLikesConteudoAplicativo'
+        )->name('likes.usuario.conteudo.aplicativo');
     }
 );

@@ -22,7 +22,7 @@ class Tipo extends Model
     ];
 
     /**
-     * Seleciona o iconde do atributo
+     * Seleciona o icone do atributo
      *
      * @return void
      */
@@ -35,7 +35,7 @@ class Tipo extends Model
     }
     
     /**
-     * Seleciona a busca do atributa por meio da url
+     * Seleciona a busca do atributo por meio da url
      *
      * @return void
      */

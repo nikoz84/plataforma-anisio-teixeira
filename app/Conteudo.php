@@ -147,39 +147,8 @@ class Conteudo extends Model
     }
 
     /**
-<<<<<<< HEAD
-     * Muta o valor do usuário que aprova o conteúdo
-     * @param \App\Conteudo $conteudo
-     * @return \App\Model\ApiResponser retorna json
-     * @param [id] integer $user
-     * @return void
-     */
-    public function setApprovingUserIdAttribute($id)
-    {
-        if ($id) {
-            $this->attributes['approving_user_id'] = $id;
-        } else {
-            $this->attributes['approving_user_id'] = null;
-        }
-    }
-      
-    public function setIsApproved($is_approved)
-    {
-        if ($is_approved) {
-            $this->attributes['is_approved'] = $is_approved;
-        } else {
-            $this->attributes['is_approved'] = false;
-        }
-    }
-    /**
-     * Adiciona novo atributo ao objeto que limita o tamanho da descrição
-     * @param \App\Conteudo $conteudo
-     * @return \App\Model\ApiResponser retorna json
-     * @return void
-=======
      * Adiciona novo atributo ao objeto que limita o tamanho da descrição
      * @return string cadena de caracteres
->>>>>>> 59fafea095472a7b96e5e8137d18ca03da6dc9ba
      */
     public function getExcerptAttribute()
     {
@@ -418,7 +387,7 @@ class Conteudo extends Model
                 break;
         }
         return $query->orderBy($order_by, $sort);
-    }  
+    }
     /**
      * Função Statica retorna documento salvo
      * @param \App\Conteudo $conteudo

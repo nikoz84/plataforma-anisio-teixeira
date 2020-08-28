@@ -16,9 +16,7 @@ class PasswordReset extends Model
     public $incrementing = false;
     
      /**
-     * Variavel protegida com os campos a ser adcionado e array associativo
-     * @param \App\PAsswordReset $password
-     * @return \App\Model\ApiResponser retorna json
+     * variaveis que serão adicionadas quando se utiliza o metodo fill
      */
     protected $fillable = [
         'email',
@@ -34,7 +32,7 @@ class PasswordReset extends Model
      
     public function getTokenByEmail($email)
     {
-        return $this->where('email', $email)->orderBy("created_at","desc")->first();
+        return $this->where('email', $email)->orderBy("created_at", "desc")->first();
     }
     
     /**
