@@ -108,7 +108,7 @@
                 return;
                 this.save(false)
                 this.outlineThumbsDown = !this.outlineThumbsDown;
-                if(!this.countThumbsDown)
+                if(!this.outlineThumbsDown)
                 {
                     if(!this.outlineThumbsUp)
                     this.countThumbsUp--;
