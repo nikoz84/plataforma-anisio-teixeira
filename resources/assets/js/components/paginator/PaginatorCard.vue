@@ -16,11 +16,10 @@
       >
       </q-img>
       <q-card-section class="q-mb-md">
-        <h6 class="text-h6 q-mt-md color-transition" :title="`Título: ${title}`" v-html="title"></h6>
-        
+        <h6 @click="goTo(item)" class="text-h6 q-mt-md color-transition" :title="`Título: ${title}`" v-html="title"></h6>
       </q-card-section>
       <q-card-actions class="flex justify-end absolute-bottom">
-        <q-btn
+        <!-- q-btn
             @click="$router.push(item.url_exibir)"
             icon="visibility"
             title="Visualizar recurso"
@@ -30,7 +29,7 @@
             @click="showDialog(item)"
             icon="toc"
             title="Mais informações"
-          />
+          / -->
       </q-card-actions>
     </q-card>
   
