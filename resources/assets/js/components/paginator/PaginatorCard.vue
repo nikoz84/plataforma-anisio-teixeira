@@ -1,37 +1,39 @@
 <template>
-  <q-card v-bind:id="item.id" v-if="item">
-    <q-img
-      clickable
-      class="cursor-pointer"
-      v-ripple
-      @click="goTo(item)"
-      alt="imagem destacada"
-      :src="getImage"
-      loading="lazy"
-      width="100%"
-      height="auto"
-      :style="`height:230px;min-height: 230px; width: 100%;border-bottom: solid 2px #264b8f;`"
-      placeholder-src="/img/fundo-padrao.svg"
-    >
-    </q-img>
-    <q-card-section class="q-mb-md">
-      <h6 class="text-h6 q-mt-md" :title="`Título: ${title}`" v-html="title"></h6>
-      
-    </q-card-section>
-    <q-card-actions class="flex justify-end absolute-bottom">
-      <q-btn
-          @click="$router.push(item.url_exibir)"
-          icon="visibility"
-          title="Visualizar recurso"
-        />
-      <q-btn
-          v-ripple 
-          @click="showDialog(item)"
-          icon="toc"
-          title="Mais informações"
-        />
-    </q-card-actions>
-  </q-card>
+  
+    <q-card class="card-hover" v-bind:id="item.id" v-if="item">
+      <q-img
+        clickable
+        class="cursor-pointer"
+        v-ripple
+        @click="goTo(item)"
+        alt="imagem destacada"
+        :src="getImage"
+        loading="lazy"
+        width="100%"
+        height="auto"
+        :style="`height:230px;min-height: 230px; width: 100%;border-bottom: solid 2px #264b8f;`"
+        placeholder-src="/img/fundo-padrao.svg"
+      >
+      </q-img>
+      <q-card-section class="q-mb-md">
+        <h6 class="text-h6 q-mt-md color-transition" :title="`Título: ${title}`" v-html="title"></h6>
+        
+      </q-card-section>
+      <q-card-actions class="flex justify-end absolute-bottom">
+        <q-btn
+            @click="$router.push(item.url_exibir)"
+            icon="visibility"
+            title="Visualizar recurso"
+          />
+        <q-btn
+            v-ripple 
+            @click="showDialog(item)"
+            icon="toc"
+            title="Mais informações"
+          />
+      </q-card-actions>
+    </q-card>
+  
 </template>
 <script>
 import {
@@ -87,23 +89,33 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-.card-heading-bottom .card-heading-inner {
-  padding-bottom: 6px;
-  border-bottom: 2px solid #2c87f0;
-  position: relative;
-  bottom: -1px;
-}
-
-.card-heading-inner {
-  display: inline-block;
-}
-
 .q-img__image {
   & .absolute-full {
     background-color: black;
   }
 }
+.text-h6 {
+  font-weight: bold;
+}
+.color-transition {
+  transition: color .2s ease-in;
+}
 
+.underline {
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 2px;
+    margin-bottom: -2px;
+    cursor: pointer;
+    color: #39b982;
+}
+
+.card-hover:hover {
+    transform: translateX(5px);
+}
+.card-hover{
+  transition: transform .2s ease-out;
+}
 .text-h6{
   font-size:16px;
   font-weight : 600;

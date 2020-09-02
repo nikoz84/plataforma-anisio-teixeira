@@ -44,10 +44,11 @@
       <q-separator />
       
     </q-list>
+    
     <!-- ADMINISTRAÇÃO-->
     <AdminLeftSideBar v-if="$route.name == 'admin'"></AdminLeftSideBar>
     <!-- CANAIS-->
-    <q-list v-else>
+    <q-list v-else-if="links.length > 0">
       <q-item-label class="bg-grey-4" header>
         <strong class="grey-10">
           Canais
@@ -108,6 +109,45 @@
         </q-item-section>
       </q-item -->
     </q-list>
+
+    <q-list v-else>
+      <q-item>
+      <q-item-section>
+        <q-item-label>
+          <q-skeleton type="text" width="60%"/>
+        </q-item-label>
+      </q-item-section>
+      </q-item>
+      <q-item>
+        <q-item-section>
+          <q-item-label>
+            <q-skeleton type="text" width="60%"/>
+          </q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-item>
+        <q-item-section>
+          <q-item-label>
+            <q-skeleton type="text" width="60%"/>
+          </q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-item>
+        <q-item-section>
+          <q-item-label>
+            <q-skeleton type="text" width="60%"/>
+          </q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-item>
+        <q-item-section>
+          <q-item-label>
+            <q-skeleton type="text" width="60%"/>
+          </q-item-label>
+        </q-item-section>
+      </q-item>
+    </q-list>
+
     <q-list padding bordered>
       <q-expansion-item
         dense

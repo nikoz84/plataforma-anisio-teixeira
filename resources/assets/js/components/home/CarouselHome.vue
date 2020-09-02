@@ -12,15 +12,22 @@
             :autoplay="10000"
             arrows
             height="250px"
-            class="accent rounded-borders"
+            class="rounded-borders bg-grey-5 text-white shadow-1"
             @input="changeSlide"
         >
-           <q-carousel-slide 
+            <q-carousel-slide name="null" class="column no-wrap flex-center" v-if="name === null">
+                <q-icon name="style" size="56px" />
+                <div class="q-mt-md text-center">
+                    HOLA MUDNO
+                </div>
+            </q-carousel-slide>
+            <q-carousel-slide 
                 v-for="(slide, d) in slider"
                 :key="`${d}-slide`"
                 :name="slide.filename" 
                 :img-src="slide.image">
             </q-carousel-slide>
+            
         </q-carousel>
         <transition name="fade" mode="out-in">
             <q-card class="featured" v-show="showTitle" flat>
@@ -40,7 +47,8 @@ export default {
             name: null, 
             slider: [],
             showTitle: false,
-            activeSlide: {}
+            activeSlide: {},
+            isLoading: false
         }
     },
     mounted(){
@@ -48,8 +56,9 @@ export default {
     },
     methods: {
         async getSlider(){
+            this.isLoading = true
             const { data } = await axios.get('/options/slider');
-            
+            this.isLoading = false
             this.slider = data.options.meta_data;
             if(this.slider.length > 0){
                 let showSlide = this.slider[0];

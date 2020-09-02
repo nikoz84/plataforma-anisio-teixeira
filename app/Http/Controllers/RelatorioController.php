@@ -47,9 +47,9 @@ class RelatorioController extends ApiController
      */
     public function gerarPdfConteudo($flag = null)
     {
-        $content = new Conteudo();
+        $conteudo = new Conteudo();
 
-        $contents = [];
+        $conteudos = [];
         $title = null;
 
         if ((is_null($flag) || ($flag != 'baixados' && $flag != 'visualizados'))) {
@@ -60,13 +60,13 @@ class RelatorioController extends ApiController
             );
         }
         if ($flag == 'baixados') {
-            $contents = $content->contents_max_downlaoad();
+            $conteudos = $conteudo->relatorioMaisBaixados();
             $title = 'LISTA DE 100 CONTEÚDOS DIGITAIS MAIS BAIXADOS';
             $flag = 'DOWNLOAD';
         }
 
         if ($flag == 'visualizados') {
-            $contents = $content->contents_max_access();
+            $conteudos = $conteudo->relatorioMaisAcessados();
             $title = 'LISTA DE 100 CONTEÚDOS DIGITAIS MAIS VISUALIZADOS';
             $flag = 'ACESSOS';
         }

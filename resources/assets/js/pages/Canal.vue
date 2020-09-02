@@ -1,9 +1,12 @@
 <template>
   <section class="q-pa-xs q-pb-lg">
     <q-banner class="bg-grey-4">  
-      <header class="row wrap items-center q-my-md">
-        <div class="text-h5 color-primary">
+      <header class="q-my-md q-gutter-md">
+        <div class="text-h5 color-primary" v-if="!isLoading">
           {{canal && canal.options ? canal.options.extend_name : canal.name }}
+        </div>
+        <div v-else>
+          <q-skeleton style="width: 300px; height: 25px" type="text" animation="pulse-x" />
         </div>
       </header>
     </q-banner>
@@ -41,7 +44,8 @@
       />
     </q-tabs>
     <q-card class="q-my-sm q-pl-sm">
-      <q-badge color="white" text-color="dark" v-if="paginator" v-text="totalCount" />
+      <q-badge color="white" text-color="dark" v-if="paginator && !isLoading" v-text="totalCount" />
+      <q-skeleton v-else style="width: 300px; height: 13px" type="text" animation="pulse-x"/>
     </q-card>
     
     <router-view></router-view>
@@ -66,7 +70,8 @@ import {
   QItemSection,
   ClosePopup,
   QBreadcrumbs,
-  QBreadcrumbsEl
+  QBreadcrumbsEl,
+  QSkeleton
 } from "quasar";
 
 export default {
@@ -88,6 +93,7 @@ export default {
     CategoriasMenu,
     QBreadcrumbs,
     QBreadcrumbsEl,
+    QSkeleton,
     Filters,
     OrderBy
   },

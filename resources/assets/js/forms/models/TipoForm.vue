@@ -24,9 +24,7 @@
                 <q-icon name="image" style="padding-bottom: 3px;" /><strong>Icone</strong>
               </q-item-label>
               
-              <svg class="icon-pat">
-                <use v-bind="{'xlink:href':'#'+ tipo.icon}"></use> 
-              </svg>
+              <img width="50" height="50" :src="tipo.icon"/>
           </q-card-section>
           <q-card-section>
             <q-btn @click.prevent="save()" class="full-width q-mt-md" label="Salvar" type="submit" color="primary"/>

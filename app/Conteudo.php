@@ -451,11 +451,10 @@ class Conteudo extends Model
 
      /**
       * Retorna Maximo de conteundo por downlaoad
-      * @param \App\Conteudo $conteudo
-      * @return \App\Model\ApiResponser retorna json
+      * @return DB
       */
-    public function contents_max_downlaoad(){
-
+    public function relatorioMaisBaixados()
+    {
         $contents = DB::select("SELECT 
             max(con.qt_downloads) as quantity, 
             tip.name as type, con.title, con.description, use.name as publisher, con.is_approved
@@ -469,21 +468,20 @@ class Conteudo extends Model
         return $contents;
     }
      /**
-      * Retorna Maximo de conteundo por acesso
-      *  @param \App\Conteudo $conteudo
-      * @return \App\Model\ApiResponser retorna json
+      * Retorna conteúdos mais acessados
+      * @return DB
       */
-    public function contents_max_access(){
-
+    public function relatorioMaisAcessados()
+    {
         $contents = DB::select("SELECT 
-            max(con.qt_access) as quantity, 
-            tip.name as type, con.title, con.description, use.name as publisher, con.is_approved
-            FROM public.conteudos con
-            INNER JOIN tipos tip on con.tipo_id = tip.id
-            INNER JOIN users use on use.id = con.user_id
-            GROUP BY (con.qt_access, tip.name, con.title, con.description, use.name, con.is_approved)
-            ORDER BY (con.qt_access) DESC
-            LIMIT 100");
+        max(con.qt_access) as quantity, 
+        tip.name as type, con.title, con.description, use.name as publisher, con.is_approved
+        FROM public.conteudos con
+        INNER JOIN tipos tip on con.tipo_id = tip.id
+        INNER JOIN users use on use.id = con.user_id
+        GROUP BY (con.qt_access, tip.name, con.title, con.description, use.name, con.is_approved)
+        ORDER BY (con.qt_access) DESC
+        LIMIT 100");
 
         return $contents;
     }

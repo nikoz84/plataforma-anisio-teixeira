@@ -26,7 +26,6 @@ class CurricularComponent extends Model
         return $this->belongsTo("App\NivelEnsino", "nivel_id", "id");
     }
     */
-
     public function categories()
     {
         return $this->hasMany('App\CurricularComponentCategory', 'id', 'category_id');
@@ -37,7 +36,7 @@ class CurricularComponent extends Model
      * @param \App\CurricularComponentes $curricular
      * @return \App\Model\ApiResponser retorna json
      */
-
+    
     public function niveis()
     {
         return $this->hasMany('App\NivelEnsino', 'id', 'nivel_id');
@@ -72,7 +71,7 @@ class CurricularComponent extends Model
 
         return $icone;
         */
-    }  
+    }
      /**
       * Função Obtem a pesquisa do Atributo
       * @param \App\CurricularComponentes $curricular

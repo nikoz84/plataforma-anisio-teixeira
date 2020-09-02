@@ -3,20 +3,16 @@
       <header class="row text-h5">
           {{title}}
       </header>
-      <section class="">
-          <div class="masonry bordered">
-            <article class="q-gutter-xs q-mt-xs img" v-for="(img, i) in images" :key="i">
-                <q-img :src="img"
-                      :placeholder-img="'/img/fundo-padrao.svg'" 
-                      alt="Imagem da galeria"
-                      clickable
-                      @click="fullWidth = true"
-                      />
-            </article>
-          </div>
-        </section>
-        
-        
+        <div class="masonry bordered">
+          <article class="q-gutter-xs q-mt-xs img" v-for="(img, i) in images" :key="i">
+              <q-img :src="img"
+                    :placeholder-img="'/img/fundo-padrao.svg'" 
+                    alt="Imagem da galeria"
+                    clickable
+                    @click="fullWidth = true"
+                    />
+          </article>
+        </div>
     </section>
     
 </template>

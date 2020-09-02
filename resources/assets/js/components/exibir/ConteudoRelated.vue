@@ -1,21 +1,49 @@
 <template>
-    <q-list>
-        <q-item @click="goTo(relacionado.url_exibir)" clickable v-ripple v-for="(relacionado, i) in relacionados" :key="i">
-            <q-item-section thumbnail>
-                <img alt="imagem destacada"
-                    height="auto"
-                    loading="lazy"
-                    width="100%"
-                    :src="getImage(relacionado.image)" 
-                >
-            </q-item-section>
-            <q-item-section>
-                <strong class="related-title" :title="relacionado.title">
-                    {{ relacionado.short_title }}
-                </strong>
-            </q-item-section>
-        </q-item>
-    </q-list>
+    <div>
+        <q-list v-if="relacionados.length > 0">
+            <q-item @click="goTo(relacionado.url_exibir)" clickable v-ripple v-for="(relacionado, i) in relacionados" :key="i">
+                <q-item-section thumbnail>
+                    <img alt="imagem destacada"
+                        height="auto"
+                        loading="lazy"
+                        width="100%"
+                        :src="getImage(relacionado.image)" 
+                    >
+                </q-item-section>
+                <q-item-section>
+                    <strong class="related-title" :title="relacionado.title">
+                        {{ relacionado.short_title }}
+                    </strong>
+                </q-item-section>
+            </q-item>
+        </q-list>
+        <q-list v-else>
+            <q-item>
+                <q-item-section thumbnail>
+                    <q-skeleton type="QAvatar" animation="fade" />
+                </q-item-section>
+                <q-item-section>
+                    <q-skeleton type="text" animation="fade" />
+                </q-item-section>
+            </q-item>
+            <q-item>
+                <q-item-section thumbnail>
+                    <q-skeleton type="QAvatar" animation="fade" />
+                </q-item-section>
+                <q-item-section>
+                    <q-skeleton type="text" animation="fade" />
+                </q-item-section>
+            </q-item>
+            <q-item>
+                <q-item-section thumbnail>
+                    <q-skeleton type="QAvatar" animation="fade" />
+                </q-item-section>
+                <q-item-section>
+                    <q-skeleton type="text" animation="fade" />
+                </q-item-section>
+            </q-item>
+        </q-list>
+    </div>
 </template>
 
 <script>

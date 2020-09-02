@@ -9,6 +9,7 @@
     </div>
 </template>
 <script>
+    import { Notify } from 'quasar';
     export default {
         name : "ThumbsMenu",
         data () 
@@ -25,28 +26,40 @@
         },
          created() 
         {
-            if(localStorage.user){
-                const user = JSON.parse(localStorage.user);
-                console.log(user)
+            if(localStorage.user)
+            {
+                const userLikes = JSON.parse(localStorage.user);
+                this.getUserLike();
             }
-            
-            //this.getUserLike();
             this.getCountLikes();
         },
         methods:{
+            testeUsuarioLogado(){
+                if(!localStorage.user)
+                {
+                    Notify.create({
+                        message: 'Você precisa estar logado para realizar esta ação',
+                        position: 'top-right',
+                        color:'red'
+                    })
+                    return false;
+                }
+                return true;
+            },
             async getUserLike(){
                 let resp = await axios.get("/likes/conteudo/"+this.$route.params.id+"/"+this.getTipo());
                 if (resp.data.success) {
                     this.likeOrNot = resp.data.metadata;
+                    if( this.likeOrNot.like)
+                    {
+                        this.outlineThumbsUp = false;
+                    }
+                    if(this.likeOrNot.like === false)
+                    {
+                        this.outlineThumbsDown = false;
+                    }
                 }
-                if( this.likeOrNot.like)
-                {
-                    this.outlineThumbsUp = false;
-                }
-                if(this.likeOrNot.like === false)
-                {
-                    this.outlineThumbsDown = false;
-                }
+                console.log("likeornot", this.likeOrNot);
             },
             async getCountLikes()
             {
@@ -70,42 +83,44 @@
             },
             thumbsUp() 
             {
-                if(this.save(true))
+                if(!this.testeUsuarioLogado())
+                return;
+                this.save(true);
+                this.outlineThumbsUp = !this.outlineThumbsUp;
+                if(!this.outlineThumbsUp)
                 {
-                    this.outlineThumbsUp = !this.outlineThumbsUp;
-                    if(!this.outlineThumbsUp)
-                    {
-                        this.outlineThumbsDown = true;
-                        if( this.countThumbsDown>0)
-                        this.countThumbsDown--;
-                        this.countThumbsUp++;
-                    }
-                    else
-                    {
-                        this.countThumbsUp--;
-                    }
+                    if(!this.outlineThumbsDown)
+                    this.countThumbsDown--;
+                    this.outlineThumbsDown = true;
+                    this.countThumbsUp++;
+                }
+                else
+                {
+                    this.countThumbsUp--;
                 }
             },
             async thumbsDown()
             {
-                if(this.save(false))
+                if(!this.testeUsuarioLogado())
+                return;
+                this.save(false)
+                this.outlineThumbsDown = !this.outlineThumbsDown;
+                if(!this.countThumbsDown)
                 {
-                    this.outlineThumbsDown = !this.outlineThumbsDown;
-                    if(!this.countThumbsDown)
-                    {
-                        this.outlineThumbsUp = true;
-                        if( this.countThumbsUp>0)
-                        this.countThumbsUp--;
-                        this.countThumbsDown++;
-                    }
-                    else
-                    {
-                        this.countThumbsDown--;
-                    }
+                    if(!this.outlineThumbsUp)
+                    this.countThumbsUp--;
+                    this.outlineThumbsUp = true;
+                    this.countThumbsDown++;
+                }
+                else 
+                {
+                    this.countThumbsDown--;
                 }
             },
             async save(likeordislike)
             {
+                
+                const userLikes = JSON.parse(localStorage.user);
                 this.loaddingIcon = true;
                 const form = new FormData();
                 if(this.$route.path.indexOf("/conteudo/")>=0)
