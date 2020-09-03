@@ -11,6 +11,7 @@ class CurricularComponentCategory extends Model
     use UserCan;
 
     protected $table = 'curricular_components_categories';
+    protected $fillable = ['name'];
     protected $appends = ['user_can', 'search_url'];
      
     /**
