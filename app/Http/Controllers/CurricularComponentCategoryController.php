@@ -36,7 +36,7 @@ class CurricularComponentCategoryController extends ApiController
                 $data = $validator->errors();
                 throw new Exception(
                     'Não foi possível atualizar a categoria do componente. Erro no preenchimento do formulário.',
-                    404
+                    422
                 );
             }
             $componentCategory->fill($this->request->all());
@@ -44,7 +44,7 @@ class CurricularComponentCategoryController extends ApiController
             if (!$componentCategory->save()) {
                 throw new Exception(
                     'Não foi possível atualizar a categoria do componente. Tente novamente mais tarde',
-                    501
+                    422
                 );
             }
         } catch (Exception $ex) {
@@ -117,8 +117,7 @@ class CurricularComponentCategoryController extends ApiController
     {
         $componentesCategoria = new CurricularComponentCategory();
         try {
-            $componentesCategoria = CurricularComponentCategory::findOrFail($id);
-            $componentesCategoria->componentes;
+            $componentesCategoria = CurricularComponentCategory::with('componentes')->findOrFail($id);
         } catch (Exception $ex) {
             return $this->errorResponse(
                 [],
