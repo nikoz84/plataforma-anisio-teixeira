@@ -96,6 +96,18 @@
           <q-item-label>Canal das Universidades</q-item-label>
         </q-item-section>
       </q-item>
+      <q-item
+        @click="goToColaborativus"
+        aria-label="`endereço para: Ambiente virtual de aprendizagem`"
+        :title="`endereço para: ambiente virtual de aprendizagem Moodle`"
+        clickable
+        v-close-popup
+        tabindex="0"
+      >
+        <q-item-section>
+          <q-item-label>Colavorativus</q-item-label>
+        </q-item-section>
+      </q-item>
       <!--q-item
         :to="`/praticas-pedagogicas`"
         aria-label="`endereço para: Práticas Pedagogicas`"
@@ -117,6 +129,34 @@
           <q-skeleton type="text" width="60%"/>
         </q-item-label>
       </q-item-section>
+      </q-item>
+      <q-item>
+        <q-item-section>
+          <q-item-label>
+            <q-skeleton type="text" width="60%"/>
+          </q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-item>
+        <q-item-section>
+          <q-item-label>
+            <q-skeleton type="text" width="60%"/>
+          </q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-item>
+        <q-item-section>
+          <q-item-label>
+            <q-skeleton type="text" width="60%"/>
+          </q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-item>
+        <q-item-section>
+          <q-item-label>
+            <q-skeleton type="text" width="60%"/>
+          </q-item-label>
+        </q-item-section>
       </q-item>
       <q-item>
         <q-item-section>
@@ -208,6 +248,11 @@ export default {
         this.$emit("update:leftDrawerOpen", val);
       }
     }
-  }
+  },
+  methods: {
+    goToColaborativus() {
+      window.open("http://colaborativus.pat.educacao.ba.gov.br", '_blank'); 
+    }
+  },
 };
 </script>

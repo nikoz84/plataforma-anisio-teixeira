@@ -30,11 +30,6 @@
             </q-btn>
           </div>
       </q-img>
-
-      <div>
-        {{ conteudo }}
-      </div>
- 
   </div>  
 </template>
 
