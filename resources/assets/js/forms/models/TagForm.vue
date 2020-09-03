@@ -1,6 +1,8 @@
 <template>
     <div class="row q-pa-md">
         <div class="col-sm-6 q-pa-md">
+            <h5 v-if="tag.id != null">Edição da Palavra-Chave <b>{{this.tagName}}</b></h5>
+            <h5 v-if="tag.id == null">Cadastro de Palavra-Chave</h5>
             <form v-on:submit.prevent="save()">
                 <q-input filled v-model.trim="tag.name" label="Adicionar palavra-chave"
                   :error="errors.name && errors.name.length > 0"
@@ -52,7 +54,8 @@ export default {
         name:''
       },
       tags: [],
-      errors: {}
+      errors: {},
+      tagName:""
     };
   },
   watch: {
@@ -106,6 +109,7 @@ export default {
       let resp = await axios.get(`tags/${this.$route.params.id}`);
       if (resp.data.success) {
         this.tag = resp.data.metadata;
+        this.tagName = this.tag.name
       }
     },
     onClick(url) {

@@ -41,6 +41,7 @@
     "google-maps-api-loader": "^1.1.1",
     "moment": "^2.27.0",
     "node-sass": "^4.14.1",
+    "number-shortener": "^1.0.1",
     "quasar": "^1.13.1",
     "vue-analytics": "^5.22.1",
     "vue-apexcharts": "^1.6.0",

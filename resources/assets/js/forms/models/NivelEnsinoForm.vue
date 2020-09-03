@@ -1,7 +1,5 @@
 <template>
-
     <div class="row q-pa-md">
-         
         <div class="col-sm-12" style="padding:5px">
             <q-card flat bordered>
                 <h5 v-if="nivelEnsino.id != null">Edição do Nível de Ensino <b>{{this.nivelEnsinoNome}}</b></h5>
@@ -76,7 +74,8 @@ export default {
                 componentes:[]
             },
             errors:[],
-            componentes:[]
+            componentes:[],
+            nivelEnsinoNome:""
         }
     },
     methods:{
@@ -135,7 +134,7 @@ export default {
             this.nivelEnsino = resp.data;
 
             console.log("nivelensino",this.nivelEnsino);
-            this.nivelEnsinoName = this.nivelEnsino.name;
+            this.nivelEnsinoNome = this.nivelEnsino.name;
         }
     }
 }

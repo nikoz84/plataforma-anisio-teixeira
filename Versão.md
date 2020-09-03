@@ -8,9 +8,9 @@
 - Ajustes de layout nas opções de busca avançada
 - Melhorias de usabilidade na busca avançada
 ## Correções (bugs, código)
-- 
+- correção de busca avançada. remocão dos itens na filtragem dos dados
 ## Novas Funcionalidades
-- 
+- "Gostar" e "Não Gostar" para conteudos pelos usuários
 ################################################################################################
 # Versão 2.0.4
 ################################################################################################

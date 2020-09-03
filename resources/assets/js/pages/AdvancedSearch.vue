@@ -64,19 +64,19 @@
         </q-card-section>
         <q-card-section v-if="filtros && filtros.tipos && filtros.tipos.length > 0">
             Tipo de Conteúdo:
-            <q-chip removable size="md" v-for="(tipo, i) in filtros.tipos" :key="`${i}-filtro-tipo`">
+            <q-chip removable size="md" v-for="(tipo, i) in filtros.tipos" @remove="filtros.tipos.splice(i, 1); tiposModel.splice(i,1); onSearch()" :key="`${i}-filtro-tipo`">
                 {{ tipo.name }}
             </q-chip>
         </q-card-section>
         <q-card-section v-if="filtros && filtros.licencas && filtros.licencas.length > 0">
             Tipo de Licença:
-            <q-chip removable size="md" v-for="(licenca, i) in filtros.licencas" :key="`${i}-filtro-licenca`">
+            <q-chip removable size="md" v-for="(licenca, i) in filtros.licencas" @remove="filtros.licencas.splice(i, 1); licencasModel.splice(i,1); onSearch()"  :key="`${i}-filtro-licenca`">
                 {{ licenca.name }}
             </q-chip>
         </q-card-section>
         <q-card-section v-if="filtros && filtros.componentes && filtros.componentes.length > 0">
             Componentes Curriculares:
-            <q-chip removable size="md" v-for="(componente, i) in filtros.componentes" :key="`${i}-filtro-componente`">
+            <q-chip removable size="md" v-for="(componente, i) in filtros.componentes" @remove="filtros.componentes.splice(i, 1); componentesModel.splice(i,1); onSearch()" :key="`${i}-filtro-componente`">
                 {{ componente.name }}
             </q-chip>
         </q-card-section>

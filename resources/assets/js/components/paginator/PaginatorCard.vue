@@ -16,7 +16,7 @@
       >
       </q-img>
       <q-card-section class="q-mb-md">
-        <h6 @click="goTo(item)" class="text-h6 q-mt-md color-transition" :title="`Título: ${title}`" v-html="title"></h6>
+        <h6 @click="goTo(item)" class="text-h6 q-mt-md cursor-pointer" :title="`Título: ${title}`" v-html="title"></h6>
       </q-card-section>
       <q-card-actions class="flex justify-end absolute-bottom">
         <!-- q-btn
@@ -96,21 +96,9 @@ export default {
 .text-h6 {
   font-weight: bold;
 }
-.color-transition {
-  transition: color .2s ease-in;
-}
-
-.underline {
-    position: relative;
-    overflow: hidden;
-    padding-bottom: 2px;
-    margin-bottom: -2px;
-    cursor: pointer;
-    color: #39b982;
-}
 
 .card-hover:hover {
-    transform: translateX(5px);
+    transform: translateY(5px);
 }
 .card-hover{
   transition: transform .2s ease-out;

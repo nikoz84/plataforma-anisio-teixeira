@@ -1,5 +1,5 @@
 <template>
-  <div v-if="conteudo && conteudo.tipo && conteudo.arquivos">
+  <div class="row justify-center" v-if="conteudo && conteudo.tipo && conteudo.arquivos">
       
       <q-media-player
         type="video"
@@ -23,11 +23,17 @@
     
       <q-img v-else :src="showImage"
           placeholder-src="/img/fundo-padrao.svg" 
-          style="height: 380px; max-width: 680px;">
-          <div class="absolute-bottom text-subtitle1 text-center">
-            Default
+          :style="onLoadImage(conteudo.image)">
+          <div class="absolute-bottom text-center" v-if="conteudo && conteudo.options && conteudo.options.site">
+            <q-btn color="primary" type="a" target="_blank" :href="conteudo.options.site">
+              IR AO SITE
+            </q-btn>
           </div>
       </q-img>
+
+      <div>
+        {{ conteudo }}
+      </div>
  
   </div>  
 </template>
@@ -60,7 +66,9 @@ export default {
     return {
       image: null,
       selectPlayer: null,
-      type: null
+      type: null,
+      width: null,
+      height: null
     };
   },
   computed: {
@@ -70,15 +78,6 @@ export default {
       {
          return this.conteudo.image;
       }
-      if (this.conteudo && this.conteudo.arquivos.visualizacao.url) {
-        return this.conteudo.arquivos.visualizacao.url;
-      } 
-      else if (this.conteudo && this.conteudo.arquivos.download.url) 
-      {
-        alert(this.conteudo.arquivos.download.url)
-        return this.conteudo.arquivos.visualizacao.url;
-      } 
-      
     },
     sources() {
       if(this.conteudo.arquivos){
@@ -94,7 +93,19 @@ export default {
         ]
       }
     }
-  }
+  },
+  methods: {
+    onLoadImage(src) {
+      let img = new Image();
+      img.src = src;
+
+      img.onload = () => {
+        this.width = img.width < 460 ? `width:${img.width}px;` : 'width: 100%;';
+        this.height = img.height > 380 ? 'height: 380px;': `height:${img.height};`;
+      }
+      
+    }
+  },
 };
 </script>
 <style lang="stylus" scoped>

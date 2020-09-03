@@ -2,6 +2,8 @@
   <article class="q-pa-md">
     <div class="row no-wrap justify-center">
       <q-card class="col-sm-6">
+        <h5 style="padding-left:15px" v-if="this.tipo.id != null">Edição de Tipo de Conteúdo <b>{{this.tipoName}}</b></h5>
+        <h5 style="padding-left:15px" v-if="this.tipo.id == null">Cadastro de Tipo de Conteúdo</h5>
         <q-card-section>
             <q-input label="Nome" 
               v-model="tipo.name"
@@ -46,6 +48,7 @@ export default {
       tipo :{
         name: '',
         icon: null,
+        tipoName:'',
         options: {
           formatos:[]
         }
@@ -67,7 +70,7 @@ export default {
       
       const { data } = await axios.get(`/tipos/${this.$route.params.id}`);
       this.tipo = data.metadata;
-      console.log(this.tipo)
+      this.tipoName = this.tipo.name;
     },
     async save(){
       const url = this.$route.params.id ? `/tipos/${this.$route.params.id}` : '/tipos';

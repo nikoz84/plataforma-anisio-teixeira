@@ -27,8 +27,7 @@ class ComponentesController extends ApiController
     {
         $limit = $this->request->get('limit', 15);
         $componentes = CurricularComponent::select("*")
-            ->with("nivel")
-            ->with("category")
+            ->with(["niveis", "categories"])
             ->limit($limit)
             ->orderBy('name', 'asc')
             ->paginate($limit);
@@ -41,22 +40,18 @@ class ComponentesController extends ApiController
      */
     public function update($id)
     {
-        try
-        {
+        try {
             $component = CurricularComponent::find($id);
             $validator = Validator::make($this->request->all(), $this->rules());
             if ($validator->fails()) {
-                throw new Exception('Não foi possível atualizar componente. Erro no preenchimento do formulário.',404);
-            }           
+                throw new Exception('Não foi possível atualizar componente. Erro no preenchimento do formulário.', 404);
+            }
             $component->fill($this->request->all());
-            if(!$component->save())
-            {
+            if (!$component->save()) {
                 throw new Exception('Não foi possível atualizar componente. Tente novamente mais tarde', 501);
             }
-        }
-        catch(Exception $ex)
-        {
-            return $this->errorResponse([], $ex->getMessage(), $ex->getCode() > 0 ? $ex->getCode() : 500 );
+        } catch (Exception $ex) {
+            return $this->errorResponse([], $ex->getMessage(), $ex->getCode() > 0 ? $ex->getCode() : 500);
         }
         return $this->showOne($component, 'Componente Curricular atualizada com sucesso!!', 200);
     }
@@ -68,15 +63,12 @@ class ComponentesController extends ApiController
     public function getById($id)
     {
         $component = new Componente();
-        try{
-            $component =  Componente::findOrFail($id);
-            $component->component;
-            $component->nivel;
-        }
-        catch(Exception $ex)
-        {
+        try {
+            $component =  Componente::with(['niveis', 'categories'])->findOrFail($id);
+        } catch (Exception $ex) {
             return $this->errorResponse([], 'Componente não encontrado', 422);
         }
+
         return $component;
     }
 
@@ -88,21 +80,25 @@ class ComponentesController extends ApiController
         try {
             if ($validator->fails()) {
                 $data = $validator->errors();
-                throw new Exception("Não foi possível criar componente. Erro no preenchimento do formulário de cadastro.", 501);
+                throw new Exception(
+                    "Não foi possível criar componente. Erro no preenchimento do formulário de cadastro.",
+                    501
+                );
             }
             $componente = new Componente();
-            $this->authorize('create', JWTAuth::user());   
+            $this->authorize('create', JWTAuth::user());
             $componente->fill($this->request->all());
 
             if (!$componente->save()) {
-                
                 throw new Exception('Não foi possível salvar componente', 422);
             }
+        } catch (Exception $ex) {
+            return $this->errorResponse(
+                $data,
+                $ex->getMessage(),
+                $ex->getCode() > 0 &&  $ex->getCode() <505 ? $ex->getCode() : 500
+            );
         }
-        catch(Exception $ex)
-        {
-            return $this->errorResponse($data, $ex->getMessage(), $ex->getCode() > 0 &&  $ex->getCode() <505 ? $ex->getCode() : 500);
-        }       
         return $this->successResponse($componente, 'Componente curricular registrada com sucesso!!', 200);
     }
 
@@ -152,7 +148,7 @@ class ComponentesController extends ApiController
         $validator = Validator::make($this->request->all(), [
             'delete_confirmation' => ['required', new \App\Rules\ValidBoolean]
         ]);
-        try{
+        try {
             if ($validator->fails()) {
                 $data = $validator->errors();
                 return $this->errorResponse($validator->errors(), "Não foi possível deletar.", 201);
@@ -160,12 +156,14 @@ class ComponentesController extends ApiController
             $component = CurricularComponent::findOrFail($id);
             $this->authorize('delete', $component);
             if (!$component->delete()) {
-               throw new Exception("Erro ao deletar a categoria: ".$component->name." Tente novamente em seguida.");
+                throw new Exception("Erro ao deletar a categoria: ".$component->name." Tente novamente em seguida.");
             }
-        }
-        catch(Exception $ex)
-        {
-            return $this->errorResponse([], $ex->getMessage(), $ex->getCode() > 0 &&  $ex->getCode() <505 ? $ex->getCode() : 500);
+        } catch (Exception $ex) {
+            return $this->errorResponse(
+                [],
+                $ex->getMessage(),
+                $ex->getCode() > 0 &&  $ex->getCode() <505 ? $ex->getCode() : 500
+            );
         }
         return $this->successResponse($component, 'Categoria do componente deletada com sucesso!', 200);
     }
