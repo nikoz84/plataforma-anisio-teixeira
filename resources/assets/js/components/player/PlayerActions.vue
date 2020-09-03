@@ -27,6 +27,7 @@
             <q-btn
                 class="bg-grey-10"
                 text-color="white"
+                :loading="loading"
                 icon="save_alt"
                 size="xs"
                 v-if="fileExists('download') && conteudo.id"
@@ -96,7 +97,7 @@ export default {
     },
     methods: {
         async downloadFile(directory, id) {
-            
+            this.loading = true;
             const file = this.conteudo.arquivos[directory];
             axios({ 
                 url:`/files/${directory}/${id}`,  
@@ -104,7 +105,7 @@ export default {
                 responseType: "blob"
                 })
                 .then(response => {
-                
+                this.loading = false
                 const url = window.URL.createObjectURL(new Blob([response.data]));
                 const link = document.createElement('a');
                 link.href = url;
