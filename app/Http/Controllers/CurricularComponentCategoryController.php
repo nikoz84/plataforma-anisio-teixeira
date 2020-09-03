@@ -39,7 +39,8 @@ class CurricularComponentCategoryController extends ApiController
                     422
                 );
             }
-            $componentCategory->fill($this->request->all());
+            //$componentCategory->fill($this->request->all());
+            $componentCategory->name = $this->request->name;
             //$componentCategory->componentes()->updateOrCreate($this->request->componentes);
             if (!$componentCategory->save()) {
                 throw new Exception(
