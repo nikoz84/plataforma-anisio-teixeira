@@ -142,7 +142,7 @@ class NivelEnsinoController extends ApiController
     public function autocomplete($term)
     {
         $search = "%{$term}%";
-        $limit = $this->request->query('limit', 100);
+        $limit = $this->request->query('limit', 15);
         $niveis = NivelEnsino::select(['id', 'name'])
             ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
             ->get(['id', 'name']);
