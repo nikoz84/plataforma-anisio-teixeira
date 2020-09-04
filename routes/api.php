@@ -261,18 +261,9 @@ Route::group(
         Route::get('/resumo', 'HomeController@getAnalytics')->name('catalogacao.blog.e.plataforma');
 
         /** RELATÓRIOS */
-        Route::get(
-            '/usuarios/role/{role_id}',
-            'RelatorioController@buscarUsuariosPorRole'
-        )->name('view.relatorio.usuario');
-        Route::get(
-            '/relatorio/conteudos/{flag}',
-            'RelatorioController@gerarPdfConteudo'
-        )->name('gerar.relatorio.conteudo');
-        Route::get(
-            '/relatorio/usuarios/role/{role_id}/{is_active?}',
-            'RelatorioController@gerarPdfUsuario'
-        )->name('gerar.relatorio.usuario');
+        Route::get('/usuarios/role/{role_id}', 'RelatorioController@buscarUsuariosPorRole')->name('view.relatorio.usuario');
+        Route::get('/relatorio/conteudos/{flag}', 'RelatorioController@gerarPdfConteudo')->name('gerar.relatorio.conteudo');
+        Route::get('/relatorio/usuarios/role/{role_id}/{is_active?}', 'RelatorioController@gerarPdfUsuario')->name('gerar.relatorio.usuario');
 
         /** SISTEMA DE PASTA */
         Route::get('/informacoes-pasta', 'FileController@getInfoFolder')->name('file.getInfoFolder');

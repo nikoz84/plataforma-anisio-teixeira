@@ -42,7 +42,6 @@ class RelatorioController extends ApiController
 
     /**
      * Gerador de relatório de conteúdo (.pdf)
-     *
      * @return pdf
      */
     public function gerarPdfConteudo($flag = null)
