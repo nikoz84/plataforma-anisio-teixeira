@@ -72,7 +72,7 @@ class RelatorioController extends ApiController
 
         return PDF::loadView(
             'relatorios.pdf-conteudo',
-            compact('contents', 'title', 'flag')
+            compact('conteudos', 'title', 'flag')
         )->setPaper('a4')->stream('relatório_conteúdos.pdf');
     }
 }

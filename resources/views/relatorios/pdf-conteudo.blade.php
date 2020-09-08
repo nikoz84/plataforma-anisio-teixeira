@@ -56,8 +56,8 @@
                                                                       </tr>
                                                             </thead>
                                                             <tbody>
-                                                                      @if(count($contents))
-                                                                      @foreach($contents as $content)
+                                                                      @if(count($conteudos))
+                                                                      @foreach($conteudos as $content)
                                                                       <tr>
                                                                                 <?php ?>
                                                                                 <td>{{mb_strimwidth($content->title, 0, 50, "...")}}</td>

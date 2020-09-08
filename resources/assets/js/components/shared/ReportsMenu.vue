@@ -12,7 +12,7 @@
         aria-label="Conteudos Mais Baixados"
         active-class="active-link-pat">
         <q-item-section>
-          <q-item-label>Contéudos Mais Baixados</q-item-label>
+          <q-item-label>Conteúdos Mais Baixados</q-item-label>
         </q-item-section>
       </q-item>
       <q-separator/>
@@ -34,13 +34,26 @@
     export default {
         name : "ReportsMenu",
         methods:{
+          downloadPdf(response)
+          {
+              this.loaddingIcon = true;
+              let blob = new Blob([response.data], { type: 'application/pdf' }),
+              url = window.URL.createObjectURL(blob)
+              window.open(url) 
+          },
           async maisBaixadosRelatorio()
           {
-            let resp = await axios.get("/relatorio/conteudos/baixados");
+              this.$q.loading.show();
+              let response = await axios.get("/relatorio/conteudos/baixados",{responseType: 'arraybuffer'});
+              this.$q.loading.hide();
+              this.downloadPdf(response)
           },
           async maisVisualizadosRelatorio()
           {
-             let resp = await axios.get("/relatorio/conteudos/visualizados");
+             this.$q.loading.show();
+             let response = await axios.get("/relatorio/conteudos/visualizados", {responseType: 'arraybuffer'});
+             this.$q.loading.hide();
+             this.downloadPdf(response);
           }
         }
     }
