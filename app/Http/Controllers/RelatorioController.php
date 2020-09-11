@@ -51,6 +51,7 @@ class RelatorioController extends ApiController
         $conteudo = new Conteudo();
         $conteudos = [];
         $title = null;
+        $totalizar = false;
         if ((is_null($flag) || ($flag != 'baixados' && $flag != 'visualizados'))) {
             return $this->errorResponse(
                 [],
@@ -72,7 +73,7 @@ class RelatorioController extends ApiController
 
         return PDF::loadView(
             'relatorios.pdf-conteudo',
-            compact('conteudos', 'title', 'flag')
+            compact('conteudos', 'title', 'flag','totalizar')
         )->setPaper('a4')->stream('relatório_conteúdos.pdf');
     }
 
