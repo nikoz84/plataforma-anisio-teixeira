@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Conteudo;
 use App\User;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 class RelatorioController extends ApiController
 {
@@ -47,10 +49,8 @@ class RelatorioController extends ApiController
     public function gerarPdfConteudo($flag = null)
     {
         $conteudo = new Conteudo();
-
         $conteudos = [];
         $title = null;
-
         if ((is_null($flag) || ($flag != 'baixados' && $flag != 'visualizados'))) {
             return $this->errorResponse(
                 [],
@@ -74,5 +74,30 @@ class RelatorioController extends ApiController
             'relatorios.pdf-conteudo',
             compact('conteudos', 'title', 'flag')
         )->setPaper('a4')->stream('relatório_conteúdos.pdf');
+    }
+
+    public function anosComConteudosPublicados()
+    {
+        $conteudo = new Conteudo();
+        return $conteudo->publicacaoAnos();
+    }
+
+    public function conteudosPublicadosPorAno($ano)
+    {
+        $conteudo = new Conteudo();
+        $conteudos = [];
+        $flag = 'baixados';
+        $title = "Conteúdos publicados no ano de $ano";
+        $totalizar = true;
+        try{
+            $conteudos = $conteudo->conteudosPorAno($ano);
+            
+            return PDF::loadView('relatorios.pdf-conteudo', compact('conteudos', 'title', 'flag', 'totalizar'))->setPaper('a4')->stream('relatório_conteúdos.pdf');
+        }
+        catch(Exception $ex)
+        {
+            return $this->errorResponse([], $ex->getMessage(), $ex->getCode() > 100 && $ex->getCode() < 510 ? $ex->getCode() : 500);
+        }
+        return $this->errorResponse([], 'Não foi possível gerar relatório. Tente novamente em instantes.', 422);
     }
 }

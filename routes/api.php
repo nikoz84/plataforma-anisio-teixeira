@@ -264,6 +264,8 @@ Route::group(
         Route::get('/usuarios/role/{role_id}', 'RelatorioController@buscarUsuariosPorRole')->name('view.relatorio.usuario');
         Route::get('/relatorio/conteudos/{flag}', 'RelatorioController@gerarPdfConteudo')->name('gerar.relatorio.conteudo');
         Route::get('/relatorio/usuarios/role/{role_id}/{is_active?}', 'RelatorioController@gerarPdfUsuario')->name('gerar.relatorio.usuario');
+        Route::get("/relatorio/anospublicacao", 'RelatorioController@anosComConteudosPublicados')->name("anospublicacao.relatorio");
+        Route::get("/relatorio/conteudosporoano/{ano}", 'RelatorioController@conteudosPublicadosPorAno')->name("conteudosporano.relatorio");
 
         /** SISTEMA DE PASTA */
         Route::get('/informacoes-pasta', 'FileController@getInfoFolder')->name('file.getInfoFolder');
@@ -274,26 +276,14 @@ Route::group(
         Route::post('/comentarios/create', 'ComentarioController@create')->name('comentario.create');
         Route::post('/comentarios/update/{id}', 'ComentarioController@update')->name('comentario.update');
         Route::get('/comentarios/{id}', 'ComentarioController@getComentarioById')->name('comentario.id');
-        Route::get(
-            '/comentarios/usuario/{idUsuario}/{tipo?}',
-            'ComentarioController@getComentariosByIdUsuario'
-        )->name('comentario.usuario');
-        Route::get(
-            '/comentarios/postagem/{id}/{tipo}',
-            'ComentarioController@getComentariosByIdPostagem'
-        )->name('comentario.postagem');
+        Route::get('/comentarios/usuario/{idUsuario}/{tipo?}', 'ComentarioController@getComentariosByIdUsuario')->name('comentario.usuario');
+        Route::get('/comentarios/postagem/{id}/{tipo}', 'ComentarioController@getComentariosByIdPostagem')->name('comentario.postagem');
         Route::get('/comentarios/delete/{id}', 'ComentarioController@deletar')->name('comentario.delete');
 
         /** LIKE - DESLIKE */
         Route::post('/like', 'ConteudoLikeController@like')->name('like');
         Route::post('/dislike', 'ConteudoLikeController@dislike')->name('dislike');
-        Route::get(
-            '/likes/usuario/{idUsuario}/{tipo?}', 
-            'ConteudoLikeController@getLikesPorIdUsuarioEtipo'
-        )->name('likes.usuario');
-        Route::get(
-            '/likes/conteudo/{conteudoid}/{tipo}',
-            'ConteudoLikeController@getUsuarioLikesConteudoAplicativo'
-        )->name('likes.usuario.conteudo.aplicativo');
+        Route::get('/likes/usuario/{idUsuario}/{tipo?}', 'ConteudoLikeController@getLikesPorIdUsuarioEtipo')->name('likes.usuario');
+        Route::get('/likes/conteudo/{conteudoid}/{tipo}','ConteudoLikeController@getUsuarioLikesConteudoAplicativo')->name('likes.usuario.conteudo.aplicativo');
     }
 );

@@ -56,7 +56,7 @@
                                                                       </tr>
                                                             </thead>
                                                             <tbody>
-                                                                      @if(count($conteudos))
+                                                                      @if(count($conteudos)>0)
                                                                       @foreach($conteudos as $content)
                                                                       <tr>
                                                                                 <?php ?>
@@ -69,6 +69,12 @@
                                                                       @else
                                                                       <tr>
                                                                                 <td colspan="5">Nenhum resgistro encontrado...</td>
+                                                                      </tr>
+                                                                      @endif
+                                                                      @if ($totalizar)
+                                                                      <tr>
+                                                                        <td><strong>Total Conteúdos publicados:</strong></td>
+                                                                        <td colspan="5" style="text-align:right"><?= count($conteudos) ?></td>
                                                                       </tr>
                                                                       @endif
                                                             </tbody>
