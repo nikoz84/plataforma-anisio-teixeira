@@ -1,16 +1,20 @@
 ################################################################################################
-# Versão 2.0.5
+# Versão 2.2.0 4 novas funcionalidades (valeu @Tiago Novais )
 ################################################################################################
-## Mudanças (layout, correção ortográfica, mudança de código)
-- Ajuste no título da exibição de componentes internos (recursos educacionais, tv, emitec, etc...)
-- Inserção de ícones nas opções de interação de componentes internos (ordenar, busca avançada, categorias, programas, etc...)
-- Ajustes de layout nos cards de resultados da busca avançada
-- Ajustes de layout nas opções de busca avançada
-- Melhorias de usabilidade na busca avançada
-## Correções (bugs, código)
-- correção de busca avançada. remocão dos itens na filtragem dos dados
-## Novas Funcionalidades
-- "Gostar" e "Não Gostar" para conteudos pelos usuários
+- Nova funcionalidade de gostei não gostei para conteúdo (nova funcionalidade)
+- Os Componentes Curriculares agora podem ser editados (nova funcionalidade)
+- As Categorias dos Componentes Curriculares agora podem ser editadas (nova funcionalidade)
+- Os Níveis de Ensino agora podem ser editados (nova funcionalidade)
+- Corregido o  nome TEMAS CONTEMPORÂNEOS no formulário, está escrito errado, com acento agudo. (mudança)
+- Mudança no box da lista de conteúdos imagem e título clicável (homologação: para abrir um determinado conteúdo/mídia é preciso clicar no título dele. Poderia clicar em qualquer região da janela  para abri-lo.) (mudança)
+- Blog da Rede, em análise de vulnerabilidades em prodeb, mudanças no banco de dados e configuração de novo servidor (atualização do blog)
+- Redirecionamento de páginas antigas (melhora)
+- Se adiciona um marcador quando o arquivo estiver baixando (homologação: Ao abrir um conteúdo, ao clicar no ícone de Download, nada aconteceu.) (bug)
+- Melhoras visuais na busca avanzada (mudança)
+- Se adiciona iconografia para os filtros dos canais (mudança)
+- Se adiciona um marcador para melhorar o feedback quando carrega o canal, os links e os títulos dos canais (mudança)
+- Ajustes de layout nos cards ou boxes de resultados da busca avançada (mudança)
+- Ajuste no título da exibição de componentes internos (mudança)
 ################################################################################################
 # Versão 2.0.4
 ################################################################################################

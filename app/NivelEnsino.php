@@ -12,7 +12,7 @@ class NivelEnsino extends Model
 
     protected $table = 'niveis_ensino';
     protected $appends = ['user_can', 'search_url'];
-    public $fillable = ['name'];
+    protected $fillable = ['name'];
 
     /**
      * Função Retorna Componentes tem muitos
