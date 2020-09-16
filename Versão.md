@@ -9,6 +9,7 @@
 - Melhorias de usabilidade na busca avançada
 - Relatórios de conteúdos - mais baixados e mais visualizados
 - Relatórios de conteúdos por ano
+- Relatório de usuários por papel
 ## Correções (bugs, código)
 - correção de busca avançada. remocão dos itens na filtragem dos dados
 ## Novas Funcionalidades

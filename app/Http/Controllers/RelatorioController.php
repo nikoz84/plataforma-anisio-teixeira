@@ -10,10 +10,8 @@ use Exception;
 
 class RelatorioController extends ApiController
 {
-
     /**
      * listar usuário por role
-     *
      * @return \Illuminate\Http\Response
      */
     public function buscarUsuariosPorRole($role_id)
@@ -28,14 +26,12 @@ class RelatorioController extends ApiController
 
     /**
      * Gerador de relatório de usuários por roles (.pdf)
-     *
      * @return pdf
      */
     public function gerarPdfUsuario($role_id, $is_active = null)
     {
         $user = new User();
         $users = $user->users_role_content($role_id, $is_active);
-
         return PDF::loadView(
             'relatorios.pdf-usuarios',
             compact('users')
@@ -77,12 +73,21 @@ class RelatorioController extends ApiController
         )->setPaper('a4')->stream('relatório_conteúdos.pdf');
     }
 
+    /**
+     * anos de publicação de conteudos para construção de menu
+     * @return array conteudos
+     */
     public function anosComConteudosPublicados()
     {
         $conteudo = new Conteudo();
         return $conteudo->publicacaoAnos();
     }
 
+    /**
+     * relatório pdf dos conteúdos por ano de publicação
+     * @param int $ano
+     * @return mixed 
+     */
     public function conteudosPublicadosPorAno($ano)
     {
         $conteudo = new Conteudo();
@@ -92,7 +97,6 @@ class RelatorioController extends ApiController
         $totalizar = true;
         try{
             $conteudos = $conteudo->conteudosPorAno($ano);
-            
             return PDF::loadView('relatorios.pdf-conteudo', compact('conteudos', 'title', 'flag', 'totalizar'))->setPaper('a4')->stream('relatório_conteúdos.pdf');
         }
         catch(Exception $ex)

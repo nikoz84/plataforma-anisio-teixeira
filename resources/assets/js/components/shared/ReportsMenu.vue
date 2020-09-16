@@ -6,7 +6,26 @@
         label="Relatórios"
       >
       <q-separator />
-
+      <q-item clickable>
+        <q-item-section>Relatorio de Usuários do Sistema</q-item-section>
+        <q-item-section side>
+          <q-icon name="keyboard_arrow_right" />
+        </q-item-section>
+         <q-menu anchor="top right" self="top left">
+                <q-list>
+                  <q-item
+                    clickable 
+                    dense
+                    v-for="role in rolesUsers"
+                    :key="role.id"
+                    @click="usuariosRelatorio(role.id, true)"
+                  >
+                    <q-item-section>{{role.name}}</q-item-section>
+                  </q-item>
+                  
+                </q-list>
+          </q-menu>
+      </q-item>
       <q-item clickable 
         @click="maisBaixadosRelatorio()"
         aria-label="Conteudos Mais Baixados"
@@ -55,10 +74,12 @@
     export default {
         name : "ReportsMenu",
         anosPublicacoes : [],
+       
         data () 
         {
             return {
-              anos:[]
+               anos:[],
+               rolesUsers : []
             }
         },
         mounted() {
@@ -67,11 +88,23 @@
         created() 
         {
           this.anosPublicacoes();
+          this.rolesMenuReport();
         },
         methods:{
+          async usuariosRelatorio(role_id, is_active){
+              this.$q.loading.show();
+              let response = await axios.get(`/relatorio/usuarios/role/${role_id}\/${is_active}` ,{responseType: 'arraybuffer'});
+              this.$q.loading.hide();
+              this.downloadPdf(response)
+          },
+          async rolesMenuReport()
+          {
+             let response = await axios.get("/roles");
+             console.log("roeles", response);
+             this.rolesUsers = response.data.paginator.data;
+          },
           downloadPdf(response)
           {
-              this.loaddingIcon = true;
               let blob = new Blob([response.data], { type: 'application/pdf' }),
               url = window.URL.createObjectURL(blob)
               window.open(url) 

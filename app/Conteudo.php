@@ -483,6 +483,10 @@ class Conteudo extends Model
         return $contents;
     }
 
+    /**
+     * obtem array com os anos distintos que houveram conteúdos publicados
+     * @return array anos
+     */
     public function publicacaoAnos()
     {
         $contents = DB::select("select  distinct date_part('year', created_at) as anopublicacao from conteudos order by 1 desc");
