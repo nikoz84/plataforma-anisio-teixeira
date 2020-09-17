@@ -132,7 +132,7 @@ class Conteudo extends Model
     {
         return $this->belongsToMany(CurricularComponent::class)
             ->whereRaw('nivel_id IS NOT NULL')
-            ->with('niveis');
+            ->with('nivel');
     }
 
     /**

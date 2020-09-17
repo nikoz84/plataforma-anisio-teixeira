@@ -328,9 +328,9 @@ class ConteudoController extends ApiController
 
         return $this->showOne($conteudo);
     }
+
     /**
      * Incopora conteúdo em páginas externas
-     *
      * @param $id integer
      */
     public function incorporarConteudo($id)

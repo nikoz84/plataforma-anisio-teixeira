@@ -181,12 +181,12 @@ class AplicativoController extends ApiController
         }
         return $this->successResponse([], 'Aplicativo deletado com sucesso!!', 200);
     }
+    
     /**
      * Metodo que faz uma busca de reposta no banco de dados.
      * @param \App\Aplicativo $aplicativo
      * @return \App\Controller\ApiResponser retorna json.
      */
-
     public function search(Request $request, $termo)
     {
         $limit = $request->query('limit', 15);
@@ -203,16 +203,15 @@ class AplicativoController extends ApiController
             200
         );
     }
+
     /**
      * Seleciona um recurso por id
-     *
-     * @param Integer $id
-     * @return json
+     * @param int $id
+     * @return string json
      */
     public function getById($id)
     {
-        $aplicativo = $this->aplicativo::with(['tags', 'category', 'user', 'canal'])
-            ->find($id);
+        $aplicativo = $this->aplicativo::with(['tags', 'category', 'user', 'canal'])->find($id);
         $increment = $aplicativo->options['qt_access'] + 1;
         $aplicativo->setAttribute('options->qt_access', $increment); // json attribute
         $aplicativo->save();
