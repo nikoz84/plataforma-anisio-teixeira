@@ -66,10 +66,10 @@ class RelatorioController extends ApiController
             $title = 'LISTA DE 100 CONTEÚDOS DIGITAIS MAIS VISUALIZADOS';
             $flag = 'ACESSOS';
         }
-
+        $total = 100;
         return PDF::loadView(
             'relatorios.pdf-conteudo',
-            compact('conteudos', 'title', 'flag','totalizar')
+            compact('conteudos', 'title', 'flag','totalizar', 'total')
         )->setPaper('a4')->stream('relatório_conteúdos.pdf');
     }
 
@@ -90,14 +90,17 @@ class RelatorioController extends ApiController
      */
     public function conteudosPublicadosPorAno($ano)
     {
+        set_time_limit(280);
         $conteudo = new Conteudo();
         $conteudos = [];
         $flag = 'baixados';
         $title = "Conteúdos publicados no ano de $ano";
+
         $totalizar = true;
         try{
             $conteudos = $conteudo->conteudosPorAno($ano);
-            return PDF::loadView('relatorios.pdf-conteudo', compact('conteudos', 'title', 'flag', 'totalizar'))->setPaper('a4')->stream('relatório_conteúdos.pdf');
+            $total = $conteudos->count();
+            return PDF::loadView('relatorios.pdf-conteudo', compact('conteudos', 'title', 'flag', 'totalizar', 'total'))->setPaper('a4')->stream('relatório_conteúdos.pdf');
         }
         catch(Exception $ex)
         {

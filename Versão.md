@@ -27,6 +27,7 @@
 ## Correções (bugs, código)
 - Correção problema ao cadastrar conteúdo
 - Correção no componente PlayerActions
+- Correção em geração de relatório de conteúdos por ano com muitos registros
 ## Novas Funcionalidades
 - Incorporar conteúdo
 - Validação de tipos de arquivos em formulário de conteúdo digital

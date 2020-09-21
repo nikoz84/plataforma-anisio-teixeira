@@ -54,7 +54,7 @@ class ConteudoLike extends Model
         }
        
         # Se o usuario nunca deu like ou dislike na postagem
-        $request->add(['like' => true]);
+        $request->request->add(['like' => true]);
         return $this->create($request->all());
     }
 

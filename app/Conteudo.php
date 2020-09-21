@@ -446,21 +446,16 @@ class Conteudo extends Model
         )->where('id', '<>', $id);
     }
 
-     /**
+      /**
       * Retorna Maximo de conteundo por downlaoad
       * @return DB
       */
     public function relatorioMaisBaixados()
     {
-        $contents = DB::select("SELECT 
-            max(con.qt_downloads) as quantity, 
-            tip.name as type, con.title, con.description, use.name as publisher, con.is_approved
-            FROM public.conteudos con
-            INNER JOIN tipos tip on con.tipo_id = tip.id
-            INNER JOIN users use on use.id = con.user_id
-            GROUP BY (con.qt_downloads, tip.name, con.title, con.description, use.name, con.is_approved)
-            ORDER BY (con.qt_downloads) DESC
-            LIMIT 100");
+        $contents = Conteudo::select(['title', 'users.name as publisher', 'tipos.name as type', 'qt_downloads as quantity'])
+        ->join('users', 'users.id', '=', 'conteudos.user_id')
+        ->join('tipos', 'tipos.id', '=', 'conteudos.tipo_id')
+        ->orderByDesc("conteudos.qt_downloads")->whereNotNull("qt_downloads")->limit(100)->get();
 
         return $contents;
     }
@@ -470,18 +465,15 @@ class Conteudo extends Model
       */
     public function relatorioMaisAcessados()
     {
-        $contents = DB::select("SELECT 
-        max(con.qt_access) as quantity, 
-        tip.name as type, con.title, con.description, use.name as publisher, con.is_approved
-        FROM public.conteudos con
-        INNER JOIN tipos tip on con.tipo_id = tip.id
-        INNER JOIN users use on use.id = con.user_id
-        GROUP BY (con.qt_access, tip.name, con.title, con.description, use.name, con.is_approved)
-        ORDER BY (con.qt_access) DESC
-        LIMIT 100");
+        $contents = Conteudo::select(['title', 'users.name as publisher', 'tipos.name as type', 'qt_access as quantity'])
+        ->join('users', 'users.id', '=', 'conteudos.user_id')
+        ->join('tipos', 'tipos.id', '=', 'conteudos.tipo_id')
+        ->whereNotNull("qt_access")
+        ->orderByDesc("conteudos.qt_access");
 
         return $contents;
     }
+
 
     /**
      * obtem array com os anos distintos que houveram conteúdos publicados
@@ -495,9 +487,9 @@ class Conteudo extends Model
 
     public function conteudosPorAno($ano)
     {
-        return Conteudo::select(['title', 'users.name as publisher', 'tipos.name as type', 'qt_downloads as quantity'])
+         return Conteudo::select(['title', 'users.name as publisher', 'tipos.name as type', 'qt_downloads as quantity'])
             ->join('users', 'users.id', '=', 'conteudos.user_id')
             ->join('tipos', 'tipos.id', '=', 'conteudos.tipo_id')
-            ->where(DB::raw("date_part('year', conteudos.created_at)"), $ano)->with("user")->with('tipo')->get();
+            ->where(DB::raw("date_part('year', conteudos.created_at)"), $ano)->get();
     }
 }
