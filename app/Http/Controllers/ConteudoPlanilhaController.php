@@ -73,7 +73,6 @@ class ConteudoPlanilhaController extends ApiController
             $data = $documento->formatarJsonRotinasDeEstudo(
                 $documento->getGoogleSpreadsheetsData($url)
             );
-
             $this->createRotinasDeEstudo($semana, $data);
         }
     }
@@ -87,10 +86,8 @@ class ConteudoPlanilhaController extends ApiController
     public function createRotinasDeEstudo($semana, $data)
     {
         $conteudoPlanilha = new ConteudoPlanilha();
-        
         $conteudoPlanilha->name = $semana;
         $conteudoPlanilha->document = $data['rotinas'];
-        
         $conteudoPlanilha->save();
     }
     /**

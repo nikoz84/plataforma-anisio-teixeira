@@ -24,12 +24,13 @@
       </div>
     </q-banner>
     <q-badge removable outline class="q-mt-lg q-mb-sm" color="primary" label="Dica: Interaja com cards coloridos para acessar o conteúdo sugerido" />
-    <div v-if="rotinas">
+    <div v-if="rotinas && !mobile">
       <div class="row justify-start q-gutter-md" v-for="(rotina, i) in rotinas" :key="i">
         <div class="col-sm-2" v-for="(atividade, d) in rotina" :key="d">
           <q-chip class="q-ml-none" square outline color="grey-7" icon="event" v-if="i == 0">
             <i>
               {{ getDay(d) }}
+
             </i>
           </q-chip>
           <q-btn no-caps align="left" type="a" target="__blank" :href="goTo(toJson(atividade).link)" class="bg-amarelo text-left q-py-md q-mb-md" v-if="d == 'segunda'">
@@ -70,6 +71,9 @@
         </div>
       </div>
     </div>
+    <div v-if="rotinas && mobile">
+      MOBILE
+    </div>
   </div>
 </template>
 
@@ -87,6 +91,7 @@ export default {
     data() {
       return {
         rotinas: [],
+        mobile:window.innerWidth <= 700,
         semanasModel: [],
         semana: {
           value : 'semana-1',
@@ -113,6 +118,10 @@ export default {
       }
     },
     created() {
+      addEventListener('resize', () => {
+        this.mobile = innerWidth <= 700
+       });
+
       if (this.$route.params.nivel){
         this.nivel = this.niveisModel.filter((item)=>{
           return item.value === this.$route.params.nivel

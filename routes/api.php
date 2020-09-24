@@ -89,16 +89,10 @@ Route::get('/files/{directory}/{id}', 'FileController@downloadFile')->name('down
 
 /**LIKES - DISLIKES */
 Route::get('/likes/count/{conteudoid}/{tipo}', 'ConteudoLikeController@getLikesByConteudoAplicativo')->name('likes.conteudo');
-/**
-*Route::get(
-*    '/planilhas/load-rotinas/',
-*    'ConteudoPlanilhaController@getRotinaDeEstudos'
-*)->name('busca.rotina.de.estudos');
-*Route::get(
-*    '/planilhas/load-faculdades/',
-*    'ConteudoPlanilhaController@getFaculdadesDaBahia'
-*)->name('busca.faculdades');
-*/
+
+Route::get('/planilhas/load-rotinas/','ConteudoPlanilhaController@getRotinaDeEstudos')->name('busca.rotina.de.estudos');
+Route::get('/planilhas/load-faculdades/', 'ConteudoPlanilhaController@getFaculdadesDaBahia')->name('busca.faculdades');
+
 Route::get('/planilhas', 'ConteudoPlanilhaController@getDocumentByName')->name('docs.planilhas');
 
 Route::get('/rotinas/{nivel}/{semana}', 'ConteudoPlanilhaController@rotinasPerNivel')->name('rotinas.estudos.x.nivel');
