@@ -10,6 +10,7 @@
 ## Correções (bugs, código)
 - correção de busca avançada. remocão dos itens na filtragem dos dados
 - correção em likes em postagens de aplicativos
+- correção visualização dos cards de estudo versão mobile
 ## Novas Funcionalidades
 - "Gostar" e "Não Gostar" para conteudos pelos usuários
 - Relatórios de conteúdos - mais baixados e mais visualizados
