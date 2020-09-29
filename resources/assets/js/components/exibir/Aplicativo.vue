@@ -43,7 +43,10 @@
                      </q-btn>
                   </div>
               </q-img>
-            </figure>
+            </figure>   
+          </div>
+           <div class="col-xs-12 col-sm-5 col-md-5">
+             <ThumbsMenu></ThumbsMenu>
           </div>
         </section>
       </q-card-section>
@@ -56,11 +59,11 @@
 <script>
 import { mapState } from "vuex";
 import { QImg, QCard, QCardSection, QSeparator } from "quasar";
-import { Title, TagList } from "@components/shared";
+import { Title, TagList , ThumbsMenu } from "@components/shared";
 
 export default {
   name: "Aplicativo",
-  components: { QImg, QCard, QCardSection, QSeparator, Title, TagList },
+  components: { QImg, QCard, QCardSection, QSeparator, Title, TagList, ThumbsMenu },
   computed: {
     ...mapState(["aplicativo"]),
     splitAuthors() {

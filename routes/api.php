@@ -88,20 +88,11 @@ Route::get('/licencas', 'LicenseController@index')->name('listar.licencas');
 Route::get('/files/{directory}/{id}', 'FileController@downloadFile')->name('downloadFile.id');
 
 /**LIKES - DISLIKES */
-Route::get(
-    '/likes/count/{conteudoid}/{tipo}',
-    'ConteudoLikeController@getLikesByConteudoAplicativo'
-)->name('likes.conteudo');
-/**
-*Route::get(
-*    '/planilhas/load-rotinas/',
-*    'ConteudoPlanilhaController@getRotinaDeEstudos'
-*)->name('busca.rotina.de.estudos');
-*Route::get(
-*    '/planilhas/load-faculdades/',
-*    'ConteudoPlanilhaController@getFaculdadesDaBahia'
-*)->name('busca.faculdades');
-*/
+Route::get('/likes/count/{conteudoid}/{tipo}', 'ConteudoLikeController@getLikesByConteudoAplicativo')->name('likes.conteudo');
+
+Route::get('/planilhas/load-rotinas/','ConteudoPlanilhaController@getRotinaDeEstudos')->name('busca.rotina.de.estudos');
+Route::get('/planilhas/load-faculdades/', 'ConteudoPlanilhaController@getFaculdadesDaBahia')->name('busca.faculdades');
+
 Route::get('/planilhas', 'ConteudoPlanilhaController@getDocumentByName')->name('docs.planilhas');
 
 Route::get('/rotinas/{nivel}/{semana}', 'ConteudoPlanilhaController@rotinasPerNivel')->name('rotinas.estudos.x.nivel');
@@ -201,18 +192,9 @@ Route::group(
         Route::delete('/aplicativos/{id}', 'AplicativoController@delete')->name('aplicativo.apagar');
 
         /** APLICATIVOS CATEGORIES */
-        Route::post(
-            '/aplicativos/categories',
-            'AplicativoCategoryController@create'
-        )->name('criar.aplicativo.categorias');
-        Route::put(
-            '/aplicativos/categories/{id}',
-            'AplicativoCategoryController@update'
-        )->name('atualizar.aplicativo.categorias');
-        Route::delete(
-            '/aplicativos/categories/{id}',
-            'AplicativoCategoryController@delete'
-        )->name('apagar.aplicativo.categorias');
+        Route::post('/aplicativos/categories', 'AplicativoCategoryController@create')->name('criar.aplicativo.categorias');
+        Route::put('/aplicativos/categories/{id}', 'AplicativoCategoryController@update')->name('atualizar.aplicativo.categorias');
+        Route::delete('/aplicativos/categories/{id}', 'AplicativoCategoryController@delete')->name('apagar.aplicativo.categorias');
 
         /** TAGS */
         Route::get('/tags', 'TagController@index')->name('lista.tag');

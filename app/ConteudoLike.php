@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\UserCan;
+use Exception;
 
 class ConteudoLike extends Model
 {
@@ -51,7 +52,7 @@ class ConteudoLike extends Model
             # Edita o campo like com true ou false levando em concideração a validação acima
             return $registro->update();
         }
-        
+       
         # Se o usuario nunca deu like ou dislike na postagem
         $request->request->add(['like' => true]);
         return $this->create($request->all());
@@ -127,7 +128,7 @@ class ConteudoLike extends Model
         if ($tipo == 'conteudo') {
             return $like->where('conteudo_id', $idPostagem)->count();
         } elseif ($tipo == 'aplicativo') {
-            $like->where('aplicativo_id', $idPostagem)->count();
+            return $like->where('aplicativo_id', $idPostagem)->count();
         }
     }
     

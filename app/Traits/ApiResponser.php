@@ -8,6 +8,9 @@ use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 
 trait ApiResponser
 {
+    /**
+     * @return String json
+     */
     protected function successResponse($data, $message = '', $code = 200)
     {
         return response()->json([
@@ -17,6 +20,14 @@ trait ApiResponser
         ], $code);
     }
 
+    /**
+     * estrutura padrão de retorno para requisições http:code 2xx
+     * @param mixed $errors
+     * @param string $message
+     * @param int $code
+     * @param mixed $headers
+     * @return string json
+     */
     protected function errorResponse($errors, $message, $code, $headers = null)
     {
         if ($headers) {

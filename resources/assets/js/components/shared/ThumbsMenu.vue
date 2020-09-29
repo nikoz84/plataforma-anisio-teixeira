@@ -83,6 +83,7 @@
                 {
                     return "aplicativo";
                 }
+                return "aplicativo";
             },
             thumbsUp() 
             {
@@ -126,16 +127,16 @@
                 const userLikes = JSON.parse(localStorage.user);
                 this.loaddingIcon = true;
                 const form = new FormData();
+                form.append("tipo", this.getTipo());
                 if(this.$route.path.indexOf("/conteudo/")>=0)
                 {
                     form.append("conteudo_id", this.$route.params.id);
-                    form.append("tipo", "conteudo");
                 }
-                else if((this.$route.path.indexOf("/aplivativo/")>=0))
+                else if((this.$route.path.indexOf("/aplicativo/")>=0))
                 {
                     form.append("aplicativo_id", this.$route.params.id);
-                    form.append("tipo", "aplicativo");
                 }
+               
                 form.append("user_id", "");
                 if(likeordislike)
                 {

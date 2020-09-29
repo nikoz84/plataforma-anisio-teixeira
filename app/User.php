@@ -347,7 +347,6 @@ class User extends Authenticatable implements JWTSubject
     public function users_role_content($role_id, $is_active = null)
     {
         $aux = $is_active ? "and use.options->'is_active' = '{$is_active}'": null;
-
         $users = DB::select("SELECT use.id, use.options->'is_active' as is_active, use.name as usuario, use.email, rol.name as funcao, count(con.user_id) as total_conteudo
         FROM public.users use
         inner join roles rol on rol.id = use.role_id
@@ -355,7 +354,6 @@ class User extends Authenticatable implements JWTSubject
         where use.role_id = {$role_id} {$aux}
         group By (use.id, use.options, use.name, use.email, rol.name)
         order by (use.name) asc");
-
         return $users;
     }
 }

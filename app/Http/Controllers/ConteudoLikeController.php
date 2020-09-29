@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Aplicativo;
+use App\Conteudo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,17 +31,34 @@ class ConteudoLikeController extends ApiController
 
     public function like()
     {
-        
         $this->request['user_id'] =  Auth::user()->id;
         try {
+            $this->existeAPlicativoOuConteudo();
             $this->request->user_id =  Auth::user()->id;
             $this->conteudoLike->like($this->request);
             return $this->successResponse([], 'Ação realizada com sucesso!', 200);
-        } catch (\Exception $e) {
-            return $this->errorResponse([], 'userid:'.Auth::user()->id.'Não foi possível realizar a operação! '.$e->getMessage(), 422);
+        } catch (Exception $e) {
+            return $this->errorResponse([], $e->getMessage(), $e->getCode()>100 && $e->getCode() < 510 ? $e->getCode() : 500);
         }
     }
 
+    public function existeAPlicativoOuConteudo()
+    {
+        if($this->request->aplicativo_id)
+        {
+            $aplicativo = Aplicativo::findOrFail($this->request->aplicativo_id);
+            if(!$aplicativo)
+            throw new Exception("Aplicativo não encontrado");
+        }
+        else if($this->request->conteudo_id)
+        {
+            $conteudo = Conteudo::findOrFail($this->request->conteudo_id);
+            if(!$conteudo)
+            throw new Exception("Conteúdo não encontrado");
+        }
+        else
+        throw new Exception("Conteúdo ou Aplicativo não encontrado");
+    }
     /**
      * Lista as curtidas de forma negativa do aplicativo.
      */

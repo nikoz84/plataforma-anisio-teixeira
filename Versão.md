@@ -7,12 +7,15 @@
 - Ajustes de layout nos cards de resultados da busca avançada
 - Ajustes de layout nas opções de busca avançada
 - Melhorias de usabilidade na busca avançada
-- Relatórios de conteúdos - mais baixados e mais visualizados
-- Relatórios de conteúdos por ano
 ## Correções (bugs, código)
 - correção de busca avançada. remocão dos itens na filtragem dos dados
+- correção em likes em postagens de aplicativos
+- correção visualização dos cards de estudo versão mobile
 ## Novas Funcionalidades
 - "Gostar" e "Não Gostar" para conteudos pelos usuários
+- Relatórios de conteúdos - mais baixados e mais visualizados
+- Relatórios de conteúdos por ano
+- Relatório de usuários por papel
 ################################################################################################
 # Versão 2.0.4
 ################################################################################################
@@ -25,6 +28,7 @@
 ## Correções (bugs, código)
 - Correção problema ao cadastrar conteúdo
 - Correção no componente PlayerActions
+- Correção em geração de relatório de conteúdos por ano com muitos registros
 ## Novas Funcionalidades
 - Incorporar conteúdo
 - Validação de tipos de arquivos em formulário de conteúdo digital

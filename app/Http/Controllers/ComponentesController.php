@@ -27,7 +27,6 @@ class ComponentesController extends ApiController
     {
         $limit = $this->request->get('limit', 15);
         $componentes = CurricularComponent::select("*")
-            ->with(["niveis", "categories"])
             ->limit($limit)
             ->orderBy('name', 'asc')
             ->paginate($limit);
@@ -64,19 +63,21 @@ class ComponentesController extends ApiController
     {
         $component = new Componente();
         try {
-            $component =  Componente::with(['niveis', 'categories'])->findOrFail($id);
+            $component =  Componente::with(['nivel', 'category'])->findOrFail($id);
         } catch (Exception $ex) {
             return $this->errorResponse([], 'Componente não encontrado', 422);
         }
-
         return $component;
     }
 
+    /**
+     * cria e salva um componente curricular atraves de dados via POST
+     * @return String json
+     */
     public function create()
     {
         $validator = Validator::make($this->request->all(), $this->rules());
         $data = [];
-        
         try {
             if ($validator->fails()) {
                 $data = $validator->errors();
@@ -104,10 +105,8 @@ class ComponentesController extends ApiController
 
      /**
      * Procura conteudos por full text search.
-     *
      * @param $request \Illuminate\Http\Request
      * @param $termo   string termo de busca
-     *
      * @return App\Traits\ApiResponser
      */
     public function search(Request $request, $termo)
@@ -140,8 +139,7 @@ class ComponentesController extends ApiController
     /**
      * Deleta o aplicativo no banco de dados
      * @param int $id identificador único
-     * @return \App\Controller\ApiResponser
-     * retorna Json
+     * @return Illuminate\Contracts\Routing\ResponseFactory::json
      */
     public function delete($id)
     {

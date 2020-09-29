@@ -23,50 +23,44 @@
         ></q-select>
       </div>
     </q-banner>
-    <q-badge removable outline class="q-mt-lg q-mb-sm" color="primary" label="Dica: Interaja com cards coloridos para acessar o conteúdo sugerido" />
-    <div v-if="rotinas">
+    <div class="row justify-start q-gutter-md">
+      <q-badge removable outline class="q-mt-lg q-mb-sm" color="primary" label="Dica: Interaja com cards coloridos para acessar o conteúdo sugerido" />
+    </div>
+    <div v-if="rotinas && !mobile">
       <div class="row justify-start q-gutter-md" v-for="(rotina, i) in rotinas" :key="i">
         <div class="col-sm-2" v-for="(atividade, d) in rotina" :key="d">
           <q-chip class="q-ml-none" square outline color="grey-7" icon="event" v-if="i == 0">
-            <i>
-              {{ getDay(d) }}
-            </i>
+            <i>{{ getDay(d) }}</i>
           </q-chip>
-          <q-btn no-caps align="left" type="a" target="__blank" :href="goTo(toJson(atividade).link)" class="bg-amarelo text-left q-py-md q-mb-md" v-if="d == 'segunda'">
+          <q-btn no-caps align="left" type="a" target="__blank" :href="goTo(toJson(atividade).link)" :class="coresClasses[i]">
             <div class="text-left">  
               {{ toJson(atividade).descricao }}
               <q-space class="q-mt-md"></q-space>
               Sugestão: {{ toJson(atividade).sugestao }} 
             </div>
           </q-btn>
-          <q-btn no-caps align="left" type="a" target="__blank" :href="goTo(toJson(atividade).link)" class="bg-rosa text-left q-py-md q-mb-md" v-if="d == 'terca'">
-            <div class="text-left">  
-              {{ toJson(atividade).descricao }}
-              <q-space class="q-mt-md"></q-space>
-              Sugestão: {{ toJson(atividade).sugestao }} 
-            </div>
-          </q-btn>
-          <q-btn no-caps align="left" type="a" target="__blank" :href="goTo(toJson(atividade).link)" class="bg-turquesa text-left q-py-md q-mb-md" v-if="d == 'quarta'">
-            <div class="text-left">  
-              {{ toJson(atividade).descricao }}
-              <q-space class="q-mt-md"></q-space>
-              Sugestão: {{ toJson(atividade).sugestao }} 
-            </div>
-          </q-btn>
-          <q-btn no-caps align="left" type="a" target="__blank" :href="goTo(toJson(atividade).link)" class="bg-verde text-left q-py-md q-mb-md" v-if="d == 'quinta'">
-            <div class="text-left">  
-              {{ toJson(atividade).descricao }}
-              <q-space class="q-mt-md"></q-space>
-              Sugestão: {{ toJson(atividade).sugestao }} 
-            </div>
-          </q-btn>
-          <q-btn no-caps align="left" type="a" target="__blank" :href="goTo(toJson(atividade).link)" class="bg-lilas text-left q-py-md q-mb-md" v-if="d == 'sexta'">
-            <div class="text-left">  
-              {{ toJson(atividade).descricao }}
-              <q-space class="q-mt-md"></q-space>
-              Sugestão: {{ toJson(atividade).sugestao }} 
-            </div>
-          </q-btn>
+        </div>
+      </div>
+    </div>
+    <div v-if="rotinas && mobile">
+      <div class="row justify-start q-gutter-md">
+        <div class="col-sm-12 col-lg-2 col-md-2" v-for="(dia, d) in diasSemana" :key="d" >
+            <q-chip class="q-ml-none" square outline color="grey-7" icon="event" >
+              <i>{{ dia }}</i>
+            </q-chip>
+
+
+              <div class="col-sm-2" v-for="(atividade, j) in rotinas" :key="j" >
+                <q-btn no-caps align="left" type="a" target="__blank" :href="goTo('softwarecommunity.company')" :class="coresClasses[d]">
+                  <div class="text-left">  
+                    {{ toJson(atividade[dia]).descricao }}
+                      <q-space class="q-mt-md"></q-space>
+                      Sugestão {{ toJson(atividade[dia]).sugestao }}
+                  </div>
+                </q-btn>
+                <q-space class="q-mt-md"></q-space> 
+              </div>
+            
         </div>
       </div>
     </div>
@@ -87,6 +81,9 @@ export default {
     data() {
       return {
         rotinas: [],
+        diasSemana:['segunda', 'terca', 'quarta', 'quinta','sexta'],
+        coresClasses:['bg-amarelo text-left q-py-md q-mb-md', 'bg-rosa text-left q-py-md q-mb-md', 'bg-turquesa', 'bg-verde text-left q-py-md q-mb-md', 'bg-lilas text-left q-py-md q-mb-md'],
+        mobile:window.innerWidth <= 700,
         semanasModel: [],
         semana: {
           value : 'semana-1',
@@ -113,6 +110,10 @@ export default {
       }
     },
     created() {
+      addEventListener('resize', () => {
+        this.mobile = innerWidth <= 700
+       });
+
       if (this.$route.params.nivel){
         this.nivel = this.niveisModel.filter((item)=>{
           return item.value === this.$route.params.nivel

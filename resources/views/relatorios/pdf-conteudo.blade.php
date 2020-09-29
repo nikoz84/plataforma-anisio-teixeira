@@ -56,25 +56,30 @@
                                                                       </tr>
                                                             </thead>
                                                             <tbody>
-                                                                      @if(count($conteudos)>0)
-                                                                      @foreach($conteudos as $content)
-                                                                      <tr>
-                                                                                <?php ?>
-                                                                                <td>{{mb_strimwidth($content->title, 0, 50, "...")}}</td>
-                                                                                <td>{{$content->type}}</td>
-                                                                                <td>{{$content->publisher}}</td>
-                                                                                <td>{{number_format($content->quantity,0,".",".")}}</td>
-                                                                      </tr>
-                                                                      @endforeach
+                                                                      @if($total>0)
+                                                                        <?php
+                                                                        $chunckarray = $conteudos->chunk(500); 
+                                                                          foreach ($chunckarray as $conts) { 
+                                                                            foreach ($conts as $content) {
+                                                                              ?>
+                                                                          <tr>
+                                                                              <td>{{mb_strimwidth($content->title, 0, 50, "...")}}</td>
+                                                                              <td>{{$content->type}}</td>
+                                                                              <td>{{$content->publisher}}</td>
+                                                                              <td>{{number_format($content->quantity,0,".",".")}}</td>
+                                                                          </tr>
+                                                                        <?php 
+                                                                            }}
+                                                                        ?>
                                                                       @else
                                                                       <tr>
-                                                                                <td colspan="5">Nenhum resgistro encontrado...</td>
+                                                                          <td colspan="5">Nenhum resgistro encontrado...</td>
                                                                       </tr>
                                                                       @endif
                                                                       @if ($totalizar)
                                                                       <tr>
                                                                         <td><strong>Total Conteúdos publicados:</strong></td>
-                                                                        <td colspan="5" style="text-align:right"><?= count($conteudos) ?></td>
+                                                                        <td colspan="5" style="text-align:right"><?= $total ?></td>
                                                                       </tr>
                                                                       @endif
                                                             </tbody>
