@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\File;
 use App\Http\Controllers\ApiController;
 use App\Traits\FileSystemLogic;
 use App\Conteudo;
+use Illuminate\Support\Facades\Log;
+use Streaming\FFMpeg;
+use Streaming\Representation;
 
 class FileController extends ApiController
 {
@@ -17,7 +20,10 @@ class FileController extends ApiController
 
     public function __construct(File $file, Request $request, Storage $storage)
     {
-        $this->middleware('jwt.auth')->except(['index', 'search', 'getFiles', 'getGallery', 'downloadFile', 'getInfoFolder', 'fileExistInBase']);
+        $this->middleware('jwt.auth')->except([
+            'index', 'search', 'getFiles', 'getGallery', 'downloadFile', 'getInfoFolder', 'fileExistInBase',
+            'ffmpegTeste', 'showVideoStreaming'
+            ]);
         $this->file = $file;
         $this->request = $request;
         $this->storage = $storage;
@@ -291,12 +297,49 @@ class FileController extends ApiController
         if ($request->hasFile('file') && $request->file('file')->isValid()) {
             $fileName = $request->file->getClientOriginalName();
 
-            $path = $request->file->storeAs('conteudo-digitais\\pdf-imagens', $fileName);
+            $path = $request->file->storeAs('conteudo-digitais'. DIRECTORY_SEPARATOR .'pdf-imagens', $fileName);
 
             $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $path);
         }
 
         return $path ? $path : $this->errorResponse([], "Falha ao fazer upload!", 500);
+    }
+
+    public function ffmpegTeste(Request $request, $id)
+    {
+        $ffmpeg = FFMpeg::create(config('ffmpeg'));
+        $r_144p  = (new Representation)->setKiloBitrate(95)->setResize(256, 144);
+        $r_360p  = (new Representation)->setKiloBitrate(276)->setResize(640, 360);
+        $r_480p  = (new Representation)->setKiloBitrate(750)->setResize(854, 480);
+
+        $disk = config('filesystems.disks.conteudos-digitais');
+        $root = $disk['root'];
+        $file = $root . DIRECTORY_SEPARATOR . 'visualizacao' . DIRECTORY_SEPARATOR . "{$id}.mp4";
+        
+        $video = $ffmpeg->open($file);
+        
+        $hls = $video->hls()
+           ->x264()
+           ->addRepresentations([$r_144p, $r_480p])
+           ->save("{$root}/streaming/12003.94934");
+        
+        $metadata = $hls->metadata();
+        print_r($metadata->get());
+        $metadata->saveAsJson("{$root}/streaming/json/{$id}.json");
+
+        var_dump($metadata->getVideoStreams());
+        var_dump($metadata->getFormat());
+        echo gmdate("H:i:s", intval($metadata->getFormat()->get('duration')));
+
+        print_r($metadata->export());
+        //Log::channel('ffmpeg_log')->info("Hello world!! $id");
+    }
+
+    public function showVideoStreaming()
+    {
+        $file = Storage::disk('conteudos-digitais')->url('streaming/12003.m3u8');
+        
+        return view('streaming.video', compact('file'));
     }
 }
 

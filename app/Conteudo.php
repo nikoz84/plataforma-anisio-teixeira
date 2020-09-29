@@ -299,10 +299,8 @@ class Conteudo extends Model
     }
     /**
      * Buscar por componente curricular
-     *
      * @param $query       Eloquent\Query
      * @param $componentes ids dos componentes a buscar
-     *
      * @return App\Conteudo
      */
     public function scopeSearchByComponent($query, $componentes)
@@ -310,12 +308,12 @@ class Conteudo extends Model
         if (!$componentes) {
             return $query;
         }
-
         return $query->whereHas("componentes", function ($q) use ($componentes) {
 
             return $q->whereIn('id', explode(',', $componentes));
         });
     }
+
     /**
      * Buscar por colunas especificas
      * @param \App\Conteudo $conteudo
@@ -324,7 +322,6 @@ class Conteudo extends Model
      * @param $column   coluna a buscar
      * @param $data     ids ou id de busca
      * @param $multiple busca com where in ou where
-     *
      * @return App\Conteudo
      */
     public function scopeSearchByColumn($query, $column, $data, $multiple = false)
@@ -484,5 +481,19 @@ class Conteudo extends Model
         LIMIT 100");
 
         return $contents;
+    }
+
+    public function publicacaoAnos()
+    {
+        $contents = DB::select("select  distinct date_part('year', created_at) as anopublicacao from conteudos order by 1 desc");
+        return $contents;
+    }
+
+    public function conteudosPorAno($ano)
+    {
+        return Conteudo::select(['title', 'users.name as publisher', 'tipos.name as type', 'qt_downloads as quantity'])
+            ->join('users', 'users.id', '=', 'conteudos.user_id')
+            ->join('tipos', 'tipos.id', '=', 'conteudos.tipo_id')
+            ->where(DB::raw("date_part('year', conteudos.created_at)"), $ano)->with("user")->with('tipo')->get();
     }
 }

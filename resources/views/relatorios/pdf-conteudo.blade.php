@@ -56,8 +56,8 @@
                                                                       </tr>
                                                             </thead>
                                                             <tbody>
-                                                                      @if(count($contents))
-                                                                      @foreach($contents as $content)
+                                                                      @if(count($conteudos)>0)
+                                                                      @foreach($conteudos as $content)
                                                                       <tr>
                                                                                 <?php ?>
                                                                                 <td>{{mb_strimwidth($content->title, 0, 50, "...")}}</td>
@@ -69,6 +69,12 @@
                                                                       @else
                                                                       <tr>
                                                                                 <td colspan="5">Nenhum resgistro encontrado...</td>
+                                                                      </tr>
+                                                                      @endif
+                                                                      @if ($totalizar)
+                                                                      <tr>
+                                                                        <td><strong>Total Conteúdos publicados:</strong></td>
+                                                                        <td colspan="5" style="text-align:right"><?= count($conteudos) ?></td>
                                                                       </tr>
                                                                       @endif
                                                             </tbody>

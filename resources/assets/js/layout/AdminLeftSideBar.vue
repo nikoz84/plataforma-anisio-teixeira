@@ -5,6 +5,7 @@
         Painel de Controle
       </strong>
     </q-item-label>
+    <ReportsMenu></ReportsMenu>
     <q-item
         to="/admin/resumo/listar"
         aria-label="Resumo da pat"
@@ -36,14 +37,17 @@
         </q-item-section>
       </q-item>
       <q-separator />
+      
     </div>
+    
   </q-list>
 </template>
 <script>
 import {mapState, mapActions} from 'vuex';
-
+import { ReportsMenu } from "@components/shared";
 export default {
   name: "AdminLeftSideBar",
+  components: { ReportsMenu },
   computed: {
     ...mapState(['linksAdmin', 'isLogged'])
   },

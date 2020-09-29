@@ -61,10 +61,14 @@ Route::get('/conteudos-digitais/conteudo/exibir/id/{id}', function ($id) {
 Route::get('/conteudos-digitais/conteudo/incorporar-conteudo/id/{id}', function ($id) {
     return redirect("/incorporar-conteudo/{$id}");
 });
-Route::get('/conteudos/conteudos-digitais/download/{id}', function ($id){
+Route::get('/conteudos/conteudos-digitais/download/{id}', function ($id) {
     //
 });
 
 Route::get('/incorporar-conteudo/{id}', 'ConteudoController@incorporarConteudo');
+
+Route::get('/teste-ffmpeg/{id}', 'FileController@ffmpegTeste');
+
+Route::get('/streaming-video', 'FileController@showVideoStreaming');
 
 Route::get('/{any}', 'ApiController@home')->where('any', '.*');
