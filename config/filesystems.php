@@ -95,6 +95,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'streaming' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/conteudos/conteudos-digitais/streaming'),
+            'url' => env('APP_URL') . '/storage/conteudos/conteudos-digitais/streaming',
+            'visibility' => 'public',
+        ],
+
         'slider' => [
             'driver' => 'local',
             'root' => storage_path('app/public/conteudos/slider'),

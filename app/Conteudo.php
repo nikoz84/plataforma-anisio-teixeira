@@ -219,10 +219,10 @@ class Conteudo extends Model
     
 
     /**
-     * Adiciona atributo imagem associada ao objeto
+     * recupera referencia ao arquivo de download
      * @param \App\Conteudo $conteudo
      * @return \App\Model\ApiResponser retorna json
-     * @return string
+     * @return string referencia ao arquivo de download
      */
     public function getDownloadAttribute()
     {
