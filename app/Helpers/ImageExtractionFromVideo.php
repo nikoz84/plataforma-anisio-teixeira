@@ -15,7 +15,7 @@ class ImageExtractionFromVideo
     protected $videoPath;
     protected $imagePathDestination;
     protected $videoId;
-    public static $video_mime_types = [
+    public static  $video_mime_types = [
         'application/annodex',
         'application/mp4',
         'application/ogg',

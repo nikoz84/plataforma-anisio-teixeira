@@ -336,6 +336,7 @@ class Conteudo extends Model
 
         return $query->where($column, $data);
     }
+    
     /**
      * Busca por canal
      * @param \App\Conteudo $conteudo
