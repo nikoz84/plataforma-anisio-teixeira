@@ -58,7 +58,7 @@
                                                             <tbody>
                                                                       @if($total>0)
                                                                         <?php
-                                                                        $chunckarray = $conteudos->chunk(500); 
+                                                                        $chunckarray = $conteudos->chunk(100); 
                                                                           foreach ($chunckarray as $conts) { 
                                                                             foreach ($conts as $content) {
                                                                               ?>

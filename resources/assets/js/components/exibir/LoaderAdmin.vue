@@ -19,7 +19,8 @@ import {
   CategoryConteudoForm,
   CurricularComponentsForm,
   CurricularComponentsCategoryForm,
-  NivelEnsinoForm
+  NivelEnsinoForm,
+  UniversidadesForm
   } from "@forms/models";
 
 import Resumo from "@pages/Resumo.vue";
@@ -46,7 +47,8 @@ export default {
     categorias:CategoryConteudoForm,
     componentes: CurricularComponentsForm,
     componentescategorias:CurricularComponentsCategoryForm,
-    nivelensino:NivelEnsinoForm
+    nivelensino:NivelEnsinoForm,
+    universidades: UniversidadesForm
   },
   data() {
     return {
@@ -93,5 +95,4 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

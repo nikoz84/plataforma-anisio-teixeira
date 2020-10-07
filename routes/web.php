@@ -67,8 +67,8 @@ Route::get('/conteudos/conteudos-digitais/download/{id}', function ($id) {
 
 Route::get('/incorporar-conteudo/{id}', 'ConteudoController@incorporarConteudo');
 
-Route::get('/teste-ffmpeg/{id}', 'FileController@ffmpegTeste');
+//Route::get('/teste-ffmpeg/{id}', 'FileController@ffmpegTeste');
 
-Route::get('/streaming-video', 'FileController@showVideoStreaming');
+//Route::get('/streaming-video', 'FileController@showVideoStreaming');
 
 Route::get('/{any}', 'ApiController@home')->where('any', '.*');

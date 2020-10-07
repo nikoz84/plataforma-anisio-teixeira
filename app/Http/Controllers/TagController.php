@@ -51,16 +51,16 @@ class TagController extends ApiController
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível atualizar a palavra-chave", 422);
         }
-        $tag = TAG::firstOrCreate([
+        $tag = Tag::firstOrCreate([
             'name' => $this->request->name,
-            'searched' => TAG::INIT_SEARCHED
+            'searched' => Tag::INIT_SEARCHED
         ]);
 
         if (!$tag->save()) {
             return $this->errorResponse([], "Não foi possivel adicionar a palavra-chave", 422);
         }
 
-        return $this->successResponse($tag, "Palavra-chave - {$tag->name} - adicionada com sucesso!!", 200);
+        return $this->successResponse($tag, "Palavra-chave: {$tag->name} - adicionada com sucesso!!", 200);
     }
 
     /**
@@ -72,7 +72,7 @@ class TagController extends ApiController
      */
     public function update($id)
     {
-        $tag = TAG::findOrFail($id);
+        $tag = Tag::findOrFail($id);
         $validator = Validator::make($this->request->all(), ["name" => "required"]);
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível editar o palavra-chave", 422);
@@ -99,7 +99,7 @@ class TagController extends ApiController
         $limit = $this->request->query('limit', 15);
         $search = "%{$termo}%";
 
-        $tags = TAG::select(['id', 'name'])
+        $tags = Tag::select(['id', 'name'])
             ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
             ->orderBy('name')
             ->paginate($limit);
@@ -120,7 +120,7 @@ class TagController extends ApiController
     {
         $search = "%{$term}%";
         $limit = $this->request->query('limit', 100);
-        $tags = TAG::select(['id', 'name'])
+        $tags = Tag::select(['id', 'name'])
             ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
             ->get(['id', 'name']);
         return $this->showAll(collect($tags));
@@ -135,7 +135,7 @@ class TagController extends ApiController
      */
     public function delete($id)
     {
-        $tag = TAG::findOrFail($id);
+        $tag = Tag::findOrFail($id);
 
         if (!$tag->delete()) {
             $this->errorResponse([], "Impossível deletar a palavra-chave", 422);
@@ -154,7 +154,7 @@ class TagController extends ApiController
 
     public function getById($id)
     {
-        $tag = TAG::findOrFail($id);
+        $tag = Tag::findOrFail($id);
 
         return $this->showOne($tag, '', 200);
     }
