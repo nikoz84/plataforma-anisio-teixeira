@@ -8,10 +8,11 @@
         use-input
         stack-input
         clearable
+        :loading="loadingState"
         fill-input
         :options="options" 
         label="Pesquisar" 
-        input-debounce="200"
+        input-debounce="400"
         style="width:250px;"
         @filter="filterFn"
         bottom-slots
@@ -30,7 +31,8 @@ export default {
   data() {
     return {
       termo: "",
-      options: []
+      options: [],
+      loadingState: false
     };
   },
   computed: {
@@ -38,23 +40,18 @@ export default {
   },
   methods: {
     ...mapMutations(["SET_PAGINATOR", "SET_IS_LOADING", 'SET_DATA']),
-    async onSearch() {
-      if (!this.termo) return;
-      this.$q.loading.show();
-      let url = `${this.$route.params.slug}/search/${this.termo}`;
-      
-      let { data }  = await axios.get(url);
-      this.$q.loading.hide();
-      this.SET_PAGINATOR(resp.data.paginator);
-      
-    },
     filterFn(val, update, abort) {
+      const self = this;
+      self.loadingState = true
+      
       update(() => {
-        if (val === "") {
+        if (val === "" || val.length <= 3) {
+          self.loadingState = false;
           return;
         } else {
           let url = `${this.$route.params.slug}/search/${val}`;
           axios.get(url).then(resp => {
+            self.loadingState = false;
             this.SET_PAGINATOR(resp.data.paginator);
           });
         }
