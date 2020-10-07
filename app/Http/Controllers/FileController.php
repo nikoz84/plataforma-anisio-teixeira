@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\File;
 use App\Http\Controllers\ApiController;
 use App\Traits\FileSystemLogic;
 use App\Conteudo;
+use App\Helpers\ContentVideoConvert;
+use Exception;
 use Illuminate\Support\Facades\Log;
 use Streaming\FFMpeg;
 use Streaming\Representation;
@@ -28,20 +30,18 @@ class FileController extends ApiController
         $this->request = $request;
         $this->storage = $storage;
     }
+    
     /**
      * Seleciona os arquivos por id.
      */
-
     public function getFiles($id)
     {
         $exists = Storage::disk('public')->exists('logo.png');
-
-
         return response(['exist' => $exists], 200, ['Content-Type' => 'image/png']);
     }
+
      /**
       *Função Cria o arquivo no Banco de dados usando id.
-      *
       * @param [type] $id
       * @return void
       */
@@ -307,31 +307,17 @@ class FileController extends ApiController
 
     public function ffmpegTeste(Request $request, $id)
     {
-        $ffmpeg = FFMpeg::create(config('ffmpeg'));
-        $r_144p  = (new Representation)->setKiloBitrate(95)->setResize(256, 144);
-        $r_360p  = (new Representation)->setKiloBitrate(276)->setResize(640, 360);
-        $r_480p  = (new Representation)->setKiloBitrate(750)->setResize(854, 480);
-
-        $disk = config('filesystems.disks.conteudos-digitais');
-        $root = $disk['root'];
-        $file = $root . DIRECTORY_SEPARATOR . 'visualizacao' . DIRECTORY_SEPARATOR . "{$id}.mp4";
-        
-        $video = $ffmpeg->open($file);
-        
-        $hls = $video->hls()
-           ->x264()
-           ->addRepresentations([$r_144p, $r_480p])
-           ->save("{$root}/streaming/12003.94934");
-        
-        $metadata = $hls->metadata();
-        print_r($metadata->get());
-        $metadata->saveAsJson("{$root}/streaming/json/{$id}.json");
-
-        var_dump($metadata->getVideoStreams());
-        var_dump($metadata->getFormat());
-        echo gmdate("H:i:s", intval($metadata->getFormat()->get('duration')));
-
-        print_r($metadata->export());
+        try 
+        {
+            $root = $urlPath = Storage::disk('conteudos-digitais')->path("streaming");
+            $contentVideoConvert = new ContentVideoConvert( Conteudo::findOrFail($id), FFMpeg::create(config('ffmpeg')));
+            $contentVideoConvert->convertToStreaming($root);
+        }
+        catch(Exception $ex)
+        {
+            return ($ex);
+            //return ($ex->getMessage());
+        }
         //Log::channel('ffmpeg_log')->info("Hello world!! $id");
     }
 

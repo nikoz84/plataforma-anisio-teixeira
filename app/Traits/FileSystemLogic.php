@@ -186,6 +186,7 @@ trait FileSystemLogic
         $file = collect(File::glob($urlPath))->last();
         return $file;
     }
+
     public function downloadFileConteudo($id)
     {
         $file = $this->downloadFileConteudoReferencia($id);
