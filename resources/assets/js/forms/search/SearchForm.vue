@@ -15,7 +15,6 @@
         input-debounce="400"
         style="width:250px;"
         @filter="filterFn"
-        bottom-slots
         >
     </q-select>
     
@@ -43,7 +42,7 @@ export default {
     filterFn(val, update, abort) {
       const self = this;
       self.loadingState = true
-      
+      console.log(val)
       update(() => {
         if (val === "" || val.length <= 3) {
           self.loadingState = false;

@@ -100,7 +100,7 @@
           async rolesMenuReport()
           {
              let response = await axios.get("/roles");
-             console.log("roeles", response);
+             
              this.rolesUsers = response.data.paginator.data;
           },
           downloadPdf(response)

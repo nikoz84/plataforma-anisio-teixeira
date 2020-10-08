@@ -562,9 +562,9 @@ export default {
       this.conteudo.tipo_id = id
     },
     addTag(val, done) {
-      const form = new FormData();
-      const http = axios;
-
+      //const form = new FormData();
+      //const http = axios;
+      console.log(val, this.autocompleteTags)
       if (this.autocompleteTags.length == 0) {
         this.showTagModal(val);
       }
@@ -582,12 +582,11 @@ export default {
               label: "Confirmar",
               color: "positive",
               handler: async () => {
-                let form = new FormData();
+                let tag = {name: val}
                 
-                form.append("name", val);
-                let { data } = await axios.post("/tags", form);
+                let { data } = await axios.post("/tags", tag);
+                
                 if (data.success) {
-                  
                   let label = data.metadata.name;
                   //done({ id, label });
                 }

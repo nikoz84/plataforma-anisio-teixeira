@@ -1,8 +1,8 @@
 <template>
     <div class="row q-pa-md">
-        <div class="col-sm-6 q-pa-md">
-            <h5 v-if="tag.id != null">Edição da Palavra-Chave <b>{{this.tagName}}</b></h5>
-            <h5 v-if="tag.id == null">Cadastro de Palavra-Chave</h5>
+        <div class="col-sm-6 q-pl-md">
+            <h6 class="text-h6" v-if="tag.id != null">Edição da Palavra-Chave <b>{{this.tagName}}</b></h6>
+            <h6 class="text-h6" v-if="tag.id == null">Cadastro de Palavra-Chave</h6>
             <form v-on:submit.prevent="save()">
                 <q-input filled v-model.trim="tag.name" label="Adicionar palavra-chave"
                   :error="errors.name && errors.name.length > 0"

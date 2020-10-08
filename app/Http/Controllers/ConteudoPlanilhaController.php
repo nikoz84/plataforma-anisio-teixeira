@@ -107,7 +107,7 @@ class ConteudoPlanilhaController extends ApiController
             )->paginate(10)->setPath("/planilhas?{$url}");
         } else {
             $conteudoPlanilha = $query->where('name', $request->slug)
-            ->paginate(10)
+            ->paginate(15)
             ->setPath("/planilhas?{$url}");
         }
 

@@ -71,4 +71,8 @@ Route::get('/incorporar-conteudo/{id}', 'ConteudoController@incorporarConteudo')
 
 //Route::get('/streaming-video', 'FileController@showVideoStreaming');
 
+Route::get('teste', function () {
+    return DB::select("select * from conteudos_planilha where name = 'ipes'");
+});
+
 Route::get('/{any}', 'ApiController@home')->where('any', '.*');

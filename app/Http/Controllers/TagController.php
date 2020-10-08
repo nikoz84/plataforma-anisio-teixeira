@@ -6,6 +6,7 @@ use App\Tag;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class TagController extends ApiController
 {
@@ -55,7 +56,7 @@ class TagController extends ApiController
             'name' => $this->request->name,
             'searched' => Tag::INIT_SEARCHED
         ]);
-
+        
         if (!$tag->save()) {
             return $this->errorResponse([], "Não foi possivel adicionar a palavra-chave", 422);
         }
