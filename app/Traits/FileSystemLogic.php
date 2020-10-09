@@ -187,6 +187,22 @@ trait FileSystemLogic
         return $file;
     }
 
+    public function streamingFileConteudoReferencia($id)
+    {
+        $urlPath = Storage::disk('conteudos-digitais')->path("streaming");
+        $urlPath = $urlPath.DIRECTORY_SEPARATOR.'conteudo-'.$id. DIRECTORY_SEPARATOR .$id.".*";
+        $blobFile = File::glob($urlPath);
+        $file = collect($blobFile)->last();
+        return $file;
+    }
+
+    public function streamingFileConteudo($id)
+    {
+        $file = $this->streamingFileConteudoReferencia($id);
+        $filename = basename($file);
+        return $filename ? Storage::disk('conteudos-digitais')->url("streaming/conteudo-".$id."/{$filename}") : null;
+    }
+
     public function downloadFileConteudo($id)
     {
         $file = $this->downloadFileConteudoReferencia($id);

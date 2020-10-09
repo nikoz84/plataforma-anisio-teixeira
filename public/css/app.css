@@ -62,7 +62,7 @@ body {
   color: #263238;
 }
 /*
- * Quasar Framework v1.14.1
+ * Quasar Framework v1.13.1
  * (c) 2015-present Razvan Stoenescu
  * Released under the MIT License.
  */
@@ -281,7 +281,7 @@ input[type='search']::-webkit-search-decoration {
   height: inherit;
   width: inherit;
 }
-.q-avatar--square {
+.q-avatar__content--square {
   border-radius: 0;
 }
 .q-badge {
@@ -678,9 +678,6 @@ input[type='search']::-webkit-search-decoration {
   min-width: 0;
   max-width: 100%;
   flex: 10000 1 0%;
-}
-.q-btn-toggle {
-  position: relative;
 }
 .q-card {
   box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
@@ -1675,9 +1672,6 @@ body.desktop .q-chip--clickable:focus {
   line-height: 2rem;
   letter-spacing: 0.0125em;
 }
-.q-dialog__progress {
-  font-size: 4rem;
-}
 .q-dialog__inner {
   outline: 0;
 }
@@ -1828,9 +1822,6 @@ body.q-ios-padding .q-dialog__inner > div {
 }
 .q-dialog-plugin .q-card__section + .q-card__section {
   padding-top: 0;
-}
-.q-dialog-plugin--progress {
-  text-align: center;
 }
 .q-editor {
   border: 1px solid rgba(0,0,0,0.12);
@@ -2229,6 +2220,7 @@ body.q-ios-padding .q-dialog__inner > div {
   bottom: 0;
   left: 0;
   pointer-events: none;
+  z-index: 1;
 }
 .q-field__control:before {
   border-radius: inherit;
@@ -2409,11 +2401,6 @@ body.q-ios-padding .q-dialog__inner > div {
   border: 2px solid transparent;
   transition: border-color 0.36s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.q-field--outlined .q-field__native:-webkit-autofill,
-.q-field--outlined .q-field__input:-webkit-autofill {
-  margin-top: 1px;
-  margin-bottom: 1px;
-}
 .q-field--outlined.q-field--rounded .q-field__control {
   border-radius: 28px;
 }
@@ -2533,6 +2520,10 @@ body.q-ios-padding .q-dialog__inner > div {
 .q-field--labeled:not(.q-field--float) .q-field__suffix {
   opacity: 0;
 }
+.q-field--labeled:not(.q-field--float) .q-field__native::-webkit-input-placeholder,
+.q-field--labeled:not(.q-field--float) .q-field__input::-webkit-input-placeholder {
+  color: transparent;
+}
 .q-field--labeled:not(.q-field--float) .q-field__native::-moz-placeholder,
 .q-field--labeled:not(.q-field--float) .q-field__input::-moz-placeholder {
   color: transparent;
@@ -2543,6 +2534,9 @@ body.q-ios-padding .q-dialog__inner > div {
 }
 .q-field--labeled:not(.q-field--float) .q-field__native::-ms-input-placeholder,
 .q-field--labeled:not(.q-field--float) .q-field__input::-ms-input-placeholder {
+  color: transparent;
+}
+.q-field--labeled:not(.q-field--float) .q-field__native::-webkit-input-placeholder, .q-field--labeled:not(.q-field--float) .q-field__input::-webkit-input-placeholder {
   color: transparent;
 }
 .q-field--labeled:not(.q-field--float) .q-field__native::-moz-placeholder, .q-field--labeled:not(.q-field--float) .q-field__input::-moz-placeholder {
@@ -5990,10 +5984,6 @@ body.q-ios-padding .q-notifications__list--bottom {
 .q-notification__avatar {
   font-size: 32px;
   padding-right: 8px;
-}
-.q-notification__spinner {
-  font-size: 32px;
-  margin-right: 8px;
 }
 .q-notification__message {
   padding: 8px 0;
@@ -9819,6 +9809,10 @@ body.q-ios-padding .q-notifications__list--bottom {
 }
 .glossy {
   background-image: linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(255,255,255,0) 50%, rgba(0,0,0,0.12) 51%, rgba(0,0,0,0.04)) !important;
+}
+.q-placeholder::-webkit-input-placeholder {
+  color: inherit;
+  opacity: 0.7;
 }
 .q-placeholder::-moz-placeholder {
   color: inherit;

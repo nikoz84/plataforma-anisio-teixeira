@@ -23,11 +23,11 @@ class ContentVideoConvert
     {
         $this->ffmpeg = $ffmpeg;
         $this->conteudo = $conteudo;
-        
     }
 
     function convertToStreaming($pathDestiny)
     {
+
         $id = $this->conteudo->id;
         $r_144p  = (new Representation)->setKiloBitrate(95)->setResize(256, 144);
         $r_360p  = (new Representation)->setKiloBitrate(276)->setResize(640, 360);
@@ -46,12 +46,18 @@ class ContentVideoConvert
         $rand = rand(5, 99999);
         $video = $this->ffmpeg->open($file);
         $name = "{$id}.{$rand}";
+        $fileConteudoStreaming = "conteudo-".$id;
+        $pathDestiny = $pathDestiny . DIRECTORY_SEPARATOR . $fileConteudoStreaming;
+        if (!is_dir($pathDestiny)) {
+            mkdir($pathDestiny);
+        }    
         $hls = $video->hls()
         ->x264()
         ->addRepresentations([$r_144p, $r_480p])
         ->save("{$pathDestiny}/$name");
         $metadata = $hls->metadata();
-        $metadata->saveAsJson("{$pathDestiny}/json/{$id}.json");
+        //mkdir("{$pathDestiny}/json/");
+        //$metadata->saveAsJson("{$pathDestiny}/json/{$id}.json");
         return $metadata->export();
     }   
 

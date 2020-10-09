@@ -9,6 +9,7 @@ use App\Http\Controllers\ApiController;
 use App\Traits\FileSystemLogic;
 use App\Conteudo;
 use App\Helpers\ContentVideoConvert;
+use App\Jobs\VideoStreamingConvert;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Streaming\FFMpeg;
@@ -138,6 +139,7 @@ class FileController extends ApiController
         $qtdFiles = count($files) - 2;
 
         $dirFiles = array();
+
 
         foreach ($files as $file) {
             if (($file == '.') || ($file == '..')) continue;
@@ -309,23 +311,29 @@ class FileController extends ApiController
     {
         try 
         {
-            $root = $urlPath = Storage::disk('conteudos-digitais')->path("streaming");
+            $root = Storage::disk('conteudos-digitais')->path("streaming");
             $contentVideoConvert = new ContentVideoConvert( Conteudo::findOrFail($id), FFMpeg::create(config('ffmpeg')));
-            $contentVideoConvert->convertToStreaming($root);
+            VideoStreamingConvert::dispatch($contentVideoConvert, $root);
         }
         catch(Exception $ex)
         {
             return ($ex);
-            //return ($ex->getMessage());
         }
-        //Log::channel('ffmpeg_log')->info("Hello world!! $id");
     }
 
-    public function showVideoStreaming()
+    public function showVideoStreaming($id)
     {
-        $file = Storage::disk('conteudos-digitais')->url('streaming/12003.m3u8');
+        try
+        {
+            $conteudo = Conteudo::findOrFail($id);
+            $file = $conteudo->streamingFileConteudo($id);
+            return view('streaming.video', compact('file'));
+        }
+        catch(Exception $e)
+        {
+            return $e;
+        }
         
-        return view('streaming.video', compact('file'));
     }
 }
 
