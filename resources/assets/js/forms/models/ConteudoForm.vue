@@ -266,7 +266,6 @@
         ></q-btn>
       </q-card-section>
     </q-card>
-
     <q-card class="col-sm-3"  :class="{'error-card' : errors && errors.componentes && errors.componentes.length > 0 }">
       <q-card-section v-if="errors && errors.componentes && errors.componentes.length > 0">
         <ShowErrors :errors="errors.componentes"></ShowErrors>

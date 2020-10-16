@@ -22,7 +22,6 @@ class ValidExtensions implements Rule
 
     /**
      * Determine if the validation rule passes.
-     *
      * @param  string  $attribute
      * @param  mixed  $value
      * @return bool
@@ -30,7 +29,8 @@ class ValidExtensions implements Rule
     public function passes($attribute, $value)
     {
         $tipo = Tipo::where('id', $this->tipo_id)->get()->first();
-        
+        if(!$tipo)
+        return false;
         $exists = in_array($value->getClientOriginalExtension(), $tipo->options['formatos']);
         
         return $exists;

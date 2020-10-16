@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Conteudo;
+use App\Helpers\ContentVideoConvert;
 use App\Helpers\ImageExtractionFromVideo;
 use App\Http\Controllers\ApiController;
+use App\Jobs\VideoStreamingConvert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\FileSystemLogic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Exception;
+use Streaming\FFMpeg;
 use Illuminate\Support\Facades\Log;
 
 class ConteudoController extends ApiController
@@ -157,7 +160,7 @@ class ConteudoController extends ApiController
                 422
             );
         }
-        
+        return "";
         $role_id = Auth::user()->role->id;
         
         if ($role_id == 1 || $role_id == 2 || $role_id == 3) {
@@ -190,22 +193,25 @@ class ConteudoController extends ApiController
         $conteudo->tags()->attach($request->tags);
         $conteudo->componentes()->attach(explode(',', $request->componentes));
         $conteudo::tsDocumentoSave($conteudo->id);
-        try {
+        try 
+        {
             $file = $this->storeFiles($request, $conteudo);
-            if (!$file) {
+            if (!$file) 
+            {
                 throw new Exception('Não foi possível fazer upload de arquivos.');
             }
-        } catch (Exception $ex) {
+            $this->stremingVideoConvert($conteudo);
+        } 
+        catch (Exception $ex) 
+        {
             Log::notice($ex->getMessage());
             return $this->errorResponse([], $ex->getMessage(), 422);
         }
-        
-        
         return $this->showOne($conteudo, 'Conteúdo cadastrado com sucesso!!', 200);
     }
+
     /**
      * Atualiza o conteúdo.
-     *
      * @param  Integer $id
      * @return Json
      */
@@ -238,15 +244,17 @@ class ConteudoController extends ApiController
             $conteudo->approving_user_id = Auth::user()->id;
             $conteudo->is_approved = $request->input('is_approved', false);
             $conteudo->is_featured = $request->input('is_featured', false);
-        } else {
+        } 
+        else 
+        {
             $conteudo->setAttribute('approving_user_id', null);
             $conteudo->setAttribute('is_approved', false);
             $conteudo->setAttribute('is_featured', false);
         }
         $conteudo->options = ['site' => $request->options_site];
         $conteudo->is_site = $request->input('is_site', false);
-
-        if (!$conteudo->save()) {
+        if (!$conteudo->save()) 
+        {
             return $this->errorResponse([], 'Não foi possível atualizar o conteúdo', 422);
         }
         $conteudo->tags()->sync($request->tags);
@@ -281,7 +289,6 @@ class ConteudoController extends ApiController
         if (!$conteudo->delete()) {
             return $this->errorResponse([], 'Não foi Possível deletar o conteúdo', 422);
         }
-
         return $this->successResponse([], "Conteúdo de id: {$id} foi apagado com sucesso!!", 200);
     }
 
@@ -410,5 +417,15 @@ class ConteudoController extends ApiController
         $destaques = new \App\Helpers\Destaques(3);
 
         return $this->successResponse($destaques->getHomeDestaques($slug));
+    }
+
+    protected function stremingVideoConvert(Conteudo $conteudo)
+    {
+        if($conteudo->tipo->id == 5)
+        {
+            $root = Storage::disk('conteudos-digitais')->path("streaming");
+            $contentVideoConvert = new ContentVideoConvert( Conteudo::findOrFail($conteudo->id), FFMpeg::create(config('ffmpeg')));
+            VideoStreamingConvert::dispatch($contentVideoConvert, $root)->delay(now()->addSeconds(15));
+        }
     }
 }
