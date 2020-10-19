@@ -54,7 +54,8 @@ Route::get('/conteudos/search/{term}', 'ConteudoController@search')->name('busca
 Route::get('/conteudos/{id}', 'ConteudoController@getById')->name('busca.x.conteudo.id');
 Route::get('/conteudos/tag/{id}', 'ConteudoController@getByTagId')->name('busca.x.tag.id');
 Route::get('/conteudos/relacionados/{id}', 'ConteudoController@conteudosRelacionados')->name('busca.x.id');
-Route::get('/conteudos/destaques/{slug}', 'ConteudoController@getConteudosRecentes')->name('lista.recentes');
+Route::get('/conteudos/nostreamingfiles', 'ConteudoController@conteudoWithNoStreamingFIles')->name('conteudos.nostreamingfiles');
+
 
 /** BLOG */
 Route::get('/posts', 'WordpressController@index')->name('lista.postagens');

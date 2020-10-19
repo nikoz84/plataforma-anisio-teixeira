@@ -493,4 +493,27 @@ class Conteudo extends Model
             ->join('tipos', 'tipos.id', '=', 'conteudos.tipo_id')
             ->where(DB::raw("date_part('year', conteudos.created_at)"), $ano)->get();
     }
+
+    /**
+     * Reorna todos objetos de conteudo de video que não possuem arquivos correspondentes de streaming
+     * @return array $conteudos de video que não possuem arquivos de streaming do video convertidos ainda
+     */
+    public function conteudosSemStreamingFiles()
+    {
+        $conteudos = Conteudo::select(['id','title', 'tipo_id'])
+        ->where("tipo_id", 5)
+        ->get();
+        $conteudoNoStreamingFile=[];
+        foreach($conteudos as $conteudo)
+        {
+            $videoFIleRef = $this->downloadFileConteudoReferencia($conteudo->getId());
+            if($videoFIleRef)
+            {
+                $videoFIleRef = $this->streamingFileConteudoReferencia($conteudo->getId());
+                if(!$videoFIleRef)
+                $conteudoNoStreamingFile[] = $conteudo;
+            }
+        }
+        return $conteudoNoStreamingFile;
+    }
 }

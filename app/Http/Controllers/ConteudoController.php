@@ -160,7 +160,6 @@ class ConteudoController extends ApiController
                 422
             );
         }
-        return "";
         $role_id = Auth::user()->role->id;
         
         if ($role_id == 1 || $role_id == 2 || $role_id == 3) {
@@ -427,5 +426,11 @@ class ConteudoController extends ApiController
             $contentVideoConvert = new ContentVideoConvert( Conteudo::findOrFail($conteudo->id), FFMpeg::create(config('ffmpeg')));
             VideoStreamingConvert::dispatch($contentVideoConvert, $root)->delay(now()->addSeconds(15));
         }
+    }
+
+    public function conteudoWithNoStreamingFIles()
+    {
+        $conteudo = new Conteudo();
+        return $conteudo->conteudosSemStreamingFiles();
     }
 }

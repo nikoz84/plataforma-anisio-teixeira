@@ -314,6 +314,7 @@ class FileController extends ApiController
             $root = Storage::disk('conteudos-digitais')->path("streaming");
             $contentVideoConvert = new ContentVideoConvert( Conteudo::findOrFail($id), FFMpeg::create(config('ffmpeg')));
             VideoStreamingConvert::dispatch($contentVideoConvert, $root);
+            //$contentVideoConvert->convertToStreaming($root, FFMpeg::create(config('ffmpeg')));
         }
         catch(Exception $ex)
         {

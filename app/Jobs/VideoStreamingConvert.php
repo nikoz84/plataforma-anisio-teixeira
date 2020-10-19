@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Helpers\ContentVideoConvert;
+use Streaming\FFMpeg;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -33,7 +34,8 @@ class VideoStreamingConvert implements ShouldQueue
      */
     public function handle()
     {
-        //
-        $this->converter->convertToStreaming($this->pathDestiny);
+        
+        $ffmpeg = FFMpeg::create(config('ffmpeg'));
+        $this->converter->convertToStreaming($this->pathDestiny, $ffmpeg);
     }
 }
