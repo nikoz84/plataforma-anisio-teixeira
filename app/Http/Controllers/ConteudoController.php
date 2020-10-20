@@ -30,7 +30,8 @@ class ConteudoController extends ApiController
             'getSitesTematicos',
             'conteudosRelacionados',
             'getConteudosRecentes',
-            'incorporarConteudo'
+            'incorporarConteudo',
+            'conteudoWithNoStreamingFiles'
         ]);
         $request = $request;
     }
@@ -82,7 +83,7 @@ class ConteudoController extends ApiController
         $limit = $request->query('limit', 10);
         $query = Conteudo::query();
 
-        $query::with(['canal'])
+        $query->with(['canal'])
             ->where('is_site', 'true')
             ->where('is_approved', 'true')
             ->sortBy($request->query('ordenar', 'created_at'));
@@ -136,11 +137,10 @@ class ConteudoController extends ApiController
         ];
         return array_merge(parent::messagesRules(), $mensagens);
     }
+
     /**
      * Adiciona e valida novo conteúdo
-     *
      * @param $request \Illuminate\Http\Request
-     *
      * @return App\Traits\ApiReponser
      */
     public function create(Request $request)
@@ -184,7 +184,6 @@ class ConteudoController extends ApiController
         $conteudo->setAttribute('is_site', $request->input('is_site', false));
         $conteudo->qt_downloads = Conteudo::INIT_COUNT;
         $conteudo->qt_access = Conteudo::INIT_COUNT;
-        
         if (!$conteudo->save()) {
             return $this->errorResponse([], "Não foi possível cadastrar o conteúdo", 422);
         }
@@ -199,7 +198,7 @@ class ConteudoController extends ApiController
             {
                 throw new Exception('Não foi possível fazer upload de arquivos.');
             }
-            $this->stremingVideoConvert($conteudo);
+           //$this->stremingVideoConvert($conteudo);
         } 
         catch (Exception $ex) 
         {
@@ -261,10 +260,13 @@ class ConteudoController extends ApiController
         Conteudo::tsDocumentoSave($conteudo->id);
 
         if ($request->has('download') || $request->has('guias_pedagogicos') ||
-            $request->has('imagem_associada') || $request->has('visualizacao')) {
+            $request->has('imagem_associada') || $request->has('visualizacao')) 
+        {
+           
             if (!$this->storeFiles($request, $conteudo)) {
                 return $this->errorResponse([], 'Não foi possível fazer upload de arquivos.', 422);
             }
+            $this->stremingVideoConvert($conteudo);
         }
         return $this->showOne($conteudo, 'Conteúdo editado com sucesso!!', 200);
     }
@@ -371,10 +373,11 @@ class ConteudoController extends ApiController
     private function storeFiles($request, $conteudo = null)
     {
         $file = null;
-
-        if ($conteudo && $conteudo->id) {
+        if ($conteudo && $conteudo->id) 
+        {
             if ($request->has('download') && !is_null($request->download)) {
                 $this->deleteFile("download", $conteudo->id);
+                $this->deleteFile("streaming", $conteudo->id);
                 $file = $this->saveFile($conteudo->id, [$request->download], 'download');
                 if ($conteudo->tipo->id == 5) {
                     if ($file && !$request->has('imagem_associada')) {
@@ -397,7 +400,6 @@ class ConteudoController extends ApiController
                 $file = $this->saveFile($conteudo->id, [$request->imagem_associada], 'imagem-associada');
             }
         }
-
         return $file;
     }
 
@@ -414,10 +416,14 @@ class ConteudoController extends ApiController
     public function getConteudosRecentes($slug)
     {
         $destaques = new \App\Helpers\Destaques(3);
-
         return $this->successResponse($destaques->getHomeDestaques($slug));
     }
 
+    /**
+     * Undocumented function
+     * @param Conteudo $conteudo
+     * @return void
+     */
     protected function stremingVideoConvert(Conteudo $conteudo)
     {
         if($conteudo->tipo->id == 5)
@@ -428,7 +434,11 @@ class ConteudoController extends ApiController
         }
     }
 
-    public function conteudoWithNoStreamingFIles()
+    /**
+     * conteudos de video sem arquivos formato streaming
+     * @return App\Traits\ApiResponser
+     */
+    public function conteudoWithNoStreamingFiles()
     {
         $conteudo = new Conteudo();
         return $conteudo->conteudosSemStreamingFiles();

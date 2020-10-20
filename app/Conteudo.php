@@ -506,10 +506,10 @@ class Conteudo extends Model
         $conteudoNoStreamingFile=[];
         foreach($conteudos as $conteudo)
         {
-            $videoFIleRef = $this->downloadFileConteudoReferencia($conteudo->getId());
+            $videoFIleRef = $this->downloadFileConteudoReferencia($conteudo->id);
             if($videoFIleRef)
             {
-                $videoFIleRef = $this->streamingFileConteudoReferencia($conteudo->getId());
+                $videoFIleRef = $this->streamingFileConteudoReferencia($conteudo->id);
                 if(!$videoFIleRef)
                 $conteudoNoStreamingFile[] = $conteudo;
             }

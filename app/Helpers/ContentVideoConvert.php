@@ -27,7 +27,6 @@ class ContentVideoConvert
 
     function convertToStreaming($pathDestiny)
     {
-
         $id = $this->conteudo->id;
         $r_144p  = (new Representation)->setKiloBitrate(95)->setResize(256, 144);
         $r_360p  = (new Representation)->setKiloBitrate(276)->setResize(640, 360);
