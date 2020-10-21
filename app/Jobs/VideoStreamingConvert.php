@@ -13,6 +13,7 @@ use Illuminate\Queue\SerializesModels;
 class VideoStreamingConvert implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    public $tries = 2;
     private ContentVideoConvert $converter;
     private string $pathDestiny;
     /**
@@ -22,7 +23,6 @@ class VideoStreamingConvert implements ShouldQueue
      */
     public function __construct(ContentVideoConvert $converter, string $path)
     {
-        //
         $this->converter = $converter;
         $this->pathDestiny = $path;
     }
@@ -34,7 +34,6 @@ class VideoStreamingConvert implements ShouldQueue
      */
     public function handle()
     {
-        
         $ffmpeg = FFMpeg::create(config('ffmpeg'));
         $this->converter->convertToStreaming($this->pathDestiny, $ffmpeg);
     }

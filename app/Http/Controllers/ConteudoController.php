@@ -198,7 +198,7 @@ class ConteudoController extends ApiController
             {
                 throw new Exception('Não foi possível fazer upload de arquivos.');
             }
-           //$this->stremingVideoConvert($conteudo);
+           $this->stremingVideoConvert($conteudo);
         } 
         catch (Exception $ex) 
         {
