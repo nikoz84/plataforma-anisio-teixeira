@@ -16,6 +16,8 @@
 - Relatórios de conteúdos - mais baixados e mais visualizados
 - Relatórios de conteúdos por ano
 - Relatório de usuários por papel
+- Conversão de arquivo de video do conteudo para o formato streaming no momento do upload.
+- Comando para conversão de conteudos de video para streaming em lote
 ################################################################################################
 # Versão 2.0.4
 ################################################################################################
