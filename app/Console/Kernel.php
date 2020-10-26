@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\ImportData::class
+        //Commands\ImportData::class,
+        Commands\CommandConvertVideoStreming::class
     ];
 
     /**
@@ -26,6 +27,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->command('convert:streaming')->daily()->between('01:00', '06:00')->withoutOverlapping();
     }
 
     /**

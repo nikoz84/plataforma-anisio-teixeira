@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Jobs\VideoStreamingConvert;
 use Streaming\FFMpeg;
 
-class ConvertVideoStreming extends Command
+class CommandConvertVideoStreming extends Command
 {
     /**
      * The name and signature of the console command.
@@ -37,8 +37,6 @@ class ConvertVideoStreming extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
     public function handle()
     {
