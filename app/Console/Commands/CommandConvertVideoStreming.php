@@ -9,25 +9,25 @@ use Illuminate\Support\Facades\Storage;
 use App\Jobs\VideoStreamingConvert;
 use Streaming\FFMpeg;
 
+/**
+ * Classe de comando para executar tarefa agendada de conversão de arquivos dos conteudos digitais para streaming
+ */
 class CommandConvertVideoStreming extends Command
 {
     /**
      * The name and signature of the console command.
-     *
      * @var string
      */
     protected $signature = 'convert:streaming';
 
     /**
      * The console command description.
-     *
      * @var string
      */
     protected $description = 'Coverte os conteudos do tipo video (tipo_id = 5) que estão na aplicação e possuem um arquivo de video mas não possuem o formato streming na pasta streming';
 
     /**
      * Create a new command instance.
-     *
      * @return void
      */
     public function __construct()
@@ -40,7 +40,6 @@ class CommandConvertVideoStreming extends Command
      */
     public function handle()
     {
-        //
         $conteudo = new Conteudo();
         $conteudosSemStreaming = $conteudo->conteudosSemStreamingFiles();
         $root = Storage::disk('conteudos-digitais')->path("streaming");

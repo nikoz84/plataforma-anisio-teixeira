@@ -471,10 +471,8 @@ class Conteudo extends Model
         ->join('tipos', 'tipos.id', '=', 'conteudos.tipo_id')
         ->whereNotNull("qt_access")
         ->orderByDesc("conteudos.qt_access");
-
         return $contents;
     }
-
 
     /**
      * obtem array com os anos distintos que houveram conteúdos publicados

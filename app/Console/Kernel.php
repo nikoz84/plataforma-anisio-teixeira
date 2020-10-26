@@ -25,20 +25,17 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        // $schedule->command('inspire')->hourly();
         $schedule->command('convert:streaming')->daily()->between('01:00', '06:00')->withoutOverlapping();
     }
 
     /**
      * Register the commands for the application.
-     *
      * @return void
      */
     protected function commands()
     {
         $this->load(__DIR__.'/Commands');
-
         require base_path('routes/console.php');
     }
 }

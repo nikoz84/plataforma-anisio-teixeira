@@ -10,6 +10,9 @@ use Streaming\FFMpeg;
 use Streaming\Representation;
 use App\Helpers\ImageExtractionFromVideo;
 
+/**
+ * Classe de conversão de video do conteudo digital para um formato streaming
+ */
 class ContentVideoConvert
 {
     use FileSystemLogic;
@@ -25,6 +28,12 @@ class ContentVideoConvert
         $this->conteudo = $conteudo;
     }
 
+    /**
+     * metodo que converte o video do conteudo, passado pelo construtor, para o formato de streaming.
+     * recebe uma string indicando o caminho do conteudo dentro da pasta de arquivos
+     * @param string $pathDestiny
+     * @return array
+     */
     function convertToStreaming($pathDestiny)
     {
         $id = $this->conteudo->id;
