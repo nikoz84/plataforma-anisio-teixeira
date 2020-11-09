@@ -29,7 +29,6 @@ class SideBar
 
         $layout = (object) Options::select("meta_data")
         ->where("name", "like", "layout")->get()->first();
-
         $canais =  DB::select(DB::raw("SELECT name,
                                     slug,
                                     options->'order_menu' AS order,
