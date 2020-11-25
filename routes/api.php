@@ -39,10 +39,7 @@ Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscar.can
 Route::get('/componentes', 'ComponentesController@index')->name('lista.componentes.curriculares');
 
 /** CATEGORIAS COMPONENTES */
-Route::get(
-    '/componentescategorias',
-    'CurricularComponentCategoryController@index'
-)->name('lista.categorias.componentes.curriculares');
+Route::get('/componentescategorias','CurricularComponentCategoryController@index')->name('lista.categorias.componentes.curriculares');
 
  /**NIVEL ENSINO**/
  Route::get('/nivelensino', 'NivelEnsinoController@index')->name('lista.nevelensino');

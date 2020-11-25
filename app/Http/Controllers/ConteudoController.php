@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Conteudo;
+use App\Helpers\CachingModelObjects;
 use App\Helpers\ContentVideoConvert;
 use App\Helpers\ImageExtractionFromVideo;
 use App\Http\Controllers\ApiController;
@@ -65,10 +66,7 @@ class ConteudoController extends ApiController
         if ($request->has('aprovados') && Auth::user()) {
             $is_approved = $request->query('aprovados', 'true');
         }
-        $conteudos = $query->aprovados($is_approved)
-            ->with(['canal', 'tipo'])
-            ->paginate($request->query('limit', 6))
-            ->setPath("/conteudos?{$url}");
+        $conteudos = $query->aprovados($is_approved)->with(['canal', 'tipo'])->paginate($request->query('limit', 6))->setPath("/conteudos?{$url}");
 
         return $this->showAsPaginator($conteudos);
     }
@@ -305,10 +303,9 @@ class ConteudoController extends ApiController
     {
         $limit = $request->query('limit', 6);
         $query = Conteudo::query();
-        
         $query->fullTextSearch($termo, 'tag');
-        
-        $conteudos = $query->paginate($limit);
+        //$conteudos = $query->paginate($limit);
+        $conteudos =  CachingModelObjects::search($query, $termo, $limit);
         $conteudos->setPath("/conteudos/search/{$termo}?limit={$limit}");
         return $this->showAsPaginator($conteudos);
     }
@@ -321,6 +318,7 @@ class ConteudoController extends ApiController
      */
     public function getById(Request $request, $id)
     {
+        /*
         $conteudo = Conteudo::with([
             'tipo',
             'user',
@@ -330,10 +328,20 @@ class ConteudoController extends ApiController
             'category',
             'componentes',
             'niveis',
-        ])->findOrFail($id);
-        
+        ])->findOrFail($id);*/
+        $conteudo = new Conteudo();
+        $query = $conteudo->query()->with([
+            'tipo',
+            'user',
+            'canal',
+            'tags',
+            'license',
+            'category',
+            'componentes',
+            'niveis',
+        ]);
+        $conteudo = CachingModelObjects::getById($query, $id);
         $conteudo->increment('qt_access', 1);
-
         return $this->showOne($conteudo);
     }
 

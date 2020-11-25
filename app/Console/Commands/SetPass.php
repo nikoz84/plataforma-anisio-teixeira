@@ -55,6 +55,7 @@ class SetPass extends Command
             'nildsonveloso@hotmail.com',
             'navegpeterson@gmail.com',
             'valdineia_gal@hotmail.com',
+            'tiago.souzalns@gmail.com'
         ];
 
         foreach ($emails as $email) {

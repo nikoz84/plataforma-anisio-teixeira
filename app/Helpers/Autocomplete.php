@@ -47,7 +47,6 @@ class Autocomplete
     private function perTag()
     {
         $search = "%{$this->term}%";
-
         $paginator = DB::table("tags as t")
             ->select(['t.id', 't.name'])
             ->whereRaw('unaccent(lower(t.name)) LIKE unaccent(lower(?))', [$search])

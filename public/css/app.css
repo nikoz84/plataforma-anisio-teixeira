@@ -62,7 +62,7 @@ body {
   color: #263238;
 }
 /*
- * Quasar Framework v1.14.1
+ * Quasar Framework v1.14.5
  * (c) 2015-present Razvan Stoenescu
  * Released under the MIT License.
  */
@@ -1888,8 +1888,14 @@ body.q-ios-padding .q-dialog__inner > div {
   width: 1px;
   background: rgba(0,0,0,0.12);
 }
-.q-editor_input input {
+.q-editor__link-input {
   color: inherit;
+  text-decoration: none;
+  text-transform: none;
+  border: none;
+  border-radius: 0;
+  background: none;
+  outline: 0;
 }
 .q-editor--flat,
 .q-editor--flat .q-editor__toolbar {
@@ -2541,17 +2547,10 @@ body.q-ios-padding .q-dialog__inner > div {
 .q-field--labeled:not(.q-field--float) .q-field__input:-ms-input-placeholder {
   color: transparent !important;
 }
-.q-field--labeled:not(.q-field--float) .q-field__native::-ms-input-placeholder,
-.q-field--labeled:not(.q-field--float) .q-field__input::-ms-input-placeholder {
-  color: transparent;
-}
 .q-field--labeled:not(.q-field--float) .q-field__native::-moz-placeholder, .q-field--labeled:not(.q-field--float) .q-field__input::-moz-placeholder {
   color: transparent;
 }
 .q-field--labeled:not(.q-field--float) .q-field__native:-ms-input-placeholder, .q-field--labeled:not(.q-field--float) .q-field__input:-ms-input-placeholder {
-  color: transparent;
-}
-.q-field--labeled:not(.q-field--float) .q-field__native::-ms-input-placeholder, .q-field--labeled:not(.q-field--float) .q-field__input::-ms-input-placeholder {
   color: transparent;
 }
 .q-field--labeled:not(.q-field--float) .q-field__native::placeholder,
@@ -2586,7 +2585,7 @@ body.q-ios-padding .q-dialog__inner > div {
 .q-field--dense .q-field__append + .q-field__append {
   padding-left: 2px;
 }
-.q-field--dense .q-avatar {
+.q-field--dense .q-field__marginal .q-avatar {
   font-size: 24px;
 }
 .q-field--dense.q-field--float .q-field__label {
@@ -3245,7 +3244,7 @@ body.platform-ios .q-layout--containerized {
 }
 .q-linear-progress__stripe {
   transition: width 0.3s;
-  background-image: linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.15) 75%, transparent 75%, transparent) !important;
+  background-image: linear-gradient(45deg, rgba(255,255,255,0.15) 25%, rgba(255,255,255,0) 25%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.15) 75%, rgba(255,255,255,0) 75%, rgba(255,255,255,0)) !important;
   background-size: 40px 40px !important;
 }
 .q-menu {
@@ -3505,6 +3504,9 @@ body.desktop .q-radio--dense:not(.disabled):hover .q-radio__inner:before {
 .q-select--with-input .q-field__control {
   cursor: text;
 }
+.q-select .q-field__native > span:first-child:empty:before {
+  content: '\A0';
+}
 .q-select .q-field__input {
   min-width: 50px !important;
 }
@@ -3520,6 +3522,7 @@ body.desktop .q-radio--dense:not(.disabled):hover .q-radio__inner:before {
 }
 .q-select__dropdown-icon {
   cursor: pointer;
+  transition: transform 0.28s;
 }
 .q-select.q-field--readonly .q-field__control,
 .q-select.q-field--readonly .q-select__dropdown-icon {
@@ -3693,7 +3696,7 @@ body.platform-ios:not(.native-mobile) .q-dialog__inner--top .q-select__dialog--f
           animation: q-skeleton--fade 1.5s linear 0.5s infinite;
 }
 .q-skeleton--anim-wave:after {
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.5), rgba(255,255,255,0));
   -webkit-animation: q-skeleton--wave 1.5s linear 0.5s infinite;
           animation: q-skeleton--wave 1.5s linear 0.5s infinite;
 }
@@ -3704,7 +3707,7 @@ body.platform-ios:not(.native-mobile) .q-dialog__inner--top .q-select__dialog--f
   border: 1px solid rgba(255,255,255,0.25);
 }
 .q-skeleton--dark.q-skeleton--anim-wave:after {
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.1), rgba(255,255,255,0));
 }
 .q-skeleton--dark.q-skeleton--anim-blink:after {
   background: rgba(255,255,255,0.2);
@@ -3810,10 +3813,10 @@ body.platform-ios:not(.native-mobile) .q-dialog__inner--top .q-select__dialog--f
   color: #000;
 }
 .q-slider__track-markers--h {
-  background-image: repeating-linear-gradient(to right, currentColor, currentColor 2px, transparent 0, transparent);
+  background-image: repeating-linear-gradient(to right, currentColor, currentColor 2px, rgba(255,255,255,0) 0, rgba(255,255,255,0));
 }
 .q-slider__track-markers--v {
-  background-image: repeating-linear-gradient(to top, currentColor, currentColor 2px, transparent 0, transparent);
+  background-image: repeating-linear-gradient(to top, currentColor, currentColor 2px, rgba(255,255,255,0) 0, rgba(255,255,255,0));
 }
 .q-slider__track-markers:after {
   content: '';
@@ -5784,7 +5787,7 @@ body.desktop .q-toggle--dense:not(.disabled):hover .q-toggle__thumb:before {
 }
 .q-uploader__file--img .q-uploader__file-header {
   padding-bottom: 24px;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.7) 20%, transparent);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.7) 20%, rgba(255,255,255,0));
 }
 .q-uploader__file + .q-uploader__file {
   margin-top: 8px;
@@ -5854,7 +5857,7 @@ body.desktop .q-toggle--dense:not(.disabled):hover .q-toggle__thumb:before {
   outline: 0;
 }
 .q-virtual-scroll__padding {
-  background: linear-gradient(transparent, transparent 20%, rgba(128,128,128,0.03) 20%, rgba(128,128,128,0.08) 50%, rgba(128,128,128,0.03) 80%, transparent 80%, transparent) /* rtl:ignore */;
+  background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0) 20%, rgba(128,128,128,0.03) 20%, rgba(128,128,128,0.08) 50%, rgba(128,128,128,0.03) 80%, rgba(255,255,255,0) 80%, rgba(255,255,255,0)) /* rtl:ignore */;
   background-size: 100% 50px /* rtl:ignore */;
 }
 .q-table .q-virtual-scroll__padding tr {
@@ -5880,7 +5883,7 @@ body.desktop .q-toggle--dense:not(.disabled):hover .q-toggle__thumb:before {
   flex: 0 0 auto;
 }
 .q-virtual-scroll--horizontal .q-virtual-scroll__padding {
-  background: linear-gradient(to left, transparent, transparent 20%, rgba(128,128,128,0.03) 20%, rgba(128,128,128,0.08) 50%, rgba(128,128,128,0.03) 80%, transparent 80%, transparent) /* rtl:ignore */;
+  background: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,0) 20%, rgba(128,128,128,0.03) 20%, rgba(128,128,128,0.08) 50%, rgba(128,128,128,0.03) 80%, rgba(255,255,255,0) 80%, rgba(255,255,255,0)) /* rtl:ignore */;
   background-size: 50px 100% /* rtl:ignore */;
 }
 .q-ripple {
@@ -5989,7 +5992,7 @@ body.q-ios-padding .q-notifications__list--bottom {
 }
 .q-notification__avatar {
   font-size: 32px;
-  padding-right: 8px;
+  margin-right: 8px;
 }
 .q-notification__spinner {
   font-size: 32px;
@@ -6138,9 +6141,14 @@ body.q-ios-padding .q-notifications__list--bottom {
     max-width: 65vw;
   }
 }
+:root {
+  --animate-duration: 0.3s;
+  --animate-delay: 0.3s;
+  --animate-repeat: 1;
+}
 .animated {
-  -webkit-animation-duration: 0.3s;
-          animation-duration: 0.3s;
+  -webkit-animation-duration: var(--animate-duration);
+          animation-duration: var(--animate-duration);
   -webkit-animation-fill-mode: both;
           animation-fill-mode: both;
 }
@@ -6152,12 +6160,65 @@ body.q-ios-padding .q-notifications__list--bottom {
   -webkit-animation-duration: 2s;
           animation-duration: 2s;
 }
-.animated.flipOutX,
-.animated.flipOutY,
-.animated.bounceIn,
-.animated.bounceOut {
-  -webkit-animation-duration: 0.3s;
-          animation-duration: 0.3s;
+.animated.repeat-1 {
+  -webkit-animation-iteration-count: var(--animate-repeat);
+          animation-iteration-count: var(--animate-repeat);
+}
+.animated.repeat-2 {
+  -webkit-animation-iteration-count: calc(var(--animate-repeat) * 2);
+          animation-iteration-count: calc(var(--animate-repeat) * 2);
+}
+.animated.repeat-3 {
+  -webkit-animation-iteration-count: calc(var(--animate-repeat) * 3);
+          animation-iteration-count: calc(var(--animate-repeat) * 3);
+}
+.animated.delay-1s {
+  -webkit-animation-delay: var(--animate-delay);
+          animation-delay: var(--animate-delay);
+}
+.animated.delay-2s {
+  -webkit-animation-delay: calc(var(--animate-delay) * 2);
+          animation-delay: calc(var(--animate-delay) * 2);
+}
+.animated.delay-3s {
+  -webkit-animation-delay: calc(var(--animate-delay) * 3);
+          animation-delay: calc(var(--animate-delay) * 3);
+}
+.animated.delay-4s {
+  -webkit-animation-delay: calc(var(--animate-delay) * 4);
+          animation-delay: calc(var(--animate-delay) * 4);
+}
+.animated.delay-5s {
+  -webkit-animation-delay: calc(var(--animate-delay) * 5);
+          animation-delay: calc(var(--animate-delay) * 5);
+}
+.animated.faster {
+  -webkit-animation-duration: calc(var(--animate-duration) / 2);
+          animation-duration: calc(var(--animate-duration) / 2);
+}
+.animated.fast {
+  -webkit-animation-duration: calc(var(--animate-duration) * 0.8);
+          animation-duration: calc(var(--animate-duration) * 0.8);
+}
+.animated.slow {
+  -webkit-animation-duration: calc(var(--animate-duration) * 2);
+          animation-duration: calc(var(--animate-duration) * 2);
+}
+.animated.slower {
+  -webkit-animation-duration: calc(var(--animate-duration) * 3);
+          animation-duration: calc(var(--animate-duration) * 3);
+}
+@media print, (prefers-reduced-motion: reduce) {
+  .animated {
+    -webkit-animation-duration: 1ms !important;
+            animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+    -webkit-animation-iteration-count: 1 !important;
+            animation-iteration-count: 1 !important;
+  }
+  .animated[class*='Out'] {
+    opacity: 0;
+  }
 }
 .q-animate--scale {
   -webkit-animation: q-scale 0.15s;
@@ -9827,10 +9888,6 @@ body.q-ios-padding .q-notifications__list--bottom {
 .q-placeholder:-ms-input-placeholder {
   color: inherit !important;
   opacity: 0.7 !important;
-}
-.q-placeholder::-ms-input-placeholder {
-  color: inherit;
-  opacity: 0.7;
 }
 .q-placeholder::placeholder {
   color: inherit;

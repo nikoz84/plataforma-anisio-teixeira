@@ -39,12 +39,13 @@ class ImportData extends Command
      */
     public function handle()
     {
-        $files = array_sort(File::files(storage_path('dumps')), function ($file) {
+        $files = array_sort(File::files("C:\Users\Public\dumps"), function ($file) {
             return $file->getFilename();
         });
         $this->info('Importando dados esper um momento...');
         
         foreach ($files as $file) {
+            $option = "";
             if ($file->getExtension() == 'json') {
                 $filename = pathinfo($file, PATHINFO_FILENAME);
                 $data = file_get_contents($file);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\CachingModelObjects;
 use App\Http\Controllers\ApiController;
 use App\Tipo;
 use Illuminate\Support\Facades\Validator;
@@ -16,7 +17,8 @@ class TipoController extends ApiController
 
     public function __construct(Request $request)
     {
-        $this->middleware('jwt.auth')->except(['index']);
+        $this->middleware('jwt.auth')->except(['index',
+        'search','getTiposById']);
         $this->request = $request;
     }
      /**
@@ -133,7 +135,8 @@ class TipoController extends ApiController
      */
     public function getTiposById($id)
     {
-        $tipo = Tipo::find($id);
+        //$tipo = Tipo::find($id);
+        $tipo = CachingModelObjects::getById(Tipo::query(), $id);
         return $this->showOne($tipo);
     }
 
@@ -147,7 +150,9 @@ class TipoController extends ApiController
     {
         $limit = ($request->has('limit')) ? $request->query('limit') : 20;
         $search = "%{$termo}%";
-        $paginator = Tipo::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search])->paginate($limit);
+        //$paginator = Tipo::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search])->paginate($limit);
+        $query =  Tipo::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search]);
+        $paginator = CachingModelObjects::search($query, $termo, $limit);
         $paginator->setPath("/tipos/search/{$termo}?limit={$limit}");
         return $this->showAsPaginator($paginator, '', 200);
     }
