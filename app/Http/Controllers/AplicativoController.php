@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ApiController;
 use App\Aplicativo;
+use App\Helpers\CachingModelObjects;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -113,13 +114,11 @@ class AplicativoController extends ApiController
     private function createFile($id, $image)
     {
         $fileName = "{$id}.{$image->guessExtension()}";
-        $path = $image
-            ->storeAs('imagem-associada', $fileName, 'aplicativos-educacionais');
+        $path = $image->storeAs('imagem-associada', $fileName, 'aplicativos-educacionais');
         $image = new ResizeImage();
 
         $filePath = $this->storage::disk('aplicativos-educacionais')->url($path);
-        $dir = $this->storage::disk('aplicativos-educacionais')
-            ->getDriver()->getAdapter()->getPathPrefix() . "imagem-associada/";
+        $dir = $this->storage::disk('aplicativos-educacionais')->getDriver()->getAdapter()->getPathPrefix() . "imagem-associada/";
         $image->resize($filePath, $fileName, $dir);
     }
     /**
@@ -191,10 +190,9 @@ class AplicativoController extends ApiController
     {
         $limit = $request->query('limit', 15);
         $search = "%{$termo}%";
-        $aplicativos = Aplicativo::select(['id', 'name'])
-            ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
-            ->paginate($limit);
-
+        //$aplicativos = Aplicativo::select(['id', 'name'])->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])->paginate($limit);
+        $query =  Aplicativo::select(['id', 'name'])->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search]);
+        $aplicativos = CachingModelObjects::search($query, $termo, $limit);
         $aplicativos->setPath("/aplicativos/search/{$termo}?limit={$limit}");
 
         return $this->showAsPaginator(
@@ -211,7 +209,8 @@ class AplicativoController extends ApiController
      */
     public function getById($id)
     {
-        $aplicativo = $this->aplicativo::with(['tags', 'category', 'user', 'canal'])->find($id);
+        //$aplicativo = $this->aplicativo::with(['tags', 'category', 'user', 'canal'])->find($id);
+        $aplicativo = CachingModelObjects::getById($this->aplicativo::with(['tags', 'category', 'user', 'canal']), $id);
         $increment = $aplicativo->options['qt_access'] + 1;
         $aplicativo->setAttribute('options->qt_access', $increment); // json attribute
         $aplicativo->save();

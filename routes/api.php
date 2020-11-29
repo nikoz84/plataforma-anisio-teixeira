@@ -40,6 +40,9 @@ Route::get('/componentes', 'ComponentesController@index')->name('lista.component
 
 /** CATEGORIAS COMPONENTES */
 Route::get('/componentescategorias','CurricularComponentCategoryController@index')->name('lista.categorias.componentes.curriculares');
+Route::get('/componentescategorias/search/{termo}', 'CurricularComponentCategoryController@search')->name('buscar.componentescategorias');
+Route::get('/componentescategorias/{id}', 'CurricularComponentCategoryController@getById' )->name('obter.componentes-categoria');
+        
 
  /**NIVEL ENSINO**/
  Route::get('/nivelensino', 'NivelEnsinoController@index')->name('lista.nevelensino');
@@ -120,40 +123,17 @@ Route::group(
         Route::delete('/componentes/{id}', 'ComponentesController@delete')->name('deletar.componentes');
 
         /** COMPONENTES CATEGORIAS*/
-        Route::post(
-            '/componentescategorias',
-            'CurricularComponentCategoryController@create'
-        )->name('criar.componentes-categoria.curriculares');
-        Route::get(
-            '/componentescategorias/{id}',
-            'CurricularComponentCategoryController@getById'
-        )->name('obter.componentes-categoria');
-        Route::get(
-            '/componentescategorias/search/{termo}',
-            'CurricularComponentCategoryController@search'
-        )->name('buscar.componentescategorias');
-        Route::put(
-            '/componentescategorias/{id}',
-            'CurricularComponentCategoryController@update'
-        )->name('atualizar.componentescategorias');
-        Route::delete(
-            '/componentescategorias/{id}',
-            'CurricularComponentCategoryController@delete'
-        )->name('deletar.componentescategorias');
-        Route::get(
-            '/componentescategorias/autocomplete/{term}',
-            'CurricularComponentCategoryController@autocomplete'
-        )->name('autocompletar.componentescategorias');
+        Route::post('/componentescategorias', 'CurricularComponentCategoryController@create' )->name('criar.componentes-categoria.curriculares');
+        Route::put('/componentescategorias/{id}', 'CurricularComponentCategoryController@update' )->name('atualizar.componentescategorias');
+        Route::delete('/componentescategorias/{id}', 'CurricularComponentCategoryController@delete' )->name('deletar.componentescategorias');
+        Route::get('/componentescategorias/autocomplete/{term}','CurricularComponentCategoryController@autocomplete')->name('autocompletar.componentescategorias');
 
         /**NIVEL ENSINO**/
         Route::get('/nivelensino/search/{termo}', 'NivelEnsinoController@search')->name('buscar.nivelensino');
         Route::get('/nivelensino/{id}', 'NivelEnsinoController@getById')->name('obter.nivelensino');
         Route::post('/nivelensino', 'NivelEnsinoController@create')->name('criar.nivelensino');
         Route::put('/nivelensino/{id}', 'NivelEnsinoController@update')->name('atualizar.nivelensino');
-        Route::get(
-            '/nivelensino/autocomplete/{term}',
-            'NivelEnsinoController@autocomplete'
-        )->name('autocompletar.nivelensino');
+        Route::get('/nivelensino/autocomplete/{term}', 'NivelEnsinoController@autocomplete')->name('autocompletar.nivelensino');
         Route::delete('/nivelensino/{id}', 'NivelEnsinoController@delete')->name('deletar.nivelensino');
 
         /** AUTENTICACAO */

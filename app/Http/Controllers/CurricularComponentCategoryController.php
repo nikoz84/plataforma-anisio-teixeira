@@ -7,6 +7,7 @@ use App\CurricularComponent as Componente;
 use App\CurricularComponent;
 use App\CurricularComponentCategory as Category;
 use App\CurricularComponentCategory;
+use App\Helpers\CachingModelObjects;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +19,7 @@ class CurricularComponentCategoryController extends ApiController
     use ApiResponser;
     public function __construct(Request $request)
     {
-        $this->middleware('jwt.auth')->except(['index', 'search']);
+        $this->middleware('jwt.auth')->except(['index', 'search', 'getById']);
         $this->request = $request;
     }
 
@@ -96,6 +97,7 @@ class CurricularComponentCategoryController extends ApiController
             ->limit($limit)
             ->orderBy('name', 'asc')
             ->paginate($limit);
+            
         return $this->showAsPaginator($componentesCategoria);
     }
 
@@ -107,8 +109,9 @@ class CurricularComponentCategoryController extends ApiController
     {
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 20;
         $search = "%{$termo}%";
-        $paginator = CurricularComponentCategory::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search])
-            ->paginate($limit);
+        //$paginator = CurricularComponentCategory::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search])->paginate($limit);
+        $query = CurricularComponentCategory::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search]);
+        $paginator = CachingModelObjects::search($query, $termo, $limit);
         $paginator->setPath("/componentescategorias/search/{$termo}?limit={$limit}");
         return $this->showAsPaginator($paginator, 'Resultado da busca...', 200);
     }
@@ -117,7 +120,8 @@ class CurricularComponentCategoryController extends ApiController
     {
         $componentesCategoria = new CurricularComponentCategory();
         try {
-            $componentesCategoria = CurricularComponentCategory::with('componentes')->findOrFail($id);
+            //$componentesCategoria = CurricularComponentCategory::with('componentes')->findOrFail($id);
+            $componentesCategoria = CachingModelObjects::getById(CurricularComponentCategory::with('componentes'), $id);
         } catch (Exception $ex) {
             return $this->errorResponse(
                 [],

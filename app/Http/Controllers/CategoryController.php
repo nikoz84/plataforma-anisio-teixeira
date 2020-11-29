@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ApiController;
 use App\Traits\FileSystemLogic;
 use App\Canal;
+use App\Helpers\CachingModelObjects;
 
 class CategoryController extends ApiController
 {
@@ -170,9 +171,9 @@ class CategoryController extends ApiController
 
     public function getById($id)
     {
-        $category = Category::findOrFail($id);
-        $category->canal;
-        return  $category;
+        //return $category = Category::findOrFail($id);
+        $category = new Category();
+        return CachingModelObjects::getById($category->query()->with("canal"), $id);
     }
 
 /**
@@ -209,7 +210,9 @@ class CategoryController extends ApiController
     {
         $limit = ($request->has('limit')) ? $request->query('limit') : 20;
         $search = "%{$termo}%";
-        $paginator = Category::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search])->paginate($limit);
+        //$paginator = Category::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search])->paginate($limit);
+        $query = Category::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search]);
+        $paginator = CachingModelObjects::search($query, $search, $limit);
         $paginator->setPath("/categorias/search/{$termo}?limit={$limit}");
         return $this->showAsPaginator($paginator, '', 200);
     }
