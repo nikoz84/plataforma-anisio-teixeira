@@ -102,8 +102,9 @@ Route::get('/rotinas/{nivel}/{semana}', 'ConteudoPlanilhaController@rotinasPerNi
  * USUÁRIO DEVE ESTAR LOGADO PARA ACESSAR ESSAS ROTAS
  *
  ********************************************************/
+
 Route::group(
-    ['middleware' => ['jwt.auth']],
+    ['middleware' => ['jwt.auth', "cors"]],
     function () {
         /** CATEGORIAS DOS CONTEÚDOS*/
         Route::post('/categorias', 'CategoryController@create')->name('criar.categorias');

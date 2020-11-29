@@ -50,12 +50,10 @@ class AuthController extends ApiController
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Usuário ou senha inválidos", 422);
         }
-        
         $credentials = $this->request->only('email', 'password');
         $token = null;
-        
         if (!$token = JWTAuth::attempt($credentials)) {
-            //return $this->errorResponse([], 'E-mail ou Senha inválidos', 422);
+            return $this->errorResponse([], 'E-mail ou Senha inválidos', 422);
         }
         return $this->respondWithToken($token);
     }
