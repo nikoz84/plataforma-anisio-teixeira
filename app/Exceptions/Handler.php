@@ -66,7 +66,7 @@ class Handler extends ExceptionHandler
         } elseif ($exception instanceof TokenInvalidException) {
             return $this->errorResponse([], 'Token inválido', 401);
         } elseif ($exception instanceof JWTException) {
-            return $this->errorResponse([], 'Token não autorizado', 401);
+            return $this->errorResponse([$exception->getMessage()], 'Token não autorizado', 401);
         }
         
         if ($exception instanceof ModelNotFoundException) {
