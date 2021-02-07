@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
  */
+
+Route::get('/logartisan', 'LogArtisanController@index')->name('logartisan.index');
+
+
 Route::get('/files/galeria', 'FileController@getGallery')->name('lista.galeria.imagens');
 Route::get('/files/{id}', 'FileController@getFiles')->name('busca.arquivo');
 Route::post('/files/{id}', 'FileController@createFile')->name('adiciona.arquivo');
@@ -245,5 +249,7 @@ Route::group(
         Route::post('/dislike', 'ConteudoLikeController@dislike')->name('dislike');
         Route::get('/likes/usuario/{idUsuario}/{tipo?}', 'ConteudoLikeController@getLikesPorIdUsuarioEtipo')->name('likes.usuario');
         Route::get('/likes/conteudo/{conteudoid}/{tipo}','ConteudoLikeController@getUsuarioLikesConteudoAplicativo')->name('likes.usuario.conteudo.aplicativo');
+
     }
+    
 );
