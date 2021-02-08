@@ -22,18 +22,18 @@ class LogArtsanFileReader{
         $count = 0;
         $stackError = "";
         $date = null;
-        while(! feof($this->resourceFile) && $count<$qtd)
+        while(! feof($this->resourceFile) && $qtd>0)
         {
             $line = fgets($this->resourceFile);
             $init = $this->initReg($line);
             if(trim($init))
             {
-                if($count>=1)
+                if($count>=1 && $count >= $beginAt)
                 {
                     $message = str_replace( $init, "", $line  );
-        
                     $this->createLogArtisanObject($date, $message, $stackError, $count);
                     $stackError = "";
+                    $qtd--;
                 }
                 $strdate = substr($init, 1, strlen($init)-2);
                 $date = new DateTime( $strdate);

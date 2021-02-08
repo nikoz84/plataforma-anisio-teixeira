@@ -196,6 +196,13 @@ class SideBar
                 'hability' => 'index',
                 'class' => \App\NivelEnsino::class
             ],
+            [
+                'label' => 'Logs Laravel',
+                'name' => 'IndexLogArtisanLaravel',
+                'slug' => 'logartisan',
+                'hability' => 'index',
+                'class' => \App\LogArtisan::class
+            ],
         ]);
     }
 }

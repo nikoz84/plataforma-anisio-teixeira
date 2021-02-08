@@ -3,16 +3,28 @@ namespace App\Http\Controllers;
 
 use App\Helpers\LogArtsanFileReader;
 use App\LogArtisan as AppLogArtisan;
-use LogArtisan;
-
+use Illuminate\Http\Request;
 class LogArtisanController extends ApiController{
 
-    function index()
+     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct(Request $request)
+    {
+        $this->middleware('jwt.auth');
+        $this->request = $request;
+    }
+
+    function index(Request $request)
     {
         $artisanLog = new AppLogArtisan();
         $logArtsanFileReader = new LogArtsanFileReader();
-        $logArtsanFileReader->readLogFile(10, 0);
+        $page = $request->query('page', 1);
+        $limit = $request->query('limit', 5);
+        $logArtsanFileReader->readLogFile($limit, $limit*($page-1));
         $artisanLog->setMessage("erro aem lugar");
-        return  $logArtsanFileReader->getLogArtisanObjectsJson();
+        return  '{ "paginator":{"current_page":'.$page.',"data":'.$logArtsanFileReader->getLogArtisanObjectsJson()."}}";
     }
 }

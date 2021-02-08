@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::get('/logartisan', 'LogArtisanController@index')->name('logartisan.index');
-
-
 Route::get('/files/galeria', 'FileController@getGallery')->name('lista.galeria.imagens');
 Route::get('/files/{id}', 'FileController@getFiles')->name('busca.arquivo');
 Route::post('/files/{id}', 'FileController@createFile')->name('adiciona.arquivo');
@@ -110,6 +107,9 @@ Route::get('/rotinas/{nivel}/{semana}', 'ConteudoPlanilhaController@rotinasPerNi
 Route::group(
     ['middleware' => ['jwt.auth', "cors"]],
     function () {
+        /**LOGS ARTISAN/LARAVEL */
+        Route::get('/logartisan', 'LogArtisanController@index')->name('logartisan.index');
+
         /** CATEGORIAS DOS CONTEÚDOS*/
         Route::post('/categorias', 'CategoryController@create')->name('criar.categorias');
         Route::put('/categorias/{id}', 'CategoryController@update')->name('atualizar.categorias');
