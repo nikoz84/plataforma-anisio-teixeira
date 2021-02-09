@@ -11,18 +11,11 @@ class LogArtisan implements Jsonable{
     protected DateTime $dateTime;
     protected String   $message;
     protected String   $stackError;
-    protected int  $cod;
+    protected int  $id;
 
     function toJson($options = 0)
     {
-
-        $json = '{
-            "dateTime":"'.$this->dateTime->format('Y-m-d H:i:s').'",
-            "cod":"'.$this->cod.'",
-            "message":"'.str_replace('"', '\"',str_replace("\n", "",$this->message)).'",
-            "stackError":"'.str_replace('"', '\"',str_replace("\n", "",$this->stackError)).'" 
-        }';
-        
+        $json = '{"dateTime":"'.$this->dateTime->format('Y-m-d H:i:s').'","id":"'.$this->id.'","message":"'.str_replace('"', '\"',str_replace("\n", "",$this->message)).'","stackError":"'.str_replace('"', '\"',str_replace("\n", "",$this->stackError)).'"}';
         return $json;
     }
 
@@ -51,14 +44,14 @@ class LogArtisan implements Jsonable{
         $this->message = $message;
     }
 
-    function setCod($cod)
+    function setId($id)
     {
-        $this->cod = $cod;
+        $this->id = $id;
     }
 
-    function getCod()
+    function getId()
     {
-        return $this->cod;
+        return $this->id;
     }
 
     function getStackError()
@@ -69,5 +62,10 @@ class LogArtisan implements Jsonable{
     function setStackError($stackError)
     {
         $this->stackError = $stackError;
+    }
+
+    function getName()
+    {
+        return $this->getDateTime()->format("yyyy-mm-dd H:i:s");
     }
 }

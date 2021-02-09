@@ -53,7 +53,7 @@
           <tr v-for="(row, i) in paginator.data" :key="`row-${i}`">
             <td
               class="text-center"
-              v-html="row.name ? row.name : row.title"
+              v-html="row.name ? row.name : (row.title ? row.title : row.message)"
             ></td>
             <td class="text-center" style="width:50px;">
               <q-btn-group spread>

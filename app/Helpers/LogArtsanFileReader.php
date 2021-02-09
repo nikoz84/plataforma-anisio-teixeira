@@ -59,7 +59,7 @@ class LogArtsanFileReader{
     private function createLogArtisanObject($date, $message, $errorStackMessage, $cod)
     {
         $logArtisan = new LogArtisan();
-        $logArtisan->setCod($cod);
+        $logArtisan->setId($cod);
         $logArtisan->setStackError($errorStackMessage);
         $logArtisan->setDateTime($date);
         $logArtisan->setMessage($message);
@@ -71,7 +71,7 @@ class LogArtsanFileReader{
         return $this->logArtisanObjects;
     }
 
-    function getLogArtisanObjectsJson()
+    function toJson()
     {
         $json = "";
         foreach($this->logArtisanObjects as $log)
