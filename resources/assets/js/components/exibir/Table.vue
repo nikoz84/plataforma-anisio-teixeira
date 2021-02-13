@@ -50,7 +50,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(row, i) in paginator.data" :key="`row-${i}`">
+          <tr v-for="(row, i) in paginator.data" :key="`row-${i}`" v-if="row != null">
             <td
               class="text-center"
               v-html="row.name ? row.name : (row.title ? row.title : row.message)"

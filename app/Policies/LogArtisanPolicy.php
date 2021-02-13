@@ -17,7 +17,6 @@ class LogArtisanPolicy
      */
     public function index(User $user)
     {
-        return true;
         return $user->role->name == 'super-admin' || $user->role->name == 'admin';
     }
     /**
@@ -28,7 +27,7 @@ class LogArtisanPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->role->name == 'super-admin' || $user->role->name == 'admin';
     }
 
     /**
@@ -40,7 +39,7 @@ class LogArtisanPolicy
      */
     public function view(User $user, LogArtisan $logartisan)
     {
-        //
+        return $user->role->name == 'super-admin' || $user->role->name == 'admin';
     }
 
     /**

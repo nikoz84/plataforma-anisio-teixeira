@@ -49,6 +49,7 @@ class LogArtsanFileReader{
     {
         return preg_match($this->stackLineExp, $line);
     }
+
     function initReg($line)
     {
         $lineWithoutDate = preg_replace($this->dateExp, "", $line);
@@ -82,5 +83,16 @@ class LogArtsanFileReader{
         }
         $json = "[".$json."]";
         return $json;
+    }
+
+    function total()
+    {
+        $count = 0;
+        $no_of_lines = count(file($this->fileArtsanLocation));
+        if(sizeof($this->logArtisanObjects))
+        {
+
+        }
+        return round($no_of_lines/24);
     }
 }

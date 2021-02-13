@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
  */
+
+Route::get('/logartisan', 'LogArtisanController@index')->name('logartisan.index');
+Route::get('/logartisan/search/{term}', 'LogArtisanController@search')->name('logartisan.search');
+
+
 Route::get('/files/galeria', 'FileController@getGallery')->name('lista.galeria.imagens');
 Route::get('/files/{id}', 'FileController@getFiles')->name('busca.arquivo');
 Route::post('/files/{id}', 'FileController@createFile')->name('adiciona.arquivo');
@@ -107,7 +112,6 @@ Route::group(
     ['middleware' => ['jwt.auth', "cors"]],
     function () {
         /**LOGS ARTISAN/LARAVEL */
-        Route::get('/logartisan', 'LogArtisanController@index')->name('logartisan.index');
         /** CATEGORIAS DOS CONTEÚDOS*/
         Route::post('/categorias', 'CategoryController@create')->name('criar.categorias');
         Route::put('/categorias/{id}', 'CategoryController@update')->name('atualizar.categorias');
