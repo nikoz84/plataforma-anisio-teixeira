@@ -17,11 +17,12 @@ class LogArtsanFileReader{
         $this->resourceFile = fopen($this->fileArtsanLocation, "r");
     }
 
-    function readLogFile($qtd, $beginAt)
+    function readLogFile($qtd, $beginAt, $searchTerm = "")
     {
         $count = 0;
         $stackError = "";
         $date = null;
+        $strdate = "";
         while(! feof($this->resourceFile) && $qtd>0)
         {
             $line = fgets($this->resourceFile);
@@ -31,6 +32,11 @@ class LogArtsanFileReader{
                 if($count>=1 && $count >= $beginAt)
                 {
                     $message = str_replace( $init, "", $line  );
+                    if(!$searchTerm || (
+                        strstr( $message , $searchTerm) 
+                        || strstr($stackError,$searchTerm) 
+                        ||  strstr($strdate,$searchTerm) 
+                    ))
                     $this->createLogArtisanObject($date, $message, $stackError, $count);
                     $stackError = "";
                     $qtd--;

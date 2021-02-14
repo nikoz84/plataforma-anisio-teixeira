@@ -81,6 +81,14 @@
                   v-if="$route.params.slug == 'conteudos' || $route.params.slug == 'aplicativos'"
                   @click="goTo(row)"
                 />
+                <q-btn
+                  size="sm"
+                  color="primary"
+                  title="Visualizar"
+                  icon="visibility"
+                  v-if="$route.params.slug =='logartisan'"
+                  :to="`/admin/logartisan/editar/${row.id}`"
+                ></q-btn>
               </q-btn-group>
             </td>
           </tr>

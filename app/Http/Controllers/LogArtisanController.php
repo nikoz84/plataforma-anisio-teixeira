@@ -14,7 +14,7 @@ class LogArtisanController extends ApiController{
      */
     public function __construct(Request $request)
     {
-        //$this->middleware('jwt.auth');
+        $this->middleware('jwt.auth');
         $this->request = $request;
     }
 
@@ -33,8 +33,18 @@ class LogArtisanController extends ApiController{
         return  $this->showAsPaginator($paginator);
     }
 
-    function search()
+    function search(Request $request, $term)
     {
-        
+        $logArtsanFileReader = new LogArtsanFileReader();
+        $page = $request->query('page', 1);
+        $limit = $request->query('limit', 15);
+        $logArtsanFileReader->readLogFile($limit, $limit*($page-1), $term);
+        $paginator = new LengthAwarePaginator( array_map(function($log){
+            if($log !== null)
+            return json_decode($log->toJson());
+        },$logArtsanFileReader->getLogArtisanObjects()), 100, $limit, $page, [
+            "path"=>"logartisan"
+        ]);
+        return $this->showAsPaginator($paginator);
     }
 }
