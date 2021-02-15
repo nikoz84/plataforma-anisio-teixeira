@@ -37,9 +37,11 @@ class LogArtsanFileReader{
                         || strstr($stackError,$searchTerm) 
                         ||  strstr($strdate,$searchTerm) 
                     ))
-                    $this->createLogArtisanObject($date, $message, $stackError, $count);
-                    $stackError = "";
-                    $qtd--;
+                    {
+                        $this->logArtisanObjects[] = $this->createLogArtisanObject($date, $message, $stackError, $count);
+                        $stackError = "";
+                        $qtd--;
+                    }
                 }
                 $strdate = substr($init, 1, strlen($init)-2);
                 $date = new DateTime( $strdate);
@@ -49,6 +51,31 @@ class LogArtsanFileReader{
             $stackError .= str_replace($init, "", $line);
         }
         fclose($this->resourceFile);
+    }
+
+    function getById($id)
+    {
+        $count = 0;
+        $stackError = "";
+        $date = null;
+        $strdate = "";
+        while(! feof($this->resourceFile))
+        {
+            $line = fgets($this->resourceFile);
+            $init = $this->initReg($line);
+            if(trim($init))
+            {
+                $message = str_replace( $init, "", $line  );
+                if($count>=1 && $count==$id)
+                {
+                    return $this->createLogArtisanObject($date, $message, $stackError, $count);
+                }
+                $count++;
+            }
+            $strdate = substr($init, 1, strlen($init)-2);
+            $date = new DateTime( $strdate);
+        }
+        return null;
     }
 
     function checkStackErrorMessage($line)
@@ -70,7 +97,7 @@ class LogArtsanFileReader{
         $logArtisan->setStackError($errorStackMessage);
         $logArtisan->setDateTime($date);
         $logArtisan->setMessage($message);
-        $this->logArtisanObjects[] = $logArtisan;
+        return $logArtisan;
     }
 
     function getLogArtisanObjects()

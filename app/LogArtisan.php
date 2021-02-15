@@ -4,10 +4,11 @@ namespace App;
 
 use DateTime;
 use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 use phpDocumentor\Reflection\Types\Integer;
 
-class LogArtisan implements Jsonable{
+class LogArtisan extends Model implements Jsonable{
     protected DateTime $dateTime;
     protected String   $message;
     protected String   $stackError;

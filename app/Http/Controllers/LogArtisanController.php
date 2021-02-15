@@ -14,7 +14,7 @@ class LogArtisanController extends ApiController{
      */
     public function __construct(Request $request)
     {
-        $this->middleware('jwt.auth');
+        //$this->middleware('jwt.auth');
         $this->request = $request;
     }
 
@@ -46,5 +46,11 @@ class LogArtisanController extends ApiController{
             "path"=>"logartisan"
         ]);
         return $this->showAsPaginator($paginator);
+    }
+
+    function getById($id)
+    {
+        $logArtsanFileReader = new LogArtsanFileReader();
+        return $logArtsanFileReader->getById($id)->toJson();
     }
 }
