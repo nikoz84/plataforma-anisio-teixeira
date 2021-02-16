@@ -309,17 +309,6 @@ class ConteudoController extends ApiController
      */
     public function getById(Request $request, $id)
     {
-        /*
-        $conteudo = Conteudo::with([
-            'tipo',
-            'user',
-            'canal',
-            'tags',
-            'license',
-            'category',
-            'componentes',
-            'niveis',
-        ])->findOrFail($id);*/
         $conteudo = new Conteudo();
         $query = $conteudo->query()->with([
             'tipo',

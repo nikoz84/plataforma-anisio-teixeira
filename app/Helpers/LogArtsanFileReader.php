@@ -72,6 +72,8 @@ class LogArtsanFileReader{
                 }
                 $count++;
             }
+            if($this->checkStackErrorMessage($line))
+            $stackError .= str_replace($init, "", $line);
             $strdate = substr($init, 1, strlen($init)-2);
             $date = new DateTime( $strdate);
         }

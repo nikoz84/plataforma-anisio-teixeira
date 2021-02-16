@@ -39,10 +39,11 @@ class LogArtisanController extends ApiController{
         $page = $request->query('page', 1);
         $limit = $request->query('limit', 15);
         $logArtsanFileReader->readLogFile($limit, $limit*($page-1), $term);
+        $logs = $logArtsanFileReader->getLogArtisanObjects();
         $paginator = new LengthAwarePaginator( array_map(function($log){
             if($log !== null)
             return json_decode($log->toJson());
-        },$logArtsanFileReader->getLogArtisanObjects()), 100, $limit, $page, [
+        },$logs), sizeof($logs), $limit, $page, [
             "path"=>"logartisan"
         ]);
         return $this->showAsPaginator($paginator);
@@ -51,6 +52,6 @@ class LogArtisanController extends ApiController{
     function getById($id)
     {
         $logArtsanFileReader = new LogArtsanFileReader();
-        return $logArtsanFileReader->getById($id)->toJson();
+        return $this->successResponse( json_decode( $logArtsanFileReader->getById($id)->toJson() ));
     }
 }
