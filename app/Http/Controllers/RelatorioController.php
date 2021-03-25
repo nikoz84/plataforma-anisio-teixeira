@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Conteudo;
-use App\User;
+use App\Models\Conteudo;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\DB;
 use Exception;

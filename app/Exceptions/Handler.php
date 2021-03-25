@@ -2,23 +2,11 @@
 
 namespace App\Exceptions;
 
-use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Tymon\JWTAuth\Exceptions\TokenExpiredException;
-use Tymon\JWTAuth\Exceptions\TokenInvalidException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Symfony\Component\HttpKernel\Exception\HttpException as KernelException;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Database\QueryException;
-use Illuminate\Auth\Access\AuthorizationException;
-use App\Traits\ApiResponser;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
-    use ApiResponser;
-
     /**
      * A list of the exception types that are not reported.
      *
@@ -41,12 +29,12 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
-     *
-     * @param  \Exception  $exception
+     * @param  \Throwable  $exception
      * @return void
+     *
+     * @throws \Throwable
      */
-    public function report(Exception $exception)
+    public function report(Throwable $exception)
     {
         parent::report($exception);
     }
@@ -55,44 +43,13 @@ class Handler extends ExceptionHandler
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
+     * @param  \Throwable  $exception
+     * @return \Symfony\Component\HttpFoundation\Response
      *
+     * @throws \Throwable
      */
-    public function render($request, Exception $exception)
+    public function render($request, Throwable $exception)
     {
-        if ($exception instanceof TokenExpiredException) {
-            return $this->errorResponse([], 'Token expirado', 401);
-        } elseif ($exception instanceof TokenInvalidException) {
-            return $this->errorResponse([], 'Token inválido', 401);
-        } elseif ($exception instanceof JWTException) {
-            return $this->errorResponse([], 'Token não autorizado', 401);
-        }
-        
-        if ($exception instanceof ModelNotFoundException) {
-            return $this->errorResponse([], "Erro em modelo", 404);
-        }
-        if ($exception instanceof QueryException) {
-            return $this->errorResponse([], "Erro em query", 404);
-        }
-        
-        if ($exception instanceof AuthorizationException) {
-            return $this->errorResponse([], "Ação não autorizada, sem permissões", 403);
-        }
-        if ($exception instanceof HttpException) {
-            return $this->errorResponse([], $exception->getMessage(), 404);
-        }
-
-        if ($exception instanceof KernelException) {
-            return $this->errorResponse([], $exception->getMessage(), 500);
-        }
-        if ($exception instanceof ValidationException) {
-            return $this->errorResponse([], 'Erro de validação', 500);
-        }
-        
-        
-
-
         return parent::render($request, $exception);
     }
 }

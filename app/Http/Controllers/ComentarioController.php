@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;
-use App\Comentario;
+use App\Models\Comentario;
 
 class ComentarioController extends ApiController
 {
@@ -108,7 +108,8 @@ class ComentarioController extends ApiController
     public function getComentariosByIdPostagem($idPostagem, $tipo)
     {
         $limit = $this->request->query('limit');
-        $comentarios = $this->comentario->getComentariosByIdPostagem($idPostagem, $tipo)->paginate($limit);
+        $comentarios = $this->comentario->getComentariosByIdPostagem($idPostagem, $tipo)
+            ->paginate($limit);
 
         if ($comentarios) {
             return $this->successResponse($comentarios);

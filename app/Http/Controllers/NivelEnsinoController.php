@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\CurricularComponent;
-use App\License;
+use App\Models\CurricularComponent;
+use App\Models\License;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\NivelEnsino;
+use App\Models\NivelEnsino;
 use App\Traits\FileSystemLogic;
 use Exception;
 use Illuminate\Support\Facades\Validator;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Canal;
+use App\Models\Canal;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;
@@ -17,11 +17,10 @@ class CanalController extends ApiController
      * @param Canal $canal
      * @param \App\Http\Controllers\CanalController
      */
-    public function __construct(Request $request, Canal $canal)
+    public function __construct(Request $request)
     {
         $this->middleware('jwt.auth')->except(['getBySlug']);
         $this->request = $request;
-        $this->canal = $canal;
     }
     /**
      * Display a indexing of the resource.
@@ -32,12 +31,12 @@ class CanalController extends ApiController
     {
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 15;
         if ($this->request->has('select')) {
-            $select = $this->canal::whereRaw('is_active = true AND id <> 9 AND id <> 7 AND id <> 8')
+            $select = Canal::whereRaw('is_active = true AND id <> 9 AND id <> 7 AND id <> 8')
                 ->orderBy('id')
                 ->get(['id', 'name']);
             return $this->fetchForSelect(collect($select));
         }
-        $canais = $this->canal::paginate($limit);
+        $canais = Canal::paginate($limit);
         $canais->setPath("/canais?limit={$limit}");
         return $this->showAsPaginator($canais);
     }
@@ -57,10 +56,10 @@ class CanalController extends ApiController
                 'name' => 'required',
                 'description' => 'required',
                 'slug' => 'required',
-                'is_active' => 'required'
+                'is_active' => 'required|boolean'
             ]
         );
-
+        
         if ($validator->fails()) {
             return $this->errorResponse(
                 $validator->errors(),
@@ -86,8 +85,8 @@ class CanalController extends ApiController
      * 
      * Atualiza aplicativo no banco de dados
      * @param  int  $id identificador único
-     * @param \App\Canal $canal
-     * @return \App\Canal\Api Responser retorna json
+     * @param \App\Models\Canal $canal
+     * @return \App\Traits\ApiResponser retorna json
      */
     public function update($id)
     {
@@ -115,7 +114,7 @@ class CanalController extends ApiController
      */
     public function delete($id)
     {
-        $canal = $this->canal::findOrFail($id);
+        $canal = Canal::findOrFail($id);
 
         $this->authorize('delete', [$canal]);
 
@@ -133,7 +132,7 @@ class CanalController extends ApiController
      */
     public function getBySlug($slug)
     {
-        $canal = $this->canal::with(['categories', 'appsCategories'])
+        $canal = Canal::with(['categories', 'appsCategories'])
             ->where('slug', $slug)->get()->first();
         
         if (!$canal) {
@@ -151,7 +150,7 @@ class CanalController extends ApiController
             $query->whereNull('parent_id');
             $query->with('subCategories');
         };
-        $canal = $this->canal::with(['categories' => $cb])->findOrFail($id);
+        $canal = Canal::with(['categories' => $cb])->findOrFail($id);
 
         return $this->showOne($canal, '', 200);
     }

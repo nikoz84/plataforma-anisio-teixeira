@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
-use App\Options;
+use App\Models\User;
+use App\Models\Options;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class OptionsPolicy
@@ -13,7 +13,7 @@ class OptionsPolicy
     /**
      * Determine whether the user can view any options.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -24,7 +24,7 @@ class OptionsPolicy
     /**
      * Determine whether the user can view the options.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Options  $options
      * @return mixed
      */
@@ -37,7 +37,7 @@ class OptionsPolicy
     /**
      * Determine whether the user can create options.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -49,7 +49,7 @@ class OptionsPolicy
     /**
      * Determine whether the user can update the options.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Options  $options
      * @return mixed
      */
@@ -66,7 +66,7 @@ class OptionsPolicy
     /**
      * Determine whether the user can delete the options.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Options  $options
      * @return mixed
      */
@@ -79,7 +79,7 @@ class OptionsPolicy
     /**
      * Determine whether the user can restore the options.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Options  $options
      * @return mixed
      */
@@ -92,7 +92,7 @@ class OptionsPolicy
     /**
      * Determine whether the user can permanently delete the options.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Options  $options
      * @return mixed
      */

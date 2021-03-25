@@ -1,14 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Aplicativo;
-use App\Conteudo;
+use App\Models\Aplicativo;
+use App\Models\Conteudo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
 use App\Http\Controllers\ApiController;
-use App\ConteudoLike;
+use App\Models\ConteudoLike;
 use Exception;
 
 class ConteudoLikeController extends ApiController

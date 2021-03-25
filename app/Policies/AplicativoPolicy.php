@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
-use App\Aplicativo;
+use App\Models\User;
+use App\Models\Aplicativo;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AplicativoPolicy
@@ -13,7 +13,7 @@ class AplicativoPolicy
     /**
      * Determine whether the user can view any aplicativos.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -24,7 +24,7 @@ class AplicativoPolicy
     /**
      * Determine whether the user can view the aplicativo.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Aplicativo  $aplicativo
      * @return mixed
      */
@@ -36,7 +36,7 @@ class AplicativoPolicy
     /**
      * Determine whether the user can create aplicativos.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -50,7 +50,7 @@ class AplicativoPolicy
     /**
      * Determine whether the user can update the aplicativo.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Aplicativo  $aplicativo
      * @return mixed
      */
@@ -65,7 +65,7 @@ class AplicativoPolicy
     /**
      * Determine whether the user can delete the aplicativo.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Aplicativo  $aplicativo
      * @return mixed
      */
@@ -80,7 +80,7 @@ class AplicativoPolicy
     /**
      * Determine whether the user can restore the aplicativo.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Aplicativo  $aplicativo
      * @return mixed
      */
@@ -93,7 +93,7 @@ class AplicativoPolicy
     /**
      * Determine whether the user can permanently delete the aplicativo.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Aplicativo  $aplicativo
      * @return mixed
      */

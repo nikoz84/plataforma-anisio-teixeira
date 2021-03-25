@@ -54,7 +54,7 @@
 </template>
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-import  { Filters, OrderBy, CategoriasMenu } from "@components/canais";
+import  { Filters, OrderBy, CategoriasMenu } from "../components/canais";
 import {
   QTabs,
   QTab,

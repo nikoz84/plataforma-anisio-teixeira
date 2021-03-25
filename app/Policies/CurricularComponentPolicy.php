@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
-use App\CurricularComponent;
+use App\Models\User;
+use App\Models\CurricularComponent;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CurricularComponentPolicy
@@ -13,7 +13,7 @@ class CurricularComponentPolicy
     /**
      * Determine whether the user can view any curricular components.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -24,7 +24,7 @@ class CurricularComponentPolicy
     /**
      * Determine whether the user can view the tipo.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function index(User $user)
@@ -35,7 +35,7 @@ class CurricularComponentPolicy
     /**
      * Determine whether the user can view the curricular component.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\CurricularComponent  $curricularComponent
      * @return mixed
      */
@@ -47,7 +47,7 @@ class CurricularComponentPolicy
     /**
      * Determine whether the user can create curricular components.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -58,7 +58,7 @@ class CurricularComponentPolicy
     /**
      * Determine whether the user can update the curricular component.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\CurricularComponent  $curricularComponent
      * @return mixed
      */
@@ -70,7 +70,7 @@ class CurricularComponentPolicy
     /**
      * Determine whether the user can delete the curricular component.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\CurricularComponent  $curricularComponent
      * @return mixed
      */
@@ -82,7 +82,7 @@ class CurricularComponentPolicy
     /**
      * Determine whether the user can restore the curricular component.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\CurricularComponent  $curricularComponent
      * @return mixed
      */
@@ -94,7 +94,7 @@ class CurricularComponentPolicy
     /**
      * Determine whether the user can permanently delete the curricular component.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\CurricularComponent  $curricularComponent
      * @return mixed
      */

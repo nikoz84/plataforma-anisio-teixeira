@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\ApiController;
 use App\Traits\FileSystemLogic;
-use App\Conteudo;
+use App\Models\Conteudo;
 use App\Helpers\ContentVideoConvert;
 use App\Jobs\VideoStreamingConvert;
 use Exception;

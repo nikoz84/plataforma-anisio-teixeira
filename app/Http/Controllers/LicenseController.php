@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\License;
+use App\Models\License;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use App\Traits\FileSystemLogic;

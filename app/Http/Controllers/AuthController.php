@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\SideBar;
+use App\Services\SideBar;
 use App\Http\Controllers\ApiController;
-use App\User;
-use App\PasswordReset;
+use App\Models\User;
+use App\Models\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -47,14 +47,19 @@ class AuthController extends ApiController
                 'recaptcha' => ['required', new \App\Rules\ValidRecaptcha]
             ]
         );
+        
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Usuário ou senha inválidos", 422);
         }
         $credentials = $this->request->only('email', 'password');
         $token = null;
+        //dd(JWTAuth::attempt($credentials));
+        
         if (!$token = JWTAuth::attempt($credentials)) {
+            
             return $this->errorResponse([], 'E-mail ou Senha inválidos', 422);
         }
+
         return $this->respondWithToken($token);
     }
     /**
@@ -138,7 +143,7 @@ class AuthController extends ApiController
 
             $user->name = $request->name;
             $user->email = $request->email;
-            $user->password = $request->password;
+            $user->setPasswordAttribute($request->password);
             $user->verified = User::USER_NOT_VERIFIED;
             $user->verification_token = $token;
             $user->options = [
@@ -298,7 +303,8 @@ class AuthController extends ApiController
                 throw new Exception("Senha e confirmação são imcompaiveis.");
             }
             $user = $this->getUserByToken($token);
-            $user->password = $this->request->password;
+            $user->setPasswordAttribute($this->request->password);
+            
             if (!$user->save()) {
                 throw new Exception("Erro ao tentar salvar modificação. Tente novamente mais tarde.");
             }

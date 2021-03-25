@@ -102,28 +102,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-$break-small: 780px;
-$break-large: 781px;
-$break-extra-large: 1200px;
+<style lang="stylus" scoped>
 
-.form-image {
-  display: block;
-  min-height: 100vh;
-  padding: 0;
-  background: url("/storage/conteudos/conteudos-digitais/galeria/11.jpg")
-    no-repeat bottom center scroll;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  -o-background-size: cover;
-
-  form {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-}
-.links {
-  padding-top: 15px;
-}
 </style>

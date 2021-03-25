@@ -25,7 +25,7 @@
             square
             title="marca"
             aria-label="Marca da plataforma Anísio Teixeira">
-              <img src="/img/sprite/logo.svg">
+              <img alt="marca" src="/img/sprite/logo.svg">
           </q-avatar>
         </q-btn>
 

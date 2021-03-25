@@ -37,8 +37,12 @@ export default {
   methods: {
     async getDestaques() {
       const { data } = await axios.get("/conteudos/destaques/conteudos-recentes");
-      this.items = data.metadata.items;
-      this.title = data.metadata.title;
+      //console.log(data)
+      if(data){
+        this.items = data.metadata.items;
+        this.title = data.metadata.title;
+      }
+      
       
     }
     

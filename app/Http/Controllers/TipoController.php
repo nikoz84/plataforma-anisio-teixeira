@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Helpers\CachingModelObjects;
 use App\Http\Controllers\ApiController;
-use App\Tipo;
+use App\Models\Tipo;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\ApiResponser;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 

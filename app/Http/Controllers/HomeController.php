@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Analytics;
-use App\Helpers\Destaques;
+use App\Services\Analytics;
 use App\Http\Controllers\ApiController;
-use App\Helpers\Autocomplete;
-use App\Helpers\SideBar;
+use App\Services\Autocomplete;
+use App\Services\SideBar;
 use Illuminate\Http\Request;
 
 class HomeController extends ApiController
@@ -29,10 +28,13 @@ class HomeController extends ApiController
      */
     public function getLayout()
     {
+        //cache()->forget('layout');
+        
+
         $from_cache = cache()->remember('layout', now()->addMinutes(1440), function () {
             return SideBar::getSideBarAdvancedFilter();
         });
-
+            
         return response()->json($from_cache);
     }
 

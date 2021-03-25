@@ -1,5 +1,5 @@
 let mix = require("laravel-mix");
-const ChunkRenamePlugin = require("webpack-chunk-rename-plugin");
+//const ChunkRenamePlugin = require("webpack-chunk-rename-plugin");
 /*
 |--------------------------------------------------------------------------
 | Mix Asset Management
@@ -25,6 +25,8 @@ mix.webpackConfig({
     },
   },
 });
+
+
 
 mix.browserSync({
   proxy: process.env.APP_URL

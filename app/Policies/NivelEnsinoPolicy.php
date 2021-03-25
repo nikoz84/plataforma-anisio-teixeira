@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
-use App\NivelEnsino;
+use App\Models\User;
+use App\Models\NivelEnsino;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class NivelEnsinoPolicy
@@ -12,7 +12,7 @@ class NivelEnsinoPolicy
     
     /**
      * Determine whether the user can view.
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function index(User $user)
@@ -23,7 +23,7 @@ class NivelEnsinoPolicy
     /**
      * Determine whether the user can view any nivel ensinos.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -35,7 +35,7 @@ class NivelEnsinoPolicy
     /**
      * Determine whether the user can view the nivel ensino.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\NivelEnsino  $nivelEnsino
      * @return mixed
      */
@@ -48,7 +48,7 @@ class NivelEnsinoPolicy
     /**
      * Determine whether the user can create nivel ensinos.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -60,7 +60,7 @@ class NivelEnsinoPolicy
     /**
      * Determine whether the user can update the nivel ensino.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\NivelEnsino  $nivelEnsino
      * @return mixed
      */
@@ -73,7 +73,7 @@ class NivelEnsinoPolicy
     /**
      * Determine whether the user can delete the nivel ensino.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\NivelEnsino  $nivelEnsino
      * @return mixed
      */
@@ -86,7 +86,7 @@ class NivelEnsinoPolicy
     /**
      * Determine whether the user can restore the nivel ensino.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\NivelEnsino  $nivelEnsino
      * @return mixed
      */
@@ -99,7 +99,7 @@ class NivelEnsinoPolicy
     /**
      * Determine whether the user can permanently delete the nivel ensino.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\NivelEnsino  $nivelEnsino
      * @return mixed
      */

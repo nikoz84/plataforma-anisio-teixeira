@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
-use App\ConteudoPlanilha;
+use App\Models\ConteudoPlanilha;
 use Illuminate\Support\Facades\DB;
 
 class ConteudoPlanilhaController extends ApiController

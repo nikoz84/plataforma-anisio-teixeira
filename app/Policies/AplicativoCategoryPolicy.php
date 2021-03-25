@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
-use App\AplicativoCategory;
+use App\Models\User;
+use App\Models\AplicativoCategory;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AplicativoCategoryPolicy
@@ -13,7 +13,7 @@ class AplicativoCategoryPolicy
     /**
      * Determine whether the user can view any aplicativo categories.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -24,7 +24,7 @@ class AplicativoCategoryPolicy
     /**
      * Determine whether the user can view the aplicativo category.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\AplicativoCategory  $aplicativoCategory
      * @return mixed
      */
@@ -36,7 +36,7 @@ class AplicativoCategoryPolicy
     /**
      * Determine whether the user can create aplicativo categories.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -47,7 +47,7 @@ class AplicativoCategoryPolicy
     /**
      * Determine whether the user can update the aplicativo category.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\AplicativoCategory  $aplicativoCategory
      * @return mixed
      */
@@ -59,7 +59,7 @@ class AplicativoCategoryPolicy
     /**
      * Determine whether the user can delete the aplicativo category.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\AplicativoCategory  $aplicativoCategory
      * @return mixed
      */
@@ -71,7 +71,7 @@ class AplicativoCategoryPolicy
     /**
      * Determine whether the user can restore the aplicativo category.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\AplicativoCategory  $aplicativoCategory
      * @return mixed
      */
@@ -83,7 +83,7 @@ class AplicativoCategoryPolicy
     /**
      * Determine whether the user can permanently delete the aplicativo category.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\AplicativoCategory  $aplicativoCategory
      * @return mixed
      */

@@ -53,8 +53,9 @@ Route::get('/conteudos/sites', 'ConteudoController@getSitesTematicos')->name('li
 Route::get('/conteudos/search/{term}', 'ConteudoController@search')->name('busca.conteudo');
 Route::get('/conteudos/{id}', 'ConteudoController@getById')->name('busca.x.conteudo.id');
 Route::get('/conteudos/tag/{id}', 'ConteudoController@getByTagId')->name('busca.x.tag.id');
-Route::get('/conteudos/relacionados/{id}', 'ConteudoController@conteudosRelacionados')->name('busca.x.id');
+Route::get('/conteudos/relacionados/{id}', 'ConteudoController@conteudosRelacionados')->name('busca.relacionados.x.id');
 Route::get('/conteudos/streaming/nofiles', 'ConteudoController@conteudoWithNoStreamingFiles')->name('nostreamingfiles.conteudo');
+Route::get('/conteudos/destaques/{slug}', 'ConteudoController@getConteudosRecentes')->name('lista.recentes');
 
 /** BLOG */
 Route::get('/posts', 'WordpressController@index')->name('lista.postagens');
@@ -63,7 +64,7 @@ Route::get('/posts/estatisticas', 'WordpressController@getEstatisticas')->name('
 
 /** APLICATIVOS */
 Route::get('/aplicativos', 'AplicativoController@index')->name('lista.aplicativo');
-Route::get('/aplicativos/categories', 'AplicativoCategoryController@index')->name('lista.categorias');
+Route::get('/aplicativos/categories', 'AplicativoCategoryController@index')->name('lista.categorias.aplicativos');
 Route::get('/aplicativos/search/{term}', 'AplicativoController@search')->name('busca.aplicativo');
 Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('busca.x.aplicativo.id');
 
@@ -81,7 +82,7 @@ Route::get('/options/{name}', 'OptionsController@getByName')->name('busca.metada
 Route::get('/options', 'OptionsController@index')->name('listar.opcoes');
 
 /** TAGS */
-Route::get('/tags/{id}', 'TagController@getById')->name('busca.x.tag.id');
+Route::get('/tags/{id}', 'TagController@getById')->name('busca.x.tag');
 /** LICENÇAS */
 Route::get('/licencas', 'LicenseController@index')->name('listar.licencas');
 /** DOWNLOAD FILE **/
@@ -206,7 +207,7 @@ Route::group(
 
         /** DENUNCIAS */
         Route::get('/contato', 'ContatoController@index')->name('listar.faleconosco');
-        Route::get('/contato/{id}', 'ContatoController@getById')->name('busca.x.id');
+        Route::get('/contato/{id}', 'ContatoController@getById')->name('busca.contato.x.id');
         Route::delete('/contato/{id}', 'ContatoController@delete')->name('apagar.contato');
 
         /** OPTIONS */

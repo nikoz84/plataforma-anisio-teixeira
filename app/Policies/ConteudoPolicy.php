@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
-use App\Conteudo;
+use App\Models\User;
+use App\Models\Conteudo;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ConteudoPolicy
@@ -13,7 +13,7 @@ class ConteudoPolicy
     /**
      * Determine whether the user can view any conteudos.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -24,7 +24,7 @@ class ConteudoPolicy
     /**
      * Determine whether the user can view the conteudo.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Conteudo  $conteudo
      * @return mixed
      */
@@ -36,7 +36,7 @@ class ConteudoPolicy
     /**
      * Determine whether the user can create conteudos.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function create(User $user, Conteudo $conteudo)
@@ -48,7 +48,7 @@ class ConteudoPolicy
     /**
      * Determine whether the user can update the conteudo.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Conteudo  $conteudo
      * @return mixed
      */
@@ -62,7 +62,7 @@ class ConteudoPolicy
     /**
      * Determine whether the user can delete the conteudo.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Conteudo  $conteudo
      * @return mixed
      */
@@ -76,7 +76,7 @@ class ConteudoPolicy
     /**
      * Determine whether the user can restore the conteudo.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Conteudo  $conteudo
      * @return mixed
      */
@@ -89,7 +89,7 @@ class ConteudoPolicy
     /**
      * Determine whether the user can permanently delete the conteudo.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Conteudo  $conteudo
      * @return mixed
      */

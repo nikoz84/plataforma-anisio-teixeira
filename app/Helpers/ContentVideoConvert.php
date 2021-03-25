@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 use App\Traits\FileSystemLogic;
 
-use App\Conteudo ;
+use App\Models\Conteudo ;
 use Exception;
 use Streaming\FFMpeg;
 use Streaming\Representation;

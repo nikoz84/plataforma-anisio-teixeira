@@ -2,16 +2,12 @@
   <div class="q-pa-sm">
     <Title title="Práticas Pedagógicas"></Title>
     <div id="map"></div>
-    <template v-if="!!this.google && !!this.map">
-      <div :google="google" :map="map">
-        <slot />
-      </div>
-    </template>
+    
   </div>
 </template>
 <script>
-import GoogleMapsApiLoader from "google-maps-api-loader";
-import { Title } from "@components/shared";
+
+import { Title } from "../components/shared";
 
 export default {
   name: "PraticasPedagogicas",

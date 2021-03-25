@@ -68,14 +68,6 @@
 </template>
 
 <script>
-import {
-  Quasar,
-  QChip,
-  QBanner,
-  QBadge,
-  QBtn
-} from 'quasar'
-
 export default {
     name: "RotinasDeEstudo",
     data() {

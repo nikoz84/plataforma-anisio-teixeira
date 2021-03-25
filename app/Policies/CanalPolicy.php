@@ -2,10 +2,10 @@
 
 namespace App\Policies;
 
-use App\User;
-use App\Canal;
+use App\Models\User;
+use App\Models\Canal;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use  Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 
 class CanalPolicy
 {
@@ -14,7 +14,7 @@ class CanalPolicy
     /**
      * Determine whether the user can view any canals.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -25,7 +25,7 @@ class CanalPolicy
     /**
      * Determine whether the user can view the canal.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Canal  $canal
      * @return mixed
      */
@@ -37,7 +37,7 @@ class CanalPolicy
     /**
      * Determine whether the user can create canals.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function create(User $user, Canal $canal)
@@ -49,7 +49,7 @@ class CanalPolicy
     /**
      * Determine whether the user can update the canal.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Canal  $canal
      * @return mixed
      */
@@ -62,7 +62,7 @@ class CanalPolicy
     /**
      * Determine whether the user can delete the canal.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Canal  $canal
      * @return mixed
      */
@@ -76,7 +76,7 @@ class CanalPolicy
     /**
      * Determine whether the user can restore the canal.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Canal  $canal
      * @return mixed
      */
@@ -90,7 +90,7 @@ class CanalPolicy
     /**
      * Determine whether the user can permanently delete the canal.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Canal  $canal
      * @return mixed
      */

@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
-use App\CurricularComponentCategory;
+use App\Models\User;
+use App\Models\CurricularComponentCategory;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CurricularComponentCategoryPolicy
@@ -12,7 +12,7 @@ class CurricularComponentCategoryPolicy
 
     /**
      * Determine whether the user can view.
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function index(User $user)
@@ -24,7 +24,7 @@ class CurricularComponentCategoryPolicy
     /**
      * Determine whether the user can view any curricular component categories.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -35,7 +35,7 @@ class CurricularComponentCategoryPolicy
     /**
      * Determine whether the user can view the curricular component category.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\CurricularComponentCategory  $curricularComponentCategory
      * @return mixed
      */
@@ -47,7 +47,7 @@ class CurricularComponentCategoryPolicy
     /**
      * Determine whether the user can create curricular component categories.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -58,7 +58,7 @@ class CurricularComponentCategoryPolicy
     /**
      * Determine whether the user can update the curricular component category.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\CurricularComponentCategory  $curricularComponentCategory
      * @return mixed
      */
@@ -70,7 +70,7 @@ class CurricularComponentCategoryPolicy
     /**
      * Determine whether the user can delete the curricular component category.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\CurricularComponentCategory  $curricularComponentCategory
      * @return mixed
      */
@@ -82,7 +82,7 @@ class CurricularComponentCategoryPolicy
     /**
      * Determine whether the user can restore the curricular component category.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\CurricularComponentCategory  $curricularComponentCategory
      * @return mixed
      */
@@ -94,7 +94,7 @@ class CurricularComponentCategoryPolicy
     /**
      * Determine whether the user can permanently delete the curricular component category.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\CurricularComponentCategory  $curricularComponentCategory
      * @return mixed
      */

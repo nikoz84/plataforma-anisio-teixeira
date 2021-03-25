@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Traits\ApiResponser;
-use App\CurricularComponent as Componente;
-use App\CurricularComponent;
-use App\CurricularComponentcomponent as component;
+use App\Models\CurricularComponent;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -61,9 +59,9 @@ class ComponentesController extends ApiController
      */
     public function getById($id)
     {
-        $component = new Componente();
+        $component = new CurricularComponent();
         try {
-            $component =  Componente::with(['nivel', 'category'])->findOrFail($id);
+            $component =  CurricularComponent::with(['nivel', 'category'])->findOrFail($id);
         } catch (Exception $ex) {
             return $this->errorResponse([], 'Componente não encontrado', 422);
         }
@@ -86,7 +84,7 @@ class ComponentesController extends ApiController
                     501
                 );
             }
-            $componente = new Componente();
+            $componente = new CurricularComponent();
             $this->authorize('create', JWTAuth::user());
             $componente->fill($this->request->all());
 
@@ -113,7 +111,7 @@ class ComponentesController extends ApiController
     {
         $limit = ($this->request->has('limit')) ? $this->request->query('limit') : 20;
         $search = "%{$termo}%";
-        $paginator = Componente::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search])
+        $paginator = CurricularComponent::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search])
             ->paginate($limit);
 
         $paginator->setPath("/licenses/search/{$termo}?limit={$limit}");
@@ -130,7 +128,7 @@ class ComponentesController extends ApiController
     {
         $search = "%{$term}%";
         $limit = $this->request->query('limit', 100);
-        $tags = Componente::select(['id', 'name'])
+        $tags = CurricularComponent::select(['id', 'name'])
             ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
             ->get(['id', 'name']);
         return $this->showAll(collect($tags));

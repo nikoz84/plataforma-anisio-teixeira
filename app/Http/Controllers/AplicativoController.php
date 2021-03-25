@@ -6,7 +6,7 @@ use App\Helpers\ResizeImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ApiController;
-use App\Aplicativo;
+use App\Models\Aplicativo;
 use App\Helpers\CachingModelObjects;
 use Exception;
 use Illuminate\Support\Facades\Validator;
@@ -70,11 +70,13 @@ class AplicativoController extends ApiController
                 $data = $validator->errors();
                 throw new  Exception("Erro no preenchimento dos dados");
             }
+            dd($this->request->all());
             $aplicativo = $this->aplicativo;
             $aplicativo->canal_id = Aplicativo::CANAL_ID;
             $aplicativo->user_id = Auth::user()->id;
+            $aplicativo->category_id = $this->request->category_id;
             $aplicativo->url = $this->request->url;
-            $aplicativo->options  = json_decode($this->request->options, true);
+            //$aplicativo->options  = json_decode($this->request->options, true);
             $aplicativo->options = [
                 'qt_access' => Aplicativo::QT_ACCESS_INIT,
                 'is_featured' => $this->request->options_is_featured
@@ -83,6 +85,7 @@ class AplicativoController extends ApiController
                 throw new  Exception("Erro no preenchimento dos dados");
             }
             $aplicativo->tags()->attach($this->request->tags);
+            
             if ($this->request->imagemAssociada) {
                 $fileImg = $this->saveFile($aplicativo->id, [$this->request->imagemAssociada], 'imagem-associada', 'aplicativos-educacionais');
                 if (!$fileImg) {

@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
-use App\Contato;
+use App\Models\User;
+use App\Models\Contato;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ContatoPolicy
@@ -13,7 +13,7 @@ class ContatoPolicy
     /**
      * Determine whether the user can view any denuncias.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -24,7 +24,7 @@ class ContatoPolicy
     /**
      * Determine whether the user can view the denuncia.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function index(User $user)
@@ -37,7 +37,7 @@ class ContatoPolicy
     /**
      * Determine whether the user can create denuncias.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -48,7 +48,7 @@ class ContatoPolicy
     /**
      * Determine whether the user can update the denuncia.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Denuncia  $denuncia
      * @return mixed
      */
@@ -62,7 +62,7 @@ class ContatoPolicy
     /**
      * Determine whether the user can delete the denuncia.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Denuncia  $denuncia
      * @return mixed
      */
@@ -76,7 +76,7 @@ class ContatoPolicy
     /**
      * Determine whether the user can restore the denuncia.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Denuncia  $denuncia
      * @return mixed
      */
@@ -88,7 +88,7 @@ class ContatoPolicy
     /**
      * Determine whether the user can permanently delete the denuncia.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Denuncia  $denuncia
      * @return mixed
      */

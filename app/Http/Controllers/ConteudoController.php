@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Conteudo;
+use App\Models\Conteudo;
 use App\Helpers\CachingModelObjects;
 use App\Helpers\ContentVideoConvert;
 use App\Helpers\ImageExtractionFromVideo;
 use App\Http\Controllers\ApiController;
 use App\Jobs\VideoStreamingConvert;
+use App\Services\Destaques;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\FileSystemLogic;
@@ -342,6 +343,9 @@ class ConteudoController extends ApiController
         ]);
         $conteudo = CachingModelObjects::getById($query, $id);
         $conteudo->increment('qt_access', 1);
+
+        $conteudo->save();
+        
         return $this->showOne($conteudo);
     }
 
@@ -423,7 +427,9 @@ class ConteudoController extends ApiController
     }
     public function getConteudosRecentes($slug)
     {
-        $destaques = new \App\Helpers\Destaques(3);
+        
+        $destaques = new Destaques(3);
+
         return $this->successResponse($destaques->getHomeDestaques($slug));
     }
 

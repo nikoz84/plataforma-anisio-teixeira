@@ -6,10 +6,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         
-        <title>{{env('APP_NAME')}}</title>
-        <meta name="description" content="{{env('APP_NAME')}} projeto da Secretaria da Educação do Estado da Bahia (SEC)">
-        <meta name="keywords" content="plataforma anísio teixeira, recursos educacionais, educação, conteúdos digitais, software livre, emitec, tv anísio teixeira">
-        <link rel="canonical" href="{{env('APP_URL')}}">
+        <title>@yield('title', $title)</title>
+
+        <meta name="description" content="@yield('description', $description)">
+        <meta name="keywords" content="@yield('keywords', $keywords)">
+    
+        <meta name="title" content="@yield('title', $title)">
+        <meta name="author" content="@yield('author', $author)">
+        <meta name="url" content="@yield('url', $url)">
+
+        <meta property="og:title" content="@yield('title', $title)"/>
+        <meta property="og:description" content="@yield('description', $description)"/>
+        {{-- <meta property=”og:type” content=”{{ $meta->og_type }}”/> --}}
+        <meta property="og:image" content=""/>
+        <meta property="og:locale" content="@yield('locale', $locale)" />
+        <meta property="og:sitename" content="@yield('sitename', $sitename)" />
+        <meta property="og:url" content="@yield('url', $url)"/>
+        <meta name="twitter:card" content="summary"/>
+        <meta name="twitter:description" content="@yield('description', $description)">
+        <meta name="twitter:site" content="@yield('url', $url)"/>
+        <meta name="twitter:title" content="@yield('title', $title)">
+        <meta name="twitter:creator" content="@yield('author', $author)"/>
+        <meta name="twitter:image" content="">
+
+        <link rel="canonical" href="@yield('canonical', $canonical)">
         <link rel="manifest" href="/manifest.json" preload>
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
         <meta name="msapplication-TileColor" content="#08275e">
@@ -31,12 +51,12 @@
             <main-app></main-app>
         </div>
         
-        @if (env('APP_ENV') === 'development')
-        <script async defer src="/js/app.js"></script>
-        @elseif (env('APP_ENV') === 'production')
-        <script async defer src="/js/manifest.js"></script>
-        <script async defer src="/js/js/vendor.js"></script>
-        <script async defer src="/js/js/app.js"></script>
+        @if (config('app.env') === 'development')
+        <script async defer src="{{ asset('/js/app.js') }}"></script>
+        @elseif (config('app.env') === 'production')
+        <script async defer src="{{ asset('/js/manifest.js') }}"></script>
+        <script async defer src="{{ asset('/js/js/vendor.js') }}"></script>
+        <script async defer src="{{ asset('/js/js/app.js')}}"></script>
         @endif
     </body>
 </html>

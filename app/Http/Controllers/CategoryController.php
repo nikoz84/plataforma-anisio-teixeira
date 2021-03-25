@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ApiController;
 use App\Traits\FileSystemLogic;
-use App\Canal;
+use App\Models\Canal;
 use App\Helpers\CachingModelObjects;
 
 class CategoryController extends ApiController

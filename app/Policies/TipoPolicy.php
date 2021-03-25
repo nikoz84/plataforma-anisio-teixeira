@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
-use App\Tipo;
+use App\Models\User;
+use App\Models\Tipo;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class TipoPolicy
@@ -13,7 +13,7 @@ class TipoPolicy
     /**
      * Determine whether the user can view any tipos.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -24,7 +24,7 @@ class TipoPolicy
     /**
      * Determine whether the user can view the tipo.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Tipo  $tipo
      * @return mixed
      */
@@ -36,7 +36,7 @@ class TipoPolicy
     /**
      * Determine whether the user can create tipos.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -47,7 +47,7 @@ class TipoPolicy
     /**
      * Determine whether the user can update the tipo.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Tipo  $tipo
      * @return mixed
      */
@@ -59,7 +59,7 @@ class TipoPolicy
     /**
      * Determine whether the user can delete the tipo.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Tipo  $tipo
      * @return mixed
      */
@@ -71,7 +71,7 @@ class TipoPolicy
     /**
      * Determine whether the user can restore the tipo.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Tipo  $tipo
      * @return mixed
      */
@@ -83,7 +83,7 @@ class TipoPolicy
     /**
      * Determine whether the user can permanently delete the tipo.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Tipo  $tipo
      * @return mixed
      */

@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Traits\ApiResponser;
-use App\CurricularComponent as Componente;
-use App\CurricularComponent;
-use App\CurricularComponentCategory as Category;
-use App\CurricularComponentCategory;
+use App\Models\CurricularComponentCategory;
 use App\Helpers\CachingModelObjects;
 use Exception;
 use Illuminate\Http\Request;

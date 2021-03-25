@@ -125,7 +125,7 @@
 </template>
 
 <script>
-import { TabComponentes, Title } from "@components/shared";
+import { TabComponentes, Title } from "../components/shared";
 import { mapState } from "vuex";
 import {
   QList,

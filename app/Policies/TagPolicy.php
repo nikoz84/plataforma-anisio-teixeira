@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
-use App\Tag;
+use App\Models\User;
+use App\Models\Tag;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class TagPolicy
@@ -13,7 +13,7 @@ class TagPolicy
     /**
      * Determine whether the user can view any tags.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -24,7 +24,7 @@ class TagPolicy
     /**
      * Determine whether the user can view the tag.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Tag  $tag
      * @return mixed
      */
@@ -37,7 +37,7 @@ class TagPolicy
     /**
      * Determine whether the user can create tags.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -49,7 +49,7 @@ class TagPolicy
     /**
      * Determine whether the user can update the tag.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Tag  $tag
      * @return mixed
      */
@@ -62,7 +62,7 @@ class TagPolicy
     /**
      * Determine whether the user can delete the tag.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Tag  $tag
      * @return mixed
      */
@@ -75,7 +75,7 @@ class TagPolicy
     /**
      * Determine whether the user can restore the tag.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Tag  $tag
      * @return mixed
      */
@@ -87,7 +87,7 @@ class TagPolicy
     /**
      * Determine whether the user can permanently delete the tag.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Tag  $tag
      * @return mixed
      */

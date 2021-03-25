@@ -3,9 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Traits\ApiResponser;
-
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Request;
+use App\Services\SearchEngineOptimization;
+use Jaybizzle\CrawlerDetect\CrawlerDetect;
 class ApiController extends Controller
 {
+    
+
+    public function __construct(Request $request, CrawlerDetect $crawlerDetect)
+    {
+        $this->seo = new SearchEngineOptimization($request);
+        $this->crawlerDetect = $crawlerDetect;
+    }
     /**
      * Trait de respostas com métodos comuns para todos os controladores filhos
      */
@@ -17,7 +27,12 @@ class ApiController extends Controller
      */
     public function home()
     {
-        return view('index');
+        $data = $this->seo->getDefaultData();
+
+        if($this->crawlerDetect->isCrawler()){
+            $data = $this->seo->getMetadata();
+        }
+        return view('index', $data);
     }
 
     /**

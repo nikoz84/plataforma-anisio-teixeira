@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\WordpressService;
+use App\Services\WordpressService;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;

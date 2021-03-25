@@ -2,30 +2,25 @@
     <div class="row q-pa-md">
       <div class="col-sm-6">
         <form v-on:submit.prevent="save()">
-          <q-stepper
-            v-model="step"
-            vertical
-            color="primary"
-            animated
-          >
-            <q-step
-              :name="1"
-              title="Nome do Canal, Url Amigável, URL da API"
-              icon="settings"
-              :done="step > 1"
-              @click="step = 1"
-            >
+                      
               <q-input filled v-model.trim="canal.options.extend_name" label="Nome do canal em extenso" hint="Nome do canal em extenso"></q-input>
               <q-input filled v-model.trim="canal.name" label="Nome do Canal" 
                 hint="Nome abreviado ou reduzido"
                 :error="errors && errors.name && errors.name.length > 0"
                 bottom-slot
               >
-              <template v-slot:error>
-                <ShowErrors :errors="errors.name"></ShowErrors>
-              </template>
+                <template v-slot:error>
+                  <ShowErrors :errors="errors.name"></ShowErrors>
+                </template>
               </q-input>
-              <q-input filled v-model.trim="canal.slug" label="Url Amigável" hint="Url amigável separado por ifens e em minusculas sem espaços"></q-input>
+              <q-input filled v-model.trim="canal.slug" label="Url Amigável"
+                :error="errors && errors.slug && errors.slug.length > 0"
+                bottom-slot 
+                hint="Url amigável separado por ifens e em minusculas sem espaços">
+                <template v-slot:error>
+                  <ShowErrors :errors="errors.slug"></ShowErrors>
+                </template>
+              </q-input>
               <q-input filled v-model.trim="canal.options.back_url" label="URL da API" hint="BackEnd URL"></q-input>
               <q-select filled 
                         v-model="canal.tipos"
@@ -40,17 +35,7 @@
                         hint="Tipos de conteúdos que o canal vai cadastrar">
               </q-select>
               
-              <q-stepper-navigation>
-                <q-btn @click="step = 2" color="primary" label="Próximo" />
-              </q-stepper-navigation>
-            </q-step>
-            <q-step
-              :name="2"
-              title="Descrição e complementos da descrição"
-              icon="settings"
-              :done="step > 2"
-              @click="step = 2"
-            >
+              
               <div class="q-mt-md">
                 <p class="text-center">Escreva uma descrição do canal</p>
               </div>
@@ -58,6 +43,9 @@
               ref="editor_ref"
               @paste.native="evt => pasteCapture(evt)"
               :toolbar="[['bold', 'italic', 'strike', 'underline']]"/>
+              <div v-if="errors && errors.description">
+                  <ShowErrors :errors="errors.description"></ShowErrors>
+              </div>
               <div class="q-mt-md">
                 <p class="text-center">Complementos da descrição</p>
               </div>
@@ -84,18 +72,7 @@
                 />
               
                 
-              <q-stepper-navigation>
-                <q-btn @click="step = 3" color="primary" label="Próximo" />
-                <q-btn flat @click="step = 1" color="primary" label="Voltar" class="q-ml-sm" />
-              </q-stepper-navigation>
-            </q-step>
-            <q-step
-              :name="3"
-              title="Ativar: Canal, Possui Home, Possui Categorias, Possui Acesso Rápido, Possui Sobre"
-              icon="settings"
-              :done="step > 2"
-              @click="step = 3"
-            >
+              
             <q-toggle
                   class="q-mt-md"
                   label="Ativar ou Desativar Canal"
@@ -141,13 +118,7 @@
                 :default-value="canal.options.color"
                 style="max-width: 250px; margin-top:30px;"
               />
-          
-          <q-stepper-navigation>
-                <q-btn flat @click="step = 2" color="primary" label="Voltar" class="q-ml-sm" />
-                <q-btn class="full-width q-mt-md" label="Salvar" type="submit" color="primary"/>
-              </q-stepper-navigation>
-            </q-step>
-          </q-stepper>
+          <q-btn class="full-width q-mt-md" label="Salvar" type="submit" color="primary"/>
         </form>
       </div>
       <div class="col-sm-6"> 
@@ -166,7 +137,7 @@
           </q-card-section>
           <q-card-section v-if="canal.options">
             <p>DESCRIÇÃO: <small v-html="canal.description"></small></p>
-            <p>O QUÊ?: <span>{{canal.options.complement_description.porque}}</span></p>
+            <p>O QUÊ?: <span>{{canal.options.complement_description.que}}</span></p>
             <p>O PORQUÊ: <span>{{canal.options.complement_description.porque}}</span></p>
             <p>O CÔMO: <span>{{canal.options.complement_description.como}}</span></p>
           </q-card-section>
@@ -252,7 +223,8 @@ export default {
 
       this.canal.options.tipo_conteudo = this.canal.tipos ? this.canal.tipos.map(i => i.id): [];
       form.append("name", this.canal.name);
-      form.append("is_active", this.canal.is_active);
+      //console.log(this.canal.is_active);
+      form.append("is_active", this.canal.is_active ? 1 : 0); 
       form.append("options", JSON.stringify(this.canal.options));
       form.append("slug", this.canal.slug);
       form.append("description", this.canal.description);
@@ -265,6 +237,7 @@ export default {
           this.$router.push(`/admin/${this.$route.params.slug}/listar`);
         }
       } catch(ex) {
+        console.log(ex);
         this.errors = ex.errors;
       }
     },

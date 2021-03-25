@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Contato;
-use App\User;
+use App\Models\Contato;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
