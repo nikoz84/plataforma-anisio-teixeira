@@ -20,7 +20,8 @@ import {
   CurricularComponentsForm,
   CurricularComponentsCategoryForm,
   NivelEnsinoForm,
-  UniversidadesForm
+  UniversidadesForm,
+  LogArtisanForm
   } from "@forms/models";
 
 import Resumo from "@pages/Resumo.vue";
@@ -48,7 +49,8 @@ export default {
     componentes: CurricularComponentsForm,
     componentescategorias:CurricularComponentsCategoryForm,
     nivelensino:NivelEnsinoForm,
-    universidades: UniversidadesForm
+    universidades: UniversidadesForm,
+    logartisan:LogArtisanForm
   },
   data() {
     return {

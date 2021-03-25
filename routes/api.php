@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
  */
+ /**LOGS ARTISAN/LARAVEL */
+ Route::get('/logartisan', 'LogArtisanController@index')->name('logartisan.index');
+ Route::get('/logartisan/{id}', 'LogArtisanController@getById')->name('logartisan.get');
+ Route::get('/logartisan/search/{term}', 'LogArtisanController@search')->name('logartisan.search');
+ 
+ 
 Route::get('/files/galeria', 'FileController@getGallery')->name('lista.galeria.imagens');
 Route::get('/files/{id}', 'FileController@getFiles')->name('busca.arquivo');
 Route::post('/files/{id}', 'FileController@createFile')->name('adiciona.arquivo');
@@ -103,9 +109,11 @@ Route::get('/rotinas/{nivel}/{semana}', 'ConteudoPlanilhaController@rotinasPerNi
  * USUÁRIO DEVE ESTAR LOGADO PARA ACESSAR ESSAS ROTAS
  *
  ********************************************************/
+
 Route::group(
-    ['middleware' => ['jwt.auth']],
+    ['middleware' => ['jwt.auth', "cors"]],
     function () {
+       
         /** CATEGORIAS DOS CONTEÚDOS*/
         Route::post('/categorias', 'CategoryController@create')->name('criar.categorias');
         Route::put('/categorias/{id}', 'CategoryController@update')->name('atualizar.categorias');
@@ -245,5 +253,7 @@ Route::group(
         Route::post('/dislike', 'ConteudoLikeController@dislike')->name('dislike');
         Route::get('/likes/usuario/{idUsuario}/{tipo?}', 'ConteudoLikeController@getLikesPorIdUsuarioEtipo')->name('likes.usuario');
         Route::get('/likes/conteudo/{conteudoid}/{tipo}','ConteudoLikeController@getUsuarioLikesConteudoAplicativo')->name('likes.usuario.conteudo.aplicativo');
+
     }
+    
 );

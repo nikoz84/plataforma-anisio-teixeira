@@ -21,10 +21,6 @@
     "image": "http://127.0.0.1:8000/storage/conteudos/conteudos-digitais/imagem-associada/licencas/",
     "childs": []
     },
-<<<<<<< HEAD
-   
-},
-=======
     {
         "id": 2,
         "parent_id": null,
@@ -76,7 +72,6 @@
         "to": 6,
         "total": 6
     },
->>>>>>> 239d1c7da7fc518486f4bea3b47695401ebabca1
 "message": "",
 "success": true
 }

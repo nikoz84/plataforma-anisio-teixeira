@@ -15,13 +15,13 @@ use Streaming\FFMpeg;
 class CommandConvertVideoStreming extends Command
 {
     /**
-     * The name and signature of the console command.
+     * Converte para Stream
      * @var string
      */
     protected $signature = 'convert:streaming';
 
     /**
-     * The console command description.
+     * Converte video de qualquer extensão para arquivos streaming.
      * @var string
      */
     protected $description = 'Coverte os conteudos do tipo video (tipo_id = 5) que estão na aplicação e possuem um arquivo de video mas não possuem o formato streming na pasta streming';
@@ -44,6 +44,7 @@ class CommandConvertVideoStreming extends Command
         $conteudosSemStreaming = $conteudo->conteudosSemStreamingFiles();
         $root = Storage::disk('conteudos-digitais')->path("streaming");
         $ffmpeg = FFMpeg::create(config('ffmpeg'));
+        
         $converts = [];
         foreach($conteudosSemStreaming as $c)
         {

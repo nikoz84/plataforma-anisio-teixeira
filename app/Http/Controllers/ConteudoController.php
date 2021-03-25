@@ -68,7 +68,6 @@ class ConteudoController extends ApiController
             $is_approved = $request->query('aprovados', 'true');
         }
         $conteudos = $query->aprovados($is_approved)->with(['canal', 'tipo'])->paginate($request->query('limit', 6))->setPath("/conteudos?{$url}");
-
         return $this->showAsPaginator($conteudos);
     }
 
@@ -86,15 +85,13 @@ class ConteudoController extends ApiController
             ->where('is_site', 'true')
             ->where('is_approved', 'true')
             ->sortBy($request->query('ordenar', 'created_at'));
-
         $sites = $query->paginate($limit)
             ->setPath("/conteudos/sites?limit={$limit}");
-
         return $this->showAsPaginator($sites);
     }
+
     /**
      * Regras de validação
-     *
      * @return array
      */
     public function configRules(Request $request)
@@ -120,7 +117,6 @@ class ConteudoController extends ApiController
             'imagem_associada' => 'sometimes|image|mimes:jpeg,jpg,webp,png,gif,svg|max:2048',
             'visualizacao' => ["sometimes","file", new \App\Rules\ValidExtensions($request)]
         ];
-        
         return $configRules;
     }
 
@@ -130,10 +126,7 @@ class ConteudoController extends ApiController
      */
     protected function messagesRules()
     {
-        $mensagens = [
-            'componentes.required' => 'Selecione ao menos 1 componente curricular para este conteúdo'
-            
-        ];
+        $mensagens = ['componentes.required' => 'Selecione ao menos 1 componente curricular para este conteúdo'];
         return array_merge(parent::messagesRules(), $mensagens);
     }
 
@@ -146,63 +139,61 @@ class ConteudoController extends ApiController
     {
         $conteudo = new Conteudo;
         $this->authorize('create', $conteudo);
-        
+        $errorStatus = 400;
+        $errors = [];
         $validator = Validator::make(
             $request->all(),
             $this->configRules($request)
         );
-        
-        if ($validator->fails()) {
-            return $this->errorResponse(
-                $validator->errors(),
-                "Não foi possível criar o conteúdo",
-                422
-            );
-        }
-        $role_id = Auth::user()->role->id;
-        
-        if ($role_id == 1 || $role_id == 2 || $role_id == 3) {
-            $conteudo->approving_user_id = Auth::user()->id;
-            $conteudo->is_approved = $request->input('is_approved', false);
-            $conteudo->is_featured = $request->input('is_featured', false);
-        } else {
-            $conteudo->setAttribute('approving_user_id', null);
-            $conteudo->setAttribute('is_approved', false);
-            $conteudo->setAttribute('is_featured', false);
-        }
-        $conteudo->user_id = Auth::user()->id;
-        $conteudo->canal_id = $request->canal_id;
-        $conteudo->tipo_id = $request->tipo_id;
-        $conteudo->license_id = $request->license_id;
-        $conteudo->category_id = $request->category_id;
-        $conteudo->title = $request->title;
-        $conteudo->description = $request->description;
-        $conteudo->source = $request->source;
-        $conteudo->authors = $request->authors;
-        $conteudo->options = ['site' => $request->options_site];
-        $conteudo->setAttribute('is_site', $request->input('is_site', false));
-        $conteudo->qt_downloads = Conteudo::INIT_COUNT;
-        $conteudo->qt_access = Conteudo::INIT_COUNT;
-        if (!$conteudo->save()) {
-            return $this->errorResponse([], "Não foi possível cadastrar o conteúdo", 422);
-        }
-
-        $conteudo->tags()->attach($request->tags);
-        $conteudo->componentes()->attach(explode(',', $request->componentes));
-        $conteudo::tsDocumentoSave($conteudo->id);
-        try 
+        try
         {
+            if ($validator->fails()) {
+                $errorStatus = 422;
+                $errors = $validator->errors();
+                throw new Exception("Não foi possível criar o conteúdo");
+            }
+            $role_id = Auth::user()->role->id;
+            
+            if ($role_id == 1 || $role_id == 2 || $role_id == 3) {
+                $conteudo->approving_user_id = Auth::user()->id;
+                $conteudo->is_approved = $request->input('is_approved', false);
+                $conteudo->is_featured = $request->input('is_featured', false);
+            } else {
+                $conteudo->setAttribute('approving_user_id', null);
+                $conteudo->setAttribute('is_approved', false);
+                $conteudo->setAttribute('is_featured', false);
+            }
+            $conteudo->user_id = Auth::user()->id;
+            $conteudo->canal_id = $request->canal_id;
+            $conteudo->tipo_id = $request->tipo_id;
+            $conteudo->license_id = $request->license_id;
+            $conteudo->category_id = $request->category_id;
+            $conteudo->title = $request->title;
+            $conteudo->description = $request->description;
+            $conteudo->source = $request->source;
+            $conteudo->authors = $request->authors;
+            $conteudo->options = ['site' => $request->options_site];
+            $conteudo->setAttribute('is_site', $request->input('is_site', false));
+            $conteudo->qt_downloads = Conteudo::INIT_COUNT;
+            $conteudo->qt_access = Conteudo::INIT_COUNT;
+            if (!$conteudo->save()) {
+                $errorStatus = 422;
+                throw new Exception("Não foi possível cadastrar o conteúdo");
+            }
+            $conteudo->tags()->attach($request->tags);
+            $conteudo->componentes()->attach(explode(',', $request->componentes));
+            $conteudo::tsDocumentoSave($conteudo->id);
             $file = $this->storeFiles($request, $conteudo);
             if (!$file) 
             {
                 throw new Exception('Não foi possível fazer upload de arquivos.');
             }
-           $this->stremingVideoConvert($conteudo);
-        } 
+            $this->stremingVideoConvert($conteudo);
+        }        
         catch (Exception $ex) 
         {
-            Log::notice($ex->getMessage());
-            return $this->errorResponse([], $ex->getMessage(), 422);
+            Log::notice($ex);
+            return $this->errorResponse($errors, $ex->getMessage(), $errorStatus);
         }
         return $this->showOne($conteudo, 'Conteúdo cadastrado com sucesso!!', 200);
     }
@@ -319,17 +310,6 @@ class ConteudoController extends ApiController
      */
     public function getById(Request $request, $id)
     {
-        /*
-        $conteudo = Conteudo::with([
-            'tipo',
-            'user',
-            'canal',
-            'tags',
-            'license',
-            'category',
-            'componentes',
-            'niveis',
-        ])->findOrFail($id);*/
         $conteudo = new Conteudo();
         $query = $conteudo->query()->with([
             'tipo',

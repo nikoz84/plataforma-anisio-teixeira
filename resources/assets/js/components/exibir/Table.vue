@@ -50,10 +50,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(row, i) in paginator.data" :key="`row-${i}`">
+          <tr v-for="(row, i) in paginator.data" :key="`row-${i}`" v-if="row != null">
             <td
               class="text-center"
-              v-html="row.name ? row.name : row.title"
+              v-html="row.name ? row.name : (row.title ? row.title : row.message)"
             ></td>
             <td class="text-center" style="width:50px;">
               <q-btn-group spread>
@@ -81,6 +81,14 @@
                   v-if="$route.params.slug == 'conteudos' || $route.params.slug == 'aplicativos'"
                   @click="goTo(row)"
                 />
+                <q-btn
+                  size="sm"
+                  color="primary"
+                  title="Visualizar"
+                  icon="visibility"
+                  v-if="$route.params.slug =='logartisan'"
+                  :to="`/admin/logartisan/editar/${row.id}`"
+                ></q-btn>
               </q-btn-group>
             </td>
           </tr>
