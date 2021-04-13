@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { LoaderAdmin } from "@components/exibir";
 
 const adminRoutes = {

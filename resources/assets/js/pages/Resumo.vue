@@ -29,7 +29,8 @@
     </q-card>
   </div>
 </template>
-<script>
+<script>// @ts-nocheck
+
 import VueApexCharts from "vue-apexcharts";
 import {
   QTable,
@@ -43,6 +44,7 @@ import {
 export default {
   name: "Resumo",
   components: {
+    QTable,
     QCard,
     QChip,
     QSelect,

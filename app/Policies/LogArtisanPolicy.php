@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\LogArtisan;
-use App\User;
+use App\Models\LogArtisan;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class LogArtisanPolicy

@@ -129,7 +129,8 @@
   </article>
 </template>
 
-<script>
+<script>// @ts-nocheck
+
 import { QForm, QInput, QEditor, QSelect, QCard, QCardSection } from "quasar";
 import { ShowErrors } from "@forms/shared";
 import { prototype } from "stream";
@@ -217,8 +218,8 @@ export default {
         ? `/aplicativos/${this.$route.params.id}`
         : "/aplicativos";
       try {
-        let resp = await axios.post(url, form);
-        if (resp.data.success) {
+        let { data } = await axios.post(url, form);
+        if (data.success) {
           this.$router.push("/admin/aplicativos/listar");
         }
       } catch (ex) {

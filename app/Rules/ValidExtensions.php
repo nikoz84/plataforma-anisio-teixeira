@@ -3,7 +3,7 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use App\Tipo;
+use App\Models\Tipo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -15,9 +15,9 @@ class ValidExtensions implements Rule
      *
      * @return void
      */
-    public function __construct(Request $request)
+    public function __construct($tipo_id)
     {
-        $this->tipo_id = $request->tipo_id;
+        $this->tipo_id = $tipo_id;
     }
 
     /**
@@ -28,6 +28,7 @@ class ValidExtensions implements Rule
      */
     public function passes($attribute, $value)
     {
+        
         $tipo = Tipo::where('id', $this->tipo_id)->get()->first();
         if(!$tipo)
         return false;

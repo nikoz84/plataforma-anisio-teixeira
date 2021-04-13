@@ -124,7 +124,7 @@
           multiple
           option-value="id"
           option-label="name"
-          hint="Pesquise pelo menos 3 palavras-chave para melhorar as buscas, se não achar a palavra escreva uma palavra e adicione apertando enter"
+          hint="Pesquise entre 3 a 10 palavras-chave para melhorar as buscas, se não achar a palavra escreva uma palavra e adicione apertando enter"
           use-chips
           stack-label
           hide-dropdown-icon
@@ -334,7 +334,8 @@
   </div>
 </template>
 
-<script>
+<script>// @ts-nocheck
+
 import { mapGetters, mapActions, mapState, mapMutations } from "vuex";
 import { ShowErrors, ParentAndChildSelect } from "@forms/shared";
 import { PasteCapture } from "@mixins/RemoveFormat";
@@ -348,7 +349,14 @@ import {
   QStep,
   QStepperNavigation,
   QDialog,
-  ClosePopup
+  ClosePopup,
+  QCheckbox,
+  QSeparator,
+  QBtn,
+  QList,
+  QItem,
+  QItemSection,
+  QItemLabel
 } from "quasar";
 
 export default {
@@ -359,6 +367,13 @@ export default {
   },
   components: {
     QInput,
+    QItemSection,
+    QCheckbox,
+    QBtn,
+    QList,
+    QItem,
+    QItemLabel,
+    QSeparator,
     QEditor,
     QCard,
     QSelect,

@@ -174,17 +174,20 @@
 </div>
 </template>
 <script>
-import { mapActions, mapState } from "vuex";
-import { QImg, Quasar, QCard, QCardSection, QCardActions, QIcon } from "quasar";
+import { mapState } from "vuex";
+import { QImg, QSeparator, QCard, QCardSection, QCardActions, QIcon } from "quasar";
 
 export default {
   name: "sobre",
   components: {
-    QImg, QCard, QCardSection, QCardActions, QIcon
+    QImg, QCard, QCardSection, QCardActions, QIcon, QSeparator
   },
   computed: {
     ...mapState(["layout", "links"]),
-  }
+  },
+  created() {
+    this.$gtag.pageview('/sobre');
+  },
 };
 </script>
 <style lang="stylus" scoped>

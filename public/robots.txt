@@ -1,8 +1,2 @@
-﻿User-agent: *
-Allow: /
-Disallow: /admin/*
-Disallow: /fisicaecotidiano/*
-Disallow: /api-v1/*
-
-Sitemap: http://pat.educacao.ba.gov.br/sitemap.xml
-
+User-agent: *
+Disallow:

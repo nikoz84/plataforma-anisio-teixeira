@@ -13,8 +13,9 @@
     </div>
   </section>
 </template>
-<script>
-import { QImg, QCard, QCardSection, QSeparator, QBtn } from "quasar";
+<script>// @ts-nocheck
+
+import { QImg, QSeparator, QBtn } from "quasar";
 import { PaginatorCard } from "@components/paginator";
 
 export default {

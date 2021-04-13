@@ -117,7 +117,8 @@
     </div>
   </div>
 </template>
-<script>
+<script>// @ts-nocheck
+
 import { SearchForm } from "@forms/search";
 import { mapMutations, mapState } from "vuex";
 import {
@@ -125,12 +126,22 @@ import {
   QDialog,
   ClosePopup,
   QPagination,
-  LocalStorage
+  LocalStorage,
+  QBtn,
+  QCard,
+  QCardSection,
+  QBtnGroup,
+  QSpace
 } from "quasar";
 
 export default {
   name: "Table",
   components: {
+    QBtn,
+    QSpace,
+    QCard,
+    QBtnGroup,
+    QCardSection,
     SearchForm,
     QMarkupTable,
     QDialog,

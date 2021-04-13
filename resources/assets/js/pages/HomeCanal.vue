@@ -64,12 +64,14 @@ import {
   QItem,
   QItemSection,
   QItemLabel,
-  QSeparator
+  QSeparator,
+  QImg
 } from "quasar";
 
 export default {
   name: "HomeCanal",
   components: {
+    QImg,
     QCard,
     QCardSection,
     QBtn,

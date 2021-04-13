@@ -11,6 +11,7 @@ trait UserCan
         $user = JWTAuth::user();
         if ($user) {
             return [
+                'create' => $user->can('create', $this),
                 'update' => $user->can('update', $this),
                 'delete' => $user->can('delete', $this)
             ];

@@ -1,11 +1,12 @@
-import HomeCanal from "../pages/HomeCanal.vue";
-import Listar from "../pages/Listar.vue";
-import Exibir from "../pages/Exibir.vue";
+// @ts-nocheck
+import HomeCanal from "@pages/HomeCanal.vue";
+import Listar from "@pages/Listar.vue";
+import Exibir from "@pages/Exibir.vue";
 
 const canalRoutes = {
     path: "/:slug",
     component: () =>
-      import(/* webpackChunkName: "canal" */ "../pages/Canal.vue"),
+      import(/* webpackChunkName: "canal" */ "@pages/Canal.vue"),
     meta: {
       requiresAuth: false,
       title: "Canal"

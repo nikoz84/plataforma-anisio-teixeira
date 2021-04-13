@@ -42,12 +42,15 @@
     
   </q-list>
 </template>
-<script>
-import {mapState, mapActions} from 'vuex';
+<script>// @ts-nocheck
+
+import { mapState, mapActions } from 'vuex';
 import { ReportsMenu } from "@components/shared";
+import { QSeparator, QList, QItem, QItemSection, QItemLabel } from "quasar";
+
 export default {
   name: "AdminLeftSideBar",
-  components: { ReportsMenu },
+  components: { ReportsMenu, QSeparator, QList, QItem, QItemSection, QItemLabel },
   computed: {
     ...mapState(['linksAdmin', 'isLogged'])
   },

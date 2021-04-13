@@ -6,16 +6,13 @@ use App\Models\Canal;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\CanalRequest;
 
 class CanalController extends ApiController
 {
     /**
-     * Criando atualizando e deletando aplicativo
-     * Undocumented function
      * Metodo Construtor
      * @param Request $request
-     * @param Canal $canal
-     * @param \App\Http\Controllers\CanalController
      */
     public function __construct(Request $request)
     {
@@ -45,34 +42,14 @@ class CanalController extends ApiController
      *
      * @return json
      */
-    public function create(Request $request)
+    public function create(CanalRequest $request)
     {
         $canal = new Canal;
         $this->authorize('create', $canal);
         
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'name' => 'required',
-                'description' => 'required',
-                'slug' => 'required',
-                'is_active' => 'required|boolean'
-            ]
-        );
+    
+        $canal->fill($request->validated());
         
-        if ($validator->fails()) {
-            return $this->errorResponse(
-                $validator->errors(),
-                "Não foi possível criar o conteúdo",
-                422
-            );
-        }
-
-        $canal->name = $this->request->name;
-        $canal->slug = $this->request->slug;
-        $canal->description = $this->request->description;
-        $canal->is_active = $this->request->is_active;
-        $canal->options = json_decode($this->request->options, true);
 
         if (!$canal->save()) {
             return $this->errorResponse([], 'Impossível cadastrar o canal', 422);
@@ -88,18 +65,14 @@ class CanalController extends ApiController
      * @param \App\Models\Canal $canal
      * @return \App\Traits\ApiResponser retorna json
      */
-    public function update($id)
+    public function update(CanalRequest $request, $id)
     {
         $canal = Canal::findOrFail($id);
         
         $this->authorize('update', $canal);
 
-        $canal->name = $this->request->name;
-        $canal->slug = $this->request->slug;
-        $canal->description = $this->request->description;
-        $canal->is_active = $this->request->is_active;
-        $canal->options = json_decode($this->request->options, true);
-
+        $canal->fill($request->validated());
+        
         if (!$canal->save()) {
             return $this->errorResponse([], 'Não foi possível editar o canal', 422);
         }

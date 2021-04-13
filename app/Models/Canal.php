@@ -146,7 +146,7 @@ class Canal extends Model
             case 9:
                 return 'Categorias';
                 break;
-            case 19:
+            case 16:
                 return 'Eixos Tecnológicos';
                 break;
             default:

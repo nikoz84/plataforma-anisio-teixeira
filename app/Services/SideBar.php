@@ -195,14 +195,7 @@ class SideBar
                 'slug' => 'nivelensino',
                 'hability' => 'index',
                 'class' => \App\Models\NivelEnsino::class
-            ],
-            [
-                'label' => 'Logs Laravel',
-                'name' => 'IndexLogArtisanLaravel',
-                'slug' => 'logartisan',
-                'hability' => 'index',
-                'class' => \App\LogArtisan::class
-            ],
+            ]
         ]);
     }
 }

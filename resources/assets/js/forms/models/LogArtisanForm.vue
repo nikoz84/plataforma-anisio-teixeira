@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-8 col-sm-12" >
       <q-card>
-        <q-card-section class="descritivo q-mx-md q-mb-sm">
+        <q-card-section class="descritivo q-mx-md q-mb-sm" v-if="logartisan">
               <h3 title="LogLaravel">LogLaravel #{{logartisan.id}} : {{logartisan.dateTime}}</h3>
               <h4>Mensagem</h4>
               <div class="q-mt-md" v-html="logartisan.message"></div> 
@@ -12,20 +12,20 @@
   </div>
 </template>
 
-<script>
-import { QCard, QCardSection, QSeparator, QChip, Ripple } from "quasar";
+<script>// @ts-nocheck
+
+import { QCard, QCardSection } from "quasar";
 export default {
       name: "LogArtisanForm",
       components: 
       {
-        QCard
+        QCard,
+        QCardSection
       },
       data() 
       {
         return {
-          logartisan:{
-
-          }
+          logartisan:{}
         }
       },
       created() {

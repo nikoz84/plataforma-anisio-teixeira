@@ -1,108 +1,129 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LogArtisanController;
+use App\Http\Controllers\FileController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TipoController;
+use App\Http\Controllers\ConteudoController;
+use App\Http\Controllers\WordpressController;
+use App\Http\Controllers\CurricularComponentCategoryController;
+use App\Http\Controllers\NivelEnsinoController;
+use App\Http\Controllers\ContatoController;
+use App\Http\Controllers\CanalController;
+use App\Http\Controllers\ComponentesController;
+use App\Http\Controllers\AplicativoController;
+use App\Http\Controllers\AplicativoCategoryController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OptionsController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\LicenseController;
+use App\Http\Controllers\ConteudoPlanilhaController;
+use App\Http\Controllers\ConteudoLikeController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RelatorioController;
+use App\Http\Controllers\ComentarioController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
- */
- /**LOGS ARTISAN/LARAVEL */
- Route::get('/logartisan', 'LogArtisanController@index')->name('logartisan.index');
- Route::get('/logartisan/{id}', 'LogArtisanController@getById')->name('logartisan.get');
- Route::get('/logartisan/search/{term}', 'LogArtisanController@search')->name('logartisan.search');
- 
- 
-Route::get('/files/galeria', 'FileController@getGallery')->name('lista.galeria.imagens');
-Route::get('/files/{id}', 'FileController@getFiles')->name('busca.arquivo');
-Route::post('/files/{id}', 'FileController@createFile')->name('adiciona.arquivo');
-Route::get('/autocompletar', 'HomeController@autocomplete')->name('autocompletar.home');
-Route::get('/layout', 'HomeController@getLayout')->name('lista.links');
+
+
+
+Route::group(['prefix' => 'files', 'as' => 'files.'], function () {
+    Route::get('/galeria', [FileController::class, 'getGallery'])->name('lista.galeria.imagens');
+    Route::get('/{id}', [FileController::class, 'getFiles'])->name('busca');
+    Route::post('/{id}', [FileController::class, 'createFile'])->name('adiciona');
+});
+
+Route::get('/autocompletar', [HomeController::class, 'autocomplete'])->name('autocompletar.home');
+Route::get('/layout', [HomeController::class, 'getLayout'])->name('lista.links');
 
 /** CATEGORIAS */
-Route::get('/categorias', 'CategoryController@index')->name('lista.categorias');
-Route::get('/categorias/{id}', 'CategoryController@getById')->name('lista.categoria.x.id');
-Route::get('/categorias/canal/{id}', 'CategoryController@getCategoryByCanalId')->name('lista.categoria.x.canal.id');
-Route::get('/categorias/search/{term}', 'CategoryController@search')->name('buscar.category');
-
+Route::group(['prefix' => 'categorias', 'as' => 'categorias.'], function () {
+    Route::get('/', [CategoryController::class, 'index'])->name('lista');
+    Route::get('/{id}', [CategoryController::class, 'getById'])->name('x.id');
+    Route::get('/canal/{id}', [CategoryController::class, 'getCategoryByCanalId'])->name('lista.x.canal.id');
+    Route::get('/search/{term}', [CategoryController::class, 'search'])->name('autocompletar');
+});
 /** TIPOS */
-Route::get('/tipos', 'TipoController@index')->name('listar.tipos');
-Route::get('/tipos/{id}', 'TipoController@getTiposById')->name('listar.tipos.x.id');
-Route::get('/tipos/search/{term}', 'TipoController@search')->name('buscar.tipo');
-
+Route::group(['prefix' => 'tipos', 'as' => 'tipos.'],function () {
+    Route::get('/', [TipoController::class, 'index'])->name('listar');
+    Route::get('/{id}', [TipoController::class, 'getTiposById'])->name('x.id');
+    Route::get('/search/{term}', [TipoController::class, 'search'])->name('autocompletar');
+});
 /** DENUNCIA E FALE CONOSCO */
-Route::post('/contato', 'ContatoController@create')->name('criar.faleconosco.contato');
+Route::post('/contato', [ContatoController::class, 'create'])->name('criar.faleconosco.contato');
 
 /** CANAIS */
-Route::get('/canais/slug/{slug}', 'CanalController@getBySlug')->name('buscar.canal.x.url.amigavel');
+Route::get('/canais/slug/{slug}', [CanalController::class, 'getBySlug'])->name('buscar.canal.x.url.amigavel');
 
 /** COMPONENTES */
-Route::get('/componentes', 'ComponentesController@index')->name('lista.componentes.curriculares');
+Route::get('/componentes', [ComponentesController::class, 'index'])->name('lista.componentes.curriculares');
 
 /** CATEGORIAS COMPONENTES */
-Route::get('/componentescategorias','CurricularComponentCategoryController@index')->name('lista.categorias.componentes.curriculares');
-Route::get('/componentescategorias/search/{termo}', 'CurricularComponentCategoryController@search')->name('buscar.componentescategorias');
-Route::get('/componentescategorias/{id}', 'CurricularComponentCategoryController@getById' )->name('obter.componentes-categoria');
-        
+Route::group(['prefix' => 'componentescategorias', 'as' => 'cc.categorias.'], function(){
+    Route::get('/',[CurricularComponentCategoryController::class, 'index'])->name('listar');
+    Route::get('/search/{termo}', [CurricularComponentCategoryController::class, 'search'])->name('autocompletar');
+    Route::get('/{id}', [CurricularComponentCategoryController::class, 'getById' ])->name('x.id');
+});
 
  /**NIVEL ENSINO**/
- Route::get('/nivelensino', 'NivelEnsinoController@index')->name('lista.nevelensino');
+ Route::get('/nivelensino', [NivelEnsinoController::class, 'index'])->name('lista.nevelensino');
 
 /** CONTEUDOS */
-Route::get('/conteudos', 'ConteudoController@index')->name('lista.conteudo');
-Route::get('/conteudos/sites', 'ConteudoController@getSitesTematicos')->name('lista.sites.tematicos');
-Route::get('/conteudos/search/{term}', 'ConteudoController@search')->name('busca.conteudo');
-Route::get('/conteudos/{id}', 'ConteudoController@getById')->name('busca.x.conteudo.id');
-Route::get('/conteudos/tag/{id}', 'ConteudoController@getByTagId')->name('busca.x.tag.id');
-Route::get('/conteudos/relacionados/{id}', 'ConteudoController@conteudosRelacionados')->name('busca.relacionados.x.id');
-Route::get('/conteudos/streaming/nofiles', 'ConteudoController@conteudoWithNoStreamingFiles')->name('nostreamingfiles.conteudo');
-Route::get('/conteudos/destaques/{slug}', 'ConteudoController@getConteudosRecentes')->name('lista.recentes');
-
+Route::group(['prefix'=> 'conteudos', 'as' => 'conteudos.'], function () {
+    Route::get('/', [ConteudoController::class, 'index'])->name('listar');
+    Route::get('/sites', [ConteudoController::class, 'getSitesTematicos'])->name('listar.sites.tematicos');
+    Route::get('/search/{term}', [ConteudoController::class, 'search'])->name('autocompletar');
+    Route::get('/{id}', [ConteudoController::class, 'getById'])->name('x.id');
+    Route::get('/tag/{id}', [ConteudoController::class, 'getByTagId'])->name('x.tag.id');
+    Route::get('/relacionados/{id}', [ConteudoController::class, 'conteudosRelacionados'])->name('relacionados.x.id');
+    Route::get('/streaming/nofiles', [ConteudoController::class, 'conteudoWithNoStreamingFiles'])->name('nostreamingfiles');
+    Route::get('/destaques/{slug}', [ConteudoController::class, 'getConteudosRecentes'])->name('recentes');
+});
 /** BLOG */
-Route::get('/posts', 'WordpressController@index')->name('lista.postagens');
-Route::get('/posts/{id}', 'WordpressController@getById')->name('busca.postagen.x.id');
-Route::get('/posts/estatisticas', 'WordpressController@getEstatisticas')->name('estatisticas.blog');
-
+Route::group(['prefix' => 'posts', 'as' => 'posts.'], function () {
+    Route::get('/', [WordpressController::class, 'index'])->name('listar');
+    Route::get('/{id}', [WordpressController::class, 'getById'])->name('x.id');
+    Route::get('/estatisticas', [WordpressController::class, 'getEstatisticas'])->name('estatisticas');
+});
 /** APLICATIVOS */
-Route::get('/aplicativos', 'AplicativoController@index')->name('lista.aplicativo');
-Route::get('/aplicativos/categories', 'AplicativoCategoryController@index')->name('lista.categorias.aplicativos');
-Route::get('/aplicativos/search/{term}', 'AplicativoController@search')->name('busca.aplicativo');
-Route::get('/aplicativos/{id}', 'AplicativoController@getById')->name('busca.x.aplicativo.id');
-
+Route::group(['prefix' => 'aplicativos', 'as' => 'aplicativos.'], function () {
+    Route::get('/', [AplicativoController::class, 'index'])->name('listar');
+    Route::get('/categories', [AplicativoCategoryController::class, 'index'])->name('listar.categorias');
+    Route::get('/search/{term}', [AplicativoController::class, 'search'])->name('autocomplete');
+    Route::get('/{id}', [AplicativoController::class, 'getById'])->name('x.id');
+});
 /** AUTENTICACAO */
-Route::post('/auth/login', 'AuthController@login')->name('login');
-
-Route::post('/auth/cadastro', 'AuthController@register')->name('registro.usuario');
-Route::get('/auth/verificar/{token}', 'AuthController@verifyToken')->name('verificar.token');
-Route::post('/auth/recuperar-senha', 'AuthController@recoverPass')->name('recuperar.senha');
-Route::post('/auth/modificar-senha/{token}', 'AuthController@modificarSenha')->name('modificar.senha');
-Route::get('/auth/verificar/email/{token}', 'AuthController@verifyTokenUserRegister')->name('verificar.usuario.token');
-
+Route::group(['prefix' => 'auth', 'as' => 'auth.usuario.'], function () {
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/cadastro', [AuthController::class, 'register'])->name('registro');
+    Route::get('/verificar/{token}', [AuthController::class, 'verifyToken'])->name('verificar.token');
+    Route::post('/recuperar-senha', [AuthController::class, 'recoverPass'])->name('recuperar.senha');
+    Route::post('/modificar-senha/{token} ', [AuthController::class, 'modificarSenha'])->name('modificar.senha');
+    Route::get('/verificar/email/{token}', [AuthController::class, 'verifyTokenUserRegister'])->name('verificar.usuario.token');
+});
 /** OPTIONS  */
-Route::get('/options/{name}', 'OptionsController@getByName')->name('busca.metadata.x.nome');
-Route::get('/options', 'OptionsController@index')->name('listar.opcoes');
-
+Route::group(['prefix' => 'options', 'as' => 'options.'],function(){
+    Route::get('/{name}', [OptionsController::class, 'getByName'])->name('busca.x.nome');
+    Route::get('/', [OptionsController::class, 'index'])->name('listar');
+});
 /** TAGS */
-Route::get('/tags/{id}', 'TagController@getById')->name('busca.x.tag');
+Route::get('/tags/{id}', [TagController::class, 'getById'])->name('busca.x.tag');
 /** LICENÇAS */
-Route::get('/licencas', 'LicenseController@index')->name('listar.licencas');
+Route::get('/licencas', [LicenseController::class, 'index'])->name('listar.licencas');
 /** DOWNLOAD FILE **/
-Route::get('/files/{directory}/{id}', 'FileController@downloadFile')->name('downloadFile.id');
+Route::get('/files/{directory}/{id}', [FileController::class, 'downloadFile'])->name('downloadFile.id');
 
 /**LIKES - DISLIKES */
-Route::get('/likes/count/{conteudoid}/{tipo}', 'ConteudoLikeController@getLikesByConteudoAplicativo')->name('likes.conteudo');
+Route::get('/likes/count/{conteudoid}/{tipo}', [ConteudoLikeController::class, 'getLikesByConteudoAplicativo'])->name('likes.conteudo');
 
-Route::get('/planilhas/load-rotinas/','ConteudoPlanilhaController@getRotinaDeEstudos')->name('busca.rotina.de.estudos');
-Route::get('/planilhas/load-faculdades/', 'ConteudoPlanilhaController@getFaculdadesDaBahia')->name('busca.faculdades');
+//Route::get('/planilhas/load-rotinas/','ConteudoPlanilhaController@getRotinaDeEstudos')->name('busca.rotina.de.estudos');
+//Route::get('/planilhas/load-faculdades/', 'ConteudoPlanilhaController@getFaculdadesDaBahia')->name('busca.faculdades');
 
-Route::get('/planilhas', 'ConteudoPlanilhaController@getDocumentByName')->name('docs.planilhas');
+Route::get('/planilhas', [ConteudoPlanilhaController::class, 'getDocumentByName'])->name('docs.planilhas');
 
-Route::get('/rotinas/{nivel}/{semana}', 'ConteudoPlanilhaController@rotinasPerNivel')->name('rotinas.estudos.x.nivel');
+Route::get('/rotinas/{nivel}/{semana}', [ConteudoPlanilhaController::class, 'rotinasPerNivel'])->name('rotinas.estudos.x.nivel');
 /***********************************************
  *
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN
@@ -111,149 +132,178 @@ Route::get('/rotinas/{nivel}/{semana}', 'ConteudoPlanilhaController@rotinasPerNi
  ********************************************************/
 
 Route::group(
-    ['middleware' => ['jwt.auth', "cors"]],
+    ['middleware' => ['jwt.auth', 'cors'], 'as' => 'auth.'],
     function () {
-       
+
         /** CATEGORIAS DOS CONTEÚDOS*/
-        Route::post('/categorias', 'CategoryController@create')->name('criar.categorias');
-        Route::put('/categorias/{id}', 'CategoryController@update')->name('atualizar.categorias');
-        Route::delete('/categorias/{id}', 'CategoryController@delete')->name('deletar.categorias');
-        Route::post('/categorias', 'CategoryController@create')->name('adicionar.categorias');
+        Route::group(['prefix' => 'categorias', 'as' => 'categorias.'], function () {
+            Route::post('/', [CategoryController::class, 'create'])->name('criar');
+            Route::put('/{id}', [CategoryController::class, 'update'])->name('atualizar');
+            Route::delete('/{id}', [CategoryController::class, 'delete'])->name('deletar');
+        });
 
         /** COMPONENTES */
-        Route::post('/componentes', 'ComponentesController@create')->name('criar.componentes.curriculares');
-        Route::get('/componentes/{id}', 'ComponentesController@getById')->name('obter.componentes');
-        Route::put('/componentes/{id}', 'ComponentesController@update')->name('atualizar.componentes');
-        Route::get('/componentes/search/{termo}', 'ComponentesController@search')->name('buscar.componentes');
-        Route::get(
-            '/componentes/autocomplete/{term}',
-            'ComponentesController@autocomplete'
-        )->name('autocompletar.componentes');
-        Route::delete('/componentes/{id}', 'ComponentesController@delete')->name('deletar.componentes');
+        Route::group(['prefix' => 'componentes', 'as' => 'componentes.'], function () {
+            Route::post('/', [ComponentesController::class, 'create'])->name('criar');
+            Route::get('/{id}', [ComponentesController::class, 'getById'])->name('x.id');
+            Route::put('/{id}', [ComponentesController::class, 'update'])->name('atualizar');
+            Route::get('/search/{termo}', [ComponentesController::class, 'search'])->name('search');
+            Route::get('/autocomplete/{term}',[ComponentesController::class, 'autocomplete'])->name('autocompletar');
+            Route::delete('/{id}', [ComponentesController::class, 'delete'])->name('deletar');
+        });
 
         /** COMPONENTES CATEGORIAS*/
-        Route::post('/componentescategorias', 'CurricularComponentCategoryController@create' )->name('criar.componentes-categoria.curriculares');
-        Route::put('/componentescategorias/{id}', 'CurricularComponentCategoryController@update' )->name('atualizar.componentescategorias');
-        Route::delete('/componentescategorias/{id}', 'CurricularComponentCategoryController@delete' )->name('deletar.componentescategorias');
-        Route::get('/componentescategorias/autocomplete/{term}','CurricularComponentCategoryController@autocomplete')->name('autocompletar.componentescategorias');
+        Route::group(['prefix' => 'componentescategorias', 'cc.categorias.'], function(){
+            Route::post('/', [CurricularComponentCategoryController::class, 'create'])->name('criar');
+            Route::put('/{id', [CurricularComponentCategoryController::class, 'update'])->name('atualizar');
+            Route::delete('/{id}', [CurricularComponentCategoryController::class, 'delete'])->name('deletar');
+            Route::get('/autocomplete/{term}', [CurricularComponentCategoryController::class, 'autocomplete'])->name('autocompletar');
+        });
 
         /**NIVEL ENSINO**/
-        Route::get('/nivelensino/search/{termo}', 'NivelEnsinoController@search')->name('buscar.nivelensino');
-        Route::get('/nivelensino/{id}', 'NivelEnsinoController@getById')->name('obter.nivelensino');
-        Route::post('/nivelensino', 'NivelEnsinoController@create')->name('criar.nivelensino');
-        Route::put('/nivelensino/{id}', 'NivelEnsinoController@update')->name('atualizar.nivelensino');
-        Route::get('/nivelensino/autocomplete/{term}', 'NivelEnsinoController@autocomplete')->name('autocompletar.nivelensino');
-        Route::delete('/nivelensino/{id}', 'NivelEnsinoController@delete')->name('deletar.nivelensino');
+        Route::group(['prefix' => 'nivelensino', 'as' => 'niveis.'], function(){
+            Route::get('/search/{termo}', [NivelEnsinoController::class, 'search'])->name('buscar');
+            Route::get('/{id}', [NivelEnsinoController::class, 'getById'])->name('x.id');
+            Route::post('/', [NivelEnsinoController::class, 'create'])->name('criar');
+            Route::put('/{id}', [NivelEnsinoController::class, 'update'])->name('atualizar');
+            Route::get('/autocomplete/{term}', [NivelEnsinoController::class, 'autocomplete'])->name('autocompletar');
+            Route::delete('/{id}', [NivelEnsinoController::class, 'delete'])->name('deletar');
+        });
 
         /** AUTENTICACAO */
-        Route::post('/auth/logout', 'AuthController@logout')->name('sair');
-        Route::post('/auth/refresh', 'AuthController@refresh')->name('refrescar.token');
-        Route::get('/auth/links-admin', 'AuthController@linksAdmin')->name('links.admin');
+        Route::group(['prefix' => 'auth', 'as' => 'usuario.'], function () {
+            Route::post('/logout', [AuthController::class, 'logout'])->name('sair');
+            Route::post('/refresh', [AuthController::class, 'refresh'])->name('refrescar.token');
+            Route::get('/links-admin', [AuthController::class, 'linksAdmin'])->name('links.admin');
+        });
 
         /** TIPOS */
-        Route::post('/tipos', 'TipoController@create')->name('criar.tipos');
-        Route::put('/tipos/{id}', 'TipoController@update')->name('atualizar.tipos');
-        Route::delete('/tipos/{id}', 'TipoController@delete')->name('deletar.tipos');
+        Route::group(['prefix' => 'tipos', 'as' => 'tipos.'], function () {
+            Route::post('/', [TipoController::class, 'create'])->name('criar');
+            Route::put('/{id}', [TipoController::class, 'update'])->name('atualizar');
+            Route::delete('/{id}', [TipoController::class, 'delete'])->name('deletar');
+        });
 
         /** ROLES */
-        Route::get('/roles', 'RoleController@index')->name('listar.roles');
-        Route::get('/roles/{id}', 'RoleController@getById')->name('obter.roles');
-        Route::post('/roles', 'RoleController@create')->name('criar.role');
-        Route::put('/roles/{id}', 'RoleController@update')->name('atualizar.role');
-        Route::delete('/roles/{id}', 'RoleController@delete')->name('deletar.role');
-        Route::get('/roles/search/{term}', 'RoleController@search')->name('busca.role');
+        Route::group(['prefix' => 'roles', 'as' => 'roles.'], function(){
+            Route::get('/', [RoleController::class, 'index'])->name('listar');
+            Route::get('/{id}', [RoleController::class, 'getById'])->name('x.id');
+            Route::post('/', [RoleController::class, 'create'])->name('criar');
+            Route::put('/{id}', [RoleController::class, 'update'])->name('atualizar');
+            Route::delete('/{id}', [RoleController::class, 'delete'])->name('deletar');
+            Route::get('/search/{term}', [RoleController::class, 'search'])->name('busca');
+        });
 
         /** USUARIOS */
-        Route::get('/usuarios/search/{termo}', 'UserController@search')->name('usuario.buscar');
-        Route::delete('/usuarios/{id}', 'UserController@delete')->name('usuario.apagar');
-        Route::get('/usuarios/{id}', 'UserController@getById')->name('user.x.id');
-        Route::get('/usuarios', 'UserController@index')->name('usuario.listar');
-        Route::put('/usuarios/{id}', 'UserController@update');
-        Route::put('/usuarios/reset-password', 'UserController@resetPass')->name('senha.atualizar');
-        Route::post('/usuarios', 'UserController@create')->name('adicionar.usuario');
+        Route::group(['prefix' => 'usuarios', 'as' => 'usuarios.'], function(){
+            Route::get('/search/{termo}', [UserController::class, 'search'])->name('buscar');
+            Route::delete('/{id}', [UserController::class, 'delete'])->name('deletar');
+            Route::get('/{id}', [UserController::class, 'getById'])->name('x.id');
+            Route::get('/', [UserController::class, 'index'])->name('listar');
+            Route::put('/{id}', [UserController::class, 'update'])->name('atualizar');
+            Route::put('/reset-password', [UserController::class, 'resetPass'])->name('senha.atualizar');
+            Route::post('/', [UserController::class, 'create'])->name('adicionar');
+        });
 
         /** APLICATIVOS */
-        Route::post('/aplicativos', 'AplicativoController@create')->name('adicionar.aplicativo');
-        Route::put('/aplicativos/{id}', 'AplicativoController@update')->name('aplicativo.editar');
-        Route::delete('/aplicativos/{id}', 'AplicativoController@delete')->name('aplicativo.apagar');
-
-        /** APLICATIVOS CATEGORIES */
-        Route::post('/aplicativos/categories', 'AplicativoCategoryController@create')->name('criar.aplicativo.categorias');
-        Route::put('/aplicativos/categories/{id}', 'AplicativoCategoryController@update')->name('atualizar.aplicativo.categorias');
-        Route::delete('/aplicativos/categories/{id}', 'AplicativoCategoryController@delete')->name('apagar.aplicativo.categorias');
+        Route::group(['prefix' => 'aplicativos', 'as' => 'aplicativos.'], function(){
+            Route::post('/', [AplicativoController::class, 'create'])->name('adicionar');
+            Route::put('/{id}', [AplicativoController::class, 'update'])->name('editar');
+            Route::delete('/{id}', [AplicativoController::class, 'delete'])->name('apagar');
+            /* APLICATIVOS CATEGORIAS */
+            Route::post('/categories', [AplicativoCategoryController::class, 'create'])->name('criar.categorias');
+            Route::put('/categories/{id}', [AplicativoCategoryController::class, 'update'])->name('atualizar.categorias');
+            Route::delete('/categories/{id}', [AplicativoCategoryController::class, 'delete'])->name('apagar.categorias');
+        });
 
         /** TAGS */
-        Route::get('/tags', 'TagController@index')->name('lista.tag');
-        Route::post('/tags', 'TagController@create')->name('adicionar.tag');
-        Route::get('/tags/search/{term}', 'TagController@search')->name('busca.tag');
-        Route::get('/tags/autocomplete/{term}', 'TagController@autocomplete')->name('autocompletar.tag');
-        Route::put('/tags/{id}', 'TagController@update')->name('atualizar.tag');
-        Route::delete('/tags/{id}', 'TagController@delete')->name('apagar.tag');
-
+        Route::group(['prefix' => 'tags', 'as' => 'tags.'], function(){
+            Route::get('/', [TagController::class, 'index'])->name('listar');
+            Route::post('/', [TagController::class, 'create'])->name('adicionar');
+            Route::get('/search/{term}', [TagController::class, 'search'])->name('search');
+            Route::get('/autocomplete/{term}', [TagController::class, 'autocomplete'])->name('autocomplete');
+            Route::put('/{id}', [TagController::class, 'update'])->name('atualizar');
+            Route::delete('/{id}', [TagController::class, 'delete'])->name('deletar');
+        });
+        
         /** CONTEUDOS */
-        Route::post('/conteudos', 'ConteudoController@create')->name('adicionar.conteudo');
-        Route::put('/conteudos/{id}', 'ConteudoController@update')->name('atualizar.conteudo');
-        Route::delete('/conteudos/{id}', 'ConteudoController@delete')->name('apagar.conteudo');
-        Route::post('/conteudos/arquivos', 'ConteudoController@storeFiles')->name('salvar.arquivo.conteudo');
+        Route::group(['prefix' => 'conteudos', 'as' => 'conteudos.'], function () {
+            
+            Route::post('/', [ConteudoController::class, 'create'])->name('adicionar');
+            Route::put('/{id}', [ConteudoController::class, 'update'])->name('atualizar');
+            Route::delete('/{id}', [ConteudoController::class, 'delete'])->name('apagar');
+            Route::post('/arquivos', [ConteudoController::class, 'storeFiles'])->name('salvar.arquivo');
+        });
 
         /** CANAIS */
-        Route::get('/canais', 'CanalController@index')->name('listar.canais');
-        Route::post('/canais', 'CanalController@create')->name('adicionar.canal');
-        Route::put('/canais/{id}', 'CanalController@update')->name('atualizar.canal');
-
+        Route::group(['prefix' => 'canais', 'as' => 'canais.'], function () {
+            Route::get('/', [CanalController::class, 'index'])->name('listar');
+            Route::post('/', [CanalController::class, 'create'])->name('adicionar');
+            Route::put('/{id}', [CanalController::class, 'update'])->name('atualizar');
+            Route::delete('/{id}', [CanalController::class, 'delete'])->name('deletar');
+            Route::get('/{id}', [CanalController::class, 'getById'])->name('x.id');
+            Route::get('/search/{term}', [CanalController::class, 'search'])->name('buscar');
             //->middleware('can:update,canal');
-        Route::delete('/canais/{id}', 'CanalController@delete')->name('apagar.canal');
-        Route::get('/canais/{id}', 'CanalController@getById')->name('listar.canal.x.id');
-        Route::get('/canais/search/{term}', 'CanalController@search')->name('buscar.canal');
-
+        });
+        
         /** LICENCAS */
-        Route::get('/licencas/search/{term}', 'LicenseController@search')->name('buscar.licenca');
-        Route::get('/licencas/{id}', 'LicenseController@getById')->name('obter.licenca');
-        Route::post('/licencas', 'LicenseController@create')->name('adicionar.licenca');
-        Route::put('/licencas/{id}', 'LicenseController@update')->name('atualizar.licenca');
-        Route::delete('/licencas/{id}', 'LicenseController@delete')->name('apagar.licenca');
+        Route::group(['prefix' => 'licencas', 'as' => 'licencas.'], function () {
+            Route::get('/search/{term}', [LicenseController::class, 'search'])->name('search');
+            Route::get('/{id}', [LicenseController::class, 'getById'])->name('x.id');
+            Route::post('/', [LicenseController::class, 'create'])->name('adicionar');
+            Route::put('/{id}', [LicenseController::class, 'update'])->name('atualizar');
+            Route::delete('/{id}', [LicenseController::class, 'delete'])->name('deletar');
+        });
 
         /** DENUNCIAS */
-        Route::get('/contato', 'ContatoController@index')->name('listar.faleconosco');
-        Route::get('/contato/{id}', 'ContatoController@getById')->name('busca.contato.x.id');
-        Route::delete('/contato/{id}', 'ContatoController@delete')->name('apagar.contato');
-
+        Route::group(['prefix' => 'contato', 'as' => 'contato.'], function () {
+            Route::get('/', [ContatoController::class, 'index'])->name('faleconosco');
+            Route::get('/{id}', [ContatoController::class, 'getById'])->name('x.id');
+            Route::delete('/{id}', [ContatoController::class, 'delete'])->name('deletar');
+        });
         /** OPTIONS */
-        Route::post('/options', 'OptionsController@create')->name('criar.opcoes');
-        Route::put('/options/{name}', 'OptionsController@update')->name('atualizar.opcoes.x.nome');
-        Route::delete('/options/{name}', 'OptionsController@delete')->name('apagar.opcoes.x.nome');
-        Route::post('/options/destaques/', 'OptionsController@createDestaques')->name('cria.destaques');
-        Route::get('/options/id/{id}', 'OptionsController@getById')->name('opcao.x.id');
-
+        Route::group(['prefix' => 'options', 'as' => 'options.'], function () {
+            Route::post('/', [OptionsController::class, 'create'])->name('criar');
+            Route::put('/{name}', [OptionsController::class, 'update'])->name('atualizar.x.nome');
+            Route::delete('/{name}', [OptionsController::class, 'delete'])->name('apagar.x.nome');
+            Route::post("/destaques/create", [OptionsController::class, 'createDestaques'])->name('adicionar');
+            Route::get('/id/{id}', [OptionsController::class, 'getById'])->name('x.id');
+        });
         /** ANALYTICS */
-        Route::get('/resumo', 'HomeController@getAnalytics')->name('catalogacao.blog.e.plataforma');
+        Route::get('/resumo', [HomeController::class, 'getAnalytics'])->name('catalogacao.blog.e.plataforma');
 
         /** RELATÓRIOS */
-        Route::get('/usuarios/role/{role_id}', 'RelatorioController@buscarUsuariosPorRole')->name('view.relatorio.usuario');
-        Route::get('/relatorio/conteudos/{flag}', 'RelatorioController@gerarPdfConteudo')->name('gerar.relatorio.conteudo');
-        Route::get('/relatorio/usuarios/role/{role_id}/{is_active?}', 'RelatorioController@gerarPdfUsuario')->name('gerar.relatorio.usuario');
-        Route::get("/relatorio/anospublicacao", 'RelatorioController@anosComConteudosPublicados')->name("anospublicacao.relatorio");
-        Route::get("/relatorio/conteudosporoano/{ano}", 'RelatorioController@conteudosPublicadosPorAno')->name("conteudosporano.relatorio");
-
+        Route::group(['prefix' => 'relatorio', 'as' => 'relatorio.'], function(){
+            Route::get('/usuarios/role/{role_id}', [RelatorioController::class, 'buscarUsuariosPorRole'])->name('view.relatorio.usuario');
+            Route::get('/conteudos/{flag}', [RelatorioController::class, 'gerarPdfConteudo'])->name('gerar.relatorio.conteudo');
+            Route::get('/usuarios/role/{role_id}/{is_active?}', [RelatorioController::class, 'gerarPdfUsuario'])->name('gerar.relatorio.usuario');
+            Route::get("/anospublicacao", [RelatorioController::class, 'anosComConteudosPublicados'])->name("anospublicacao.relatorio");
+            Route::get("/conteudosporoano/{ano}", [RelatorioController::class, 'conteudosPublicadosPorAno'])->name("conteudosporano.relatorio");
+        });
         /** SISTEMA DE PASTA */
-        Route::get('/informacoes-pasta', 'FileController@getInfoFolder')->name('file.getInfoFolder');
-        Route::get('/arquivos-existe', 'FileController@fileExistInBase')->name('file.fileExistInBase');
-        Route::post('/converter-para-imagem', 'FileController@convertPdfToImage')->name('file.convertPdfToImage');
+        Route::get('/informacoes-pasta', [FileController::class, 'getInfoFolder'])->name('file.getInfoFolder');
+        Route::get('/arquivos-existe', [FileController::class, 'fileExistInBase'])->name('file.fileExistInBase');
+        Route::post('/converter-para-imagem', [FileController::class, 'convertPdfToImage'])->name('file.convertPdfToImage');
 
         /** COMENTARIOS */
-        Route::post('/comentarios/create', 'ComentarioController@create')->name('comentario.create');
-        Route::post('/comentarios/update/{id}', 'ComentarioController@update')->name('comentario.update');
-        Route::get('/comentarios/{id}', 'ComentarioController@getComentarioById')->name('comentario.id');
-        Route::get('/comentarios/usuario/{idUsuario}/{tipo?}', 'ComentarioController@getComentariosByIdUsuario')->name('comentario.usuario');
-        Route::get('/comentarios/postagem/{id}/{tipo}', 'ComentarioController@getComentariosByIdPostagem')->name('comentario.postagem');
-        Route::get('/comentarios/delete/{id}', 'ComentarioController@deletar')->name('comentario.delete');
-
+        Route::group(['prefix' => 'comentarios', 'as' => 'comentarios.'], function () {
+            Route::post('/create', [ComentarioController::class, 'create'])->name('criar');
+            Route::put('/{id}', [ComentarioController::class, 'update'])->name('atualizar');
+            Route::get('/{id}', [ComentarioController::class, 'getComentarioById'])->name('x.id');
+            Route::get('/usuario/{idUsuario}/{tipo?}', [ComentarioController::class, 'getComentariosByIdUsuario'])->name('x.id.usuario');
+            Route::get('/postagem/{id}/{tipo}', [ComentarioController::class, 'getComentariosByIdPostagem'])->name('postagem');
+            Route::get('/delete/{id}', [ComentarioController::class, 'deletar'])->name('deletar');
+        });
         /** LIKE - DESLIKE */
-        Route::post('/like', 'ConteudoLikeController@like')->name('like');
-        Route::post('/dislike', 'ConteudoLikeController@dislike')->name('dislike');
-        Route::get('/likes/usuario/{idUsuario}/{tipo?}', 'ConteudoLikeController@getLikesPorIdUsuarioEtipo')->name('likes.usuario');
-        Route::get('/likes/conteudo/{conteudoid}/{tipo}','ConteudoLikeController@getUsuarioLikesConteudoAplicativo')->name('likes.usuario.conteudo.aplicativo');
+        Route::post('/like', [ConteudoLikeController::class, 'like'])->name('like');
+        Route::post('/dislike', [ConteudoLikeController::class, 'dislike'])->name('dislike');
+        Route::get('/likes/usuario/{idUsuario}/{tipo?}', [ConteudoLikeController::class, 'getLikesPorIdUsuarioEtipo'])->name('likes.usuario');
+        Route::get('/likes/conteudo/{conteudoid}/{tipo}', [ConteudoLikeController::class, 'getUsuarioLikesConteudoAplicativo'])->name('likes.usuario.conteudo.aplicativo');
 
-    }
-    
-);
+        /**LOGS ARTISAN/LARAVEL */
+        Route::group(['prefix' => 'logartisan', 'as' => 'logs.'], function () {
+            Route::get('/', [LogArtisanController::class, 'index'])->name('index');
+            Route::get('/{id}', [LogArtisanController::class, 'getById'])->name('x.id');
+            Route::get('/search/{term}', [LogArtisanController::class, 'search'])->name('search');
+        });
+});

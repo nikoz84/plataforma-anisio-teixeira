@@ -1,0 +1,36 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "del-cli --force ../public/{js,css} && npm run development",
+        "development": "mix",
+        "watch": "del-cli --force ../public/{js,css} && mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
+        "prod": "del-cli --force ../public/{js,css} && npm run production",
+        "production": "mix --production"
+    },
+    "devDependencies": {
+        "axios": "^0.21",
+        "bootstrap": "^4.0.0",
+        "del-cli": "^3.0.1",
+        "jquery": "^3.2",
+        "laravel-mix": "^6.0.6",
+        "lodash": "^4.17.19",
+        "popper.js": "^1.12",
+        "postcss": "^8.1.14",
+        "resolve-url-loader": "^3.1.2",
+        "sass": "^1.20.1",
+        "sass-loader": "^8.0.0",
+        "vue": "^2.5.17",
+        "vue-loader": "^15.9.5",
+        "vue-template-compiler": "^2.6.10"
+    },
+    "dependencies": {
+        "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+        "@inertiajs/inertia": "^0.8.6",
+        "@inertiajs/inertia-vue": "^0.5.6",
+        "vue": "^2.6.12",
+        "vue-router": "^3.5.1",
+        "ziggy-js": "^1.0.5"
+    }
+}

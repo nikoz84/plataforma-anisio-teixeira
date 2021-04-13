@@ -132,7 +132,7 @@ class Aplicativo extends Model
      * Obtem referencia do arquivo de imgame associada
      * @return string
      */
-    public function refenciaImagemAssociada()
+    public function referenciaImagemAssociada()
     {
         if (!$this->id) {
             return null;

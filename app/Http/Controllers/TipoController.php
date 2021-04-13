@@ -6,15 +6,13 @@ use App\Helpers\CachingModelObjects;
 use App\Http\Controllers\ApiController;
 use App\Models\Tipo;
 use Illuminate\Support\Facades\Validator;
-use App\Traits\ApiResponser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class TipoController extends ApiController
 {
-    use ApiResponser;
-
+    
     public function __construct(Request $request)
     {
         $this->middleware('jwt.auth')->except(['index',

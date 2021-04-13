@@ -108,6 +108,8 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'analytics' => env('MIX_ANALYTICS'),
+
     /*
     |--------------------------------------------------------------------------
     | Logging Configuration

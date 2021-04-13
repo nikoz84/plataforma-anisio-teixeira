@@ -4,7 +4,8 @@
     <div :is="componentName"></div>
   </article>
 </template>
-<script>
+<script>// @ts-nocheck
+
 import { mapMutations, mapState } from "vuex";
 import { 
   ConteudoForm,
@@ -20,8 +21,7 @@ import {
   CurricularComponentsForm,
   CurricularComponentsCategoryForm,
   NivelEnsinoForm,
-  UniversidadesForm,
-  LogArtisanForm
+  UniversidadesForm
   } from "@forms/models";
 
 import Resumo from "@pages/Resumo.vue";
@@ -49,8 +49,7 @@ export default {
     componentes: CurricularComponentsForm,
     componentescategorias:CurricularComponentsCategoryForm,
     nivelensino:NivelEnsinoForm,
-    universidades: UniversidadesForm,
-    logartisan:LogArtisanForm
+    universidades: UniversidadesForm
   },
   data() {
     return {

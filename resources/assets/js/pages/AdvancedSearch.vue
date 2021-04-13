@@ -94,20 +94,20 @@
             >
             </q-pagination>
         </div>
-          <!-- LISTA DE ITENS -->
+        <!-- LISTA DE ITENS -->
         <div class="q-pa-sm">
-        <q-card class="q-mt-sm" v-for="(item, i) in results" :key="`result-${i}`">
-            <q-card-section class="q-px-sm">
-                <a :href="item.url_exibir" target="new" class="text-dark">
-                    <h5 class="q-my-xs" v-html="item.title"></h5>
-                </a>
-            <q-separator class="q-my-md"></q-separator>
-            <div class="paginator-excerpt" v-html="item.description"></div>
-            </q-card-section>
-            <q-card-actions vertical align="right">
-                <!--q-btn color="pink-9" type="a" target="_blank" :href="item.url_exibir">Visualizar</q-btn-->
-            </q-card-actions>
-        </q-card>
+            <q-card class="q-mt-sm" v-for="(item, i) in results" :key="`result-${i}`">
+                <q-card-section class="q-px-sm">
+                    <a :href="item.url_exibir" target="new" class="text-dark">
+                        <h5 class="q-my-xs" v-html="item.title"></h5>
+                    </a>
+                <q-separator class="q-my-md"></q-separator>
+                <div class="paginator-excerpt" v-html="item.description"></div>
+                </q-card-section>
+                <q-card-actions vertical align="right">
+                    <!--q-btn color="pink-9" type="a" target="_blank" :href="item.url_exibir">Visualizar</q-btn-->
+                </q-card-actions>
+            </q-card>
         </div>
         <!-- PAGINATOR -->
         <div class="q-pa-lg flex flex-center">
@@ -124,7 +124,8 @@
   </div>
 </template>
 
-<script>
+<script>// @ts-nocheck
+
 import { TabComponentes, Title } from "../components/shared";
 import { mapState } from "vuex";
 import {
@@ -139,15 +140,21 @@ import {
   QBtn,
   QSeparator,
   QRadio,
-  QSelect
+  QSelect,
+  QChip,
+  QPagination,
+  QIcon
 } from "quasar";
 
 
 export default {
     name: "AdvancedSearch",
     components: {
+        QIcon,
         TabComponentes,
         QList,
+        QChip,
+        QPagination,
         Title,
         QItem,
         QItemSection,
@@ -185,7 +192,9 @@ export default {
         results: [],
         current: 0,
         last: 0,
-        filtros: []
+        filtros: [
+            
+        ]
         };
     },
     computed: {

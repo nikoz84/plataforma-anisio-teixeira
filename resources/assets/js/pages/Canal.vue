@@ -52,7 +52,7 @@
     
   </section>
 </template>
-<script>
+<script>// @ts-nocheck
 import { mapState, mapActions, mapMutations } from "vuex";
 import  { Filters, OrderBy, CategoriasMenu } from "../components/canais";
 import {
@@ -67,11 +67,13 @@ import {
   QMenu,
   QList,
   QItem,
+  QBadge,
   QItemSection,
   ClosePopup,
   QBreadcrumbs,
   QBreadcrumbsEl,
-  QSkeleton
+  QSkeleton,
+  QBanner
 } from "quasar";
 
 export default {
@@ -79,6 +81,8 @@ export default {
   directives: { ClosePopup },
   components: {
     QTabs,
+    QBanner,
+    QBadge,
     QRouteTab,
     QSeparator,
     QSpace,
@@ -106,14 +110,16 @@ export default {
   },
   mounted() {
     this.getCanalBySlug(this.$route.params.slug).then(() => {
-      this.$ga.page(this.$route.params.slug);
+      this.$gtag.pageview(this.$route.params.slug);
       this.fetchData();
     });
   },
   watch: {
     $route(to, from) {
       if (to.fullPath != from.fullPath) {
-        this.$ga.page(this.$route.params.slug);
+        
+        this.$gtag.pageview(this.$route.params.slug);
+    
         this.getCanalBySlug(this.$route.params.slug).then(() => {
           this.fetchData();
         });

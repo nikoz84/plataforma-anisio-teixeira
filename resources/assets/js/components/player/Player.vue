@@ -35,6 +35,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { QMediaPlayer} from "@quasar/quasar-ui-qmediaplayer";
 import {
   QCard,
   QCardActions,
@@ -48,6 +49,7 @@ import {
 export default {
   name: "Player",
   components: {
+    QMediaPlayer,
     QCard,
     QCardActions,
     QCardSection,

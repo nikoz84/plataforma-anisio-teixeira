@@ -41,8 +41,10 @@ class ConteudoPolicy
      */
     public function create(User $user, Conteudo $conteudo)
     {
+        
         return $user->role->name === 'super-admin' ||
-            $user->role->name === 'admin' || $user->role->name === 'coordenador';
+            $user->role->name === 'admin' || 
+            $user->role->name === 'coordenador';
     }
 
     /**
@@ -55,7 +57,8 @@ class ConteudoPolicy
     public function update(User $user, Conteudo $conteudo)
     {
         return $user->role->name === 'super-admin' ||
-            $user->role->name === 'admin' || $user->role->name === 'coordenador' ||
+            $user->role->name === 'admin' || 
+            $user->role->name === 'coordenador' ||
             $user->id === $conteudo->user_id;
     }
 
@@ -69,7 +72,8 @@ class ConteudoPolicy
     public function delete(User $user, Conteudo $conteudo)
     {
         return $user->role->name === 'super-admin' ||
-            $user->role->name === 'admin' || $user->role->name === 'coordenador' ||
+            $user->role->name === 'admin' || 
+            $user->role->name === 'coordenador' ||
             $user->id === $conteudo->user_id;
     }
 

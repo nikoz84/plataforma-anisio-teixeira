@@ -51,7 +51,7 @@
             <main-app></main-app>
         </div>
         
-        @if (config('app.env') === 'development')
+        @if (config('app.env') === 'local')
         <script async defer src="{{ asset('/js/app.js') }}"></script>
         @elseif (config('app.env') === 'production')
         <script async defer src="{{ asset('/js/manifest.js') }}"></script>

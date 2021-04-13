@@ -34,9 +34,12 @@
       </q-card>
     </article>
 </template>
-<script>
+<script>// @ts-nocheck
+
+import {QCard, QCardSection, QSeparator } from "quasar";
 export default {
   name: "Contato",
+  components:{QCard, QCardSection, QSeparator},
   data() {
     return {
       contato: {}

@@ -4,22 +4,9 @@ use App\Http\Controllers\RedirectRoutesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Tymon\JWTAuth\Facades\JWTAuth;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
+use App\Http\Controllers\Web\HomeController;
+use App\Http\Controllers\Web\UserController;
+use App\Http\Controllers\Web\CanalController;
 /*
 Route::get('/email', function (Request $request) {
     return new App\Mail\SendMail($request);
@@ -74,8 +61,8 @@ Route::get('/incorporar-conteudo/{id}', 'ConteudoController@incorporarConteudo')
 
 //Route::get('/streaming-video/{id}', 'FileController@showVideoStreaming');
 
-Route::get('/teste', [RedirectRoutesController::class, 'teste']);
+//Route::get('/teste', [RedirectRoutesController::class, 'teste']);
 
-//Route::get('/ssr', [\App\Http\Controllers\Web\HomeController::class, 'index']);
+Route::get('/{any}', [\App\Http\Controllers\ApiController::class, 'home'])
+    ->where('any', '.*');
 
-Route::get('/{any}', [\App\Http\Controllers\ApiController::class,'home'])->where('any', '.*');

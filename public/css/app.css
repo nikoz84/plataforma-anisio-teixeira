@@ -62,7 +62,7 @@ body {
   color: #263238;
 }
 /*
- * Quasar Framework v1.15.5
+ * Quasar Framework v1.15.8
  * (c) 2015-present Razvan Stoenescu
  * Released under the MIT License.
  */
@@ -576,7 +576,7 @@ input[type='search']::-webkit-search-decoration {
   opacity: 0.2;
   background: currentColor;
 }
-.q-btn-dropdown--split .q-btn-dropdown__arrow-container {
+.q-btn-dropdown--split .q-btn-dropdown__arrow-container:not(.q-btn--outline) {
   border-left: 1px solid rgba(255,255,255,0.3);
 }
 .q-btn-dropdown--split .q-btn-dropdown__arrow-container .q-btn__wrapper {
@@ -1748,6 +1748,7 @@ body.desktop .q-chip--clickable:focus {
 .q-dialog__backdrop {
   z-index: -1;
   pointer-events: all;
+  outline: 0;
   background: rgba(0,0,0,0.4);
 }
 body.platform-ios .q-dialog__inner--minimized > div,
@@ -11062,7 +11063,10 @@ body.platform-android .platform-android-hide {
     display: none !important;
   }
 }
-.q-focus-helper {
+.q-focus-helper,
+.q-focusable,
+.q-manual-focusable,
+.q-hoverable {
   outline: 0;
 }
 body.desktop .q-focus-helper {
@@ -11099,11 +11103,6 @@ body.desktop .q-focus-helper--rounded {
 }
 body.desktop .q-focus-helper--round {
   border-radius: 50%;
-}
-body.desktop .q-focusable,
-body.desktop .q-manual-focusable,
-body.desktop .q-hoverable {
-  outline: 0;
 }
 body.desktop .q-focusable:focus > .q-focus-helper,
 body.desktop .q-manual-focusable--focused > .q-focus-helper,

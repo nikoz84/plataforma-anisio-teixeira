@@ -32,7 +32,6 @@
   "css.fileExtensions": ["css", "scss", "sass"],
   "editor.fontSize": 14,
   "emmet.includeLanguages": {
-    "javascript": "javascriptreact",
     "vue-html": "html",
     "razor": "html",
     "plaintext": "jade"
@@ -50,5 +49,14 @@
     "deletar",
     "obrigatório",
     "perfil"
-  ]
+  ],
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+      "source.fixAll": true
+  },
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+  "javascript.format.placeOpenBraceOnNewLineForControlBlocks": false,
+  "javascript.format.placeOpenBraceOnNewLineForFunctions": false,
+  "vetur.format.defaultFormatter.html": "js-beautify-html"
 }

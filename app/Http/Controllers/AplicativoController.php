@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ApiController;
 use App\Models\Aplicativo;
 use App\Helpers\CachingModelObjects;
+use App\Http\Requests\AplicativoRequest;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -45,7 +46,7 @@ class AplicativoController extends ApiController
         });
 
         $apps = $query->with(['category', 'canal'])
-            ->orderBy('created_at', 'desc')
+            ->orderBy('name', 'asc')
             ->paginate($limit)
             ->setPath("/aplicativos?categoria={$category}&limit={$limit}");
         return $this->showAsPaginator($apps);
@@ -57,60 +58,30 @@ class AplicativoController extends ApiController
      *@param \App\Aplicativo $aplicativo
      *@return \App\Controller\ApiResponser retorna json
      */
-    public function create()
+    public function create(AplicativoRequest $request)
     {
         $this->authorize('create', Aplicativo::class);
-        $validator = Validator::make(
-            $this->request->all(),
-            $this->configRules()
-        );
-        $data = [];
-        try {
-            if ($validator->fails()) {
-                $data = $validator->errors();
-                throw new  Exception("Erro no preenchimento dos dados");
-            }
-            dd($this->request->all());
-            $aplicativo = $this->aplicativo;
-            $aplicativo->canal_id = Aplicativo::CANAL_ID;
-            $aplicativo->user_id = Auth::user()->id;
-            $aplicativo->category_id = $this->request->category_id;
-            $aplicativo->url = $this->request->url;
-            //$aplicativo->options  = json_decode($this->request->options, true);
-            $aplicativo->options = [
-                'qt_access' => Aplicativo::QT_ACCESS_INIT,
-                'is_featured' => $this->request->options_is_featured
-            ];
-            if (!$aplicativo->save()) {
-                throw new  Exception("Erro no preenchimento dos dados");
-            }
-            $aplicativo->tags()->attach($this->request->tags);
-            
-            if ($this->request->imagemAssociada) {
-                $fileImg = $this->saveFile($aplicativo->id, [$this->request->imagemAssociada], 'imagem-associada', 'aplicativos-educacionais');
-                if (!$fileImg) {
-                    throw new Exception("Não foi possível salvar imagem. Tente novamente mais tarde.", 501);
-                }
-            }
-        } catch (Exception $ex) {
-            return $this->errorResponse($data, $ex->getMessage(), 422);
+        
+        $aplicativo = new Aplicativo;
+        $aplicativo->fill($request->validated());
+        
+        if (!$aplicativo->save()) {
+            $this->errorResponse([], "Erro no prenchimento de dados.", 422);
         }
+        
+        
+        $aplicativo->tags()->attach($this->request->tags);
+            
+        if ($this->request->imagemAssociada) {
+            $fileImg = $this->saveFile($aplicativo->id, [$this->request->imagemAssociada], 'imagem-associada', 'aplicativos-educacionais');
+            if (!$fileImg) {
+                return $this->errorResponse([], "Não foi possível salvar imagem. Tente novamente mais tarde.", 422);
+            }
+        }
+        
         return $this->successResponse($aplicativo, 'Aplicativo cadastrado com sucesso!', 200);
     }
-    /**
-     * Regras de validação
-     */
-    private function configRules()
-    {
-        return [
-            'name' => 'required|min:2|max:255',
-            'description' => 'required|min:140',
-            'url' => 'required|active_url',
-            'options_is_featured' => 'boolean',
-            'tags' => 'required|array|between:3,10',
-            'image' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:1024'
-        ];
-    }
+    
     /**
      * Cria Arquivo de imagem
      */
@@ -131,34 +102,24 @@ class AplicativoController extends ApiController
      * @param  \App\Aplicativo  $aplicativo
      * @return \App\Traits\ApiResponser retorna json
      */
-    public function update($id)
+    public function update(AplicativoRequest $request, $id)
     {
         $aplicativo = Aplicativo::findOrFail($id);
         
         $this->authorize('update', $aplicativo);
-        $validator = Validator::make(
-            $this->request->all(),
-            $this->configRules()
-        );
-        if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível atualizar o aplicativo", 422);
-        }
-        $aplicativo->name = $this->request->name;
-        $aplicativo->canal_id = $aplicativo::CANAL_ID;
-        $aplicativo->url = $this->request->url;
-        $aplicativo->description = $this->request->description;
-        $is_featured = $this->request->options_is_featured == '1' ? true : false;
-        $aplicativo->setAttribute('options->is_featured', $is_featured);
-        $aplicativo->category_id = Aplicativo::CANAL_ID;
 
-        $aplicativo->tags()->sync($this->request->tags);
-
+        
+        $aplicativo->fill($request->validated());
+        
         if (!$aplicativo->save()) {
             return $this->errorResponse([], "Não foi possível atualizar o aplicativo", 422);
         }
-        if ($this->request->imagemAssociada) {
-            if ($aplicativo->refenciaImagemAssociada()) {
-                unlink($aplicativo->refenciaImagemAssociada());
+        
+        $aplicativo->tags()->sync($request->tags);
+
+        if ($request->imagemAssociada) {
+            if ($aplicativo->referenciaImagemAssociada()) {
+                unlink($aplicativo->referenciaImagemAssociada());
             }
             $fileImg = $this->saveFile($aplicativo->id, [$this->request->imagemAssociada], 'imagem-associada', 'aplicativos-educacionais');
             if (!$fileImg) {
@@ -212,8 +173,7 @@ class AplicativoController extends ApiController
      */
     public function getById($id)
     {
-        //$aplicativo = $this->aplicativo::with(['tags', 'category', 'user', 'canal'])->find($id);
-        $aplicativo = CachingModelObjects::getById($this->aplicativo::with(['tags', 'category', 'user', 'canal']), $id);
+        $aplicativo = $this->aplicativo::with(['tags', 'category', 'user', 'canal'])->find($id);
         $increment = $aplicativo->options['qt_access'] + 1;
         $aplicativo->setAttribute('options->qt_access', $increment); // json attribute
         $aplicativo->save();

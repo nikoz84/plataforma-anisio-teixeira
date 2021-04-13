@@ -40,9 +40,9 @@
     ></CardHomeIcon>
   </section>
 </template>
-<script>
-import { mapState, mapMutations } from "vuex";
-import { ClosePopup } from "quasar";
+<script>// @ts-nocheck
+
+import { mapState } from "vuex";
 import { CarouselHome, CardHome, CardHomeIcon, HomeLinksRotinas } from "@components/home";
 import {
   QParallax,

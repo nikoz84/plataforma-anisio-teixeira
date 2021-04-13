@@ -67,7 +67,8 @@
   </div>
 </template>
 
-<script>
+<script>// @ts-nocheck
+
 export default {
     name: "RotinasDeEstudo",
     data() {

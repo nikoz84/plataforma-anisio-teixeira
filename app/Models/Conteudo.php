@@ -10,12 +10,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Canal;
 use App\Models\User;
 use App\Models\Tag;
+use App\Models\Tipo;
 use App\Models\CurricularComponent;
 use App\Models\License;
 use App\Models\Category;
 use App\Models\NivelEnsino;
 use App\Helpers\TransformDate;
 use App\Traits\UserCan;
+use Illuminate\Support\Facades\Auth;
 
 
 class Conteudo extends Model
@@ -152,6 +154,25 @@ class Conteudo extends Model
         return $this->hasOne(License::class, 'id', 'license_id');
     }
 
+
+    public function setIsApprovedAttribute($value)
+    {
+        $user_can = $this->getUserCanAttribute();
+        
+        if ($user_can['create'] || $user_can['update']) {
+            $this->attributes['is_approved'] = true;
+        } else {
+            $this->attributes['is_approved'] = false;
+        }
+    }
+    
+    public function setApprovingUserId($value)
+    {
+        $user_id = Auth::user()->id;
+
+        $this->attributes['approving_user_id'] = $user_id ? $user_id : null;
+
+    }
     /**
      * Adiciona novo atributo ao objeto que limita o tamanho da descrição
      * @return string cadena de caracteres

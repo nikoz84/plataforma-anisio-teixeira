@@ -18,6 +18,7 @@ mix.webpackConfig({
       'vue$': 'vue/dist/vue.esm.js',
       '@': __dirname + '/resources/assets/js',
       '@components': __dirname + '/resources/assets/js/components',
+      '@composables': __dirname + '/resources/assets/js/composables',
       '@forms': __dirname + '/resources/assets/js/forms',
       '@pages': __dirname + '/resources/assets/js/pages',
       '@mixins': __dirname + '/resources/assets/js/mixins'
