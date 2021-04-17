@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Traits\ApiResponser;
+use Illuminate\Support\Facades\Auth;
 
 class CanalRequest extends FormRequest
 {
@@ -15,7 +16,7 @@ class CanalRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::check();
     }
     public function validated()
     {

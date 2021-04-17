@@ -14,13 +14,13 @@ class ImportData extends Command
      *
      * @var string
      */
-    protected $signature = 'import:data';
+    protected $signature = 'names:min';
 
     /**
      * Descrição do comando
      * @var string
      */
-    protected $description = 'Carga do Banco de dados';
+    protected $description = 'nomes a minuscula';
 
     /**
      * Criar uma nova instância do commando
@@ -39,55 +39,17 @@ class ImportData extends Command
      */
     public function handle()
     {
-        $files = array_sort(File::files("C:\Users\Public\dumps"), function ($file) {
-            return $file->getFilename();
-        });
-        $this->info('Importando dados esper um momento...');
         
-        foreach ($files as $file) {
-            $option = "";
-            if ($file->getExtension() == 'json') {
-                $filename = pathinfo($file, PATHINFO_FILENAME);
-                $data = file_get_contents($file);
-                DB::statement("insert into options (name, meta_data) values ('$filename','$data')");
-                $option = strtoupper($filename);
-                $this->info("Opção: {$option} criada com sucesso!!");
-            } else {
-                DB::statement("COPY {$file->getExtension()} FROM '{$file->getPathname()}' DELIMITER '*';");
-                $tabela = strtoupper($file->getExtension());
-                $this->line("Tabela: $tabela copiada com successo!!");
-            }
+        $users = \App\Models\User::all();
+
+        foreach($users as $user){
+            $this->info("Usuário: {$user->name}");
+            $user->name = $user->name;
+
+            $user->save();
         }
-        
-        $this->info('Reiniciando sequencias');
-        DB::statement("ALTER SEQUENCE users_id_seq RESTART WITH 2675;");
-        DB::statement("ALTER SEQUENCE canais_id_seq RESTART WITH 16;");
-        DB::statement("ALTER SEQUENCE tags_id_seq RESTART WITH 15018;");
-        DB::statement("ALTER SEQUENCE aplicativos_id_seq RESTART WITH 126;");
-        DB::statement("ALTER SEQUENCE conteudos_id_seq RESTART WITH 12000;");
-        DB::statement("ALTER SEQUENCE licenses_id_seq RESTART WITH 14;");
-        DB::statement("ALTER SEQUENCE categories_id_seq RESTART WITH 69;");
-        DB::statement("ALTER SEQUENCE aplicativo_categories_id_seq RESTART WITH 16;");
-        DB::statement("ALTER SEQUENCE niveis_ensino_id_seq RESTART WITH 12;");
-        DB::statement("ALTER SEQUENCE roles_id_seq RESTART WITH 8;");
-        DB::statement("ALTER SEQUENCE aplicativo_categories_id_seq RESTART WITH 40;");
-        DB::statement("ALTER SEQUENCE tipos_id_seq RESTART WITH 20;");
+        $this->info('concluido');
 
-
-        $this->info('Atualizando Canais');
-        //DB::statement("UPDATE conteudos set canal_id = 6 where is_site = false and canal_id is null;");
-        //DB::statement("UPDATE conteudos set canal_id = 5 where is_site = true and canal_id is null;");
-        DB::statement("UPDATE canais set is_active = false where  id  IN (4,10,11,13,14,15);");
-        DB::statement("UPDATE canais set name = 'Recursos Educacionais' where id = 6;");
-        DB::statement("UPDATE tipos set name = 'Documento' where id = 1");
-        DB::statement("UPDATE canais set is_active = false where id = 8");
-        DB::statement("UPDATE tipos set name = 'Animação' where id = 7");
-        $this->info('Adicionando Temas contenporâneos');
-        
-        
-        $this->createInitSlider();
-
-        $this->info('Processo finalizado com sucesso');
     }
 
     private function createInitSlider()

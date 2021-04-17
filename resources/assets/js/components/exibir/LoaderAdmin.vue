@@ -44,7 +44,6 @@ export default {
     options: OptionsForm,
     contato: Contato,
     listar: Table,
-    resumo: Resumo,
     categorias:CategoryConteudoForm,
     componentes: CurricularComponentsForm,
     componentescategorias:CurricularComponentsCategoryForm,
@@ -96,4 +95,3 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped></style>

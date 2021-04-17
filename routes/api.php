@@ -284,7 +284,7 @@ Route::group(
         Route::get('/informacoes-pasta', [FileController::class, 'getInfoFolder'])->name('file.getInfoFolder');
         Route::get('/arquivos-existe', [FileController::class, 'fileExistInBase'])->name('file.fileExistInBase');
         Route::post('/converter-para-imagem', [FileController::class, 'convertPdfToImage'])->name('file.convertPdfToImage');
-
+        Route::delete('/files', [FileController::class, 'deleteFile'])->name('file.delete');
         /** COMENTARIOS */
         Route::group(['prefix' => 'comentarios', 'as' => 'comentarios.'], function () {
             Route::post('/create', [ComentarioController::class, 'create'])->name('criar');
@@ -300,10 +300,5 @@ Route::group(
         Route::get('/likes/usuario/{idUsuario}/{tipo?}', [ConteudoLikeController::class, 'getLikesPorIdUsuarioEtipo'])->name('likes.usuario');
         Route::get('/likes/conteudo/{conteudoid}/{tipo}', [ConteudoLikeController::class, 'getUsuarioLikesConteudoAplicativo'])->name('likes.usuario.conteudo.aplicativo');
 
-        /**LOGS ARTISAN/LARAVEL */
-        Route::group(['prefix' => 'logartisan', 'as' => 'logs.'], function () {
-            Route::get('/', [LogArtisanController::class, 'index'])->name('index');
-            Route::get('/{id}', [LogArtisanController::class, 'getById'])->name('x.id');
-            Route::get('/search/{term}', [LogArtisanController::class, 'search'])->name('search');
-        });
+        
 });

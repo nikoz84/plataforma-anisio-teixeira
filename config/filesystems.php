@@ -50,83 +50,85 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL') . '/storage',
+            'root' => storage_path('app'.DIRECTORY_SEPARATOR.'public'),
+            'url' => env('APP_URL') . DIRECTORY_SEPARATOR .'storage',
             'visibility' => 'public',
         ],
         'public-path' => [
             'driver' => 'local',
             'root' => public_path(),
-            'url' => env('APP_URL') . '/',
+            'url' => env('APP_URL') . DIRECTORY_SEPARATOR,
             'visibility' => 'public',
         ],
         'conteudos-blog' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/conteudos/conteudos-blog/uploads'),
+            'root' => storage_path('app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'conteudos' . DIRECTORY_SEPARATOR .'conteudos-blog' . DIRECTORY_SEPARATOR . 'uploads'),
             'url' => env('APP_URL') . '/storage/conteudos/conteudos-blog/uploads',
             'visibility' => 'public',
         ],
         
         'conteudos-digitais' => [
             'driver' => 'local',
-            'root' => storage_path('app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'conteudos'.DIRECTORY_SEPARATOR.'conteudos-digitais'),
+            'root' => storage_path('app' . DIRECTORY_SEPARATOR .'public' . DIRECTORY_SEPARATOR .'conteudos' . DIRECTORY_SEPARATOR . 'conteudos-digitais'),
             'url' => env('APP_URL') . '/storage/conteudos/conteudos-digitais',
             'visibility' => 'public',
         ],
 
         'aplicativos-educacionais' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/conteudos/aplicativos-educacionais/'),
+            'root' => storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR .'conteudos' . DIRECTORY_SEPARATOR . 'aplicativos-educacionais'),
             'url' => env('APP_URL') . '/storage/conteudos/aplicativos-educacionais/',
             'visibility' => 'public'
         ],
 
         'download' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/conteudos/conteudos-digitais/download'),
+            'root' => storage_path('app' . DIRECTORY_SEPARATOR .'public' . DIRECTORY_SEPARATOR .'conteudos' . DIRECTORY_SEPARATOR .'conteudos-digitais' . DIRECTORY_SEPARATOR . 'download'),
             'url' => env('APP_URL') . '/storage/conteudos/conteudos-digitais/download',
+            'visibility' => 'public',
+        ],
+
+        'fotos-perfil' => [
+            'driver' => 'local',
+            'root' => storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'conteudos' . DIRECTORY_SEPARATOR . 'fotos-perfil'),
+            'url' => '/storage/conteudos/fotos-perfil',
             'visibility' => 'public',
         ],
 
         'visualizacao' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/conteudos/conteudos-digitais/visualizacao'),
+            'root' => storage_path('app' . DIRECTORY_SEPARATOR .'public' . DIRECTORY_SEPARATOR .'conteudos' . DIRECTORY_SEPARATOR .'conteudos-digitais' . DIRECTORY_SEPARATOR . 'visualizacao'),
             'url' => env('APP_URL') . '/storage/conteudos/conteudos-digitais/visualizacao',
             'visibility' => 'public',
         ],
 
         'streaming' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/conteudos/conteudos-digitais/streaming'),
+            'root' => storage_path('app' . DIRECTORY_SEPARATOR .'public' . DIRECTORY_SEPARATOR .'conteudos' . DIRECTORY_SEPARATOR .'conteudos-digitais' . DIRECTORY_SEPARATOR . 'streaming'),
             'url' => env('APP_URL') . '/storage/conteudos/conteudos-digitais/streaming',
             'visibility' => 'public',
         ],
 
         'slider' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/conteudos/slider'),
+            'root' => storage_path('app' . DIRECTORY_SEPARATOR .'public' . DIRECTORY_SEPARATOR .'conteudos' . DIRECTORY_SEPARATOR . 'slider'),
             'url' => env('APP_URL') . '/storage/conteudos/slider',
             'visibility' => 'public',
         ],
 
         'sinopse' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/conteudos/conteudos-digitais/imagem-associada/sinopse'),
+            'root' => storage_path('app' . DIRECTORY_SEPARATOR .'public' . DIRECTORY_SEPARATOR .'conteudos' . DIRECTORY_SEPARATOR .'conteudos-digitais' . DIRECTORY_SEPARATOR .'imagem-associada' . DIRECTORY_SEPARATOR . 'sinopse'),
             'url' => env('APP_URL') . '/storage/conteudos/conteudos-digitais/imagem-associada/sinopse',
             'visibility' => 'public',
         ],
         'galeria' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/conteudos/galeria'),
+            'root' => storage_path('app' . DIRECTORY_SEPARATOR .'public' . DIRECTORY_SEPARATOR .'conteudos' . DIRECTORY_SEPARATOR . 'galeria'),
             'url' => env('APP_URL') . '/storage/conteudos/galeria',
             'visibility' => 'public',
         ],
-        'fotos-perfil' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public/conteudos/fotos-perfil'),
-            'url' => env('APP_URL') . '/storage/conteudos/fotos-perfil',
-            'visibility' => 'public',
-        ],
+        
 
         's3' => [
             'driver' => 's3',

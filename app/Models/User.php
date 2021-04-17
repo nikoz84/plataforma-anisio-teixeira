@@ -40,7 +40,8 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'verification_token',
         'verified',
-        'role_id'
+        'role_id',
+        'options'
     ];
 
     /**
@@ -101,7 +102,8 @@ class User extends Authenticatable implements JWTSubject
      */
     public function setNameAttribute($value)
     {
-        $this->attributes['name'] = trim(strtolower($value));
+        $to_utf8 = mb_convert_encoding($value, "UTF-8", "auto");
+        $this->attributes['name'] = Str::lower($to_utf8);
     }
 
     /**

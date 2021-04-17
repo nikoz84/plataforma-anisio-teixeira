@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ApiController;
+use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Services\StorageUser;
 
 class UserController extends ApiController
 {
@@ -14,7 +17,7 @@ class UserController extends ApiController
 
     public function __construct(Request $request)
     {
-        $this->middleware('jwt.auth')->except([]);
+        //$this->middleware('jwt.auth')->except([]);
         $this->request = $request;
     }
 
@@ -49,32 +52,54 @@ class UserController extends ApiController
     }
 
     /**
+     * Cria novo usuário
+     * @param $request
+     * @return App\Traits\ApiResponser
+     */
+    public function create(UserRequest $request)
+    {
+        $user = new User;
+        $this->authorize('create', $user);
+
+        $user->fill($request->validated());
+
+        return $this->saveFile($user, $request);
+        
+    }
+    /**
      * Atualizar usuário por ID
      *
      * @param $request \Illuminate\Http\Request
      * @param $id integer
      * @return App\Traits\ApiResponser
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
         $user = User::findOrFail($id);
         $this->authorize('update', $user);
-        $validator = Validator::make($this->request->all(), $this->updateRules());
-        if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Erro no preenchimento do formulário", 422);
-        }
-        $validator = Validator::make(json_decode($this->request->options, true), $this->optionsRules());
-        if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível editar usuário", 422);
-        }
-        $user->fill($this->request->all());
-        $user->options = json_decode($this->request->options);
+
+        $user->fill($request->validated());
+        
+        
+        
+        return $this->saveFile($user, $request);
+    }
+
+    public function saveFile(User $user, $request)
+    {
         if (!$user->save()) {
-            $this->errorResponse([], 'Não foi possível editar o usuário', 422);
+            return $this->errorResponse([], 'Não foi possível editar o usuário', 422);
         }
         
-        if ($this->request->arquivoImagem) {
+        if ($request->has('arquivoImagem')) {
+            $storage = new StorageUser();
+            $user = $storage->saveFile($user, $request);
+            if (!$user) {
+                return $this->errorResponse([], 'Não foi possível fazer o upload da imagem', 422);
+            }
         }
+        
+        
         return $this->successResponse($user, 'Usuário editado com sucesso!', 200);
     }
 
@@ -122,69 +147,5 @@ class UserController extends ApiController
             'password_confirmation' => 'min:6|same:password',
             'optionsbirthday' => 'required|date|date_format:Y-m-d',
         ];
-    }
-
-    /**
-     * validação de atualização de usuários
-     * @return array
-     */
-    protected function updateRules()
-    {
-        return [
-            'email' => 'required|unique:users,email',
-            'name' => 'required|min:2|max:255',
-            'role_id' => 'required'
-        ];
-        
-    }
-
-    /**
-     * valida os campos da propriedade options
-     * @return array
-     */
-    protected function optionsRules()
-    {
-        return [
-            'birthday' => 'required|date|date_format:Y-m-d',
-        ];
-    }
-
-    /**
-     * Cria novo usuário
-     * @param $request
-     * @return App\Traits\ApiResponser
-     */
-    public function create(Request $request)
-    {
-        $this->authorize('create', User::class);
-        $validator = Validator::make(
-            $request->all(),
-            $this->configRules()
-        );
-
-        if ($validator->fails()) {
-            $this->errorResponse(
-                $validator->errors(),
-                'Não foi possível salvar usuário',
-                422
-            );
-        }
-        $user = new User;
-        $user->email = $request->get('login');
-        $user->name = $request->get('name');
-        $user->password = $request->get('password');
-        $user->options = [
-            "sexo" => null,
-            "birthday" => null,
-            "telefone" => null,
-            "is_active" => false,
-            "neighborhood"=> null
-        ];
-
-        if (!$user->save()) {
-            $this->errorResponse([], 'não foi possível registrar o usuário', 422);
-        }
-
-        return $this->successResponse([], 'Usuário registrado com sucesso!', 200);
     }
 }

@@ -42,6 +42,7 @@
           :selectedId="conteudo.license_id"
           @click="setLicense"
         ></ParentAndChildSelect>
+        <div> {{license_description ? license_description : '' }} </div>
         <div class="q-my-md" v-if="errors && errors.license_id && errors.license_id.length > 0">
           <ShowErrors :errors="errors.license_id"></ShowErrors>
         </div>
@@ -168,10 +169,16 @@
       </q-card-section>
         <!-- ARQUIVO DE DOWNLOAD --> 
       <q-card-section>
-        <div v-if="conteudo.download" >
-          Baixar Arquivo Download:
-        </div>
-         <a v-if="conteudo.download" :href="conteudo.download" :download="conteudo.download" >{{conteudo.download.split('/').pop()}}</a>
+        <DeleteFiles message="Download"
+          :file="conteudo.arquivos['download']"
+          directory="download"
+          >
+        </DeleteFiles>
+        <DeleteFiles message="Visualização"
+          :file="conteudo.arquivos['visualizacao']"
+          directory="visualizacao"
+          >
+        </DeleteFiles>
         <q-input
           class="q-mt-md"
           @input="val => {file = val[0];}"
@@ -188,10 +195,11 @@
         </q-input>
         <!-- ARQUIVO DE UPLOAD --> 
         <br>
-        <div v-if="conteudo.guiaPedagogico">
-          Baixar Arquivo Guia Pedagógico:
-        </div>
-         <a v-if="conteudo.guiaPedagogico" :href="conteudo.guiaPedagogico" :download="conteudo.guiaPedagogico" >{{conteudo.guiaPedagogico.split('/').pop()}}</a>
+        <DeleteFiles message="Guias Pedagógicos"
+          :file="conteudo.arquivos['guias-pedagogicos']"
+          directory="guias-pedagogicos"
+          >
+        </DeleteFiles>
         
         <q-input
           class="q-mt-md"
@@ -215,12 +223,14 @@
           label="URL do Site"
           hint="Exemplo: http://dominio.com.br"
           bottom-slots
-          :error="errors && errors.options_site && errors.options_site.length > 0" 
-        >
+          :error="errors && errors.options && errors.options.site && errors.options.site.length > 0"
+          >
           <template v-slot:error>
-            <ShowErrors :errors="errors.options_site"></ShowErrors>
+            <ShowErrors :errors="errors.options.site"></ShowErrors>
           </template>
         </q-input>
+        
+        
       </q-card-section>
       <q-card-section>
         <div class="q-gutter-sm">
@@ -273,7 +283,7 @@
       <q-card-section>
           <!-- COMPONENTES CURRICULARES --> 
           <div v-if="componentes">
-            <div v-for="(component, i) in componentes" :key="`c-${i}`" :index="component.id">
+            <div v-for="component in componentes" :key="`c-${component.id}`">
               <div class="text-center text-negative q-pt-md" >
                 {{ component.name }}
               </div>
@@ -306,7 +316,7 @@
       <q-card-section>
           <!-- NIVEIS DE ENSINO --> 
           <div v-if="niveis">
-            <div v-for="(nivel, n) in niveis" :key="`n-${n}`" :index="nivel.id">
+            <div v-for="nivel in niveis" :key="`n-${nivel.id}`">
               <div class="text-center text-positive q-pt-md">
                 {{ nivel.name }}
               </div>
@@ -358,6 +368,7 @@ import {
   QItemSection,
   QItemLabel
 } from "quasar";
+import DeleteFiles from "./DeleteFiles";
 
 export default {
   name: "ConteudoForm",
@@ -366,6 +377,7 @@ export default {
     ClosePopup
   },
   components: {
+    DeleteFiles,
     QInput,
     QItemSection,
     QCheckbox,
@@ -395,7 +407,6 @@ export default {
         canal_id: "",
         category_id: "",
         tipo_id: "",
-        site: "",
         title: "",
         description: "",
         canal: "",
@@ -425,6 +436,7 @@ export default {
       imagem_associada:null,
       download_file:null,
       guias_pedagogicos: null,
+      license_description: null,
       loading: false,
       errors: {},
       dialog: {
@@ -463,44 +475,39 @@ export default {
     async save() {
       this.loading = true;
       const form = new FormData();
-  
-      if(this.conteudo.category) {
-        form.append("category_id",  this.conteudo.category.id );
+      
+      form.append('conteudo', JSON.stringify({
+          category_id: this.conteudo.category_id,
+          title: this.conteudo.title,
+          tipo_id: this.conteudo.tipo_id,
+          canal_id: this.conteudo.canal_id,
+          license_id: this.conteudo.license_id,
+          title: this.conteudo.title,
+          description: this.conteudo.description,
+          source: this.conteudo.source,
+          authors: this.conteudo.authors,
+          componentes: this.componentesCurriculares,
+          tags: this.conteudo.tags.map(item => item.id),
+          terms: this.terms,
+          is_featured: this.conteudo.is_featured,
+          is_approved: this.conteudo.is_approved,
+          is_site: this.conteudo.options.site == '' ? false : true,
+          options: {
+            site : this.conteudo.options.site
+          }
+        })
+      );
+      
+      if(this.imagem_associada){
+        form.append("imagem_associada", this.imagem_associada );
       }
-      if(this.conteudo.options.site) {
-        form.append("options.site", this.conteudo.options.site);
-        form.append("is_site", 1) ;
-      } else {
-        form.append("is_site", 0);
+      if(this.download_file){
+        form.append("download", this.download_file);
+      }
+      if(this.guias_pedagogicos){
+        form.append("guias_pedagogicos", this.guias_pedagogicos );
       }
       
-      form.append("tipo_id", this.conteudo.tipo_id ? this.conteudo.tipo_id : "");
-      form.append("canal_id", this.conteudo.canal_id ? this.conteudo.canal_id : "");
-      form.append("license_id", this.conteudo.license_id ? this.conteudo.license_id : "");
-      form.append("category_id",  this.conteudo.category_id ? this.conteudo.category_id : "" );
-      form.append("title", this.conteudo.title ? this.conteudo.title : "");
-      form.append("description", this.conteudo.description ? this.conteudo.description : "");
-      form.append("source", this.conteudo.source ? this.conteudo.source : "");
-      form.append("authors", this.conteudo.authors ? this.conteudo.authors : "");
-      form.append("image", this.conteudo.image);
-      if (this.conteudo.tags.length) {
-        let tags = this.conteudo.tags.map(item => item.id);
-        for (var i = 0; i < tags.length; i++) {
-          form.append("tags[]", tags[i]);
-        }
-      }
-      form.append("componentes", this.componentesCurriculares);
-     
-      if( this.terms )
-      form.append("terms", 1);
-      form.append("is_featured", this.conteudo.is_featured ? 1 : 0);
-      form.append("is_approved", this.conteudo.is_approved ? 1 : 0);
-      if(this.imagem_associada)
-      form.append("imagem_associada", this.imagem_associada );
-      if(this.download_file)
-      form.append("download", this.download_file);
-      if(this.guias_pedagogicos)
-      form.append("guias_pedagogicos", this.guias_pedagogicos );
       let url = "/conteudos";
       if (this.$route.params.action == "editar") {
         form.append("id", this.conteudo.id);
@@ -518,8 +525,8 @@ export default {
           this.$router.push(`/admin/conteudos/listar`);
         } 
         
-      } catch(e) {
-        this.errors = e.errors;
+      } catch(ex) {
+        this.errors = ex.errors;
         this.loading = false;
       }
     },
@@ -565,14 +572,16 @@ export default {
       this.conteudo.category_id = id
     },
     setLicense(id){
-      this.conteudo.license_id = id
+      this.conteudo.license_id = id;
+      axios.get(`/licencas/${id}`).then(resp => {
+        this.license_description = resp.data.metadata.description;
+      })
     },
     setCanal(id){
       this.conteudo.canal_id = id
       this.getCategories({id})
     },
     setTipo(id){
-      
       this.conteudo.tipo_id = id
     },
     addTag(val, done) {

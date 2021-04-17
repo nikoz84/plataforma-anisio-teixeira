@@ -255,7 +255,7 @@ class Conteudo extends Model
     {
         return $this->downloadFileConteudo($this->id);
     }
-
+    
     /**
      * Adiciona atributo imagem associada ao objeto
      * @param \App\Conteudo $conteudo

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import AplicativoForm from './AplicativoForm';
 import CanalForm from './CanalForm';
 import CategoryAplicativoForm from './CategoryAplicativoForm';
@@ -14,7 +15,6 @@ import TipoForm from './TipoForm';
 import UserForm from './UserForm';
 import SliderForm from './SliderForm';
 import UniversidadesForm from './UniversidadesForm';
-import LogArtisanForm from './LogArtisanForm'
 
 export {
     AplicativoForm,
@@ -32,8 +32,7 @@ export {
     TipoForm,
     UserForm,
     SliderForm,
-    UniversidadesForm,
-    LogArtisanForm
+    UniversidadesForm
 };
 
 

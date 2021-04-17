@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Conteudo from './Conteudo';
 import ConteudoMetadata from "./ConteudoMetadata";
 import ConteudoRelated from './ConteudoRelated';

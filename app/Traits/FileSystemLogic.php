@@ -110,10 +110,9 @@ trait FileSystemLogic
     {
         $filesystem = new Filesystem;
 
-        $path = self::windowsDirectory(
-            Storage::disk('conteudos-digitais')->path($directory) . "/{$id}.*"
-        );
-
+        $path = Storage::disk('conteudos-digitais')->path($directory) . "/{$id}.*";
+        
+        
         $files = $filesystem->glob($path);
         $arr = [];
         foreach ($files as $file) {
@@ -126,7 +125,9 @@ trait FileSystemLogic
                 'url'       => Storage::disk('conteudos-digitais')->url($directory) . "/{$name}"
             ];
         }
-        return (object) $arr;
+        $count = count($arr);
+
+        return $count > 1 ? $arr : null;
     }
 
     /**

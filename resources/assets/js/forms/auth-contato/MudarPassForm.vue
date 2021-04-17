@@ -42,7 +42,8 @@
     </div>
   </article>
 </template>
-<script>
+<script>// @ts-nocheck
+
 import { ShowErrors } from "@forms/shared";
 import {QCard, QCardSection } from "quasar";
 
@@ -101,7 +102,3 @@ export default {
   }
 };
 </script>
-
-<style lang="stylus" scoped>
-
-</style>

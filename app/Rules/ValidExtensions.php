@@ -5,19 +5,18 @@ namespace App\Rules;
 use Illuminate\Contracts\Validation\Rule;
 use App\Models\Tipo;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
 
 class ValidExtensions implements Rule
 {
-    private $tipo_id = null;
+    private $id;
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct($tipo_id)
+    public function __construct($id)
     {
-        $this->tipo_id = $tipo_id;
+        $this->id = $id;
     }
 
     /**
@@ -28,11 +27,15 @@ class ValidExtensions implements Rule
      */
     public function passes($attribute, $value)
     {
+        $tipo = Tipo::where('id', $this->id)->get()->first();
+        if(!$tipo){
+            return false;
+        }
         
-        $tipo = Tipo::where('id', $this->tipo_id)->get()->first();
-        if(!$tipo)
-        return false;
-        $exists = in_array($value->getClientOriginalExtension(), $tipo->options['formatos']);
+        $exists = in_array(
+            $value->getClientOriginalExtension(), 
+            $tipo->options['formatos']
+        );
         
         return $exists;
     }

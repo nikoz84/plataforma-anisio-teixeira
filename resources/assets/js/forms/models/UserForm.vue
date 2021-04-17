@@ -1,40 +1,69 @@
 <template>
-    <div class="row q-pa-md">
-        <div class="col-sm-12">
+  <div class="q-pa-md">
+    <q-card>
+        <q-card-section>
             <h5 v-if="user.id != null">Edição de dados do Usuário(a) <b>{{this.userName}}</b></h5>
             <h5 v-if="user.id == null">Cadastro de Novo Usuário(a)</h5>
+        
             <form @submit.prevent="save()">
-              <div class="col-4">
-                <q-img :src="user.image" 
-                       width="150px"
-                       height="150px"
-                       loading="lazy"
-                       style="width:150px;height:150px;" 
-                       placeholder-src="/img/fundo-padrao.svg" 
-                       :ratio="1">
+              <div>
+                <q-img :src="user.options.image" 
+                       width="250"
+                       height="250"
+                       style="height: 300px"
+                      placeholder-src="/img/fundo-padrao.svg"
+                       >
                 </q-img>
+                
                 <q-input
                         class="q-mt-md"
                         @input="val => {file = val[0];}"
                         outlined
                         accept=".png, .webp, .svg, .jpeg, .jpg"
                         type="file"
-                        @change="onFileChange" hint="Imagem de perfil"></q-input>
+                        @change="onFileChange" hint="Imagem de perfil">
+                    
+                </q-input>
+                <div v-if="errors && errors.arquivoImagem">
+                  <ShowErrors :errors="errors.arquivoImagem"></ShowErrors>
+                </div>
               </div>
-                <ShowErrors :errors="errors.name"></ShowErrors>
+              <div class="col-4">
                 <q-input filled v-model.trim="user.name" :error="errors.name && errors.name.length > 0" 
                          label="Usuário" hint="Nome Completo" style="margin-bottom:15px;"></q-input>
                 <q-input filled v-model.trim="user.email" label="E-mail" hint="Correio eletrónico" style="margin-bottom:15px;"></q-input>
+                <q-input
+                  v-model="user.password"
+                  filled
+                  :type="isPwd ? 'password' : 'text'"
+                  hint="Senha"
+                  bottom-slots
+                  :error="errors.password && errors.password.length > 0"
+                  autocomplete="off"
+                >
+                  <template v-slot:append>
+                    <q-icon
+                      :name="isPwd ? 'visibility_off' : 'visibility'"
+                      class="cursor-pointer"
+                      @click="isPwd = !isPwd"
+                    />
+                  </template>
+                  <template v-slot:error>
+                    <ShowErrors :errors="errors.password"></ShowErrors>
+                  </template>
+                </q-input>
+                </div>
                 <q-input filled v-model.trim="user.options.neighborhood" label="Bairro" hint="Bairro" style="margin-bottom:15px;"></q-input>
                 <q-select filled 
                         option-value="id"
                         option-label="name" 
                         use-chips
                         v-model="user.role" 
-                        emmit-value
+                        
                         :options="roles" 
                         label="Tipo de Usuário" 
                         style="margin-bottom:15px;"/>
+            
                 <q-select filled 
                         option-value="id"
                         option-label="name" 
@@ -46,9 +75,10 @@
                         style="margin-bottom:15px;"
                         hint="Este usuário poderá criar e editar conteúdos nos seguintes canais"/>
                 <div style="margin-bottom:15px;">
-                    Sexo:
+                    Genero:
                     <q-radio v-model="user.options.sexo" val="f" label="Femenino" />
                     <q-radio v-model="user.options.sexo" val="m" label="Masculino" />
+                    <q-radio v-model="user.options.sexo" val="o" label="Outro" />
                 </div>
                 <q-input
                     style="margin-bottom:15px;"
@@ -66,25 +96,26 @@
                         style="margin-bottom:15px;"/>
                 
                 <q-input v-if="user.id" filled v-model="user.created_at" label="Possui conta desde" disable readonly style="margin-bottom:15px;"/>
-
-                
+                <div>
+                Activo: <q-checkbox v-model="user.options.is_active" color="negative"/>
+                </div>
                 <q-btn class="full-width" label="Salvar" type="submit" color="primary"></q-btn>
             </form>
-        </div>
-    </div>
+        </q-card-section>
+    </q-card>
+  </div>
 </template>
 
-<script>
-
-
-import { QInput, QRadio, QDate, QBtn, date, QUploader } from "quasar";
+<script>// @ts-nocheck
+import {QIcon, QCard, QCardSection, QInput, QRadio, QDate, QBtn, date, QUploader, QSelect, QImg, QCheckbox } from "quasar";
 import { FileUpload, ShowErrors } from "@forms/shared";
 
 export default {
   name: "UserForm",
-  components: { QInput, QRadio, QDate, QBtn, date, QUploader, FileUpload, ShowErrors },
+  components: {QIcon, QCard, QCardSection, QInput, QRadio, QDate, QBtn, date, QUploader, QImg, QSelect, QCheckbox, FileUpload, ShowErrors },
   data() {
     return {
+      isPwd: true,
       user: {
         name: "",
         email: "",
@@ -99,7 +130,7 @@ export default {
           birthday: null,
           neighborhood: null,
           telefone: null,
-          is_active: false
+          is_active: 0
         }
       },
       file: null,
@@ -116,7 +147,7 @@ export default {
   },
   computed: {
     birthday() {
-      return date.formatDate(this.user.options.birthday, "DD/MM/YYYY");
+      return date.formatDate(this.user.options.birthday, "YYYY/MM/DD");
     }
   },
   methods: {
@@ -130,10 +161,15 @@ export default {
     async save() {
       let id = this.$route.params.id ? `/${this.$route.params.id}` : "";
       let form = new FormData();
-      form.append("name", this.user.name);
-      form.append("email", this.user.email);
-      form.append("role_id", this.user.role.id);
-      form.append("options", JSON.stringify(this.user.options));
+      
+      form.append("user", JSON.stringify({
+        name : this.user.name,
+        email: this.user.email,
+        password: this.user.password,
+        role_id: this.user.role.id,
+        options: this.user.options
+      }));
+      
       if(this.user.arquivoImagem)
       form.append("arquivoImagem", this.user.arquivoImagem);
       if (this.$route.params.action == "editar") {
@@ -142,13 +178,13 @@ export default {
       if (this.file) {
         form.append("file", this.file, this.file.name);
       }
-      try
-      {
-        let resp = await axios.post(this.$route.params.slug + id, form);
-        this.$router.push(`/admin/usuarios/listar`);
-      }
-      catch(ex)
-      {
+      try {
+        const { data } = await axios.post(this.$route.params.slug + id, form);
+        
+        if(data.success){
+          this.$router.push(`/admin/usuarios/listar`);
+        }
+      } catch(ex) {
         this.errors = ex.errors;
       }
     },

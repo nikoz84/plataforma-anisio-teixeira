@@ -100,16 +100,16 @@ class ConteudoController extends ApiController
     public function create(ConteudoFormRequest $request)
     {
         $conteudo = new Conteudo;
-        $this->autorize('create', $conteudo);
+        $this->authorize('create', $conteudo);
         
         $conteudo->fill($request->validated());
-                        
+        
         if (!$conteudo->save()) {
             $this->errorResponse([], 'Não foi possível criar o conteúdo.', 422);
         }
 
         $conteudo->tags()->attach($request->tags);
-        $conteudo->componentes()->attach(explode(',', $request->componentes));
+        $conteudo->componentes()->attach($request->componentes);
         $conteudo::tsDocumentoSave($conteudo->id);
             
         $file = $this->storeFiles($request, $conteudo);
@@ -140,7 +140,7 @@ class ConteudoController extends ApiController
         }
         
         $conteudo->tags()->sync($request->tags);
-        $conteudo->componentes()->sync(explode(',', $request->componentes));
+        $conteudo->componentes()->sync($request->componentes);
         Conteudo::tsDocumentoSave($conteudo->id);
 
         if ($request->has('download') || $request->has('guias_pedagogicos') ||

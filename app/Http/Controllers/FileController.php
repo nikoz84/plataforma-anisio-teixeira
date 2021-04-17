@@ -11,6 +11,7 @@ use App\Models\Conteudo;
 use App\Helpers\ContentVideoConvert;
 use App\Jobs\VideoStreamingConvert;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Streaming\FFMpeg;
 use Streaming\Representation;
@@ -334,6 +335,27 @@ class FileController extends ApiController
         {
             return $e;
         }
+        
+    }
+
+    public function deleteFile(Request $request)
+    {
+        $filename = $request->filename;
+        $directory = $request->directory;
+        $role = Auth::user()->role->name;
+        if(Auth::check() && $role == 'super-admin' || $role == 'admin' || $role == 'cooredenador'){
+            $file = Storage::disk($directory)->path($filename);
+            if (file_exists($file)) {
+                
+                $response = unlink($file) ? 'Apagado com sucesso' : 'Não encontrado';
+                return $this->successResponse([
+                    'success' => true
+                ], $response, 200);
+            }
+        }
+
+        return $this->errorResponse(['success' => false], 'Usuário sem permissões para realizar esta ação', 422);
+        
         
     }
 }
