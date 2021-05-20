@@ -64,7 +64,8 @@
     </div>
   </article>
 </template>
-<script>
+<script>// @ts-nocheck
+
 import { mapActions, mapState } from "vuex";
 import { RecaptchaForm, ShowErrors } from "@forms/shared";
 import {

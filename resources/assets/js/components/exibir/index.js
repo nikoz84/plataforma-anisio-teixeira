@@ -7,6 +7,9 @@ import Contato from './Contato';
 import Table from './Table';
 import NotFound from './NotFound';
 import LoaderAdmin from './LoaderAdmin';
+import ListarConteudos from './ListarConteudos';
+import ListarCanais from './ListarCanais';
+import ListarAplicativos from './ListarAplicativos';
 
 export {
     Conteudo,
@@ -15,6 +18,9 @@ export {
     Aplicativo,
     Contato,
     Table,
-    LoaderAdmin,
-    NotFound
+    //LoaderAdmin,
+    NotFound,
+    ListarConteudos,
+    ListarCanais,
+    ListarAplicativos
 };

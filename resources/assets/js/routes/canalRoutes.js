@@ -2,59 +2,78 @@
 import HomeCanal from "@pages/HomeCanal.vue";
 import Listar from "@pages/Listar.vue";
 import Exibir from "@pages/Exibir.vue";
+import Canal from "@pages/Canal.vue";
+import Default from "@layout/Default.vue";
 
 const canalRoutes = {
     path: "/:slug",
-    component: () =>
-      import(/* webpackChunkName: "canal" */ "@pages/Canal.vue"),
+    components: {
+      main: Canal
+    },
     meta: {
       requiresAuth: false,
-      title: "Canal"
+      title: "Canal",
+      layout: Default
     },
     children: [
       {
         path: "/",
         name: "Inicio",
-        component: HomeCanal,
+        components:{
+          canal: HomeCanal
+        },
         meta: {
           requiresAuth: false,
-          title: "Inicio"
+          title: "Inicio",
+          layout: Default
         }
       },
       {
         path: "listar",
         name: "Listar",
-        component: Listar,
+        components:{
+          canal: Listar
+        },
         meta: {
           requiresAuth: false,
-          title: "Listar Conteúdos"
+          title: "Listar Conteúdos",
+          layout: Default
         }
       },
       {
         path: "listar/tag/:id",
         name: "listarTagId",
-        component: Listar,
+        components:{
+          canal: Listar
+        },
         meta: {
           requiresAuth: false,
-          title: "Lista de conteúdos por tag"
+          title: "Lista de conteúdos por tag",
+          layout: Default
         }
       },
       {
         path: "conteudo/exibir/:id",
         name: "ExibirConteudo",
-        component: Exibir,
+        components: {
+          canal: Exibir
+        },
         meta: {
           requiresAuth: false,
-          title: "Exibir conteúdo digital"
+          title: "Exibir conteúdo digital",
+          layout: Default
         }
       },
       {
         path: "aplicativo/exibir/:id",
         name: "ExibirAplicativo",
-        component: Exibir,
+        components: {
+          canal : Exibir
+        },
         meta: {
           requiresAuth: false,
-          title: "Exibir aplicativo educacional"
+          title: "Exibir aplicativo educacional",
+          layout: Default
         }
       }
     ]

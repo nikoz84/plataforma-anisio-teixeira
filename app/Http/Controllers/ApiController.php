@@ -28,10 +28,11 @@ class ApiController extends Controller
     public function home()
     {
         $data = $this->seo->getDefaultData();
-
+        // teste 'Mozilla/5.0 (compatible; Sosospider/2.0; +http://help.soso.com/webspider.htm)' 
         if($this->crawlerDetect->isCrawler()){
             $data = $this->seo->getMetadata();
         }
+        
         return view('index', $data);
     }
 

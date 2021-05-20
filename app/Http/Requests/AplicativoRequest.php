@@ -6,10 +6,11 @@ use Illuminate\Foundation\Http\FormRequest;
 use App\Traits\ApiResponser;
 use App\Models\Aplicativo;
 use Illuminate\Support\Facades\Auth;
-
+use App\Traits\RequestValidator;
 class AplicativoRequest extends FormRequest
 {
-    use ApiResponser;
+    use RequestValidator;
+    protected $stringify = 'aplicativo';
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -22,26 +23,24 @@ class AplicativoRequest extends FormRequest
 
     public function validated()
     {
-        $this->merge([
-            'canal_id' => Aplicativo::CANAL_ID,
-            'options' => json_decode(request()->options, true)
-        ]);
-
         if(request()->method() == 'POST') {
-            $this->whenCreated();
+            return $this->whenCreated();
         }
         return $this->toArray();
     }
 
     public function whenCreated()
     {
-        $this->append([
-            'user_id' => Auth::user()->id,
-            'options' => [
-                'is_featured' => request()->is_featured,
-                'qt_access' => Aplicativo::QT_ACCESS_INIT
-            ]
-        ]);
+        $data = collect($this->toArray());
+        
+        $data->put('user_id', Auth::user()->id);
+        $data->put('canal_id', Aplicativo::CANAL_ID);
+        $options = collect($data->get('options'));
+        $options->put('qt_access', Aplicativo::QT_ACCESS_INIT);
+        $data->put('options' , $options->toArray());
+        $data->forget('aplicativo');
+
+        return $data->toArray();
     }
     /**
      * Get the validation rules that apply to the request.
@@ -55,11 +54,12 @@ class AplicativoRequest extends FormRequest
             'description' => 'required|min:140',
             'category_id' => 'required',
             'url' => 'required|active_url',
-            'options_is_featured' => 'sometimes|boolean',
-            'tags' => 'required|array|min:3|max:10',
+            'options.is_featured' => 'sometimes|boolean',
+            'tags' => 'required|array|min:3|max:15',
             'image' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:1024'
         ];
     }
+    /*
     public function withValidator($validator)
     {
         if ($validator->fails()) {
@@ -67,4 +67,5 @@ class AplicativoRequest extends FormRequest
             return $this->errorResponse($validator->errors(), "Não foi possível {$action} o aplicativo", 422);
         }
     }
+    */
 }

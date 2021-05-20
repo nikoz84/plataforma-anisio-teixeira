@@ -30,10 +30,18 @@ class NivelEnsinoController extends ApiController
     public function index()
     {
         $limit = $this->request->get('limit', 15);
-        $niveisensino = NivelEnsino::select("*")
-            ->limit($limit)
-            ->orderBy('name', 'asc')
+        
+        if($this->request->has('select')){
+            return $this->showAll(
+                NivelEnsino::with('componentes')->orderBy('name', 'desc')->get()
+            );
+            
+        }
+
+        $niveisensino = NivelEnsino::orderBy('name', 'asc')
             ->paginate($limit);
+        
+
         return $this->showAsPaginator($niveisensino);
     }
 

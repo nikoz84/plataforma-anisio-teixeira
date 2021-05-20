@@ -7,71 +7,90 @@ import {
   ContactForm,
   ConfirmationEmailForm
 } from "@forms/auth-contato";
-
-
+import Default from "@layout/Default";
+import User from "@pages/User";
 
 
 
 const usuarioRoutes = {
     path: "/usuario",
     name: "User",
-    component: () => import(/* webpackChunkName: "user" */ "@pages/User.vue"),
+    components: {
+      main: User
+    },
     meta: {
-      requiresAuth: false
+      requiresAuth: false,
+      layout: Default
     },
     children: [
       {
         path: "login",
         name: "login",
-        component: LoginForm,
+        components: {
+          user: LoginForm
+        },
         meta: {
           requiresAuth: false,
-          title: "faça seu login"
+          title: "faça seu login",
+          layout: Default
         }
       },
       {
         path: "recuperar-senha",
         name: "Recuperar",
-        component: RecoverPassForm,
+        components: {
+          user: RecoverPassForm
+        },
         meta: {
           requiresAuth: false,
-          title: "Recuperar senha"
+          title: "Recuperar senha",
+          layout: Default
         }
       },
       {
         path: "mudar-senha/:token",
         name: "MudarSenha",
-        component: MudarPassForm,
+        components: {
+          user : MudarPassForm
+        },
         meta: {
           //requiresAuth: true,
-          title: "Mudar senha"
+          title: "Mudar senha",
+          layout: Default
         }
       },
       {
         path: "registro",
         name: "Register",
-        component: RegisterForm,
+        components: {
+          user: RegisterForm
+        },
         meta: {
           requiresAuth: false,
-          title: "Faça seu registro"
+          title: "Faça seu registro",
+          layout: Default
         }
       },
       {
         path: "confirmar-email",
         name: "confirmar",
-        component: ConfirmationEmailForm,
+        components: {user:ConfirmationEmailForm},
         meta: {
           requiresAuth: false,
-          title: "Confirmar email"
+          title: "Confirmar email",
+          layout: Default
         }
       },
       {
         path: "contato/:action",
         name: "ContactForm",
-        component: ContactForm,
+        components:{
+          user: ContactForm
+        } ,
         meta: {
           requiresAuth: false,
-          title: "Contatenos"
+          title: "Contatenos",
+          layout: Default
         }
       }
     ]

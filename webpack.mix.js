@@ -1,5 +1,6 @@
+// @ts-nocheck
 let mix = require("laravel-mix");
-//const ChunkRenamePlugin = require("webpack-chunk-rename-plugin");
+const ChunkRenamePlugin = require("webpack-chunk-rename-plugin");
 /*
 |--------------------------------------------------------------------------
 | Mix Asset Management
@@ -15,47 +16,60 @@ mix.webpackConfig({
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
-      '@': __dirname + '/resources/assets/js',
-      '@components': __dirname + '/resources/assets/js/components',
-      '@composables': __dirname + '/resources/assets/js/composables',
-      '@forms': __dirname + '/resources/assets/js/forms',
-      '@pages': __dirname + '/resources/assets/js/pages',
-      '@mixins': __dirname + '/resources/assets/js/mixins'
-      
-    },
-  },
+    'vue$': 'vue/dist/vue.esm.js',
+    '@': __dirname + '/resources/assets/js',
+    '@components': __dirname + '/resources/assets/js/components',
+    '@composables': __dirname + '/resources/assets/js/composables',
+    '@forms': __dirname + '/resources/assets/js/forms',
+    '@pages': __dirname + '/resources/assets/js/pages',
+    '@mixins': __dirname + '/resources/assets/js/mixins',
+    '@layout': __dirname + '/resources/assets/js/layout'
+    }
+  }
 });
-
-
 
 mix.browserSync({
   proxy: process.env.APP_URL
-});
+})
+.disableNotifications();
 
-mix.disableNotifications();
 
-if (!mix.inProduction()) {
-  mix.config.webpackConfig.output = {
-    chunkFilename: "js/[name].min.js",
+const config = {
+  //entry:{},
+  output : {
+    chunkFilename: 'js/[name].js?id=[chunkhash]', // 
     publicPath: "/"
-  };
-  mix
-    .js("resources/assets/js/app.js", "public/js")
-    .stylus("resources/assets/stylus/app.styl", "public/css");
-    //.version();
+  },
+  plugins: [
+    new ChunkRenamePlugin({
+    initialChunksWithEntry: true,
+    "/js/vendor": "js/vendor.js",
+    "/js/app": "js/app.js",
+    "/js/manifest": "js/manifest.js",
+  })]
+};
 
-  //mix.copy("public/css/app.css", "public/css/app-copy.css");
+
+
+
+if (mix.inProduction()) {
+    mix.extract(['vue', 'quasar', 'vue-apexcharts', 'vuex', 'moment'])
+    .webpackConfig(config)
+    .js("resources/assets/js/app.js", "public/js")
+    .version();
 } else {
-  mix
-    .webpackConfig({
-      output: {
-        filename: "[name].js",
-        chunkFilename: "js/[name].js"
-      }
-    })
-    .js(["resources/assets/js/app.js"], "public/js")
-    .extract();
-  //mix.copy("public/js/js/app.vendor.js", "public/js/");
-  //mix.styles(["public/css/app-copy.css"], "public/css/app.css");
+  mix.webpackConfig(config)
+  .js("resources/assets/js/app.js", "public/js")
+  .options({
+    processCssUrls: false
+  })
+  .stylus("resources/assets/stylus/app.styl", "public/css")
+  .copy("public/css/app.css", "public/css/app-min.css")
+  .copy("resources/assets/stylus/fonts", "public/fonts");
+
 }
+
+//mix.stylus("resources/assets/stylus/app.styl", "public/css", {outputStyle: 'compressed'})
+  //.minify('public/css/app.css');
+    
+  //

@@ -41,12 +41,12 @@
 @font-face {
   font-family: 'Ubuntu';
   font-display: swap;
-  src: url(/fonts/Ubuntu-Regular.woff2?0d865b07d66f0efa0d5dedba23a34ba8);
+  src: url("./fonts/Ubuntu-Regular.woff2");
 }
 @font-face {
   font-family: 'Lato';
   font-display: swap;
-  src: url(/fonts/Lato-Regular.woff2?0ebc78e6767e52d7af91269e61c7e36b);
+  src: url("./fonts/Lato-Regular.woff2");
 }
 .title-page-tipos {
   font-family: 'Lato', sans-serif, cursive;
@@ -62,7 +62,7 @@ body {
   color: #263238;
 }
 /*
- * Quasar Framework v1.15.10
+ * Quasar Framework v1.15.15
  * (c) 2015-present Razvan Stoenescu
  * Released under the MIT License.
  */
@@ -291,6 +291,7 @@ input[type='search']::-webkit-search-decoration {
   padding: 2px 6px;
   border-radius: 3px;
   font-size: 12px;
+  min-height: 12px;
   line-height: 12px;
   font-weight: normal;
   vertical-align: baseline;
@@ -931,6 +932,7 @@ input[type='search']::-webkit-search-decoration {
 }
 .q-message-label {
   margin: 24px 0;
+  text-align: center;
 }
 .q-message-stamp {
   color: inherit;
@@ -3156,15 +3158,15 @@ body.q-ios-padding .q-layout--standard .q-header > .q-toolbar:nth-child(1),
 body.q-ios-padding .q-layout--standard .q-header > .q-tabs:nth-child(1) .q-tabs-head,
 body.q-ios-padding .q-layout--standard .q-drawer--top-padding .q-drawer__content {
   padding-top: 20px;
-  min-height: 75px;
+  min-height: 80px;
   padding-top: env(safe-area-inset-top);
-  min-height: calc(env(safe-area-inset-top) + 55px);
+  min-height: calc(env(safe-area-inset-top) + 60px);
 }
 body.q-ios-padding .q-layout--standard .q-footer > .q-toolbar:last-child,
 body.q-ios-padding .q-layout--standard .q-footer > .q-tabs:last-child .q-tabs-head,
 body.q-ios-padding .q-layout--standard .q-drawer--top-padding .q-drawer__content {
   padding-bottom: env(safe-area-inset-bottom);
-  min-height: calc(env(safe-area-inset-bottom) + 55px);
+  min-height: calc(env(safe-area-inset-bottom) + 60px);
 }
 .q-body--layout-animate .q-drawer__backdrop {
   transition: background-color 0.12s !important;
@@ -4200,6 +4202,9 @@ body.desktop .q-slider.q-slider--enabled:hover .q-slider__arrow--v {
 }
 .q-stepper__header--standard-labels .q-stepper__tab:last-child {
   justify-content: flex-end;
+}
+.q-stepper__header--standard-labels .q-stepper__tab:only-child {
+  justify-content: center;
 }
 .q-stepper__header--standard-labels .q-stepper__dot:after {
   display: none;
@@ -5529,7 +5534,7 @@ body.desktop .q-toggle--dense:not(.disabled):hover .q-toggle__thumb:before {
 .q-toolbar {
   position: relative;
   padding: 0 12px;
-  min-height: 55px;
+  min-height: 60px;
   width: 100%;
 }
 .q-toolbar--inset {
@@ -10662,7 +10667,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-smoothing: antialiased;
   line-height: 1.5;
-  font-size: 14px;
+  font-size: 13px;
 }
 h1 {
   font-size: 4rem;
@@ -11157,7 +11162,7 @@ body.body--dark {
     min-height: 24px;
   }
   .q-toolbar:after {
-    min-height: 55px;
+    min-height: 60px;
   }
   .q-notification--standard:after {
     min-height: 48px;
@@ -11285,7 +11290,7 @@ body.body--dark {
     min-height: 24px;
   }
   .q-toolbar:after {
-    min-height: 55px;
+    min-height: 60px;
   }
   .q-notification--standard:after {
     min-height: 48px;

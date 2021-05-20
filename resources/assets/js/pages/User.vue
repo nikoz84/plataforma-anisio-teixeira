@@ -1,6 +1,6 @@
 <template>
   <section class="container-fluid heigth">
-    <router-view></router-view>
+    <router-view name="user"></router-view>
   </section>
 </template>
 

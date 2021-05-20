@@ -1,10 +1,25 @@
 <template>
     <div>
-        <q-btn :outline="outlineThumbsUp" :loading="loaddingIcon"  @click="thumbsUp()"  round color="green" icon="thumb_up" >
-            <q-badge v-if="this.countThumbsUp>0" color="light-green-12"  floating>{{this.shortNum(this.countThumbsUp)}}</q-badge>
+        <q-btn :outline="outlineThumbsUp" 
+            :loading="loaddingIcon"
+            size="md"  
+            @click="thumbsUp()" 
+            label="Gostei" icon="thumb_up" >
+            <q-badge v-if="this.countThumbsUp>0" 
+                color="deep-purple-10"  floating>
+                    {{this.shortNum(this.countThumbsUp)}}
+            </q-badge>
         </q-btn>
-        <q-btn :outline="outlineThumbsDown" :loading="loaddingIcon" @click="thumbsDown()"  round color="red" icon="thumb_down">
-            <q-badge  v-if="this.countThumbsDown>0" color="orange-4" floating>{{this.shortNum(this.countThumbsDown)}}</q-badge>
+        <q-btn :outline="outlineThumbsDown" 
+            :loading="loaddingIcon"
+            size="md" 
+            @click="thumbsDown()"  
+            label="Não gostei" icon="thumb_down">
+            <q-badge  v-if="this.countThumbsDown>0" 
+                color="deep-purple-10" 
+                floating>
+                {{this.shortNum(this.countThumbsDown)}}
+                </q-badge>
         </q-btn>
     </div>
 </template>
@@ -62,7 +77,7 @@
                         this.outlineThumbsDown = false;
                     }
                 }
-                console.log("likeornot", this.likeOrNot);
+                //console.log("likeornot", this.likeOrNot);
             },
             async getCountLikes()
             {

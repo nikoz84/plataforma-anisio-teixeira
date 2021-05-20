@@ -90,8 +90,13 @@ class CurricularComponentCategoryController extends ApiController
     public function index()
     {
         $limit = $this->request->get('limit', 15);
-        $componentesCategoria = CurricularComponentCategory::select("*")
-            ->limit($limit)
+
+        if($this->request->has('select')){
+            return $this->showAll(
+                CurricularComponentCategory::with('componentes')->orderBy('name', 'asc')->get()
+            );
+        }
+        $componentesCategoria = CurricularComponentCategory::with('componentes')
             ->orderBy('name', 'asc')
             ->paginate($limit);
             

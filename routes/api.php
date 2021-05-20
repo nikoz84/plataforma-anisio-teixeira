@@ -161,8 +161,9 @@ Route::group(
         });
 
         /**NIVEL ENSINO**/
-        Route::group(['prefix' => 'nivelensino', 'as' => 'niveis.'], function(){
+        Route::group(['prefix' => 'niveis-ensino', 'as' => 'niveis.'], function(){
             Route::get('/search/{termo}', [NivelEnsinoController::class, 'search'])->name('buscar');
+            Route::get('/', [NivelEnsinoController::class, 'index'])->name('listar');
             Route::get('/{id}', [NivelEnsinoController::class, 'getById'])->name('x.id');
             Route::post('/', [NivelEnsinoController::class, 'create'])->name('criar');
             Route::put('/{id}', [NivelEnsinoController::class, 'update'])->name('atualizar');

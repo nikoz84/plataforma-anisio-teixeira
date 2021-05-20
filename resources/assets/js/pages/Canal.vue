@@ -48,7 +48,7 @@
       <q-skeleton v-else style="width: 300px; height: 13px" type="text" animation="pulse-x"/>
     </q-card>
     
-    <router-view></router-view>
+    <router-view name="canal"></router-view>
     
   </section>
 </template>
@@ -77,7 +77,9 @@ import {
 } from "quasar";
 
 export default {
-  name: "canal",
+  props: {
+  },
+  name: "Canal",
   directives: { ClosePopup },
   components: {
     QTabs,

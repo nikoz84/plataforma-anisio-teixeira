@@ -66,9 +66,15 @@ class ConteudoController extends ApiController
         $is_approved = 'true';
         
         if ($request->has('aprovados') && Auth::user()) {
-            $is_approved = $request->query('aprovados', 'true');
+            $is_approved = $request->query('aprovados', true);
         }
-        $conteudos = $query->aprovados($is_approved)->with(['canal', 'tipo'])->paginate($request->query('limit', 6))->setPath("/conteudos?{$url}");
+        
+        $conteudos = $query
+            ->aprovados($is_approved)
+            ->with(['canal', 'tipo'])
+            ->paginate($request->query('limit', 6))
+            ->setPath("/conteudos?{$url}");
+        
         return $this->showAsPaginator($conteudos);
     }
 
@@ -189,10 +195,15 @@ class ConteudoController extends ApiController
     {
         $limit = $request->query('limit', 6);
         $query = Conteudo::query();
-        $query->fullTextSearch($termo, 'tag');
-        //$conteudos = $query->paginate($limit);
-        $conteudos =  CachingModelObjects::search($query, $termo, $limit);
-        $conteudos->setPath("/conteudos/search/{$termo}?limit={$limit}");
+
+        
+        $conteudos = $query
+            ->aprovados(true)
+            ->fullTextSearch($termo, 'tag')
+            ->with(['canal', 'tipo'])
+            ->paginate($limit)
+            ->setPath("/conteudos/search/{$termo}?limit={$limit}");
+            
         return $this->showAsPaginator($conteudos);
     }
     /**

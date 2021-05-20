@@ -170,12 +170,12 @@
         <!-- ARQUIVO DE DOWNLOAD --> 
       <q-card-section>
         <DeleteFiles message="Download"
-          :file="conteudo.arquivos['download']"
+          :file="conteudo && conteudo.arquivos ? conteudo.arquivos['download'] : null"
           directory="download"
           >
         </DeleteFiles>
         <DeleteFiles message="Visualização"
-          :file="conteudo.arquivos['visualizacao']"
+          :file="conteudo && conteudo.arquivos ? conteudo.arquivos['visualizacao'] : null"
           directory="visualizacao"
           >
         </DeleteFiles>
@@ -196,7 +196,7 @@
         <!-- ARQUIVO DE UPLOAD --> 
         <br>
         <DeleteFiles message="Guias Pedagógicos"
-          :file="conteudo.arquivos['guias-pedagogicos']"
+          :file="conteudo && conteudo.arquivos ? conteudo.arquivos['guias-pedagogicos'] : null"
           directory="guias-pedagogicos"
           >
         </DeleteFiles>
@@ -428,6 +428,8 @@ export default {
       terms: false,
       tipos: [],
       componentesCurriculares: [],
+      niveis: [],
+      componentes: [],
       licencas: [],
       autocompleteTags: [],
       categoryName: null,
@@ -451,7 +453,7 @@ export default {
     this.getData();
   },
   computed: {
-    ...mapState(["componentes", "niveis"])
+    //...mapState(["componentes", "niveis"])
   },
   methods: {
     onImageFileChange(e) {
@@ -509,7 +511,7 @@ export default {
       }
       
       let url = "/conteudos";
-      if (this.$route.params.action == "editar") {
+      if (this.$route.params.id) {
         form.append("id", this.conteudo.id);
         form.append("_method", "PUT");
         url = url + '/' + this.conteudo.id; 
@@ -545,14 +547,18 @@ export default {
     },
     async getData() {
       this.$q.loading.show();
+      
       const canais = await axios.get("/canais?select");
       const tipos = await axios.get("/tipos?select");
       const licencas = await axios.get("/licencas?select");
-      //let responses = await axios.all([canais, tipos, licencas]);
-      
+      const niveis = await axios.get('/niveis-ensino?select');
+      const componentes = await axios.get('/componentescategorias?select')
       this.canais = canais.data.metadata;
       this.tipos = tipos.data.metadata;
       this.licencas = licencas.data.metadata;
+      this.niveis = niveis.data.metadata;
+      this.componentes = componentes.data.metadata;
+      //this.componentesCurriculares = componentes.data.metadata;
       
       if (this.$route.params.id) {
         let { data } = await axios.get("/conteudos/" + this.$route.params.id);

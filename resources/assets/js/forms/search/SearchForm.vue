@@ -27,6 +27,7 @@ import { mapMutations, mapState } from "vuex";
 export default {
   name: "SearchForm",
   components: { QSelect, QItem, QItemSection, QSpace },
+  props: ['slug'],
   data() {
     return {
       termo: "",
@@ -35,24 +36,23 @@ export default {
     };
   },
   computed: {
-    ...mapState(["paginator", "isLogged"])
+    ...mapState(["paginator", "isLogged", "isLoading"])
   },
   methods: {
     ...mapMutations(["SET_PAGINATOR", "SET_IS_LOADING", 'SET_DATA']),
     filterFn(val, update, abort) {
-      const self = this;
-      self.loadingState = true
+      this.SET_IS_LOADING(true);
       console.log(val)
-      update(() => {
-        if (val === "" || val.length <= 3) {
-          self.loadingState = false;
+      update(async () => {
+        if (val === "" || val.length <= 2) {
+          this.loadingState = false;
           return;
         } else {
-          let url = `${this.$route.params.slug}/search/${val}`;
-          axios.get(url).then(resp => {
-            self.loadingState = false;
-            this.SET_PAGINATOR(resp.data.paginator);
-          });
+          let url = `/${this.slug}/search/${val}`;
+          const {data} = await axios.get(url)
+          this.loadingState = false;
+          this.SET_PAGINATOR(data.paginator);
+          
         }
       });
     }

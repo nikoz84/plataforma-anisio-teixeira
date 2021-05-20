@@ -4,7 +4,9 @@
       <q-card-section horizontal>
         <q-card-section class="q-pt-xs col-2">
           <div class="text-h5 q-mt-sm q-mb-xs" >
-            {{ $route.params.action == 'adicionar' ? 'Adicionar Aplicativo' : 'Editar Aplicativo' }}
+            
+            {{ $route.params.id ?  'Editar Aplicativo' : 'Adicionar Aplicativo' }}
+
           </div>
         </q-card-section>
         <q-form v-on:submit.prevent="save()">
@@ -34,7 +36,7 @@
               style="height:150px; width:150px"
               :src="aplicativo.image"
               placeholder-src="/img/fundo-padrao.svg"
-              alt=" Icone da categoria :"/>
+              alt="Icone da categoria :"/>
             </div>
            </q-card-section>
            
@@ -56,7 +58,7 @@
             <!-- CATEGORIA -->
             <q-select outlined 
               class="col-sm-5"
-              v-model="aplicativo.category" 
+              v-model="selectCategory" 
               :options="categoriesList"
               option-value="id"
               option-label="name"
@@ -133,7 +135,6 @@
 
 import { QForm, QInput, QEditor, QSelect, QCard, QCardSection } from "quasar";
 import { ShowErrors } from "@forms/shared";
-import { prototype } from "stream";
 import { PasteCapture } from "@mixins/RemoveFormat";
 
 export default {
@@ -155,20 +156,18 @@ export default {
         name: "",
         description: "",
         url: "",
-        canal:null,
+        canal_id : 9,
         tags: [],
         options: {
           is_featured: false,
-          qt_access: 0
-
+          //qt_access: 0
         },
         image: null,
         category_id: null
       },
-      
+      selectCategory: null,
       categoriesList: [],
       tagsList: [],
-      canais:[],
       imagemAssociada: null,
       count: 0,
       errors: {}
@@ -186,29 +185,26 @@ export default {
             this.imagemAssociada = files[0];
         },
     save() {
-      let form = new FormData();
-      if(this.aplicativo.canal)
-            form.append("canal_id", this.aplicativo.canal.id);
-      if (this.$route.params.action === "editar") {
+      const form = new FormData();
+      const aplicativo = JSON.stringify({
+        name:this.aplicativo.name,
+        canal_id: this.aplicativo.canal_id,
+        category_id: this.selectCategory ? this.selectCategory.id : null,
+        description: this.aplicativo.description,
+        url: this.aplicativo.url,
+        options: this.aplicativo.options,
+        tags: this.aplicativo.tags.map(item => item.id)
+      });
+      console.log(aplicativo)
+      form.append('aplicativo', aplicativo);
+      
+      if (this.$route.params.id) {
         form.append("id", this.$route.params.id);
         form.append("_method", "PUT");
       }
-      form.append("name", this.aplicativo.name);
-      form.append("description", this.aplicativo.description);
-      if (this.aplicativo.category) {
-        form.append("category_id", this.aplicativo.category.id);
-      }
       
-      form.append("url", this.aplicativo.url);
-      form.append("options", JSON.stringify(this.aplicativo.options));
       if (this.imagemAssociada) {
         form.append("imagemAssociada", this.imagemAssociada);
-      }
-      if (this.aplicativo.tags.length) {
-        let tags = this.aplicativo.tags.map(item => item.id);
-        for (var i = 0; i < tags.length; i++) {
-          form.append("tags[]", tags[i]);
-        }
       }
       
       this.sendData(form);

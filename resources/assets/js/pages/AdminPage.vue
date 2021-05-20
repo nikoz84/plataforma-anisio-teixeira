@@ -4,6 +4,6 @@
 <script>
 
 export default {
-  name: "admin"
+  name: "AdminPage"
 };
 </script>

@@ -8,18 +8,18 @@
             <div class="q-pt-lg q-pr-lg" v-html="aplicativo.description"></div>
             <section class="q-mt-lg">
               <strong>Categoria: </strong>
-                {{aplicativo.category.name}}
+                {{ aplicativo.category ? aplicativo.category.name : null }}
               <q-separator class="q-my-md"></q-separator>
               <strong>Publicador(a): </strong>
-                {{aplicativo.user.name}}
+                {{ aplicativo.user ? aplicativo.user.name : null }}
                 
               <q-separator class="q-my-md"></q-separator>
               <strong>Publicado em: </strong>
-                {{aplicativo.formated_date}}
+                {{ aplicativo.formated_date ? aplicativo.formated_date : null }}
                 
               <q-separator class="q-my-md"></q-separator>
               <strong>Acessos: </strong>
-                {{aplicativo.options.qt_access}}
+                {{ aplicativo.options ? aplicativo.options.qt_access : null }}
                 
               <q-separator class="q-my-md"></q-separator>
             </section>

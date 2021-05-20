@@ -45,8 +45,8 @@ class AplicativoController extends ApiController
             return $q->where('category_id', $category);
         });
 
-        $apps = $query->with(['category', 'canal'])
-            ->orderBy('name', 'asc')
+        $apps = $query->with(['category', 'canal', 'user'])
+            ->orderBy('updated_at', 'desc')
             ->paginate($limit)
             ->setPath("/aplicativos?categoria={$category}&limit={$limit}");
         return $this->showAsPaginator($apps);
@@ -70,10 +70,10 @@ class AplicativoController extends ApiController
         }
         
         
-        $aplicativo->tags()->attach($this->request->tags);
+        $aplicativo->tags()->attach($request->tags);
             
-        if ($this->request->imagemAssociada) {
-            $fileImg = $this->saveFile($aplicativo->id, [$this->request->imagemAssociada], 'imagem-associada', 'aplicativos-educacionais');
+        if ($request->imagemAssociada) {
+            $fileImg = $this->saveFile($aplicativo->id, [$request->imagemAssociada], 'imagem-associada', 'aplicativos-educacionais');
             if (!$fileImg) {
                 return $this->errorResponse([], "Não foi possível salvar imagem. Tente novamente mais tarde.", 422);
             }

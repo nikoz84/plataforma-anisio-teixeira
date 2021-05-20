@@ -16,6 +16,7 @@
 </template>
 
 <script>
+// @ts-nocheck
 export default {
     name: "DeleteFiles",
     props: ["message", "file", "directory"],

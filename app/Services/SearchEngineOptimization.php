@@ -76,7 +76,10 @@ class SearchEngineOptimization
     {
         if (class_exists($class_name)) {
             $class = $class_name::with(['tags'])->find($id);
-
+            if(!$class){
+                return $this->getDefaultData();
+            }
+            
             $tags = $class->tags->implode('name', ', ');
 
             return [

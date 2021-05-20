@@ -30,9 +30,7 @@
         </q-btn>
 
         <q-space />
-        <AutocompleteForm></AutocompleteForm>
-        <q-space />
-
+        
         <q-btn-dropdown stretch flat icon="person" dropdown-icon="arrow_drop_down" aria-label="Opçoes de usuário">
           <q-list>
             <q-item clickable to="/usuario/contato/faleconosco" aria-label="fale conosco">
@@ -80,11 +78,11 @@
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" bordered content-class="bg-grey-2">
-      <LeftSideBar :leftDrawerOpen.sync="leftDrawerOpen"></LeftSideBar>
+      <AdminLeftSideBar></AdminLeftSideBar>
     </q-drawer>
 
     <q-page-container>
-      <router-view id="main-content" name="main"/>
+      <router-view  name="main"/>
       <q-page-scroller position="bottom-right">
         <q-btn round color="accent" icon="arrow_upward" aria-label="subir ao topo"/>
       </q-page-scroller>
@@ -92,9 +90,9 @@
   </q-layout>
 </template>
 <script>
+// @ts-nocheck
 import { mapActions, mapState } from "vuex";
-import { AutocompleteForm } from "@forms/search";
-import LeftSideBar from "./LeftSideBar.vue";
+import AdminLeftSideBar from "./AdminLeftSideBar.vue";
 import {
   QLayout,
   QDrawer,
@@ -116,11 +114,10 @@ import {
 } from "quasar";
 
 export default {
-  name: "Default",
+  name: "Admin",
   directives: { GoBack },
   components: {
-    AutocompleteForm,
-    LeftSideBar,
+    AdminLeftSideBar,
     QLayout,
     QDrawer,
     QHeader,
@@ -140,13 +137,15 @@ export default {
   data() {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop
-    };
+    }
   },
   created() {
-    this.getLayout();
+      const vlibras  = window.document.getElementById('vlibras');
+      vlibras.classList.remove('enabled');
+      vlibras.classList.add('disabled');
   },
   computed: {
-    ...mapState(["isLogged", "links", "canal", "sidebar", "layout"])
+    ...mapState(["isLogged"])
   },
   methods: {
     ...mapActions(["getLayout", "logout"]),
@@ -157,29 +156,3 @@ export default {
   }
 };
 </script>
-<style lang="stylus">
-.skip-link {
-  position: absolute;
-  top: -40px;
-  left: 0;
-  background: #000000;
-  color: white;
-  padding: 8px;
-  z-index: 100;
-}
-
-.skip-link:focus {
-  top: 0;
-}
-
-.drawer-footer-link {
-  color: inherit;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 0.75rem;
-
-  &:hover {
-    color: #000;
-  }
-}
-</style>

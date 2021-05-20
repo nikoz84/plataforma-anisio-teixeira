@@ -11,7 +11,6 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ComponentesController extends ApiController
 {
-    use ApiResponser;
     public function __construct(Request $request)
     {
         $this->middleware('jwt.auth')->except(['index', 'search']);
@@ -24,11 +23,17 @@ class ComponentesController extends ApiController
     public function index()
     {
         $limit = $this->request->get('limit', 15);
-        $componentes = CurricularComponent::select("*")
-            ->limit($limit)
-            ->orderBy('name', 'asc')
-            ->paginate($limit);
-        return $this->showAsPaginator($componentes);
+        
+        if ($this->request->has('select')) {
+            return $this->showAll(
+                CurricularComponent::orderBy('name', 'desc')->get()
+            );
+        }
+
+        $componentes = CurricularComponent::orderBy('name', 'asc')
+        ->paginate($limit);
+        
+            return $this->showAsPaginator($componentes);
     }
 
     /**

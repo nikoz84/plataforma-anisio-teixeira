@@ -7,10 +7,6 @@
           <Player :arquivos="conteudo.arquivos" :tipo="conteudo.tipo"></Player>
           <PlayerActions class="q-mt-sm"></PlayerActions>
         </q-card-section>
-        <q-card-section class="descritivo q-mx-md q-mb-sm">
-              <Title :title="conteudo.title"></Title>
-              <div class="q-mt-md  conteudo-descricao" v-html="conteudo.description"></div> 
-        </q-card-section>
         <q-card-section class="ficha-tecnica col-sm-12 q-mt-lg">
           <q-expansion-item
             dense
@@ -35,11 +31,12 @@
     </div>
   </div>
 </template>
-<script>
+<script>// @ts-nocheck
+
 import { mapState, mapActions } from "vuex";
 import { QCard, QCardSection, QSeparator, QChip, Ripple } from "quasar";
 import { Player, PlayerActions } from "@components/player";
-import { Title } from "@components/shared";
+
 import ConteudoMetadata from "@components/exibir/ConteudoMetadata";
 import ConteudoRelated from "@components/exibir/ConteudoRelated";
 
@@ -53,7 +50,6 @@ export default {
     QSeparator,
     Player,
     QChip,
-    Title,
     ConteudoMetadata,
     PlayerActions,
     ConteudoRelated
@@ -82,10 +78,6 @@ export default {
 };
 </script>
 <style scoped>
-
-.conteudo-descricao::before{
-  content:"Descrição: "
-}
 
 .conteudo-descricao{
   font-size: 1rem;

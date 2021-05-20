@@ -1,64 +1,45 @@
 <template>
     <div v-if="conteudo">
-        <div class="flex justify-center q-gutter-sm">
-            <p v-if="conteudo.tipo">
-                Tipo de Conteúdo: 
-                <q-badge class="bg-grey-10" text-color="white">{{conteudo.tipo.name}}</q-badge>
-            </p>
-            <p v-if="conteudo.qt_access">
-                Acessos: 
-                <q-badge class="bg-grey-10" text-color="white">{{conteudo.qt_access}}</q-badge>
-            </p>
-            <p v-if="conteudo.qt_downloads && conteudo.tipo.id != 8">
-                Downloads: 
-                <q-badge class="bg-grey-10" text-color="white">{{conteudo.qt_downloads}}</q-badge>
-            </p>
-            <q-space></q-space>
-            <ThumbsMenu></ThumbsMenu>
-            <q-btn class="bg-grey-10" 
-                text-color="white"
-                icon="share"
-                size="xs"
-                @click="show = !show" >
-                <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
-                    Compartilhar
-                </q-tooltip>
+        <div class="flex justify-center q-gutter-sm" >
+            <q-btn v-if="conteudo.arquivos && conteudo.arquivos['download']"
+                target="__blank"
+                size="md"
+                outline
+                type="a"
+                label="Baixar Conteúdo"
+                icon="download"
+                :href="conteudo.arquivos['download'].url"
+                :download="conteudo.arquivos['download'].url"
+                >
             </q-btn>
-            <q-btn
-                class="bg-grey-10"
-                text-color="white"
-                :loading="loading"
-                icon="save_alt"
-                size="xs"
-                v-if="fileExists('download') && conteudo.id"
-                @click="downloadFile('download', conteudo.id)" >
-                <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
-                    Baixar conteúdo
-                </q-tooltip>
-            </q-btn>
-            <!--q-btn
-                round
-                push
-                class="bg-grey-10"
-                text-color="white"
-                icon="save_alt"
-                size="sm"
-                v-if="fileExists('visualizacao')"
-                @click="downloadFile('visualizacao', conteudo.id)" >
-                <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
-                    Baixar conteúdo
-                </q-tooltip>
-            </q-btn-->
-            <q-btn
-                class="bg-grey-10"
-                text-color="white"
+            <q-btn v-if="conteudo.arquivos && conteudo.arquivos['guias-pedagogicos']"
+                target="__blank"
+                size="md"
+                outline
+                type="a"
+                label="Baixar guia pedagógico"
                 icon="description"
-                size="xs"
-                v-if="fileExists('guias-pedagogicos')" 
-                @click="downloadFile('guias-pedagogicos', conteudo.id)">
-                <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
-                    Baixar guia pedagógico
-                </q-tooltip>
+                :href="conteudo.arquivos['guias-pedagogicos'].url"
+                :download="conteudo.arquivos['guias-pedagogicos'].url">
+            </q-btn>
+            <q-btn size="md" href="#"
+                label="Compartilhar" icon="share"
+                outline
+                @click.prevent="show = !show" >
+                
+            </q-btn>
+            
+            <ThumbsMenu></ThumbsMenu>
+            <q-btn v-if="conteudo.arquivos && conteudo.arquivos['visualizacao']"
+                target="__blank"
+                size="md"
+                outline
+                type="a"
+                label="Baixar Conteúdo"
+                icon="download"
+                :href="conteudo.arquivos['visualizacao'].url"
+                :download="conteudo.arquivos['visualizacao'].url"
+                >
             </q-btn>
         </div>
         <div class="q-mt-md" v-if="show">
@@ -72,7 +53,8 @@
     </div>
 </template>
 
-<script>
+<script>// @ts-nocheck
+
 import {mapState} from "vuex";
 import { Dialog } from "quasar";
 import { DialogShare, ThumbsMenu } from "@components/shared";
@@ -126,19 +108,15 @@ export default {
                 </iframe>
             `;
             
-        },
-        fileExists(path) {
-            let files = this.conteudo ? this.conteudo.arquivos : null;
-            
-            if(path && files != null){
-                return files[`${path}`].hasOwnProperty('url');
-            }
-            return false
         }
+          
     },
 }
 </script>
 
-<style>
-
+<style scoped>
+a{
+    text-decoration: none;
+}
 </style>
+

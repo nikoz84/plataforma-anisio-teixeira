@@ -15,8 +15,10 @@ import TipoForm from './TipoForm';
 import UserForm from './UserForm';
 import SliderForm from './SliderForm';
 import UniversidadesForm from './UniversidadesForm';
+import PlayListForm from './PlayListForm';
 
 export {
+    PlayListForm,
     AplicativoForm,
     CanalForm,
     CategoryAplicativoForm,

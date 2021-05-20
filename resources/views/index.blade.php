@@ -35,11 +35,9 @@
         <meta name="msapplication-TileColor" content="#08275e">
         <meta name="theme-color" content="#08275e">
         <!--  rel="preload" as="style" onload="this.rel='stylesheet'" async -->
-        <link rel="stylesheet" href="/css/app.css" async >
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" crossorigin="anonymous" async>
-        <noscript>
-            <link rel="stylesheet" href="/css/app.css"/>
-        </noscript>
+        <link rel="stylesheet" href="{{asset("/css/app.min.css")}}" async >
+        <!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" crossorigin="anonymous" async-->
+        
     </head>
     <body>
         <noscript>
@@ -47,16 +45,24 @@
             por favor, habilite o javascript no navegador.
         </noscript>
         
-        <div id="app">
-            <main-app></main-app>
-        </div>
+        <div id="app"></div>
         
+        <div id="vlibras" vw class="enabled">
+            <div vw-access-button class="active"></div>
+            <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+            </div>
+        </div>
         @if (config('app.env') === 'local')
-        <script async defer src="{{ asset('/js/app.js') }}"></script>
+        <script async defer src="{{ mix('/js/app.js') }}"></script>
         @elseif (config('app.env') === 'production')
-        <script async defer src="{{ asset('/js/manifest.js') }}"></script>
-        <script async defer src="{{ asset('/js/js/vendor.js') }}"></script>
-        <script async defer src="{{ asset('/js/js/app.js')}}"></script>
+        <script async defer src="{{ mix('/js/manifest.js') }}"></script>
+        <script async defer src="{{ mix('/js/vendor.js') }}"></script>
+        <script async defer src="{{ mix('/js/app.js')}}"></script>
         @endif
+        <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+        <script>
+            new window.VLibras.Widget('https://vlibras.gov.br/app');
+        </script>
     </body>
 </html>

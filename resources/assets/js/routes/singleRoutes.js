@@ -1,31 +1,41 @@
 // @ts-nocheck
+import Default from "@layout/Default";
+import Home from "@pages/Home";
+
 
 const homeRoute = {
     path: "/",
     name: "Home",
-    component: () => import(/* webpackChunkName: "home" */ "@pages/Home.vue"),
+    components: { default: Home, main:Home },
     meta: {
       requiresAuth: false,
-      title: "Inicio"
+      title: "Inicio",
+      layout: Default
     }
 };
   
 const galeriaRoute = {
     path: "/galeria",
     name: "Galeria",
-    component: () => import(/* webpackChunkName: "galeria" */ "@components/home/Gallery.vue"),
+    components: {
+      main: () => import(/* webpackChunkName: "sobre" */ "@components/home/Gallery.vue")
+    },
     meta: {
       requiresAuth: false,
-      title: "Galeria de Imagens"
+      title: "Galeria de Imagens",
+      layout: Default
     }
 };
 const sobreRoute = {
     path: "/sobre",
     name: "Sobre",
-    component: () => import(/* webpackChunkName: "sobre" */ "@pages/Sobre.vue"),
+    components:{
+      main : () => import(/* webpackChunkName: "sobre" */ "@pages/Sobre.vue")
+    },
     meta: {
       requiresAuth: false,
-      title: "Sobre a Plataforma"
+      title: "Sobre a Plataforma",
+      layout: Default 
     }
 };
 const praticasRoute = {
@@ -34,35 +44,39 @@ const praticasRoute = {
     component: () => import(/* webpackChunkName: "praticas" */ "@pages/PraticasPedagogicas.vue"),
     meta: {
       requiresAuth: false,
-      title: "Pŕaticas pedagógicas"
+      title: "Pŕaticas pedagógicas",
+      layout: Default
     }
 };
 const ipesRoute = {
   path: "/ipes",
   name: "IpesFaculdades",
-  component: () => import(/* webpackChunkName: "ipes" */ "@pages/Ipes.vue"),
+  components: { main: () => import(/* webpackChunkName: "ipes" */ "@pages/Ipes.vue")},
   meta: {
       requiresAuth: false,
-      title: "Faculdades da Bahia"
+      title: "Faculdades da Bahia",
+      layout: Default
     }
 };
 const rotinasRoute = {
   path: "/rotinas-de-estudo/:nivel?/:semana?",
   name: "RotinasEstudo",
-  component: () => import(/* webpackChunkName: "rotinas" */ "@pages/RotinasDeEstudo.vue"),
+  components: { main : () => import(/* webpackChunkName: "rotinas" */ "@pages/RotinasDeEstudo.vue")},
   meta: {
       requiresAuth: false,
-      title: "Rotinas de Estudo"
+      title: "Rotinas de Estudo",
+      layout: Default
     }
 };
 
 const advancedSearch = {
   path: "/busca-avancada",
   name: "BuscaAvancada",
-  component: () => import(/* webpackChunkName: "busca" */ "@pages/AdvancedSearch.vue"),
+  components: { main: () => import(/* webpackChunkName: "busca" */ "@pages/AdvancedSearch.vue")},
   meta: {
       requiresAuth: false,
-      title: "Busca Avançada"
+      title: "Busca Avançada",
+      layout: Default
     }
 };
 

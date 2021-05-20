@@ -28,11 +28,13 @@
     </div>
     <div v-if="rotinas && !mobile">
       <div class="row justify-start q-gutter-md" v-for="(rotina, i) in rotinas" :key="i">
-        <div class="col-sm-2" v-for="(atividade, d) in rotina" :key="d">
+        <div class="col-sm-2" v-for="(atividade, d) in rotina" :key="`at-${d}`">
           <q-chip class="q-ml-none" square outline color="grey-7" icon="event" v-if="i == 0">
             <i>{{ getDay(d) }}</i>
           </q-chip>
-          <q-btn no-caps align="left" type="a" target="__blank" :href="goTo(toJson(atividade).link)" :class="coresClasses[i]">
+          <q-btn no-caps align="left" type="a" target="__blank" 
+            :href="goTo(toJson(atividade).link)" 
+            :class="coresClasses[i]">
             <div class="text-left">  
               {{ toJson(atividade).descricao }}
               <q-space class="q-mt-md"></q-space>
@@ -51,7 +53,9 @@
 
 
               <div class="col-sm-2" v-for="(atividade, j) in rotinas" :key="j" >
-                <q-btn no-caps align="left" type="a" target="__blank" :href="goTo('softwarecommunity.company')" :class="coresClasses[d]">
+                <q-btn no-caps align="left" type="a" target="__blank" 
+                  :href="goTo(toJson(atividade[dia]).link)" 
+                  :class="coresClasses[d]">
                   <div class="text-left">  
                     {{ toJson(atividade[dia]).descricao }}
                       <q-space class="q-mt-md"></q-space>
@@ -159,6 +163,9 @@ export default {
         }
       },
       goTo(url) {
+        if(!url){
+          return false;
+        }
         const host = window.location.host;
         const protocol = window.location.protocol;
         const parser = document.createElement('a');

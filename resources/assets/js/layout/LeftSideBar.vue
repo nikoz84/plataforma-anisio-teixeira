@@ -45,10 +45,11 @@
       
     </q-list>
     
-    <!-- ADMINISTRAÇÃO-->
+    <!-- ADMINISTRAÇÃO 
     <AdminLeftSideBar v-if="$route.name == 'admin'"></AdminLeftSideBar>
+    -->
     <!-- CANAIS-->
-    <q-list v-else-if="links.length > 0">
+    <q-list v-if="links.length > 0">
       <q-item-label class="bg-grey-4" header>
         <strong class="grey-10">
           Canais
@@ -72,7 +73,7 @@
         <q-separator />
       </div>
       <q-item
-        :to="{ name: 'RotinasEstudo' }"
+        :to="{path: '/rotinas-de-estudo/ensino-medio/semana-1' }"
         aria-label="IR: Rotinas de estudo"
         title="IR: Rotinas de estudo"
         clickable
