@@ -25,7 +25,7 @@ import {
   } from "@forms/models";
 
 import Resumo from "@pages/Resumo.vue";
-import { Contato, Table }  from "@components/exibir";
+import { Contato }  from "@components/exibir";
 
 
 
@@ -43,7 +43,7 @@ export default {
     tipos: TipoForm,
     options: OptionsForm,
     contato: Contato,
-    listar: Table,
+    //listar: Table,
     categorias:CategoryConteudoForm,
     componentes: CurricularComponentsForm,
     componentescategorias:CurricularComponentsCategoryForm,

@@ -32,6 +32,7 @@
                 <q-input filled v-model.trim="user.name" :error="errors.name && errors.name.length > 0" 
                          label="Usuário" hint="Nome Completo" style="margin-bottom:15px;"></q-input>
                 <q-input filled v-model.trim="user.email" label="E-mail" hint="Correio eletrónico" style="margin-bottom:15px;"></q-input>
+                
                 <q-input
                   v-model="user.password"
                   filled
@@ -75,10 +76,10 @@
                         style="margin-bottom:15px;"
                         hint="Este usuário poderá criar e editar conteúdos nos seguintes canais"/>
                 <div style="margin-bottom:15px;">
-                    Genero:
+                    Gênero:
                     <q-radio v-model="user.options.sexo" val="f" label="Femenino" />
                     <q-radio v-model="user.options.sexo" val="m" label="Masculino" />
-                    <q-radio v-model="user.options.sexo" val="o" label="Outro" />
+                    <!--q-radio v-model="user.options.sexo" val="o" label="Outro" / -->
                 </div>
                 <q-input
                     style="margin-bottom:15px;"
@@ -159,7 +160,7 @@ export default {
             this.user.arquivoImagem = files[0];
         },
     async save() {
-      let id = this.$route.params.id ? `/${this.$route.params.id}` : "";
+      let url = this.$route.params.id ? `/usuarios/${this.$route.params.id}` : "/usuarios";
       let form = new FormData();
       
       form.append("user", JSON.stringify({
@@ -172,14 +173,14 @@ export default {
       
       if(this.user.arquivoImagem)
       form.append("arquivoImagem", this.user.arquivoImagem);
-      if (this.$route.params.action == "editar") {
+      if (this.$route.params.id) {
         form.append("_method", "PUT");
       }
       if (this.file) {
         form.append("file", this.file, this.file.name);
       }
       try {
-        const { data } = await axios.post(this.$route.params.slug + id, form);
+        const { data } = await axios.post(url, form);
         
         if(data.success){
           this.$router.push(`/admin/usuarios/listar`);
@@ -190,7 +191,7 @@ export default {
     },
     async getUser() {
       if (!this.$route.params.id) return;
-      let url = `${this.$route.params.slug}/${this.$route.params.id}`;
+      let url = `/usuarios/${this.$route.params.id}`;
       let resp = await axios.get(url);
       if (resp.data.success) {
         this.user = resp.data.metadata;

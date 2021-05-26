@@ -61,10 +61,10 @@ export default {
   },
   watch: {
     busca: debounce(function(val) {
-      if (val.length > 2 && val != "") {
+      if (val.length > 1 && val != "") {
         this.getTags(val);
       }
-    }, 500),
+    }, 300),
     $route(to, from) {
       this.getTag();
     }
@@ -99,6 +99,8 @@ export default {
     },
     async getTags(val) {
       if (!val) return;
+
+      
       let resp = await axios.get(`tags/search/${val}?limit=150`);
       if (resp.data.success == true) {
         this.tags = resp.data.paginator.data;
@@ -106,6 +108,7 @@ export default {
     },
     async getTag() {
       if (!this.$route.params.id) return;
+      
       let resp = await axios.get(`tags/${this.$route.params.id}`);
       if (resp.data.success) {
         this.tag = resp.data.metadata;

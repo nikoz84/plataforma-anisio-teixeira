@@ -1,8 +1,9 @@
 // @ts-nocheck
 //import { LoaderAdmin } from "@components/exibir";
 import Admin from "@layout/Admin";
-import { ListarConteudos, ListarAplicativos, ListarCanais, ListarContato, ListarOptions, ListarRoles, ListarTags } from "@components/exibir"
-import { ConteudoForm, PlayListForm, AplicativoForm, CanalForm, OptionsForm, RoleForm, TagForm } from "@forms/models";
+import { ListarConteudos, ListarAplicativos, ListarCanais, 
+    ListarContato, ListarOptions, ListarRoles, ListarTags, ListarTipos, ListarUsers } from "@components/exibir"
+import { ConteudoForm, PlayListForm, AplicativoForm, CanalForm, OptionsForm, RoleForm, TagForm, TipoForm, UserForm } from "@forms/models";
 import AdminPage from "@pages/AdminPage.vue"
 import Resumo from "@pages/Resumo.vue";
 import { Contato }  from "@components/exibir";
@@ -205,17 +206,70 @@ const adminRoutes = {
         layout: Admin
       }
     },
-    ,
     {
-      path: "tags/:id",
+      path: "tags/adicionar",
       components: { admin: TagForm },
       meta: {
         requiresAuth: true,
-        title: "Visualizar palavra-chave",
+        title: "Adicionar palavra-chave",
         layout: Admin
       }
     },
-    
+    {
+      path: "tipos/listar",
+      components: { admin: ListarTipos },
+      meta: {
+        requiresAuth: true,
+        title: "Listar tipos de conteúdos",
+        layout: Admin
+      }
+    },
+    {
+      path: "tipos/editar/:id",
+      components: { admin: TipoForm },
+      meta: {
+        requiresAuth: true,
+        title: "Editar tipo de conteúdo",
+        layout: Admin
+      }
+    },
+    {
+      path: "tipos/adicionar",
+      components: { admin: TipoForm },
+      meta: {
+        requiresAuth: true,
+        title: "Adicionar tipo de conteúdo",
+        layout: Admin
+      }
+    },
+    {
+      path: "usuarios/listar",
+      components: { admin: ListarUsers },
+      meta: {
+        requiresAuth: true,
+        title: "Listar usuários",
+        layout: Admin
+      }
+    },
+    {
+      path: "usuarios/editar/:id",
+      components: { admin: UserForm },
+      meta: {
+        requiresAuth: true,
+        title: "Editar usuário",
+        layout: Admin
+      }
+    },
+    {
+      path: "usuarios/adicionar",
+      components: { admin: UserForm },
+      meta: {
+        requiresAuth: true,
+        title: "Adicionar usuário",
+        layout: Admin
+      }
+    },
+
 
   ]
 };

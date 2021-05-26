@@ -35,7 +35,8 @@
     </div>
   </article>
 </template>
-<script>
+<script>// @ts-nocheck
+
 import { ShowErrors } from "@forms/shared";
 
 export default {
@@ -79,24 +80,18 @@ export default {
       const form = new FormData();
       form.append('name', this.tipo.name);
       form.append('options', JSON.stringify(this.tipo.options));
+      if(this.$route.params.id){
+        form.append("_method", "PUT");
+      }
       try
       {
-        if (this.$route.params.action === "editar") 
-        {
-          form.append("id", this.$route.params.id);
-          form.append("_method", "PUT");
-          let resp = await axios.post(this.$route.params.slug +"/"+ this.tipo.id, form);
+        const {data} = await axios.post(url, form);
+        if(data.success){
+          this.$router.push(`/admin/tipos/listar`);
         }
-        else
-        {
-            let resp = await axios.post(this.$route.params.slug , form);
-        }
-        this.$router.push(`/admin/tipos/listar`);
       }
       catch(ex)
       {
-        console.log("Exceção:",ex);
-        console.log("Exceção:",ex.errors);
         this.errors = ex.errors;
       }
       

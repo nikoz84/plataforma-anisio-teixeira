@@ -14,6 +14,8 @@ import ListarContato from './ListarContato';
 import ListarOptions from './ListarOptions';
 import ListarRoles from './ListarRoles';
 import ListarTags from './ListarTags';
+import ListarTipos from './ListarTipos';
+import ListarUsers from './ListarUsers';
 
 export {
     Conteudo,
@@ -21,7 +23,7 @@ export {
     ConteudoRelated,
     Aplicativo,
     Contato,
-    Table,
+    //Table,
     //LoaderAdmin,
     NotFound,
     ListarConteudos,
@@ -30,5 +32,7 @@ export {
     ListarContato,
     ListarOptions,
     ListarRoles,
-    ListarTags
+    ListarTags,
+    ListarTipos,
+    ListarUsers
 };

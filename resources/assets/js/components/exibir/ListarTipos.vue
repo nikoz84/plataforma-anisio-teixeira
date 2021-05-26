@@ -1,14 +1,14 @@
 <template>
   <div class="q-pa-md">
     <div class="col-lg-12">
-      <SearchForm slug="tags"></SearchForm>
+      <SearchForm slug="tipos"></SearchForm>
     </div>
     <div class="col-lg-12 flex flex-center q-gutter-sm">
       <!-- ADICIONAR -->
       <q-btn icon="add" 
         color="positive" 
         size="xs"
-        :to="`/admin/tags/adicionar`" 
+        :to="`/admin/tipos/adicionar`" 
         title="Adicionar novo item"
         label="adicionar item"
         />
@@ -42,10 +42,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="tag in paginator.data" :key="tag.id" :id="`item-${tag.id}`">
+          <tr v-for="tipo in paginator.data" :key="tipo.id" :id="`item-${tipo.id}`">
             <td
               class="text-center"
-              v-html="tag.name"
+              v-html="tipo.name"
             ></td>
             
             <td class="text-center" style="width:50px;">
@@ -55,18 +55,17 @@
                   color="primary"
                   title="Editar item"
                   icon="edit"
-                  v-if="tag.user_can && tag.user_can.update"
-                  :to="`/admin/tags/editar/${tag.id}`"
+                  v-if="tipo.user_can && tipo.user_can.update"
+                  :to="`/admin/tipos/editar/${tipo.id}`"
                 />
                 <q-btn
                   size="sm"
                   color="negative"
                   title="Deletar item"
-                  @click="deleteItem(`/tags/${tag.id}`, tag.id)"
+                  @click="deleteItem(`/tipos/${tipo.id}`, tipo.id)"
                   icon="delete"
-                  v-if="tag.user_can && tag.user_can.delete"
+                  v-if="tipo.user_can && tipo.user_can.delete"
                 />
-          
                 
               </q-btn-group>
             </td>
@@ -108,11 +107,11 @@ import { mapMutations, mapState } from "vuex";
 import { SemResultados } from "@components/paginator";
 
 export default {
-    name: "ListarTags",
+    name: "ListarTipos",
     components: {SearchForm, SemResultados},
     data() {
       return {
-        tags: [],
+        tipos: [],
         searchParams: new URLSearchParams({}),
       }
     },
@@ -120,15 +119,15 @@ export default {
       ...mapState(["paginator", "isLogged"])
     },
     created() {
-      this.getTags()
+      this.getTipos()
     },
     methods: {
       ...mapMutations(["SET_PAGINATOR", "SET_IS_LOADING", 'SET_DATA']),
       
-      async getTags(page = 1){
+      async getTipos(page = 1){
         this.searchParams.set('page', page)
         
-        const path =`/tags?${this.searchParams.toString()}`;
+        const path =`/tipos?${this.searchParams.toString()}`;
         
         this.$q.loading.show();
         
