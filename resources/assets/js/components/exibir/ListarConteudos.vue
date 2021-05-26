@@ -37,14 +37,7 @@
       >
       </q-pagination>
 
-      <div v-if="paginator && paginator.total == 0">
-        
-        <q-card>
-          <q-card-section class="text-center">
-            <p class="text-h6">Sem resultados</p>
-          </q-card-section>
-        </q-card>
-      </div>
+      
       
     </div>
     <div class="col-lg-12 q-mt-xs" v-if="paginator && paginator.total > 0">
@@ -77,7 +70,7 @@
             <td
               class="text-center"
             >
-              {{conteudo.canal.name}}
+              {{conteudo.canal ? conteudo.canal.name: ''}}
             </td>
             <td class="text-center" style="width:50px;">
               <q-btn-group spread>
@@ -112,6 +105,8 @@
           </tr>
         </tbody>
       </q-markup-table>
+      </div>
+      <SemResultados v-else :paginator="paginator"></SemResultados>
       <div
         class="col-lg-12 q-mt-lg"
         v-if="paginator && paginator.total > paginator.per_page"
@@ -133,17 +128,17 @@
           </q-pagination>
         </div>
       </div>
-    </div>
   </div>
 </template>
 
 <script>
 // @ts-nocheck
 import { SearchForm } from "@forms/search";
+import { SemResultados } from "@components/paginator";
 import { mapMutations, mapState } from "vuex";
 export default {
     name: "ListarConteudos",
-    components: {SearchForm},
+    components: {SearchForm, SemResultados},
     data() {
       return {
         conteudos: [],

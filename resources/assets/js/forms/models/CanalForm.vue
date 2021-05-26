@@ -145,7 +145,8 @@
        </div>
     </div>
 </template>
-<script>
+<script>// @ts-nocheck
+
 import { PasteCapture } from "@mixins/RemoveFormat";
 import {
   QInput,
@@ -159,7 +160,7 @@ import {
   QStep,
   QStepperNavigation
 } from "quasar";
-import { ShowErrors } from '@forms/shared'
+import { ShowErrors } from '@forms/shared';
 
 export default {
   name: "CanalForm",
@@ -232,9 +233,9 @@ export default {
         form.append("_method", "PUT");
       }
       try {
-        let {data} = await axios.post(`/${this.$route.params.slug}`+ id, form);
+        let {data} = await axios.post(`/canais`+ id, form);
         if(data.success){
-          this.$router.push(`/admin/${this.$route.params.slug}/listar`);
+          this.$router.push(`/admin/canais/listar`);
         }
       } catch(ex) {
         console.log(ex);

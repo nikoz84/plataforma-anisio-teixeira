@@ -1,18 +1,18 @@
 <template>
   <div class="q-pa-md">
     <div class="col-lg-12">
-      <SearchForm slug="canais"></SearchForm>
+      
     </div>
     <div class="col-lg-12 flex flex-center q-gutter-sm">
-      <!-- ADICIONAR -->
+      <!-- ADICIONAR 
       <q-btn icon="add" 
         color="positive" 
         size="xs"
-        :to="`/admin/canais/adicionar`" 
-        title="Adicionar novo item"
-        label="adicionar item"
+        :to="`/admin/contato/responder`" 
+        title="Responder"
+        label="Responder"
         />
-        
+        -->
         <q-space></q-space>
         <!-- PAGINAÇÃO -->
       <q-pagination
@@ -20,7 +20,7 @@
         v-model="paginator.current_page"
         :max="paginator.last_page"
         :input="true"
-        @input="getCanais"
+        @input="getOptions"
       >
       </q-pagination>
 
@@ -38,43 +38,34 @@
         <thead>
           <tr>
             <th class="text-center">Nome</th>
-            <th class="text-center">Ações</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="canal in paginator.data" :key="canal.id" :id="`item-${canal.id}`">
+          <tr v-for="option in paginator.data" :key="option.id" :id="`item-${option.id}`">
+            
             <td
               class="text-center"
-              v-html="canal.name"
+              v-html="option.name"
             ></td>
-            
             <td class="text-center" style="width:50px;">
               <q-btn-group spread>
                 <q-btn
                   size="sm"
                   color="primary"
-                  title="Editar item"
+                  title="Responder mensagem"
                   icon="edit"
-                  v-if="canal.user_can && canal.user_can.update"
-                  :to="`/admin/canais/editar/${canal.id}`"
+                  v-if="option.user_can && option.user_can.update"
+                  :to="`/admin/options/editar/${option.id}`"
                 />
-                <q-btn
+                <!--q-btn
                   size="sm"
                   color="negative"
                   title="Deletar item"
-                  @click="deleteItem(`/canais/${canal.id}`, canal.id)"
+                  @click="deleteItem(`/options/${option.id}`, option.id)"
                   icon="delete"
-                  v-if="canal.user_can && canal.user_can.delete"
-                />
-                <q-btn
-                  size="sm"
-                  color="primary"
-                  title="Visualizar"
-                  icon="visibility"
-                  type="a"
-                  target="__blank"
-                  :to="`/${canal.slug}/`"
-                />
+                  v-if="option.user_can && option.user_can.delete"
+                / -->
+                
                 
               </q-btn-group>
             </td>
@@ -101,7 +92,7 @@
             :max="paginator.last_page"
             :max-pages="10"
             boundary-numbers
-            @input="getCanais"
+            @input="getContatos"
           >
           </q-pagination>
         </div>
@@ -111,16 +102,15 @@
 
 <script>
 // @ts-nocheck
-import { SearchForm } from "@forms/search";
 import { mapMutations, mapState } from "vuex";
 import { SemResultados } from "@components/paginator";
 
 export default {
-    name: "ListarCanais",
-    components: {SearchForm, SemResultados},
+    name: "ListarOptions",
+    components: {SemResultados},
     data() {
       return {
-        canais: [],
+        options: [],
         searchParams: new URLSearchParams({}),
       }
     },
@@ -128,15 +118,15 @@ export default {
       ...mapState(["paginator", "isLogged"])
     },
     created() {
-      this.getCanais()
+      this.getOptions()
     },
     methods: {
       ...mapMutations(["SET_PAGINATOR", "SET_IS_LOADING", 'SET_DATA']),
       
-      async getCanais(page = 1){
+      async getOptions(page = 1){
         this.searchParams.set('page', page)
         
-        const path =`/canais?${this.searchParams.toString()}`;
+        const path =`/options?${this.searchParams.toString()}`;
         
         this.$q.loading.show();
         

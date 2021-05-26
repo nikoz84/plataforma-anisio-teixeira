@@ -7,9 +7,9 @@
                 <!-- NOME -->
                 
                 <q-card-section>
-                    <ShowErrors :errors="errors.name"></ShowErrors>
                     <q-input filled v-model="role.name" :error="errors.name && errors.name.length > 0"
                          label="Nome da função do usuário" />
+                    <ShowErrors :errors="errors.name"></ShowErrors>
                 </q-card-section>
                 <q-card-section>
                     <q-btn @click.prevent="save()" class="full-width q-mt-md" label="Salvar" type="submit" color="primary"/>
@@ -18,7 +18,8 @@
         </div>
     </div>
 </template>
-<script>
+<script>// @ts-nocheck
+
 import { QInput } from 'quasar';
 import { ShowErrors } from "@forms/shared";
 
@@ -37,9 +38,6 @@ export default {
     this.getRole()
   },
   methods:{
-        send(){
-            console.log("hola")
-        },
         async getRole(){
             if (!this.$route.params.id) return; 
             const { data } = await axios.get(`/roles/${this.$route.params.id}`);
@@ -48,27 +46,18 @@ export default {
         },
         async save()
         {
-            const url = this.$route.params.id ? `/tipos/${this.$route.params.id}` : '/tipos';
+            const url = this.$route.params.id ? `/roles/${this.$route.params.id}` : '/roles';
             const method = this.$route.params.id ? 'PUT' : 'POST';
             const form = new FormData();
             form.append("_method", method);
             form.append('name', this.role.name);
-            try
-            {
-                if (this.$route.params.action === "editar") 
-                {
-                    let resp = await axios.post(this.$route.params.slug +"/"+ this.role.id, form);
+            try {
+            const {data} = await axios.post(url, form);
+                if(data.success){
+                    this.$router.push(`/admin/roles/listar`);
                 }
-                else
-                {
-                    let resp = await axios.post(this.$route.params.slug , form);
-                }
-                this.$router.push(`/admin/roles/listar`);
-            }
-            catch(ex)
-            {
-                console.log("Exceção:",ex);
-                console.log("Exceção:",ex.errors);
+            
+            } catch(ex) {
                 this.errors = ex.errors;
             }
         }

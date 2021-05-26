@@ -258,7 +258,7 @@ Route::group(
 
         /** DENUNCIAS */
         Route::group(['prefix' => 'contato', 'as' => 'contato.'], function () {
-            Route::get('/', [ContatoController::class, 'index'])->name('faleconosco');
+            Route::get('/', [ContatoController::class, 'index'])->name('listar.contatos');
             Route::get('/{id}', [ContatoController::class, 'getById'])->name('x.id');
             Route::delete('/{id}', [ContatoController::class, 'delete'])->name('deletar');
         });

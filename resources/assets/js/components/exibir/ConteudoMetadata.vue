@@ -90,6 +90,11 @@
                 <strong>Licença: {{ conteudo.license.name }}</strong>
                 <p class="q-mt-lg">{{conteudo.license.description}}</p>
                 <q-separator class="q-my-md"></q-separator>
+                <!--p class="q-mt-lg text-primary" >
+                    Todos os conteúdos postados em esse site são responsabilidade 
+                de cada <strong>publicador</strong> ou <strong>projeto</strong>
+                </p>
+                <q-separator-- class="q-my-md"></q-separator-->
             </div>
         </q-card-section>
     </div>      

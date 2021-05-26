@@ -119,7 +119,7 @@ export default {
   },
   methods: {
     async getData() {
-      let url = `${this.$route.params.slug}?option=${this.item.value}`;
+      let url = `resumo?option=${this.item.value}`;
       let resp = await axios.get(url);
       console.log(resp)
       if (resp.data.success) {

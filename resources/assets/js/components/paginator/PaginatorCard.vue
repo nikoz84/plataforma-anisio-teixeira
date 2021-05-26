@@ -11,7 +11,7 @@
         loading="lazy"
         width="100%"
         height="auto"
-        :style="`height:230px;min-height: 230px; width: 100%;border-bottom: solid 2px #264b8f;`"
+        :style="`height:230px;min-height: 230px; width: 100%;border-bottom: solid 5px #264b8f;`"
         placeholder-src="/img/fundo-padrao.svg"
       >
       </q-img>
@@ -19,17 +19,8 @@
         <h6 @click="goTo(item)" class="text-h6 q-mt-md cursor-pointer" :title="`Título: ${title}`" v-html="title"></h6>
       </q-card-section>
       <q-card-actions class="flex justify-end absolute-bottom">
-        <!-- q-btn
-            @click="$router.push(item.url_exibir)"
-            icon="visibility"
-            title="Visualizar recurso"
-          />
-        <q-btn
-            v-ripple 
-            @click="showDialog(item)"
-            icon="toc"
-            title="Mais informações"
-          / -->
+        
+        
       </q-card-actions>
     </q-card>
   
@@ -80,9 +71,6 @@ export default {
           params: { slug: item.slug, id: item.id, action: 'exibir' }
         })
       }
-    },
-    showDialog(item){
-      console.log(item)
     }
   }
 };

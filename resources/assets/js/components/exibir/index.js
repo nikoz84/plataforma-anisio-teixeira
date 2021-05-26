@@ -8,8 +8,12 @@ import Table from './Table';
 import NotFound from './NotFound';
 import LoaderAdmin from './LoaderAdmin';
 import ListarConteudos from './ListarConteudos';
-import ListarCanais from './ListarCanais';
 import ListarAplicativos from './ListarAplicativos';
+import ListarCanais from './ListarCanais';
+import ListarContato from './ListarContato';
+import ListarOptions from './ListarOptions';
+import ListarRoles from './ListarRoles';
+import ListarTags from './ListarTags';
 
 export {
     Conteudo,
@@ -22,5 +26,9 @@ export {
     NotFound,
     ListarConteudos,
     ListarCanais,
-    ListarAplicativos
+    ListarAplicativos,
+    ListarContato,
+    ListarOptions,
+    ListarRoles,
+    ListarTags
 };

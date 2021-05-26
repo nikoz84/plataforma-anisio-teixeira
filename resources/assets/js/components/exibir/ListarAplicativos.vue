@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md">
     <div class="col-lg-12">
-      <SearchForm slug="conteudos"></SearchForm>
+      <SearchForm slug="aplicativos"></SearchForm>
     </div>
     <div class="col-lg-12 flex flex-center q-gutter-sm">
       <!-- ADICIONAR -->
@@ -24,15 +24,7 @@
       >
       </q-pagination>
 
-      <div v-if="paginator && paginator.total == 0">
-        
-        <q-card>
-          <q-card-section class="text-center">
-            <p class="text-h6">Sem resultados</p>
-          </q-card-section>
-        </q-card>
-      </div>
-      
+           
     </div>
     <div class="col-lg-12 q-mt-xs" v-if="paginator && paginator.total > 0">
       <!-- LISTA -->
@@ -64,7 +56,7 @@
             <td
               class="text-center"
             >
-              {{aplicativo.canal.name}}
+              {{aplicativo.canal ? aplicativo.canal.name : null}}
             </td>
             <td class="text-center" style="width:50px;">
               <q-btn-group spread>
@@ -99,6 +91,10 @@
           </tr>
         </tbody>
       </q-markup-table>
+
+      </div>
+      <SemResultados v-else :paginator="paginator"></SemResultados>
+      
       <div
         class="col-lg-12 q-mt-lg"
         v-if="paginator && paginator.total > paginator.per_page"
@@ -120,17 +116,17 @@
           </q-pagination>
         </div>
       </div>
-    </div>
   </div>
 </template>
 
 <script>
 // @ts-nocheck
 import { SearchForm } from "@forms/search";
+import { SemResultados } from "@components/paginator";
 import { mapMutations, mapState } from "vuex";
 export default {
     name: "ListarConteudos",
-    components: {SearchForm},
+    components: {SearchForm, SemResultados},
     data() {
       return {
         aplicativos: [],

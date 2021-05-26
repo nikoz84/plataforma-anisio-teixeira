@@ -1,9 +1,12 @@
 // @ts-nocheck
 //import { LoaderAdmin } from "@components/exibir";
 import Admin from "@layout/Admin";
-import { ListarConteudos, ListarAplicativos, ListarCanais } from "@components/exibir"
-import { ConteudoForm, PlayListForm, AplicativoForm } from "@forms/models";
+import { ListarConteudos, ListarAplicativos, ListarCanais, ListarContato, ListarOptions, ListarRoles, ListarTags } from "@components/exibir"
+import { ConteudoForm, PlayListForm, AplicativoForm, CanalForm, OptionsForm, RoleForm, TagForm } from "@forms/models";
 import AdminPage from "@pages/AdminPage.vue"
+import Resumo from "@pages/Resumo.vue";
+import { Contato }  from "@components/exibir";
+
 
 const adminRoutes = {
   path: "/admin",
@@ -16,6 +19,17 @@ const adminRoutes = {
     layout : Admin
   },
   children: [
+    {
+      path: "resumo/listar",
+      components: {  
+        admin: Resumo
+      },
+      meta: {
+        requiresAuth: true,
+        title: "Estatisticas",
+        layout: Admin
+      }
+    },
     {
       path: "conteudos/listar",
       components: {  
@@ -72,6 +86,7 @@ const adminRoutes = {
         layout: Admin
       }
     },
+    /*
     {
       path: "playlist/listar",
       components: { admin: PlayListForm },
@@ -80,24 +95,129 @@ const adminRoutes = {
         title: "Adicionar Conteúdo",
         layout: Admin
       }
-    }
-
-  ]
-  /*
-  children: [
+    },*/
     {
-      path: ":slug/:action/:id?",
-      name: "admin",
-      components: {
-        default: LoaderAdmin,
-        admin: LoaderAdmin
-      },
+      path: "canais/listar",
+      components: { admin: ListarCanais },
       meta: {
         requiresAuth: true,
-        title: "Administração"
+        title: "Listar Canais",
+        layout: Admin
       }
-    }
-  ]*/
+    },
+    {
+      path: "canais/adicionar",
+      components: { admin: CanalForm },
+      meta: {
+        requiresAuth: true,
+        title: "Adicionar Canal",
+        layout: Admin
+      }
+    },
+    {
+      path: "canais/editar/:id",
+      components: { admin: CanalForm },
+      meta: {
+        requiresAuth: true,
+        title: "Editar Canal",
+        layout: Admin
+      }
+    },
+    {
+      path: "contato/listar",
+      components: { admin: ListarContato },
+      meta: {
+        requiresAuth: true,
+        title: "Listar faleconosco",
+        layout: Admin
+      }
+    },
+    {
+      path: "contato/responder/:id",
+      components: { admin: Contato },
+      meta: {
+        requiresAuth: true,
+        title: "Responder faleconosco",
+        layout: Admin
+      }
+    },
+    ,
+    {
+      path: "options/listar",
+      components: { admin: ListarOptions },
+      meta: {
+        requiresAuth: true,
+        title: "Listar opções do sistema",
+        layout: Admin
+      }
+    },
+    {
+      path: "options/editar/:id",
+      components: { admin: OptionsForm },
+      meta: {
+        requiresAuth: true,
+        title: "Opçao para editar",
+        layout: Admin
+      }
+    },
+    {
+      path: "roles/listar",
+      components: { admin: ListarRoles },
+      meta: {
+        requiresAuth: true,
+        title: "Listar tipos de usuários",
+        layout: Admin
+      }
+    },
+    {
+      path: "roles/editar/:id",
+      components: { admin: RoleForm },
+      meta: {
+        requiresAuth: true,
+        title: "Editar Role",
+        layout: Admin
+      }
+    },
+    {
+      path: "roles/adicionar",
+      components: { admin: RoleForm },
+      meta: {
+        requiresAuth: true,
+        title: "Adicionar Role",
+        layout: Admin
+      }
+    },
+    {
+      path: "tags/listar",
+      components: { admin: ListarTags },
+      meta: {
+        requiresAuth: true,
+        title: "Listar palavras-chave",
+        layout: Admin
+      }
+    },
+    {
+      path: "tags/editar/:id",
+      components: { admin: TagForm },
+      meta: {
+        requiresAuth: true,
+        title: "Editar palavras-chave",
+        layout: Admin
+      }
+    },
+    ,
+    {
+      path: "tags/:id",
+      components: { admin: TagForm },
+      meta: {
+        requiresAuth: true,
+        title: "Visualizar palavra-chave",
+        layout: Admin
+      }
+    },
+    
+
+  ]
 };
 
 export default adminRoutes;

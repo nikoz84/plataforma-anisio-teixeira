@@ -39,7 +39,8 @@
         </div>
     </div>
 </template>
-<script>
+<script>// @ts-nocheck
+
 import { QInput, QChip, QCard, QCardSection, date } from "quasar";
 import { debounce } from "lodash";
 import { ShowErrors } from "@forms/shared";
@@ -74,18 +75,17 @@ export default {
   methods: {
     async save() 
     {
-      let id = this.$route.params.id ? `/${this.$route.params.id}` : "";
+      let url = this.$route.params.id ? `/tags/${this.$route.params.id}` : "/tags";
       let form = new FormData();
       form.append("name", this.tag.name.toLowerCase());
 
-      if (this.$route.params.action == "editar") 
+      if (this.$route.params.id) 
       {
-        form.append("id", this.$route.params.id);
         form.append("_method", "PUT");
       }
       try 
       {
-        let response = await axios.post(this.$route.params.slug + id, form);
+        let response = await axios.post(url, form);
         this.$router.push(`/admin/tags/listar`);
       } 
       catch (response) 

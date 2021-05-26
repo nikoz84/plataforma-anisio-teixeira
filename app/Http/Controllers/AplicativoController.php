@@ -154,9 +154,11 @@ class AplicativoController extends ApiController
     {
         $limit = $request->query('limit', 15);
         $search = "%{$termo}%";
-        //$aplicativos = Aplicativo::select(['id', 'name'])->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])->paginate($limit);
-        $query =  Aplicativo::select(['id', 'name'])->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search]);
-        $aplicativos = CachingModelObjects::search($query, $termo, $limit);
+        $aplicativos = Aplicativo::select(['id', 'name'])
+            ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
+            ->with(['category', 'canal'])
+            ->paginate($limit);
+        
         $aplicativos->setPath("/aplicativos/search/{$termo}?limit={$limit}");
 
         return $this->showAsPaginator(

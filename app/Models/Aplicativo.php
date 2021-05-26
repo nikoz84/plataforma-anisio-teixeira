@@ -73,8 +73,7 @@ class Aplicativo extends Model
         Canal::$without_appends = true;
 
         return $this->belongsTo(Canal::class, 'canal_id')
-            ->select(['id', 'name', 'slug', 'options->color as color'])
-            ->where('id', 9);
+            ->select(['id', 'name', 'slug', 'options->color as color']);
     }
     public function user()
     {

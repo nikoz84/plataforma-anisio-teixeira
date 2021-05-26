@@ -3,7 +3,8 @@
     <div :is="componentForm" :item="item"></div>
   </article>
 </template>
-<script>
+<script>// @ts-nocheck
+
 
 export default {
   name: "OptionsForm",

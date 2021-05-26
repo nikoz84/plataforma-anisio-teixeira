@@ -1,14 +1,14 @@
 <template>
   <div class="q-pa-md">
     <div class="col-lg-12">
-      <SearchForm slug="canais"></SearchForm>
+      <SearchForm slug="tags"></SearchForm>
     </div>
     <div class="col-lg-12 flex flex-center q-gutter-sm">
       <!-- ADICIONAR -->
       <q-btn icon="add" 
         color="positive" 
         size="xs"
-        :to="`/admin/canais/adicionar`" 
+        :to="`/admin/tags/adicionar`" 
         title="Adicionar novo item"
         label="adicionar item"
         />
@@ -20,7 +20,7 @@
         v-model="paginator.current_page"
         :max="paginator.last_page"
         :input="true"
-        @input="getCanais"
+        @input="getTags"
       >
       </q-pagination>
 
@@ -42,10 +42,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="canal in paginator.data" :key="canal.id" :id="`item-${canal.id}`">
+          <tr v-for="tag in paginator.data" :key="tag.id" :id="`item-${tag.id}`">
             <td
               class="text-center"
-              v-html="canal.name"
+              v-html="tag.name"
             ></td>
             
             <td class="text-center" style="width:50px;">
@@ -55,25 +55,23 @@
                   color="primary"
                   title="Editar item"
                   icon="edit"
-                  v-if="canal.user_can && canal.user_can.update"
-                  :to="`/admin/canais/editar/${canal.id}`"
+                  v-if="tag.user_can && tag.user_can.update"
+                  :to="`/admin/tags/editar/${tag.id}`"
                 />
                 <q-btn
                   size="sm"
                   color="negative"
                   title="Deletar item"
-                  @click="deleteItem(`/canais/${canal.id}`, canal.id)"
+                  @click="deleteItem(`/tags/${tag.id}`, tag.id)"
                   icon="delete"
-                  v-if="canal.user_can && canal.user_can.delete"
+                  v-if="tag.user_can && tag.user_can.delete"
                 />
                 <q-btn
                   size="sm"
                   color="primary"
                   title="Visualizar"
                   icon="visibility"
-                  type="a"
-                  target="__blank"
-                  :to="`/${canal.slug}/`"
+                  :to="`/admin/tags/${tag.id}`"
                 />
                 
               </q-btn-group>
@@ -101,7 +99,7 @@
             :max="paginator.last_page"
             :max-pages="10"
             boundary-numbers
-            @input="getCanais"
+            @input="getTags"
           >
           </q-pagination>
         </div>
@@ -116,11 +114,11 @@ import { mapMutations, mapState } from "vuex";
 import { SemResultados } from "@components/paginator";
 
 export default {
-    name: "ListarCanais",
+    name: "ListarTags",
     components: {SearchForm, SemResultados},
     data() {
       return {
-        canais: [],
+        tags: [],
         searchParams: new URLSearchParams({}),
       }
     },
@@ -128,15 +126,15 @@ export default {
       ...mapState(["paginator", "isLogged"])
     },
     created() {
-      this.getCanais()
+      this.getTags()
     },
     methods: {
       ...mapMutations(["SET_PAGINATOR", "SET_IS_LOADING", 'SET_DATA']),
       
-      async getCanais(page = 1){
+      async getTags(page = 1){
         this.searchParams.set('page', page)
         
-        const path =`/canais?${this.searchParams.toString()}`;
+        const path =`/tags?${this.searchParams.toString()}`;
         
         this.$q.loading.show();
         

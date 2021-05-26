@@ -90,12 +90,6 @@ class RoleController extends ApiController
      */
     public function delete($id)
     {
-        $validator = Validator::make($this->request->all(), [
-            'delete_confirmation' => ['required', new \App\Rules\ValidBoolean]
-        ]);
-        if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível deletar.", 201);
-        }
    
         $role = $this->role::find($id);
         

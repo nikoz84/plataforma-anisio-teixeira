@@ -45,6 +45,9 @@ export default {
       contato: {}
     };
   },
+  beforeEnter: (to, from, next) => {
+    console.log(to)
+  },
   mounted() {
     this.getContato();
   },

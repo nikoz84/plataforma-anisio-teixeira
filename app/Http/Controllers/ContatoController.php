@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class ContatoController extends ApiController
 {
@@ -42,11 +43,11 @@ class ContatoController extends ApiController
     public function configRules()
     {
         return [
-            'name' => 'required|min:5',
+            'name' => 'required|min:5|max:140',
             'email' => 'required|email',
             'url' => 'required',
-            'subject' => 'required',
-            'message' => 'required|min:50|max:300',
+            'subject' => 'required|min:20|max:200',
+            'message' => 'required|min:50|max:400',
             'recaptcha' => ['required', new \App\Rules\ValidRecaptcha],
         ];
     }
@@ -108,14 +109,9 @@ class ContatoController extends ApiController
     public function delete($id)
     {
 
-        $validator = Validator::make($this->request->all(), [
-            'delete_confirmation' => ['required', new \App\Rules\ValidBoolean]
-        ]);
-        if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível deletar a licença", 422);
-        }
-
         $contato = $this->contato::find($id);
+
+        $this->authorize('delete', $contato);
 
         if (!$contato->delete()) {
             return $this->errorResponse([], "Não foi possível apagar", 422);
