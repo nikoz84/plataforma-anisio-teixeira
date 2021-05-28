@@ -20,7 +20,7 @@
         v-model="paginator.current_page"
         :max="paginator.last_page"
         :input="true"
-        @input="getTags"
+        @input="getTipos"
       >
       </q-pagination>
 
@@ -92,7 +92,7 @@
             :max="paginator.last_page"
             :max-pages="10"
             boundary-numbers
-            @input="getTags"
+            @input="getTipos"
           >
           </q-pagination>
         </div>
