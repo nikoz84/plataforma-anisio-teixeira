@@ -4,9 +4,11 @@ use App\Http\Controllers\RedirectRoutesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ConteudoController;
 use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\UserController;
 use App\Http\Controllers\Web\CanalController;
+
 /*
 Route::get('/email', function (Request $request) {
     return new App\Mail\SendMail($request);
@@ -55,7 +57,7 @@ Route::get('/conteudos/conteudos-digitais/download/{id}', [
     RedirectRoutesController::class, 'redirectDownload'
 ]);
 
-Route::get('/incorporar-conteudo/{id}', 'ConteudoController@incorporarConteudo');
+Route::get('/incorporar-conteudo/{id}', [ConteudoController::class, 'incorporarConteudo']);
 
 //Route::get('/teste-ffmpeg/{id}', 'FileController@ffmpegTeste');
 

@@ -240,24 +240,30 @@ class ConteudoController extends ApiController
      */
     public function incorporarConteudo($id)
     {
+        
         $conteudo = Conteudo::findOrFail($id);
-        $arquivos = $conteudo->getAttribute('arquivos');
+        
+        $arquivos = collect($conteudo->getAttribute('arquivos'));
+
         $download = null;
         $formato = null;
         $mega_bytes = null;
         $mime_type = null;
+        $download_file = collect($arquivos->get('download'));
+        $visualiza_file = collect($arquivos->get('visualizacao'));
 
-        if (isset($arquivos['download']->url)) {
-            $download = $arquivos['download']->url;
-            $formato = $arquivos['download']->extension;
-            $mega_bytes = number_format($arquivos['download']->size / 1024, 2, ',', '.');
-            $mime_type = $arquivos['download']->mime_type;
-        } elseif (isset($arquivos['visualizacao']->url)) {
-            $download = $arquivos['visualizacao']->url;
-            $formato = $arquivos['visualizacao']->extension;
-            $mega_bytes = number_format($arquivos['visualizacao']->size / 1024, 2, ',', '.');
-            $mime_type = $arquivos['visualizacao']->mime_type;
+        if ($download_file->isNotEmpty()) {
+            $download = $download_file->get('url');
+            $formato = $download_file->get('extension');
+            $mega_bytes = number_format($download_file->get('size') / 1024, 2, ',', '.');
+            $mime_type = $download_file->get('mime_type');
+        } elseif ($visualiza_file->isNotEmpty()) {
+            $download = $visualiza_file->get('url');
+            $formato = $visualiza_file->get('extension');
+            $mega_bytes = number_format($visualiza_file->get('size') / 1024, 2, ',', '.');
+            $mime_type = $visualiza_file->get('mime_type');
         }
+        
         return view(
             'incorporar.index',
             compact('download', 'formato', 'mega_bytes', 'mime_type', 'conteudo')
