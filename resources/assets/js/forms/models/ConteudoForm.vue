@@ -479,7 +479,7 @@ export default {
       const form = new FormData();
       
       form.append('conteudo', JSON.stringify({
-          category_id: this.conteudo.category_id,
+          category_id: this.conteudo.category_id ? this.conteudo.category_id : null,
           title: this.conteudo.title,
           tipo_id: this.conteudo.tipo_id,
           canal_id: this.conteudo.canal_id,

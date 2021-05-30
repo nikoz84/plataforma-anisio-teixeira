@@ -56,7 +56,7 @@ class ConteudoFormRequest extends FormRequest
         $data->put('user_id', Auth::user()->id);
         $data->put('qt_downloads', Conteudo::INIT_COUNT);
         $data->put('qt_access', Conteudo::INIT_COUNT);
-        
+        //dd($data);
         $data->forget('conteudo');
 
         $this->merge($data->toArray());
