@@ -88,7 +88,7 @@ class ConteudoFormRequest extends FormRequest
             'download' => ["sometimes", "file", new \App\Rules\ValidExtensions($this->get('tipo_id'))],
             'guias_pedagogicos' => ["sometimes','file','mimes:pdf,doc,docx,epub','max:120000"],
             'imagem_associada' => ['sometimes','image','mimes:jpeg,jpg,webp,png,gif,svg','max:2048'],
-            'visualizacao' => ["sometimes", "file", new \App\Rules\ValidExtensions($this->get('tipo'))]
+            'visualizacao' => ["sometimes", "file", new \App\Rules\ValidExtensions($this->get('tipo_id'))]
         ];
     }
 

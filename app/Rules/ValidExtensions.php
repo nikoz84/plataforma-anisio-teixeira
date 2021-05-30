@@ -27,16 +27,21 @@ class ValidExtensions implements Rule
      */
     public function passes($attribute, $value)
     {
-        $tipo = Tipo::where('id', $this->id)->get()->first();
-        if(!$tipo){
+        if (!$this->id) {
             return false;
         }
-        
+
+        $tipo = Tipo::where('id', $this->id)->get()->first();
+
+        if (!$tipo) {
+            return false;
+        }
+
         $exists = in_array(
-            $value->getClientOriginalExtension(), 
+            $value->getClientOriginalExtension(),
             $tipo->options['formatos']
         );
-        
+
         return $exists;
     }
 
