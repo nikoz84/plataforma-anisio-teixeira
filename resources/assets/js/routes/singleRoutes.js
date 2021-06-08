@@ -80,11 +80,24 @@ const advancedSearch = {
     }
 };
 
+
+const praticasInspiradoras = {
+  path: "/praticas-inspiradoras",
+  name: "PraticasInspiradoras",
+  components: { main: () => import(/* webpackChunkName: "pinsp" */ "@pages/PraticasInspiradoras.vue")},
+  meta: {
+      requiresAuth: false,
+      title: "Práticas Inspiradoras",
+      layout: Default
+    }
+};
+
 export {
     homeRoute,
     galeriaRoute,
     sobreRoute,
     ipesRoute,
     rotinasRoute,
-    advancedSearch
+    advancedSearch,
+    praticasInspiradoras
 };

@@ -42,7 +42,7 @@
     "fastclick": "^1.0.6",
     "moment": "^2.29.1",
     "number-shortener": "^1.0.1",
-    "quasar": "^1.15.1",
+    "quasar": "^1.15.20",
     "vue": "^2.6.12",
     "vue-apexcharts": "^1.6.0",
     "vue-gtag": "^1.11.0",

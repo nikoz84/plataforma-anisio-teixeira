@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
-use App\Models\ConteudoPlanilha;
+use App\Models\Document;
 use Illuminate\Support\Facades\DB;
 
-class ConteudoPlanilhaController extends ApiController
+class DocumentController extends ApiController
 { 
     
 
@@ -30,9 +30,9 @@ class ConteudoPlanilhaController extends ApiController
     {
         $url = "AKfycbyewWsCp5HdbrkQwRSMyeRAsQiRc8PtjeyOrS07drrzxdpjb7HA/exec";
 
-        $conteudoPlanilha = new ConteudoPlanilha();
-        $this->createFaculdadesDaBahia($conteudoPlanilha->formatarJsonFaculdadesDaBahia(
-            $conteudoPlanilha->getGoogleSpreadsheetsData($url)
+        $doc = new Document();
+        $this->createFaculdadesDaBahia($doc->formatarJsonFaculdadesDaBahia(
+            $doc->getGoogleSpreadsheetsData($url)
         ));
     }
       /**
@@ -44,15 +44,15 @@ class ConteudoPlanilhaController extends ApiController
     public function createFaculdadesDaBahia($dados)
     {
         foreach ($dados as $dado) {
-            $conteudoPlanilha = new ConteudoPlanilha();
-            $conteudoPlanilha->name = $dado['name'];
+            $doc = new Document();
+            $doc->name = $dado['name'];
             
-            $conteudoPlanilha->document = [
+            $doc->document = [
                 'faculdade' => $dado['faculdade'],
                 'slug' => $dado['slug'],
                 'actions' => $dado['actions']];
 
-            $conteudoPlanilha->save();
+            $doc->save();
         }
     }
     /**
@@ -68,7 +68,7 @@ class ConteudoPlanilhaController extends ApiController
             $semana = 'semana-' . $semana;
             $url = "AKfycbzwTW7RUANw0j8CjCIxnWLCQ3QHjiTbCbYapV5frwXyn8UmBdh2/exec?semana={$semana}";
             
-            $documento = new ConteudoPlanilha();
+            $documento = new Document();
             
             $data = $documento->formatarJsonRotinasDeEstudo(
                 $documento->getGoogleSpreadsheetsData($url)
@@ -85,10 +85,10 @@ class ConteudoPlanilhaController extends ApiController
       */
     public function createRotinasDeEstudo($semana, $data)
     {
-        $conteudoPlanilha = new ConteudoPlanilha();
-        $conteudoPlanilha->name = $semana;
-        $conteudoPlanilha->document = $data['rotinas'];
-        $conteudoPlanilha->save();
+        $doc = new Document();
+        $doc->name = $semana;
+        $doc->document = $data['rotinas'];
+        $doc->save();
     }
     /**
      * Seleciona e requisita a Resposta por nome no Banco de Dados.
@@ -96,29 +96,29 @@ class ConteudoPlanilhaController extends ApiController
 
     public function getDocumentByName(Request $request)
     {
-        $query = ConteudoPlanilha::query();
+        $query = Document::query();
         $url = http_build_query($request->except('page'));
 
         if ($request->slug === 'rotinas') {
-            $conteudoPlanilha = $query->where(
+            $doc = $query->where(
                 'name',
                 'like',
                 'semana%'
             )->paginate(10)->setPath("/planilhas?{$url}");
         } else {
-            $conteudoPlanilha = $query->where('name', $request->slug)
+            $doc = $query->where('name', $request->slug)
             ->paginate(15)
             ->setPath("/planilhas?{$url}");
         }
 
-        return $this->showAsPaginator($conteudoPlanilha);
+        return $this->showAsPaginator($doc);
     }
     /** teste */
     public function rotinasPerNivel(Request $request, $nivel, $semana)
     {
-        $query = ConteudoPlanilha::query();
+        $query = Document::query();
         
-        $conteudoPlanilha = $query->select(
+        $doc = $query->select(
             DB::raw("
                 jsonb_array_elements(
                     document->'segunda-feira'->'{$nivel}'
@@ -148,7 +148,7 @@ class ConteudoPlanilhaController extends ApiController
         
 
         return $this->successResponse([
-            'rotinas' => $conteudoPlanilha,
+            'rotinas' => $doc,
             'semanas' => $this->getSemanas()
         ]);
     }
@@ -159,7 +159,7 @@ class ConteudoPlanilhaController extends ApiController
       */
     public function getSemanas()
     {
-        $total = ConteudoPlanilha::where('name', 'like', 'semana%')->get();
+        $total = Document::where('name', 'like', 'semana%')->get();
         
         $semanas = [];
         for ($i=1; $i <= $total->count(); $i++) {

@@ -87,7 +87,6 @@ const adminRoutes = {
         layout: Admin
       }
     },
-    /*
     {
       path: "playlist/listar",
       components: { admin: PlayListForm },
@@ -96,7 +95,7 @@ const adminRoutes = {
         title: "Adicionar Conteúdo",
         layout: Admin
       }
-    },*/
+    },
     {
       path: "canais/listar",
       components: { admin: ListarCanais },

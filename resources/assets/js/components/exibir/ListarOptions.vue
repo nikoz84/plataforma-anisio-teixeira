@@ -92,7 +92,7 @@
             :max="paginator.last_page"
             :max-pages="10"
             boundary-numbers
-            @input="getContatos"
+            @input="getOptions"
           >
           </q-pagination>
         </div>

@@ -3,12 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use App\Policies\AplicativoPolicy;
-use App\Policies\ConteudoPolicy;
-use App\Policies\CanalPolicy;
-use App\Aplicativo;
-use App\Canal;
-use App\Conteudo;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -18,9 +12,11 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        Aplicativo::class => AplicativoPolicy::class,
-        Canal::class => CanalPolicy::class,
-        Conteudo::class => ConteudoPolicy::class
+        App\Models\Aplicativo::class => App\Policies\AplicativoPolicy::class,
+        App\Models\Canal::class => App\Policies\CanalPolicy::class,
+        App\Models\Conteudo::class => App\Policies\ConteudoPolicy::class,
+        App\Models\Document::class => App\Policies\DocumentPolicy::class,
+        App\Models\PlayList::class => App\Policies\PlayListPolicy::class
     ];
 
     /**

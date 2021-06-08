@@ -30,11 +30,10 @@ class HomeController extends ApiController
     {
         //cache()->forget('layout');
         
-
         $from_cache = cache()->remember('layout', now()->addMinutes(1440), function () {
             return SideBar::getSideBarAdvancedFilter();
         });
-            
+        
         return response()->json($from_cache);
     }
 

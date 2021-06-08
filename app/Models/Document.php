@@ -11,11 +11,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\UserCan;
 use Illuminate\Support\Facades\Auth;
 
-class ConteudoPlanilha extends Model
+class Document extends Model
 {
     use SoftDeletes, UserCan;
 
-    protected $table = 'conteudos_planilha';
+    protected $table = 'documents';
     protected $casts = ['document' => 'array'];
 
     protected $fillable = [

@@ -27,8 +27,8 @@ class SideBar
         ->where('id', '<>', 12)
         ->get();
 
-        $layout = (object) Options::select("meta_data")
-        ->where("name", "like", "layout")->get()->first();
+        $layout = (object) Options::select("meta_data")->where("name", "like", "layout")->get()->first();
+        
         $canais =  DB::select(DB::raw("SELECT name,
                                     slug,
                                     options->'order_menu' AS order,
@@ -118,6 +118,13 @@ class SideBar
                 'slug' => 'canais',
                 'hability' => 'index',
                 'class' => \App\Models\Canal::class
+            ],
+            [
+                'label' => 'Playlists',
+                'name' => 'IndexPlayList',
+                'slug' => 'playlist',
+                'hability' => 'index',
+                'class' => \App\Models\Document::class
             ],
             [
                 'label' => 'Fale Conosco',

@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LogArtisanController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
@@ -19,15 +18,13 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OptionsController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\LicenseController;
-use App\Http\Controllers\ConteudoPlanilhaController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\ConteudoLikeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RelatorioController;
 use App\Http\Controllers\ComentarioController;
-
-
-
+use App\Http\Controllers\PlayListController;
 
 Route::group(['prefix' => 'files', 'as' => 'files.'], function () {
     Route::get('/galeria', [FileController::class, 'getGallery'])->name('lista.galeria.imagens');
@@ -121,9 +118,17 @@ Route::get('/likes/count/{conteudoid}/{tipo}', [ConteudoLikeController::class, '
 //Route::get('/planilhas/load-rotinas/','ConteudoPlanilhaController@getRotinaDeEstudos')->name('busca.rotina.de.estudos');
 //Route::get('/planilhas/load-faculdades/', 'ConteudoPlanilhaController@getFaculdadesDaBahia')->name('busca.faculdades');
 
-Route::get('/planilhas', [ConteudoPlanilhaController::class, 'getDocumentByName'])->name('docs.planilhas');
+Route::get('/planilhas', [DocumentController::class, 'getDocumentByName'])->name('docs.planilhas');
 
-Route::get('/rotinas/{nivel}/{semana}', [ConteudoPlanilhaController::class, 'rotinasPerNivel'])->name('rotinas.estudos.x.nivel');
+Route::get('/rotinas/{nivel}/{semana}', [DocumentController::class, 'rotinasPerNivel'])->name('rotinas.estudos.x.nivel');
+
+Route::group(
+    ['prefix' => 'playlist', 'as' => 'playlist.'],
+    function () {
+    Route::get('/', [PlayListController::class, 'index'])->name('listar');
+    Route::post('/', [PlayListController::class, 'create'])->name('adicionar');
+    Route::get('/search/{term}', [PlayListController::class, 'search'])->name('search');
+});
 /***********************************************
  *
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN
