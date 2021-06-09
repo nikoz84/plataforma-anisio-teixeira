@@ -2,13 +2,16 @@
 <div class="q-pa-md row justify-center q-gutter-xs">
     <q-card class="col-sm-6">
       <q-card-section class="q-gutter-sm">
-        
-          <q-input label="Pesquisar conteúdo" v-model="term"></q-input>
-          <ul>
-            <li v-for="conteudo in conteudos" :key="conteudo.id">
-              {{conteudo.title}}
-            </li>
-          </ul>
+        <q-input label="Pesquisar conteúdo" v-model="term"></q-input>
+        <q-list bordered>      
+            <q-item clickable v-ripple v-for="conteudo in conteudos" :key="conteudo.id">
+            <q-item-section thumbnail>
+              <img :src="conteudo.image">
+            </q-item-section>
+            <q-item-section>{{conteudo.title}}</q-item-section>
+          </q-item>
+        </q-list>
+          
         </q-card-section>
         <q-card-actions>
           <q-btn color="primary" label="Buscar" @click="search()"></q-btn>
