@@ -46,23 +46,46 @@ class PlayListController extends ApiController
 
     public function addToPlayList()
     {
-        //
+        $addToPlaylist = PlayList::where('name','p1-%');
+        $this->authorize('index','$addToPlaylist');
+
+        return $this->successResponse($addToPlaylist);
     }
 
-    public function removeToPlayList()
+    public function removeToPlayList($id)
     {
-        //
+        $remove = $this->Playlist->findOrFail($id);
+            $remove->delete();
+
+            return $this->successResponse($remove);
     }
-    public function updatePlayList()
+
+    public function updatePlayList( PlaylistRequest $request)
     {
-        //
+       $data = $request->all();
+
+       $playlist->fill($request->validated());
+
+       $playlist = $this->playlist->find($data['id']);
+       $playlist->update($data);
+
+       return response()->json($playlist);
     }
+
     public function getByName()
     {
-        //
+         $getByName = PlayList::where('name', 'pl-%');
+
+        $this->authorize('index', $getByName);
+
+        return $this->successResponse($getByName);
     }
     public function getById()
     {
-        //
+         $getById = PlayList::where('id', 'pl-%');
+
+        $this->authorize('index', $getById);
+
+        return $this->successResponse($getById);
     }
 }
