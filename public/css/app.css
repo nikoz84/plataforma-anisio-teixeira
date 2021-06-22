@@ -62,7 +62,7 @@ body {
   color: #263238;
 }
 /*
- * Quasar Framework v1.15.15
+ * Quasar Framework v1.15.20
  * (c) 2015-present Razvan Stoenescu
  * Released under the MIT License.
  */
@@ -1723,20 +1723,20 @@ body.desktop .q-chip--clickable:focus {
   padding-right: 0 !important;
   padding-left: 0 !important;
 }
-.q-dialog__inner--left > div,
-.q-dialog__inner--top > div {
+.q-dialog__inner--left:not(.q-dialog__inner--animating) > div,
+.q-dialog__inner--top:not(.q-dialog__inner--animating) > div {
   border-top-left-radius: 0;
 }
-.q-dialog__inner--right > div,
-.q-dialog__inner--top > div {
+.q-dialog__inner--right:not(.q-dialog__inner--animating) > div,
+.q-dialog__inner--top:not(.q-dialog__inner--animating) > div {
   border-top-right-radius: 0;
 }
-.q-dialog__inner--left > div,
-.q-dialog__inner--bottom > div {
+.q-dialog__inner--left:not(.q-dialog__inner--animating) > div,
+.q-dialog__inner--bottom:not(.q-dialog__inner--animating) > div {
   border-bottom-left-radius: 0;
 }
-.q-dialog__inner--right > div,
-.q-dialog__inner--bottom > div {
+.q-dialog__inner--right:not(.q-dialog__inner--animating) > div,
+.q-dialog__inner--bottom:not(.q-dialog__inner--animating) > div {
   border-bottom-right-radius: 0;
 }
 .q-dialog__inner--fullwidth > div {
@@ -2720,9 +2720,6 @@ body.q-ios-padding .q-dialog__inner > div {
 .q-transition--field-message-leave,
 .q-transition--field-message-leave-active {
   position: absolute;
-}
-.q-file {
-  width: 100%;
 }
 .q-file .q-field__native {
   word-break: break-all;

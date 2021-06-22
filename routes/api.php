@@ -128,11 +128,11 @@ Route::group(
     Route::get('/', [PlayListController::class, 'index'])->name('listar');
     Route::post('/', [PlayListController::class, 'create'])->name('adicionar');
     Route::get('/search/{term}', [PlayListController::class, 'search'])->name('search');
-    Route::get('/addToPlayList/{id}',[PlayListController::class,'addToPlaylist'])->name('add');
-    Route::delete('/removeToPlayList/{id}',[PlayListController::class,'removeToPlayList'])->name('remove');
-    Route::put('/updatePlayList/{id}',[PlayListController::class,'updatePlayList'])->name('update');
-    Route::get('/{name}',[PlayListController::class,'getByName'])->name('ByName');
-    Route::get('/{id}',[PlayListController::class,'getByID'])->name('ByID');
+    Route::get('/adicionar/item/{id}',[PlayListController::class,'addToPlaylist'])->name('add');
+    Route::delete('/remover/item/{id}',[PlayListController::class,'removeToPlayList'])->name('remove');
+    Route::put('/atualizar/item/{id}',[PlayListController::class,'updatePlayList'])->name('update');
+    Route::get('/name/{name}',[PlayListController::class,'getByName'])->name('ByName');
+    Route::get('/{id}',[PlayListController::class,'getById'])->name('ByID');
 });
 /***********************************************
  *

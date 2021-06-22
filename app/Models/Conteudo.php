@@ -196,7 +196,7 @@ class Conteudo extends Model
      */
     public function getTitleSlugAttribute()
     {
-        return Str::slug(Str::words($this->title, 25), '-');
+        return Str::slug(Str::words($this->title, 30), '-');
     }
     /**
      * Seleciona e tranforma created-at ao formato (06 setembro de 2019 ás 17:37)

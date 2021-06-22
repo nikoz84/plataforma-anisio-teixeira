@@ -16,6 +16,7 @@ import UserForm from './UserForm';
 import SliderForm from './SliderForm';
 import UniversidadesForm from './UniversidadesForm';
 import PlayListForm from './PlayListForm';
+import PlayListModalForm from './PlayListModalForm';
 
 export {
     PlayListForm,
@@ -34,7 +35,8 @@ export {
     TipoForm,
     UserForm,
     SliderForm,
-    UniversidadesForm
+    UniversidadesForm,
+    PlayListModalForm
 };
 
 

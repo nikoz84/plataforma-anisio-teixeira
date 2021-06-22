@@ -7,11 +7,13 @@ use App\Models\PlayList;
 use Illuminate\Http\Request;
 use App\Http\Requests\PlaylistRequest;
 use App\Models\Conteudo;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use App\Traits\ToPaginator;
 
 class PlayListController extends ApiController
 {
+    use ToPaginator;
+
     public function index()
     {
         
@@ -36,20 +38,38 @@ class PlayListController extends ApiController
 
     }
 
-    public function search($term)
+    public function search(Request $request, $term)
     {
-        $conteudos = Conteudo::where('title', "ilike", "%{$term}%")->limit(20)->get();
+        $limit = $request->query('limit', 8);
+        $term  = Str::lower($term);
 
-        return $this->successResponse($conteudos);
+        $paginator = Conteudo::with(['tipo'])->where('title', "ilike", "%{$term}%")
+            ->paginate($limit);
+
+        $paginator->getCollection()->transform(function($item) use ($term) {
+            $replace = preg_replace('/(' . $term . ')/i', "<b>$1</b> ", Str::lower($item->title));
+            $item->title = "<p>" . Str::replace('B>', 'b>', Str::title($replace)) . "</p>";
+            return $item;
+        });
+
+        return $this->showAsPaginator($paginator);
     }
     
-
-    public function addToPlayList()
+    public static function toPaginator($data)
     {
-        $addToPlaylist = PlayList::where('name','p1-%');
-        $this->authorize('index','$addToPlaylist');
+        $items = collect($data);
 
-        return $this->successResponse($addToPlaylist);
+
+    }
+
+    public function addToPlayList($id)
+    {
+        $playlist = PlayList::findOrFail($id);
+
+        $conteudos = collect($playlist->ids);
+        //$this->authorize('index','$addToPlaylist');
+
+        return $this->successResponse($playlist);
     }
 
     public function removeToPlayList($id)
@@ -60,32 +80,28 @@ class PlayListController extends ApiController
             return $this->successResponse($remove);
     }
 
-    public function updatePlayList( PlaylistRequest $request)
+    public function updatePlayList(PlaylistRequest $request, $id)
     {
-       $data = $request->all();
+       $playlist = PlayList::findOrFail($id);
 
        $playlist->fill($request->validated());
 
-       $playlist = $this->playlist->find($data['id']);
-       $playlist->update($data);
-
+       
        return response()->json($playlist);
     }
 
-    public function getByName()
+    public function getByName(Request $request)
     {
-         $getByName = PlayList::where('name', 'pl-%');
+        $name = PlayList::where('name', "pl-%{$request->name}");
 
-        $this->authorize('index', $getByName);
-
-        return $this->successResponse($getByName);
+        return $this->successResponse($name);
     }
-    public function getById()
+    public function getById($id)
     {
-         $getById = PlayList::where('id', 'pl-%');
+        $playlist = PlayList::findOrFail($id);
 
-        $this->authorize('index', $getById);
+        //$this->authorize('index', $getById);
 
-        return $this->successResponse($getById);
+        return $this->successResponse($playlist);
     }
 }
