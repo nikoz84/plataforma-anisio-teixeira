@@ -91,7 +91,8 @@
     </q-page-container>
   </q-layout>
 </template>
-<script>
+<script>// @ts-nocheck
+
 import { mapActions, mapState } from "vuex";
 import { AutocompleteForm } from "@forms/search";
 import LeftSideBar from "./LeftSideBar.vue";
@@ -139,14 +140,14 @@ export default {
   },
   data() {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop
+      leftDrawerOpen: this.openSideBar ? this.openSideBar : this.$q.platform.is.desktop
     };
   },
   created() {
     this.getLayout();
   },
   computed: {
-    ...mapState(["isLogged", "links", "canal", "sidebar", "layout"])
+    ...mapState(["isLogged", "links", "canal", "sidebar", "layout", "openSideBar"])
   },
   methods: {
     ...mapActions(["getLayout", "logout"]),

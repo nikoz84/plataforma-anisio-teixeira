@@ -86,10 +86,21 @@ const praticasInspiradoras = {
   name: "PraticasInspiradoras",
   components: { main: () => import(/* webpackChunkName: "pinsp" */ "@pages/PraticasInspiradoras.vue")},
   meta: {
-      requiresAuth: false,
-      title: "Práticas Inspiradoras",
-      layout: Default
-    }
+    requiresAuth: false,
+    title: "Práticas Inspiradoras",
+    layout: Default
+  }
+};
+
+const canalAT = {
+  path: "/canal-anisio-teixeira",
+  name: "canalAT",
+  components: { main: () => import(/* webpackChunkName: "canalAT" */"@pages/CanalAT.vue") },
+  meta: {
+    requiresAuth: false,
+    title: "Canal Anísio Teixeira",
+    layout: Default
+  }
 };
 
 export {
@@ -98,6 +109,7 @@ export {
     sobreRoute,
     ipesRoute,
     rotinasRoute,
+    canalAT,
     advancedSearch,
     praticasInspiradoras
 };

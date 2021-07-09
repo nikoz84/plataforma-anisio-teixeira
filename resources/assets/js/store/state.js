@@ -1,6 +1,8 @@
+
 const state = {
   layout: {},
   homeData: {},
+  openSideBar: null,
   links: [],
   linksAdmin: [],
   conteudos: [],

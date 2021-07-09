@@ -76,6 +76,11 @@ class OptionsPolicy
             $user->role->name == 'admin';
     }
 
+    public function createDestaque(User $user, Options $options)
+    {
+        return $user->role->name == 'super-admin';
+    }
+
     /**
      * Determine whether the user can restore the options.
      *

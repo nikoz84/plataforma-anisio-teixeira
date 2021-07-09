@@ -57,13 +57,13 @@
       </q-item-label>
       <div v-for="(link, i) in links" :key="`x-${i}`">
         <q-item
-          tag="div"
+          
           :to="`/${link.slug}/listar`"
           :aria-label="`IR: ${link.name}`"
           :title="`IR: ${link.name}`"
           clickable
           v-close-popup
-          tabindex="0"
+          :tabindex="i"
           active-class="active-link-pat"
         >
           <q-item-section>
@@ -78,7 +78,8 @@
         title="IR: Rotinas de estudo"
         clickable
         v-close-popup
-        tabindex="0"
+        active-class="active-link-pat"
+        tabindex="16"
       >
         <q-item-section>
           <q-item-label>Rotinas de Estudo</q-item-label>
@@ -91,10 +92,24 @@
         title="IR: Ações de Faculdades da Bahia"
         clickable
         v-close-popup
-        tabindex="0"
+        active-class="active-link-pat"
+        tabindex="20"
       >
         <q-item-section>
           <q-item-label>Canal das Universidades</q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-item
+        :to="{name: 'canalAT'}"
+        aria-label="IR: Canal Anísio Teixeira"
+        title="IR: Canal Anísio Teixeira"
+        clickable
+        v-close-popup
+        active-class="active-link-pat"
+        tabindex="21"
+      >
+        <q-item-section>
+          <q-item-label>Canal Anísio Teixeira</q-item-label>
         </q-item-section>
       </q-item>
       <q-item
@@ -103,10 +118,10 @@
         :title="`endereço para: ambiente virtual de aprendizagem Moodle`"
         clickable
         v-close-popup
-        tabindex="0"
+        tabindex="25"
       >
         <q-item-section>
-          <q-item-label>Colavorativus</q-item-label>
+          <q-item-label>Colaborativus</q-item-label>
         </q-item-section>
       </q-item>
       <!--q-item

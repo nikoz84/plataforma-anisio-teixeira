@@ -24,12 +24,12 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RelatorioController;
 use App\Http\Controllers\ComentarioController;
-use App\Http\Controllers\PlayListController;
+//use App\Http\Controllers\PlayListController;
 
 Route::group(['prefix' => 'files', 'as' => 'files.'], function () {
     Route::get('/galeria', [FileController::class, 'getGallery'])->name('lista.galeria.imagens');
     Route::get('/{id}', [FileController::class, 'getFiles'])->name('busca');
-    Route::post('/{id}', [FileController::class, 'createFile'])->name('adiciona');
+    //Route::post('/{id}', [FileController::class, 'createFile'])->name('adiciona');
 });
 
 Route::get('/autocompletar', [HomeController::class, 'autocomplete'])->name('autocompletar.home');
@@ -121,7 +121,9 @@ Route::get('/likes/count/{conteudoid}/{tipo}', [ConteudoLikeController::class, '
 Route::get('/planilhas', [DocumentController::class, 'getDocumentByName'])->name('docs.planilhas');
 
 Route::get('/rotinas/{nivel}/{semana}', [DocumentController::class, 'rotinasPerNivel'])->name('rotinas.estudos.x.nivel');
+Route::get('/canal-at', [DocumentController::class, 'getCanalAT'])->name('docs.canalAT');
 
+/*
 Route::group(
     ['prefix' => 'playlist', 'as' => 'playlist.'],
     function () {
@@ -134,6 +136,7 @@ Route::group(
     Route::get('/name/{name}',[PlayListController::class,'getByName'])->name('ByName');
     Route::get('/{id}',[PlayListController::class,'getById'])->name('ByID');
 });
+*/
 /***********************************************
  *
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN

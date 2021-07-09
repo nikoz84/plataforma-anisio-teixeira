@@ -13,6 +13,7 @@
 
 <script>
 export default {
-    name: "PlayListHome"
+    name: "PlayListHome",
+  
 }
 </script>

@@ -3,10 +3,11 @@
     <!-- BOTÕES CAROUSEL -->
     <CarouselHome></CarouselHome>
 
-    <!-- PRÁTICAS INSPIRADORAS-->
+    <!-- PRÁTICAS INSPIRADORAS 
+
     <a class="skip-link" href="#praticas-inspiradoras">Ir a práticas inspiradoras</a>
     <PlayListHome id="praticas-inspiradoras"></PlayListHome>
-    
+    -->
     <!-- BOTÕES ROTINAS DE ESTUDO -->
     <a class="skip-link" href="#rotinas-de-estudo">Ir a rotinas de estudo</a>
     <HomeLinksRotinas id="rotinas-de-estudo"></HomeLinksRotinas>

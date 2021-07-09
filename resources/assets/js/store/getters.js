@@ -9,6 +9,9 @@ const getters = {
   getCanalById: state => {
     return state.canal;
   },
+  getOpenSideBar: state => {
+    return state.openSideBar;
+  },
   getConteudos: state => {
     return state.conteudos;
   },

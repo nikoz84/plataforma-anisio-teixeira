@@ -45,7 +45,7 @@ class OptionsController extends ApiController
             [
                 "url" => "required",
                 "title" => "required",
-                "image" => "mimes:jpeg,jpg,png,gif|required|max:10000"
+                "image" => "mimes:jpeg,jpg,png,gif|required|max:2000"
             ]
         );
 
@@ -53,7 +53,7 @@ class OptionsController extends ApiController
             return $this->errorResponse($validator->errors(), "Não foi possível criar o Slider", 422);
         }
         
-        $this->authorize('destaques', Options::class);
+        //$this->authorize('createDestaque');
 
         $path = $this->saveFile($request);
 

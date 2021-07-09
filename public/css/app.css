@@ -62,7 +62,7 @@ body {
   color: #263238;
 }
 /*
- * Quasar Framework v1.15.20
+ * Quasar Framework v1.15.21
  * (c) 2015-present Razvan Stoenescu
  * Released under the MIT License.
  */
@@ -2723,12 +2723,17 @@ body.q-ios-padding .q-dialog__inner > div {
 }
 .q-file .q-field__native {
   word-break: break-all;
+  overflow: hidden;
 }
 .q-file .q-field__input {
   opacity: 0 !important;
 }
 .q-file .q-field__input::-webkit-file-upload-button {
   cursor: pointer;
+}
+.q-file__filler {
+  opacity: 0;
+  pointer-events: none;
 }
 .q-file__dnd {
   outline: 1px dashed currentColor;

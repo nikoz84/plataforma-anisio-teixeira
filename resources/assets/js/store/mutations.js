@@ -52,6 +52,9 @@ const mutations = {
   SET_CONTEUDO(state, newConteudo) {
     state.conteudo = newConteudo;
   },
+  SET_OPENSIDEBAR(state, openSideBar){
+    state.openSideBar = openSideBar
+  },
   CREATE_CONTEUDO(state, newConteudo) {
     state.conteudo = newConteudo;
   },

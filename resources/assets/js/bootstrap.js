@@ -1,5 +1,6 @@
 import Quasar from "quasar";
 import Vue from "vue";
+import anime from 'animejs/lib/anime.min.js';
 import {
   Meta,
   Notify,
@@ -22,6 +23,7 @@ Loading.setDefaults({
   spinner: QSpinnerGears,
 });
 
+Vue.prototype.$anime = anime;
 Vue.use(QPlayer);
 Vue.use(Quasar, {
   lang,

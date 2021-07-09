@@ -1,7 +1,7 @@
 // @ts-nocheck
 import "./bootstrap";
 import Vue from "vue";
-import VueCompositionAPI from '@vue/composition-api';
+//import VueCompositionAPI from '@vue/composition-api';
 import VueRouter from "vue-router";
 import router from "./routes/index.js";
 import VueGtag from "vue-gtag";
@@ -18,12 +18,14 @@ Vue.use(VueGtag, {
   config: { 
     id: process.env.MIX_ANALYTICS,
     params: {
-      send_page_view: false
-    }
+      send_page_view: false,
+      cookie_flags: "SameSite=None;Secure"
+    },
+    
   }
 });
 
-Vue.use(VueCompositionAPI);
+//Vue.use(VueCompositionAPI);
 Vue.use(VueApexCharts);
 Vue.use(Vuex);
 Vue.use(VueRouter);

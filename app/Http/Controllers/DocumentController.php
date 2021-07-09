@@ -17,9 +17,10 @@ class DocumentController extends ApiController
             'getFaculdadesDaBahia',
             'getDocumentByName',
             'getRotinaDeEstudos',
-            'rotinasPerNivel'
+            'rotinasPerNivel',
+            'getCanalAT'
         ]);
-        $request = $request;
+        //$this->request = $request;
     }
      /**
       * Seleciona e lista a faculdade por id.
@@ -171,4 +172,12 @@ class DocumentController extends ApiController
 
         return $semanas;
     }
+
+    public function getCanalAT(Request $request)
+    {
+        return $this->showOne(
+            Document::where('name', 'canal-anisio-teixeira')->get()->first()
+        );
+    }
+
 }

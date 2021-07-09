@@ -37,6 +37,7 @@
     "@quasar/extras": "^1.9.14",
     "@quasar/quasar-ui-qmediaplayer": "^1.0.29",
     "@vue/composition-api": "^1.0.0-rc.6",
+    "animejs": "^3.2.1",
     "apexcharts": "^3.26.0",
     "axios": "^0.21.1",
     "fastclick": "^1.0.6",
