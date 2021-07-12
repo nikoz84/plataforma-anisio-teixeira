@@ -44,7 +44,7 @@ class ImportData extends Command
 
         foreach($users as $user){
             $this->info("Usuário: {$user->name}");
-            $user->name = $user->name;
+            $user->setAttribute('name', $user->name);
 
             $user->save();
         }

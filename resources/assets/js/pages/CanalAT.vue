@@ -23,51 +23,33 @@
             </div>
         </article>
         
-        <!--div class="row justify-center" style="margin-top:150px;">
+        <div class="row justify-center" style="margin-top:150px;">
             <article class="col-xs-12 col-md-5 q-mr-md">
-                <img width="100%" :src="canal.document.sections.podcast.img" @click="goTo('podcast')">
+                <q-btn stack to="/recursos-educacionais/listar?busca=podcast_at"
+                :aria-label="canal.document.sections.podcast.label"
+                type="a" target="__blank" 
+                padding="none"
+                >
+                    <img width="100%" :src="canal.document.sections.podcast.img">
+                </q-btn>
+                        
             </article>
             <article class="col-xs-12 col-md-5">
+                <q-btn stack to="/recursos-educacionais/conteudo/exibir/4900"
+                :aria-label="canal.document.sections.cordelito.label"
+                type="a" target="__blank"
+                padding="none"
+                >
                 <img width="100%" :src="canal.document.sections.cordelito.img">
+                </q-btn>
             </article>
-        </div>
-
-        <div class="q-pa-lg flex justify-center">
-            <h2 class="text-h5">{{canal.document.sections.conteudos.label}}</h2>
         </div>
         
-        <div-- class="flex justify-center" id="conteudos">
-            <article  class="col-sm-3 dom-node-demo el" style="background-color:#ADFDFF">
-
-            </article>
-            
-        </div-->
-        <div class="q-pa-lg flex justify-center">
+        <div class="q-pa-lg flex justify-center" style="margin-top:100px;">
             <div class="col-lg-8">
-                <img width="100%" :src="canal.document.sections.podcast.img" >
-            </div>
-        </div>
-
-        <div class="q-pa-lg flex justify-center" v-if="podcasts && podcasts.length > 0">
-            <div class="q-ma-md col-lg-5" v-for="(podcast, i) in podcasts" :key="i">
-                <h4 class="text-h5">{{podcast.name}}</h4>
-                <q-media-player type="audio"
-                    :sources="[{
-                        type: podcast.type,
-                        src: podcast.src
-                    }]"
-                    dense
-                    hide-volume-slider
-                    poster=""
-                    :volume="25"
-                ></q-media-player>
-            </div>
-        </div>
-
-
-        <div class="q-pa-lg flex justify-center">
-            <div class="col-lg-8">
-                <q-btn size="22px" icon="east" color="accent" label="Veja mais conteúdos sobre Anísio Teixeira" to="/recursos-educacionais/listar?busca=canal_at"></q-btn>
+                <q-btn size="22px" icon="east" color="accent" type="a" target="__blank"
+                    label="Veja mais conteúdos sobre Anísio Teixeira" 
+                    to="/recursos-educacionais/listar?busca=canal_at"></q-btn>
             </div>
         </div>
 
