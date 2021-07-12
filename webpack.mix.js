@@ -55,13 +55,16 @@ const config = {
 if (mix.inProduction()) {
     mix.extract(['vue', 'quasar', 'vue-apexcharts', 'vuex', 'moment'])
     .webpackConfig(config)
+    .options({
+      processCssUrls: true
+    })
     .js("resources/assets/js/app.js", "public/js")
     .version();
 } else {
   mix.webpackConfig(config)
   .js("resources/assets/js/app.js", "public/js")
   .options({
-    processCssUrls: false
+    processCssUrls: true
   })
   .stylus("resources/assets/stylus/app.styl", "public/css")
   .copy("public/css/app.css", "public/css/app-min.css")

@@ -108,9 +108,7 @@ class FileController extends ApiController
             "Content-Type" => "$file->mime_type"
         ];
 
-        $path = self::windowsDirectory(
-            Storage::disk('conteudos-digitais')->path("{$directory}/{$file->name}")
-        );
+        $path = Storage::disk('conteudos-digitais')->path("{$directory}" . DIRECTORY_SEPARATOR . "{$file->name}");
 
         return response()->download($path, $file->name, $headers);
     }

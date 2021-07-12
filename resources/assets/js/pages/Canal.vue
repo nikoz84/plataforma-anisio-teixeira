@@ -1,10 +1,11 @@
 <template>
   <section class="q-pa-xs q-pb-lg">
-    <q-banner class="bg-grey-4">  
+    <q-banner class="head">  
       <header class="q-my-md q-gutter-md">
-        <div class="text-h5 color-primary" v-if="!isLoading">
+        
+        <h1 class="text-h4 color-primary" v-if="!isLoading">
           {{canal && canal.options ? canal.options.extend_name : canal.name }}
-        </div>
+        </h1>
         <div v-else>
           <q-skeleton style="width: 300px; height: 25px" type="text" animation="pulse-x" />
         </div>
@@ -171,6 +172,14 @@ export default {
 <style lang="stylus">
 $text-color = #004081
 $background-cinza = #e1e2e1
+
+
+
+.head{
+  background-color: #ffffff;
+  border-bottom-color : 5px #FADFFA;
+  background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23623d9c' fill-opacity='0.39' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
+}
 
 .q-tabs__arrow--right {
   top: 0;

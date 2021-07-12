@@ -1,5 +1,6 @@
 <template>
-    <div class="q-mb-xl">
+    <div class="q-mb-xl q-mt-lg">
+        <q-responsive :ratio="16/4" style="max-width: 100%;heigth:25vh">
         <q-carousel
             swipeable
             animated
@@ -11,35 +12,42 @@
             infinite
             :autoplay="10000"
             arrows
-            height="250px"
-            class="rounded-borders bg-grey-5 text-white shadow-1"
+            height="35vh"
+            class="rounded-borders text-white shadow-2"
             @input="changeSlide"
         >
             <q-carousel-slide name="null" class="column no-wrap flex-center" v-if="name === null">
-                <q-icon name="style" size="56px" />
-                <div class="q-mt-md text-center">
-                    HOLA MUDNO
-                </div>
+                
             </q-carousel-slide>
             <q-carousel-slide 
                 v-for="(slide, d) in slider"
                 :key="`${d}-slide`"
                 :name="slide.filename" 
-                :img-src="slide.image">
+                :img-src="slide.image"
+                style="width:100%">
             </q-carousel-slide>
-            
+            <template v-slot:control>
+                <q-carousel-control
+                    position="bottom"
+                    :offset="[16, 4]"
+                    class="text-left rounded-borders"
+                    style="padding: 10px 10px;"
+                >
+                    
+                    <transition name="fade" mode="out-in">
+                        <q-btn color="accent" size="sm" class="text-left" @click="goTo(activeSlide.url)">
+                            Saiba Mais
+                        </q-btn>
+                    </transition>
+                </q-carousel-control>
+            </template>
         </q-carousel>
-        <transition name="fade" mode="out-in">
-            <q-card class="featured" v-show="showTitle" flat>
-                <q-card-section class="text-right bg-blue-grey-1 color-grey-9" @click="goTo(activeSlide.url)">
-                     SAIBA MAIS
-                </q-card-section>
-            </q-card>
-        </transition>
-        <q-separator ></q-separator>
+        </q-responsive>
+        
     </div>
 </template>
-<script>
+<script>// @ts-nocheck
+
 export default {
     name: "CarouselHome",
     data(){
@@ -85,9 +93,10 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
+
 .q-carousel__slide{
-  width: 100% !important;
-  height : 25vh !important;
+  background-repeat:no-repeat;
+  background-size:contain;
 }
 .featured {
   font-family: Ubuntu, Arial;

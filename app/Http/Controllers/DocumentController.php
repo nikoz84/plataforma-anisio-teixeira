@@ -6,6 +6,8 @@ use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use App\Models\Document;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentController extends ApiController
 { 
@@ -18,7 +20,8 @@ class DocumentController extends ApiController
             'getDocumentByName',
             'getRotinaDeEstudos',
             'rotinasPerNivel',
-            'getCanalAT'
+            'getCanalAT',
+            'getPodcastAT'
         ]);
         //$this->request = $request;
     }
@@ -178,6 +181,24 @@ class DocumentController extends ApiController
         return $this->showOne(
             Document::where('name', 'canal-anisio-teixeira')->get()->first()
         );
+    }
+
+    public function getPodcastAT(Request $request)
+    {
+        $path = Storage::disk('podcast-at');
+        $path = $path->getDriver()->getAdapter()->getPathPrefix();
+        $files = File::allFiles($path);
+        
+        $podcasts = collect($files)->map(function ($file) {
+            return [
+                'name' => pathinfo($file->getFilename(), PATHINFO_FILENAME),
+                'src' => Storage::disk('podcast-at')->url("{$file->getFilename()}"),
+                'type' => 'audio/mp3'
+            ];
+        })->shuffle();
+        
+        return $this->showAll($podcasts);
+    
     }
 
 }

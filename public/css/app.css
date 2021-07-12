@@ -40,24 +40,45 @@
 }
 @font-face {
   font-family: 'Ubuntu';
-  font-display: swap;
-  src: url("./fonts/Ubuntu-Regular.woff2");
+  font-style: normal;
+  font-weight: 400;
+  src: url(/fonts/ubuntu-v15-latin-regular.woff2?5b23eeb3a32b30e91682d601535d2a89) format('woff2'), url(/fonts/ubuntu-v15-latin-regular.woff?1e926e228a9e2e1e77034f624211e2b4) format('woff'), url(/fonts/ubuntu-v15-latin-regular.ttf?694f32f4f139e578f8303309a343cfa0) format('truetype'), url(/fonts/ubuntu-v15-latin-regular.svg?3c51cf95e0cf5b2145510b36882a66ed#Ubuntu) format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 500;
+  src: url(/fonts/ubuntu-v15-latin-500.woff2?b4e565dcfc8f6cb332be0fc03302ad99) format('woff2'), url(/fonts/ubuntu-v15-latin-500.woff?e5613b0c875443174f948840c8ce07f6) format('woff'), url(/fonts/ubuntu-v15-latin-500.ttf?d4ee1476ddc3dedb306bbd3b7ad6501b) format('truetype'), url(/fonts/ubuntu-v15-latin-500.svg?c6d4b87d6dcae52931ee0ed61274b542#Ubuntu) format('svg'); /* Legacy iOS */
 }
 @font-face {
   font-family: 'Lato';
-  font-display: swap;
-  src: url("./fonts/Lato-Regular.woff2");
+  font-style: normal;
+  font-weight: 400;
+  src: url(/fonts/lato-v17-latin-regular.woff2?b4d2c4c39853ee244272c04999b230ba) format('woff2'), url(/fonts/lato-v17-latin-regular.woff?b8ee546acd6cc0c49f42ad3d48ef244f) format('woff'), url(/fonts/lato-v17-latin-regular.ttf?d1d5e30aa8bb081cad8f409f27861672) format('truetype'), url(/fonts/lato-v17-latin-regular.svg?9087e4a6aceecc9b2914823044951a3a#Lato) format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  src: url(/fonts/lato-v17-latin-700.woff2?1efbd38aa76ddae2580fedf378276333) format('woff2'), url(/fonts/lato-v17-latin-700.woff?874b8e7bc7e8d1507b50f56bc6c9b536) format('woff'), url(/fonts/lato-v17-latin-700.ttf?fe7d53e4cac8f5b946a9e25f004efc8c) format('truetype'), url(/fonts/lato-v17-latin-700.svg?596223f7bff9598c852e949e9d2b1aa0#Lato) format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'Bilbo Swash Caps';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/fonts/bilbo-swash-caps-v15-latin-regular.woff2?dfbea5711bbd3afb0aa1deee38aaaf93) format('woff2'), url(/fonts/bilbo-swash-caps-v15-latin-regular.woff?d82890eed3ce5752811b9c348dc93bec) format('woff'), url(/fonts/bilbo-swash-caps-v15-latin-regular.ttf?bb74973aaedb625fa9cdd67ffab4e766) format('truetype'), url(/fonts/bilbo-swash-caps-v15-latin-regular.svg?d08c606ca059a425f67a84231aeacb75#BilboSwashCaps) format('svg'); /* Legacy iOS */
 }
 .title-page-tipos {
   font-family: 'Lato', sans-serif, cursive;
   font-weight: 700 false;
   padding-bottom: 5px;
-  border-bottom: 4px double #004081;
+  border-bottom: 4px double #451e5f;
   font-display: swap;
 }
 body {
   font-family: 'Ubuntu', '-apple-system', Helvetica, Arial, sans-serif;
   font-weight: 500 false;
+  font-size: 16px;
   font-display: swap;
   color: #263238;
 }
@@ -2360,7 +2381,7 @@ body.q-ios-padding .q-dialog__inner > div {
   left: 0;
   right: 0;
   top: 18px;
-  color: #004081;
+  color: #451e5f;
   font-size: 16px;
   line-height: 20px;
   font-weight: 400;
@@ -6272,7 +6293,7 @@ body.q-ios-padding .q-notifications__list--bottom {
 :root {
   --q-color-primary: #066ab1;
   --q-color-secondary: #5698e3;
-  --q-color-accent: #004081;
+  --q-color-accent: #451e5f;
   --q-color-positive: #3cac3d;
   --q-color-negative: #cc2726;
   --q-color-info: #3871c1;
@@ -6304,11 +6325,11 @@ body.q-ios-padding .q-notifications__list--bottom {
   background: var(--q-color-secondary) !important;
 }
 .text-accent {
-  color: #004081 !important;
+  color: #451e5f !important;
   color: var(--q-color-accent) !important;
 }
 .bg-accent {
-  background: #004081 !important;
+  background: #451e5f !important;
   background: var(--q-color-accent) !important;
 }
 .text-positive {
@@ -10669,7 +10690,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-smoothing: antialiased;
   line-height: 1.5;
-  font-size: 13px;
+  font-size: 15px;
 }
 h1 {
   font-size: 4rem;

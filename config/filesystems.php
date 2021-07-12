@@ -109,6 +109,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'podcast-at' => [
+            'driver' => 'local',
+            'root' => storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'conteudos' . DIRECTORY_SEPARATOR . 'conteudos-digitais' . DIRECTORY_SEPARATOR . 'podcast-at'),
+            'url' => env('APP_URL') . '/storage/conteudos/conteudos-digitais/podcast-at',
+            'visibility' => 'public',
+        ],
+
         'slider' => [
             'driver' => 'local',
             'root' => storage_path('app' . DIRECTORY_SEPARATOR .'public' . DIRECTORY_SEPARATOR .'conteudos' . DIRECTORY_SEPARATOR . 'slider'),

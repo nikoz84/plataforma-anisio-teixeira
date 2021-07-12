@@ -7,3 +7,6 @@ export default {
   props: ["title"]
 };
 </script>
+<style>
+
+</style>

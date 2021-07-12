@@ -121,7 +121,11 @@ Route::get('/likes/count/{conteudoid}/{tipo}', [ConteudoLikeController::class, '
 Route::get('/planilhas', [DocumentController::class, 'getDocumentByName'])->name('docs.planilhas');
 
 Route::get('/rotinas/{nivel}/{semana}', [DocumentController::class, 'rotinasPerNivel'])->name('rotinas.estudos.x.nivel');
-Route::get('/canal-at', [DocumentController::class, 'getCanalAT'])->name('docs.canalAT');
+
+Route::group( ['prefix' => 'canal-at', 'as' => 'canal-at.'], function () {
+    Route::get('/', [DocumentController::class, 'getCanalAT'])->name('info');
+    Route::get('/podcast', [DocumentController::class, 'getPodcastAT'])->name('podcast');
+});
 
 /*
 Route::group(
