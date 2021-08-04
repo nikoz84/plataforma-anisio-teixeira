@@ -4,6 +4,7 @@ import Listar from "@pages/Listar.vue";
 import Exibir from "@pages/Exibir.vue";
 import Canal from "@pages/Canal.vue";
 import Default from "@layout/Default.vue";
+import PageNotFound from "@pages/PageNotFound.vue";
 
 const canalRoutes = {
     path: "/:slug",

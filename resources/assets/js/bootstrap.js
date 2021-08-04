@@ -15,9 +15,9 @@ import {
 import "quasar/dist/quasar.ie.polyfills.umd.min.js";
 import lang from "quasar/lang/pt-br.js";
 import iconSet from "quasar/dist/icon-set/material-icons.umd.min.js";
-import "@quasar/extras/material-icons/material-icons.css";
+//import "@quasar/extras/material-icons/material-icons.css";
 import QPlayer from '@quasar/quasar-ui-qmediaplayer';
-import '@quasar/quasar-ui-qmediaplayer/dist/index.css';
+//import '@quasar/quasar-ui-qmediaplayer/dist/index.css';
 
 Loading.setDefaults({
   spinner: QSpinnerGears,

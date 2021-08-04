@@ -175,7 +175,6 @@ return [
         Jaybizzle\LaravelCrawlerDetect\LaravelCrawlerDetectServiceProvider::class,
         Buglinjo\LaravelWebp\WebpServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-
         /*
          * Application Service Providers...
          */

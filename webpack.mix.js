@@ -49,14 +49,18 @@ const config = {
   })]
 };
 
-
+const stylusOptions = {
+  paths: ['node_modules', 'resources/assets/stylus'],
+  'include css': true,
+  'resolve url': true
+};
 
 
 if (mix.inProduction()) {
     mix.extract(['vue', 'quasar', 'vue-apexcharts', 'vuex', 'moment'])
     .webpackConfig(config)
     .options({
-      processCssUrls: true
+      processCssUrls: false,
     })
     .js("resources/assets/js/app.js", "public/js")
     .version();
@@ -64,9 +68,10 @@ if (mix.inProduction()) {
   mix.webpackConfig(config)
   .js("resources/assets/js/app.js", "public/js")
   .options({
-    processCssUrls: true
+    processCssUrls: true,
+    //extractVueStyles: 'public/css/[name].css',
   })
-  .stylus("resources/assets/stylus/app.styl", "public/css")
+  .stylus("resources/assets/stylus/app.styl", "public/css", stylusOptions)
   .copy("public/css/app.css", "public/css/app-min.css")
   .copy("resources/assets/stylus/fonts", "public/fonts");
 
