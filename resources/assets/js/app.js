@@ -1,7 +1,6 @@
 // @ts-nocheck
 import "./bootstrap";
 import Vue from "vue";
-//import VueCompositionAPI from '@vue/composition-api';
 import VueRouter from "vue-router";
 import router from "./routes/index.js";
 import VueGtag from "vue-gtag";
@@ -25,7 +24,6 @@ Vue.use(VueGtag, {
   }
 });
 
-//Vue.use(VueCompositionAPI);
 Vue.use(VueApexCharts);
 Vue.use(Vuex);
 Vue.use(VueRouter);

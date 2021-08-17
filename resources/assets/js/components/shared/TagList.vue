@@ -1,20 +1,17 @@
 <template>
   <div>
     <strong >{{title}}:</strong>
-    <q-chip flat 
-      dense
-      color="blue-grey-6" 
-      text-color="white"
-      clickable
-      v-for="(item, i) in items"
-      :key="i"
-      :label="item.name"
-      @click="searchBy(item)"
+    <div class="flex justify-center q-mt-md">
+    <a v-for="(item, i) in items"
+      :key="`tag-${i}`"
+      class="text-primary q-ml-lg q-mt-md"
+      v-html="item.name"
+      :href="searchBy(item)"      
+      :title="`Procurar por palavra-chave: ${item.name}`"
     >
-      <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px">
-        Procurar por palavra-chave: {{item.name}}
-      </q-tooltip>
-    </q-chip>
+      
+    </a>
+    </div>
   </div>    
 </template>
 <script>
@@ -26,7 +23,7 @@ export default {
       let term = this.slug == "busca" ? item.name : item.id;
       let url = `/recursos-educacionais/listar?${this.slug}=${term}`;
 
-      this.$router.push(url);
+      return url;
     }
   }
 };

@@ -1,7 +1,7 @@
 // @ts-nocheck
 import Default from "@layout/Default";
 import Home from "@pages/Home";
-
+import Ipes from "@pages/Ipes";
 
 const homeRoute = {
     path: "/",
@@ -18,7 +18,7 @@ const galeriaRoute = {
     path: "/galeria",
     name: "Galeria",
     components: {
-      main: () => import(/* webpackChunkName: "sobre" */ "@components/home/Gallery.vue")
+      main: () => import("@components/home/Gallery.vue")
     },
     meta: {
       requiresAuth: false,
@@ -30,7 +30,7 @@ const sobreRoute = {
     path: "/sobre",
     name: "Sobre",
     components:{
-      main : () => import(/* webpackChunkName: "sobre" */ "@pages/Sobre.vue")
+      main : () => import("@pages/Sobre.vue")
     },
     meta: {
       requiresAuth: false,
@@ -38,20 +38,23 @@ const sobreRoute = {
       layout: Default 
     }
 };
+
 const praticasRoute = {
     path: "/praticas-pedagogicas",
     name: "PraticasPedagogicas",
-    component: () => import(/* webpackChunkName: "praticas" */ "@pages/PraticasPedagogicas.vue"),
+    components: 
+    { main: () => import("@pages/PraticasPedagogicas.vue")},
     meta: {
       requiresAuth: false,
       title: "Pŕaticas pedagógicas",
       layout: Default
     }
 };
+
 const ipesRoute = {
   path: "/ipes",
   name: "IpesFaculdades",
-  components: { main: () => import(/* webpackChunkName: "ipes" */ "@pages/Ipes.vue")},
+  components: { main : Ipes},
   meta: {
       requiresAuth: false,
       title: "Faculdades da Bahia",
@@ -61,7 +64,7 @@ const ipesRoute = {
 const rotinasRoute = {
   path: "/rotinas-de-estudo/:nivel?/:semana?",
   name: "RotinasEstudo",
-  components: { main : () => import(/* webpackChunkName: "rotinas" */ "@pages/RotinasDeEstudo.vue")},
+  components: { main : () => import("@pages/RotinasDeEstudo.vue")},
   meta: {
       requiresAuth: false,
       title: "Rotinas de Estudo",
@@ -72,7 +75,7 @@ const rotinasRoute = {
 const advancedSearch = {
   path: "/busca-avancada",
   name: "BuscaAvancada",
-  components: { main: () => import(/* webpackChunkName: "busca" */ "@pages/AdvancedSearch.vue")},
+  components: { main: () => import("@pages/AdvancedSearch.vue")},
   meta: {
       requiresAuth: false,
       title: "Busca Avançada",
@@ -84,7 +87,7 @@ const advancedSearch = {
 const praticasInspiradoras = {
   path: "/praticas-inspiradoras",
   name: "PraticasInspiradoras",
-  components: { main: () => import(/* webpackChunkName: "pinsp" */ "@pages/PraticasInspiradoras.vue")},
+  components: { main: () => import("@pages/PraticasInspiradoras.vue")},
   meta: {
     requiresAuth: false,
     title: "Práticas Inspiradoras",
@@ -95,7 +98,7 @@ const praticasInspiradoras = {
 const canalAT = {
   path: "/canal-anisio-teixeira",
   name: "canalAT",
-  components: { main: () => import(/* webpackChunkName: "canalAT" */"@pages/CanalAT.vue") },
+  components: { main: () => import("@pages/CanalAT.vue") },
   meta: {
     requiresAuth: false,
     title: "Canal Anísio Teixeira",

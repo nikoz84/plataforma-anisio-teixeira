@@ -21,23 +21,21 @@
             class="ipes-label text-primary"
             :label="item.document.faculdade" 
             >
-            
-                    <q-card bordered class="ipes-atividade q-py-md" v-for="(action, a) in item.document.actions" :key="a">
-                        <q-card-section>
-                            <strong>Ação:</strong> {{ action.name }} <q-space></q-space>
-                            <strong>Descrição:</strong> {{ action.description }}
-                        </q-card-section>
-                        <q-card-actions>
-                            <q-btn
-                                color="primary"
-                                icon-right="open_in_new"
-                                label="Acessar conteúdo"
-                                @click="goTo($event, action.link)"
-                                size="13px"
-                                padding="13px" />
-                        </q-card-actions>
-                    </q-card>
-
+                <q-card bordered class="ipes-atividade q-py-md" v-for="(action, a) in item.document.actions" :key="a">
+                    <q-card-section>
+                        <strong>Ação:</strong> {{ action.name }} <q-space></q-space>
+                        <strong>Descrição:</strong> {{ action.description }}
+                    </q-card-section>
+                    <q-card-actions>
+                        <q-btn
+                            color="primary"
+                            icon-right="open_in_new"
+                            label="Acessar conteúdo"
+                            @click="goTo($event, action.link)"
+                            size="13px"
+                            padding="13px" />
+                    </q-card-actions>
+                </q-card>
             </q-expansion-item>
 
         </q-list>
@@ -45,15 +43,7 @@
   </div>
 </template>
 
-<script>
-
-import {
-  Quasar,
-  QBanner,
-  QBtn,
-  QExpansionItem
-} from 'quasar'
-
+<script>// @ts-nocheck
 export default {
     name: "Ipes",
     data(){

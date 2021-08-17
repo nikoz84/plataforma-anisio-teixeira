@@ -7,8 +7,9 @@
                             params: { slug : $route.params.slug }, 
                             query: { categoria: $route.query.categoria, 
                                      componentes: disciplina.id }}" 
-                exact>
-                <a>{{ disciplina.name }}</a>
+                exact
+                >
+                    {{disciplina.name}}
                 </router-link>
             </li>
         </ul>

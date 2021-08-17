@@ -7,14 +7,19 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;
 use App\Services\SearchEngineOptimization;
 use Jaybizzle\CrawlerDetect\CrawlerDetect;
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Http;
 class ApiController extends Controller
 {
     
-
+    private $seo;
+    private $crawlerDetect;
+    private $request;
     public function __construct(Request $request, CrawlerDetect $crawlerDetect)
     {
         $this->seo = new SearchEngineOptimization($request);
         $this->crawlerDetect = $crawlerDetect;
+        $this->request = $request;
     }
     /**
      * Trait de respostas com métodos comuns para todos os controladores filhos
@@ -28,9 +33,12 @@ class ApiController extends Controller
     public function home()
     {
         $data = $this->seo->getDefaultData();
-        // teste 'Mozilla/5.0 (compatible; Sosospider/2.0; +http://help.soso.com/webspider.htm)' 
+        //$crawler = 'Mozilla/5.0 (compatible; aiHitBot/2.9; +https://www.aihitdata.com/about)';
+        
         if($this->crawlerDetect->isCrawler()){
             $data = $this->seo->getMetadata();
+                
+            $url = $this->request::fullUrl();
         }
         
         return view('index', $data);
@@ -47,5 +55,24 @@ class ApiController extends Controller
             'max' => "O número máximo de caracteres para este campo é de :max",
             'mimes' => "Formato do arquivo é incorreto"
         ];
+    }
+
+    private function getHtmlFromPuppeteer()
+    {
+        /*
+            $response = Http::get('http://localhost:4000/ssr', [
+                'url' => $url
+            ]);
+            */
+            //$ssr_content = file_get_contents($ssr_server);
+            //dd($ssr_content);
+            // Did we get the content?
+            //dd($response->getStatusCode());
+            /*
+            if ($response->getStatusCode() != 500) {
+                echo $response->getContent();
+                die;
+            }
+            */
     }
 }

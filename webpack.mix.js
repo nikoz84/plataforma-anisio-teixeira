@@ -68,16 +68,12 @@ if (mix.inProduction()) {
   mix.webpackConfig(config)
   .js("resources/assets/js/app.js", "public/js")
   .options({
-    processCssUrls: true,
-    //extractVueStyles: 'public/css/[name].css',
+    processCssUrls: false,
+    //extractVueStyles: true,
   })
   .stylus("resources/assets/stylus/app.styl", "public/css", stylusOptions)
-  .copy("public/css/app.css", "public/css/app-min.css")
-  .copy("resources/assets/stylus/fonts", "public/fonts");
+  .copy("public/css/app.css", "public/css/app-min.css");
+  //.copy("resources/assets/stylus/fonts", "public/fonts");
 
 }
 
-//mix.stylus("resources/assets/stylus/app.styl", "public/css", {outputStyle: 'compressed'})
-  //.minify('public/css/app.css');
-    
-  //

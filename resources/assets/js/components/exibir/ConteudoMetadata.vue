@@ -53,34 +53,25 @@
             <strong>
                 Publicador(a):
             </strong>
-            <q-chip dense
-                    color="blue-grey-6" 
-                    text-color="white"
-                    clickable
-                    :label="conteudo.user ? conteudo.user.name: null"
-                    @click="onClick(`/recursos-educacionais/listar?publicador=${conteudo.user.id}`)">
-                    <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px;word-break: break-word;">
-                        Outros conteúdos deste publicador
-                    </q-tooltip>
-            </q-chip>
+            <a class="text-orange" v-html="conteudo.user ? conteudo.user.name: null"
+                    title="Outros conteúdos deste publicador"
+                    :href="`/recursos-educacionais/listar?publicador=${conteudo.user.id}`">
+                    
+            </a>
             
             <q-separator class="q-my-md"></q-separator>
 
             <strong >Componentes:</strong>
-            <q-chip dense
-                    color="blue-grey-6" 
-                    text-color="white"
-                    v-for="(componente) in conteudo.componentes"
+            <div class="flex justify-center q-mt-md">
+            <a v-for="(componente) in conteudo.componentes"
                     :key="`c-${componente.id}`"
-                    :label="componente.name"
-                    clickable
-                    @click="onClick(`/recursos-educacionais/listar?componentes=${componente.id}`)"
+                    v-html="componente.name"
+                    class="text-primary q-ml-lg q-mt-md"
+                    :href="`/recursos-educacionais/listar?componentes=${componente.id}`"
+                :title="`Procurar por: ${componente.name}`"
                 >
-                <q-tooltip content-class="bg-grey-10" content-style="font-size: 12px;word-break: break-word;">
-                    Procurar por: {{componente.name}}
-                </q-tooltip>
-            </q-chip>
-            
+            </a>
+            </div>
             <q-separator class="q-my-md"></q-separator>
 
             <TagList :items="conteudo.tags" title="Palavras Chave" slug="tag"></TagList>

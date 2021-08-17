@@ -1,15 +1,22 @@
 <template>
-    <div class="row q-gutter-xs">
-        <h5 v-if="category.id != null">Edição de Categoria de Conteúdo <b>{{this.categoryNome}}</b></h5>
-        <h5 v-if="category.id == null">Cadastro de Categoria de Conteúdo</h5>
+    <div class="row q-pa-md">
+      
         <form class="col-sm-12" v-on:submit.prevent="save()">
             
             <div class="row">
                 <q-card class="col-sm-12">
+                    <q-card-section>
+                        <h5 v-if="category.id != null">Edição da categoria: 
+                            <b>{{this.categoryNome}}</b>
+                        </h5>
+                        <h5 v-else>
+                            Criar nova categoria
+                        </h5>
+                        <div v-if="errors && errors.length > 0">
+                            <ShowErrors v-for="(error, i) in errors" :key="i" :errors="error"></ShowErrors>
+                        </div>
+                    </q-card-section>
                     <q-card-section class="q-gutter-sm">
-                        <template v-slot:error>
-                            <ShowErrors :errors="errors.name"></ShowErrors>
-                        </template>
                         <q-input 
                              bottom-slots 
                              :error="errors.name && errors.name.length > 0"
@@ -40,7 +47,7 @@
                             option-label="name"
                             ransition-show="scale"
                             transition-hide="scale"
-                            v-model="category.subCategories"
+                            v-model="parentCategory"
                             :options="categorias"
                             label="Categoria relacionada"
                             hint="Selecione uma categoria se precisar agrupar por sub-categorias"
@@ -51,7 +58,7 @@
                         <div class="q-gutter-sm">
                         <q-checkbox
                             v-model="category.options.is_active"
-                            label="Aprovar conteúdo"
+                            label="Ativa"
                             color="pink"
                         />
                         <q-checkbox
@@ -62,7 +69,10 @@
                         </div>
                     </q-card-section>
                     <q-card-section>
-                        <q-item-label style="margin-bottom:10px" ><q-icon name="image" style="padding-bottom: 3px;" /><strong>Imagem Associada</strong></q-item-label>
+                        <q-item-label style="margin-bottom:10px" >
+                            <q-icon name="image" style="padding-bottom: 3px;" />
+                                <strong>Imagem Associada</strong>
+                            </q-item-label>
                         <q-img 
                         loading="lazy" 
                         style="height:150px; width:150px"
@@ -80,26 +90,7 @@
                         hint="Imagem de Destaque"
                         />
                     </q-card-section>
-                     <q-card-section>
-                        <q-item-label style="margin-bottom:10px" ><q-icon name="videocam" style="padding-bottom: 3px;" /><strong>Video Destaque</strong></q-item-label>
-                        
-                        <q-video v-if="category.video"
-                            :ratio="16/9"
-                            :src="category.video"
-                        />
-                        <q-input
-                        class="q-mt-md"
-                        @input="val => {file = val[0];}"
-                        outlined
-                        type="file"
-                        filled
-                        :error="errors.videoDestaque && errors.videoDestaque.length > 0"
-                        @change="onFileVideoChange"
-                        counter
-                        accept=".webm"
-                        max-file-size="102400000"
-                        hint="Vídeo no formato .webm, tamanho máximo: 50MB"/>
-                    </q-card-section>
+                     
                 </q-card>
                 <q-card class="col-12">
                     <q-btn
@@ -113,16 +104,12 @@
         </form>
     </div>
 </template>
-<script>
+<script>// @ts-nocheck
+
 import { RecaptchaForm, ShowErrors } from "@forms/shared";
+
 export default {
-    name: "CategoryConteudoForm",
-    computed: {
-        url() 
-        {
-            return `http://${window.location.hostname}/${slug}`;
-        }
-    },
+  name: "CategoryConteudoForm",
     data() {
         return {
             category: {
@@ -130,14 +117,14 @@ export default {
                 canal:null,
                 canal_id: null,
                 imagemAssociada: "",
-                videoDestaque:"",
                 options: {
                     description:"",
                     is_active:true,
                     is_featured:true
                 },
-                subCategories:[]
+                subCategories: []
             },
+            parentCategory: null,
             canais: [],
             categorias:[],
             errors:{}
@@ -152,12 +139,6 @@ export default {
             if (!files.length)
                 return;
             this.category.imagemAssociada = files[0];
-        },
-        onFileVideoChange(e){
-            var files = e.target.files || e.dataTransfer.files;
-            if (!files.length)
-                return;
-            this.category.videoDestaque = files[0];
         },
         async getData() {
             const canais  = axios.get("/canais?select");
@@ -176,31 +157,29 @@ export default {
 
         async save() {
             const form = new FormData();
+            console.log(this.parentCategory)
+            
             form.append("name", this.category.name);
+            form.append('parent_id', 'dd');
             form.append("options", JSON.stringify(this.category.options));
-            if(this.category.canal)
-            form.append("canal_id", this.category.canal.id);
-            if(this.category.imagemAssociada)
-            form.append("imagemAssociada", this.category.imagemAssociada);
-            if(this.category.videoDestaque)
-            form.append("videoDestaque", this.category.videoDestaque);
-            try{
-                if (this.$route.params.action == "editar") 
-                {
-                    form.append("id", this.category.id);    
-                    form.append("_method", "PUT");
-                    let resp = await axios.post(this.$route.params.slug +"/"+ this.category.id, form);
-                }
-                else
-                {
-                    let resp = await axios.post(this.$route.params.slug , form);
-                }
-                this.$router.push(`/admin/categorias/listar`);
+            form.append("canal_id", this.category.canal ? this.category.canal.id : null);
+            form.append("imagemAssociada", this.category.imagemAssociada ? this.category.imagemAssociada : null);
+            
+            let url = "/categorias";
+            if(this.category.id){
+                url = url + `/${this.category.id}`;
+                 form.append("_method", "PUT");
             }
-            catch(ex)
-            {
-                this.errors = ex.errors;
+            
+            try {
+                const {data} = await axios.post( url, form);
+                if(data.success == true){
+                    this.$router.push(`/admin/categorias/listar`);
+                }
+            } catch(ex){
+                this.errors = ex.errors
             }
+             
          }
     }
 }

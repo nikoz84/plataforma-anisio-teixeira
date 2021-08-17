@@ -16,6 +16,7 @@ import ListarRoles from './ListarRoles';
 import ListarTags from './ListarTags';
 import ListarTipos from './ListarTipos';
 import ListarUsers from './ListarUsers';
+import ListarCategorias from './ListarCategorias';
 
 export {
     Conteudo,
@@ -34,5 +35,6 @@ export {
     ListarRoles,
     ListarTags,
     ListarTipos,
-    ListarUsers
+    ListarUsers,
+    ListarCategorias
 };

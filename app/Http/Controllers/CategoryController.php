@@ -26,9 +26,9 @@ class CategoryController extends ApiController
     {
         return [
             'canal_id' => 'required',
+            'parent_id' => 'sometimes|nullable',
             'name'=> 'required|min:2|max:255',
-            'imagemAssociada' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048|nullable',
-            'videoDestaque' => 'mimes:webpM,mp4|max:51200|nullable'
+            'imagemAssociada' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048|nullable'
         ];
     }
     /**
@@ -68,11 +68,20 @@ class CategoryController extends ApiController
     */
     public function create()
     {
+        dd($this->request->all());
         $validator = Validator::make($this->request->all(), $this->rules());
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível criar a categoria", 422);
+            return $this->errorResponse(
+                $validator->errors(), 
+                "Não foi possível criar a categoria", 
+                422
+            );
         }
-        $category           = new Category;
+        $category = new Category;
+
+        dd($validator->validate());
+        $category->fill($validator->validate());
+        dd('dkdi');
         $category->name     = $this->request->name;
         $category->canal_id = $this->request->canal_id;
         $category->options  = json_decode($this->request->options);
@@ -80,17 +89,21 @@ class CategoryController extends ApiController
         if (!$category->save()) {
             return $this->errorResponse([], 'Não foi possível cadastrar a categoria', 422);
         }
+        
         $fileImg = $this->saveFile($category->id, [$this->request->imagemAssociada], 'imagem-associada/categorias');
+        
         if(!$fileImg)
         {
             return $this->errorResponse([], 'Não foi possível salvar imagem associada', 422);
         }   
+        /*
         if ($this->request->videoDestaque) {
             $fileVideo = $this->saveFile($category->id, [$this->request->videoDestaque], 'visualizacao');
             if (!$fileVideo) {
                 return $this->errorResponse([], 'Não foi possível salvar video de destaque', 422);
             }
         }
+        */
         return $this->successResponse($category, 'Categoria criada com sucesso!', 200);
     }
 

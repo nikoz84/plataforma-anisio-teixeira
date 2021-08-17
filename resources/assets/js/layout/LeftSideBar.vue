@@ -50,11 +50,11 @@
     -->
     <!-- CANAIS-->
     <q-list v-if="links.length > 0">
-      <q-item-label class="bg-grey-4" header>
-        <strong class="grey-10">
+      <!--q-item-label class="bg-grey-4" header>
+        <strong class="text-grey-1">
           Canais
         </strong>
-      </q-item-label>
+      </q-item-label-->
       <div v-for="(link, i) in links" :key="`x-${i}`">
         <q-item
           
@@ -87,7 +87,7 @@
       </q-item>
       <q-separator />
       <q-item
-        :to="{ name: 'IpesFaculdades' }"
+        :to="{ path: '/ipes' }"
         aria-label="IR: Ações de Faculdades da Bahia"
         title="IR: Ações de Faculdades da Bahia"
         clickable

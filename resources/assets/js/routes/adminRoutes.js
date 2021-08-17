@@ -2,8 +2,10 @@
 //import { LoaderAdmin } from "@components/exibir";
 import Admin from "@layout/Admin";
 import { ListarConteudos, ListarAplicativos, ListarCanais, 
-    ListarContato, ListarOptions, ListarRoles, ListarTags, ListarTipos, ListarUsers } from "@components/exibir"
-import { ConteudoForm, PlayListForm, AplicativoForm, CanalForm, OptionsForm, RoleForm, TagForm, TipoForm, UserForm } from "@forms/models";
+    ListarContato, ListarOptions, ListarRoles, ListarTags, ListarTipos, ListarUsers, 
+    ListarCategorias } from "@components/exibir"
+import { ConteudoForm, PlayListForm, AplicativoForm, CanalForm, OptionsForm, RoleForm, 
+  TagForm, TipoForm, UserForm, CategoryConteudoForm } from "@forms/models";
 import AdminPage from "@pages/AdminPage.vue"
 import Resumo from "@pages/Resumo.vue";
 import { Contato }  from "@components/exibir";
@@ -268,7 +270,33 @@ const adminRoutes = {
         layout: Admin
       }
     },
-
+    {
+      path: "categorias/listar",
+      components: { admin: ListarCategorias },
+      meta: {
+        requiresAuth: true,
+        title: "Listar categorias",
+        layout: Admin
+      }
+    },
+    {
+      path: "categorias/editar/:id",
+      components: { admin: CategoryConteudoForm },
+      meta: {
+        requiresAuth: true,
+        title: "Editar categoria",
+        layout: Admin
+      }
+    },
+    {
+      path: "categorias/adicionar",
+      components: { admin: CategoryConteudoForm },
+      meta: {
+        requiresAuth: true,
+        title: "Adicionar categoria",
+        layout: Admin
+      }
+    }
     
   ]
 };
