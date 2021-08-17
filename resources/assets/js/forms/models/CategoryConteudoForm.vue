@@ -149,7 +149,7 @@ export default {
             if (this.$route.params.id) {
                 let category = await axios.get("/categorias/" + this.$route.params.id);
                 this.category = category.data;
-                console.log( this.category)
+                console.log(this.category)
                 this.categoryNome = this.category.name;
             }
             
