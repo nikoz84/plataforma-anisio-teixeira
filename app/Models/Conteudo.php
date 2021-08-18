@@ -24,8 +24,8 @@ class Conteudo extends Model
 {
     use FileSystemLogic, SoftDeletes, UserCan;
 
-    const IS_SITE = false;
-    const IS_APPROVED = false;
+    const IS_SITE = 'false';
+    const IS_APPROVED = 'false';
     const INIT_COUNT = 0;
     public static $TYPE_SEARCH = 'simple';
 
@@ -283,7 +283,7 @@ class Conteudo extends Model
      * @param \App\Conteudo $conteudo
      * @return \App\Model\ApiResponser retorna json
      */
-    public function scopeAprovados($query, $is_approved)
+    public function scopeApproved($query, $is_approved)
     {
         if (!$is_approved) {
             return $query;

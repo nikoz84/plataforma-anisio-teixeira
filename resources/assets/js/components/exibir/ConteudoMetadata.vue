@@ -53,24 +53,25 @@
             <strong>
                 Publicador(a):
             </strong>
-            <a class="text-orange" v-html="conteudo.user ? conteudo.user.name: null"
-                    title="Outros conteúdos deste publicador"
-                    :href="`/recursos-educacionais/listar?publicador=${conteudo.user.id}`">
-                    
-            </a>
-            
+            <div class="flex justify-center q-mt-md wordbreak">
+                <a class="tag text-primary" v-html="conteudo.user ? conteudo.user.name: null"
+                        title="Outros conteúdos deste publicador"
+                        :href="`/recursos-educacionais/listar?publicador=${conteudo.user.id}`">
+                        
+                </a>
+            </div>
             <q-separator class="q-my-md"></q-separator>
 
             <strong >Componentes:</strong>
-            <div class="flex justify-center q-mt-md">
-            <a v-for="(componente) in conteudo.componentes"
-                    :key="`c-${componente.id}`"
-                    v-html="componente.name"
-                    class="text-primary q-ml-lg q-mt-md"
-                    :href="`/recursos-educacionais/listar?componentes=${componente.id}`"
-                :title="`Procurar por: ${componente.name}`"
-                >
-            </a>
+            <div class="flex justify-center q-mt-md wordbreak">
+                <a v-for="(componente) in conteudo.componentes"
+                        :key="`c-${componente.id}`"
+                        v-html="componente.name"
+                        class="tag text-primary q-ml-lg q-mt-md"
+                        :href="`/recursos-educacionais/listar?componentes=${componente.id}`"
+                    :title="`Procurar por: ${componente.name}`"
+                    >
+                </a>
             </div>
             <q-separator class="q-my-md"></q-separator>
 

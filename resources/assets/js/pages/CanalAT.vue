@@ -108,7 +108,6 @@ export default {
         this.getPodcast()
     },
     methods: {
-        ...mapMutations(['SET_OPENSIDEBAR']),
         async getCanal(){
             const {data} = await axios.get('/canal-at');
             this.canal = data.metadata
@@ -117,23 +116,7 @@ export default {
         async getPodcast(){
             const {data} = await axios.get('/canal-at/podcast/');
             this.podcasts = data.metadata
-            console.log(this.podcasts)
-        },
-        animateEffect(){
-            var elements = document.querySelectorAll('.el');
-            this.$anime({
-                targets: elements,
-                keyframes: [
-                    {translateY: -40},
-                    {translateX: 250},
-                    {translateY: 40},
-                    {translateX: 0},
-                    {translateY: 0}
-                ],
-                duration: 4000,
-                easing: 'easeOutElastic(1, .8)',
-                loop: true
-            });
+            //console.log(this.podcasts)
         }
     },
 }

@@ -70,7 +70,7 @@ class ConteudoController extends ApiController
         }
         
         $conteudos = $query
-            ->aprovados($is_approved)
+            ->approved($is_approved)
             ->with(['canal', 'tipo'])
             ->paginate($request->query('limit', 6))
             ->setPath("/conteudos?{$url}");
@@ -198,7 +198,7 @@ class ConteudoController extends ApiController
 
         
         $conteudos = $query
-            ->aprovados(true)
+            ->approved(true)
             ->fullTextSearch($termo, 'tag')
             ->with(['canal', 'tipo'])
             ->paginate($limit)

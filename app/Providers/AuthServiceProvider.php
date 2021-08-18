@@ -12,11 +12,11 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        App\Models\Aplicativo::class => App\Policies\AplicativoPolicy::class,
-        App\Models\Canal::class => App\Policies\CanalPolicy::class,
-        App\Models\Conteudo::class => App\Policies\ConteudoPolicy::class,
-        App\Models\Document::class => App\Policies\DocumentPolicy::class,
-        App\Models\PlayList::class => App\Policies\PlayListPolicy::class
+        \App\Models\Aplicativo::class => \App\Policies\AplicativoPolicy::class,
+        \App\Models\Canal::class => \App\Policies\CanalPolicy::class,
+        \App\Models\Conteudo::class => \App\Policies\ConteudoPolicy::class,
+        \App\Models\Document::class => \App\Policies\DocumentPolicy::class,
+        \App\Models\PlayList::class => \App\Policies\PlayListPolicy::class
     ];
 
     /**

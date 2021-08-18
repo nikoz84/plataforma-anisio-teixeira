@@ -48,6 +48,15 @@
   background-color: #066ab1;
   color: #fff !important;
 }
+.wordbreak {
+  word-break: break-all !important;
+}
+.tag {
+  padding: 10px;
+  font-size: 16px;
+  text-decoration: none;
+  background-color: #f0f8ff;
+}
 .title-page-tipos {
   font-family: 'Lato', sans-serif, cursive;
   font-weight: 700 false;

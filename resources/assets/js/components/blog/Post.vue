@@ -1,7 +1,9 @@
 <template>
-    <article class="row q-mt-sm">
+    <article class="q-ma-lg">
         <q-card class="" v-if="post">
-          
+            <div :style="styleCss">
+              
+            </div>
             <q-card-section class="text-center">
                 <Title :title="post.title"></Title>
             </q-card-section>
@@ -16,7 +18,7 @@
                 </small>
               <q-separator class="q-mt-lg" />
             </q-card-section>
-            <q-card-section :class="`q-ma-lg text-justify`" 
+            <q-card-section :class="`q-ma-lg text-justify wordbreak`" 
                             v-html="postContent">
             </q-card-section>
             <q-card-section>
@@ -44,7 +46,7 @@ export default {
       const doc = new DOMParser().parseFromString(this.post.content, "text/html");
       const body = doc.body;
       const section = document.createElement('section')
-
+      section.classList.add('font-post')
       const elements = [...body.children].map(e=>{
           e.removeAttribute('style')
           return section.appendChild(e);
@@ -53,6 +55,18 @@ export default {
       
       return section.outerHTML
       
+    },
+    styleCss(){
+      
+      return {
+        'width': '100%',
+        'height': '250px',
+        'background-image': `url(${this.post.image})`,
+        'background-repeat': 'no-repeat',
+        'background-position': 'center center',
+        'background-color': '#EEE',
+        'background-size': '100% auto'
+      }
     }
   },
   methods:{
@@ -69,21 +83,26 @@ export default {
   }
 };
 </script>
-<style lang="stylus">
+<style lang="stylus" scoped>
 .wp-caption .aligncenter {
   align-items: center;
 }
-p{
+.font-post{
   font-size: 20px;
+}
+section > p{
+  font-size: 18px !important;
   display: block;
-  word-break: break-word;
+  word-break: break-word !important;
 }
 p::after{
   content: "\A";
   white-space: pre;
 }
 img{
-  object-fit: contain;
+  width: 60%;
+  height: 45%;
 }
+
 </style>
 

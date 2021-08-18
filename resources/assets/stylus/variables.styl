@@ -77,37 +77,17 @@ $generic-border-radius    = 3px;
 $body-font-size          ?= 15px
 $quasar-dont-import-fonts = true;
 
-/*
-
-@font-face {
-  font-family: 'Lato';
-  font-style: normal;
-  font-weight: 400;
-  src: url('./fonts/lato-v17-latin-regular.woff2') format('woff2'), 
-       url('./fonts/lato-v17-latin-regular.woff') format('woff'), 
-       url('./fonts/lato-v17-latin-regular.ttf') format('truetype'), 
-       url('./fonts/lato-v17-latin-regular.svg#Lato') format('svg'); 
+.wordbreak{
+  word-break: break-all !important;
 }
-@font-face {
-  font-family: 'Lato';
-  font-style: normal;
-  font-weight: 700;
-  src: url('./fonts/lato-v17-latin-700.woff2') format('woff2'), 
-       url('./fonts/lato-v17-latin-700.woff') format('woff'), 
-       url('./fonts/lato-v17-latin-700.ttf') format('truetype'), 
-       url('./fonts/lato-v17-latin-700.svg#Lato') format('svg'); 
+.tag{
+  padding: 10px;
+  font-size: 16px;
+  text-decoration: none;
+  background-color: aliceblue;
 }
 
-@font-face {
-  font-family: 'Bilbo Swash Caps';
-  font-style: normal;
-  font-weight: 400;
-  src: url('./fonts/bilbo-swash-caps-v15-latin-regular.woff2') format('woff2'), 
-       url('./fonts/bilbo-swash-caps-v15-latin-regular.woff') format('woff'), 
-       url('./fonts/bilbo-swash-caps-v15-latin-regular.ttf') format('truetype'), 
-       url('./fonts/bilbo-swash-caps-v15-latin-regular.svg#BilboSwashCaps') format('svg'); 
-}
-*/
+
 $headings ?= {
   h1: {
     size: 4rem,

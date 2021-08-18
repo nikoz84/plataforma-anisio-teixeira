@@ -1,10 +1,10 @@
 <template>
   <div>
     <strong >{{title}}:</strong>
-    <div class="flex justify-center q-mt-md">
+    <div class="flex justify-center q-mt-md wordbreak">
     <a v-for="(item, i) in items"
       :key="`tag-${i}`"
-      class="text-primary q-ml-lg q-mt-md"
+      class="text-primary q-ml-lg q-mt-md tag"
       v-html="item.name"
       :href="searchBy(item)"      
       :title="`Procurar por palavra-chave: ${item.name}`"
@@ -28,4 +28,3 @@ export default {
   }
 };
 </script>
-
