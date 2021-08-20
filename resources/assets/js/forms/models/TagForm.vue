@@ -11,7 +11,7 @@
                     <ShowErrors :errors="errors.name"></ShowErrors>
                   </template>
                 </q-input>
-                <q-card v-if="tag.id">
+                <q-card v-if="tag && tag.id">
                     <q-card-section>
                         <p>Vezes pesquisada: {{ tag.searched }}</p> 
                         <p>Criada em: {{ format(tag.created_at) }}</p>
