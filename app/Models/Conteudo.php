@@ -189,7 +189,7 @@ class Conteudo extends Model
      */
     public function getShortTitleAttribute()
     {
-        return Str::words($this->title, 7);
+        return Str::words($this->title, 8);
     }
     /**
      * Converte o título para slug ou url amigável

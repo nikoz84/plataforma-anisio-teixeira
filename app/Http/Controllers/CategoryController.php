@@ -9,6 +9,7 @@ use App\Http\Controllers\ApiController;
 use App\Traits\FileSystemLogic;
 use App\Models\Canal;
 use App\Helpers\CachingModelObjects;
+use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends ApiController
 {
@@ -28,7 +29,7 @@ class CategoryController extends ApiController
             'canal_id' => 'required',
             'parent_id' => 'sometimes|nullable',
             'name'=> 'required|min:2|max:255',
-            'imagemAssociada' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048|nullable'
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:2048|nullable'
         ];
     }
     /**
@@ -45,65 +46,47 @@ class CategoryController extends ApiController
     }
 
     /**
-     * Lista as informações do aplicativo 
-     * @param \App\Category $categories
+     * Lista as categorias do canal 
+     * 
      * @return \App\Controllers\ApiResponser
      */ 
 
     public function index()
     {
         $limit = $this->request->get('limit', 15);
-        $categories = Category::whereNull('parent_id')
-            ->where('options->is_active', 'true')
+        
+        $categories = Category:://whereNull('parent_id')
+            where('options->is_active', 'true')
             ->with('subCategories')
             ->limit($limit)
-            ->orderBy('name', 'asc')
+            ->orderBy('created_at', 'desc')
             ->paginate($limit);
+        
         return $this->showAsPaginator($categories);
     }
+
    /**
     * 
     * Criando e validando informações para ser adicionadas no banco de dados
     * @return void
     */
-    public function create()
+    public function create(CategoryRequest $request)
     {
-        dd($this->request->all());
-        $validator = Validator::make($this->request->all(), $this->rules());
-        if ($validator->fails()) {
-            return $this->errorResponse(
-                $validator->errors(), 
-                "Não foi possível criar a categoria", 
-                422
-            );
-        }
         $category = new Category;
-
-        dd($validator->validate());
-        $category->fill($validator->validate());
-        dd('dkdi');
-        $category->name     = $this->request->name;
-        $category->canal_id = $this->request->canal_id;
-        $category->options  = json_decode($this->request->options);
-
+        
+        $category->fill($request->validated());
+        
         if (!$category->save()) {
             return $this->errorResponse([], 'Não foi possível cadastrar a categoria', 422);
         }
         
-        $fileImg = $this->saveFile($category->id, [$this->request->imagemAssociada], 'imagem-associada/categorias');
-        
-        if(!$fileImg)
-        {
-            return $this->errorResponse([], 'Não foi possível salvar imagem associada', 422);
-        }   
-        /*
-        if ($this->request->videoDestaque) {
-            $fileVideo = $this->saveFile($category->id, [$this->request->videoDestaque], 'visualizacao');
-            if (!$fileVideo) {
-                return $this->errorResponse([], 'Não foi possível salvar video de destaque', 422);
+        if($request->has('image') && $request->image){
+            $fileImg = $this->saveFile($category->id, [$request->image], 'imagem-associada/categorias');
+            if (!$fileImg) {
+                return $this->errorResponse([], 'Não foi possível salvar imagem associada', 422);
             }
         }
-        */
+        
         return $this->successResponse($category, 'Categoria criada com sucesso!', 200);
     }
 
@@ -114,17 +97,13 @@ class CategoryController extends ApiController
      * @param  \App\Category $categories
      * @return  \App\Controllers\ApiResponser retorna json
      */
-    public function update($id)
+    public function update(CategoryRequest $request, Category $category)
     {
-        $validator = Validator::make($this->request->all(), $this->rules());
-        if ($validator->fails())
-        {
-            return $this->errorResponse($validator->errors(), "Não foi possível atualizar a categoria", 422);
-        }
-        $category = Category::findOrFail($id);
-        $category->name = $this->request->name;
-        $category->canal_id = $this->request->canal_id;
-        $category->options = json_decode($this->request->options);
+        
+        $category->fill($request->validated());
+
+        dd($category);
+        dd('d');
         if ($this->request->imagemAssociada)
         {
             if($category->refenciaImagemAssociada())

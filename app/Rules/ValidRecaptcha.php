@@ -38,6 +38,6 @@ class ValidRecaptcha implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+        return 'Verifique o côdigo de segurança';
     }
 }

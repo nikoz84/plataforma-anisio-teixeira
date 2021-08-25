@@ -71,36 +71,43 @@
           </template>
         </q-select-->
         <!-- TITULO --> 
-        <q-input outlined v-model="conteudo.title" 
-           label="Título do conteúdo"
-           autogrow
-           bottom-slots
-          :error="errors && errors.title && errors.title.length > 0"
-           >
-           <template v-slot:error>
-            <ShowErrors :errors="errors.title"></ShowErrors>
-          </template>
-        </q-input>
-        <!-- AUTORES --> 
-        <q-input outlined v-model="conteudo.authors" 
-          label="Autores"
-          autogrow
-          bottom-slots
-          :error="errors && errors.authors && errors.authors.length > 0">
-           <template v-slot:error>
-            <ShowErrors :errors="errors.authors"></ShowErrors>
-          </template>
-        </q-input>
+        <div class="q-my-lg">
+          <q-input outlined v-model="conteudo.title" 
+            label="Título do conteúdo"
+            autogrow
+            bottom-slots
+            :error="errors && errors.title && errors.title.length > 0"
+            >
+            <template v-slot:error>
+              <ShowErrors :errors="errors.title"></ShowErrors>
+            </template>
+          </q-input>
+        
+        </div>
+        <!-- AUTORES -->
+        <div class="q-my-lg">
+          <q-input outlined v-model="conteudo.authors" 
+            label="Autores"
+            autogrow
+            bottom-slots
+            :error="errors && errors.authors && errors.authors.length > 0">
+            <template v-slot:error>
+              <ShowErrors :errors="errors.authors"></ShowErrors>
+            </template>
+          </q-input>
+        </div>
         <!-- FONTE --> 
-        <q-input outlined v-model="conteudo.source" 
-          label="Fonte"
-          autogrow
-          bottom-slots
-          :error="errors && errors.source && errors.source.length > 0">
-           <template v-slot:error>
-            <ShowErrors :errors="errors.source"></ShowErrors>
-          </template>
-        </q-input>
+        <div class="q-my-lg">
+          <q-input outlined v-model="conteudo.source" 
+            label="Fonte"
+            autogrow
+            bottom-slots
+            :error="errors && errors.source && errors.source.length > 0">
+            <template v-slot:error>
+              <ShowErrors :errors="errors.source"></ShowErrors>
+            </template>
+          </q-input>
+        </div>
         <!-- DESCRIÇÃO --> 
         <div class="q-mt-md">
           <p class="text-center">Escreva uma descrição 

@@ -4,8 +4,10 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Conteudo;
+use App\Rules\ConteudoTitleExist;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\RequestValidator;
+use App\Rules\ValidExtensions;
 
 class ConteudoFormRequest extends FormRequest
 {
@@ -74,7 +76,7 @@ class ConteudoFormRequest extends FormRequest
             'canal_id' => 'required',
             'tipo_id' => 'required',
             'category_id' => 'nullable',
-            'title' => 'required|min:5|max:200',
+            'title' => ['required','min:5','max:200', new ConteudoTitleExist()],
             'description' => 'required|min:100|max:5012',
             'options.site' => 'nullable|active_url',
             'tags' => 'required|array|min:3|max:15',
@@ -85,10 +87,10 @@ class ConteudoFormRequest extends FormRequest
             'is_featured' => 'sometimes|boolean',
             'is_approved' => 'required|boolean',
             'is_site' => 'sometimes|boolean',
-            'download' => ["sometimes", "file", new \App\Rules\ValidExtensions($this->get('tipo_id'))],
+            'download' => ["sometimes", "file", new ValidExtensions($this->get('tipo_id'))],
             'guias_pedagogicos' => ["sometimes','file','mimes:pdf,doc,docx,epub','max:120000"],
             'imagem_associada' => ['sometimes','image','mimes:jpeg,jpg,webp,png,gif,svg','max:2048'],
-            'visualizacao' => ["sometimes", "file", new \App\Rules\ValidExtensions($this->get('tipo_id'))]
+            'visualizacao' => ["sometimes", "file", new ValidExtensions($this->get('tipo_id'))]
         ];
     }
 
@@ -97,6 +99,7 @@ class ConteudoFormRequest extends FormRequest
     public function messages()
     {
         return [
+            'exists' => 'Esse título existe.',
             'options.site.active_url' => 'O campo URL do Site não é uma URL válida',
             'componentes.required' => 'Selecione ao menos 1 componente curricular para este conteúdo'
         ];

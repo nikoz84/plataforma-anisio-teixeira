@@ -14,6 +14,7 @@ trait RequestValidator
      */
     protected function failedValidation(Validator $validator)
     {
+        //dd($validator->failed());
         $errors = [];
         foreach (collect($validator->errors()) as $key => $value) {
             array_set($errors, $key, $value);

@@ -143,7 +143,10 @@ return [
         'birthday' => 'nascimento',
         'delete_confirmation' => 'confirmação',
         'download' => 'arquivo de download',
-        'componentes' => 'componentes curriculares'
+        'componentes' => 'componentes curriculares',
+        'options.description' => 'descrição',
+        'options.is_active' => 'marcar como ativo',
+        'options.is_featured' => 'marcar como destaque'
     ],
     'options' => [
         'lang' => 'pt_BR',
