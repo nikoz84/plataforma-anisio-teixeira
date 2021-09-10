@@ -5,7 +5,8 @@ import {
   RecoverPassForm, 
   MudarPassForm,
   ContactForm,
-  ConfirmationEmailForm
+  ConfirmationEmailForm,
+  MudarSenhaForm
 } from "@forms/auth-contato";
 import Default from "@layout/Default";
 import User from "@pages/User";
@@ -55,6 +56,18 @@ const usuarioRoutes = {
         },
         meta: {
           //requiresAuth: true,
+          title: "Mudar senha",
+          layout: Default
+        }
+      },
+      {
+        path: "senha",
+        name: "Senha",
+        components: {
+          user : MudarSenhaForm
+        },
+        meta: {
+          requiresAuth: true,
           title: "Mudar senha",
           layout: Default
         }

@@ -52,7 +52,7 @@
 
             <q-item
               v-if="isLogged"
-              to="/usuario/mudar-senha"
+              to="/usuario/senha"
               clickable
               v-close-popup
               tabindex="0"

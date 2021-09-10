@@ -103,7 +103,7 @@ export default {
         }
     },
     mounted() {
-        this.SET_OPENSIDEBAR(true);
+        //this.SET_OPENSIDEBAR(true);
         this.getCanal()
         this.getPodcast()
     },

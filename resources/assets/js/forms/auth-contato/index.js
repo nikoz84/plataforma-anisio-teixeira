@@ -4,6 +4,7 @@ import RecoverPassForm from "./RecoverPassForm";
 import MudarPassForm from "./MudarPassForm";
 import ContactForm from "./ContactForm";
 import ConfirmationEmailForm from "./ConfirmationEmailForm";
+import MudarSenhaForm from "./MudarSenhaForm";
 
 export {
     LoginForm,
@@ -11,5 +12,6 @@ export {
     RecoverPassForm,
     MudarPassForm,
     ContactForm,
-    ConfirmationEmailForm
+    ConfirmationEmailForm,
+    MudarSenhaForm
 };

@@ -2,20 +2,50 @@
   <div class="q-pa-md row justify-center q-gutter-xs">
     <q-card class="col-sm-5">
       <q-card-section class="q-gutter-sm">
-        <!-- CANAL -->
-        <ParentAndChildSelect :parent="canais" 
-          label="Canais"
-          :selectedId="conteudo.canal_id"
-          @click="setCanal"
-        ></ParentAndChildSelect>
-        <div class="q-my-md" v-if="errors && errors.canal_id && errors.canal_id.length > 0">
-          <ShowErrors :errors="errors.canal_id"></ShowErrors>
-        </div>
-        <!--q-select
+        <q-input outlined v-model="conteudo.title" 
+            label="Título do conteúdo"
+            autogrow
+            bottom-slots
+            :error="errors && errors.title && errors.title.length > 0"
+            >
+            <template v-slot:error>
+              <ShowErrors :errors="errors.title"></ShowErrors>
+            </template>
+          </q-input>
+      </q-card-section>
+      <q-card-section>
+        <q-select
           outlined
+          stack-label
+          emit-value
+          map-options
           option-value="id"
           option-label="name"
-          v-model="conteudo.canal"
+          v-model="conteudo.tipo_id"
+          :options="tipos"
+          label="Tipo de Mídia"
+          :error="errors && errors.tipo_id && errors.tipo_id.length > 0"
+          bottom-slots
+        >
+          <template v-slot:error>
+            <ShowErrors :errors="errors.tipo_id"></ShowErrors>
+          </template>
+        </q-select>
+      
+      </q-card-section>
+      <q-card-section class="q-gutter-sm">
+        
+      </q-card-section>
+      
+      <q-card-section class="q-gutter-sm">
+        <q-select
+          outlined
+          stack-label
+          emit-value
+          map-options
+          option-value="id"
+          option-label="name"
+          v-model="conteudo.canal_id"
           :options="canais"
           label="Escolha um Canal"
           @input="getCategories"
@@ -25,7 +55,7 @@
           <template v-slot:error>
             <ShowErrors :errors="errors.canal_id"></ShowErrors>
           </template>
-        </q-select-->
+        </q-select>
         
         <!-- CATEGORIA -->
         <ParentAndChildSelect :parent="categories" 
@@ -36,54 +66,30 @@
         <div class="q-my-md" v-if="errors && errors.category_id && errors.category_id.length > 0">
           <ShowErrors :errors="errors.category_id"></ShowErrors>
         </div>
-        <!-- LICENÇAS -->
-        <ParentAndChildSelect :parent="licencas" 
-          label="Licença"
-          :selectedId="conteudo.license_id"
-          @click="setLicense"
-        ></ParentAndChildSelect>
-        <div> {{license_description ? license_description : '' }} </div>
-        <div class="q-my-md" v-if="errors && errors.license_id && errors.license_id.length > 0">
-          <ShowErrors :errors="errors.license_id"></ShowErrors>
-        </div>
-        <!-- TIPO DE MIDIA -->
-        <ParentAndChildSelect :parent="tipos" 
-          label="Tipos"
-          :selectedId="conteudo.tipo_id"
-          @click="setTipo"
-        ></ParentAndChildSelect>
-        <div class="q-my-md" v-if="errors && errors.tipo_id && errors.tipo_id.length > 0">
-          <ShowErrors :errors="errors.tipo_id"></ShowErrors>
-        </div>
-        <!-- q-select
+        
+        <!--q-select
+          v-if="categories && categories.length > 0"
           outlined
           stack-label
+          emit-value
+          map-options
           option-value="id"
           option-label="name"
-          v-model="conteudo.tipo"
-          :options="tipos"
-          label="Tipo de Mídia"
-          :error="errors && errors.tipo_id && errors.tipo_id.length > 0"
+          v-model="conteudo.category_id"
+          :options="categories"
+          @input="setCategory"
+          @getOptionLabel="getOptionLabel"
+          options-selected-class="text-deep-orange"
+          label="Escolha uma Categoria"
+          :error="errors && errors.category_id && errors.category_id.length > 0"
           bottom-slots
         >
           <template v-slot:error>
-            <ShowErrors :errors="errors.tipo_id"></ShowErrors>
+            <ShowErrors :errors="errors.category_id"></ShowErrors>
           </template>
-        </q-select-->
-        <!-- TITULO --> 
-        <div class="q-my-lg">
-          <q-input outlined v-model="conteudo.title" 
-            label="Título do conteúdo"
-            autogrow
-            bottom-slots
-            :error="errors && errors.title && errors.title.length > 0"
-            >
-            <template v-slot:error>
-              <ShowErrors :errors="errors.title"></ShowErrors>
-            </template>
-          </q-input>
-        
-        </div>
+        </!--q-select -->
+
+
         <!-- AUTORES -->
         <div class="q-my-lg">
           <q-input outlined v-model="conteudo.authors" 
@@ -108,6 +114,23 @@
             </template>
           </q-input>
         </div>
+        
+        </q-card-section>
+
+        <q-card-section>
+        
+        <!-- LICENÇAS -->
+        <ParentAndChildSelect :parent="licencas" 
+          label="Licença"
+          :selectedId="conteudo.license_id"
+          @click="setLicense"
+        ></ParentAndChildSelect>
+        <div> {{license_description ? license_description : '' }} </div>
+        <div class="q-my-md" v-if="errors && errors.license_id && errors.license_id.length > 0">
+          <ShowErrors :errors="errors.license_id"></ShowErrors>
+        </div>
+        
+        
         <!-- DESCRIÇÃO --> 
         <div class="q-mt-md">
           <p class="text-center">Escreva uma descrição 
@@ -460,7 +483,7 @@ export default {
     this.getData();
   },
   computed: {
-    //...mapState(["componentes", "niveis"])
+    //
   },
   methods: {
     onImageFileChange(e) {
@@ -539,17 +562,36 @@ export default {
         this.loading = false;
       }
     },
+    
+    hasChild (scope) {
+      return scope.opt.sub_categories.some(c => c.id === this.conteudo.category_id)
+      //scope.opt.children.some(c => c.name === this.model)
+    },
+    
     async getCategories(val) {
-      if(!val || !val.id)
-      {
-        return;
-      }
-      const id = val.id;
-      this.conteudo.canal = val;
-      const { data } = await axios.get(`/categorias/canal/${id}`);
       
-      this.categories = data.metadata.categories;
-      this.categoryName = data.metadata.category_name;
+      if(!val) return;
+      const id = val.hasOwnProperty('id') ? val.id: val;
+      this.$q.loading.show()
+      try {
+        const { data } = await axios.get(`/categorias/canal/${id}`);
+        
+          this.categories = data.metadata.categories;
+          this.categoryName = data.metadata.category_name;
+        this.$q.loading.hide()
+      } catch (error) {
+        this.$q.loading.hide()
+      }
+    },
+    getSubCategorias(val){
+      let subCat = null;
+      if(!val) return;
+      
+      subCat = this.categories.filter((item)=>{
+        return item.id == val
+      })
+
+      return subCat
       
     },
     async getData() {
@@ -581,8 +623,14 @@ export default {
         this.selectedCategory = category.name;
       }
     },
-    setCategory(id){
-      this.conteudo.category_id = id
+    setCategory(cat){
+      console.log(cat)
+      this.conteudo.category_id = cat.id
+      return cat
+      
+    },
+    getOptionLabel(ev){
+      console.log(ev, 'sds')
     },
     setLicense(id){
       this.conteudo.license_id = id;
