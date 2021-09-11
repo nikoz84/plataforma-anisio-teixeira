@@ -1,20 +1,7 @@
-/*
-$primary   = #08275e
-$secondary = #424242
-$accent    = #451e5f
-$positive  = #4BBEAB
-$negative  = #B05552
-$info      = #35586A
-$warning   = #D6B476
-$light     = #bdbdbd
-$dark      = #04091f
-$faded     = #777
-*/
 
 $primary   = #066ab1
 $secondary = #5698e3
 $accent    = #451e5f
-
 $light     = #5698e3
 $dark      = #004081
 $positive  = #3cac3d
@@ -23,19 +10,13 @@ $info      = #3871c1
 $warning   = #e9ba1a
 $light     = #bdbdbd
 $faded     = #e1e2e1
-
 $petecavermelho  = $negative
 $petecaamarelo   = $warning
 $petecaazul      = $info 
 $petecaverde     = $positive
-
 $background-cinza = #e1e2e1
-
-
-
 $input-text-color   = $primary;
 $input-label-color  = $accent;
-
 $generic-border-radius    = 3px;
 $body-font-size          ?= 15px
 $quasar-dont-import-fonts = true;
@@ -86,7 +67,7 @@ $quasar-dont-import-fonts = true;
 
 .tag
   padding: 10px;
-  font-size: 16px;
+  font-size: 15px;
   text-decoration: none;
   background-color: aliceblue;
 
@@ -96,14 +77,15 @@ $quasar-dont-import-fonts = true;
   background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23623d9c' fill-opacity='0.39' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
   min-height:115px;
 h1
-  text-shadow: -0.0075em 0.0075em 0 mix($accent, $faded, 94%),
-  0.005em 0.005em 0 mix($accent, $faded, 60%),
-  0.01em 0.01em 0 mix($accent, $faded, 62%), 
-  0.015em 0.015em mix($accent, $faded, 64%), 
-  0.02em 0.02em 0 mix($accent, $faded, 66%), 
-  0.025em 0.025em 0 mix($accent, $faded, 68%),
-  0.03em 0.03em 0 mix($accent, $faded, 70%),
-  0.035em 0.035em 0 mix($accent, $faded, 72%);
+  color: $text;
+  text-shadow: -0.0075em 0.0075em 0 mix($accent, $primary, 94%),
+  0.005em 0.005em 0 mix($accent, $primary, 60%),
+  0.01em 0.01em 0 mix($accent, $primary, 62%), 
+  0.015em 0.015em mix($accent, $primary, 64%), 
+  0.02em 0.02em 0 mix($accent, $primary, 66%), 
+  0.025em 0.025em 0 mix($accent, $primary, 68%),
+  0.03em 0.03em 0 mix($accent, $primary, 70%),
+  0.035em 0.035em 0 mix($accent, $primary, 72%);
 
 .wp-block-image
   display: flex;

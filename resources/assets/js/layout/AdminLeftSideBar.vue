@@ -1,5 +1,5 @@
 <template>
-  <q-list>
+  <q-list dense bordered padding>
     <q-item-label class="bg-grey-4" header>
       <strong class="grey-10">
         Painel de Controle

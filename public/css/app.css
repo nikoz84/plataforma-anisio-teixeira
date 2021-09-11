@@ -53,7 +53,7 @@
 }
 .tag {
   padding: 10px;
-  font-size: 16px;
+  font-size: 15px;
   text-decoration: none;
   background-color: #f0f8ff;
 }
@@ -64,7 +64,8 @@
   min-height: 115px;
 }
 h1 {
-  text-shadow: -0.0075em 0.0075em 0 #4e2966, 0.005em 0.005em 0 #836c93, 0.01em 0.01em 0 #806890, 0.015em 0.015em #7d648d, 0.02em 0.02em 0 #7a608b, 0.025em 0.025em 0 #765c88, 0.03em 0.03em 0 #735886, 0.035em 0.035em 0 #705483;
+  color: $text;
+  text-shadow: -0.0075em 0.0075em 0 #412263, 0.005em 0.005em 0 #2b3c7f, 0.01em 0.01em 0 #2d3a7e, 0.015em 0.015em #2e397c, 0.02em 0.02em 0 #2f377a, 0.025em 0.025em 0 #303679, 0.03em 0.03em 0 #323477, 0.035em 0.035em 0 #333375;
 }
 .wp-block-image {
   display: flex;
