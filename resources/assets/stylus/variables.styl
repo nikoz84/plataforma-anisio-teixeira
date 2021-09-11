@@ -29,6 +29,17 @@ $petecaamarelo   = $warning
 $petecaazul      = $info 
 $petecaverde     = $positive
 
+$background-cinza = #e1e2e1
+
+
+
+$input-text-color   = $primary;
+$input-label-color  = $accent;
+
+$generic-border-radius    = 3px;
+$body-font-size          ?= 15px
+$quasar-dont-import-fonts = true;
+
 
 .bg-cinza
   background: $faded !important
@@ -70,22 +81,69 @@ $petecaverde     = $positive
   background-color: $primary
   color: #fff !important
 
-$input-text-color         = $primary;
-$input-label-color        = $accent;
-
-$generic-border-radius    = 3px;
-$body-font-size          ?= 15px
-$quasar-dont-import-fonts = true;
-
-.wordbreak{
+.wordbreak
   word-break: break-all !important;
-}
-.tag{
+
+.tag
   padding: 10px;
   font-size: 16px;
   text-decoration: none;
   background-color: aliceblue;
-}
+
+.head
+  background-color: #fff;
+  border-bottom-color : 5px #FADFFA;
+  background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23623d9c' fill-opacity='0.39' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
+  min-height:115px;
+h1
+  text-shadow: -0.0075em 0.0075em 0 mix($accent, $faded, 94%),
+  0.005em 0.005em 0 mix($accent, $faded, 60%),
+  0.01em 0.01em 0 mix($accent, $faded, 62%), 
+  0.015em 0.015em mix($accent, $faded, 64%), 
+  0.02em 0.02em 0 mix($accent, $faded, 66%), 
+  0.025em 0.025em 0 mix($accent, $faded, 68%),
+  0.03em 0.03em 0 mix($accent, $faded, 70%),
+  0.035em 0.035em 0 mix($accent, $faded, 72%);
+
+.wp-block-image
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+.wp-block-group
+  font-size : 20px;
+
+.font-post
+  font-size : 18px
+
+.wp-block-quote
+  margin: 1.5em 0;
+  padding-left: 1.25em;
+  border-left: 4px solid;
+  border-color: $accent;
+  border-color: $accent;
+  color: $dark;
+  color: $dark;
+  font-size: 20px;
+  font-size: 1.125rem;
+
+.q-tabs__arrow--right
+  top: 0;
+  right: 0;
+  bottom: 0;
+  color: $text-color;
+  background-color: $background-cinza !important;
+
+.q-tabs__arrow--left
+  top: 0;
+  right: 0;
+  bottom: 0;
+  color: $text-color;
+  background-color: $background-cinza !important;
+
+.q-tabs__arrow--faded
+  display: none;
+
 
 
 $headings ?= {

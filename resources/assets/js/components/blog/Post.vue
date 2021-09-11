@@ -4,8 +4,15 @@
             <div :style="styleCss">
               
             </div>
-            <q-card-section class="text-center">
-                <Title :title="post.title"></Title>
+            <q-card-section class="head">
+                
+                  <header class="q-my-md q-gutter-md">
+        
+                    <h1 class="text-h3 color-primary">
+                      {{post.title}}
+                    </h1>
+                  </header>
+                
             </q-card-section>
             <q-card-section class="text-center">
               <small>
@@ -70,8 +77,8 @@ export default {
     }
   },
   methods:{
-    getPostData(){
-      const doc = new DOMParser().parseFromString(this.post.content, "text/html");
+    async getPostData(){
+      const doc = await new DOMParser().parseFromString(this.post.content, "text/html");
       const body = doc.body;
       const nodes = body.childNodes
       return nodes.forEach(e => {
@@ -83,26 +90,3 @@ export default {
   }
 };
 </script>
-<style lang="stylus" scoped>
-.wp-caption .aligncenter {
-  align-items: center;
-}
-.font-post{
-  font-size: 20px;
-}
-section > p{
-  font-size: 18px !important;
-  display: block;
-  word-break: break-word !important;
-}
-p::after{
-  content: "\A";
-  white-space: pre;
-}
-img{
-  width: 60%;
-  height: 45%;
-}
-
-</style>
-
