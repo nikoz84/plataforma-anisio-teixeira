@@ -1,18 +1,13 @@
 <template>
     <article class="q-ma-lg">
-        <q-card class="" v-if="post">
-            <div :style="styleCss">
-              
-            </div>
+        <q-card v-if="post">
+            <div :style="styleCss"></div>
             <q-card-section class="head">
-                
-                  <header class="q-my-md q-gutter-md">
-        
-                    <h1 class="text-h3 color-primary">
-                      {{post.title}}
-                    </h1>
-                  </header>
-                
+              <header class="q-my-md q-gutter-md">
+                <h1 class="text-h3 color-primary">
+                  {{post.title}}
+                </h1>
+              </header>
             </q-card-section>
             <q-card-section :class="`q-ma-lg text-justify wordbreak`" 
                             v-html="postContent">
