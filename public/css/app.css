@@ -72,9 +72,6 @@ h1 {
   align-items: center;
   justify-content: center;
 }
-.wp-image-* {
-  width: 100%;
-}
 .wp-block-group {
   font-size: 20px;
 }
@@ -97,14 +94,14 @@ h1 {
   right: 0;
   bottom: 0;
   color: $text-color;
-  background-color: #e1e2e1 !important;
+  background-color: #451e5f !important;
 }
 .q-tabs__arrow--left {
   top: 0;
   right: 0;
   bottom: 0;
   color: $text-color;
-  background-color: #e1e2e1 !important;
+  background-color: #451e5f !important;
 }
 .q-tabs__arrow--faded {
   display: none;
