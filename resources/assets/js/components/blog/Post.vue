@@ -14,19 +14,14 @@
                   </header>
                 
             </q-card-section>
-            <q-card-section class="text-center">
-              <small>
-                  Autor: 
-                  <q-badge color="secondary">{{post.author}}</q-badge>
-                </small>
-                <small>
-                  Publicado em: 
-                  <q-badge color="secondary">{{post.created_at}}</q-badge>
-                </small>
-              <q-separator class="q-mt-lg" />
-            </q-card-section>
             <q-card-section :class="`q-ma-lg text-justify wordbreak`" 
                             v-html="postContent">
+            </q-card-section>
+            <q-card-section>
+              Publicado por: <b>{{post.author}}</b>
+            </q-card-section>
+            <q-card-section>
+              Publicado em: <b>{{post.created_at}}</b>
             </q-card-section>
             <q-card-section>
               <TagList :items="post.categories" title="Categorias" slug="busca"></TagList>
@@ -42,7 +37,8 @@ import { Title, TagList } from "@components/shared";
 
 export default {
   name: "Post",
-  components: { Title, TagList },
+  components: { QCard, QCardSection, QCardActions, QChip,
+    Title, TagList },
   mounted() {
     //this.getPostData()
     
@@ -67,7 +63,7 @@ export default {
       
       return {
         'width': '100%',
-        'height': '250px',
+        'height': '450px',
         'background-image': `url(${this.post.image})`,
         'background-repeat': 'no-repeat',
         'background-position': 'center center',
@@ -89,4 +85,11 @@ export default {
     }
   }
 };
+
 </script>
+<style lang="stylus">
+img{
+  width:100%;
+  height: 60%;
+}
+</style>
