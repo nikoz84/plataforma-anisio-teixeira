@@ -65,7 +65,7 @@
 }
 h1 {
   color: $text;
-  text-shadow: -0.0075em 0.0075em 0 #412263, 0.005em 0.005em 0 #2b3c7f, 0.01em 0.01em 0 #2d3a7e, 0.015em 0.015em #2e397c, 0.02em 0.02em 0 #2f377a, 0.025em 0.025em 0 #303679, 0.03em 0.03em 0 #323477, 0.035em 0.035em 0 #333375;
+  text-shadow: -0.0075em 0.0075em 0 #b2b8bc, 0.005em 0.005em 0 #739bb8, 0.01em 0.01em 0 #779db8, 0.015em 0.015em #7b9fb8, 0.02em 0.02em 0 #7ea0b8, 0.025em 0.025em 0 #82a2b9, 0.03em 0.03em 0 #86a4b9, 0.035em 0.035em 0 #89a5b9;
 }
 .wp-block-image {
   display: flex;
