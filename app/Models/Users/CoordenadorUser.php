@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class CoordenadorUser extends User
 {
     use HasFactory;
-    
+
+    public $table = 'users';
+
     public static function boot()
     {
         parent::boot();

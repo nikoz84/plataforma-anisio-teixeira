@@ -9,6 +9,8 @@ class ConvidadoUser extends User
 {
     use HasFactory;
 
+    public $table = 'users';
+
     public static function boot()
     {
         parent::boot();

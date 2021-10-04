@@ -14,8 +14,7 @@ class DocumentsTable extends Migration
      */
     public function up()
     {
-        DB::statement("ALTER TABLE conteudos_planilha RENAME TO documents;");
-        
+        Schema::rename('conteudos_planilha', 'documents');
         Schema::create('documents', function (Blueprint $table) {
             $table->bigIncrements('id')->comment('Chave primaria');
             $table->string('name', 155)->comment('Nome identificador do conteudo');

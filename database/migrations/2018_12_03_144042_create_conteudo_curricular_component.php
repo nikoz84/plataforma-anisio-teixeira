@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 class CreateConteudoCurricularComponent extends Migration
 {
@@ -16,6 +17,8 @@ class CreateConteudoCurricularComponent extends Migration
         Schema::create('conteudo_curricular_component', function (Blueprint $table) {
             $table->bigInteger('conteudo_id');
             $table->bigInteger('curricular_component_id');
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->nullable()->default(null);
 
             $table->primary(['conteudo_id', 'curricular_component_id']);
             $table->foreign('conteudo_id')->references('id')->on('conteudos');

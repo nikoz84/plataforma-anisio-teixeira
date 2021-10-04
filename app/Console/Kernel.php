@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //Commands\ImportData::class,
-        Commands\CommandConvertVideoStreming::class
+        Commands\CommandConvertVideoStreming::class,
+        Commands\SendReportCommand::class
     ];
 
     /**
@@ -25,6 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        //$schedule->command('send:report')->montly()
         // $schedule->command('inspire')->hourly();
         $schedule->command('convert:streaming')->daily()->between('01:00', '06:00')->withoutOverlapping();
     }
@@ -35,7 +37,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
         require base_path('routes/console.php');
     }
 }
