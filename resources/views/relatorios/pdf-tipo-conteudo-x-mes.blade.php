@@ -140,6 +140,35 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- REPORT POR Visitors -->
+        <div class="row">
+            <header>
+                <h4 style=" text-align: center">Usuários Visitantes Google Analytics - últimos 6 meses</h4>
+            </header>
+            <br><br>
+        </div>
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td scope="col">Data</td>
+                        <th scope="col">Visitantes</th>
+                        <th scope="col">Páginas Visualizadas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        @foreach($relatorio_visitors as $visitor)
+                        <tr>
+                            <td>{{$visitor['date']}}</td>
+                            <td>{{$visitor['visitors']}}</td>
+                            <td>{{$visitor['pageViews']}}</td>
+                        </tr>
+                        @endforeach
+                    
+                </tbody>
+            </table>
+        </div>
 </div>
 </body>
 

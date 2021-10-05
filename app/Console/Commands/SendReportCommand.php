@@ -57,7 +57,7 @@ class SendReportCommand extends Command
         $relatorios = new ReportPat($request);
 
 
-        //dd(GoogleAnalytics::getReportBrowsers());
+
         //dd($relatorios->postsPerMonth());
 
         $pdf = PDF::loadView(
@@ -67,7 +67,8 @@ class SendReportCommand extends Command
                 'relatorio_mes' => $relatorios->postsPerMonth(),
                 'relatorio_canal' => $relatorios->postsPerCanal(),
                 'relatorio_pages' => GoogleAnalytics::getReportMostVisited(),
-                'relatorio_browsers' => GoogleAnalytics::getReportBrowsers()
+                'relatorio_browsers' => GoogleAnalytics::getReportBrowsers(),
+                'relatorio_visitors' => GoogleAnalytics::getReportVisitors()
             ]
         )->setOptions([
             'isRemoteEnabled' => true,

@@ -32,4 +32,8 @@ class GoogleAnalytics
     {
         return Analytics::fetchTopBrowsers(Period::months(6), 10);
     }
+    public function getReportVisitors()
+    {
+        return Analytics::fetchTotalVisitorsAndPageViews(Period::months(6));
+    }
 }
