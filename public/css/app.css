@@ -129,7 +129,7 @@ body {
   color: #263238;
 }
 /*
- * Quasar Framework v1.15.21
+ * Quasar Framework v1.16.0
  * (c) 2015-present Razvan Stoenescu
  * Released under the MIT License.
  */
@@ -1091,6 +1091,7 @@ input[type='search']::-webkit-search-decoration {
   border: 2px solid currentColor;
   border-radius: 2px;
   transition: background 0.22s cubic-bezier(0, 0, 0.2, 1) 0ms;
+  -webkit-print-color-adjust: exact;
 }
 .q-checkbox__native {
   width: 1px;
@@ -2069,19 +2070,6 @@ body.q-ios-padding .q-dialog__inner > div {
 .q-fab--form-square {
   border-radius: 3px;
 }
-.q-fab--opened .q-fab__actions {
-  opacity: 1;
-  transform: scale(1) translate(0, 0);
-  pointer-events: all;
-}
-.q-fab--opened .q-fab__icon {
-  transform: rotate(180deg);
-  opacity: 0;
-}
-.q-fab--opened .q-fab__active-icon {
-  transform: rotate(0deg);
-  opacity: 1;
-}
 .q-fab__icon,
 .q-fab__active-icon {
   transition: opacity 0.4s, transform 0.4s;
@@ -2155,6 +2143,14 @@ body.q-ios-padding .q-dialog__inner > div {
   min-height: 24px;
   position: relative;
 }
+.q-fab__icon-holder--opened .q-fab__icon {
+  transform: rotate(180deg);
+  opacity: 0;
+}
+.q-fab__icon-holder--opened .q-fab__active-icon {
+  transform: rotate(0deg);
+  opacity: 1;
+}
 .q-fab__actions {
   position: absolute;
   opacity: 0;
@@ -2203,6 +2199,11 @@ body.q-ios-padding .q-dialog__inner > div {
 .q-fab__actions--down {
   left: 50%;
   margin-left: -28px;
+}
+.q-fab__actions--opened {
+  opacity: 1;
+  transform: scale(1) translate(0, 0);
+  pointer-events: all;
 }
 .q-fab--align-left > .q-fab__actions--up,
 .q-fab--align-left > .q-fab__actions--down {
@@ -3425,6 +3426,7 @@ body.platform-ios .q-layout--containerized {
   left: 25%;
   width: 50%;
   height: 50%;
+  -webkit-print-color-adjust: exact;
 }
 .q-radio__bg path {
   fill: currentColor;
@@ -5522,6 +5524,7 @@ body.desktop .q-table > tbody > tr:not(.q-tr--no-hover):hover > td:not(.q-td--no
   min-width: 1.4em;
   height: 1em;
   padding: 0.325em 0.3em;
+  -webkit-print-color-adjust: exact;
 }
 .q-toggle__inner--indet .q-toggle__thumb {
   left: 0.45em;
@@ -11930,7 +11933,7 @@ body.body--dark {
   }
 }
 /*!
- * @quasar/quasar-ui-qmediaplayer v1.2.1
+ * @quasar/quasar-ui-qmediaplayer v1.4.1
  * (c) 2021 Jeff Galbraith <jeff@quasar.dev>
  * Released under the MIT License.
  */

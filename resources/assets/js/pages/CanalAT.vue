@@ -53,6 +53,38 @@
             </div>
         </div>
 
+
+
+        <q-tabs
+            :style="`background-color:#333`" 
+            class="text-white shadow-3"
+            no-caps
+            ripple
+            dense
+            inline-label
+        >
+        
+        
+        <q-route-tab
+            name="listar"
+            label="LISTAR"
+            icon="view_list"
+            :to="'/canal-anisio-teixeira/'"
+        />
+        <q-route-tab
+            name="busca"
+            label="BUSCA AVANÇADA"
+            icon="search"
+            :to="{ name: 'BuscaAvancada' }"
+        />
+        <q-route-tab
+            name="inicio"
+            label="SOBRE"
+            icon="info"
+            :to="'/canal-anisio-teixeira/sobre'"
+        />
+    </q-tabs>
+
     </div>
     
 </section>
@@ -61,7 +93,6 @@
 <script>
 // @ts-nocheck
 import { QMediaPlayer} from "@quasar/quasar-ui-qmediaplayer";
-import { mapMutations } from "vuex";
 export default {
     name: "CanalAT",
     components:{QMediaPlayer},

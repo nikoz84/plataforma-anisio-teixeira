@@ -1,25 +1,23 @@
 <template>
   <div class="q-pa-md q-pb-xl">
     
-    <q-banner class="bg-primary text-white">
-        <header class="row wrap items-center q-my-md">
-            <div class="text-h5 color-primary">
+        <header class="head q-pa-md">
+            <h1 class="text-h4 color-primary">
                 Canal das Universidades
-            </div>
+            </h1>
         </header>
-    </q-banner>
 
         <q-list bordered class="q-mt-md q-mb-xl">
         
             <q-expansion-item
-            expand-separator
-            dense-toggle
-            group="ipes"
-            icon="bookmarks"
-            v-for="(item, i) in items" :key="i" :id="item.document.slug"
-            :v-text="item.document.faculdade"
-            class="ipes-label text-primary"
-            :label="item.document.faculdade" 
+                expand-separator
+                dense-toggle
+                group="ipes"
+                icon="bookmarks"
+                v-for="(item, i) in items" :key="i" :id="item.document.slug"
+                :v-text="item.document.faculdade"
+                class="ipes-label text-primary"
+                :label="item.document.faculdade" 
             >
                 <q-card bordered class="ipes-atividade q-py-md" v-for="(action, a) in item.document.actions" :key="a">
                     <q-card-section>

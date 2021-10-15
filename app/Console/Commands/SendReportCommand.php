@@ -102,6 +102,6 @@ class SendReportCommand extends Command
         //dd($analyticsData);
 
 
-        dd('opk');
+        $this->info('The command was successful!');
     }
 }

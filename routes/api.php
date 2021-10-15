@@ -130,20 +130,21 @@ Route::group(['prefix' => 'canal-at', 'as' => 'canal-at.'], function () {
     Route::get('/podcast', [DocumentController::class, 'getPodcastAT'])->name('podcast');
 });
 
-/*
+
 Route::group(
     ['prefix' => 'playlist', 'as' => 'playlist.'],
     function () {
-    Route::get('/', [PlayListController::class, 'index'])->name('listar');
-    Route::post('/', [PlayListController::class, 'create'])->name('adicionar');
-    Route::get('/search/{term}', [PlayListController::class, 'search'])->name('search');
-    Route::get('/adicionar/item/{id}',[PlayListController::class,'addToPlaylist'])->name('add');
-    Route::delete('/remover/item/{id}',[PlayListController::class,'removeToPlayList'])->name('remove');
-    Route::put('/atualizar/item/{id}',[PlayListController::class,'updatePlayList'])->name('update');
-    Route::get('/name/{name}',[PlayListController::class,'getByName'])->name('ByName');
-    Route::get('/{id}',[PlayListController::class,'getById'])->name('ByID');
-});
-*/
+        Route::get('/', [PlayListController::class, 'index'])->name('listar');
+        Route::post('/', [PlayListController::class, 'create'])->name('adicionar');
+        Route::get('/search/{term}', [PlayListController::class, 'search'])->name('search');
+        Route::get('/adicionar/item/{id}', [PlayListController::class, 'addToPlaylist'])->name('add');
+        Route::delete('/remover/item/{id}', [PlayListController::class, 'removeToPlayList'])->name('remove');
+        Route::put('/atualizar/item/{id}', [PlayListController::class, 'updatePlayList'])->name('update');
+        Route::get('/name/{name}', [PlayListController::class, 'getByName'])->name('ByName');
+        Route::get('/{id}', [PlayListController::class, 'getById'])->name('ByID');
+    }
+);
+
 /***********************************************
  *
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN
