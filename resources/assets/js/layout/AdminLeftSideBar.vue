@@ -24,7 +24,7 @@
       <q-item
         v-for="(link, i) in linksAdmin" 
         :key="`admin-${i}`"
-        tag="div"
+        
         :to="`/admin/${link.slug}/listar`"
         
         :aria-label="`IR: ${link.label}`"

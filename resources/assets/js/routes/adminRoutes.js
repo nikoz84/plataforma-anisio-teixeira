@@ -3,9 +3,9 @@
 import Admin from "@layout/Admin";
 import { ListarConteudos, ListarAplicativos, ListarCanais, 
     ListarContato, ListarOptions, ListarRoles, ListarTags, ListarTipos, ListarUsers, 
-    ListarCategorias } from "@components/exibir"
+    ListarCategorias,ListarComponentes } from "@components/exibir"
 import { ConteudoForm, PlayListForm, AplicativoForm, CanalForm, OptionsForm, RoleForm, 
-  TagForm, TipoForm, UserForm, CategoryConteudoForm } from "@forms/models";
+  TagForm, TipoForm, UserForm, CategoryConteudoForm, CurricularComponentsForm } from "@forms/models";
 import AdminPage from "@pages/AdminPage.vue"
 import Resumo from "@pages/Resumo.vue";
 import { Contato }  from "@components/exibir";
@@ -296,7 +296,34 @@ const adminRoutes = {
         title: "Adicionar categoria",
         layout: Admin
       }
-    }
+    },
+    {
+      path: "componentes/listar",
+      components: { admin: ListarComponentes },
+      meta: {
+        requiresAuth: true,
+        title: "Listar componentes",
+        layout: Admin
+      }
+    },
+    {
+      path: "componentes/editar/:id",
+      components: { admin: CurricularComponentsForm },
+      meta: {
+        requiresAuth: true,
+        title: "Editar Componente Curricular",
+        layout: Admin
+      }
+    },
+    {
+      path: "componentes/adicionar",
+      components: { admin: CurricularComponentsForm },
+      meta: {
+        requiresAuth: true,
+        title: "Adicionar Componente Curricular",
+        layout: Admin
+      }
+    },
     
   ]
 };

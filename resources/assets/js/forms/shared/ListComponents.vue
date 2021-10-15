@@ -1,6 +1,6 @@
 <template>
     <q-list>
-        <q-item tag="label" 
+        <q-item  
         v-ripple v-for="(component, i) in componentes"
         :key="`child-com-${i}`">
         <q-item-section avatar>

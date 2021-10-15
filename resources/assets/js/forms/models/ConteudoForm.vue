@@ -319,7 +319,7 @@
               </div>
               <q-separator class="q-mt-lg" inset color="negative"></q-separator>
               <q-list dense bordered>
-                <q-item tag="label" v-ripple 
+                <q-item  v-ripple 
                 v-for="(component, i) in component.componentes" :key="`child-com-${i}`">
                   <q-item-section avatar>
                     <q-checkbox v-model="componentesCurriculares" :val="component.id" color="negative"/>
