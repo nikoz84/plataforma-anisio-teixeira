@@ -224,7 +224,7 @@ class ConteudoController extends ApiController
             'category',
             'componentes',
             'niveis',
-        ])->find($id);
+        ])->findOrFail($id);
         
         
         $conteudo->increment('qt_access');
