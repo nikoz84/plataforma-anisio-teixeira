@@ -1,12 +1,10 @@
 <template>
   <div class="q-pa-md">
-    <q-banner class="bg-primary text-white">
-      <header class="row wrap items-center q-my-md">
-        <div class="text-h5 color-primary">
+    <header class="head q-pa-md">
+        <h1 class="text-h4 color-primary">
           Rotinas de Estudo do {{ this.nivel.label }}
-        </div>
-      </header>
-    </q-banner>
+        </h1>
+    </header>
     <q-banner dense class="bg-grey-3">
       <div class="row justify-left q-gutter-md">
         <q-select

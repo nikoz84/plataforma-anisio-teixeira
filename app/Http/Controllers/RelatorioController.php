@@ -31,7 +31,7 @@ class RelatorioController extends ApiController
     public function gerarPdfUsuario($role_id, $is_active = null)
     {
         $user = new User();
-        $users = $user->users_role_content($role_id, $is_active);
+        $users = $user->usersRoleContent($role_id, $is_active);
         return PDF::loadView(
             'relatorios.pdf-usuarios',
             compact('users')
@@ -69,7 +69,7 @@ class RelatorioController extends ApiController
         $total = 100;
         return PDF::loadView(
             'relatorios.pdf-conteudo',
-            compact('conteudos', 'title', 'flag','totalizar', 'total')
+            compact('conteudos', 'title', 'flag', 'totalizar', 'total')
         )->setPaper('a4')->stream('relatório_conteúdos.pdf');
     }
 
@@ -97,13 +97,11 @@ class RelatorioController extends ApiController
         $title = "Conteúdos publicados no ano de $ano";
 
         $totalizar = true;
-        try{
+        try {
             $conteudos = $conteudo->conteudosPorAno($ano);
             $total = $conteudos->count();
             return PDF::loadView('relatorios.pdf-conteudo', compact('conteudos', 'title', 'flag', 'totalizar', 'total'))->setPaper('a4')->stream('relatório_conteúdos.pdf');
-        }
-        catch(Exception $ex)
-        {
+        } catch (Exception $ex) {
             return $this->errorResponse([], $ex->getMessage(), $ex->getCode() > 100 && $ex->getCode() < 510 ? $ex->getCode() : 500);
         }
         return $this->errorResponse([], 'Não foi possível gerar relatório. Tente novamente em instantes.', 422);

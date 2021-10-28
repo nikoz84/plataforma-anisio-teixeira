@@ -480,12 +480,18 @@ class Conteudo extends Model
       */
     public function relatorioMaisBaixados()
     {
-        $contents = Conteudo::select(['title', 'users.name as publisher', 'tipos.name as type', 'qt_downloads as quantity'])
+        return Conteudo::select([
+            'title', 
+            'users.name as publisher', 
+            'tipos.name as type', 
+            'qt_downloads as quantity'
+            ])
         ->join('users', 'users.id', '=', 'conteudos.user_id')
         ->join('tipos', 'tipos.id', '=', 'conteudos.tipo_id')
-        ->orderByDesc("conteudos.qt_downloads")->whereNotNull("qt_downloads")->limit(100)->get();
-
-        return $contents;
+        ->orderByDesc("conteudos.qt_downloads")
+        ->whereNotNull("qt_downloads")
+        ->limit(100)
+        ->get();
     }
      /**
       * Retorna conteúdos mais acessados
@@ -493,12 +499,16 @@ class Conteudo extends Model
       */
     public function relatorioMaisAcessados()
     {
-        $contents = Conteudo::select(['title', 'users.name as publisher', 'tipos.name as type', 'qt_access as quantity'])
+        return Conteudo::select([
+            'title', 
+            'users.name as publisher', 
+            'tipos.name as type', 
+            'qt_access as quantity'
+            ])
         ->join('users', 'users.id', '=', 'conteudos.user_id')
         ->join('tipos', 'tipos.id', '=', 'conteudos.tipo_id')
         ->whereNotNull("qt_access")
         ->orderByDesc("conteudos.qt_access");
-        return $contents;
     }
 
     /**
@@ -507,16 +517,21 @@ class Conteudo extends Model
      */
     public function publicacaoAnos()
     {
-        $contents = DB::select("select  distinct date_part('year', created_at) as anopublicacao from conteudos order by 1 desc");
-        return $contents;
+        return DB::select("select  distinct date_part('year', created_at) as anopublicacao from conteudos order by 1 desc");
     }
 
     public function conteudosPorAno($ano)
     {
-         return Conteudo::select(['title', 'users.name as publisher', 'tipos.name as type', 'qt_downloads as quantity'])
+         return Conteudo::select([
+             'title', 
+             'users.name as publisher', 
+             'tipos.name as type', 
+             'qt_downloads as quantity'
+             ])
             ->join('users', 'users.id', '=', 'conteudos.user_id')
             ->join('tipos', 'tipos.id', '=', 'conteudos.tipo_id')
-            ->where(DB::raw("date_part('year', conteudos.created_at)"), $ano)->get();
+            ->where(DB::raw("date_part('year', conteudos.created_at)"), $ano)
+            ->get();
     }
 
     /**

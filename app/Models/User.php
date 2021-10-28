@@ -171,10 +171,9 @@ class User extends Authenticatable implements JWTSubject
         $path_assoc = Storage::disk('fotos-perfil')->path('usuario');
         $img_assoc = $path_assoc . "/{$this->id}.*";
         $file = $filesystem->glob($img_assoc);
-        if (count($file)) 
-        {
+        if (count($file)) {
             $imagemRef = array_values($file)[0];
-        }    
+        }
         return $imagemRef;
     }
     /**
@@ -186,7 +185,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return  Str::random(40);
     }
-    
+
     /**
      * Relação usuário possui varios conteudos
      */
@@ -262,14 +261,14 @@ class User extends Authenticatable implements JWTSubject
     {
         return Auth::user()->id == $user_id;
     }
-    
+
     /**
      * Method usado para validação de token por hora
      * @param $token | (String) O token que deve ser passado
      * @param $horaDoTokenCadastradoNoBanco | (Timestamp) da hora que o token foi gerado
      * @param $horasValidas | (Int) Por quantas horas você deseja que o token seja valido
      * @return Boolean
-    */
+     */
     public function tokenValidatingByHours(string $token, $horaDoTokenCadastradoNoBanco, int $horasValidas)
     {
         $horaDoSistema = date('Y-m-d H:i:s');
@@ -285,37 +284,35 @@ class User extends Authenticatable implements JWTSubject
 
         return true;
     }
-    
+
     // Metodo valida o token de recuperação de senha
     public function verifyToken($token, PasswordReset $passwordReset)
     {
         // Recupera o teken gerado direto da tabela
         $tokenGerado = $passwordReset->getToken($token);
         // Verifica se o token da rota é o mesmo que foi gerado para o usuário
-        if ( ! is_null($tokenGerado) && $token == $tokenGerado->token) {
-            
+        if (!is_null($tokenGerado) && $token == $tokenGerado->token) {
+
             // Verifica se o token ainda está valido
             if (!$this->tokenValidatingByHours($token, $tokenGerado->created_at, 1)) {
                 throw new Exception("Token expirou.");
             }
-        } 
-        else 
-        {
+        } else {
             throw new Exception("Token não encontrado!");
         }
-        return true ;
+        return true;
     }
-    
+
     // Metodo valida o token de cadastro de usuarios
     public function verifyTokenUserRegister(string $token)
     {
         $user = $this->where('verification_token', $token)->first();
 
-        if ( ! is_null($user)) {
+        if (!is_null($user)) {
 
             // Verifica se o token da rota é o mesmo que foi gerado para o usuário
-            if ( ! is_null($token) && $token == $user->verification_token) {
-                
+            if (!is_null($token) && $token == $user->verification_token) {
+
                 if ($this->tokenValidatingByHours($token, $user->created_at, 1)) {
                     // Seta o campo verified como 1, ous seja, usuario validado
                     $user->verified = 1;
@@ -327,7 +324,7 @@ class User extends Authenticatable implements JWTSubject
                     ]);
                 }
 
-                 return response()->json([
+                return response()->json([
                     'success' => true,
                     'message' => 'Este token expirou e não é mais valido!'
                 ]);
@@ -337,9 +334,8 @@ class User extends Authenticatable implements JWTSubject
                 'success' => false,
                 'message' => 'Este Token não pertence a este usuário!'
             ]);
-
         } else {
-             return response()->json([
+            return response()->json([
                 'success' => false,
                 'message' => 'Token não encontrado!'
             ]);
@@ -347,9 +343,9 @@ class User extends Authenticatable implements JWTSubject
     }
 
 
-    public function users_role_content($role_id, $is_active = null)
+    public function usersRoleContent($role_id, $is_active = null)
     {
-        $aux = $is_active ? "and use.options->'is_active' = '{$is_active}'": null;
+        $aux = $is_active ? "and use.options->'is_active' = '{$is_active}'" : null;
         $users = DB::select("SELECT use.id, use.options->'is_active' as is_active, use.name as usuario, use.email, rol.name as funcao, count(con.user_id) as total_conteudo
         FROM public.users use
         inner join roles rol on rol.id = use.role_id

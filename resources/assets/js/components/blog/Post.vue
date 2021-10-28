@@ -1,25 +1,22 @@
 <template>
     <article class="q-ma-lg">
-        <q-card class="" v-if="post">
-            <div :style="styleCss">
-              
-            </div>
-            <q-card-section class="text-center">
-                <Title :title="post.title"></Title>
+        <q-card v-if="post">
+            <div :style="styleCss"></div>
+            <q-card-section class="head text-center">
+              <header class="q-my-md q-gutter-md">
+                <h1 class="text-h3 color-primary">
+                  {{post.title}}
+                </h1>
+              </header>
             </q-card-section>
-            <q-card-section class="text-center">
-              <small>
-                  Autor: 
-                  <q-badge color="secondary">{{post.author}}</q-badge>
-                </small>
-                <small>
-                  Publicado em: 
-                  <q-badge color="secondary">{{post.created_at}}</q-badge>
-                </small>
-              <q-separator class="q-mt-lg" />
-            </q-card-section>
-            <q-card-section :class="`q-ma-lg text-justify wordbreak`" 
+            <q-card-section :class="`q-ma-lg text-justify`" 
                             v-html="postContent">
+            </q-card-section>
+            <q-card-section>
+              Publicado por: <b>{{post.author}}</b>
+            </q-card-section>
+            <q-card-section>
+              Publicado em: <b>{{post.created_at}}</b>
             </q-card-section>
             <q-card-section>
               <TagList :items="post.categories" title="Categorias" slug="busca"></TagList>
@@ -35,7 +32,8 @@ import { Title, TagList } from "@components/shared";
 
 export default {
   name: "Post",
-  components: { Title, TagList },
+  components: { QCard, QCardSection, QCardActions, QChip,
+    Title, TagList },
   mounted() {
     //this.getPostData()
     
@@ -60,7 +58,7 @@ export default {
       
       return {
         'width': '100%',
-        'height': '250px',
+        'height': '450px',
         'background-image': `url(${this.post.image})`,
         'background-repeat': 'no-repeat',
         'background-position': 'center center',
@@ -70,8 +68,8 @@ export default {
     }
   },
   methods:{
-    getPostData(){
-      const doc = new DOMParser().parseFromString(this.post.content, "text/html");
+    async getPostData(){
+      const doc = await new DOMParser().parseFromString(this.post.content, "text/html");
       const body = doc.body;
       const nodes = body.childNodes
       return nodes.forEach(e => {
@@ -82,27 +80,11 @@ export default {
     }
   }
 };
+
 </script>
-<style lang="stylus" scoped>
-.wp-caption .aligncenter {
-  align-items: center;
-}
-.font-post{
-  font-size: 20px;
-}
-section > p{
-  font-size: 18px !important;
-  display: block;
-  word-break: break-word !important;
-}
-p::after{
-  content: "\A";
-  white-space: pre;
-}
+<style lang="stylus">
 img{
-  width: 60%;
-  height: 45%;
+  width:100%;
+  height: 60%;
 }
-
 </style>
-

@@ -17,6 +17,7 @@ import ListarTags from './ListarTags';
 import ListarTipos from './ListarTipos';
 import ListarUsers from './ListarUsers';
 import ListarCategorias from './ListarCategorias';
+import ListarComponentes from './ListarComponentes';
 
 export {
     Conteudo,
@@ -36,5 +37,6 @@ export {
     ListarTags,
     ListarTipos,
     ListarUsers,
-    ListarCategorias
+    ListarCategorias,
+    ListarComponentes
 };

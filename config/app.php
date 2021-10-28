@@ -27,7 +27,7 @@ return [
      */
 
     'env' => env('APP_ENV', 'production'),
-    
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -175,6 +175,8 @@ return [
         Jaybizzle\LaravelCrawlerDetect\LaravelCrawlerDetectServiceProvider::class,
         Buglinjo\LaravelWebp\WebpServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Spatie\Analytics\AnalyticsServiceProvider::class,
+        App\Providers\GoogleAnalyticsServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -238,6 +240,8 @@ return [
         'Date' => Jenssegers\Date\Date::class,
         'Crawler'   => Jaybizzle\LaravelCrawlerDetect\Facades\LaravelCrawlerDetect::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Analytics' => Spatie\Analytics\AnalyticsFacade::class,
+        'GoogleAnalytics'   =>  App\Facades\GoogleAnalyticsFacade::class
     ],
 
 ];

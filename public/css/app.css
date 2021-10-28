@@ -53,9 +53,66 @@
 }
 .tag {
   padding: 10px;
-  font-size: 16px;
+  font-size: 15px;
   text-decoration: none;
   background-color: #f0f8ff;
+}
+.head {
+  background-color: #fff;
+  border-bottom-color: 5px #fadffa;
+  background-image: url("data:image/svg+xml,%3Csvg%20width=%276%27%20height=%276%27%20viewBox=%270%200%206%206%27%20xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cg%20fill=%27%23623d9c%27%20fill-opacity=%270.39%27%20fill-rule=%27evenodd%27%3E%3Cpath%20d=%27M5%200h1L0%206V5zM6%205v1H5z%27/%3E%3C/g%3E%3C/svg%3E");
+  min-height: 115px;
+}
+h1 {
+  color: $text;
+  text-shadow: -0.0075em 0.0075em 0 #b2b8bc, 0.005em 0.005em 0 #739bb8, 0.01em 0.01em 0 #779db8, 0.015em 0.015em #7b9fb8, 0.02em 0.02em 0 #7ea0b8, 0.025em 0.025em 0 #82a2b9, 0.03em 0.03em 0 #86a4b9, 0.035em 0.035em 0 #89a5b9;
+}
+.wp-block-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wp-block-video {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wp-block-video > video {
+  width: 80%;
+}
+.wp-block-group {
+  font-size: 20px;
+}
+.font-post {
+  font-size: 18px;
+}
+.wp-block-quote {
+  margin: 1.5em 0;
+  padding-left: 1.25em;
+  border-left: 4px solid;
+  border-color: #451e5f;
+  border-color: #451e5f;
+  color: #004081;
+  color: #004081;
+  font-size: 20px;
+  font-size: 1.125rem;
+}
+.q-tabs__arrow--right {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  color: $text-color;
+  background-color: #451e5f !important;
+}
+.q-tabs__arrow--left {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  color: $text-color;
+  background-color: #451e5f !important;
+}
+.q-tabs__arrow--faded {
+  display: none;
 }
 .title-page-tipos {
   font-family: 'Lato', sans-serif, cursive;
@@ -72,7 +129,7 @@ body {
   color: #263238;
 }
 /*
- * Quasar Framework v1.15.21
+ * Quasar Framework v1.16.0
  * (c) 2015-present Razvan Stoenescu
  * Released under the MIT License.
  */
@@ -1034,6 +1091,7 @@ input[type='search']::-webkit-search-decoration {
   border: 2px solid currentColor;
   border-radius: 2px;
   transition: background 0.22s cubic-bezier(0, 0, 0.2, 1) 0ms;
+  -webkit-print-color-adjust: exact;
 }
 .q-checkbox__native {
   width: 1px;
@@ -2012,19 +2070,6 @@ body.q-ios-padding .q-dialog__inner > div {
 .q-fab--form-square {
   border-radius: 3px;
 }
-.q-fab--opened .q-fab__actions {
-  opacity: 1;
-  transform: scale(1) translate(0, 0);
-  pointer-events: all;
-}
-.q-fab--opened .q-fab__icon {
-  transform: rotate(180deg);
-  opacity: 0;
-}
-.q-fab--opened .q-fab__active-icon {
-  transform: rotate(0deg);
-  opacity: 1;
-}
 .q-fab__icon,
 .q-fab__active-icon {
   transition: opacity 0.4s, transform 0.4s;
@@ -2098,6 +2143,14 @@ body.q-ios-padding .q-dialog__inner > div {
   min-height: 24px;
   position: relative;
 }
+.q-fab__icon-holder--opened .q-fab__icon {
+  transform: rotate(180deg);
+  opacity: 0;
+}
+.q-fab__icon-holder--opened .q-fab__active-icon {
+  transform: rotate(0deg);
+  opacity: 1;
+}
 .q-fab__actions {
   position: absolute;
   opacity: 0;
@@ -2146,6 +2199,11 @@ body.q-ios-padding .q-dialog__inner > div {
 .q-fab__actions--down {
   left: 50%;
   margin-left: -28px;
+}
+.q-fab__actions--opened {
+  opacity: 1;
+  transform: scale(1) translate(0, 0);
+  pointer-events: all;
 }
 .q-fab--align-left > .q-fab__actions--up,
 .q-fab--align-left > .q-fab__actions--down {
@@ -3368,6 +3426,7 @@ body.platform-ios .q-layout--containerized {
   left: 25%;
   width: 50%;
   height: 50%;
+  -webkit-print-color-adjust: exact;
 }
 .q-radio__bg path {
   fill: currentColor;
@@ -5465,6 +5524,7 @@ body.desktop .q-table > tbody > tr:not(.q-tr--no-hover):hover > td:not(.q-td--no
   min-width: 1.4em;
   height: 1em;
   padding: 0.325em 0.3em;
+  -webkit-print-color-adjust: exact;
 }
 .q-toggle__inner--indet .q-toggle__thumb {
   left: 0.45em;
@@ -11873,7 +11933,7 @@ body.body--dark {
   }
 }
 /*!
- * @quasar/quasar-ui-qmediaplayer v1.2.1
+ * @quasar/quasar-ui-qmediaplayer v1.4.1
  * (c) 2021 Jeff Galbraith <jeff@quasar.dev>
  * Released under the MIT License.
  */

@@ -1,5 +1,5 @@
 <template>
-  <q-list>
+  <q-list dense bordered padding separator>
     <q-item-label class="bg-grey-4" header>
       <strong class="grey-10">
         Painel de Controle
@@ -19,10 +19,12 @@
           <q-item-label>Resumo</q-item-label>
         </q-item-section>
     </q-item>
-    <q-separator />
-    <div v-for="(link, i) in linksAdmin" :key="`admin-${i}`">
+
+    
       <q-item
-        tag="div"
+        v-for="(link, i) in linksAdmin" 
+        :key="`admin-${i}`"
+        
         :to="`/admin/${link.slug}/listar`"
         
         :aria-label="`IR: ${link.label}`"
@@ -36,9 +38,8 @@
           <q-item-label>{{ link.label }}</q-item-label>
         </q-item-section>
       </q-item>
-      <q-separator />
       
-    </div>
+    
     
   </q-list>
 </template>

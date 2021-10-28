@@ -16,13 +16,20 @@ export default {
     NotFound
   },
   created() {
-    if (this.$route.params.slug == "aplicativos-educacionais") {
-      this.fetchAplicativo(this.$route.params);
-    } else if (this.$route.params.slug == "blog") {
-      this.fetchPost(this.$route.params);
-    } else {
-      this.fetchConteudo(this.$route.params);
+
+    switch (this.$route.params.slug) {
+      case "aplicativos-educacionais":
+        this.fetchAplicativo(this.$route.params);
+        break;
+      case "blog":
+        this.fetchPost(this.$route.params);
+        break;
+    
+      default:
+        this.fetchConteudo(this.$route.params);
+        break;
     }
+    
   },
 
   computed: {

@@ -18,6 +18,7 @@ use Exception;
 use Streaming\FFMpeg;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\ConteudoFormRequest;
+use App\Models\Tag;
 
 class ConteudoController extends ApiController
 {
@@ -64,17 +65,25 @@ class ConteudoController extends ApiController
 
         $url = http_build_query($request->except('page'));
         $is_approved = 'true';
-        
+
         if ($request->has('aprovados') && Auth::user()) {
             $is_approved = $request->query('aprovados', true);
         }
-        
+
         $conteudos = $query
             ->approved($is_approved)
             ->with(['canal', 'tipo'])
             ->paginate($request->query('limit', 6))
             ->setPath("/conteudos?{$url}");
-        
+
+        // INCREMENTA TAG EM 1
+        if ($request->query('busca') && $request->query('por', 'tag') === 'tag') {
+            $tag = Tag::where('name', $request->query('busca'))->get()->first();
+            if ($tag) {
+                $tag->increment('searched');
+                $tag->save();
+            }
+        }
         return $this->showAsPaginator($conteudos);
     }
 
@@ -97,7 +106,7 @@ class ConteudoController extends ApiController
         return $this->showAsPaginator($sites);
     }
 
-    
+
     /**
      * Adiciona e valida novo conteúdo
      * @param $request \Illuminate\Http\Request
@@ -107,9 +116,9 @@ class ConteudoController extends ApiController
     {
         $conteudo = new Conteudo;
         $this->authorize('create', $conteudo);
-        
+
         $conteudo->fill($request->validated());
-        
+
         if (!$conteudo->save()) {
             $this->errorResponse([], 'Não foi possível criar o conteúdo.', 422);
         }
@@ -117,14 +126,13 @@ class ConteudoController extends ApiController
         $conteudo->tags()->attach($request->tags);
         $conteudo->componentes()->attach($request->componentes);
         $conteudo::tsDocumentoSave($conteudo->id);
-            
+
         $file = $this->storeFiles($request, $conteudo);
-        
-        if (!$file) 
-        {
+
+        if (!$file) {
             $this->errorResponse([], 'Não foi possível fazer upload de arquivos.', 422);
         }
-            //$this->stremingVideoConvert($conteudo);
+        //$this->stremingVideoConvert($conteudo);
         return $this->showOne($conteudo, 'Conteúdo cadastrado com sucesso!!', 200);
     }
 
@@ -137,22 +145,22 @@ class ConteudoController extends ApiController
     {
         $conteudo = Conteudo::find($id);
         $this->authorize('update', $conteudo);
-        
+
         $conteudo->update($request->validated());
-        
-        if (!$conteudo->save()) 
-        {
+
+        if (!$conteudo->save()) {
             return $this->errorResponse([], 'Não foi possível atualizar o conteúdo', 422);
         }
-        
+
         $conteudo->tags()->sync($request->tags);
         $conteudo->componentes()->sync($request->componentes);
         Conteudo::tsDocumentoSave($conteudo->id);
 
-        if ($request->has('download') || $request->has('guias_pedagogicos') ||
-            $request->has('imagem_associada') || $request->has('visualizacao')) 
-        {
-           
+        if (
+            $request->has('download') || $request->has('guias_pedagogicos') ||
+            $request->has('imagem_associada') || $request->has('visualizacao')
+        ) {
+
             if (!$this->storeFiles($request, $conteudo)) {
                 return $this->errorResponse([], 'Não foi possível fazer upload de arquivos.', 422);
             }
@@ -196,14 +204,20 @@ class ConteudoController extends ApiController
         $limit = $request->query('limit', 6);
         $query = Conteudo::query();
 
-        
+        if ($termo) {
+            $tag = Tag::where('name', $termo)->get()->first();
+            if ($tag) {
+                $tag->increment('searched');
+                $tag->save();
+            }
+        }
         $conteudos = $query
             ->approved(true)
             ->fullTextSearch($termo, 'tag')
             ->with(['canal', 'tipo'])
             ->paginate($limit)
             ->setPath("/conteudos/search/{$termo}?limit={$limit}");
-            
+
         return $this->showAsPaginator($conteudos);
     }
     /**
@@ -224,13 +238,19 @@ class ConteudoController extends ApiController
             'category',
             'componentes',
             'niveis',
+<<<<<<< HEAD
         ])->findOrFail($id);
         
         
+=======
+        ])->find($id);
+
+
+>>>>>>> 605e8253eb85031da3155db0fe4d84a3d29e0a1f
         $conteudo->increment('qt_access');
 
         $conteudo->save();
-        
+
         return $this->showOne($conteudo);
     }
 
@@ -240,9 +260,9 @@ class ConteudoController extends ApiController
      */
     public function incorporarConteudo($id)
     {
-        
+
         $conteudo = Conteudo::findOrFail($id);
-        
+
         $arquivos = collect($conteudo->getAttribute('arquivos'));
 
         $download = null;
@@ -263,21 +283,20 @@ class ConteudoController extends ApiController
             $mega_bytes = number_format($visualiza_file->get('size') / 1024, 2, ',', '.');
             $mime_type = $visualiza_file->get('mime_type');
         }
-        
+
         return view(
             'incorporar.index',
             compact('download', 'formato', 'mega_bytes', 'mime_type', 'conteudo')
         );
     }
-    
+
     /**
      * Responsável por criar arquivos de conteúdo
      */
     private function storeFiles($request, $conteudo = null)
     {
         $file = null;
-        if ($conteudo && $conteudo->id) 
-        {
+        if ($conteudo && $conteudo->id) {
             if ($request->has('download') && !is_null($request->download)) {
                 $this->deleteFile("download", $conteudo->id);
                 $this->deleteFile("streaming", $conteudo->id);
@@ -318,7 +337,7 @@ class ConteudoController extends ApiController
     }
     public function getConteudosRecentes($slug)
     {
-        
+
         $destaques = new Destaques(3);
 
         return $this->successResponse($destaques->getHomeDestaques($slug));
@@ -331,10 +350,9 @@ class ConteudoController extends ApiController
      */
     protected function stremingVideoConvert(Conteudo $conteudo)
     {
-        if($conteudo->tipo->id == 5)
-        {
+        if ($conteudo->tipo->id == 5) {
             $root = Storage::disk('conteudos-digitais')->path("streaming");
-            $contentVideoConvert = new ContentVideoConvert( Conteudo::findOrFail($conteudo->id), FFMpeg::create(config('ffmpeg')));
+            $contentVideoConvert = new ContentVideoConvert(Conteudo::findOrFail($conteudo->id), FFMpeg::create(config('ffmpeg')));
             VideoStreamingConvert::dispatch($contentVideoConvert, $root)->delay(now()->addSeconds(15));
         }
     }

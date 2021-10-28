@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 class CreateNiveis extends Migration
 {
@@ -16,6 +17,8 @@ class CreateNiveis extends Migration
         Schema::create('niveis_ensino', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->nullable()->default(null);
         });
     }
 

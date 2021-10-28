@@ -1,16 +1,16 @@
 <template>
   <section class="q-pa-xs q-pb-lg">
-    <q-banner class="head">  
-      <header class="q-my-md q-gutter-md">
-        
-        <h1 class="text-h4 color-primary" v-if="!isLoading">
-          {{canal && canal.options ? canal.options.extend_name : canal.name }}
-        </h1>
-        <div v-else>
-          <q-skeleton style="width: 300px; height: 25px" type="text" animation="pulse-x" />
-        </div>
-      </header>
-    </q-banner>
+     
+    <header class="head q-pa-md">
+      
+      <h1 class="text-h4 color-primary" v-if="!isLoading">
+        {{canal && canal.options ? canal.options.extend_name : canal.name }}
+      </h1>
+      
+      <q-skeleton v-else style="width: 380px; height: 85px" type="text" animation="pulse-x" />
+      
+    </header>
+    
     <q-tabs
       :style="`background-color:${color}`" 
       class="text-white shadow-3"
@@ -169,34 +169,3 @@ export default {
   }
 };
 </script>
-<style lang="stylus">
-$text-color = #004081
-$background-cinza = #e1e2e1
-
-
-
-.head{
-  background-color: #ffffff;
-  border-bottom-color : 5px #FADFFA;
-  background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23623d9c' fill-opacity='0.39' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
-}
-
-.q-tabs__arrow--right {
-  top: 0;
-  right: 0;
-  bottom: 0;
-  color: $text-color;
-  background-color: $background-cinza !important;
-}
-.q-tabs__arrow--left {
-  top: 0;
-  right: 0;
-  bottom: 0;
-  color: $text-color;
-  background-color: $background-cinza !important;
-}
-.q-tabs__arrow--faded {
-  display: none;
-}
-
-</style>

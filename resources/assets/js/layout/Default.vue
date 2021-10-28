@@ -34,7 +34,7 @@
         <q-space />
 
         <q-btn-dropdown stretch flat icon="person" dropdown-icon="arrow_drop_down" aria-label="Opçoes de usuário">
-          <q-list>
+          <q-list dense bordered padding>
             <q-item clickable to="/usuario/contato/faleconosco" aria-label="fale conosco">
               <q-item-section>
                 <q-item-label>Fale Conosco</q-item-label>

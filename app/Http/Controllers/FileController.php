@@ -27,12 +27,12 @@ class FileController extends ApiController
         $this->middleware('jwt.auth')->except([
             'index', 'search', 'getFiles', 'getGallery', 'downloadFile', 'getInfoFolder', 'fileExistInBase',
             'ffmpegTeste', 'showVideoStreaming'
-            ]);
+        ]);
         $this->file = $file;
         $this->request = $request;
         $this->storage = $storage;
     }
-    
+
     /**
      * Seleciona os arquivos por id.
      */
@@ -42,11 +42,11 @@ class FileController extends ApiController
         return response(['exist' => $exists], 200, ['Content-Type' => 'image/png']);
     }
 
-     /**
-      *Função Cria o arquivo no Banco de dados usando id.
-      * @param [type] $id
-      * @return void
-      */
+    /**
+     *Função Cria o arquivo no Banco de dados usando id.
+     * @param [type] $id
+     * @return void
+     */
     public function createFile($id)
     {
         if ($this->request->hasFile('image')) {
@@ -227,15 +227,15 @@ class FileController extends ApiController
         // if ($noOfPagesInPDF) {
         //     for ($i = 0; $i < $noOfPagesInPDF; $i++) {
 
-                $fileNameWithoutExtension = $this->_getFileName($filePath, $this->_getFileExtension($filePath));
+        $fileNameWithoutExtension = $this->_getFileName($filePath, $this->_getFileExtension($filePath));
 
-                $filePath = $this->_getFileDirectory($filePath);
+        $filePath = $this->_getFileDirectory($filePath);
 
-                $newFile = $filePath . DIRECTORY_SEPARATOR . $fileNameWithoutExtension . "." . $extension;
+        $newFile = $filePath . DIRECTORY_SEPARATOR . $fileNameWithoutExtension . "." . $extension;
 
-                $_imagick->setImageFormat($extension);
+        $_imagick->setImageFormat($extension);
 
-                $_imagick->writeImage($newFile);
+        $_imagick->writeImage($newFile);
         //     }
         // }
 
@@ -298,7 +298,7 @@ class FileController extends ApiController
         if ($request->hasFile('file') && $request->file('file')->isValid()) {
             $fileName = $request->file->getClientOriginalName();
 
-            $path = $request->file->storeAs('conteudo-digitais'. DIRECTORY_SEPARATOR .'pdf-imagens', $fileName);
+            $path = $request->file->storeAs('conteudo-digitais' . DIRECTORY_SEPARATOR . 'pdf-imagens', $fileName);
 
             $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $path);
         }
@@ -308,32 +308,25 @@ class FileController extends ApiController
 
     public function ffmpegTeste(Request $request, $id)
     {
-        try 
-        {
+        try {
             $root = Storage::disk('conteudos-digitais')->path("streaming");
-            $contentVideoConvert = new ContentVideoConvert( Conteudo::findOrFail($id), FFMpeg::create(config('ffmpeg')));
+            $contentVideoConvert = new ContentVideoConvert(Conteudo::findOrFail($id), FFMpeg::create(config('ffmpeg')));
             VideoStreamingConvert::dispatch($contentVideoConvert, $root);
             //$contentVideoConvert->convertToStreaming($root, FFMpeg::create(config('ffmpeg')));
-        }
-        catch(Exception $ex)
-        {
+        } catch (Exception $ex) {
             return ($ex);
         }
     }
 
     public function showVideoStreaming($id)
     {
-        try
-        {
+        try {
             $conteudo = Conteudo::findOrFail($id);
             $file = $conteudo->streamingFileConteudo($id);
             return view('streaming.video', compact('file'));
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             return $e;
         }
-        
     }
 
     public function deleteFile(Request $request)
@@ -341,10 +334,10 @@ class FileController extends ApiController
         $filename = $request->filename;
         $directory = $request->directory;
         $role = Auth::user()->role->name;
-        if(Auth::check() && $role == 'super-admin' || $role == 'admin' || $role == 'cooredenador'){
+        if (Auth::check() && $role == 'super-admin' || $role == 'admin' || $role == 'coordenador') {
             $file = Storage::disk($directory)->path($filename);
             if (file_exists($file)) {
-                
+
                 $response = unlink($file) ? 'Apagado com sucesso' : 'Não encontrado';
                 return $this->successResponse([
                     'success' => true
@@ -353,8 +346,6 @@ class FileController extends ApiController
         }
 
         return $this->errorResponse(['success' => false], 'Usuário sem permissões para realizar esta ação', 422);
-        
-        
     }
 }
 

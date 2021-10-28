@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <q-list>
+    <q-list dense bordered padding separator>
       <q-item-label v-if="!$q.screen.gt.xs || !$q.screen.gt.sm">
         <q-btn
           flat
@@ -11,7 +11,6 @@
         />
         <BtnMarca></BtnMarca>
       </q-item-label>
-      <q-separator />
       <!-- ADMINISTRAÇÃO -->
       <q-item
         v-if="isLogged"
@@ -27,7 +26,6 @@
           </q-item-label>
         </q-item-section>
       </q-item>
-      <q-separator/>
       <!-- HOME -->
       <q-item clickable 
         to="/" 
@@ -41,23 +39,15 @@
           <q-item-label>Início</q-item-label>
         </q-item-section>
       </q-item>
-      <q-separator />
+      
       
     </q-list>
     
-    <!-- ADMINISTRAÇÃO 
-    <AdminLeftSideBar v-if="$route.name == 'admin'"></AdminLeftSideBar>
-    -->
     <!-- CANAIS-->
-    <q-list v-if="links.length > 0">
-      <!--q-item-label class="bg-grey-4" header>
-        <strong class="text-grey-1">
-          Canais
-        </strong>
-      </q-item-label-->
-      <div v-for="(link, i) in links" :key="`x-${i}`">
+    <q-list dense bordered padding separator  v-if="links.length > 0">
+      
         <q-item
-          
+          v-for="(link, i) in links" :key="`x-${i}`"
           :to="`/${link.slug}/listar`"
           :aria-label="`IR: ${link.name}`"
           :title="`IR: ${link.name}`"
@@ -71,7 +61,7 @@
           </q-item-section>
         </q-item>
         <q-separator />
-      </div>
+      
       <q-item
         :to="{path: '/rotinas-de-estudo/ensino-medio/semana-1' }"
         aria-label="IR: Rotinas de estudo"
@@ -138,7 +128,7 @@
       </q-item -->
     </q-list>
 
-    <q-list v-else>
+    <q-list dense bordered padding v-else>
       <q-item>
       <q-item-section>
         <q-item-label>
@@ -204,7 +194,7 @@
       </q-item>
     </q-list>
 
-    <q-list padding bordered>
+    <q-list dense bordered >
       <q-expansion-item
         dense
         dense-toggle
