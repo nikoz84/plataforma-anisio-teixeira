@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
     {
         //$schedule->command('send:report')->montly()
         // $schedule->command('inspire')->hourly();
-        $schedule->command('convert:streaming')->daily()->between('01:00', '06:00')->withoutOverlapping();
+        //$schedule->command('convert:streaming')->daily()->between('01:00', '06:00')->withoutOverlapping();
     }
 
     /**

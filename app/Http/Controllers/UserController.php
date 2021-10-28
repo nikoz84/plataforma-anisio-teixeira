@@ -24,7 +24,7 @@ class UserController extends ApiController
     /**
      * Lista de usuários
      *
-     * @param $request \Illuminate\Http\Request
+     * @param  \Illuminate\Http\Request $request Requisição HTTP
      *
      * @return App\Traits\ApiResponser
      */
@@ -32,29 +32,37 @@ class UserController extends ApiController
     {
         $this->authorize('index', JWTAuth::user());
         $limit = $request->query('limit', 15);
-        //$orderBy = ($request->has('order')) ? $request->query('order') : 'name';
+
         $query = User::query();
-        $paginator = $query->with(['role'])->orderBy('name', 'asc')->paginate($limit);
+        $paginator = $query
+            ->with(['role'])
+            ->orderBy('name', 'asc')
+            ->paginate($limit);
+
         $paginator->setPath("/usuarios?limit={$limit}");
+
         return $this->showAsPaginator($paginator, '', 200);
     }
 
     /**
      * Buscar usuário por ID
-     * @param $id integer
+     * @param integer $id ID do usuário
      * @return App\Traits\ApiReponser
      */
     public function getById($id)
     {
-        $user = User::with('role')->findOrFail($id)->makeVisible('email');
+        $user = User::with('role')
+            ->findOrFail($id)
+            ->makeVisible('email');
+
         $this->authorize('index', [$user]);
-        
+
         return $this->showOne($user, '', 200);
     }
 
     /**
      * Cria novo usuário
-     * @param $request
+     * @param UserRequest $request Clase request do usuário
      * @return App\Traits\ApiResponser
      */
     public function create(UserRequest $request)
@@ -65,7 +73,6 @@ class UserController extends ApiController
         $user->fill($request->validated());
 
         return $this->saveFile($user, $request);
-        
     }
     /**
      * Atualizar usuário por ID
@@ -80,9 +87,9 @@ class UserController extends ApiController
         $this->authorize('update', $user);
 
         $user->fill($request->validated());
-        
-        
-        
+
+
+
         return $this->saveFile($user, $request);
     }
 
@@ -91,7 +98,7 @@ class UserController extends ApiController
         if (!$user->save()) {
             return $this->errorResponse([], 'Não foi possível editar o usuário', 422);
         }
-        
+
         if ($request->has('arquivoImagem')) {
             $storage = new StorageUser();
             $user = $storage->saveFile($user, $request);
@@ -99,8 +106,8 @@ class UserController extends ApiController
                 return $this->errorResponse([], 'Não foi possível fazer o upload da imagem', 422);
             }
         }
-        
-        
+
+
         return $this->successResponse($user, 'Usuário editado com sucesso!', 200);
     }
 
