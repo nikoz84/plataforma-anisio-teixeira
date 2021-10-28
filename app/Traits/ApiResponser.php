@@ -9,7 +9,13 @@ use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 trait ApiResponser
 {
     /**
-     * @return String json
+     * Estrutura padrão de retorno para respostas com sucesso
+     * 
+     * @param array $data Recebe um array ou coleção de dados
+     * @param string $message Recebe uma mensagem opcional
+     * @param integer $code Código HTTP ou statusCode
+     * 
+     * @return string json
      */
     protected function successResponse($data, $message = '', $code = 200)
     {
@@ -21,11 +27,13 @@ trait ApiResponser
     }
 
     /**
-     * estrutura padrão de retorno para requisições http:code 2xx
-     * @param mixed $errors
-     * @param string $message
-     * @param int $code
-     * @param mixed $headers
+     * Estrutura padrão de retorno para erros
+     * 
+     * @param array $errors Erros da aplicação
+     * @param string $message Mensagem alternativa
+     * @param integer $code Código HTTP ou statusCode
+     * @param mixed $headers Cabeçalhos HTTP
+     * 
      * @return string json
      */
     protected function errorResponse($errors, $message, $code, $headers = null)
@@ -44,12 +52,29 @@ trait ApiResponser
             ], $code);
         }
     }
-
+    /**
+     * Resposta de uma coleção de dados 
+     * 
+     * @param \Illuminate\Support\Collection $collection Recebe uma coleção laravel
+     * @param string $message Mensagem alternativa
+     * @param integer $code Código HTTP ou statusCode
+     * 
+     * @return string json
+     */
     protected function showAll(Collection $collection, $message = '', $code = 200)
     {
         return $this->successResponse($collection, $message, $code);
     }
 
+    /**
+     * Resposta em formato paginação
+     * 
+     * @param Paginator $paginator Recebe um objeto de tipo paginator
+     * @param string $message Recebe uma mensagem opcional
+     * @param integer $code Código HTTP ou statusCode
+     * 
+     * @return string json
+     */
     protected function showAsPaginator(Paginator $paginator, $message = '', $code = 200)
     {
         return response()->json([
@@ -59,11 +84,27 @@ trait ApiResponser
         ], $code);
     }
 
+    /**
+     * Resposta json da um modelo
+     * 
+     * @param Model $instance Instância de um modelo
+     * @param string $message Mensagem opcional
+     * @param integer $code Código HTTP ou statusCode
+     * 
+     * @return string json
+     */
+
     protected function showOne(Model $instance, $message = '', $code = 200)
     {
         return $this->successResponse($instance, $message, $code);
     }
 
+    /**
+     * Transforma coleção para um select com chave valor id => name
+     * @param Collection $collection Coleção laravel
+     * 
+     * @return string json
+     */
     protected function fetchForSelect(Collection $collection)
     {
         $select = $collection->map(function ($item) {

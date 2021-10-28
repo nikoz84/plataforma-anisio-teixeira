@@ -90,11 +90,11 @@ class RoleController extends ApiController
      */
     public function delete($id)
     {
-   
+
         $role = $this->role::find($id);
-        
+
         $this->authorize('delete', $role);
-        
+
         if ($role->delete()) {
             return $this->successResponse($role, 'Perfil deletado com sucesso!', 200);
         }
@@ -116,6 +116,7 @@ class RoleController extends ApiController
             ->setBindings([$search])
             ->paginate($limit);
         $roles->setPath("/roles/search/{$termo}?limit={$limit}");
+
         return response()->json([
             'success' => true,
             'paginator' => $roles,
@@ -132,6 +133,7 @@ class RoleController extends ApiController
     public function getById($id)
     {
         $tipo = Role::find($id);
+
         return $this->showOne($tipo);
     }
 }

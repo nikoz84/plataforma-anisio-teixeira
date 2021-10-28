@@ -9,9 +9,11 @@ use App\Services\SearchEngineOptimization;
 use Jaybizzle\CrawlerDetect\CrawlerDetect;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Http;
+
+
 class ApiController extends Controller
 {
-    
+
     private $seo;
     private $crawlerDetect;
     private $request;
@@ -34,13 +36,13 @@ class ApiController extends Controller
     {
         $data = $this->seo->getDefaultData();
         //$crawler = 'Mozilla/5.0 (compatible; aiHitBot/2.9; +https://www.aihitdata.com/about)';
-        
-        if($this->crawlerDetect->isCrawler()){
+
+        if ($this->crawlerDetect->isCrawler()) {
             $data = $this->seo->getMetadata();
-                
+
             $url = $this->request::fullUrl();
         }
-        
+
         return view('index', $data);
     }
 
@@ -48,7 +50,8 @@ class ApiController extends Controller
      * retorna mensagens de validações padrão para os formulários em geral
      * @return array conjunto de mensagens para as validações dos formulários em geral
      */
-    protected function messagesRules(){
+    protected function messagesRules()
+    {
         return [
             'required' => 'O campo :attribute é obrigatório',
             'min' => "O número mínimo de caracteres para este campo é :min",
@@ -64,11 +67,11 @@ class ApiController extends Controller
                 'url' => $url
             ]);
             */
-            //$ssr_content = file_get_contents($ssr_server);
-            //dd($ssr_content);
-            // Did we get the content?
-            //dd($response->getStatusCode());
-            /*
+        //$ssr_content = file_get_contents($ssr_server);
+        //dd($ssr_content);
+        // Did we get the content?
+        //dd($response->getStatusCode());
+        /*
             if ($response->getStatusCode() != 500) {
                 echo $response->getContent();
                 die;

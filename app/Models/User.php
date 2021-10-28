@@ -45,7 +45,7 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     /**
-     * Atributos escondidos do array
+     * Atributos escondidos da clase
      *
      * @var array
      */

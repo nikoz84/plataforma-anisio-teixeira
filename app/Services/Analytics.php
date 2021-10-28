@@ -85,7 +85,7 @@ class Analytics
     }
 
     public function postsPerUserMonthly()
-    {
+    { 
         $sql = "WITH data AS (
                     SELECT id, created_at, user_id,
                         (SELECT upper(name) FROM users WHERE id = user_id) AS name

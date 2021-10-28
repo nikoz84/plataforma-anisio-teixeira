@@ -353,7 +353,7 @@
               <q-separator class="q-mt-lg" inset color="positive"></q-separator>
               <q-list dense bordered>
                 <q-item v-for="(component, i) in nivel.componentes" :key="`child-com-${i}`"
-                  tag="label" v-ripple>
+                   v-ripple>
                   <q-item-section avatar>
                     <q-checkbox v-model="componentesCurriculares" :val="component.id" color="teal"/>
                   </q-item-section>
