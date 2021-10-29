@@ -8,7 +8,7 @@ use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;
 
 class AplicativoCategoryController extends ApiController
-   {  
+{
     /**
      * Metodo construtor chama o metodo a cada objeto recem criado
      * 
@@ -23,6 +23,12 @@ class AplicativoCategoryController extends ApiController
 
         $this->request = $request;
     }
+
+    /**
+     * Método index lista todos os objetos do banco de dados
+     * @param int $id identificador único
+     * @return \App\Controllers\ApiResponse retorna json
+     */
     public function index()
     {
 
@@ -59,7 +65,7 @@ class AplicativoCategoryController extends ApiController
      * @return \App\Controllers\ApiResponser 
      * retorna json
      */
-    
+
     public function update(Request $request, $id)
     {
         $validator = Validator::make($this->request->all(), config("rules.aplicativo_categoria"));
@@ -77,14 +83,14 @@ class AplicativoCategoryController extends ApiController
             return $this->errorResponse($aplicativo_category, 'Não existe essa categoria para ser atualizada', 200);
         }
     }
-   /**
-    * Deleta aplicativo do banco de dados
-    *
-    * @param [type] $id identificador único
-    * @param \App\AplicativoCategoryController $aplicativo_category
-    * @param \App\Controllers\ApiResponser retorna json  
-    * @return void
-    */
+    /**
+     * Deleta aplicativo do banco de dados
+     *
+     * @param [type] $id identificador único
+     * @param \App\AplicativoCategoryController $aplicativo_category
+     * @param \App\Controllers\ApiResponser retorna json  
+     * @return void
+     */
     public function delete($id)
     {
         $validator = Validator::make($this->request->all(), [
@@ -108,7 +114,7 @@ class AplicativoCategoryController extends ApiController
      *  @param \App\AplicativoCategoryCoontroller $aplicativo_category
      *  @return \App\Controller\ApiResponser retorna json
      */
-    
+
     public function getById($id)
     {
         $category = $this->category::findOrFail($id);

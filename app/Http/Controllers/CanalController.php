@@ -21,7 +21,7 @@ class CanalController extends ApiController
     }
     /**
      * Display a indexing of the resource.
-     *
+     * Exibe uma indexação do recurso.
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -39,17 +39,17 @@ class CanalController extends ApiController
     }
     /**
      * Show the form for creating a new resource.
-     *
+     * Mostra o formulário de criação de um novo recurso.
      * @return json
      */
     public function create(CanalRequest $request)
     {
         $canal = new Canal;
         $this->authorize('create', $canal);
-        
-    
+
+
         $canal->fill($request->validated());
-        
+
 
         if (!$canal->save()) {
             return $this->errorResponse([], 'Impossível cadastrar o canal', 422);
@@ -68,11 +68,11 @@ class CanalController extends ApiController
     public function update(CanalRequest $request, $id)
     {
         $canal = Canal::findOrFail($id);
-        
+
         $this->authorize('update', $canal);
 
         $canal->fill($request->validated());
-        
+
         if (!$canal->save()) {
             return $this->errorResponse([], 'Não foi possível editar o canal', 422);
         }
@@ -107,7 +107,7 @@ class CanalController extends ApiController
     {
         $canal = Canal::with(['categories', 'appsCategories'])
             ->where('slug', $slug)->get()->first();
-        
+
         if (!$canal) {
             return $this->errorResponse([], 'Não encontrado', 404);
         }

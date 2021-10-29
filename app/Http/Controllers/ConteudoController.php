@@ -225,7 +225,7 @@ class ConteudoController extends ApiController
      *
      * @param $id integer
      *
-     * @return App\Traits\ApiResponser
+     * @return string json
      */
     public function getById(Request $request, $id)
     {
@@ -238,15 +238,9 @@ class ConteudoController extends ApiController
             'category',
             'componentes',
             'niveis',
-<<<<<<< HEAD
         ])->findOrFail($id);
-        
-        
-=======
-        ])->find($id);
 
 
->>>>>>> 605e8253eb85031da3155db0fe4d84a3d29e0a1f
         $conteudo->increment('qt_access');
 
         $conteudo->save();

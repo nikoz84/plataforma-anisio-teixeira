@@ -27,12 +27,12 @@ class ComentarioController extends ApiController
             'deletar'
         ]);
     }
-     /**
-      * Metodo que cria retorna uma listagem do banco de dados e valida
-      * @param \App\Comentario $comentario
-      * @return \App\Controllers\ComentarioController\ApiResponser
-      * retorna json
-      */
+    /**
+     * Metodo que cria retorna uma listagem do banco de dados e valida
+     * @param \App\Comentario $comentario
+     * @return \App\Controllers\ComentarioController\ApiResponser
+     * retorna json
+     */
     public function create()
     {
         $validator = Validator::make(
@@ -58,7 +58,7 @@ class ComentarioController extends ApiController
      * @return \App\Controllers\ApiResponser
      * retorna json
      */
-    
+
     public function getComentarioById($id)
     {
         $comentario = $this->comentario->getComentarioById($id);
@@ -99,16 +99,18 @@ class ComentarioController extends ApiController
     }
     /**
      * Retorna os comentarios sobre uma determinada postagem
-     * @param [type] $idPostagem
-     * @param \App\Comentario
-     * @return \App\Controller\ApiResponser
-     * retorna Json
+     * @param integer $idPostagem identificador único do recurso
+     * @param string $tipo tabela conteudo ou aplicativo
+     * 
+     * @return string json
      */
-    
+
     public function getComentariosByIdPostagem($idPostagem, $tipo)
     {
         $limit = $this->request->query('limit');
-        $comentarios = $this->comentario->getComentariosByIdPostagem($idPostagem, $tipo)
+        $query = $this->comentario::query();
+
+        $comentarios =  $query->comentariosById($idPostagem, $tipo)
             ->paginate($limit);
 
         if ($comentarios) {
@@ -117,7 +119,7 @@ class ComentarioController extends ApiController
 
         return $this->errorResponse([], 'Comentários não encontrado!', 422);
     }
-    
+
     /**
      * Retorna os comentarios por id do usuario e pelo tipo
      * @param [type] $idUsuario

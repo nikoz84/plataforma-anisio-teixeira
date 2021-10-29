@@ -11,7 +11,7 @@ trait ApiResponser
     /**
      * Estrutura padrão de retorno para respostas com sucesso
      * 
-     * @param array $data Recebe um array ou coleção de dados
+     * @param mixed $data Recebe um array ou coleção de dados
      * @param string $message Recebe uma mensagem opcional
      * @param integer $code Código HTTP ou statusCode
      * 
@@ -29,7 +29,7 @@ trait ApiResponser
     /**
      * Estrutura padrão de retorno para erros
      * 
-     * @param array $errors Erros da aplicação
+     * @param mixed $errors Erros da aplicação
      * @param string $message Mensagem alternativa
      * @param integer $code Código HTTP ou statusCode
      * @param mixed $headers Cabeçalhos HTTP

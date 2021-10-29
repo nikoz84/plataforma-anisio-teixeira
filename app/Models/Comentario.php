@@ -23,10 +23,10 @@ class Comentario extends Model
         'body',
         'tipo'
     ];
-     /**
-      * Retorna Comentário do Id do Usuário
-      * 
-      */
+    /**
+     * Retorna Comentário do Id do Usuário
+     * 
+     */
     public function getComentariosByIdUsuario($userId, $tipo = false)
     {
         $comentarios = $this->where('user_id', $userId);
@@ -40,59 +40,68 @@ class Comentario extends Model
 
         return false;
     }
-      /**
-       * Retorna Postagem com Id da Postagem
-       *
-       * @param [type] $idPostagem
-       * @param [type] $tipo
-       * @return void
-       */
-    public function getComentariosByIdPostagem($idPostagem, $tipo)
+    /**
+     * Retorna Postagem com Id da Postagem
+     *
+     * @param integer $idPostagem
+     * @param string $tipo
+     * @return void
+     */
+    public function scopeComentariosById($query, $idPostagem, $tipo)
     {
-        $comentarios = false;
+        if (!$idPostagem || !$tipo) {
+            return $query;
+        }
+
+        return $query->when($tipo == 'conteudo', function ($q) use ($idPostagem) {
+            return $q->where('conteudo_id', $idPostagem);
+        })->when($tipo == 'aplicativo', function ($q) use ($idPostagem) {
+            return $q->where('aplicativo_id', $idPostagem);
+        });
+
+
+        /*
+        $comentarios = null;
         if ($tipo == 'conteudo') {
             $comentarios = $this->where('conteudo_id', $idPostagem);
         } elseif ($tipo == 'aplicativo') {
             $comentarios = $this->where('aplicativo_id', $idPostagem);
         }
 
-        if ($comentarios) {
-            return $comentarios;
-        }
-
-        return false;
+        return $comentarios;
+        */
     }
-      /**
-       * Retorna Comentário Por id
-       *
-       * @param [int] $id
-       * @return void
-       */
+    /**
+     * Retorna Comentário Por id
+     *
+     * @param [int] $id
+     * @return void
+     */
     public function getComentarioById($id)
     {
         $comentario = $this->find($id);
-        if (! is_null($comentario)) {
+        if (!is_null($comentario)) {
             return $comentario;
         }
 
         return false;
     }
-      /**
-       * Retorna Comentário Por Tipo.
-       *
-       * @param [int] $tipo
-       * @return void
-       */
+    /**
+     * Retorna Comentário Por Tipo.
+     *
+     * @param [int] $tipo
+     * @return void
+     */
     public function getComentariosByTipo($tipo)
     {
         return $this->where('tipo', $tipo)->get();
     }
-       /**
-        * Deleta Informações
-        *
-        * @param [int] $id
-        * @return void
-        */
+    /**
+     * Deleta Informações
+     *
+     * @param [int] $id
+     * @return void
+     */
     public function deletar($id)
     {
         return $this->where('id', $id)->delete();

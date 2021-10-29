@@ -28,12 +28,13 @@ class CategoryController extends ApiController
         return [
             'canal_id' => 'required',
             'parent_id' => 'sometimes|nullable',
-            'name'=> 'required|min:2|max:255',
+            'name' => 'required|min:2|max:255',
             'image' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:2048|nullable'
         ];
     }
     /**
      * Undocumented function
+     * Função não documentada
      * Método Construtor
      * @param Request $request
      */
@@ -49,75 +50,76 @@ class CategoryController extends ApiController
      * Lista as categorias do canal 
      * 
      * @return \App\Controllers\ApiResponser
-     */ 
+     */
 
     public function index()
     {
         $limit = $this->request->get('limit', 15);
-        
-        $categories = Category:://whereNull('parent_id')
+
+        $categories = Category:: //whereNull('parent_id')
             where('options->is_active', 'true')
             ->with('subCategories')
             ->limit($limit)
             ->orderBy('created_at', 'desc')
             ->paginate($limit);
-        
+
         return $this->showAsPaginator($categories);
     }
 
-   /**
-    * 
-    * Criando e validando informações para ser adicionadas no banco de dados
-    * @return void
-    */
+    /**
+     * 
+     * Criando e validando informações para ser adicionadas no banco de dados
+     * @param CategoryRequest
+     * @param $request 
+     * @return void
+     */
     public function create(CategoryRequest $request)
     {
         $category = new Category;
-        
+
         $category->fill($request->validated());
-        
+
         if (!$category->save()) {
             return $this->errorResponse([], 'Não foi possível cadastrar a categoria', 422);
         }
-        
-        if($request->has('image') && $request->image){
+
+        if ($request->has('image') && $request->image) {
             $fileImg = $this->saveFile($category->id, [$request->image], 'imagem-associada/categorias');
             if (!$fileImg) {
                 return $this->errorResponse([], 'Não foi possível salvar imagem associada', 422);
             }
         }
-        
+
         return $this->successResponse($category, 'Categoria criada com sucesso!', 200);
     }
 
     /**
      * Atualiza aplicativo no banco de dados
      * 
-     * @param int id identificador único
-     * @param  \App\Category $categories
-     * @return  \App\Controllers\ApiResponser retorna json
+     * @param \App\Http\Requests\CategoryRequest $request Requisição personalizada
+     * @param integer $id identificador único da categoria
+     * 
+     * @return string json
      */
-    public function update(CategoryRequest $request, Category $category)
+    public function update(CategoryRequest $request, $id)
     {
-        
+        $category = Category::findOrFail($id);
+
         $category->fill($request->validated());
 
         dd($category);
         dd('d');
-        if ($this->request->imagemAssociada)
-        {
-            if($category->refenciaImagemAssociada())
-            unlink($category->refenciaImagemAssociada());
+        if ($this->request->imagemAssociada) {
+            if ($category->refenciaImagemAssociada())
+                unlink($category->refenciaImagemAssociada());
             $file = $this->saveFile($category->id, [$this->request->imagemAssociada], 'imagem-associada/categorias');
-            if(!$file)
-            {
+            if (!$file) {
                 return $this->errorResponse([], 'Não foi possível salvar imagem associada', 422);
             }
         }
-        if ($this->request->videoDestaque) 
-        {
-            if($category->refenciaVideoDestaque())
-            unlink($category->refenciaVideoDestaque());
+        if ($this->request->videoDestaque) {
+            if ($category->refenciaVideoDestaque())
+                unlink($category->refenciaVideoDestaque());
             $fileVideo = $this->saveFile($category->id, [$this->request->videoDestaque], 'visualizacao');
             if (!$fileVideo) {
                 return $this->errorResponse([], 'Não foi possível salvar imagem associada', 422);
@@ -148,18 +150,18 @@ class CategoryController extends ApiController
         if (!$category->delete()) {
             return $this->errorResponse([], 'Não foi possível deletar a categoria', 422);
         }
-        if($category->refenciaImagemAssociada())
+        if ($category->refenciaImagemAssociada())
             unlink($category->refenciaImagemAssociada());
-        if($category->refenciaVideoDestaque())
-        unlink($category->refenciaVideoDestaque());
+        if ($category->refenciaVideoDestaque())
+            unlink($category->refenciaVideoDestaque());
         return $this->successResponse($category, 'Categoria deletada com sucesso!', 200);
     }
-     /**
-      * 
-      * Lista id do aplicativo no banco de dados
-      * @param \App\Category $categories
-      * @return \App\Controllers\ApiResponser retorna json
-      */
+    /**
+     * 
+     * Lista id do aplicativo no banco de dados
+     * @param \App\Category $categories
+     * @return \App\Controllers\ApiResponser retorna json
+     */
 
     public function getById($id)
     {
@@ -168,22 +170,22 @@ class CategoryController extends ApiController
         return CachingModelObjects::getById($category->query()->with("canal"), $id);
     }
 
-/**
- * 
- * Lista a categoria do canal por id
- * @param [type] $id
- * @return void
- */
+    /**
+     * 
+     * Lista a categoria do canal por id
+     * @param [type] $id
+     * @return void
+     */
     public function getCategoryByCanalId($id)
     {
         $categories = Category::with('subCategories')->where('canal_id', $id)
-        ->where('options->is_active', 'true')
-        ->whereNull('parent_id')
-        ->orderBy('name')
-        ->get();
-        
+            ->where('options->is_active', 'true')
+            ->whereNull('parent_id')
+            ->orderBy('name')
+            ->get();
+
         $canal = Canal::where('id', $id)->get();
-        
+
         $data = collect([
             'category_name' => $canal->pluck('category_name')->first(),
             'categories' => $categories

@@ -47,16 +47,16 @@ class AuthController extends ApiController
                 'recaptcha' => ['required', new \App\Rules\ValidRecaptcha]
             ]
         );
-        
+
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Usuário ou senha inválidos", 422);
         }
         $credentials = $this->request->only('email', 'password');
         $token = null;
         //dd(JWTAuth::attempt($credentials));
-        
+
         if (!$token = JWTAuth::attempt($credentials)) {
-            
+
             return $this->errorResponse([], 'E-mail ou Senha inválidos', 422);
         }
 
@@ -70,16 +70,16 @@ class AuthController extends ApiController
     public function linksAdmin()
     {
         $user = auth('api')->user();
-        
+
         $sidebar = new SideBar;
 
         return $this->successResponse([
-            
+
             'links' => $sidebar->getAdminSidebar($user)
         ]);
     }
     /**
-     * Log the user out (Invalidate the token).
+     * Logout ou sair do sistema (Invalidate the token).
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -116,7 +116,7 @@ class AuthController extends ApiController
             'expires_in' => auth()->factory()->getTTL() * 60,
         ];
 
-        return $this->successResponse($data, $message) ;
+        return $this->successResponse($data, $message);
     }
     /**
      * Registro do usuário.
@@ -151,7 +151,7 @@ class AuthController extends ApiController
                 "birthday" => null,
                 "telefone" => null,
                 "is_active" => false,
-                "neighborhood"=> null
+                "neighborhood" => null
             ];
 
             if (!$user->save()) {
@@ -163,16 +163,16 @@ class AuthController extends ApiController
         } catch (Exception $ex) {
             return $this->errorResponse([], $ex->getMessage(), 422);
         }
-        
+
         return $this->successResponse(
             [],
             "Usuário cadastrado com sucesso! Espere o código de ativação em sua conta de email",
             200
         );
     }
-    /**
-     * Recuperar senha
-     *
+    /** 
+     * Recuperar senha do usuário
+     * @return json response
      */
     public function recoverPass(Request $request)
     {
@@ -236,7 +236,7 @@ class AuthController extends ApiController
     protected function sendConfirmationEmail($email, $token, $option)
     {
         $user = User::where('email', $email)->get()->first();
-        
+
         try {
             Mail::send(new SendVerificationEmail($user, $token, $option));
             return true;
@@ -267,7 +267,12 @@ class AuthController extends ApiController
     }
 
     /**
-     *
+     * Verifica o token do usuário e registra
+     * 
+     * @param $request \Illuminate\Http\Request
+     * @param $token  token de validação
+     * 
+     * @return \App\Models\User\verifyTokenUserRegister
      */
     public function verifyTokenUserRegister(Request $request, $token)
     {
@@ -276,7 +281,7 @@ class AuthController extends ApiController
     }
 
     /**
-     * modifica senha de usuario
+     * Modifica senha de usuario
      * @param string $token token gerado pela aplicação e enviado posteriormente
      * pelo usuário para comprovação de autorização
      * @return string
@@ -304,7 +309,7 @@ class AuthController extends ApiController
             }
             $user = $this->getUserByToken($token);
             $user->setPasswordAttribute($this->request->password);
-            
+
             if (!$user->save()) {
                 throw new Exception("Erro ao tentar salvar modificação. Tente novamente mais tarde.");
             }

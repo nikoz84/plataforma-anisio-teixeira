@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Traits\FileSystemLogic;
 
 class AplicativoController extends ApiController
-{ 
+{
 
     use FileSystemLogic;
     /**
@@ -30,7 +30,7 @@ class AplicativoController extends ApiController
     }
     /**
      * Display a listing of the resource.
-     * Lista Informações do palicativo no banco de dados
+     * Lista Informações do aplicativo no banco de dados
      * @param\App\Aplicativo $aplicativo
      * @return \Illuminate\Http\Response
      */
@@ -61,27 +61,27 @@ class AplicativoController extends ApiController
     public function create(AplicativoRequest $request)
     {
         $this->authorize('create', Aplicativo::class);
-        
+
         $aplicativo = new Aplicativo;
         $aplicativo->fill($request->validated());
-        
+
         if (!$aplicativo->save()) {
             $this->errorResponse([], "Erro no prenchimento de dados.", 422);
         }
-        
-        
+
+
         $aplicativo->tags()->attach($request->tags);
-            
+
         if ($request->imagemAssociada) {
             $fileImg = $this->saveFile($aplicativo->id, [$request->imagemAssociada], 'imagem-associada', 'aplicativos-educacionais');
             if (!$fileImg) {
                 return $this->errorResponse([], "Não foi possível salvar imagem. Tente novamente mais tarde.", 422);
             }
         }
-        
+
         return $this->successResponse($aplicativo, 'Aplicativo cadastrado com sucesso!', 200);
     }
-    
+
     /**
      * Cria Arquivo de imagem
      */
@@ -105,16 +105,16 @@ class AplicativoController extends ApiController
     public function update(AplicativoRequest $request, $id)
     {
         $aplicativo = Aplicativo::findOrFail($id);
-        
+
         $this->authorize('update', $aplicativo);
 
-        
+
         $aplicativo->fill($request->validated());
-        
+
         if (!$aplicativo->save()) {
             return $this->errorResponse([], "Não foi possível atualizar o aplicativo", 422);
         }
-        
+
         $aplicativo->tags()->sync($request->tags);
 
         if ($request->imagemAssociada) {
@@ -144,7 +144,7 @@ class AplicativoController extends ApiController
         }
         return $this->successResponse([], 'Aplicativo deletado com sucesso!!', 200);
     }
-    
+
     /**
      * Metodo que faz uma busca de reposta no banco de dados.
      * @param \App\Aplicativo $aplicativo
@@ -158,7 +158,7 @@ class AplicativoController extends ApiController
             ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
             ->with(['category', 'canal'])
             ->paginate($limit);
-        
+
         $aplicativos->setPath("/aplicativos/search/{$termo}?limit={$limit}");
 
         return $this->showAsPaginator(

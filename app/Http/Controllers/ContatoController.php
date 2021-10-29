@@ -39,7 +39,10 @@ class ContatoController extends ApiController
 
         return $this->showAsPaginator($paginator);
     }
-    
+    /**
+     * Regra de Validação
+     * @return array  array de regras
+     */
     public function configRules()
     {
         return [
@@ -54,7 +57,7 @@ class ContatoController extends ApiController
     /**
      * Adiciona novas denúncias
      *
-     * @return \Illuminate\Http\Response
+     * @return string json
      */
     public function create()
     {
