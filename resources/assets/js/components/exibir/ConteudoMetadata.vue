@@ -53,7 +53,7 @@
             <strong>
                 Publicador(a):
             </strong>
-            <div class="flex justify-center q-mt-md wordbreak">
+            <div class="flex justify-center q-mt-md wordbreak" v-if="conteudo && conteudo.user">
                 <a class="tag text-primary" v-html="conteudo.user ? conteudo.user.name: null"
                         title="Outros conteúdos deste publicador"
                         :href="`/recursos-educacionais/listar?publicador=${conteudo.user.id}`">
