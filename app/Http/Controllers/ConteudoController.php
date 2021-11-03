@@ -211,10 +211,12 @@ class ConteudoController extends ApiController
                 $tag->save();
             }
         }
+
         $conteudos = $query
             ->approved(true)
             ->fullTextSearch($termo, 'tag')
             ->with(['canal', 'tipo'])
+            ->orderBy('created_at', 'desc')
             ->paginate($limit)
             ->setPath("/conteudos/search/{$termo}?limit={$limit}");
 

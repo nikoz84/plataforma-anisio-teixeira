@@ -10,9 +10,7 @@ use App\Helpers\TransformDate;
 use App\Models\Tag;
 use App\Models\AplicativoCategory;
 use App\Traits\UserCan;
-use Illuminate\Support\Facades\File;
 use App\Traits\FileSystemLogic;
-
 
 class Aplicativo extends Model
 {
@@ -145,5 +143,14 @@ class Aplicativo extends Model
         }
         
         return null;
+    }
+
+    /**
+     * Adiciona novo atributo ao objeto que limita o tamanho do título
+     * @return string cadeia de caracteres
+     */
+    public function getShortTitleAttribute()
+    {
+        return Str::words($this->name, 8);
     }
 }
