@@ -18,7 +18,7 @@ use App\Models\NivelEnsino;
 use App\Helpers\TransformDate;
 use App\Traits\UserCan;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Database\Eloquent\Builder;
 
 class Conteudo extends Model
 {
@@ -52,9 +52,7 @@ class Conteudo extends Model
 
     /**
      * Seleciona o canal do conteúdo sem os campos adicionais
-     * @param \App\Conteudo $conteufo
-     * @return \App\Model\ApiResponser retorna json
-     * @return boolean
+     * @return Canal instância
      */
     public function canal()
     {
@@ -65,9 +63,7 @@ class Conteudo extends Model
     }
     /**
      * Seleciona usuário publicador
-     * @param \App\Conteudo $conteudo
-     * @return \App\Model\ApiResponser retorna json
-     * @return void
+     * @return User instâcia
      */
     public function user()
     {
@@ -76,22 +72,16 @@ class Conteudo extends Model
     }
     /**
      * Conteúdo tipo
-     * @param \App\Conteudo $conteudo
-     * @return \App\Model\ApiResponser retorna json
-     * @return App\Tipo
+     * @return Tipo instância
      */
     public function tipo()
     {
-        //Tipo::$without_appends = true;
-
         return $this->hasOne(Tipo::class, 'id', 'tipo_id')
             ->select(['id', 'name']);
     }
     /**
      * Seleciona as Tags relacionadas
-     * @param \App\Conteudo $conteudo
-     * @return \App\Traits\ApiResponser retorna json
-     * @return App\Tag
+     * @return Tag instância
      */
     public function tags()
     {
@@ -100,9 +90,7 @@ class Conteudo extends Model
     }
     /**
      * Seleciona os componentes curriculares
-     * @param \App\Models\Contedudo $conteudo
-     * @return \App\Traits\ApiResponser retorna json
-     * @return App\Models\CurricularComponent
+     * @return CurricularComponent instância
      */
     public function componentes()
     {
@@ -116,9 +104,7 @@ class Conteudo extends Model
 
     /**
      * Seleciona a categoria do conteúdo
-     * @param \App\Conteudo $conteudo
-     * @return \App\Model\ApiResponser retorna json
-     * @return App\Category
+     * @return Category instância
      */
     public function category()
     {
@@ -127,9 +113,7 @@ class Conteudo extends Model
 
     /**
      * Seleciona niveis de ensino
-     * @param \App\Conteudo $conteudo
-     * @return \App\Model\ApiResponser retorna json
-     * @return App\NivelEnsino
+     * @return NivelEnsino instância
      */
     public function niveis()
     {
@@ -139,22 +123,22 @@ class Conteudo extends Model
             'id',
             'nivel_id'
         );
-            //->whereRaw('nivel_id IS NOT NULL')
-            //->with('nivel');
     }
 
     /**
      * Seleciona a licença relacionada
-     * @param \App\Conteudo $conteudo
-     * @return \App\Model\ApiResponser retorna json
-     * @return App\License
+     * @return License intância
      */
     public function license()
     {
         return $this->hasOne(License::class, 'id', 'license_id');
     }
 
-
+    /**
+     * Seta o atributo aprovado (isApproved)
+     * @param boolean $value Valor de tipo true false
+     * @return void
+     */
     public function setIsApprovedAttribute($value)
     {
         $user_can = $this->getUserCanAttribute();
@@ -165,27 +149,29 @@ class Conteudo extends Model
             $this->attributes['is_approved'] = false;
         }
     }
-    
+    /**
+     * Seta o atributo usuário que aprova um conteúdo (approvedUserId)
+     * @param integer $value Identificador único do usuário
+     * @return void
+     */
     public function setApprovingUserId($value)
     {
         $user_id = Auth::user()->id;
 
         $this->attributes['approving_user_id'] = $user_id ? $user_id : null;
-
     }
+
     /**
      * Adiciona novo atributo ao objeto que limita o tamanho da descrição
-     * @return string cadena de caracteres
+     * @return string cadeia de caracteres
      */
     public function getExcerptAttribute()
     {
         return strip_tags(Str::words($this->description, 30));
     }
     /**
-     * Adiciona novo atributo ao objeto que limita o tamanho da descrição
-     * @param \App\Conteudo $conteudo
-     * @return \App\Model\ApiResponser retorna json
-     * @return void
+     * Adiciona novo atributo ao objeto que limita o tamanho do título
+     * @return string cadeia de caracteres
      */
     public function getShortTitleAttribute()
     {
@@ -200,8 +186,6 @@ class Conteudo extends Model
     }
     /**
      * Seleciona e tranforma created-at ao formato (06 setembro de 2019 ás 17:37)
-     * @param \App\Conteudo $conteudo
-     * @return \App\Model\ApiResponser retorna json
      * @return void
      */
     public function getFormatedDateAttribute()
@@ -210,10 +194,6 @@ class Conteudo extends Model
     }
     /**
      * Seleciona os Arquivos de download, visualizaçao e guias pedagógicas
-     * desde o Trait App\Traits\File
-     * @param \App\Conteudo $conteudo
-     * @return \App\Model\ApiResponser retorna json
-     *
      * @return array
      */
     public function getArquivosAttribute()
@@ -227,9 +207,7 @@ class Conteudo extends Model
 
     /**
      * Adiciona atributo imagem associada ao objeto
-     * @param \App\Conteudo $conteudo
-     * @return \App\Model\ApiResponser retorna json
-     * @return void
+     * @return string url da imagem
      */
     public function getImageAttribute()
     {
@@ -246,10 +224,8 @@ class Conteudo extends Model
     
 
     /**
-     * recupera referencia ao arquivo de download
-     * @param \App\Conteudo $conteudo
-     * @return \App\Model\ApiResponser retorna json
-     * @return string referencia ao arquivo de download
+     * Recupera referencia ao arquivo de download
+     * @return string referência ao arquivo de download
      */
     public function getDownloadAttribute()
     {
@@ -257,10 +233,8 @@ class Conteudo extends Model
     }
     
     /**
-     * Adiciona atributo imagem associada ao objeto
-     * @param \App\Conteudo $conteudo
-     * @return \App\Model\ApiResponser retorna json
-     * @return string
+     * Adiciona atributo Guia Pedagogico ao objeto
+     * @return string referência ao arquivo de guia pedagogico
      */
     public function getGuiaPedagogicoAttribute()
     {
@@ -269,8 +243,6 @@ class Conteudo extends Model
 
     /**
      * Adiciona atributo url_exibir
-     * @param \App\Conteudo $conteudo
-     * @return \App\Model\ApiResponser retorna json
      * @return string
      */
     public function getUrlExibirAttribute()
@@ -280,10 +252,11 @@ class Conteudo extends Model
     }
     /**
      * Filtro para conteúdos Aprovados
-     * @param \App\Conteudo $conteudo
-     * @return \App\Model\ApiResponser retorna json
+     * @param Builder $query instância do query builder
+     * @param boolean $is_approved Verdadeiro ou Falso se conteúdo é aprovado
+     * @return void
      */
-    public function scopeApproved($query, $is_approved)
+    public function scopeApproved(Builder $query, $is_approved)
     {
         if (!$is_approved) {
             return $query;
@@ -292,12 +265,12 @@ class Conteudo extends Model
     }
     /**
      * Filtro para full text search
-     * @param $query  Eloquent\Query instance
-     * @param $search termo de busca
-     * @param $por    define se busca é por tag ou título
-     * @return Eloquent\Query instance
+     * @param Builder $query instância do query builder
+     * @param string $search termo de busca
+     * @param string $por define se busca é por tag ou título
+     * @return void
      */
-    public function scopeFullTextSearch($query, $search, $por)
+    public function scopeFullTextSearch(Builder $query, $search, $por)
     {
         if (!$search) {
             return $query;
@@ -308,12 +281,12 @@ class Conteudo extends Model
     }
 
     /**
-     * Filtro de busca por tags e incrementa as veces buscada
-     * @param $query Eloquent\Query
-     * @param $id    id da palavra chave
-     * @return App\Conteudo
+     * Filtro de busca por tags e incrementa as vezes que foi buscada
+     * @param Builder $query instância do query builder
+     * @param $id Identificador único da palavra chave
+     * @return void
      */
-    public function scopeSearchTag($query, $tag_id)
+    public function scopeSearchTag(Builder $query, $tag_id)
     {
         if (!$tag_id) {
             return $query;
@@ -326,32 +299,29 @@ class Conteudo extends Model
     }
     /**
      * Buscar por componente curricular
-     * @param $query       Eloquent\Query
+     * @param Builder $query instância do query builder
      * @param $componentes ids dos componentes a buscar
-     * @return App\Conteudo
+     * @return void
      */
-    public function scopeSearchByComponent($query, $componentes)
+    public function scopeSearchByComponent(Builder $query, $componentes)
     {
         if (!$componentes) {
             return $query;
         }
         return $query->whereHas("componentes", function ($q) use ($componentes) {
-
-            return $q->whereIn('id', explode(',', $componentes));
+            return $q->whereIn("id", explode(',', $componentes));
         });
     }
 
     /**
-     * Buscar por colunas especificas
-     * @param \App\Conteudo $conteudo
-     * @return \App\Model\ApiResponser retorna json
-     * @param $query    Eloquent\Query
+     * Buscar por colunas específicas
+     * @param Builder $query instância do query builder
      * @param $column   coluna a buscar
      * @param $data     ids ou id de busca
-     * @param $multiple busca com where in ou where
-     * @return App\Conteudo
+     * @param $multiple busca com whereIn ou where
+     * @return void
      */
-    public function scopeSearchByColumn($query, $column, $data, $multiple = false)
+    public function scopeSearchByColumn(Builder $query, $column, $data, $multiple = false)
     {
         if (!$data) {
             return $query;
@@ -366,14 +336,11 @@ class Conteudo extends Model
     
     /**
      * Busca por canal
-     * @param \App\Conteudo $conteudo
-     * @return \App\Model\ApiResponser retorna json
-     * @param $query    Eloquent\Query
-     * @param $canal_id id a procurar canal 6 são a suma de todos os canais
-     *
-     * @return App\Conteudo
+     * @param Builder $query instância query builder
+     * @param integer $canal_id Identificador único do canal
+     * @return void
      */
-    public function scopeSearchByCanal($query, $canal_id)
+    public function scopeSearchByCanal(Builder $query, $canal_id)
     {
         if (!$canal_id || $canal_id == 6) {
             return $query;
@@ -382,14 +349,12 @@ class Conteudo extends Model
         return $query->where('canal_id', $canal_id);
     }
      /**
-      * Função que retorna scopo sorteado por id
-      * @param \App\Conteudo $conteudo
-      * @return \App\Model\ApiResponser retorna json
-      * @param [type] $query
-      * @param [type] $by
+      * Função que retorna modelo ordenado por quantidade de downloads, acessos, titulo ou data criação
+      * @param Builder $query Instância query builder
+      * @param string $by Ordem
       * @return void
       */
-    public function scopeSortBy($query, $by)
+    public function scopeSortBy(builder $query, $by)
     {
         if (!$by) {
             return $query;
@@ -415,9 +380,7 @@ class Conteudo extends Model
     }
     /**
      * Função Statica retorna documento salvo
-     * @param \App\Conteudo $conteudo
-     * @return \App\Model\ApiResponser retorna json
-     * @param [type] $id
+     * @param integer $id Identificador único do conteúdo
      * @return void
      */
     public static function tsDocumentoSave($id)
@@ -450,11 +413,12 @@ class Conteudo extends Model
         DB::update('update conteudos set ts_documento = ? where id = ?', [$fullTextSearch->ts_documento, $id]);
     }
       /**
-      * Retorna Scopo relacionado
-      * @param \App\Conteudo $conteudo
-      * @return \App\Model\ApiResponser retorna json
+      * Retorna conteúdos relacionados
+      * @param Builder $query Instância query builder
+      * @param integer $id Identificador único do conteúdo digital
+      * @return void
       */
-    public function scopeRelacionados($query, $id)
+    public function scopeRelacionados(Builder $query, $id)
     {
         if (!$id) {
             return $query;
@@ -475,15 +439,15 @@ class Conteudo extends Model
     }
 
       /**
-      * Retorna Maximo de conteundo por downlaoad
+      * Retorna conteúdos mais baixados
       * @return DB
       */
     public function relatorioMaisBaixados()
     {
         return Conteudo::select([
-            'title', 
-            'users.name as publisher', 
-            'tipos.name as type', 
+            'title',
+            'users.name as publisher',
+            'tipos.name as type',
             'qt_downloads as quantity'
             ])
         ->join('users', 'users.id', '=', 'conteudos.user_id')
@@ -500,9 +464,9 @@ class Conteudo extends Model
     public function relatorioMaisAcessados()
     {
         return Conteudo::select([
-            'title', 
-            'users.name as publisher', 
-            'tipos.name as type', 
+            'title',
+            'users.name as publisher',
+            'tipos.name as type',
             'qt_access as quantity'
             ])
         ->join('users', 'users.id', '=', 'conteudos.user_id')
@@ -512,20 +476,24 @@ class Conteudo extends Model
     }
 
     /**
-     * obtem array com os anos distintos que houveram conteúdos publicados
-     * @return array anos
+     * Obtem array com os anos distintos que houveram conteúdos publicados
+     * @return array
      */
     public function publicacaoAnos()
     {
         return DB::select("select  distinct date_part('year', created_at) as anopublicacao from conteudos order by 1 desc");
     }
-
+    /**
+     * Obtem os conteúdos publicados por ano
+     * @param integer $ano Ano de publicação
+     * @return void
+     */
     public function conteudosPorAno($ano)
     {
          return Conteudo::select([
-             'title', 
-             'users.name as publisher', 
-             'tipos.name as type', 
+             'title',
+             'users.name as publisher',
+             'tipos.name as type',
              'qt_downloads as quantity'
              ])
             ->join('users', 'users.id', '=', 'conteudos.user_id')
@@ -544,13 +512,13 @@ class Conteudo extends Model
         ->where("tipo_id", 5)
         ->get();
         $conteudoNoStreamingFile=[];
-        foreach($conteudos as $conteudo)
-        {
+        foreach ($conteudos as $conteudo) {
             $videoFIleRef = $this->downloadFileConteudoReferencia($conteudo->id);
-            if($videoFIleRef)
-            {
+            if ($videoFIleRef) {
                 $videoFIleRef = $this->streamingFileConteudoReferencia($conteudo->id);
-                if(!$videoFIleRef)
+                if (!$videoFIleRef) {
+                    return;
+                }
                 $conteudoNoStreamingFile[] = $conteudo;
             }
         }
