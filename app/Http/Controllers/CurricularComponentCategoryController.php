@@ -21,8 +21,10 @@ class CurricularComponentCategoryController extends ApiController
     }
 
     /**
-     * @param $id
+     * Atualiza o Componente curricular no banco de dados
+     * @param $id integer Identificador único
      * @return CurricularComponentCategory
+     * @return string - json
      */
     public function update($id)
     {
@@ -54,12 +56,15 @@ class CurricularComponentCategoryController extends ApiController
         }
         return $this->showOne($componentCategory, 'Componente Curricular atualizada com sucesso!!', 200);
     }
-
+    /**
+     * Cria e Valida o Componente Curricular
+     * @return string - json
+     */
     public function create()
     {
         $validator = Validator::make($this->request->all(), $this->rules());
         $data = [];
-        
+
         try {
             if ($validator->fails()) {
                 $data = $validator->errors();
@@ -78,20 +83,21 @@ class CurricularComponentCategoryController extends ApiController
             return $this->errorResponse(
                 $data,
                 $ex->getMessage(),
-                $ex->getCode() > 0 &&  $ex->getCode() <505 ? $ex->getCode() : 500
+                $ex->getCode() > 0 &&  $ex->getCode() < 505 ? $ex->getCode() : 500
             );
         }
         return $this->successResponse($componente, 'Categoria do Componente curricular registrada com sucesso!!', 200);
     }
 
     /**
-     * @return \Iluminate\Http\JsonResponse
+     * Lista os componentes e ordena o nome de forma crescente
+     * @return string json
      */
     public function index()
     {
         $limit = $this->request->get('limit', 15);
 
-        if($this->request->has('select')){
+        if ($this->request->has('select')) {
             return $this->showAll(
                 CurricularComponentCategory::with('componentes')->orderBy('name', 'asc')->get()
             );
@@ -99,11 +105,12 @@ class CurricularComponentCategoryController extends ApiController
         $componentesCategoria = CurricularComponentCategory::with('componentes')
             ->orderBy('name', 'asc')
             ->paginate($limit);
-            
+
         return $this->showAsPaginator($componentesCategoria);
     }
 
     /**
+     * Busca por termo
      * @return string json de objetos de categorias de componentes curriculares
      *
      */
@@ -117,7 +124,9 @@ class CurricularComponentCategoryController extends ApiController
         $paginator->setPath("/componentescategorias/search/{$termo}?limit={$limit}");
         return $this->showAsPaginator($paginator, 'Resultado da busca...', 200);
     }
-
+    /**
+     * Busca por Id
+     */
     public function getById($id)
     {
         $componentesCategoria = new CurricularComponentCategory();
@@ -128,13 +137,13 @@ class CurricularComponentCategoryController extends ApiController
             return $this->errorResponse(
                 [],
                 $ex->getMessage(),
-                $ex->getCode() > 0 &&  $ex->getCode() <505 ? $ex->getCode() : 500
+                $ex->getCode() > 0 &&  $ex->getCode() < 505 ? $ex->getCode() : 500
             );
         }
         return $componentesCategoria;
     }
 
-     /**
+    /**
      * Auto-Completação
      * @param string $term identificador único
      * @return string json
@@ -168,13 +177,13 @@ class CurricularComponentCategoryController extends ApiController
             $category = CurricularComponentCategory::findOrFail($id);
             $this->authorize('delete', $category);
             if (!$category->delete()) {
-                throw new Exception("Erro ao deletar a categoria: ".$category->name." Tente novamente em seguida.");
+                throw new Exception("Erro ao deletar a categoria: " . $category->name . " Tente novamente em seguida.");
             }
         } catch (Exception $ex) {
             return $this->errorResponse(
                 [],
                 $ex->getMessage(),
-                $ex->getCode() > 0 &&  $ex->getCode() <505 ? $ex->getCode() : 500
+                $ex->getCode() > 0 &&  $ex->getCode() < 505 ? $ex->getCode() : 500
             );
         }
         return $this->successResponse($category, 'Categoria do componente deletada com sucesso!', 200);
@@ -183,7 +192,7 @@ class CurricularComponentCategoryController extends ApiController
     public function rules()
     {
         return [
-            'name'=> 'required|min:2|max:255'
+            'name' => 'required|min:2|max:255'
         ];
     }
 }

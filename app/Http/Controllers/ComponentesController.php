@@ -23,7 +23,7 @@ class ComponentesController extends ApiController
     public function index()
     {
         $limit = $this->request->get('limit', 15);
-        
+
         if ($this->request->has('select')) {
             return $this->showAll(
                 CurricularComponent::orderBy('name', 'desc')->get()
@@ -31,12 +31,13 @@ class ComponentesController extends ApiController
         }
 
         $componentes = CurricularComponent::orderBy('name', 'asc')
-        ->paginate($limit);
-        
-            return $this->showAsPaginator($componentes);
+            ->paginate($limit);
+
+        return $this->showAsPaginator($componentes);
     }
 
     /**
+     * Atualiza aplicativo
      * @param $id
      * @return CurricularComponent
      */
@@ -59,7 +60,8 @@ class ComponentesController extends ApiController
     }
 
     /**
-     * @param $id
+     * Método que pega o Componente curricular por ID
+     * @param  integer $id  ID identificador único
      * @return CurricularComponent
      */
     public function getById($id)
@@ -100,13 +102,13 @@ class ComponentesController extends ApiController
             return $this->errorResponse(
                 $data,
                 $ex->getMessage(),
-                $ex->getCode() > 0 &&  $ex->getCode() <505 ? $ex->getCode() : 500
+                $ex->getCode() > 0 &&  $ex->getCode() < 505 ? $ex->getCode() : 500
             );
         }
         return $this->successResponse($componente, 'Componente curricular registrada com sucesso!!', 200);
     }
 
-     /**
+    /**
      * Procura conteudos por full text search.
      * @param $request \Illuminate\Http\Request
      * @param $termo   string termo de busca
@@ -141,8 +143,8 @@ class ComponentesController extends ApiController
 
     /**
      * Deleta o aplicativo no banco de dados
-     * @param int $id identificador único
-     * @return Illuminate\Contracts\Routing\ResponseFactory::json
+     * @param integer $id ID identificador único
+     * @return App\Traits\ApiResponser::successResponse Estrutura Padrão de retorno
      */
     public function delete($id)
     {
@@ -157,22 +159,24 @@ class ComponentesController extends ApiController
             $component = CurricularComponent::findOrFail($id);
             $this->authorize('delete', $component);
             if (!$component->delete()) {
-                throw new Exception("Erro ao deletar a categoria: ".$component->name." Tente novamente em seguida.");
+                throw new Exception("Erro ao deletar a categoria: " . $component->name . " Tente novamente em seguida.");
             }
         } catch (Exception $ex) {
             return $this->errorResponse(
                 [],
                 $ex->getMessage(),
-                $ex->getCode() > 0 &&  $ex->getCode() <505 ? $ex->getCode() : 500
+                $ex->getCode() > 0 &&  $ex->getCode() < 505 ? $ex->getCode() : 500
             );
         }
         return $this->successResponse($component, 'Categoria do componente deletada com sucesso!', 200);
     }
-
+    /**
+     * Regras de validação
+     */
     public function rules()
     {
         return [
-            'name'=> 'required|min:2|max:255'
+            'name' => 'required|min:2|max:255'
         ];
     }
 }

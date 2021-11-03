@@ -44,8 +44,7 @@ class ConteudoController extends ApiController
      * Lista de conteúdos por canal
      *
      * @param $request \Illuminate\Http\Request
-     *
-     * @return App\Traits\ApiResponder
+     * @return  string - Json
      */
     public function index(Request $request)
     {
@@ -89,8 +88,8 @@ class ConteudoController extends ApiController
 
     /**
      * Lista de sites temáticos
-     *
-     * @return App\Traits\ApiResponser
+     * @param Illuminate\Http\Request  
+     * @return string - Json
      */
     public function getSitesTematicos(Request $request)
     {
@@ -109,8 +108,8 @@ class ConteudoController extends ApiController
 
     /**
      * Adiciona e valida novo conteúdo
-     * @param $request \Illuminate\Http\Request
-     * @return App\Traits\ApiReponser
+     * @param  App\Http\Requests\ConteudoFormRequest
+     * @return string - Json
      */
     public function create(ConteudoFormRequest $request)
     {
@@ -138,7 +137,8 @@ class ConteudoController extends ApiController
 
     /**
      * Atualiza o conteúdo.
-     * @param  Integer $id
+     * @param  App\Http\Requests\ConteudoFormRequest
+     * @param  Integer Identificador único $id
      * @return Json
      */
     public function update(ConteudoFormRequest $request, $id)
@@ -171,8 +171,8 @@ class ConteudoController extends ApiController
 
     /**
      * Apaga o conteúdo do banco de dados, com tags, componentes
-     * @param $id integer
-     * @return App\Traits\ApiResponser
+     * @param $id ID identificador único 
+     * @return string json
      */
     public function delete($id)
     {
@@ -197,7 +197,7 @@ class ConteudoController extends ApiController
      * @param $request \Illuminate\Http\Request
      * @param $termo   string termo de busca
      *
-     * @return App\Traits\ApiResponser
+     * @return string Json
      */
     public function search(Request $request, $termo)
     {
@@ -225,7 +225,7 @@ class ConteudoController extends ApiController
      *
      * @param $id integer
      *
-     * @return string json
+     * @return string Json
      */
     public function getById(Request $request, $id)
     {

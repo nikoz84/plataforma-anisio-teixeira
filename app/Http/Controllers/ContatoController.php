@@ -55,7 +55,7 @@ class ContatoController extends ApiController
         ];
     }
     /**
-     * Adiciona novas denúncias
+     * Adiciona ou cria novas denúncias
      *
      * @return string json
      */
@@ -88,7 +88,10 @@ class ContatoController extends ApiController
 
         return $this->successResponse([], 'Enviado com sucesso', 200);
     }
-
+    /**
+     * Envia para usuários administraivos
+     * @return boolean verdadeiro ou falso 
+     */
     private function sendToAdminUsers()
     {
         $users = User::whereRaw("options->>'role' = 'administrador' or options->>'role' = 'super administrador'")
@@ -106,8 +109,9 @@ class ContatoController extends ApiController
 
     /**
      * Deleta as denúncias
-     *
-     * @return \Illuminate\Http\Response
+     * @param integer $id Identificador único
+     * @return App\Traits\ApiResponser::successResponse 
+     * Estrutura padrão de retorno para respostas com sucesso
      */
     public function delete($id)
     {
@@ -126,7 +130,7 @@ class ContatoController extends ApiController
     /**
      * Seleciona uma denuncia pelo ID
      *
-     * @param [type] $id
+     * @param integer ID identificador [type] $id 
      * @return void
      */
     public function getById($id)
