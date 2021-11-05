@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Log;
 use Streaming\FFMpeg;
 use Streaming\Representation;
 
+
 class FileController extends ApiController
 {
     use FileSystemLogic;
@@ -81,7 +82,7 @@ class FileController extends ApiController
      * Função que executa Download de arquivos no banco de dados.
      *
      * @param [type] $directory
-     * @param [type] $id
+     * @param integer $id
      * @return void
      */
     public function downloadFile($directory, $id)
@@ -114,6 +115,7 @@ class FileController extends ApiController
     }
     /**
      * Função que Requisita informações da Galeria 
+     * @return string json
      */
 
     public function getGallery()
@@ -125,6 +127,9 @@ class FileController extends ApiController
 
     /**
      * Função responsável por exibir informações de um diretório passado por parametro.
+     * @param Illuminate\Http\Request
+     * @param Illuminate\Http\Request\$request
+     * @return string json
      */
     public function getInfoFolder(Request $request)
     {
@@ -164,8 +169,10 @@ class FileController extends ApiController
     }
 
     /**
-     * Função responsável por verificar na base de dados se
-     * existe arquivos de um diretório passado por parametro.
+     * Existe Arquivos na base
+     * @param Illuminate\Http\Request
+     * @param $request
+     * @return string json
      */
     public function fileExistInBase(Request $request)
     {
@@ -290,7 +297,11 @@ class FileController extends ApiController
         $extension = pathinfo($filePath, PATHINFO_DIRNAME);
         return $extension;
     }
-
+    /**
+     * Histórico de arquivos
+     * @param mixed $request
+     * @return null|string path
+     */
     private function storeFile($request)
     {
         $path = null;
@@ -305,8 +316,12 @@ class FileController extends ApiController
 
         return $path ? $path : $this->errorResponse([], "Falha ao fazer upload!", 500);
     }
-
-    public function ffmpegTeste(Request $request, $id)
+    /**
+     *  Teste de ffmpeg
+     * @param Id Identificador único $id
+     * @return void
+     */
+    public function ffmpegTeste($id)
     {
         try {
             $root = Storage::disk('conteudos-digitais')->path("streaming");
@@ -317,7 +332,11 @@ class FileController extends ApiController
             return ($ex);
         }
     }
-
+    /**
+     * Video Streaming
+     * @param  integer Id  identificador único $id
+     * @return void
+     */
     public function showVideoStreaming($id)
     {
         try {
@@ -329,6 +348,11 @@ class FileController extends ApiController
         }
     }
 
+    /**
+     * Deleta o arquivo
+     * @param Illuminate\Http\Request $request
+     * @return App\Traits\ApiResponser::errorResponse
+     */
     public function deleteFile(Request $request)
     {
         $filename = $request->filename;

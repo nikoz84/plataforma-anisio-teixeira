@@ -23,7 +23,7 @@ class CanalRequest extends FormRequest
         $this->merge([
             'options' => json_decode(request()->options, true)
         ]);
-        
+
         return $this->toArray();
     }
     /**

@@ -33,8 +33,10 @@ trait RequestValidator
     {
         $json = $this->request->get($this->stringify);
         
-        $this->merge(json_decode($json, true));
-
+        if(!is_null($json)){
+        	$this->merge(json_decode($json, true));
+        }
+        
         return parent::getValidatorInstance();
     }
 }

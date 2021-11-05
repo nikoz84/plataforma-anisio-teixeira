@@ -12,6 +12,7 @@ class HomeController extends ApiController
 {
     /**
      * Create a new controller instance.
+     * Cria e instância um novo controlador
      *
      * @return void
      */
@@ -29,18 +30,18 @@ class HomeController extends ApiController
     public function getLayout()
     {
         //cache()->forget('layout');
-        
+
         $from_cache = cache()->remember('layout', now()->addMinutes(1440), function () {
             return SideBar::getSideBarAdvancedFilter();
         });
-        
+
         return response()->json($from_cache);
     }
 
     /**
-     * Método que solicita analitica da aplicação
+     * Método que solicita analiza da aplicação
      *
-     * @return void
+     * @return string json
      */
     public function getAnalytics()
     {
@@ -53,7 +54,7 @@ class HomeController extends ApiController
     /**
      * Método de autocompletar
      *
-     * @return void
+     * @return string json
      */
     public function autocomplete()
     {

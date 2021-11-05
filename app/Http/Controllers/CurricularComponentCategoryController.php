@@ -161,7 +161,7 @@ class CurricularComponentCategoryController extends ApiController
     /**
      * Deleta o aplicativo no banco de dados
      * @param int $id identificador único
-     * @return \App\Controller\ApiResponser
+     * @return string json
      * retorna Json
      */
     public function delete($id)
@@ -188,7 +188,10 @@ class CurricularComponentCategoryController extends ApiController
         }
         return $this->successResponse($category, 'Categoria do componente deletada com sucesso!', 200);
     }
-
+    /**
+     * Regras de Validação
+     * @return string array
+     */
     public function rules()
     {
         return [
