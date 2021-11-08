@@ -16,6 +16,8 @@ use Exception;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Conteudo;
+use App\Models\Canal;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -191,7 +193,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function conteudos()
     {
-        return $this->hasMany('App\Conteudo');
+        return $this->hasMany(Conteudo::class);
     }
     /**
      * Relação usuário pode criar conteúdos em diferentes canais
@@ -200,7 +202,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function canais()
     {
-        return $this->hasMany('App\Canal');
+        return $this->hasMany(Canal::class);
     }
     /**
      * Chave de Acesso para a API
@@ -229,9 +231,9 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
     /**
-     * Undocumented function
+     * Relação com tabela roles ou funções do usuário
      *
-     * @return void
+     * @return Query
      */
     public function role()
     {

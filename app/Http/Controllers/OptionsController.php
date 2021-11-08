@@ -22,21 +22,22 @@ class OptionsController extends ApiController
 
     /**
      * Display a indexing of the resource.
+     * Exibe uma idexação do recurso
      *
-     * @return \Illuminate\Http\Response
+     * @return string json
      */
     public function index()
     {
-        
+
         $options = $this->options::select(['id', 'name'])->paginate(6);
-        
+
         return $this->showAsPaginator($options);
     }
 
     /**
      * Método responsável por criar slider
-     *
-     * @return \Illuminate\Http\Response
+     * @param Illuminate\Http\Request
+     * @return string json
      */
     public function createDestaques(Request $request)
     {
@@ -52,12 +53,12 @@ class OptionsController extends ApiController
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível criar o Slider", 422);
         }
-        
+
         //$this->authorize('createDestaque');
 
         $path = $this->saveFile($request);
 
-        
+
         $data = $this->newSlider($request, $path);
 
         if (!$data) {
@@ -66,7 +67,12 @@ class OptionsController extends ApiController
 
         return $this->successResponse($data, 'Slider criado com sucesso!', 201);
     }
-
+    /**
+     * Método Privado
+     * @param  mixed $request
+     * @param  mixed $path 
+     * @return $data
+     */
     private function newSlider($request, $path = null)
     {
         $data = null;
@@ -78,14 +84,13 @@ class OptionsController extends ApiController
             'filename' => $this->fileName($request)
         ];
 
-        $slider =  $this->options::
-            selectRaw('jsonb_array_length(meta_data) AS length, id, name, meta_data')
+        $slider =  $this->options::selectRaw('jsonb_array_length(meta_data) AS length, id, name, meta_data')
             ->where('name', 'slider')->first();
-        
+
         if (!$slider) {
             $data = $this->options::create([
                 'name' => 'slider',
-                'meta_data' => [ $newSlide ]
+                'meta_data' => [$newSlide]
             ]);
         } else {
             $data = $this->appendSlide($slider, $newSlide);
@@ -94,7 +99,12 @@ class OptionsController extends ApiController
 
         return $data;
     }
-
+    /**
+     * Método Privado Anexar Slider
+     * @param mixed $slider
+     * @param mixed $newSlider
+     * @return mixed $slider
+     */
     private function appendSlide($slider, $newSlide)
     {
         $items = $slider->meta_data;
@@ -104,14 +114,18 @@ class OptionsController extends ApiController
 
         return $slider;
     }
-
+    /**
+     * Método salve arquivo
+     * @param mixed $request
+     * @return mixed $path
+     */
     private function saveFile($request)
     {
         $path = null;
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $fileName = $this->fileName($request);
-            
+
             $path = $request->image->storeAs(
                 null,
                 $fileName,
@@ -122,7 +136,11 @@ class OptionsController extends ApiController
 
         return $path ? $path : $this->errorResponse([], "Falha ao fazer upload!", 500);
     }
-
+    /**
+     * Método Privado Arquivo por Nome
+     * @param $request
+     * @return string $filename
+     */
     private function fileName($request)
     {
         $extension = $request->image->extension();
@@ -132,6 +150,11 @@ class OptionsController extends ApiController
 
         return $fileName;
     }
+    /**
+     * Método privado deleta o último slider
+     * @param mixed $slider
+     * @return Boolean
+     */
     private function deleteLast($slider)
     {
         if ($slider->length > 5) {
@@ -192,8 +215,8 @@ class OptionsController extends ApiController
     /**
      * Função que seleciona as informações por id no Banco de Dados.
      *
-     * @param [type] $id
-     * @return void
+     * @param integer identificador único $id
+     * @return string json
      */
     public function getById($id)
     {

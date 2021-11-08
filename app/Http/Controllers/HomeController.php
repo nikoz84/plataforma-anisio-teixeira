@@ -39,7 +39,7 @@ class HomeController extends ApiController
     }
 
     /**
-     * Método que solicita analiza da aplicação
+     * Método que solicita e analiza a aplicação
      *
      * @return string json
      */

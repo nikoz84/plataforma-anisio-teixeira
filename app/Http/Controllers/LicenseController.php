@@ -23,7 +23,7 @@ class LicenseController extends ApiController
     /**
      * Lista das licenças.
      *
-     * @return \Illuminate\Http\Response
+     * @return string json
      */
     public function index()
     {
@@ -48,41 +48,38 @@ class LicenseController extends ApiController
     protected function config()
     {
         return [
-            'name'=>'required|min:2|max:255',
+            'name' => 'required|min:2|max:255',
             'description' => 'required|min:32|max:512'
         ];
     }
 
     /**
      * Adiciona nova licença.
-     * @return \Illuminate\Http\Response
+     * @return string json
      */
     public function create()
     {
         $validator = Validator::make($this->request->all(), $this->config());
         $license = new License;
         $data = [];
-        try
-        {
+        try {
             if ($validator->fails()) {
                 $data = $validator->errors();
                 throw new Exception("Não foi possível criar a licença", 422);
             }
-            $this->authorize('create', JWTAuth::user());   
+            $this->authorize('create', JWTAuth::user());
             $license->fill($this->request->all());
             if (!$license->save()) {
-                
+
                 throw new Exception('Não foi possível salvar imagem associada', 422);
             }
             if ($this->request->imagemAssociada) {
-                $fileImg = $this->saveFile($license->id, [$this->request->imagemAssociada], 'imagem-associada'. DIRECTORY_SEPARATOR. "licencas");
+                $fileImg = $this->saveFile($license->id, [$this->request->imagemAssociada], 'imagem-associada' . DIRECTORY_SEPARATOR . "licencas");
                 if (!$fileImg) {
                     throw new Exception("Não foi possível salvar imagem. Tente novamente mais tarde.", 501);
                 }
             }
-        }
-        catch(Exception $ex)
-        {
+        } catch (Exception $ex) {
             return $this->errorResponse($data, $ex->getMessage(), 422);
         }
         return $this->successResponse($license, 'Licença registrada com sucesso!!', 200);
@@ -95,29 +92,24 @@ class LicenseController extends ApiController
      */
     public function update($id)
     {
-        try
-        {
+        try {
             $license = License::find($id);
             $this->authorize('update', $id);
             $validator = Validator::make($this->request->all(), $this->config());
             if ($validator->fails()) {
                 throw new Exception('Não foi possível salvar imagem associada');
             }
-            if ($this->request->imagemAssociada) 
-            {
-                if($license->refenciaImagemAssociada())
-                unlink($license->refenciaImagemAssociada());
-                $file = $this->saveFile($license->id, [$this->request->imagemAssociada], 'imagem-associada'.DIRECTORY_SEPARATOR.'licencas');
-                if(!$file)
-                {
+            if ($this->request->imagemAssociada) {
+                if ($license->refenciaImagemAssociada())
+                    unlink($license->refenciaImagemAssociada());
+                $file = $this->saveFile($license->id, [$this->request->imagemAssociada], 'imagem-associada' . DIRECTORY_SEPARATOR . 'licencas');
+                if (!$file) {
                     throw new Exception('Não foi possível salvar imagem associada');
-                } 
+                }
             }
             $license->fill($this->request->all());
-            $license->save();    
-        }
-        catch(Exception $ex)
-        {
+            $license->save();
+        } catch (Exception $ex) {
             return $this->errorResponse([], $ex->getMessage(), 422);
         }
         return $this->showOne($license, 'Licença atualizada com Sucesso!!', 200);
@@ -126,7 +118,7 @@ class LicenseController extends ApiController
     /**
      * Apaga uma licença específica.
      * @param  \App\License  $id
-     * @return \Illuminate\Http\Response
+     * @return string json
      */
     public function delete($id)
     {
@@ -147,7 +139,7 @@ class LicenseController extends ApiController
     /**
      * Busca por nome da licença.
      * @param   $termo
-     * @return \Illuminate\Http\Response
+     * @return  string - json
      */
     public function search($termo)
     {
@@ -162,9 +154,9 @@ class LicenseController extends ApiController
     }
 
     /**
-     * metodo para retorno da licença em expecifio, ou objeto nulo em json
+     * Metodo para retorno da licença em expecifico, ou objeto nulo em json
      * @param int $id identificador unico da licença
-     * @return License objeto de licenca relacionado ao id
+     * @return License objeto de licenca relacionado ao id 
      */
     public function getById($id)
     {

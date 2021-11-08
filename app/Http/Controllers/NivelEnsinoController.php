@@ -24,32 +24,35 @@ class NivelEnsinoController extends ApiController
     }
 
     /**
-     * Lista das Niveos de Ensino.
-     * @return \Illuminate\Http\Response
+     * Lista das Niveis de Ensino.
+     * @return \Illuminate\Http\Response string - json
      */
     public function index()
     {
         $limit = $this->request->get('limit', 15);
-        
-        if($this->request->has('select')){
+
+        if ($this->request->has('select')) {
             return $this->showAll(
                 NivelEnsino::with('componentes')->orderBy('name', 'desc')->get()
             );
-            
         }
 
         $niveisensino = NivelEnsino::orderBy('name', 'asc')
             ->paginate($limit);
-        
+
 
         return $this->showAsPaginator($niveisensino);
     }
-
+    /**
+     * Método que cria Nível de Ensino
+     * @param Illuminate\Http\Request
+     * @return string json
+     */
     public function create()
     {
         $validator = Validator::make($this->request->all(), $this->rules());
         $data = [];
-        
+
         try {
             if ($validator->fails()) {
                 $data = $validator->errors();
@@ -61,7 +64,7 @@ class NivelEnsinoController extends ApiController
             $nivel = new NivelEnsino();
             $this->authorize('create', JWTAuth::user());
             $nivel->fill($this->request->all());
-           
+
             if (!$nivel->save()) {
                 throw new Exception('Não foi possível salvar Nível de Ensino', 422);
             }
@@ -69,7 +72,7 @@ class NivelEnsinoController extends ApiController
             return $this->errorResponse(
                 $data,
                 $ex->getMessage(),
-                $ex->getCode() > 0 &&  $ex->getCode() <505 ? $ex->getCode() : 500
+                $ex->getCode() > 0 &&  $ex->getCode() < 505 ? $ex->getCode() : 500
             );
         }
         return $this->successResponse($nivel, 'Nível de ensino foi registrada com sucesso!!', 200);
@@ -90,7 +93,7 @@ class NivelEnsinoController extends ApiController
             return $this->errorResponse(
                 [],
                 $ex->getMessage(),
-                $ex->getCode() > 0 &&  $ex->getCode() <505 ? $ex->getCode() : 500
+                $ex->getCode() > 0 &&  $ex->getCode() < 505 ? $ex->getCode() : 500
             );
         }
         return $nivel;
@@ -115,7 +118,7 @@ class NivelEnsinoController extends ApiController
     /**
      * Deleta o aplicativo no banco de dados
      * @param int $id identificador único
-     * @return \App\Controller\ApiResponser
+     * @return \App\Controller\ApiResponser String - json
      */
     public function delete($id)
     {
@@ -130,19 +133,19 @@ class NivelEnsinoController extends ApiController
             $nivel = NivelEnsino::findOrFail($id);
             $this->authorize('delete', $nivel);
             if (!$nivel->delete()) {
-                throw new Exception("Erro ao deletar o nível de ensino: ".$nivel->name." Tente novamente em seguida.");
+                throw new Exception("Erro ao deletar o nível de ensino: " . $nivel->name . " Tente novamente em seguida.");
             }
         } catch (Exception $ex) {
             return $this->errorResponse(
                 [],
                 $ex->getMessage(),
-                $ex->getCode() > 0 &&  $ex->getCode() <505 ? $ex->getCode() : 500
+                $ex->getCode() > 0 &&  $ex->getCode() < 505 ? $ex->getCode() : 500
             );
         }
         return $this->successResponse($nivel, 'Nível de Ensino foi removido com sucesso!', 200);
     }
 
-     /**
+    /**
      * Auto-Completação
      * @param string $term identificador único
      * @return string json
@@ -164,7 +167,7 @@ class NivelEnsinoController extends ApiController
     public function rules()
     {
         return [
-            'name'=> 'required|min:2|max:255'
+            'name' => 'required|min:2|max:255'
         ];
     }
 }
