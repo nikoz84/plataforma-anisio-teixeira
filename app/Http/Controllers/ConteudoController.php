@@ -156,11 +156,8 @@ class ConteudoController extends ApiController
         $conteudo->componentes()->sync($request->componentes);
         Conteudo::tsDocumentoSave($conteudo->id);
 
-        if (
-            $request->has('download') || $request->has('guias_pedagogicos') ||
-            $request->has('imagem_associada') || $request->has('visualizacao')
-        ) {
-
+        if ($request->has('download') || $request->has('guias_pedagogicos')
+            || $request->has('imagem_associada') || $request->has('visualizacao')) {
             if (!$this->storeFiles($request, $conteudo)) {
                 return $this->errorResponse([], 'Não foi possível fazer upload de arquivos.', 422);
             }
@@ -185,6 +182,10 @@ class ConteudoController extends ApiController
         $conteudo->tags()->detach();
         $conteudo->componentes()->detach();
         $conteudo->niveis()->detach();
+
+        $this->deleteFile("download", $conteudo->id);
+        $this->deleteFile("streaming", $conteudo->id);
+
         if (!$conteudo->delete()) {
             return $this->errorResponse([], 'Não foi Possível deletar o conteúdo', 422);
         }

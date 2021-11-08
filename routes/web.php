@@ -1,13 +1,15 @@
 <?php
 
 use App\Http\Controllers\RedirectRoutesController;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ConteudoController;
-use App\Http\Controllers\Web\HomeController;
-use App\Http\Controllers\Web\UserController;
-use App\Http\Controllers\Web\CanalController;
+use Illuminate\Support\Facades\Artisan;
+
+//use Illuminate\Support\Facades\Auth;
+//use Illuminate\Support\Facades\DB;
+//use App\Http\Controllers\Web\HomeController;
+//use App\Http\Controllers\Web\UserController;
+//use App\Http\Controllers\Web\CanalController;
 
 /*
 Route::get('/email', function (Request $request) {
@@ -29,18 +31,20 @@ Route::get('/docs', function (Request $request) {
 });
 
 */
-
+Route::get('/disk-space', function () {
+    return Artisan::call('space:disk');
+});
 /** Redireção de páginas antigas */
 Route::permanentRedirect('/home/ipes', '/ipes');
 Route::permanentRedirect('/home/rotinas-de-estudo', '/rotinas-de-estudo');
 Route::permanentRedirect('/conteudos-digitais', '/recursos-educacionais');
-Route::get('/conteudos-digitais/conteudos/listar/tag/{id}',[
+Route::get('/conteudos-digitais/conteudos/listar/tag/{id}', [
     RedirectRoutesController::class, 'redirectTags'
 ]);
 Route::get('/tv-anisio-teixeira/programas/exibir/id/{id}', [
     RedirectRoutesController::class, 'redirectTV'
 ]);
-Route::get('/emitec/disciplinas/exibir/id/{id}',[
+Route::get('/emitec/disciplinas/exibir/id/{id}', [
     RedirectRoutesController::class, 'redirectEmitec'
 ]);
 Route::get('/emitec/disciplinas/aulas/id/{id}/disciplina/{disciplina}', [
@@ -67,4 +71,3 @@ Route::get('/incorporar-conteudo/{id}', [ConteudoController::class, 'incorporarC
 
 Route::get('/{any}', [\App\Http\Controllers\ApiController::class, 'home'])
     ->where('any', '.*');
-

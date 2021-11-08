@@ -57,9 +57,9 @@
         @if (config('app.env') === 'local')
         <script async defer src="{{ asset('/js/app.js') }}"></script>
         @elseif (config('app.env') === 'production')
-        <script async defer src="{{ mix('/js/manifest.js') }}"></script>
-        <script async defer src="{{ mix('/js/vendor.js') }}"></script>
-        <script async defer src="{{ mix('/js/app.js')}}"></script>
+        <script async defer src="{{ asset('/js/manifest.js') }}"></script>
+        <script async defer src="{{ asset('/js/vendor.js') }}"></script>
+        <script async defer src="{{ asset('/js/app.js')}}"></script>
         @endif
         <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
         <script>
