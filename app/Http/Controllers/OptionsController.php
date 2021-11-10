@@ -115,7 +115,7 @@ class OptionsController extends ApiController
         return $slider;
     }
     /**
-     * Método salve arquivo
+     * Método salve arquivo 
      * @param mixed $request
      * @return mixed $path
      */
@@ -200,7 +200,7 @@ class OptionsController extends ApiController
     /**
      * Função que aciona o as informações por nome
      *
-     * @param [type] $name
+     * @param string $name
      * @return void
      */
     public function getByName($name)

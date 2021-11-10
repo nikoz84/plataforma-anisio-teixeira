@@ -7,39 +7,76 @@ use Illuminate\Support\Facades\DB;
 
 class RedirectRoutesController extends Controller
 {
+    /**
+     * Método que redireciona as Tags
+     * @param integer id Identificador único $id
+     * @return void
+     */
     public function redirectTags($id)
     {
         return redirect("/recursos-educacionais/listar?tag={$id}");
     }
+    /**
+     * Método que redireciona para tv
+     * @param integer id Identificador único $id
+     * @return void
+     */
     public function redirectTV($id)
     {
         return redirect("/tv-anisio-teixeira/conteudo/exibir/{$id}");
     }
+    /**
+     * Método que redireciona para Emitec
+     * @param integer id identificador único $id
+     * @return void
+     */
     public function redirectEmitec($id)
     {
         return redirect("/emitec/conteudo/exibir/{$id}");
     }
+    /**
+     * Método que redireciona para aulas Emitec
+     * @param mixed disciplina
+     * @param integer id identificador único $id
+     * @return void
+     */
     public function redirectAulasEmitec($disciplina, $id)
     {
         return redirect("/emitec/listar?canal=2&componentes=$disciplina&categoria=$id");
     }
+    /**
+     * Método que redireciona para Resursos
+     * @param integer id identificador único $id
+     * @return void
+     */
     public function redirectRecursos($id)
     {
         return redirect("/recursos-educacionais/conteudo/exibir/{$id}");
     }
+    /**
+     * Método que Redireciona para incorporar
+     * @param integer id Identificador único $id
+     * @return void
+     */
     public function redirectIncorporar($id)
     {
         return redirect("/incorporar-conteudo/{$id}");
     }
-
+    /**
+     * Método que redireciona o Download
+     * @return void
+     */
     public function redirectDownload()
     {
         return;
     }
-
+    /**
+     * Método que faz o teste
+     * @return string json
+     */
     public function teste()
     {
-        
+
         //$is_save = \App\Canal::where('slug', 'educacao-profissional')->get();
         /*
         $canal->name = 'Educação Profissional e Tecnológica';
@@ -66,32 +103,35 @@ class RedirectRoutesController extends Controller
         $is_save = $canal->save();
         */
         $this->createCategories();
-        
+
         return response()->json([
             //'save' => $is_save,
             'categories' => 'ok'
         ]);
-        
     }
+    /**
+     * Método que cria uma categoria
+     * @return void
+     */
     public function createCategories()
     {
 
         $rn = \App\Models\Category::create([
             'canal_id' => 19,
-                'name' => 'Recursos Naturais',
-                'options'=> json_decode('{
+            'name' => 'Recursos Naturais',
+            'options' => json_decode('{
                     "is_active": true,
                     "description": "descrição",
                     "is_featured": false
                 }')
         ]);
-        
+
         $data = [
             [
                 'parent_id' => $rn->id,
                 'canal_id' => 19,
                 'name' => 'Técnico em Aquicultura',
-                'options'=> json_decode('{
+                'options' => json_decode('{
                     "is_active": true,
                     "description": "descrição",
                     "is_featured": false
@@ -101,7 +141,7 @@ class RedirectRoutesController extends Controller
                 'parent_id' => $rn->id,
                 'canal_id' => 19,
                 'name' => 'Técnico em Cafeicultura',
-                'options'=> json_decode('{
+                'options' => json_decode('{
                     "is_active": true,
                     "description": "descrição",
                     "is_featured": false
@@ -111,7 +151,7 @@ class RedirectRoutesController extends Controller
                 'parent_id' => $rn->id,
                 'canal_id' => 19,
                 'name' => 'Técnico em Florestas',
-                'options'=> json_decode('{
+                'options' => json_decode('{
                     "is_active": true,
                     "description": "descrição",
                     "is_featured": false
@@ -121,7 +161,7 @@ class RedirectRoutesController extends Controller
                 'parent_id' => $rn->id,
                 'canal_id' => 19,
                 'name' => 'Técnico em Pesca',
-                'options'=> json_decode('{
+                'options' => json_decode('{
                     "is_active": true,
                     "description": "descrição",
                     "is_featured": false
@@ -131,7 +171,7 @@ class RedirectRoutesController extends Controller
                 'parent_id' => $rn->id,
                 'canal_id' => 19,
                 'name' => 'Técnico em Recursos Pesqueiros',
-                'options'=> json_decode('{
+                'options' => json_decode('{
                     "is_active": true,
                     "description": "descrição",
                     "is_featured": false
@@ -141,7 +181,7 @@ class RedirectRoutesController extends Controller
                 'parent_id' => $rn->id,
                 'canal_id' => 19,
                 'name' => 'Técnico em Zootecnia',
-                'options'=> json_decode('{
+                'options' => json_decode('{
                     "is_active": true,
                     "description": "descrição",
                     "is_featured": false
@@ -151,23 +191,25 @@ class RedirectRoutesController extends Controller
                 'parent_id' => $rn->id,
                 'canal_id' => 19,
                 'name' => 'Viveiricultor',
-                'options'=> json_decode('{
+                'options' => json_decode('{
                     "is_active": true,
                     "description": "descrição",
                     "is_featured": false
                 }')
             ]
-    
+
         ];
-    
-    
-        foreach($data as $item){
+
+
+        foreach ($data as $item) {
             \App\Models\Category::create($item);
         }
     }
-
+    /**
+     * Método que cria cursos
+     * @return void
+     */
     public function createCourses()
     {
-
     }
 }

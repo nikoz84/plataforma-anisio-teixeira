@@ -79,7 +79,7 @@ class NivelEnsinoController extends ApiController
     }
 
     /**
-     * obtem json do nivel de ensino a partir do seu id
+     * Método que obtem json do nivel de ensino a partir do seu id
      * @param int $id
      * @return string nivel de sensino em formtato json
      */
@@ -100,6 +100,7 @@ class NivelEnsinoController extends ApiController
     }
 
     /**
+     * Método de Busca por termo
      * @param string termo para filtrar por nome
      * @return string json dos objetos de nivel de ensino filtrados
      */
