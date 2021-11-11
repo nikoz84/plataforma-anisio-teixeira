@@ -17,6 +17,7 @@ class WordpressController extends ApiController
     }
     /**
      * Display a listing of the resource.
+     * Exibe uma lista de recurso.
      *
      * @return \Illuminate\Http\Response
      */
@@ -26,8 +27,9 @@ class WordpressController extends ApiController
 
         return $this->showAsPaginator($wordpress->getPosts());
     }
-     /**
-     *  Busca informações do Banco de Dados
+    /**
+     *  Search Database Information.
+     *  Busca informações do Banco de Dados.
      *
      * @param string $termo identificador único
      * @param \App\Wordpress $wordpress
@@ -41,7 +43,8 @@ class WordpressController extends ApiController
         $search = "%{$termo}%";
     }
     /**
-     * Seleciona um recurso por id
+     * Select a resource by id.
+     * Seleciona um recurso por id.
      *
      * @param Integer $id
      * @return json
@@ -52,7 +55,12 @@ class WordpressController extends ApiController
 
         return $this->successResponse($wordpress->getOne(), "", 200);
     }
-
+    /**
+     * Method that selects id by statistics.
+     * Método que seleciona o id por estatistica 
+     * 
+     * @return void
+     */
     public function getEstatisticas()
     {
         $wordpress = new WordpressService($this->request);

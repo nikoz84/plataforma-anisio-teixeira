@@ -18,8 +18,9 @@ class TagController extends ApiController
 
     /**
      * Display a indexing of the resource.
+     * Exibe uma indexação do recurso
      *
-     * @return \Illuminate\Http\Response
+     * @return string json
      */
     public function index()
     {
@@ -36,9 +37,10 @@ class TagController extends ApiController
 
 
     /**
-     * Show the form for creating a new resource
+     * Show the form for creating a new resource.
+     * Mostra o formulário para criar um novo recurso.
      *
-     * @return \Illuminate\Http\Response
+     * @return string json
      */
     public function create()
     {
@@ -56,7 +58,7 @@ class TagController extends ApiController
             'name' => $this->request->name,
             'searched' => Tag::INIT_SEARCHED
         ]);
-        
+
         if (!$tag->save()) {
             return $this->errorResponse([], "Não foi possivel adicionar a palavra-chave", 422);
         }
@@ -66,10 +68,11 @@ class TagController extends ApiController
 
     /**
      * Update the specified resource in storage.
+     * Atualiza o recurso especificado no armazenamento.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Tag  $tag
-     * @return \Illuminate\Http\Response
+     * @return string json
      */
     public function update($id)
     {
@@ -87,12 +90,12 @@ class TagController extends ApiController
         return $this->showOne($tag, 'Palavra-chave atualizada com sucesso!!', 200);
     }
     /**
-     *  Busca informações do Banco de Dados
+     *  Método que Busca as informações do Banco de Dados 
      *
      * @param string $termo identificador único
      * @param \App\Tag $tag
      * @return \App\Controller\ApiResponser 
-     * retorna Json
+     * @return string Json
      */
 
     public function search($termo)
@@ -110,12 +113,13 @@ class TagController extends ApiController
         return $this->showAsPaginator($tags);
     }
     /**
+     * Auto-Completion
      * Auto-Completação
      * 
      * @param string $term identificador único
      * @param \App\Tag $tag
      * @return \App\Controller\ApiResponser 
-     * retorna Json
+     * @return string Json
      */
     public function autocomplete($term)
     {
@@ -127,12 +131,13 @@ class TagController extends ApiController
         return $this->showAll(collect($tags));
     }
     /**
+     * Delete information from the Database.
      * Deleta informações no Banco de Dados
      *
      * @param int $id identificador único
      * @param \App\tag $tag
-     * @return \App\Controller\ApiResponser 
-     * retorna Json
+     * @return string json
+     * 
      */
     public function delete($id)
     {
@@ -149,8 +154,8 @@ class TagController extends ApiController
      * 
      * @param int $id identificador único
      * @param \App\tag $tag
-     * @return \App\Controller\ApiResponser 
-     * retorna Json
+     * @return string json
+     * 
      */
 
     public function getById($id)

@@ -93,6 +93,14 @@ class UserController extends ApiController
         return $this->saveFile($user, $request);
     }
 
+    /**
+     * Método que Salva um arquivo
+     * 
+     * @param User App\Models\User $user
+     * @param  mixed $request
+     * @return string json
+     */
+
     public function saveFile(User $user, $request)
     {
         if (!$user->save()) {
@@ -142,7 +150,7 @@ class UserController extends ApiController
     }
 
     /**
-     * Valida a criação do Usuário
+     * Valida a criação do Usuário 
      * @return array
      */
     protected function configRules()
