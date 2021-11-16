@@ -15,15 +15,21 @@ class AplicativoCategory extends Model
     protected $appends = ['sub_categories', 'user_can'];
     public $fillable = ['name'];
     /**
-     * Categoria de Filtro do Aplicativo
+     * Método Aplicativos
+     * 
      * @param \App\AplicativoCategory $aplicativo_categories
-     * @return \App\Model\ApiResponser retorna json
-     * @return void
+     * 
+     * @return  relação Tem Muitos Aplicativo
      */
     public function aplicativos()
     {
         return $this->hasMany(Aplicativo::class, 'category_id', 'id');
     }
+    /**
+     * Método Lista Sub-Categorias do Atributo
+     * @param void
+     * @return void
+     */
     public function getSubCategoriesAttribute()
     {
         return [];

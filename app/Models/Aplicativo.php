@@ -20,14 +20,14 @@ class Aplicativo extends Model
     const QT_ACCESS_INIT = 0;
 
     /**
-     * Cria a tabela aplicativo no Bancode dados Protegida
+     * Cria a tabela aplicativo no Banco de dados Protegida
      * @param \App\Aplicativo $aplicativo
      * @return \App\Model\ApiResponser retorna json
      */
     protected $table = 'aplicativos';
-     /**
-      * Tabela com os campos definidos
-      */
+    /**
+     * Tabela com os campos definidos
+     */
     protected $fillable = [
         'name',
         'user_id',
@@ -38,10 +38,10 @@ class Aplicativo extends Model
         'is_featured',
         'options'
     ];
-      
-      /**
-      * Tabela com os campos definidos
-      */
+
+    /**
+     * Tabela com os campos definidos
+     */
     protected $appends = [
         'image',
         'excerpt',
@@ -49,23 +49,23 @@ class Aplicativo extends Model
         'formated_date',
         'user_can'
     ];
-      /**
-      * Tabela com os campos definidos
-      */
+    /**
+     * Tabela com os campos definidos
+     */
     protected $dates = [
         'created_at',
         'updated_at',
         'deleted_at'
     ];
-      /**
-      * Força atributo options ser um array
-      */
+    /**
+     * Força atributo options ser um array
+     */
     protected $casts = [
         'options' => 'array',
     ];
     /**
-    * Relação com canal
-    */
+     * Relação com canal
+     */
     public function canal()
     {
         Canal::$without_appends = true;
@@ -134,14 +134,14 @@ class Aplicativo extends Model
         if (!$this->id) {
             return null;
         }
-        
+
         $urlPath = Storage::disk("aplicativos-educacionais")->path("imagem-associada");
-        $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.".*";
+        $urlPath = $urlPath . DIRECTORY_SEPARATOR . $this->id . ".*";
         $info = glob($urlPath);
-        if (sizeof($info)>0) {
+        if (sizeof($info) > 0) {
             return $info[0];
         }
-        
+
         return null;
     }
 
