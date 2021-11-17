@@ -9,9 +9,13 @@ use App\Traits\UserCan;
 class ConteudoLike extends Model
 {
     use SoftDeletes, UserCan;
-
+    /**
+     * Tabela com campo definido
+     */
     protected $table = 'conteudos_likes';
-
+    /**
+     * Tabela com campos definidos
+     */
     protected $fillable = [
         'user_id',
         'conteudo_id',
