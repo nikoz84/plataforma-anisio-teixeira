@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Auth;
 class Comentario extends Model
 {
     use SoftDeletes, UserCan;
-
+    /**Tabela com campo definido */
     protected $table = 'comentarios';
-
+    /**Tabela com campos definidos */
     protected $fillable = [
         'user_id',
         'conteudo_id',
@@ -25,7 +25,9 @@ class Comentario extends Model
     ];
     /**
      * Retorna Comentário do Id do Usuário
-     * 
+     * @param mixed $userId identificador único
+     * @param mixed $tipo boolean
+     * @return boolean
      */
     public function getComentariosByIdUsuario($userId, $tipo = false)
     {
@@ -45,6 +47,7 @@ class Comentario extends Model
      *
      * @param integer $idPostagem
      * @param string $tipo
+     * @param mixed $query
      * @return void
      */
     public function scopeComentariosById($query, $idPostagem, $tipo)
@@ -74,8 +77,8 @@ class Comentario extends Model
     /**
      * Retorna Comentário Por id
      *
-     * @param [int] $id
-     * @return void
+     * @param integer $id
+     * @return booleano
      */
     public function getComentarioById($id)
     {
@@ -89,7 +92,7 @@ class Comentario extends Model
     /**
      * Retorna Comentário Por Tipo.
      *
-     * @param [int] $tipo
+     * @param integer $tipo
      * @return void
      */
     public function getComentariosByTipo($tipo)
@@ -100,7 +103,7 @@ class Comentario extends Model
      * Deleta Informações
      *
      * @param [int] $id
-     * @return void
+     * @return integer
      */
     public function deletar($id)
     {

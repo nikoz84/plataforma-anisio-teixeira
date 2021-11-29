@@ -28,7 +28,7 @@ class Conteudo extends Model
     const IS_APPROVED = 'false';
     const INIT_COUNT = 0;
     public static $TYPE_SEARCH = 'simple';
-
+    /**Tabela com campos definidos */
     protected $fillable = [
         'approving_user_id',
         'user_id',
@@ -45,9 +45,17 @@ class Conteudo extends Model
         'is_approved',
         'options',
     ];
-
+    /**
+     * Tabela com campos definidos
+     */
     protected $appends = ['image', 'excerpt', 'short_title', 'url_exibir', 'user_can', 'arquivos', 'formated_date', 'title_slug', 'download', 'guiaPedagogico'];
+    /**
+     * Tabela com campos definidos
+     */
     protected $casts = ['options' => 'array',];
+    /**
+     * Tabela com campos definidos
+     */
     protected $hidden = ['ts_documento'];
 
     /**
@@ -142,7 +150,7 @@ class Conteudo extends Model
     public function setIsApprovedAttribute($value)
     {
         $user_can = $this->getUserCanAttribute();
-        
+
         if ($user_can['create'] || $user_can['update']) {
             $this->attributes['is_approved'] = true;
         } else {
@@ -221,7 +229,7 @@ class Conteudo extends Model
         }
         return $image;
     }
-    
+
 
     /**
      * Recupera referencia ao arquivo de download
@@ -231,7 +239,7 @@ class Conteudo extends Model
     {
         return $this->downloadFileConteudo($this->id);
     }
-    
+
     /**
      * Adiciona atributo Guia Pedagogico ao objeto
      * @return string referência ao arquivo de guia pedagogico
@@ -333,7 +341,7 @@ class Conteudo extends Model
 
         return $query->where($column, $data);
     }
-    
+
     /**
      * Busca por canal
      * @param Builder $query instância query builder
@@ -348,12 +356,12 @@ class Conteudo extends Model
 
         return $query->where('canal_id', $canal_id);
     }
-     /**
-      * Função que retorna modelo ordenado por quantidade de downloads, acessos, titulo ou data criação
-      * @param Builder $query Instância query builder
-      * @param string $by Ordem
-      * @return void
-      */
+    /**
+     * Função que retorna modelo ordenado por quantidade de downloads, acessos, titulo ou data criação
+     * @param Builder $query Instância query builder
+     * @param string $by Ordem
+     * @return void
+     */
     public function scopeSortBy(builder $query, $by)
     {
         if (!$by) {
@@ -412,12 +420,12 @@ class Conteudo extends Model
 
         DB::update('update conteudos set ts_documento = ? where id = ?', [$fullTextSearch->ts_documento, $id]);
     }
-      /**
-      * Retorna conteúdos relacionados
-      * @param Builder $query Instância query builder
-      * @param integer $id Identificador único do conteúdo digital
-      * @return void
-      */
+    /**
+     * Retorna conteúdos relacionados
+     * @param Builder $query Instância query builder
+     * @param integer $id Identificador único do conteúdo digital
+     * @return void
+     */
     public function scopeRelacionados(Builder $query, $id)
     {
         if (!$id) {
@@ -426,9 +434,9 @@ class Conteudo extends Model
         $tags_query = function ($q) {
             return $q->limit(2);
         };
-        $conteudo = Conteudo::with(['tags'=> $tags_query])->findOrFail($id);
+        $conteudo = Conteudo::with(['tags' => $tags_query])->findOrFail($id);
         $tags = $conteudo->tags->implode('name', ', ');
-        
+
         return Conteudo::whereRaw(
             "conteudos.ts_documento @@ plainto_tsquery('portuguese', lower(unaccent(?)))",
             [$tags]
@@ -438,10 +446,10 @@ class Conteudo extends Model
         )->where('id', '<>', $id);
     }
 
-      /**
-      * Retorna conteúdos mais baixados
-      * @return DB
-      */
+    /**
+     * Retorna conteúdos mais baixados
+     * @return DB
+     */
     public function relatorioMaisBaixados()
     {
         return Conteudo::select([
@@ -449,18 +457,18 @@ class Conteudo extends Model
             'users.name as publisher',
             'tipos.name as type',
             'qt_downloads as quantity'
-            ])
-        ->join('users', 'users.id', '=', 'conteudos.user_id')
-        ->join('tipos', 'tipos.id', '=', 'conteudos.tipo_id')
-        ->orderByDesc("conteudos.qt_downloads")
-        ->whereNotNull("qt_downloads")
-        ->limit(100)
-        ->get();
+        ])
+            ->join('users', 'users.id', '=', 'conteudos.user_id')
+            ->join('tipos', 'tipos.id', '=', 'conteudos.tipo_id')
+            ->orderByDesc("conteudos.qt_downloads")
+            ->whereNotNull("qt_downloads")
+            ->limit(100)
+            ->get();
     }
-     /**
-      * Retorna conteúdos mais acessados
-      * @return DB
-      */
+    /**
+     * Retorna conteúdos mais acessados
+     * @return DB
+     */
     public function relatorioMaisAcessados()
     {
         return Conteudo::select([
@@ -468,11 +476,11 @@ class Conteudo extends Model
             'users.name as publisher',
             'tipos.name as type',
             'qt_access as quantity'
-            ])
-        ->join('users', 'users.id', '=', 'conteudos.user_id')
-        ->join('tipos', 'tipos.id', '=', 'conteudos.tipo_id')
-        ->whereNotNull("qt_access")
-        ->orderByDesc("conteudos.qt_access");
+        ])
+            ->join('users', 'users.id', '=', 'conteudos.user_id')
+            ->join('tipos', 'tipos.id', '=', 'conteudos.tipo_id')
+            ->whereNotNull("qt_access")
+            ->orderByDesc("conteudos.qt_access");
     }
 
     /**
@@ -490,12 +498,12 @@ class Conteudo extends Model
      */
     public function conteudosPorAno($ano)
     {
-         return Conteudo::select([
-             'title',
-             'users.name as publisher',
-             'tipos.name as type',
-             'qt_downloads as quantity'
-             ])
+        return Conteudo::select([
+            'title',
+            'users.name as publisher',
+            'tipos.name as type',
+            'qt_downloads as quantity'
+        ])
             ->join('users', 'users.id', '=', 'conteudos.user_id')
             ->join('tipos', 'tipos.id', '=', 'conteudos.tipo_id')
             ->where(DB::raw("date_part('year', conteudos.created_at)"), $ano)
@@ -508,10 +516,10 @@ class Conteudo extends Model
      */
     public function conteudosSemStreamingFiles()
     {
-        $conteudos = Conteudo::select(['id','title', 'tipo_id'])
-        ->where("tipo_id", 5)
-        ->get();
-        $conteudoNoStreamingFile=[];
+        $conteudos = Conteudo::select(['id', 'title', 'tipo_id'])
+            ->where("tipo_id", 5)
+            ->get();
+        $conteudoNoStreamingFile = [];
         foreach ($conteudos as $conteudo) {
             $videoFIleRef = $this->downloadFileConteudoReferencia($conteudo->id);
             if ($videoFIleRef) {

@@ -16,12 +16,12 @@ use Illuminate\Support\Str;
 class Canal extends Model
 {
     use SoftDeletes, WithoutAppends, UserCan;
-
+    /**
+     *  Tabela com campo definido
+     */
     protected $table = 'canais';
     /**
-     * $fillable São todos os atributos que podem ser asignavéis
-     * @param \App\Canal $canal
-     * @return \App\Model\ApiResponser retorna json
+     *  Tabela com campos definidos
      */
     protected $fillable = [
         'name',
@@ -30,22 +30,32 @@ class Canal extends Model
         'slug',
         'options'
     ];
-
+    /**
+     * Tabela com campo oculto 
+     */
     protected $hidden = ['token'];
-
+    /**
+     * Tabela com campos definidos
+     */
     protected $dates = [
         'created_at',
         'updated_at',
         'deleted_at'
     ];
+    /**
+     * Tabela com campos definidos
+     */
     protected $appends = ['tipos', 'category_name', 'user_can', 'filters', 'excerpt'];
+    /**
+     * Tabela com campo definido
+     */
     protected $casts = [
         'options' => 'array',
     ];
     /**
      * Conteúdos digitais
-     * @param \App\Canal $canal
-     * @return \App\Model\ApiResponser retorna json
+     * @param void
+     * @return Tem muitos relação com Conteúdo
      *
      */
     public function conteudos()
@@ -54,8 +64,8 @@ class Canal extends Model
     }
     /**
      * Categoria componente curricular filtros
-     * @param \App\Canal $canal
-     * @return \App\Model\ApiResponser retorna json
+     * @param void
+     * @return belongsToMany Pertence a CurricularComponentCategory
      * 
      */
     public function filterCategoryCC()
@@ -68,9 +78,9 @@ class Canal extends Model
         )->orderBy('name');
     }
     /**
-     * Canal aplicativos educacionais
-     * @param \App\Canal $canal
-     * @return \App\Model\ApiResponser retorna json
+     * Método Aplicativos 
+     * @param void
+     * @return hasMany Tem muitos relação Aplicativo
      * 
      */
     public function aplicativos()
@@ -78,9 +88,9 @@ class Canal extends Model
         return $this->hasMany(Aplicativo::class);
     }
     /**
-     * Categorias conteúdos digitais
-     * @param \App\Canal $canal
-     * @return \App\Model\ApiResponser retorna json
+     * Método Categorias
+     * @param void
+     * @return hasMany Tem muitos relação com Category
      * 
      */
     public function categories()
@@ -92,9 +102,9 @@ class Canal extends Model
             ->with('subCategories');
     }
     /**
-     * Categorias dos aplicativos educacionais
-     * @param \App\Canal $canal
-     * @return \App\Model\ApiResponser retorna json
+     * Método Categorias 
+     * @param void
+     * @return hasMany tem muitos relação AplicativoCategory
      * 
      */
     public function appsCategories()
@@ -103,19 +113,19 @@ class Canal extends Model
             ->orderBy("name");
     }
     /**
-     * Tipo de conteudos do canal
-     * @param \App\Canal $canal
-     * @return \App\Model\ApiResponser retorna json
+     * Método que traz o tipo de Atributo
+     * @param void
+     * @return void
      * 
      */
     public function getTiposAttribute()
     {
         $ids = null;
-        
-        if($this->options && $this->options['tipo_conteudo']){
+
+        if ($this->options && $this->options['tipo_conteudo']) {
             $ids = $this->options['tipo_conteudo'];
         }
-        
+
         if ($ids) {
             return DB::table('tipos')
                 ->whereIn('id', $this['options']['tipo_conteudo'])
@@ -125,9 +135,9 @@ class Canal extends Model
         return [];
     }
     /**
-     * Nome da categoria
-     * @param \App\Canal $canal
-     * @return \App\Model\ApiResponser retorna json
+     * Método Nome da categoria por atributo
+     * @param void
+     * @return void
      * 
      */
     public function getCategoryNameAttribute()
@@ -154,18 +164,24 @@ class Canal extends Model
                 break;
         }
     }
-
+    /**
+     * Método Resumo do conteúdo
+     * @param void
+     * @return string sem html
+     */
     public function getExcerptAttribute()
     {
         return strip_tags(
             Str::words(
-                trim(preg_replace('/\s+/', ' ', $this->description))
-            , 100));
+                trim(preg_replace('/\s+/', ' ', $this->description)),
+                100
+            )
+        );
     }
     /**
      * Categoria de Filtro do Atributo.
-     * @param \App\Canal $canal
-     * @return \App\Model\ApiResponser retorna json
+     * @param void
+     * @return void
      */
     public function getFiltersAttribute()
     {

@@ -12,7 +12,8 @@ class Contato extends Model
  */
 {
     use SoftDeletes, UserCan;
-
+    /**Tabela com campos definidos */
     protected $fillable = ['name', 'email', 'url', 'subject', 'message', 'action'];
+    /**Tabela com campo definido */
     protected $appends = ['user_can'];
 }

@@ -9,11 +9,16 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
+    /**
+     *Lista de Usuários
+     *@param void
+     *@return $array
+     */
     public function index()
     {
         $paginator = User::paginate(10);
 
-        return Inertia::render('Dashboard/ListUsers',[
+        return Inertia::render('Dashboard/ListUsers', [
             'paginator' => $paginator
         ]);
     }

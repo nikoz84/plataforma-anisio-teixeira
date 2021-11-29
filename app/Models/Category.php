@@ -13,17 +13,27 @@ use Illuminate\Support\Facades\Storage;
 class Category extends Model
 {
     use SoftDeletes, UserCan;
-
-    protected $table = 'categories';
-    public $fillable = ['name', 'parent_id', 'options', 'canal_id'];
-    protected $casts = ['options' => 'array'];
-    protected $appends = ['user_can', 'image', 'video'];
-     
     /**
-     * Ordena o arquivo por nome 
-     * @param \App\Category $category
-     * @return \App\Model\ApiResponser retorna json
-     * @return void
+     * Tabela com campo definido
+     */
+    protected $table = 'categories';
+    /**
+     * Tabela com campos definidos
+     */
+    public $fillable = ['name', 'parent_id', 'options', 'canal_id'];
+    /**
+     * Tabela com campo definido
+     */
+    protected $casts = ['options' => 'array'];
+    /**
+     * Tabela com campos definidos
+     */
+    protected $appends = ['user_can', 'image', 'video'];
+
+    /**
+     * Método SubCategorias
+     * @param void
+     * @return hasMany Tem muitos relacionamento Category \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function subCategories()
     {
@@ -34,83 +44,79 @@ class Category extends Model
     }
 
     /**
-     * obtem referencia do arquivo de video destaque
-     * da categoria do conteudo em questão
-     * @param \App\Category $category
-     * @return \App\Model\ApiResponser retorna json
-     * @return string
+     * Método referencia de video destaque
+     * @param void
+     * @return void
      */
     public function refenciaVideoDestaque()
     {
-        if(!$this->id)
-        return null;
+        if (!$this->id)
+            return null;
         $urlPath = Storage::disk("conteudos-digitais")->path("visualizacao");
-        $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.".*";
+        $urlPath = $urlPath . DIRECTORY_SEPARATOR . $this->id . ".*";
         $info = glob($urlPath);
-        if(sizeof($info)>0)
-        return $info[0];
+        if (sizeof($info) > 0)
+            return $info[0];
         return null;
     }
 
     /**
-     * obtem referencia do arquivo de imgame associada
-     * da categoria do conteudo em questão
-     * @param \App\Category $category
-     * @return \App\Model\ApiResponser retorna json
-     * @return string
+     * Método referencia do arquivo de imgame associada
+     * @param void
+     * @return void
      */
     public function refenciaImagemAssociada()
     {
-        if(!$this->id)
-        return null;
-        $urlPath = Storage::disk("conteudos-digitais")->path("imagem-associada". DIRECTORY_SEPARATOR . "categorias");
-        $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.".*";
+        if (!$this->id)
+            return null;
+        $urlPath = Storage::disk("conteudos-digitais")->path("imagem-associada" . DIRECTORY_SEPARATOR . "categorias");
+        $urlPath = $urlPath . DIRECTORY_SEPARATOR . $this->id . ".*";
         $info = glob($urlPath);
-        if(sizeof($info)>0)
-        return $info[0];
+        if (sizeof($info) > 0)
+            return $info[0];
         return null;
     }
 
     /**
-     * obtem url da imagem associada
-     * @param \App\Category $category
-     * @return \App\Model\ApiResponser retorna json
-     * @return string
+     * Método Imagem do Atributo
+     * @param void
+     * @return void
+     * 
      */
-    public function getImageAttribute(){
+    public function getImageAttribute()
+    {
         //return $urlPath;
         $filename = basename($this->refenciaImagemAssociada());
-        if($this->canal_id == 2)
-        {
-            return Storage::disk('conteudos-digitais')->url("imagem-associada/sinopse/".$filename);
+        if ($this->canal_id == 2) {
+            return Storage::disk('conteudos-digitais')->url("imagem-associada/sinopse/" . $filename);
         }
         if ($filename) {
-            return Storage::disk("conteudos-digitais")->url("imagem-associada/categorias/".$filename);
+            return Storage::disk("conteudos-digitais")->url("imagem-associada/categorias/" . $filename);
         }
-       
+
         return null;
     }
 
     /**
-     * obtem url do video destaque da categoria
-     * @param \App\Category $category
-     * @return \App\Model\ApiResponser retorna json
-     * @return string
+     * Método url do video destaque da categoria
+     * @param void
+     * @return void
+     * 
      */
-    public function getVideoAttribute(){
+    public function getVideoAttribute()
+    {
         //return $urlPath;
         $filename = basename($this->refenciaVideoDestaque());
-        if($filename)
-        return Storage::disk("conteudos-digitais")->url("visualizacao/".$filename);
+        if ($filename)
+            return Storage::disk("conteudos-digitais")->url("visualizacao/" . $filename);
         return null;
     }
 
     /**
-     * canal associado à categoria de conteudo
-     * @param \App\Category $category
-     * @return \App\Model\ApiResponser retorna json
+     * Método Cnal
+     * @param void
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-    */
+     */
     public function canal()
     {
         return $this->belongsTo(Canal::class, 'canal_id', 'id');

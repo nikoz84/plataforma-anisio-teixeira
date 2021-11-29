@@ -12,7 +12,7 @@ class RelatorioController extends ApiController
 {
     /**
      * listar usuário por role
-     * @return \Illuminate\Http\Response
+     * @return string json
      */
     public function buscarUsuariosPorRole($role_id)
     {
@@ -40,6 +40,7 @@ class RelatorioController extends ApiController
 
     /**
      * Gerador de relatório de conteúdo (.pdf)
+     * @param $flag null
      * @return pdf
      */
     public function gerarPdfConteudo($flag = null)
@@ -75,7 +76,7 @@ class RelatorioController extends ApiController
 
     /**
      * anos de publicação de conteudos para construção de menu
-     * @return array conteudos
+     * @return $array
      */
     public function anosComConteudosPublicados()
     {
@@ -85,7 +86,7 @@ class RelatorioController extends ApiController
 
     /**
      * relatório pdf dos conteúdos por ano de publicação
-     * @param int $ano
+     * @param integer $ano
      * @return mixed 
      */
     public function conteudosPublicadosPorAno($ano)
