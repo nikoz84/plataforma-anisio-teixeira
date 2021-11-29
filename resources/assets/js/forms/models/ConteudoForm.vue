@@ -2,7 +2,7 @@
   <div class="q-pa-md row justify-center q-gutter-xs">
     <q-card class="col-sm-5">
       <q-card-section class="q-gutter-sm">
-        <q-input outlined v-model="conteudo.title" 
+          <q-input outlined v-model="conteudo.title" 
             label="Título do conteúdo"
             autogrow
             bottom-slots
@@ -119,7 +119,7 @@
 
         <q-card-section>
         
-        <!-- LICENÇAS -->
+        <!-- LICENÇAS 
         <ParentAndChildSelect :parent="licencas" 
           label="Licença"
           :selectedId="conteudo.license_id"
@@ -129,7 +129,7 @@
         <div class="q-my-md" v-if="errors && errors.license_id && errors.license_id.length > 0">
           <ShowErrors :errors="errors.license_id"></ShowErrors>
         </div>
-        
+        -->
         
         <!-- DESCRIÇÃO --> 
         <div class="q-mt-md">

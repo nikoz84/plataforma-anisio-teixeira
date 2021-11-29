@@ -31,9 +31,10 @@ Route::get('/docs', function (Request $request) {
 });
 
 */
-Route::get('/disk-space', function () {
-    return Artisan::call('space:disk');
-});
+
+
+
+
 /** Redireção de páginas antigas */
 Route::permanentRedirect('/home/ipes', '/ipes');
 Route::permanentRedirect('/home/rotinas-de-estudo', '/rotinas-de-estudo');

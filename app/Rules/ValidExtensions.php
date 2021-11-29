@@ -38,8 +38,8 @@ class ValidExtensions implements Rule
         }
 
         $exists = in_array(
-            $value->getClientOriginalExtension(),
-            $tipo->options['formatos']
+            $value->getClientOriginalExtension(), 
+            $tipo->options['formatos'] 
         );
 
         return $exists;

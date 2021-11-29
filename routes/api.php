@@ -130,7 +130,7 @@ Route::group(['prefix' => 'canal-at', 'as' => 'canal-at.'], function () {
     Route::get('/podcast', [DocumentController::class, 'getPodcastAT'])->name('podcast');
 });
 
-
+/*
 Route::group(
     ['prefix' => 'playlist', 'as' => 'playlist.'],
     function () {
@@ -144,7 +144,7 @@ Route::group(
         Route::get('/{id}', [PlayListController::class, 'getById'])->name('ByID');
     }
 );
-
+*/
 /***********************************************
  *
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN

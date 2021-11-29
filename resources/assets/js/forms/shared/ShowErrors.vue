@@ -1,6 +1,6 @@
 <template>
   <div v-if="errors">
-    <p class="text-negative" v-for="error in errors" v-html="error"></p>
+    <p class="text-negative" v-for="(error, i) in errors" v-html="error" :key="i"></p>
   </div>
 </template>
 <script>

@@ -48,9 +48,10 @@ class SpaceDiskCommand extends Command
             $this->output->progressAdvance($count);
             sleep(.7);
         }
-        $this->output->progressFinish();
+
         $headers = ['Peso', 'Pasta'];
         
         $this->table($headers, $data);
+        $this->output->progressFinish();
     }
 }

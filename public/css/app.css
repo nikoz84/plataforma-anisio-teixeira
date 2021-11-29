@@ -97,6 +97,9 @@ h1 {
   font-size: 20px;
   font-size: 1.125rem;
 }
+.has-text-align-center {
+  text-align: center !important;
+}
 .q-tabs__arrow--right {
   top: 0;
   right: 0;

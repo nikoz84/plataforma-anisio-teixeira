@@ -168,7 +168,7 @@ class ConteudoController extends ApiController
 
     /**
      * Apaga o conteúdo do banco de dados, com tags, componentes
-     * @param $id ID identificador único 
+     * @param integer ID identificador único
      * @return string json
      */
     public function delete($id)
@@ -184,7 +184,7 @@ class ConteudoController extends ApiController
         $conteudo->niveis()->detach();
 
         $this->deleteFile("download", $conteudo->id);
-        $this->deleteFile("streaming", $conteudo->id);
+        //$this->deleteFile("streaming", $conteudo->id);
 
         if (!$conteudo->delete()) {
             return $this->errorResponse([], 'Não foi Possível deletar o conteúdo', 422);
@@ -296,7 +296,7 @@ class ConteudoController extends ApiController
         if ($conteudo && $conteudo->id) {
             if ($request->has('download') && !is_null($request->download)) {
                 $this->deleteFile("download", $conteudo->id);
-                $this->deleteFile("streaming", $conteudo->id);
+                //$this->deleteFile("streaming", $conteudo->id);
                 $file = $this->saveFile($conteudo->id, [$request->download], 'download');
                 if ($conteudo->tipo->id == 5) {
                     if ($file && !$request->has('imagem_associada')) {
