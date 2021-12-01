@@ -2,9 +2,10 @@
   <div class="q-pa-md row justify-center q-gutter-xs">
     <q-card class="col-sm-5">
       <q-card-section class="q-gutter-sm">
-          <q-input outlined v-model="conteudo.title" 
+          <q-input v-model="conteudo.title" 
             label="Título do conteúdo"
             autogrow
+            dense
             bottom-slots
             :error="errors && errors.title && errors.title.length > 0"
             >
@@ -12,52 +13,50 @@
               <ShowErrors :errors="errors.title"></ShowErrors>
             </template>
           </q-input>
+
+          <q-select
+            dense
+            stack-label
+            emit-value
+            map-options
+            option-value="id"
+            option-label="name"
+            v-model="conteudo.tipo_id"
+            :options="tipos"
+            label="Tipo de Mídia"
+            :error="errors && errors.tipo_id && errors.tipo_id.length > 0"
+            bottom-slots
+          >
+            <template v-slot:error>
+              <ShowErrors :errors="errors.tipo_id"></ShowErrors>
+            </template>
+          </q-select>
+
+           <q-select
+            dense
+            stack-label
+            emit-value
+            map-options
+            option-value="id"
+            option-label="name"
+            v-model="conteudo.canal_id"
+            :options="canais"
+            label="Escolha um Canal"
+            @input="getCategories"
+            :error="errors && errors.canal_id && errors.canal_id.length > 0"
+            bottom-slots
+          >
+            <template v-slot:error>
+              <ShowErrors :errors="errors.canal_id"></ShowErrors>
+            </template>
+          </q-select>
       </q-card-section>
-      <q-card-section>
-        <q-select
-          outlined
-          stack-label
-          emit-value
-          map-options
-          option-value="id"
-          option-label="name"
-          v-model="conteudo.tipo_id"
-          :options="tipos"
-          label="Tipo de Mídia"
-          :error="errors && errors.tipo_id && errors.tipo_id.length > 0"
-          bottom-slots
-        >
-          <template v-slot:error>
-            <ShowErrors :errors="errors.tipo_id"></ShowErrors>
-          </template>
-        </q-select>
       
-      </q-card-section>
-      <q-card-section class="q-gutter-sm">
-        
-      </q-card-section>
       
       <q-card-section class="q-gutter-sm">
-        <q-select
-          outlined
-          stack-label
-          emit-value
-          map-options
-          option-value="id"
-          option-label="name"
-          v-model="conteudo.canal_id"
-          :options="canais"
-          label="Escolha um Canal"
-          @input="getCategories"
-          :error="errors && errors.canal_id && errors.canal_id.length > 0"
-          bottom-slots
-        >
-          <template v-slot:error>
-            <ShowErrors :errors="errors.canal_id"></ShowErrors>
-          </template>
-        </q-select>
+       
         
-        <!-- CATEGORIA -->
+        <!-- CATEGORIA 
         <ParentAndChildSelect :parent="categories" 
           :label="categoryName"
           :selectedId="conteudo.category_id"
@@ -66,7 +65,7 @@
         <div class="q-my-md" v-if="errors && errors.category_id && errors.category_id.length > 0">
           <ShowErrors :errors="errors.category_id"></ShowErrors>
         </div>
-        
+          -->
         <!--q-select
           v-if="categories && categories.length > 0"
           outlined
@@ -91,8 +90,7 @@
 
 
         <!-- AUTORES -->
-        <div class="q-my-lg">
-          <q-input outlined v-model="conteudo.authors" 
+          <q-input dense v-model="conteudo.authors" 
             label="Autores"
             autogrow
             bottom-slots
@@ -101,10 +99,8 @@
               <ShowErrors :errors="errors.authors"></ShowErrors>
             </template>
           </q-input>
-        </div>
-        <!-- FONTE --> 
-        <div class="q-my-lg">
-          <q-input outlined v-model="conteudo.source" 
+          <!-- FONTE -->
+          <q-input dense v-model="conteudo.source" 
             label="Fonte"
             autogrow
             bottom-slots
@@ -113,9 +109,44 @@
               <ShowErrors :errors="errors.source"></ShowErrors>
             </template>
           </q-input>
-        </div>
         
         </q-card-section>
+
+        <q-card-section>
+        <!-- TAGS --> 
+        <q-select
+          dense
+          v-model="conteudo.tags"
+          use-input
+          multiple
+          option-value="id"
+          option-label="name"
+          hint="Pesquise entre 3 a 10 palavras-chave para melhorar as buscas, se não achar a palavra chave, escreva uma palavra e adicione apertando enter"
+          use-chips
+          stack-label
+          hide-dropdown-icon
+          label="Palavras-Chave"
+          input-debounce="200"
+          new-value-mode="add-unique"
+          @new-value="addTag"
+          :options="autocompleteTags"
+          @filter="getTags"
+          bottom-slots
+          map-options
+          :error="errors && errors.tags && errors.tags.length > 0"
+          >
+           <template v-slot:error>
+            <ShowErrors :errors="errors.tags"></ShowErrors>
+          </template>
+          <template v-slot:no-option>
+            <q-item>
+              <q-item-section class="text-grey">
+                Sem Resultados
+              </q-item-section>
+            </q-item>
+          </template>
+        </q-select>
+      </q-card-section>
 
         <q-card-section>
         
@@ -133,10 +164,13 @@
         
         <!-- DESCRIÇÃO --> 
         <div class="q-mt-md">
-          <p class="text-center">Escreva uma descrição 
-            <b>(Para melhorar a qualidade de nossa oferta e busca de conteúdos 
-            deve escrever um texto como mínimo de 140 caracteres)</b>
-          </p>
+          
+          <p class="text-center">Escreva uma descrição </p>
+          <small>
+              <b>(Para melhorar a qualidade de nossa oferta e busca de conteúdos, 
+            escreva um texto como mínimo de 100 caracteres)</b>
+          </small>
+          
         </div>
         <q-editor v-model="conteudo.description" min-height="18rem"
           ref="editor_ref"
@@ -146,33 +180,7 @@
           :errors="errors.description">
         </ShowErrors>
       </q-card-section>
-      <q-card-section>
-        <!-- TAGS --> 
-        <q-select
-          outlined
-          v-model="conteudo.tags"
-          use-input
-          multiple
-          option-value="id"
-          option-label="name"
-          hint="Pesquise entre 3 a 10 palavras-chave para melhorar as buscas, se não achar a palavra escreva uma palavra e adicione apertando enter"
-          use-chips
-          stack-label
-          hide-dropdown-icon
-          label="Escreva aqui uma palavra para sugestões"
-          input-debounce="200"
-          new-value-mode="add-unique"
-          @new-value="addTag"
-          :options="autocompleteTags"
-          @filter="getTags"
-          bottom-slots
-          :error="errors && errors.tags && errors.tags.length > 0"
-          >
-           <template v-slot:error>
-            <ShowErrors :errors="errors.tags"></ShowErrors>
-          </template>
-        </q-select>
-      </q-card-section>
+      
       <q-card-section>
         <q-img 
           loading="lazy" 
@@ -232,9 +240,9 @@
         </DeleteFiles>
         
         <q-input
+          dense
           class="q-mt-md"
           @input="val => {file = val[0];}"
-          outlined
           @change="onguiaPedagogicoFileChange"
           type="file"
           hint="Arquivo para Guia Pedagógico"
@@ -248,7 +256,7 @@
         <!-- ENVIAR SITE -->
         <br>
         <q-input
-          outlined
+          dense
           v-model="conteudo.options.site"
           label="URL do Site"
           hint="Exemplo: http://dominio.com.br"
@@ -319,7 +327,7 @@
               </div>
               <q-separator class="q-mt-lg" inset color="negative"></q-separator>
               <q-list dense bordered>
-                <q-item  v-ripple 
+                <q-item  dense v-ripple 
                 v-for="(component, i) in component.componentes" :key="`child-com-${i}`">
                   <q-item-section avatar>
                     <q-checkbox v-model="componentesCurriculares" :val="component.id" color="negative"/>
@@ -648,10 +656,11 @@ export default {
     addTag(val, done) {
       //const form = new FormData();
       //const http = axios;
-      console.log(val, this.autocompleteTags)
-      if (this.autocompleteTags.length == 0) {
+      console.log(val)
+      //console.log(val, this.autocompleteTags)
+      
         this.showTagModal(val);
-      }
+      
     },
     showTagModal(val){
       this.$q.notify({
@@ -687,16 +696,22 @@ export default {
         });
     },
     getTags(val, update, abort) {
-      update(() => {
-        if (val === "" && val.length < 3) {
+      update(async () => {
+        if (val === "" && val.length < 2) {
           this.autocompleteTags = [];
         } else {
-          const self = this;
-          axios.get(`tags/autocomplete/${val}`).then(resp => {
-            self.autocompleteTags = resp.data.metadata;
+          const {data} = await axios.get(`tags/autocomplete/${val}`)
+          
+          const term = val.toUpperCase()
+          this.autocompleteTags = data.metadata.filter((item) => {
+            console.log(item.name.toUpperCase())
+            return  item.name.toUpperCase().includes(term)
           });
         }
       });
+    },
+    lengths(){
+
     }
   }
 };

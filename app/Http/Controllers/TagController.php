@@ -102,7 +102,7 @@ class TagController extends ApiController
     {
         $limit = $this->request->query('limit', 15);
         $search = "%{$termo}%";
-
+        
         $tags = Tag::select(['id', 'name'])
             ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
             ->orderBy('name')
@@ -113,21 +113,25 @@ class TagController extends ApiController
         return $this->showAsPaginator($tags);
     }
     /**
-     * Auto-Completion
-     * Auto-Completação
-     * 
+     * Auto Completar
+     *
      * @param string $term identificador único
      * @param \App\Tag $tag
-     * @return \App\Controller\ApiResponser 
+     * @return \App\Controller\ApiResponser
      * @return string Json
      */
     public function autocomplete($term)
     {
         $search = "%{$term}%";
-        $limit = $this->request->query('limit', 100);
+        $limit = $this->request->query('limit', 200);
         $tags = Tag::select(['id', 'name'])
             ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
-            ->get(['id', 'name']);
+            ->where('name', 'NOT LIKE', '% %')
+            ->distinct()
+            ->get(['id', 'name'])->take($limit);
+        
+        
+
         return $this->showAll(collect($tags));
     }
     /**
