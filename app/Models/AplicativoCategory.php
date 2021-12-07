@@ -19,7 +19,7 @@ class AplicativoCategory extends Model
      * 
      * @param \App\AplicativoCategory $aplicativo_categories
      * 
-     * @return  relação Tem Muitos Aplicativo
+     * @return relação Tem Muitos Aplicativo
      */
     public function aplicativos()
     {

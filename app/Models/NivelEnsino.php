@@ -11,9 +11,11 @@ use App\Models\CurricularComponent;
 class NivelEnsino extends Model
 {
     use UserCan;
-
+    /**Tabela com campo definido */
     protected $table = 'niveis_ensino';
+    /**Tabela com campos definidos */
     protected $appends = ['user_can', 'search_url'];
+    /**Tabela com campos definidos */
     protected $fillable = ['name'];
 
     /**

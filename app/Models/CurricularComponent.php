@@ -12,18 +12,28 @@ use App\Models\Conteudo;
 class CurricularComponent extends Model
 {
     use UserCan;
-
+    /**Tabela com Campo definido */
     protected $table = 'curricular_components';
+    /**Tabela com campo definido */
     protected $hidden = ['pivot'];
+    /**Tabela com campos definidos */
     protected $appends = ['icon', 'user_can', 'search_url'];
-
+    /**Tabela com campos definidos */
     public $fillable = ['name', 'category_id', 'nivel_id'];
-
+    /**
+     * Método Categoria
+     * @param void
+     * @return belongsTo pertence a CurricularComponentCategory
+     */
     public function category()
     {
         return $this->belongsTo(CurricularComponentCategory::class, "category_id", "id");
     }
-    
+    /**
+     * Método Nível
+     * @param void
+     * @return belongsTo pertence a Nivel de Ensino
+     */
     public function nivel()
     {
         return $this->belongsTo(NivelEnsino::class,"nivel_id", "id");
@@ -38,7 +48,11 @@ class CurricularComponent extends Model
     {
         return $this->belongsToMany(Conteudo::class);
     }
-
+    /**
+     * Função que aciona os atributos do icone
+     * @param void
+     * @return string e img
+     */
     public function getIconAttribute()
     {
         return "/img/sprite/" . Str::slug($this['name'], '-') . ".svg";

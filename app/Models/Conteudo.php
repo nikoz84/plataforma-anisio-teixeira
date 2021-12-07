@@ -60,7 +60,8 @@ class Conteudo extends Model
 
     /**
      * Seleciona o canal do conteúdo sem os campos adicionais
-     * @return Canal instância
+     *
+     * @return Canal instância belongstTo pertence a Canal
      */
     public function canal()
     {
@@ -71,7 +72,7 @@ class Conteudo extends Model
     }
     /**
      * Seleciona usuário publicador
-     * @return User instâcia
+     * @return User instâcia belongsTo pertence a user
      */
     public function user()
     {
@@ -80,7 +81,7 @@ class Conteudo extends Model
     }
     /**
      * Conteúdo tipo
-     * @return Tipo instância
+     * @return Tipo instância HasOne Tem um
      */
     public function tipo()
     {
@@ -89,7 +90,7 @@ class Conteudo extends Model
     }
     /**
      * Seleciona as Tags relacionadas
-     * @return Tag instância
+     * @return Tag instância Pertence a Muitos belongs To Many
      */
     public function tags()
     {
@@ -98,7 +99,7 @@ class Conteudo extends Model
     }
     /**
      * Seleciona os componentes curriculares
-     * @return CurricularComponent instância
+     * @return CurricularComponent instância Pertence a Muitos belongs To Many
      */
     public function componentes()
     {
@@ -112,7 +113,7 @@ class Conteudo extends Model
 
     /**
      * Seleciona a categoria do conteúdo
-     * @return Category instância
+     * @return Category instância Pertence à belongsTo
      */
     public function category()
     {
@@ -121,7 +122,7 @@ class Conteudo extends Model
 
     /**
      * Seleciona niveis de ensino
-     * @return NivelEnsino instância
+     * @return NivelEnsino instância Pertence a muitos belongsToMany 
      */
     public function niveis()
     {
@@ -135,7 +136,7 @@ class Conteudo extends Model
 
     /**
      * Seleciona a licença relacionada
-     * @return License intância
+     * @return License intância Há um has one 
      */
     public function license()
     {
@@ -144,7 +145,7 @@ class Conteudo extends Model
 
     /**
      * Seta o atributo aprovado (isApproved)
-     * @param boolean $value Valor de tipo true false
+     * @param boolean $value Valor de tipo booleano true false
      * @return void
      */
     public function setIsApprovedAttribute($value)

@@ -15,7 +15,7 @@ class Options extends Model
      */
      
     use UserCan;
-
+    /**Tabela com campos definidos */
     protected $fillable = [
         'name',
         'meta_data',

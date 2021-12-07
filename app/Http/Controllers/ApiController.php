@@ -28,7 +28,7 @@ class ApiController extends Controller
      */
     use ApiResponser;
     /**
-     * Todo o javascript vai se renderizar em essa view
+     * Todo o javascript vai se renderizar  nessa view
      *
      * @return void
      */

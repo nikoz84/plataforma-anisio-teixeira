@@ -13,7 +13,7 @@ class License extends Model
     use UserCan;
     /**
      * The attributes that are mass assignable.
-     *
+     * Os Atributos podem ser atribuídos em massa
      * @var array
      */
     protected $fillable = [
@@ -26,7 +26,6 @@ class License extends Model
      * @param \App\License $license
      * @return \App\Model\ApiResponser retorna json
      */
-
     public function conteudo()
     {
         return $this->belongsTo(Conteudo::class, 'license_id');

@@ -31,7 +31,7 @@ class Canal extends Model
         'options'
     ];
     /**
-     * Tabela com campo oculto 
+     * Método oculto protegido
      */
     protected $hidden = ['token'];
     /**
@@ -102,7 +102,7 @@ class Canal extends Model
             ->with('subCategories');
     }
     /**
-     * Método Categorias 
+     * Método appsCategorias 
      * @param void
      * @return hasMany tem muitos relação AplicativoCategory
      * 

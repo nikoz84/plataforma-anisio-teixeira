@@ -139,7 +139,7 @@ class ConteudoLike extends Model
      * Recupera um registro de like ou seslike do usuario vinculado a uma postagem
      * @param idUsuario, id do usuario
      * @param idPostagem, pode ser conteudo_id ou aplicativo_id
-     * @param tipo, se é conteudo ou aplicativo
+     * @param tipo, booleano se é conteudo ou aplicativo
      * @return Object
      */
     protected function getRegistroPorIdUsuarioEIdPostagem($idUsuario, $idPostagem, $tipo)
@@ -154,7 +154,7 @@ class ConteudoLike extends Model
     /**
      * Retorna registros de likes e dislikes do usuario
      * @param idUsuario, id do usuario
-     * @param tipo, se é conteudo ou aplicativo
+     * @param tipo, booleano se é conteudo ou aplicativo 
      * @param queryString limit
      * @return Object
      */

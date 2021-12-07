@@ -113,7 +113,8 @@ class Category extends Model
     }
 
     /**
-     * Método Cnal
+     * Método Canal
+     * BelongsTo pertence a canal
      * @param void
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
