@@ -11,6 +11,7 @@ class CanalRequest extends FormRequest
     use ApiResponser;
     /**
      * Determine if the user is authorized to make this request.
+     * Determine se o usuário está autorizado a fazer essa solicitação
      *
      * @return bool
      */
@@ -18,6 +19,11 @@ class CanalRequest extends FormRequest
     {
         return Auth::check();
     }
+     /**
+      * Método qeu faz a validação
+      *@param void
+      *@return array
+      */
     public function validated()
     {
         $this->merge([
@@ -28,7 +34,7 @@ class CanalRequest extends FormRequest
     }
     /**
      * Get the validation rules that apply to the request.
-     *
+     * Obtenha as regras de Validação que se aplicam à solicitação
      * @return array
      */
     public function rules()
@@ -40,6 +46,11 @@ class CanalRequest extends FormRequest
             'is_active' => 'required|boolean'
         ];
     }
+    /**
+     * Método com validador
+     * @param mixed $validador
+     * @return error response com código do protocolo http
+     */
 
     public function withValidator($validator)
     {

@@ -14,6 +14,7 @@ class PlaylistRequest extends FormRequest
     protected $stringify = 'document';
     /**
      * Determine if the user is authorized to make this request.
+     * Determine se o usuário está autorizado a fazer essa solicitação.
      *
      * @return bool
      */
@@ -24,6 +25,7 @@ class PlaylistRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
+     * Obtenha as regras de validação que se aplicam à solicitação.
      *
      * @return array
      */
@@ -34,7 +36,10 @@ class PlaylistRequest extends FormRequest
             'description' => 'required'
         ];
     }
-
+     /**
+      * Função de Validação
+      * @return array
+      */
     public function validated()
     {
         
@@ -56,7 +61,10 @@ class PlaylistRequest extends FormRequest
 
         return $this->toArray();
     }
-
+    /**
+     * Função que cria slug
+     * @return Str slug
+     */
     public function createSlug($value)
     {
         return  "pl-" . Str::slug(Str::words($value, 45), '-');

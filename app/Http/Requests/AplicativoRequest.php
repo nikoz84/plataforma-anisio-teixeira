@@ -13,6 +13,7 @@ class AplicativoRequest extends FormRequest
     protected $stringify = 'aplicativo';
     /**
      * Determine if the user is authorized to make this request.
+     * Determine se o usuário está autorizado a fazer essa solicitação
      *
      * @return bool
      */
@@ -20,7 +21,10 @@ class AplicativoRequest extends FormRequest
     {
         return Auth::check();
     }
-
+     /**
+      * @param void
+      * @return array
+      */
     public function validated()
     {
         if(request()->method() == 'POST') {
@@ -28,7 +32,10 @@ class AplicativoRequest extends FormRequest
         }
         return $this->toArray();
     }
-
+      /**
+       * @param void
+       * @return array
+       */
     public function whenCreated()
     {
         $data = collect($this->toArray());
@@ -44,6 +51,7 @@ class AplicativoRequest extends FormRequest
     }
     /**
      * Get the validation rules that apply to the request.
+     * Obtenha as regras de validação que se aplicam à solicitação
      *
      * @return array
      */

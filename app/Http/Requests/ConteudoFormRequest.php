@@ -16,6 +16,7 @@ class ConteudoFormRequest extends FormRequest
     protected $stringify = 'conteudo';
     /**
      * Determine if the user is authorized to make this request.
+     * Determine se o usuário está autorizado a fazer essa solicitação
      *
      * @return bool
      */
@@ -29,7 +30,11 @@ class ConteudoFormRequest extends FormRequest
     {
         //dd($validator->valid());
     }
-    
+    /**
+     * Função de Validação
+     * @param void
+     * @return array
+     */
     public function validated()
     {
         
@@ -39,7 +44,10 @@ class ConteudoFormRequest extends FormRequest
         
         return $this->toArray();
     }
-
+     /**
+      * Método de Nome Quando criar
+      * @return array
+      */
     public function whenCreate()
     {
         $data = collect($this->toArray());
@@ -66,6 +74,7 @@ class ConteudoFormRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
+     * Obtenha as regras de validação que se aplicam à solicitação
      *
      * @return array
      */
@@ -94,7 +103,10 @@ class ConteudoFormRequest extends FormRequest
         ];
     }
 
-    
+    /**
+     * Função de mensagens
+     * @return  array de strings com validações
+     */
 
     public function messages()
     {

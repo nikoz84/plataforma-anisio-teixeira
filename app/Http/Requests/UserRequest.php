@@ -13,10 +13,12 @@ class UserRequest extends FormRequest
     use ApiResponser, RequestValidator;
     /** 
      * Variable utilizada no Trait RequestValidator para converter o request JSON.stringify para array
+     * Variável utilizada sem Trait RequestValidator para conversor de solicitação JSON.stringify para array
      */
     public $stringify = 'user';
     /**
      * Determine if the user is authorized to make this request.
+     * Determine se o usuário está autorizado a fazer essa solicitação.
      *
      * @return bool
      */
@@ -31,6 +33,7 @@ class UserRequest extends FormRequest
     }
     /**
      * Get the validation rules that apply to the request.
+     * Obtenha as regras de validação que se aplicam à solicitação.
      *
      * @return array
      */
@@ -50,6 +53,10 @@ class UserRequest extends FormRequest
         ];
     }
     
+    /**
+     * Função de mensagens de regras de validação.
+     * @return Array de String
+     */
 
     public function messages()
     {

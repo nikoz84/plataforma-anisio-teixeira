@@ -14,6 +14,7 @@ class CategoryRequest extends FormRequest
     
     /**
      * Determine if the user is authorized to make this request.
+     * Determine se o ususário está autorizado a fazer essa solicitação
      *
      * @return bool
      */
@@ -25,6 +26,7 @@ class CategoryRequest extends FormRequest
     
     /**
      * Get the validation rules that apply to the request.
+     * Obtenha as regras de validação que se aplicam à solicitação
      *
      * @return array
      */
