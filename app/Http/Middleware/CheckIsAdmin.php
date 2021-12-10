@@ -11,7 +11,7 @@ class CheckIsAdmin
     use ApiResponser;
     /**
      * Handle an incoming request.
-     *
+     *Função que lida com a solcitação de entrada
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
      * @return mixed

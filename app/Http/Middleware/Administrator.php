@@ -8,7 +8,7 @@ class Administrator
 {
     /**
      * Handle an incoming request.
-     *
+     * Função que lida com a solicitação de entrada
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
      * @return mixed

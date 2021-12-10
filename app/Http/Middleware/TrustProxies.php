@@ -9,6 +9,7 @@ class TrustProxies extends Middleware
 {
     /**
      * The trusted proxies for this application.
+     * Os proxies confiáveis para este aplicativo
      *
      * @var array
      */

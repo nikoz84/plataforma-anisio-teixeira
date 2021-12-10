@@ -8,6 +8,7 @@ class TrimStrings extends Middleware
 {
     /**
      * The names of the attributes that should not be trimmed.
+     * Os nomes dos atributos que não devem ser parados
      *
      * @var array
      */

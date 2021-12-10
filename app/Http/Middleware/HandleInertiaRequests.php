@@ -10,6 +10,7 @@ class HandleInertiaRequests extends Middleware
 {
     /**
      * The root template that's loaded on the first page visit.
+     * O modelo raiz que é carregado na primeira visita à página
      *
      * @see https://inertiajs.com/server-side-setup#root-template
      * @var string
@@ -18,6 +19,7 @@ class HandleInertiaRequests extends Middleware
 
     /**
      * Determines the current asset version.
+     * Determina a versão atual do ativo
      *
      * @see https://inertiajs.com/asset-versioning
      * @param  \Illuminate\Http\Request  $request
@@ -31,7 +33,8 @@ class HandleInertiaRequests extends Middleware
 
     /**
      * Defines the props that are shared by default.
-     *
+     * Define os adereços que são compartilhados por padrão
+     * 
      * @see https://inertiajs.com/shared-data
      * @param  \Illuminate\Http\Request  $request
      * @return array

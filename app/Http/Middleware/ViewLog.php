@@ -9,6 +9,7 @@ class ViewLog
 {
     /**
      * Handle an incoming request.
+     * Função ou método que lida uma solicitação de entrada
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next

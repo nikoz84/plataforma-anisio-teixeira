@@ -11,6 +11,7 @@ class CheckIsSuperAdmin
     use ApiResponser;
     /**
      * Handle an incoming request.
+     * Função que lida com uma solicitação de entrada
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next

@@ -8,6 +8,13 @@ use App\Traits\ApiResponser;
 class CustomThrottleRequests extends ThrottleRequests
 {
     use ApiResponser;
+    /**
+     * Função Protegida que constroi uma exceção
+     * @param mixed $key
+     * @param mixed $maxAttempts
+     * 
+     * @return void
+     */
 
     protected function buildException($key, $maxAttempts)
     {
