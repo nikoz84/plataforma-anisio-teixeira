@@ -19,6 +19,7 @@ class SendVerificationEmail extends Mailable
     protected $user;
     /**
      * Create a new message instance.
+     * Crie uma nova instância de mensagem.
      *
      * @return void
      */
@@ -31,6 +32,7 @@ class SendVerificationEmail extends Mailable
 
     /**
      * Build the message.
+     * Construa a mensagem.
      *
      * @return $this
      */

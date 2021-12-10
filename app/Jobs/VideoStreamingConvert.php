@@ -23,6 +23,7 @@ class VideoStreamingConvert implements ShouldQueue
 
     /**
      * Create a new job instance.
+     * Crie uma nova instância de trabalho.
      * @return void
      */
     public function __construct(ContentVideoConvert $converter, string $path)
@@ -33,6 +34,7 @@ class VideoStreamingConvert implements ShouldQueue
 
     /**
      * Execute the job.
+     * Execute o trabalho
      *
      * @return void
      */

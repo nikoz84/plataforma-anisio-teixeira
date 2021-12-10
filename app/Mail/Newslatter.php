@@ -14,7 +14,7 @@ class Newslatter extends Mailable
 
     /**
      * Create a new message instance.
-     *
+     * Crie uma nova instância de mensagem.
      * @return void
      */
     public function __construct()
@@ -24,6 +24,7 @@ class Newslatter extends Mailable
 
     /**
      * Build the message.
+     * Construa a mensagem.
      *
      * @return $this
      */

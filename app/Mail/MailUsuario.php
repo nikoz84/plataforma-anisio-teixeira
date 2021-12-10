@@ -14,6 +14,7 @@ class MailUsuario extends Mailable
     use Queueable, SerializesModels;
     /**
      * Create a new message instance.
+     * Crie uma nova instância de mensagem.
      *
      * @return void
      */
@@ -24,6 +25,7 @@ class MailUsuario extends Mailable
 
     /**
      * Build the message.
+     * Construa a mensagem.
      *
      * @return $this
      */

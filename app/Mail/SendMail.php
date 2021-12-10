@@ -18,6 +18,7 @@ class SendMail extends Mailable
     public $message;
     /**
      * Create a new message instance.
+     * Crie uma nova instância de mensagem.
      *
      * @return void
      */
@@ -32,6 +33,7 @@ class SendMail extends Mailable
 
     /**
      * Build the message.
+     * Construa a mensagem.
      *
      * @return $this
      */
