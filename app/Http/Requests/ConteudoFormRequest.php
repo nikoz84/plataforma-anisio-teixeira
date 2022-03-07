@@ -79,7 +79,7 @@ class ConteudoFormRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
+    {  
         return [
             'license_id' => 'required',
             'canal_id' => 'required',
@@ -101,6 +101,8 @@ class ConteudoFormRequest extends FormRequest
             'imagem_associada' => ['sometimes','image','mimes:jpeg,jpg,webp,png,gif,svg','max:2048'],
             'visualizacao' => ["sometimes", "file", new ValidExtensions($this->get('tipo_id'))]
         ];
+
+        
     }
 
     /**

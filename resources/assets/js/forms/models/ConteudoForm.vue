@@ -3,7 +3,7 @@
     <q-card class="col-sm-5">
       <q-card-section class="q-gutter-sm">
           <q-input v-model="conteudo.title" 
-            label="Título do conteúdo"
+            label="Título do Conteúdo"
             autogrow
             dense
             bottom-slots
