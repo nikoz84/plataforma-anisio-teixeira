@@ -88,7 +88,7 @@ class ConteudoFormRequest extends FormRequest
             'title' => ['required','min:5','max:200', new ConteudoTitleExist()],
             'description' => 'required|min:100|max:5012',
             'options.site' => 'nullable|active_url',
-            'tags' => 'required|array|min:3|max:15',
+            'tags' => 'required|array|min:3|max:30',
             'componentes' => 'required|array|min:1',
             'authors' => 'required',
             'source' => 'required',
