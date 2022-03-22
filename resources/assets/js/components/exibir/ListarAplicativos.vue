@@ -5,16 +5,33 @@
     </div>
     <div class="col-lg-12 flex flex-center q-gutter-sm">
       <!-- ADICIONAR -->
-      <q-btn icon="add" 
-        color="positive" 
+      <q-btn
+        icon="add"
+        color="positive"
         size="xs"
-        :to="`/admin/aplicativos/adicionar`" 
+        :to="`/admin/aplicativos/adicionar`"
         title="Adicionar novo item"
         label="adicionar item"
+      />
+
+      <xlsx-workbook>
+        <xlsx-sheet
+          :collection="sheet.data"
+          v-for="sheet in sheets"
+          :key="sheet.name"
+          :sheet-name="sheet.name"
         />
-        
-        <q-space></q-space>
-        <!-- PAGINAÇÃO -->
+        <xlsx-download filename='Aplicativos.xlsx'>
+          <q-btn
+            size="xs"
+            color="primary"
+            label="Download em Excel"
+          />
+
+        </xlsx-download>
+      </xlsx-workbook>
+      <q-space></q-space>
+      <!-- PAGINAÇÃO -->
       <q-pagination
         v-if="paginator && paginator.total > paginator.per_page"
         v-model="paginator.current_page"
@@ -24,9 +41,11 @@
       >
       </q-pagination>
 
-           
     </div>
-    <div class="col-lg-12 q-mt-xs" v-if="paginator && paginator.total > 0">
+    <div
+      class="col-lg-12 q-mt-xs"
+      v-if="paginator && paginator.total > 0"
+    >
       <!-- LISTA -->
       <q-markup-table
         separator="horizontal"
@@ -43,22 +62,25 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="aplicativo in paginator.data" :key="aplicativo.id" :id="`item-${aplicativo.id}`">
+          <tr
+            v-for="aplicativo in paginator.data"
+            :key="aplicativo.id"
+            :id="`item-${aplicativo.id}`"
+          >
             <td
               class="text-center"
               v-html="aplicativo.name"
             ></td>
-            <td
-              class="text-center"
-            >
+            <td class="text-center">
               {{aplicativo.category ? aplicativo.category.name : null}}
             </td>
-            <td
-              class="text-center"
-            >
+            <td class="text-center">
               {{aplicativo.canal ? aplicativo.canal.name : null}}
             </td>
-            <td class="text-center" style="width:50px;">
+            <td
+              class="text-center"
+              style="width:50px;"
+            >
               <q-btn-group spread>
                 <q-btn
                   size="sm"
@@ -85,37 +107,40 @@
                   target="__blank"
                   :href="aplicativo.url_exibir"
                 />
-                
+
               </q-btn-group>
             </td>
           </tr>
         </tbody>
       </q-markup-table>
 
+    </div>
+    <SemResultados
+      v-else
+      :paginator="paginator"
+    ></SemResultados>
+
+    <div
+      class="col-lg-12 q-mt-lg"
+      v-if="paginator && paginator.total > paginator.per_page"
+    >
+      <div class="flex flex-center">
+        <p>
+          <strong>Total</strong>: {{ paginator.total }} itens -
+          {{ paginator.per_page }} itens por página
+        </p>
       </div>
-      <SemResultados v-else :paginator="paginator"></SemResultados>
-      
-      <div
-        class="col-lg-12 q-mt-lg"
-        v-if="paginator && paginator.total > paginator.per_page"
-      >
-        <div class="flex flex-center">
-          <p>
-            <strong>Total</strong>: {{ paginator.total }} itens -
-            {{ paginator.per_page }} itens por página
-          </p>
-        </div>
-        <div class="flex flex-center">
-          <q-pagination
-            v-model="paginator.current_page"
-            :max="paginator.last_page"
-            :max-pages="10"
-            boundary-numbers
-            @input="getAplicativos"
-          >
-          </q-pagination>
-        </div>
+      <div class="flex flex-center">
+        <q-pagination
+          v-model="paginator.current_page"
+          :max="paginator.last_page"
+          :max-pages="10"
+          boundary-numbers
+          @input="getAplicativos"
+        >
+        </q-pagination>
       </div>
+    </div>
   </div>
 </template>
 
@@ -124,59 +149,90 @@
 import { SearchForm } from "@forms/search";
 import { SemResultados } from "@components/paginator";
 import { mapMutations, mapState } from "vuex";
+import XlsxWorkbook from "../../../../../node_modules/vue-xlsx/dist/components/XlsxWorkbook";
+import XlsxSheet from "../../../../../node_modules/vue-xlsx/dist/components/XlsxSheet";
+import XlsxDownload from "../../../../../node_modules/vue-xlsx/dist/components/XlsxDownload";
 export default {
-    name: "ListarConteudos",
-    components: {SearchForm, SemResultados},
-    data() {
-      return {
-        aplicativos: [],
-        searchParams: new URLSearchParams({}),
-      }
-    },
-    computed: {
-      ...mapState(["paginator", "isLogged"])
-    },
-    created() {
-      this.getAplicativos()
-    },
-    methods: {
-      ...mapMutations(["SET_PAGINATOR", "SET_IS_LOADING", 'SET_DATA']),
-      
-      async getAplicativos(page = 1){
-        this.searchParams.set('page', page)
-        
-        const path =`/aplicativos?${this.searchParams.toString()}`;
-        
-        this.$q.loading.show();
-        
-        //console.log(path, params)
-        
-        const { data } = await axios.get(path);
-        
-        this.$q.loading.hide();
-        if(data.success){
-          this.SET_PAGINATOR(data.paginator)  
-        }
-  
-      },
-      goTo(aplicativo){
-        console.log(aplicativo.url_exibir)
-        
-        this.$router.push('/admin/aplicativos/listar');
-      },
-      getAprovados(){
-        this.searchParams.set('aprovados', false)
-        this.searchParams.set('page', 1)
-        if(this.searchParams.has('publicador')){
-          this.searchParams.delete('publicador');
-        }
-        this.getConteudos()
+  name: "ListarConteudos",
+  components: {
+    SearchForm,
+    SemResultados,
+    XlsxWorkbook,
+    XlsxSheet,
+    XlsxDownload,
+  },
+  data() {
+    return {
+      aplicativos: [],
+      searchParams: new URLSearchParams({}),
+      sheets: [],
+    };
+  },
+  computed: {
+    ...mapState(["paginator", "isLogged"]),
+  },
+  created() {
+    this.getAplicativos();
+    this.getTodosAplicativos();
+  },
+  methods: {
+    ...mapMutations(["SET_PAGINATOR", "SET_IS_LOADING", "SET_DATA"]),
+
+    async getAplicativos(page = 1) {
+      this.searchParams.set("page", page);
+
+      const path = `/aplicativos?${this.searchParams.toString()}`;
+
+      this.$q.loading.show();
+
+      //console.log(path, params)
+
+      const { data } = await axios.get(path);
+
+      this.$q.loading.hide();
+      if (data.success) {
+        this.SET_PAGINATOR(data.paginator);
       }
     },
 
-}
+    async getTodosAplicativos() {
+      const path = `/aplicativos?categoria=&limit=99999`;
+
+      this.$q.loading.show();
+
+      //console.log(path, params)
+
+      const { data } = await axios.get(path);
+
+      console.log(data);
+
+      this.$q.loading.hide();
+      if (data.success) {
+        this.sheets = [
+          {
+            name: "Aplicativos",
+            data: data.paginator.data,
+          },
+        ];
+      }
+    },
+
+    goTo(aplicativo) {
+      console.log(aplicativo.url_exibir);
+
+      this.$router.push("/admin/aplicativos/listar");
+    },
+    getAprovados() {
+      this.searchParams.set("aprovados", false);
+      this.searchParams.set("page", 1);
+      if (this.searchParams.has("publicador")) {
+        this.searchParams.delete("publicador");
+      }
+      this.getConteudos();
+    },
+  },
+};
 </script>
 
 <style>
-
 </style>

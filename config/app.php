@@ -242,6 +242,7 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Analytics' => Spatie\Analytics\AnalyticsFacade::class,
         'GoogleAnalytics'   =>  App\Facades\GoogleAnalyticsFacade::class
+
     ],
 
 ];

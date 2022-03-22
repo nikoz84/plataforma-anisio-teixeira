@@ -9,6 +9,7 @@ use App\Helpers\ReplaceStr;
 use App\Traits\UserCan;
 use App\Traits\WithoutAppends;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class Tipo extends Model
 {
@@ -33,7 +34,7 @@ class Tipo extends Model
         }
         return "";
     }
-    
+
     /**
      * Seleciona a busca do atributo por meio da url
      *

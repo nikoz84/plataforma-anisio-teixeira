@@ -38,6 +38,7 @@ const state = {
   action: "",
   destaques: null,
   recapcha: null
+
 };
 
 export default state;

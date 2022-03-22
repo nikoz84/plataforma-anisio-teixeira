@@ -6,6 +6,8 @@ use App\Models\Conteudo;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\DB;
+
+use App\Models\Tipo;
 use Exception;
 
 class RelatorioController extends ApiController
@@ -89,22 +91,59 @@ class RelatorioController extends ApiController
      * @param integer $ano
      * @return mixed 
      */
-    public function conteudosPublicadosPorAno($ano)
+    public function conteudosPublicadosPorAno($ano, $tipo)
     {
-        set_time_limit(280);
+
+        if ($tipo == 'PDF') {
+            set_time_limit(280);
+            $conteudo = new Conteudo();
+            $conteudos = [];
+            $flag = 'baixados';
+            $title = "Conteúdos publicados no ano de $ano";
+
+            $totalizar = true;
+            try {
+                $conteudos = $conteudo->conteudosPorAno($ano);
+                $total = $conteudos->count();
+                return PDF::loadView('relatorios.pdf-conteudo', compact('conteudos', 'title', 'flag', 'totalizar', 'total'))->setPaper('a4')->stream('relatório_conteúdos.pdf');
+            } catch (Exception $ex) {
+                return $this->errorResponse([], $ex->getMessage(), $ex->getCode() > 100 && $ex->getCode() < 510 ? $ex->getCode() : 500);
+            }
+            return $this->errorResponse([], 'Não foi possível gerar relatório. Tente novamente em instantes.', 422);
+        }
+
+
+        if ($tipo == 'EXCEL') {
+
+            $conteudo = new Conteudo();
+            $conteudos = [];
+
+            $conteudos = $conteudo->conteudosPorAnoExcel($ano);
+            return $conteudos;
+        }
+    }
+
+
+
+
+
+    /*
+      relatório excel dos conteúdos por ano de publicação
+      @param integer $ano
+      @return mixed 
+     
+    public function conteudosPublicadosPorAnoExcel($ano)
+    {
         $conteudo = new Conteudo();
         $conteudos = [];
-        $flag = 'baixados';
-        $title = "Conteúdos publicados no ano de $ano";
+        $conteudos = $conteudo->conteudosPorAno($ano);
 
-        $totalizar = true;
-        try {
-            $conteudos = $conteudo->conteudosPorAno($ano);
-            $total = $conteudos->count();
-            return PDF::loadView('relatorios.pdf-conteudo', compact('conteudos', 'title', 'flag', 'totalizar', 'total'))->setPaper('a4')->stream('relatório_conteúdos.pdf');
-        } catch (Exception $ex) {
-            return $this->errorResponse([], $ex->getMessage(), $ex->getCode() > 100 && $ex->getCode() < 510 ? $ex->getCode() : 500);
-        }
-        return $this->errorResponse([], 'Não foi possível gerar relatório. Tente novamente em instantes.', 422);
+        // $emails = DB::table('conteudos')->orderBy('data', 'asc')->limit($limit)->paginate($limit);
+
+
+        //print_r($newsletter);
+        //die();
+        return $conteudos;
     }
+     */
 }

@@ -25,6 +25,7 @@ class WordpressController extends ApiController
     {
         $wordpress = new WordpressService($this->request);
 
+
         return $this->showAsPaginator($wordpress->getPosts());
     }
     /**
@@ -52,6 +53,7 @@ class WordpressController extends ApiController
     public function getById()
     {
         $wordpress = new WordpressService($this->request);
+
 
         return $this->successResponse($wordpress->getOne(), "", 200);
     }

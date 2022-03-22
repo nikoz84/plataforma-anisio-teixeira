@@ -1,15 +1,21 @@
-<template>
-  <q-layout view="hHh lpR fFf">
-    <a class="skip-link" href="#main-content">Pular ao conteúdo</a>
-    <q-header elevated dense>
-      <q-toolbar >
+git status<template>
+  <q-layout view="hHh lpR fff">
+    <a
+      class="skip-link"
+      href="#main-content"
+    >Pular ao conteúdo</a>
+    <q-header
+      dense
+      class="glossy"
+    >
+      <q-toolbar>
         <q-btn
           flat
           dense
           round
           @click="leftDrawerOpen = !leftDrawerOpen"
           aria-label="Menu"
-          icon="dehaze"
+          icon="menu"
         />
         <q-btn
           flat
@@ -20,12 +26,16 @@
           size="sm"
         >
           <q-avatar
-            style="width: 200px;height: 44px;"
+            style="width: 260px"
             alt="Marca"
             square
             title="marca"
-            aria-label="Marca da plataforma Anísio Teixeira">
-              <img alt="marca" src="/img/sprite/logo.svg">
+            aria-label="Marca da plataforma Anísio Teixeira"
+          >
+            <img
+              alt="marca"
+              src="/img/sprite/logo_colorido.png"
+            >
           </q-avatar>
         </q-btn>
 
@@ -33,13 +43,88 @@
         <AutocompleteForm></AutocompleteForm>
         <q-space />
 
-        <q-btn-dropdown stretch flat icon="person" dropdown-icon="arrow_drop_down" aria-label="Opçoes de usuário">
-          <q-list dense bordered padding>
-            <q-item clickable to="/usuario/contato/faleconosco" aria-label="fale conosco">
-              <q-item-section>
-                <q-item-label>Fale Conosco</q-item-label>
-              </q-item-section>
-            </q-item>
+        <div class="flex_modo_estudante">
+          <span class="text-weight-bolder text-caption">ESTUDANTE</span>
+          <div
+            class="mode-toggle-student"
+            @click="modeToggleStudent"
+            :class="studentStudent"
+          >
+            <q-tooltip
+              class="bg-petecaazul"
+              :offset="[10, 10]"
+            >
+              Ativar modo do Estudante
+            </q-tooltip>
+            <div class="toggle-student">
+
+              <div
+                id="student-mode"
+                type="checkbox"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <q-separator
+          dark
+          vertical
+          inset
+        />
+
+        <div class="flex_modo_escuro">
+          <span class="text-weight-bolder text-caption">MODO ESCURO</span>
+          <div
+            class="mode-toggle"
+            @click="modeToggle"
+            :class="darkDark"
+          >
+            <q-tooltip
+              class="bg-indigo"
+              :offset="[10, 10]"
+            >
+              Ativar modo escuro
+            </q-tooltip>
+            <div class="toggle">
+
+              <div
+                id="dark-mode"
+                type="checkbox"
+              ></div>
+            </div>
+          </div>
+        </div>
+        <q-separator
+          dark
+          vertical
+          inset
+        />
+
+        <q-btn
+          stretch
+          flat
+          label="Fale Conosco"
+          to="/usuario/contato/faleconosco"
+        />
+
+        <q-separator
+          dark
+          vertical
+          inset
+        />
+        <q-btn-dropdown
+          stretch
+          flat
+          icon="person"
+          dropdown-icon="arrow_drop_down"
+          aria-label="Opçoes de usuário"
+        >
+          <q-list
+            dense
+            bordered
+            padding
+          >
+
             <q-item
               v-if="!isLogged"
               to="/usuario/login"
@@ -77,25 +162,54 @@
           </q-list>
         </q-btn-dropdown>
       </q-toolbar>
+      <div class="wave"></div>
+
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" bordered content-class="bg-grey-2">
+    <q-drawer
+      show-if-above
+      v-model="leftDrawerOpen"
+      :mini="miniState"
+      @mouseover="miniState = false"
+      @mouseout="miniState = true"
+      :width="350"
+      :breakpoint="500"
+      bordered
+      class="bg-grey-3"
+    >
       <LeftSideBar :leftDrawerOpen.sync="leftDrawerOpen"></LeftSideBar>
-    </q-drawer>
 
+    </q-drawer>
+    <q-footer elevated>
+
+      <Footer></Footer>
+
+    </q-footer>
     <q-page-container>
-      <router-view id="main-content" name="main"/>
+      <router-view
+        id="main-content"
+        name="main"
+        style="min-height:800px"
+      />
       <q-page-scroller position="bottom-right">
-        <q-btn round color="accent" icon="arrow_upward" aria-label="subir ao topo"/>
+        <q-btn
+          round
+          color="accent"
+          icon="arrow_upward"
+          aria-label="subir ao topo"
+        />
       </q-page-scroller>
     </q-page-container>
   </q-layout>
 </template>
-<script>// @ts-nocheck
+<script>
+// @ts-nocheck
 
 import { mapActions, mapState } from "vuex";
 import { AutocompleteForm } from "@forms/search";
 import LeftSideBar from "./LeftSideBar.vue";
+import Footer from "./Footer.vue";
+
 import {
   QLayout,
   QDrawer,
@@ -113,7 +227,7 @@ import {
   QExpansionItem,
   QMenu,
   QSelect,
-  GoBack
+  GoBack,
 } from "quasar";
 
 export default {
@@ -136,26 +250,89 @@ export default {
     QItemSection,
     QItemLabel,
     QExpansionItem,
-    QSelect
+    QSelect,
+    Footer,
   },
   data() {
     return {
-      leftDrawerOpen: this.openSideBar ? this.openSideBar : this.$q.platform.is.desktop
+      leftDrawerOpen: this.openSideBar
+        ? this.openSideBar
+        : this.$q.platform.is.desktop,
+      drawer: false,
+      miniState: true,
+      darkMode: false,
+      studentMode: false,
     };
   },
   created() {
     this.getLayout();
   },
   computed: {
-    ...mapState(["isLogged", "links", "canal", "sidebar", "layout", "openSideBar"])
+    ...mapState([
+      "isLogged",
+      "links",
+      "canal",
+      "sidebar",
+      "layout",
+      "openSideBar",
+    ]),
+
+    darkDark() {
+      return this.darkMode && "darkmode-toggled";
+    },
+    studentStudent() {
+      return this.studentMode && "studentmode-toggled";
+    },
   },
   methods: {
     ...mapActions(["getLayout", "logout"]),
     async sair() {
       await this.logout();
-      this.$router.push('/');
-    }
-  }
+      this.$router.push("/");
+    },
+
+    dark() {
+      document.querySelector("body").classList.add("dark-mode");
+      this.darkMode = true;
+      this.$emit("dark");
+    },
+
+    light() {
+      document.querySelector("body").classList.remove("dark-mode");
+      document.querySelector("body").classList.remove("student-mode");
+      this.darkMode = false;
+      this.studentMode = false;
+      this.$emit("light");
+    },
+
+    modeToggle() {
+      if (
+        this.darkMode ||
+        document.querySelector("body").classList.contains("dark-mode")
+      ) {
+        this.light();
+      } else {
+        this.dark();
+      }
+    },
+
+    student() {
+      document.querySelector("body").classList.add("student-mode");
+      this.studentMode = true;
+      this.$emit("student");
+    },
+
+    modeToggleStudent() {
+      if (
+        this.studentMode ||
+        document.querySelector("body").classList.contains("student-mode")
+      ) {
+        this.light();
+      } else {
+        this.student();
+      }
+    },
+  },
 };
 </script>
 <style lang="stylus">
