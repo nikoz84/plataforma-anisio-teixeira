@@ -29,13 +29,19 @@ use App\Http\Controllers\{
     NewsletterController,
     ContentPaginaInicialController
 };
+<<<<<<< HEAD
 //use App\Models\ContentPaginaInicial;
+=======
+
+/** FILE */
+>>>>>>> f9151613628e0cb8cdce5a1fe421eb5825b61663
 
 Route::group(['prefix' => 'files', 'as' => 'files.'], function () {
     Route::get('/galeria', [FileController::class, 'getGallery'])->name('lista.galeria.imagens');
     Route::get('/{id}', [FileController::class, 'getFiles'])->name('busca');
     //Route::post('/{id}', [FileController::class, 'createFile'])->name('adiciona');
 });
+/** HOME */
 
 Route::get('/autocompletar', [HomeController::class, 'autocomplete'])->name('autocompletar.home');
 Route::get('/layout', [HomeController::class, 'getLayout'])->name('lista.links');
@@ -143,7 +149,7 @@ Route::group(['prefix' => 'canal-at', 'as' => 'canal-at.'], function () {
     Route::get('/podcast', [DocumentController::class, 'getPodcastAT'])->name('podcast');
 });
 
-/*
+
 Route::group(
     ['prefix' => 'playlist', 'as' => 'playlist.'],
     function () {
@@ -157,7 +163,7 @@ Route::group(
         Route::get('/{id}', [PlayListController::class, 'getById'])->name('ByID');
     }
 );
-*/
+
 /***********************************************
  *
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN

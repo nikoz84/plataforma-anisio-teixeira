@@ -79,7 +79,7 @@ class ConteudoFormRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
+    {  
         return [
             'license_id' => 'required',
             'canal_id' => 'required',
@@ -88,7 +88,7 @@ class ConteudoFormRequest extends FormRequest
             'title' => ['required','min:5','max:200', new ConteudoTitleExist()],
             'description' => 'required|min:100|max:5012',
             'options.site' => 'nullable|active_url',
-            'tags' => 'required|array|min:3|max:15',
+            'tags' => 'required|array|min:3|max:50',
             'componentes' => 'required|array|min:1',
             'authors' => 'required',
             'source' => 'required',
@@ -101,6 +101,8 @@ class ConteudoFormRequest extends FormRequest
             'imagem_associada' => ['sometimes','image','mimes:jpeg,jpg,webp,png,gif,svg','max:2048'],
             'visualizacao' => ["sometimes", "file", new ValidExtensions($this->get('tipo_id'))]
         ];
+
+        
     }
 
     /**

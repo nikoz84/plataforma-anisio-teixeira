@@ -2,6 +2,7 @@
   <div class="q-pa-md row justify-center q-gutter-xs">
     <q-card class="col-sm-5">
       <q-card-section class="q-gutter-sm">
+<<<<<<< HEAD
         <q-input
           v-model="conteudo.title"
           label="Título do conteúdo"
@@ -14,6 +15,19 @@
             <ShowErrors :errors="errors.title"></ShowErrors>
           </template>
           <template v-slot:after>
+=======
+          <q-input v-model="conteudo.title" 
+            label="Título do Conteúdo"
+            autogrow
+            dense
+            bottom-slots
+            :error="errors && errors.title && errors.title.length > 0"
+            >
+            <template v-slot:error>
+              <ShowErrors :errors="errors.title"></ShowErrors>
+            </template>
+          </q-input>
+>>>>>>> f9151613628e0cb8cdce5a1fe421eb5825b61663
 
             <q-btn
               round
