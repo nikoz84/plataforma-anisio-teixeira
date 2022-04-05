@@ -39,6 +39,7 @@ const getters = {
   getTipos: state => {
     return state.tipos;
   },
+
   getIsError: state => {
     return state.isError;
   },

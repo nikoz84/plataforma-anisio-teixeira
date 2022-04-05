@@ -18,6 +18,10 @@ import ListarTipos from './ListarTipos';
 import ListarUsers from './ListarUsers';
 import ListarCategorias from './ListarCategorias';
 import ListarComponentes from './ListarComponentes';
+import QuantidadeArquivos from './QuantidadeArquivos';
+import Newsletter from './Newsletter';
+import ContentPaginaInicial from './ContentPaginaInicial';
+
 
 export {
     Conteudo,
@@ -38,5 +42,8 @@ export {
     ListarTipos,
     ListarUsers,
     ListarCategorias,
-    ListarComponentes
+    ListarComponentes,
+    QuantidadeArquivos,
+    Newsletter,
+    ContentPaginaInicial,
 };

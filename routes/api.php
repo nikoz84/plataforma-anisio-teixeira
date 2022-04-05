@@ -25,15 +25,23 @@ use App\Http\Controllers\{
     UserController,
     RelatorioController,
     ComentarioController,
-    PlayListController
+    PlayListController,
+    NewsletterController,
+    ContentPaginaInicialController
 };
+<<<<<<< HEAD
+//use App\Models\ContentPaginaInicial;
+=======
 
+/** FILE */
+>>>>>>> f9151613628e0cb8cdce5a1fe421eb5825b61663
 
 Route::group(['prefix' => 'files', 'as' => 'files.'], function () {
     Route::get('/galeria', [FileController::class, 'getGallery'])->name('lista.galeria.imagens');
     Route::get('/{id}', [FileController::class, 'getFiles'])->name('busca');
     //Route::post('/{id}', [FileController::class, 'createFile'])->name('adiciona');
 });
+/** HOME */
 
 Route::get('/autocompletar', [HomeController::class, 'autocomplete'])->name('autocompletar.home');
 Route::get('/layout', [HomeController::class, 'getLayout'])->name('lista.links');
@@ -51,8 +59,19 @@ Route::group(['prefix' => 'tipos', 'as' => 'tipos.'], function () {
     Route::get('/{id}', [TipoController::class, 'getTiposById'])->name('x.id');
     Route::get('/search/{term}', [TipoController::class, 'search'])->name('autocompletar');
 });
+
+/** Pegar quantidade de arquivos */
+Route::get('/quantidade_arquivos/{id}', [TipoController::class, 'getQuantidadeTipos'])->name('x.id');
+
+/** Pegar Conteúdo página inicial */
+//Route::get('/content_pagina_inicial/', [ContentPaginaInicialController::class, 'index'])->name('listar');
+Route::get('/content_pagina_inicial/conteudo', [ContentPaginaInicialController::class, 'getConteudo'])->name('conteudo');
+
 /** DENUNCIA E FALE CONOSCO */
 Route::post('/contato', [ContatoController::class, 'create'])->name('criar.faleconosco.contato');
+
+/** NEWSLETTER */
+Route::post('/newsletter', [NewsletterController::class, 'create'])->name('criar.newsletter.newsletter');
 
 /** CANAIS */
 Route::get('/canais/slug/{slug}', [CanalController::class, 'getBySlug'])->name('buscar.canal.x.url.amigavel');
@@ -130,7 +149,7 @@ Route::group(['prefix' => 'canal-at', 'as' => 'canal-at.'], function () {
     Route::get('/podcast', [DocumentController::class, 'getPodcastAT'])->name('podcast');
 });
 
-/*
+
 Route::group(
     ['prefix' => 'playlist', 'as' => 'playlist.'],
     function () {
@@ -144,7 +163,7 @@ Route::group(
         Route::get('/{id}', [PlayListController::class, 'getById'])->name('ByID');
     }
 );
-*/
+
 /***********************************************
  *
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN
@@ -283,6 +302,25 @@ Route::group(
             Route::get('/{id}', [ContatoController::class, 'getById'])->name('x.id');
             Route::delete('/{id}', [ContatoController::class, 'delete'])->name('deletar');
         });
+
+        /** NEWSLETTER */
+        Route::group(['prefix' => 'newsletter', 'as' => 'newsletter.'], function () {
+            Route::get('/', [NewsletterController::class, 'index'])->name('listar.newsletter');
+            Route::get('/{id}', [NewsletterController::class, 'getById'])->name('x.id');
+            Route::delete('/{id}', [NewsletterController::class, 'delete'])->name('deletar');
+            Route::get('/search/{term}', [NewsletterController::class, 'search'])->name('buscar');
+        });
+
+        /** Conteúdo Página Inicial */
+        Route::group(['prefix' => 'content_pagina_inicial', 'as' => 'content_pagina_inicial.'], function () {
+            // Route::get('/', [NewsletterController::class, 'index'])->name('listar.content_pagina_inicial');
+            Route::post("/criar", [ContentPaginaInicialController::class, 'create'])->name('criar');
+        });
+
+
+
+
+
         /** OPTIONS */
         Route::group(['prefix' => 'options', 'as' => 'options.'], function () {
             Route::post('/', [OptionsController::class, 'create'])->name('criar');
@@ -300,7 +338,8 @@ Route::group(
             Route::get('/conteudos/{flag}', [RelatorioController::class, 'gerarPdfConteudo'])->name('gerar.relatorio.conteudo');
             Route::get('/usuarios/role/{role_id}/{is_active?}', [RelatorioController::class, 'gerarPdfUsuario'])->name('gerar.relatorio.usuario');
             Route::get("/anospublicacao", [RelatorioController::class, 'anosComConteudosPublicados'])->name("anospublicacao.relatorio");
-            Route::get("/conteudosporoano/{ano}", [RelatorioController::class, 'conteudosPublicadosPorAno'])->name("conteudosporano.relatorio");
+            Route::get("/conteudosporoano/{ano}/{tipo?}", [RelatorioController::class, 'conteudosPublicadosPorAno'])->name("conteudosporano.relatorio");
+            // Route::get("/conteudosporoanoexcel/{ano}", [RelatorioController::class, 'conteudosPublicadosPorAnoExcel'])->name("conteudosporanoexcel.relatorio");
         });
         /** SISTEMA DE PASTA */
         Route::get('/informacoes-pasta', [FileController::class, 'getInfoFolder'])->name('file.getInfoFolder');

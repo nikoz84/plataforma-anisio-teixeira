@@ -5,15 +5,18 @@
     </div>
     <div class="separatriz-6"></div>
     <div class="row justify-center q-py-lg q-gutter-lg">
-      <PaginatorCard 
-        v-for="(item, i) in items" :key="i"
+      <PaginatorCard
+        v-for="(item, i) in items"
+        :key="i"
         class="col-xs-10 col-md-3"
-        :item="item">
+        :item="item"
+      >
       </PaginatorCard>
     </div>
   </section>
 </template>
-<script>// @ts-nocheck
+<script>
+// @ts-nocheck
 
 import { QImg, QSeparator, QBtn } from "quasar";
 import { PaginatorCard } from "@components/paginator";
@@ -24,30 +27,29 @@ export default {
     QImg,
     PaginatorCard,
     QSeparator,
-    QBtn
+    QBtn,
   },
-  data(){
-    return { 
+  data() {
+    return {
       items: [],
-      title: null
-    }
+      title: null,
+    };
   },
   created() {
     this.getDestaques();
   },
   methods: {
     async getDestaques() {
-      const { data } = await axios.get("/conteudos/destaques/conteudos-recentes");
-      //console.log(data)
-      if(data){
+      const { data } = await axios.get(
+        "/conteudos/destaques/conteudos-recentes"
+      );
+      //console.log(data)e
+      if (data) {
         this.items = data.metadata.items;
         this.title = data.metadata.title;
       }
-      
-      
-    }
-    
-  }
+    },
+  },
 };
 </script>
 

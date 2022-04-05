@@ -5,29 +5,57 @@
     </div>
     <div class="col-lg-12 flex flex-center q-gutter-sm">
       <!-- ADICIONAR -->
-      <q-btn icon="add" 
-        color="positive" 
+      <q-btn
+        icon="add"
+        color="positive"
         size="xs"
-        :to="`/admin/conteudos/adicionar`" 
+        :to="`/admin/conteudos/adicionar`"
         title="Adicionar novo item"
         label="adicionar item"
-        />
-        <!-- LISTAR CONTEÚDOS APROVADOS -->
-        <q-btn icon="checked" 
-        color="primary" 
+      />
+      <!-- LISTAR CONTEÚDOS APROVADOS -->
+      <q-btn
+        icon="checked"
+        color="primary"
         size="xs"
         label="Aprovar"
         @click="getAprovados()"
-        />
-        <q-btn
+      />
+      <q-btn
         color="primary"
-        icon="person" 
+        icon="person"
         size="xs"
         label="Meus Conteúdos"
         @click="getOwnerResources()"
+      />
+      <q-btn
+        id="gerar_planilha"
+        size="xs"
+        color="primary"
+        label="Gerar Planilha para Exportação"
+        @click="getTodosConteudos()"
+        v-show="esconder"
+      />
+
+      <xlsx-workbook>
+        <xlsx-sheet
+          :collection="sheet.data"
+          v-for="sheet in sheets"
+          :key="sheet.name"
+          :sheet-name="sheet.name"
         />
-        <q-space></q-space>
-        <!-- PAGINAÇÃO -->
+        <xlsx-download filename='Conteudos.xlsx'>
+          <q-btn
+            size="xs"
+            color="negative"
+            label="Download em Excel"
+            v-if="sheets!=''"
+          />
+
+        </xlsx-download>
+      </xlsx-workbook>
+      <q-space></q-space>
+      <!-- PAGINAÇÃO -->
       <q-pagination
         v-if="paginator && paginator.total > paginator.per_page"
         v-model="paginator.current_page"
@@ -37,10 +65,11 @@
       >
       </q-pagination>
 
-      
-      
     </div>
-    <div class="col-lg-12 q-mt-xs" v-if="paginator && paginator.total > 0">
+    <div
+      class="col-lg-12 q-mt-xs"
+      v-if="paginator && paginator.total > 0"
+    >
       <!-- LISTA -->
       <q-markup-table
         separator="horizontal"
@@ -57,22 +86,25 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="conteudo in paginator.data" :key="conteudo.id" :id="`item-${conteudo.id}`">
+          <tr
+            v-for="conteudo in paginator.data"
+            :key="conteudo.id"
+            :id="`item-${conteudo.id}`"
+          >
             <td
               class="text-center"
               v-html="conteudo.title"
             ></td>
-            <td
-              class="text-center"
-            >
+            <td class="text-center">
               {{ conteudo.tipo ? conteudo.tipo.name : '' }}
             </td>
-            <td
-              class="text-center"
-            >
+            <td class="text-center">
               {{conteudo.canal ? conteudo.canal.name: ''}}
             </td>
-            <td class="text-center" style="width:50px;">
+            <td
+              class="text-center"
+              style="width:50px;"
+            >
               <q-btn-group spread>
                 <q-btn
                   size="sm"
@@ -99,35 +131,38 @@
                   target="__blank"
                   :href="conteudo.url_exibir"
                 />
-                
+
               </q-btn-group>
             </td>
           </tr>
         </tbody>
       </q-markup-table>
+    </div>
+    <SemResultados
+      v-else
+      :paginator="paginator"
+    ></SemResultados>
+    <div
+      class="col-lg-12 q-mt-lg"
+      v-if="paginator && paginator.total > paginator.per_page"
+    >
+      <div class="flex flex-center">
+        <p>
+          <strong>Total</strong>: {{ paginator.total }} itens -
+          {{ paginator.per_page }} itens por página
+        </p>
       </div>
-      <SemResultados v-else :paginator="paginator"></SemResultados>
-      <div
-        class="col-lg-12 q-mt-lg"
-        v-if="paginator && paginator.total > paginator.per_page"
-      >
-        <div class="flex flex-center">
-          <p>
-            <strong>Total</strong>: {{ paginator.total }} itens -
-            {{ paginator.per_page }} itens por página
-          </p>
-        </div>
-        <div class="flex flex-center">
-          <q-pagination
-            v-model="paginator.current_page"
-            :max="paginator.last_page"
-            :max-pages="10"
-            boundary-numbers
-            @input="getConteudos"
-          >
-          </q-pagination>
-        </div>
+      <div class="flex flex-center">
+        <q-pagination
+          v-model="paginator.current_page"
+          :max="paginator.last_page"
+          :max-pages="10"
+          boundary-numbers
+          @input="getConteudos"
+        >
+        </q-pagination>
       </div>
+    </div>
   </div>
 </template>
 
@@ -136,69 +171,103 @@
 import { SearchForm } from "@forms/search";
 import { SemResultados } from "@components/paginator";
 import { mapMutations, mapState } from "vuex";
+import XlsxWorkbook from "../../../../../node_modules/vue-xlsx/dist/components/XlsxWorkbook";
+import XlsxSheet from "../../../../../node_modules/vue-xlsx/dist/components/XlsxSheet";
+import XlsxDownload from "../../../../../node_modules/vue-xlsx/dist/components/XlsxDownload";
+
 export default {
-    name: "ListarConteudos",
-    components: {SearchForm, SemResultados},
-    data() {
-      return {
-        conteudos: [],
-        searchParams: new URLSearchParams({}),
-      }
-    },
-    computed: {
-      ...mapState(["paginator", "isLogged"])
-    },
-    created() {
-      this.getConteudos()
-    },
-    methods: {
-      ...mapMutations(["SET_PAGINATOR", "SET_IS_LOADING", 'SET_DATA']),
-      
-      async getConteudos(page = 1){
-        this.searchParams.set('page', page)
-        console.log(this.searchParams.toString())
-        
-        const path =`/conteudos?${this.searchParams.toString()}`;
-        console.log(path)
-        this.$q.loading.show();
-        
-        //console.log(path, params)
-        
-        const { data } = await axios.get(path);
-        
-        this.$q.loading.hide();
-        if(data.success){
-          this.SET_PAGINATOR(data.paginator)  
-        }
-  
-      },
-      goTo(conteudo){
-        console.log(conteudo.url_exibir)
-        
-        this.$router.push('/admin/conteudos/');
-      },
-      getOwnerResources(){
-        const user = JSON.parse(localStorage.getItem('user'));
-        this.searchParams.set('publicador', user.id)
-        if(this.searchParams.has('aprovados')){
-          this.searchParams.delete('aprovados');
-        }
-        this.searchParams.set('page', 1)
-        this.getConteudos()
-      },
-      getAprovados(){
-        this.searchParams.set('aprovados', false)
-        this.searchParams.set('page', 1)
-        if(this.searchParams.has('publicador')){
-          this.searchParams.delete('publicador');
-        }
-        this.getConteudos()
+  name: "ListarConteudos",
+  components: {
+    SearchForm,
+    SemResultados,
+    XlsxWorkbook,
+    XlsxSheet,
+    XlsxDownload,
+  },
+  data() {
+    return {
+      conteudos: [],
+      searchParams: new URLSearchParams({}),
+      sheets: [],
+      esconder: true,
+    };
+  },
+  computed: {
+    ...mapState(["paginator", "isLogged"]),
+  },
+  created() {
+    this.getConteudos();
+  },
+  methods: {
+    ...mapMutations(["SET_PAGINATOR", "SET_IS_LOADING", "SET_DATA"]),
+
+    async getConteudos(page = 1) {
+      this.searchParams.set("page", page);
+      console.log(this.searchParams.toString());
+
+      const path = `/conteudos?${this.searchParams.toString()}`;
+      // console.log(path);
+      this.$q.loading.show();
+
+      //console.log(path, params)
+
+      const { data } = await axios.get(path);
+
+      this.$q.loading.hide();
+      if (data.success) {
+        this.SET_PAGINATOR(data.paginator);
       }
     },
 
-}
+    async getTodosConteudos() {
+      const path = `/conteudos?categoria=&limit=99999`;
+
+      this.$q.loading.show();
+
+      //console.log(path, params)
+
+      const { data } = await axios.get(path);
+
+      //console.log(data);
+
+      this.$q.loading.hide();
+      if (data.success) {
+        this.sheets = [
+          {
+            name: "Conteudos",
+            data: data.paginator.data,
+          },
+        ];
+
+        this.esconder = false;
+      }
+    },
+
+    goTo(conteudo) {
+      console.log(conteudo.url_exibir);
+
+      this.$router.push("/admin/conteudos/");
+    },
+    getOwnerResources() {
+      const user = JSON.parse(localStorage.getItem("user"));
+      this.searchParams.set("publicador", user.id);
+      if (this.searchParams.has("aprovados")) {
+        this.searchParams.delete("aprovados");
+      }
+      this.searchParams.set("page", 1);
+      this.getConteudos();
+    },
+    getAprovados() {
+      this.searchParams.set("aprovados", false);
+      this.searchParams.set("page", 1);
+      if (this.searchParams.has("publicador")) {
+        this.searchParams.delete("publicador");
+      }
+      this.getConteudos();
+    },
+  },
+};
 </script>
 
 <style>
-
 </style>

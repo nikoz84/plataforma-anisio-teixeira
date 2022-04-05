@@ -13,9 +13,15 @@
       class="q-mb-lg"
       @input="getData"
     />
-    <q-card >
-      <q-card-section >
-        <VueApexCharts height="450" v-if="render" type="bar" :options="chartOptions" :series="series"></VueApexCharts>
+    <q-card>
+      <q-card-section>
+        <VueApexCharts
+          height="450"
+          v-if="render"
+          type="bar"
+          :options="chartOptions"
+          :series="series"
+        ></VueApexCharts>
       </q-card-section>
       <q-card-section>
         <q-table
@@ -29,7 +35,8 @@
     </q-card>
   </div>
 </template>
-<script>// @ts-nocheck
+<script>
+// @ts-nocheck
 
 import VueApexCharts from "vue-apexcharts";
 import {
@@ -38,7 +45,7 @@ import {
   QCardSection,
   QSeparator,
   QSelect,
-  QChip
+  QChip,
 } from "quasar";
 
 export default {
@@ -50,7 +57,7 @@ export default {
     QSelect,
     QCardSection,
     QSeparator,
-    VueApexCharts
+    VueApexCharts,
   },
   data() {
     return {
@@ -61,19 +68,19 @@ export default {
         {
           name: "name",
           label: "Nome",
-          field: "name"
+          field: "name",
         },
         {
           name: "total",
           label: "Total",
-          field: "total"
+          field: "total",
         },
         {
           name: "month",
           label: "Mês",
           field: "month",
-          required: false
-        }
+          required: false,
+        },
       ],
       item: { label: "Catalogação por usuário", value: "per_user" },
       selectOptions: [
@@ -81,37 +88,37 @@ export default {
         { label: "Catalogação por usuário", value: "per_user" },
         {
           label: "Catalogação por canal",
-          value: "per_chanel"
+          value: "per_chanel",
         },
         { label: "Catalogação mensal por usuário", value: "user_montly" },
         { label: "Catalogação total mensal", value: "per_month" },
         { label: "Catalogação total mensal por canal", value: "canal_montly" },
-        { label: "Catalogação BLOG", value: "wordpress_data" }
+        { label: "Catalogação BLOG", value: "wordpress_data" },
       ],
       chartOptions: {
         chart: {
           id: "vuechart-teste",
           height: 430,
           width: "100%",
-          type: "bar"
+          type: "bar",
         },
         title: {
           text: "hola",
-          align: "center"
+          align: "center",
         },
         plotOptions: {
           bar: {
-            horizontal: true
-          }
+            horizontal: true,
+          },
         },
         dataLabels: {
-          enabled: false
+          enabled: false,
         },
         xaxis: {
-          categories: []
-        }
+          categories: [],
+        },
       },
-      series: [{ name: "Quantidade", data: [] }]
+      series: [{ name: "Quantidade", data: [] }],
     };
   },
   created() {
@@ -121,10 +128,11 @@ export default {
     async getData() {
       let url = `resumo?option=${this.item.value}`;
       let resp = await axios.get(url);
-      console.log(resp)
+
       if (resp.data.success) {
         this.title = resp.data.metadata.title;
         this.metadata = resp.data.metadata.data;
+        console.log(this.metadata);
         this.render = resp.data.metadata.render;
         if (this.render) {
           this.appendData(resp.data.metadata.series);
@@ -137,19 +145,19 @@ export default {
         ...this.chartOptions,
         ...{
           title: {
-            text: this.title
+            text: this.title,
           },
           xaxis: {
-            categories
-          }
-        }
+            categories,
+          },
+        },
       };
     },
     appendData(data) {
       let arr = this.series.slice();
       arr[0].data = data;
       this.series = arr;
-    }
-  }
+    },
+  },
 };
 </script>

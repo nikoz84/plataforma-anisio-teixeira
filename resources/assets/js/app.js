@@ -12,15 +12,14 @@ import Main from "./layout/Main.vue";
 import "./interceptor.js";
 import axios from "axios";
 
-
 Vue.use(VueGtag, {
-  config: { 
+  config: {
     id: process.env.MIX_ANALYTICS,
     params: {
       send_page_view: false,
       cookie_flags: "SameSite=None;Secure"
     },
-    
+
   }
 });
 
@@ -31,7 +30,7 @@ Vue.use(VueRouter);
 
 Vue.mixin({
   methods: {
-    deleteItem(url, id) {
+    deleteItem (url, id) {
       this.$q.dialog({
         title: 'Confirmar',
         message: 'Realmente deseja apagar esse item?',
@@ -49,7 +48,7 @@ Vue.mixin({
         console.log(id)
         const resp = await axios.delete(url);
 
-        if(resp.data.success){
+        if (resp.data.success) {
           document.getElementById(`item-${id}`).remove();
         }
       })
@@ -59,6 +58,6 @@ Vue.mixin({
 
 new Vue({
   router,
-  store,  
+  store,
   render: h => h(Main)
 }).$mount("#app");

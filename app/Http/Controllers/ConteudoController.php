@@ -72,7 +72,7 @@ class ConteudoController extends ApiController
         $conteudos = $query
             ->approved($is_approved)
             ->with(['canal', 'tipo'])
-            ->paginate($request->query('limit', 6))
+            ->paginate($request->query('limit', 12))
             ->setPath("/conteudos?{$url}");
 
         // INCREMENTA TAG EM 1
@@ -156,8 +156,10 @@ class ConteudoController extends ApiController
         $conteudo->componentes()->sync($request->componentes);
         Conteudo::tsDocumentoSave($conteudo->id);
 
-        if ($request->has('download') || $request->has('guias_pedagogicos')
-            || $request->has('imagem_associada') || $request->has('visualizacao')) {
+        if (
+            $request->has('download') || $request->has('guias_pedagogicos')
+            || $request->has('imagem_associada') || $request->has('visualizacao')
+        ) {
             if (!$this->storeFiles($request, $conteudo)) {
                 return $this->errorResponse([], 'Não foi possível fazer upload de arquivos.', 422);
             }
@@ -335,7 +337,7 @@ class ConteudoController extends ApiController
     public function getConteudosRecentes($slug)
     {
 
-        $destaques = new Destaques(3);
+        $destaques = new Destaques(4);
 
         return $this->successResponse($destaques->getHomeDestaques($slug));
     }

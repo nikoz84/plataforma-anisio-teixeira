@@ -16,37 +16,47 @@ mix.webpackConfig({
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-    'vue$': 'vue/dist/vue.esm.js',
-    '@': __dirname + '/resources/assets/js',
-    '@components': __dirname + '/resources/assets/js/components',
-    '@composables': __dirname + '/resources/assets/js/composables',
-    '@forms': __dirname + '/resources/assets/js/forms',
-    '@pages': __dirname + '/resources/assets/js/pages',
-    '@mixins': __dirname + '/resources/assets/js/mixins',
-    '@layout': __dirname + '/resources/assets/js/layout'
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': __dirname + '/resources/assets/js',
+      '@components': __dirname + '/resources/assets/js/components',
+      '@composables': __dirname + '/resources/assets/js/composables',
+      '@forms': __dirname + '/resources/assets/js/forms',
+      '@pages': __dirname + '/resources/assets/js/pages',
+      '@mixins': __dirname + '/resources/assets/js/mixins',
+      '@layout': __dirname + '/resources/assets/js/layout'
     }
   }
 });
-
+<<<<<<< HEAD
+/*
 mix.browserSync({
   proxy: process.env.APP_URL
 })
 .disableNotifications();
+*/
+=======
 
+//mix.browserSync({
+//  proxy: process.env.APP_URL
+//})
+mix.disableNotifications();
+>>>>>>> f9151613628e0cb8cdce5a1fe421eb5825b61663
+
+mix.disableNotifications();
 
 const config = {
   //entry:{},
-  output : {
+  output: {
     chunkFilename: 'js/[name].js?id=[chunkhash]', // 
     publicPath: "/"
   },
   plugins: [
     new ChunkRenamePlugin({
-    initialChunksWithEntry: true,
-    "/js/vendor": "js/vendor.js",
-    "/js/app": "js/app.js",
-    "/js/manifest": "js/manifest.js",
-  })]
+      initialChunksWithEntry: true,
+      "/js/vendor": "js/vendor.js",
+      "/js/app": "js/app.js",
+      "/js/manifest": "js/manifest.js",
+    })]
 };
 
 const stylusOptions = {
@@ -57,7 +67,7 @@ const stylusOptions = {
 
 
 if (mix.inProduction()) {
-    mix.extract(['vue', 'quasar', 'vue-apexcharts', 'vuex', 'moment'])
+  mix.extract(['vue', 'quasar', 'vue-apexcharts', 'vuex', 'moment'])
     .webpackConfig(config)
     .options({
       processCssUrls: false,
@@ -66,13 +76,13 @@ if (mix.inProduction()) {
     .version();
 } else {
   mix.webpackConfig(config)
-  .js("resources/assets/js/app.js", "public/js")
-  .options({
-    processCssUrls: false,
-    //extractVueStyles: true,
-  })
-  .stylus("resources/assets/stylus/app.styl", "public/css", stylusOptions)
-  .copy("public/css/app.css", "public/css/app-min.css");
+    .js("resources/assets/js/app.js", "public/js")
+    .options({
+      processCssUrls: false,
+      //extractVueStyles: true,
+    })
+    .stylus("resources/assets/stylus/app.styl", "public/css", stylusOptions)
+    .copy("public/css/app.css", "public/css/app-min.css");
   //.copy("resources/assets/stylus/fonts", "public/fonts");
 
 }

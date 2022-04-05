@@ -19,11 +19,11 @@ class CanalRequest extends FormRequest
     {
         return Auth::check();
     }
-     /**
-      * Método qeu faz a validação
-      *@param void
-      *@return array
-      */
+    /**
+     * Método qeu faz a validação
+     *@param void
+     *@return array
+     */
     public function validated()
     {
         $this->merge([
@@ -43,7 +43,8 @@ class CanalRequest extends FormRequest
             'name' => 'required',
             'description' => 'required',
             'slug' => 'required',
-            'is_active' => 'required|boolean'
+            'is_active' => 'required|boolean',
+
         ];
     }
     /**

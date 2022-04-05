@@ -1,30 +1,34 @@
 // @ts-nocheck
 //import { LoaderAdmin } from "@components/exibir";
 import Admin from "@layout/Admin";
-import { ListarConteudos, ListarAplicativos, ListarCanais, 
-    ListarContato, ListarOptions, ListarRoles, ListarTags, ListarTipos, ListarUsers, 
-    ListarCategorias,ListarComponentes } from "@components/exibir"
-import { ConteudoForm, PlayListForm, AplicativoForm, CanalForm, OptionsForm, RoleForm, 
-  TagForm, TipoForm, UserForm, CategoryConteudoForm, CurricularComponentsForm } from "@forms/models";
+import {
+  ListarConteudos, ListarAplicativos, ListarCanais,
+  ListarContato, ListarOptions, ListarRoles, ListarTags, ListarTipos, ListarUsers,
+  ListarCategorias, ListarComponentes, QuantidadeArquivos, Newsletter, ContentPaginaInicial
+} from "@components/exibir"
+import {
+  ConteudoForm, PlayListForm, AplicativoForm, CanalForm, OptionsForm, RoleForm,
+  TagForm, TipoForm, UserForm, CategoryConteudoForm, CurricularComponentsForm
+} from "@forms/models";
 import AdminPage from "@pages/AdminPage.vue"
 import Resumo from "@pages/Resumo.vue";
-import { Contato }  from "@components/exibir";
+import { Contato } from "@components/exibir";
 
 
 const adminRoutes = {
   path: "/admin",
   //name: "admin-home",
-  components : {
+  components: {
     main: AdminPage
   },
   meta: {
     requiresAuth: true,
-    layout : Admin
+    layout: Admin
   },
   children: [
     {
       path: "resumo/listar",
-      components: {  
+      components: {
         admin: Resumo
       },
       meta: {
@@ -35,7 +39,7 @@ const adminRoutes = {
     },
     {
       path: "conteudos/listar",
-      components: {  
+      components: {
         admin: ListarConteudos
       },
       meta: {
@@ -46,7 +50,7 @@ const adminRoutes = {
     },
     {
       path: "conteudos/adicionar",
-      components: {admin: ConteudoForm},
+      components: { admin: ConteudoForm },
       meta: {
         requiresAuth: true,
         title: "Adicionar Conteúdo",
@@ -107,6 +111,7 @@ const adminRoutes = {
         layout: Admin
       }
     },
+
     {
       path: "canais/adicionar",
       components: { admin: CanalForm },
@@ -131,6 +136,15 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar faleconosco",
+        layout: Admin
+      }
+    },
+    {
+      path: "newsletter/listar",
+      components: { admin: Newsletter },
+      meta: {
+        requiresAuth: true,
+        title: "Listar Cadastros no Newsletter",
         layout: Admin
       }
     },
@@ -225,6 +239,56 @@ const adminRoutes = {
         layout: Admin
       }
     },
+    {
+      path: "quantidade_arquivos",
+      components: { admin: QuantidadeArquivos },
+      meta: {
+        requiresAuth: true,
+        title: "Quantidade de arquivos",
+        layout: Admin
+      }
+    },
+    {
+      path: "content_pagina_inicial/",
+      components: { admin: ContentPaginaInicial },
+      meta: {
+        requiresAuth: true,
+        title: "Conteúdo da Página Inicial",
+        layout: Admin
+      }
+    },
+
+    {
+      path: "content_pagina_inicial/listar",
+      components: { admin: ContentPaginaInicial },
+      meta: {
+        requiresAuth: true,
+        title: "Conteúdo da Página Inicial",
+        layout: Admin
+      }
+    },
+
+
+    {
+      path: "content_pagina_inicial/criar",
+      components: { admin: ContentPaginaInicial },
+      meta: {
+        requiresAuth: true,
+        title: "Salvar Conteúdo da Página Inicial",
+        layout: Admin
+      }
+    },
+
+    {
+      path: "quantidade_arquivos/:id",
+      components: { admin: QuantidadeArquivos },
+      meta: {
+        requiresAuth: true,
+        title: "Quantidade de arquivos",
+        layout: Admin
+      }
+    },
+
     {
       path: "tipos/editar/:id",
       components: { admin: TipoForm },
@@ -324,7 +388,7 @@ const adminRoutes = {
         layout: Admin
       }
     },
-    
+
   ]
 };
 

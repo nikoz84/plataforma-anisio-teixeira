@@ -77,12 +77,20 @@ class OptionsController extends ApiController
     {
         $data = null;
 
+        if ($request->disp_alunos == 'true') {
+            $css = 'carousel_estudante';
+        }
+
         $newSlide = [
             'title' => $request->title,
             'image' => str_replace('\\', '/', $path),
             'url' => $request->url,
+            'css' => $css,
+
             'filename' => $this->fileName($request)
         ];
+
+
 
         $slider =  $this->options::selectRaw('jsonb_array_length(meta_data) AS length, id, name, meta_data')
             ->where('name', 'slider')->first();
