@@ -37,6 +37,8 @@ class ContatoController extends ApiController
         $paginator = $this->contato::orderBy('created_at', 'desc')
             ->paginate($limit)->setPath("/contato?limit={$limit}");
 
+
+
         return $this->showAsPaginator($paginator);
     }
     /**
@@ -74,6 +76,7 @@ class ContatoController extends ApiController
         }
 
         $contato = $this->contato;
+
 
         $contato->name = $this->request->get('name');
         $contato->email = $this->request->get('email');

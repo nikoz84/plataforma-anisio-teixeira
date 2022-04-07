@@ -19,11 +19,13 @@ import iconSet from "quasar/dist/icon-set/material-icons.umd.min.js";
 import QPlayer from '@quasar/quasar-ui-qmediaplayer';
 //import '@quasar/quasar-ui-qmediaplayer/dist/index.css';
 
+
 Loading.setDefaults({
   spinner: QSpinnerGears,
 });
 
 Vue.prototype.$anime = anime;
+
 Vue.use(QPlayer);
 Vue.use(Quasar, {
   lang,

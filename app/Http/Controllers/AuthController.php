@@ -88,7 +88,7 @@ class AuthController extends ApiController
     {
         auth()->logout();
 
-        return $this->successResponse([], 'Volte pronto', 200);
+        return $this->successResponse([], 'Deslogado com Sucesso!', 200);
     }
     /**
      * Refresh a token.

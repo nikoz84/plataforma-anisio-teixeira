@@ -26,7 +26,7 @@ class WordpressService
     {
         $this->request = $request;
         $this->timeout = 10.0;
-        $this->limit = $request->query('limit', 6);
+        $this->limit = $request->query('limit', 12);
         $this->page = $request->query('page', 1);
         $this->data_inicio = $request->query('inicio', date('Y-01-01 00:00:00'));
         $this->data_fim = $request->query('fim', Carbon::now());
@@ -44,8 +44,11 @@ class WordpressService
             'query' => ['page' => $this->page, 'limit' => $this->limit]
         ]);
 
+
+
         $response = $client->request('GET', 'posts');
         $data = json_decode($response->getBody(), true);
+
 
         return $this->getPaginator($data);
     }
@@ -56,6 +59,7 @@ class WordpressService
 
         $total = $itemsCollection->get('total');
         $items = $itemsCollection->get('posts');
+
 
         $paginatedItems = new Paginator($items, $total, $this->limit, null);
 

@@ -9,17 +9,20 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\DB;
 
 class TipoController extends ApiController
 {
-    
+
     public function __construct(Request $request)
     {
-        $this->middleware('jwt.auth')->except(['index',
-        'search','getTiposById']);
+        $this->middleware('jwt.auth')->except([
+            'index',
+            'search', 'getTiposById'
+        ]);
         $this->request = $request;
     }
-     /**
+    /**
      * Lista as Informações do Aplicativo
      * 
      * @param int $id identificador único
@@ -32,7 +35,7 @@ class TipoController extends ApiController
         $limit = $this->request->query('limit', 15);
         if ($this->request->has('select')) {
             $tipos = Tipo::all();
-            return $this->fetchForSelect(collect($tipos));
+            return '$this->fetchForSelect(collect($tipos))';
         }
         $query = Tipo::query();
 
@@ -153,5 +156,24 @@ class TipoController extends ApiController
         $paginator = CachingModelObjects::search($query, $termo, $limit);
         $paginator->setPath("/tipos/search/{$termo}?limit={$limit}");
         return $this->showAsPaginator($paginator, '', 200);
+    }
+
+
+    /**
+     * pegar a quantidade de cada tipo de conteúdo
+     */
+    public function getQuantidadeTipos($id)
+    {
+        $sql = "SELECT (SELECT upper(name)
+                FROM tipos AS t WHERE t.id = c.tipo_id) as name,
+                COUNT (c.tipo_id) as total ,
+                row_number() OVER () AS id
+                FROM
+                conteudos AS c
+                /*WHERE c.tipo_id = $id*/
+                GROUP BY name
+                ORDER BY name ASC";
+
+        return DB::select(DB::raw($sql));
     }
 }

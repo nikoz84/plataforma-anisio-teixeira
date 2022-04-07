@@ -1,0 +1,461 @@
+// MODO ESTUDANTE
+$dark = #171717;
+$mode-toggle-bg = #cc2726;
+
+// _base.scss
+body {
+  //background-color: #f8f5f5;
+ // color: $dark;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+// _student-mode.scss
+body {
+  &.student-mode {
+    background-color: #ede6e65e;
+    color: #000;
+    
+
+    .flex {
+      h1 {
+        color: #fff;
+      }
+    }
+
+.q-layout__section--marginal {
+  background-color: #3cac3d 
+  color: #fff
+}
+
+
+
+
+.q-field__focusable-action {
+ 
+  color: #fff !important
+
+}
+
+
+    
+.mostrar_alunos {
+  visibility: visible
+  height: 100%
+
+}
+
+.text-primary {
+
+  color: #379f38 !important
+}
+
+.separatriz-6 {
+  border-top-color: #389f39 !important
+}
+
+.bg-accent {
+  background: #379d38 !important
+    
+}
+
+.classe_formato-0{
+  
+  width: 150px !important
+  padding: 10px 10px 10px 10px !important
+  animation: backInLeft
+  animation-duration: 2s
+  animate-repeat: infinite
+  clip-path: polygon(0% 0%, 100% 0, 100% 50%, 47% 99%, 0 49%)  
+}
+
+.classe_formato-1{
+  width: 150px !important
+  animation: backInDown
+  animation-duration: 2s
+  animate-repeat: infinite
+  clip-path: polygon(0% 0%, 100% 0, 100% 50%, 47% 99%, 0 49%)  
+  
+}
+.classe_formato-2{
+  width: 150px !important
+  animation: backInRight
+  animation-duration: 2s
+  animate-repeat: infinite 
+  clip-path: polygon(0% 0%, 100% 0, 100% 50%, 47% 99%, 0 49%) 
+}
+
+.animate__animated.animate__bounce {
+  --animate-duration: 20s;
+  --animate-repeat: infinite;
+}
+
+.q-responsive_professores{
+  visibility: hidden !important
+  height: 5px !important
+}
+
+#0 {
+  animation: tada;
+  animation-duration: 2s;
+}
+
+
+.classe-b0 {
+  background-color: #0662a4
+  color: #fff 
+  transform: skew(19deg, 360deg)
+  border-radius: 20px
+  
+}
+.classe-b1 {
+  background-color: #379e38
+  color: #fff 
+  transform: skew(19deg, 360deg)
+  border-radius: 20px
+}
+.classe-b2 {
+  background-color: #cc2726
+  color: #fff 
+  transform: skew(19deg, 360deg)
+  border-radius: 20px
+}
+.classe-b3 {
+  background-color: #e9ba1a
+  color: #fff 
+  transform: skew(19deg, 360deg)
+  border-radius: 20px
+}
+.classe-b4 {
+  background-color: #0662a4
+  color: #fff 
+  transform: skew(19deg, 360deg)
+  border-radius: 20px
+}
+.classe-b5 {
+  background-color: #379e38
+  color: #fff 
+  transform: skew(341deg, 360deg)
+  border-radius: 20px
+}
+
+.classe-b6 {
+  background-color: #cc2726
+  color: #fff 
+  transform: skew(341deg, 360deg)
+  border-radius: 20px
+}
+
+.classe-b7 {
+  background-color: #e9ba1a
+  color: #fff 
+  transform: skew(341deg, 360deg)
+  border-radius: 20px
+}
+
+.classe-b8 {
+  background-color: #0662a4
+  color: #fff 
+  transform: skew(341deg, 360deg)
+  border-radius: 20px
+}
+
+.classe-b9 {
+  background-color: #379e38
+  color: #fff
+  transform: skew(341deg, 360deg)
+  border-radius: 20px
+}
+
+.classe-b12 {
+  background-color: #379e38
+  color: #fff 
+  transform: skew(19deg, 360deg)
+  border-radius: 20px
+  
+}
+.classe-b10 {
+  background-color: #e9ba1a
+  color: #fff 
+  transform: skew(19deg, 360deg)
+  border-radius: 20px
+}
+.classe-b11 {
+  background-color: #0662a4
+  color: #fff 
+  transform: skew(19deg, 360deg)
+  border-radius: 20px
+}
+
+
+.classe-img-b0 , .classe-img-b1 , .classe-img-b2, .classe-img-b3 , .classe-img-b4, .classe-img-b5,
+ .classe-img-b6, .classe-img-b7, .classe-img-b8, .classe-img-b9, .classe-img-b10, .classe-img-b11, .classe-img-b12{
+  filter: brightness(0%);
+-webkit-filter: brightness(0%);
+-moz-filter: brightness(0%);
+}
+
+
+
+.bg-banner-estudante {
+  background-color: #3cac3d !important
+}
+
+.carousel_estudante {
+  VISIBILITY: visible
+  HEIGHT: 100%
+  margin-bottom: 80px !important
+}
+
+ .imagem_full_home {
+      display: none !important;
+    }
+
+    .imagem_botoes-2 {
+  width: 100%
+  height: 200px
+  background-image: url(/img/bg_botao_ensino_medio_alunos.png)
+  border-top-color: #e9ba1a
+  border-right-color: #e9ba1a
+  border-left-color: #e9ba1a
+  border-top-style: solid
+  border-right-style: solid
+  border-left-style: solid
+  border-top-right-radius: 10px
+  border-top-left-radius: 10px
+}
+
+
+
+.imagem_botoes-0 {
+  width: 100%
+  height: 200px
+  background-image: url(/img/bg_botao_ensino_fundamental_alunos.png)
+  border-top-color: #3cac3d
+  border-right-color: #3cac3d
+  border-left-color: #3cac3d
+  border-top-style: solid
+  border-right-style: solid
+  border-left-style: solid
+  border-top-right-radius: 10px
+  border-top-left-radius: 10px
+
+}
+.imagem_botoes-1 {
+  width: 100%
+  height: 200px
+  background-image: url(/img/bg_botao_ensino_fundamental2_alunos.png)
+  border-top-color: #cc2726
+  border-right-color: #cc2726
+  border-left-color: #cc2726
+  border-top-style: solid
+  border-right-style: solid
+  border-left-style: solid
+  border-top-right-radius: 10px
+  border-top-left-radius: 10px
+
+}
+
+
+.menu {
+  display: block;
+  position: relative;
+  cursor: pointer;
+}
+
+.menu-title {
+  display: block;
+  width: 300px;
+  height: 70px;
+  padding: 12px 0 0;
+  background: #066ab1;
+  text-align: center;
+  color: #ffffff;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: 0.3s background-color;
+  margin-bottom: 0px !important;
+  font-size: 19px;
+  margin-top: 0px;
+}
+
+.menu-title:before {
+  content: "";
+  display: block;
+  height: 0;
+  border-top: 5px solid #066ab1;
+  border-left: (300px / 2) solid transparent;
+  border-right: (300px / 2) solid transparent;
+  border-bottom: 0 solid #dddddd;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 101;
+  transition:
+    0.2s 0.2s border-top ease-out,
+    0.3s border-top-color;
+}
+
+.menu-title:hover { background: #0f588d; }
+.menu-title:hover:before { border-top-color: #0f588d; }
+
+.menu:hover > .menu-title:before {
+  border-top-width: 0;
+  transition:
+    0.2s border-top-width ease-in,
+    0.3s border-top-color;
+}
+
+.menu-title:after {
+  content: "";
+  display: block;
+  height: 0;
+  border-left: (300px / 2) solid transparent;
+  border-right: (300px / 2) solid transparent;
+  border-bottom: 0 solid #ebebeb;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 101;
+  transition: 0.2s border-bottom ease-in;
+}
+
+.menu:hover > .menu-title:after {
+  border-bottom-width: 5px;
+  transition: 0.2s 0.2s border-bottom-width ease-out;
+}
+
+.item-0 { background: #3cac3d; }
+.item-0:hover { background: #318732; }
+.item-0:before { border-top-color: #3cac3d; }
+.item-0:hover:before { border-top-color: #318732; }
+
+.item-1 { background: #cc2726; }
+.item-1:hover { background: #8f1c1b; }
+.item-1:before { border-top-color: #cc2726; }
+.item-1:hover:before { border-top-color: #8f1c1b; }
+
+.item-2 { background: #e9ba1a; }
+.item-2:hover { background: #cb9b48; }
+.item-2:before { border-top-color: #e9ba1a; }
+.item-2:hover:before { border-top-color: #cb9b48; }
+
+
+
+
+
+  }
+}
+
+// _mode-toggle-student.scss
+.mode-toggle-student {
+  position: relative;
+  // margin: auto .5rem .5rem auto;
+  padding: 0;
+  width: 44px;
+  height: 24px;
+  min-width: 36px;
+  min-height: 20px;
+  background-color: $mode-toggle-bg;
+  border: 0;
+  border-radius: 24px;
+  outline: 0;
+  overflow: hidden;
+  cursor: pointer;
+  z-index: 2;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-touch-callout: none;
+  appearance: none;
+  transition: background-color 0.5s ease;
+  margin-left: auto;
+    margin-right: auto;
+
+  .toggle-student {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    box-shadow: inset 0 0 0 2px #a5abba;
+    overflow: hidden;
+    transition: transform 0.5s ease;
+
+   
+
+    #student-mode {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 50%;
+      background-color: #fff;
+
+      &:before {
+        content: '';
+        position: relative;
+        width: 100%;
+        height: 100%;
+        left: 50%;
+        float: left;
+        
+        }
+    }
+  }
+}
+
+body.student-mode {
+  .mode-toggle-student {
+    background-color: #cc2726
+
+    .toggle-student {
+      transform: translateX(19px);
+
+      #student-mode {
+        &:before {
+          border-radius: 50%;
+          width: 150%;
+          height: 85%;
+          left: 40%;
+          transform: translate(-10%, -40%), rotate(-35deg);
+        }
+      }
+    }
+  }
+}
+
+// DEMO STYLES
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+
+html {
+  font-size: 16px;
+}
+
+html, body, #app {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Source Sans Pro';
+}
+
+h1 {
+  font-weight: 400;
+  transition: color 0.5s ease;
+}
+
+.flex_modo_estudante {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px;
+  margin-right: 10px;
+}
+
+
+// FIM MODO ESTUDANTE
+

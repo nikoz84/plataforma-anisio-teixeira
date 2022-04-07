@@ -34,11 +34,16 @@ class PlayListController extends ApiController
      */
     public function create(PlaylistRequest $request)
     {
+
         $playlist = new PlayList();
 
+        //dd($request->all());
+         
         $this->authorize('create', $playlist);
 
-        $playlist->fill($request->validated());
+       $playlist->fill($request->validated());
+         
+        $request->validated();
 
         if ($playlist->save()) {
             return $this->successResponse([], 'Playlist adicionada com succeso!');

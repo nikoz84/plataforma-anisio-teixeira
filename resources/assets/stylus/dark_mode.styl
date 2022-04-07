@@ -12,8 +12,8 @@ body {
 // _dark-mode.scss
 body {
   &.dark-mode {
-    background-color: lighten($dark, 5%);
-    color: #ffffff;
+    background-color: lighten($dark, 5%) !important;
+    color: #ffffff !important;
     
 
     .flex {
@@ -165,6 +165,16 @@ filter: invert(12%) sepia(2%) saturate(2476%) hue-rotate(
 86deg) brightness(100%) contrast(0%);
 }
 
+.classe-img-b0, .classe-img-b1, .classe-img-b2, .classe-img-b3, .classe-img-b4, .classe-img-b5, .classe-img-b6, .classe-img-b7, .classe-img-b8, .classe-img-b9, .classe-img-b10, .classe-img-b11, .classe-img-b12, .classe-img-b13,  {
+  filter: brightness(0%) invert(100%);
+-webkit-filter: brightness(0%) invert(100%);
+-moz-filter: brightness(0%) invert(100%);
+}
+
+.classe-b0, .classe-b1, .classe-b2, .classe-b3, .classe-b4, .classe-b5, .classe-b6, .classe-b7, .classe-b8, .classe-b9, .classe-b10, .classe-b11, .classe-b12, .classe-b13{
+  background-color: #677178
+  color: #fff 
+}
 
 .creative-commons-escuro{
  margin-top: -2px !important; 
@@ -208,8 +218,32 @@ a:visited{
  
 }
 
+.q-layout__section--marginal {
+  background-color: #232323 !important
+  color: #fff
+}
 
+.menu:not(:hover) > .menu-dropdown {
+  
+  background: #4a4a4a;
+  
+}
 
+.menu-dropdown {
+  
+  background: #4a4a4a;
+  
+}
+
+.menu-title:before {
+  
+  border-top: 5px solid #4a4a4a;
+  
+  border-bottom: 0 solid #4a4a4a;
+  
+}
+
+.menu-title:hover:before { border-top-color: #4a4a4a; }
 
   }
 }
@@ -234,6 +268,8 @@ a:visited{
   -webkit-touch-callout: none;
   appearance: none;
   transition: background-color 0.5s ease;
+  margin-left: auto;
+    margin-right: auto;
 
   .toggle {
     position: absolute;

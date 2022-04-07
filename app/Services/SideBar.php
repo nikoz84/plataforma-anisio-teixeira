@@ -8,6 +8,8 @@ use App\Models\License;
 use App\Models\Tipo;
 use App\Models\User;
 use App\Models\Options;
+use App\Models\Newsletter;
+use App\Models\ContentPaginaInicial;
 use Illuminate\Support\Facades\DB;
 
 class SideBar
@@ -20,23 +22,23 @@ class SideBar
         }])->get();
 
         $licencas = License::select(['id', 'name'])
-        ->whereRaw('parent_id is null')->get();
+            ->whereRaw('parent_id is null')->get();
 
         $niveis = NivelEnsino::with(['componentes'])
-        ->where('id', '<>', 13)
-        ->where('id', '<>', 12)
-        ->get();
+            ->where('id', '<>', 13)
+            ->where('id', '<>', 12)
+            ->get();
 
         $layout = (object) Options::select("meta_data")->where("name", "like", "layout")->get()->first();
-        
+
         $canais =  DB::select(DB::raw("SELECT name,
-                                    slug,
+                                    slug,icon,
                                     options->'order_menu' AS order,
                                     options->'back_url_exibir' AS url_exibir
                                     FROM canais
                                     WHERE is_active = ?
                                     ORDER BY options->'order_menu';"), [true]);
-        
+
         return [
             'layout' => $layout,
             'links' => $canais,
@@ -55,6 +57,7 @@ class SideBar
     public function getAdminSidebar(User $user)
     {
         $links = $this->getlinks();
+
         $linksArr = [];
         foreach ($links as $link) {
             if ($user->can('index', $link['class'])) {
@@ -68,7 +71,7 @@ class SideBar
                 );
             }
         }
-        
+
         return (object) $linksArr;
     }
     /**
@@ -155,7 +158,7 @@ class SideBar
                 'class' => \App\Models\Role::class
             ],
             [
-                'label' => 'Palavras-Chaves',
+                'label' => 'Palavras-Chave',
                 'name' => 'IndexTags',
                 'slug' => 'tags',
                 'hability' => 'index',
@@ -202,6 +205,20 @@ class SideBar
                 'slug' => 'nivelensino',
                 'hability' => 'index',
                 'class' => \App\Models\NivelEnsino::class
+            ],
+            [
+                'label' => 'Newsletter',
+                'name' => 'IndexNewsletter',
+                'slug' => 'newsletter',
+                'hability' => 'index',
+                'class' => \App\Models\Newsletter::class
+            ],
+            [
+                'label' => 'Conteúdo na Página Inicial',
+                'name' => 'IndexContent_Pagina_Inicial',
+                'slug' => 'Content_Pagina_Inicial',
+                'hability' => 'index',
+                'class' => \App\Models\ContentPaginaInicial::class
             ]
         ]);
     }

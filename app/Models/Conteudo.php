@@ -492,6 +492,32 @@ class Conteudo extends Model
     {
         return DB::select("select  distinct date_part('year', created_at) as anopublicacao from conteudos order by 1 desc");
     }
+
+
+    /**
+     * Obtem os conteúdos publicados por ano para excel
+     * @param integer $ano Ano de publicação
+     * @return void
+     */
+    public function conteudosPorAnoExcel($ano)
+    {
+        echo (DB::table('conteudos')
+            ->select(
+                'conteudos.title as Título',
+
+                'users.name as Quem publicou',
+                'tipos.name as tipo',
+                'qt_downloads as Quantidade de Downloads',
+                'conteudos.created_at as Data de Criação'
+            )
+            ->join('users', 'users.id', '=', 'conteudos.user_id')
+            ->join('tipos', 'tipos.id', '=', 'conteudos.tipo_id')
+            ->where(DB::raw("date_part('year', conteudos.created_at)"), $ano)
+            ->get());
+    }
+
+
+
     /**
      * Obtem os conteúdos publicados por ano
      * @param integer $ano Ano de publicação
