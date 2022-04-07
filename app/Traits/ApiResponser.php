@@ -94,7 +94,7 @@ trait ApiResponser
      * @return string json
      */
 
-    protected function showOne(Model $instance, $message = '', $code = 200)
+    protected function showOne(Model $instance, string $message = '', int $code = 200)
     {
         return $this->successResponse($instance, $message, $code);
     }

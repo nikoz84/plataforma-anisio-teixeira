@@ -104,11 +104,9 @@ class CategoryController extends ApiController
     public function update(CategoryRequest $request, $id)
     {
         $category = Category::findOrFail($id);
-
+        
         $category->fill($request->validated());
 
-        dd($category);
-        dd('d');
         if ($this->request->imagemAssociada) {
             if ($category->refenciaImagemAssociada())
                 unlink($category->refenciaImagemAssociada());
@@ -117,6 +115,7 @@ class CategoryController extends ApiController
                 return $this->errorResponse([], 'Não foi possível salvar imagem associada', 422);
             }
         }
+        /*
         if ($this->request->videoDestaque) {
             if ($category->refenciaVideoDestaque())
                 unlink($category->refenciaVideoDestaque());
@@ -125,7 +124,8 @@ class CategoryController extends ApiController
                 return $this->errorResponse([], 'Não foi possível salvar imagem associada', 422);
             }
         }
-        if (!$category->update()) {
+         */
+        if (!$category->save()) {
             return $this->errorResponse([], 'Não foi possível editar', 422);
         }
         return $this->successResponse($category, 'Categoria atualizada com sucesso!', 200);
@@ -165,9 +165,13 @@ class CategoryController extends ApiController
 
     public function getById($id)
     {
-        //return $category = Category::findOrFail($id);
-        $category = new Category();
-        return CachingModelObjects::getById($category->query()->with("canal"), $id);
+        
+        $category = Category::with("canal")->where("id", $id)->get()->first();
+        
+        if (!$category) {
+            return $this->errorResponse([], 'Não encontrado', 404);
+        }
+        return $this->showOne($category);
     }
 
     /**

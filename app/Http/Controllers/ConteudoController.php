@@ -72,7 +72,7 @@ class ConteudoController extends ApiController
         $conteudos = $query
             ->approved($is_approved)
             ->with(['canal', 'tipo'])
-            ->paginate($request->query('limit', 6))
+            ->paginate($request->query('limit', 10))
             ->setPath("/conteudos?{$url}");
 
         // INCREMENTA TAG EM 1

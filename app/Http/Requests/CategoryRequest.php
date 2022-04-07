@@ -20,8 +20,12 @@ class CategoryRequest extends FormRequest
      */
     public function authorize()
     {
+        
         return auth()->check();
     }
+
+
+    
 
     
     /**
@@ -32,14 +36,15 @@ class CategoryRequest extends FormRequest
      */
     public function rules()
     {
+        
         return [
-            'canal_id' => 'required',
-            'parent_id' => 'nullable',
-            'name' => 'required|min:2|max:100|string',
-            'options.description' => 'required',
-            'options.is_featured' => 'required|boolean',
-            'options.is_active' => 'required|boolean',
-            'featured_image' => 'sometimes|mimes:jpeg,jpg,webp,png,gif,svg|max:2048'
+            'canal_id' => ['required'],
+            'parent_id' => ['nullable'],
+            'name' => ['required','min:2','max:100','string'],
+            'options.description' => ['required'],
+            'options.is_featured' => ['required','boolean'],
+            'options.is_active' => ['required','boolean'],
+            'imagemAssociada' => ['sometimes','image','mimes:jpeg,jpg,webp,png,gif,svg','max:2048']
         ];
     }
 

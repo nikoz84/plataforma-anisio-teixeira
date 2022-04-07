@@ -160,7 +160,6 @@ export default {
     },
     mounted() {
         this.getData();
-        
     },
     methods: {
         onFileChange(e) {
@@ -173,8 +172,9 @@ export default {
             this.canais = data.metadata;
             
             if (this.$route.params.id) {
-                let category = await axios.get("/categorias/" + this.$route.params.id);
-                this.category = category.data;
+                const resp = await axios.get("/categorias/" + this.$route.params.id);
+                
+                this.category = resp.data.metadata;
                 this.categoryNome = this.category.name;
 
                 await this.filter()
@@ -186,8 +186,9 @@ export default {
             this.$q.loading.show({
                 message: 'Carregando...'
             })
-            const {data} = await axios.get(`/categorias/canal/${this.category.canal_id}`);
             console.log(this.category)
+            const {data} = await axios.get(`/categorias/canal/${this.category.canal_id}`);
+            
             if(data.success == true){
                 this.filterCategories = data.metadata.categories;
                 this.$q.loading.hide();
@@ -198,11 +199,13 @@ export default {
         async save() {
             const form = new FormData();
             this.$q.loading.show();
-            
+            console.log(this.uploadImage)
             form.append('category', JSON.stringify(this.category))
-            form.append('featured_image', this.uploadImage);
-            
+            if(this.uploadImage){
+                form.append('imagemAssociada', this.uploadImage);
+            }
             let url = "/categorias";
+            console.log(this.$route.params)
             if(this.$route.params.id){
                 url = url + `/${this.category.id}`;
                 form.append("_method", "PUT");
