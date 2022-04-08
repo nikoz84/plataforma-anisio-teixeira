@@ -100,17 +100,15 @@
                   icon="delete"
                   v-if="categoria.user_can && categoria.user_can.delete"
                 />
-                <!--q-btn
+                <q-btn
                   size="sm"
                   color="primary"
                   title="Visualizar"
                   icon="visibility"
                   type="a"
                   target="__blank"
-                  :to="`/${categoria.canal}/${categoria.slug}/`"
-                /-->
-
-                
+                  :to="`/${categoria.slug}/`"
+                />
                 
               </q-btn-group>
             </td>

@@ -2,11 +2,14 @@
   <section class="q-pa-xs q-pb-lg">
      
     <header class="head q-pa-md">
+      
       <h1 class="text-h4 color-primary" v-if="!isLoading">
         {{canal && canal.options ? canal.options.extend_name : canal.name }}
 
       </h1>
+      
       <q-skeleton v-else style="width: 380px; height: 85px" type="text" animation="pulse-x" />
+      
     </header>
 
     <q-tabs
