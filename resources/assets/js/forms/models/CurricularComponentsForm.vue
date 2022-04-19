@@ -96,27 +96,28 @@ export default {
          async save() {
             const form = new FormData();
             form.append("name", this.curricularComponent.name);
-            if(this.curricularComponent.nivel)
-            {
+            if(this.curricularComponent.nivel) {
                 form.append("nivel_id", this.curricularComponent.nivel.id);
             }
-            if(this.curricularComponent.category)
-            {
+            if(this.curricularComponent.category) {
                 form.append("category_id", this.curricularComponent.category.id);
             }
-            try
-            {
-                if (this.$route.params.action == "editar") 
-                {
+
+            console.log(this.$route.params.id)
+            try {
+                let url = '/componentes'
+                
+                if (this.$route.params.id) {
                     form.append("id", this.curricularComponent.id);    
                     form.append("_method", "PUT");
-                    let resp = await axios.post(this.$route.params.slug +"/"+ this.curricularComponent.id, form);
+                    url = url + `/${this.$route.params.id}`
+                } 
+                
+                const resp = await axios.post(url, form);
+                
+                if(resp.status === 200){
+                    this.$router.push(`/admin/componentes/listar`)
                 }
-                else
-                {
-                    let resp = await axios.post(this.$route.params.slug , form);
-                }
-                this.$router.push(`/admin/componentes/listar`);
             }
             catch(ex)
             {
