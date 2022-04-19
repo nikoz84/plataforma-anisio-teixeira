@@ -2,6 +2,7 @@
   <div class="q-pa-md row justify-center q-gutter-xs">
     <q-card class="col-sm-5">
       <q-card-section class="q-gutter-sm">
+          <!-- TITLE -->
           <q-input v-model="conteudo.title" 
             label="Título do Conteúdo"
             autogrow
@@ -13,7 +14,7 @@
               <ShowErrors :errors="errors.title"></ShowErrors>
             </template>
           </q-input>
-
+          <!-- TIPO CONTEÚDO -->
           <q-select
             dense
             stack-label
@@ -31,8 +32,8 @@
               <ShowErrors :errors="errors.tipo_id"></ShowErrors>
             </template>
           </q-select>
-
-           <q-select
+          <!-- CANAIS -->
+          <q-select
             dense
             stack-label
             emit-value
@@ -51,7 +52,6 @@
             </template>
           </q-select>
       </q-card-section>
-      
       
       <q-card-section class="q-gutter-sm">
        
@@ -89,7 +89,7 @@
         </!--q-select -->
 
 
-        <!-- AUTORES -->
+          <!-- AUTORES -->
           <q-input dense v-model="conteudo.authors" 
             label="Autores"
             autogrow
@@ -108,10 +108,11 @@
             <template v-slot:error>
               <ShowErrors :errors="errors.source"></ShowErrors>
             </template>
-          </q-input>
-        
+          </q-input>        
         </q-card-section>
-
+        
+        <q-separator color="faded"></q-separator>
+        
         <q-card-section>
         <!-- TAGS --> 
         <q-select

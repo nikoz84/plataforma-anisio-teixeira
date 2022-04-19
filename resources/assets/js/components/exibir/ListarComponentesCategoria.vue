@@ -1,16 +1,16 @@
 <template>
   <div class="q-pa-md">
     <div class="col-lg-12">
-      <SearchForm slug="componentes"></SearchForm>
+      <SearchForm slug="componentescategorias"></SearchForm>
     </div>
     <div class="col-lg-12 flex flex-center q-gutter-sm">
-      
+      <!-- ADICIONAR -->
       <q-btn icon="add" 
         color="positive" 
         size="xs"
-        :to="`/admin/componentes/adicionar`" 
-        title="Adicionar"
-        label="Adicionar"
+        :to="`/admin/componentes-categoria/adicionar`" 
+        title="Adicionar novo item"
+        label="adicionar item"
         />
         
         <q-space></q-space>
@@ -20,7 +20,7 @@
         v-model="paginator.current_page"
         :max="paginator.last_page"
         :input="true"
-        @input="getComponentes"
+        @input="getCategorias"
       >
       </q-pagination>
 
@@ -42,11 +42,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="componente in paginator.data" :key="componente.id" :id="`item-${componente.id}`">
+          <tr v-for="categoria in paginator.data" :key="categoria.id" :id="`item-${categoria.id}`">
             <td
               class="text-center"
-              v-html="componente.name"
+              v-html="categoria.name"
             ></td>
+            
             <td class="text-center" style="width:50px;">
               <q-btn-group spread>
                 <q-btn
@@ -54,18 +55,18 @@
                   color="primary"
                   title="Editar item"
                   icon="edit"
-                  v-if="componente.user_can && componente.user_can.update"
-                  :to="`/admin/componentes/editar/${componente.id}`"
+                  v-if="categoria.user_can && categoria.user_can.update"
+                  :to="`/admin/componentes-categoria/editar/${categoria.id}`"
                 />
                 <q-btn
                   size="sm"
                   color="negative"
                   title="Deletar item"
-                  @click="deleteItem(`/componentes/${componente.id}`, componente.id)"
+                  @click="deleteItem(`/componentes-categoria/${categoria.id}`, categoria.id)"
                   icon="delete"
-                  v-if="componente.user_can && componente.user_can.delete"
+                  v-if="categoria.user_can && categoria.user_can.delete"
                 />
-              
+                
               </q-btn-group>
             </td>
           </tr>
@@ -91,7 +92,7 @@
             :max="paginator.last_page"
             :max-pages="10"
             boundary-numbers
-            @input="getComponentes"
+            @input="getCategorias"
           >
           </q-pagination>
         </div>
@@ -106,11 +107,11 @@ import { mapMutations, mapState } from "vuex";
 import { SemResultados } from "@components/paginator";
 
 export default {
-    name: "ListarComponentes",
-    components: {SemResultados, SearchForm},
+    name: "ListarComponentesCategoria",
+    components: {SearchForm, SemResultados},
     data() {
       return {
-        componentes: [],
+        categorias: [],
         searchParams: new URLSearchParams({}),
       }
     },
@@ -118,15 +119,15 @@ export default {
       ...mapState(["paginator", "isLogged"])
     },
     created() {
-      this.getComponentes()
+      this.getCategorias()
     },
     methods: {
       ...mapMutations(["SET_PAGINATOR", "SET_IS_LOADING", 'SET_DATA']),
       
-      async getComponentes(page = 1){
+      async getCategorias(page = 1){
         this.searchParams.set('page', page)
         
-        const path =`/componentes?${this.searchParams.toString()}`;
+        const path =`/componentescategorias?${this.searchParams.toString()}`;
         
         this.$q.loading.show();
         

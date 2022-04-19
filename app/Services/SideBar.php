@@ -192,14 +192,14 @@ class SideBar
             [
                 'label' => 'Categorias dos Componentes Curriculares',
                 'name' => 'IndexComponentesCategorias',
-                'slug' => 'componentescategorias',
+                'slug' => 'componentes-categoria',
                 'hability' => 'index',
                 'class' => \App\Models\CurricularComponentCategory::class
             ],
             [
                 'label' => 'Níveis de Ensino',
                 'name' => 'IndexNiveisEnsino',
-                'slug' => 'nivelensino',
+                'slug' => 'niveis-ensino',
                 'hability' => 'index',
                 'class' => \App\Models\NivelEnsino::class
             ]

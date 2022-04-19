@@ -130,8 +130,10 @@ export default {
             {
                 return;
             }
-            let resp = await axios.get(`/nivelensino/${this.$route.params.id}`);
-            this.nivelEnsino = resp.data;
+            let {data} = await axios.get(`/niveis-ensino/${this.$route.params.id}`);
+
+            console.log(data)
+            this.nivelEnsino = data.metadata;
 
             console.log("nivelensino",this.nivelEnsino);
             this.nivelEnsinoNome = this.nivelEnsino.name;

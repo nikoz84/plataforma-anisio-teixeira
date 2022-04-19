@@ -122,7 +122,7 @@ class CurricularComponentCategoryController extends ApiController
         $query = CurricularComponentCategory::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search]);
         $paginator = CachingModelObjects::search($query, $termo, $limit);
         $paginator->setPath("/componentescategorias/search/{$termo}?limit={$limit}");
-        return $this->showAsPaginator($paginator, 'Resultado da busca...', 200);
+        return $this->showAsPaginator($paginator, '', 200);
     }
     /**
      * Busca por Id

@@ -85,18 +85,10 @@ class NivelEnsinoController extends ApiController
      */
     public function getById($id)
     {
-        $nivel = new NivelEnsino();
-        try {
-            $nivel = NivelEnsino::findOrFail($id);
-            $nivel->componentes;
-        } catch (Exception $ex) {
-            return $this->errorResponse(
-                [],
-                $ex->getMessage(),
-                $ex->getCode() > 0 &&  $ex->getCode() < 505 ? $ex->getCode() : 500
-            );
-        }
-        return $nivel;
+        $nivel = NivelEnsino::findOrFail($id);
+        
+        
+        return $this->successResponse($nivel);
     }
 
     /**

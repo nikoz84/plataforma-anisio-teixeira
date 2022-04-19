@@ -4,9 +4,7 @@ import ConteudoMetadata from "./ConteudoMetadata";
 import ConteudoRelated from './ConteudoRelated';
 import Aplicativo from './Aplicativo';
 import Contato from './Contato';
-import Table from './Table';
 import NotFound from './NotFound';
-import LoaderAdmin from './LoaderAdmin';
 import ListarConteudos from './ListarConteudos';
 import ListarAplicativos from './ListarAplicativos';
 import ListarCanais from './ListarCanais';
@@ -18,6 +16,8 @@ import ListarTipos from './ListarTipos';
 import ListarUsers from './ListarUsers';
 import ListarCategorias from './ListarCategorias';
 import ListarComponentes from './ListarComponentes';
+import ListarComponentesCategoria from './ListarComponentesCategoria';
+import ListarNiveisEnsino from './ListarNiveisEnsino'
 
 export {
     Conteudo,
@@ -25,8 +25,6 @@ export {
     ConteudoRelated,
     Aplicativo,
     Contato,
-    //Table,
-    //LoaderAdmin,
     NotFound,
     ListarConteudos,
     ListarCanais,
@@ -38,5 +36,7 @@ export {
     ListarTipos,
     ListarUsers,
     ListarCategorias,
-    ListarComponentes
+    ListarComponentes,
+    ListarComponentesCategoria,
+    ListarNiveisEnsino
 };
