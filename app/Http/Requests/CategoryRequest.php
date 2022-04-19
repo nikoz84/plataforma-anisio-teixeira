@@ -23,6 +23,19 @@ class CategoryRequest extends FormRequest
         return auth()->check();
     }
 
+
+    public function withValidator($validator)
+    {
+        
+        
+        //$data = collect(request()->only(['category', 'image', '_method']));
+        //dd($data);
+        //$data->forget(['category', 'video', 'canal']);
+
+        //dd($data);
+        //dd($validator->valid());
+    }
+
     
     /**
      * Get the validation rules that apply to the request.
@@ -39,7 +52,20 @@ class CategoryRequest extends FormRequest
             'options.description' => 'required',
             'options.is_featured' => 'required|boolean',
             'options.is_active' => 'required|boolean',
-            'featured_image' => 'sometimes|mimes:jpeg,jpg,webp,png,gif,svg|max:2048'
+            'image' => 'nullable|sometimes|mimes:jpeg,jpg,webp,png,gif,svg|max:2048'
+        ];
+    }
+
+
+     /**
+     * Função de mensagens
+     * @return  array de strings com validações
+     */
+
+    public function messages()
+    {
+        return [
+            'options.description.require' => 'O campo de descrição precisa estar preenchido',
         ];
     }
 

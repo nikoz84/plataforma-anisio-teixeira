@@ -44,7 +44,7 @@ class ComponentesController extends ApiController
     public function update($id)
     {
         try {
-            $component = CurricularComponent::find($id);
+           $component = CurricularComponent::find($id);
             $validator = Validator::make($this->request->all(), $this->rules());
             if ($validator->fails()) {
                 throw new Exception('Não foi possível atualizar componente. Erro no preenchimento do formulário.', 404);

@@ -323,5 +323,4 @@ Route::group(
         Route::post('/dislike', [ConteudoLikeController::class, 'dislike'])->name('dislike');
         Route::get('/likes/usuario/{idUsuario}/{tipo?}', [ConteudoLikeController::class, 'getLikesPorIdUsuarioEtipo'])->name('likes.usuario');
         Route::get('/likes/conteudo/{conteudoid}/{tipo}', [ConteudoLikeController::class, 'getUsuarioLikesConteudoAplicativo'])->name('likes.usuario.conteudo.aplicativo');
-    }
-);
+    }); 
