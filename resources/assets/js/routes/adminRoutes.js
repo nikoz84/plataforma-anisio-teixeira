@@ -3,9 +3,10 @@
 import Admin from "@layout/Admin";
 import { ListarConteudos, ListarAplicativos, ListarCanais, 
     ListarContato, ListarOptions, ListarRoles, ListarTags, ListarTipos, ListarUsers, 
-    ListarCategorias,ListarComponentes } from "@components/exibir"
+    ListarCategorias,ListarComponentes, ListarComponentesCategoria, ListarNiveisEnsino } from "@components/exibir"
 import { ConteudoForm, PlayListForm, AplicativoForm, CanalForm, OptionsForm, RoleForm, 
-  TagForm, TipoForm, UserForm, CategoryConteudoForm, CurricularComponentsForm } from "@forms/models";
+  TagForm, TipoForm, UserForm, CategoryConteudoForm, CurricularComponentsForm, CurricularComponentsCategoryForm,
+NivelEnsinoForm  } from "@forms/models";
 import AdminPage from "@pages/AdminPage.vue"
 import Resumo from "@pages/Resumo.vue";
 import { Contato }  from "@components/exibir";
@@ -324,7 +325,60 @@ const adminRoutes = {
         layout: Admin
       }
     },
-    
+    {
+      path: "componentes-categoria/listar",
+      components: { admin: ListarComponentesCategoria },
+      meta: {
+        requiresAuth: true,
+        title: "Listar categoria componentes curriculares",
+        layout: Admin
+      }
+    },
+    {
+      path: "componentes-categoria/editar/:id",
+      components: { admin: CurricularComponentsCategoryForm },
+      meta: {
+        requiresAuth: true,
+        title: "Editar Categoria Componente Curricular",
+        layout: Admin
+      }
+    },
+    {
+      path: "componentes-categoria/adicionar",
+      components: { admin: CurricularComponentsCategoryForm },
+      meta: {
+        requiresAuth: true,
+        title: "Adicionar Categoria Componente Curricular",
+        layout: Admin
+      }
+    },
+    {
+      path: "niveis-ensino/listar",
+      components: { admin: ListarNiveisEnsino },
+      meta: {
+        requiresAuth: true,
+        title: "Listar niveis de ensino",
+        layout: Admin
+      }
+    },
+    {
+      path: "niveis-ensino/editar/:id",
+      components: { admin: NivelEnsinoForm },
+      meta: {
+        requiresAuth: true,
+        title: "Editar nivel de ensino",
+        layout: Admin
+      }
+    },
+    {
+      path: "niveis-ensino/adicionar",
+      components: { admin: NivelEnsinoForm },
+      meta: {
+        requiresAuth: true,
+        title: "Adicionar nivel de ensino",
+        layout: Admin
+      }
+    },
   ]
 };
 

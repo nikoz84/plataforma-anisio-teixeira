@@ -1,16 +1,16 @@
 <template>
   <div class="q-pa-md">
     <div class="col-lg-12">
-      <SearchForm slug="componentes"></SearchForm>
+      <SearchForm slug="niveis-ensino"></SearchForm>
     </div>
     <div class="col-lg-12 flex flex-center q-gutter-sm">
-      
+      <!-- ADICIONAR -->
       <q-btn icon="add" 
         color="positive" 
         size="xs"
-        :to="`/admin/componentes/adicionar`" 
-        title="Adicionar"
-        label="Adicionar"
+        :to="`/admin/niveis-ensino/adicionar`" 
+        title="Adicionar novo item"
+        label="adicionar item"
         />
         
         <q-space></q-space>
@@ -20,7 +20,7 @@
         v-model="paginator.current_page"
         :max="paginator.last_page"
         :input="true"
-        @input="getComponentes"
+        @input="getNiveis"
       >
       </q-pagination>
 
@@ -42,11 +42,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="componente in paginator.data" :key="componente.id" :id="`item-${componente.id}`">
+          <tr v-for="nivel in paginator.data" :key="nivel.id" :id="`item-${nivel.id}`">
             <td
               class="text-center"
-              v-html="componente.name"
+              v-html="nivel.name"
             ></td>
+            
             <td class="text-center" style="width:50px;">
               <q-btn-group spread>
                 <q-btn
@@ -54,18 +55,18 @@
                   color="primary"
                   title="Editar item"
                   icon="edit"
-                  v-if="componente.user_can && componente.user_can.update"
-                  :to="`/admin/componentes/editar/${componente.id}`"
+                  v-if="nivel.user_can && nivel.user_can.update"
+                  :to="`/admin/niveis-ensino/editar/${nivel.id}`"
                 />
                 <q-btn
                   size="sm"
                   color="negative"
                   title="Deletar item"
-                  @click="deleteItem(`/componentes/${componente.id}`, componente.id)"
+                  @click="deleteItem(`/niveis-ensino/${nivel.id}`, nivel.id)"
                   icon="delete"
-                  v-if="componente.user_can && componente.user_can.delete"
+                  v-if="nivel.user_can && nivel.user_can.delete"
                 />
-              
+                
               </q-btn-group>
             </td>
           </tr>
@@ -91,7 +92,7 @@
             :max="paginator.last_page"
             :max-pages="10"
             boundary-numbers
-            @input="getComponentes"
+            @input="getNiveis"
           >
           </q-pagination>
         </div>
@@ -106,11 +107,11 @@ import { mapMutations, mapState } from "vuex";
 import { SemResultados } from "@components/paginator";
 
 export default {
-    name: "ListarComponentes",
-    components: {SemResultados, SearchForm},
+    name: "ListarNiveisEnsino",
+    components: {SearchForm, SemResultados},
     data() {
       return {
-        componentes: [],
+        niveis: [],
         searchParams: new URLSearchParams({}),
       }
     },
@@ -118,15 +119,15 @@ export default {
       ...mapState(["paginator", "isLogged"])
     },
     created() {
-      this.getComponentes()
+      this.getNiveis()
     },
     methods: {
       ...mapMutations(["SET_PAGINATOR", "SET_IS_LOADING", 'SET_DATA']),
       
-      async getComponentes(page = 1){
+      async getNiveis(page = 1){
         this.searchParams.set('page', page)
         
-        const path =`/componentes?${this.searchParams.toString()}`;
+        const path =`/niveis-ensino?${this.searchParams.toString()}`;
         
         this.$q.loading.show();
         

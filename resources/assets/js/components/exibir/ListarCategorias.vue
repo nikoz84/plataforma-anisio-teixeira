@@ -116,7 +116,7 @@ import { mapMutations, mapState } from "vuex";
 import { SemResultados } from "@components/paginator";
 
 export default {
-    name: "ListarCanais",
+    name: "ListarCategorias",
     components: {SearchForm, SemResultados},
     data() {
       return {
@@ -141,7 +141,6 @@ export default {
         this.$q.loading.show();
         
         //console.log(path, params)
-        
         const { data } = await axios.get(path);
         
         this.$q.loading.hide();

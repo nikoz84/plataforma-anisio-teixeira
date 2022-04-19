@@ -123,7 +123,7 @@ class ComponentesController extends ApiController
 
         $paginator->setPath("/licenses/search/{$termo}?limit={$limit}");
 
-        return $this->showAsPaginator($paginator, 'Resultado da busca...', 200);
+        return $this->showAsPaginator($paginator);
     }
 
     /**
