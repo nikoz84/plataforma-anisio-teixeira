@@ -178,7 +178,7 @@ Route::group(
         /** COMPONENTES CATEGORIAS*/
         Route::group(['prefix' => 'componentescategorias', 'cc.categorias.'], function () {
             Route::post('/', [CurricularComponentCategoryController::class, 'create'])->name('criar');
-            Route::put('/{id', [CurricularComponentCategoryController::class, 'update'])->name('atualizar');
+            Route::put('/{id}', [CurricularComponentCategoryController::class, 'update'])->name('atualizar');
             Route::delete('/{id}', [CurricularComponentCategoryController::class, 'delete'])->name('deletar');
             Route::get('/autocomplete/{term}', [CurricularComponentCategoryController::class, 'autocomplete'])->name('autocompletar');
         });

@@ -103,7 +103,6 @@ export default {
                 form.append("category_id", this.curricularComponent.category.id);
             }
 
-            console.log(this.$route.params.id)
             try {
                 let url = '/componentes'
                 
@@ -125,7 +124,7 @@ export default {
             }
          },
          async getCategories() {
-            let resp = await axios.get("/componentescategorias");
+            let resp = await axios.get("/componentes");
             console.log("resp", resp)
             if (resp.data.success) {
                this.categories = resp.data.paginator.data;
@@ -149,7 +148,7 @@ export default {
                 this.categories = [];
                 } else {
                 const self = this;
-                axios.get(`componentescategorias/autocomplete/${val}`).then(resp => {
+                axios.get(`componentes/autocomplete/${val}`).then(resp => {
                     self.categories = resp.data.metadata;
                 });
                 }

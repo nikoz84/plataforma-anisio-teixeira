@@ -96,17 +96,17 @@ export default {
             }
             try
             {
-                if (this.$route.params.action == "editar") 
-                {
-                    form.append("id", this.curricularComponentCategory.id);    
+                let url = 'componentescategorias'
+                if(this.$route.params.id){
+                    form.append("id", this.curricularComponentCategory.id);
                     form.append("_method", "PUT");
-                    let resp = await axios.post(this.$route.params.slug +"/"+ this.curricularComponentCategory.id, form);
+                    url = url + `/${this.$route.params.id}`
                 }
-                else
-                {
-                    let resp = await axios.post(this.$route.params.slug , form);
+                const resp = await axios.post(url, form);
+                
+                if(resp.status === 200){
+                  this.$router.push(`/admin/componentes-categoria/listar`)
                 }
-                this.$router.push(`/admin/componentescategorias/listar`);
             }
             catch(ex)
             {
@@ -121,7 +121,7 @@ export default {
                 this.componentes = [];
                 } else {
                 const self = this;
-                axios.get(`componentes/autocomplete/${val}`).then(resp => {
+                axios.get(`componentescategorias/autocomplete/${val}`).then(resp => {
                     self.componentes = resp.data.metadata;
                 });
                 }
