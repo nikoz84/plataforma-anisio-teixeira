@@ -77,6 +77,41 @@ class NivelEnsinoController extends ApiController
         }
         return $this->successResponse($nivel, 'Nível de ensino foi registrada com sucesso!!', 200);
     }
+    /**
+     * Método que atualiza Nível de Ensino
+     * @param Illuminate\Http\Request
+     * @return string json
+     */
+
+    public function update($id){
+        try {
+            $data =[];
+            $nivelEnsino = NivelEnsino::find($id);
+            $validator = Validator::make($this->request->all(), $this->rules());
+            if($validator->fails()){
+                $data = $validator->errors();
+                throw  new Exception(
+                    'Não foi possível atualizar o Nível de Ensino. Erro no preenchimento do formulário. ', 422
+                );
+            }
+            $nivelEnsino->fill($this->request->all());
+
+            if(!$nivelEnsino->save()){
+                throw new Exception(
+                    'Não foi possível atualizar o Nível de Ensino. Tente novamente mais tarde',
+                    422
+                );
+            }
+        } catch (\Exception $ex) {
+            return $this->erroResponse(
+                $data,
+                $ex->getMessage(),
+                $ex->getCode() > 0 && $ex->getCode() < 506 ? $ex->getCode() : 500
+            );
+        }
+        return $this->showOne($nivelEnsino, 'Nível de Ensino atualizado com sucesso!!', 200);
+       
+    }
 
     /**
      * Método que obtem json do nivel de ensino a partir do seu id
@@ -86,7 +121,6 @@ class NivelEnsinoController extends ApiController
     public function getById($id)
     {
         $nivel = NivelEnsino::with('componentes')->findOrFail($id);
-        
         
         return $this->successResponse($nivel);
     }
