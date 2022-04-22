@@ -2,16 +2,20 @@
     <div class="row q-pa-md">
         <div class="col-sm-12" style="padding:5px">
             <q-card flat bordered>
-                <h5 v-if="nivelEnsino.id != null">Edição do Nível de Ensino <b>{{this.nivelEnsinoNome}}</b></h5>
-                <h5 v-if="nivelEnsino.id == null">Cadastro do Nível de Ensino</h5>
+                <h5>Nível de Ensino</h5> 
                 <form v-on:submit.prevent="save()">
                     <ShowErrors :errors="errors.name"></ShowErrors>
-                    <q-input filled v-model.trim="nivelEnsino.name" label="Nome da Categoria do Componente" 
+                    <q-input filled v-model.trim="nivelEnsino.name" 
+                        label="Nome da Categoria do Componente" 
                         hint="Nome abreviado ou reduzido"
                         :error="errors && errors.name && errors.name.length > 0"
                         bottom-slot
                     />
-                    <q-item-label v-if="nivelEnsino.id != null" style="margin-bottom:5px" ><q-icon name="list" style="padding-bottom: 3px; padding-top: 3px; height:15px; width:15px" /><strong>Componentes</strong></q-item-label>
+                    <q-item-label v-if="nivelEnsino.id != null" style="margin-bottom:5px" >
+                        <q-icon name="list" 
+                        style="padding-bottom: 3px; padding-top: 3px; height:15px; width:15px" />
+                        <strong>Componentes</strong>
+                    </q-item-label>
                     <q-select class="col-sm-10"
                         v-if="nivelEnsino.id != null"
                         filled
@@ -41,20 +45,6 @@
     </div>
 </template>
 <script>
-
-import {
-  QInput,
-  QEditor,
-  QCard,
-  QCardSection,
-  QBtn,
-  QToggle,
-  QColor,
-  QStepper,
-  QStep,
-  QStepperNavigation
-} from "quasar";
-
 import { ShowErrors } from '@forms/shared';
 export default {
     name: 'NivelEnsinoForm',
@@ -93,16 +83,15 @@ export default {
             }
             try
             {
-                if (this.$route.params.action == "editar") 
+                let url = ''
+                if (this.$route.params.id) 
                 {
                     form.append("id", this.nivelEnsino.id);    
                     form.append("_method", "PUT");
-                    let resp = await axios.post(this.$route.params.slug +"/"+ this.nivelEnsino.id, form);
+                    
                 }
-                else
-                {
-                    let resp = await axios.post(this.$route.params.slug , form);
-                }
+                const resp = await axios.post(this.$route.params.slug +"/"+ this.nivelEnsino.id, form);
+                
                 this.$router.push(`/admin/nivelensino/listar`);
             }
             catch(ex)
