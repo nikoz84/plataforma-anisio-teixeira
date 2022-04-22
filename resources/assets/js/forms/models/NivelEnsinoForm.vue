@@ -6,8 +6,7 @@
                 <form v-on:submit.prevent="save()">
                     <ShowErrors :errors="errors.name"></ShowErrors>
                     <q-input filled v-model.trim="nivelEnsino.name" 
-                        label="Nome da Categoria do Componente" 
-                        hint="Nome abreviado ou reduzido"
+                        label="Nome do nível de ensino" 
                         :error="errors && errors.name && errors.name.length > 0"
                         bottom-slot
                     />
@@ -17,16 +16,16 @@
                         <strong>Componentes</strong>
                     </q-item-label>
                     <q-select class="col-sm-10"
-                        v-if="nivelEnsino.id != null"
+                        
                         filled
-                        readonly="readonly"
+                        label="Adicione Componentes Curriculares"
                         v-model="nivelEnsino.componentes"
                         use-input
                         multiple
                         option-value="id"
                         option-label="name"
                         use-chips
-                        hint="Adicione Componentes Curriculares"
+                        
                         input-debounce="300"
                         new-value-mode="add-unique"
                         :options="this.componentes"
