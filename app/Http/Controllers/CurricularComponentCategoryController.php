@@ -129,17 +129,10 @@ class CurricularComponentCategoryController extends ApiController
      */
     public function getById($id)
     {
-        $componentesCategoria = new CurricularComponentCategory();
-        try {
-            //$componentesCategoria = CurricularComponentCategory::with('componentes')->findOrFail($id);
-            $componentesCategoria = CachingModelObjects::getById(CurricularComponentCategory::with('componentes'), $id);
-        } catch (Exception $ex) {
-            return $this->errorResponse(
-                [],
-                $ex->getMessage(),
-                $ex->getCode() > 0 &&  $ex->getCode() < 505 ? $ex->getCode() : 500
-            );
-        }
+        $componentesCategoria = CurricularComponentCategory::with('componentes')
+            ->findOrFail($id);
+        
+        
         return $componentesCategoria;
     }
 
