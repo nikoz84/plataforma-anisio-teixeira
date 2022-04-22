@@ -85,6 +85,8 @@ h1 {
 }
 .font-post {
   font-size: 18px;
+  text-align: justify;
+  text-justify: inter-word;
 }
 .wp-block-quote {
   margin: 1.5em 0;

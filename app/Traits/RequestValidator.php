@@ -14,11 +14,12 @@ trait RequestValidator
      */
     protected function failedValidation(Validator $validator)
     {
-        //dd($validator->failed());
+        
         $errors = [];
         foreach (collect($validator->errors()) as $key => $value) {
             array_set($errors, $key, $value);
         }
+        
         $response = response()->json([
             'message' => 'Não Foi possível realizar essa ação',
             'errors' => $errors,

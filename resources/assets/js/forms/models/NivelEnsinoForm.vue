@@ -83,16 +83,20 @@ export default {
             }
             try
             {
-                let url = ''
-                if (this.$route.params.id) 
-                {
-                    form.append("id", this.nivelEnsino.id);    
-                    form.append("_method", "PUT");
-                    
-                }
-                const resp = await axios.post(this.$route.params.slug +"/"+ this.nivelEnsino.id, form);
+               let url = '/niveis-ensino'
+
+               if(this.$route.params.id){
+                   form.append("id", this.nivelEnsino.id);
+                   form.append("_method", "PUT");
+                   url = url + `/${this.$route.params.id}`
+               }
+
+               const resp = await axios.post(url, form);
+
+               if(resp.status === 200){
+                   this.$router.push(`/admin/niveis-ensino/listar`)
+               }
                 
-                this.$router.push(`/admin/nivelensino/listar`);
             }
             catch(ex)
             {
@@ -107,7 +111,7 @@ export default {
                 this.componentes = [];
                 } else {
                 const self = this;
-                axios.get(`componentes/autocomplete/${val}`).then(resp => {
+                axios.get(`niveis-ensino/autocomplete/${val}`).then(resp => {
                     self.componentes = resp.data.metadata;
                 });
                 }

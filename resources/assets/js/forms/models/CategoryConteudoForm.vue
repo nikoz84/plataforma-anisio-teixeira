@@ -101,11 +101,11 @@
                                 <strong>Imagem Associada</strong>
                             </q-item-label>
                         <q-img 
-                        loading="lazy" 
-                        style="height:150px; width:150px"
-                        :src="category.image"
-                        placeholder-src="/img/fundo-padrao.svg"
-                        alt=" Icone da categoria :"/>
+                            loading="lazy" 
+                            style="height:150px; width:150px"
+                            :src="category.image"
+                            placeholder-src="/img/fundo-padrao.svg"
+                            alt=" Icone da categoria :"/>
                         <q-input
                         @input="val => {file = val[0];}"
                         outlined
@@ -200,7 +200,7 @@ export default {
             this.$q.loading.show();
             
             form.append('category', JSON.stringify(this.category))
-            form.append('featured_image', this.uploadImage);
+            form.append('image', this.uploadImage);
             
             let url = "/categorias";
             if(this.$route.params.id){

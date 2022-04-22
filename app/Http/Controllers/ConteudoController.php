@@ -86,7 +86,7 @@ class ConteudoController extends ApiController
         return $this->showAsPaginator($conteudos);
     }
 
-    /**
+    /** 
      * Lista de sites temáticos
      * @param Illuminate\Http\Request  
      * @return string - Json
@@ -95,6 +95,9 @@ class ConteudoController extends ApiController
     {
         $limit = $request->query('limit', 10);
         $query = Conteudo::query();
+        $conteudo = new Conteudo;
+        $this->authorize('create', $conteudo);
+
 
         $query->with(['canal'])
             ->where('is_site', 'true')
@@ -217,7 +220,7 @@ class ConteudoController extends ApiController
             ->approved(true)
             ->fullTextSearch($termo, 'tag')
             ->with(['canal', 'tipo'])
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'desc ')
             ->paginate($limit)
             ->setPath("/conteudos/search/{$termo}?limit={$limit}");
 

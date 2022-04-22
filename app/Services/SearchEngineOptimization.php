@@ -72,6 +72,7 @@ class SearchEngineOptimization
             'sitename' => Config::get('seo.sitename')
         ];
     }
+
     public function getFromClass($class_name, $id)
     {
         if (class_exists($class_name)) {
@@ -90,7 +91,8 @@ class SearchEngineOptimization
                 'keywords' => "{$tags}",
                 'canonical' => $this->request::fullUrl(),
                 'locale' => Config::get('seo.locale'),
-                'sitename' => Config::get('seo.sitename')
+                'sitename' => Config::get('seo.sitename'),
+                'image' => $class->image,
             ];
         }
     }

@@ -85,7 +85,7 @@ class NivelEnsinoController extends ApiController
      */
     public function getById($id)
     {
-        $nivel = NivelEnsino::findOrFail($id);
+        $nivel = NivelEnsino::with('componentes')->findOrFail($id);
         
         
         return $this->successResponse($nivel);

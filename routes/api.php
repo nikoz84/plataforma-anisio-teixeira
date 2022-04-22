@@ -28,12 +28,14 @@ use App\Http\Controllers\{
     PlayListController
 };
 
+/** FILE */
 
 Route::group(['prefix' => 'files', 'as' => 'files.'], function () {
     Route::get('/galeria', [FileController::class, 'getGallery'])->name('lista.galeria.imagens');
     Route::get('/{id}', [FileController::class, 'getFiles'])->name('busca');
     //Route::post('/{id}', [FileController::class, 'createFile'])->name('adiciona');
 });
+/** HOME */
 
 Route::get('/autocompletar', [HomeController::class, 'autocomplete'])->name('autocompletar.home');
 Route::get('/layout', [HomeController::class, 'getLayout'])->name('lista.links');
@@ -130,7 +132,7 @@ Route::group(['prefix' => 'canal-at', 'as' => 'canal-at.'], function () {
     Route::get('/podcast', [DocumentController::class, 'getPodcastAT'])->name('podcast');
 });
 
-/*
+
 Route::group(
     ['prefix' => 'playlist', 'as' => 'playlist.'],
     function () {
@@ -144,7 +146,7 @@ Route::group(
         Route::get('/{id}', [PlayListController::class, 'getById'])->name('ByID');
     }
 );
-*/
+
 /***********************************************
  *
  * ROTAS PROTEGIDAS COM JSON WEB TOKEN
@@ -176,7 +178,7 @@ Route::group(
         /** COMPONENTES CATEGORIAS*/
         Route::group(['prefix' => 'componentescategorias', 'cc.categorias.'], function () {
             Route::post('/', [CurricularComponentCategoryController::class, 'create'])->name('criar');
-            Route::put('/{id', [CurricularComponentCategoryController::class, 'update'])->name('atualizar');
+            Route::put('/{id}', [CurricularComponentCategoryController::class, 'update'])->name('atualizar');
             Route::delete('/{id}', [CurricularComponentCategoryController::class, 'delete'])->name('deletar');
             Route::get('/autocomplete/{term}', [CurricularComponentCategoryController::class, 'autocomplete'])->name('autocompletar');
         });
@@ -321,5 +323,4 @@ Route::group(
         Route::post('/dislike', [ConteudoLikeController::class, 'dislike'])->name('dislike');
         Route::get('/likes/usuario/{idUsuario}/{tipo?}', [ConteudoLikeController::class, 'getLikesPorIdUsuarioEtipo'])->name('likes.usuario');
         Route::get('/likes/conteudo/{conteudoid}/{tipo}', [ConteudoLikeController::class, 'getUsuarioLikesConteudoAplicativo'])->name('likes.usuario.conteudo.aplicativo');
-    }
-);
+    }); 

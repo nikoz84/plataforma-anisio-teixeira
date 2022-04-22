@@ -1,0 +1,325 @@
+// MODO ESCURO 
+$dark = #171717;
+$mode-toggle-bg = #262626;
+
+// _base.scss
+body {
+  background-color: #f8f5f5;
+  color: $dark;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+// _dark-mode.scss
+body {
+  &.dark-mode {
+    background-color: lighten($dark, 5%);
+    color: #ffffff;
+    
+
+    .flex {
+      h1 {
+        color: #fff;
+      }
+    }
+
+    .q-card {
+      background-color: lighten($dark, 5%);
+      box-shadow: 0 1px 5px #ffffff, 0 2px 2px #ffffff, 0 3px 1px -2px #ffffff !important;
+    }
+
+    .q-carousel {
+      background-color: lighten($dark, 5%);
+    }
+
+    .glossy {
+      background-color: lighten($dark, 5%);
+    }
+
+    .text-primary {
+      color: #fff !important;
+    }
+
+    .separatriz-6 {
+      border-top-color: #ffffff;
+    }
+
+    .fit {
+      background-color: #232323 !important;
+    }
+
+    .text-teal-10 {
+      color: #ffffff !important;
+    }
+
+    .tag {
+      background-color: #2174bd !important;
+    }
+
+.head-recursos-educacionais {
+      background-color: #3c3f42 !important;
+    }
+.head-tv-anisio-teixeira {
+      background-color: #3c3f42 !important;
+    }    
+.head-radio-anisio-teixeira {
+      background-color: #3c3f42 !important;
+    } 
+
+.head-emitec {
+      background-color: #3c3f42 !important;
+    }
+.head-projetos-artisticos {
+      background-color: #3c3f42 !important;
+    }
+.head-sites-tematicos {
+      background-color: #3c3f42 !important;
+    }
+.head-blog {
+      background-color: #3c3f42 !important;
+    }
+.head-aplicativos-educacionais {
+      background-color: #3c3f42 !important;
+    }
+.head-educacao-profissional {
+      background-color: #3c3f42 !important;
+    }
+.head {
+    background-color: #3c3f42 !important;
+
+}
+
+    .q-tabs {
+      background-color: #000 !important;
+    }
+
+    .q-menu {
+      background: #232323 !important;
+    }
+
+    element.style {
+    }
+
+    .q-mb-md, .q-my-md {
+      margin-bottom: 16px;
+    }
+
+    .q-mt-md, .q-my-md {
+      margin-top: 16px;
+    }
+
+    .q-separator--horizontal {
+      display: block;
+      height: 1px;
+    }
+
+    .q-separator {
+      background: #fff !important;
+    }
+
+    .q-field__native, .q-field__prefix, .q-field__suffix, .q-field__input {
+      color: #ffffff !important;
+    }
+
+    .wave {
+    
+    background-image: url(%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20id%3D%22wave%22%20version%3D%221.1%22%20viewBox%3D%220%200%207680%20200%22%3E%0A%20%3Cpath%20d%3D%22m7680%20100.49c-1358.3-48.636-2559-99.696-3845.5-100.49-1210.5%201.0331-2570.3%2055.185-3834.5%20100.49v99.505h7680z%22%20fill%3D%22%23232323%22%20stroke-width%3D%221.8903%22%2F%3E%0A%3C%2Fsvg%3E);
+    
+}
+
+.q-field--auto-height .q-field__control {
+    
+    background-color: #333333 !important;
+}
+
+.q-field__focusable-action {
+ 
+    color: #fff !important;
+
+}
+
+.bg-amarelo{
+    background-color: #8f8a7b !important;
+}
+
+.bg-rosa{
+    background-color: #54494d !important;
+}
+.bg-turquesa {
+    background-color: #88a3a7 !important;
+}
+
+.ipes-label:nth-child(odd) {
+    background-color: #3d3f40 /** blue-grey-1 */;
+}
+
+.ipes-label:hover {
+    background-color: #353738 /** blue-grey-2 */;
+}
+
+.q-item__section--side {
+    color: #fffefe !important;
+
+}
+.q-icon-escuro{
+filter: invert(12%) sepia(2%) saturate(2476%) hue-rotate(
+86deg) brightness(100%) contrast(0%);
+}
+
+
+.creative-commons-escuro{
+ margin-top: -2px !important; 
+filter: invert(12%) sepia(2%) saturate(2476%) hue-rotate(
+86deg) brightness(100%) contrast(0%);
+    
+    height: 100%;
+}
+
+.q-field__marginal {
+
+    color: #fff !important;
+
+}
+.q-tab-panels {
+    background: #3c3c3c !important;
+}
+.q-field--filled .q-field__control {
+    
+    background: #333 !important;
+    
+}
+
+a{
+    color: #fff !important;
+}
+
+a:hover{
+    color: #fff !important;
+}
+
+a:link{
+    color: #fff !important;
+}
+a:visited{
+    color: #e0e0e0 !important;
+}
+
+.q-field__bottom {
+    color: #ffffff !important;
+ 
+}
+
+
+
+
+  }
+}
+
+// _mode-toggle.scss
+.mode-toggle {
+  position: relative;
+  // margin: auto .5rem .5rem auto;
+  padding: 0;
+  width: 44px;
+  height: 24px;
+  min-width: 36px;
+  min-height: 20px;
+  background-color: $mode-toggle-bg;
+  border: 0;
+  border-radius: 24px;
+  outline: 0;
+  overflow: hidden;
+  cursor: pointer;
+  z-index: 2;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-touch-callout: none;
+  appearance: none;
+  transition: background-color 0.5s ease;
+
+  .toggle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    box-shadow: inset 0 0 0 2px #a5abba;
+    overflow: hidden;
+    transition: transform 0.5s ease;
+
+    #dark-mode {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 50%;
+
+      &:before {
+        content: '';
+        position: relative;
+        width: 100%;
+        height: 100%;
+        left: 50%;
+        float: left;
+        background-color: #a5abba;
+        transition: border-radius 0.5s ease, width 0.5s ease, height 0.5s ease, left 0.5s ease, transform 0.5s ease;
+      }
+    }
+  }
+}
+
+body.dark-mode {
+  .mode-toggle {
+    background-color: lighten($mode-toggle-bg, 5%);
+
+    .toggle {
+      transform: translateX(19px);
+
+      #dark-mode {
+        &:before {
+          border-radius: 50%;
+          width: 150%;
+          height: 85%;
+          left: 40%;
+          transform: translate(-10%, -40%), rotate(-35deg);
+        }
+      }
+    }
+  }
+}
+
+// DEMO STYLES
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+
+html {
+  font-size: 16px;
+}
+
+html, body, #app {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Source Sans Pro';
+}
+
+h1 {
+  font-weight: 400;
+  transition: color 0.5s ease;
+}
+
+.flex_modo_escuro {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px;
+  margin-right: 10px;
+}
+
+
+// FIM MODO ESCURO
+

@@ -28,10 +28,10 @@ mix.webpackConfig({
   }
 });
 
-mix.browserSync({
-  proxy: process.env.APP_URL
-})
-.disableNotifications();
+//mix.browserSync({
+//  proxy: process.env.APP_URL
+//})
+mix.disableNotifications();
 
 
 const config = {

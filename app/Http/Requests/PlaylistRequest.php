@@ -20,7 +20,7 @@ class PlaylistRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::check();
+        return true; /*Auth::check();*/
     }
 
     /**
