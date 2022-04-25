@@ -127,6 +127,7 @@ export default {
                 }
             });
         },
+           
          async getComponenteCategoria() 
         {
             if (!this.$route.params.id) 
