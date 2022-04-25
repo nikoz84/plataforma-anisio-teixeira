@@ -110,7 +110,7 @@ export default {
                 this.componentes = [];
                 } else {
                 const self = this;
-                axios.get(`niveis-ensino/autocomplete/${val}`).then(resp => {
+                axios.get(`componentes/autocomplete/${val}`).then(resp => {
                     self.componentes = resp.data.metadata;
                 });
                 }
