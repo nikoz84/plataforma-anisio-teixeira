@@ -141,13 +141,15 @@ class CategoryController extends ApiController
 
     public function delete($id)
     {
-        $validator = Validator::make($this->request->all(), [
+        /* $validator = Validator::make($this->request->all(), [
             'delete_confirmation' => ['required', new \App\Rules\ValidBoolean]
-        ]);
+         ]);
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors(), "Não foi possível deletar.", 422);
-        }
+        } */
         $category = Category::findOrFail($id);
+        $category->delete($id);
+
         if (!$category->delete()) {
             return $this->errorResponse([], 'Não foi possível deletar a categoria', 422);
         }
@@ -155,7 +157,7 @@ class CategoryController extends ApiController
             unlink($category->refenciaImagemAssociada());
         if ($category->refenciaVideoDestaque())
             unlink($category->refenciaVideoDestaque());
-        return $this->successResponse($category, 'Categoria deletada com sucesso!', 200);
+        return $this->successResponse($category, 'Categoria deletada com sucesso!', 200); 
     }
     /**
      * 

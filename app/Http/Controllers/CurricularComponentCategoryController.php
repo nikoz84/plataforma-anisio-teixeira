@@ -159,7 +159,7 @@ class CurricularComponentCategoryController extends ApiController
      */
     public function delete($id)
     {
-        $validator = Validator::make($this->request->all(), [
+        /*$validator = Validator::make($this->request->all(), [
             'delete_confirmation' => ['required', new \App\Rules\ValidBoolean]
         ]);
         try {
@@ -167,18 +167,19 @@ class CurricularComponentCategoryController extends ApiController
                 $data = $validator->errors();
                 return $this->errorResponse($validator->errors(), "Não foi possível deletar.", 201);
             }
+            */
             $category = CurricularComponentCategory::findOrFail($id);
             $this->authorize('delete', $category);
             if (!$category->delete()) {
                 throw new Exception("Erro ao deletar a categoria: " . $category->name . " Tente novamente em seguida.");
             }
-        } catch (Exception $ex) {
+        /*}catch (Exception $ex) {
             return $this->errorResponse(
                 [],
                 $ex->getMessage(),
                 $ex->getCode() > 0 &&  $ex->getCode() < 505 ? $ex->getCode() : 500
-            );
-        }
+            ); 
+        } */
         return $this->successResponse($category, 'Categoria do componente deletada com sucesso!', 200);
     }
     /**

@@ -120,7 +120,6 @@ class PlayListController extends ApiController
     public function updatePlayList(PlaylistRequest $request, $id)
     {
         $playlist = PlayList::findOrFail($id);
-
         $playlist->fill($request->validated());
 
 
