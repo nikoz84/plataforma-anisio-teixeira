@@ -28,7 +28,7 @@ class Category extends Model
     /**
      * Tabela com campos definidos
      */
-    protected $appends = ['user_can', 'image', 'video'];
+    protected $appends = ['user_can', 'image', 'video', 'has_children'];
 
     /**
      * Método SubCategorias
@@ -121,5 +121,13 @@ class Category extends Model
     public function canal()
     {
         return $this->belongsTo(Canal::class, 'canal_id', 'id');
+    }
+
+
+    public function getHasChildrenAttribute()
+    {
+        $count = $this->subCategories()->count();
+        
+        return $count ? true : false;
     }
 }

@@ -19,7 +19,7 @@ class License extends Model
     protected $fillable = [
         'name', 'description', 'site', 'parent_id',
     ];
-    protected $appends = ['user_can', 'image'];
+    protected $appends = ['user_can', 'image', 'has_children'];
     /**
      * Função Pertence a Conteudo
      * 
@@ -31,7 +31,7 @@ class License extends Model
         return $this->belongsTo(Conteudo::class, 'license_id');
     }
      /**
-     * Função criança Pertence a muitos
+     * Tabela autorelacionada, sub categoria
      * @param \App\Licence $license
      * @return \App\Model\ApiResponser retorna json
      */
@@ -78,5 +78,13 @@ class License extends Model
         }
         
         return null;
+    }
+
+
+    public function getHasChildrenAttribute()
+    {
+        $count = $this->childs()->count();
+        
+        return $count ? true : false;
     }
 }

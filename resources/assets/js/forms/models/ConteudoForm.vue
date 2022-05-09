@@ -1,8 +1,24 @@
 <template>
   <div class="q-pa-md row justify-center q-gutter-xs">
-    <q-card class="col-sm-5">
-      <q-card-section class="q-gutter-sm">
-          <!-- TITLE -->
+    <q-stepper
+      v-model="step"
+      ref="stepper"
+      color="primary"
+      header-nav
+      animated
+    >
+      <!-- STEPER 1 -->
+      <q-step
+        :name="1"
+        title="Informações básicas"
+        icon="settings"
+        :error="false"
+        :done="step > 1"
+      >
+        <b>Em essa seção você encontrará: TÍTULO, TIPO DE CONTEÚDO, CANAL, CATEGORIA DO CANAL,
+          LICENÇA, AUTORES E FONTE
+        </b>
+        <!-- TITLE -->
           <q-input v-model="conteudo.title" 
             label="Título do Conteúdo"
             autogrow
@@ -51,43 +67,122 @@
               <ShowErrors :errors="errors.canal_id"></ShowErrors>
             </template>
           </q-select>
-      </q-card-section>
-      
-      <q-card-section class="q-gutter-sm">
-       
-        {{ conteudo.category_id }}
-        <!-- CATEGORIA -->
-        <ParentAndChildSelect :parent="categories" 
-          :label="categoryName"
-          :selectedId="conteudo.category_id"
-          @click="setCategory"
-        ></ParentAndChildSelect>
-        <div class="q-my-md" v-if="errors && errors.category_id && errors.category_id.length > 0">
-          <ShowErrors :errors="errors.category_id"></ShowErrors>
-        </div>
-          
-        <!--q-select
-          v-if="categories && categories.length > 0"
-          outlined
-          stack-label
-          emit-value
-          map-options
-          option-value="id"
-          option-label="name"
-          v-model="conteudo.category_id"
-          :options="categories"
-          @input="setCategory"
-          @getOptionLabel="getOptionLabel"
-          options-selected-class="text-deep-orange"
-          label="Escolha uma Categoria"
-          :error="errors && errors.category_id && errors.category_id.length > 0"
-          bottom-slots
-        >
-          <template v-slot:error>
-            <ShowErrors :errors="errors.category_id"></ShowErrors>
-          </template>
-        </!--q-select -->
+        <!-- CATEGORIAS -->
+          <q-select
+            v-if="categories && categories.length > 0"
+            dense
+            stack-label
+            emit-value
+            map-options
+            option-value="id"
+            option-label="name"
+            v-model="conteudo.category"
+            :options="categories"
+            @input="setCategory"
+            options-selected-class="text-deep-orange"
+            :label="`Escolha um(a) ${categoryName}`"
+            :error="errors && errors.category_id && errors.category_id.length > 0"
+            bottom-slots
+          >
+            <template v-slot:option="scope">
+              <q-item v-if="scope.opt.has_children" 
+                :active="true" 
+                active-class="bg-teal-1 text-grey-8">
+                <q-item-section>
+                  <q-item-label>{{ scope.opt.name }}</q-item-label>
+                </q-item-section>
+              </q-item>
+              <q-item v-else 
+                clickable
+                v-ripple
+                v-close-popup
+                @click="setCategory(scope.opt)"
+                :class="{ 'bg-light-blue-5': conteudo.category_id === scope.opt.id }"
+                >
+                  <q-item-section>{{ scope.opt.name }}</q-item-section>
+              </q-item>
+              <q-separator></q-separator>
+              <template >
+                <q-item
+                  v-for="child in scope.opt.sub_categories"
+                  :key="child.id"
+                  clickable
+                  v-ripple
+                  v-close-popup
+                  @click="setCategory(child)"
+                  :class="{ 'bg-light-blue-5': conteudo.category_id === child.id }"
+                  style="border: solid 1px #ddd"
+                  >
+                  <q-item-section >
+                    <q-item-label v-html="child.name" 
+                      ></q-item-label>
+                  </q-item-section>
+              </q-item>
+            </template>
+            </template>
+            <template v-slot:error>
+              <ShowErrors :errors="errors.category_id"></ShowErrors>
+            </template>
+          </q-select>
 
+          <!-- LICENÇAS -->
+          <q-select
+            v-if="licencas && licencas.length > 0"
+            dense
+            stack-label
+            emit-value
+            map-options
+            option-value="id"
+            option-label="name"
+            v-model="conteudo.license"
+            :options="licencas"
+            @input="setLicense"
+            options-selected-class="text-deep-orange"
+            label="Escolha uma licença"
+            :error="errors && errors.license_id && errors.license_id.length > 0"
+            bottom-slots
+          >
+            <template v-slot:option="scope">
+              <q-item v-if="scope.opt.has_children" 
+                :active="true" 
+                active-class="bg-teal-1 text-grey-8">
+                
+                  <q-item-section>
+                    <q-item-label>{{ scope.opt.name }}</q-item-label>
+                  </q-item-section>
+                
+              </q-item>
+              <q-item v-else 
+                clickable
+                v-ripple
+                v-close-popup
+                @click="setLicense(scope.opt)"
+                :class="{ 'bg-light-blue-5': conteudo.license_id === scope.opt.id }"
+                >
+                  <q-item-section>{{ scope.opt.name }}</q-item-section>
+              </q-item>
+              <q-separator></q-separator>
+              <template >
+                <q-item
+                  v-for="child in scope.opt.childs"
+                  :key="child.id"
+                  clickable
+                  v-ripple
+                  v-close-popup
+                  @click="setLicense(child)"
+                  :class="{ 'bg-light-blue-5': conteudo.license_id === child.id }"
+                  style="border: solid 1px #ddd"
+                  >
+                  <q-item-section>
+                    <q-item-label v-html="child.name" class="q-ml-md" ></q-item-label>
+                  </q-item-section>
+              </q-item>
+            </template>
+            </template>
+            <template v-slot:error>
+              <ShowErrors :errors="errors.license_id"></ShowErrors>
+            </template>
+          </q-select>
 
           <!-- AUTORES -->
           <q-input dense v-model="conteudo.authors" 
@@ -108,21 +203,39 @@
             <template v-slot:error>
               <ShowErrors :errors="errors.source"></ShowErrors>
             </template>
-          </q-input>        
-        </q-card-section>
+          </q-input>
+      </q-step>
+      <!-- STEPER 2 -->
+      <q-step
+        :name="2"
+        title="Informações complementares"
+        icon="create_new_folder"
+        :done="step > 2"
+      >
+        <!-- DESCRIÇÃO --> 
+        <b class="q-my-lg">Para melhorar a qualidade de nossa oferta e busca de conteúdos, 
+            escreva uma descrição como mínimo de 100 caracteres</b>
+        <q-editor v-model="conteudo.description" min-height="18rem"
+          ref="editor_ref"
+          @paste.native="evt => pasteCapture(evt)"
+          :toolbar="[['bold', 'italic', 'strike', 'underline']]"/>
         
-        <q-separator color="faded"></q-separator>
-        
-        <q-card-section>
+        <ShowErrors v-if="errors && errors.description && errors.description.length > 0" 
+          :errors="errors.description">
+        </ShowErrors>
+        <q-separator class="q-my-lg"></q-separator>
+        <b class="q-my-lg">Pesquise como mínimo 3 até 15 palavras-chave para aprimorar os 
+            resultados de busca. Se não achar a palavra, escreva uma palavra e adicione 
+            apertando enter, aparecerá na parte inferior da sua tela uma opção para salvar </b>
         <!-- TAGS --> 
         <q-select
           dense
           v-model="conteudo.tags"
           use-input
+          hint="Adicione palavras-chave"
           multiple
           option-value="id"
           option-label="name"
-          hint="Pesquise entre 3 a 10 palavras-chave para melhorar as buscas, se não achar a palavra chave, escreva uma palavra e adicione apertando enter"
           use-chips
           stack-label
           hide-dropdown-icon
@@ -147,46 +260,118 @@
             </q-item>
           </template>
         </q-select>
-      </q-card-section>
+      </q-step>
+      <q-step :name="3"
+        title="Componentes e níveis de ensino"
+        icon="create_new_folder"
+        :done="step > 3">
+        <q-tabs
+          v-model="tab"
+          dense
+          class="text-grey"
+          active-color="primary"
+          indicator-color="primary"
+          align="justify"
+          narrow-indicator
+        >
+          <q-tab name="componentes" 
+            label="Componentes Curriculares" 
+            
+            />
+          <q-tab name="niveis" 
+            label="Níveis de Ensino"/>
+        </q-tabs>
 
-        <q-card-section>
-        
-        <!-- LICENÇAS -->
-        <ParentAndChildSelect :parent="licencas" 
-          label="Licença"
-          :selectedId="conteudo.license_id"
-          @click="setLicense"
-        ></ParentAndChildSelect>
-        <div> {{license_description ? license_description : '' }} </div>
-        <div class="q-my-md" v-if="errors && errors.license_id && errors.license_id.length > 0">
-          <ShowErrors :errors="errors.license_id"></ShowErrors>
-        </div>
-        
-        
-        <!-- DESCRIÇÃO --> 
-        <div class="q-mt-md">
-          
-          <p class="text-center">Escreva uma descrição </p>
-          <small>
-              <b>(Para melhorar a qualidade de nossa oferta e busca de conteúdos, 
-            escreva um texto como mínimo de 100 caracteres)</b>
-          </small>
-          
-        </div>
-        <q-editor v-model="conteudo.description" min-height="18rem"
-          ref="editor_ref"
-          @paste.native="evt => pasteCapture(evt)"
-          :toolbar="[['bold', 'italic', 'strike', 'underline']]"/>
-        <ShowErrors v-if="errors && errors.description && errors.description.length > 0" 
-          :errors="errors.description">
-        </ShowErrors>
-      </q-card-section>
-      
-      <q-card-section>
+        <q-separator />
+
+        <q-tab-panels v-model="tab" 
+          animated 
+          :class="{'error-card' : errors && errors.componentes && errors.componentes.length > 0 }">
+          <q-tab-panel name="componentes" v-if="componentes">
+            <div class="text-h6 q-mb-md">Escolha um Componente Curricular</div>
+              <q-list dense bordered v-for="component in componentes" :key="`c-${component.id}`">
+                  <q-expansion-item 
+                    header-class="text-deep-purple"
+                    expand-separator
+                    :label="component.name">
+                  <q-item>
+                    <q-item-section>
+                      <q-toggle
+                        @input="selectAll(component)"
+                        v-model="allCheckbox"
+                        :val="component.id"
+                        label="Marcar Todas"
+                      />
+                    </q-item-section>
+                  </q-item>
+                  <q-item  dense 
+                    v-ripple v-for="(component, i) in component.componentes" 
+                    :key="`child-com-${i}`">
+                    <q-item-section avatar>
+                      <q-checkbox dense 
+                        v-model="componentesCurriculares" 
+                        :val="component.id" 
+                        color="purple"/>
+                    </q-item-section>
+                    <q-item-label class="q-pt-sm">
+                      {{component.name}}
+                    </q-item-label>
+                  </q-item>
+                  </q-expansion-item>
+                </q-list>
+          </q-tab-panel>
+
+          <q-tab-panel name="niveis" v-if="niveis">
+            <div class="text-h6 q-mb-md">Escolha um Nível de Ensino</div>
+              <q-list dense bordered v-for="nivel in niveis" :key="`n-${nivel.id}`">
+                  <q-expansion-item :label="nivel.name">
+                  <q-item>
+                    <q-item-section>
+                      <q-toggle
+                        @input="selectAll(nivel)"
+                        v-model="allCheckbox"
+                        :val="nivel.id"
+                        label="Marcar Todas"
+                      />
+                    </q-item-section>
+                  </q-item>
+                  <q-item v-for="(component, i) in nivel.componentes" :key="`child-com-${i}`"
+                    v-ripple>
+                    <q-item-section avatar>
+                      <q-checkbox 
+                        dense 
+                        v-model="componentesCurriculares" 
+                        :val="component.id" 
+                        color="teal"
+                        />
+                    </q-item-section>
+                    <q-item-label class="q-pt-sm">
+                      {{component.name}}
+                    </q-item-label>
+                  </q-item>
+                  </q-expansion-item>
+                </q-list>
+          </q-tab-panel>
+
+        </q-tab-panels>
+
+        <q-card-section v-if="errors && errors.componentes && errors.componentes.length > 0">
+          <ShowErrors :errors="errors.componentes"></ShowErrors>
+        </q-card-section>
+      </q-step>
+
+      <!-- STEPER 4 -->
+      <q-step
+        :name="4"
+        title="Upload de arquivos"
+        icon="add_comment"
+      >
+
+        <b>IMAGEN ASSOCIADA, ARQUIVO PARA DOWNLOAD, GUIA PEDAGÓGICO, URL SITE, APROVAR CONTEÚDO, MARCAR COMO DESTAQUE, TERMOS DE USO</b>
         <q-img 
           loading="lazy" 
-          width="100%" 
-          height="200" 
+          width="640" 
+          height="460" 
           :src="conteudo.image"
           placeholder-src="/img/fundo-padrao.svg"
           alt="imagem de destaque"/>
@@ -205,9 +390,7 @@
             <ShowErrors :errors="errors.imagem_associada"></ShowErrors>
           </template>
         </q-input>
-      </q-card-section>
-        <!-- ARQUIVO DE DOWNLOAD --> 
-      <q-card-section>
+      
         <DeleteFiles message="Download"
           :file="conteudo && conteudo.arquivos ? conteudo.arquivos['download'] : null"
           directory="download"
@@ -268,12 +451,10 @@
             <ShowErrors :errors="errors.options.site"></ShowErrors>
           </template>
         </q-input>
-        
-        
-      </q-card-section>
-      <q-card-section>
-        <div class="q-gutter-sm">
-          <!-- CONTEUDO APROVADO --> 
+
+        <div class="q-gutter-sm q-my-lg">
+          
+          <!-- APROVAR --> 
           <q-checkbox
             v-model="conteudo.is_approved"
             label="Aprovar conteúdo"
@@ -293,151 +474,35 @@
             <ShowErrors :errors="errors.is_featured"></ShowErrors>
           </div>
         </div>
-      </q-card-section>
-      <q-card-section>
         <!-- TERMOS DE USO --> 
-        <div class="q-gutter-sm">
+        <div class="q-my-lg">
           Li e concordo com os <a href="#terms">termos e condições de uso</a> :
           <q-checkbox v-model="terms" color="pink" />
           <div v-if="errors && errors.terms && errors.terms.length > 0">
             <ShowErrors :errors="errors.terms"></ShowErrors>
           </div>
         </div>
-      </q-card-section>
-      <q-card-section>
-        <!-- SALVAR --> 
-        <q-btn
-          class="full-width"
-          color="primary"
-          @click="save()"
-          label="Salvar"
-          :loading="loading"
-        ></q-btn>
-      </q-card-section>
-    </q-card>
-    <q-card class="col-sm-5">
-      <q-tabs
-        v-model="tab"
-        dense
-        class="text-grey"
-        active-color="primary"
-        indicator-color="primary"
-        align="justify"
-        narrow-indicator
-      >
-        <q-tab name="componentes" label="Componentes Curriculares" />
-        <q-tab name="niveis" label="Níveis de Ensino" />
-      </q-tabs>
+      </q-step>
 
-      <q-separator />
-
-      <q-tab-panels v-model="tab" animated>
-        <q-tab-panel name="componentes" v-if="componentes">
-          <div class="text-h6 q-mb-md">Escolha um Componente Curricular</div>
-            <q-list dense bordered v-for="component in componentes" :key="`c-${component.id}`">
-                <q-expansion-item 
-                  header-class="text-deep-purple"
-                  expand-separator
-                  :label="component.name">
-                <q-item>
-                  <q-item-section>
-                    <q-toggle
-                      @input="selectAll(component)"
-                      v-model="allCheckbox"
-                      :val="component.id"
-                      label="Marcar Todas"
-                    />
-                  </q-item-section>
-                </q-item>
-                <q-item  dense 
-                  v-ripple v-for="(component, i) in component.componentes" 
-                  :key="`child-com-${i}`">
-                  <q-item-section avatar>
-                    <q-checkbox dense 
-                      v-model="componentesCurriculares" 
-                      :val="component.id" 
-                      color="purple"/>
-                  </q-item-section>
-                  <q-item-label class="q-pt-sm">
-                    {{component.name}}
-                  </q-item-label>
-                </q-item>
-                </q-expansion-item>
-              </q-list>
-        </q-tab-panel>
-
-        <q-tab-panel name="niveis" v-if="niveis">
-          <div class="text-h6 q-mb-md">Escolha um Nível de Ensino</div>
-            <q-list dense bordered v-for="nivel in niveis" :key="`n-${nivel.id}`">
-                <q-expansion-item :label="nivel.name">
-                <q-item>
-                  <q-item-section>
-                    <q-toggle
-                      @input="selectAll(nivel)"
-                      v-model="allCheckbox"
-                      :val="nivel.id"
-                      label="Marcar Todas"
-                    />
-                  </q-item-section>
-                </q-item>
-                <q-item v-for="(component, i) in nivel.componentes" :key="`child-com-${i}`"
-                   v-ripple>
-                  <q-item-section avatar>
-                    <q-checkbox 
-                      dense 
-                      v-model="componentesCurriculares" 
-                      :val="component.id" 
-                      color="teal"
-                      />
-                  </q-item-section>
-                  <q-item-label class="q-pt-sm">
-                    {{component.name}}
-                  </q-item-label>
-                </q-item>
-                </q-expansion-item>
-              </q-list>
-        </q-tab-panel>
-
-      </q-tab-panels>
-    </q-card>
-
-    <q-card class="col-sm-3"  :class="{'error-card' : errors && errors.componentes && errors.componentes.length > 0 }">
-      <q-card-section v-if="errors && errors.componentes && errors.componentes.length > 0">
-        <ShowErrors :errors="errors.componentes"></ShowErrors>
-      </q-card-section>
-      <q-card-section>
-          <!-- COMPONENTES CURRICULARES -->
-          
-
-
-
-          
-      </q-card-section>
-      
-      <q-card-section class="q-mt-lg" v-if="errors && errors.componentes && errors.componentes.length > 0">
-        <ShowErrors :errors="errors.componentes"></ShowErrors>
-      </q-card-section>
-      
-    </q-card>
-    <q-card class="col-sm-3" :class="{'error-card' : errors && errors.componentes && errors.componentes.length > 0 }">
-      <q-card-section class="q-mt-lg" v-if="errors && errors.componentes && errors.componentes.length > 0">
-        <ShowErrors :errors="errors.componentes"></ShowErrors>
-      </q-card-section>
-      <q-card-section>
-          <!-- NIVEIS DE ENSINO --> 
-          
-        </q-card-section>
-      
-      <q-card-section class="q-mt-lg"  v-if="errors && errors.componentes && errors.componentes.length > 0">
-        <ShowErrors :errors="errors.componentes"></ShowErrors>
-      </q-card-section>
-    </q-card>
+      <template v-slot:navigation>
+        <q-stepper-navigation>
+          <!-- SALVAR --> 
+          <q-btn
+            color="primary"
+            @click="save()"
+            label="Salvar"
+            :loading="loading"
+            v-if="step === 4"
+          ></q-btn>
+          <q-btn v-else @click="$refs.stepper.next()" color="primary" label="Continuar" />
+          <q-btn v-if="step > 1" flat color="primary" @click="$refs.stepper.previous()" label="Voltar" class="q-ml-sm" />
+        </q-stepper-navigation>
+      </template>
+    </q-stepper>
   </div>
 </template>
 
 <script>// @ts-nocheck
-
-import { mapGetters, mapActions, mapState, mapMutations } from "vuex";
 import { ShowErrors, ParentAndChildSelect } from "@forms/shared";
 import { PasteCapture } from "@mixins/RemoveFormat";
 import {
@@ -504,7 +569,8 @@ export default {
         options: {
           site: ""
         },
-        category:"",
+        category: null,
+        license: null,
         authors: "",
         source: "",
         image: "",
@@ -514,7 +580,6 @@ export default {
         is_featured: false,
         is_site: false
       },
-      categoriesList: [],
       canais: [],
       terms: false,
       tipos: [],
@@ -539,6 +604,7 @@ export default {
         new_tag: ""
       },
       tab: 'componentes',
+      step: 1,
       allCheckbox: []
     };
   },
@@ -626,14 +692,8 @@ export default {
       }
     },
     
-    hasChild (scope) {
-      return scope.opt.sub_categories.some(c => c.id === this.conteudo.category_id)
-      //scope.opt.children.some(c => c.name === this.model)
-    },
-    
     async getCategories(val) {
       if(!val) return;
-      
       const id = val.hasOwnProperty('id') ? val.id: val;
       this.$q.loading.show()
       try {
@@ -653,9 +713,7 @@ export default {
       subCat = this.categories.filter((item)=>{
         return item.id == val
       })
-
       return subCat
-      
     },
     async getData() {
       this.$q.loading.show();
@@ -681,23 +739,16 @@ export default {
       this.$q.loading.hide();
       if(this.conteudo.category && this.conteudo.canal){
         this.getCategories(this.conteudo.canal);
-        const category = this.conteudo.category
-        this.selectedCategory = category.name;
+        //this.selectedCategory = this.conteudo.category.name;
       }
     },
     setCategory(cat){
-      console.log(cat)
+      this.conteudo.category = cat
       this.conteudo.category_id = cat.id
-      return cat
     },
-    getOptionLabel(ev){
-      console.log(ev, 'sds')
-    },
-    setLicense(id){
-      this.conteudo.license_id = id;
-      axios.get(`/licencas/${id}`).then(resp => {
-        this.license_description = resp.data.metadata.description;
-      })
+    setLicense(license){
+      this.conteudo.license = license
+      this.conteudo.license_id = license.id
     },
     selectAll(componente){
       const { componentes } = componente 
@@ -716,8 +767,6 @@ export default {
           }
         })
       }
-      
-      console.log(this.componentesCurriculares)
     },
     setCanal(id){
       this.conteudo.canal_id = id
@@ -728,17 +777,12 @@ export default {
       this.conteudo.tipo_id = id
     },
     addTag(val, done) {
-      //const form = new FormData();
-      //const http = axios;
       console.log(val)
-      //console.log(val, this.autocompleteTags)
-      
-        this.showTagModal(val);
-      
+      this.showTagModal(val);
     },
     showTagModal(val){
       this.$q.notify({
-          message: `Essa palavra-chave não existe deseja adicionar ${val}?`,
+          message: `Essa palavra-chave não existe, deseja adicionar ${val}?`,
           multiLine: true,
           color: "grey-4",
           textColor: "primary",
@@ -784,9 +828,6 @@ export default {
         }
       });
     },
-    lengths(){
-
-    }
   }
 };
 </script>
