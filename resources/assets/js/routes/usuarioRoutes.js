@@ -7,7 +7,6 @@ import {
   ContactForm,
   ConfirmationEmailForm,
   MudarSenhaForm,
-  Footer,
 } from "@forms/auth-contato";
 import Default from "@layout/Default";
 import User from "@pages/User";
@@ -104,18 +103,6 @@ const usuarioRoutes = {
       meta: {
         requiresAuth: false,
         title: "Contatenos",
-        layout: Default
-      }
-    },
-    {
-      path: "newsletter/:action",
-      name: "Footer",
-      components: {
-        user: Footer
-      },
-      meta: {
-        requiresAuth: false,
-        title: "Newsletter",
         layout: Default
       }
     }

@@ -673,12 +673,9 @@ import {
   QItemLabel,
 } from "quasar";
 import DeleteFiles from "./DeleteFiles";
-import { useQuasar } from "quasar";
 
 export default {
-  setup() {
-    const $q = useQuasar();
-  },
+  
   name: "ConteudoForm",
   mixins: [PasteCapture],
   directives: {

@@ -1,17 +1,12 @@
 <template>
   <section class="q-pa-xs q-pb-lg">
-     
     <header class="head q-pa-md">
-      
       <h1 class="text-h4 color-primary" v-if="!isLoading">
         {{canal && canal.options ? canal.options.extend_name : canal.name }}
 
       </h1>
-      
       <q-skeleton v-else style="width: 380px; height: 85px" type="text" animation="pulse-x" />
-      
     </header>
-
     <q-tabs
       :style="`background-color:${color}`"
       class="text-white shadow-3"
@@ -38,10 +33,6 @@
         inset
       />
       <OrderBy></OrderBy>
-      <q-separator
-        vertical
-        inset
-      />
       <q-route-tab
         name="busca"
         label="BUSCA AVANÇADA"
@@ -55,30 +46,25 @@
       />
       <q-route-tab
         name="inicio"
-        label="SOBRE"
+        label="SOBRE O CANAL"
         icon="info"
         :to="{ name: 'Inicio', params: { slug: $route.params.slug } }"
         v-if="canal && canal.options && canal.options.has_home"
       />
 
+      <!--q-input bg-color="lime-1" 
+        color="lime-11" 
+        label-color="orange" 
+        debounce="500" 
+        filled 
+        dense
+        label="Busca do canal">
+
+      </q-input-->
     </q-tabs>
-
-    <q-card class="q-my-sm q-pl-sm">
-
-      <q-badge
-        color="white"
-        text-color="dark"
-        v-if="paginator && !isLoading"
-        v-text="totalCount"
-      />
-
-      <q-skeleton
-        v-else
-        style="width: 300px; height: 13px"
-        type="text"
-        animation="pulse-x"
-      />
-
+    <q-card class="q-my-sm">
+      <q-badge color="white" text-color="dark" v-if="paginator && !isLoading" v-text="totalCount" />
+      <q-skeleton v-else style="width: 300px; height: 13px" type="text" animation="pulse-x"/>
     </q-card>
 
     <router-view name="canal"></router-view>

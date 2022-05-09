@@ -29,12 +29,6 @@ use App\Http\Controllers\{
     NewsletterController,
     ContentPaginaInicialController
 };
-<<<<<<< HEAD
-//use App\Models\ContentPaginaInicial;
-=======
-
-/** FILE */
->>>>>>> f9151613628e0cb8cdce5a1fe421eb5825b61663
 
 Route::group(['prefix' => 'files', 'as' => 'files.'], function () {
     Route::get('/galeria', [FileController::class, 'getGallery'])->name('lista.galeria.imagens');
@@ -42,7 +36,6 @@ Route::group(['prefix' => 'files', 'as' => 'files.'], function () {
     //Route::post('/{id}', [FileController::class, 'createFile'])->name('adiciona');
 });
 /** HOME */
-
 Route::get('/autocompletar', [HomeController::class, 'autocomplete'])->name('autocompletar.home');
 Route::get('/layout', [HomeController::class, 'getLayout'])->name('lista.links');
 
@@ -65,7 +58,7 @@ Route::get('/quantidade_arquivos/{id}', [TipoController::class, 'getQuantidadeTi
 
 /** Pegar Conteúdo página inicial */
 //Route::get('/content_pagina_inicial/', [ContentPaginaInicialController::class, 'index'])->name('listar');
-Route::get('/content_pagina_inicial/conteudo', [ContentPaginaInicialController::class, 'getConteudo'])->name('conteudo');
+//Route::get('/content_pagina_inicial/conteudo', [ContentPaginaInicialController::class, 'getConteudo'])->name('conteudo');
 
 /** DENUNCIA E FALE CONOSCO */
 Route::post('/contato', [ContatoController::class, 'create'])->name('criar.faleconosco.contato');
