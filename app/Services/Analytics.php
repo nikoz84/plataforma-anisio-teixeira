@@ -126,6 +126,44 @@ class Analytics
         return DB::select($sql, [$this->data_inicio, $this->data_fim]);
     }
 
+
+
+    public function maisBaixados()
+    {
+        $sql = "SELECT c.title as name,
+                c.qt_downloads as total, id
+                FROM conteudos AS c
+                ORDER BY c.qt_downloads DESC 
+                LIMIT 10";
+        return DB::select($sql); 
+    }
+
+    public function maisAcessados()
+    {
+        $sql = "SELECT c.title as name, 
+            c.qt_access as total, id
+            FROM conteudos AS c
+            ORDER BY c.qt_access DESC 
+            LIMIT 10";
+        return DB::select($sql);
+    }
+
+    public function maisBuscadas()
+    {
+        $sql = "SELECT name, searched as total, id 
+            FROM tags 
+            ORDER BY searched DESC LIMIT 10";
+        return DB::select($sql);
+    } 
+
+    public function aplicativosMaisVisualizados()
+    {
+        $sql = "SELECT name ,
+            cast(options->>'qt_access' AS INTEGER) as total, id 
+            from aplicativos order by total DESC LIMIT 10";
+        return DB::select($sql);
+    }
+
     public function getData()
     {
         $wordpress = new WordpressService($this->request);
@@ -170,6 +208,34 @@ class Analytics
                 $this->render_graph = true;
                 return $this->getSeries($this->perTypeOfMidia(), "Tipos de mídia");
                 break;
+            case 'qt_downloads':
+                $this->render_graph = true;
+                return $this->getSeries(
+                    $this->maisBaixados(),
+                    "10 conteúdos mais baixados"
+                );
+                break;
+            case 'qt_access':
+                $this->render_graph = true;
+                return $this->getSeries(
+                    $this->maisAcessados(),
+                    "10 conteúdos mais acessados"
+                );
+                break;
+            case 'searched_tags':
+                $this->render_graph = true;
+                return $this->getSeries(
+                    $this->maisBuscadas(),
+                    "10 tags mais buscadas"
+                );
+                break;
+              case 'aplicativo_qt_access':
+                $this->render_graph = true;
+                return $this->getSeries(
+                    $this->aplicativosMaisVisualizados(),
+                    "10 aplicativos mais visualizados"
+                );
+                break;  
             default:
                 return $this->postsPerUser();
                 break;

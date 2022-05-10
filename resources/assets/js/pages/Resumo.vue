@@ -86,6 +86,10 @@ export default {
         { label: "Catalogação mensal por usuário", value: "user_montly" },
         { label: "Catalogação total mensal", value: "per_month" },
         { label: "Catalogação total mensal por canal", value: "canal_montly" },
+        { label: "Conteúdos mais baixados", value: "qt_downloads" },
+        { label: "Conteúdos mais acessados", value: "qt_access"}, 
+        { label: "Tags mais procuradas", value: "searched_tags"},//searched_tags
+        { label: "Aplicativos mais visualizados", value: "aplicativo_qt_access"},
         { label: "Catalogação BLOG", value: "wordpress_data" }
       ],
       chartOptions: {
