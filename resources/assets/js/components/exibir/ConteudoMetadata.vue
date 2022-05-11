@@ -54,7 +54,7 @@
                 Publicador(a):
             </strong>
             <div class="flex justify-center q-mt-md wordbreak" v-if="conteudo && conteudo.user">
-                <a class="tag text-primary" v-html="conteudo.user ? conteudo.user.name: null"
+                <a class="tag" v-html="conteudo.user ? conteudo.user.name: null"
                         title="Outros conteúdos deste publicador"
                         :href="`/recursos-educacionais/listar?publicador=${conteudo.user.id}`">
                         
@@ -67,7 +67,7 @@
                 <a v-for="(componente) in conteudo.componentes"
                         :key="`c-${componente.id}`"
                         v-html="componente.name"
-                        class="tag text-primary q-ml-lg q-mt-md"
+                        class="tag q-ml-lg q-mt-md"
                         :href="`/recursos-educacionais/listar?componentes=${componente.id}`"
                     :title="`Procurar por: ${componente.name}`"
                     >
