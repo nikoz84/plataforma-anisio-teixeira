@@ -164,6 +164,44 @@ class Analytics
         return DB::select($sql);
     }
 
+    public function registroMesOcorrencia()
+    {
+       $sql = "SELECT count(id) as total, 
+        CASE WHEN action = 'sugerencia' THEN 'sugestao' ELSE action END as name, 
+        CASE WHEN EXTRACT(MONTH from created_at) = 1 THEN
+          'Janeiro'
+       WHEN EXTRACT(MONTH from created_at) = 2 THEN
+          'Fevereiro'
+       WHEN EXTRACT(MONTH from created_at) = 3 THEN
+          'Março'
+       WHEN EXTRACT(MONTH from created_at) = 4 THEN
+          'Abril'
+       WHEN EXTRACT(MONTH from created_at) = 5 THEN
+          'Maio'
+       WHEN EXTRACT(MONTH from created_at) = 6 THEN
+          'Junho'
+       WHEN EXTRACT(MONTH from created_at) = 7 THEN
+          'Julho'
+       WHEN EXTRACT(MONTH from created_at) = 8 THEN
+          'Agosto'
+       WHEN EXTRACT(MONTH from created_at) = 9 THEN
+          'Setembro'
+       WHEN EXTRACT(MONTH from created_at) = 10 THEN
+          'Outubro'
+       WHEN EXTRACT(MONTH from created_at) = 11 THEN
+          'Novembro'
+       WHEN EXTRACT(MONTH from created_at)= 12 THEN
+       'Dezembro'  
+        END AS month
+        FROM contatos 
+        where created_at between '2020-01-01' and '2022-05-01'
+        group by EXTRACT(MONTH from created_at), action
+        order by EXTRACT(MONTH from created_at)";
+    
+        return DB::select($sql);
+
+    }
+
     public function getData()
     {
         $wordpress = new WordpressService($this->request);
@@ -234,6 +272,13 @@ class Analytics
                 return $this->getSeries(
                     $this->aplicativosMaisVisualizados(),
                     "10 aplicativos mais visualizados"
+                );
+                break;  
+                case 'registro_mes_ocorrencia':
+                $this->render_graph = true;
+                return $this->getSeries(
+                    $this->registroMesOcorrencia(),
+                    "Registros de ocorrência de formulário de contatos"
                 );
                 break;  
             default:
