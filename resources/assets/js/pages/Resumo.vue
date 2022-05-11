@@ -88,8 +88,9 @@ export default {
         { label: "Catalogação total mensal por canal", value: "canal_montly" },
         { label: "Conteúdos mais baixados", value: "qt_downloads" },
         { label: "Conteúdos mais acessados", value: "qt_access"}, 
-        { label: "Tags mais procuradas", value: "searched_tags"},//searched_tags
+        { label: "Tags mais procuradas", value: "searched_tags"},
         { label: "Aplicativos mais visualizados", value: "aplicativo_qt_access"},
+        { label: "Registro de ocorrência formulário de contatos", value: "registro_mes_ocorrencia"},
         { label: "Catalogação BLOG", value: "wordpress_data" }
       ],
       chartOptions: {
