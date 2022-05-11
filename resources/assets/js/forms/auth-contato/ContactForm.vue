@@ -138,8 +138,8 @@ export default {
         case "reportar":
           return "Reportar Problema";
           break;
-        case "sugerencia":
-          return "Sugerência de Conteúdo";
+        case "sugestao":
+          return "Sugestão de Conteúdo";
           break;
         default:
           return "Outros";

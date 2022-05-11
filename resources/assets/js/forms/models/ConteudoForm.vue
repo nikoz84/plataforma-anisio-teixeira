@@ -367,11 +367,13 @@
         icon="add_comment"
       >
 
-        <b>IMAGEN ASSOCIADA, ARQUIVO PARA DOWNLOAD, GUIA PEDAGÓGICO, URL SITE, APROVAR CONTEÚDO, MARCAR COMO DESTAQUE, TERMOS DE USO</b>
+      <b>IMAGEN ASSOCIADA, ARQUIVO PARA DOWNLOAD, GUIA PEDAGÓGICO, URL SITE, APROVAR CONTEÚDO, MARCAR COMO DESTAQUE, TERMOS DE USO</b>
+      
+      
         <q-img 
           loading="lazy" 
           width="640" 
-          height="460" 
+          height="460"
           :src="conteudo.image"
           placeholder-src="/img/fundo-padrao.svg"
           alt="imagem de destaque"/>
@@ -503,7 +505,7 @@
 </template>
 
 <script>// @ts-nocheck
-import { ShowErrors, ParentAndChildSelect } from "@forms/shared";
+import { ShowErrors } from "@forms/shared";
 import { PasteCapture } from "@mixins/RemoveFormat";
 import {
   QInput,
@@ -551,7 +553,6 @@ export default {
     QStepperNavigation,
     ShowErrors,
     QDialog,
-    ParentAndChildSelect
   },
   data() {
     return {
@@ -604,7 +605,6 @@ export default {
         new_tag: ""
       },
       tab: 'componentes',
-      step: 1,
       allCheckbox: []
     };
   },
