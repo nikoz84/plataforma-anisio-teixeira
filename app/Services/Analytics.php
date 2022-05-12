@@ -146,6 +146,40 @@ class Analytics
             ORDER BY c.qt_access DESC 
             LIMIT 10";
         return DB::select($sql);
+    } 
+
+    public function TotalConteudosAcessadosUltimostresMeses()
+    {
+        $sql = "SELECT id, title as name, created_at::DATE as data,
+         sum(qt_access) as total, 
+         CASE WHEN EXTRACT(MONTH from created_at) = 1 THEN
+          'Janeiro'
+       WHEN EXTRACT(MONTH from created_at) = 2 THEN
+          'Fevereiro'
+       WHEN EXTRACT(MONTH from created_at) = 3 THEN
+          'Março'
+       WHEN EXTRACT(MONTH from created_at) = 4 THEN
+          'Abril'
+       WHEN EXTRACT(MONTH from created_at) = 5 THEN
+          'Maio'
+       WHEN EXTRACT(MONTH from created_at) = 6 THEN
+          'Junho'
+       WHEN EXTRACT(MONTH from created_at) = 7 THEN
+          'Julho'
+       WHEN EXTRACT(MONTH from created_at) = 8 THEN
+          'Agosto'
+       WHEN EXTRACT(MONTH from created_at) = 9 THEN
+          'Setembro'
+       WHEN EXTRACT(MONTH from created_at) = 10 THEN
+          'Outubro'
+       WHEN EXTRACT(MONTH from created_at) = 11 THEN
+          'Novembro'
+       WHEN EXTRACT(MONTH from created_at)= 12 THEN
+       'Dezembro'  
+        END AS month from conteudos
+        WHERE created_at between '2021-01-01' and '2021-04-01' GROUP BY MONTH, data, id, title ORDER BY TOTAL DESC LIMIT 10";
+
+        return DB::select($sql);
     }
 
     public function maisBuscadas()
@@ -281,6 +315,13 @@ class Analytics
                     "Registros de ocorrência de formulário de contatos"
                 );
                 break;  
+                 case 'acessados_ultimos_meses':
+                $this->render_graph = true;
+                return $this->getSeries(
+                    $this->TotalConteudosAcessadosUltimostresMeses(),
+                    "10 conteúdos mais visualizados nos últimos 3 meses"
+                );
+                break; 
             default:
                 return $this->postsPerUser();
                 break;
