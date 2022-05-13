@@ -6,7 +6,6 @@
   "phpcs.enable": true,
   "phpcs.standard": "PSR2",
   "editor.renderWhitespace": "all",
-  "editor.renderIndentGuides": true,
   "autoimport.autoComplete": true,
   "files.eol": "\n",
   "auto-close-tag.enableAutoCloseTag": true,
@@ -59,5 +58,6 @@
   "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
   "javascript.format.placeOpenBraceOnNewLineForControlBlocks": false,
   "javascript.format.placeOpenBraceOnNewLineForFunctions": false,
-  "vetur.format.defaultFormatter.html": "js-beautify-html"
+  "vetur.format.defaultFormatter.html": "js-beautify-html",
+  "editor.guides.indentation": true
 }
