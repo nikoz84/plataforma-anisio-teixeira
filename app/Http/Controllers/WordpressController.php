@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ApiController;
 use App\Models\Wordpress\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class WordpressController extends ApiController
 {
@@ -24,25 +25,20 @@ class WordpressController extends ApiController
      */
     public function index()
     {
-        $wordpress = new WordpressService($this->request);
+        //$wordpress = new WordpressService($this->request);
 
-        return $this->showAsPaginator($wordpress->getPosts());
+        //return $this->showAsPaginator($wordpress->getPosts());
+        $search = Post::query();
+        if (request('term')) {
+            $term = "%{request('term')}%";
+            $search->where('post_type', '=', 'post')
+            ->where('post_status', '=', 'publish')
+            ->whereRaw("post_title like ?", [$term]);
+        }
+        $paginator = $search->orderBy('post_date', 'DESC')->paginate(10);
+        return $this->showAsPaginator($paginator);
     }
-    /**
-     *  Search Database Information.
-     *  Busca informações do Banco de Dados.
-     *
-     * @param string $termo identificador único
-     * @param \App\Wordpress $wordpress
-     * @return \App\Controller\ApiResponser 
-     * retorna Json
-     */
-    public function search($termo)
-    {
-        $limit = $this->request->query('limit', 6);
-        $page = $this->request->query('page', 1);
-        $search = "%{$termo}%";
-    }
+    
     /**
      * Select a resource by id.
      * Seleciona um recurso por id.
@@ -69,10 +65,16 @@ class WordpressController extends ApiController
         $wordpress->getCatalogacao();
     }
 
-    public function postagens()
+    public function search($term)
     {
-       $wordpress = Post::where('pw_title','LIKE', '%$term%');
-
-       return $this->successResponse($wordpress);
+        $search = Post::query();
+        if (request('term')) {
+            $term = "%{$term}%";
+            $search->where('post_type', '=', 'post')
+            ->where('post_status', '=', 'publish')
+            ->whereRaw("post_title like ?", [$term]);
+        }
+        
+        return $search->orderBy('post_date', 'DESC')->paginate(10);
     }
 }

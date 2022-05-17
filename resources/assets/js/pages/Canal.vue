@@ -28,7 +28,7 @@
         :to="{ name: 'Listar', params: { slug: $route.params.slug } }"
       />
       <OrderBy></OrderBy>
-      <q-space />
+      
       <q-route-tab
         name="busca"
         label="BUSCA AVANÇADA"
@@ -45,8 +45,18 @@
       />
     </q-tabs>
     <q-card class="q-my-sm q-pl-sm">
-      <q-badge color="white" text-color="dark" v-if="paginator && !isLoading" v-text="totalCount" />
-      <q-skeleton v-else style="width: 300px; height: 13px" type="text" animation="pulse-x"/>
+      <q-card-section>
+        <q-badge color="accent" text-color="white" v-if="paginator && !isLoading" v-text="totalCount" />
+        <q-skeleton v-else style="width: 300px; height: 13px" type="text" animation="pulse-x"/>
+      </q-card-section>
+      <q-card-section v-if="$route.params.slug === 'blog'">
+        <q-input v-model="term" rounded outlined bottom-slots placeholder="Busca no blog"  :loading="loadingStateSearch">
+          <template v-slot:append>
+            <q-icon v-if="term !== ''" name="close" @click="term = ''" class="cursor-pointer" />
+            <q-icon name="search" class="cursor-pointer" @click="searchInBlog"/>
+          </template>
+        </q-input>
+      </q-card-section>
     </q-card>
     
     <router-view name="canal"></router-view>
@@ -76,6 +86,7 @@ import {
   QSkeleton,
   QBanner
 } from "quasar";
+import axios from "axios";
 
 export default {
   props: {
@@ -108,13 +119,16 @@ export default {
     return {
       options: [],
       loadingState: false,
-      categoryName: ""
+      categoryName: "",
+      term: "",
+      loadingStateSearch: false
     };
   },
   mounted() {
     this.getCanalBySlug(this.$route.params.slug).then(() => {
       this.$gtag.pageview(this.$route.params.slug);
       this.fetchData();
+      
     });
   },
   watch: {
@@ -165,6 +179,11 @@ export default {
           return this.fetchConteudos(query);
           break;
       }
+    },
+    async searchInBlog(){
+      console.log(this.term)
+      const {data} = await axios.get(`/postagens/search/${this.term}`)
+      console.log(data)
     }
   }
 };

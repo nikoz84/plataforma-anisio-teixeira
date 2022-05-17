@@ -153,7 +153,7 @@ Route::get('/postagens', function(){
     return response()->json($postagens);
 });
 */
-Route::get('/postagens/search/{term}', WordpressController::class, 'postagens');
+Route::get('/postagens/search/{term}', [WordpressController::class, 'search']);
 
 /***********************************************
  *
