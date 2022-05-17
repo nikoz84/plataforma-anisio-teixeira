@@ -9,4 +9,5 @@ class Post extends Model
 {
     use HasFactory;
     protected $connection = 'mysql';
+    protected $table = 'pw_posts';
 }

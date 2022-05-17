@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\WordpressService;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ApiController;
+use App\Models\Wordpress\Post;
 use Illuminate\Http\Request;
 
 class WordpressController extends ApiController
@@ -66,5 +67,12 @@ class WordpressController extends ApiController
         $wordpress = new WordpressService($this->request);
 
         $wordpress->getCatalogacao();
+    }
+
+    public function postagens()
+    {
+       $wordpress = Post::where('pw_title','LIKE', '%$term%');
+
+       return $this->successResponse($wordpress);
     }
 }
