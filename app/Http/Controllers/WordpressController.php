@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ApiController;
 use App\Models\Wordpress\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class WordpressController extends ApiController
 {
@@ -25,12 +24,10 @@ class WordpressController extends ApiController
      */
     public function index()
     {
-        //$wordpress = new WordpressService($this->request);
-
-        //return $this->showAsPaginator($wordpress->getPosts());
+        $term = $this->request->input('term', '');
         $search = Post::query();
-        if (request('term')) {
-            $term = "%{request('term')}%";
+        if ($term) {
+            $term = "%{$term}%";
             $search->where('post_type', '=', 'post')
             ->where('post_status', '=', 'publish')
             ->whereRaw("post_title like ?", [$term]);
@@ -46,11 +43,11 @@ class WordpressController extends ApiController
      * @param Integer $id
      * @return json
      */
-    public function getById()
+    public function getById($id)
     {
-        $wordpress = new WordpressService($this->request);
-
-        return $this->successResponse($wordpress->getOne(), "", 200);
+        $post = Post::with(['user'])->findOrFail($id);
+        
+        return $this->successResponse($post);
     }
     /**
      * Method that selects id by statistics.
