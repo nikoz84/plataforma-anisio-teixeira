@@ -145,6 +145,7 @@ export default {
   },
   created() {
     this.getLayout();
+    this.$q.dark.isActive
   },
   computed: {
     ...mapState(["isLogged", "links", "canal", "sidebar", "layout", "openSideBar"])
