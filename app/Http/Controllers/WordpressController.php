@@ -26,16 +26,17 @@ class WordpressController extends ApiController
     {
         $term = $this->request->input('term', '');
         $search = Post::query();
+        $search->with(['user']);
         if ($term) {
             $term = "%{$term}%";
-            $search->where('post_type', '=', 'post')
-            ->where('post_status', '=', 'publish')
-            ->whereRaw("post_title like ?", [$term]);
+            $search->whereRaw("post_title like ?", [$term]);
         }
+        $search->where('post_type', '=', 'post')
+            ->where('post_status', '=', 'publish');
         $paginator = $search->orderBy('post_date', 'DESC')->paginate(10);
         return $this->showAsPaginator($paginator);
     }
-    
+
     /**
      * Select a resource by id.
      * Seleciona um recurso por id.
@@ -46,7 +47,7 @@ class WordpressController extends ApiController
     public function getById($id)
     {
         $post = Post::with(['user'])->findOrFail($id);
-        
+
         return $this->successResponse($post);
     }
     /**
@@ -68,10 +69,10 @@ class WordpressController extends ApiController
         if (request('term')) {
             $term = "%{$term}%";
             $search->where('post_type', '=', 'post')
-            ->where('post_status', '=', 'publish')
-            ->whereRaw("post_title like ?", [$term]);
+                ->where('post_status', '=', 'publish')
+                ->whereRaw("post_title like ?", [$term]);
         }
-        
+
         return $search->orderBy('post_date', 'DESC')->paginate(10);
     }
 }

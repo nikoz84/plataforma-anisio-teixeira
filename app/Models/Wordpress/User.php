@@ -9,7 +9,7 @@ class User extends Model
 {
     use HasFactory;
     protected $connection = 'mysql';
-    protected $table = 'pw_users';
+    protected $table = 'at_users';
 
     public function userMeta()
     {
