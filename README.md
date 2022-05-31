@@ -2,7 +2,7 @@
 
 O Ambiente Educacional Web – AEW é um projeto de aprendizagem (Baseado em Laravel 5.8) voltado ao compartilhamento de conteúdos digitais através de licenças livres, disponibilizado na internet no endereço (http://pat.educacao.ba.gov.br) para acesso e utilização de todos.
 
-Você poderá criar canais dinámicos, conteúdos digitais, aplicativos educacionais, sites temáticos.
+Você poderá criar canais dinámicos, conteúdos digitais, aplicativos educacionais e sites temáticos.
 
 ## SOFTWARE LIVRE
 
@@ -20,7 +20,8 @@ Criamos uma API RESTFUL que se comunica com frontend feito em VUE.js permitindo 
 
 ## COMO INSTALAR
 
-Faça uma copia do arquivo .env.example, e renomee para .env, em este arquivo você vai adicionar as seguintes configurações:
+Faça uma copia do arquivo .env.example, e renomeie para .env. 
+Neste arquivo você vai adicionar as seguintes configurações:
 
 - Banco de dados
 - APP_KEY: variavel global de verificação da aplicação em base 64: `php artisan key:generate;`
@@ -44,7 +45,6 @@ Instalar as dependências do Vuejs com npm, lembre ter instalado o NODEJS:
 
 `npm install`
 
-
 ### crlf
 
 > Nota: Se trabalhar com windows ou linux o git pode ter uma incosistência para converter como terminam as linhas de um arquivo de texto, para evitar esse comportamento adicione nas configurações gerais do git `$ git config core.autocrlf true`
@@ -56,9 +56,11 @@ Crie o esquema do banco de dados no Postgresql com o comando:
 Agora podemos arrancar o servidor embutido do framework:
 
 `$ php artisan serve`
+<br>
+### Links úteis
+<hr>
 
-
-[novas funcionalidades](https://github.com/nikoz84/plataforma-anisio-teixeira/blob/master/Versão.md)
-[Como criar tags](https://github.com/nikoz84/plataforma-anisio-teixeira/blob/master/TAGS.md)
-
+[Novas funcionalidades](https://github.com/nikoz84/plataforma-anisio-teixeira/blob/master/Versão.md) <br>
+[Como criar tags](https://github.com/nikoz84/plataforma-anisio-teixeira/blob/master/TAGS.md) <br>
+[Git Flow](https://blog.betrybe.com/git/git-flow/)
 
