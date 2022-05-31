@@ -9,6 +9,6 @@ class PostMeta extends Model
 {
     use HasFactory;
     protected $connection = 'mysql';
-    protected $table = 'at_postmeta';
+    protected $table = 'pw_postmeta';
     protected $primaryKey = 'meta_id';
 }

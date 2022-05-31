@@ -10,13 +10,13 @@
               </header>
             </q-card-section>
             <q-card-section :class="`q-ma-lg text-justify`" 
-                            v-html="postContent">
+                            v-html="post.post_content">
             </q-card-section>
             <q-card-section>
-              Publicado por: <b>{{post.author}}</b>
+              Publicado por: <b>{{post.user.display_name}}</b>
             </q-card-section>
             <q-card-section>
-              Publicado em: <b>{{post.created_at}}</b>
+              Publicado em: <b>{{post.formated_date}}</b>
             </q-card-section>
             <q-card-section>
               <TagList :items="post.categories" title="Categorias" slug="busca"></TagList>

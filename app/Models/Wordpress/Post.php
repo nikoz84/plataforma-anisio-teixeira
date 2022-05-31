@@ -6,16 +6,16 @@ use App\Models\Wordpress\User;
 use App\Models\Wordpress\PostMeta;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
+use App\Helpers\TransformDate;
 
 class Post extends Model
 {
     use HasFactory;
     protected $connection = 'mysql';
-    protected $table = 'at_posts';
+    protected $table = 'pw_posts';
     protected $primaryKey = 'ID';
 
-    public $appends = ['title', 'image', 'url_exibir'];
+    public $appends = ['title', 'image', 'url_exibir', 'formated_date'];
 
     public function user()
     {
@@ -39,6 +39,11 @@ class Post extends Model
 
     public function getUrlExibirAttribute()
     {
-        return "/blog/postagem/exibir/{$this->getAttribute('ID')}";
+        return "/blog/conteudo/exibir/{$this->getAttribute('ID')}";
+    }
+
+    public function getFormatedDateAttribute()
+    {
+        return TransformDate::format($this['post_date']);
     }
 }

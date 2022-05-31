@@ -16,7 +16,6 @@ export default {
     NotFound
   },
   created() {
-
     switch (this.$route.params.slug) {
       case "aplicativos-educacionais":
         this.fetchAplicativo(this.$route.params);
