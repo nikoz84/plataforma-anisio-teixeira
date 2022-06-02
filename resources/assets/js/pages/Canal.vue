@@ -12,8 +12,9 @@
     </header>
     
     <q-tabs
-      :style="`background-color:${color}`" 
-      class="text-white shadow-3"
+      active-bg-color="primary"
+      bg-color="lime-5"
+      class="bg-primary text-white shadow-2"
       no-caps
       ripple
       dense
@@ -169,3 +170,8 @@ export default {
   }
 };
 </script>
+<style lang="stylus" scoped>
+
+
+
+</style>
