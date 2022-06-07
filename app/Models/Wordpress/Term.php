@@ -11,7 +11,7 @@ class Term extends Model
     use HasFactory;
 
     protected $connection = 'mysql';
-    protected $table = "at_terms";
+    protected $table = "pw_terms";
     protected $primaryKey = 'ID';
 
     public function post()

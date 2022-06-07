@@ -14,7 +14,7 @@ class Post extends Model
 {
     use HasFactory;
     protected $connection = 'mysql';
-    protected $table = 'at_posts';
+    protected $table = 'pw_posts';
     protected $primaryKey = 'ID';
 
     public $appends = ['title', 'image', 'url_exibir', 'formated_date', 'terms'];
@@ -52,10 +52,10 @@ class Post extends Model
 
     public function getTermsAttribute()
     {
-        $sql = "select ate.term_id, att.taxonomy, ate.name, ate.slug  from at_posts ap 
-            join at_term_relationships atr on atr.object_id = ap.ID 
-            join at_term_taxonomy att on att.term_taxonomy_id = atr.term_taxonomy_id
-            join at_terms ate on ate.term_id = att.term_id  
+        $sql = "select ate.term_id, att.taxonomy, ate.name, ate.slug  from pw_posts ap 
+            join pw_term_relationships atr on atr.object_id = ap.ID 
+            join pw_term_taxonomy att on att.term_taxonomy_id = atr.term_taxonomy_id
+            join pw_terms ate on ate.term_id = att.term_id  
             where ap.post_status = 'publish' 
             and ap.post_type = 'post' 
          and ap.ID = ?";

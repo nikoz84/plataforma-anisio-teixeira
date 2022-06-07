@@ -9,7 +9,7 @@ class UserMeta extends Model
 {
     use HasFactory;
     protected $connection = 'mysql';
-    protected $table = 'at_usermeta';
+    protected $table = 'pw_usermeta';
 
 
     public $appends = ['role'];
