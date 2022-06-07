@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\TransformDate;
+use App\Models\Wordpress\TermTaxonomy;
 
 class Post extends Model
 {
@@ -17,7 +18,7 @@ class Post extends Model
     protected $table = 'pw_posts';
     protected $primaryKey = 'ID';
 
-    public $appends = ['title', 'image', 'url_exibir', 'formated_date', 'terms'];
+    public $appends = ['title', 'image', 'url_exibir', 'formated_date', 'tags', 'categories'];
 
     public function user()
     {
@@ -40,6 +41,41 @@ class Post extends Model
         return $this['post_title'];
     }
 
+    public function terms()
+    {
+
+        return $this->belongsToMany(TermTaxonomy::class, 'pw_term_relationships', 'object_id', 'term_taxonomy_id')->with('term');
+    }
+
+    public function getTagsAttribute()
+    {
+        $terms = $this->terms()->get();
+        
+        return $this->mapTerms($terms, 'post_tag');
+    }
+
+    public function getCategoriesAttribute()
+    {
+        $terms = $this->terms()->get();
+        
+        return $this->mapTerms($terms, 'category');
+    }
+
+    protected function mapTerms($items, $type)
+    {
+        return $items->map(function($item) use ($type) {
+            if($item->taxonomy === $type){
+                return [
+                    'id' => $item->term_id,
+                    'taxonomy' => $item->taxonomy,
+                    'name' => $item->term->name,
+                    'term_id' => $item->term->term_id,
+                    'slug' => $item->term->slug,
+                ];
+            }
+        })->whereNotNull();
+    }
+
     public function getUrlExibirAttribute()
     {
         return "/blog/conteudo/exibir/{$this->getAttribute('ID')}";
@@ -50,18 +86,5 @@ class Post extends Model
         return TransformDate::format($this['post_date']);
     }
 
-    public function getTermsAttribute()
-    {
-        $sql = "select ate.term_id, att.taxonomy, ate.name, ate.slug  from pw_posts ap 
-            join pw_term_relationships atr on atr.object_id = ap.ID 
-            join pw_term_taxonomy att on att.term_taxonomy_id = atr.term_taxonomy_id
-            join pw_terms ate on ate.term_id = att.term_id  
-            where ap.post_status = 'publish' 
-            and ap.post_type = 'post' 
-         and ap.ID = ?";
-
-        $db = collect(DB::connection('mysql')->select(DB::raw($sql), [$this->ID]));
-
-        return $db->toArray();
-    }
+    
 }

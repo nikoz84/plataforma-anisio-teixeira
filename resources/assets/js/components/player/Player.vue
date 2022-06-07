@@ -1,6 +1,5 @@
 <template>
   <div class="row justify-center" v-if="conteudo && conteudo.tipo && conteudo.arquivos">
-      
       <q-media-player
         type="video"
         :sources="sources"

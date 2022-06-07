@@ -14,7 +14,7 @@ const ChunkRenamePlugin = require("webpack-chunk-rename-plugin");
 
 mix.webpackConfig({
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
+    extensions: ['.js', '.vue', '.json', 'styl'],
     alias: {
     'vue$': 'vue/dist/vue.esm.js',
     '@': __dirname + '/resources/assets/js',
@@ -23,7 +23,8 @@ mix.webpackConfig({
     '@forms': __dirname + '/resources/assets/js/forms',
     '@pages': __dirname + '/resources/assets/js/pages',
     '@mixins': __dirname + '/resources/assets/js/mixins',
-    '@layout': __dirname + '/resources/assets/js/layout'
+    '@layout': __dirname + '/resources/assets/js/layout',
+    //'@': __diname + '/resources/assets/stylus'
     }
   }
 });

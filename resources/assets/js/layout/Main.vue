@@ -6,7 +6,11 @@
 
 <script>
 export default {
-    name: "Main"
+    name: "Main",
+    mounted() {
+      //this.$q.dark.set(true) 
+      //console.log(this.$q.dark.mode)
+    },
 }
 </script>
 

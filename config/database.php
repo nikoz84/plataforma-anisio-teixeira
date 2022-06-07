@@ -52,6 +52,7 @@ return [
             'prefix' => '',
             'strict' => true,
             'engine' => null,
+            'extra_prefix' => env('DB_PREFIX_WP', 'wp_')
         ],
 
         'pgsql' => [

@@ -48,9 +48,11 @@ class WordpressController extends ApiController
      */
     public function getById($id)
     {
-        $term = Post::findOrFail($id);
+        $post = Post::findOrFail($id);
 
-        return $this->successResponse($term);
+    
+        
+        return $this->successResponse($post);
     }
     /**
      * Method that selects id by statistics.
