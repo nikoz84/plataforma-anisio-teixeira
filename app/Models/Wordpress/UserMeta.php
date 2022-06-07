@@ -9,7 +9,7 @@ class UserMeta extends Model
 {
     use HasFactory;
     protected $connection = 'mysql';
-    protected $table = 'pw_usermeta';
+    protected $table = 'at_usermeta';
 
 
     public $appends = ['role'];
@@ -17,6 +17,6 @@ class UserMeta extends Model
 
     public function getRoleAttribute()
     {
-        return unserialize($this['meta_value']); 
+        return unserialize($this['meta_value']);
     }
 }

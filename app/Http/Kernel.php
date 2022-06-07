@@ -21,7 +21,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrustProxies::class,
         \App\Http\Middleware\Test::class,
         \Fruitcake\Cors\HandleCors::class,
-        
+
     ];
 
     /**
@@ -39,16 +39,16 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\CacheControl::class,
-            
+
             //\App\Http\Middleware\HandleInertiaRequests::class,
-            
+
         ],
         //'throttle' => ['throttle:120,1'],
         'api' => [
             'throttle:130,1',
             'bindings',
         ],
-        'log' =>[
+        'log' => [
             \App\Http\Middleware\ViewLog::class,
         ]
 

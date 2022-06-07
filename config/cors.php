@@ -31,7 +31,7 @@ return [
     /*
      * Matches the request origin. `[*]` allows all origins.
      */
-    'allowed_origins' => ['localhost', '127.0.0.1:8000', 'pat.educacao.ba.gov.br'],
+    'allowed_origins' => ['localhost', '127.0.0.1:8000', 'pat.educacao.ba.gov.br', 'pat.teste.com'],
 
     /*
      * Matches the request origin with, similar to `Request::is()`
@@ -57,4 +57,6 @@ return [
      * Sets the Access-Control-Allow-Credentials header.
      */
     'supports_credentials' => true,
+
+
 ];

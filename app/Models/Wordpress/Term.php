@@ -4,15 +4,18 @@ namespace App\Models\Wordpress;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Env;
 
-class User extends Model
+class Term extends Model
 {
     use HasFactory;
-    protected $connection = 'mysql';
-    protected $table = 'at_users';
 
-    public function userMeta()
+    protected $connection = 'mysql';
+    protected $table = "at_terms";
+    protected $primaryKey = 'ID';
+
+    public function post()
     {
-        return $this->hasMany(UserMeta::class, 'user_id', 'ID')->where('meta_key', 'pw_capabilities');
+        return $this->belongsTo(Post::class, 'ID');
     }
 }

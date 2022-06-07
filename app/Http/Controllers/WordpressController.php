@@ -6,6 +6,7 @@ use App\Services\WordpressService;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ApiController;
 use App\Models\Wordpress\Post;
+use App\Models\Wordpress\Term;
 use Illuminate\Http\Request;
 
 class WordpressController extends ApiController
@@ -25,15 +26,16 @@ class WordpressController extends ApiController
     public function index()
     {
         $term = $this->request->input('term', '');
-        $search = Post::query();
-        $search->with(['user']);
+        $post = Post::query();
+        //$post->select(['ID', 'post_title', 'post_type', 'post_status', 'post_excerpt', 'post_date']);
         if ($term) {
             $term = "%{$term}%";
-            $search->whereRaw("post_title like ?", [$term]);
+            $post->whereRaw("post_title like ?", [$term]);
         }
-        $search->where('post_type', '=', 'post')
+        $post->where('post_type', '=', 'post')
             ->where('post_status', '=', 'publish');
-        $paginator = $search->orderBy('post_date', 'DESC')->paginate(10);
+        $post->with(['user']);
+        $paginator = $post->orderBy('post_date', 'DESC')->paginate(10);
         return $this->showAsPaginator($paginator);
     }
 
@@ -46,9 +48,9 @@ class WordpressController extends ApiController
      */
     public function getById($id)
     {
-        $post = Post::with(['user'])->findOrFail($id);
+        $term = Post::findOrFail($id);
 
-        return $this->successResponse($post);
+        return $this->successResponse($term);
     }
     /**
      * Method that selects id by statistics.
