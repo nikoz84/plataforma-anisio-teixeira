@@ -79,8 +79,21 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" bordered content-class="bg-grey-2">
-      <LeftSideBar :leftDrawerOpen.sync="leftDrawerOpen"></LeftSideBar>
+    <q-drawer
+      show-if-above
+      :mini="miniState"
+      @mouseover="miniState = false"
+      @mouseout="miniState = true"
+      mini-to-overlay
+      :width="380"
+      :breakpoint="500"
+      bordered
+      content-class="bg-grey-2"
+      v-model="leftDrawerOpen"
+      >
+      <q-scroll-area class="fit">
+        <LeftSideBar :leftDrawerOpen.sync="leftDrawerOpen"></LeftSideBar>
+      </q-scroll-area>
     </q-drawer>
 
     <q-page-container>
@@ -140,12 +153,12 @@ export default {
   },
   data() {
     return {
-      leftDrawerOpen: this.openSideBar ? this.openSideBar : this.$q.platform.is.desktop
+      leftDrawerOpen: this.openSideBar ? this.openSideBar : this.$q.platform.is.desktop,
+      miniState: true
     };
   },
   created() {
     this.getLayout();
-    this.$q.dark.isActive
   },
   computed: {
     ...mapState(["isLogged", "links", "canal", "sidebar", "layout", "openSideBar"])
