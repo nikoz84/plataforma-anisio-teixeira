@@ -11,7 +11,7 @@
           <q-expansion-item
             dense
             :default-opened="isLargestScreen"
-            header-class="bg-cinza text-black"
+            header-class="bg-light text-black"
             label="Ficha Técnica">
               <ConteudoMetadata></ConteudoMetadata> 
           </q-expansion-item>
@@ -22,7 +22,7 @@
     <div class="col-md-4 col-sm-12" :class="{'q-mt-sm': !isLargestScreen }">
       <q-card class="" :class="{'q-ml-sm': isLargestScreen }">
         <q-card-section>
-          <strong class="q-pa-sm" >Conteúdo(s) Relacionado(s)</strong>
+          <strong class="q-pa-sm" >Conteúdo(s) Relacionado(s)</strong>  
         </q-card-section>
         <q-card-section>
           <ConteudoRelated></ConteudoRelated>

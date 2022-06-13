@@ -1,18 +1,13 @@
 <template>
   <div>
-    <strong >{{title}}:</strong>
-    <div class="flex justify-center q-mt-md wordbreak">
-    <a v-for="(item, i) in items"
-      :key="`tag-${i}`"
-      class="q-ml-lg q-mt-md tag"
-      v-html="item.name"
-      :href="searchBy(item)"      
-      :title="`Procurar por palavra-chave: ${item.name}`"
-    >
-      
-    </a>
+    <strong>{{title}}:</strong>
+    <div class="flex wordbreak">
+      <a v-for="(item, i) in items" :key="`tag-${i}`"
+        class="text-subtitle2 q-badge q-badge-single--line bg-dark q-ml-md q-mt-md text-decoration-none"
+        v-html="item.name" :href="searchBy(item)" :title="`Procurar por palavra-chave: ${item.name}`">
+      </a>
     </div>
-  </div>    
+  </div>
 </template>
 <script>
 export default {

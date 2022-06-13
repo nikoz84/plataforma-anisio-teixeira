@@ -1,25 +1,16 @@
 <template>
-    <div>
-        <q-btn :outline="outlineThumbsUp" 
-            :loading="loaddingIcon"
-            size="md"  
-            @click="thumbsUp()" 
-            label="Gostei" icon="thumb_up" >
-            <q-badge v-if="this.countThumbsUp>0" 
-                color="deep-purple-10"  floating>
-                    {{this.shortNum(this.countThumbsUp)}}
+    <div class="">
+        <q-btn :outline="outlineThumbsUp" :loading="loaddingIcon" size="md" round color="positive" @click="thumbsUp()"
+            title="Gostei" icon="thumb_up">
+            <q-badge v-if="this.countThumbsUp>0" color="positive" floating>
+                {{this.shortNum(this.countThumbsUp)}}
             </q-badge>
         </q-btn>
-        <q-btn :outline="outlineThumbsDown" 
-            :loading="loaddingIcon"
-            size="md" 
-            @click="thumbsDown()"  
-            label="Não gostei" icon="thumb_down">
-            <q-badge  v-if="this.countThumbsDown>0" 
-                color="deep-purple-10" 
-                floating>
+        <q-btn :outline="outlineThumbsDown" :loading="loaddingIcon" size="md" round ripple color="negative"
+            @click="thumbsDown()" title="Não gostei" icon="thumb_down">
+            <q-badge v-if="this.countThumbsDown>0" color="negative" floating>
                 {{this.shortNum(this.countThumbsDown)}}
-                </q-badge>
+            </q-badge>
         </q-btn>
     </div>
 </template>
