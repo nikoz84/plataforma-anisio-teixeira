@@ -1,54 +1,30 @@
 <template>
     <div v-if="conteudo">
-        <div class="flex justify-center q-gutter-sm" >
-            <q-btn v-if="conteudo.arquivos && conteudo.arquivos['download']"
-                target="__blank"
-                size="md"
-                outline
-                type="a"
-                label="Baixar Conteúdo"
-                icon="download"
-                :href="conteudo.arquivos['download'].url"
-                :download="conteudo.arquivos['download'].url"
-                >
+        <div class="flex justify-center q-gutter-sm">
+            <q-btn v-if="conteudo.arquivos && conteudo.arquivos['download']" target="__blank" size="md" outline round
+                color="primary" type="a" title="Baixar Conteúdo" icon="download"
+                :href="conteudo.arquivos['download'].url" :download="conteudo.arquivos['download'].url">
             </q-btn>
-            <q-btn v-if="conteudo.arquivos && conteudo.arquivos['guias-pedagogicos']"
-                target="__blank"
-                size="md"
-                outline
-                type="a"
-                label="Baixar guia pedagógico"
-                icon="description"
+            <q-btn v-if="conteudo.arquivos && conteudo.arquivos['guias-pedagogicos']" target="__blank" size="md" outline
+                round color="primary" type="a" title="Baixar guia pedagógico" icon="description"
                 :href="conteudo.arquivos['guias-pedagogicos'].url"
                 :download="conteudo.arquivos['guias-pedagogicos'].url">
             </q-btn>
-            <q-btn size="md" href="#"
-                label="Compartilhar" icon="share"
-                outline
-                @click.prevent="show = !show" >
-                
+            <q-btn size="md" href="#" icon="share" title="Compartilhar" outline round color="primary"
+                @click.prevent="show = !show">
             </q-btn>
-            
+
             <ThumbsMenu></ThumbsMenu>
-            <q-btn v-if="conteudo.arquivos && conteudo.arquivos['visualizacao']"
-                target="__blank"
-                size="md"
-                outline
-                type="a"
-                label="Baixar Conteúdo"
-                icon="download"
-                :href="conteudo.arquivos['visualizacao'].url"
-                :download="conteudo.arquivos['visualizacao'].url"
-                >
+            <q-btn v-if="conteudo.arquivos && conteudo.arquivos['visualizacao']" target="__blank" size="md" outline
+                round color="primary" type="a" title="Baixar Conteúdo" icon="download"
+                :href="conteudo.arquivos['visualizacao'].url" :download="conteudo.arquivos['visualizacao'].url">
             </q-btn>
         </div>
         <div class="q-mt-md" v-if="show">
-            <q-btn @click="incorporar" color="pink" label="Incorporar"></q-btn>
-
+            <q-btn @click="incorporar" color="primary" label="Incorporar"></q-btn>
             <q-separator></q-separator>
-            <q-input v-if="stringShare" v-model="stringShare" 
-                hint="Copie e cole esse código para adicionar na sua página web" 
-                autogrow readonly />
+            <q-input v-if="stringShare" v-model="stringShare"
+                hint="Copie e cole esse código para adicionar na sua página web" autogrow readonly />
         </div>
     </div>
 </template>

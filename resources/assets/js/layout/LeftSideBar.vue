@@ -1,6 +1,11 @@
 <template>
   <nav>
-    <q-list dense bordered padding separator>
+    <q-list
+      dense
+      bordered
+      padding
+      separator
+    >
       <q-item-label v-if="!$q.screen.gt.xs || !$q.screen.gt.sm">
         <q-btn flat dense @click="leftDrawerOpenModel = false" aria-label="Menu" icon="swap_horiz" />
         <BtnMarca></BtnMarca>
@@ -94,7 +99,12 @@
       </q-item -->
     </q-list>
 
-    <q-list dense bordered padding v-else>
+    <q-list
+      dense
+      bordered
+      padding
+      v-else
+    >
       <q-item>
         <q-item-section>
           <q-item-label>
@@ -194,7 +204,6 @@ export default {
   data() {
     return {
       isPanel: false,
-      
     };
   },
   computed: {
@@ -205,13 +214,13 @@ export default {
       },
       set(val) {
         this.$emit("update:leftDrawerOpen", val);
-      }
-    }
+      },
+    },
   },
   methods: {
     goToColaborativus() {
-      window.open("http://colaborativus.pat.educacao.ba.gov.br", '_blank'); 
-    }
+      window.open("http://colaborativus.pat.educacao.ba.gov.br", "_blank");
+    },
   },
 };
 </script>

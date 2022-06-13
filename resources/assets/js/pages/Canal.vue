@@ -1,25 +1,31 @@
 <template>
   <section class="q-pa-xs q-pb-lg">
-     
+
     <header class="head q-pa-md">
-      
-      <h1 class="text-h4 color-primary" v-if="!isLoading">
+
+      <h1
+        class="text-h4 color-primary"
+        v-if="!isLoading"
+      >
         {{canal && canal.options ? canal.options.extend_name : canal.name }}
       </h1>
-      
-      <q-skeleton v-else style="width: 380px; height: 85px" type="text" animation="pulse-x" />
-      
+
+      <q-skeleton
+        v-else
+        style="width: 380px; height: 85px"
+        type="text"
+        animation="pulse-x"
+      />
+
     </header>
-    
+
     <q-tabs
-      active-bg-color="primary"
-      bg-color="lime-5"
-      class="bg-primary text-white shadow-2"
+      class="text-white shadow-3 bg-primary"
       no-caps
       ripple
       dense
       inline-label
-      >
+    >
       <CategoriasMenu></CategoriasMenu>
       <Filters></Filters>
       <q-route-tab
@@ -46,17 +52,28 @@
       />
     </q-tabs>
     <q-card class="q-my-sm q-pl-sm">
-      <q-badge color="white" text-color="dark" v-if="paginator && !isLoading" v-text="totalCount" />
-      <q-skeleton v-else style="width: 300px; height: 13px" type="text" animation="pulse-x"/>
+      <q-badge
+        color="white"
+        text-color="dark"
+        v-if="paginator && !isLoading"
+        v-text="totalCount"
+      />
+      <q-skeleton
+        v-else
+        style="width: 300px; height: 13px"
+        type="text"
+        animation="pulse-x"
+      />
     </q-card>
-    
+
     <router-view name="canal"></router-view>
-    
+
   </section>
 </template>
-<script>// @ts-nocheck
+<script>
+// @ts-nocheck
 import { mapState, mapActions, mapMutations } from "vuex";
-import  { Filters, OrderBy, CategoriasMenu } from "../components/canais";
+import { Filters, OrderBy, CategoriasMenu } from "../components/canais";
 import {
   QTabs,
   QTab,
@@ -75,12 +92,11 @@ import {
   QBreadcrumbs,
   QBreadcrumbsEl,
   QSkeleton,
-  QBanner
+  QBanner,
 } from "quasar";
 
 export default {
-  props: {
-  },
+  props: {},
   name: "Canal",
   directives: { ClosePopup },
   components: {
@@ -103,16 +119,17 @@ export default {
     QBreadcrumbsEl,
     QSkeleton,
     Filters,
-    OrderBy
+    OrderBy,
   },
   data() {
     return {
       options: [],
       loadingState: false,
-      categoryName: ""
+      categoryName: "",
     };
   },
   mounted() {
+    //this.$q.dark.set(true);
     this.getCanalBySlug(this.$route.params.slug).then(() => {
       this.$gtag.pageview(this.$route.params.slug);
       this.fetchData();
@@ -121,14 +138,13 @@ export default {
   watch: {
     $route(to, from) {
       if (to.fullPath != from.fullPath) {
-        
         this.$gtag.pageview(this.$route.params.slug);
-    
+
         this.getCanalBySlug(this.$route.params.slug).then(() => {
           this.fetchData();
         });
       }
-    }
+    },
   },
   computed: {
     ...mapState(["canal", "paginator", "isLoading"]),
@@ -142,15 +158,17 @@ export default {
         : "#08275e";
     },
     totalCount() {
-      return this.isLoading ? 'carregando' : `${this.paginator.total} - itens encontrados`;
-    }
+      return this.isLoading
+        ? "carregando"
+        : `${this.paginator.total} - itens encontrados`;
+    },
   },
   methods: {
     ...mapActions([
       "getCanalBySlug",
       "fetchConteudos",
       "fetchAplicativos",
-      "fetchPosts"
+      "fetchPosts",
     ]),
     fetchData() {
       let query = this.$route.query;
@@ -166,7 +184,7 @@ export default {
           return this.fetchConteudos(query);
           break;
       }
-    }
-  }
+    },
+  },
 };
 </script>
