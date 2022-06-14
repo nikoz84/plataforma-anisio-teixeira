@@ -182,9 +182,7 @@ export default {
       }
     },
     async searchInBlog(){
-      console.log(this.term)
-      const {data} = await axios.get(`/postagens/search/${this.term}`)
-      console.log(data)
+      this.fetchPosts({ term: this.term})
     }
   }
 };

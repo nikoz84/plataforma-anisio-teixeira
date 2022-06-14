@@ -18,7 +18,8 @@
         Publicado em: <b>{{ post.formated_date }}</b>
       </q-card-section>
       <q-card-section>
-        <TagList :items="post.categories" title="Categorias" slug="busca"></TagList>
+        <TagList :items="post.categories" title="Categorias" slug="busca">
+        </TagList>
       </q-card-section>
     </q-card>
   </article>
