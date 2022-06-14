@@ -146,6 +146,14 @@ Route::group(
         Route::get('/{id}', [PlayListController::class, 'getById'])->name('ByID');
     }
 );
+/*
+Route::get('/postagens', function(){
+    $postagens =  \App\Models\Wordpress\Post::all();
+
+    return response()->json($postagens);
+});
+*/
+Route::get('/postagens/search/{term}', [WordpressController::class, 'search']);
 
 /***********************************************
  *

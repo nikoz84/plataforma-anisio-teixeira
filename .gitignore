@@ -18,4 +18,4 @@ yarn-error.log
 .env
 /app/Console/Commands/ImportData.php
 /migra_sql
-/documentation/node_modules
+/documentation/node_modules'

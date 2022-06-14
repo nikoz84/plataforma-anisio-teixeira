@@ -50,14 +50,14 @@ const actions = {
     commit("SET_IS_LOADING", true);
     let url = `/posts`;
     try {
-      await axios.get(url, { params: payload }).then(resp => {
+      const resp = await axios.get(url, { params: payload })
         commit("SET_COMPONENT_ID", "");
         if (resp.status == 200 && resp.data.paginator) {
           commit("SET_COMPONENT_ID", "Paginator");
           commit("SET_IS_LOADING", false);
           commit("SET_PAGINATOR", resp.data.paginator);
         }
-      });
+      
     } catch (e) {
       commit("SET_IS_LOADING", false);
       commit("SET_IS_ERROR", true);

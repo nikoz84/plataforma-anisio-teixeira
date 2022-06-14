@@ -17,21 +17,11 @@ Route::get('/email', function (Request $request) {
 });
 
 
-
-Route::get('/teste', function (Request $request) {
-    //$wordpres = new App\Helpers\WordpressService($request->limit, $request->page);
-    $colaborativus = new App\Helpers\ColaborativusService();
-
-    return $colaborativus->findCourses();
-    //return $wordpres->getPosts();
-});
-
 Route::get('/docs', function (Request $request) {
     return view('docs');
 });
 
 */
-
 
 
 

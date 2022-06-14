@@ -91,6 +91,7 @@ export default {
         { label: "Tags mais procuradas", value: "searched_tags"},
         { label: "Aplicativos mais visualizados", value: "aplicativo_qt_access"},
         { label: "Registro de ocorrência formulário de contatos", value: "registro_mes_ocorrencia"},
+        { label: "Conteúdos mais acessados nos últimos três meses", value: "acessados_ultimos_meses"},
         { label: "Catalogação BLOG", value: "wordpress_data" }
       ],
       chartOptions: {

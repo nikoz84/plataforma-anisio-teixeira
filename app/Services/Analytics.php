@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Services\WordpressService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class Analytics
 {
@@ -85,7 +85,7 @@ class Analytics
     }
 
     public function postsPerUserMonthly()
-    { 
+    {
         $sql = "WITH data AS (
                     SELECT id, created_at, user_id,
                         (SELECT upper(name) FROM users WHERE id = user_id) AS name
@@ -126,48 +126,80 @@ class Analytics
         return DB::select($sql, [$this->data_inicio, $this->data_fim]);
     }
 
-
-
     public function maisBaixados()
     {
         $sql = "SELECT c.title as name,
                 c.qt_downloads as total, id
                 FROM conteudos AS c
-                ORDER BY c.qt_downloads DESC 
+                ORDER BY c.qt_downloads DESC
                 LIMIT 10";
-        return DB::select($sql); 
+        return DB::select($sql);
     }
 
     public function maisAcessados()
     {
-        $sql = "SELECT c.title as name, 
+        $sql = "SELECT c.title as name,
             c.qt_access as total, id
             FROM conteudos AS c
-            ORDER BY c.qt_access DESC 
+            ORDER BY c.qt_access DESC
             LIMIT 10";
         return DB::select($sql);
     }
 
+    public function TotalConteudosAcessadosUltimostresMeses()
+    {
+        $sql = "SELECT id, title as name, created_at::DATE as data,
+         sum(qt_access) as total,
+         CASE WHEN EXTRACT(MONTH from created_at) = 1 THEN
+          'Janeiro'
+       WHEN EXTRACT(MONTH from created_at) = 2 THEN
+          'Fevereiro'
+       WHEN EXTRACT(MONTH from created_at) = 3 THEN
+          'Março'
+       WHEN EXTRACT(MONTH from created_at) = 4 THEN
+          'Abril'
+       WHEN EXTRACT(MONTH from created_at) = 5 THEN
+          'Maio'
+       WHEN EXTRACT(MONTH from created_at) = 6 THEN
+          'Junho'
+       WHEN EXTRACT(MONTH from created_at) = 7 THEN
+          'Julho'
+       WHEN EXTRACT(MONTH from created_at) = 8 THEN
+          'Agosto'
+       WHEN EXTRACT(MONTH from created_at) = 9 THEN
+          'Setembro'
+       WHEN EXTRACT(MONTH from created_at) = 10 THEN
+          'Outubro'
+       WHEN EXTRACT(MONTH from created_at) = 11 THEN
+          'Novembro'
+       WHEN EXTRACT(MONTH from created_at)= 12 THEN
+       'Dezembro'
+        END AS month from conteudos
+        WHERE created_at between '?' and '?' GROUP BY MONTH, data, id, title ORDER BY TOTAL DESC LIMIT 10";
+
+        return DB::select($sql, [$this->data_inicio, $this->data_fim]);
+    }
+
     public function maisBuscadas()
     {
-        $sql = "SELECT name, searched as total, id 
-            FROM tags 
+        $sql = "SELECT name, searched as total, id
+            FROM tags
             ORDER BY searched DESC LIMIT 10";
         return DB::select($sql);
-    } 
+    }
 
     public function aplicativosMaisVisualizados()
     {
         $sql = "SELECT name ,
-            cast(options->>'qt_access' AS INTEGER) as total, id 
+            cast(options->>'qt_access' AS INTEGER) as total, id
             from aplicativos order by total DESC LIMIT 10";
         return DB::select($sql);
     }
 
     public function registroMesOcorrencia()
     {
-       $sql = "SELECT count(id) as total, 
-        CASE WHEN action = 'sugerencia' THEN 'sugestao' ELSE action END as name, 
+        $sql = "SELECT count(id) as total,
+        CASE WHEN action = 'sugerencia' THEN 'sugestao' ELSE action END as name,
         CASE WHEN EXTRACT(MONTH from created_at) = 1 THEN
           'Janeiro'
        WHEN EXTRACT(MONTH from created_at) = 2 THEN
@@ -191,14 +223,14 @@ class Analytics
        WHEN EXTRACT(MONTH from created_at) = 11 THEN
           'Novembro'
        WHEN EXTRACT(MONTH from created_at)= 12 THEN
-       'Dezembro'  
+       'Dezembro'
         END AS month
-        FROM contatos 
-        where created_at between '2020-01-01' and '2022-05-01'
+        FROM contatos
+        where created_at between '?' and '?'
         group by EXTRACT(MONTH from created_at), action
         order by EXTRACT(MONTH from created_at)";
-    
-        return DB::select($sql);
+
+        return DB::select($sql, [$this->data_inicio, $this->data_fim]);
 
     }
 
@@ -267,20 +299,27 @@ class Analytics
                     "10 tags mais buscadas"
                 );
                 break;
-              case 'aplicativo_qt_access':
+            case 'aplicativo_qt_access':
                 $this->render_graph = true;
                 return $this->getSeries(
                     $this->aplicativosMaisVisualizados(),
                     "10 aplicativos mais visualizados"
                 );
-                break;  
-                case 'registro_mes_ocorrencia':
+                break;
+            case 'registro_mes_ocorrencia':
                 $this->render_graph = true;
                 return $this->getSeries(
                     $this->registroMesOcorrencia(),
                     "Registros de ocorrência de formulário de contatos"
                 );
-                break;  
+                break;
+            case 'acessados_ultimos_meses':
+                $this->render_graph = true;
+                return $this->getSeries(
+                    $this->TotalConteudosAcessadosUltimostresMeses(),
+                    "10 conteúdos mais visualizados nos últimos 3 meses"
+                );
+                break;
             default:
                 return $this->postsPerUser();
                 break;
@@ -301,7 +340,7 @@ class Analytics
                 'render' => $this->render_graph,
                 'data' => $data,
                 'categories' => $collect->pluck('name'),
-                'series' => $collect->pluck('total')
+                'series' => $collect->pluck('total'),
             ];
         }
     }

@@ -28,42 +28,29 @@
     >
       <CategoriasMenu></CategoriasMenu>
       <Filters></Filters>
-      <q-route-tab
-        name="listar"
-        label="LISTAR"
-        icon="view_list"
-        :to="{ name: 'Listar', params: { slug: $route.params.slug } }"
-      />
+      <q-route-tab name="listar" label="LISTAR" icon="view_list"
+        :to="{ name: 'Listar', params: { slug: $route.params.slug } }" />
       <OrderBy></OrderBy>
-      <q-space />
-      <q-route-tab
-        name="busca"
-        label="BUSCA AVANÇADA"
-        icon="search"
-        :to="{ name: 'BuscaAvancada' }"
-        v-if="$route.params.slug == 'recursos-educacionais'"
-      />
-      <q-route-tab
-        name="inicio"
-        label="SOBRE"
-        icon="info"
+
+      <q-route-tab name="busca" label="BUSCA AVANÇADA" icon="search" :to="{ name: 'BuscaAvancada' }"
+        v-if="$route.params.slug == 'recursos-educacionais'" />
+      <q-route-tab name="inicio" label="SOBRE" icon="info"
         :to="{ name: 'Inicio', params: { slug: $route.params.slug } }"
-        v-if="canal && canal.options && canal.options.has_home"
-      />
+        v-if="canal && canal.options && canal.options.has_home" />
     </q-tabs>
-    <q-card class="q-my-sm q-pl-sm">
-      <q-badge
-        color="white"
-        text-color="dark"
-        v-if="paginator && !isLoading"
-        v-text="totalCount"
-      />
-      <q-skeleton
-        v-else
-        style="width: 300px; height: 13px"
-        type="text"
-        animation="pulse-x"
-      />
+    <q-card class="q-my-sm ">
+      <q-card-section class="flex justify-between">
+        <q-badge color="accent" text-color="white" style="max-height: 20px;" v-if="paginator && !isLoading" v-text="totalCount" />
+        <q-skeleton v-else style="width: 300px; height: 13px" type="text" animation="pulse-x" />
+       
+        <q-input v-model="term" dense bottom-slots placeholder="Busca no blog" style="width:200px"
+          :loading="loadingStateSearch" v-if="$route.params.slug === 'blog'">
+          <template v-slot:append>
+            <q-icon v-if="term !== ''" name="close" @click="closeAction" class="cursor-pointer" />
+            <q-icon name="search" class="cursor-pointer" @click="searchInBlog" />
+          </template>
+        </q-input>
+      </q-card-section>
     </q-card>
 
     <router-view name="canal"></router-view>
@@ -94,6 +81,7 @@ import {
   QSkeleton,
   QBanner,
 } from "quasar";
+import axios from "axios";
 
 export default {
   props: {},
@@ -126,6 +114,8 @@ export default {
       options: [],
       loadingState: false,
       categoryName: "",
+      term: "",
+      loadingStateSearch: false
     };
   },
   mounted() {
@@ -133,6 +123,7 @@ export default {
     this.getCanalBySlug(this.$route.params.slug).then(() => {
       this.$gtag.pageview(this.$route.params.slug);
       this.fetchData();
+      
     });
   },
   watch: {
@@ -185,6 +176,13 @@ export default {
           break;
       }
     },
-  },
+    async searchInBlog(){
+      await this.fetchPosts({ term: this.term})
+    },
+    async closeAction() {
+      this.term = ''
+      await this.fetchPosts()
+    }
+  }
 };
 </script>

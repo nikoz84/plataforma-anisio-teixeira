@@ -41,17 +41,18 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'unix_socket' => env('DB_SOCKET', ''),
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_unicode_ci',
+            'host' => env('DB_HOST_WP', '127.0.0.1'),
+            'port' => env('DB_PORT_WP', '3306'),
+            'database' => env('DB_DATABASE_WP', 'forge'),
+            'username' => env('DB_USERNAME_WP', 'forge'),
+            'password' => env('DB_PASSWORD_WP', ''),
+            'unix_socket' => env('DB_SOCKET_WP', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
             'prefix' => '',
             'strict' => true,
             'engine' => null,
+            'extra_prefix' => env('DB_PREFIX_WP', 'wp_')
         ],
 
         'pgsql' => [
