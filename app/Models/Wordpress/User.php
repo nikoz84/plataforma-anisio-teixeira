@@ -4,12 +4,22 @@ namespace App\Models\Wordpress;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\WPPrefix;
 
 class User extends Model
 {
-    use HasFactory;
+    use HasFactory, WPPrefix;
     protected $connection = 'mysql';
-    protected $table = 'pw_users';
+    protected $table = 'users';
+
+    public function __construct(array $attributes = [])
+    {
+        $this->table = $this->getPrefix() . $this->table;
+
+        parent::__construct($attributes);
+    }
+
+
 
     public function userMeta()
     {

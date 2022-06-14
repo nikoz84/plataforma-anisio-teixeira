@@ -10,15 +10,24 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\TransformDate;
 use App\Models\Wordpress\TermTaxonomy;
+use App\Traits\WPPrefix;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, WPPrefix;
     protected $connection = 'mysql';
-    protected $table = 'pw_posts';
+    protected $table = 'posts';
     protected $primaryKey = 'ID';
 
     public $appends = ['title', 'image', 'url_exibir', 'formated_date', 'tags', 'categories'];
+
+    public function __construct(array $attributes = [])
+    {
+        $this->table = $this->getPrefix() . $this->table;
+
+        parent::__construct($attributes);
+    }
+
 
     public function user()
     {
@@ -32,8 +41,9 @@ class Post extends Model
         $id = PostMeta::where('meta_key', '=', '_thumbnail_id')
             ->where('post_id', $this->getAttribute('ID'))
             ->get(['meta_value'])->pluck('meta_value')->first();
+        $image = Post::select(['guid'])->whereIn('ID', [$id])->get()->pluck('guid')->first();
 
-        return Post::select(['guid'])->whereIn('ID', [$id])->get()->pluck('guid')->first();
+        return $image ? $image : '/img/fundo-padrao.svg';
     }
 
     public function getTitleAttribute()
@@ -44,27 +54,28 @@ class Post extends Model
     public function terms()
     {
 
-        return $this->belongsToMany(TermTaxonomy::class, 'pw_term_relationships', 'object_id', 'term_taxonomy_id')->with('term');
+        return $this->belongsToMany(TermTaxonomy::class, $this->getPrefix() . 'term_relationships', 'object_id', 'term_taxonomy_id')
+            ->with('term');
     }
 
     public function getTagsAttribute()
     {
         $terms = $this->terms()->get();
-        
+
         return $this->mapTerms($terms, 'post_tag');
     }
 
     public function getCategoriesAttribute()
     {
         $terms = $this->terms()->get();
-        
+
         return $this->mapTerms($terms, 'category');
     }
 
     protected function mapTerms($items, $type)
     {
-        return $items->map(function($item) use ($type) {
-            if($item->taxonomy === $type){
+        return $items->map(function ($item) use ($type) {
+            if ($item->taxonomy === $type) {
                 return [
                     'id' => $item->term_id,
                     'taxonomy' => $item->taxonomy,
@@ -85,6 +96,4 @@ class Post extends Model
     {
         return TransformDate::format($this['post_date']);
     }
-
-    
 }

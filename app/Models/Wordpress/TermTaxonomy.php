@@ -6,22 +6,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Wordpress\Term;
 
-define('PREFIX', config('database.connections.mysql.extra_prefix'));
+use App\Traits\WPPrefix;
 
 class TermTaxonomy extends Model
 {
-    use HasFactory;
-    
+    use HasFactory, WPPrefix;
+
     protected $table =  "term_taxonomy";
     protected $primaryKey = 'term_taxonomy_id';
-    
+
 
     public function __construct(array $attributes = [])
-   {
-       $this->table = PREFIX . $this->table;
+    {
+        $this->table = $this->getPrefix() . $this->table;
 
-       parent::__construct($attributes);
-   }
+        parent::__construct($attributes);
+    }
 
 
     public function term()
