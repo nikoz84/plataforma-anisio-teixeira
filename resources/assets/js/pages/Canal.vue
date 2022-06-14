@@ -1,67 +1,47 @@
 <template>
   <section class="q-pa-xs q-pb-lg">
-     
+
     <header class="head q-pa-md">
-      
+
       <h1 class="text-h4 color-primary" v-if="!isLoading">
         {{canal && canal.options ? canal.options.extend_name : canal.name }}
       </h1>
-      
+
       <q-skeleton v-else style="width: 380px; height: 85px" type="text" animation="pulse-x" />
-      
+
     </header>
-    
-    <q-tabs
-      active-bg-color="primary"
-      bg-color="lime-5"
-      class="bg-primary text-white shadow-2"
-      no-caps
-      ripple
-      dense
-      inline-label
-      >
+
+    <q-tabs active-bg-color="primary" bg-color="lime-5" class="bg-primary text-white shadow-2" no-caps ripple dense
+      inline-label>
       <CategoriasMenu></CategoriasMenu>
       <Filters></Filters>
-      <q-route-tab
-        name="listar"
-        label="LISTAR"
-        icon="view_list"
-        :to="{ name: 'Listar', params: { slug: $route.params.slug } }"
-      />
+      <q-route-tab name="listar" label="LISTAR" icon="view_list"
+        :to="{ name: 'Listar', params: { slug: $route.params.slug } }" />
       <OrderBy></OrderBy>
-      
-      <q-route-tab
-        name="busca"
-        label="BUSCA AVANÇADA"
-        icon="search"
-        :to="{ name: 'BuscaAvancada' }"
-        v-if="$route.params.slug == 'recursos-educacionais'"
-      />
-      <q-route-tab
-        name="inicio"
-        label="SOBRE"
-        icon="info"
+
+      <q-route-tab name="busca" label="BUSCA AVANÇADA" icon="search" :to="{ name: 'BuscaAvancada' }"
+        v-if="$route.params.slug == 'recursos-educacionais'" />
+      <q-route-tab name="inicio" label="SOBRE" icon="info"
         :to="{ name: 'Inicio', params: { slug: $route.params.slug } }"
-        v-if="canal && canal.options && canal.options.has_home"
-      />
+        v-if="canal && canal.options && canal.options.has_home" />
     </q-tabs>
-    <q-card class="q-my-sm q-pl-sm">
-      <q-card-section>
-        <q-badge color="accent" text-color="white" v-if="paginator && !isLoading" v-text="totalCount" />
-        <q-skeleton v-else style="width: 300px; height: 13px" type="text" animation="pulse-x"/>
-      </q-card-section>
-      <q-card-section v-if="$route.params.slug === 'blog'">
-        <q-input v-model="term" rounded outlined bottom-slots placeholder="Busca no blog"  :loading="loadingStateSearch">
+    <q-card class="q-my-sm ">
+      <q-card-section class="flex justify-between">
+        <q-badge color="accent" text-color="white" style="max-height: 20px;" v-if="paginator && !isLoading" v-text="totalCount" />
+        <q-skeleton v-else style="width: 300px; height: 13px" type="text" animation="pulse-x" />
+       
+        <q-input v-model="term" rounded dense outlined bottom-slots placeholder="Busca no blog" style="width:200px"
+          :loading="loadingStateSearch" v-if="$route.params.slug === 'blog'">
           <template v-slot:append>
-            <q-icon v-if="term !== ''" name="close" @click="term = ''" class="cursor-pointer" />
-            <q-icon name="search" class="cursor-pointer" @click="searchInBlog"/>
+            <q-icon v-if="term !== ''" name="close" @click="closeAction" class="cursor-pointer" />
+            <q-icon name="search" class="cursor-pointer" @click="searchInBlog" />
           </template>
         </q-input>
       </q-card-section>
     </q-card>
-    
+
     <router-view name="canal"></router-view>
-    
+
   </section>
 </template>
 <script>// @ts-nocheck
@@ -182,7 +162,11 @@ export default {
       }
     },
     async searchInBlog(){
-      this.fetchPosts({ term: this.term})
+      await this.fetchPosts({ term: this.term})
+    },
+    async closeAction() {
+      this.term = ''
+      await this.fetchPosts()
     }
   }
 };
