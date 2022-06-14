@@ -1,14 +1,17 @@
 
 $primary   = #5ca0d4
 $secondary = #f45859
-$accent    = #451e5f
-$dark      = #384349
-$positive  = #3cac3d
-$negative  = #bb1f30
-$info      = #3871c1
-$warning   = #e9ba1a
-$light     = #bdbdbd
-$faded     = #e1e2e1
+$dark      = #2072a2
+$light     = #90d1ff
+
+$positive  = #5bd9c6
+$negative  = #cd3c48
+$info      = #7784e6
+// $accent    = #894a76
+$accentt = #C10087
+$warning   = #fbc66b
+
+$faded     = #e3e2e2
 $petecavermelho  = $negative
 $petecaamarelo   = $warning
 $petecaazul      = $info 
@@ -20,6 +23,8 @@ $generic-border-radius    = 3px;
 $body-font-size          ?= 15px
 $quasar-dont-import-fonts = true;
 
+.card-borda-imagem 
+  border-bottom: solid 4px $primary
 
 .bg-cinza
   background: $faded !important
@@ -64,28 +69,13 @@ $quasar-dont-import-fonts = true;
 .wordbreak
   word-break: break-all !important;
 
-.tag
-  padding: 10px;
-  font-size: 15px;
+.text-decoration-none
   text-decoration: none;
-  color: #fff;
-  background-color: $secondary;
 
 .head
   background-color: #fff;
   border-bottom-color : 5px #FADFFA;
-  background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23623d9c' fill-opacity='0.39' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
   min-height:115px;
-h1
-  color: $text;
-  text-shadow: -0.0075em 0.0075em 0 mix($light, $primary, 94%),
-  0.005em 0.005em 0 mix($light, $primary, 60%),
-  0.01em 0.01em 0 mix($light, $primary, 62%), 
-  0.015em 0.015em mix($light, $primary, 64%), 
-  0.02em 0.02em 0 mix($light, $primary, 66%), 
-  0.025em 0.025em 0 mix($light, $primary, 68%),
-  0.03em 0.03em 0 mix($light, $primary, 70%),
-  0.035em 0.035em 0 mix($light, $primary, 72%);
 
 .wp-block-image
   display: flex;

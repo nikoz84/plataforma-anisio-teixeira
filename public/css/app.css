@@ -8,41 +8,44 @@
   font-style: normal;
   font-weight: 400;
 }
+.card-borda-imagem {
+  border-bottom: solid 4px #5ca0d4;
+}
 .bg-cinza {
-  background: #e1e2e1 !important;
+  background: #e3e2e2 !important;
 }
 .texto-cinza {
-  color: #e1e2e1 !important;
+  color: #e3e2e2 !important;
 }
 .bg-light {
-  background-color: #bdbdbd !important;
+  background-color: #90d1ff !important;
 }
 .bg-dark {
-  background-color: #384349 !important;
+  background-color: #2072a2 !important;
 }
 .bg-petecavermelho {
-  background-color: #bb1f30 !important;
+  background-color: #cd3c48 !important;
 }
 .texto-vermelho {
-  color: #bb1f30 !important;
+  color: #cd3c48 !important;
 }
 .bg-petecaamarelo {
-  background-color: #e9ba1a !important;
+  background-color: #fbc66b !important;
 }
 .texto-amarelo {
-  color: #e9ba1a !important;
+  color: #fbc66b !important;
 }
 .bg-petecaazul {
-  background-color: #3871c1 !important;
+  background-color: #7784e6 !important;
 }
 .texto-azul {
-  color: #3871c1 !important;
+  color: #7784e6 !important;
 }
 .bg-petecaverde {
-  background-color: #3cac3d !important;
+  background-color: #5bd9c6 !important;
 }
 .texto-verde {
-  color: #3cac3d !important;
+  color: #5bd9c6 !important;
 }
 .active-link-pat {
   background-color: #5ca0d4;
@@ -51,22 +54,13 @@
 .wordbreak {
   word-break: break-all !important;
 }
-.tag {
-  padding: 10px;
-  font-size: 15px;
+.text-decoration-none {
   text-decoration: none;
-  color: #fff;
-  background-color: #f45859;
 }
 .head {
   background-color: #fff;
   border-bottom-color: 5px #fadffa;
-  background-image: url("data:image/svg+xml,%3Csvg%20width=%276%27%20height=%276%27%20viewBox=%270%200%206%206%27%20xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cg%20fill=%27%23623d9c%27%20fill-opacity=%270.39%27%20fill-rule=%27evenodd%27%3E%3Cpath%20d=%27M5%200h1L0%206V5zM6%205v1H5z%27/%3E%3C/g%3E%3C/svg%3E");
   min-height: 115px;
-}
-h1 {
-  color: $text;
-  text-shadow: -0.0075em 0.0075em 0 #b7bbbe, 0.005em 0.005em 0 #96b1c6, 0.01em 0.01em 0 #98b1c5, 0.015em 0.015em #9ab2c5, 0.02em 0.02em 0 #9cb3c4, 0.025em 0.025em 0 #9db3c4, 0.03em 0.03em 0 #9fb4c3, 0.035em 0.035em 0 #a1b4c3;
 }
 .wp-block-image {
   display: flex;
@@ -93,10 +87,10 @@ h1 {
   margin: 1.5em 0;
   padding-left: 1.25em;
   border-left: 4px solid;
-  border-color: #451e5f;
-  border-color: #451e5f;
-  color: #384349;
-  color: #384349;
+  border-color: $accent;
+  border-color: $accent;
+  color: #2072a2;
+  color: #2072a2;
   font-size: 20px;
   font-size: 1.125rem;
 }
@@ -112,14 +106,14 @@ h1 {
   right: 0;
   bottom: 0;
   color: $text-color;
-  background-color: #451e5f !important;
+  background-color: $accent !important;
 }
 .q-tabs__arrow--left {
   top: 0;
   right: 0;
   bottom: 0;
   color: $text-color;
-  background-color: #451e5f !important;
+  background-color: $accent !important;
 }
 .q-tabs__arrow--faded {
   display: none;
@@ -128,7 +122,7 @@ h1 {
   font-family: 'Lato', sans-serif, cursive;
   font-weight: 700 false;
   padding-bottom: 5px;
-  border-bottom: 4px double #451e5f;
+  border-bottom: 4px double $accent;
   font-display: swap;
 }
 body {
@@ -2438,7 +2432,7 @@ body.q-ios-padding .q-dialog__inner > div {
   left: 0;
   right: 0;
   top: 18px;
-  color: #451e5f;
+  color: #9c27b0;
   font-size: 16px;
   line-height: 20px;
   font-weight: 400;
@@ -2722,7 +2716,7 @@ body.q-ios-padding .q-dialog__inner > div {
           animation: q-field-label 0.36s;
 }
 .q-field--error .q-field__bottom {
-  color: #bb1f30;
+  color: #cd3c48;
   color: var(--q-color-negative);
 }
 .q-field__focusable-action {
@@ -4257,7 +4251,7 @@ body.desktop .q-slider.q-slider--enabled:hover .q-slider__arrow--v {
   color: rgba(0,0,0,0.32);
 }
 .q-stepper__tab--error {
-  color: #bb1f30;
+  color: #cd3c48;
   color: var(--q-color-negative);
 }
 .q-stepper__tab--error .q-stepper__dot {
@@ -6133,9 +6127,9 @@ body.q-ios-padding .q-notifications__list--bottom {
           animation: q-notif-badge 0.42s;
   padding: 4px 8px;
   position: absolute;
-  background: #bb1f30;
+  background: #cd3c48;
   box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 1px 1px rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12);
-  background-color: #bb1f30;
+  background-color: #cd3c48;
   background-color: var(--q-color-negative);
   color: #fff;
   border-radius: 3px;
@@ -6352,19 +6346,19 @@ body.q-ios-padding .q-notifications__list--bottom {
 :root {
   --q-color-primary: #5ca0d4;
   --q-color-secondary: #f45859;
-  --q-color-accent: #451e5f;
-  --q-color-positive: #3cac3d;
-  --q-color-negative: #bb1f30;
-  --q-color-info: #3871c1;
-  --q-color-warning: #e9ba1a;
-  --q-color-dark: #384349;
+  --q-color-accent: #9c27b0;
+  --q-color-positive: #5bd9c6;
+  --q-color-negative: #cd3c48;
+  --q-color-info: #7784e6;
+  --q-color-warning: #fbc66b;
+  --q-color-dark: #2072a2;
 }
 .text-dark {
-  color: #384349 !important;
+  color: #2072a2 !important;
   color: var(--q-color-dark) !important;
 }
 .bg-dark {
-  background: #384349 !important;
+  background: #2072a2 !important;
   background: var(--q-color-dark) !important;
 }
 .text-primary {
@@ -6384,43 +6378,43 @@ body.q-ios-padding .q-notifications__list--bottom {
   background: var(--q-color-secondary) !important;
 }
 .text-accent {
-  color: #451e5f !important;
+  color: #9c27b0 !important;
   color: var(--q-color-accent) !important;
 }
 .bg-accent {
-  background: #451e5f !important;
+  background: #9c27b0 !important;
   background: var(--q-color-accent) !important;
 }
 .text-positive {
-  color: #3cac3d !important;
+  color: #5bd9c6 !important;
   color: var(--q-color-positive) !important;
 }
 .bg-positive {
-  background: #3cac3d !important;
+  background: #5bd9c6 !important;
   background: var(--q-color-positive) !important;
 }
 .text-negative {
-  color: #bb1f30 !important;
+  color: #cd3c48 !important;
   color: var(--q-color-negative) !important;
 }
 .bg-negative {
-  background: #bb1f30 !important;
+  background: #cd3c48 !important;
   background: var(--q-color-negative) !important;
 }
 .text-info {
-  color: #3871c1 !important;
+  color: #7784e6 !important;
   color: var(--q-color-info) !important;
 }
 .bg-info {
-  background: #3871c1 !important;
+  background: #7784e6 !important;
   background: var(--q-color-info) !important;
 }
 .text-warning {
-  color: #e9ba1a !important;
+  color: #fbc66b !important;
   color: var(--q-color-warning) !important;
 }
 .bg-warning {
-  background: #e9ba1a !important;
+  background: #fbc66b !important;
   background: var(--q-color-warning) !important;
 }
 .text-white {

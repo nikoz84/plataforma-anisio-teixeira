@@ -12,66 +12,77 @@
                 <q-separator class="q-my-md"></q-separator>
             </div>
             <div v-if="conteudo.tipo">
-                <strong>Tipo de Conteúdo:</strong> 
-                <q-badge outline align="middle" color="teal-10">
+                <strong>Tipo de Conteúdo:</strong>
+                <q-badge outline align="middle" color="dark" class="text-subtitle2">
                     {{conteudo.tipo.name}}
                 </q-badge>
                 <q-separator class="q-my-md"></q-separator>
             </div>
             <div v-if="conteudo.qt_access">
-                <strong>Quantidade de acessos:</strong> 
-                <q-badge outline align="middle" color="teal-10">{{conteudo.qt_access}}</q-badge>
+                <strong>Quantidade de acessos:</strong>
+                <q-badge outline align="middle" color="dark" class="text-subtitle2">{{conteudo.qt_access}}</q-badge>
                 <q-separator class="q-my-md"></q-separator>
             </div>
-            <div v-if="conteudo.tipo && conteudo.tipo.id != 8 && conteudo.qt_downloads > 0">
-                <strong >
-                    Downloads: 
+            <div class="text-subtitle2" v-if="conteudo.tipo && conteudo.tipo.id != 8 && conteudo.qt_downloads > 0">
+                <strong>
+                    Downloads:
                 </strong>
-                <q-badge outline align="middle" color="teal-10">
+                <q-badge outline align="middle" color="dark">
                     {{conteudo.qt_downloads}}
                 </q-badge>
                 <q-separator class="q-my-md">
                 </q-separator>
-            </div>    
+            </div>
             <strong>Publicado em: </strong>
+            <q-badge outline align="middle" color="dark" class="text-subtitle2">
                 {{conteudo.formated_date}}
-                
-            <q-separator class="q-my-md"></q-separator>
-            
-            <strong>Fonte:</strong>
-                {{ conteudo.source ? conteudo.source : null }}
+            </q-badge>
 
             <q-separator class="q-my-md"></q-separator>
-            
-            <strong>Autores:</strong>
-                <i class="break-word">
-                    {{conteudo.authors ? conteudo.authors : null}}
-                </i>
-            
+
+            <strong>Fonte:</strong>
+
+            <q-badge outline align="middle" color="dark" class="text-subtitle2">
+                {{ conteudo.source ? conteudo.source : null }}
+            </q-badge>
+
             <q-separator class="q-my-md"></q-separator>
-            
+
+            <strong>Autores:</strong>
+            <q-badge outline align="middle" color="dark" class="text-subtitle2">
+                {{conteudo.authors ? conteudo.authors : null}}
+            </q-badge>
+
+            <q-separator class="q-my-md"></q-separator>
+
             <strong>
                 Publicador(a):
             </strong>
-            <div class="flex justify-center q-mt-md wordbreak" v-if="conteudo && conteudo.user">
-                <a class="tag" v-html="conteudo.user ? conteudo.user.name: null"
-                        title="Outros conteúdos deste publicador"
+            <i class="break-word" v-if="conteudo && conteudo.user">
+
+                <q-chip square size="lg" class="text-weight-medium">
+                    <q-avatar>
+                        <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                    </q-avatar>
+                    <a class="text-decoration-none text-dark" v-html="conteudo.user ? conteudo.user.name: null"
+                        title="Ver outros conteúdos deste publicador"
                         :href="`/recursos-educacionais/listar?publicador=${conteudo.user.id}`">
-                        
-                </a>
-            </div>
+                    </a>
+                </q-chip>
+            </i>
+
             <q-separator class="q-my-md"></q-separator>
 
-            <strong >Componentes:</strong>
-            <div class="flex justify-center q-mt-md wordbreak">
-                <a v-for="(componente) in conteudo.componentes"
-                        :key="`c-${componente.id}`"
-                        v-html="componente.name"
-                        class="tag q-ml-lg q-mt-md"
-                        :href="`/recursos-educacionais/listar?componentes=${componente.id}`"
-                    :title="`Procurar por: ${componente.name}`"
-                    >
+            <strong>Componentes:</strong>
+            <div class="flex wordbreak">
+
+                <a v-for="(componente) in conteudo.componentes" :key="`c-${componente.id}`" v-html="componente.name"
+                    class="text-subtitle2 q-badge q-badge-single--line bg-dark q-ml-md q-mt-md text-decoration-none"
+                    :href="`/recursos-educacionais/listar?componentes=${componente.id}`"
+                    :title="`Mais conteúdos do tipo: ${componente.name}`">
                 </a>
+
+
             </div>
             <q-separator class="q-my-md"></q-separator>
 
@@ -89,7 +100,7 @@
                 <q-separator-- class="q-my-md"></q-separator-->
             </div>
         </q-card-section>
-    </div>      
+    </div>
 </template>
 
 <script>// @ts-nocheck
