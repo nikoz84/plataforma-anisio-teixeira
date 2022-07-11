@@ -11,7 +11,7 @@ use App\Traits\FileSystemLogic;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use Gate;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class NivelEnsinoController extends ApiController
 {

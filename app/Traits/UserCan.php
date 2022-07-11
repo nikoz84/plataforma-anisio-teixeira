@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use Tymon\JWTAuth\Facades\JWTAuth;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 trait UserCan
 {

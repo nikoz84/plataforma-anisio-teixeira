@@ -10,10 +10,10 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=7.3.0",
+        "php": ">=7.4.0",
         "aminyazdanpanah/php-ffmpeg-video-streaming": "^1.2",
         "arcanedev/log-viewer": "8.*",
-        "barryvdh/laravel-dompdf": "^0.8.6",
+        "barryvdh/laravel-dompdf": "^1.0.2",
         "buglinjo/laravel-webp": "^2.0",
         "calcinai/php-imagick": "^0.1.2",
         "fideloper/proxy": "^4.2",
@@ -26,8 +26,8 @@
         "laravel/helpers": "^1.2",
         "laravel/tinker": "^2.0",
         "orbitale/imagemagick-php": "^3.0",
-        "spatie/laravel-analytics": "^3.11",
-        "tymon/jwt-auth": "1.0.2"
+        "php-open-source-saver/jwt-auth": "^1.4",
+        "spatie/laravel-analytics": "^3.11"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
