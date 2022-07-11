@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Conteudo;
 use App\Models\Canal;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -98,45 +99,53 @@ class User extends Authenticatable implements JWTSubject
     }*/
 
     /**
-     * Converte o atributo nome para minusculas
+     * Seta o atributo name para minusculas e devolve a primeira letra das palavras em maiuscula
      * @param string $value
      * @return void
      */
+    /*
     public function setNameAttribute($value)
     {
         $to_utf8 = mb_convert_encoding($value, "UTF-8", "auto");
         $this->attributes['name'] = Str::lower($to_utf8);
     }
 
-    /**
-     * Encripta o atributo password
-     * @param $value string
-     * @return void
-     */
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
-
-    /**
-     * Retorna atributo nome capitalizado (primeira letra em maiuscula)
-     * @param string $value retorna o nome capitalizado
-     *
-     * @return string
-     */
     public function getNameAttribute($value)
     {
         return ucwords($value);
+        Alexandre Leao
     }
+    */
+    public function name(): Attribute {
+        return new Attribute(
+            set : fn ($value) => Str::lower(mb_convert_encoding($value, "UTF-8", "auto")),
+            get: fn ($value) => ucwords($value)
+        );
+    }
+
+    /**
+     * Seta e encripta o atributo password
+     * @param $value string
+     * @return void
+     */
+     public function password() : Attribute
+    {
+        return new Attribute(
+            set: fn ($value) => bcrypt($value)
+        );
+    }
+   
 
     /**
      * Atributo email a minusculas e tira espaços
      * @param $value string email do usuário
      * @return void
      */
-    public function setEmailAttribute($value)
+    public function email(): Attribute
     {
-        $this->attributes['email'] = trim(strtolower($value));
+        return new Attribute(
+            set: fn ($value) => trim(strtolower($value))
+        );
     }
 
     /**
@@ -148,17 +157,23 @@ class User extends Authenticatable implements JWTSubject
         return $this->verified == self::USER_VERIFIED;
     }
     /**
-     * Undocumented function
+     * Devolve a imagem de destaque
      * @return void
      */
-    public function getImageAttribute()
+    public function image(): Attribute
     {
-        $path_assoc = $this->referenciaImagem();
-        if ($path_assoc) {
-            $img_assoc = str_replace($path_assoc, "", $path_assoc);
-            return Storage::disk('fotos-perfil')->url("usuario" . $img_assoc);
-        }
-        return null;
+        $get = function () {
+            $path_assoc = $this->referenciaImagem();
+            if ($path_assoc) {
+                $img_assoc = str_replace($path_assoc, "", $path_assoc);
+                return Storage::disk('fotos-perfil')->url("usuario" . $img_assoc);
+            }
+            return null;
+        };
+
+        return new Attribute(
+            get: $get
+        );
     }
 
     /**

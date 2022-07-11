@@ -25,7 +25,7 @@ class AplicativoRequest extends FormRequest
       * @param void
       * @return array
       */
-    public function validated()
+    public function validated($key = null, $default = null)
     {
         if(request()->method() == 'POST') {
             return $this->whenCreated();

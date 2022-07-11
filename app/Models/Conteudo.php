@@ -19,6 +19,7 @@ use App\Helpers\TransformDate;
 use App\Traits\UserCan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Conteudo extends Model
 {
@@ -148,26 +149,31 @@ class Conteudo extends Model
      * @param boolean $value Valor de tipo booleano true false
      * @return void
      */
-    public function setIsApprovedAttribute($value)
+    public function isApproved(): Attribute
     {
-        $user_can = $this->getUserCanAttribute();
+        $set = function () {
+            $user_can = $this->userCan();
+            $is_approved = false;
+            if ($user_can['create'] || $user_can['update']) {
+                $is_approved = true;
+            }
+            return $is_approved;
+        };
 
-        if ($user_can['create'] || $user_can['update']) {
-            $this->attributes['is_approved'] = true;
-        } else {
-            $this->attributes['is_approved'] = false;
-        }
+        return new Attribute(
+            set: $set 
+        );
     }
     /**
      * Seta o atributo usuário que aprova um conteúdo (approvedUserId)
      * @param integer $value Identificador único do usuário
      * @return void
      */
-    public function setApprovingUserId($value)
+    public function approvingUserId(): Attribute
     {
-        $user_id = Auth::user()->id;
-
-        $this->attributes['approving_user_id'] = $user_id ? $user_id : null;
+        return new Attribute(
+            set: fn () => Auth::user()->id ? Auth::user()->id : null
+        );
     }
 
     /**

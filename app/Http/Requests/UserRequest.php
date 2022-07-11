@@ -27,7 +27,7 @@ class UserRequest extends FormRequest
         return Auth::check();
     }
 
-    public function validated()
+    public function validated($key = null, $default = null)
     {
         return $this->toArray();
     }

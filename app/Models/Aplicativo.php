@@ -11,6 +11,7 @@ use App\Models\Tag;
 use App\Models\AplicativoCategory;
 use App\Traits\UserCan;
 use App\Traits\FileSystemLogic;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Aplicativo extends Model
 {
@@ -97,32 +98,40 @@ class Aplicativo extends Model
     /**
      * Descrição abreviada com 30 palavras e sem html
      */
-    public function getExcerptAttribute()
+    public function excerpt(): Attribute
     {
-        return strip_tags(Str::words($this['description'], 30));
+        return new Attribute(
+            get: fn () => strip_tags(Str::words($this['description'], 30))
+        );
     }
     /**
      * Imagem de destaque do aplicativo
      */
-    public function getImageAttribute()
+    public function image(): Attribute
     {
-        return $this->getAplicativoImage($this['id']);
+        return new Attribute(
+            get: fn () => $this->getAplicativoImage($this['id'])
+        );
     }
     /**
      * Cria url exibir
      */
-    public function getUrlExibirAttribute()
+    public function urlExibir(): Attribute
     {
-        return "/aplicativos-educacionais/aplicativo/exibir/" . $this['id'];
+        return new Attribute(
+            get: fn () => "/aplicativos-educacionais/aplicativo/exibir/" . $this['id']
+        );
     }
     /**
      * Seleciona e tranforma created-at ao formato (06 setembro de 2019 ás 17:37)
      * @param \App\Aplicativo $aplicativo
      * @return \App\Model\ApiResponser retorna json
      */
-    public function getFormatedDateAttribute()
+    public function formatedDate(): Attribute
     {
-        return TransformDate::format($this['created_at']);
+        return new Attribute(
+            get: fn() => TransformDate::format($this['created_at'])
+        );
     }
 
     /**
@@ -149,8 +158,10 @@ class Aplicativo extends Model
      * Adiciona novo atributo ao objeto que limita o tamanho do título
      * @return string cadeia de caracteres
      */
-    public function getShortTitleAttribute()
+    public function shortTitle(): Attribute
     {
-        return Str::words($this->name, 8);
+        return new Attribute(
+            get: fn () => Str::words($this->name, 8)
+        );
     }
 }
