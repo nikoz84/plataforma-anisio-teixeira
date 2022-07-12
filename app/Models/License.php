@@ -6,6 +6,7 @@ use App\Traits\UserCan;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Conteudo;
 use Illuminate\Contracts\Cache\Store;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\Storage;
 
 class License extends Model
@@ -53,11 +54,21 @@ class License extends Model
      * obtem url da imagem associada
      * @return string
      */
-    public function getImageAttribute() {
-        //return $urlPath;
-        $filename = basename($this->refenciaImagemAssociada());
-        return Storage::disk("conteudos-digitais")->url("imagem-associada/licencas/".$filename);
-    }
+    
+     public function image (): Attribute{
+         $get = function(){
+             $filename = basename($this->refenciaImagemAssociada());
+             if($filename){
+                   return Storage::disk("conteudos-digitais")->url("imagem-associada/licencas/".$filename);
+             }
+             return null;
+         };
+
+         return new Attribute(
+             get: $get
+         );
+         
+     }
 
     /**
      * obtem referencia do arquivo de imgame associada
@@ -81,10 +92,17 @@ class License extends Model
     }
 
 
-    public function getHasChildrenAttribute()
-    {
-        $count = $this->childs()->count();
-        
-        return $count ? true : false;
-    }
+     public function hasChildren(): Attribute{
+         $get = function (){
+             $count = $this->childs()->count();
+             if($count){
+                 return $count ? true : false;
+             }
+             return null;
+         };
+         
+         return new Attribute(
+             get: $get
+         );
+     }
 }

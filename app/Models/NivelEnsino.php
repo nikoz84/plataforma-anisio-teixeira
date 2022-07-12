@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Canal;
 use App\Models\CurricularComponent;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class NivelEnsino extends Model
 {
@@ -32,9 +33,24 @@ class NivelEnsino extends Model
        *@param \App\NivelEnsino $nivelEnsion
        * @return \App\Model\ApiResponser retorna json
        */
-    public function getSearchUrlAttribute()
-    {
-        $canal = Canal::find(6);
-        return "/{$canal->slug}/listar?nivel_id={$this['id']}";
+    //public function getSearchUrlAttribute()
+    //{
+      //  $canal = Canal::find(6);
+        //return "/{$canal->slug}/listar?nivel_id={$this['id']}";
+    //}
+
+     public function searchUrl(): Attribute {
+         $get = function () {
+             $canal = Canal::find(6);
+             if($canal) {
+                 return "/{$canal->slug}/listar?nivel_id={$this['id']}";
+             }
+            return null;
+         };
+         
+          return new Attribute(
+           get: $get
+         );
+
     }
 }

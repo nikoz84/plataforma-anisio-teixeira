@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use App\Models\CurricularComponentCategory;
 use App\Models\NivelEnsino;
 use App\Models\Conteudo;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class CurricularComponent extends Model
 {
@@ -53,9 +54,12 @@ class CurricularComponent extends Model
      * @param void
      * @return string e img
      */
-    public function getIconAttribute()
-    {
-        return "/img/sprite/" . Str::slug($this['name'], '-') . ".svg";
+      public function icon(): Attribute
+       { 
+           return new Attribute(
+               get: fn () => "/img/sprite/" . Str::slug($this['name'], '-') . ".svg",
+           ); 
+          
         /*
         $icone = null;
         if ($this['nivel_id'] == 5) {
@@ -66,16 +70,28 @@ class CurricularComponent extends Model
 
         return $icone;
         */
-    }
+       }
      /**
       * Função Obtem a pesquisa do Atributo
       * @param \App\Models\CurricularComponentes $curricular
       * @return \App\Traits\ApiResponser retorna json
       * @return void
       */
-    public function getSearchUrlAttribute()
-    {
-        $canal = Canal::find(6);
-        return "/{$canal->slug}/listar?componentes={$this['id']}";
+    public function searchUrl(): Attribute
+    {  
+        $get = function (){
+            $canal = Canal::find(6);
+            if($canal){
+                   return "/{$canal->slug}/listar?componentes={$this['id']}";
+            }
+            return null;
+        };
+
+        return new Attribute(
+            get: $get
+        );
+
+      
+     
     }
 }
