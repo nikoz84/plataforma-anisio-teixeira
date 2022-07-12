@@ -47,9 +47,7 @@ class CanalController extends ApiController
         $canal = new Canal;
         $this->authorize('create', $canal);
 
-
         $canal->fill($request->validated());
-
 
         if (!$canal->save()) {
             return $this->errorResponse([], 'Impossível cadastrar o canal', 422);

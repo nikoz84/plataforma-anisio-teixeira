@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use FontLib\Table\Type\name;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class UserFactory extends Factory
@@ -16,7 +17,11 @@ class UserFactory extends Factory
 
     public function definition()
     {
-        return [];
+        return [
+            'name' => $this->faker->name,
+            'email' => $this->faker->unique()->email,
+            'password' => $this->faker->password
+        ];
     }
     /**
      * Configure the model factory.
@@ -31,6 +36,4 @@ class UserFactory extends Factory
             //
         });
     }
-
-    
 }

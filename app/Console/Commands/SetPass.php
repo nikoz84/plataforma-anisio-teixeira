@@ -37,34 +37,16 @@ class SetPass extends Command
     public function handle()
     {
         $emails = [
-            'nicolas.hernandez@educacao.ba.gov.br',
-            'estudio.emitec@educacao.ba.gov.br',
-            'lucianoalbuquerque.iat@gmail.com',
-            'sojesus2@gmail.com',
-            'monica.mota@educacao.ba.gov.br',
-            'anarangel.rat@gmail.com',
-            'hanamedrado@hotmail.com',
-            'soledadeandre@hotmail.com',
-            'camila.moura@educacao.ba.gov.br',
-            'barroscarl@gmail.com',
-            'harrison.dir@gmail.com',
-            'gabriel.barreto@educacao.ba.gov.br',
-            'geizegoncalves@gmail.com',
-            'geraldoseara@gmail.com',
-            'marcusleo@gmail.com',
-            'nildsonveloso@hotmail.com',
-            'navegpeterson@gmail.com',
-            'valdineia_gal@hotmail.com',
-            'tiago.souzalns@gmail.com'
+            'teste@gmail.com'
         ];
 
         foreach ($emails as $email) {
-            \App\User::where('email', $email)->update(
+            \App\Models\User::where('email', $email)->update(
                 [
-                    'password' => bcrypt('Mudar@789')
+                    'password' => bcrypt('123456')
                 ]
             );
-            
+
             $this->info("Password do usuario: {$email}, Atualizado com sucesso! ");
         }
 

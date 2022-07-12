@@ -36,9 +36,9 @@ class CurricularComponent extends Model
      */
     public function nivel()
     {
-        return $this->belongsTo(NivelEnsino::class,"nivel_id", "id");
+        return $this->belongsTo(NivelEnsino::class, "nivel_id", "id");
     }
-    
+
     /**
      * Funçao as Conteudos Pertence a  Muitos
      * @param \App\Models\CurricularComponent $curricular
@@ -67,12 +67,12 @@ class CurricularComponent extends Model
         return $icone;
         */
     }
-     /**
-      * Função Obtem a pesquisa do Atributo
-      * @param \App\Models\CurricularComponentes $curricular
-      * @return \App\Traits\ApiResponser retorna json
-      * @return void
-      */
+    /**
+     * Função Obtem a pesquisa do Atributo
+     * @param \App\Models\CurricularComponentes $curricular
+     * @return \App\Traits\ApiResponser retorna json
+     * @return void
+     */
     public function getSearchUrlAttribute()
     {
         $canal = Canal::find(6);
