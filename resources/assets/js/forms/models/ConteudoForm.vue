@@ -526,7 +526,7 @@ import {
   QItemSection,
   QItemLabel
 } from "quasar";
-import DeleteFiles from "./DeleteFiles";
+import DeleteFiles from "./DeleteFiles.vue";
 
 export default {
   name: "ConteudoForm",
