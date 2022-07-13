@@ -43,7 +43,8 @@ Vue.use(Quasar, {
   ]
 });
 
-window.axios = require("axios");
+import axios from "axios";
+window.axios = axios;
 
 window.axios.defaults.baseURL = process.env.MIX_API_URL;
 
