@@ -49,7 +49,7 @@ Neste arquivo você vai adicionar as seguintes configurações:
 
 `$ php arstisan migrate`
 
-Agora podemos arrancar o servidor embutido do framework:
+### Agora pode levantar o servidor embutido do framework:
 
 `$ php artisan serve`
 <br>
