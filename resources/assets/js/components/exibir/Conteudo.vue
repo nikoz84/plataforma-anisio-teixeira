@@ -37,8 +37,8 @@ import { mapState, mapActions } from "vuex";
 import { QCard, QCardSection, QSeparator, QChip, Ripple } from "quasar";
 import { Player, PlayerActions } from "@components/player";
 
-import ConteudoMetadata from "@components/exibir/ConteudoMetadata";
-import ConteudoRelated from "@components/exibir/ConteudoRelated";
+import ConteudoMetadata from "@components/exibir/ConteudoMetadata.vue";
+import ConteudoRelated from "@components/exibir/ConteudoRelated.vue";
 
 
 export default {

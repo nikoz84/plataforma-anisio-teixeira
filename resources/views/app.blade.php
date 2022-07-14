@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    <link href="{{ mix('/css/app.css') }}" rel="stylesheet" />
+    @vite('resources/css/app.css')
     {{-- @routes --}}
   </head>
   <body>
     @inertia
     
-    <script defer src="{{ mix('/js/manifest.js') }}"></script>
-    <script defer src="{{ mix('/js/vendor.js') }}" defer></script>
-    <script defer src="{{ mix('/js/app.js') }}" defer></script>
+    @vite('resources/js/manifest.js')
+    @vite('resources/js/vendor.js')
+    @vite('resources/js/app.js')
     
     
   </body>

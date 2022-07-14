@@ -15,7 +15,7 @@ import axios from "axios";
 
 Vue.use(VueGtag, {
   config: { 
-    id: process.env.MIX_ANALYTICS,
+    id: import.meta.env.VITE_ANALYTICS,
     params: {
       send_page_view: false,
       cookie_flags: "SameSite=None;Secure"

@@ -34,7 +34,7 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
-import PaginatorCard from "./PaginatorCard";
+import PaginatorCard from "./PaginatorCard.vue";
 
 export default {
     name: "Paginator",
