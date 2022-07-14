@@ -13,36 +13,27 @@
     <HomeLinksRotinas id="rotinas-de-estudo"></HomeLinksRotinas>
 
     <!-- SESSÃO ADICINADOS RECENTEMENTE -->
-    
+
     <a class="skip-link" href="#conteudos-recentes">Ir a adicionados recentemente</a>
     <CardHome id="conteudos-recentes"></CardHome>
-    
+
     <!-- TIPOS DE CONTEUDO -->
     <a class="skip-link" href="#tipo-conteudos">Ir a tipos de conteúdos</a>
-    <CardHomeIcon
-      id="tipo-conteudos"
-      title="Tipos de Conteúdos"
-      :items="tipos"
-      v-if="tipos"
-    ></CardHomeIcon>
-    
+    <CardHomeIcon id="tipo-conteudos" title="Tipos de Conteúdos" :items="tipos" v-if="tipos"
+      bg-sessao="">
+    </CardHomeIcon>
+
     <!-- ENSINO MEDIO -->
     <a class="skip-link" href="#ensino-medio">Ir a disciplinas do ensino medio</a>
-    <CardHomeIcon
-      id="ensino-medio"
-       v-if="disciplinas"
-      :title="disciplinas.name"
-      :items="disciplinas.componentes"
-    ></CardHomeIcon>
-    
+    <CardHomeIcon id="ensino-medio" v-if="disciplinas" :title="disciplinas.name" :items="disciplinas.componentes"
+      bg-sessao="">
+    </CardHomeIcon>
+
     <!-- TEMAS TRANSVERSAIS -->
     <a class="skip-link" href="#temas-transversais">Ir a temas transversais</a>
-    <CardHomeIcon
-      id="temas-transversais"
-      v-if="temas"
-      :title="temas.name"
-      :items="temas.componentes"
-    ></CardHomeIcon>
+    <CardHomeIcon id="temas-transversais" v-if="temas" :title="temas.name" :items="temas.componentes"
+      bg-sessao="">
+    </CardHomeIcon>
   </section>
 </template>
 <script>// @ts-nocheck

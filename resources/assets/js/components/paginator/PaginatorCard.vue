@@ -1,30 +1,11 @@
 <template>
 
-  <q-card
-    class="card-hover"
-    v-bind:id="item.id"
-    v-if="item"
-  >
-    <q-img
-      clickable
-      class="cursor-pointer card-borda-imagem"
-      v-ripple
-      @click="goTo(item)"
-      alt="imagem destacada"
-      :src="getImage"
-      loading="lazy"
-      width="100%"
-      height="auto"
-      placeholder-src="/img/fundo-padrao.svg"
-    >
+  <q-card class="card-hover q-pa-sm bg-grey-2" v-bind:id="item.id" v-if="item" flat>
+    <q-img clickable class="cursor-pointer card-borda-imagem" v-ripple @click="goTo(item)" alt="imagem destacada"
+      :src="getImage" loading="lazy" width="100%" height="auto" placeholder-src="/img/fundo-padrao.svg">
     </q-img>
-    <q-card-section class="q-mb-md">
-      <h6
-        @click="goTo(item)"
-        class="text-h6 q-mt-md cursor-pointer"
-        :title="`Título: ${title}`"
-        v-html="title"
-      ></h6>
+    <q-card-section class="q-pl-none">
+      <div @click="goTo(item)" class="yt-title cursor-pointer q-pt-xs" :title="`Título: ${title}`" v-html="title"></div>
     </q-card-section>
     <q-card-actions class="flex justify-end absolute-bottom">
 
@@ -101,9 +82,9 @@ export default {
   font-weight: bold;
 }
 
-.card-hover:hover {
-  transform: translateY(5px);
-}
+// .card-hover:hover {
+//   transform: translateY(5px);
+// }
 
 .card-hover {
   transition: transform 0.2s ease-out;
@@ -119,4 +100,23 @@ export default {
   min-height: 230px;
   width: 100%;
 }
+
+.card-borda-imagem {
+    border-bottom: solid 3px #5ca0d4;
+}
+
+.yt-title{
+  font-family: "Roboto","Arial",sans-serif;
+    font-size: 1.4rem;
+    line-height: 2rem;
+    font-weight: 500;
+    max-height: 4rem;
+    overflow: hidden;
+    display: block;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
 </style>
