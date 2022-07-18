@@ -1,5 +1,5 @@
 <template>
-    <div class="q-mb-xl q-mt-lg">
+    <div class="q-mb-xl q-mt-lg ">
         <q-responsive :ratio="16/4" style="max-width: 100%;heigth:25vh">
         <q-carousel
             swipeable

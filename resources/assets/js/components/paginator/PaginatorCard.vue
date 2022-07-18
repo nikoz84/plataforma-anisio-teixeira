@@ -1,15 +1,21 @@
 <template>
 
-  <q-card class="card-hover q-pa-sm bg-grey-2" v-bind:id="item.id" v-if="item" flat>
-    <q-img clickable class="cursor-pointer card-borda-imagem" v-ripple @click="goTo(item)" alt="imagem destacada"
-      :src="getImage" loading="lazy" width="100%" height="auto" placeholder-src="/img/fundo-padrao.svg">
-    </q-img>
-    <q-card-section class="q-pl-none">
-      <div @click="goTo(item)" class="yt-title cursor-pointer q-pt-xs" :title="`Título: ${title}`" v-html="title"></div>
-    </q-card-section>
-    <q-card-actions class="flex justify-end absolute-bottom">
-
-    </q-card-actions>
+  <q-card @click="goTo(item)" class="card-hover q-pa-sm bg-grey-2  cursor-pointer" v-bind:id="item.id" v-if="item" flat>
+    
+      <q-img clickable class="cursor-pointer card-borda-imagem" v-ripple 
+        :src="getImage" loading="lazy" width="100%" height="auto" placeholder-src="/img/fundo-padrao.svg">
+      </q-img>
+      <q-card-section class="q-pl-none">
+        <q-chip class="q-ml-none" color="light" size="md" icon="" v-html="getTipo">
+        </q-chip>
+        <div class="yt-title q-pt-xs" v-html="title">
+        </div>
+      </q-card-section>
+      <q-tooltip class="bg-light text-body2 shadow-4" :offset="[10, 10]">Título: {{title}} <br> Tipo: {{ getTipo }}
+      </q-tooltip>
+      <q-card-actions class="flex justify-end absolute-bottom">
+      </q-card-actions>
+    
   </q-card>
 
 </template>
@@ -107,7 +113,7 @@ export default {
 
 .yt-title{
   font-family: "Roboto","Arial",sans-serif;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     line-height: 2rem;
     font-weight: 500;
     max-height: 4rem;
@@ -117,6 +123,10 @@ export default {
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
     white-space: normal;
+}
+
+.card-tooltip{
+  background-color: blue;
 }
 
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="q-pa-md">
         <div class="text-h5 title-page text-primary separatriz q-pb-md">
             Rotinas de Estudo
         </div>

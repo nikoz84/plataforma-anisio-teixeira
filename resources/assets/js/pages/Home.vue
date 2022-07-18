@@ -1,5 +1,5 @@
 <template>
-  <section class="q-pa-md">
+  <section class="">
     <!-- BOTÕES CAROUSEL -->
     <CarouselHome></CarouselHome>
 
