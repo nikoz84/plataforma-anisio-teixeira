@@ -20,12 +20,12 @@
           size="sm"
         >
           <q-avatar
-            style="width: 200px;height: 44px;"
+            style="width: auto;height: 44px;"
             alt="Marca"
             square
             title="marca"
             aria-label="Marca da plataforma Anísio Teixeira">
-              <img alt="marca" src="/img/sprite/logo.svg">
+              <img alt="marca" src="/img/sprite/logo-pat-2022-off.png">
           </q-avatar>
         </q-btn>
 
