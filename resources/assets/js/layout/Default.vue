@@ -3,6 +3,7 @@
     <a class="skip-link" href="#main-content">Pular ao conteúdo</a>
     <q-header elevated dense>
       <q-toolbar>
+<<<<<<< HEAD
         <q-btn
           flat
           dense
@@ -27,6 +28,13 @@
             aria-label="Marca da plataforma Anísio Teixeira"
           >
             <img alt="marca" src="/img/sprite/logo.svg" />
+=======
+        <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" aria-label="Menu" icon="dehaze" />
+        <q-btn flat class="q-ml-xs" aria-label="voltar ao inicio" to="/" v-if="$q.screen.gt.xs" size="sm">
+          <q-avatar style="width: auto;height: 44px;" alt="Marca" square title="marca"
+            aria-label="Marca da plataforma Anísio Teixeira">
+            <img alt="marca" src="/img/sprite/logo-pat-2022-off.png">
+>>>>>>> 1a94e6ee0aa211829de731deee39ee6a7a83bb0e
           </q-avatar>
         </q-btn>
 
@@ -51,36 +59,18 @@
                 <q-item-label>Fale Conosco</q-item-label>
               </q-item-section>
             </q-item>
-            <q-item
-              v-if="!isLogged"
-              to="/usuario/login"
-              clickable
-              v-close-popup
-              tabindex="0"
-            >
+            <q-item v-if="!isLogged" to="/usuario/login" clickable v-close-popup tabindex="0">
               <q-item-section>
                 <q-item-label>Login</q-item-label>
               </q-item-section>
             </q-item>
 
-            <q-item
-              v-if="isLogged"
-              to="/usuario/mudar-senha"
-              clickable
-              v-close-popup
-              tabindex="0"
-            >
+            <q-item v-if="isLogged" to="/usuario/mudar-senha" clickable v-close-popup tabindex="0">
               <q-item-section>
                 <q-item-label>Alterar senha</q-item-label>
               </q-item-section>
             </q-item>
-            <q-item
-              v-if="isLogged"
-              @click="sair()"
-              clickable
-              v-close-popup
-              tabindex="0"
-            >
+            <q-item v-if="isLogged" @click="sair()" clickable v-close-popup tabindex="0">
               <q-item-section>
                 <q-item-label>Sair</q-item-label>
               </q-item-section>
@@ -90,6 +80,7 @@
       </q-toolbar>
     </q-header>
 
+<<<<<<< HEAD
     <q-drawer
       show-if-above
       :mini="miniState"
@@ -102,6 +93,10 @@
       content-class="bg-grey-2"
       v-model="leftDrawerOpen"
     >
+=======
+    <q-drawer show-if-above :mini="miniState" @mouseover="miniState = false" @mouseout="miniState = true"
+      mini-to-overlay :width="380" :breakpoint="500" bordered content-class="bg-grey-2" v-model="leftDrawerOpen">
+>>>>>>> 1a94e6ee0aa211829de731deee39ee6a7a83bb0e
       <q-scroll-area class="fit">
         <LeftSideBar :leftDrawerOpen.sync="leftDrawerOpen"></LeftSideBar>
       </q-scroll-area>
@@ -110,12 +105,16 @@
     <q-page-container>
       <router-view id="main-content" name="main" />
       <q-page-scroller position="bottom-right">
+<<<<<<< HEAD
         <q-btn
           round
           color="accent"
           icon="arrow_upward"
           aria-label="subir ao topo"
         />
+=======
+        <q-btn round color="accent" icon="arrow_upward" aria-label="subir ao topo" />
+>>>>>>> 1a94e6ee0aa211829de731deee39ee6a7a83bb0e
       </q-page-scroller>
     </q-page-container>
   </q-layout>
