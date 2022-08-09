@@ -19,7 +19,6 @@ class DocumentPolicy
         //
     }
 
-
     public function index(User $user)
     {
         return $user->role->name == 'super-admin' ||

@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendMail;
 use App\Models\Contato;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\SendMail;
-use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
 
 class ContatoController extends ApiController
 {
     private $contato;
+
     protected $request;
 
     public function __construct(Request $request, Contato $contato)
@@ -39,8 +38,10 @@ class ContatoController extends ApiController
 
         return $this->showAsPaginator($paginator);
     }
+
     /**
      * Regra de Validação
+     *
      * @return array  array de regras
      */
     public function configRules()
@@ -54,6 +55,7 @@ class ContatoController extends ApiController
             'recaptcha' => ['required', new \App\Rules\ValidRecaptcha],
         ];
     }
+
     /**
      * Adiciona ou cria novas denúncias
      *
@@ -82,15 +84,17 @@ class ContatoController extends ApiController
         $contato->subject = $this->request->get('subject');
         $contato->message = $this->request->get('message');
 
-        if (!$contato->save()) {
+        if (! $contato->save()) {
             return $this->errorResponse([], 'Não foi possível enviar', 422);
         }
 
         return $this->successResponse([], 'Enviado com sucesso', 200);
     }
+
     /**
      * Envia para usuários administraivos
-     * @return boolean verdadeiro ou falso 
+     *
+     * @return bool verdadeiro ou falso
      */
     private function sendToAdminUsers()
     {
@@ -109,28 +113,28 @@ class ContatoController extends ApiController
 
     /**
      * Deleta as denúncias
-     * @param integer $id Identificador único
-     * @return App\Traits\ApiResponser::successResponse 
+     *
+     * @param  int  $id Identificador único
+     * @return App\Traits\ApiResponser::successResponse
      * Estrutura padrão de retorno para respostas com sucesso
      */
     public function delete($id)
     {
-
         $contato = $this->contato::find($id);
 
         $this->authorize('delete', $contato);
 
-        if (!$contato->delete()) {
-            return $this->errorResponse([], "Não foi possível apagar", 422);
+        if (! $contato->delete()) {
+            return $this->errorResponse([], 'Não foi possível apagar', 422);
         }
 
-        return $this->successResponse([], "Apagado com sucesso!", 200);
+        return $this->successResponse([], 'Apagado com sucesso!', 200);
     }
 
     /**
      * Seleciona uma denuncia pelo ID
      *
-     * @param integer ID identificador [type] $id 
+     * @param int ID identificador [type] $id
      * @return void
      */
     public function getById($id)

@@ -2,13 +2,14 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Traits\ApiResponser;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
 class CanalRequest extends FormRequest
 {
     use ApiResponser;
+
     /**
      * Determine if the user is authorized to make this request.
      * Determine se o usuário está autorizado a fazer essa solicitação
@@ -19,22 +20,26 @@ class CanalRequest extends FormRequest
     {
         return Auth::check();
     }
-     /**
-      * Método qeu faz a validação
-      *@param void
-      *@return array
-      */
+
+    /**
+     * Método qeu faz a validação
+     *
+     *@param void
+     *@return array
+     */
     public function validated()
     {
         $this->merge([
-            'options' => json_decode(request()->options, true)
+            'options' => json_decode(request()->options, true),
         ]);
 
         return $this->toArray();
     }
+
     /**
      * Get the validation rules that apply to the request.
      * Obtenha as regras de Validação que se aplicam à solicitação
+     *
      * @return array
      */
     public function rules()
@@ -43,21 +48,22 @@ class CanalRequest extends FormRequest
             'name' => 'required',
             'description' => 'required',
             'slug' => 'required',
-            'is_active' => 'required|boolean'
+            'is_active' => 'required|boolean',
         ];
     }
+
     /**
      * Método com validador
-     * @param mixed $validador
+     *
+     * @param  mixed  $validador
      * @return error response com código do protocolo http
      */
-
     public function withValidator($validator)
     {
         if ($validator->fails()) {
             return $this->errorResponse(
                 $validator->errors(),
-                "Não foi possível criar o canal",
+                'Não foi possível criar o canal',
                 422
             );
         }

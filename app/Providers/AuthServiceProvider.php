@@ -16,7 +16,7 @@ class AuthServiceProvider extends ServiceProvider
         \App\Models\Canal::class => \App\Policies\CanalPolicy::class,
         \App\Models\Conteudo::class => \App\Policies\ConteudoPolicy::class,
         \App\Models\Document::class => \App\Policies\DocumentPolicy::class,
-        \App\Models\PlayList::class => \App\Policies\PlayListPolicy::class
+        \App\Models\PlayList::class => \App\Policies\PlayListPolicy::class,
     ];
 
     /**

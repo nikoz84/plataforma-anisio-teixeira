@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Services\WordpressService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -11,10 +10,15 @@ use Illuminate\Support\Facades\DB;
 class Analytics
 {
     protected $limit;
+
     protected $page;
+
     protected $data_inicio;
+
     protected $data_fim;
+
     protected $option;
+
     protected $render_graph;
 
     public function __construct(Request $request)
@@ -29,40 +33,41 @@ class Analytics
 
     public function postsPerCanal()
     {
-        $sql = "SELECT (SELECT upper(name) FROM canais as c WHERE c.id = cd.canal_id) AS name,
+        $sql = 'SELECT (SELECT upper(name) FROM canais as c WHERE c.id = cd.canal_id) AS name,
                 COUNT (cd.canal_id) as total,
                 row_number() OVER () AS id
                 FROM
                 conteudos as cd
                 WHERE created_at BETWEEN ? AND ?
                 GROUP BY
-                cd.canal_id";
+                cd.canal_id';
 
         return DB::select($sql, [$this->data_inicio, $this->data_fim]);
     }
 
     public function postsPerUser()
     {
-        $sql = "SELECT (SELECT upper(name) FROM users WHERE id = c.user_id) AS name,
+        $sql = 'SELECT (SELECT upper(name) FROM users WHERE id = c.user_id) AS name,
                 COUNT (c.user_id) as total,
                 row_number() OVER () AS id
                 FROM
                 conteudos as c
                 WHERE created_at BETWEEN ? AND ?
                 GROUP BY
-                c.user_id";
+                c.user_id';
 
         return DB::select($sql, [$this->data_inicio, $this->data_fim]);
     }
+
     public function perTypeOfMidia()
     {
-        $sql = "SELECT (SELECT upper(name)
+        $sql = 'SELECT (SELECT upper(name)
                 FROM tipos AS t WHERE t.id = c.tipo_id) as name,
                 COUNT (c.tipo_id) as total,
                 row_number() OVER () AS id
                 FROM
                 conteudos AS c
-                GROUP BY name";
+                GROUP BY name';
 
         return DB::select(DB::raw($sql));
     }
@@ -128,21 +133,23 @@ class Analytics
 
     public function maisBaixados()
     {
-        $sql = "SELECT c.title as name,
+        $sql = 'SELECT c.title as name,
                 c.qt_downloads as total, id
                 FROM conteudos AS c
                 ORDER BY c.qt_downloads DESC
-                LIMIT 10";
+                LIMIT 10';
+
         return DB::select($sql);
     }
 
     public function maisAcessados()
     {
-        $sql = "SELECT c.title as name,
+        $sql = 'SELECT c.title as name,
             c.qt_access as total, id
             FROM conteudos AS c
             ORDER BY c.qt_access DESC
-            LIMIT 10";
+            LIMIT 10';
+
         return DB::select($sql);
     }
 
@@ -182,9 +189,10 @@ class Analytics
 
     public function maisBuscadas()
     {
-        $sql = "SELECT name, searched as total, id
+        $sql = 'SELECT name, searched as total, id
             FROM tags
-            ORDER BY searched DESC LIMIT 10";
+            ORDER BY searched DESC LIMIT 10';
+
         return DB::select($sql);
     }
 
@@ -193,6 +201,7 @@ class Analytics
         $sql = "SELECT name ,
             cast(options->>'qt_access' AS INTEGER) as total, id
             from aplicativos order by total DESC LIMIT 10";
+
         return DB::select($sql);
     }
 
@@ -231,7 +240,6 @@ class Analytics
         order by EXTRACT(MONTH from created_at)";
 
         return DB::select($sql, [$this->data_inicio, $this->data_fim]);
-
     }
 
     public function getData()
@@ -243,6 +251,7 @@ class Analytics
         switch ($this->option) {
             case 'per_user':
                 $this->render_graph = true;
+
                 return $this->getSeries(
                     $this->postsPerUser(),
                     "Catalogação por usuário publicador na PAT entre as datas {$d_inicio} - {$d_fim}"
@@ -250,6 +259,7 @@ class Analytics
                 break;
             case 'wordpress_data':
                 $this->render_graph = false;
+
                 return collect(
                     $wordpress->getCatalogacao(),
                     "Catalogação por usuário publicador no Blog entre as datas {$d_inicio} - {$d_fim}"
@@ -257,6 +267,7 @@ class Analytics
                 break;
             case 'per_chanel':
                 $this->render_graph = true;
+
                 return $this->getSeries(
                     $this->postsPerCanal(),
                     "Catalogação por canais entre as datas {$d_inicio} - {$d_fim}"
@@ -264,60 +275,70 @@ class Analytics
                 break;
             case 'user_montly':
                 $this->render_graph = false;
-                return $this->getSeries($this->postsPerUserMonthly(), "Catalogação mensal por usuário");
+
+                return $this->getSeries($this->postsPerUserMonthly(), 'Catalogação mensal por usuário');
                 break;
             case 'per_month':
                 $this->render_graph = false;
-                return $this->getSeries($this->postsPerMonth(), "Catalogação mensal");
+
+                return $this->getSeries($this->postsPerMonth(), 'Catalogação mensal');
                 break;
             case 'canal_montly':
                 $this->render_graph = true;
-                return $this->getSeries($this->postsPerCanalMonthly(), "Catalogação mensal por canal");
+
+                return $this->getSeries($this->postsPerCanalMonthly(), 'Catalogação mensal por canal');
                 break;
             case 'type_of_midia':
                 $this->render_graph = true;
-                return $this->getSeries($this->perTypeOfMidia(), "Tipos de mídia");
+
+                return $this->getSeries($this->perTypeOfMidia(), 'Tipos de mídia');
                 break;
             case 'qt_downloads':
                 $this->render_graph = true;
+
                 return $this->getSeries(
                     $this->maisBaixados(),
-                    "10 conteúdos mais baixados"
+                    '10 conteúdos mais baixados'
                 );
                 break;
             case 'qt_access':
                 $this->render_graph = true;
+
                 return $this->getSeries(
                     $this->maisAcessados(),
-                    "10 conteúdos mais acessados"
+                    '10 conteúdos mais acessados'
                 );
                 break;
             case 'searched_tags':
                 $this->render_graph = true;
+
                 return $this->getSeries(
                     $this->maisBuscadas(),
-                    "10 tags mais buscadas"
+                    '10 tags mais buscadas'
                 );
                 break;
             case 'aplicativo_qt_access':
                 $this->render_graph = true;
+
                 return $this->getSeries(
                     $this->aplicativosMaisVisualizados(),
-                    "10 aplicativos mais visualizados"
+                    '10 aplicativos mais visualizados'
                 );
                 break;
             case 'registro_mes_ocorrencia':
                 $this->render_graph = true;
+
                 return $this->getSeries(
                     $this->registroMesOcorrencia(),
-                    "Registros de ocorrência de formulário de contatos"
+                    'Registros de ocorrência de formulário de contatos'
                 );
                 break;
             case 'acessados_ultimos_meses':
                 $this->render_graph = true;
+
                 return $this->getSeries(
                     $this->TotalConteudosAcessadosUltimostresMeses(),
-                    "10 conteúdos mais visualizados nos últimos 3 meses"
+                    '10 conteúdos mais visualizados nos últimos 3 meses'
                 );
                 break;
             default:
@@ -325,16 +346,17 @@ class Analytics
                 break;
         }
     }
+
     /**
      * Método para gráficos, converte o array associativo em um array simples ou lista
      *
-     * @param Collection $data intância de collection
+     * @param  Collection  $data intância de collection
      * @return void
      */
-    public function getSeries($data, $title = "")
+    public function getSeries($data, $title = '')
     {
         $collect = collect($data);
-        if (!$collect->contains('month')) {
+        if (! $collect->contains('month')) {
             return [
                 'title' => $title,
                 'render' => $this->render_graph,

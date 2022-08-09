@@ -2,19 +2,18 @@
 
 namespace App\Traits;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
+use Illuminate\Support\Collection;
 
 trait ApiResponser
 {
     /**
      * Estrutura padrão de retorno para respostas com sucesso
-     * 
-     * @param mixed $data Recebe um array ou coleção de dados
-     * @param string $message Recebe uma mensagem opcional
-     * @param integer $code Código HTTP ou statusCode
-     * 
+     *
+     * @param  mixed  $data Recebe um array ou coleção de dados
+     * @param  string  $message Recebe uma mensagem opcional
+     * @param  int  $code Código HTTP ou statusCode
      * @return string json
      */
     protected function successResponse($data, $message = '', $code = 200)
@@ -22,18 +21,17 @@ trait ApiResponser
         return response()->json([
             'metadata' => $data,
             'message' => $message,
-            'success' => true
+            'success' => true,
         ], $code);
     }
 
     /**
      * Estrutura padrão de retorno para erros
-     * 
-     * @param mixed $errors Erros da aplicação
-     * @param string $message Mensagem alternativa
-     * @param integer $code Código HTTP ou statusCode
-     * @param mixed $headers Cabeçalhos HTTP
-     * 
+     *
+     * @param  mixed  $errors Erros da aplicação
+     * @param  string  $message Mensagem alternativa
+     * @param  int  $code Código HTTP ou statusCode
+     * @param  mixed  $headers Cabeçalhos HTTP
      * @return string json
      */
     protected function errorResponse($errors, $message, $code, $headers = null)
@@ -42,23 +40,23 @@ trait ApiResponser
             return response()->json([
                 'errors' => $errors,
                 'message' => $message,
-                'success' => false
+                'success' => false,
             ], $code, $headers);
         } else {
             return response()->json([
                 'errors' => $errors,
                 'message' => $message,
-                'success' => false
+                'success' => false,
             ], $code);
         }
     }
+
     /**
-     * Resposta de uma coleção de dados 
-     * 
-     * @param \Illuminate\Support\Collection $collection Recebe uma coleção laravel
-     * @param string $message Mensagem alternativa
-     * @param integer $code Código HTTP ou statusCode
-     * 
+     * Resposta de uma coleção de dados
+     *
+     * @param  \Illuminate\Support\Collection  $collection Recebe uma coleção laravel
+     * @param  string  $message Mensagem alternativa
+     * @param  int  $code Código HTTP ou statusCode
      * @return string json
      */
     protected function showAll(Collection $collection, $message = '', $code = 200)
@@ -68,11 +66,10 @@ trait ApiResponser
 
     /**
      * Resposta em formato paginação
-     * 
-     * @param Paginator $paginator Recebe um objeto de tipo paginator
-     * @param string $message Recebe uma mensagem opcional
-     * @param integer $code Código HTTP ou statusCode
-     * 
+     *
+     * @param  Paginator  $paginator Recebe um objeto de tipo paginator
+     * @param  string  $message Recebe uma mensagem opcional
+     * @param  int  $code Código HTTP ou statusCode
      * @return string json
      */
     protected function showAsPaginator(Paginator $paginator, $message = '', $code = 200)
@@ -80,20 +77,18 @@ trait ApiResponser
         return response()->json([
             'paginator' => $paginator,
             'message' => $message,
-            'success' => true
+            'success' => true,
         ], $code);
     }
 
     /**
      * Resposta json da um modelo
-     * 
-     * @param Model $instance Instância de um modelo
-     * @param string $message Mensagem opcional
-     * @param integer $code Código HTTP ou statusCode
-     * 
+     *
+     * @param  Model  $instance Instância de um modelo
+     * @param  string  $message Mensagem opcional
+     * @param  int  $code Código HTTP ou statusCode
      * @return string json
      */
-
     protected function showOne(Model $instance, $message = '', $code = 200)
     {
         return $this->successResponse($instance, $message, $code);
@@ -101,8 +96,8 @@ trait ApiResponser
 
     /**
      * Transforma coleção para um select com chave valor id => name
-     * @param Collection $collection Coleção laravel
-     * 
+     *
+     * @param  Collection  $collection Coleção laravel
      * @return string json
      */
     protected function fetchForSelect(Collection $collection)
@@ -110,8 +105,10 @@ trait ApiResponser
         $select = $collection->map(function ($item) {
             $data['name'] = $item->name ? $item->name : $item->title;
             $data['id'] = $item->id;
+
             return $data;
         });
+
         return $this->showAll($select);
     }
 }

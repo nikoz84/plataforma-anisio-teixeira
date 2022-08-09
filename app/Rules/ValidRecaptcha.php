@@ -2,8 +2,8 @@
 
 namespace App\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
 use App\Helpers\GoogleRecaptcha;
+use Illuminate\Contracts\Validation\Rule;
 
 class ValidRecaptcha implements Rule
 {

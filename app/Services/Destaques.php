@@ -2,20 +2,18 @@
 
 namespace App\Services;
 
-use App\Models\Conteudo;
 use App\Models\Aplicativo;
-use App\Services\WordpressService;
-use App\Models\CurricularComponentCategory;
-use App\Models\NivelEnsino;
-use App\Models\Tipo;
+use App\Models\Conteudo;
 
 class Destaques
 {
     public $limit = 6;
+
     public function __construct($limit = 6)
     {
         $this->limit = $limit;
     }
+
     /**
      * Retorna por demanda requisição
      *
@@ -66,9 +64,10 @@ class Destaques
             'slug' => 'conteudos-recentes',
             'items' => $conteudos->map(function ($conteudo) {
                 return $conteudo->only(['id', 'title', 'image', 'url_exibir', 'tipo']);
-            })
+            }),
         ];
     }
+
     /**
      * Conteúdos mais baixados
      *
@@ -83,9 +82,10 @@ class Destaques
             'slug' => 'conteudos-mais-baixados',
             'items' => $conteudos->map(function ($conteudo) {
                 return $conteudo->only(['id', 'title', 'image', 'qt_downloads', 'url_exibir']);
-            })
+            }),
         ];
     }
+
     /**
      * Conteúdos mais acessados
      *
@@ -100,9 +100,10 @@ class Destaques
             'slug' => 'conteudos-mais-acessados',
             'items' => $conteudos->map(function ($conteudo) {
                 return $conteudo->only(['id', 'title', 'image', 'qt_access', 'url_exibir']);
-            })
+            }),
         ];
     }
+
     /**
      * Conteúdos destacados
      *
@@ -110,16 +111,17 @@ class Destaques
      */
     private function getConteudosDestaques()
     {
-        $conteudos = Conteudo::where("is_featured", true)->limit($this->limit)->get();
+        $conteudos = Conteudo::where('is_featured', true)->limit($this->limit)->get();
 
         return [
             'title' => 'Conteúdos Destacados',
             'slug' => 'conteudos-destacados',
             'items' => $conteudos->map(function ($conteudo) {
                 return $conteudo->only(['id', 'title', 'image', 'url_exibir']);
-            })
+            }),
         ];
     }
+
     /**
      * aplicativos em destaque
      *
@@ -135,9 +137,10 @@ class Destaques
             'slug' => 'aplicativos-destacados',
             'items' => $aplicativos->map(function ($aplicativo) {
                 return $aplicativo->only(['id', 'name', 'image', 'url_exibir']);
-            })
+            }),
         ];
     }
+
     /**
      * Aplicativos mais recentes
      *
@@ -152,9 +155,10 @@ class Destaques
             'slug' => 'aplicativos-recentes',
             'items' => $aplicativos->map(function ($aplicativo) {
                 return $aplicativo->only(['id', 'name', 'image', 'url_exibir']);
-            })
+            }),
         ];
     }
+
     /**
      * Postagens recentes
      *

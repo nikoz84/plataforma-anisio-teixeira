@@ -2,32 +2,29 @@
 
 namespace App\Models\Wordpress;
 
-use App\Models\Wordpress\User;
-use App\Models\Wordpress\PostMeta;
-use App\Models\Wordpress\Term;
+use App\Helpers\TransformDate;
+use App\Traits\WPPrefix;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-use App\Helpers\TransformDate;
-use App\Models\Wordpress\TermTaxonomy;
-use App\Traits\WPPrefix;
 
 class Post extends Model
 {
-    use HasFactory, WPPrefix;
+    use HasFactory;use WPPrefix;
+
     protected $connection = 'mysql';
+
     protected $table = 'posts';
+
     protected $primaryKey = 'ID';
 
     public $appends = ['title', 'image', 'url_exibir', 'formated_date', 'tags', 'categories'];
 
     public function __construct(array $attributes = [])
     {
-        $this->table = $this->getPrefix() . $this->table;
+        $this->table = $this->getPrefix().$this->table;
 
         parent::__construct($attributes);
     }
-
 
     public function user()
     {
@@ -37,7 +34,6 @@ class Post extends Model
 
     public function getImageAttribute()
     {
-
         $id = PostMeta::where('meta_key', '=', '_thumbnail_id')
             ->where('post_id', $this->getAttribute('ID'))
             ->get(['meta_value'])->pluck('meta_value')->first();
@@ -53,8 +49,7 @@ class Post extends Model
 
     public function terms()
     {
-
-        return $this->belongsToMany(TermTaxonomy::class, $this->getPrefix() . 'term_relationships', 'object_id', 'term_taxonomy_id')
+        return $this->belongsToMany(TermTaxonomy::class, $this->getPrefix().'term_relationships', 'object_id', 'term_taxonomy_id')
             ->with('term');
     }
 

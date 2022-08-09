@@ -3,12 +3,13 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
 
 class Autocomplete
 {
     protected $term;
+
     protected $limit;
+
     protected $per;
 
     public function __construct($term, $limit, $per)
@@ -17,6 +18,7 @@ class Autocomplete
         $this->limit = $limit;
         $this->per = $per;
     }
+
     public function autocomplete()
     {
         switch ($this->per) {
@@ -28,9 +30,9 @@ class Autocomplete
                 break;
         }
     }
+
     private function perTitle()
     {
-
         $paginator = DB::table(DB::raw("conteudos as cd, plainto_tsquery('simple', lower(unaccent(?))) query"))
             ->select([
                 'cd.id', 'cd.title as name',
@@ -44,10 +46,11 @@ class Autocomplete
 
         return $paginator->setPath("/autocompletar?termo={$this->term}&por={$this->per}&limit={$this->limit}");
     }
+
     private function perTag()
     {
         $search = "%{$this->term}%";
-        $paginator = DB::table("tags as t")
+        $paginator = DB::table('tags as t')
             ->select(['t.id', 't.name'])
             ->whereRaw('unaccent(lower(t.name)) LIKE unaccent(lower(?))', [$search])
             ->orderBy('t.name', 'desc')

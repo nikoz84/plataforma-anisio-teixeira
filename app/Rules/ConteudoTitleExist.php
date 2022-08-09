@@ -2,14 +2,16 @@
 
 namespace App\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
 use App\Models\Conteudo;
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Str;
 
 class ConteudoTitleExist implements Rule
 {
     protected $title;
+
     private $err;
+
     /**
      * Create a new rule instance.
      *
@@ -17,7 +19,6 @@ class ConteudoTitleExist implements Rule
      */
     public function __construct()
     {
-        
     }
 
     /**
@@ -32,9 +33,10 @@ class ConteudoTitleExist implements Rule
         $response = true;
         $count = Conteudo::where('title', 'ilike', "%$value%")->count();
         $this->err = $value;
-        if(request()->method() != 'PUT' && $count > 0){
+        if (request()->method() != 'PUT' && $count > 0) {
             $response = false;
         }
+
         return $response;
     }
 
@@ -48,6 +50,7 @@ class ConteudoTitleExist implements Rule
         $encode = urlencode($this->err);
         $url = "/recursos-educacionais/listar?busca={$encode}";
         $short_word = Str::words($this->err, 7);
+
         return "O título já existe <a target='_blank' href='{$url}'>{$short_word}</a>";
     }
 }

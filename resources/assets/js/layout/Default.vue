@@ -2,7 +2,7 @@
   <q-layout view="hHh lpR fFf">
     <a class="skip-link" href="#main-content">Pular ao conteúdo</a>
     <q-header elevated dense>
-      <q-toolbar >
+      <q-toolbar>
         <q-btn
           flat
           dense
@@ -24,8 +24,9 @@
             alt="Marca"
             square
             title="marca"
-            aria-label="Marca da plataforma Anísio Teixeira">
-              <img alt="marca" src="/img/sprite/logo.svg">
+            aria-label="Marca da plataforma Anísio Teixeira"
+          >
+            <img alt="marca" src="/img/sprite/logo.svg" />
           </q-avatar>
         </q-btn>
 
@@ -33,9 +34,19 @@
         <AutocompleteForm></AutocompleteForm>
         <q-space />
 
-        <q-btn-dropdown stretch flat icon="person" dropdown-icon="arrow_drop_down" aria-label="Opçoes de usuário">
+        <q-btn-dropdown
+          stretch
+          flat
+          icon="person"
+          dropdown-icon="arrow_drop_down"
+          aria-label="Opçoes de usuário"
+        >
           <q-list dense bordered padding>
-            <q-item clickable to="/usuario/contato/faleconosco" aria-label="fale conosco">
+            <q-item
+              clickable
+              to="/usuario/contato/faleconosco"
+              aria-label="fale conosco"
+            >
               <q-item-section>
                 <q-item-label>Fale Conosco</q-item-label>
               </q-item-section>
@@ -90,44 +101,32 @@
       bordered
       content-class="bg-grey-2"
       v-model="leftDrawerOpen"
-      >
+    >
       <q-scroll-area class="fit">
         <LeftSideBar :leftDrawerOpen.sync="leftDrawerOpen"></LeftSideBar>
       </q-scroll-area>
     </q-drawer>
 
     <q-page-container>
-      <router-view id="main-content" name="main"/>
+      <router-view id="main-content" name="main" />
       <q-page-scroller position="bottom-right">
-        <q-btn round color="accent" icon="arrow_upward" aria-label="subir ao topo"/>
+        <q-btn
+          round
+          color="accent"
+          icon="arrow_upward"
+          aria-label="subir ao topo"
+        />
       </q-page-scroller>
     </q-page-container>
   </q-layout>
 </template>
-<script>// @ts-nocheck
+<script>
+// @ts-nocheck
 
 import { mapActions, mapState } from "vuex";
 import { AutocompleteForm } from "@forms/search";
 import LeftSideBar from "./LeftSideBar.vue";
-import {
-  QLayout,
-  QDrawer,
-  QHeader,
-  QToolbar,
-  QSpace,
-  QSeparator,
-  QToolbarTitle,
-  QPageContainer,
-  QPageScroller,
-  QList,
-  QItemLabel,
-  QItem,
-  QItemSection,
-  QExpansionItem,
-  QMenu,
-  QSelect,
-  GoBack
-} from "quasar";
+import { GoBack } from "quasar";
 
 export default {
   name: "Default",
@@ -135,41 +134,35 @@ export default {
   components: {
     AutocompleteForm,
     LeftSideBar,
-    QLayout,
-    QDrawer,
-    QHeader,
-    QSpace,
-    QSeparator,
-    QToolbar,
-    QToolbarTitle,
-    QPageContainer,
-    QPageScroller,
-    QList,
-    QItem,
-    QItemSection,
-    QItemLabel,
-    QExpansionItem,
-    QSelect
   },
   data() {
     return {
-      leftDrawerOpen: this.openSideBar ? this.openSideBar : this.$q.platform.is.desktop,
-      miniState: true
+      leftDrawerOpen: this.openSideBar
+        ? this.openSideBar
+        : this.$q.platform.is.desktop,
+      miniState: true,
     };
   },
   created() {
     this.getLayout();
   },
   computed: {
-    ...mapState(["isLogged", "links", "canal", "sidebar", "layout", "openSideBar"])
+    ...mapState([
+      "isLogged",
+      "links",
+      "canal",
+      "sidebar",
+      "layout",
+      "openSideBar",
+    ]),
   },
   methods: {
     ...mapActions(["getLayout", "logout"]),
     async sair() {
       await this.logout();
-      this.$router.push('/');
-    }
-  }
+      this.$router.push("/");
+    },
+  },
 };
 </script>
 <style lang="stylus">

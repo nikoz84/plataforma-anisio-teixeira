@@ -2,30 +2,31 @@
 
 namespace App\Models;
 
+use App\Helpers\TransformDate;
+use App\Traits\FileSystemLogic;
+use App\Traits\UserCan;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Helpers\TransformDate;
-use App\Models\Tag;
-use App\Models\AplicativoCategory;
-use App\Traits\UserCan;
-use App\Traits\FileSystemLogic;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Aplicativo extends Model
 {
-    use SoftDeletes, UserCan, FileSystemLogic;
+    use SoftDeletes;use UserCan;use FileSystemLogic;
 
-    const CANAL_ID = 9;
-    const QT_ACCESS_INIT = 0;
+    public const CANAL_ID = 9;
+
+    public const QT_ACCESS_INIT = 0;
 
     /**
      * Cria a tabela aplicativo no Banco de dados Protegida
-     * @param \App\Aplicativo $aplicativo
+     *
+     * @param  \App\Aplicativo  $aplicativo
      * @return \App\Model\ApiResponser retorna json
      */
     protected $table = 'aplicativos';
+
     /**
      * Tabela com os campos definidos
      */
@@ -37,7 +38,7 @@ class Aplicativo extends Model
         'description',
         'url',
         'is_featured',
-        'options'
+        'options',
     ];
 
     /**
@@ -48,22 +49,25 @@ class Aplicativo extends Model
         'excerpt',
         'url_exibir',
         'formated_date',
-        'user_can'
+        'user_can',
     ];
+
     /**
      * Tabela com os campos definidos
      */
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at'
+        'deleted_at',
     ];
+
     /**
      * Força atributo options ser um array
      */
     protected $casts = [
         'options' => 'array',
     ];
+
     /**
      * Relação com canal
      */
@@ -74,11 +78,13 @@ class Aplicativo extends Model
         return $this->belongsTo(Canal::class, 'canal_id')
             ->select(['id', 'name', 'slug', 'options->color as color']);
     }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id')
             ->select(['id', 'name']);
     }
+
     /**
      * Relação com tabela de tags
      */
@@ -87,6 +93,7 @@ class Aplicativo extends Model
         return $this->belongsToMany(Tag::class, 'aplicativo_tag', 'aplicativo_id', 'tag_id')
             ->select(['id', 'name'])->orderBy('name');
     }
+
     /**
      * Relação com categoria
      */
@@ -104,6 +111,7 @@ class Aplicativo extends Model
             get: fn () => strip_tags(Str::words($this['description'], 30))
         );
     }
+
     /**
      * Imagem de destaque do aplicativo
      */
@@ -113,49 +121,54 @@ class Aplicativo extends Model
             get: fn () => $this->getAplicativoImage($this['id'])
         );
     }
+
     /**
      * Cria url exibir
      */
     public function urlExibir(): Attribute
     {
         return new Attribute(
-            get: fn () => "/aplicativos-educacionais/aplicativo/exibir/" . $this['id']
+            get: fn () => '/aplicativos-educacionais/aplicativo/exibir/'.$this['id']
         );
     }
+
     /**
      * Seleciona e tranforma created-at ao formato (06 setembro de 2019 ás 17:37)
-     * @param \App\Aplicativo $aplicativo
+     *
+     * @param  \App\Aplicativo  $aplicativo
      * @return \App\Model\ApiResponser retorna json
      */
     public function formatedDate(): Attribute
     {
         return new Attribute(
-            get: fn() => TransformDate::format($this['created_at'])
+            get: fn () => TransformDate::format($this['created_at'])
         );
     }
 
     /**
      * Obtem referencia do arquivo de imgame associada
+     *
      * @return string
      */
     public function referenciaImagemAssociada()
     {
-        if (!$this->id) {
-            return null;
+        if (! $this->id) {
+            return;
         }
 
-        $urlPath = Storage::disk("aplicativos-educacionais")->path("imagem-associada");
-        $urlPath = $urlPath . DIRECTORY_SEPARATOR . $this->id . ".*";
+        $urlPath = Storage::disk('aplicativos-educacionais')->path('imagem-associada');
+        $urlPath = $urlPath.DIRECTORY_SEPARATOR.$this->id.'.*';
         $info = glob($urlPath);
-        if (sizeof($info) > 0) {
+        if (count($info) > 0) {
             return $info[0];
         }
 
-        return null;
+        return;
     }
 
     /**
      * Adiciona novo atributo ao objeto que limita o tamanho do título
+     *
      * @return string cadeia de caracteres
      */
     public function shortTitle(): Attribute

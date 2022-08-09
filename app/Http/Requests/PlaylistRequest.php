@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Traits\RequestValidator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use App\Traits\RequestValidator;
 use Illuminate\Support\Str;
 
 class PlaylistRequest extends FormRequest
@@ -12,6 +12,7 @@ class PlaylistRequest extends FormRequest
     use RequestValidator;
 
     protected $stringify = 'document';
+
     /**
      * Determine if the user is authorized to make this request.
      * Determine se o usuário está autorizado a fazer essa solicitação.
@@ -33,18 +34,18 @@ class PlaylistRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'description' => 'required'
+            'description' => 'required',
         ];
     }
-     /**
-      * Função de Validação
-      * @return array
-      */
+
+    /**
+     * Função de Validação
+     *
+     * @return array
+     */
     public function validated()
     {
-        
-        if (request()->method() == "POST") {
-            
+        if (request()->method() == 'POST') {
             $data = collect($this->toArray());
 
             return [
@@ -53,20 +54,21 @@ class PlaylistRequest extends FormRequest
                     'title' => $data->get('title'),
                     'description' => $data->get('description'),
                     'owner' => Auth::user()->id,
-                    'ids' => [] //13234, 13233, 13230, 13229
-                ]
+                    'ids' => [], //13234, 13233, 13230, 13229
+                ],
             ];
-            
         }
 
         return $this->toArray();
     }
+
     /**
      * Função que cria slug
+     *
      * @return Str slug
      */
     public function createSlug($value)
     {
-        return  "pl-" . Str::slug(Str::words($value, 45), '-');
+        return  'pl-'.Str::slug(Str::words($value, 45), '-');
     }
 }

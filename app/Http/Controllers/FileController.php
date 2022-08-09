@@ -2,20 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
-use App\Http\Controllers\ApiController;
-use App\Traits\FileSystemLogic;
-use App\Models\Conteudo;
 use App\Helpers\ContentVideoConvert;
 use App\Jobs\VideoStreamingConvert;
+use App\Models\Conteudo;
+use App\Traits\FileSystemLogic;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Streaming\FFMpeg;
-use Streaming\Representation;
-
 
 class FileController extends ApiController
 {
@@ -27,7 +23,7 @@ class FileController extends ApiController
     {
         $this->middleware('jwt.auth')->except([
             'index', 'search', 'getFiles', 'getGallery', 'downloadFile', 'getInfoFolder', 'fileExistInBase',
-            'ffmpegTeste', 'showVideoStreaming'
+            'ffmpegTeste', 'showVideoStreaming',
         ]);
         $this->file = $file;
         $this->request = $request;
@@ -40,11 +36,13 @@ class FileController extends ApiController
     public function getFiles($id)
     {
         $exists = Storage::disk('public')->exists('logo.png');
+
         return response(['exist' => $exists], 200, ['Content-Type' => 'image/png']);
     }
 
     /**
      *Função Cria o arquivo no Banco de dados usando id.
+     *
      * @param [type] $id
      * @return void
      */
@@ -60,29 +58,31 @@ class FileController extends ApiController
             return response()->json([
                 'success' => true,
                 'message' => 'Arquivo enviado',
-                'file' => $path
+                'file' => $path,
             ]);
         }
+
         return response()->json([
             'success' => false,
-            'message' => 'Erro no envio do arquivo'
+            'message' => 'Erro no envio do arquivo',
         ]);
     }
+
     /**
      * Função Recursos anihados por rotas.
      */
-
     public function store()
     {
         if ($this->request->hasFile('imagem')) {
             $this->request->file('imagem');
         }
     }
+
     /**
      * Função que executa Download de arquivos no banco de dados.
      *
      * @param [type] $directory
-     * @param integer $id
+     * @param  int  $id
      * @return void
      */
     public function downloadFile($directory, $id)
@@ -107,18 +107,19 @@ class FileController extends ApiController
         }
 
         $headers = [
-            "Content-Type" => "$file->mime_type"
+            'Content-Type' => "$file->mime_type",
         ];
 
-        $path = Storage::disk('conteudos-digitais')->path("{$directory}" . DIRECTORY_SEPARATOR . "{$file->name}");
+        $path = Storage::disk('conteudos-digitais')->path("{$directory}".DIRECTORY_SEPARATOR."{$file->name}");
 
         return response()->download($path, $file->name, $headers);
     }
+
     /**
-     * Função que Requisita informações da Galeria 
+     * Função que Requisita informações da Galeria
+     *
      * @return string json
      */
-
     public function getGallery()
     {
         $imagens = collect($this->getImagesGallery(true));
@@ -128,6 +129,7 @@ class FileController extends ApiController
 
     /**
      * Função responsável por exibir informações de um diretório passado por parametro.
+     *
      * @param Illuminate\Http\Request
      * @param Illuminate\Http\Request\$request
      * @return string json
@@ -135,69 +137,73 @@ class FileController extends ApiController
     public function getInfoFolder(Request $request)
     {
         if ($request->path == 'public') {
-            $path = storage_path('app' . DIRECTORY_SEPARATOR . $request->path);
+            $path = storage_path('app'.DIRECTORY_SEPARATOR.$request->path);
         } else {
-            $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $request->path);
+            $path = storage_path('app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.$request->path);
         }
         $files = scandir($path);
 
         $qtdFiles = count($files) - 2;
 
-        $dirFiles = array();
-
+        $dirFiles = [];
 
         foreach ($files as $file) {
-            if (($file == '.') || ($file == '..')) continue;
+            if (($file == '.') || ($file == '..')) {
+                continue;
+            }
 
-            $filename = $path . DIRECTORY_SEPARATOR . $file;
+            $filename = $path.DIRECTORY_SEPARATOR.$file;
             $dirName = explode('\public', $filename);
 
             $info = pathinfo($filename);
-            $info["dirname"] = $dirName[1];
-            $info["size"] = filesize($filename);
-            $info["modified"] = date("d/m/Y H:i:s", filemtime($filename));
+            $info['dirname'] = $dirName[1];
+            $info['size'] = filesize($filename);
+            $info['modified'] = date('d/m/Y H:i:s', filemtime($filename));
 
             array_push($dirFiles, $info);
         }
 
-        $arrayFiles = array();
+        $arrayFiles = [];
 
         foreach ($dirFiles as $file) {
-            array_push($arrayFiles, ["Name: " . $file["basename"], "Size: " . $file["size"] . "KByte", "Modified: " . $file["modified"], "Directory: " . $file["dirname"]]);
+            array_push($arrayFiles, ['Name: '.$file['basename'], 'Size: '.$file['size'].'KByte', 'Modified: '.$file['modified'], 'Directory: '.$file['dirname']]);
         }
 
-        return $this->successResponse(['quantidade de conteúdos: ' . $qtdFiles, $arrayFiles], 'sucesso!', 200);
+        return $this->successResponse(['quantidade de conteúdos: '.$qtdFiles, $arrayFiles], 'sucesso!', 200);
     }
 
     /**
      * Existe Arquivos na base
+     *
      * @param Illuminate\Http\Request
      * @param $request
      * @return string json
      */
     public function fileExistInBase(Request $request)
     {
-        $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $request->path);
+        $path = storage_path('app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.$request->path);
 
         $files = scandir($path);
 
-        $arrayExist = array();
-        $arrayNotExist = array();
+        $arrayExist = [];
+        $arrayNotExist = [];
 
         foreach ($files as $file) {
-            if (($file == '.') || ($file == '..')) continue;
+            if (($file == '.') || ($file == '..')) {
+                continue;
+            }
 
-            $dirFile = $path . DIRECTORY_SEPARATOR . $file;
+            $dirFile = $path.DIRECTORY_SEPARATOR.$file;
 
-            if (!is_dir($dirFile)) {
+            if (! is_dir($dirFile)) {
                 $info = pathinfo($dirFile);
 
-                $fileName = explode('.', $info["filename"]);
+                $fileName = explode('.', $info['filename']);
 
                 if (Conteudo::where('id', $fileName[0])->count() > 0) {
-                    array_push($arrayExist, $info["basename"] . ' Existe na base de dados');
+                    array_push($arrayExist, $info['basename'].' Existe na base de dados');
                 } else {
-                    array_push($arrayNotExist, $info["basename"] . ' Nao existe na base de dados');
+                    array_push($arrayNotExist, $info['basename'].' Nao existe na base de dados');
                 }
             }
         }
@@ -208,23 +214,23 @@ class FileController extends ApiController
     /**
      * Convert PDF to image JPG
      *
-     * @param string $filePath
-     * @param string $customPath
-     *
+     * @param  string  $filePath
+     * @param  string  $customPath
      * @return void
      */
     public function convertPdfToImage(Request $request)
     {
-        if (!extension_loaded('imagick'))
+        if (! extension_loaded('imagick')) {
             return response()->json(['Extensao Imagick Nao está habilitada para uso!']);
+        }
 
         $extension = 'jpg';
 
         $file = $request->file('file');
 
-        $filePath =  storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'conteudos' . DIRECTORY_SEPARATOR . 'conteudos-digitais' . DIRECTORY_SEPARATOR . 'pdf-imagens' . DIRECTORY_SEPARATOR . $file->getClientOriginalName());
+        $filePath = storage_path('app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'conteudos'.DIRECTORY_SEPARATOR.'conteudos-digitais'.DIRECTORY_SEPARATOR.'pdf-imagens'.DIRECTORY_SEPARATOR.$file->getClientOriginalName());
 
-        if (!file_exists($filePath)) {
+        if (! file_exists($filePath)) {
             $filePath = $this->storeFile($request);
         }
 
@@ -239,7 +245,7 @@ class FileController extends ApiController
 
         $filePath = $this->_getFileDirectory($filePath);
 
-        $newFile = $filePath . DIRECTORY_SEPARATOR . $fileNameWithoutExtension . "." . $extension;
+        $newFile = $filePath.DIRECTORY_SEPARATOR.$fileNameWithoutExtension.'.'.$extension;
 
         $_imagick->setImageFormat($extension);
 
@@ -248,7 +254,7 @@ class FileController extends ApiController
         // }
 
         if (file_exists($newFile)) {
-            return $this->successResponse([$fileNameWithoutExtension . "." . $extension], 'Arquivo convertido para imagem com sucesso!', 200);
+            return $this->successResponse([$fileNameWithoutExtension.'.'.$extension], 'Arquivo convertido para imagem com sucesso!', 200);
         } else {
             return $this->successResponse([], 'Houve algum erro ao tentar fazer a conversão!', 200);
         }
@@ -257,18 +263,19 @@ class FileController extends ApiController
     /**
      * Return file name with extension or without extension
      *
-     * @param string $filePath
-     * @param string $extension - Extension to be removed from file name
-     *
+     * @param  string  $filePath
+     * @param  string  $extension - Extension to be removed from file name
      * @return string
      */
     private function _getFileName($filePath, $extension = null)
     {
         if ($extension == null) {
             $name = basename($filePath);
+
             return $name;
         } else {
             $name = basename($filePath, $extension);
+
             return $name;
         }
     }
@@ -276,31 +283,33 @@ class FileController extends ApiController
     /**
      * Return file extension from file path
      *
-     * @param string $filePath
-     *
+     * @param  string  $filePath
      * @return string
      */
     private function _getFileExtension($filePath)
     {
         $extension = pathinfo($filePath, PATHINFO_EXTENSION);
-        return "." . $extension;
+
+        return '.'.$extension;
     }
 
     /**
      * Return path from file path
      *
-     * @param string $filePath
-     *
+     * @param  string  $filePath
      * @return string
      */
     private function _getFileDirectory($filePath)
     {
         $extension = pathinfo($filePath, PATHINFO_DIRNAME);
+
         return $extension;
     }
+
     /**
      * Histórico de arquivos
-     * @param mixed $request
+     *
+     * @param  mixed  $request
      * @return null|string path
      */
     private function storeFile($request)
@@ -310,32 +319,36 @@ class FileController extends ApiController
         if ($request->hasFile('file') && $request->file('file')->isValid()) {
             $fileName = $request->file->getClientOriginalName();
 
-            $path = $request->file->storeAs('conteudo-digitais' . DIRECTORY_SEPARATOR . 'pdf-imagens', $fileName);
+            $path = $request->file->storeAs('conteudo-digitais'.DIRECTORY_SEPARATOR.'pdf-imagens', $fileName);
 
-            $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $path);
+            $path = storage_path('app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.$path);
         }
 
-        return $path ? $path : $this->errorResponse([], "Falha ao fazer upload!", 500);
+        return $path ? $path : $this->errorResponse([], 'Falha ao fazer upload!', 500);
     }
+
     /**
      *  Teste de ffmpeg
+     *
      * @param Id Identificador único $id
      * @return void
      */
     public function ffmpegTeste($id)
     {
         try {
-            $root = Storage::disk('conteudos-digitais')->path("streaming");
+            $root = Storage::disk('conteudos-digitais')->path('streaming');
             $contentVideoConvert = new ContentVideoConvert(Conteudo::findOrFail($id), FFMpeg::create(config('ffmpeg')));
             VideoStreamingConvert::dispatch($contentVideoConvert, $root);
             //$contentVideoConvert->convertToStreaming($root, FFMpeg::create(config('ffmpeg')));
         } catch (Exception $ex) {
-            return ($ex);
+            return $ex;
         }
     }
+
     /**
      * Video Streaming
-     * @param  integer Id  identificador único $id
+     *
+     * @param  int Id  identificador único $id
      * @return void
      */
     public function showVideoStreaming($id)
@@ -343,6 +356,7 @@ class FileController extends ApiController
         try {
             $conteudo = Conteudo::findOrFail($id);
             $file = $conteudo->streamingFileConteudo($id);
+
             return view('streaming.video', compact('file'));
         } catch (Exception $e) {
             return $e;
@@ -351,7 +365,8 @@ class FileController extends ApiController
 
     /**
      * Deleta o arquivo
-     * @param Illuminate\Http\Request $request
+     *
+     * @param  Illuminate\Http\Request  $request
      * @return App\Traits\ApiResponser::errorResponse
      */
     public function deleteFile(Request $request)
@@ -362,10 +377,10 @@ class FileController extends ApiController
         if (Auth::check() && $role == 'super-admin' || $role == 'admin' || $role == 'coordenador') {
             $file = Storage::disk($directory)->path($filename);
             if (file_exists($file)) {
-
                 $response = unlink($file) ? 'Apagado com sucesso' : 'Não encontrado';
+
                 return $this->successResponse([
-                    'success' => true
+                    'success' => true,
                 ], $response, 200);
             }
         }
@@ -373,15 +388,3 @@ class FileController extends ApiController
         return $this->errorResponse(['success' => false], 'Usuário sem permissões para realizar esta ação', 422);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

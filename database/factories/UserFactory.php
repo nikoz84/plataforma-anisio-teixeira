@@ -18,6 +18,7 @@ class UserFactory extends Factory
     {
         return [];
     }
+
     /**
      * Configure the model factory.
      *
@@ -31,6 +32,4 @@ class UserFactory extends Factory
             //
         });
     }
-
-    
 }

@@ -50,7 +50,7 @@ class Kernel extends HttpKernel
         ],
         'log' => [
             \App\Http\Middleware\ViewLog::class,
-        ]
+        ],
 
     ];
 

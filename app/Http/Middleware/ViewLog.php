@@ -17,8 +17,7 @@ class ViewLog
      */
     public function handle(Request $request, Closure $next)
     {
-    
-        if($request->has('pass') && env('LOG_PASS') == $request->pass){
+        if ($request->has('pass') && env('LOG_PASS') == $request->pass) {
             return $next($request);
         }
 

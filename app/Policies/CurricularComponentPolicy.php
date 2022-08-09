@@ -2,14 +2,14 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\CurricularComponent;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CurricularComponentPolicy
 {
     use HandlesAuthorization;
-    
+
     /**
      * Determine whether the user can view any curricular components.
      *

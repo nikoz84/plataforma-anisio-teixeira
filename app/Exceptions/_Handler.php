@@ -1,17 +1,16 @@
-<?php 
+<?php
 
-use Throwable;
+use App\Traits\ApiResponser;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 use PHPOpenSourceSaver\JWTAuth\Exceptions\TokenExpiredException;
 use PHPOpenSourceSaver\JWTAuth\Exceptions\TokenInvalidException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException as KernelException;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Database\QueryException;
-use Illuminate\Auth\Access\AuthorizationException;
-use App\Traits\ApiResponser;
 
 class Handler extends ExceptionHandler
 {
@@ -55,7 +54,6 @@ class Handler extends ExceptionHandler
      * @param  \Illuminate\Http\Request  $request
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
-     *
      */
     public function render($request, Exception $exception)
     {
@@ -66,16 +64,16 @@ class Handler extends ExceptionHandler
         } elseif ($exception instanceof JWTException) {
             return $this->errorResponse([], 'Token não autorizado', 401);
         }
-        
+
         if ($exception instanceof ModelNotFoundException) {
-            return $this->errorResponse([], "Erro em modelo", 404);
+            return $this->errorResponse([], 'Erro em modelo', 404);
         }
         if ($exception instanceof QueryException) {
-            return $this->errorResponse([], "Erro em query", 404);
+            return $this->errorResponse([], 'Erro em query', 404);
         }
-        
+
         if ($exception instanceof AuthorizationException) {
-            return $this->errorResponse([], "Ação não autorizada, sem permissões", 403);
+            return $this->errorResponse([], 'Ação não autorizada, sem permissões', 403);
         }
         if ($exception instanceof HttpException) {
             return $this->errorResponse([], $exception->getMessage(), 404);
@@ -87,9 +85,6 @@ class Handler extends ExceptionHandler
         if ($exception instanceof ValidationException) {
             return $this->errorResponse([], 'Erro de validação', 500);
         }
-        
-        
-
 
         return parent::render($request, $exception);
     }
