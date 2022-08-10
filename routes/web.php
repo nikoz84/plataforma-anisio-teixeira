@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ConteudoController;
 use App\Http\Controllers\RedirectRoutesController;
+
 use Illuminate\Support\Facades\Route;
 
 //use Illuminate\Support\Facades\Auth;
@@ -59,3 +60,5 @@ Route::get('/incorporar-conteudo/{id}', [ConteudoController::class, 'incorporarC
 
 Route::get('/{any}', [\App\Http\Controllers\ApiController::class, 'home'])
     ->where('any', '.*');
+
+
