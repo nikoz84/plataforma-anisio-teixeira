@@ -308,7 +308,7 @@ class AuthController extends ApiController
                 throw new Exception("Senha e confirmação são imcompaiveis.");
             }
             $user = $this->getUserByToken($token);
-            $user->setPasswordAttribute($this->request->password);
+            $user->password = $this->request->password;
 
             if (!$user->save()) {
                 throw new Exception("Erro ao tentar salvar modificação. Tente novamente mais tarde.");
