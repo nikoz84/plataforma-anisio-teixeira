@@ -1,11 +1,12 @@
-import { defineConfig } from 'vite';
+import { createVuePlugin } from 'vite-plugin-vue2'
 import laravel from 'laravel-vite-plugin';
 
-export default defineConfig({
-    plugins: [
-        laravel([
-            'resources/assets/js/app.js',
+
+export default {
+  plugins: [
+    createVuePlugin(),
+    laravel([
             'resources/assets/js/app.js',
         ]),
-    ],
-});
+  ],
+}
