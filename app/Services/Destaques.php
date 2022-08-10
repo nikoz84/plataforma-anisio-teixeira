@@ -62,9 +62,7 @@ class Destaques
         return [
             'title' => 'Conteúdos Recentes',
             'slug' => 'conteudos-recentes',
-            'items' => $conteudos->map(function ($conteudo) {
-                return $conteudo->only(['id', 'title', 'image', 'url_exibir', 'tipo']);
-            }),
+            'items' => $conteudos,
         ];
     }
 

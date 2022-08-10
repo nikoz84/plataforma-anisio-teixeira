@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Helpers\TransformDate;
 use App\Traits\FileSystemLogic;
 use App\Traits\UserCan;
+use App\Traits\ShortTitle;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,7 +14,7 @@ use Illuminate\Support\Str;
 
 class Aplicativo extends Model
 {
-    use SoftDeletes;use UserCan;use FileSystemLogic;
+    use SoftDeletes, UserCan, FileSystemLogic;
 
     public const CANAL_ID = 9;
 
@@ -50,6 +51,7 @@ class Aplicativo extends Model
         'url_exibir',
         'formated_date',
         'user_can',
+        'short_title'
     ];
 
     /**
@@ -166,15 +168,17 @@ class Aplicativo extends Model
         return;
     }
 
-    /**
-     * Adiciona novo atributo ao objeto que limita o tamanho do título
-     *
-     * @return string cadeia de caracteres
-     */
     public function shortTitle(): Attribute
     {
         return new Attribute(
-            get: fn () => Str::words($this->name, 8)
+            get: fn () => Str::words($this->name, 12, '...')
+        );
+    }
+
+    public function title(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->name
         );
     }
 }

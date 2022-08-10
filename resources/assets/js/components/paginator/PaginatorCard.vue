@@ -1,23 +1,44 @@
 <template>
-
-  <q-card @click="goTo(item)" class="card-hover q-pa-sm bg-grey-2  cursor-pointer" v-bind:id="item.id" v-if="item" flat>
-    
-      <q-img clickable class="cursor-pointer card-borda-imagem" v-ripple 
-        :src="getImage" loading="lazy" width="100%" height="auto" placeholder-src="/img/fundo-padrao.svg">
-      </q-img>
-      <q-card-section class="q-pl-none">
-        <q-chip class="q-ml-none" color="light" size="md" icon="" v-html="getTipo">
-        </q-chip>
-        <div class="yt-title q-pt-xs" v-html="title">
+  <q-card v-bind:id="item.id" v-if="item" class="bg-grey-2">
+    <q-img
+      clickable
+      @click="goTo(item)"
+      class="cursor-pointer card-borda-imagem"
+      v-ripple
+      :src="getImage"
+      loading="lazy"
+      :title="item.title"
+      width="100%"
+      height="auto"
+      style="max-height:200px"
+      placeholder-src="/img/fundo-padrao.svg"
+    />
+    <q-card-section>
+      <div class="row items-center no-wrap">
+        <div class="col">
+          <div
+            class="cursor-pointer text-h6"
+            v-html="item.short_title"
+            :title="item.title"
+            @click="goTo(item)"
+          ></div>
+          <div class="text-subtitle2" v-html="getTipo"></div>
         </div>
-      </q-card-section>
-      <q-tooltip class="bg-light text-body2 shadow-4" :offset="[10, 10]">Título: {{title}} <br> Tipo: {{ getTipo }}
-      </q-tooltip>
-      <q-card-actions class="flex justify-end absolute-bottom">
-      </q-card-actions>
-    
-  </q-card>
 
+        <div class="col-auto">
+          <q-btn color="grey-7" round flat icon="more_vert">
+            <q-menu cover auto-close>
+              <q-list>
+                <q-item clickable @click="openPrevisualizar">
+                  <q-item-section>Mais informações</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
+        </div>
+      </div>
+    </q-card-section>
+  </q-card>
 </template>
 <script>
 import {
@@ -45,11 +66,6 @@ export default {
     QIcon,
   },
   computed: {
-    title() {
-      let title = this.item.name ? this.item.name : this.item.title;
-
-      return title.length > 100 ? title.substr(0, 100) + " ..." : title;
-    },
     slug() {
       return this.item.canal ? this.item.canal.slug : this.item.slug;
     },
@@ -74,6 +90,9 @@ export default {
         });
       }
     },
+    openPrevisualizar() {
+      console.log("oi");
+    },
   },
 };
 </script>
@@ -87,10 +106,6 @@ export default {
 .text-h6 {
   font-weight: bold;
 }
-
-// .card-hover:hover {
-//   transform: translateY(5px);
-// }
 
 .card-hover {
   transition: transform 0.2s ease-out;
@@ -128,5 +143,4 @@ export default {
 .card-tooltip{
   background-color: blue;
 }
-
 </style>

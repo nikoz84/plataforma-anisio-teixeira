@@ -32,7 +32,6 @@
         clickable
         to="/"
         aria-label="Inicio"
-        exact
         active-class="active-link-pat"
       >
         <q-item-section avatar>
@@ -227,7 +226,6 @@
           clickable
           to="/sobre"
           aria-label="sobre a plataforma"
-          exact
           active-class="active-link-pat"
         >
           <q-item-section>
@@ -241,7 +239,6 @@
           to="/galeria"
           aria-label="visite a galería de imagens"
           active-class="active-link-pat"
-          exact
         >
           <q-item-section>
             <q-item-label>Galeria</q-item-label>

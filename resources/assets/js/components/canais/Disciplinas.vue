@@ -1,27 +1,35 @@
 <template>
-    <nav role="menu disciplinas ensino medio" v-if="disciplinas" style="margin-top:30px;">
-        <h5 class="text-center">{{ disciplinas.name }}</h5>
-        <ul class="nav nav-pills nav-stacked">
-            <li  v-for="(disciplina, d) in disciplinas.components" :key="d">
-                <router-link :to="{ name: 'Listar', 
-                            params: { slug : $route.params.slug }, 
-                            query: { categoria: $route.query.categoria, 
-                                     componentes: disciplina.id }}" 
-                exact
-                >
-                    {{disciplina.name}}
-                </router-link>
-            </li>
-        </ul>
-    </nav>
+  <nav
+    role="menu disciplinas ensino medio"
+    v-if="disciplinas"
+    style="margin-top:30px;"
+  >
+    <h5 class="text-center">{{ disciplinas.name }}</h5>
+    <ul class="nav nav-pills nav-stacked">
+      <li v-for="(disciplina, d) in disciplinas.components" :key="d">
+        <router-link
+          :to="{
+            name: 'Listar',
+            params: { slug: $route.params.slug },
+            query: {
+              categoria: $route.query.categoria,
+              componentes: disciplina.id,
+            },
+          }"
+        >
+          {{ disciplina.name }}
+        </router-link>
+      </li>
+    </ul>
+  </nav>
 </template>
 <script>
-import {mapState} from 'vuex';
+import { mapState } from "vuex";
 
 export default {
-    name: "Disciplinas",
-    computed: {
-        ...mapState(["disciplinas"])
-    },
-}
+  name: "Disciplinas",
+  computed: {
+    ...mapState(["disciplinas"]),
+  },
+};
 </script>

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Helpers\TransformDate;
 use App\Traits\FileSystemLogic;
 use App\Traits\UserCan;
+use App\Traits\ShortTitle;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +16,7 @@ use Illuminate\Support\Str;
 
 class Conteudo extends Model
 {
-    use FileSystemLogic;use SoftDeletes;use UserCan;
+    use FileSystemLogic, SoftDeletes, UserCan, ShortTitle;
 
     public const IS_SITE = 'false';
 
@@ -202,17 +203,6 @@ class Conteudo extends Model
         );
     }
 
-    /**
-     * Adiciona novo atributo ao objeto que limita o tamanho do título
-     *
-     * @return string cadeia de caracteres
-     */
-    public function shortTitle(): Attribute
-    {
-        return new Attribute(
-            get: fn () => Str::words($this->title, 8)
-        );
-    }
 
     /**
      * Converte o título para slug ou url amigável
@@ -221,6 +211,13 @@ class Conteudo extends Model
     {
         return new Attribute(
             get: fn () => Str::slug(Str::words($this->title, 30), '-')
+        );
+    }
+
+    public function shortTitle(): Attribute
+    {
+        return new Attribute(
+            get: fn () => Str::words($this->title, 12, '...')
         );
     }
 

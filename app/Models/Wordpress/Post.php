@@ -4,8 +4,10 @@ namespace App\Models\Wordpress;
 
 use App\Helpers\TransformDate;
 use App\Traits\WPPrefix;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
@@ -17,7 +19,7 @@ class Post extends Model
 
     protected $primaryKey = 'ID';
 
-    public $appends = ['title', 'image', 'url_exibir', 'formated_date', 'tags', 'categories'];
+    public $appends = [ 'short_title', 'title', 'image', 'url_exibir', 'formated_date', 'tags', 'categories'];
 
     public function __construct(array $attributes = [])
     {
@@ -42,9 +44,18 @@ class Post extends Model
         return $image ? $image : '/img/fundo-padrao.svg';
     }
 
-    public function getTitleAttribute()
+    public function title():Attribute
     {
-        return $this['post_title'];
+        return new Attribute(
+            get: fn () => $this->post_title
+        );
+    }
+
+    public function shortTitle(): Attribute
+    {
+        return new Attribute(
+            get: fn () => Str::words($this->post_title, 12, '...')
+        );
     }
 
     public function terms()
