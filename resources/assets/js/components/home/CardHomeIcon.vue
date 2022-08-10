@@ -60,7 +60,7 @@ export default {
 }
 
 .card-icon{
-  opacity : 0.95;h
+  opacity : 0.95;
 }
 
 .bg-fix{

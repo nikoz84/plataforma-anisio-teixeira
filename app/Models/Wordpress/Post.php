@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 
 class Post extends Model
 {
-    use HasFactory;use WPPrefix;
+    use HasFactory, WPPrefix;
 
     protected $connection = 'mysql';
 
@@ -19,7 +19,7 @@ class Post extends Model
 
     protected $primaryKey = 'ID';
 
-    public $appends = [ 'short_title', 'title', 'image', 'url_exibir', 'formated_date', 'tags', 'categories'];
+    public $appends = [ 'short_title', 'title', 'image', 'url_exibir', 'formated_date', 'tags', 'categories', 'category'];
 
     public function __construct(array $attributes = [])
     {
@@ -47,14 +47,14 @@ class Post extends Model
     public function title():Attribute
     {
         return new Attribute(
-            get: fn () => $this->post_title
+            get: fn () => $this['post_title']
         );
     }
 
     public function shortTitle(): Attribute
     {
         return new Attribute(
-            get: fn () => Str::words($this->post_title, 12, '...')
+            get: fn () => Str::words($this['post_title'], 12, '...')
         );
     }
 
@@ -76,6 +76,13 @@ class Post extends Model
         $terms = $this->terms()->get();
 
         return $this->mapTerms($terms, 'category');
+    }
+
+    public function getCategoryAttribute()
+    {
+        
+        $categories = collect($this->mapTerms($this->terms()->get(), 'category'))->first();
+        return $categories;
     }
 
     protected function mapTerms($items, $type)
