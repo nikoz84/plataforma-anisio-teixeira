@@ -19,7 +19,7 @@
         align="justify"
         narrow-indicator
       >
-        <q-tab name="tipo-conteudos" label="Tipos de Conteúdos" />
+        <q-tab name="tipo-conteudos" label="Tipos de Conteúdo" />
         <q-tab name="ensino-medio" label="Ensino Medio" />
         <q-tab name="temas-transversais" label="Temas Transversais" />
       </q-tabs>
@@ -28,7 +28,7 @@
         <q-tab-panel name="tipo-conteudos">
           <CardHomeIcon
             id="tipo-conteudos"
-            title="Tipos de Conteúdos"
+            title="Tipos de Conteúdo"
             :items="tipos"
             v-if="tipos"
             bg-sessao=""
@@ -93,7 +93,7 @@ export default {
   name: "Home",
   data() {
     return {
-      tab: "ensino-medio",
+      tab: "tipo-conteudos",
     };
   },
   directives: {
