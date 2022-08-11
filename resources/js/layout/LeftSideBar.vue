@@ -230,7 +230,7 @@
     </q-list>
 
     <q-list bordered>
-      <q-expansion-item dense dense-toggle expand-separator label="Sobre a PAT">
+      <q-expansion-item expand-separator label="Sobre a PAT">
         <q-separator />
         <!-- SOBRE -->
         <q-item

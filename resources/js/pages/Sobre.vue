@@ -60,7 +60,7 @@
               <img
                 alt="imagem descritiva"
                 aria-label="imagem descritiva"
-                src="@/assets/img/sprite/oque.svg"
+                src="/img/sprite/oque.svg"
               />
             </q-icon>
             <q-card-section>
@@ -87,7 +87,7 @@
               <img
                 alt="imagem descritiva"
                 aria-label="imagem descritiva"
-                src="@/assets/img/sprite/porque.svg"
+                :src="`/img/sprite/porque.svg`"
               />
             </q-icon>
             <q-card-section>
@@ -115,7 +115,7 @@
               <img
                 alt="imagem descritiva"
                 aria-label="imagem descritiva"
-                src="@/assets/img/sprite/como.svg"
+                :src="`/img/sprite/como.svg`"
               />
             </q-icon>
             <q-card-section>
@@ -144,7 +144,7 @@
               <img
                 alt="imagem informações de contato"
                 aria-label="imagem informações de contato"
-                src="@/assets/img/sprite/informacoes.svg"
+                :src="`/img/sprite/informacoes.svg`"
               />
             </q-icon>
             <q-card-section class="flex justify-content-center">
@@ -169,7 +169,7 @@
         <q-card class="my-card" flat>
           <q-card-section horizontal>
             <q-icon class="col-2" color="accent" size="5rem">
-              <img src="@/assets/img/sprite/anisioteixeira2.svg" />
+              <img :src="`/img/sprite/anisioteixeira2.svg`" />
             </q-icon>
             <q-card-section>
               <div
@@ -219,7 +219,7 @@
             aria-label="imagem pessoas atendidas"
             height="390px"
             width="100%"
-            src="@/assets/img/sprite/pessoasatendidas.svg"
+            :src="`/img/sprite/pessoasatendidas.svg`"
           />
         </q-icon>
         <div class="dados-consolidados" id="pessoas-atendidas">
@@ -235,7 +235,7 @@
             aria-label="imagem mídias produzidas"
             height="390px"
             width="100%"
-            src="@/assets/img/sprite/midiasproduzidas.svg"
+            :src="`/img/sprite/midiasproduzidas.svg`"
           />
         </q-icon>
         <div class="dados-consolidados" id="pessoas-atendidas">
@@ -251,7 +251,7 @@
             aria-label="imagem mídias disponibilizas"
             height="380px"
             width="100%"
-            src="@/assets/img/sprite/midiasdisponibilizadas.svg"
+            :src="`/img/sprite/midiasdisponibilizadas.svg`"
           />
         </q-icon>
         <div class="dados-consolidados" id="pessoas-atendidas">
@@ -267,7 +267,7 @@
             aria-label="imagem midias acessadas"
             height="380px"
             width="100%"
-            src="@/assets/img/sprite/midiasacessadas.svg"
+            :src="`/img/sprite/midiasacessadas.svg`"
           />
         </q-icon>
         <div class="dados-consolidados" id="pessoas-atendidas">
@@ -326,7 +326,7 @@
             alt="imagem creative commons"
             aria-label="imagem creative commons"
             width="100%"
-            src="@/assets/img/sprite/creative-commons.svg"
+            :src="`/img/sprite/creative-commons.svg`"
           />
         </q-icon>
       </p>

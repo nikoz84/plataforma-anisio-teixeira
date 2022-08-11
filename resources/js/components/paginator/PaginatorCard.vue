@@ -11,7 +11,7 @@
       width="100%"
       height="auto"
       style="max-height:200px"
-      placeholder-src="@/assets/img/fundo-padrao.svg"
+      :placeholder-src="`/img/fundo-padrao.svg`"
     />
     <q-card-section>
       <div class="row items-center no-wrap">
