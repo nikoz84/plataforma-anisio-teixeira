@@ -23,7 +23,7 @@ export default {
   props: ["errors"],
   data() {
     return {
-      siteKey: process.env.MIX_RECAPTCHA_SITE_KEY,
+      siteKey: import.meta.env.VITE_RECAPTCHA_SITE_KEY,
       r_id: "recaptcha_id",
       gResponse: "",
       loadRecaptcha: true,

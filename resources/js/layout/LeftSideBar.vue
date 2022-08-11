@@ -35,7 +35,7 @@
         active-class="active-link-pat"
       >
         <q-item-section avatar>
-          <q-icon name="home" />
+          <q-icon size="50px" name="home" />
         </q-item-section>
         <q-item-section>
           <q-item-label>Início</q-item-label>
@@ -57,9 +57,10 @@
         active-class="active-link-pat"
       >
         <q-item-section avatar>
-          <q-icon
-            size="50px"
-            :name="`img:@/assets/img/icon-menu/${link.slug}.svg`"
+          <img
+            width="50"
+            height="50"
+            :src="`/img/icon-menu/${link.slug}.svg`"
           />
         </q-item-section>
         <q-item-section>
@@ -78,9 +79,10 @@
         tabindex="16"
       >
         <q-item-section avatar>
-          <q-icon
-            size="50px"
-            :name="`img:@/assets/img/icon-menu/rotinas-de-estudo.svg`"
+          <img
+            width="50"
+            height="50"
+            :src="`/img/icon-menu/rotinas-de-estudo.svg`"
           />
         </q-item-section>
         <q-item-section>
@@ -98,9 +100,10 @@
         tabindex="20"
       >
         <q-item-section avatar>
-          <q-icon
-            size="50px"
-            :name="`img:@/assets/img/icon-menu/canal-das-universidades.svg`"
+          <img
+            width="50"
+            height="50"
+            :src="`/img/icon-menu/canal-das-universidades.svg`"
           />
         </q-item-section>
         <q-item-section>
@@ -117,9 +120,10 @@
         tabindex="21"
       >
         <q-item-section avatar>
-          <q-icon
-            size="50px"
-            :name="`img:@/assets/img/icon-menu/canal-anisio-teixeira.svg`"
+          <img
+            width="50"
+            height="50"
+            :src="`/img/icon-menu/canal-anisio-teixeira.svg`"
           />
         </q-item-section>
         <q-item-section>
@@ -135,9 +139,10 @@
         tabindex="25"
       >
         <q-item-section avatar>
-          <q-icon
-            size="50px"
-            :name="`img:@/assets/img/icon-menu/colaborativus.svg`"
+          <img
+            width="50"
+            height="50"
+            :src="`/img/icon-menu/colaborativus.svg`"
           />
         </q-item-section>
         <q-item-section>
@@ -224,7 +229,7 @@
       </q-item>
     </q-list>
 
-    <q-list dense bordered>
+    <q-list bordered>
       <q-expansion-item dense dense-toggle expand-separator label="Sobre a PAT">
         <q-separator />
         <!-- SOBRE -->
@@ -257,7 +262,6 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import { QList, QItem, QItemSection, QIcon } from "quasar";
 import BtnMarca from "./BtnMarca.vue";
 import AdminLeftSideBar from "./AdminLeftSideBar.vue";
 
