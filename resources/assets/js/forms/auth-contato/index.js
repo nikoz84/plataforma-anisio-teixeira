@@ -1,10 +1,10 @@
-import LoginForm from "./LoginForm";
-import RegisterForm from "./RegisterForm";
-import RecoverPassForm from "./RecoverPassForm";
-import MudarPassForm from "./MudarPassForm";
-import ContactForm from "./ContactForm";
-import ConfirmationEmailForm from "./ConfirmationEmailForm";
-import MudarSenhaForm from "./MudarSenhaForm";
+import LoginForm from "./LoginForm.vue";
+import RegisterForm from "./RegisterForm.vue";
+import RecoverPassForm from "./RecoverPassForm.vue";
+import MudarPassForm from "./MudarPassForm.vue";
+import ContactForm from "./ContactForm.vue";
+import ConfirmationEmailForm from "./ConfirmationEmailForm.vue";
+import MudarSenhaForm from "./MudarSenhaForm.vue";
 
 export {
     LoginForm,

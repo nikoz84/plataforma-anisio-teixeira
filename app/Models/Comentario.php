@@ -2,32 +2,32 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
-use App\Traits\FileSystemLogic;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\UserCan;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comentario extends Model
 {
-    use SoftDeletes, UserCan;
+    use SoftDeletes;use UserCan;
+
     /**Tabela com campo definido */
     protected $table = 'comentarios';
+
     /**Tabela com campos definidos */
     protected $fillable = [
         'user_id',
         'conteudo_id',
         'aplicativo_id',
         'body',
-        'tipo'
+        'tipo',
     ];
+
     /**
      * Retorna Comentário do Id do Usuário
-     * @param mixed $userId identificador único
-     * @param mixed $tipo boolean
-     * @return boolean
+     *
+     * @param  mixed  $userId identificador único
+     * @param  mixed  $tipo boolean
+     * @return bool
      */
     public function getComentariosByIdUsuario($userId, $tipo = false)
     {
@@ -42,17 +42,18 @@ class Comentario extends Model
 
         return false;
     }
+
     /**
      * Retorna Postagem com Id da Postagem
      *
-     * @param integer $idPostagem
-     * @param string $tipo
-     * @param mixed $query
+     * @param  int  $idPostagem
+     * @param  string  $tipo
+     * @param  mixed  $query
      * @return void
      */
     public function scopeComentariosById($query, $idPostagem, $tipo)
     {
-        if (!$idPostagem || !$tipo) {
+        if (! $idPostagem || ! $tipo) {
             return $query;
         }
 
@@ -61,7 +62,6 @@ class Comentario extends Model
         })->when($tipo == 'aplicativo', function ($q) use ($idPostagem) {
             return $q->where('aplicativo_id', $idPostagem);
         });
-
 
         /*
         $comentarios = null;
@@ -74,36 +74,39 @@ class Comentario extends Model
         return $comentarios;
         */
     }
+
     /**
      * Retorna Comentário Por id
      *
-     * @param integer $id
+     * @param  int  $id
      * @return booleano
      */
     public function getComentarioById($id)
     {
         $comentario = $this->find($id);
-        if (!is_null($comentario)) {
+        if (! is_null($comentario)) {
             return $comentario;
         }
 
         return false;
     }
+
     /**
      * Retorna Comentário Por Tipo.
      *
-     * @param integer $tipo
+     * @param  int  $tipo
      * @return void
      */
     public function getComentariosByTipo($tipo)
     {
         return $this->where('tipo', $tipo)->get();
     }
+
     /**
      * Deleta Informações
      *
      * @param [int] $id
-     * @return integer
+     * @return int
      */
     public function deletar($id)
     {

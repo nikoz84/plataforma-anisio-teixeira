@@ -1,7 +1,7 @@
 // @ts-nocheck
-import Paginator from './Paginator';
-import PaginatorCard from './PaginatorCard';
-import SemResultados from './SemResultados';
+import Paginator from './Paginator.vue';
+import PaginatorCard from './PaginatorCard.vue';
+import SemResultados from './SemResultados.vue';
 
 export {
     Paginator,

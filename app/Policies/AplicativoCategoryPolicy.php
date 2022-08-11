@@ -2,14 +2,14 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\AplicativoCategory;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AplicativoCategoryPolicy
 {
     use HandlesAuthorization;
-    
+
     /**
      * Determine whether the user can view any aplicativo categories.
      *

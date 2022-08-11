@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\ApiController;
-use App\Models\PlayList;
-use Illuminate\Http\Request;
 use App\Http\Requests\PlaylistRequest;
 use App\Models\Conteudo;
-use Illuminate\Support\Str;
+use App\Models\PlayList;
 use App\Traits\ToPaginator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PlayListController extends ApiController
 {
@@ -17,74 +16,79 @@ class PlayListController extends ApiController
     /**
      * Método que lista a playlist
      */
-
     public function index()
     {
-
         $playlist = PlayList::where('name', 'pl-%');
 
         $this->authorize('index', $playlist);
 
         return $this->successResponse($playlist);
     }
+
     /**
      * Método que cria a PlayList
+     *
      * @param App\Http\Requests\PlaylistRequest
      * @return string - Json
      */
     public function create(PlaylistRequest $request)
     {
-
-        $playlist = new PlayList();
+        $playlist = new PlayList;
 
         //dd($request->all());
-         
+
         $this->authorize('create', $playlist);
 
-       $playlist->fill($request->validated());
-         
+        $playlist->fill($request->validated());
+
         $request->validated();
 
         if ($playlist->save()) {
             return $this->successResponse([], 'Playlist adicionada com succeso!');
         }
     }
+
     /**
      * Método que busca por termo
+     *
      * @param App\Http\Request
-     * @param App\http\Request $request
-     * @param mixed $termo 
-     * 
-     * @return String - Json
+     * @param  App\http\Request  $request
+     * @param  mixed  $termo
+     * @return string - Json
      */
     public function search(Request $request, $term)
     {
         $limit = $request->query('limit', 8);
-        $term  = Str::lower($term);
+        $term = Str::lower($term);
 
-        $paginator = Conteudo::with(['tipo'])->where('title', "ilike", "%{$term}%")
+        $paginator = Conteudo::with(['tipo'])->where('title', 'ilike', "%{$term}%")
             ->paginate($limit);
 
         $paginator->getCollection()->transform(function ($item) use ($term) {
-            $replace = preg_replace('/(' . $term . ')/i', "<b>$1</b> ", Str::lower($item->title));
-            $item->title = "<p>" . Str::replace('B>', 'b>', Str::title($replace)) . "</p>";
+            $replace = preg_replace('/('.$term.')/i', '<b>$1</b> ', Str::lower($item->title));
+            $item->title = '<p>'.Str::replace('B>', 'b>', Str::title($replace)).'</p>';
+
             return $item;
         });
 
         return $this->showAsPaginator($paginator);
     }
+
     /**
      * Método Estático para paginar
-     * @param mixed $data
+     *
+     * @param  mixed  $data
      * @return void
      */
     public static function toPaginator($data)
     {
         $items = collect($data);
     }
+
     /**
      * Método adiciona a Playlist por id
-     * @param integer id identificador único $id
+     *
+     * @param int id identificador único $id
      * @return string json
      */
     public function addToPlayList($id)
@@ -99,10 +103,10 @@ class PlayListController extends ApiController
 
     /**
      * Método que remove da playlist por id
-     * @param integer id identificador único $id
+     *
+     * @param int id identificador único $id
      * @return string - json
      */
-
     public function removeToPlayList($id)
     {
         $remove = $this->Playlist->findOrFail($id);
@@ -110,23 +114,25 @@ class PlayListController extends ApiController
 
         return $this->successResponse($remove);
     }
+
     /**
      * Método que atualiza a playlist
-     * @param App\Http\Request\PlalylistRequest $request
-     * @param integer id identificador único
+     *
+     * @param  App\Http\Request\PlalylistRequest  $request
+     * @param int id identificador único
      * @return string json
      */
-
     public function updatePlayList(PlaylistRequest $request, $id)
     {
         $playlist = PlayList::findOrFail($id);
         $playlist->fill($request->validated());
 
-
         return response()->json($playlist);
     }
+
     /**
-     * Adiciona na lista por nome 
+     * Adiciona na lista por nome
+     *
      * @param Illuminate\Http\Request
      * @return string - json
      */
@@ -136,9 +142,11 @@ class PlayListController extends ApiController
 
         return $this->successResponse($name);
     }
+
     /**
      * Adiciona na playlity por id
-     * @param integer id identificador único $id
+     *
+     * @param int id identificador único $id
      * @return string - json
      */
     public function getById($id)

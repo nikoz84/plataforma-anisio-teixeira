@@ -8,8 +8,8 @@ import {
   ConfirmationEmailForm,
   MudarSenhaForm
 } from "@forms/auth-contato";
-import Default from "@layout/Default";
-import User from "@pages/User";
+import Default from "@layout/Default.vue";
+import User from "@pages/User.vue";
 
 
 

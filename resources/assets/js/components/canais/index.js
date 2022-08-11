@@ -1,7 +1,7 @@
-import Filters from "./Filters";
-import OrderBy from "./OrderBy";
-import Disciplinas from "./Disciplinas";
-import CategoriasMenu from "./CategoriasMenu";
+import Filters from "./Filters.vue";
+import OrderBy from "./OrderBy.vue";
+import Disciplinas from "./Disciplinas.vue";
+import CategoriasMenu from "./CategoriasMenu.vue";
 
 export {
     Filters,

@@ -5,13 +5,11 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Http\Request;
-
 
 class MailUsuario extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;use SerializesModels;
+
     /**
      * Create a new message instance.
      * Crie uma nova instância de mensagem.
@@ -20,7 +18,6 @@ class MailUsuario extends Mailable
      */
     public function __construct()
     {
-
     }
 
     /**

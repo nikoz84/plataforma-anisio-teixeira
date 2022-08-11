@@ -2,10 +2,9 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\Canal;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Support\Facades\Auth;
 
 class CanalPolicy
 {

@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\CurricularComponentCategory;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CurricularComponentCategoryPolicy
@@ -12,6 +12,7 @@ class CurricularComponentCategoryPolicy
 
     /**
      * Determine whether the user can view.
+     *
      * @param  \App\Models\User  $user
      * @return mixed
      */
@@ -20,7 +21,6 @@ class CurricularComponentCategoryPolicy
         return $user->role->name == 'super-admin' || $user->role->name == 'admin';
     }
 
-    
     /**
      * Determine whether the user can view any curricular component categories.
      *
@@ -100,6 +100,6 @@ class CurricularComponentCategoryPolicy
      */
     public function forceDelete(User $user, CurricularComponentCategory $curricularComponentCategory)
     {
-        return $user->role->name == 'super-admin' ;
+        return $user->role->name == 'super-admin';
     }
 }

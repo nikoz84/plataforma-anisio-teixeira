@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
+use App\Traits\UserCan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Traits\UserCan;
 
 class ConteudoLike extends Model
 {
-    use SoftDeletes, UserCan;
+    use SoftDeletes;use UserCan;
+
     /**
      * Tabela com campo definido
      */
     protected $table = 'conteudos_likes';
+
     /**
      * Tabela com campos definidos
      */
@@ -21,8 +23,9 @@ class ConteudoLike extends Model
         'conteudo_id',
         'aplicativo_id',
         'tipo',
-        'like'
+        'like',
     ];
+
     /**
      * Verifica os comentários no aplicativo
      *
@@ -31,7 +34,7 @@ class ConteudoLike extends Model
      */
     public function like($request)
     {
-        # Verifica se o like ou dislike é para um (conteudo ou aplicativo) e retorna o id
+        // Verifica se o like ou dislike é para um (conteudo ou aplicativo) e retorna o id
         $idPostagem = $this->retornaOIdDaPostagemCorretaBaseandoseNoTipo($request);
 
         $seExisteLike = $this->seExisteLikeOuDislikeDoUsuarioParaAPostagem(
@@ -40,35 +43,35 @@ class ConteudoLike extends Model
             $request->tipo
         );
 
-        # Se o usuario já deu algum like ou dislike na postagem
+        // Se o usuario já deu algum like ou dislike na postagem
         if ($seExisteLike) {
-            # Recupera o registro
+            // Recupera o registro
             $registro = $this->getRegistroPorIdUsuarioEIdPostagem($request->user_id, $idPostagem, $request->tipo);
 
-            # Verifica se foi um like ou dislike
+            // Verifica se foi um like ou dislike
             if ($registro->like == true) {
                 $registro->like = null;
             } else {
                 $registro->like = true;
             }
 
-            # Edita o campo like com true ou false levando em concideração a validação acima
+            // Edita o campo like com true ou false levando em concideração a validação acima
             return $registro->update();
         }
 
-        # Se o usuario nunca deu like ou dislike na postagem
+        // Se o usuario nunca deu like ou dislike na postagem
         $request->request->add(['like' => true]);
+
         return $this->create($request->all());
     }
 
-
-    # Verifica se o like ou dislike é para um (conteudo ou aplicativo) e rtorna o id
+    // Verifica se o like ou dislike é para um (conteudo ou aplicativo) e rtorna o id
     /**
      * Função que verifica o dislike do conteudo do aplicativo
      */
     public function dislike($request)
     {
-        # Verifica se o like ou dislike é para um (conteudo ou aplicativo) e retorna o id
+        // Verifica se o like ou dislike é para um (conteudo ou aplicativo) e retorna o id
         $idPostagem = $this->retornaOIdDaPostagemCorretaBaseandoseNoTipo($request);
 
         $seExisteLike = $this->seExisteLikeOuDislikeDoUsuarioParaAPostagem(
@@ -77,35 +80,37 @@ class ConteudoLike extends Model
             $request->tipo
         );
 
-        # Se o usuario já deu algum like ou dislike na postagem
+        // Se o usuario já deu algum like ou dislike na postagem
         if ($seExisteLike) {
-            # Recupera o registro
+            // Recupera o registro
             $registro = $this->getRegistroPorIdUsuarioEIdPostagem($request->user_id, $idPostagem, $request->tipo);
 
-            # Se foi um like anteriormente, então dá dislike, ou seja, false
+            // Se foi um like anteriormente, então dá dislike, ou seja, false
             if ($registro->like == true) {
                 $registro->like = false;
 
-                # Se estiver em status null, aplica false, ou seja, dislike
+            // Se estiver em status null, aplica false, ou seja, dislike
             } elseif (is_null($registro->like)) {
                 $registro->like = false;
 
-                # Se estiver am false, ou seja, dislike aplica null
+            // Se estiver am false, ou seja, dislike aplica null
             } else {
                 $registro->like = null;
             }
 
-            # Edita o campo like com true ou false levando em concideração a validação acima
+            // Edita o campo like com true ou false levando em concideração a validação acima
             return $registro->update();
         }
 
-        # Se o usuario nunca deu like ou dislike na postagem
+        // Se o usuario nunca deu like ou dislike na postagem
         $request->request->add(['like' => false]);
+
         return $this->create($request->all());
     }
 
     /**
      * Recebe o request e verifica de o like ou dislike é para um (conteudo ou aplicativo)
+     *
      * @param objeto request
      * @return id da postagem que pode ser conteudo ou aplicativo
      */
@@ -120,6 +125,7 @@ class ConteudoLike extends Model
 
     /**
      * Verifica se o usuario já deu like ou dislike na postagem
+     *
      * @param idUsuario, id do usuario
      * @param idPostagem, pode ser conteudo_id ou aplicativo_id
      * @param tipo, se é conteudo ou aplicativo
@@ -137,10 +143,11 @@ class ConteudoLike extends Model
 
     /**
      * Recupera um registro de like ou seslike do usuario vinculado a uma postagem
+     *
      * @param idUsuario, id do usuario
      * @param idPostagem, pode ser conteudo_id ou aplicativo_id
      * @param tipo, booleano se é conteudo ou aplicativo
-     * @return Object
+     * @return object
      */
     protected function getRegistroPorIdUsuarioEIdPostagem($idUsuario, $idPostagem, $tipo)
     {
@@ -153,10 +160,11 @@ class ConteudoLike extends Model
 
     /**
      * Retorna registros de likes e dislikes do usuario
+     *
      * @param idUsuario, id do usuario
-     * @param tipo, booleano se é conteudo ou aplicativo 
+     * @param tipo, booleano se é conteudo ou aplicativo
      * @param queryString limit
-     * @return Object
+     * @return object
      */
     public function getLikesPorIdUsuarioEtipo($idUsuario, $tipo = false, $limit = false)
     {

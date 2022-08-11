@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use App\Services\GoogleAnalytics;
+use Illuminate\Support\ServiceProvider;
 
 class GoogleAnalyticsServiceProvider extends ServiceProvider
 {
@@ -15,7 +15,7 @@ class GoogleAnalyticsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('google_analytics', function () {
-            return new GoogleAnalytics();
+            return new GoogleAnalytics;
         });
     }
 

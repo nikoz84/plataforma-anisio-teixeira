@@ -2,14 +2,14 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\Options;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class OptionsPolicy
 {
     use HandlesAuthorization;
-    
+
     /**
      * Determine whether the user can view any options.
      *
@@ -58,11 +58,13 @@ class OptionsPolicy
         return $user->role->name == 'super-admin' ||
             $user->role->name == 'admin';
     }
+
     public function destaques(User $user, Options $options)
     {
         return $user->role->name == 'super-admin' ||
             $user->role->name == 'admin';
     }
+
     /**
      * Determine whether the user can delete the options.
      *

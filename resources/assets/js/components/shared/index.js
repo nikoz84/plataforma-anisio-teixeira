@@ -1,9 +1,9 @@
-import Confirm from './Confirm';
-import TagList from './TagList';
-import Title from './Title';
-import ThumbsMenu from './ThumbsMenu';
-import ReportsMenu from './ReportsMenu'
-import TabComponentes from './TabComponentes';
+import Confirm from './Confirm.vue';
+import TagList from './TagList.vue';
+import Title from './Title.vue';
+import ThumbsMenu from './ThumbsMenu.vue';
+import ReportsMenu from './ReportsMenu.vue'
+import TabComponentes from './TabComponentes.vue';
 
 export {
     Confirm,

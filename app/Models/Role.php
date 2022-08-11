@@ -8,15 +8,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Role extends Model
 {
+    use SoftDeletes;use UserCan;
 
-    use SoftDeletes, UserCan;
-    
     public $fillable = ['name'];
+
     protected $appends = ['user_can'];
-    
-     /**
+
+    /**
      * Função usuario
-     * @param \App\Role $role
+     *
+     * @param  \App\Role  $role
      * @return \App\Model\ApiResponser retorna json
      */
     public function users()

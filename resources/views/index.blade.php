@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="{{ asset('/css/app.css') }}" async media="print" onload="this.media='all'">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" crossorigin="anonymous" async-->
-
+    @vite('resources/assets/js/app.js')
 </head>
 
 <body>
@@ -49,16 +49,13 @@
     </noscript>
 
     <div id="app"></div>
-
-    <div id="vlibras" vw class="enabled">
+    {{-- <div id="vlibras" vw class="enabled" style="top:45% !important;">
         <div vw-access-button class="active"></div>
         <div vw-plugin-wrapper>
             <div class="vw-plugin-top-wrapper"></div>
         </div>
-    </div>
-
-
-    @if (config('app.env') === 'local')
+    </div> --}}
+    {{-- @if (config('app.env') === 'local')
         <script async defer src="{{ asset('/js/app.js') }}"></script>
     @elseif (config('app.env') === 'production')
         <script async defer src="{{ asset('/js/manifest.js') }}"></script>
@@ -68,7 +65,7 @@
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     <script>
         new window.VLibras.Widget('https://vlibras.gov.br/app');
-    </script>
+    </script> --}}
 </body>
 
 </html>

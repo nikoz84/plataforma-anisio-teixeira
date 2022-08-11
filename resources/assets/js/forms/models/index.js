@@ -1,22 +1,22 @@
 // @ts-nocheck
-import AplicativoForm from './AplicativoForm';
-import CanalForm from './CanalForm';
-import CategoryAplicativoForm from './CategoryAplicativoForm';
-import CategoryConteudoForm from './CategoryConteudoForm';
-import ConteudoForm from './ConteudoForm';
-import CurricularComponentsForm from './CurricularComponentsForm';
-import CurricularComponentsCategoryForm from './CurricularComponentsCategoryForm';
-import NivelEnsinoForm from './NivelEnsinoForm';
-import LicenseForm from './LicenseForm';
-import OptionsForm from './OptionsForm';
-import RoleForm from './RoleForm';
-import TagForm from './TagForm';
-import TipoForm from './TipoForm';
-import UserForm from './UserForm';
-import SliderForm from './SliderForm';
-import UniversidadesForm from './UniversidadesForm';
-import PlayListForm from './PlayListForm';
-import PlayListModalForm from './PlayListModalForm';
+import AplicativoForm from './AplicativoForm.vue';
+import CanalForm from './CanalForm.vue';
+import CategoryAplicativoForm from './CategoryAplicativoForm.vue';
+import CategoryConteudoForm from './CategoryConteudoForm.vue';
+import ConteudoForm from './ConteudoForm.vue';
+import CurricularComponentsForm from './CurricularComponentsForm.vue';
+import CurricularComponentsCategoryForm from './CurricularComponentsCategoryForm.vue';
+import NivelEnsinoForm from './NivelEnsinoForm.vue';
+import LicenseForm from './LicenseForm.vue';
+import OptionsForm from './OptionsForm.vue';
+import RoleForm from './RoleForm.vue';
+import TagForm from './TagForm.vue';
+import TipoForm from './TipoForm.vue';
+import UserForm from './UserForm.vue';
+import SliderForm from './SliderForm.vue';
+import UniversidadesForm from './UniversidadesForm.vue';
+import PlayListForm from './PlayListForm.vue';
+import PlayListModalForm from './PlayListModalForm.vue';
 
 export {
     PlayListForm,

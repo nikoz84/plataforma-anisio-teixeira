@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\Aplicativo;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AplicativoPolicy
@@ -41,10 +41,9 @@ class AplicativoPolicy
      */
     public function create(User $user)
     {
-
-        return ($user->role->name === 'super-admin' ||
+        return $user->role->name === 'super-admin' ||
             $user->role->name === 'admin' ||
-            $user->role->name === 'coordenador');
+            $user->role->name === 'coordenador';
     }
 
     /**
@@ -56,10 +55,10 @@ class AplicativoPolicy
      */
     public function update(User $user, Aplicativo $aplicativo)
     {
-        return ($user->role->name === 'super-admin' ||
+        return $user->role->name === 'super-admin' ||
             $user->role->name === 'admin' ||
             $user->role->name === 'coordenador' ||
-            $aplicativo->user_id === $user->id);
+            $aplicativo->user_id === $user->id;
     }
 
     /**
@@ -71,10 +70,10 @@ class AplicativoPolicy
      */
     public function delete(User $user, Aplicativo $aplicativo)
     {
-        return ($user->role->name === 'super-admin' ||
+        return $user->role->name === 'super-admin' ||
             $user->role->name === 'admin' ||
             $user->role->name === 'coordenador' ||
-            $aplicativo->user_id === $user->id);
+            $aplicativo->user_id === $user->id;
     }
 
     /**
@@ -86,8 +85,8 @@ class AplicativoPolicy
      */
     public function restore(User $user)
     {
-        return ($user->role->name === 'super-admin' ||
-            $user->role->name === 'admin');
+        return $user->role->name === 'super-admin' ||
+            $user->role->name === 'admin';
     }
 
     /**
@@ -99,6 +98,6 @@ class AplicativoPolicy
      */
     public function forceDelete(User $user)
     {
-        return ($user->role->name === 'super-admin');
+        return $user->role->name === 'super-admin';
     }
 }

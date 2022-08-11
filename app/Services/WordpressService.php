@@ -3,23 +3,30 @@
 namespace App\Services;
 
 use App\Models\Canal;
-use GuzzleHttp\Client;
-use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use App\Traits\FileSystemLogic;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 
 class WordpressService
 {
     use FileSystemLogic;
 
     protected $api;
+
     protected $slug;
+
     protected $id_canal;
+
     protected $limit;
+
     protected $post;
+
     protected $data_inicio;
+
     protected $data_fim;
+
     protected $timeout;
 
     public function __construct(Request $request)
@@ -33,15 +40,15 @@ class WordpressService
 
         $canal = Canal::find(7);
 
-        $this->api =  $canal->options['back_url'] . "/wp-json/pat/v1/";
+        $this->api = $canal->options['back_url'].'/wp-json/pat/v1/';
     }
 
     public function getPosts()
     {
         $client = new Client([
             'base_uri' => $this->api,
-            'timeout'  => $this->timeout,
-            'query' => ['page' => $this->page, 'limit' => $this->limit]
+            'timeout' => $this->timeout,
+            'query' => ['page' => $this->page, 'limit' => $this->limit],
         ]);
 
         $response = $client->request('GET', 'posts');
@@ -68,11 +75,11 @@ class WordpressService
     {
         $client = new Client([
             'base_uri' => $this->api,
-            'timeout'  => $this->timeout,
+            'timeout' => $this->timeout,
             'query' => [
                 'inicio' => $this->data_inicio,
-                'fim'    => $this->data_fim
-            ]
+                'fim' => $this->data_fim,
+            ],
         ]);
 
         $response = $client->request('GET', 'posts');
@@ -84,7 +91,7 @@ class WordpressService
     {
         $client = new Client([
             'base_uri' => $this->api,
-            'timeout'  => $this->timeout
+            'timeout' => $this->timeout,
         ]);
 
         $response = $client->request('GET', "posts/{$this->request->id}");

@@ -237,10 +237,10 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Webp' => Buglinjo\LaravelWebp\Facades\Webp::class,
         'Date' => Jenssegers\Date\Date::class,
-        'Crawler'   => Jaybizzle\LaravelCrawlerDetect\Facades\LaravelCrawlerDetect::class,
+        'Crawler' => Jaybizzle\LaravelCrawlerDetect\Facades\LaravelCrawlerDetect::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Analytics' => Spatie\Analytics\AnalyticsFacade::class,
-        'GoogleAnalytics'   =>  App\Facades\GoogleAnalyticsFacade::class
+        'GoogleAnalytics' => App\Facades\GoogleAnalyticsFacade::class,
     ],
 
 ];

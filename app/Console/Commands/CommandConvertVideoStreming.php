@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Conteudo;
-use Illuminate\Console\Command;
+use App\Models\Conteudo;
 use App\Helpers\ContentVideoConvert;
-use Illuminate\Support\Facades\Storage;
 use App\Jobs\VideoStreamingConvert;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 use Streaming\FFMpeg;
 
 /**
@@ -16,18 +16,21 @@ class CommandConvertVideoStreming extends Command
 {
     /**
      * Converte para Stream
+     *
      * @var string
      */
     protected $signature = 'convert:streaming';
 
     /**
      * Converte video de qualquer extensão para arquivos streaming.
+     *
      * @var string
      */
     protected $description = 'Coverte os conteudos do tipo video (tipo_id = 5) que estão na aplicação e possuem um arquivo de video mas não possuem o formato streming na pasta streming';
 
     /**
      * Create a new command instance.
+     *
      * @return void
      */
     public function __construct()
@@ -40,19 +43,17 @@ class CommandConvertVideoStreming extends Command
      */
     public function handle()
     {
-        $conteudo = new Conteudo();
+        $conteudo = new Conteudo;
         $conteudosSemStreaming = $conteudo->conteudosSemStreamingFiles();
-        $root = Storage::disk('conteudos-digitais')->path("streaming");
+        $root = Storage::disk('conteudos-digitais')->path('streaming');
         $ffmpeg = FFMpeg::create(config('ffmpeg'));
-        
+
         $converts = [];
-        foreach($conteudosSemStreaming as $c)
-        {
-            $converts[] = new ContentVideoConvert( $c, $ffmpeg);
+        foreach ($conteudosSemStreaming as $c) {
+            $converts[] = new ContentVideoConvert($c, $ffmpeg);
         }
         $sgesDelay = 60;
-        foreach( $converts as $convert )
-        {
+        foreach ($converts as $convert) {
             VideoStreamingConvert::dispatch($convert, $root)->delay(now()->addSeconds($sgesDelay));
             $sgesDelay += $sgesDelay;
         }

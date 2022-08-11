@@ -1,5 +1,5 @@
-import Posts from './Posts';
-import Post from './Post';
+import Posts from './Posts.vue';
+import Post from './Post.vue';
 
 export {
     Posts,

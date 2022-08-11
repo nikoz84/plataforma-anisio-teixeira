@@ -2,21 +2,21 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Models\User;
-use Illuminate\Support\Facades\URL;
-use Carbon\Carbon;
 
 class SendVerificationEmail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;use SerializesModels;
 
     protected $token;
+
     protected $option;
+
     protected $user;
+
     /**
      * Create a new message instance.
      * Crie uma nova instância de mensagem.
@@ -39,7 +39,7 @@ class SendVerificationEmail extends Mailable
     public function build()
     {
         $dominio = env('APP_URL');
-        
+
         return $this->from(env('MAIL_USERNAME'))
             ->to($this->user->email, $this->user->name)
             ->subject('Email de verificação Plataforma Anísio Teixeira')
@@ -49,7 +49,7 @@ class SendVerificationEmail extends Mailable
                     'user' => $this->user,
                     'token' => $this->token,
                     'dominio' => $dominio,
-                    'option' => $this->option
+                    'option' => $this->option,
                 ]
             );
     }

@@ -1,8 +1,8 @@
-import FileUpload from "./FileUpload";
-import ListComponents from "./ListComponents";
-import ShowErrors from "./ShowErrors";
-import RecaptchaForm from "./RecaptchaForm";
-import ParentAndChildSelect from './ParentAndChildSelect';
+import FileUpload from "./FileUpload.vue";
+import ListComponents from "./ListComponents.vue";
+import ShowErrors from "./ShowErrors.vue";
+import RecaptchaForm from "./RecaptchaForm.vue";
+import ParentAndChildSelect from './ParentAndChildSelect.vue';
 
 export {
     FileUpload,

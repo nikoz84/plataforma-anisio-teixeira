@@ -5,10 +5,11 @@ namespace App\Http\Middleware;
 use Closure;
 
 class CacheControl
-{   /**
+{
+    /**
      *Handle an incoming request.
      * Função que lida com a solicitação de entrada
-    */
+     */
     public function handle($request, Closure $next)
     {
         $response = $next($request);

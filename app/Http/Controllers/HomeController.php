@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Services\Analytics;
-use App\Http\Controllers\ApiController;
 use App\Services\Autocomplete;
 use App\Services\SideBar;
 use Illuminate\Http\Request;
@@ -22,9 +21,9 @@ class HomeController extends ApiController
         $this->request = $request;
     }
 
-
     /**
      * Seleciona da tabela options as configurações do layout
+     *
      * @return json resposta em json
      */
     public function getLayout()
@@ -48,9 +47,9 @@ class HomeController extends ApiController
         $analitycs = new Analytics($this->request);
         $collect = collect($analitycs->getData());
 
-
         return $this->showAll($collect, '', 200);
     }
+
     /**
      * Método de autocompletar
      *

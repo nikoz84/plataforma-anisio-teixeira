@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use App\Http\Controllers\ApiController;
-use App\Traits\FileSystemLogic;
-use App\Models\Canal;
 use App\Helpers\CachingModelObjects;
 use App\Http\Requests\CategoryRequest;
+use App\Models\Canal;
+use App\Models\Category;
+use App\Traits\FileSystemLogic;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends ApiController
 {
     /**
      * Cria imagem no banco de dados
-     * 
-     * @param int $id identificador único
+     *
+     * @param  int  $id identificador único
      * @param  \App\Controller\CategoryController\ApiResponser
      * retorna json
      */
     use FileSystemLogic;
+
     protected $request;
 
     public function rules()
@@ -29,29 +29,30 @@ class CategoryController extends ApiController
             'canal_id' => 'required',
             'parent_id' => 'sometimes|nullable',
             'name' => 'required|min:2|max:255',
-            'image' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:2048|nullable'
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:2048|nullable',
         ];
     }
+
     /**
      * Undocumented function
      * Função não documentada
      * Método Construtor
-     * @param Request $request
+     *
+     * @param  Request  $request
      */
     public function __construct(Request $request)
     {
         $this->middleware('jwt.auth')->except([
-            'index', 'search', 'getById', 'getCategoryByCanalId'
+            'index', 'search', 'getById', 'getCategoryByCanalId',
         ]);
         $this->request = $request;
     }
 
     /**
-     * Lista as categorias do canal 
-     * 
+     * Lista as categorias do canal
+     *
      * @return \App\Controllers\ApiResponser
      */
-
     public function index()
     {
         $limit = $this->request->get('limit', 15);
@@ -67,10 +68,10 @@ class CategoryController extends ApiController
     }
 
     /**
-     * 
      * Criando e validando informações para ser adicionadas no banco de dados
+     *
      * @param CategoryRequest
-     * @param $request 
+     * @param $request
      * @return void
      */
     public function create(CategoryRequest $request)
@@ -79,13 +80,13 @@ class CategoryController extends ApiController
 
         $category->fill($request->validated());
 
-        if (!$category->save()) {
+        if (! $category->save()) {
             return $this->errorResponse([], 'Não foi possível cadastrar a categoria', 422);
         }
 
         if ($request->has('image') && $request->image) {
             $fileImg = $this->saveFile($category->id, [$request->image], 'imagem-associada/categorias');
-            if (!$fileImg) {
+            if (! $fileImg) {
                 return $this->errorResponse([], 'Não foi possível salvar imagem associada', 422);
             }
         }
@@ -95,24 +96,23 @@ class CategoryController extends ApiController
 
     /**
      * Atualiza aplicativo no banco de dados
-     * 
-     * @param \App\Http\Requests\CategoryRequest $request Requisição personalizada
-     * @param integer $id identificador único da categoria
-     * 
+     *
+     * @param  \App\Http\Requests\CategoryRequest  $request Requisição personalizada
+     * @param  int  $id identificador único da categoria
      * @return string json
      */
     public function update(CategoryRequest $request, $id)
     {
         $category = Category::findOrFail($id);
-        
+
         $category->fill($request->validated());
-       
-       
+
         if ($request->image) {
-            if ($category->refenciaImagemAssociada())
+            if ($category->refenciaImagemAssociada()) {
                 unlink($category->refenciaImagemAssociada());
+            }
             $file = $this->saveFile($category->id, [$request->image], 'imagem-associada/categorias');
-            if (!$file) {
+            if (! $file) {
                 return $this->errorResponse([], 'Não foi possível salvar imagem associada', 422);
             }
         }
@@ -125,20 +125,20 @@ class CategoryController extends ApiController
                 return $this->errorResponse([], 'Não foi possível salvar imagem associada', 422);
             }
         }*/
-        if (!$category->save()) {
+        if (! $category->save()) {
             return $this->errorResponse([], 'Não foi possível editar', 422);
         }
 
         return $this->successResponse($category, 'Categoria atualizada com sucesso!', 200);
     }
+
     /**
      * Deleta aplicativo do banco de dados
-     * 
-     * @param int $id identificador único
-     * @param \App\Category $categories
+     *
+     * @param  int  $id identificador único
+     * @param  \App\Category  $categories
      * @return \App\Controllers\ApiResponser retorna json
      */
-
     public function delete($id)
     {
         /* $validator = Validator::make($this->request->all(), [
@@ -150,33 +150,36 @@ class CategoryController extends ApiController
         $category = Category::findOrFail($id);
         $category->delete($id);
 
-        if (!$category->delete()) {
+        if (! $category->delete()) {
             return $this->errorResponse([], 'Não foi possível deletar a categoria', 422);
         }
-        if ($category->refenciaImagemAssociada())
+        if ($category->refenciaImagemAssociada()) {
             unlink($category->refenciaImagemAssociada());
-        if ($category->refenciaVideoDestaque())
+        }
+        if ($category->refenciaVideoDestaque()) {
             unlink($category->refenciaVideoDestaque());
-        return $this->successResponse($category, 'Categoria deletada com sucesso!', 200); 
+        }
+
+        return $this->successResponse($category, 'Categoria deletada com sucesso!', 200);
     }
+
     /**
-     * 
      * Lista id do aplicativo no banco de dados
-     * @param \App\Category $categories
+     *
+     * @param  \App\Category  $categories
      * @return \App\Controllers\ApiResponser retorna json
      */
-
     public function getById($id)
     {
         //return $category = Category::findOrFail($id);
         $category = Category::with(['canal'])->findOrFail($id);
-        
-        return $category;//CachingModelObjects::getById($category->query()->with("canal"), $id);
+
+        return $category; //CachingModelObjects::getById($category->query()->with("canal"), $id);
     }
 
     /**
-     * 
      * Lista a categoria do canal por id
+     *
      * @param [type] $id
      * @return void
      */
@@ -192,7 +195,7 @@ class CategoryController extends ApiController
 
         $data = collect([
             'category_name' => $canal->pluck('category_name')->first(),
-            'categories' => $categories
+            'categories' => $categories,
         ]);
 
         return $this->showAll($data);
@@ -200,6 +203,7 @@ class CategoryController extends ApiController
 
     /**
      * Procura categoria pelo nome
+     *
      * @param $request \Illuminate\Http\Request
      * @param $termo string de busca
      * @return App\Traits\ApiResponser
@@ -212,6 +216,7 @@ class CategoryController extends ApiController
         $query = Category::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search]);
         $paginator = CachingModelObjects::search($query, $search, $limit);
         $paginator->setPath("/categorias/search/{$termo}?limit={$limit}");
+
         return $this->showAsPaginator($paginator, '', 200);
     }
 }

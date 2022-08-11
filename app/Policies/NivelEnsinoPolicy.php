@@ -2,16 +2,17 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\NivelEnsino;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class NivelEnsinoPolicy
 {
     use HandlesAuthorization;
-    
+
     /**
      * Determine whether the user can view.
+     *
      * @param  \App\Models\User  $user
      * @return mixed
      */
@@ -19,7 +20,7 @@ class NivelEnsinoPolicy
     {
         return $user->role->name == 'super-admin' || $user->role->name == 'admin';
     }
-    
+
     /**
      * Determine whether the user can view any nivel ensinos.
      *
@@ -80,7 +81,7 @@ class NivelEnsinoPolicy
     public function delete(User $user, NivelEnsino $nivelEnsino)
     {
         //
-        return $user->role->name == 'super-admin' ;
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -93,7 +94,7 @@ class NivelEnsinoPolicy
     public function restore(User $user, NivelEnsino $nivelEnsino)
     {
         //
-        return $user->role->name == 'super-admin' ;
+        return $user->role->name == 'super-admin';
     }
 
     /**
@@ -106,6 +107,6 @@ class NivelEnsinoPolicy
     public function forceDelete(User $user, NivelEnsino $nivelEnsino)
     {
         //
-        return $user->role->name == 'super-admin' ;
+        return $user->role->name == 'super-admin';
     }
 }

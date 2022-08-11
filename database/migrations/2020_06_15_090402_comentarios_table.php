@@ -26,7 +26,7 @@ class ComentariosTable extends Migration
             $table->foreign('aplicativo_id')->references('id')->on('aplicativos');
 
             $table->text('body')->comment('Nome identificador do conteudo');
-          
+
             // campo de data created_at and updated_at
             $table->timestamps();
             // campo de data deleted_at

@@ -1,5 +1,5 @@
-import Player from './Player';
-import PlayerActions from "./PlayerActions";
+import Player from './Player.vue';
+import PlayerActions from "./PlayerActions.vue";
 
 
 export {

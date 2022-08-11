@@ -37,7 +37,6 @@ class SpaceDiskCommand extends Command
      */
     public function handle()
     {
-        
         exec('du -h storage/app', $output);
         $data = [];
         $this->output->progressStart(count($output));
@@ -50,7 +49,7 @@ class SpaceDiskCommand extends Command
         }
 
         $headers = ['Peso', 'Pasta'];
-        
+
         $this->table($headers, $data);
         $this->output->progressFinish();
     }

@@ -2,32 +2,31 @@
 
 namespace App\Models\Wordpress;
 
-use App\Models\Wordpress\User;
-use App\Models\Wordpress\PostMeta;
-use App\Models\Wordpress\Term;
+use App\Helpers\TransformDate;
+use App\Traits\WPPrefix;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-use App\Helpers\TransformDate;
-use App\Models\Wordpress\TermTaxonomy;
-use App\Traits\WPPrefix;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
     use HasFactory, WPPrefix;
+
     protected $connection = 'mysql';
+
     protected $table = 'posts';
+
     protected $primaryKey = 'ID';
 
-    public $appends = ['title', 'image', 'url_exibir', 'formated_date', 'tags', 'categories'];
+    public $appends = [ 'short_title', 'title', 'image', 'url_exibir', 'formated_date', 'tags', 'categories', 'category'];
 
     public function __construct(array $attributes = [])
     {
-        $this->table = $this->getPrefix() . $this->table;
+        $this->table = $this->getPrefix().$this->table;
 
         parent::__construct($attributes);
     }
-
 
     public function user()
     {
@@ -37,7 +36,6 @@ class Post extends Model
 
     public function getImageAttribute()
     {
-
         $id = PostMeta::where('meta_key', '=', '_thumbnail_id')
             ->where('post_id', $this->getAttribute('ID'))
             ->get(['meta_value'])->pluck('meta_value')->first();
@@ -46,15 +44,23 @@ class Post extends Model
         return $image ? $image : '/img/fundo-padrao.svg';
     }
 
-    public function getTitleAttribute()
+    public function title():Attribute
     {
-        return $this['post_title'];
+        return new Attribute(
+            get: fn () => $this['post_title']
+        );
+    }
+
+    public function shortTitle(): Attribute
+    {
+        return new Attribute(
+            get: fn () => Str::words($this['post_title'], 12, '...')
+        );
     }
 
     public function terms()
     {
-
-        return $this->belongsToMany(TermTaxonomy::class, $this->getPrefix() . 'term_relationships', 'object_id', 'term_taxonomy_id')
+        return $this->belongsToMany(TermTaxonomy::class, $this->getPrefix().'term_relationships', 'object_id', 'term_taxonomy_id')
             ->with('term');
     }
 
@@ -70,6 +76,13 @@ class Post extends Model
         $terms = $this->terms()->get();
 
         return $this->mapTerms($terms, 'category');
+    }
+
+    public function getCategoryAttribute()
+    {
+        
+        $categories = collect($this->mapTerms($this->terms()->get(), 'category'))->first();
+        return $categories;
     }
 
     protected function mapTerms($items, $type)

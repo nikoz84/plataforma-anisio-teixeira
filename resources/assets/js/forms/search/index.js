@@ -1,5 +1,5 @@
-import SearchForm from "./SearchForm";
-import AutocompleteForm from "./AutocompleteForm";
+import SearchForm from "./SearchForm.vue";
+import AutocompleteForm from "./AutocompleteForm.vue";
 
 
 export {

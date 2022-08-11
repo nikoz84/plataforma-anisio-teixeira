@@ -1,9 +1,9 @@
 <?php
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use PhpOffice\PhpSpreadsheet\Worksheet\RowIterator;
 
 class GenerateModelFromDb extends Command
 {
@@ -16,6 +16,7 @@ class GenerateModelFromDb extends Command
 
     /**
      * Descicao do comando
+     *
      * @var string
      */
     protected $description = 'Genera as clases a partir de uma tabela do banco';
@@ -39,24 +40,24 @@ class GenerateModelFromDb extends Command
     {
         $tablename = $this->argument('tablename');
         $tableschema = $this->argument('tableschema');
-        $where = "";
+        $where = '';
         if ($tablename) {
             $where = "where table_name='".$tablename."'";
         }
         if ($tableschema) {
             $where .= " and table_schema = '".$tableschema."'";
         }
-        $selectSchema = "select * from information_schema.tables ".$where;
+        $selectSchema = 'select * from information_schema.tables '.$where;
         $tables = DB::select($selectSchema); // nomes das tabelas que quer exportar
         foreach ($tables as $table_schema) {
             $this->info($table_schema->table_name);
             $model = ucfirst($table_schema->table_name);
             echo $model.'-';
-            $this->call("krlove:generate:model", [
-                "class-name" => $model,
-                "-tn" => 'escola.'.$table_schema->table_name,
+            $this->call('krlove:generate:model', [
+                'class-name' => $model,
+                '-tn' => 'escola.'.$table_schema->table_name,
                 //"-op" => app_path('Models',"Configuracoes"),
-                "-ns" => "App\Models\Escola"
+                '-ns' => "App\Models\Escola",
             ]);
         }
     }
