@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="{{ asset('/css/app.css') }}" async media="print" onload="this.media='all'">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" crossorigin="anonymous" async-->
-    @vite('resources/assets/js/app.js')
+    @vite(['resources/js/app.js'])
 </head>
 
 <body>

@@ -1,24 +1,97 @@
-import { createVuePlugin } from 'vite-plugin-vue2'
+import vue from '@vitejs/plugin-vue2'
 import laravel from 'laravel-vite-plugin';
+import { defineConfig } from 'vite';
 
-export default {
+
+export default defineConfig({
+    publicDir: false,
+    optimizeDeps: {
+        include: [
+            'vue',
+            'vue-router',
+            'vuex',
+            'axios',
+            'quasar'
+        ]
+    },
+    build: {
+        manifest: true,
+        outDir: 'public/build',
+        rollupOptions: {
+            input: 'resources/js/app.js',
+        }
+    },
+    plugins: [
+        laravel([
+            'resources/js/app.js',
+        ]),
+        vue({
+            template: {
+                transformAssetUrls: {
+                    base: null,
+                    includeAbsolute: false,
+                },
+            },
+        }),
+    ],
     resolve:{
-        dedupe: ['vue', 'vue-router', 'vuex', 'quasar'],
         alias:{
-            //'vue$': 'vue/dist/vue.esm.browser',
-            '@': __dirname + '/resources/assets/js',
-            '@components': __dirname + '/resources/assets/js/components',
-            '@composables': __dirname + '/resources/assets/js/composables',
-            '@forms': __dirname + '/resources/assets/js/forms',
-            '@pages': __dirname + '/resources/assets/js/pages',
-            '@mixins': __dirname + '/resources/assets/js/mixins',
-            '@layout': __dirname + '/resources/assets/js/layout'
+            '@': __dirname + '/resources/js',
+        },
+    },
+});
+
+
+/*
+export default ({command}) => ({
+    base: command === 'serve' ? '' : '/build/',
+    publicDir: false,
+    build: {
+        manifest: true,
+        outDir: 'public/build',
+        rollupOptions: {
+            input: 'resources/js/app.js',
+        }
+    },
+    resolve:{
+        alias:{
+            '@': __dirname + '/resources/js',
         },
     },
     plugins: [
         createVuePlugin(),
+        laravel('resources/js/app.js')
+    ]
+});
+
+
+export default defineConfig({
+    resolve:{
+        
+        alias:{
+            '@': __dirname + '/resources/assets/js',
+        },
+    },
+    optimizeDeps: {
+        include: [
+            //'vue',
+            //'axios'
+        ]
+    },
+    plugins: [
+        createVuePlugin({
+            template: {
+                compilerOptions: {
+                    compatConfig: {
+                        MODE: 2
+                    }
+                }
+            }
+        }),
+        dynamicImport(),
         laravel([
-                'resources/assets/js/app.js',
+                'resources/assets/js/app.js'
             ]),
     ],
-}
+})
+*/
