@@ -1,5 +1,6 @@
 // @ts-nocheck
 import "./bootstrap";
+//import "~@/app.styl"
 import Vue from "vue";
 import VueRouter from "vue-router";
 import router from "./routes/index.js";

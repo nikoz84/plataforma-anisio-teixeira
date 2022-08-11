@@ -65,10 +65,12 @@
         Publicador(a):
       </strong>
       <i class="break-word" v-if="conteudo && conteudo.user">
-        <q-chip square size="lg" class="text-weight-medium">
-          <q-avatar>
-            <img src="https://cdn.quasar.dev@/assets/img/boy-avatar.png" />
-          </q-avatar>
+        <q-chip
+          square
+          size="lg"
+          class="text-weight-medium"
+          style="white-space: break-space;"
+        >
           <a
             class="text-decoration-none text-dark"
             v-html="conteudo.user ? conteudo.user.name : null"

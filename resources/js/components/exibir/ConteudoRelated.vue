@@ -87,7 +87,7 @@ export default {
       this.$router.push(url);
     },
     getImage(image) {
-      return image ? image : "@/assets/img/fundo-padrao.svg";
+      return image ? image : "/img/fundo-padrao.svg";
     },
   },
 };

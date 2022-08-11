@@ -60,7 +60,7 @@
               <img
                 alt="imagem descritiva"
                 aria-label="imagem descritiva"
-                src="/img/sprite/oque.svg"
+                :src="`/img/sprite/oque.svg`"
               />
             </q-icon>
             <q-card-section>

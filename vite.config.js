@@ -1,6 +1,7 @@
 import vue from '@vitejs/plugin-vue2'
 import laravel from 'laravel-vite-plugin';
 import { defineConfig } from 'vite';
+import { resolve } from 'path'
 
 
 export default defineConfig({
@@ -24,6 +25,7 @@ export default defineConfig({
     plugins: [
         laravel([
             'resources/js/app.js',
+            'resources/stylus/app.styl'
         ]),
         vue({
             template: {
@@ -32,13 +34,23 @@ export default defineConfig({
                     includeAbsolute: false,
                 },
             },
-        }),
+        })
     ],
-    resolve:{
-        alias:{
-            '@': __dirname + '/resources/js',
+    resolve: {
+        alias: {
+            '@' : resolve(__dirname, '/resources/js'),
+            '~@': resolve(__dirname,  '/resources/stylus'),
+            '~quasar': resolve(__dirname, 'node_modules/quasar'),
+            '@quasar': resolve(__dirname, 'node_modules/@quasar')
         },
     },
+    css: {
+        preprocessorOptions: {
+            styl: {
+                //additionalData: '@import "@scss/shared.scss";'
+            }
+        }
+    }
 });
 
 
