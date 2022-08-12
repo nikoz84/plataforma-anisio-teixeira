@@ -1,57 +1,52 @@
 
-//import { LoaderAdmin } from "@/components/exibir";
-import Admin from "@/layout/Admin.vue";
-import { ListarConteudos, ListarAplicativos, ListarCanais, 
+import { ListarCanais, 
     ListarContato, ListarOptions, ListarRoles, ListarTags, ListarTipos, ListarUsers, 
     ListarCategorias,ListarComponentes, ListarComponentesCategoria, ListarNiveisEnsino } from "@/components/exibir"
 import { ConteudoForm, PlayListForm, AplicativoForm, CanalForm, OptionsForm, RoleForm, 
   TagForm, TipoForm, UserForm, CategoryConteudoForm, CurricularComponentsForm, CurricularComponentsCategoryForm,
 NivelEnsinoForm  } from "@/forms/models";
-import AdminPage from "@/pages/AdminPage.vue"
-import Resumo from "@/pages/Resumo.vue";
-import { Contato }  from "@/components/exibir";
 
 
 const adminRoutes = {
   path: "/admin",
   //name: "admin-home",
   components : {
-    main: AdminPage
+    main: () => import("@/pages/AdminPage.vue")
   },
   meta: {
     requiresAuth: true,
-    layout : Admin
+    layout : () => import("@/layout/Admin.vue")
   },
   children: [
     {
       path: "resumo/listar",
       components: {  
-        admin: Resumo
+        admin: () => import("@/pages/Resumo.vue")
       },
       meta: {
         requiresAuth: true,
         title: "Estatisticas",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
       path: "conteudos/listar",
       components: {  
-        admin: ListarConteudos
+        admin: () => import("@/components/exibir/ListarConteudos.vue")
       },
       meta: {
         requiresAuth: true,
         title: "Listar Conteúdos",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
       path: "conteudos/adicionar",
-      components: {admin: ConteudoForm},
+      components: {admin: () => import("@/forms/models/ConteudoForm.vue") },
       meta: {
         requiresAuth: true,
         title: "Adicionar Conteúdo",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -60,7 +55,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar Conteúdo",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -69,7 +64,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Editar Aplicativo",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -78,16 +73,16 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar Aplicativo",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
       path: "aplicativos/listar",
-      components: { admin: ListarAplicativos },
+      components: { admin: () => import("@/components/exibir/ListarAplicativos.vue") },
       meta: {
         requiresAuth: true,
         title: "Adicionar Aplicativo",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -96,7 +91,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar Conteúdo",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -105,7 +100,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar Canais",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -114,7 +109,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar Canal",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -123,7 +118,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Editar Canal",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -132,16 +127,16 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar faleconosco",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
       path: "contato/responder/:id",
-      components: { admin: Contato },
+      components: { admin: () => import("@/components/exibir") },
       meta: {
         requiresAuth: true,
         title: "Responder faleconosco",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     ,
@@ -151,7 +146,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar opções do sistema",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -160,7 +155,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Opçao para editar",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -169,7 +164,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar tipos de usuários",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -178,7 +173,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Editar Role",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -187,7 +182,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar Role",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -196,7 +191,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar palavras-chave",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -205,7 +200,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Editar palavras-chave",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -214,7 +209,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar palavra-chave",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -223,7 +218,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar tipos de conteúdos",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -232,7 +227,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Editar tipo de conteúdo",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -241,7 +236,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar tipo de conteúdo",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -250,7 +245,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar usuários",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -259,7 +254,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Editar usuário",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -268,7 +263,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar usuário",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -277,7 +272,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar categorias",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -286,7 +281,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Editar categoria",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -295,7 +290,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar categoria",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -304,7 +299,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar componentes",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -313,7 +308,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Editar Componente Curricular",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -322,7 +317,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar Componente Curricular",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -331,7 +326,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar categoria componentes curriculares",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -340,7 +335,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Editar Categoria Componente Curricular",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -349,7 +344,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar Categoria Componente Curricular",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -358,7 +353,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar niveis de ensino",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -367,7 +362,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Editar nivel de ensino",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
     {
@@ -376,7 +371,7 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar nivel de ensino",
-        layout: Admin
+        layout: () => import("@/layout/Admin.vue")
       }
     },
   ]

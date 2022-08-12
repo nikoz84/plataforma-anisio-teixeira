@@ -1,16 +1,12 @@
 
-import Default from "@/layout/Default.vue";
-import Home from "@/pages/Home.vue";
-import Ipes from "@/pages/Ipes.vue";
-
 const homeRoute = {
     path: "/",
     name: "Home",
-    components: { default: Home, main:Home },
+    components: { default: () => import("@/pages/Home.vue"), main: () => import("@/pages/Home.vue") },
     meta: {
       requiresAuth: false,
       title: "Inicio",
-      layout: Default
+      layout: () => import("@/layout/Default.vue")
     }
 };
   
@@ -23,7 +19,7 @@ const galeriaRoute = {
     meta: {
       requiresAuth: false,
       title: "Galeria de Imagens",
-      layout: Default
+      layout: () => import("@/layout/Default.vue")
     }
 };
 const sobreRoute = {
@@ -35,7 +31,7 @@ const sobreRoute = {
     meta: {
       requiresAuth: false,
       title: "Sobre a Plataforma",
-      layout: Default 
+      layout: () => import("@/layout/Default.vue") 
     }
 };
 
@@ -47,18 +43,18 @@ const praticasRoute = {
     meta: {
       requiresAuth: false,
       title: "Pŕaticas pedagógicas",
-      layout: Default
+      layout: () => import("@/layout/Default.vue")
     }
 };
 
 const ipesRoute = {
   path: "/ipes",
   name: "IpesFaculdades",
-  components: { main : Ipes},
+  components: { main : () => import("@/pages/Ipes.vue")},
   meta: {
       requiresAuth: false,
       title: "Faculdades da Bahia",
-      layout: Default
+      layout: () => import("@/layout/Default.vue")
     }
 };
 const rotinasRoute = {
@@ -68,7 +64,7 @@ const rotinasRoute = {
   meta: {
       requiresAuth: false,
       title: "Rotinas de Estudo",
-      layout: Default
+      layout: () => import("@/layout/Default.vue")
     }
 };
 
@@ -79,7 +75,7 @@ const advancedSearch = {
   meta: {
       requiresAuth: false,
       title: "Busca Avançada",
-      layout: Default
+      layout: () => import("@/layout/Default.vue")
     }
 };
 
@@ -91,7 +87,7 @@ const praticasInspiradoras = {
   meta: {
     requiresAuth: false,
     title: "Práticas Inspiradoras",
-    layout: Default
+    layout: () => import("@/layout/Default.vue")
   }
 };
 
@@ -102,7 +98,7 @@ const canalAT = {
   meta: {
     requiresAuth: false,
     title: "Canal Anísio Teixeira",
-    layout: Default
+    layout: () => import("@/layout/Default.vue")
   }
 };
 

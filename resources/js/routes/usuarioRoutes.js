@@ -1,109 +1,95 @@
 
-import { 
-  LoginForm, 
-  RegisterForm, 
-  RecoverPassForm, 
-  MudarPassForm,
-  ContactForm,
-  ConfirmationEmailForm,
-  MudarSenhaForm
-} from "@/forms/auth-contato";
-import Default from "@/layout/Default.vue";
-import User from "@/pages/User.vue";
-
-
-
 const usuarioRoutes = {
     path: "/usuario",
     name: "User",
     components: {
-      main: User
+      main: () => import("@/pages/User.vue")
     },
     meta: {
       requiresAuth: false,
-      layout: Default
+      layout: () => import("@/layout/Default.vue")
     },
     children: [
       {
         path: "login",
         name: "login",
         components: {
-          user: LoginForm
+          user: () => import("@/forms/auth-contato/LoginForm.vue")
         },
         meta: {
           requiresAuth: false,
           title: "faça seu login",
-          layout: Default
+          layout: () => import("@/layout/Default.vue")
         }
       },
       {
         path: "recuperar-senha",
         name: "Recuperar",
         components: {
-          user: RecoverPassForm
+          user: () => import("@/forms/auth-contato/RecoverPassForm.vue")
         },
         meta: {
           requiresAuth: false,
           title: "Recuperar senha",
-          layout: Default
+          layout: () => import("@/layout/Default.vue")
         }
       },
       {
         path: "mudar-senha/:token",
         name: "MudarSenha",
         components: {
-          user : MudarPassForm
+          user : () => ("@/forms/auth-contato/MudarPassForm.vue")
         },
         meta: {
           //requiresAuth: true,
           title: "Mudar senha",
-          layout: Default
+          layout: () => import("@/layout/Default.vue")
         }
       },
       {
         path: "senha",
         name: "Senha",
         components: {
-          user : MudarSenhaForm
+          user : () => import("@/forms/auth-contato/MudarSenhaForm.vue")
         },
         meta: {
           requiresAuth: true,
           title: "Mudar senha",
-          layout: Default
+          layout: () => import("@/layout/Default.vue")
         }
       },
       {
         path: "registro",
         name: "Register",
         components: {
-          user: RegisterForm
+          user: () => import("@/forms/auth-contato/RegisterForm.vue")
         },
         meta: {
           requiresAuth: false,
           title: "Faça seu registro",
-          layout: Default
+          layout: () => import("@/layout/Default.vue")
         }
       },
       {
         path: "confirmar-email",
         name: "confirmar",
-        components: {user:ConfirmationEmailForm},
+        components: {user:() => import("@/forms/auth-contato/ConfirmationEmailForm.vue")},
         meta: {
           requiresAuth: false,
           title: "Confirmar email",
-          layout: Default
+          layout: () => import("@/layout/Default.vue")
         }
       },
       {
         path: "contato/:action",
         name: "ContactForm",
         components:{
-          user: ContactForm
+          user: () => import("@/forms/auth-contato/ContactForm.vue")
         } ,
         meta: {
           requiresAuth: false,
           title: "Contatenos",
-          layout: Default
+          layout: () => import("@/layout/Default.vue")
         }
       }
     ]

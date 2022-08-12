@@ -1,80 +1,76 @@
 
-import HomeCanal from "@/pages/HomeCanal.vue";
-import Listar from "@/pages/Listar.vue";
-import Exibir from "@/pages/Exibir.vue";
-import Canal from "@/pages/Canal.vue";
-import Default from "@/layout/Default.vue";
-import PageNotFound from "@/pages/PageNotFound.vue";
+
+//import PageNotFound from "@/pages/PageNotFound.vue";
 
 const canalRoutes = {
     path: "/:slug",
     components: {
-      main: Canal
+      main: () => import("@/pages/Canal.vue")
     },
     meta: {
       requiresAuth: false,
       title: "Canal",
-      layout: Default
+      layout: () => import("@/layout/Default.vue")
     },
     children: [
       {
         path: "/",
         name: "Inicio",
         components:{
-          canal: HomeCanal
+          canal: () => import("@/pages/HomeCanal.vue")
         },
         meta: {
           requiresAuth: false,
           title: "Inicio",
-          layout: Default
+          layout: () => import("@/layout/Default.vue")
         }
       },
       {
         path: "listar",
         name: "Listar",
         components:{
-          canal: Listar
+          canal: () => import("@/pages/Listar.vue")
         },
         meta: {
           requiresAuth: false,
           title: "Listar Conteúdos",
-          layout: Default
+          layout: () => import("@/layout/Default.vue")
         }
       },
       {
         path: "listar/tag/:id",
         name: "listarTagId",
         components:{
-          canal: Listar
+          canal: () => import("@/pages/Listar.vue")
         },
         meta: {
           requiresAuth: false,
           title: "Lista de conteúdos por tag",
-          layout: Default
+          layout: () => import("@/layout/Default.vue")
         }
       },
       {
         path: "conteudo/exibir/:id",
         name: "ExibirConteudo",
         components: {
-          canal: Exibir
+          canal: () => import("@/pages/Exibir.vue")
         },
         meta: {
           requiresAuth: false,
           title: "Exibir conteúdo digital",
-          layout: Default
+          layout: () => import("@/layout/Default.vue")
         }
       },
       {
         path: "aplicativo/exibir/:id",
         name: "ExibirAplicativo",
         components: {
-          canal : Exibir
+          canal : () => import("@/pages/Exibir.vue")
         },
         meta: {
           requiresAuth: false,
           title: "Exibir aplicativo educacional",
-          layout: Default
+          layout: () => import("@/layout/Default.vue")
         }
       }
     ]
