@@ -11,7 +11,7 @@
       >
         <q-img
           :src="img"
-          :placeholder-img="'@/assets/img/fundo-padrao.svg'"
+          :placeholder-img="`/img/fundo-padrao.svg`"
           alt="Imagem da galeria"
           clickable
           @click="fullWidth = true"

@@ -38,7 +38,7 @@
             </q-input>
             <q-input
               v-model="email"
-              label="example@dominio.com"
+              label="exemplo@dominio.com"
               filled
               type="email"
               hint="E-mail obrigatório"

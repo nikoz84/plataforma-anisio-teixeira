@@ -49,7 +49,7 @@
           loading="lazy"
           style="height:150px; width:150px"
           :src="curricularComponent.icon"
-          placeholder-src="@/assets/img/fundo-padrao.svg"
+          :placeholder-src="`/img/fundo-padrao.svg`"
           alt=" Icone da categoria :"
         />
         <br />

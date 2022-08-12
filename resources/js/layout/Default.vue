@@ -26,7 +26,7 @@
             title="marca"
             aria-label="Marca da plataforma Anísio Teixeira"
           >
-            <img alt="marca" src="@/assets/img/sprite/logo-pat-2022-off.png" />
+            <img alt="marca" :src="`/img/sprite/logo-pat-2022-off.png`" />
           </q-avatar>
         </q-btn>
 

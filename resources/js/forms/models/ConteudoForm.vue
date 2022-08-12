@@ -419,7 +419,7 @@
           width="640"
           height="460"
           :src="conteudo.image"
-          placeholder-src="@/assets/img/fundo-padrao.svg"
+          :placeholder-src="`/img/fundo-padrao.svg`"
           alt="imagem de destaque"
         />
         <!-- IMAGEM DE DESTAQUE -->

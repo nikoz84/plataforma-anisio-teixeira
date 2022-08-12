@@ -142,7 +142,7 @@ export default {
   computed: {
     image() {
       if (!this.canal.document.banner) {
-        return "@/assets/img/fundo-padrao.svg";
+        return "/img/fundo-padrao.svg";
       }
 
       return this.canal.document.banner;

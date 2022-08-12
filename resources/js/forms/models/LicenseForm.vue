@@ -53,7 +53,7 @@
               loading="lazy"
               style="height:150px; width:150px"
               :src="licenca.image"
-              placeholder-src="@/assets/img/fundo-padrao.svg"
+              :placeholder-src="`/img/fundo-padrao.svg`"
               alt=" Icone da licença :"
             />
             <q-input

@@ -26,7 +26,7 @@
           <img
             class="q-pa-sm"
             lazyload
-            src="@/assets/img/sprite/peteca-icon-branco.svg"
+            :src="`/img/sprite/peteca-icon-branco.svg`"
             alt="icone"
           />
         </q-avatar>

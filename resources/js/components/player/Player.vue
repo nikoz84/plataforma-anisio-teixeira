@@ -25,7 +25,7 @@
     <q-img
       v-else
       :src="showImage"
-      placeholder-src="@/assets/img/fundo-padrao.svg"
+      :placeholder-src="`/img/fundo-padrao.svg`"
       :style="onLoadImage(conteudo.image)"
     >
       <div

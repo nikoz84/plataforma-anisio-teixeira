@@ -30,7 +30,7 @@
               <q-img
                 :src="aplicativo.image"
                 v-if="aplicativo.canal"
-                :placeholder-src="`@/assets/img/fundo-padrao.svg`"
+                :placeholder-src="`/img/fundo-padrao.svg`"
                 style="height: 250px; width: 100%;"
                 v-bind:style="
                   `border-color:${aplicativo.canal.color};margin: 0 auto;`
