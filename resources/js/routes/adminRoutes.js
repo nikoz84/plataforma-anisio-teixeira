@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 //import { LoaderAdmin } from "@/components/exibir";
 import Admin from "@/layout/Admin.vue";
 import { ListarConteudos, ListarAplicativos, ListarCanais, 

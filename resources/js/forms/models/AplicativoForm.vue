@@ -160,9 +160,6 @@
 </template>
 
 <script>
-// @ts-nocheck
-
-import { QForm, QInput, QEditor, QSelect, QCard, QCardSection } from "quasar";
 import { ShowErrors } from "@/forms/shared";
 import { PasteCapture } from "@/mixins/RemoveFormat";
 
@@ -170,12 +167,6 @@ export default {
   name: "AplicativoForm",
   mixins: [PasteCapture],
   components: {
-    QForm,
-    QInput,
-    QEditor,
-    QSelect,
-    QCard,
-    QCardSection,
     ShowErrors,
   },
 

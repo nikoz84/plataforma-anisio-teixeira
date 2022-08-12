@@ -14,7 +14,7 @@
               width="250"
               height="250"
               style="height: 300px"
-              placeholder-src="@/assets/img/fundo-padrao.svg"
+              :placeholder-src="`/img/fundo-padrao.svg`"
             >
             </q-img>
 
@@ -154,38 +154,13 @@
 </template>
 
 <script>
-// @ts-nocheck
-import {
-  QIcon,
-  QCard,
-  QCardSection,
-  QInput,
-  QRadio,
-  QDate,
-  QBtn,
-  date,
-  QUploader,
-  QSelect,
-  QImg,
-  QCheckbox,
-} from "quasar";
+import { date } from "quasar";
 import { FileUpload, ShowErrors } from "@/forms/shared";
 
 export default {
   name: "UserForm",
   components: {
-    QIcon,
-    QCard,
-    QCardSection,
-    QInput,
-    QRadio,
-    QDate,
-    QBtn,
     date,
-    QUploader,
-    QImg,
-    QSelect,
-    QCheckbox,
     FileUpload,
     ShowErrors,
   },

@@ -18,18 +18,12 @@
   </section>
 </template>
 <script>
-// @ts-nocheck
-
-import { QImg, QSeparator, QBtn } from "quasar";
 import { PaginatorCard } from "@/components/paginator";
 
 export default {
   name: "CardHome",
   components: {
-    QImg,
     PaginatorCard,
-    QSeparator,
-    QBtn,
   },
   data() {
     return {

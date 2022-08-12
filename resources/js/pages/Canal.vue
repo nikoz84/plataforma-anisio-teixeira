@@ -90,52 +90,15 @@
   </section>
 </template>
 <script>
-// @ts-nocheck
-import { mapState, mapActions, mapMutations } from "vuex";
+import { mapState, mapActions } from "vuex";
 import { Filters, OrderBy, CategoriasMenu } from "../components/canais";
-import {
-  QTabs,
-  QTab,
-  QRouteTab,
-  QSeparator,
-  QSpace,
-  QSelect,
-  QInput,
-  QCard,
-  QMenu,
-  QList,
-  QItem,
-  QBadge,
-  QItemSection,
-  ClosePopup,
-  QBreadcrumbs,
-  QBreadcrumbsEl,
-  QSkeleton,
-  QBanner,
-} from "quasar";
+import { ClosePopup } from "quasar";
 
 export default {
   name: "Canal",
   directives: { ClosePopup },
   components: {
-    QTabs,
-    QBanner,
-    QBadge,
-    QRouteTab,
-    QSeparator,
-    QSpace,
-    QSelect,
-    QInput,
-    QTab,
-    QCard,
-    QMenu,
-    QList,
-    QItem,
-    QItemSection,
     CategoriasMenu,
-    QBreadcrumbs,
-    QBreadcrumbsEl,
-    QSkeleton,
     Filters,
     OrderBy,
   },

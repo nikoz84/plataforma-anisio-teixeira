@@ -31,8 +31,6 @@
   </div>
 </template>
 <script>
-// @ts-nocheck
-
 import { QInput } from "quasar";
 import { ShowErrors } from "@/forms/shared";
 

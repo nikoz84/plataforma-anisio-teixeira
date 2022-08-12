@@ -2,8 +2,6 @@
   <component :is="exibirId"></component>
 </template>
 <script>
-// @ts-nocheck
-
 import { Conteudo, Aplicativo, NotFound } from "@/components/exibir";
 import { Post } from "@/components/blog";
 import { mapState, mapActions } from "vuex";

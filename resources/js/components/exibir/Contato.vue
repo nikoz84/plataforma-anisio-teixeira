@@ -1,52 +1,49 @@
 <template>
-    <article class="q-pa-sm">
-      <q-card>
-        <q-card-section>
-          <strong>Fonte: </strong>
-                {{contato.action}}
-                
-            <q-separator class="q-my-md"></q-separator>
-          <strong>Nome: </strong>
-                {{contato.name}}
-                
-            <q-separator class="q-my-md"></q-separator>
-          <strong>Assunto: </strong>
-                {{contato.subject}}
-                
-            <q-separator class="q-my-md"></q-separator>
-          <strong>Email: </strong>
-                {{contato.email}}
-                
-            <q-separator class="q-my-md"></q-separator>
-          <strong>Mensagem: </strong>
-                {{contato.message}}
-                
-            <q-separator class="q-my-md"></q-separator>
-          <strong>Url:  </strong>
-                {{contato.url}}
-                
-            <q-separator class="q-my-md"></q-separator>
-          <strong>Enviado em: </strong>
-                {{contato.created_at}}
-                
-            <q-separator class="q-my-md"></q-separator>
-        </q-card-section>
-      </q-card>
-    </article>
-</template>
-<script>// @ts-nocheck
+  <article class="q-pa-sm">
+    <q-card>
+      <q-card-section>
+        <strong>Fonte: </strong>
+        {{ contato.action }}
 
-import {QCard, QCardSection, QSeparator } from "quasar";
+        <q-separator class="q-my-md"></q-separator>
+        <strong>Nome: </strong>
+        {{ contato.name }}
+
+        <q-separator class="q-my-md"></q-separator>
+        <strong>Assunto: </strong>
+        {{ contato.subject }}
+
+        <q-separator class="q-my-md"></q-separator>
+        <strong>Email: </strong>
+        {{ contato.email }}
+
+        <q-separator class="q-my-md"></q-separator>
+        <strong>Mensagem: </strong>
+        {{ contato.message }}
+
+        <q-separator class="q-my-md"></q-separator>
+        <strong>Url: </strong>
+        {{ contato.url }}
+
+        <q-separator class="q-my-md"></q-separator>
+        <strong>Enviado em: </strong>
+        {{ contato.created_at }}
+
+        <q-separator class="q-my-md"></q-separator>
+      </q-card-section>
+    </q-card>
+  </article>
+</template>
+<script>
 export default {
   name: "Contato",
-  components:{QCard, QCardSection, QSeparator},
   data() {
     return {
-      contato: {}
+      contato: {},
     };
   },
   beforeEnter: (to, from, next) => {
-    console.log(to)
+    console.log(to);
   },
   mounted() {
     this.getContato();
@@ -57,9 +54,7 @@ export default {
       if (resp.data.success) {
         this.contato = resp.data.metadata;
       }
-    }
-  }
+    },
+  },
 };
 </script>
-
-

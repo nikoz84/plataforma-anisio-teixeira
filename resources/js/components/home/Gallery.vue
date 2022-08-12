@@ -21,11 +21,8 @@
   </section>
 </template>
 <script>
-import { QImg, QCard, QCardSection, QCardActions } from "quasar";
-
 export default {
   name: "Gallery",
-  components: { QImg, QCard, QCardSection, QCardActions },
   data() {
     return {
       images: [],

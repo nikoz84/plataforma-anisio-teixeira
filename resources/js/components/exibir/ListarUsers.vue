@@ -105,7 +105,6 @@
 </template>
 
 <script>
-// @ts-nocheck
 import { SearchForm } from "@/forms/search";
 import { mapMutations, mapState } from "vuex";
 import { SemResultados } from "@/components/paginator";

@@ -25,7 +25,6 @@ export default defineConfig({
     plugins: [
         laravel([
             'resources/js/app.js',
-            'resources/stylus/app.styl'
         ]),
         vue({
             template: {
@@ -38,17 +37,17 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            '@' : resolve(__dirname, '/resources/js'),
-            '~@': resolve(__dirname,  '/resources/stylus'),
+            '@' : resolve(__dirname, 'resources/js'),
+            '~@': resolve(__dirname,  'resources/css'),
             '~quasar': resolve(__dirname, 'node_modules/quasar'),
             '@quasar': resolve(__dirname, 'node_modules/@quasar')
         },
     },
     css: {
         preprocessorOptions: {
-            styl: {
+            //styl: {
                 //additionalData: '@import "@scss/shared.scss";'
-            }
+            //}
         }
     }
 });

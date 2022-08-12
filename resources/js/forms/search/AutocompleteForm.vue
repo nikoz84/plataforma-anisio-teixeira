@@ -1,9 +1,12 @@
 <template>
-  <div class="YL__toolbar-input-container row no-wrap justify-end bg-none" id="autocomplete-form">
+  <div
+    class="YL__toolbar-input-container row no-wrap justify-end bg-none"
+    id="autocomplete-form"
+  >
     <q-select
       dense
-      rounded 
-      standout 
+      rounded
+      standout
       clearable
       v-model="term"
       use-input
@@ -25,41 +28,62 @@
       class="col q-my-sm"
       style="with:100%;"
     >
-     <template v-slot:append>
-      <q-icon class="cursor-pointer" round flat name="search" @click="searchIcon()" color="primary" />
-      <q-btn color="primary" round flat icon="more_vert" aria-label="opções de busca">
-        <q-menu cover auto-close>
-          <q-list>
-            <q-item clickable aria-label="buscar por palavra chave" @click="recommendationPer('tag')">
-              <q-item-section >Buscar por palavra chave</q-item-section>
-            </q-item>
-            <q-item clickable aria-label="buscar por título" @click="recommendationPer('titulo')">
-              <q-item-section >Buscar por título</q-item-section>
-            </q-item>
-            <q-item clickable aria-label="acessar busca avançada" 
-              @click="$router.push({name: 'BuscaAvancada'} )">
-              <q-item-section>Acessar busca avançada</q-item-section>
-            </q-item>
-          </q-list>
-        </q-menu>
-      </q-btn>
-     </template>
-  </q-select>
+      <template v-slot:append>
+        <q-icon
+          class="cursor-pointer"
+          round
+          flat
+          name="search"
+          @click="searchIcon()"
+          color="primary"
+        />
+        <q-btn
+          color="primary"
+          round
+          flat
+          icon="more_vert"
+          aria-label="opções de busca"
+        >
+          <q-menu cover auto-close>
+            <q-list>
+              <q-item
+                clickable
+                aria-label="buscar por palavra chave"
+                @click="recommendationPer('tag')"
+              >
+                <q-item-section>Buscar por palavra chave</q-item-section>
+              </q-item>
+              <q-item
+                clickable
+                aria-label="buscar por título"
+                @click="recommendationPer('titulo')"
+              >
+                <q-item-section>Buscar por título</q-item-section>
+              </q-item>
+              <q-item
+                clickable
+                aria-label="acessar busca avançada"
+                @click="$router.push({ name: 'BuscaAvancada' })"
+              >
+                <q-item-section>Acessar busca avançada</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
+      </template>
+    </q-select>
   </div>
 </template>
 <script>
-import { QSelect } from "quasar";
-
 export default {
   name: "AutocompleteForm",
-  components: { QSelect },
   data() {
     return {
       term: null,
       label: "palavra chave",
       options: [],
       per: "tag",
-      loadingState: false
+      loadingState: false,
     };
   },
   methods: {
@@ -69,14 +93,14 @@ export default {
       this.term = val;
       update(() => {
         if (val === "" || val.length <= 3) {
-          this.label = '';
+          this.label = "";
           self.options = [];
           self.loadingState = false;
         } else {
           self.loadingState = true;
           axios
             .get(`/autocompletar?termo=${val}&por=${this.per}`)
-            .then(resp => {
+            .then((resp) => {
               if (resp.data.success) {
                 self.options = resp.data.paginator.data;
                 self.loadingState = false;
@@ -86,8 +110,8 @@ export default {
         }
       });
     },
-    searchIcon(){
-      if(this.term && this.term.length > 2){
+    searchIcon() {
+      if (this.term && this.term.length > 2) {
         this.$router.replace(
           `/recursos-educacionais/listar?busca=${this.term}`
         );
@@ -104,7 +128,7 @@ export default {
       }
     },
     labelText() {
-      return this.label ? `Buscar por ${this.label}` : '';
+      return this.label ? `Buscar por ${this.label}` : "";
     },
     add(details) {
       //console.log(details);
@@ -116,8 +140,8 @@ export default {
       } else {
         this.label = "título";
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="stylus" scoped>
@@ -148,5 +172,4 @@ export default {
       max-width: 60px
       width: 100%
       font-size: 14px !important
-
 </style>

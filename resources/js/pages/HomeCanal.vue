@@ -4,7 +4,7 @@
       <q-card-section>
         <div class="row">
           <div class="col-1 col-sm-2 q-pa-lg" thumbnail>
-            <q-img src="@/assets/img/sobre/info.svg" alt="" />
+            <q-img :src="`/img/sobre/info.svg`" alt="" />
           </div>
           <div class="col-11 col-sm-10 q-pl-md">
             <div class="text-h5">SOBRE</div>
@@ -18,7 +18,7 @@
       >
         <div class="row">
           <div class="col-1 col-sm-2 q-pa-lg" thumbnail>
-            <q-img src="@/assets/img/sobre/o-que.svg" alt="" />
+            <q-img :src="`/img/sobre/o-que.svg`" alt="" />
           </div>
           <div class="col-11 col-sm-10 q-pl-md">
             <div class="text-h5">O Quê?</div>
@@ -30,7 +30,7 @@
         </div>
         <div class="row">
           <div class="col-1 col-sm-2 q-pa-lg" thumbnail>
-            <q-img src="@/assets/img/sobre/porque.svg" alt="" />
+            <q-img :src="`/img/sobre/porque.svg`" alt="" />
           </div>
           <div class="col-11 col-sm-10 q-pl-md">
             <div class="text-h5">Por Quê?</div>
@@ -42,7 +42,7 @@
         </div>
         <div class="row">
           <div class="col-1 col-sm-2 q-pa-lg" thumbnail>
-            <q-img src="@/assets/img/sobre/como.svg" alt="" />
+            <q-img :src="`/img/sobre/como.svg`" alt="" />
           </div>
           <div class="col-11 col-sm-10 q-pl-md">
             <div class="text-h5">Como?</div>
@@ -58,33 +58,9 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import {
-  QCard,
-  QCardSection,
-  QBtn,
-  QList,
-  QAvatar,
-  QItem,
-  QItemSection,
-  QItemLabel,
-  QSeparator,
-  QImg,
-} from "quasar";
 
 export default {
   name: "HomeCanal",
-  components: {
-    QImg,
-    QCard,
-    QCardSection,
-    QBtn,
-    QList,
-    QAvatar,
-    QItem,
-    QItemSection,
-    QItemLabel,
-    QSeparator,
-  },
   computed: {
     ...mapState(["canal"]),
   },

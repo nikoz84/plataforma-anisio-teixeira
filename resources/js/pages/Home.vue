@@ -67,8 +67,6 @@
   </section>
 </template>
 <script>
-// @ts-nocheck
-
 import { mapState } from "vuex";
 import {
   CarouselHome,
@@ -76,16 +74,7 @@ import {
   CardHomeIcon,
   HomeLinksRotinas,
 } from "@/components/home";
-import {
-  ScrollFire,
-  QBanner,
-  QCard,
-  QCardSection,
-  QCardActions,
-  QBtn,
-  QAvatar,
-  QBtnGroup,
-} from "quasar";
+import { ScrollFire } from "quasar";
 
 export default {
   name: "Home",
@@ -98,14 +87,7 @@ export default {
     ScrollFire,
   },
   components: {
-    QBanner,
-    QCard,
-    QCardSection,
-    QCardActions,
-    QBtn,
-    QAvatar,
     CardHomeIcon,
-    QBtnGroup,
     CarouselHome,
     HomeLinksRotinas,
     CardHome,

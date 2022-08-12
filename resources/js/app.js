@@ -1,6 +1,5 @@
-// @ts-nocheck
+
 import "./bootstrap";
-//import "~@/app.styl"
 import Vue from "vue";
 import VueRouter from "vue-router";
 import router from "./routes/index.js";
@@ -29,7 +28,8 @@ import lang from "quasar/lang/pt-br.js";
 import iconSet from "quasar/dist/icon-set/material-icons.umd.min.js";
 //import "@quasar/extras/material-icons/material-icons.css";
 import QPlayer from '@quasar/quasar-ui-qmediaplayer';
-//import '@quasar/quasar-ui-qmediaplayer/dist/index.css';
+import '@quasar/quasar-ui-qmediaplayer/dist/index.css';
+import "~@/app.styl"
 
 Loading.setDefaults({
   spinner: QSpinnerGears,

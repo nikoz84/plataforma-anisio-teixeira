@@ -107,7 +107,6 @@
 </template>
 
 <script>
-// @ts-nocheck
 import { QMediaPlayer } from "@quasar/quasar-ui-qmediaplayer";
 export default {
   name: "CanalAT",

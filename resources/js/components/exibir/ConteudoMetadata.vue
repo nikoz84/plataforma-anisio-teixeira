@@ -121,8 +121,6 @@
 </template>
 
 <script>
-// @ts-nocheck
-
 import { mapState } from "vuex";
 import { TagList, Title } from "@/components/shared";
 export default {

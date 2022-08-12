@@ -65,32 +65,13 @@
   </article>
 </template>
 <script>
-// @ts-nocheck
-
 import { mapActions, mapState } from "vuex";
 import { RecaptchaForm, ShowErrors } from "@/forms/shared";
-import {
-  QCard,
-  QCardSection,
-  QCardActions,
-  QInput,
-  QForm,
-  QImg,
-  QSeparator,
-  QSpace,
-} from "quasar";
 
 export default {
   name: "LoginForm",
   components: {
-    QCard,
-    QCardSection,
-    QCardActions,
     ShowErrors,
-    QForm,
-    QInput,
-    QSeparator,
-    QSpace,
     RecaptchaForm,
   },
   data() {

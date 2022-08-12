@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 import AplicativoForm from './AplicativoForm.vue';
 import CanalForm from './CanalForm.vue';
 import CategoryAplicativoForm from './CategoryAplicativoForm.vue';

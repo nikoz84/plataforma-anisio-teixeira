@@ -52,8 +52,6 @@
   </article>
 </template>
 <script>
-// @ts-nocheck
-
 import { ShowErrors } from "@/forms/shared";
 
 export default {

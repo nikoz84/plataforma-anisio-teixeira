@@ -94,7 +94,6 @@
 </template>
 
 <script>
-// @ts-nocheck
 import { mapMutations, mapState } from "vuex";
 import { SemResultados } from "@/components/paginator";
 

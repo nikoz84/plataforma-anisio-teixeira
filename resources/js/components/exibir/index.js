@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 import Conteudo from './Conteudo.vue';
 import ConteudoMetadata from './ConteudoMetadata.vue';
 import ConteudoRelated from './ConteudoRelated.vue';

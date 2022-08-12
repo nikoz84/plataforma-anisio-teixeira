@@ -2,31 +2,22 @@
   <div>
     <component :is="componentId" v-if="!isLoading"></component>
     <div v-else class="q-mt-lg row justify-center">
-        <q-spinner-pie
-            style="margin-top:80px;"
-            color="primary"
-            size="5em"
-          />
+      <q-spinner-pie style="margin-top:80px;" color="primary" size="5em" />
     </div>
   </div>
 </template>
 <script>
-import { Paginator }from "../components/paginator";
+import { Paginator } from "../components/paginator";
 import { Posts } from "../components/blog";
-import { mapState, mapActions } from "vuex";
-import { QSpinnerPie } from "quasar";
+import { mapState } from "vuex";
 
 export default {
   name: "Listar",
-  components: { Paginator, Posts, QSpinnerPie },
+  components: { Paginator, Posts },
   computed: {
-    ...mapState(["componentId", "canal", "isLoading"])
+    ...mapState(["componentId", "canal", "isLoading"]),
   },
-  destroy(){
-
-  }
+  destroy() {},
 };
 </script>
-<style lang="sass" scoped>
-
-</style>
+<style lang="sass" scoped></style>

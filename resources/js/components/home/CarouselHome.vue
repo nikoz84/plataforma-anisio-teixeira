@@ -54,8 +54,6 @@
   </div>
 </template>
 <script>
-// @ts-nocheck
-
 export default {
   name: "CarouselHome",
   data() {

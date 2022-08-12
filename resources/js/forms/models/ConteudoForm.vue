@@ -603,29 +603,10 @@
 </template>
 
 <script>
-// @ts-nocheck
 import { ShowErrors } from "@/forms/shared";
 import { PasteCapture } from "@/mixins/RemoveFormat";
-import {
-  QInput,
-  QEditor,
-  QCard,
-  QCardSection,
-  QSelect,
-  QStepper,
-  QStep,
-  QStepperNavigation,
-  QDialog,
-  ClosePopup,
-  QCheckbox,
-  QSeparator,
-  QBtn,
-  QList,
-  QItem,
-  QItemSection,
-  QItemLabel,
-} from "quasar";
 import DeleteFiles from "./DeleteFiles.vue";
+import { ClosePopup } from "quasar";
 
 export default {
   name: "ConteudoForm",
@@ -635,23 +616,7 @@ export default {
   },
   components: {
     DeleteFiles,
-    QInput,
-    QItemSection,
-    QCheckbox,
-    QBtn,
-    QList,
-    QItem,
-    QItemLabel,
-    QSeparator,
-    QEditor,
-    QCard,
-    QSelect,
-    QCardSection,
-    QStepper,
-    QStep,
-    QStepperNavigation,
     ShowErrors,
-    QDialog,
   },
   data() {
     return {

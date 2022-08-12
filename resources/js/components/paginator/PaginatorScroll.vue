@@ -20,23 +20,39 @@
       <q-banner dense class="bg-secondary text-white">
         <p>Sua pesquisa não encontrou nenhum documento correspondente.</p>
         <p>Sugestões:</p>
-          <ul>
-            <li>Certifique-se de que todas as palavras estejam escritas corretamente.</li>
-            <li>Tente palavras-chave diferentes.</li>
-            <li>Tente palavras-chave mais genéricas.</li>
-            <li>Tente usar menos palavras-chave.</li>
-          </ul>
-        <p>Se você precisar de algum conteúdo específico por favor envie sua suagerencia</p>
+        <ul>
+          <li>
+            Certifique-se de que todas as palavras estejam escritas
+            corretamente.
+          </li>
+          <li>Tente palavras-chave diferentes.</li>
+          <li>Tente palavras-chave mais genéricas.</li>
+          <li>Tente usar menos palavras-chave.</li>
+        </ul>
+        <p>
+          Se você precisar de algum conteúdo específico por favor envie sua
+          suagerencia
+        </p>
         <template v-slot:action>
-          <q-btn flat color="white" to="/recursos-educacionais/listar" label="Voltar" />
-          <q-btn flat color="white" to="/usuario/contato/sugerencia" label="Sugerir Conteúdo" />
+          <q-btn
+            flat
+            color="white"
+            to="/recursos-educacionais/listar"
+            label="Voltar"
+          />
+          <q-btn
+            flat
+            color="white"
+            to="/usuario/contato/sugerencia"
+            label="Sugerir Conteúdo"
+          />
         </template>
       </q-banner>
     </q-card>
   </div>
 </template>
 <script>
-import { QInfiniteScroll, QSpinnerDots, QCard, QBanner } from "quasar";
+import { QInfiniteScroll } from "quasar";
 import { mapState, mapMutations } from "vuex";
 import PaginatorCard from "./PaginatorCard.vue";
 
@@ -44,7 +60,7 @@ export default {
   name: "PaginatorDefault",
   data() {
     return {
-      infiniteSrollData: []
+      infiniteSrollData: [],
     };
   },
   components: { QInfiniteScroll, QSpinnerDots, PaginatorCard, QCard },
@@ -52,14 +68,14 @@ export default {
     this.infiniteSrollData = this.infiniteSrollData.concat(this.paginator.data);
   },
   computed: {
-    ...mapState(["paginator"])
+    ...mapState(["paginator"]),
   },
   methods: {
     ...mapMutations(["SET_PAGINATOR"]),
     async onLoad(index, done) {
       if (this.paginator.next_page_url && this.paginator.data.length > 0) {
         let params = this.queryStringToObject(this.paginator.next_page_url);
-        
+
         let resp = await axios.get(this.paginator.next_page_url);
 
         this.SET_PAGINATOR(resp.data.paginator);
@@ -86,8 +102,8 @@ export default {
         )[0];
 
       return params;
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="sass" scoped></style>

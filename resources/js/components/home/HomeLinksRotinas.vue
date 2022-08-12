@@ -36,10 +36,8 @@
 </template>
 
 <script>
-import { QBtn, QAvatar } from "quasar";
 export default {
   name: "HomeLinksRotinas",
-  components: { QBtn, QAvatar },
   data() {
     return {
       buttons: [

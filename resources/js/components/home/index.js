@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 import CardHome from "./CardHome.vue";
 import CardHomeIcon from "./CardHomeIcon.vue";
 import CarouselHome from "./CarouselHome.vue";

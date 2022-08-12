@@ -121,8 +121,6 @@
   </q-layout>
 </template>
 <script>
-// @ts-nocheck
-
 import { mapActions, mapState } from "vuex";
 import { AutocompleteForm } from "@/forms/search";
 import LeftSideBar from "./LeftSideBar.vue";

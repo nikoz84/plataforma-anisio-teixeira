@@ -56,15 +56,13 @@
   </div>
 </template>
 <script>
-// @ts-nocheck
-
-import { QInput, QChip, QCard, QCardSection, date } from "quasar";
+import { date } from "quasar";
 import { debounce } from "lodash";
 import { ShowErrors } from "@/forms/shared";
 
 export default {
   name: "TagForm",
-  components: { QInput, QChip, QCard, QCardSection, ShowErrors },
+  components: { ShowErrors },
   data() {
     return {
       busca: "",

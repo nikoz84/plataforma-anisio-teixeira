@@ -335,25 +335,9 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import {
-  QImg,
-  QSeparator,
-  QCard,
-  QCardSection,
-  QCardActions,
-  QIcon,
-} from "quasar";
 
 export default {
   name: "sobre",
-  components: {
-    QImg,
-    QCard,
-    QCardSection,
-    QCardActions,
-    QIcon,
-    QSeparator,
-  },
   computed: {
     ...mapState(["layout", "links"]),
   },

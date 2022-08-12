@@ -127,10 +127,10 @@
 </template>
 
 <script>
-// @ts-nocheck
 import { SearchForm } from "@/forms/search";
 import { SemResultados } from "@/components/paginator";
 import { mapMutations, mapState } from "vuex";
+
 export default {
   name: "ListarConteudos",
   components: { SearchForm, SemResultados },

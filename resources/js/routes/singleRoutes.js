@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 import Default from "@/layout/Default.vue";
 import Home from "@/pages/Home.vue";
 import Ipes from "@/pages/Ipes.vue";

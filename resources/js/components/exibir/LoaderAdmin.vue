@@ -5,8 +5,6 @@
   </article>
 </template>
 <script>
-// @ts-nocheck
-
 import { mapMutations, mapState } from "vuex";
 import {
   ConteudoForm,

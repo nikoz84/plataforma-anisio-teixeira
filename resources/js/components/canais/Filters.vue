@@ -27,7 +27,6 @@
   </q-btn-dropdown>
 </template>
 <script>
-import { QTab, QMenu, QList, QItem, QItemSection, ClosePopup } from "quasar";
 import { mapState } from "vuex";
 import { QueryString } from "@/mixins/QueryString";
 

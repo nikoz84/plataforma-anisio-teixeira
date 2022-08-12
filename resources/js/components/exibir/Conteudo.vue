@@ -32,10 +32,8 @@
   </div>
 </template>
 <script>
-// @ts-nocheck
-
 import { mapState, mapActions } from "vuex";
-import { QCard, QCardSection, QSeparator, QChip, Ripple } from "quasar";
+import { Ripple } from "quasar";
 import { Player, PlayerActions } from "@/components/player";
 
 import ConteudoMetadata from "@/components/exibir/ConteudoMetadata.vue";
@@ -45,11 +43,7 @@ export default {
   name: "Conteudo",
   directives: { Ripple },
   components: {
-    QCard,
-    QCardSection,
-    QSeparator,
     Player,
-    QChip,
     ConteudoMetadata,
     PlayerActions,
     ConteudoRelated,

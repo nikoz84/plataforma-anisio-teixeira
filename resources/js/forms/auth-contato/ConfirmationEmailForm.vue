@@ -23,12 +23,11 @@
   </article>
 </template>
 <script>
-import { QCard, QCardSection, QCardActions, QBtn, QInput } from "quasar";
 import { ShowErrors } from "@/forms/shared";
 
 export default {
   name: "ConfirmationEmailForm",
-  components: { QCard, QCardSection, QCardActions, QBtn, QInput, ShowErrors },
+  components: { ShowErrors },
   data() {
     return {
       token: null,

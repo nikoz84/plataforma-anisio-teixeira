@@ -106,49 +106,15 @@
   </q-layout>
 </template>
 <script>
-// @ts-nocheck
 import { mapActions, mapState } from "vuex";
 import AdminLeftSideBar from "./AdminLeftSideBar.vue";
-import {
-  QLayout,
-  QDrawer,
-  QHeader,
-  QToolbar,
-  QSpace,
-  QSeparator,
-  QToolbarTitle,
-  QPageContainer,
-  QPageScroller,
-  QList,
-  QItemLabel,
-  QItem,
-  QItemSection,
-  QExpansionItem,
-  QMenu,
-  QSelect,
-  GoBack,
-} from "quasar";
+import { GoBack } from "quasar";
 
 export default {
   name: "Admin",
   directives: { GoBack },
   components: {
     AdminLeftSideBar,
-    QLayout,
-    QDrawer,
-    QHeader,
-    QSpace,
-    QSeparator,
-    QToolbar,
-    QToolbarTitle,
-    QPageContainer,
-    QPageScroller,
-    QList,
-    QItem,
-    QItemSection,
-    QItemLabel,
-    QExpansionItem,
-    QSelect,
   },
   data() {
     return {

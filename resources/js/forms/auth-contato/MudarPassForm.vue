@@ -62,16 +62,11 @@
   </article>
 </template>
 <script>
-// @ts-nocheck
-
 import { ShowErrors } from "@/forms/shared";
-import { QCard, QCardSection } from "quasar";
 
 export default {
   name: "MudarPassForm",
   components: {
-    QCard,
-    QCardSection,
     ShowErrors,
   },
   data() {

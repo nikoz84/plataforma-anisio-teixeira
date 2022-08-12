@@ -206,37 +206,13 @@
   </div>
 </template>
 <script>
-// @ts-nocheck
-
 import { PasteCapture } from "@/mixins/RemoveFormat";
-import {
-  QInput,
-  QEditor,
-  QCard,
-  QCardSection,
-  QBtn,
-  QToggle,
-  QColor,
-  QStepper,
-  QStep,
-  QStepperNavigation,
-} from "quasar";
 import { ShowErrors } from "@/forms/shared";
 
 export default {
   name: "CanalForm",
   mixins: [PasteCapture],
   components: {
-    QInput,
-    QEditor,
-    QCard,
-    QCardSection,
-    QBtn,
-    QToggle,
-    QColor,
-    QStepper,
-    QStep,
-    QStepperNavigation,
     ShowErrors,
   },
   data() {

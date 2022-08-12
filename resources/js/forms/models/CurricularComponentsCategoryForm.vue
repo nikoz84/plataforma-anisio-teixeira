@@ -55,19 +55,6 @@
   </div>
 </template>
 <script>
-import {
-  QInput,
-  QEditor,
-  QCard,
-  QCardSection,
-  QBtn,
-  QToggle,
-  QColor,
-  QStepper,
-  QStep,
-  QStepperNavigation,
-} from "quasar";
-
 import { ShowErrors } from "@/forms/shared";
 export default {
   name: "CurricularComponentsCategoryForm",

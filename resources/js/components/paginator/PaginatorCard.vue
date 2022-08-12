@@ -41,29 +41,10 @@
   </q-card>
 </template>
 <script>
-import {
-  QCard,
-  QCardSection,
-  QCardActions,
-  QBtn,
-  QImg,
-  QSeparator,
-  QIcon,
-} from "quasar";
-
 export default {
   name: "PaginatorCard",
   props: {
     item: Object,
-  },
-  components: {
-    QCard,
-    QCardSection,
-    QCardActions,
-    QBtn,
-    QImg,
-    QSeparator,
-    QIcon,
   },
   computed: {
     slug() {

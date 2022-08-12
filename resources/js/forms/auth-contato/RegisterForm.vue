@@ -99,27 +99,10 @@
 
 <script>
 import { RecaptchaForm, ShowErrors } from "@/forms/shared";
-import { mapActions, mapState, mapMutations } from "vuex";
-import {
-  QCard,
-  QCardSection,
-  QCardActions,
-  QInput,
-  QForm,
-  QImg,
-  QSeparator,
-} from "quasar";
 
 export default {
   name: "RegisterForm",
   components: {
-    QCard,
-    QCardSection,
-    QCardActions,
-    QInput,
-    QForm,
-    QImg,
-    QSeparator,
     ShowErrors,
     RecaptchaForm,
   },

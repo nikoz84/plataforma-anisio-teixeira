@@ -129,37 +129,15 @@
   </div>
 </template>
 <script>
-// @ts-nocheck
-
 import { SearchForm } from "@/forms/search";
 import { mapMutations, mapState } from "vuex";
-import {
-  QMarkupTable,
-  QDialog,
-  ClosePopup,
-  QPagination,
-  LocalStorage,
-  QBtn,
-  QCard,
-  QCardSection,
-  QBtnGroup,
-  QSpace,
-} from "quasar";
+import { ClosePopup } from "quasar";
 
 export default {
   name: "Table",
+  directives: { ClosePopup },
   components: {
-    QBtn,
-    QSpace,
-    QCard,
-    QBtnGroup,
-    QCardSection,
     SearchForm,
-    QMarkupTable,
-    QDialog,
-    ClosePopup,
-    QPagination,
-    LocalStorage,
   },
   data() {
     return {
@@ -237,8 +215,8 @@ export default {
     },
     userCan() {
       let can = null;
-      if (LocalStorage.has("user")) {
-        const user = JSON.parse(LocalStorage.getItem("user"));
+      if (this.$q.localStorage.has("user")) {
+        const user = JSON.parse(this.$q.localStorage.getItem("user"));
         let role = user.role;
         can = (this.isLogged && role === 1) || role === 2 || role === 3;
       }

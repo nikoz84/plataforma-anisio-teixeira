@@ -28,19 +28,12 @@
   </article>
 </template>
 <script>
-// @ts-nocheck
-
 import { mapState } from "vuex";
-import { QCard, QCardSection, QCardActions, QChip } from "quasar";
 import { Title, TagList } from "@/components/shared";
 
 export default {
   name: "Post",
   components: {
-    QCard,
-    QCardSection,
-    QCardActions,
-    QChip,
     Title,
     TagList,
   },

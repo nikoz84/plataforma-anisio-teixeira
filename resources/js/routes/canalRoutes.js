@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 import HomeCanal from "@/pages/HomeCanal.vue";
 import Listar from "@/pages/Listar.vue";
 import Exibir from "@/pages/Exibir.vue";

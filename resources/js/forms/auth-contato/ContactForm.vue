@@ -93,20 +93,12 @@
 </template>
 
 <script>
-import { ShowErrors } from "@/forms/shared";
-import { QCard, QCardSection, QImg, QForm, QInput, QSeparator } from "quasar";
-import { RecaptchaForm } from "@/forms/shared";
+import { RecaptchaForm, ShowErrors } from "@/forms/shared";
 
 export default {
   name: "ContactForm",
   components: {
     ShowErrors,
-    QCard,
-    QCardSection,
-    QForm,
-    QInput,
-    QImg,
-    QSeparator,
     RecaptchaForm,
   },
   data() {

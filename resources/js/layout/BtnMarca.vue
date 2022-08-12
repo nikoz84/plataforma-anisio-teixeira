@@ -4,7 +4,7 @@
       <img
         alt="marca do site"
         style="width: auto;height: 44px;"
-        src="@/assets/img/sprite/logo-pat-2022-off.png"
+        :src="`/img/sprite/logo-pat-2022-off.png`"
       />
     </div>
   </div>

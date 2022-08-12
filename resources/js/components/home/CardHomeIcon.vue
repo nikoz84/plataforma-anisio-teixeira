@@ -24,10 +24,8 @@
   </section>
 </template>
 <script>
-import { QBtn, QAvatar } from "quasar";
 export default {
   name: "CardHomeIcon",
-  components: { QBtn, QAvatar },
   props: ["title", "items", "bgSessao"],
   data() {
     return {

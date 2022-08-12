@@ -81,7 +81,6 @@
 </template>
 
 <script>
-// @ts-nocheck
 import { mapMutations, mapState } from "vuex";
 import PlayListModalForm from "./PlayListModalForm.vue";
 import { Player } from "@/components/player";

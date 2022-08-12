@@ -46,31 +46,13 @@
 </template>
 
 <script>
-// @ts-nocheck
-
 import { mapState } from "vuex";
 import { QMediaPlayer } from "@quasar/quasar-ui-qmediaplayer";
-import {
-  QCard,
-  QCardActions,
-  QCardSection,
-  QBtnGroup,
-  QBtn,
-  QImg,
-  QSpace,
-} from "quasar";
 
 export default {
   name: "Player",
   components: {
     QMediaPlayer,
-    QCard,
-    QCardActions,
-    QCardSection,
-    QBtn,
-    QBtnGroup,
-    QImg,
-    QSpace,
   },
   props: ["arquivos", "tipo"],
   data() {

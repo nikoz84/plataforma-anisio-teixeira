@@ -72,8 +72,6 @@
 </template>
 
 <script>
-// @ts-nocheck
-
 import { mapState } from "vuex";
 import { ThumbsMenu } from "@/components/shared";
 
