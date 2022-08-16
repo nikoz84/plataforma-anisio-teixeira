@@ -437,8 +437,8 @@
           bottom-slots
           :error="
             errors &&
-              errors.imagem_associada &&
-              errors.imagem_associada.length > 0
+            errors.imagem_associada &&
+            errors.imagem_associada.length > 0
           "
         >
           <template v-slot:error>
@@ -509,8 +509,8 @@
           bottom-slots
           :error="
             errors &&
-              errors.guias_pedagogicos &&
-              errors.guias_pedagogicos.length > 0
+            errors.guias_pedagogicos &&
+            errors.guias_pedagogicos.length > 0
           "
         >
           <template v-slot:error>
@@ -527,9 +527,9 @@
           bottom-slots
           :error="
             errors &&
-              errors.options &&
-              errors.options.site &&
-              errors.options.site.length > 0
+            errors.options &&
+            errors.options.site &&
+            errors.options.site.length > 0
           "
         >
           <template v-slot:error>
@@ -543,6 +543,9 @@
             v-model="conteudo.is_approved"
             label="Aprovar conteúdo"
             color="pink"
+            true-value="true"
+            false-value="false"
+            :toggle-indeterminate="false"
           />
           <div
             v-if="errors && errors.is_approved && errors.is_approved.length > 0"
@@ -555,6 +558,9 @@
             v-model="conteudo.is_featured"
             label="Marcar como destaque"
             color="pink"
+            true-value="true"
+            false-value="false"
+            :toggle-indeterminate="false"
           />
           <div
             v-if="errors && errors.is_featured && errors.is_featured.length > 0"
@@ -565,7 +571,13 @@
         <!-- TERMOS DE USO -->
         <div class="q-my-lg">
           Li e concordo com os <a href="#terms">termos e condições de uso</a> :
-          <q-checkbox v-model="terms" color="pink" />
+          <q-checkbox
+            v-model="terms"
+            color="pink"
+            true-value="true"
+            false-value="false"
+            :toggle-indeterminate="false"
+          />
           <div v-if="errors && errors.terms && errors.terms.length > 0">
             <ShowErrors :errors="errors.terms"></ShowErrors>
           </div>
@@ -646,7 +658,7 @@ export default {
         is_site: false,
       },
       canais: [],
-      terms: false,
+      terms: null,
       tipos: [],
       componentesCurriculares: [],
       niveis: [],
@@ -675,9 +687,6 @@ export default {
   mounted() {
     this.getData();
   },
-  computed: {
-    //
-  },
   methods: {
     onImageFileChange(e) {
       var files = e.target.files || e.dataTransfer.files;
@@ -697,7 +706,36 @@ export default {
     async save() {
       this.loading = true;
       const form = new FormData();
+      form.append("title", this.conteudo.title);
+      form.append("tipo_id", this.conteudo.tipo_id);
+      form.append(
+        "category_id",
+        this.conteudo.category_id ? this.conteudo.category_id : null
+      );
+      form.append("canal_id", this.conteudo.canal_id);
+      form.append("license_id", this.conteudo.license_id);
+      form.append("title", this.conteudo.title);
+      form.append("description", this.conteudo.description);
+      form.append("source", this.conteudo.source);
+      form.append("authors", this.conteudo.authors);
+      this.componentesCurriculares.map((item) => {
+        form.append("componentes[]", item);
+      });
+      this.conteudo.tags.map((item) => {
+        form.append("tags[]", item.id);
+      });
+      console.log(this.terms);
+      form.append("terms", this.terms);
+      console.log(this.conteudo.is_featured);
+      form.append("is_featured", this.conteudo.is_featured);
+      form.append("is_approved", this.conteudo.is_approved);
+      form.append("is_site", this.conteudo.options.site == "" ? 0 : 1);
+      form.append(
+        "options",
+        JSON.stringify({ site: this.conteudo.options.site })
+      );
 
+      /*
       form.append(
         "conteudo",
         JSON.stringify({
@@ -723,7 +761,7 @@ export default {
           },
         })
       );
-
+      */
       if (this.imagem_associada) {
         form.append("imagem_associada", this.imagem_associada);
       }

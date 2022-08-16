@@ -35,7 +35,7 @@
         active-class="active-link-pat"
       >
         <q-item-section avatar>
-          <q-icon size="50px" name="home" />
+          <q-icon size="20px" name="home" />
         </q-item-section>
         <q-item-section>
           <q-item-label>Início</q-item-label>

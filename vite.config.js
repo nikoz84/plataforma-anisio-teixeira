@@ -12,7 +12,6 @@ export default defineConfig({
             'vue-router',
             'vuex',
             'axios',
-            'quasar'
         ]
     },
     build: {

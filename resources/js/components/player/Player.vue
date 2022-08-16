@@ -106,4 +106,4 @@ export default {
   },
 };
 </script>
-<style lang="stylus" scoped></style>
+<style src="@quasar/quasar-ui-qmediaplayer/dist/index.css"></style>

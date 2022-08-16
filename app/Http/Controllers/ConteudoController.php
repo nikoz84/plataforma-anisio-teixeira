@@ -146,8 +146,8 @@ class ConteudoController extends ApiController
     {
         $conteudo = Conteudo::find($id);
         $this->authorize('update', $conteudo);
-
-        $conteudo->update($request->validated());
+        
+        $conteudo->fill($request->validated());
 
         if (! $conteudo->save()) {
             return $this->errorResponse([], 'Não foi possível atualizar o conteúdo', 422);

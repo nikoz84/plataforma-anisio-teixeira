@@ -8,7 +8,8 @@ use App\Rules\ValidExtensions;
 use App\Traits\RequestValidator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-
+use App\Rules\ValidBoolean;
+use App\Rules\ValidFeatured;
 class ConteudoFormRequest extends FormRequest
 {
     use RequestValidator;
@@ -37,15 +38,16 @@ class ConteudoFormRequest extends FormRequest
      * @param void
      * @return array
      */
+    /*
     public function validated($key = null, $default = null)
     {
         if (request()->method() == 'POST') {
             $this->whenCreate();
         }
-
+            dd($this->toArray());
         return $this->toArray();
     }
-
+    */
     /**
      * Método de Nome Quando criar
      *
@@ -69,9 +71,7 @@ class ConteudoFormRequest extends FormRequest
         $data->put('user_id', Auth::user()->id);
         $data->put('qt_downloads', Conteudo::INIT_COUNT);
         $data->put('qt_access', Conteudo::INIT_COUNT);
-        //dd($data);
-        $data->forget('conteudo');
-
+        
         $this->merge($data->toArray());
     }
 
@@ -93,11 +93,11 @@ class ConteudoFormRequest extends FormRequest
             'options.site' => 'nullable|active_url',
             'tags' => 'required|array|min:3|max:50',
             'componentes' => 'required|array|min:1',
-            'authors' => 'required',
-            'source' => 'required',
-            'terms' => 'required|boolean',
-            'is_featured' => 'sometimes|boolean',
-            'is_approved' => 'required|boolean',
+            'authors' => ['required'],
+            'source' => ['required'],
+            'terms' => [ 'required', new ValidBoolean()],
+            'is_featured' => ['sometimes', new ValidFeatured() ],
+            'is_approved' => ['required', new ValidBoolean()],
             'is_site' => 'sometimes|boolean',
             'download' => ['sometimes', 'file', new ValidExtensions($this->get('tipo_id'))],
             'guias_pedagogicos' => ["sometimes','file','mimes:pdf,doc,docx,epub','max:120000"],
@@ -118,5 +118,15 @@ class ConteudoFormRequest extends FormRequest
             'options.site.active_url' => 'O campo URL do Site não é uma URL válida',
             'componentes.required' => 'Selecione ao menos 1 componente curricular para este conteúdo',
         ];
+    }
+
+
+    protected function prepareForValidation()
+    {
+        if (request()->method() == 'POST') {
+            $this->whenCreate();
+        }
+
+        //dd($this->toArray());
     }
 }

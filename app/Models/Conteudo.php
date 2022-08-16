@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Helpers\TransformDate;
 use App\Traits\FileSystemLogic;
 use App\Traits\UserCan;
-use App\Traits\ShortTitle;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +15,7 @@ use Illuminate\Support\Str;
 
 class Conteudo extends Model
 {
-    use FileSystemLogic, SoftDeletes, UserCan, ShortTitle;
+    use FileSystemLogic, SoftDeletes, UserCan;
 
     public const IS_SITE = 'false';
 
@@ -26,7 +25,6 @@ class Conteudo extends Model
 
     public static $TYPE_SEARCH = 'simple';
 
-    /**Tabela com campos definidos */
     protected $fillable = [
         'approving_user_id',
         'user_id',
@@ -44,21 +42,13 @@ class Conteudo extends Model
         'options',
     ];
 
-    /**
-     * Tabela com campos definidos
-     */
     protected $appends = ['image', 'excerpt', 'short_title', 'url_exibir', 'user_can', 'arquivos', 'formated_date', 'title_slug', 'download', 'guiaPedagogico'];
 
-    /**
-     * Tabela com campos definidos
-     */
-    protected $casts = ['options' => 'array'];
-
-    /**
-     * Tabela com campos definidos
-     */
     protected $hidden = ['ts_documento'];
 
+    protected $casts = [
+        'options' => 'array'
+    ];
     /**
      * Seleciona o canal do conteúdo sem os campos adicionais
      *
@@ -155,6 +145,16 @@ class Conteudo extends Model
         return $this->hasOne(License::class, 'id', 'license_id');
     }
 
+    /*
+    protected function options(): Attribute
+    {
+        //dd($this['options']);
+        return Attribute::make(
+            get: fn ($value) => json_decode($value, false),
+            set: fn ($value) => json_encode($value),
+        );
+    }
+    *
     /**
      * Seta o atributo aprovado (isApproved)
      *
@@ -163,18 +163,15 @@ class Conteudo extends Model
      */
     public function isApproved(): Attribute
     {
-        $set = function () {
-            $user_can = $this->userCan();
-            $is_approved = false;
-            if ($user_can['create'] || $user_can['update']) {
-                $is_approved = true;
-            }
-
-            return $is_approved;
-        };
-
+        $user_can = collect($this->getUserCanAttribute());
+        $is_approved = false;
+        
+        if (!$user_can->empty() && $user_can->get('create') || $user_can->get('update')) {
+            $is_approved = true;
+        }
+        
         return new Attribute(
-            set: $set
+            set: fn() => $is_approved
         );
     }
 

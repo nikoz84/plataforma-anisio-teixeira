@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class ValidBoolean implements Rule
+class ValidFeatured implements Rule
 {
     /**
      * Create a new rule instance.
@@ -25,7 +25,7 @@ class ValidBoolean implements Rule
     {
         switch($value) {
             case "null":
-                $value = NULL ;
+                return TRUE;
                 break;
             case "false":
                 $value = FALSE;

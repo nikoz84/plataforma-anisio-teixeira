@@ -31,13 +31,13 @@
     <meta name="twitter:image" content="'image' , $image ? $image :">
 
     <link rel="canonical" href="@yield('canonical', $canonical)">
-    <link rel="manifest" href="/manifest.json" preload>
+    <link rel="manifest" href="/build/manifest.json" preload>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <meta name="msapplication-TileColor" content="#08275e">
     <meta name="theme-color" content="#08275e">
     <!--  rel="preload" as="style" onload="this.rel='stylesheet'" async -->
     {{-- <link rel="stylesheet" href="{{ asset('/css/app.css') }}" async media="print" onload="this.media='all'"> --}}
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"-->
     <!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" crossorigin="anonymous" async-->
     @vite(['resources/js/app.js'])
 </head>
