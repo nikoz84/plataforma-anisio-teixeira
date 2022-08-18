@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use App\Models\CurricularComponent;
 use App\Models\Canal;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class CurricularComponentCategory extends Model
 {
@@ -33,9 +34,17 @@ class CurricularComponentCategory extends Model
      * obtem string url de busca de eatributos da cateroria do componente
      * @return string
      */
-    public function getSearchUrlAttribute()
-    {
-        $canal = Canal::find(6);
-        return "/{$canal->slug}/listar?cc_category_id={$this['id']}";
-    }
+
+     public function searchUrl(): Attribute{
+         $get = function(){
+             $canal = Canal::find(6);
+             if($canal){
+                 return "/{$canal->slug}/listar?cc_category_id={$this['id']}";
+             }
+             return null;
+         };
+         return new Attribute(
+             get: $get
+         );
+     }
 }

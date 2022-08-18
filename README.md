@@ -2,7 +2,7 @@
 
 O Ambiente Educacional Web – AEW é um projeto de aprendizagem (Baseado em Laravel 5.8) voltado ao compartilhamento de conteúdos digitais através de licenças livres, disponibilizado na internet no endereço (http://pat.educacao.ba.gov.br) para acesso e utilização de todos.
 
-Você poderá criar canais dinámicos, conteúdos digitais, aplicativos educacionais, sites temáticos.
+Você poderá criar canais dinámicos, conteúdos digitais, aplicativos educacionais e sites temáticos.
 
 ## SOFTWARE LIVRE
 
@@ -12,17 +12,18 @@ Estamos liberando o código da aplicação para cumprir com o propósito para o 
 
 Criamos uma API RESTFUL que se comunica com frontend feito em VUE.js permitindo desacoplar as camadas de frontend do backend:
 
-- Backend - PHP 7.1+
-- Backend - Laravel Framework 5.8+
-- Backend - Servidor Apache 2.2
+- Backend - PHP 8.0+
+- Backend - Laravel Framework 9.*
+- Backend - Servidor Apache 2.2+
 - Backend - Banco de dados Postgres 9.5+
 - Frontend - VUE JS 2.6, Quasar Framework 1.9+
 
 ## COMO INSTALAR
 
-Faça uma copia do arquivo .env.example, e renomee para .env, em este arquivo você vai adicionar as seguintes configurações:
+Faça uma copia do arquivo .env.example, e renomeie para .env. 
+Neste arquivo você vai adicionar as seguintes configurações:
 
-- Banco de dados
+- Criar banco de dados
 - APP_KEY: variavel global de verificação da aplicação em base 64: `php artisan key:generate;`
 - JWT_SECRET: chave para a autenticação com Json Web Token: `php artisan jwt:secret;`
 - Também será adicionado um link simbólico da pasta public na pasta storage/app/public: `php artisan storage:link`
@@ -32,33 +33,30 @@ Faça uma copia do arquivo .env.example, e renomee para .env, em este arquivo vo
 `sudo chgrp -R www-data storage bootstrap/cache`
 `sudo chmod -R ug+rwx storage bootstrap/cache`
 
-Instalar as dependências do laravel com composer:
+### Instalar as dependências do laravel com composer:
 
 `composer install`
 
-Se tiver problemas com a instalação das dependencias verifique as extensões de PHP
+### Se tiver problemas com a instalação das dependencias verifique as extensões de PHP
 
-`sudo apt install php7.*-tokenizer php7.*-dom php7.*-mbstring`
+`sudo apt install php8.*-tokenizer php8.*-dom php8.*-mbstring php8.*-pgsql`
 
-Instalar as dependências do Vuejs com npm, lembre ter instalado o NODEJS:
+### Instalar as dependências do Vuejs com npm, lembre ter instalado o NODEJS:
 
 `npm install`
 
-
-### crlf
-
-> Nota: Se trabalhar com windows ou linux o git pode ter uma incosistência para converter como terminam as linhas de um arquivo de texto, para evitar esse comportamento adicione nas configurações gerais do git `$ git config core.autocrlf true`
-
-Crie o esquema do banco de dados no Postgresql com o comando:
+### Crie o esquema do banco de dados no Postgresql com o comando:
 
 `$ php arstisan migrate`
 
-Agora podemos arrancar o servidor embutido do framework:
+### Agora pode levantar o servidor embutido do framework:
 
 `$ php artisan serve`
+<br>
+### Links úteis
+<hr>
 
-
-[novas funcionalidades](https://github.com/nikoz84/plataforma-anisio-teixeira/blob/master/Versão.md)
-[Como criar tags](https://github.com/nikoz84/plataforma-anisio-teixeira/blob/master/TAGS.md)
-
+[Novas funcionalidades](https://github.com/nikoz84/plataforma-anisio-teixeira/blob/master/Versão.md) <br>
+[Como criar tags](https://github.com/nikoz84/plataforma-anisio-teixeira/blob/master/TAGS.md) <br>
+[Git Flow](https://blog.betrybe.com/git/git-flow/)
 

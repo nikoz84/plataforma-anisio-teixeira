@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use App\Models\Conteudo;
 use App\Models\Aplicativo;
 use App\Traits\UserCan;
+
 
 class Tag extends Model
 {
@@ -35,8 +37,11 @@ class Tag extends Model
      * Seta o atributo name em caixa baixa
      * @param $name cadena de caracteres
      */
-    public function setNameAttribute($value)
-    {
-        $this->attributes['name'] = strtolower($value);
-    }
+    
+      public function name(): Attribute
+      {
+          return new Attribute(
+            set: fn ($value) => strtolower($value)
+          );
+      }
 }

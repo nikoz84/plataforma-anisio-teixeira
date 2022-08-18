@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\UserCan;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
@@ -83,18 +84,27 @@ class Category extends Model
      * @return void
      * 
      */
-    public function getImageAttribute()
+    public function image(): Attribute
     {
-        //return $urlPath;
-        $filename = basename($this->refenciaImagemAssociada());
-        if ($this->canal_id == 2) {
-            return Storage::disk('conteudos-digitais')->url("imagem-associada/sinopse/" . $filename);
-        }
-        if ($filename) {
+        $get = function(){
+              $filename = basename($this->refenciaImagemAssociada());
+              if ($this->canal_id == 2) {
+             return Storage::disk('conteudos-digitais')->url("imagem-associada/sinopse/" . $filename);
+                
+            if ($filename) {
             return Storage::disk("conteudos-digitais")->url("imagem-associada/categorias/" . $filename);
-        }
+           }
+            return null;
+          }
+        };
 
-        return null;
+        return new Attribute(
+            get:$get
+        );
+        //return $urlPath;
+      
+     
+       
     }
 
     /**

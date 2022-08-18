@@ -180,32 +180,43 @@ class Conteudo extends Model
      * Adiciona novo atributo ao objeto que limita o tamanho da descrição
      * @return string cadeia de caracteres
      */
-    public function getExcerptAttribute()
+    public function excerpt():Attribute
     {
-        return strip_tags(Str::words($this->description, 30));
+        return new Attribute (
+          get: fn() => strip_tags(Str::words($this->description, 30))
+        );
     }
+    
     /**
      * Adiciona novo atributo ao objeto que limita o tamanho do título
      * @return string cadeia de caracteres
      */
-    public function getShortTitleAttribute()
-    {
-        return Str::words($this->title, 8);
+    public function shortTitle(): Attribute
+    {  
+        return new Attribute(
+            get: fn() => Str::words($this->title, 8)
+        );
+
+        
     }
     /**
      * Converte o título para slug ou url amigável
      */
-    public function getTitleSlugAttribute()
+    public function titleSlug(): Attribute
     {
-        return Str::slug(Str::words($this->title, 30), '-');
+        return new Attribute(
+            get: fn () => Str::slug(Str::words($this->title, 30), '-')
+        );
     }
     /**
      * Seleciona e tranforma created-at ao formato (06 setembro de 2019 ás 17:37)
      * @return void
      */
-    public function getFormatedDateAttribute()
+    public function formatedDate() : Attribute
     {
-        return TransformDate::format($this['created_at']);
+        return new Attribute(
+            get: fn () => TransformDate::format($this['created_at'])
+        );
     }
     /**
      * Seleciona os Arquivos de download, visualizaçao e guias pedagógicas
@@ -218,6 +229,7 @@ class Conteudo extends Model
             'visualizacao'       => $this->getMetaDados('visualizacao', $this['id']),
             'guias-pedagogicos'  => $this->getMetaDados('guias-pedagogicos', $this['id']),
         ];
+                
     }
 
     /**
@@ -260,10 +272,20 @@ class Conteudo extends Model
      * Adiciona atributo url_exibir
      * @return string
      */
-    public function getUrlExibirAttribute()
-    {
-        $slug = $this->canal()->pluck('slug')->first();
-        return "/{$slug}/conteudo/exibir/" . $this['id'];
+    public function urlExibir(): Attribute
+    {  
+        $get = function(){
+             $slug = $this->canal()->pluck('slug')->first();
+             if($slug){
+                  return "/{$slug}/conteudo/exibir/" . $this['id'];
+             }
+             return null;
+        };
+
+        return new Attribute(
+            get: $get
+        );
+      
     }
     /**
      * Filtro para conteúdos Aprovados
