@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class CreateConteudosTable extends Migration
 {
@@ -15,7 +15,6 @@ class CreateConteudosTable extends Migration
     public function up()
     {
         Schema::create('conteudos', function (Blueprint $table) {
-
             $table->bigIncrements('id')->comment('Identificador único e chave primaria do conteúdo');
             $table->bigInteger('tipo_id')->unsigned()->comment('Chave foranea do tipo de conteúdo');
             $table->bigInteger('canal_id')->unsigned()->nullable()->comment('Chave foranea do canal');
@@ -56,7 +55,7 @@ class CreateConteudosTable extends Migration
         // cria extensão sem acentos necesaria para full text search
         DB::statement('CREATE EXTENSION IF NOT EXISTS unaccent');
         // coluna para full text search
-        DB::statement("ALTER TABLE conteudos ADD COLUMN ts_documento TSVECTOR;");
+        DB::statement('ALTER TABLE conteudos ADD COLUMN ts_documento TSVECTOR;');
         // indices para full text search e documento jsonb
         DB::statement('CREATE INDEX conteudos_ts_documento_index ON conteudos USING GIN (ts_documento);');
         DB::statement('CREATE INDEX conteudos_options_index ON conteudos USING GIN (options jsonb_path_ops);');

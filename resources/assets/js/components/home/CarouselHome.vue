@@ -68,7 +68,6 @@
   </div>
 </template>
 <script>
-// @ts-nocheck
 export default {
   name: "CarouselHome",
   data() {
@@ -135,4 +134,5 @@ export default {
 // .fade-enter, .fade-leave-to {
 //   opacity: 0;
 // }
+
 </style>

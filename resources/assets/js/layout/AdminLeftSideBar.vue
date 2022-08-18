@@ -7,60 +7,59 @@
     </q-item-label>
     <ReportsMenu></ReportsMenu>
     <q-item
-        to="/admin/resumo/listar"
-        aria-label="Resumo da pat"
-        title="Resumo da pat"
-        clickable
-        tabindex="0"
-        active-class="active-link-pat"
-        exact
-      >
-        <q-item-section>
-          <q-item-label>Resumo</q-item-label>
-        </q-item-section>
+      to="/admin/resumo/listar"
+      aria-label="Resumo da pat"
+      title="Resumo da pat"
+      clickable
+      tabindex="0"
+      active-class="active-link-pat"
+    >
+      <q-item-section>
+        <q-item-label>Resumo</q-item-label>
+      </q-item-section>
     </q-item>
 
-    
-      <q-item
-        v-for="(link, i) in linksAdmin" 
-        :key="`admin-${i}`"
-        
-        :to="`/admin/${link.slug}/listar`"
-        
-        :aria-label="`IR: ${link.label}`"
-        :title="`IR: ${link.label}`"
-        clickable
-        tabindex="0"
-        active-class="active-link-pat"
-        exact
-      >
-        <q-item-section>
-          <q-item-label>{{ link.label }}</q-item-label>
-        </q-item-section>
-      </q-item>
-      
-    
-    
+    <q-item
+      v-for="(link, i) in linksAdmin"
+      :key="`admin-${i}`"
+      :to="`/admin/${link.slug}/listar`"
+      :aria-label="`IR: ${link.label}`"
+      :title="`IR: ${link.label}`"
+      clickable
+      tabindex="0"
+      active-class="active-link-pat"
+    >
+      <q-item-section>
+        <q-item-label>{{ link.label }}</q-item-label>
+      </q-item-section>
+    </q-item>
   </q-list>
 </template>
-<script>// @ts-nocheck
+<script>
+// @ts-nocheck
 
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions } from "vuex";
 import { ReportsMenu } from "@components/shared";
 import { QSeparator, QList, QItem, QItemSection, QItemLabel } from "quasar";
 
 export default {
   name: "AdminLeftSideBar",
-  components: { ReportsMenu, QSeparator, QList, QItem, QItemSection, QItemLabel },
+  components: {
+    ReportsMenu,
+    QSeparator,
+    QList,
+    QItem,
+    QItemSection,
+    QItemLabel,
+  },
   computed: {
-    ...mapState(['linksAdmin', 'isLogged'])
+    ...mapState(["linksAdmin", "isLogged"]),
   },
   mounted() {
     this.getLinksAdmin();
   },
   methods: {
-    ...mapActions(['getLinksAdmin']),
-    
-  }
+    ...mapActions(["getLinksAdmin"]),
+  },
 };
 </script>

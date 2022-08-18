@@ -13,8 +13,8 @@ return [
     | and private_key is the Secret key.
     |
     */
-    'PUBLIC_KEY'     => env('GOOGLE_RECAPTCHA_PUBLIC_KEY', ''),
-    'PRIVATE_KEY'    => env('GOOGLE_RECAPTCHA_SECRET_KEY', ''),
+    'PUBLIC_KEY' => env('GOOGLE_RECAPTCHA_PUBLIC_KEY', ''),
+    'PRIVATE_KEY' => env('GOOGLE_RECAPTCHA_SECRET_KEY', ''),
 
     /*
     |--------------------------------------------------------------------------
@@ -24,7 +24,7 @@ return [
     | Set a template to use if you don't want to use the standard one.
     |
     */
-    'template'    => '',
+    'template' => '',
 
     /*
     |--------------------------------------------------------------------------
@@ -35,7 +35,7 @@ return [
     | Only applies to v2.
     |
     */
-    'driver'      => 'curl',
+    'driver' => 'curl',
 
     /*
     |--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ return [
     | Various options for the driver
     |
     */
-    'options'     => [
+    'options' => [
 
         'curl_timeout' => 1,
         'curl_verify' => true,
@@ -61,6 +61,6 @@ return [
     |
     */
 
-    'version'     => 2,
+    'version' => 2,
 
 ];

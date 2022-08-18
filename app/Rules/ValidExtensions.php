@@ -2,13 +2,13 @@
 
 namespace App\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
 use App\Models\Tipo;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\Validation\Rule;
 
 class ValidExtensions implements Rule
 {
     private $id;
+
     /**
      * Create a new rule instance.
      *
@@ -21,25 +21,26 @@ class ValidExtensions implements Rule
 
     /**
      * Determine if the validation rule passes.
+     *
      * @param  string  $attribute
      * @param  mixed  $value
      * @return bool
      */
     public function passes($attribute, $value)
     {
-        if (!$this->id) {
+        if (! $this->id) {
             return false;
         }
 
         $tipo = Tipo::where('id', $this->id)->get()->first();
 
-        if (!$tipo) {
+        if (! $tipo) {
             return false;
         }
 
         $exists = in_array(
-            $value->getClientOriginalExtension(), 
-            $tipo->options['formatos'] 
+            $value->getClientOriginalExtension(),
+            $tipo->options['formatos']
         );
 
         return $exists;

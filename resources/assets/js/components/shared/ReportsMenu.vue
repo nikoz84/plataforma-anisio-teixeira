@@ -40,7 +40,7 @@
         aria-label="" 
         active-class="active-link-pat" 
         @click="maisVisualizadosRelatorio()"
-        exact>
+        >
         <q-item-section>
           <q-item-label>Conteúdos Mais Visualizados</q-item-label>
         </q-item-section>

@@ -2,31 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Traits\ApiResponser;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Request;
 use App\Services\SearchEngineOptimization;
-use Jaybizzle\CrawlerDetect\CrawlerDetect;
+use App\Traits\ApiResponser;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Http;
-
+use Illuminate\Support\Facades\Request;
+use Jaybizzle\CrawlerDetect\CrawlerDetect;
 
 class ApiController extends Controller
 {
-
+    /**
+     * Trait de respostas com métodos comuns para todos os controladores filhos
+     */
+    use ApiResponser;
     private $seo;
+
     private $crawlerDetect;
+
     private $request;
+
     public function __construct(Request $request, CrawlerDetect $crawlerDetect)
     {
         $this->seo = new SearchEngineOptimization($request);
         $this->crawlerDetect = $crawlerDetect;
         $this->request = $request;
     }
-    /**
-     * Trait de respostas com métodos comuns para todos os controladores filhos
-     */
-    use ApiResponser;
+
     /**
      * Todo o javascript vai se renderizar  nessa view
      *
@@ -48,15 +49,16 @@ class ApiController extends Controller
 
     /**
      * retorna mensagens de validações padrão para os formulários em geral
+     *
      * @return array conjunto de mensagens para as validações dos formulários em geral
      */
     protected function messagesRules()
     {
         return [
             'required' => 'O campo :attribute é obrigatório',
-            'min' => "O número mínimo de caracteres para este campo é :min",
-            'max' => "O número máximo de caracteres para este campo é de :max",
-            'mimes' => "Formato do arquivo é incorreto"
+            'min' => 'O número mínimo de caracteres para este campo é :min',
+            'max' => 'O número máximo de caracteres para este campo é de :max',
+            'mimes' => 'Formato do arquivo é incorreto',
         ];
     }
 

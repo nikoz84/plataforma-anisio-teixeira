@@ -2,18 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\ApiController;
-use Illuminate\Http\Request;
 use App\Models\Document;
-use Arcanedev\LogViewer\Contracts\Utilities\Filesystem;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class DocumentController extends ApiController
 {
-
-
     public function __construct()
     {
         $this->middleware('auth:api')->except([
@@ -22,9 +18,10 @@ class DocumentController extends ApiController
             'getRotinaDeEstudos',
             'rotinasPerNivel',
             'getCanalAT',
-            'getPodcastAT'
+            'getPodcastAT',
         ]);
     }
+
     /**
      * Seleciona e lista a faculdade por id.
      *
@@ -32,34 +29,36 @@ class DocumentController extends ApiController
      */
     public function getFaculdadesDaBahia()
     {
-        $url = "AKfycbyewWsCp5HdbrkQwRSMyeRAsQiRc8PtjeyOrS07drrzxdpjb7HA/exec";
+        $url = 'AKfycbyewWsCp5HdbrkQwRSMyeRAsQiRc8PtjeyOrS07drrzxdpjb7HA/exec';
 
-        $doc = new Document();
+        $doc = new Document;
         $this->createFaculdadesDaBahia($doc->formatarJsonFaculdadesDaBahia(
             $doc->getGoogleSpreadsheetsData($url)
         ));
     }
+
     /**
      * Cria Aplicativo no Banco de Dados.
      *
-     * @param array $dados
+     * @param  array  $dados
      * @return void
      */
     public function createFaculdadesDaBahia($dados)
     {
         foreach ($dados as $dado) {
-            $doc = new Document();
+            $doc = new Document;
             $doc->name = $dado['name'];
 
             $doc->document = [
                 'faculdade' => $dado['faculdade'],
                 'slug' => $dado['slug'],
-                'actions' => $dado['actions']
+                'actions' => $dado['actions'],
             ];
 
             $doc->save();
         }
     }
+
     /**
      * Seleciona as Rotinas de Estudos e Lista.
      *
@@ -70,10 +69,10 @@ class DocumentController extends ApiController
         $semanas = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
         foreach ($semanas as $semana) {
-            $semana = 'semana-' . $semana;
+            $semana = 'semana-'.$semana;
             $url = "AKfycbzwTW7RUANw0j8CjCIxnWLCQ3QHjiTbCbYapV5frwXyn8UmBdh2/exec?semana={$semana}";
 
-            $documento = new Document();
+            $documento = new Document;
 
             $data = $documento->formatarJsonRotinasDeEstudo(
                 $documento->getGoogleSpreadsheetsData($url)
@@ -81,27 +80,29 @@ class DocumentController extends ApiController
             $this->createRotinasDeEstudo($semana, $data);
         }
     }
+
     /**
      * Salva Rotinas de Estudo no Banco de Dados
      *
-     * @param string $semana Nome do documento (ex: semana-1, semana-2)
-     * @param array $data Conjunto de dados
+     * @param  string  $semana Nome do documento (ex: semana-1, semana-2)
+     * @param  array  $data Conjunto de dados
      * @return void
      */
     public function createRotinasDeEstudo($semana, $data)
     {
-        $doc = new Document();
+        $doc = new Document;
         $doc->name = $semana;
         $doc->document = $data['rotinas'];
         $doc->save();
     }
+
     /**
      * Seleciona o documento por nome.
+     *
      * @param \Illuminate\Http\Request
-     * @param $request string 
+     * @param $request string
      * @return string json
      */
-
     public function getDocumentByName(Request $request)
     {
         $query = Document::query();
@@ -121,9 +122,10 @@ class DocumentController extends ApiController
 
         return $this->showAsPaginator($doc);
     }
+
     /** Testando Rotina por Nível
-     * @param mixed $nivel 
-     * @param mixed $semana
+     * @param  mixed  $nivel
+     * @param  mixed  $semana
      * @return string json
      */
     public function rotinasPerNivel($nivel, $semana)
@@ -157,13 +159,12 @@ class DocumentController extends ApiController
             $semana
         )->get();
 
-
-
         return $this->successResponse([
             'rotinas' => $doc,
-            'semanas' => $this->getSemanas()
+            'semanas' => $this->getSemanas(),
         ]);
     }
+
     /**
      * Seleciona por semana.
      *
@@ -177,14 +178,16 @@ class DocumentController extends ApiController
         for ($i = 1; $i <= $total->count(); $i++) {
             array_push($semanas, [
                 'value' => "semana-{$i}",
-                'label' => "Semana {$i}"
+                'label' => "Semana {$i}",
             ]);
         }
 
         return $semanas;
     }
+
     /**
      *  Lista conteudo do Canal AT
+     *
      *  @return string json
      */
     public function getCanalAT()
@@ -193,8 +196,10 @@ class DocumentController extends ApiController
             Document::where('name', 'canal-anisio-teixeira')->get()->first()
         );
     }
+
     /**
      *  Lista conteudo do Podcast AT
+     *
      *  @return string json
      */
     public function getPodcastAT()
@@ -209,7 +214,7 @@ class DocumentController extends ApiController
             return [
                 'name' => pathinfo($file->getFilename(), PATHINFO_FILENAME),
                 'src' => Storage::disk('podcast-at')->url("{$file->getFilename()}"),
-                'type' => 'audio/mp3'
+                'type' => 'audio/mp3',
             ];
         })->shuffle();
 

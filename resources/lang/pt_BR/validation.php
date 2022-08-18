@@ -146,7 +146,7 @@ return [
         'componentes' => 'componentes curriculares',
         'options.description' => 'descrição',
         'options.is_active' => 'marcar como ativo',
-        'options.is_featured' => 'marcar como destaque'
+        'options.is_featured' => 'marcar como destaque',
     ],
     'options' => [
         'lang' => 'pt_BR',

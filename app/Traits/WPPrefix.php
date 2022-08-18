@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-trait  WPPrefix
+trait WPPrefix
 {
     public function getPrefix()
     {

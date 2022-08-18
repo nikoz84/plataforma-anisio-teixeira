@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -18,8 +18,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         'user.saved' => [
             'App\Events\UserEvent@saved',
-        ]
+        ],
     ];
+
     /**
      * Register any events for your application.
      *

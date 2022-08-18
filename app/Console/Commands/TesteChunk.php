@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Models\Conteudo;
-use Illuminate\Support\Facades\Log;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class TesteChunk extends Command
 {
@@ -53,25 +53,23 @@ class TesteChunk extends Command
         Log::debug($count);
         */
         $ano = '2018';
-        $conteudo = new Conteudo();
+        $conteudo = new Conteudo;
         $totalizar = 0;
         $conteudos = $conteudo->conteudosPorAno($ano);
-        $conteudos->chunk(100)->map(function($chunk) use (&$totalizar, &$ano){
+        $conteudos->chunk(100)->map(function ($chunk) use (&$totalizar, &$ano) {
             Log::debug(count($chunk));
             $flag = 'baixados';
             $total = count($chunk);
             $title = "Conteúdos publicados no ano de $ano";
             $totalizar = $totalizar + count($chunk);
             $conteudos = $chunk;
-            PDF::loadView('relatorios.pdf-conteudo', 
+            PDF::loadView(
+                'relatorios.pdf-conteudo',
                 compact('conteudos', 'title', 'flag', 'totalizar', 'total')
             )->setPaper('a4')
             ->stream("{$totalizar}.relatório_conteúdos.pdf");
         });
         Log::alert($totalizar);
         //return PDF::loadView('relatorios.pdf-conteudo', compact('conteudos', 'title', 'flag', 'totalizar', 'total'))->setPaper('a4')->stream('relatório_conteúdos.pdf');
-        
-        
     }
-
 }

@@ -2,15 +2,17 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-use App\Traits\ApiResponser;
 use App\Models\Aplicativo;
-use Illuminate\Support\Facades\Auth;
 use App\Traits\RequestValidator;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+
 class AplicativoRequest extends FormRequest
 {
     use RequestValidator;
+
     protected $stringify = 'aplicativo';
+
     /**
      * Determine if the user is authorized to make this request.
      * Determine se o usuário está autorizado a fazer essa solicitação
@@ -21,34 +23,38 @@ class AplicativoRequest extends FormRequest
     {
         return Auth::check();
     }
-     /**
-      * @param void
-      * @return array
-      */
+
+    /**
+     * @param void
+     * @return array
+     */
     public function validated($key = null, $default = null)
     {
-        if(request()->method() == 'POST') {
+        if (request()->method() == 'POST') {
             return $this->whenCreated();
         }
+
         return $this->toArray();
     }
-      /**
-       * @param void
-       * @return array
-       */
+
+    /**
+     * @param void
+     * @return array
+     */
     public function whenCreated()
     {
         $data = collect($this->toArray());
-        
+
         $data->put('user_id', Auth::user()->id);
         $data->put('canal_id', Aplicativo::CANAL_ID);
         $options = collect($data->get('options'));
         $options->put('qt_access', Aplicativo::QT_ACCESS_INIT);
-        $data->put('options' , $options->toArray());
+        $data->put('options', $options->toArray());
         $data->forget('aplicativo');
 
         return $data->toArray();
     }
+
     /**
      * Get the validation rules that apply to the request.
      * Obtenha as regras de validação que se aplicam à solicitação
@@ -64,7 +70,7 @@ class AplicativoRequest extends FormRequest
             'url' => 'required|active_url',
             'options.is_featured' => 'sometimes|boolean',
             'tags' => 'required|array|min:3|max:15',
-            'image' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:1024'
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:1024',
         ];
     }
     /*

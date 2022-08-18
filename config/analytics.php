@@ -3,7 +3,7 @@
 return [
 
     /*
-     * The view id of which you want to display data. 
+     * The view id of which you want to display data.
      */
     'view_id' => env('ANALYTICS_VIEW_ID'),
 
