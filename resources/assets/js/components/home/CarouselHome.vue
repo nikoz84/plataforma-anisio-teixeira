@@ -1,61 +1,73 @@
 <template>
-  <div class="q-mb-xl q-mt-lg ">
-    <q-responsive :ratio="16 / 4" style="max-width: 100%;heigth:25vh">
-      <q-carousel
-        swipeable
-        animated
-        v-model="name"
-        controlType="flat"
-        control-color="primary"
-        navigation
-        navigation-icon="radio_button_checked"
-        infinite
-        :autoplay="10000"
-        arrows
-        height="50vh"
-        class="rounded-borders text-white shadow-2"
-        @input="changeSlide"
+  <div class="q-mb-xl q-mt-lg">
+    <q-carousel
+      v-model="name"
+      ref="carousel"
+      swipeable
+      animated
+      controlType="push"
+      control-color="dark"
+      infinite
+      :autoplay="5000"
+      height="28vh"
+      class="bg-primary text-white shadow-1"
+      @input="changeSlide"
+    >
+      <q-carousel-slide name="null" class="" v-if="name === null">
+      </q-carousel-slide>
+      <q-carousel-slide
+        v-for="(slide, d) in slider"
+        :key="`${d}-slide`"
+        :name="slide.filename"
+        :img-src="slide.image"
+        style=""
       >
-        <q-carousel-slide
-          name="null"
-          class="column no-wrap flex-center"
-          v-if="name === null"
+      </q-carousel-slide>
+      <template v-slot:control>
+        <q-carousel-control
+          position="bottom-right"
+          :offset="[18, 18]"
+          class="q-gutter-xs"
         >
-        </q-carousel-slide>
-        <q-carousel-slide
-          v-for="(slide, d) in slider"
-          :key="`${d}-slide`"
-          :name="slide.filename"
-          :img-src="slide.image"
-          style="width:100%; heigth:50vh;"
+          <q-btn
+            push
+            round
+            dense
+            color="dark"
+            text-color="white"
+            icon="arrow_left"
+            @click="$refs.carousel.previous()"
+          />
+          <q-btn
+            push
+            round
+            dense
+            color="dark"
+            text-color="white"
+            icon="arrow_right"
+            @click="$refs.carousel.next()"
+          />
+        </q-carousel-control>
+        <q-carousel-control
+          position="bottom-left"
+          :offset="[18, 18]"
+          class="text-left rounded-borders"
+          style=""
         >
-        </q-carousel-slide>
-        <template v-slot:control>
-          <q-carousel-control
-            position="bottom"
-            :offset="[16, 4]"
-            class="text-left rounded-borders"
-            style="padding: 10px 10px;"
+          <q-btn
+            color="accent"
+            size="sm"
+            class="text-left"
+            @click="goTo(activeSlide.url)"
           >
-            <transition name="fade" mode="out-in">
-              <q-btn
-                color="accent"
-                size="sm"
-                class="text-left"
-                @click="goTo(activeSlide.url)"
-              >
-                Saiba Mais
-              </q-btn>
-            </transition>
-          </q-carousel-control>
-        </template>
-      </q-carousel>
-    </q-responsive>
+            Saiba Mais
+          </q-btn>
+        </q-carousel-control>
+      </template>
+    </q-carousel>
   </div>
 </template>
 <script>
-// @ts-nocheck
-
 export default {
   name: "CarouselHome",
   data() {
@@ -65,6 +77,7 @@ export default {
       showTitle: false,
       activeSlide: {},
       isLoading: false,
+      slide: 1,
     };
   },
   mounted() {
@@ -104,21 +117,22 @@ export default {
   background-repeat:no-repeat;
   background-size:contain;
 }
-.featured {
-  font-family: Ubuntu, Arial;
-  font-size: 16px;
-  letter-spacing: 0.5px;
-  word-spacing: 0.3px;
-  font-weight: 700;
-  cursor: pointer;
-  font-style: italic;
-  font-variant: small-caps;
-  text-transform: uppercase;
-}
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-}
+// .featured {
+//   font-family: Ubuntu, Arial;
+//   font-size: 16px;
+//   letter-spacing: 0.5px;
+//   word-spacing: 0.3px;
+//   font-weight: 700;
+//   cursor: pointer;
+//   font-style: italic;
+//   font-variant: small-caps;
+//   text-transform: uppercase;
+// }
+// .fade-enter-active, .fade-leave-active {
+//   transition: opacity .5s;
+// }
+// .fade-enter, .fade-leave-to {
+//   opacity: 0;
+// }
+
 </style>
