@@ -23,6 +23,7 @@ class UserFactory extends Factory
             'password' => $this->faker->password
         ];
     }
+
     /**
      * Configure the model factory.
      *

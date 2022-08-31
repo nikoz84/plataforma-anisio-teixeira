@@ -2,16 +2,15 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-
-use App\Services\Analytics as ReportPat;
+use App\Facades\GoogleAnalyticsFacade as GoogleAnalytics;
 use App\Models\User;
 use App\Models\Users\AdminUser;
+use App\Services\Analytics as ReportPat;
 //use App\Services\GoogleAnalytics as ServicesGoogleAnalytics;
+use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Barryvdh\DomPDF\Facade as PDF;
-use App\Facades\GoogleAnalyticsFacade as GoogleAnalytics;
 
 class SendReportCommand extends Command
 {
@@ -51,12 +50,10 @@ class SendReportCommand extends Command
         //dd($carbon->year);
 
         $request = new Request([
-            'limit' => 100
+            'limit' => 100,
         ]);
 
         $relatorios = new ReportPat($request);
-
-
 
         //dd($relatorios->postsPerMonth());
 
@@ -68,20 +65,16 @@ class SendReportCommand extends Command
                 'relatorio_canal' => $relatorios->postsPerCanal(),
                 'relatorio_pages' => GoogleAnalytics::getReportMostVisited(),
                 'relatorio_browsers' => GoogleAnalytics::getReportBrowsers(),
-                'relatorio_visitors' => GoogleAnalytics::getReportVisitors()
+                'relatorio_visitors' => GoogleAnalytics::getReportVisitors(),
             ]
         )->setOptions([
             'isRemoteEnabled' => true,
-            'setPapper' => 'a4'
+            'setPapper' => 'a4',
         ]);
 
         $pdf->save(storage_path('app/reports/report.pdf'));
 
         //$users = AdminUser::get();
-
-
-
-
 
         //$users = User::with(['role'])->where('')
 
@@ -100,7 +93,6 @@ class SendReportCommand extends Command
         */
 
         //dd($analyticsData);
-
 
         $this->info('The command was successful!');
     }

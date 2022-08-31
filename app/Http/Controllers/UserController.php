@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Support\Facades\Validator;
-use App\Http\Controllers\ApiController;
 use App\Http\Requests\UserRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Models\User;
 use App\Services\StorageUser;
+use Illuminate\Http\Request;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class UserController extends ApiController
 {
@@ -24,8 +21,7 @@ class UserController extends ApiController
     /**
      * Lista de usuários
      *
-     * @param  \Illuminate\Http\Request $request Requisição HTTP
-     *
+     * @param  \Illuminate\Http\Request  $request Requisição HTTP
      * @return App\Traits\ApiResponser
      */
     public function index(Request $request)
@@ -46,7 +42,8 @@ class UserController extends ApiController
 
     /**
      * Buscar usuário por ID
-     * @param integer $id ID do usuário
+     *
+     * @param  int  $id ID do usuário
      * @return App\Traits\ApiReponser
      */
     public function getById($id)
@@ -62,7 +59,8 @@ class UserController extends ApiController
 
     /**
      * Cria novo usuário
-     * @param UserRequest $request Clase request do usuário
+     *
+     * @param  UserRequest  $request Clase request do usuário
      * @return App\Traits\ApiResponser
      */
     public function create(UserRequest $request)
@@ -74,6 +72,7 @@ class UserController extends ApiController
 
         return $this->saveFile($user, $request);
     }
+
     /**
      * Atualizar usuário por ID
      *
@@ -88,39 +87,36 @@ class UserController extends ApiController
 
         $user->fill($request->validated());
 
-
-
         return $this->saveFile($user, $request);
     }
 
     /**
      * Método que Salva um arquivo
-     * 
+     *
      * @param User App\Models\User $user
-     * @param  mixed $request
+     * @param  mixed  $request
      * @return string json
      */
-
     public function saveFile(User $user, $request)
     {
-        if (!$user->save()) {
+        if (! $user->save()) {
             return $this->errorResponse([], 'Não foi possível editar o usuário', 422);
         }
 
         if ($request->has('arquivoImagem')) {
-            $storage = new StorageUser();
+            $storage = new StorageUser;
             $user = $storage->saveFile($user, $request);
-            if (!$user) {
+            if (! $user) {
                 return $this->errorResponse([], 'Não foi possível fazer o upload da imagem', 422);
             }
         }
-
 
         return $this->successResponse($user, 'Usuário editado com sucesso!', 200);
     }
 
     /**
      * Método apagar por id
+     *
      * @param $id integer
      * @return \App\Traits\ApiResponser
      */
@@ -128,14 +124,16 @@ class UserController extends ApiController
     {
         $user = User::findOrFail($id);
         $this->authorize('delete', $user);
-        if (!$user->delete()) {
+        if (! $user->delete()) {
             return $this->errorResponse([], 'Não foi possível deletar o usuário', 422);
         }
+
         return $this->successResponse([], 'Usuário deletado com sucesso!!', 200);
     }
 
     /**
      * Procura usuario pelo nome
+     *
      * @param $request \Illuminate\Http\Request
      * @param $termo string de busca
      * @return App\Traits\ApiResponser
@@ -146,11 +144,13 @@ class UserController extends ApiController
         $search = "%{$termo}%";
         $paginator = User::with(['role'])->whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search])->paginate($limit);
         $paginator->setPath("/usuarios/search/{$termo}?limit={$limit}");
+
         return $this->showAsPaginator($paginator, '', 200);
     }
 
     /**
-     * Valida a criação do Usuário 
+     * Valida a criação do Usuário
+     *
      * @return array
      */
     protected function configRules()

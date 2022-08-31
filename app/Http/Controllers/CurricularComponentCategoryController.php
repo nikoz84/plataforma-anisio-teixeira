@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Traits\ApiResponser;
-use App\Models\CurricularComponentCategory;
 use App\Helpers\CachingModelObjects;
+use App\Models\CurricularComponentCategory;
+use App\Traits\ApiResponser;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Tymon\JWTAuth\Facades\JWTAuth;
-use Illuminate\Support\Facades\Log;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class CurricularComponentCategoryController extends ApiController
 {
     use ApiResponser;
+
     public function __construct(Request $request)
     {
         $this->middleware('jwt.auth')->except(['index', 'search', 'getById']);
@@ -22,6 +22,7 @@ class CurricularComponentCategoryController extends ApiController
 
     /**
      * Atualiza o Componente curricular no banco de dados
+     *
      * @param $id integer Identificador único
      * @return CurricularComponentCategory
      * @return string - json
@@ -41,7 +42,7 @@ class CurricularComponentCategoryController extends ApiController
             }
             $componentCategory->fill($this->request->all());
             //$componentCategory->componentes()->updateOrCreate($this->request->componentes);
-            if (!$componentCategory->save()) {
+            if (! $componentCategory->save()) {
                 throw new Exception(
                     'Não foi possível atualizar a categoria do componente. Tente novamente mais tarde',
                     422
@@ -51,13 +52,16 @@ class CurricularComponentCategoryController extends ApiController
             return $this->errorResponse(
                 $data,
                 $ex->getMessage(),
-                $ex->getCode() > 0  && $ex->getCode() < 506 ? $ex->getCode() : 500
+                $ex->getCode() > 0 && $ex->getCode() < 506 ? $ex->getCode() : 500
             );
         }
+
         return $this->showOne($componentCategory, 'Componente Curricular atualizada com sucesso!!', 200);
     }
+
     /**
      * Cria e Valida o Componente Curricular
+     *
      * @return string - json
      */
     public function create()
@@ -69,28 +73,30 @@ class CurricularComponentCategoryController extends ApiController
             if ($validator->fails()) {
                 $data = $validator->errors();
                 throw new Exception(
-                    "Não foi possível criar componente. Erro no preenchimento do formulário de cadastro.",
+                    'Não foi possível criar componente. Erro no preenchimento do formulário de cadastro.',
                     501
                 );
             }
-            $componente = new CurricularComponentCategory();
+            $componente = new CurricularComponentCategory;
             $this->authorize('create', JWTAuth::user());
             $componente->fill($this->request->all());
-            if (!$componente->save()) {
+            if (! $componente->save()) {
                 throw new Exception('Não foi possível salvar categoria do componente', 422);
             }
         } catch (Exception $ex) {
             return $this->errorResponse(
                 $data,
                 $ex->getMessage(),
-                $ex->getCode() > 0 &&  $ex->getCode() < 505 ? $ex->getCode() : 500
+                $ex->getCode() > 0 && $ex->getCode() < 505 ? $ex->getCode() : 500
             );
         }
+
         return $this->successResponse($componente, 'Categoria do Componente curricular registrada com sucesso!!', 200);
     }
 
     /**
      * Lista os componentes e ordena o nome de forma crescente
+     *
      * @return string json
      */
     public function index()
@@ -111,8 +117,8 @@ class CurricularComponentCategoryController extends ApiController
 
     /**
      * Busca por termo
-     * @return string json de objetos de categorias de componentes curriculares
      *
+     * @return string json de objetos de categorias de componentes curriculares
      */
     public function search($termo)
     {
@@ -122,8 +128,10 @@ class CurricularComponentCategoryController extends ApiController
         $query = CurricularComponentCategory::whereRaw('unaccent(lower(name)) ILIKE unaccent(lower(?))', [$search]);
         $paginator = CachingModelObjects::search($query, $termo, $limit);
         $paginator->setPath("/componentescategorias/search/{$termo}?limit={$limit}");
+
         return $this->showAsPaginator($paginator, '', 200);
     }
+
     /**
      * Busca por Id
      */
@@ -131,14 +139,14 @@ class CurricularComponentCategoryController extends ApiController
     {
         $componentesCategoria = CurricularComponentCategory::with('componentes')
             ->findOrFail($id);
-        
-        
+
         return $componentesCategoria;
     }
 
     /**
      * Auto-Completação
-     * @param string $term identificador único
+     *
+     * @param  string  $term identificador único
      * @return string json
      */
     public function autocomplete($term)
@@ -148,12 +156,14 @@ class CurricularComponentCategoryController extends ApiController
         $categories = CurricularComponentCategory::select(['id', 'name'])
             ->whereRaw('unaccent(lower(name)) LIKE unaccent(lower(?))', [$search])
             ->get(['id', 'name']);
+
         return $this->showAll(collect($categories));
     }
 
     /**
      * Deleta o aplicativo no banco de dados
-     * @param int $id identificador único
+     *
+     * @param  int  $id identificador único
      * @return string json
      * retorna Json
      */
@@ -168,28 +178,30 @@ class CurricularComponentCategoryController extends ApiController
                 return $this->errorResponse($validator->errors(), "Não foi possível deletar.", 201);
             }
             */
-            $category = CurricularComponentCategory::findOrFail($id);
-            $this->authorize('delete', $category);
-            if (!$category->delete()) {
-                throw new Exception("Erro ao deletar a categoria: " . $category->name . " Tente novamente em seguida.");
-            }
+        $category = CurricularComponentCategory::findOrFail($id);
+        $this->authorize('delete', $category);
+        if (! $category->delete()) {
+            throw new Exception('Erro ao deletar a categoria: '.$category->name.' Tente novamente em seguida.');
+        }
         /*}catch (Exception $ex) {
             return $this->errorResponse(
                 [],
                 $ex->getMessage(),
                 $ex->getCode() > 0 &&  $ex->getCode() < 505 ? $ex->getCode() : 500
-            ); 
+            );
         } */
         return $this->successResponse($category, 'Categoria do componente deletada com sucesso!', 200);
     }
+
     /**
      * Regras de Validação
+     *
      * @return string array
      */
     public function rules()
     {
         return [
-            'name' => 'required|min:2|max:255'
+            'name' => 'required|min:2|max:255',
         ];
     }
 }

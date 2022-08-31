@@ -170,7 +170,6 @@ return [
         /*
          * Package Service Providers...
          */
-        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Jenssegers\Date\DateServiceProvider::class,
         Jaybizzle\LaravelCrawlerDetect\LaravelCrawlerDetectServiceProvider::class,
         Buglinjo\LaravelWebp\WebpServiceProvider::class,
@@ -233,15 +232,15 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
-        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'JWTAuth' => PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => PHPOpenSourceSaver\JWTAuth\Facades\JWTFactory::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Webp' => Buglinjo\LaravelWebp\Facades\Webp::class,
         'Date' => Jenssegers\Date\Date::class,
-        'Crawler'   => Jaybizzle\LaravelCrawlerDetect\Facades\LaravelCrawlerDetect::class,
+        'Crawler' => Jaybizzle\LaravelCrawlerDetect\Facades\LaravelCrawlerDetect::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Analytics' => Spatie\Analytics\AnalyticsFacade::class,
-        'GoogleAnalytics'   =>  App\Facades\GoogleAnalyticsFacade::class
+        'GoogleAnalytics' => App\Facades\GoogleAnalyticsFacade::class,
     ],
 
 ];

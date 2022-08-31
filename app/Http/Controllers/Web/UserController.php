@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\User;
 use Inertia\Inertia;
 
@@ -11,6 +10,7 @@ class UserController extends Controller
 {
     /**
      *Lista de Usuários
+     *
      *@param void
      *@return $array
      */
@@ -19,7 +19,7 @@ class UserController extends Controller
         $paginator = User::paginate(10);
 
         return Inertia::render('Dashboard/ListUsers', [
-            'paginator' => $paginator
+            'paginator' => $paginator,
         ]);
     }
 }

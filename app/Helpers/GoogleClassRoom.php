@@ -3,4 +3,5 @@
 namespace App\Helpers;
 
 class GoogleClassRoom
-{ }
+{
+}

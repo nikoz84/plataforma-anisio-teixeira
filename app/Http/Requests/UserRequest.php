@@ -2,20 +2,21 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 use App\Traits\ApiResponser;
 use App\Traits\RequestValidator;
-use Illuminate\Support\Str;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UserRequest extends FormRequest
 {
     use ApiResponser, RequestValidator;
-    /** 
+
+    /**
      * Variable utilizada no Trait RequestValidator para converter o request JSON.stringify para array
      * Variável utilizada sem Trait RequestValidator para conversor de solicitação JSON.stringify para array
      */
     public $stringify = 'user';
+
     /**
      * Determine if the user is authorized to make this request.
      * Determine se o usuário está autorizado a fazer essa solicitação.
@@ -27,10 +28,11 @@ class UserRequest extends FormRequest
         return Auth::check();
     }
 
-    public function validated()
+    public function validated($key = null, $default = null)
     {
         return $this->toArray();
     }
+
     /**
      * Get the validation rules that apply to the request.
      * Obtenha as regras de validação que se aplicam à solicitação.
@@ -49,15 +51,15 @@ class UserRequest extends FormRequest
             'options.sexo' => 'nullable',
             'options.telefone' => 'nullable',
             'options.is_active' => 'required|boolean',
-            'options.neighborhood' => 'nullable'
+            'options.neighborhood' => 'nullable',
         ];
     }
-    
+
     /**
      * Função de mensagens de regras de validação.
-     * @return Array de String
+     *
+     * @return array de String
      */
-
     public function messages()
     {
         return [
@@ -66,7 +68,7 @@ class UserRequest extends FormRequest
             'options.sexo' => 'genero',
             'options.telefone' => 'telefone',
             'options.is_active' => 'Usuario Activo',
-            'options.neighborhood' => 'endereço'
+            'options.neighborhood' => 'endereço',
         ];
     }
 }

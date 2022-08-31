@@ -15,6 +15,7 @@ class SetPass extends Command
 
     /**
      * Descrição do comando
+     *
      * @var string
      */
     protected $description = 'Muda senha para usuários de homologação';
@@ -37,13 +38,13 @@ class SetPass extends Command
     public function handle()
     {
         $emails = [
-            'teste@gmail.com'
+
         ];
 
         foreach ($emails as $email) {
             \App\Models\User::where('email', $email)->update(
                 [
-                    'password' => bcrypt('123456')
+                    'password' => bcrypt('Mudar@789')
                 ]
             );
 

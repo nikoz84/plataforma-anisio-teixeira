@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Services\Analytics;
-use App\Http\Controllers\ApiController;
 use App\Services\Autocomplete;
 use App\Services\SideBar;
 use Illuminate\Http\Request;
@@ -22,14 +21,14 @@ class HomeController extends ApiController
         $this->request = $request;
     }
 
-
     /**
      * Seleciona da tabela options as configurações do layout
+     *
      * @return json resposta em json
      */
     public function getLayout()
     {
-        //cache()->forget('layout');
+        cache()->forget('layout');
 
         $from_cache = cache()->remember('layout', now()->addMinutes(1440), function () {
             return SideBar::getSideBarAdvancedFilter();
@@ -50,6 +49,7 @@ class HomeController extends ApiController
 
         return $this->showAll($collect, '', 200);
     }
+
     /**
      * Método de autocompletar
      *

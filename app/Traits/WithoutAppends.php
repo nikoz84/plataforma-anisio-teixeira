@@ -19,6 +19,7 @@ trait WithoutAppends
         if (self::$without_appends) {
             return [];
         }
+
         return parent::getArrayableAppends();
     }
 }

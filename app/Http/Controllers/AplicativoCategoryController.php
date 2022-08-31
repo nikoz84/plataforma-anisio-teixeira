@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\AplicativoCategory;
-use App\Http\Controllers\ApiController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class AplicativoCategoryController extends ApiController
 {
     /**
      * Metodo construtor chama o metodo a cada objeto recem criado
-     * 
-     * @param Request $request
-     * @param \App\AplicativoCategoryController $aplicativo_category
+     *
+     * @param  Request  $request
+     * @param  \App\AplicativoCategoryController  $aplicativo_category
      * @return \App\Controllers\ApiResponse retorna json
-     * 
      */
     public function __construct(Request $request)
     {
@@ -26,51 +24,53 @@ class AplicativoCategoryController extends ApiController
 
     /**
      * Método index lista todos os objetos do banco de dados
-     * @param int $id identificador único
+     *
+     * @param  int  $id identificador único
      * @return \App\Controllers\ApiResponse retorna json
      */
     public function index()
     {
-
         $categories = AplicativoCategory::all();
 
         return $this->successResponse($categories, '', 200);
     }
+
     /**
      * Cria aplicativo no banco de dados
-     * 
-     * @param int $id identificador único
-     * @param \App\AplicativoCategoryController $aplicativo_category
+     *
+     * @param  int  $id identificador único
+     * @param  \App\AplicativoCategoryController  $aplicativo_category
      * @return \App\Controllers\ApiResponser retorna json
      */
     public function create()
     {
-        $validator = Validator::make($this->request->all(), config("rules.aplicativo_categoria"));
+        $validator = Validator::make($this->request->all(), config('rules.aplicativo_categoria'));
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Campo nome é obrigatório!", 422);
+            return $this->errorResponse($validator->errors(), 'Campo nome é obrigatório!', 422);
         }
         $aplicativo_category = $this->category;
         $aplicativo_category->name = $this->request->name;
 
-        if (!$aplicativo_category->save()) {
+        if (! $aplicativo_category->save()) {
             return $this->errorResponse([], 'Não foi possível cadastrar a categoria', 422);
         }
+
         return $this->successResponse($aplicativo_category, 'Categoria criada com sucesso!', 200);
     }
+
     /**
      * Atualiza aplicativo no banco de dados
-     * 
-     * @param int $id identificado único
-     * @param \App\AplicativoCategoryController $aplicativo_category
-     * @return \App\Controllers\ApiResponser 
+     *
+     * @param  int  $id identificado único
+     * @param  \App\AplicativoCategoryController  $aplicativo_category
+     * @return \App\Controllers\ApiResponser
      * retorna json
      */
-
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($this->request->all(), config("rules.aplicativo_categoria"));
+        $validator = Validator::make($this->request->all(), config('rules.aplicativo_categoria'));
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível atualizar a categoria", 201);
+            return $this->errorResponse($validator->errors(), 'Não foi possível atualizar a categoria', 201);
         }
         $aplicativo_category = $this->category;
         $aplicativo_category->name = $this->request->name;
@@ -83,21 +83,22 @@ class AplicativoCategoryController extends ApiController
             return $this->errorResponse($aplicativo_category, 'Não existe essa categoria para ser atualizada', 200);
         }
     }
+
     /**
      * Deleta aplicativo do banco de dados
      *
      * @param [type] $id identificador único
-     * @param \App\AplicativoCategoryController $aplicativo_category
-     * @param \App\Controllers\ApiResponser retorna json  
+     * @param  \App\AplicativoCategoryController  $aplicativo_category
+     * @param \App\Controllers\ApiResponser retorna json
      * @return void
      */
     public function delete($id)
     {
         $validator = Validator::make($this->request->all(), [
-            'delete_confirmation' => ['required', new \App\Rules\ValidBoolean]
+            'delete_confirmation' => ['required', new \App\Rules\ValidBoolean],
         ]);
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Não foi possível deletar.", 201);
+            return $this->errorResponse($validator->errors(), 'Não foi possível deletar.', 201);
         }
         $category = $this->category;
 
@@ -107,17 +108,18 @@ class AplicativoCategoryController extends ApiController
             return $this->successResponse($category, 'Categoria deletada com sucesso!', 200);
         }
     }
+
     /**
      *  Obtem um id e recupera um resultado por meio da consulta
-     * 
-     *  @param int $id identificador único
-     *  @param \App\AplicativoCategoryCoontroller $aplicativo_category
+     *
+     *  @param  int  $id identificador único
+     *  @param  \App\AplicativoCategoryCoontroller  $aplicativo_category
      *  @return \App\Controller\ApiResponser retorna json
      */
-
     public function getById($id)
     {
         $category = $this->category::findOrFail($id);
+
         return $this->showOne($category);
     }
 }

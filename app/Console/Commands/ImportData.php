@@ -3,9 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
 
 class ImportData extends Command
 {
@@ -18,6 +15,7 @@ class ImportData extends Command
 
     /**
      * Descrição do comando
+     *
      * @var string
      */
     protected $description = 'nomes a minuscula';
@@ -39,17 +37,15 @@ class ImportData extends Command
      */
     public function handle()
     {
-        
         $users = \App\Models\User::all();
 
-        foreach($users as $user){
+        foreach ($users as $user) {
             $this->info("Usuário: {$user->name}");
             $user->setAttribute('name', $user->name);
 
             $user->save();
         }
         $this->info('concluido');
-
     }
 
     private function createInitSlider()
@@ -60,18 +56,18 @@ class ImportData extends Command
             'name' => 'slider',
             'meta_data' => [
                 [
-                    'image' => "/storage/conteudos/slider/banner-rotinas-de-estudo.png",
+                    'image' => '/storage/conteudos/slider/banner-rotinas-de-estudo.png',
                     'filename' => 'banner-rotinas-de-estudo.png',
-                    'url' => "/rotinas-de-estudo",
-                    'title' => 'Canal de rotinas de estudo'
+                    'url' => '/rotinas-de-estudo',
+                    'title' => 'Canal de rotinas de estudo',
                 ],
                 [
-                    'image' => "/storage/conteudos/slider/banner-ensino-superior.png",
+                    'image' => '/storage/conteudos/slider/banner-ensino-superior.png',
                     'filename' => 'banner-ensinosuperior.png',
-                    'url' => "/ipes",
-                    'title' => 'Canal de ensino superior'
-                ]
-            ]
+                    'url' => '/ipes',
+                    'title' => 'Canal de ensino superior',
+                ],
+            ],
         ]);
     }
 }

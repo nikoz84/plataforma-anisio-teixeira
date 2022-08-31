@@ -14,12 +14,11 @@ trait RequestValidator
      */
     protected function failedValidation(Validator $validator)
     {
-        
         $errors = [];
         foreach (collect($validator->errors()) as $key => $value) {
             array_set($errors, $key, $value);
         }
-        
+
         $response = response()->json([
             'message' => 'Não Foi possível realizar essa ação',
             'errors' => $errors,
@@ -27,17 +26,18 @@ trait RequestValidator
 
         throw new ValidationException($validator, $response);
     }
+
     /**
      * Transforma o campo JSON.stringify para um array de validações
      */
     protected function getValidatorInstance()
     {
         $json = $this->request->get($this->stringify);
-        
-        if(!is_null($json)){
-        	$this->merge(json_decode($json, true));
+
+        if (! is_null($json)) {
+            $this->merge(json_decode($json, true));
         }
-        
+
         return parent::getValidatorInstance();
     }
 }

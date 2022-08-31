@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\Canal;
 use Illuminate\Database\Seeder;
 
-class CanaisTesteSeeder extends Seeder
+class CanaisSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,13 +14,12 @@ class CanaisTesteSeeder extends Seeder
      */
     public function run()
     {
-        //
-
         Canal::create([
             'name' => 'Canal Teste',
             'description' => 'Teste inclusão de canal',
             'slug' => 'Teste Canal',
-            'is_active' => true
+            'is_active' => true,
+            'options' => []
 
         ]);
     }

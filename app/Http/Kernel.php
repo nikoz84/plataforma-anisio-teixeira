@@ -50,7 +50,7 @@ class Kernel extends HttpKernel
         ],
         'log' => [
             \App\Http\Middleware\ViewLog::class,
-        ]
+        ],
 
     ];
 
@@ -71,7 +71,7 @@ class Kernel extends HttpKernel
         'cors' => \Fruitcake\Cors\HandleCors::class,
         //'isAdmin' => \App\Http\Middleware\CheckIsAdmin::class,
         //'isSuperAdmin' => \App\Http\Middleware\CheckIsSuperAdmin::class,
-        'jwt.auth' => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
-        'jwt.refresh' => \Tymon\JWTAuth\Http\Middleware\RefreshToken::class,
+        'jwt.auth' => \PHPOpenSourceSaver\JWTAuth\Http\Middleware\Authenticate::class,
+        'jwt.refresh' => \PHPOpenSourceSaver\JWTAuth\Http\Middleware\RefreshToken::class,
     ];
 }

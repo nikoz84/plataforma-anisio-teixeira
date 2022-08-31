@@ -1,42 +1,38 @@
 <?php
 
+use App\Http\Controllers\AplicativoCategoryController;
+use App\Http\Controllers\AplicativoController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CanalController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ComentarioController;
+use App\Http\Controllers\ComponentesController;
+use App\Http\Controllers\ContatoController;
+use App\Http\Controllers\ConteudoController;
+use App\Http\Controllers\ConteudoLikeController;
+use App\Http\Controllers\CurricularComponentCategoryController;
+use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\FileController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LicenseController;
+use App\Http\Controllers\NivelEnsinoController;
+use App\Http\Controllers\OptionsController;
+use App\Http\Controllers\PlayListController;
+use App\Http\Controllers\RelatorioController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\TipoController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\WordpressController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{
-    FileController,
-    HomeController,
-    CategoryController,
-    TipoController,
-    ConteudoController,
-    WordpressController,
-    CurricularComponentCategoryController,
-    NivelEnsinoController,
-    ContatoController,
-    CanalController,
-    ComponentesController,
-    AplicativoController,
-    AplicativoCategoryController,
-    AuthController,
-    OptionsController,
-    TagController,
-    LicenseController,
-    DocumentController,
-    ConteudoLikeController,
-    RoleController,
-    UserController,
-    RelatorioController,
-    ComentarioController,
-    PlayListController
-};
 
 /** FILE */
-
 Route::group(['prefix' => 'files', 'as' => 'files.'], function () {
     Route::get('/galeria', [FileController::class, 'getGallery'])->name('lista.galeria.imagens');
     Route::get('/{id}', [FileController::class, 'getFiles'])->name('busca');
     //Route::post('/{id}', [FileController::class, 'createFile'])->name('adiciona');
 });
 /** HOME */
-
 Route::get('/autocompletar', [HomeController::class, 'autocomplete'])->name('autocompletar.home');
 Route::get('/layout', [HomeController::class, 'getLayout'])->name('lista.links');
 
@@ -132,7 +128,6 @@ Route::group(['prefix' => 'canal-at', 'as' => 'canal-at.'], function () {
     Route::get('/podcast', [DocumentController::class, 'getPodcastAT'])->name('podcast');
 });
 
-
 Route::group(
     ['prefix' => 'playlist', 'as' => 'playlist.'],
     function () {
@@ -165,7 +160,6 @@ Route::get('/postagens/search/{term}', [WordpressController::class, 'search']);
 Route::group(
     ['middleware' => ['jwt.auth', 'cors'], 'as' => 'auth.'],
     function () {
-
         /** CATEGORIAS DOS CONTEÚDOS*/
         Route::group(['prefix' => 'categorias', 'as' => 'categorias.'], function () {
             Route::post('/', [CategoryController::class, 'create'])->name('criar');
@@ -260,7 +254,6 @@ Route::group(
 
         /** CONTEUDOS */
         Route::group(['prefix' => 'conteudos', 'as' => 'conteudos.'], function () {
-
             Route::post('/', [ConteudoController::class, 'create'])->name('adicionar');
             Route::put('/{id}', [ConteudoController::class, 'update'])->name('atualizar');
             Route::delete('/{id}', [ConteudoController::class, 'delete'])->name('apagar');
@@ -298,7 +291,7 @@ Route::group(
             Route::post('/', [OptionsController::class, 'create'])->name('criar');
             Route::put('/{name}', [OptionsController::class, 'update'])->name('atualizar.x.nome');
             Route::delete('/{name}', [OptionsController::class, 'delete'])->name('apagar.x.nome');
-            Route::post("/destaques/create", [OptionsController::class, 'createDestaques'])->name('adicionar');
+            Route::post('/destaques/create', [OptionsController::class, 'createDestaques'])->name('adicionar');
             Route::get('/id/{id}', [OptionsController::class, 'getById'])->name('x.id');
         });
         /** ANALYTICS */
@@ -309,8 +302,8 @@ Route::group(
             Route::get('/usuarios/role/{role_id}', [RelatorioController::class, 'buscarUsuariosPorRole'])->name('view.relatorio.usuario');
             Route::get('/conteudos/{flag}', [RelatorioController::class, 'gerarPdfConteudo'])->name('gerar.relatorio.conteudo');
             Route::get('/usuarios/role/{role_id}/{is_active?}', [RelatorioController::class, 'gerarPdfUsuario'])->name('gerar.relatorio.usuario');
-            Route::get("/anospublicacao", [RelatorioController::class, 'anosComConteudosPublicados'])->name("anospublicacao.relatorio");
-            Route::get("/conteudosporoano/{ano}", [RelatorioController::class, 'conteudosPublicadosPorAno'])->name("conteudosporano.relatorio");
+            Route::get('/anospublicacao', [RelatorioController::class, 'anosComConteudosPublicados'])->name('anospublicacao.relatorio');
+            Route::get('/conteudosporoano/{ano}', [RelatorioController::class, 'conteudosPublicadosPorAno'])->name('conteudosporano.relatorio');
         });
         /** SISTEMA DE PASTA */
         Route::get('/informacoes-pasta', [FileController::class, 'getInfoFolder'])->name('file.getInfoFolder');

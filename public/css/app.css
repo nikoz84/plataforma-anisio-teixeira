@@ -11,6 +11,10 @@
 .card-borda-imagem {
   border-bottom: solid 4px #5ca0d4;
 }
+.separatriz-6 {
+  border-top-color: #5ca0d4 !important;
+  border-top: 6px solid;
+}
 .bg-cinza {
   background: #e3e2e2 !important;
 }
@@ -131,6 +135,9 @@ body {
   font-size: 16px;
   font-display: swap;
   color: #263238;
+}
+#vlibras {
+  margin-top: -20vh;
 }
 /*
  * Quasar Framework v1.16.0

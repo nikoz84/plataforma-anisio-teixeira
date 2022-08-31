@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\ApiController;
-use Illuminate\Support\Facades\Validator;
 use App\Models\Comentario;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ComentarioController extends ApiController
 {
     protected $comentario;
+
     protected $request;
 
     public function __construct(Request $request, Comentario $comentario)
@@ -24,12 +24,14 @@ class ComentarioController extends ApiController
             'getComentariosByIdUsuario',
             'getComentariosByIdPostagem',
             'getComentarioById',
-            'deletar'
+            'deletar',
         ]);
     }
+
     /**
      * Metodo que cria retorna uma listagem do banco de dados e valida
-     * @param \App\Comentario $comentario
+     *
+     * @param  \App\Comentario  $comentario
      * @return \App\Controllers\ComentarioController\ApiResponser
      * retorna json
      */
@@ -41,24 +43,26 @@ class ComentarioController extends ApiController
         );
 
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Usuário não validado", 422);
+            return $this->errorResponse($validator->errors(), 'Usuário não validado', 422);
         }
 
         try {
             $this->comentario->create($this->request->all());
+
             return $this->successResponse([], 'Comentário criado com sucesso!', 200);
         } catch (\Exception $e) {
             return $this->errorResponse([], 'Não foi possível criar o comentário!', 422);
         }
     }
+
     /**
      * Retorna o comentario pelo seu id, ou seja, chave primaria
+     *
      * @param [type] $id
-     * @param \App\Comentario $comentario
+     * @param  \App\Comentario  $comentario
      * @return \App\Controllers\ApiResponser
      * retorna json
      */
-
     public function getComentarioById($id)
     {
         $comentario = $this->comentario->getComentarioById($id);
@@ -68,14 +72,15 @@ class ComentarioController extends ApiController
 
         return $this->errorResponse([], 'Comentário não encontrado!', 422);
     }
+
     /**
      * Atualiza o Aplicativo no banco de dados
-     * @param int $id identificador único
-     * @param \App\Comentario $comentario
+     *
+     * @param  int  $id identificador único
+     * @param  \App\Comentario  $comentario
      * @return \App\Controller\ApiResponser
      * retorna json
      */
-
     public function update($id)
     {
         $validator = Validator::make(
@@ -84,7 +89,7 @@ class ComentarioController extends ApiController
         );
 
         if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), "Usuário não validado", 422);
+            return $this->errorResponse($validator->errors(), 'Usuário não validado', 422);
         }
 
         $comentario = $this->comentario->find($id);
@@ -92,25 +97,26 @@ class ComentarioController extends ApiController
 
         try {
             $comentario->update($body);
+
             return $this->successResponse([], 'Comentário editado com sucesso!', 200);
         } catch (\Exception $e) {
             return $this->errorResponse([], 'Não foi possível editar o comentário!', 422);
         }
     }
+
     /**
      * Retorna os comentarios sobre uma determinada postagem
-     * @param integer $idPostagem identificador único do recurso
-     * @param string $tipo tabela conteudo ou aplicativo
-     * 
+     *
+     * @param  int  $idPostagem identificador único do recurso
+     * @param  string  $tipo tabela conteudo ou aplicativo
      * @return string json
      */
-
     public function getComentariosByIdPostagem($idPostagem, $tipo)
     {
         $limit = $this->request->query('limit');
         $query = $this->comentario::query();
 
-        $comentarios =  $query->comentariosById($idPostagem, $tipo)
+        $comentarios = $query->comentariosById($idPostagem, $tipo)
             ->paginate($limit);
 
         if ($comentarios) {
@@ -122,8 +128,9 @@ class ComentarioController extends ApiController
 
     /**
      * Retorna os comentarios por id do usuario e pelo tipo
+     *
      * @param [type] $idUsuario
-     * @param boolean $tipo
+     * @param  bool  $tipo
      * @return void
      */
     public function getComentariosByIdUsuario($idUsuario, $tipo = false)
@@ -137,14 +144,15 @@ class ComentarioController extends ApiController
 
         return $this->errorResponse([], 'Comentários não encontrados!', 422);
     }
+
     /**
      * Deleta aplicativo no banco de dados
-     * @param int $id identificador único
-     * @param \App\Comentario $comentario
+     *
+     * @param  int  $id identificador único
+     * @param  \App\Comentario  $comentario
      * @return \App\Controller\ApiResponser
      * retorna json
      */
-
     public function deletar($id)
     {
         if ($this->comentario->deletar($id)) {

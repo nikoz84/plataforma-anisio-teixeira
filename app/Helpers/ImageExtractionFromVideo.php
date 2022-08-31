@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace App\Helpers;
 
 use Exception;
@@ -12,10 +13,14 @@ use Illuminate\Support\Facades\Log;
 class ImageExtractionFromVideo
 {
     protected $imageSize;
+
     protected $videoPath;
+
     protected $imagePathDestination;
+
     protected $videoId;
-    public static  $video_mime_types = [
+
+    public static $video_mime_types = [
         'application/annodex',
         'application/mp4',
         'application/ogg',
@@ -62,104 +67,116 @@ class ImageExtractionFromVideo
         'video/x-ms-wvx',
         'video/x-ms-wmx',
     ];
-    # vga = 640×480
-    public const VGA_IMAGESCALE="vga";
-    public const WXH_IMAGESCALE="WxH";
+
+    // vga = 640×480
+    public const VGA_IMAGESCALE = 'vga';
+
+    public const WXH_IMAGESCALE = 'WxH';
 
     /**
-    * verifica se arquivo é mesmo um video
-     * @return boolean
+     * verifica se arquivo é mesmo um video
+     *
+     * @return bool
      */
     private function verificaVideo()
     {
         if (in_array(mime_content_type($this->videoPath), self::$video_mime_types)) {
             return true;
         }
+
         return false;
     }
 
-    public function __construct($videoPath = null, $videoId = null, $imagePathDestination = "", $imageSize = "vga")
+    public function __construct($videoPath = null, $videoId = null, $imagePathDestination = '', $imageSize = 'vga')
     {
         $this->setImageSize($imageSize);
         $this->setVideoPath($videoPath);
         $this->setVideoId($videoId);
         $this->setImagePathDestination($imagePathDestination);
     }
+
     /**
-    * Recebe o id do Video, este id é usado para formar o nome da imagem que será gerada
-    * @return void
-    */
+     * Recebe o id do Video, este id é usado para formar o nome da imagem que será gerada
+     *
+     * @return void
+     */
     public function setVideoId($videoId)
     {
         $this->videoId = $videoId;
     }
-    
+
     /**
-    * Seta o tamanho que a imagem tera ao ser gerada
-    * @return void
-    */
+     * Seta o tamanho que a imagem tera ao ser gerada
+     *
+     * @return void
+     */
     public function setImageSize($size)
     {
         $this->imageSize = $size;
     }
-    
+
     /**
-    * Seta o caminho completo do video juntamente com a extensao
-    * @return void
-    */
+     * Seta o caminho completo do video juntamente com a extensao
+     *
+     * @return void
+     */
     public function setVideoPath($path)
     {
         $this->videoPath = $path;
     }
-    
+
     /**
-    * Seta o caminho em que a imgem gerada será salva
-    * @return void
-    */
+     * Seta o caminho em que a imgem gerada será salva
+     *
+     * @return void
+     */
     public function setImagePathDestination($pathDestination)
     {
         $this->imagePathDestination = $pathDestination;
     }
-    
+
     /**
-    * Realiga a extração da imagem utilizando comando do software FFmpeg
-    * @return void
-    */
+     * Realiga a extração da imagem utilizando comando do software FFmpeg
+     *
+     * @return void
+     */
     public function extract()
     {
-    # Executa o comando três vezes e extrai uma imagem em momentos diferentes após o inicio do video
+        // Executa o comando três vezes e extrai uma imagem em momentos diferentes após o inicio do video
         $this->realXtract('30');
         $this->realXtract('40');
         $this->realXtract('50');
     }
-    
+
     /**
-    * Metodo que executa o comando FFmpeg
-    * @param $second: Representa a quantos segunos após o inicio do video as imagens serão extraidas
-    */
+     * Metodo que executa o comando FFmpeg
+     *
+     * @param $second: Representa a quantos segunos após o inicio do video as imagens serão extraidas
+     */
     public function realXtract($second)
     {
-        if (!is_file($this->videoPath)) {
-            throw new Exception("Caminho fornecido: ".$this->videoPath." não é um arquivo, tão pouco de video.", 501);
+        if (! is_file($this->videoPath)) {
+            throw new Exception('Caminho fornecido: '.$this->videoPath.' não é um arquivo, tão pouco de video.', 501);
         }
-        if (!$this->verificaVideo($this->videoPath)) {
-            throw new Exception("Arquivo: ".$this->videoPath." não é um arquivo de video.", 501);
+        if (! $this->verificaVideo($this->videoPath)) {
+            throw new Exception('Arquivo: '.$this->videoPath.' não é um arquivo de video.', 501);
         }
-        if (!is_dir($this->imagePathDestination)) {
-            throw new Exception("Caminho: ".$this->imagePathDestination." não é um diretório de destino válido para salvar frame de video.", 501);
+        if (! is_dir($this->imagePathDestination)) {
+            throw new Exception('Caminho: '.$this->imagePathDestination.' não é um diretório de destino válido para salvar frame de video.', 501);
         }
         try {
-            $command = "ffmpeg -itsoffset -{$second} -i {$this->videoPath} -r 1 -s {$this->imageSize} -f image2 -vframes 1 {$this->imagePathDestination}". DIRECTORY_SEPARATOR ."{$this->createImageName()}-%03d.jpeg";
+            $command = "ffmpeg -itsoffset -{$second} -i {$this->videoPath} -r 1 -s {$this->imageSize} -f image2 -vframes 1 {$this->imagePathDestination}".DIRECTORY_SEPARATOR."{$this->createImageName()}-%03d.jpeg";
             shell_exec($command);
         } catch (Exception $ex) {
             Log::notice($ex->getMessage());
         }
     }
-    
+
     /**
-    * Cria um nome para a imagem que será salva
-    * @return String
-    */
+     * Cria um nome para a imagem que será salva
+     *
+     * @return string
+     */
     private function createImageName()
     {
         return $this->videoId.'.'.rand();

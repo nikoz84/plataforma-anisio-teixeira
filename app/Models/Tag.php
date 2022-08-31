@@ -2,21 +2,23 @@
 
 namespace App\Models;
 
+use App\Traits\UserCan;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Conteudo;
-use App\Models\Aplicativo;
-use App\Traits\UserCan;
 
 class Tag extends Model
 {
-    use SoftDeletes, UserCan;
+    use SoftDeletes;use UserCan;
 
-    const INIT_SEARCHED = 0;
+    public const INIT_SEARCHED = 0;
 
     protected $fillable = ['name', 'searched'];
+
     protected $hidden = ['pivot'];
+
     protected $appends = ['user_can'];
+
     /**
      * Relação de tag com tabela conteudos
      */
@@ -24,6 +26,7 @@ class Tag extends Model
     {
         return $this->belongsToMany(Conteudo::class);
     }
+
     /**
      * Relação de tag com tabela aplicativos
      */
@@ -31,12 +34,16 @@ class Tag extends Model
     {
         return $this->belongsToMany(Aplicativo::class);
     }
+
     /**
      * Seta o atributo name em caixa baixa
+     *
      * @param $name cadena de caracteres
      */
-    public function setNameAttribute($value)
+    public function name(): Attribute
     {
-        $this->attributes['name'] = strtolower($value);
+        return new Attribute(
+            set: fn ($value) => strtolower($value)
+        );
     }
 }

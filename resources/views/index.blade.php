@@ -50,7 +50,7 @@
 
     <div id="app"></div>
 
-    <div id="vlibras" vw class="enabled">
+    <div id="vlibras" vw class="enabled" style="top:45% !important;">
         <div vw-access-button class="active"></div>
         <div vw-plugin-wrapper>
             <div class="vw-plugin-top-wrapper"></div>

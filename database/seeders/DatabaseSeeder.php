@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,10 +17,11 @@ class DatabaseSeeder extends Seeder
             [
                 UserSeeder::class,
                 ContatoSeeder::class,
-                AplicativoCategoriesSeeder::class,
+                AplicativoCategorySeeder::class,
+                CanaisSeeder::class,
                 AplicativoSeeder::class,
-                CanaisTesteSeeder::class,
-                ComentariosSeeder::class,
+                //ComentariosSeeder::class,
+                TipoSeeder::class,
                 ConteudoSeeder::class,
                 ConteudoLikeSeeder::class,
                 CurricularComponentSeeder::class,

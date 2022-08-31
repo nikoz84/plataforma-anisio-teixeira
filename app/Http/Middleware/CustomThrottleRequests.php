@@ -2,20 +2,20 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Routing\Middleware\ThrottleRequests;
 use App\Traits\ApiResponser;
+use Illuminate\Routing\Middleware\ThrottleRequests;
 
 class CustomThrottleRequests extends ThrottleRequests
 {
     use ApiResponser;
+
     /**
      * Função Protegida que constroi uma exceção
-     * @param mixed $key
-     * @param mixed $maxAttempts
-     * 
+     *
+     * @param  mixed  $key
+     * @param  mixed  $maxAttempts
      * @return void
      */
-
     protected function buildException($key, $maxAttempts)
     {
         $retryAfter = $this->getTimeUntilNextRetry($key);

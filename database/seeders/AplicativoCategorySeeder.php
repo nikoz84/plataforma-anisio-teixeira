@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\AplicativoCategory;
 
-class AplicativoCategoriesSeeder extends Seeder
+class AplicativoCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,10 +15,8 @@ class AplicativoCategoriesSeeder extends Seeder
      */
     public function run()
     {
-        //
         AplicativoCategory::create([
-            'name' => 'Categoria Teste',
-            'canal_id' => 9
+            'name' => 'Tutoriais'
         ]);
     }
 }

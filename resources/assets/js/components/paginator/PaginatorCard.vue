@@ -1,36 +1,44 @@
 <template>
-
-  <q-card
-    class="card-hover"
-    v-bind:id="item.id"
-    v-if="item"
-  >
+  <q-card v-bind:id="item.id" v-if="item" class="bg-grey-2">
     <q-img
       clickable
+      @click="goTo(item)"
       class="cursor-pointer card-borda-imagem"
       v-ripple
-      @click="goTo(item)"
-      alt="imagem destacada"
       :src="getImage"
       loading="lazy"
+      :title="item.title"
       width="100%"
       height="auto"
+      style="max-height:200px"
       placeholder-src="/img/fundo-padrao.svg"
-    >
-    </q-img>
-    <q-card-section class="q-mb-md">
-      <h6
-        @click="goTo(item)"
-        class="text-h6 q-mt-md cursor-pointer"
-        :title="`Título: ${title}`"
-        v-html="title"
-      ></h6>
+    />
+    <q-card-section>
+      <div class="row items-center no-wrap">
+        <div class="col">
+          <div
+            class="cursor-pointer text-h6"
+            v-html="item.short_title"
+            :title="item.title"
+            @click="goTo(item)"
+          ></div>
+          <div class="text-subtitle2" v-html="getTipo"></div>
+        </div>
+
+        <div class="col-auto">
+          <q-btn color="grey-7" round flat icon="more_vert">
+            <q-menu cover auto-close>
+              <q-list>
+                <q-item clickable @click="openPrevisualizar">
+                  <q-item-section>Mais informações</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
+        </div>
+      </div>
     </q-card-section>
-    <q-card-actions class="flex justify-end absolute-bottom">
-
-    </q-card-actions>
   </q-card>
-
 </template>
 <script>
 import {
@@ -58,11 +66,6 @@ export default {
     QIcon,
   },
   computed: {
-    title() {
-      let title = this.item.name ? this.item.name : this.item.title;
-
-      return title.length > 100 ? title.substr(0, 100) + " ..." : title;
-    },
     slug() {
       return this.item.canal ? this.item.canal.slug : this.item.slug;
     },
@@ -87,6 +90,9 @@ export default {
         });
       }
     },
+    openPrevisualizar() {
+      console.log("oi");
+    },
   },
 };
 </script>
@@ -99,10 +105,6 @@ export default {
 
 .text-h6 {
   font-weight: bold;
-}
-
-.card-hover:hover {
-  transform: translateY(5px);
 }
 
 .card-hover {
@@ -118,5 +120,27 @@ export default {
   height: 230px;
   min-height: 230px;
   width: 100%;
+}
+
+.card-borda-imagem {
+    border-bottom: solid 3px #5ca0d4;
+}
+
+.yt-title{
+  font-family: "Roboto","Arial",sans-serif;
+    font-size: 1.3rem;
+    line-height: 2rem;
+    font-weight: 500;
+    max-height: 4rem;
+    overflow: hidden;
+    display: block;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
+.card-tooltip{
+  background-color: blue;
 }
 </style>

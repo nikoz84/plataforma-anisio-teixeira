@@ -13,7 +13,7 @@ class CreateConteudosLikesTable extends Migration
      */
     public function up()
     {
-         Schema::create('conteudos_likes', function (Blueprint $table) {
+        Schema::create('conteudos_likes', function (Blueprint $table) {
             $table->bigIncrements('id')->comment('Chave primaria');
 
             $table->bigInteger('user_id');
@@ -30,7 +30,6 @@ class CreateConteudosLikesTable extends Migration
             $table->timestamps();
             // campo de data deleted_at
             $table->softDeletes();
-    
         });
     }
 
@@ -41,6 +40,6 @@ class CreateConteudosLikesTable extends Migration
      */
     public function down()
     {
-         Schema::dropIfExists('conteudos_likes');
+        Schema::dropIfExists('conteudos_likes');
     }
 }

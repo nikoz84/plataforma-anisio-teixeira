@@ -3,19 +3,24 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Http\Request;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Http\Request;
 
 class SendMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;use SerializesModels;
 
     public $name;
+
     public $subject;
+
     public $email;
+
     public $url;
+
     public $message;
+
     /**
      * Create a new message instance.
      * Crie uma nova instância de mensagem.
@@ -44,9 +49,9 @@ class SendMail extends Mailable
             ->with([
                 'name' => 'niko',
                 'subject' => 'tete',
-                'email' => "anikocom",
-                'url' => "as",
-                'message' => "menssagem"
+                'email' => 'anikocom',
+                'url' => 'as',
+                'message' => 'menssagem',
             ]);
     }
 }
