@@ -1,30 +1,26 @@
 <template>
   <div class="q-pa-md">
-    <q-select
-      filled
-      v-model="item"
-      use-input
-      option-value="value"
-      option-label="label"
-      use-chips
-      stack-value
-      input-debounce="0"
-      :options="selectOptions"
-      class="q-mb-lg"
-      @input="getData"
-    />
-    <q-card >
-      <q-card-section >
+    <q-select filled v-model="item" use-input option-value="value" option-label="label" use-chips stack-value
+      input-debounce="0" :options="selectOptions" class="q-mb-lg" @input="getData" />
+    <div class="q-pa-md row items-start q-gutter-md">
+      <card-componet title="Catalogação por ano" total="Total: 35021"></card-componet>
+      <card-componet title="Catalogação por canal" total="Total: 15021"></card-componet>
+      <card-componet title="Catalogação total mensal" total="Total: 78021"></card-componet>
+      <card-componet title="Catalogação total mensal por canal" conteudo="Ginastica de Reabilitação"
+        total="Total: 15083">
+      </card-componet>
+      <card-componet title="Conteúdos publicados por ano" total="Total: 150325">
+      </card-componet>
+
+    </div>
+
+    <hr>
+    <q-card>
+      <q-card-section>
         <VueApexCharts height="450" v-if="render" type="bar" :options="chartOptions" :series="series"></VueApexCharts>
       </q-card-section>
       <q-card-section>
-        <q-table
-          :title="title"
-          :data="metadata"
-          :columns="columns"
-          row-key="id"
-          separator="horizontal"
-        />
+        <q-table :title="title" :data="metadata" :columns="columns" row-key="id" separator="horizontal" />
       </q-card-section>
     </q-card>
   </div>
@@ -40,6 +36,7 @@ import {
   QSelect,
   QChip
 } from "quasar";
+import CardComponet from "../components/card/CardComponet";
 
 export default {
   name: "Resumo",
@@ -50,9 +47,10 @@ export default {
     QSelect,
     QCardSection,
     QSeparator,
-    VueApexCharts
+    VueApexCharts,
+    CardComponet
   },
-  data() {
+  data () {
     return {
       title: "",
       render: false,
@@ -87,11 +85,11 @@ export default {
         { label: "Catalogação total mensal", value: "per_month" },
         { label: "Catalogação total mensal por canal", value: "canal_montly" },
         { label: "Conteúdos mais baixados", value: "qt_downloads" },
-        { label: "Conteúdos mais acessados", value: "qt_access"}, 
-        { label: "Tags mais procuradas", value: "searched_tags"},
-        { label: "Aplicativos mais visualizados", value: "aplicativo_qt_access"},
-        { label: "Registro de ocorrência formulário de contatos", value: "registro_mes_ocorrencia"},
-        { label: "Conteúdos mais acessados nos últimos três meses", value: "acessados_ultimos_meses"},
+        { label: "Conteúdos mais acessados", value: "qt_access" },
+        { label: "Tags mais procuradas", value: "searched_tags" },
+        { label: "Aplicativos mais visualizados", value: "aplicativo_qt_access" },
+        { label: "Registro de ocorrência formulário de contatos", value: "registro_mes_ocorrencia" },
+        { label: "Conteúdos mais acessados nos últimos três meses", value: "acessados_ultimos_meses" },
         { label: "Catalogação BLOG", value: "wordpress_data" }
       ],
       chartOptions: {
@@ -120,11 +118,11 @@ export default {
       series: [{ name: "Quantidade", data: [] }]
     };
   },
-  created() {
+  created () {
     this.getData();
   },
   methods: {
-    async getData() {
+    async getData () {
       let url = `resumo?option=${this.item.value}`;
       let resp = await axios.get(url);
       console.log(resp)
@@ -138,7 +136,7 @@ export default {
         }
       }
     },
-    createInfoGraf(categories) {
+    createInfoGraf (categories) {
       this.chartOptions = {
         ...this.chartOptions,
         ...{
@@ -151,7 +149,7 @@ export default {
         }
       };
     },
-    appendData(data) {
+    appendData (data) {
       let arr = this.series.slice();
       arr[0].data = data;
       this.series = arr;

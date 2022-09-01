@@ -1,13 +1,14 @@
 <template>
     <div class="q-pa-md row items-start q-gutter-md">
-        <q-card class="my-card">
+        <q-card class="my-card text-white" style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%)">
             <q-card-section>
-                {{ title }} {{ percent }} {{ day }}
+                <div class=" text-h6">
+                    {{ title }}
+                </div>
                 <q-card-section horizontal>
                     <q-card-section>
-                        {{ conteudo }}
+                        {{ conteudo }} {{ total }}
                     </q-card-section>
-                    {{ icon }}
                 </q-card-section>
             </q-card-section>
         </q-card>
@@ -19,11 +20,16 @@ export default {
     name: 'CardComponent',
     props: [
         'title',
-        'percent',
-        'day',
         'conteudo',
-        'icon'
+        'total'
 
     ]
 }
 </script>
+<style scoped>
+.my-card {
+    width: 100%;
+    max-width: 250px;
+    border-radius: 15px
+}
+</style>
