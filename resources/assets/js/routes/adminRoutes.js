@@ -8,7 +8,7 @@ import { ConteudoForm, PlayListForm, AplicativoForm, CanalForm, OptionsForm, Rol
   TagForm, TipoForm, UserForm, CategoryConteudoForm, CurricularComponentsForm, CurricularComponentsCategoryForm,
 NivelEnsinoForm  } from "@forms/models";
 import AdminPage from "@pages/AdminPage.vue"
-import Resumo from "@pages/Resumo.vue";
+import Dashboard from "@pages/Dashboard.vue";
 import { Contato }  from "@components/exibir";
 
 
@@ -24,9 +24,9 @@ const adminRoutes = {
   },
   children: [
     {
-      path: "resumo/listar",
+      path: "dashboard/listar",
       components: {  
-        admin: Resumo
+        admin: Dashboard
       },
       meta: {
         requiresAuth: true,
