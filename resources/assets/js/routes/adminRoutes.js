@@ -10,6 +10,7 @@ NivelEnsinoForm  } from "@forms/models";
 import AdminPage from "@pages/AdminPage.vue"
 import Dashboard from "@pages/Dashboard.vue";
 import { Contato }  from "@components/exibir";
+import { ConteudosPorAno, CatalogacaoMensal } from "@components/dashboard";
 
 
 const adminRoutes = {
@@ -32,7 +33,31 @@ const adminRoutes = {
         requiresAuth: true,
         title: "Estatisticas",
         layout: Admin
-      }
+      },
+      children: [
+        {
+          path: "conteudos-por-ano",
+          components: {  
+            admin: ConteudosPorAno
+          },
+          meta: {
+            requiresAuth: true,
+            title: "Catalogação por ano",
+            layout: Admin
+          },
+        },
+        {
+          path: "catalogacao-mensal",
+          components: {  
+            admin: CatalogacaoMensal
+          },
+          meta: {
+            requiresAuth: true,
+            title: "Catalogação mensal",
+            layout: Admin
+          },
+        }
+      ]
     },
     {
       path: "conteudos/listar",

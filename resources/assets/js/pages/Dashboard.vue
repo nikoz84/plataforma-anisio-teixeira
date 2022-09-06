@@ -3,17 +3,8 @@
     <q-select filled v-model="item" use-input option-value="value" option-label="label" use-chips stack-value
       input-debounce="0" :options="selectOptions" class="q-mb-lg" @input="getData" />
     <div class="q-pa-md row items-start q-gutter-md">
-      <card-componet title="Catalogação por ano" total="Total: 35021"></card-componet>
-      <card-componet title="Catalogação por canal" total="Total: 15021"></card-componet>
-      <card-componet title="Catalogação total mensal" total="Total: 78021"></card-componet>
-      <card-componet title="Catalogação total mensal por canal" conteudo="Ginastica de Reabilitação"
-        total="Total: 15083">
-      </card-componet>
-      <card-componet title="Conteúdos publicados por ano" total="Total: 150325">
-      </card-componet>
-
+      <card-dashboard v-for="(item, i) in dashboardData" :key="i" :data="item.data" :id="item.id" />
     </div>
-
     <hr>
     <q-card>
       <q-card-section>
@@ -36,10 +27,10 @@ import {
   QSelect,
   QChip
 } from "quasar";
-import CardComponet from "../components/card/CardComponet";
+import { CardDashboard } from "@components/dashboard";
 
 export default {
-  name: "Resumo",
+  name: "Dashboard",
   components: {
     QTable,
     QCard,
@@ -48,12 +39,13 @@ export default {
     QCardSection,
     QSeparator,
     VueApexCharts,
-    CardComponet
+    CardDashboard
   },
   data () {
     return {
       title: "",
       render: false,
+      dashboardData: null,
       metadata: [],
       columns: [
         {
@@ -120,12 +112,12 @@ export default {
   },
   created () {
     this.getData();
+    this.getDashboardData();
   },
   methods: {
     async getData () {
       let url = `resumo?option=${this.item.value}`;
       let resp = await axios.get(url);
-      console.log(resp)
       if (resp.data.success) {
         this.title = resp.data.metadata.title;
         this.metadata = resp.data.metadata.data;
@@ -136,6 +128,21 @@ export default {
         }
       }
     },
+
+    async getDashboardData () {
+
+      let inicio = '01-01-2021';
+      let fim = '02-02-2021';
+
+      const { data } = await axios.get(`/dashboard?inicio=${inicio}&fim=${fim}`);
+      console.log(data)
+      if (data.success) {
+        this.dashboardData = data.metadata
+      }
+
+    },
+
+
     createInfoGraf (categories) {
       this.chartOptions = {
         ...this.chartOptions,

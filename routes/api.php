@@ -25,6 +25,7 @@ use App\Http\Controllers\TipoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WordpressController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 
 /** FILE */
 Route::group(['prefix' => 'files', 'as' => 'files.'], function () {
@@ -160,7 +161,6 @@ Route::get('/postagens/search/{term}', [WordpressController::class, 'search']);
 Route::group(
     ['middleware' => ['jwt.auth', 'cors'], 'as' => 'auth.'],
     function () {
-
         /** CATEGORIAS DOS CONTEÚDOS*/
         Route::group(['prefix' => 'categorias', 'as' => 'categorias.'], function () {
             Route::post('/', [CategoryController::class, 'create'])->name('criar');
@@ -297,7 +297,7 @@ Route::group(
         });
         /** ANALYTICS */
         Route::get('/resumo', [HomeController::class, 'getAnalytics'])->name('catalogacao.blog.e.plataforma');
-
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('index.dashboard');
         /** RELATÓRIOS */
         Route::group(['prefix' => 'relatorio', 'as' => 'relatorio.'], function () {
             Route::get('/usuarios/role/{role_id}', [RelatorioController::class, 'buscarUsuariosPorRole'])->name('view.relatorio.usuario');

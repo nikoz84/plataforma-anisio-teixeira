@@ -3,13 +3,16 @@
         <q-card class="my-card text-white" style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%)">
             <q-card-section>
                 <div class=" text-h6">
-                    {{ title }}
+                    {{ data.titulo }}
                 </div>
                 <q-card-section horizontal>
                     <q-card-section>
-                        {{ conteudo }} {{ total }}
+                        Quantidade: {{ data.quantidade }}
                     </q-card-section>
                 </q-card-section>
+            </q-card-section>
+            <q-card-section>
+                <q-btn label="Ver mais" @click="goto(id)"></q-btn>
             </q-card-section>
         </q-card>
     </div>
@@ -17,13 +20,17 @@
 
 <script>
 export default {
-    name: 'CardComponent',
+    name: 'CardDashboard',
     props: [
-        'title',
-        'conteudo',
-        'total'
+        'id',
+        'data'
+    ],
+    methods: {
+        goto (ID) {
+            this.$router.push('/admin/dashboard/listar/' + ID)
+        }
+    }
 
-    ]
 }
 </script>
 <style scoped>

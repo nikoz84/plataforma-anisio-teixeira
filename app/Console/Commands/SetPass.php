@@ -38,13 +38,13 @@ class SetPass extends Command
     public function handle()
     {
         $emails = [
-
+            'nicolas.hernandez@educacao.ba.gov.br'
         ];
 
         foreach ($emails as $email) {
             \App\Models\User::where('email', $email)->update(
                 [
-                    'password' => bcrypt('Mudar@789'),
+                    'password' => bcrypt('123456'),
                 ]
             );
 
