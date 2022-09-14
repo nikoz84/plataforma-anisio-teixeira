@@ -4,5 +4,5 @@ import CatalogacaoMensal from './CatalogacaoMensal.vue'
 export {
     CardDashboard,
     ConteudosPorAno,
-    CatalogacaoMensal
+    CatalogacaoMensal,
 }

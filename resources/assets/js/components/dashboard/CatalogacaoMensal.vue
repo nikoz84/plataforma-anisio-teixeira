@@ -7,9 +7,8 @@
 <script>
 export default {
     name: 'CatalogacaoMensal',
-
-
 }
 </script>
 <style scoped>
+
 </style>

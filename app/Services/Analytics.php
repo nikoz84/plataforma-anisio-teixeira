@@ -153,7 +153,7 @@ class Analytics
         return DB::select($sql);
     }
 
-    public function TotalConteudosAcessadosUltimostresMeses()
+    public function TotalConteudosAcessadosUltimosTresMeses()
     {
         $sql = "SELECT id, title as name, created_at::DATE as data,
          sum(qt_access) as total,

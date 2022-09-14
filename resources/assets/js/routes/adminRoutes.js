@@ -1,83 +1,107 @@
 // @ts-nocheck
 //import { LoaderAdmin } from "@components/exibir";
 import Admin from "@layout/Admin";
-import { ListarConteudos, ListarAplicativos, ListarCanais, 
-    ListarContato, ListarOptions, ListarRoles, ListarTags, ListarTipos, ListarUsers, 
-    ListarCategorias,ListarComponentes, ListarComponentesCategoria, ListarNiveisEnsino } from "@components/exibir"
-import { ConteudoForm, PlayListForm, AplicativoForm, CanalForm, OptionsForm, RoleForm, 
-  TagForm, TipoForm, UserForm, CategoryConteudoForm, CurricularComponentsForm, CurricularComponentsCategoryForm,
-NivelEnsinoForm  } from "@forms/models";
-import AdminPage from "@pages/AdminPage.vue"
-import Dashboard from "@pages/Dashboard.vue";
-import { Contato }  from "@components/exibir";
+import {
+  ListarConteudos,
+  ListarAplicativos,
+  ListarCanais,
+  ListarContato,
+  ListarOptions,
+  ListarRoles,
+  ListarTags,
+  ListarTipos,
+  ListarUsers,
+  ListarCategorias,
+  ListarComponentes,
+  ListarComponentesCategoria,
+  ListarNiveisEnsino,
+} from "@components/exibir";
+import {
+  ConteudoForm,
+  PlayListForm,
+  AplicativoForm,
+  CanalForm,
+  OptionsForm,
+  RoleForm,
+  TagForm,
+  TipoForm,
+  UserForm,
+  CategoryConteudoForm,
+  CurricularComponentsForm,
+  CurricularComponentsCategoryForm,
+  NivelEnsinoForm,
+} from "@forms/models";
 import { ConteudosPorAno, CatalogacaoMensal } from "@components/dashboard";
 
+import AdminPage from "@pages/AdminPage.vue";
+import Dashboard from "@pages/Dashboard.vue";
+import { Contato } from "@components/exibir";
 
 const adminRoutes = {
   path: "/admin",
-  //name: "admin-home",
-  components : {
-    main: AdminPage
+  name: "admin-home",
+  components: {
+    main: AdminPage,
   },
   meta: {
     requiresAuth: true,
-    layout : Admin
+    layout: Admin,
   },
   children: [
     {
       path: "dashboard/listar",
-      components: {  
-        admin: Dashboard
+      components: {
+        admin: Dashboard,
       },
       meta: {
         requiresAuth: true,
         title: "Estatisticas",
-        layout: Admin
+        layout: Admin,
       },
       children: [
         {
           path: "conteudos-por-ano",
-          components: {  
-            admin: ConteudosPorAno
+          components: {
+            admin: ConteudosPorAno,
           },
           meta: {
             requiresAuth: true,
             title: "Catalogação por ano",
-            layout: Admin
+            layout: Admin,
           },
         },
         {
           path: "catalogacao-mensal",
-          components: {  
-            admin: CatalogacaoMensal
+          components: {
+            admin: CatalogacaoMensal,
           },
           meta: {
             requiresAuth: true,
             title: "Catalogação mensal",
-            layout: Admin
+            layout: Admin,
           },
-        }
-      ]
+        },
+      ],
     },
     {
       path: "conteudos/listar",
-      components: {  
-        admin: ListarConteudos
+      components: {
+        admin: ListarConteudos,
       },
       meta: {
         requiresAuth: true,
         title: "Listar Conteúdos",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "conteudos/adicionar",
-      components: {admin: ConteudoForm},
+      components: { admin: ConteudoForm },
       meta: {
         requiresAuth: true,
         title: "Adicionar Conteúdo",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "conteudos/editar/:id",
@@ -85,8 +109,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar Conteúdo",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "aplicativos/editar/:id",
@@ -94,8 +118,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Editar Aplicativo",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "aplicativos/adicionar",
@@ -103,8 +127,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar Aplicativo",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "aplicativos/listar",
@@ -112,8 +136,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar Aplicativo",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "playlist/listar",
@@ -121,8 +145,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar Conteúdo",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "canais/listar",
@@ -130,8 +154,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar Canais",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "canais/adicionar",
@@ -139,8 +163,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar Canal",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "canais/editar/:id",
@@ -148,8 +172,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Editar Canal",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "contato/listar",
@@ -157,8 +181,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar faleconosco",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "contato/responder/:id",
@@ -166,8 +190,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Responder faleconosco",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     ,
     {
@@ -176,8 +200,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar opções do sistema",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "options/editar/:id",
@@ -185,8 +209,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Opçao para editar",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "roles/listar",
@@ -194,8 +218,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar tipos de usuários",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "roles/editar/:id",
@@ -203,8 +227,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Editar Role",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "roles/adicionar",
@@ -212,8 +236,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar Role",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "tags/listar",
@@ -221,8 +245,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar palavras-chave",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "tags/editar/:id",
@@ -230,8 +254,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Editar palavras-chave",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "tags/adicionar",
@@ -239,8 +263,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar palavra-chave",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "tipos/listar",
@@ -248,8 +272,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar tipos de conteúdos",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "tipos/editar/:id",
@@ -257,8 +281,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Editar tipo de conteúdo",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "tipos/adicionar",
@@ -266,8 +290,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar tipo de conteúdo",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "usuarios/listar",
@@ -275,8 +299,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar usuários",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "usuarios/editar/:id",
@@ -284,8 +308,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Editar usuário",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "usuarios/adicionar",
@@ -293,8 +317,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar usuário",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "categorias/listar",
@@ -302,8 +326,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar categorias",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "categorias/editar/:id",
@@ -311,8 +335,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Editar categoria",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "categorias/adicionar",
@@ -320,8 +344,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar categoria",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "componentes/listar",
@@ -329,8 +353,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar componentes",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "componentes/editar/:id",
@@ -338,8 +362,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Editar Componente Curricular",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "componentes/adicionar",
@@ -347,8 +371,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar Componente Curricular",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "componentes-categoria/listar",
@@ -356,8 +380,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar categoria componentes curriculares",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "componentes-categoria/editar/:id",
@@ -365,8 +389,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Editar Categoria Componente Curricular",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "componentes-categoria/adicionar",
@@ -374,8 +398,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar Categoria Componente Curricular",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "niveis-ensino/listar",
@@ -383,8 +407,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Listar niveis de ensino",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "niveis-ensino/editar/:id",
@@ -392,8 +416,8 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Editar nivel de ensino",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
     {
       path: "niveis-ensino/adicionar",
@@ -401,10 +425,10 @@ const adminRoutes = {
       meta: {
         requiresAuth: true,
         title: "Adicionar nivel de ensino",
-        layout: Admin
-      }
+        layout: Admin,
+      },
     },
-  ]
+  ],
 };
 
 export default adminRoutes;

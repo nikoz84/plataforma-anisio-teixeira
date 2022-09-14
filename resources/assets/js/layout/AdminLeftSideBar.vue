@@ -5,14 +5,13 @@
         Painel de Controle
       </strong>
     </q-item-label>
-    <ReportsMenu></ReportsMenu>
     <q-item to="/admin/dashboard/listar" aria-label="Resumo da pat" title="Resumo da pat" clickable tabindex="0"
       active-class="active-link-pat">
       <q-item-section>
         <q-item-label>DashBoard</q-item-label>
       </q-item-section>
     </q-item>
-
+    <ReportsMenu></ReportsMenu>
     <q-item v-for="(link, i) in linksAdmin" :key="`admin-${i}`" :to="`/admin/${link.slug}/listar`"
       :aria-label="`IR: ${link.label}`" :title="`IR: ${link.label}`" clickable tabindex="0"
       active-class="active-link-pat">
