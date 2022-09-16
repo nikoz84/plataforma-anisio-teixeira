@@ -8,40 +8,79 @@
     </div>
 
     <div class="row items-start q-gutter-md q-mb-xl">
-      <card-dashboard v-for="(item, i) in dashboardData" :key="i" :data="item.data" :id="item.id" />
+      <card-dashboard
+        v-for="(item, i) in dashboardData"
+        :key="i"
+        :data="item.data"
+        :id="item.id"
+      />
     </div>
 
-    <div class="row items-start q-gutter-md q-mb-xl">
-    </div>
+    <div class="row items-start q-gutter-md q-mb-xl"></div>
 
-    <q-select filled v-model="item" use-input option-value="value" option-label="label" use-chips stack-value
-      input-debounce="0" :options="selectOptions" class="q-mb-lg" @input="getData" />
+    <q-select
+      filled
+      v-model="item"
+      use-input
+      option-value="value"
+      option-label="label"
+      use-chips
+      stack-value
+      input-debounce="0"
+      :options="selectOptions"
+      class="q-mb-lg"
+      @input="getData"
+    />
     <hr />
     <q-card>
       <q-card-section>
         <div class="text-dark text-h6">Filtros</div>
         <div class="q-gutter-md row items-start">
           <div style="min-width: 250px; max-width: 300px">
-            <q-select v-model="anoMultiple" multiple label-color="primary" :options="anos" use-chips stack-label
-              label="Anos" />
+            <q-select
+              v-model="anoMultiple"
+              multiple
+              label-color="primary"
+              :options="anos"
+              use-chips
+              stack-label
+              label="Anos"
+            />
           </div>
           <div style="min-width: 250px; max-width: 300px">
-            <q-select v-model="temaMultiple" multiple label-color="primary" :options="temas" use-chips stack-label
-              label="Tema ou Disciplina" />
+            <q-select
+              v-model="temaMultiple"
+              multiple
+              label-color="primary"
+              :options="temas"
+              use-chips
+              stack-label
+              label="Tema ou Disciplina"
+            />
           </div>
         </div>
       </q-card-section>
       <q-separator />
       <q-card-section>
-        <VueApexCharts height="450" v-if="render" type="bar" :options="chartOptions" :series="series"></VueApexCharts>
+        <VueApexCharts
+          height="450"
+          v-if="render"
+          type="bar"
+          :options="chartOptions"
+          :series="series"
+        ></VueApexCharts>
       </q-card-section>
       <q-card-section>
-        <q-table :title="title" :data="metadata" :columns="columns" row-key="id" separator="horizontal" />
+        <q-table
+          :title="title"
+          :data="metadata"
+          :columns="columns"
+          row-key="id"
+          separator="horizontal"
+        />
       </q-card-section>
     </q-card>
-
   </div>
-
 </template>
 <script>
 // @ts-nocheck
@@ -69,7 +108,7 @@ export default {
     VueApexCharts,
     CardDashboard,
   },
-  data () {
+  data() {
     return {
       title: "",
       render: false,
@@ -151,12 +190,12 @@ export default {
       temas: ["123", "456", "789", "000"],
     };
   },
-  created () {
+  created() {
     this.getData();
     this.getDashboardData();
   },
   methods: {
-    async getData () {
+    async getData() {
       let url = `resumo?option=${this.item.value}`;
       let resp = await axios.get(url);
       if (resp.data.success) {
@@ -170,11 +209,10 @@ export default {
       }
     },
 
-    async getDashboardData () {
+    async getDashboardData() {
       let from = "01-01-2000";
       let to = "30-12-2022";
-      let id = '';
-
+      let id = "";
 
       const { data } = await axios.get(
         `/dashboard?inicio=${from}&fim=${to}&category_id={id}`
@@ -185,7 +223,7 @@ export default {
       }
     },
 
-    createInfoGraf (categories) {
+    createInfoGraf(categories) {
       this.chartOptions = {
         ...this.chartOptions,
         ...{
@@ -198,7 +236,7 @@ export default {
         },
       };
     },
-    appendData (data) {
+    appendData(data) {
       let arr = this.series.slice();
       arr[0].data = data;
       this.series = arr;

@@ -1,5 +1,3 @@
-// @ts-nocheck
-//import { LoaderAdmin } from "@components/exibir";
 import Admin from "@layout/Admin";
 import {
   ListarConteudos,
@@ -31,11 +29,11 @@ import {
   CurricularComponentsCategoryForm,
   NivelEnsinoForm,
 } from "@forms/models";
-import { ConteudosPorAno, CatalogacaoMensal } from "@components/dashboard";
-
 import AdminPage from "@pages/AdminPage.vue";
-import Dashboard from "@pages/Dashboard.vue";
 import { Contato } from "@components/exibir";
+import { listarDashboardRoute, 
+  conteudoPorAnoRoute, 
+  catalogacaoMensalRoute} from './dashboardRoutes'
 
 const adminRoutes = {
   path: "/admin",
@@ -48,43 +46,11 @@ const adminRoutes = {
     layout: Admin,
   },
   children: [
+    listarDashboardRoute, 
+    conteudoPorAnoRoute, 
+    catalogacaoMensalRoute,
     {
-      path: "dashboard/listar",
-      components: {
-        admin: Dashboard,
-      },
-      meta: {
-        requiresAuth: true,
-        title: "Estatisticas",
-        layout: Admin,
-      },
-      children: [
-        {
-          path: "conteudos-por-ano",
-          components: {
-            admin: ConteudosPorAno,
-          },
-          meta: {
-            requiresAuth: true,
-            title: "Catalogação por ano",
-            layout: Admin,
-          },
-        },
-        {
-          path: "catalogacao-mensal",
-          components: {
-            admin: CatalogacaoMensal,
-          },
-          meta: {
-            requiresAuth: true,
-            title: "Catalogação mensal",
-            layout: Admin,
-          },
-        },
-      ],
-    },
-    {
-      path: "conteudos/listar",
+      path: "/conteudos/listar",
       components: {
         admin: ListarConteudos,
       },

@@ -1,46 +1,42 @@
 <template>
-    <div class="row items-start">
-        <q-card class="my-card text-dark" style="" square>
-            <!-- TÍTULO DOS DADOS -->
-            <q-card-section>
-                <div class="text-h6">
-                    {{ data.titulo }}
-                </div>
-            </q-card-section>
+  <div class="row items-start">
+    <q-card class="my-card text-dark" style="" square>
+      <!-- TÍTULO DOS DADOS -->
+      <q-card-section>
+        <div class="text-h6">
+          {{ data.titulo }}
+        </div>
+      </q-card-section>
 
-            <q-separator />
+      <q-separator />
 
-            <!-- ENTRADA DE DADOS -->
-            <q-card-section> {{ data.nome }} Quantidade: {{ data.quantidade }} </q-card-section>
+      <!-- ENTRADA DE DADOS -->
+      <q-card-section>
+        {{ data.nome }} Quantidade: {{ data.quantidade }}
+      </q-card-section>
 
-            <q-separator />
+      <q-separator />
 
-            <!-- AÇÕES DOS DADOS -->
-            <q-card-actions>
-                <q-btn flat @click="goto(id, $event)" size="sm">Ver relatório completo</q-btn>
-            </q-card-actions>
-        </q-card>
-    </div>
+      <!-- AÇÕES DOS DADOS -->
+      <q-card-actions>
+        <q-btn flat :to="`/admin/dashboard/${id}`" size="sm"
+          >Ver relatório completo</q-btn
+        >
+      </q-card-actions>
+    </q-card>
+  </div>
 </template>
 
 <script>
 export default {
-    name: "CardDashboard",
-    props: ["id", "data", "nome"],
-    methods: {
-        goto: function (ID, e) {
-            if (e) {
-                e.preventDefault();
-
-                this.$router.push("/admin/dashboard/listar/" + ID);
-            }
-        },
-    },
+  name: "CardDashboard",
+  props: ["id", "data", "nome"],
+  methods: {},
 };
 </script>
 <style scoped>
 .my-card {
-    width: 450px;
-    max-width: 450px;
+  width: 450px;
+  max-width: 450px;
 }
 </style>
