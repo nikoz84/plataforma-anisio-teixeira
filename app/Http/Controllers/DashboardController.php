@@ -12,43 +12,40 @@ class DashboardController extends ApiController
         return $this->successResponse([
             [
                 'id' => 'conteudos-por-ano',
-                'data' => DashboardData::getConteudosPorAno($request)
+                'data' => DashboardData::conteudosPorAno($request)
             ],
-            [
-                'id' => 'catalogacao-mensal',
-                'data' => DashboardData::getCatalogacaoMensal($request)
-            ],
+        
             [
                 'id' => 'catalogacao-por-canal',
-                'data' => DashboardData::getCatalogacaoPorCanal($request)
+                'data' => DashboardData::catalogacaoPorCanal($request)
             ],
             [
                 'id' => 'catalogacao-mensal-por-usuario',
-                'data' => DashboardData::getCatalogacaoMensalPorUsuario($request)
+                'data' => DashboardData::catalogacaoMensalPorUsuario($request)
             ],
             [
                 'id' => 'catalogacao-total-mensal',
-                'data' => DashboardData::getCatalogacaoTotalMensal($request)
+                'data' => DashboardData::catalogacaoTotalMensal($request)
             ],
              [
                 'id' => 'conteudos-mais-baixados',
-                'data' => DashboardData::getConteudosMaisBaixados($request)
+                'data' => DashboardData::conteudosMaisBaixados($request)
             ],
             [
                 'id' => 'conteudos-mais-acessados',
-                'data' => DashboardData::getConteudosMaisAcessados($request)
+                'data' => DashboardData::conteudosMaisAcessados($request)
             ],
             [
                 'id' => 'tags-mais-procuradas',
-                'data' => DashboardData::getTagsMaisProcuradas($request)
+                'data' => DashboardData::tagsMaisProcuradas($request)
             ],
             [
                  'id' => 'aplicativos-mais-vizualizados',
-                'data' => DashboardData::getAplicativosMaisVizualizados($request)
+                'data' => DashboardData::aplicativosMaisVizualizados($request)
             ],
             [
                 'id' => 'tipos-de-midia',
-                'data' => DashboardData::getTiposDeMidia($request)
+                'data' => DashboardData::tiposDeMidia($request)
             ],
 
         ]);

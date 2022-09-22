@@ -12,16 +12,14 @@
 
       <!-- ENTRADA DE DADOS -->
       <q-card-section>
-        {{ data.nome }} Quantidade: {{ data.quantidade }}
+        {{ data.title ? data.title : '' }} Quantidade: {{ data.quantidade ? data.quantidade : 0}}
       </q-card-section>
 
       <q-separator />
 
       <!-- AÇÕES DOS DADOS -->
       <q-card-actions>
-        <q-btn flat :to="`/admin/dashboard/${id}`" size="sm"
-          >Ver relatório completo</q-btn
-        >
+        <q-btn flat :to="`/admin/dashboard/${id}`" size="sm">Ver relatório completo</q-btn>
       </q-card-actions>
     </q-card>
   </div>
@@ -30,7 +28,7 @@
 <script>
 export default {
   name: "CardDashboard",
-  props: ["id", "data", "nome"],
+  props: ["id", "data", "title", "slug"],
   methods: {},
 };
 </script>
