@@ -3,142 +3,130 @@
 namespace App\Services;
 
 use App\Models\Aplicativo;
-use Illuminate\Http\Request;
 use App\Models\Conteudo;
 use App\Models\Tag;
-use App\Models\Tipo;
 use Illuminate\Support\Facades\DB;
 
 class DashboardData
 {
 
-    public $limit = 1;
-
-    public function __construct($limit = 1)
+    public static function conteudosPorAno()
     {
-        $this->limit = $limit;
-    }
-
-
-
-    public static function conteudosPorAno(Request $request)
-    {
-
-        $conteudos = Conteudo::whereBetween('created_at', [
-            $request->get('inicio', ''),
-            $request->get('fim', '')
-        ])->count();
+        $conteudo = Conteudo::selectRaw('extract(year from conteudos.created_at) as ano, COUNT(*) as quantidade')
+            ->groupByRaw('extract(year from conteudos.created_at)')
+            ->orderBy('quantidade', 'DESC')
+            ->get()->first();
 
         return [
-            'titulo' => 'Conteúdos publicados por ano',
-            'quantidade' => $conteudos,
-            'fim' => $request->get('fim', ''),
-            'inicio' => $request->get('inicio', '')
+            'titulo' => 'Conteúdos por ano',
+            'quantidade' => $conteudo->quantidade,
+            'title' => $conteudo->ano
         ];
     }
-    
-    public static function catalogacaoPorCanal(Request $request)
+
+    public static function catalogacaoPorCanal()
     {
-        $conteudos = Conteudo::whereBetween('created_at', [
-            $request->get('fim', ''),
-            $request->get('inicio', '')
-        ])->count();
+        $canal = DB::table('canais AS ca')
+            ->select(DB::raw('ca.name, count(ca.id) AS total'))
+            ->join('conteudos AS c', 'ca.id', '=', 'c.canal_id')
+            ->groupBy('ca.name')
+            ->orderBy('total', 'DESC')
+            ->get()->first();
 
         return [
             'titulo' => 'Catalogação por canal',
-            'quantidade' => $conteudos,
-            'fim' => $request->get('fim', ''),
-            'inicio' => $request->get('inicio', '')
+            'quantidade' => $canal->total,
+            'title' => $canal->name
         ];
     }
-    public static function catalogacaoMensalPorUsuario(Request $request)
+    public static function catalogacaoMensalPorUsuario()
     {
-        $conteudos = Conteudo::whereBetween('created_at', [
-            $request->get('fim', ''),
-            $request->get('inicio', '')
-        ])->count();
+        $user = DB::table('users as u')
+            ->select(DB::raw('u.name, count(u.id) AS total'))
+            ->join('conteudos AS c', 'u.id', '=', 'c.user_id')
+            ->groupBy('u.name')
+            ->orderBy('total', 'DESC')
+            ->get()->first();
         return [
             'titulo' => 'Catalogação mensal por usuário',
-            'quantidade' => $conteudos,
-            'fim' => $request->get('fim', ''),
-            'inicio' => $request->get('inicio', '')
+            'quantidade' => $user->total,
+            'title' => $user->name
+
         ];
     }
-    public static function catalogacaoTotalMensal(Request $request)
+    public static function catalogacaoTotalMensal()
     {
-        $conteudos = Conteudo::whereBetween('created_at', [
-            $request->get('fim', ''),
-            $request->get('inicio', '')
-        ])->count();
+        $conteudo = Conteudo::selectRaw('extract(month from conteudos.created_at) as mes, COUNT(*) as quantidade')
+            ->groupByRaw('extract(month from conteudos.created_at)')
+            ->orderBy('quantidade', 'DESC')
+            ->get()->first();
 
         return [
             'titulo' => 'Catalogação total mensal',
-            'quantidade' => $conteudos,
-           
+            'quantidade' => $conteudo->quantidade,
+            'title' => $conteudo->mes
         ];
     }
     public static function conteudosMaisBaixados()
     {
         $conteudo = Conteudo::orderBy('qt_downloads', 'desc')->get()->first();
-       
-            return [
-                'titulo' => 'Conteúdo Mais baixado',
-                'quantidade' => $conteudo->qt_access,
-                'title' => $conteudo->title,
-            ];
-        
+
+        return [
+            'titulo' => 'Conteúdo Mais baixado',
+            'quantidade' => $conteudo->qt_access,
+            'title' => $conteudo->title,
+        ];
     }
 
     public static function conteudosMaisAcessados()
     {
         $conteudo = Conteudo::orderBy('qt_access', 'desc')->get()->first();
-      
-            return [
-                'titulo' => 'Conteúdo Mais Acessado',
-                'quantidade' => $conteudo->qt_access,
-                'title' => $conteudo->title,
-         
-            ];
+
+        return [
+            'titulo' => 'Conteúdo mais Acessado',
+            'quantidade' => $conteudo->qt_access,
+            'title' => $conteudo->title,
+
+        ];
     }
 
     public static function tagsMaisProcuradas()
     {
         $conteudo = Tag::orderBy('searched', 'desc')->get()->first();
-       
-            return [
-                'titulo' => 'Tag mais procurada',
-                'quantidade' => $conteudo->searched,
-                'title' => $conteudo->name,
-            ];
+
+        return [
+            'titulo' => 'Tag mais procurada',
+            'quantidade' => $conteudo->searched,
+            'title' => $conteudo->name,
+        ];
     }
 
-    
 
     public static function aplicativosMaisVizualizados()
     {
-         $aplicativo = Aplicativo::orderby('options->>qt_access', 'DESC')->first();
-        
+        $aplicativo = Aplicativo::orderby('options->>qt_access', 'DESC')->first();
+
         return [
             'titulo' => 'Aplicativo mais vizualizados',
             'quantidade' => $aplicativo->options['qt_access'],
             'title' => $aplicativo->title,
         ];
-
     }
 
 
     public static function tiposDeMidia()
-
     {
-    $tipo = Tipo::orderby('options->>qt_access', 'DESC')->first();
-    
-    return [
-            'titulo' => 'Tipo de mídia mais vizualizada',
-            'quantidade' => $tipo->options['qt_access'],
-            'title' => $tipo->name,
+        $tipo = DB::table('tipos AS t')
+            ->select(DB::raw('t.name, count(t.id) AS total'))
+            ->join('conteudos AS c', 't.id', '=', 'c.tipo_id')
+            ->groupBy('t.name')
+            ->orderBy('total', 'DESC')
+            ->get()->first();
+
+        return [
+            'titulo' => 'Mídia mais vizualizada',
+            'quantidade' => $tipo->total,
+            'title' => $tipo->name
         ];
-        
-      
-            
-}
+    }
 }
