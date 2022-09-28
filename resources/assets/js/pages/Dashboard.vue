@@ -13,6 +13,30 @@
 
     <div class="row items-start q-gutter-md q-mb-xl"></div>
 
+    <q-select filled v-model="item" use-input option-value="value" option-label="label" use-chips stack-value
+      input-debounce="0" :options="selectOptions" class="q-mb-lg" @input="getData" />
+    <hr />
+    <q-card>
+      <!-- <q-card-section>
+        <div class="text-dark text-h6">Filtros</div>
+        <div class="q-gutter-md row items-start">
+          <div style="min-width: 250px; max-width: 300px">
+            <q-select v-model="anoMultiple" multiple label-color="primary" :options="anos" use-chips stack-label
+              label="Anos" />
+          </div>
+          <div style="min-width: 250px; max-width: 300px">
+            <q-select v-model="temaMultiple" multiple label-color="primary" :options="temas" use-chips stack-label
+              label="Tema ou Disciplina" />
+          </div>
+        </div>
+      </q-card-section> -->
+      <q-separator />
+      <q-card-section>
+        <VueApexCharts height="450" v-if="render" type="bar" :options="chartOptions" :series="series"></VueApexCharts>
+      </q-card-section>
+
+    </q-card>
+
   </div>
 </template>
 <script>

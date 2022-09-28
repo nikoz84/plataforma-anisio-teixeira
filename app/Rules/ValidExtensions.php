@@ -28,13 +28,14 @@ class ValidExtensions implements Rule
      */
     public function passes($attribute, $value)
     {
-        if (! $this->id) {
+        //dd($value, $this->id);
+        if (!$this->id) {
             return false;
         }
 
         $tipo = Tipo::where('id', $this->id)->get()->first();
 
-        if (! $tipo) {
+        if (!$tipo) {
             return false;
         }
 

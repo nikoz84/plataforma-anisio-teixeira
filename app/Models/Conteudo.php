@@ -52,8 +52,16 @@ class Conteudo extends Model
     /**
      * Tabela com campos definidos
      */
-    protected $casts = ['options' => 'array'];
+    //protected $casts = ['options' => 'array'];
 
+    public function options(): Attribute
+    {
+        dd($this['options']);
+        return Attribute::make(
+            get: fn ($value) => json_decode($value, true),
+            set: fn ($value) => json_encode($value),
+        );
+    }
     /**
      * Tabela com campos definidos
      */
@@ -173,9 +181,7 @@ class Conteudo extends Model
             return $is_approved;
         };
 
-        return new Attribute(
-            set: $set
-        );
+        return Attribute::make(set: $set);
     }
 
     /**
@@ -186,9 +192,7 @@ class Conteudo extends Model
      */
     public function approvingUserId(): Attribute
     {
-        return new Attribute(
-            set: fn () => Auth::user()->id ? Auth::user()->id : null
-        );
+        return Attribute::make(set: fn () => Auth::user()->id ? Auth::user()->id : null);
     }
 
     /**
@@ -198,9 +202,7 @@ class Conteudo extends Model
      */
     public function excerpt(): Attribute
     {
-        return new Attribute(
-            get: fn () => strip_tags(Str::words($this->description, 30))
-        );
+        return Attribute::make(get: fn () => strip_tags(Str::words($this->description, 30)));
     }
 
 
@@ -209,16 +211,12 @@ class Conteudo extends Model
      */
     public function titleSlug(): Attribute
     {
-        return new Attribute(
-            get: fn () => Str::slug(Str::words($this->title, 30), '-')
-        );
+        return Attribute::make(get: fn () => Str::slug(Str::words($this->title, 30), '-'));
     }
 
     public function shortTitle(): Attribute
     {
-        return new Attribute(
-            get: fn () => Str::words($this->title, 12, '...')
-        );
+        return Attribute::make(get: fn () => Str::words($this->title, 12, '...'));
     }
 
     /**
@@ -228,9 +226,7 @@ class Conteudo extends Model
      */
     public function formatedDate(): Attribute
     {
-        return new Attribute(
-            get: fn () => TransformDate::format($this['created_at'])
-        );
+        return Attribute::make(get: fn () => TransformDate::format($this['created_at']));
     }
 
     /**
@@ -256,10 +252,10 @@ class Conteudo extends Model
     {
         $id = $this['id'];
         $image = $this::getImageFromConteudo($id);
-        if (! $image) {
+        if (!$image) {
             $image = $this->getCategoryImage($this->category_id);
         }
-        if (! $image) {
+        if (!$image) {
             $image = $this->getImageFromTipo($this->tipo, $this->id);
         }
 
@@ -296,15 +292,13 @@ class Conteudo extends Model
         $get = function () {
             $slug = $this->canal()->pluck('slug')->first();
             if ($slug) {
-                return "/{$slug}/conteudo/exibir/".$this['id'];
+                return "/{$slug}/conteudo/exibir/" . $this['id'];
             }
 
             return;
         };
 
-        return new Attribute(
-            get: $get
-        );
+        return Attribute::make(get: $get);
     }
 
     /**
@@ -316,7 +310,7 @@ class Conteudo extends Model
      */
     public function scopeApproved(Builder $query, $is_approved)
     {
-        if (! $is_approved) {
+        if (!$is_approved) {
             return $query;
         }
 
@@ -333,7 +327,7 @@ class Conteudo extends Model
      */
     public function scopeFullTextSearch(Builder $query, $search, $por)
     {
-        if (! $search) {
+        if (!$search) {
             return $query;
         }
         $type = ($por == 'tag') ? 'simple' : 'portuguese';
@@ -351,7 +345,7 @@ class Conteudo extends Model
      */
     public function scopeSearchTag(Builder $query, $tag_id)
     {
-        if (! $tag_id) {
+        if (!$tag_id) {
             return $query;
         }
         Tag::where('id', $tag_id)->increment('searched', 1);
@@ -370,7 +364,7 @@ class Conteudo extends Model
      */
     public function scopeSearchByComponent(Builder $query, $componentes)
     {
-        if (! $componentes) {
+        if (!$componentes) {
             return $query;
         }
 
@@ -390,7 +384,7 @@ class Conteudo extends Model
      */
     public function scopeSearchByColumn(Builder $query, $column, $data, $multiple = false)
     {
-        if (! $data) {
+        if (!$data) {
             return $query;
         }
 
@@ -410,7 +404,7 @@ class Conteudo extends Model
      */
     public function scopeSearchByCanal(Builder $query, $canal_id)
     {
-        if (! $canal_id || $canal_id == 6) {
+        if (!$canal_id || $canal_id == 6) {
             return $query;
         }
 
@@ -426,7 +420,7 @@ class Conteudo extends Model
      */
     public function scopeSortBy(builder $query, $by)
     {
-        if (! $by) {
+        if (!$by) {
             return $query;
         }
         $order_by = null;
@@ -458,7 +452,7 @@ class Conteudo extends Model
      */
     public static function tsDocumentoSave($id)
     {
-        if (! $id) {
+        if (!$id) {
             return;
         }
 
@@ -476,135 +470,135 @@ class Conteudo extends Model
                regexp_replace(
                regexp_replace( c.description
                , E'<.*?>', '', 'g')
-               , E'&nbsp;', ' ', 'g')
-               , E'[\\n\\r]+', ' ', 'g')
-           ))),'D') AS ts_documento")
-            ->where('id', '=', $id)
-            ->get()
-            ->first();
+, E'&nbsp;', ' ', 'g')
+, E'[\\n\\r]+', ' ', 'g')
+))),'D') AS ts_documento")
+->where('id', '=', $id)
+->get()
+->first();
 
-        DB::update('update conteudos set ts_documento = ? where id = ?', [$fullTextSearch->ts_documento, $id]);
+DB::update('update conteudos set ts_documento = ? where id = ?', [$fullTextSearch->ts_documento, $id]);
+}
+
+/**
+* Retorna conteúdos relacionados
+*
+* @param Builder $query Instância query builder
+* @param int $id Identificador único do conteúdo digital
+* @return void
+*/
+public function scopeRelacionados(Builder $query, $id)
+{
+if (!$id) {
+return $query;
+}
+$tags_query = function ($q) {
+return $q->limit(2);
+};
+$conteudo = Conteudo::with(['tags' => $tags_query])->findOrFail($id);
+$tags = $conteudo->tags->implode('name', ', ');
+
+return Conteudo::whereRaw(
+"conteudos.ts_documento @@ plainto_tsquery('portuguese', lower(unaccent(?)))",
+[$tags]
+)->orWhereRaw(
+"conteudos.ts_documento @@ plainto_tsquery('simple', lower(unaccent(?)))",
+[$tags]
+)->where('id', '<>', $id);
     }
 
     /**
-     * Retorna conteúdos relacionados
-     *
-     * @param  Builder  $query Instância query builder
-     * @param  int  $id Identificador único do conteúdo digital
-     * @return void
-     */
-    public function scopeRelacionados(Builder $query, $id)
-    {
-        if (! $id) {
-            return $query;
-        }
-        $tags_query = function ($q) {
-            return $q->limit(2);
-        };
-        $conteudo = Conteudo::with(['tags' => $tags_query])->findOrFail($id);
-        $tags = $conteudo->tags->implode('name', ', ');
-
-        return Conteudo::whereRaw(
-            "conteudos.ts_documento @@ plainto_tsquery('portuguese', lower(unaccent(?)))",
-            [$tags]
-        )->orWhereRaw(
-            "conteudos.ts_documento @@ plainto_tsquery('simple', lower(unaccent(?)))",
-            [$tags]
-        )->where('id', '<>', $id);
-    }
-
-    /**
-     * Retorna conteúdos mais baixados
-     *
-     * @return DB
-     */
+    * Retorna conteúdos mais baixados
+    *
+    * @return DB
+    */
     public function relatorioMaisBaixados()
     {
-        return Conteudo::select([
-            'title',
-            'users.name as publisher',
-            'tipos.name as type',
-            'qt_downloads as quantity',
-        ])
-            ->join('users', 'users.id', '=', 'conteudos.user_id')
-            ->join('tipos', 'tipos.id', '=', 'conteudos.tipo_id')
-            ->orderByDesc('conteudos.qt_downloads')
-            ->whereNotNull('qt_downloads')
-            ->limit(100)
-            ->get();
+    return Conteudo::select([
+    'title',
+    'users.name as publisher',
+    'tipos.name as type',
+    'qt_downloads as quantity',
+    ])
+    ->join('users', 'users.id', '=', 'conteudos.user_id')
+    ->join('tipos', 'tipos.id', '=', 'conteudos.tipo_id')
+    ->orderByDesc('conteudos.qt_downloads')
+    ->whereNotNull('qt_downloads')
+    ->limit(100)
+    ->get();
     }
 
     /**
-     * Retorna conteúdos mais acessados
-     *
-     * @return DB
-     */
+    * Retorna conteúdos mais acessados
+    *
+    * @return DB
+    */
     public function relatorioMaisAcessados()
     {
-        return Conteudo::select([
-            'title',
-            'users.name as publisher',
-            'tipos.name as type',
-            'qt_access as quantity',
-        ])
-            ->join('users', 'users.id', '=', 'conteudos.user_id')
-            ->join('tipos', 'tipos.id', '=', 'conteudos.tipo_id')
-            ->whereNotNull('qt_access')
-            ->orderByDesc('conteudos.qt_access');
+    return Conteudo::select([
+    'title',
+    'users.name as publisher',
+    'tipos.name as type',
+    'qt_access as quantity',
+    ])
+    ->join('users', 'users.id', '=', 'conteudos.user_id')
+    ->join('tipos', 'tipos.id', '=', 'conteudos.tipo_id')
+    ->whereNotNull('qt_access')
+    ->orderByDesc('conteudos.qt_access');
     }
 
     /**
-     * Obtem array com os anos distintos que houveram conteúdos publicados
-     *
-     * @return array
-     */
+    * Obtem array com os anos distintos que houveram conteúdos publicados
+    *
+    * @return array
+    */
     public function publicacaoAnos()
     {
-        return DB::select("select  distinct date_part('year', created_at) as anopublicacao from conteudos order by 1 desc");
+    return DB::select("select distinct date_part('year', created_at) as anopublicacao from conteudos order by 1 desc");
     }
 
     /**
-     * Obtem os conteúdos publicados por ano
-     *
-     * @param  int  $ano Ano de publicação
-     * @return void
-     */
+    * Obtem os conteúdos publicados por ano
+    *
+    * @param int $ano Ano de publicação
+    * @return void
+    */
     public function conteudosPorAno($ano)
     {
-        return Conteudo::select([
-            'title',
-            'users.name as publisher',
-            'tipos.name as type',
-            'qt_downloads as quantity',
-        ])
-            ->join('users', 'users.id', '=', 'conteudos.user_id')
-            ->join('tipos', 'tipos.id', '=', 'conteudos.tipo_id')
-            ->where(DB::raw("date_part('year', conteudos.created_at)"), $ano)
-            ->get();
+    return Conteudo::select([
+    'title',
+    'users.name as publisher',
+    'tipos.name as type',
+    'qt_downloads as quantity',
+    ])
+    ->join('users', 'users.id', '=', 'conteudos.user_id')
+    ->join('tipos', 'tipos.id', '=', 'conteudos.tipo_id')
+    ->where(DB::raw("date_part('year', conteudos.created_at)"), $ano)
+    ->get();
     }
 
     /**
-     * Reorna todos objetos de conteudo de video que não possuem arquivos correspondentes de streaming
-     *
-     * @return array $conteudos de video que não possuem arquivos de streaming do video convertidos ainda
-     */
+    * Reorna todos objetos de conteudo de video que não possuem arquivos correspondentes de streaming
+    *
+    * @return array $conteudos de video que não possuem arquivos de streaming do video convertidos ainda
+    */
     public function conteudosSemStreamingFiles()
     {
-        $conteudos = Conteudo::select(['id', 'title', 'tipo_id'])
-            ->where('tipo_id', 5)
-            ->get();
-        $conteudoNoStreamingFile = [];
-        foreach ($conteudos as $conteudo) {
-            $videoFIleRef = $this->downloadFileConteudoReferencia($conteudo->id);
-            if ($videoFIleRef) {
-                $videoFIleRef = $this->streamingFileConteudoReferencia($conteudo->id);
-                if (! $videoFIleRef) {
-                    return;
-                }
-                $conteudoNoStreamingFile[] = $conteudo;
-            }
-        }
-
-        return $conteudoNoStreamingFile;
+    $conteudos = Conteudo::select(['id', 'title', 'tipo_id'])
+    ->where('tipo_id', 5)
+    ->get();
+    $conteudoNoStreamingFile = [];
+    foreach ($conteudos as $conteudo) {
+    $videoFIleRef = $this->downloadFileConteudoReferencia($conteudo->id);
+    if ($videoFIleRef) {
+    $videoFIleRef = $this->streamingFileConteudoReferencia($conteudo->id);
+    if (!$videoFIleRef) {
+    return;
     }
-}
+    $conteudoNoStreamingFile[] = $conteudo;
+    }
+    }
+
+    return $conteudoNoStreamingFile;
+    }
+    }
