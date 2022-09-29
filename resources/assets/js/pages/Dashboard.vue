@@ -28,6 +28,27 @@
             <q-select v-model="temaMultiple" multiple label-color="primary" :options="temas" use-chips stack-label
               label="Tema ou Disciplina" />
           </div>
+          <div style="min-width: 250px; max-width: 300px">
+            <q-select
+              v-model="tipoConteudoMultiple"
+              multiple
+              label-color="primary"
+              :options="tipoConteudo"
+              use-chips
+              stack-label
+              label="Tipo de conteúdo"
+            />
+          </div>
+          <div style="min-width: 250px; max-width: 300px">
+            <q-select
+              v-model="ordenarMultiple"
+              label-color="primary"
+              :options="ordenar"
+              use-chips
+              stack-label
+              label="Ordenar por:"
+            />
+          </div>
         </div>
       </q-card-section> -->
       <q-separator />
@@ -141,10 +162,40 @@ export default {
         },
       },
       series: [{ name: "Quantidade", data: [] }],
+      mesMultiple: null,
       anoMultiple: null,
       temaMultiple: null,
-      anos: ["Google", "Facebook", "Twitter", "Apple", "Oracle"],
-      temas: ["123", "456", "789", "000"],
+      tipoConteudoMultiple: null,
+      ordenarMultiple: null,
+      meses: [
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro",
+      ],
+      anos: ["2022", "2021", "2020", "2019", "2018"],
+      temas: ["Matemática", "Física", "Química", "Sexualidade"],
+      tipoConteudo: [
+        "Videos",
+        "Apresentações",
+        "Áudios",
+        "Aplicativos",
+        "Games",
+      ],
+      ordenar: [
+        "Mais baixados",
+        "Mais visualizados",
+        "Mais acessados",
+        "Catalogado por usuário",
+      ],
     };
   },
   created () {
