@@ -31,9 +31,19 @@ import {
 } from "@forms/models";
 import AdminPage from "@pages/AdminPage.vue";
 import { Contato } from "@components/exibir";
-import { listarDashboardRoute, 
-  conteudoPorAnoRoute, 
-  catalogacaoMensalRoute} from './dashboardRoutes'
+import {
+  listarDashboardRoute,
+  conteudoPorAnoRoute,
+  catalogacaoMensalRoute,
+  catalogacaoPorCanalRoute,
+  catalogacaoMensalPorUsuarioRoute,
+  catalogacaoTotalMensalRoute,
+  conteudosMaisBaixadosRoute,
+  conteudosMaisAcessadosRoute,
+  tagsMaisProcuradasRoute,
+  aplicativosMaisVizualizadosRoute,
+  tiposDeMidiaRoute,
+} from './dashboardRoutes'
 
 const adminRoutes = {
   path: "/admin",
@@ -46,9 +56,17 @@ const adminRoutes = {
     layout: Admin,
   },
   children: [
-    listarDashboardRoute, 
-    conteudoPorAnoRoute, 
+    listarDashboardRoute,
+    conteudoPorAnoRoute,
     catalogacaoMensalRoute,
+    catalogacaoPorCanalRoute,
+    catalogacaoMensalPorUsuarioRoute,
+    catalogacaoTotalMensalRoute,
+    conteudosMaisBaixadosRoute,
+    conteudosMaisAcessadosRoute,
+    tagsMaisProcuradasRoute,
+    aplicativosMaisVizualizadosRoute,
+    tiposDeMidiaRoute,
     {
       path: "/conteudos/listar",
       components: {

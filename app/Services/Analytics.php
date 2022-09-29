@@ -182,7 +182,7 @@ class Analytics
        WHEN EXTRACT(MONTH from created_at)= 12 THEN
        'Dezembro'
         END AS month from conteudos
-        WHERE created_at between '?' and '?' GROUP BY MONTH, data, id, title ORDER BY TOTAL DESC LIMIT 10";
+        WHERE created_at between '01-01-2020' and '01-04-2020' GROUP BY MONTH, data, id, title ORDER BY TOTAL DESC LIMIT 10";
 
         return DB::select($sql, [$this->data_inicio, $this->data_fim]);
     }
@@ -356,7 +356,7 @@ class Analytics
     public function getSeries($data, $title = '')
     {
         $collect = collect($data);
-        if (! $collect->contains('month')) {
+        if (!$collect->contains('month')) {
             return [
                 'title' => $title,
                 'render' => $this->render_graph,

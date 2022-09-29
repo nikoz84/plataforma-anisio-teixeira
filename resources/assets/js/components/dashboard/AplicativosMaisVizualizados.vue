@@ -1,6 +1,6 @@
 <template>
     <div>
-        <section>
+        <q-section>
             <q-card>
                 <q-separator />
                 <q-card-section>
@@ -28,42 +28,46 @@
                         </div>
                     </div>
                 </q-card-section>
-                <q-table title="Conteúdos" :data="dataTable" :columns="columns" color="primary" row-key="name">
+                <q-table title="Aplicativos Mais Visualizados" :data="data" :columns="columns" color="primary"
+                    row-key="name">
                     <template v-slot:top-right>
                         <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps
-                            @click="exportToCsv" />
+                            @click="exportTable" />
                     </template>
                 </q-table>
             </q-card>
-        </section>
+        </q-section>
         <q-separator />
         <q-card-section>
-            <VueApexCharts height="450" type="bar" :options="chartOptions" :series="series" />
+            <VueApexCharts height="450" v-if="render" type="bar" :options="chartOptions" :series="series" />
+
         </q-card-section>
     </div>
 </template>
 
 <script>
-import { exportTable } from '@composables/ToCsv';
+import { exportFile } from 'quasar';
 import VueApexCharts from "vue-apexcharts";
 
-
 export default {
-    name: 'ConteudosPorAno',
+    name: 'AplicativosMaisVizualizados',
     components: {
+
         VueApexCharts
     },
     data () {
         return {
             columns: [
+
                 { name: 'Titulo', align: 'center', label: 'Títulos', field: 'titulos' },
                 { name: 'Descricao', label: 'Descrição', field: 'descricao' },
                 { name: 'Author', label: 'Autor', field: 'autor' },
                 { name: 'Q.Downloads', label: 'Q.Downloads', field: 'qt_downloads' },
                 { name: 'Qt.Acessos', label: 'Qt.Acessos', field: 'qt_access' },
                 { name: 'Dt.Criacao', label: 'Dt.Criação', field: 'created_at' }
+
             ],
-            dataTable: [],
+
             series: [{ name: "Quantidade", data: [] }],
             mesMultiple: null,
             anoMultiple: null,
@@ -123,14 +127,6 @@ export default {
                 },
             },
 
-        }
-    },
-    methods: {
-        exportToCsv () {
-            exportTable(this.dataTable, this.columns)
-        },
-        getDataTable () {
-            console.log('oisio')
         }
     }
 }
