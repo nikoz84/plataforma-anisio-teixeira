@@ -9,6 +9,10 @@
 
     <div class="row items-start q-gutter-md q-mb-xl">
       <card-dashboard v-for="(item, i) in dashboardData" :key="i" :data="item.data" :id="item.id" />
+      <!-- <span>
+        <VueApexCharts height="150" v-if="render" type="bar" :options="chartOptions" :series="series"></VueApexCharts>
+
+      </span> -->
     </div>
 
     <div class="row items-start q-gutter-md q-mb-xl"></div>
@@ -114,28 +118,16 @@ export default {
       selectOptions: [
         { label: "Tipos de mídias", value: "type_of_midia" },
         { label: "Catalogação por usuário", value: "per_user" },
-        {
-          label: "Catalogação por canal",
-          value: "per_chanel",
-        },
+        { label: "Catalogação por canal", value: "per_chanel" },
         { label: "Catalogação mensal por usuário", value: "user_montly" },
         { label: "Catalogação total mensal", value: "per_month" },
         { label: "Catalogação total mensal por canal", value: "canal_montly" },
         { label: "Conteúdos mais baixados", value: "qt_downloads" },
         { label: "Conteúdos mais acessados", value: "qt_access" },
         { label: "Tags mais procuradas", value: "searched_tags" },
-        {
-          label: "Aplicativos mais visualizados",
-          value: "aplicativo_qt_access",
-        },
-        {
-          label: "Registro de ocorrência formulário de contatos",
-          value: "registro_mes_ocorrencia",
-        },
-        {
-          label: "Conteúdos mais acessados nos últimos três meses",
-          value: "acessados_ultimos_meses",
-        },
+        { label: "Aplicativos mais visualizados", value: "aplicativo_qt_access" },
+        { label: "Registro de ocorrência formulário de contatos", value: "registro_mes_ocorrencia" },
+        { label: "Conteúdos mais acessados nos últimos três meses", value: "acessados_ultimos_meses", },
         { label: "Catalogação BLOG", value: "wordpress_data" },
       ],
       chartOptions: {

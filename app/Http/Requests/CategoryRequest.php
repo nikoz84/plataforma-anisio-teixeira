@@ -26,11 +26,9 @@ class CategoryRequest extends FormRequest
     {
 
         //$data = collect(request()->only(['category', 'image', '_method']));
-        //dd($data);
+        //
         //$data->forget(['category', 'video', 'canal']);
 
-        //dd($data);
-        //dd($validator->valid());
     }
 
     /**

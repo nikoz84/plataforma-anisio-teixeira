@@ -28,7 +28,6 @@ class ValidExtensions implements Rule
      */
     public function passes($attribute, $value)
     {
-        //dd($value, $this->id);
         if (!$this->id) {
             return false;
         }

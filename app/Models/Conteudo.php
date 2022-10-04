@@ -56,7 +56,6 @@ class Conteudo extends Model
 
     public function options(): Attribute
     {
-        dd($this['options']);
         return Attribute::make(
             get: fn ($value) => json_decode($value, true),
             set: fn ($value) => json_encode($value),

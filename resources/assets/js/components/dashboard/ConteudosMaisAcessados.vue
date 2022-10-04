@@ -126,7 +126,12 @@ export default {
             },
 
         }
-    }
+    },
+    methods: {
+        async listas () {
+            const { data } = await axios.get('');
+        }
+    },
 }
 </script>
 <style scoped>
