@@ -14,6 +14,13 @@
         :data="item.data"
         :id="item.id"
       />
+       <VueApexCharts
+          height="450"
+          v-if="render"
+          type="bar"
+          :options="chartOptions"
+          :series="series"
+        ></VueApexCharts>
     </div>
 
     <div class="row items-start q-gutter-md q-mb-xl"></div>

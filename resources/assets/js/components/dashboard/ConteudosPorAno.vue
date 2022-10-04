@@ -28,7 +28,7 @@
                         </div>
                     </div>
                 </q-card-section>
-                <q-table title="Conteúdos" :data="dataTable" :columns="columns" color="primary" row-key="name">
+                <q-table title="Conteúdos Por Ano" :data="dataTable" :columns="columns" color="primary" row-key="name">
                     <template v-slot:top-right>
                         <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps
                             @click="exportToCsv" />
@@ -129,8 +129,10 @@ export default {
         exportToCsv () {
             exportTable(this.dataTable, this.columns)
         },
-        getDataTable () {
-            console.log('oisio')
+         getDataTable () {
+           //Aqui eu consumo os dados da api
+            //const {data} = await axios.get('');
+            console.log("cheguei!");
         }
     }
 }
