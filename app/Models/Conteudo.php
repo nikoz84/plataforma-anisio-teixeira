@@ -52,15 +52,9 @@ class Conteudo extends Model
     /**
      * Tabela com campos definidos
      */
-    //protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array'];
 
-    public function options(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => json_decode($value, true),
-            set: fn ($value) => json_encode($value),
-        );
-    }
+
     /**
      * Tabela com campos definidos
      */
@@ -171,7 +165,7 @@ class Conteudo extends Model
     public function isApproved(): Attribute
     {
         $set = function () {
-            $user_can = $this->userCan();
+            $user_can = $this->getUserCanAttribute();
             $is_approved = false;
             if ($user_can['create'] || $user_can['update']) {
                 $is_approved = true;

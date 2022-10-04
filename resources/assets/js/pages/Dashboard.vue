@@ -178,8 +178,7 @@ export default {
       let to = "30-12-2022";
       let id = "";
 
-      const { data } = await axios.get(
-        `/dashboard?inicio=${from}&fim=${to}&category_id={id}`
+      const { data } = await axios.get(`/dashboard?inicio=${from}&fim=${to}&category_id={id}`
       );
       console.log(data);
       if (data.success) {

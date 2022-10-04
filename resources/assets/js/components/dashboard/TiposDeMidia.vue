@@ -130,6 +130,7 @@ export default {
         this.getListarMidia();
     },
     methods: {
+
         getListarMidia () {
             console.log('Cheguei aqui')
         }

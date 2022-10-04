@@ -48,7 +48,9 @@
         por favor, habilite o javascript no navegador.
     </noscript>
 
-    <div id="app"></div>
+    <div id="app">
+        <p><span></span></p>
+    </div>
 
     <div id="vlibras" vw class="enabled" style="top:45% !important;">
         <div vw-access-button class="active"></div>
