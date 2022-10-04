@@ -15,8 +15,6 @@
         {{ data.title ? data.title : '' }} Quantidade: {{ data.quantidade ? data.quantidade : 0}}
       </q-card-section>
 
-      <q-separator />
-
       <!-- AÇÕES DOS DADOS -->
       <q-card-actions>
         <q-btn flat :to="`/admin/dashboard/${id}`" size="sm">Ver relatório completo</q-btn>

@@ -9,10 +9,7 @@
 
     <div class="row items-start q-gutter-md q-mb-xl">
       <card-dashboard v-for="(item, i) in dashboardData" :key="i" :data="item.data" :id="item.id" />
-      <!-- <span>
-        <VueApexCharts height="150" v-if="render" type="bar" :options="chartOptions" :series="series"></VueApexCharts>
 
-      </span> -->
     </div>
 
     <div class="row items-start q-gutter-md q-mb-xl"></div>
@@ -21,40 +18,7 @@
       input-debounce="0" :options="selectOptions" class="q-mb-lg" @input="getData" />
     <hr />
     <q-card>
-      <!-- <q-card-section>
-        <div class="text-dark text-h6">Filtros</div>
-        <div class="q-gutter-md row items-start">
-          <div style="min-width: 250px; max-width: 300px">
-            <q-select v-model="anoMultiple" multiple label-color="primary" :options="anos" use-chips stack-label
-              label="Anos" />
-          </div>
-          <div style="min-width: 250px; max-width: 300px">
-            <q-select v-model="temaMultiple" multiple label-color="primary" :options="temas" use-chips stack-label
-              label="Tema ou Disciplina" />
-          </div>
-          <div style="min-width: 250px; max-width: 300px">
-            <q-select
-              v-model="tipoConteudoMultiple"
-              multiple
-              label-color="primary"
-              :options="tipoConteudo"
-              use-chips
-              stack-label
-              label="Tipo de conteúdo"
-            />
-          </div>
-          <div style="min-width: 250px; max-width: 300px">
-            <q-select
-              v-model="ordenarMultiple"
-              label-color="primary"
-              :options="ordenar"
-              use-chips
-              stack-label
-              label="Ordenar por:"
-            />
-          </div>
-        </div>
-      </q-card-section> -->
+
       <q-separator />
       <q-card-section>
         <VueApexCharts height="450" v-if="render" type="bar" :options="chartOptions" :series="series"></VueApexCharts>

@@ -45,7 +45,6 @@
 </template>
 
 <script>
-import { exportFile } from 'quasar';
 import VueApexCharts from "vue-apexcharts";
 
 export default {
@@ -126,7 +125,15 @@ export default {
             },
 
         }
-    }
+    },
+    created () {
+        this.getListarMidia();
+    },
+    methods: {
+        getListarMidia () {
+            console.log('Cheguei aqui')
+        }
+    },
 }
 </script>
 <style scoped>

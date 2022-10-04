@@ -37,7 +37,7 @@ const conteudoPorAnoRoute = {
   },
 };
 const catalogacaoMensalRoute = {
-  path: "/catalogacao-mensal",
+  path: "dashboard/catalogacao-mensal",
   components: {
     admin: CatalogacaoMensal,
   },
@@ -47,104 +47,113 @@ const catalogacaoMensalRoute = {
     layout: Admin,
   },
 };
-const tagsMaisProcuradasRoute = {
-  path: "/tags-mais-procuradas",
-  components: {
-    admin: TagsMaisProcuradas,
-  },
-  meta: {
-    requiresAuth: true,
-    title: "Tags mais procuradas",
-    layout: Admin,
-  },
-};
-const aplicativosMaisVizualizadosRoute = {
-  path: "/aplicativos-mais-vizualizados",
-  components: {
-    admin: AplicativosMaisVizualizados,
-  },
-  meta: {
-    requiresAuth: true,
-    title: "Aplicativos mais vizualizados",
-    layout: Admin,
-  },
-};
-const catalogacaoMensalPorUsuarioRoute = {
-  path: "/catalogacao-mensal-por-usuario",
-  components: {
-    admin: CatalogacaoMensalPorUsuario,
-  },
-  meta: {
-    requiresAuth: true,
-    title: "Catalogação mensal por usuario",
-    layout: Admin,
-  },
-};
-const tiposDeMidiaRoute = {
-  path: "/tipos-de-midia",
-  components: {
-    admin: TiposDeMidia,
-  },
-  meta: {
-    requiresAuth: true,
-    title: "Tipos de Mídia",
-    layout: Admin,
-  },
-};
-const conteudosMaisBaixadosRoute = {
-  path: "/conteudo-mais-baixados",
-  components: {
-    admin: ConteudosMaisBaixados,
-  },
-  meta: {
-    requiresAuth: true,
-    title: "Conteúdos mais baixados",
-    layout: Admin,
-  },
-};
-const conteudosMaisAcessadosRoute = {
-  path: "/conteudos-mais-acessados",
-  components: {
-    admin: ConteudosMaisAcessados,
-  },
-  meta: {
-    requiresAuth: true,
-    title: "Conteúdos mais acessados",
-    layout: Admin,
-  },
-};
-const catalogacaoTotalMensalRoute = {
-  path: "/catalogacao-total-mensal",
-  components: {
-    admin: CatalogacaoTotalMensal,
-  },
-  meta: {
-    requiresAuth: true,
-    title: "Tipos de Mídia",
-    layout: Admin,
-  },
-};
+
 const catalogacaoPorCanalRoute = {
-  path: "/catalogacao-por-canal",
+  path: "dashboard/catalogacao-por-canal",
   components: {
     admin: CatalogacaoPorCanal,
   },
   meta: {
     requiresAuth: true,
-    title: "Catalogação por Canal",
+    title: "Catalogação Por Canal",
     layout: Admin,
   },
 };
+
+const catalogacaoMensalPorUsuarioRoute = {
+  path: "dashboard/catalogacao-mensal-por-usuario",
+  components: {
+    admin: CatalogacaoMensalPorUsuario,
+  },
+  meta: {
+    requiresAuth: true,
+    title: "Catalogação mensal por usuário",
+    layout: Admin,
+  },
+};
+
+const catalogacaoTotalMensalRoute = {
+  path: "dashboard/catalogacao-total-mensal",
+  components: {
+    admin: CatalogacaoTotalMensal,
+  },
+  meta: {
+    requiresAuth: true,
+    title: "Catalogação total mensal ",
+    layout: Admin,
+  },
+};
+
+const conteudosMaisBaixadosRoute = {
+  path: "dashboard/conteudos-mais-baixados",
+  components: {
+    admin: ConteudosMaisBaixados,
+  },
+  meta: {
+    requiresAuth: true,
+    title: "Conteudos mais baixados ",
+    layout: Admin,
+  },
+};
+
+const conteudosMaisAcessadosRoute = {
+  path: "dashboard/conteudos-mais-acessados",
+  components: {
+    admin: ConteudosMaisAcessados,
+  },
+  meta: {
+    requiresAuth: true,
+    title: "Conteudos mais acessados ",
+    layout: Admin,
+  },
+};
+
+const tagsMaisProcuradasRoute = {
+  path: "dashboard/tags-mais-procuradas",
+  components: {
+    admin: TagsMaisProcuradas,
+  },
+  meta: {
+    requiresAuth: true,
+    title: "Tags mais procuradas ",
+    layout: Admin,
+  },
+};
+
+const aplicativosMaisVizualizadosRoute = {
+  path: "dashboard/aplicativos-mais-vizualizados",
+  components: {
+    admin: AplicativosMaisVizualizados,
+  },
+  meta: {
+    requiresAuth: true,
+    title: "Aplicativos mais vizualizados ",
+    layout: Admin,
+  },
+};
+
+const tiposDeMidiaRoute = {
+  path: "dashboard/tipos-de-midia",
+  components: {
+    admin: TiposDeMidia,
+  },
+  meta: {
+    requiresAuth: true,
+    title: "Tipos de mídia ",
+    layout: Admin,
+  },
+};
+
 export {
   listarDashboardRoute,
   conteudoPorAnoRoute,
   catalogacaoMensalRoute,
-  tagsMaisProcuradasRoute,
-  aplicativosMaisVizualizadosRoute,
+  catalogacaoPorCanalRoute,
   catalogacaoMensalPorUsuarioRoute,
-  tiposDeMidiaRoute,
+  catalogacaoTotalMensalRoute,
   conteudosMaisBaixadosRoute,
   conteudosMaisAcessadosRoute,
-  catalogacaoTotalMensalRoute,
-  catalogacaoPorCanalRoute,
+  tagsMaisProcuradasRoute,
+  aplicativosMaisVizualizadosRoute,
+  tiposDeMidiaRoute,
 };

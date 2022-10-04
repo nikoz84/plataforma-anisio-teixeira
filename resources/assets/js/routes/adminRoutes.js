@@ -43,7 +43,7 @@ import {
   tagsMaisProcuradasRoute,
   aplicativosMaisVizualizadosRoute,
   tiposDeMidiaRoute,
-} from './dashboardRoutes'
+} from "./dashboardRoutes";
 
 const adminRoutes = {
   path: "/admin",
@@ -68,10 +68,8 @@ const adminRoutes = {
     aplicativosMaisVizualizadosRoute,
     tiposDeMidiaRoute,
     {
-      path: "/conteudos/listar",
-      components: {
-        admin: ListarConteudos,
-      },
+      path: "conteudos/listar",
+      components: { admin: ListarConteudos },
       meta: {
         requiresAuth: true,
         title: "Listar Conteúdos",
