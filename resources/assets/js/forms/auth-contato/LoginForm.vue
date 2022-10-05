@@ -3,11 +3,11 @@
     <div class="row no-wrap justify-center">
       <q-card class="col-sm-6">
         <q-card-section>
-          <div class="text-center text-h5">Faça seu Login</div>
+          <div class="text-center text-h5">Faça seu Login asda</div>
         </q-card-section>
         <q-separator inset />
         <q-card-section>
-          <q-form @submit.prevent="onSubmit()" class="q-gutter-md" ref="loginForm">
+          <q-form class="q-gutter-md" ref="loginForm">
             <q-input filled v-model="email" label="Seu E-mail *" hint="E-mail" type="email" bottom-slots
               :error="errors.email && errors.email.length > 0">
               <template v-slot:error>
@@ -26,7 +26,7 @@
             </q-input>
             <RecaptchaForm :errors="errors.recaptcha"></RecaptchaForm>
             <div>
-              <q-btn class="full-width" label="Entrar" type="submit" color="primary" />
+              <q-btn class="full-width" label="Entrar" @click="onSubmit" color="primary" />
             </div>
           </q-form>
         </q-card-section>
@@ -48,7 +48,6 @@ import {
   QCardActions,
   QInput,
   QForm,
-  QImg,
   QSeparator,
   QSpace
 } from "quasar";
@@ -82,7 +81,7 @@ export default {
     async onSubmit () {
       this.$q.loading.show();
       this.errors = {};
-
+      console.log('oisdiosa')
       let credentials = {
         email: this.email,
         password: this.password,

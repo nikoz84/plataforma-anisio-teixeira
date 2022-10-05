@@ -2,17 +2,19 @@
 
 namespace App\Events;
 
-use App\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use App\Models\User;
 
 class UserEvent
 {
-    use Dispatchable;use InteractsWithSockets;use SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     /**
      * Get the channels the event should broadcast on.
@@ -21,8 +23,8 @@ class UserEvent
      */
     public function saved(User $user)
     {
-        dd($user);
-        Log::info('message: '.$user);
+
+        Log::info('message: ' . $user);
     }
 
     /**

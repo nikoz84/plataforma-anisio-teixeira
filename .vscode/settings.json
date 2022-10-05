@@ -59,5 +59,9 @@
   "javascript.format.placeOpenBraceOnNewLineForControlBlocks": false,
   "javascript.format.placeOpenBraceOnNewLineForFunctions": false,
   "vetur.format.defaultFormatter.html": "js-beautify-html",
-  "editor.guides.indentation": true
+  "editor.guides.indentation": true,
+  "DockerRun.DisableDockerrc": true,
+  "DockerRun.Containers": [
+    "9c108c49d5c0"
+  ]
 }

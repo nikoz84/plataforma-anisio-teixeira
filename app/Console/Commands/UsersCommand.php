@@ -59,7 +59,7 @@ class UsersCommand extends Command
             )
         );
         $user = User::inRandomOrder()->get()->first();
-        dd($user->name);
+    
         $this->info($resumo);*/
     }
 }

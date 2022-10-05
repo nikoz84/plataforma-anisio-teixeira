@@ -70,9 +70,9 @@ class ApiController extends Controller
             ]);
             */
         //$ssr_content = file_get_contents($ssr_server);
-        //dd($ssr_content);
+        //
         // Did we get the content?
-        //dd($response->getStatusCode());
+        //
         /*
             if ($response->getStatusCode() != 500) {
                 echo $response->getContent();

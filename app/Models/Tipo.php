@@ -10,7 +10,8 @@ use Illuminate\Support\Str;
 
 class Tipo extends Model
 {
-    use UserCan;use WithoutAppends;
+    use UserCan;
+    use WithoutAppends;
 
     public $timestamps = false;
 
@@ -18,9 +19,14 @@ class Tipo extends Model
 
     protected $appends = ['icon', 'user_can', 'search_url'];
 
-    protected $casts = [
-        'options' => 'array',
-    ];
+
+    public function options(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => json_decode($value, true),
+            set: fn ($value) => json_encode($value),
+        );
+    }
 
     /**
      * Seleciona o icone do atributo
@@ -30,7 +36,7 @@ class Tipo extends Model
     public function icon(): Attribute
     {
         return new Attribute(
-            get: fn () => '/img/tipo-conteudo/'.Str::slug($this->name, '-').'.svg'
+            get: fn () => '/img/tipo-conteudo/' . Str::slug($this->name, '-') . '.svg'
         );
     }
 
@@ -43,7 +49,7 @@ class Tipo extends Model
     //  {
     //   $canal = Canal::find(6);
     //return "/{$canal->slug}/listar?tipos={$this['id']}";
-//    }
+    //    }
 
     public function searchUrl(): Attribute
     {

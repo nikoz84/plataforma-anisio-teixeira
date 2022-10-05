@@ -8,6 +8,7 @@
     </div>
 
     <div class="row items-start q-gutter-md q-mb-xl">
+<<<<<<< HEAD
       <card-dashboard
         v-for="(item, i) in dashboardData"
         :key="i"
@@ -21,104 +22,26 @@
           :options="chartOptions"
           :series="series"
         ></VueApexCharts>
+=======
+      <card-dashboard v-for="(item, i) in dashboardData" :key="i" :data="item.data" :id="item.id" />
+
+>>>>>>> feat-02
     </div>
 
     <div class="row items-start q-gutter-md q-mb-xl"></div>
 
-    <q-select
-      filled
-      v-model="item"
-      use-input
-      option-value="value"
-      option-label="label"
-      use-chips
-      stack-value
-      input-debounce="0"
-      :options="selectOptions"
-      class="q-mb-lg"
-      @input="getData"
-    />
+    <q-select filled v-model="item" use-input option-value="value" option-label="label" use-chips stack-value
+      input-debounce="0" :options="selectOptions" class="q-mb-lg" @input="getData" />
     <hr />
     <q-card>
-      <q-card-section>
-        <div class="text-dark text-h6">Filtros</div>
-        <div class="q-gutter-md row items-start">
-          <div style="min-width: 250px; max-width: 300px">
-            <q-select
-              v-model="mesMultiple"
-              multiple
-              label-color="primary"
-              :options="meses"
-              use-chips
-              stack-label
-              label="Filtrar por meses"
-            />
-          </div>
-          <div style="min-width: 250px; max-width: 300px">
-            <q-select
-              v-model="anoMultiple"
-              multiple
-              label-color="primary"
-              :options="anos"
-              use-chips
-              stack-label
-              label="Filtrar por anos"
-            />
-          </div>
-          <div style="min-width: 250px; max-width: 300px">
-            <q-select
-              v-model="temaMultiple"
-              multiple
-              label-color="primary"
-              :options="temas"
-              use-chips
-              stack-label
-              label="Tema ou Disciplina"
-            />
-          </div>
-          <div style="min-width: 250px; max-width: 300px">
-            <q-select
-              v-model="tipoConteudoMultiple"
-              multiple
-              label-color="primary"
-              :options="tipoConteudo"
-              use-chips
-              stack-label
-              label="Tipo de conteúdo"
-            />
-          </div>
-          <div style="min-width: 250px; max-width: 300px">
-            <q-select
-              v-model="ordenarMultiple"
-              label-color="primary"
-              :options="ordenar"
-              use-chips
-              stack-label
-              label="Ordenar por:"
-            />
-          </div>
-        </div>
-      </q-card-section>
+
       <q-separator />
       <q-card-section>
-        <VueApexCharts
-          height="450"
-          v-if="render"
-          type="bar"
-          :options="chartOptions"
-          :series="series"
-        ></VueApexCharts>
+        <VueApexCharts height="450" v-if="render" type="bar" :options="chartOptions" :series="series"></VueApexCharts>
       </q-card-section>
-      <q-card-section>
-        <q-table
-          :title="title"
-          :data="metadata"
-          :columns="columns"
-          row-key="id"
-          separator="horizontal"
-        />
-      </q-card-section>
+
     </q-card>
+
   </div>
 </template>
 <script>
@@ -147,7 +70,7 @@ export default {
     VueApexCharts,
     CardDashboard,
   },
-  data() {
+  data () {
     return {
       title: "",
       render: false,
@@ -175,28 +98,16 @@ export default {
       selectOptions: [
         { label: "Tipos de mídias", value: "type_of_midia" },
         { label: "Catalogação por usuário", value: "per_user" },
-        {
-          label: "Catalogação por canal",
-          value: "per_chanel",
-        },
+        { label: "Catalogação por canal", value: "per_chanel" },
         { label: "Catalogação mensal por usuário", value: "user_montly" },
         { label: "Catalogação total mensal", value: "per_month" },
         { label: "Catalogação total mensal por canal", value: "canal_montly" },
         { label: "Conteúdos mais baixados", value: "qt_downloads" },
         { label: "Conteúdos mais acessados", value: "qt_access" },
         { label: "Tags mais procuradas", value: "searched_tags" },
-        {
-          label: "Aplicativos mais visualizados",
-          value: "aplicativo_qt_access",
-        },
-        {
-          label: "Registro de ocorrência formulário de contatos",
-          value: "registro_mes_ocorrencia",
-        },
-        {
-          label: "Conteúdos mais acessados nos últimos três meses",
-          value: "acessados_ultimos_meses",
-        },
+        { label: "Aplicativos mais visualizados", value: "aplicativo_qt_access" },
+        { label: "Registro de ocorrência formulário de contatos", value: "registro_mes_ocorrencia" },
+        { label: "Conteúdos mais acessados nos últimos três meses", value: "acessados_ultimos_meses", },
         { label: "Catalogação BLOG", value: "wordpress_data" },
       ],
       chartOptions: {
@@ -223,48 +134,15 @@ export default {
         },
       },
       series: [{ name: "Quantidade", data: [] }],
-      mesMultiple: null,
-      anoMultiple: null,
-      temaMultiple: null,
-      tipoConteudoMultiple: null,
-      ordenarMultiple: null,
-      meses: [
-        "Janeiro",
-        "Fevereiro",
-        "Março",
-        "Abril",
-        "Maio",
-        "Junho",
-        "Julho",
-        "Agosto",
-        "Setembro",
-        "Outubro",
-        "Novembro",
-        "Dezembro",
-      ],
-      anos: ["2022", "2021", "2020", "2019", "2018"],
-      temas: ["Matemática", "Física", "Química", "Sexualidade"],
-      tipoConteudo: [
-        "Videos",
-        "Apresentações",
-        "Áudios",
-        "Aplicativos",
-        "Games",
-      ],
-      ordenar: [
-        "Mais baixados",
-        "Mais visualizados",
-        "Mais acessados",
-        "Catalogado por usuário",
-      ],
+
     };
   },
-  created() {
+  created () {
     this.getData();
     this.getDashboardData();
   },
   methods: {
-    async getData() {
+    async getData () {
       let url = `resumo?option=${this.item.value}`;
       let resp = await axios.get(url);
       if (resp.data.success) {
@@ -278,21 +156,15 @@ export default {
       }
     },
 
-    async getDashboardData() {
-      let from = "01-01-2000";
-      let to = "30-12-2022";
-      let id = "";
-
-      const { data } = await axios.get(
-        `/dashboard?inicio=${from}&fim=${to}&category_id={id}`
-      );
+    async getDashboardData () {
+      const { data } = await axios.get(`/dashboard`);
       console.log(data);
       if (data.success) {
         this.dashboardData = data.metadata;
       }
     },
 
-    createInfoGraf(categories) {
+    createInfoGraf (categories) {
       this.chartOptions = {
         ...this.chartOptions,
         ...{
@@ -305,7 +177,7 @@ export default {
         },
       };
     },
-    appendData(data) {
+    appendData (data) {
       let arr = this.series.slice();
       arr[0].data = data;
       this.series = arr;

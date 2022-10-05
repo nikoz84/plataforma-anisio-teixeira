@@ -2,153 +2,139 @@
 
 namespace App\Services;
 
-use Illuminate\Http\Request;
+use App\Models\Aplicativo;
 use App\Models\Conteudo;
 use App\Models\Tag;
-use App\Models\Aplicativo;
-use App\Models\Canal;
-use Google\Service\AnalyticsData\OrderBy;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class DashboardData
 {
-    public static function getConteudosPorAno(Request $request)
-    {
+    protected static $request = null;
 
-        $conteudos = Conteudo::whereBetween('created_at', [
-            $request->get('inicio', ''),
-            $request->get('fim', '')
-        ])->count();
+    public static function conteudosPorAno()
+    {
+        $conteudo = Conteudo::selectRaw('extract(year from conteudos.created_at) as ano, COUNT(*) as quantidade')
+            ->groupByRaw('extract(year from conteudos.created_at)')
+            ->orderBy('quantidade', 'DESC')
+            ->get();
 
-        return [
-            'titulo' => 'Conteúdos publicados por ano',
-            'quantidade' => $conteudos,
-            'fim' => $request->get('fim', ''),
-            'inicio' => $request->get('inicio', '')
-        ];
+        return self::setHeader($conteudo, 'Conteúdos por ano');
     }
-    public static function getCatalogacaoMensal(Request $request)
-    {
-        $conteudos = Conteudo::whereBetween('created_at', [
-            $request->get('inicio', ''),
-            $request->get('fim', '')
-        ])->count();
 
-        return [
-            'titulo' => 'Catalogação mensal',
-            'quantidade' => $conteudos,
-            'fim' => $request->get('fim', ''),
-            'inicio' => $request->get('inicio', '')
-        ];
-    }
-    public static function getCatalogacaoPorCanal(Request $request)
+    public static function catalogacaoPorCanal()
     {
-        $conteudos = Conteudo::whereBetween('created_at', [
-            $request->get('fim', ''),
-            $request->get('inicio', '')
-        ])->count();
+        $canal = DB::table('canais AS ca')
+            ->select(DB::raw('ca.name, count(ca.id) AS total'))
+            ->join('conteudos AS c', 'ca.id', '=', 'c.canal_id')
+            ->groupBy('ca.name')
+            ->orderBy('total', 'DESC')
+            ->get();
 
-        return [
-            'titulo' => 'Catalogação por canal',
-            'quantidade' => $conteudos,
-            'fim' => $request->get('fim', ''),
-            'inicio' => $request->get('inicio', '')
-        ];
+        return self::setHeader($canal, 'Catalogação por canal');
     }
-    public static function getCatalogacaoMensalPorUsuario(Request $request)
+    public static function catalogacaoMensalPorUsuario()
     {
-        $conteudos = Conteudo::whereBetween('created_at', [
-            $request->get('fim', ''),
-            $request->get('inicio', '')
-        ])->count();
-        return [
-            'titulo' => 'Catalogação mensal por usuário',
-            'quantidade' => $conteudos,
-            'fim' => $request->get('fim', ''),
-            'inicio' => $request->get('inicio', '')
-        ];
+        $user = DB::table('users as u')
+            ->select(DB::raw('u.name, count(u.id) AS total'))
+            ->join('conteudos AS c', 'u.id', '=', 'c.user_id')
+            ->groupBy('u.name')
+            ->orderBy('total', 'DESC')
+            ->get();
+        return self::setHeader($user, 'Catalogação mensal por usuário');
     }
-    public static function getCatalogacaoTotalMensal(Request $request)
+    public static function catalogacaoTotalMensal()
     {
-        $conteudos = Conteudo::whereBetween('created_at', [
-            $request->get('fim', ''),
-            $request->get('inicio', '')
-        ])->count();
+        $conteudo = Conteudo::selectRaw('extract(month from conteudos.created_at) as mes, COUNT(*) as quantidade')
+            ->groupByRaw('extract(month from conteudos.created_at)')
+            ->orderBy('quantidade', 'DESC')
+            ->get();
 
-        return [
-            'titulo' => 'Catalogação total mensal',
-            'quantidade' => $conteudos,
-            'fim' => $request->get('fim', ''),
-            'inicio' => $request->get('inicio', '')
-        ];
+        return self::setHeader($conteudo, 'Catalogação total mensal');
     }
-    public static function getConteudosMaisBaixados(Request $request)
+    public static function conteudosMaisBaixados()
     {
-        $conteudos = Conteudo::whereBetween('created_at', [
-            $request->get('fim', ''),
-            $request->get('inicio', '')
-        ])->count();
-        return [
-            'titulo' => 'Conteúdos mais baixados',
-            'quantidade' => $conteudos,
-            'fim' => $request->get('fim', ''),
-            'inicio' => $request->get('inicio', '')
-        ];
-    }
-    public static function getConteudosMaisAcessados(Request $request)
-    {
+        $conteudo = Conteudo::orderBy('qt_downloads', 'desc')->get();
 
-        $conteudos = Conteudo::whereBetween('created_at', [
-            $request->get('inicio', ''),
-            $request->get('fim', '')
-        ])->count();
-        return [
-            'titulo' => 'Conteúdos mais acessados',
-            'quantidade' => $conteudos,
-            'inicio' => $request->get('inicio', ''),
-            'fim' => $request->get('fim', ''),
-            'category_id' => $request->get('id', '')
-        ];
+        return self::setHeader($conteudo, 'Conteúdos Mais baixado');
     }
-    public static function getTagsMaisProcuradas(Request $request)
+
+    public static function conteudosMaisAcessados()
     {
-        $conteudos = Conteudo::whereBetween('created_at', [
-            $request->get('fim', ''),
-            $request->get('inicio', '')
-        ])->count();
+        $conteudo = Conteudo::orderBy('qt_access', 'desc')->get();
 
-        return [
-            'titulo' => 'Tags mais procuradas',
-            'quantidade' => $conteudos,
-            'fim' => $request->get('fim', ''),
-            'inicio' => $request->get('inicio', ''),
-
-        ];
+        return self::setHeader($conteudo, 'Conteúdos mais Acessado');
     }
-    public static function getAplicativosMaisVizualizados(Request $request)
+
+    public static function tagsMaisProcuradas()
     {
-        $conteudos = Conteudo::whereBetween('created_at', [
-            $request->get('inicio', ''),
-            $request->get('fim', '')
-        ])->count();
+        $tags = Tag::orderBy('searched', 'desc')->get();
+
+        return self::setHeader($tags, 'Palavras-chave mais procurada');
+    }
+
+
+    public static function aplicativosMaisVisualizados()
+    {
+        $aplicativo = Aplicativo::orderby('options->>qt_access', 'DESC')->get();
+
+        return self::setHeader($aplicativo, 'Aplicavos mais visualizadoss');
+    }
+
+
+    public static function tiposDeMidia()
+    {
+        $tipo = DB::table('tipos AS t')
+            ->select(DB::raw('t.name, count(t.id) AS total'))
+            ->join('conteudos AS c', 't.id', '=', 'c.tipo_id')
+            ->groupBy('t.name')
+            ->orderBy('total', 'DESC')
+            ->get();
+
+        return self::setHeader($tipo, 'Mídias mais visualizadas');
+    }
+
+
+    public static function setRequest(Request $request)
+    {
+        self::$request = $request;
+    }
+
+    public static function setHeader($data, $title)
+    {
         return [
-            'titulo' => 'Aplicativos mais visualizados',
-            'quantidade' => $conteudos,
-            'fim' => $request->get('fim', ''),
-            'inicio' => $request->get('inicio', ''),
+            'data' => $data,
+            'titulo' => $title,
         ];
     }
 
-    public static function getTiposDeMidia(Request $request)
+    public static function getDataFromId()
     {
-        $conteudos = Conteudo::whereBetween('created_at', [
-            $request->get('fim', ''),
-            $request->get('inicio', '')
-        ])->count();
-        return [
-            'titulo' => 'Tipos de mídia',
-            'quantidade' => $conteudos,
-            'fim' => $request->get('fim', ''),
-            'inicio' => $request->get('inicio', ''),
-        ];
+        $id = self::$request->get('id', '');
+        if ($id) {
+            $nameClass = self::class;
+            $method = Str::camel($id, '-');
+            $resposta = call_user_func("{$nameClass}::{$method}");
+            return $resposta;
+        }
+    }
+
+    public static function getAll()
+    {
+        $ids = collect([
+            'conteudos-por-ano', 'catalogacao-por-canal', 'catalogacao-mensal-por-usuario', 'catalogacao-total-mensal',
+            'conteudos-mais-baixados', 'conteudos-mais-acessados', 'tags-mais-procuradas', 'aplicativos-mais-visualizados', 'tipos-de-midia'
+        ]);
+
+        $methods = $ids->map(function ($item) {
+            $nameClass = self::class;
+            $method = Str::camel($item, '-');
+            $resposta = call_user_func("{$nameClass}::{$method}");
+
+            return $resposta;
+        });
+
+        return $methods;
     }
 }

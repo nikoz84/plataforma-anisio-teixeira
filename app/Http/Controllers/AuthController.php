@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
-class AuthController extends ApiController /**
+class AuthController extends ApiController
+/**
  * Criacao e atualizacao de login e logout usando email
  *
  * @param $int $id cadastro verificacao de login e senha
@@ -51,9 +52,8 @@ class AuthController extends ApiController /**
         }
         $credentials = $this->request->only('email', 'password');
         $token = null;
-        //dd(JWTAuth::attempt($credentials));
 
-        if (! $token = JWTAuth::attempt($credentials)) {
+        if (!$token = JWTAuth::attempt($credentials)) {
             return $this->errorResponse([], 'E-mail ou Senha inválidos', 422);
         }
 
@@ -155,10 +155,10 @@ class AuthController extends ApiController /**
                 'neighborhood' => null,
             ];
 
-            if (! $user->save()) {
+            if (!$user->save()) {
                 throw new Exception('Erro ao enviar os cadastrar usuário');
             }
-            if (! $this->sendConfirmationEmail($user->email, $token, 'register')) {
+            if (!$this->sendConfirmationEmail($user->email, $token, 'register')) {
                 throw new Exception('Erro ao enviar email');
             }
         } catch (Exception $ex) {
@@ -195,7 +195,7 @@ class AuthController extends ApiController /**
             }
 
             $usuario = User::where('email', $request->email)->get()->first();
-            if (! $usuario) {
+            if (!$usuario) {
                 throw new Exception('Usuário não existe.');
             }
             PasswordReset::create([
@@ -207,7 +207,7 @@ class AuthController extends ApiController /**
             $tokenGerado = new PasswordReset;
             $token = $tokenGerado->getTokenByEmail($usuario->email)->token;
             $email = $this->sendConfirmationEmail($usuario->email, $token, 'recoverPass');
-            if (! $email) {
+            if (!$email) {
                 throw new Exception('Erro ao enviar email.');
             }
         } catch (Exception $ex) {
@@ -321,7 +321,7 @@ class AuthController extends ApiController /**
             $user = $this->getUserByToken($token);
             $user->password = $this->request->password;
 
-            if (! $user->save()) {
+            if (!$user->save()) {
                 throw new Exception('Erro ao tentar salvar modificação. Tente novamente mais tarde.');
             }
         } catch (Exception $ex) {

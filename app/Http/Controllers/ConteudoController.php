@@ -118,7 +118,7 @@ class ConteudoController extends ApiController
 
         $conteudo->fill($request->validated());
 
-        if (! $conteudo->save()) {
+        if (!$conteudo->save()) {
             $this->errorResponse([], 'Não foi possível criar o conteúdo.', 422);
         }
 
@@ -128,7 +128,7 @@ class ConteudoController extends ApiController
 
         $file = $this->storeFiles($request, $conteudo);
 
-        if (! $file) {
+        if (!$file) {
             $this->errorResponse([], 'Não foi possível fazer upload de arquivos.', 422);
         }
         //$this->stremingVideoConvert($conteudo);
@@ -149,7 +149,7 @@ class ConteudoController extends ApiController
 
         $conteudo->update($request->validated());
 
-        if (! $conteudo->save()) {
+        if (!$conteudo->save()) {
             return $this->errorResponse([], 'Não foi possível atualizar o conteúdo', 422);
         }
 
@@ -157,9 +157,11 @@ class ConteudoController extends ApiController
         $conteudo->componentes()->sync($request->componentes);
         Conteudo::tsDocumentoSave($conteudo->id);
 
-        if ($request->has('download') || $request->has('guias_pedagogicos')
-            || $request->has('imagem_associada') || $request->has('visualizacao')) {
-            if (! $this->storeFiles($request, $conteudo)) {
+        if (
+            $request->has('download') || $request->has('guias_pedagogicos')
+            || $request->has('imagem_associada') || $request->has('visualizacao')
+        ) {
+            if (!$this->storeFiles($request, $conteudo)) {
                 return $this->errorResponse([], 'Não foi possível fazer upload de arquivos.', 422);
             }
             //$this->stremingVideoConvert($conteudo);
@@ -189,7 +191,7 @@ class ConteudoController extends ApiController
         $this->deleteFile('download', $conteudo->id);
         //$this->deleteFile("streaming", $conteudo->id);
 
-        if (! $conteudo->delete()) {
+        if (!$conteudo->delete()) {
             return $this->errorResponse([], 'Não foi Possível deletar o conteúdo', 422);
         }
 
@@ -296,12 +298,12 @@ class ConteudoController extends ApiController
     {
         $file = null;
         if ($conteudo && $conteudo->id) {
-            if ($request->has('download') && ! is_null($request->download)) {
+            if ($request->has('download') && !is_null($request->download)) {
                 $this->deleteFile('download', $conteudo->id);
                 //$this->deleteFile("streaming", $conteudo->id);
                 $file = $this->saveFile($conteudo->id, [$request->download], 'download');
                 if ($conteudo->tipo->id == 5) {
-                    if ($file && ! $request->has('imagem_associada')) {
+                    if ($file && !$request->has('imagem_associada')) {
                         $this->deleteFile('imagem-associada', $conteudo->id);
                         $imagemPath = Storage::disk('conteudos-digitais')->path('imagem-associada');
                         $imageExtraction = new ImageExtractionFromVideo(
@@ -313,10 +315,10 @@ class ConteudoController extends ApiController
                     }
                 }
             }
-            if ($request->has('guias_pedagogicos') && ! is_null($request->guias_pedagogicos)) {
+            if ($request->has('guias_pedagogicos') && !is_null($request->guias_pedagogicos)) {
                 $file = $this->saveFile($conteudo->id, [$request->guias_pedagogicos], 'guias-pedagogicos');
             }
-            if ($request->has('imagem_associada') && ! is_null($request->imagem_associada)) {
+            if ($request->has('imagem_associada') && !is_null($request->imagem_associada)) {
                 $this->deleteFile('imagem-associada', $conteudo->id);
                 $file = $this->saveFile($conteudo->id, [$request->imagem_associada], 'imagem-associada');
             }

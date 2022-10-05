@@ -9,6 +9,6 @@ trait ShortTitle
 {
     public function getShortTitleAttribute()
     {
-        dd($this::class); 
+        // 
     }
 }

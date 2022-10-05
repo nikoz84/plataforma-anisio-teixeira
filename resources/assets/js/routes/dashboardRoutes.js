@@ -23,7 +23,7 @@ const listarDashboardRoute = {
     title: "Estatisticas",
     layout: Admin,
   },
-}
+};
 
 const conteudoPorAnoRoute = {
   path: "dashboard/conteudos-por-ano",
@@ -35,7 +35,7 @@ const conteudoPorAnoRoute = {
     title: "Catalogação por ano",
     layout: Admin,
   },
-}
+};
 const catalogacaoMensalRoute = {
   path: "dashboard/catalogacao-mensal",
   components: {
@@ -46,7 +46,7 @@ const catalogacaoMensalRoute = {
     title: "Catalogação mensal",
     layout: Admin,
   },
-}
+};
 
 const catalogacaoPorCanalRoute = {
   path: "dashboard/catalogacao-por-canal",
@@ -58,7 +58,7 @@ const catalogacaoPorCanalRoute = {
     title: "Catalogação Por Canal",
     layout: Admin,
   },
-}
+};
 
 const catalogacaoMensalPorUsuarioRoute = {
   path: "dashboard/catalogacao-mensal-por-usuario",
@@ -70,7 +70,7 @@ const catalogacaoMensalPorUsuarioRoute = {
     title: "Catalogação mensal por usuário",
     layout: Admin,
   },
-}
+};
 
 const catalogacaoTotalMensalRoute = {
   path: "dashboard/catalogacao-total-mensal",
@@ -82,7 +82,7 @@ const catalogacaoTotalMensalRoute = {
     title: "Catalogação total mensal ",
     layout: Admin,
   },
-}
+};
 
 const conteudosMaisBaixadosRoute = {
   path: "dashboard/conteudos-mais-baixados",
@@ -94,7 +94,7 @@ const conteudosMaisBaixadosRoute = {
     title: "Conteudos mais baixados ",
     layout: Admin,
   },
-}
+};
 
 const conteudosMaisAcessadosRoute = {
   path: "dashboard/conteudos-mais-acessados",
@@ -106,7 +106,7 @@ const conteudosMaisAcessadosRoute = {
     title: "Conteudos mais acessados ",
     layout: Admin,
   },
-}
+};
 
 const tagsMaisProcuradasRoute = {
   path: "dashboard/tags-mais-procuradas",
@@ -118,7 +118,7 @@ const tagsMaisProcuradasRoute = {
     title: "Tags mais procuradas ",
     layout: Admin,
   },
-}
+};
 
 const aplicativosMaisVizualizadosRoute = {
   path: "dashboard/aplicativos-mais-vizualizados",
@@ -130,7 +130,7 @@ const aplicativosMaisVizualizadosRoute = {
     title: "Aplicativos mais vizualizados ",
     layout: Admin,
   },
-}
+};
 
 const tiposDeMidiaRoute = {
   path: "dashboard/tipos-de-midia",
@@ -142,9 +142,7 @@ const tiposDeMidiaRoute = {
     title: "Tipos de mídia ",
     layout: Admin,
   },
-}
-
-
+};
 
 export {
   listarDashboardRoute,
@@ -158,4 +156,4 @@ export {
   tagsMaisProcuradasRoute,
   aplicativosMaisVizualizadosRoute,
   tiposDeMidiaRoute,
-}
+};
