@@ -118,40 +118,7 @@ export default {
         },
       },
       series: [{ name: "Quantidade", data: [] }],
-      mesMultiple: null,
-      anoMultiple: null,
-      temaMultiple: null,
-      tipoConteudoMultiple: null,
-      ordenarMultiple: null,
-      meses: [
-        "Janeiro",
-        "Fevereiro",
-        "Março",
-        "Abril",
-        "Maio",
-        "Junho",
-        "Julho",
-        "Agosto",
-        "Setembro",
-        "Outubro",
-        "Novembro",
-        "Dezembro",
-      ],
-      anos: ["2022", "2021", "2020", "2019", "2018"],
-      temas: ["Matemática", "Física", "Química", "Sexualidade"],
-      tipoConteudo: [
-        "Videos",
-        "Apresentações",
-        "Áudios",
-        "Aplicativos",
-        "Games",
-      ],
-      ordenar: [
-        "Mais baixados",
-        "Mais visualizados",
-        "Mais acessados",
-        "Catalogado por usuário",
-      ],
+
     };
   },
   created () {
@@ -174,12 +141,7 @@ export default {
     },
 
     async getDashboardData () {
-      let from = "01-01-2000";
-      let to = "30-12-2022";
-      let id = "";
-
-      const { data } = await axios.get(`/dashboard?inicio=${from}&fim=${to}&category_id={id}`
-      );
+      const { data } = await axios.get(`/dashboard`);
       console.log(data);
       if (data.success) {
         this.dashboardData = data.metadata;
