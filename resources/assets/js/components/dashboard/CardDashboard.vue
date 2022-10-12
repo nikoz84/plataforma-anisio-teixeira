@@ -4,15 +4,75 @@
       <!-- TÍTULO DOS DADOS -->
       <q-card-section>
         <div class="text-h6">
-          {{ data.titulo }}
+          {{ titulo }}
         </div>
       </q-card-section>
-
       <q-separator />
-
       <!-- ENTRADA DE DADOS -->
-      <q-card-section>
-        {{ data.title ? data.title : '' }} Quantidade: {{ data.quantidade ? data.quantidade : 0}}
+      <q-card-section v-if="id === 'conteudos-por-ano'">
+        <span>
+          Total de conteúdos: {{ cardContent.total }}
+          <br />
+          Ano: {{ cardContent.ano }}
+
+
+        </span>
+      </q-card-section>
+      <q-card-section v-else-if="id === 'catalogacao-por-canal'">
+        <span>
+          Quantidade: {{ cardContent.total }}
+          <br />
+          Nome canal: {{ cardContent.name }}
+        </span>
+      </q-card-section>
+      <q-card-section v-else-if="id === 'tags-mais-procuradas'">
+        <span>
+          Vezes buscada: {{ cardContent.name }}
+          <br />
+          Palavra-chave: {{ cardContent.searched }}
+        </span>
+      </q-card-section>
+      <q-card-section v-else-if="id === 'tipos-de-midia'">
+        <span>
+          Nome da mída: {{ cardContent.name }}
+          <br />
+          Total: {{ cardContent.total}}
+        </span>
+      </q-card-section>
+      <q-card-section v-else-if="id === 'aplicativos-mais-visualizados'">
+        <span>
+          Nome do aplicativo: {{ cardContent.name }}
+          <br />
+          Total: {{ cardContent.qt_access}}
+        </span>
+      </q-card-section>
+      <q-card-section v-else-if="id === 'conteudos-mais-acessados'">
+        <span>
+          Título: {{ cardContent.title}}
+          <br />
+          Total: {{ cardContent.qt_access}}
+        </span>
+      </q-card-section>
+      <q-card-section v-else-if="id === 'conteudos-mais-baixados'">
+        <span>
+          Título: {{ cardContent.title}}
+          <br />
+          Total: {{ cardContent.qt_downloads}}
+        </span>
+      </q-card-section>
+      <q-card-section v-else-if="id === 'catalogacao-mensal-por-usuario'">
+        <span>
+          Nome: {{ cardContent.name}}
+          <br />
+          Total: {{ cardContent.total}}
+        </span>
+      </q-card-section>
+      <q-card-section v-else-if="id === 'catalogacao-total-mensal'">
+        <span>
+          Mês: {{ cardContent.mes}}
+          <br />
+          Quantidade: {{ cardContent.quantidade}}
+        </span>
       </q-card-section>
 
       <!-- AÇÕES DOS DADOS -->
@@ -26,8 +86,26 @@
 <script>
 export default {
   name: "CardDashboard",
-  props: ["id", "data", "title", "slug"],
-  methods: {},
+  props: ["id", "titulo"],
+  data () {
+    return {
+      cardContent: 'null'
+    }
+  },
+  created () {
+    this.getDataFromId()
+  },
+  methods: {
+    async getDataFromId () {
+      console.log(this.id)
+      const { data } = await axios.get(`/dashboard/${this.id}`)
+      if (data.success) {
+        const [first] = data.metadata
+        console.log(first)
+        this.cardContent = first
+      }
+    }
+  },
 };
 </script>
 <style scoped>

@@ -8,21 +8,15 @@
     </div>
 
     <div class="row items-start q-gutter-md q-mb-xl">
-      <card-dashboard v-for="(item, i) in dashboardData" :key="i" :data="item.data" :id="item.id" />
-
+      <card-dashboard v-for="(card, i) in cards" :key="i" :titulo="card.titulo" :id="card.id" />
     </div>
 
     <div class="row items-start q-gutter-md q-mb-xl"></div>
 
-    <q-select filled v-model="item" use-input option-value="value" option-label="label" use-chips stack-value
-      input-debounce="0" :options="selectOptions" class="q-mb-lg" @input="getData" />
-    <hr />
     <q-card>
 
       <q-separator />
-      <q-card-section>
-        <VueApexCharts height="450" v-if="render" type="bar" :options="chartOptions" :series="series"></VueApexCharts>
-      </q-card-section>
+
 
     </q-card>
 
@@ -31,7 +25,6 @@
 <script>
 // @ts-nocheck
 
-import VueApexCharts from "vue-apexcharts";
 import {
   QTable,
   QCard,
@@ -42,6 +35,7 @@ import {
 } from "quasar";
 import { CardDashboard } from "@components/dashboard";
 
+
 export default {
   name: "Dashboard",
   components: {
@@ -51,14 +45,13 @@ export default {
     QSelect,
     QCardSection,
     QSeparator,
-    VueApexCharts,
-    CardDashboard,
+    CardDashboard
   },
   data () {
     return {
       title: "",
       render: false,
-      dashboardData: null,
+      cards: null,
       metadata: [],
       columns: [
         {
@@ -78,52 +71,13 @@ export default {
           required: false,
         },
       ],
-      item: { label: "Catalogação por usuário", value: "per_user" },
-      selectOptions: [
-        { label: "Tipos de mídias", value: "type_of_midia" },
-        { label: "Catalogação por usuário", value: "per_user" },
-        { label: "Catalogação por canal", value: "per_chanel" },
-        { label: "Catalogação mensal por usuário", value: "user_montly" },
-        { label: "Catalogação total mensal", value: "per_month" },
-        { label: "Catalogação total mensal por canal", value: "canal_montly" },
-        { label: "Conteúdos mais baixados", value: "qt_downloads" },
-        { label: "Conteúdos mais acessados", value: "qt_access" },
-        { label: "Tags mais procuradas", value: "searched_tags" },
-        { label: "Aplicativos mais visualizados", value: "aplicativo_qt_access" },
-        { label: "Registro de ocorrência formulário de contatos", value: "registro_mes_ocorrencia" },
-        { label: "Conteúdos mais acessados nos últimos três meses", value: "acessados_ultimos_meses", },
-        { label: "Catalogação BLOG", value: "wordpress_data" },
-      ],
-      chartOptions: {
-        chart: {
-          id: "vuechart-teste",
-          height: 430,
-          width: "100%",
-          type: "bar",
-        },
-        title: {
-          text: "hola",
-          align: "center",
-        },
-        plotOptions: {
-          bar: {
-            horizontal: true,
-          },
-        },
-        dataLabels: {
-          enabled: false,
-        },
-        xaxis: {
-          categories: [],
-        },
-      },
-      series: [{ name: "Quantidade", data: [] }],
+
 
     };
   },
   created () {
     this.getData();
-    this.getDashboardData();
+    this.getCards();
   },
   methods: {
     async getData () {
@@ -140,11 +94,12 @@ export default {
       }
     },
 
-    async getDashboardData () {
-      const { data } = await axios.get(`/dashboard`);
-      console.log(data);
-      if (data.success) {
-        this.dashboardData = data.metadata;
+    async getCards () {
+
+      const { data } = await axios.get('/dashboard');
+
+      if (data?.success) {
+        this.cards = data.metadata;
       }
     },
 

@@ -15,126 +15,109 @@ class DashboardData
 
     public static function conteudosPorAno()
     {
-        $conteudo = Conteudo::selectRaw('extract(year from conteudos.created_at) as ano, COUNT(*) as quantidade')
+        return DB::table('conteudos')->selectRaw('extract(year from conteudos.created_at) as ano, COUNT(*) as total')
             ->groupByRaw('extract(year from conteudos.created_at)')
-            ->orderBy('quantidade', 'DESC')
+            ->orderBy('total', 'DESC')
             ->get();
-
-        return self::setHeader($conteudo, 'Conteúdos por ano');
     }
 
     public static function catalogacaoPorCanal()
     {
-        $canal = DB::table('canais AS ca')
+        return DB::table('canais AS ca')
             ->select(DB::raw('ca.name, count(ca.id) AS total'))
             ->join('conteudos AS c', 'ca.id', '=', 'c.canal_id')
             ->groupBy('ca.name')
             ->orderBy('total', 'DESC')
             ->get();
-
-        return self::setHeader($canal, 'Catalogação por canal');
     }
     public static function catalogacaoMensalPorUsuario()
     {
-        $user = DB::table('users as u')
+        return DB::table('users as u')
             ->select(DB::raw('u.name, count(u.id) AS total'))
             ->join('conteudos AS c', 'u.id', '=', 'c.user_id')
+            ->limit(10)
             ->groupBy('u.name')
             ->orderBy('total', 'DESC')
             ->get();
-        return self::setHeader($user, 'Catalogação mensal por usuário');
     }
     public static function catalogacaoTotalMensal()
     {
-        $conteudo = Conteudo::selectRaw('extract(month from conteudos.created_at) as mes, COUNT(*) as quantidade')
+        return DB::table('conteudos')->selectRaw('extract(month from conteudos.created_at) as mes, COUNT(*) as quantidade')
             ->groupByRaw('extract(month from conteudos.created_at)')
             ->orderBy('quantidade', 'DESC')
             ->get();
-
-        return self::setHeader($conteudo, 'Catalogação total mensal');
     }
     public static function conteudosMaisBaixados()
     {
-        $conteudo = Conteudo::orderBy('qt_downloads', 'desc')->get();
-
-        return self::setHeader($conteudo, 'Conteúdos Mais baixado');
+        return DB::table('conteudos')->select(['title', 'qt_downloads'])->limit(10)->orderBy('qt_downloads', 'desc')->get();
     }
 
     public static function conteudosMaisAcessados()
     {
-        $conteudo = Conteudo::orderBy('qt_access', 'desc')->get();
-
-        return self::setHeader($conteudo, 'Conteúdos mais Acessado');
+        return DB::table('conteudos')->select(['title', 'qt_access'])->limit(10)->orderBy('qt_access', 'desc')->get();
     }
 
     public static function tagsMaisProcuradas()
     {
-        $tags = Tag::orderBy('searched', 'desc')->get();
-
-        return self::setHeader($tags, 'Palavras-chave mais procurada');
+        return DB::table('tags')
+            ->select(['name', 'searched'])
+            ->orderBy('searched', 'desc')
+            ->limit(15)->get();
     }
 
 
     public static function aplicativosMaisVisualizados()
     {
-        $aplicativo = Aplicativo::orderby('options->>qt_access', 'DESC')->get();
-
-        return self::setHeader($aplicativo, 'Aplicavos mais visualizadoss');
+        return DB::table('aplicativos')
+            ->select(['name', 'options->qt_access as qt_access'])
+            ->limit(10)
+            ->orderBy('options->qt_access', 'DESC')
+            ->get();
     }
 
 
     public static function tiposDeMidia()
     {
-        $tipo = DB::table('tipos AS t')
+        return DB::table('tipos AS t')
             ->select(DB::raw('t.name, count(t.id) AS total'))
             ->join('conteudos AS c', 't.id', '=', 'c.tipo_id')
+            ->limit(10)
             ->groupBy('t.name')
             ->orderBy('total', 'DESC')
             ->get();
-
-        return self::setHeader($tipo, 'Mídias mais visualizadas');
     }
 
 
     public static function setRequest(Request $request)
     {
+
         self::$request = $request;
     }
 
-    public static function setHeader($data, $title)
+    public static function getDataFromId($id)
     {
-        return [
-            'data' => $data,
-            'titulo' => $title,
-        ];
-    }
 
-    public static function getDataFromId()
-    {
-        $id = self::$request->get('id', '');
         if ($id) {
             $nameClass = self::class;
             $method = Str::camel($id, '-');
             $resposta = call_user_func("{$nameClass}::{$method}");
+
             return $resposta;
         }
     }
 
-    public static function getAll()
+    public static function getCards()
     {
-        $ids = collect([
-            'conteudos-por-ano', 'catalogacao-por-canal', 'catalogacao-mensal-por-usuario', 'catalogacao-total-mensal',
-            'conteudos-mais-baixados', 'conteudos-mais-acessados', 'tags-mais-procuradas', 'aplicativos-mais-visualizados', 'tipos-de-midia'
+        return collect([
+            ['id' => 'conteudos-por-ano', 'titulo' => 'Conteúdo por ano'],
+            ['id' => 'catalogacao-por-canal', 'titulo' => 'Catalogação por canal'],
+            ['id' => 'catalogacao-mensal-por-usuario', 'titulo' => 'Catalogação mensal por usuário'],
+            ['id' => 'catalogacao-total-mensal', 'titulo' => 'Catalogação total mensal'],
+            ['id' => 'conteudos-mais-baixados', 'titulo' => 'Conteúdo mais baixado'],
+            ['id' => 'conteudos-mais-acessados', 'titulo' => 'Conteúdo mais acessado'],
+            ['id' => 'tags-mais-procuradas', 'titulo' => 'Palavra-chave mais procurada'],
+            ['id' => 'aplicativos-mais-visualizados', 'titulo' => 'Aplicativo mais vizualizados'],
+            ['id' => 'tipos-de-midia', 'titulo' => 'Tipo de mídia'],
         ]);
-
-        $methods = $ids->map(function ($item) {
-            $nameClass = self::class;
-            $method = Str::camel($item, '-');
-            $resposta = call_user_func("{$nameClass}::{$method}");
-
-            return $resposta;
-        });
-
-        return $methods;
     }
 }
