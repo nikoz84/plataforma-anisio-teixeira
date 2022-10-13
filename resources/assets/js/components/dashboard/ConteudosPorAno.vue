@@ -18,7 +18,7 @@
         </section>
         <q-separator />
         <q-card-section>
-            <VueApexCharts height="450" type="bar" :render="render" :options="chartOptions" />
+            <VueApexCharts height="450" type="bar" :render="render" :options="chartOptions"></VueApexCharts>
         </q-card-section>
     </div>
 </template>
@@ -26,6 +26,7 @@
 <script>
 import { exportTable } from '@composables/ToCsv';
 import VueApexCharts from "vue-apexcharts";
+
 
 
 export default {
@@ -42,9 +43,10 @@ export default {
             dataTable: [],
             mapSeries: [],
             render: false,
+            // Inicio da configuração do gráfico
             chartOptions: {
                 chart: {
-                    id: "vuechart-teste",
+                    id: "vuechart-conteudos",
                     height: 430,
                     width: "100%",
                     type: "bar",
@@ -60,12 +62,14 @@ export default {
                 },
                 dataLabels: {
                     enabled: false,
+                    positions: top,
                 },
                 xaxis: {
                     categories: [],
                 },
                 series: null
             },
+            //Fim da configuração do gráfico
 
         }
     },
@@ -81,8 +85,13 @@ export default {
             if (data.success) {
                 this.dataTable = data.metadata
                 this.chartOptions.xaxis.categories = data.metadata.map(item => item.ano)
-                //this.chartOptions.series = [{ name: "Quantidade", data: data.metadata.map(item => item.total) }]
-                //this.render = data.success
+                this.chartOptions.series = [
+                    {
+                        name: "Quantidade",
+                        data: data.metadata.map(item => item.total)
+                    }
+                ]
+                this.render = data.success
                 console.log(this.mapSeries, this.chartOptions)
             }
         }
