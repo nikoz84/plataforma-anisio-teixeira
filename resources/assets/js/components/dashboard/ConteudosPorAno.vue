@@ -5,36 +5,22 @@
         <q-separator />
         <q-card-section>
           <div class="text-dark text-h6">Filtros</div>
+          <div style="min-width: 250px; max-width: 300px">
+            <q-select v-model="anoMultiple" multiple label-color="primary" :options="OptionsAnos" use-chips stack-label
+              label="Filtrar por anos" />
+          </div>
         </q-card-section>
-        <q-table
-          v-if="render"
-          title="Conteúdos"
-          :data="dataTable"
-          :columns="columns"
-          color="primary"
-          row-key="name"
-          :pagination="{ rowsPerPage: 20 }"
-        >
+        <q-table v-if="render" title="Conteúdos" :data="dataTable" :columns="columns" color="primary" row-key="name"
+          :pagination="{ rowsPerPage: 20 }">
           <template v-slot:top-right>
-            <q-btn
-              color="primary"
-              icon-right="archive"
-              label="Export to csv"
-              no-caps
-              @click="exportToCsv"
-            />
+            <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps @click="exportToCsv" />
           </template>
         </q-table>
       </q-card>
     </section>
     <q-separator />
     <q-card-section v-if="render">
-      <VueApexCharts
-        height="450"
-        type="bar"
-        :options="chartOptions"
-        :series="mapSeries"
-      />
+      <VueApexCharts height="450" type="bar" :options="chartOptions" :series="mapSeries" />
     </q-card-section>
   </div>
 </template>
@@ -48,8 +34,10 @@ export default {
   components: {
     VueApexCharts,
   },
-  data() {
+  data () {
     return {
+      OptionsAnos: [],
+      anoMultiple: null,
       columns: [
         {
           name: "ano",
@@ -90,14 +78,16 @@ export default {
       },
     };
   },
-  created() {
+  created () {
     this.getDataTable();
   },
   methods: {
-    exportToCsv() {
+    exportToCsv () {
       exportTable(this.dataTable, this.columns);
     },
-    async getDataTable() {
+
+
+    async getDataTable () {
       this.$q.loading.show();
       const { data } = await axios.get(`/dashboard/conteudos-por-ano`);
       if (data.success) {
