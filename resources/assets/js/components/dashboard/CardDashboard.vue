@@ -17,7 +17,7 @@
           <strong>Ano:</strong>
           {{ cardContent.ano }}
           <br>
-          <VueApexCharts height="450" type="bar" :options="chartOptions" :series="mapSeries" />
+          <VueApexCharts height="450" :options="conteudosPorAnoOptions" :series="mapSeries" />
         </span>
       </q-card-section>
       <q-card-section v-else-if="id === 'catalogacao-por-canal'">
@@ -25,8 +25,7 @@
           Quantidade: {{ cardContent.total }}
           <br />
           Nome canal: {{ cardContent.name }}
-          <VueApexCharts height="450" type="bar" :options="chartOptionsPorCanal" :series="mapSeriesPorCanal" />
-
+          <VueApexCharts height="450" :options="chartOptionsPorCanal" :series="mapSeriesPorCanal" />
         </span>
       </q-card-section>
       <q-card-section v-else-if="id === 'tags-mais-procuradas'">
@@ -34,13 +33,16 @@
           Vezes buscada: {{ cardContent.name }}
           <br />
           Palavra-chave: {{ cardContent.searched }}
+          <VueApexCharts height="450" :options="mapSeriesTagsProcuradas" :series="mapSeriesTagsProcuradas" />
+
         </span>
       </q-card-section>
       <q-card-section v-else-if="id === 'tipos-de-midia'">
         <span>
-          Nome da mída: {{ cardContent.name }}
+          Mídia: {{ cardContent.name }}
           <br />
           Total: {{ cardContent.total}}
+          <VueApexCharts height="450" :options="chartOptionsTipos" :series="mapSeriesTipos" />
         </span>
       </q-card-section>
       <q-card-section v-else-if="id === 'aplicativos-mais-visualizados'">
@@ -48,6 +50,8 @@
           Nome do aplicativo: {{ cardContent.name }}
           <br />
           Total: {{ cardContent.qt_access}}
+          <VueApexCharts height="450" :options="chartOptionsMaisVizualizados" :series="chartOptionsMaisVizualizados" />
+
         </span>
       </q-card-section>
       <q-card-section v-else-if="id === 'conteudos-mais-acessados'">
@@ -56,7 +60,7 @@
           <br />
           Total: {{ cardContent.qt_access}}
         </span>
-        <VueApexCharts height="450" type="bar" :options="chartOptionsMaisACessados" :series="mapSeriesMaisAcessados" />
+        <VueApexCharts height="450" :options="chartOptionsMaisACessados" :series="mapSeriesMaisAcessados" />
 
       </q-card-section>
       <q-card-section v-else-if="id === 'conteudos-mais-baixados'">
@@ -64,8 +68,7 @@
           Título: {{ cardContent.title}}
           <br />
           Total: {{ cardContent.qt_downloads}}
-          <VueApexCharts height="450" type="line" :options="chartOptionsConteudosMaisBaixados"
-            :series="mapSeriesConteudosMaisBaixados" />
+          <VueApexCharts height="450" :options="chartOptionsConteudosBaixados" :series="chartOptionsContudosBaixados" />
 
         </span>
       </q-card-section>
@@ -74,6 +77,7 @@
           Nome: {{ cardContent.name}}
           <br />
           Total: {{ cardContent.total}}
+          <VueApexCharts height="450" :options="chartOptionsPorUsuario" :series="chartOptionsPorUsuario" />
         </span>
       </q-card-section>
       <q-card-section v-else-if="id === 'catalogacao-total-mensal'">
@@ -81,6 +85,8 @@
           Mês: {{ cardContent.mes}}
           <br />
           Quantidade: {{ cardContent.quantidade}}
+          <VueApexCharts height="450" :options="chartOptionsTotalMensal" :series="mapSeriesTotalMensal" />
+
         </span>
       </q-card-section>
 
@@ -94,6 +100,7 @@
 
 <script>
 import VueApexCharts from "vue-apexcharts";
+import { conteudosPorAnoOptions } from '@composables/ChartOptions'
 
 export default {
   name: "CardDashboard",
@@ -107,18 +114,21 @@ export default {
       dataTable: [],
       mapSeries: [],
       mapSeriesPorCanal: [],
-      mapSeriesPorCanal: [],
+      mapSeriesTotalMensal: [],
       mapSeriesMaisAcessados: [],
+      chartOptionsContudosBaixados: [],
+      chartOptionsPorUsuario: [],
+      mapSeriesTagsProcuradas: [],
+      chartOptionsMaisVizualizados: [],
+      mapSeriesTipos: [],
 
       render: false,
-
-      // Inicio da configuração do gráfico conteudos por ano
-      chartOptions: {
+      conteudosPorAnoOptions: {
         plotOptions: {
           bar: {
             borderRadius: 4,
             horizontal: true,
-          }
+          },
         },
         chart: {
           id: "vuechart-conteudos",
@@ -128,10 +138,10 @@ export default {
         },
 
         stroke: {
-          curve: 'smooth',
+          curve: "smooth",
         },
         fill: {
-          opacity: 0.8
+          opacity: 0.8,
         },
         dataLabels: {
           enabled: false,
@@ -139,7 +149,7 @@ export default {
         },
         xaxis: {
           categories: [],
-        }
+        },
       },
       // Inicio da configuração do gráfico catalogação por canal
       chartOptionsPorCanal: {
@@ -149,12 +159,13 @@ export default {
           zoom: {
             enabled: false
           },
+          labels: [],
         },
         dataLabels: {
           enabled: false,
         },
         stroke: {
-          curve: 'straight'
+          curve: 'smooth'
         },
 
         legend: {
@@ -168,7 +179,7 @@ export default {
       },
 
       //Conteudos mais acessados
-      chartOptionsMaisAcessados: {
+      chartOptionsMaisACessados: {
         chart: {
           height: 430,
           type: "bar",
@@ -191,7 +202,7 @@ export default {
           offsetX: -6,
           style: {
             fontSize: '12px',
-            colors: ['#00ffff']
+            colors: ['#000']
           }
         },
         xaxis: {
@@ -207,18 +218,30 @@ export default {
           intersect: false
         },
       },
-      //
-      //Conteudos mais baixados
-      chartOptionsConteudosMaisBaixados: {
+      //Catalogacao total mensal
+      // Inicio da configuração do gráfico
+      chartOptionsTotalMensal: {
         chart: {
-          height: 430,
-          width: "100%",
-          type: "line",
+          height: 350,
+          type: 'line'
+        },
+
+        dataLabels: {
+          enabled: false,
+        },
+        xaxis: {
+          categories: [],
+        },
+      },
+      //Conteudos mais baixados
+      chartOptionsConteudosBaixados: {
+        chart: {
+          type: "bar",
         },
 
         plotOptions: {
           bar: {
-            horizontal: false,
+            horizontal: true,
           },
 
         },
@@ -229,38 +252,170 @@ export default {
         xaxis: {
           categories: [],
         },
+
         stroke: {
           curve: 'smooth',
         },
 
       },
+      //Inicia configuração do gráfico catalogação por usuario
+      chartOptionsPorUsuario: {
+        chart: {
+          height: 430,
+          type: "bar",
+        },
 
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            // horizontal: true,
+            dataLabels: {
+              position: 'top',
+            },
+          },
+        },//plotOptions
+        dataLabels: {
+          enabled: true,
+          offsetX: -6,
+          style: {
+            fontSize: '12px',
+            colors: ['#000']
+          }
+        },
+        xaxis: {
+          categories: [],
+        },
+        stroke: {
+          show: true,
+          width: 1,
+          colors: ['#000000']
+        },
+        tooltip: {
+          shared: true,
+          intersect: false
+        },
+      },
+
+      //Inicia configuração Tags mais procuradas
+      mapSeriesTagsProcuradas: {
+        chart: {
+          height: 430,
+          type: "line"
+        },
+
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            dataLabels: {
+              position: 'top'
+            },
+          }
+        },
+        dataLabels: {
+          enabled: true,
+          offsetX: -6,
+          style: {
+            fontSize: '12px',
+            colors: ['#363636']
+          }
+        },
+        xaxis: {
+          categories: [],
+        },
+        stroke: {
+          show: true,
+          width: 1,
+          colors: ['#000000']
+        },
+        tooltip: {
+          shared: true,
+          intersect: false
+        },
+      },
+      //Aplicativos mais vizualizados
+      chartOptionsMaisVizualizados: {
+        chart: {
+          height: 430,
+          type: "line"
+        },
+
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            dataLabels: {
+              position: 'top'
+            },
+          }
+        },
+        dataLabels: {
+          enabled: true,
+          offsetX: -6,
+          style: {
+            fontSize: '12px',
+            colors: ['#363636']
+          }
+        },
+        xaxis: {
+          categories: [],
+        },
+        stroke: {
+          show: true,
+          width: 1,
+          colors: ['#000000']
+        },
+        tooltip: {
+          shared: true,
+          intersect: false
+        },
+      },
+      chartOptionsTipos: {
+        plotOptions: {
+          bar: {
+            borderRadius: 4,
+            horizontal: true,
+          },
+        },
+        chart: {
+          id: "vuechart-conteudos",
+          height: 350,
+          // width: "100%",
+          type: "bar",
+        },
+
+        stroke: {
+          curve: "smooth",
+        },
+        fill: {
+          opacity: 0.8,
+        },
+        dataLabels: {
+          enabled: false,
+          positions: top,
+        },
+        xaxis: {
+          categories: [],
+        },
+      }
     }
   },
-  created () {
-    this.getDataFromId();
+  mounted () {
     this.getDataTable();
   },
 
   methods: {
-    async getDataFromId () {
-      console.log(this.id)
-      const { data } = await axios.get(`/dashboard/${this.id}`)
-      if (data.success) {
-        const [first] = data.metadata
-        console.log(first)
-        this.cardContent = first
-      }
-    },
 
     async getDataTable () {
       this.$q.loading.show();
       const { data } = await axios.get(`/dashboard/${this.id}`)
       if (data.success) {
         // define as as cetegorias com o spread operator (...)
+        const [first] = data.metadata
+        this.cardContent = first
 
-        this.chartOptions = {
-          ...this.chartOptions,
+
+
+        this.conteudosPorAnoOptions = {
+          ...this.conteudosPorAnoOptions,
           ...{
             xaxis: {
               categories: data.metadata.map((item) => item.ano),
@@ -294,15 +449,15 @@ export default {
         ];
 
         //Conteudos mais baixados
-        this.chartOptionsConteudosMaisBaixados = {
-          ...this.chartOptionsConteudosMaisBaixados,
+        this.chartOptionsConteudosBaixados = {
+          ...this.chartOptionsConteudosBaixados,
           ...{
             xaxis: {
               categories: data.metadata.map((item) => item.title),
             },
           },
         };
-        this.mapSeriesConteudosMaisBaixados = [
+        this.chartOptionsContudosBaixados = [
           {
             name: "Download",
             data: data.metadata.map((item) => item.qt_downloads),
@@ -324,6 +479,109 @@ export default {
           {
             name: "Download",
             data: data.metadata.map((item) => item.qt_access),
+          },
+        ];
+
+        //Catalogação total mensal
+        this.chartOptionsTotalMensal = {
+          ...this.chartOptionsTotalMensal,
+          ...{
+            xaxis: {
+              categories: data.metadata.map((item) => item.mes),
+            },
+          },
+        };
+        // define as series
+        this.mapSeriesTotalMensal = [
+          {
+            name: "Download",
+            data: data.metadata.map((item) => item.quantidade),
+          },
+        ];
+        //Catalogação por usuario
+        this.chartOptionsPorUsuario = {
+          ...this.chartOptionsPorUsuario,
+          ...{
+            xaxis: {
+              categories: data.metadata.map((item) => item.name),
+            },
+          },
+        };
+        // define as series
+        this.chartOptionsPorUsuario = [
+          {
+            name: "Total",
+            data: data.metadata.map((item) => item.total),
+          },
+        ];
+
+        //Tag mais procuradas
+
+        //Catalogação total mensal
+        this.mapSeriesTagsProcuradas = {
+          ...this.mapSeriesTagsProcuradas,
+          ...{
+            xaxis: {
+              categories: data.metadata.map((item) => item.name),
+            },
+          },
+        };
+        // define as series
+        this.mapSeriesTagsProcuradas = [
+          {
+            name: "searched",
+            data: data.metadata.map((item) => item.searched),
+          },
+        ];
+
+        //Catalogação por usuario
+        this.chartOptionsPorUsuario = {
+          ...this.chartOptionsPorUsuario,
+          ...{
+            xaxis: {
+              categories: data.metadata.map((item) => item.name),
+            },
+          },
+        };
+        // define as series
+        this.chartOptionsPorUsuario = [
+          {
+            name: "Total",
+            data: data.metadata.map((item) => item.total),
+          },
+        ];
+
+        //Aplicativos mais visualizados
+
+        this.chartOptionsMaisVizualizados = {
+          ...this.chartOptionsMaisVizualizados,
+          ...{
+            xaxis: {
+              categories: data.metadata.map((item) => item.name),
+            },
+          },
+        };
+        // define as series
+        this.chartOptionsMaisVizualizados = [
+          {
+            name: "Total",
+            data: data.metadata.map((item) => item.qt_access),
+          },
+        ];
+
+        this.chartOptionsTipos = {
+          ...this.chartOptionsTipos,
+          ...{
+            xaxis: {
+              categories: data.metadata.map((item) => item.name),
+            },
+          },
+        };
+        // define as series
+        this.mapSeriesTipos = [
+          {
+            name: "Total",
+            data: data.metadata.map((item) => item.total),
           },
         ];
 

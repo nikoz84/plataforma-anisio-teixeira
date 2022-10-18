@@ -15,11 +15,13 @@ class DashboardData
 
     public static function conteudosPorAno()
     {
-        return DB::table('conteudos')->selectRaw('extract(year from conteudos.created_at) as ano, COUNT(*) as total')
+        return DB::table('conteudos')
+            ->selectRaw('extract(year from conteudos.created_at) as ano, COUNT(*) as total')
             ->groupByRaw('extract(year from conteudos.created_at)')
             ->orderBy('total', 'DESC')
             ->get();
     }
+
 
     public static function catalogacaoPorCanal()
     {

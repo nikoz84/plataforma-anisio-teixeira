@@ -5,11 +5,21 @@
         <q-separator />
         <q-card-section>
           <div class="text-dark text-h6">Filtros</div>
-          <div style="min-width: 250px; max-width: 300px">
-            <q-select v-model="anoMultiple" multiple label-color="primary" :options="OptionsAnos" use-chips stack-label
-              label="Filtrar por anos" />
+          <div class="q-gutter-md row items-start">
+            <div style="min-width: 150px; max-width: 200px">
+              <q-select v-model="mesMultiple" multiple label-color="primary" :options="mapOptionsMes" use-chips
+                stack-label label="Filtrar por meses" />
+            </div>
+            <div style="min-width: 150px; max-width: 200px">
+              <q-select v-model="anoMultiple" multiple label-color="primary" :options="MapOptionsAnos" use-chips
+                stack-label label="Filtrar por anos" />
+            </div>
+            <div style="min-width: 150px; max-width: 200px">
+              <q-btn color="primary" label="Pesquisar" size="md" @click='pesquisarFiltros()' />
+            </div>
           </div>
         </q-card-section>
+
         <q-table v-if="render" title="Conteúdos" :data="dataTable" :columns="columns" color="primary" row-key="name"
           :pagination="{ rowsPerPage: 20 }">
           <template v-slot:top-right>
@@ -36,8 +46,10 @@ export default {
   },
   data () {
     return {
-      OptionsAnos: [],
+      MapOptionsAnos: [],
+      mapOptionsMes: [],
       anoMultiple: null,
+      mesMultiple: null,
       columns: [
         {
           name: "ano",
@@ -108,8 +120,11 @@ export default {
             data: data.metadata.map((item) => item.total),
           },
         ];
-        // renderiza
-        this.render = data.success;
+
+        this.MapOptionsAnos = data.metadata.map((item) => item.ano),
+          // this.MapOptionsMes = data.metadata.map((item) => mes),
+          // renderiza
+          this.render = data.success;
       }
       this.$q.loading.hide();
     },

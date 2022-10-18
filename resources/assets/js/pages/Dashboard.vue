@@ -6,25 +6,16 @@
       </div>
       <div class="separatriz-6"></div>
     </div>
-
     <div class="row items-start q-gutter-md q-mb-xl">
       <card-dashboard v-for="(card, i) in cards" :key="i" :titulo="card.titulo" :id="card.id" />
     </div>
-
     <div class="row items-start q-gutter-md q-mb-xl"></div>
-
     <q-card>
-
       <q-separator />
-
-
     </q-card>
-
   </div>
 </template>
 <script>
-// @ts-nocheck
-
 import {
   QTable,
   QCard,
@@ -76,51 +67,15 @@ export default {
     };
   },
   created () {
-    this.getData();
     this.getCards();
   },
   methods: {
-    async getData () {
-      let url = `resumo?option=${this.item.value}`;
-      let resp = await axios.get(url);
-      if (resp.data.success) {
-        this.title = resp.data.metadata.title;
-        this.metadata = resp.data.metadata.data;
-        this.render = resp.data.metadata.render;
-        if (this.render) {
-          this.appendData(resp.data.metadata.series);
-          this.createInfoGraf(resp.data.metadata.categories);
-        }
-      }
-    },
-
     async getCards () {
-
       const { data } = await axios.get('/dashboard');
-
       if (data?.success) {
         this.cards = data.metadata;
       }
-    },
-
-    createInfoGraf (categories) {
-      this.chartOptions = {
-        ...this.chartOptions,
-        ...{
-          title: {
-            text: this.title,
-          },
-          xaxis: {
-            categories,
-          },
-        },
-      };
-    },
-    appendData (data) {
-      let arr = this.series.slice();
-      arr[0].data = data;
-      this.series = arr;
-    },
+    }
   },
 };
 </script>
