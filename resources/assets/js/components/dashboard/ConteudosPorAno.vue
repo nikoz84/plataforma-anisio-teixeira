@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
     <div>
         <section>
             <q-card>
@@ -36,99 +37,68 @@
                 </q-table>
             </q-card>
         </section>
+=======
+  <div class="q-pa-lg">
+    <section>
+      <q-card>
+>>>>>>> feat-02
         <q-separator />
         <q-card-section>
-            <VueApexCharts height="450" type="bar" :options="chartOptions" :series="series" />
+          <div class="text-dark text-h6">Filtros</div>
         </q-card-section>
-    </div>
+        <q-table
+          v-if="render"
+          title="Conteúdos"
+          :data="dataTable"
+          :columns="columns"
+          color="primary"
+          row-key="name"
+          :pagination="{ rowsPerPage: 20 }"
+        >
+          <template v-slot:top-right>
+            <q-btn
+              color="primary"
+              icon-right="archive"
+              label="Export to csv"
+              no-caps
+              @click="exportToCsv"
+            />
+          </template>
+        </q-table>
+      </q-card>
+    </section>
+    <q-separator />
+    <q-card-section v-if="render">
+      <VueApexCharts
+        height="450"
+        type="bar"
+        :options="chartOptions"
+        :series="mapSeries"
+      />
+    </q-card-section>
+  </div>
 </template>
 
 <script>
-import { exportTable } from '@composables/ToCsv';
+import { exportTable } from "@composables/ToCsv";
 import VueApexCharts from "vue-apexcharts";
 
-
 export default {
-    name: 'ConteudosPorAno',
-    components: {
-        VueApexCharts
-    },
-    data () {
-        return {
-            columns: [
-                { name: 'Titulo', align: 'center', label: 'Títulos', field: 'titulos' },
-                { name: 'Descricao', label: 'Descrição', field: 'descricao' },
-                { name: 'Author', label: 'Autor', field: 'autor' },
-                { name: 'Q.Downloads', label: 'Q.Downloads', field: 'qt_downloads' },
-                { name: 'Qt.Acessos', label: 'Qt.Acessos', field: 'qt_access' },
-                { name: 'Dt.Criacao', label: 'Dt.Criação', field: 'created_at' }
-            ],
-            dataTable: [],
-            series: [{ name: "Quantidade", data: [] }],
-            mesMultiple: null,
-            anoMultiple: null,
-            temaMultiple: null,
-            tipoConteudoMultiple: null,
-            ordenarMultiple: null,
-            meses: [
-                "Janeiro",
-                "Fevereiro",
-                "Março",
-                "Abril",
-                "Maio",
-                "Junho",
-                "Julho",
-                "Agosto",
-                "Setembro",
-                "Outubro",
-                "Novembro",
-                "Dezembro",
-            ],
-            anos: ["2022", "2021", "2020", "2019", "2018"],
-            temas: ["Matemática", "Física", "Química", "Sexualidade"],
-            tipoConteudo: [
-                "Videos",
-                "Apresentações",
-                "Áudios",
-                "Aplicativos",
-                "Games",
-            ],
-            ordenar: [
-                "Mais baixados",
-                "Mais visualizados",
-                "Mais acessados",
-                "Catalogado por usuário",
-            ],
-            chartOptions: {
-                chart: {
-                    id: "vuechart-teste",
-                    height: 430,
-                    width: "100%",
-                    type: "bar",
-                },
-                title: {
-                    text: "hola",
-                    align: "center",
-                },
-                plotOptions: {
-                    bar: {
-                        horizontal: true,
-                    },
-                },
-                dataLabels: {
-                    enabled: false,
-                },
-                xaxis: {
-                    categories: [],
-                },
-            },
-
-        }
-    },
-    methods: {
-        exportToCsv () {
-            exportTable(this.dataTable, this.columns)
+  name: "ConteudosPorAno",
+  components: {
+    VueApexCharts,
+  },
+  data() {
+    return {
+      columns: [
+        {
+          name: "ano",
+          align: "center",
+          label: "Ano",
+          field: "ano",
+          sortable: true,
         },
+<<<<<<< HEAD
          getDataTable () {
            //Aqui eu consumo os dados da api
             //const {data} = await axios.get('');
@@ -136,7 +106,73 @@ export default {
         }
     }
 }
+=======
+        { name: "total", label: "Total", field: "total" },
+      ],
+      dataTable: [],
+      mapSeries: [],
+      render: false,
+      // Inicio da configuração do gráfico
+      chartOptions: {
+        chart: {
+          id: "vuechart-conteudos",
+          height: 430,
+          width: "100%",
+          type: "bar",
+        },
+        title: {
+          text: "Conteúdos por ano",
+          align: "center",
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+          },
+        },
+        dataLabels: {
+          enabled: false,
+          positions: top,
+        },
+        xaxis: {
+          categories: [],
+        },
+      },
+    };
+  },
+  created() {
+    this.getDataTable();
+  },
+  methods: {
+    exportToCsv() {
+      exportTable(this.dataTable, this.columns);
+    },
+    async getDataTable() {
+      this.$q.loading.show();
+      const { data } = await axios.get(`/dashboard/conteudos-por-ano`);
+      if (data.success) {
+        this.dataTable = data.metadata;
+        // define as as cetegorias com o spread operator (...)
+        this.chartOptions = {
+          ...this.chartOptions,
+          ...{
+            xaxis: {
+              categories: data.metadata.map((item) => item.ano),
+            },
+          },
+        };
+        // define as series
+        this.mapSeries = [
+          {
+            name: "Total",
+            data: data.metadata.map((item) => item.total),
+          },
+        ];
+        // renderiza
+        this.render = data.success;
+      }
+      this.$q.loading.hide();
+    },
+  },
+};
+>>>>>>> feat-02
 </script>
-<style scoped>
-
-</style>

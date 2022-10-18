@@ -297,7 +297,10 @@ Route::group(
         });
         /** ANALYTICS */
         Route::get('/resumo', [HomeController::class, 'getAnalytics'])->name('catalogacao.blog.e.plataforma');
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('index.dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'getCards'])->name('cards.dashboard');
+        Route::get('/dashboard/{id}', [DashboardController::class, 'getById'])->name('data.x.id');
+
+
         /** RELATÓRIOS */
         Route::group(['prefix' => 'relatorio', 'as' => 'relatorio.'], function () {
             Route::get('/usuarios/role/{role_id}', [RelatorioController::class, 'buscarUsuariosPorRole'])->name('view.relatorio.usuario');

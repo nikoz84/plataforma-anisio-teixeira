@@ -51,7 +51,7 @@ import VueApexCharts from "vue-apexcharts";
 export default {
     name: 'ConteudosPorCanal',
     components: {
-        VueApexCharts
+        //
     },
     data () {
         return {
@@ -135,6 +135,3 @@ export default {
     }
 }
 </script>
-<style scoped>
-
-</style>

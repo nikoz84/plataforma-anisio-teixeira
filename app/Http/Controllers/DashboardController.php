@@ -5,18 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use App\Services\DashboardData;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class DashboardController extends ApiController
 {
-    public function index(Request $request)
+    public function getCards()
+    {
+        return $this->successResponse(DashboardData::getCards());
+    }
+
+    public function getById(Request $request, $id)
     {
         DashboardData::setRequest($request);
-        if ($request->get('id')) {
-            $data = DashboardData::getDatafromId();
-        } else {
-            $data = DashboardData::getAll();
-        }
-
-        return $this->successResponse($data);
+        return $this->successResponse(DashboardData::getDataFromId($id));
     }
 }
