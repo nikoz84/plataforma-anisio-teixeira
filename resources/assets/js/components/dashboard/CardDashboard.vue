@@ -181,41 +181,38 @@ export default {
       //Conteudos mais acessados
       chartOptionsMaisACessados: {
         chart: {
-          height: 430,
+          height: 350,
           type: "bar",
         },
-        title: {
-          text: "Conteúdos mais acessados",
-          align: "center",
-        },
+
         plotOptions: {
           bar: {
             horizontal: false,
-            // horizontal: true,
-            dataLabels: {
-              position: 'top',
-            },
+            columnWidth: '55%',
+            endingShape: 'rounded'
           },
         },//plotOptions
         dataLabels: {
           enabled: true,
-          offsetX: -6,
-          style: {
-            fontSize: '12px',
-            colors: ['#000']
-          }
         },
         xaxis: {
           categories: [],
         },
         stroke: {
           show: true,
-          width: 1,
-          colors: ['#000000']
+          width: 2,
+          colors: ['transparent']
+        },
+
+        fill: {
+          opacity: 1
         },
         tooltip: {
-          shared: true,
-          intersect: false
+          y: {
+            formatter: function (val) {
+              return "$ " + val + " thousands"
+            }
+          }
         },
       },
       //Catalogacao total mensal

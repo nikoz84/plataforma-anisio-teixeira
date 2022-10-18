@@ -23,6 +23,16 @@ class DashboardData
     }
 
 
+    public static function aplicativosMaisVisualizados()
+    {
+        return DB::table('aplicativos')
+            ->select(['name', 'options->qt_access as qt_access'])
+            ->limit(10)
+            ->orderBy('options->qt_access', 'DESC')
+            ->get();
+    }
+
+
     public static function catalogacaoPorCanal()
     {
         return DB::table('canais AS ca')
@@ -68,14 +78,6 @@ class DashboardData
     }
 
 
-    public static function aplicativosMaisVisualizados()
-    {
-        return DB::table('aplicativos')
-            ->select(['name', 'options->qt_access as qt_access'])
-            ->limit(10)
-            ->orderBy('options->qt_access', 'DESC')
-            ->get();
-    }
 
 
     public static function tiposDeMidia()
@@ -112,13 +114,13 @@ class DashboardData
     {
         return collect([
             ['id' => 'conteudos-por-ano', 'titulo' => 'Conteúdo por ano'],
+            ['id' => 'aplicativos-mais-visualizados', 'titulo' => 'Aplicativo mais vizualizados'],
             ['id' => 'catalogacao-por-canal', 'titulo' => 'Catalogação por canal'],
             ['id' => 'catalogacao-mensal-por-usuario', 'titulo' => 'Catalogação mensal por usuário'],
             ['id' => 'catalogacao-total-mensal', 'titulo' => 'Catalogação total mensal'],
             ['id' => 'conteudos-mais-baixados', 'titulo' => 'Conteúdo mais baixado'],
             ['id' => 'conteudos-mais-acessados', 'titulo' => 'Conteúdo mais acessado'],
             ['id' => 'tags-mais-procuradas', 'titulo' => 'Palavra-chave mais procurada'],
-            ['id' => 'aplicativos-mais-visualizados', 'titulo' => 'Aplicativo mais vizualizados'],
             ['id' => 'tipos-de-midia', 'titulo' => 'Tipo de mídia'],
         ]);
     }
