@@ -1,106 +1,104 @@
 <template>
-  <div class="row items-start">
-    <q-card class="my-card text-dark" style="" square>
-      <!-- TÍTULO DOS DADOS -->
-      <q-card-section>
-        <div class="text-h6">
-          {{ titulo }}
-        </div>
-      </q-card-section>
-      <q-separator />
-      <!-- ENTRADA DE DADOS -->
-      <q-card-section v-if="id === 'conteudos-por-ano'">
-        <span>
-          <strong>Total de conteúdos:</strong>
-          {{ cardContent.total }}
-          <br />
-          <strong>Ano:</strong>
-          {{ cardContent.ano }}
-          <br>
-          <VueApexCharts height="450" :options="conteudosPorAnoOptions" :series="mapSeries" />
-        </span>
-      </q-card-section>
-      <q-card-section v-else-if="id === 'catalogacao-por-canal'">
-        <span>
-          Quantidade: {{ cardContent.total }}
-          <br />
-          Nome canal: {{ cardContent.name }}
-          <VueApexCharts height="450" :options="chartOptionsPorCanal" :series="mapSeriesPorCanal" />
-        </span>
-      </q-card-section>
-      <q-card-section v-else-if="id === 'tags-mais-procuradas'">
-        <span>
-          Vezes buscada: {{ cardContent.name }}
-          <br />
-          Palavra-chave: {{ cardContent.searched }}
-          <VueApexCharts height="450" :options="mapSeriesTagsProcuradas" :series="mapSeriesTagsProcuradas" />
 
-        </span>
-      </q-card-section>
-      <q-card-section v-else-if="id === 'tipos-de-midia'">
-        <span>
-          Mídia: {{ cardContent.name }}
-          <br />
-          Total: {{ cardContent.total}}
-          <VueApexCharts height="450" :options="chartOptionsTipos" :series="mapSeriesTipos" />
-        </span>
-      </q-card-section>
-      <q-card-section v-else-if="id === 'aplicativos-mais-visualizados'">
-        <span>
-          Nome do aplicativo: {{ cardContent.name }}
-          <br />
-          Total: {{ cardContent.qt_access}}
-          <VueApexCharts height="450" :options="chartOptionsMaisVizualizados" :series="chartOptionsMaisVizualizados" />
+  <q-card class="my-card text-dark" style="" square>
+    <!-- TÍTULO DOS DADOS -->
+    <q-card-section>
+      <div class="text-h6">
+        {{ titulo }}
+      </div>
+    </q-card-section>
+    <q-separator />
+    <!-- ENTRADA DE DADOS -->
+    <q-card-section v-if="id === 'conteudos-por-ano'">
+      <span>
+        <strong>Total de conteúdos:</strong>
+        {{ cardContent.total }}
+        <br />
+        <strong>Ano:</strong>
+        {{ cardContent.ano }}
+        <br>
+        <VueApexCharts heigth="450" :options="conteudosPorAnoOptions" :series="mapSeries" />
+      </span>
+    </q-card-section>
+    <q-card-section v-else-if="id === 'catalogacao-por-canal'">
+      <span>
+        Quantidade: {{ cardContent.total }}
+        <br />
+        Nome canal: {{ cardContent.name }}
+        <VueApexCharts :options="chartOptionsPorCanal" :series="mapSeriesPorCanal" />
+      </span>
+    </q-card-section>
+    <q-card-section v-else-if="id === 'tags-mais-procuradas'">
+      <span>
+        Vezes buscada: {{ cardContent.name }}
+        <br />
+        Palavra-chave: {{ cardContent.searched }}
+        <VueApexCharts :options="mapSeriesTagsProcuradas" :series="mapSeriesTagsProcuradas" />
 
-        </span>
-      </q-card-section>
-      <q-card-section v-else-if="id === 'conteudos-mais-acessados'">
-        <span>
-          Título: {{ cardContent.title}}
-          <br />
-          Total: {{ cardContent.qt_access}}
-        </span>
-        <VueApexCharts height="450" :options="chartOptionsMaisACessados" :series="mapSeriesMaisAcessados" />
+      </span>
+    </q-card-section>
+    <q-card-section v-else-if="id === 'tipos-de-midia'">
+      <span>
+        Mídia: {{ cardContent.name }}
+        <br />
+        Total: {{ cardContent.total}}
+        <VueApexCharts :options="chartOptionsTipos" :series="mapSeriesTipos" />
+      </span>
+    </q-card-section>
+    <q-card-section v-else-if="id === 'aplicativos-mais-visualizados'">
+      <span>
+        Nome do aplicativo: {{ cardContent.name }}
+        <br />
+        Total: {{ cardContent.qt_access}}
+        <VueApexCharts :options="chartOptionsMaisVizualizados" :series="chartOptionsMaisVizualizados" />
 
-      </q-card-section>
-      <q-card-section v-else-if="id === 'conteudos-mais-baixados'">
-        <span>
-          Título: {{ cardContent.title}}
-          <br />
-          Total: {{ cardContent.qt_downloads}}
-          <VueApexCharts height="450" :options="chartOptionsConteudosBaixados" :series="chartOptionsContudosBaixados" />
+      </span>
+    </q-card-section>
+    <q-card-section v-else-if="id === 'conteudos-mais-acessados'">
+      <span>
+        Título: {{ cardContent.title}}
+        <br />
+        Total: {{ cardContent.qt_access}}
+      </span>
+      <VueApexCharts :options="chartOptionsMaisACessados" :series="mapSeriesMaisAcessados" />
 
-        </span>
-      </q-card-section>
-      <q-card-section v-else-if="id === 'catalogacao-mensal-por-usuario'">
-        <span>
-          Nome: {{ cardContent.name}}
-          <br />
-          Total: {{ cardContent.total}}
-          <VueApexCharts height="450" :options="chartOptionsPorUsuario" :series="chartOptionsPorUsuario" />
-        </span>
-      </q-card-section>
-      <q-card-section v-else-if="id === 'catalogacao-total-mensal'">
-        <span>
-          Mês: {{ cardContent.mes}}
-          <br />
-          Quantidade: {{ cardContent.quantidade}}
-          <VueApexCharts height="450" :options="chartOptionsTotalMensal" :series="mapSeriesTotalMensal" />
+    </q-card-section>
+    <q-card-section v-else-if="id === 'conteudos-mais-baixados'">
+      <span>
+        Título: {{ cardContent.title}}
+        <br />
+        Total: {{ cardContent.qt_downloads}}
+        <VueApexCharts :options="chartOptionsConteudosBaixados" :series="chartOptionsContudosBaixados" />
 
-        </span>
-      </q-card-section>
+      </span>
+    </q-card-section>
+    <q-card-section v-else-if="id === 'catalogacao-mensal-por-usuario'">
+      <span>
+        Nome: {{ cardContent.name}}
+        <br />
+        Total: {{ cardContent.total}}
+        <VueApexCharts :options="chartOptionsPorUsuario" :series="chartOptionsPorUsuario" />
+      </span>
+    </q-card-section>
+    <q-card-section v-else-if="id === 'catalogacao-total-mensal'">
+      <span>
+        Mês: {{ cardContent.mes}}
+        <br />
+        Quantidade: {{ cardContent.quantidade}}
+        <VueApexCharts :options="chartOptionsTotalMensal" :series="mapSeriesTotalMensal" />
 
-      <!-- AÇÕES DOS DADOS -->
-      <q-card-actions>
-        <q-btn flat :to="`/admin/dashboard/${id}`" size="sm">Ver relatório completo</q-btn>
-      </q-card-actions>
-    </q-card>
-  </div>
+      </span>
+    </q-card-section>
+
+    <!-- AÇÕES DOS DADOS -->
+    <q-card-actions>
+      <q-btn flat :to="`/admin/dashboard/${id}`" size="sm">Ver relatório completo</q-btn>
+    </q-card-actions>
+  </q-card>
 </template>
 
 <script>
-import VueApexCharts from "vue-apexcharts";
-import { conteudosPorAnoOptions } from '@composables/ChartOptions'
+import VueApexCharts from "vue-apexcharts"
 
 export default {
   name: "CardDashboard",
@@ -132,7 +130,7 @@ export default {
         },
         chart: {
           id: "vuechart-conteudos",
-          height: 350,
+          // height: 450,
           // width: "100%",
           type: "bar",
         },
@@ -154,7 +152,7 @@ export default {
       // Inicio da configuração do gráfico catalogação por canal
       chartOptionsPorCanal: {
         chart: {
-          height: 350,
+          height: 450,
           type: "area",
           zoom: {
             enabled: false
@@ -181,7 +179,7 @@ export default {
       //Conteudos mais acessados
       chartOptionsMaisACessados: {
         chart: {
-          height: 350,
+          height: 450,
           type: "bar",
         },
 
@@ -207,19 +205,12 @@ export default {
         fill: {
           opacity: 1
         },
-        tooltip: {
-          y: {
-            formatter: function (val) {
-              return "$ " + val + " thousands"
-            }
-          }
-        },
+
       },
       //Catalogacao total mensal
-      // Inicio da configuração do gráfico
       chartOptionsTotalMensal: {
         chart: {
-          height: 350,
+          height: 450,
           type: 'line'
         },
 
@@ -234,6 +225,7 @@ export default {
       chartOptionsConteudosBaixados: {
         chart: {
           type: "bar",
+          height: 450,
         },
 
         plotOptions: {
@@ -258,7 +250,7 @@ export default {
       //Inicia configuração do gráfico catalogação por usuario
       chartOptionsPorUsuario: {
         chart: {
-          height: 430,
+          height: 450,
           type: "bar",
         },
 
@@ -296,7 +288,7 @@ export default {
       //Inicia configuração Tags mais procuradas
       mapSeriesTagsProcuradas: {
         chart: {
-          height: 430,
+          height: 450,
           type: "line"
         },
 
@@ -332,7 +324,7 @@ export default {
       //Aplicativos mais vizualizados
       chartOptionsMaisVizualizados: {
         chart: {
-          height: 430,
+          height: 450,
           type: "line"
         },
 
@@ -374,8 +366,7 @@ export default {
         },
         chart: {
           id: "vuechart-conteudos",
-          height: 350,
-          // width: "100%",
+          height: 450,
           type: "bar",
         },
 
@@ -395,14 +386,16 @@ export default {
       }
     }
   },
-  mounted () {
+  created () {
     this.getDataTable();
   },
 
   methods: {
 
     async getDataTable () {
+
       this.$q.loading.show();
+
       const { data } = await axios.get(`/dashboard/${this.id}`)
       if (data.success) {
         // define as as cetegorias com o spread operator (...)

@@ -1,26 +1,19 @@
 <template>
-    <div>
-        <q-section>
-            <q-card>
-                <q-separator />
-                <q-card-section>
-
-                </q-card-section>
-                <q-table v-if="render" title="Catalogação total mensal" :data="dataTable" :columns="columns"
-                    style="width: 95%" color="primary" row-key="name" :pagination="{ rowsPerPage: 20 }">
-                    <template v-slot:top-right>
-                        <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps
-                            @click="exportToCsv" />
-                    </template>
-
-                </q-table>
-            </q-card>
-        </q-section>
+    <q-card>
         <q-separator />
-        <q-card-section v-if="render">
-            <VueApexCharts height="450" type="line" :options="chartOptions" :series="mapSeries" />
+        <q-card-section>
+            <q-table v-if="render" title="Catalogação total mensal" :data="dataTable" :columns="columns"
+                style="width: 95%" color="primary" row-key="name" :pagination="{ rowsPerPage: 20 }">
+                <template v-slot:top-right>
+                    <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps @click="exportToCsv" />
+                </template>
+
+            </q-table>
         </q-card-section>
-    </div>
+        <q-card-section>
+            <VueApexCharts v-if="render" height="450" type="line" :options="chartOptions" :series="mapSeries" />
+        </q-card-section>
+    </q-card>
 </template>
 
 <script>

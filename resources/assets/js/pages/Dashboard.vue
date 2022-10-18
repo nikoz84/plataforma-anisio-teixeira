@@ -6,8 +6,8 @@
       </div>
       <div class="separatriz-6"></div>
     </div>
-    <div class="row items-start q-gutter-md q-mb-xl">
-      <card-dashboard v-for="(card, i) in cards" :key="i" :titulo="card.titulo" :id="card.id" />
+    <div class="flex justify-center q-gutter-md">
+      <ConteudosPorAno :isDashboard="true"></ConteudosPorAno>
     </div>
     <div class="row items-start q-gutter-md q-mb-xl"></div>
     <q-card>
@@ -24,7 +24,7 @@ import {
   QSelect,
   QChip,
 } from "quasar";
-import { CardDashboard } from "@components/dashboard";
+import { CardDashboard, ConteudosPorAno } from "@components/dashboard";
 
 
 export default {
@@ -36,46 +36,9 @@ export default {
     QSelect,
     QCardSection,
     QSeparator,
-    CardDashboard
-  },
-  data () {
-    return {
-      title: "",
-      render: false,
-      cards: null,
-      metadata: [],
-      columns: [
-        {
-          name: "name",
-          label: "Nome",
-          field: "name",
-        },
-        {
-          name: "total",
-          label: "Total",
-          field: "total",
-        },
-        {
-          name: "month",
-          label: "Mês",
-          field: "month",
-          required: false,
-        },
-      ],
+    CardDashboard,
+    ConteudosPorAno
 
-
-    };
-  },
-  created () {
-    this.getCards();
-  },
-  methods: {
-    async getCards () {
-      const { data } = await axios.get('/dashboard');
-      if (data?.success) {
-        this.cards = data.metadata;
-      }
-    }
   },
 };
 </script>
