@@ -33,7 +33,7 @@
             </q-table>
         </q-card-section>
         <q-card-section>
-            <VueApexCharts height="450" v-if="render" type="bar" :options="chartOptions" :series="series" />
+            <VueApexCharts height="450" v-if="render" :options="chartOptions" :series="series" />
         </q-card-section>
     </q-card>
 </template>

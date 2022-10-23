@@ -8,7 +8,7 @@ import {
   ConteudosMaisBaixados,
   ConteudosMaisAcessados,
   TagsMaisProcuradas,
-  AplicativosMaisVizualizados,
+  AplicativosMaisVisualizados,
   TiposDeMidia,
 } from "@components/dashboard";
 import Admin from "@layout/Admin";
@@ -120,14 +120,14 @@ const tagsMaisProcuradasRoute = {
   },
 };
 
-const aplicativosMaisVizualizadosRoute = {
-  path: "dashboard/aplicativos-mais-vizualizados",
+const aplicativosMaisVisualizadosRoute = {
+  path: "dashboard/aplicativos-mais-visualizados",
   components: {
-    admin: AplicativosMaisVizualizados,
+    admin: AplicativosMaisVisualizados,
   },
   meta: {
     requiresAuth: true,
-    title: "Aplicativos mais vizualizados ",
+    title: "Aplicativos mais visualizados ",
     layout: Admin,
   },
 };
@@ -154,6 +154,6 @@ export {
   conteudosMaisBaixadosRoute,
   conteudosMaisAcessadosRoute,
   tagsMaisProcuradasRoute,
-  aplicativosMaisVizualizadosRoute,
+  aplicativosMaisVisualizadosRoute,
   tiposDeMidiaRoute,
 };

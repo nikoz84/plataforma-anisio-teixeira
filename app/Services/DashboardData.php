@@ -114,7 +114,7 @@ class DashboardData
     {
         return collect([
             ['id' => 'conteudos-por-ano', 'titulo' => 'Conteúdo por ano', 'componente' => 'ConteudosPorAno'],
-            ['id' => 'aplicativos-mais-visualizados', 'titulo' => 'Aplicativo mais vizualizados', 'componente' => 'AplicativosMaisVisualizados'],
+            ['id' => 'aplicativos-mais-visualizados', 'titulo' => 'Aplicativos mais visualizados', 'componente' => 'AplicativosMaisVisualizados'],
             ['id' => 'catalogacao-por-canal', 'titulo' => 'Catalogação por canal', 'componente' => 'CatalogacaoPorCanal'],
             ['id' => 'catalogacao-mensal-por-usuario', 'titulo' => 'Catalogação mensal por usuário', 'componente' => 'CatalogacaoMensalPorUsuario'],
             ['id' => 'catalogacao-total-mensal', 'titulo' => 'Catalogação total mensal', 'componente' => 'CatalogacaoTotalMensal'],

@@ -1,6 +1,6 @@
 <template>
 
-  <q-card class="my-card text-dark" style="" square>
+  <q-card class="my-card" style="" square>
     <!-- TÍTULO DOS DADOS -->
     <q-card-section>
       <div class="text-h6">
@@ -589,5 +589,6 @@ export default {
 .my-card {
   width: 450px;
   max-width: 450px;
+  flex: auto;
 }
 </style>

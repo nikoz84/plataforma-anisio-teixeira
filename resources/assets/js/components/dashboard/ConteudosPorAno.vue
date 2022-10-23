@@ -3,12 +3,8 @@
     <q-card-section v-if="!isDashboard">
       <div class="text-dark text-h6">Filtros</div>
       <div class="q-gutter-md row items-start">
-        <div style="min-width: 150px; max-width: 200px">
-          <q-select v-model="mesMultiple" multiple label-color="primary" :options="mapOptionsMes" use-chips stack-label
-            label="Filtrar por meses" />
-        </div>
-        <div style="min-width: 150px; max-width: 200px">
-          <q-select v-model="anoMultiple" multiple label-color="primary" :options="MapOptionsAnos" use-chips stack-label
+        <div style="min-width: 250px; max-width: 200px">
+          <q-select v-model="anoMultiple" label-color="primary" :options="MapOptionsAnos" stack-label
             label="Filtrar por anos" />
         </div>
         <div style="min-width: 150px; max-width: 200px">
@@ -25,10 +21,10 @@
       </q-table>
     </q-card-section>
     <q-card-section v-if="render">
-      <VueApexCharts height="450" type="bar" :options="chartOptions" :series="mapSeries" />
+      <VueApexCharts height="450" :options="chartOptions" :series="mapSeries" />
     </q-card-section>
     <q-card-actions>
-      <q-btn class="full-width" flat :to="buttonRedirect.url" size="sm">
+      <q-btn color="primary" class="full-width" :to="buttonRedirect.url" size="sm">
         {{ buttonRedirect.label }}
       </q-btn>
     </q-card-actions>
@@ -53,11 +49,7 @@ export default {
       mesMultiple: null,
       columns: [
         {
-          name: "ano",
-          align: "center",
-          label: "Ano",
-          field: "ano",
-          sortable: true,
+          name: "ano", align: "left", label: "Ano", field: "ano", sortable: true,
         },
         { name: "total", label: "Total", field: "total" },
       ],
@@ -71,14 +63,28 @@ export default {
           height: 430,
           width: "100%",
           type: "bar",
+          animations: {
+            enabled: true,
+            easing: 'easeinout',
+            speed: 800,
+            animateGradually: {
+              enabled: true,
+              delay: 200
+            },
+            dynamicAnimation: {
+              enabled: true,
+              speed: 350
+            }
+          }
         },
         title: {
           text: "Conteúdos por ano",
-          align: "center",
+          align: "left",
+          margin: 55,
         },
         plotOptions: {
           bar: {
-            horizontal: false,
+            horizontal: true,
           },
         },
         dataLabels: {
@@ -106,7 +112,6 @@ export default {
     exportToCsv () {
       exportTable(this.dataTable, this.columns);
     },
-
 
     async getDataTable () {
       this.$q.loading.show();
@@ -140,3 +145,5 @@ export default {
   },
 };
 </script>
+
+

@@ -1,32 +1,38 @@
 <template>
-    <div>
-        <q-section>
-            <q-card>
-                <q-separator />
-                <q-card-section>
-                    <div class="text-dark text-h6">Filtros</div>
-                    <div class="q-gutter-md row items-start">
-                        <div style="min-width: 250px; max-width: 300px">
-                            <q-select v-model="anoMultiple" multiple label-color="primary" use-chips stack-label
-                                label="Filtrar por anos" />
-                        </div>
-
-                    </div>
-                </q-card-section>
-                <q-table title="Catalogação Mensal Por Usuário" :data="dataTable" :columns="columns" color="primary"
-                    row-key="name">
-                    <template v-slot:top-right>
-                        <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps
-                            @click="exportTable" />
-                    </template>
-                </q-table>
-            </q-card>
-        </q-section>
-        <q-separator />
+    <q-card>
+        <q-card-section v-if="!isDashboard">
+            <div class="text-dark text-h6">Filtros</div>
+            <div class="q-gutter-md row items-start">
+                <div style="min-width: 150px; max-width: 200px">
+                    <q-select v-model="mesMultiple" multiple label-color="primary" :options="mapOptionsMes" use-chips
+                        stack-label label="Filtrar por meses" />
+                </div>
+                <div style="min-width: 150px; max-width: 200px">
+                    <q-select v-model="anoMultiple" multiple label-color="primary" :options="MapOptionsAnos" use-chips
+                        stack-label label="Filtrar por anos" />
+                </div>
+                <div style="min-width: 150px; max-width: 200px">
+                    <q-btn color="primary" label="Pesquisar" size="md" @click='pesquisarFiltros()' />
+                </div>
+            </div>
+        </q-card-section>
+        <q-card-section v-if="!isDashboard">
+            <q-table title="Conteúdos" :data="dataTable" :columns="columns" color="primary" row-key="name"
+                :pagination="{ rowsPerPage: 20 }">
+                <template v-slot:top-right>
+                    <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps @click="exportToCsv" />
+                </template>
+            </q-table>
+        </q-card-section>
         <q-card-section v-if="render">
             <VueApexCharts height="450" :options="chartOptions" :series="mapSeries" />
         </q-card-section>
-    </div>
+        <q-card-actions>
+            <q-btn color="primary" class="full-width" :to="buttonRedirect.url" size="sm">
+                {{ buttonRedirect.label }}
+            </q-btn>
+        </q-card-actions>
+    </q-card>
 </template>
 
 <script>
@@ -38,6 +44,7 @@ export default {
     components: {
         VueApexCharts
     },
+    props: ['isDashboard'],
     data () {
         return {
             columns: [
@@ -68,22 +75,24 @@ export default {
                         },
                     },
                 },//plotOptions
+                title: {
+                    text: "Catalogação mensal total por usúario",
+                    align: "left",
+                    margin: 55,
+                },
                 dataLabels: {
-                    enabled: true,
+                    enabled: false,
                     offsetX: -6,
                     style: {
                         fontSize: '12px',
-                        colors: ['#00ffff']
+                        colors: ['#00f']
                     }
                 },
+
                 xaxis: {
                     categories: [],
                 },
-                stroke: {
-                    show: true,
-                    width: 1,
-                    colors: ['#000000']
-                },
+
                 tooltip: {
                     shared: true,
                     intersect: false
@@ -91,9 +100,16 @@ export default {
             },
         }
     },
+    computed: {
+        buttonRedirect () {
+            return this.isDashboard ?
+                { label: 'Ver relatório completo', url: '/admin/dashboard/catalogacao-mensal-por-usuario' } :
+                { label: 'Voltar', url: '/admin/dashboard/listar' }
+        }
+    },
     created () {
+        console.log(this.disableTable)
         this.getDataTable();
-
     },
     methods: {
         exportToCsv () {

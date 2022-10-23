@@ -36,77 +36,95 @@
 </template>
 
 <script>
-import { exportTable } from "@composables/ToCsv";
 import VueApexCharts from "vue-apexcharts";
+import { exportTable } from "@composables/ToCsv";
 
 export default {
-    name: "ConteudosMaisBaixados",
+    name: 'AplicativosMaisVisualizados',
     components: {
-        VueApexCharts,
+        VueApexCharts
     },
     props: ['isDashboard'],
     data () {
         return {
             columns: [
-                {
-                    name: "title",
-                    align: "left",
-                    label: "Título",
-                    field: "title",
-                    sortable: true,
-                    width: "100%"
 
-                },
-                {
-                    name: "Quantidade",
-                    label: "Downloads",
-                    field: "qt_downloads"
-                },
+                { name: 'Nome', align: 'left', label: 'Nome', field: 'name' },
+                { name: 'Quantidade', label: 'Quantidade', field: 'qt_access' }
+
             ],
+            mesMultiple: null,
+            anoMultiple: null,
             dataTable: [],
             mapSeries: [],
             render: false,
-            // Inicio da configuração do gráfico
+
+            //Inicia configuração do gráfico
             chartOptions: {
                 chart: {
-                    id: "vuechart-conteudos",
-                    height: 500,
-                    width: "100%",
+                    height: 430,
                     type: "line",
+                    zoom: {
+                        enabled: true,
+                        type: 'x',
+                        autoScaleYaxis: false,
+                        zoomedArea: {
+                            fill: {
+                                color: '#90CAF9',
+                                opacity: 0.4
+                            },
+                            stroke: {
+                                color: '#0D47A1',
+                                opacity: 0.4,
+                                width: 1
+                            }
+                        }
+                    },
                 },
                 title: {
-                    text: "Conteúdos mais baixados",
+                    text: "Aplicativos mais visualizados",
                     align: "left",
                     margin: 55,
-                },
 
+                },
                 plotOptions: {
                     bar: {
                         horizontal: false,
+                        // horizontal: true,
+                        dataLabels: {
+                            position: 'top',
+                        },
                     },
-
-                },
+                },//plotOptions
 
                 dataLabels: {
-                    enabled: false,
-                    positions: top,
+                    enabled: true,
+                    offsetX: -6,
+                    style: {
+                        fontSize: '10px',
+                        colors: ['#008B8B']
+                    }
                 },
                 xaxis: {
                     categories: [],
                 },
                 stroke: {
-                    curve: 'smooth',
+                    show: true,
+                    width: 1,
+                    colors: ['#000000']
                 },
-
+                tooltip: {
+                    shared: true,
+                    intersect: false
+                },
             },
-        };
+        }
     },
-
     computed: {
         buttonRedirect () {
             return this.isDashboard ?
                 {
-                    label: 'Ver relatório completo', url: '/admin/dashboard/conteudos-mais-baixados'
+                    label: 'Ver relatório completo', url: '/admin/dashboard/aplicativos-mais-visualizados'
                 } :
                 { label: 'Voltar', url: '/admin/dashboard/listar' }
         }
@@ -122,7 +140,7 @@ export default {
 
         async getDataTable () {
             this.$q.loading.show();
-            const { data } = await axios.get(`/dashboard/conteudos-mais-baixados`);
+            const { data } = await axios.get(`/dashboard/aplicativos-mais-visualizados`);
             if (data.success) {
                 this.dataTable = data.metadata;
                 // define as as cetegorias com o spread operator (...)
@@ -130,26 +148,25 @@ export default {
                     ...this.chartOptions,
                     ...{
                         xaxis: {
-                            categories: data.metadata.map((item) => item.title),
+                            categories: data.metadata.map((item) => item.name),
                         },
                     },
                 };
                 // define as series
                 this.mapSeries = [
                     {
-                        name: "Download",
-                        data: data.metadata.map((item) => item.qt_downloads),
+                        name: "Quantidade",
+                        data: data.metadata.map((item) => item.qt_access),
                     },
                 ];
                 // renderiza
                 this.render = data.success;
             }
             this.$q.loading.hide();
-        },
-    },
-};
+        }
+    }
+}
 </script>
 <style scoped>
 
 </style>
-
