@@ -1,140 +1,142 @@
 <template>
-    <div>
-        <section>
-            <q-card>
-                <q-separator />
-                <q-card-section>
-                    <div class="text-dark text-h6">Filtros</div>
-                    <div class="q-gutter-md row items-start">
-                        <div style="min-width: 250px; max-width: 300px">
-                            <q-select v-model="mesMultiple" multiple label-color="primary" :options="meses" use-chips
-                                stack-label label="Filtrar por meses" />
-                        </div>
-                        <div style="min-width: 250px; max-width: 300px">
-                            <q-select v-model="anoMultiple" multiple label-color="primary" :options="anos" use-chips
-                                stack-label label="Filtrar por anos" />
-                        </div>
-                        <div style="min-width: 250px; max-width: 300px">
-                            <q-select v-model="temaMultiple" multiple label-color="primary" :options="temas" use-chips
-                                stack-label label="Tema ou Disciplina" />
-                        </div>
-                        <div style="min-width: 250px; max-width: 300px">
-                            <q-select v-model="tipoConteudoMultiple" multiple label-color="primary"
-                                :options="tipoConteudo" use-chips stack-label label="Tipo de conteúdo" />
-                        </div>
-                        <div style="min-width: 250px; max-width: 300px">
-                            <q-select v-model="ordenarMultiple" label-color="primary" :options="ordenar" use-chips
-                                stack-label label="Ordenar por:" />
-                        </div>
-                    </div>
-                </q-card-section>
-                <q-table title="Tags Mais Procuradas" :data="dataTable" :columns="columns" color="primary" row-key="name">
-                    <template v-slot:top-right>
-                        <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps
-                            @click="exportToCsv" />
-                    </template>
-                </q-table>
-            </q-card>
-        </section>
-        <q-separator />
-        <q-card-section>
-            <VueApexCharts height="450" type="bar" :options="chartOptions" :series="series" />
+    <q-card>
+        <q-card-section v-if="!isDashboard">
+            <div class="text-dark text-h6">Filtros</div>
+            <div class="q-gutter-md row items-start">
+                <div style="min-width: 150px; max-width: 200px">
+                    <q-select v-model="mesMultiple" multiple label-color="primary" :options="mapOptionsMes" use-chips
+                        stack-label label="Filtrar por Palavras" />
+                </div>
+                <div style="min-width: 150px; max-width: 200px">
+                    <q-select v-model="anoMultiple" multiple label-color="primary" :options="MapOptionsAnos" use-chips
+                        stack-label label="Filtrar por Meses" />
+                </div>
+                <div style="min-width: 150px; max-width: 200px">
+                    <q-btn color="primary" label="Pesquisar" size="md" @click='pesquisarFiltros()' />
+                </div>
+            </div>
         </q-card-section>
-    </div>
+        <q-card-section v-if="!isDashboard">
+            <q-table title="Palavras-Chaves" :data="dataTable" :columns="columns" color="primary" row-key="name"
+                :pagination="{ rowsPerPage: 20 }">
+                <template v-slot:top-right>
+                    <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps @click="exportToCsv" />
+                </template>
+            </q-table>
+        </q-card-section>
+        <q-card-section v-if="render">
+            <VueApexCharts height="450" type="bar" :options="chartOptions" :series="mapSeries" />
+        </q-card-section>
+        <q-card-actions>
+            <q-btn color="primary" class="full-width" flat :to="buttonRedirect.url" size="sm">
+                {{ buttonRedirect.label }}
+            </q-btn>
+        </q-card-actions>
+    </q-card>
 </template>
 
 <script>
-import { exportTable } from '@composables/ToCsv';
+import { exportTable } from "@composables/ToCsv";
 import VueApexCharts from "vue-apexcharts";
 
-
 export default {
-    name: 'TagsMaisProcuradas',
+    name: "TagsMaisProcuradas",
     components: {
-        VueApexCharts
+        VueApexCharts,
     },
+    props: ['isDashboard'],
     data () {
         return {
+            MapOptionsAnos: [],
+            mapOptionsMes: [],
+            anoMultiple: null,
+            mesMultiple: null,
             columns: [
-                { name: 'Titulo', align: 'center', label: 'Títulos', field: 'titulos' },
-                { name: 'Descricao', label: 'Descrição', field: 'descricao' },
-                { name: 'Author', label: 'Autor', field: 'autor' },
-                { name: 'Q.Downloads', label: 'Q.Downloads', field: 'qt_downloads' },
-                { name: 'Qt.Acessos', label: 'Qt.Acessos', field: 'qt_access' },
-                { name: 'Dt.Criacao', label: 'Dt.Criação', field: 'created_at' }
+                {
+                    name: "name",
+                    align: "center",
+                    label: "Nome",
+                    field: "name",
+                    sortable: true,
+                },
+                { name: "searched", label: "Procuradas", field: "searched" },
             ],
             dataTable: [],
-            series: [{ name: "Quantidade", data: [] }],
-            mesMultiple: null,
-            anoMultiple: null,
-            temaMultiple: null,
-            tipoConteudoMultiple: null,
-            ordenarMultiple: null,
-            meses: [
-                "Janeiro",
-                "Fevereiro",
-                "Março",
-                "Abril",
-                "Maio",
-                "Junho",
-                "Julho",
-                "Agosto",
-                "Setembro",
-                "Outubro",
-                "Novembro",
-                "Dezembro",
-            ],
-            anos: ["2022", "2021", "2020", "2019", "2018"],
-            temas: ["Matemática", "Física", "Química", "Sexualidade"],
-            tipoConteudo: [
-                "Videos",
-                "Apresentações",
-                "Áudios",
-                "Aplicativos",
-                "Games",
-            ],
-            ordenar: [
-                "Mais baixados",
-                "Mais visualizados",
-                "Mais acessados",
-                "Catalogado por usuário",
-            ],
+            mapSeries: [],
+            render: false,
+            // Inicio da configuração do gráfico
             chartOptions: {
                 chart: {
-                    id: "vuechart-teste",
+                    id: "vuechart-Tags",
                     height: 430,
                     width: "100%",
                     type: "bar",
                 },
                 title: {
-                    text: "hola",
+                    text: "Palavras-Chave",
                     align: "center",
                 },
                 plotOptions: {
                     bar: {
-                        horizontal: true,
+                        horizontal: false,
                     },
                 },
                 dataLabels: {
                     enabled: false,
+                    positions: top,
                 },
                 xaxis: {
                     categories: [],
                 },
             },
-
+        };
+    },
+    computed: {
+        buttonRedirect () {
+            return this.isDashboard ?
+                { label: 'Ver relatório completo', url: '/admin/dashboard/tags-mais-procuradas' } :
+                { label: 'Voltar', url: '/admin/dashboard/listar' }
         }
+    },
+    created () {
+        console.log(this.disableTable)
+        this.getDataTable();
     },
     methods: {
         exportToCsv () {
-            exportTable(this.dataTable, this.columns)
+            exportTable(this.dataTable, this.columns);
         },
-        getDataTable () {
-            console.log('oisio')
-        }
-    }
-}
-</script>
-<style scoped>
 
-</style>
+
+        async getDataTable () {
+            this.$q.loading.show();
+            const { data } = await axios.get(`/dashboard/tags-mais-procuradas`);
+            if (data.success) {
+                this.dataTable = data.metadata;
+                // define as as cetegorias com o spread operator (...)
+                this.chartOptions = {
+                    ...this.chartOptions,
+                    ...{
+                        xaxis: {
+                            categories: data.metadata.map((item) => item.name),
+                        },
+                    },
+                };
+                // define as series
+                this.mapSeries = [
+                    {
+                        name: "Total",
+                        data: data.metadata.map((item) => item.searched),
+                    },
+                ];
+
+                this.MapOptionsName = data.metadata.map((item) => item.name),
+                    // this.MapOptionsMes = data.metadata.map((item) => mes),
+                    // renderiza
+                    this.render = data.success;
+            }
+            this.$q.loading.hide();
+        },
+    },
+};
+</script>

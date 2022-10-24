@@ -7,28 +7,14 @@
                     <div class="text-dark text-h6">Filtros</div>
                     <div class="q-gutter-md row items-start">
                         <div style="min-width: 250px; max-width: 300px">
-                            <q-select v-model="mesMultiple" multiple label-color="primary" :options="meses" use-chips
-                                stack-label label="Filtrar por meses" />
+                            <q-select v-model="anoMultiple" multiple label-color="primary" use-chips stack-label
+                                label="Filtrar por anos" />
                         </div>
-                        <div style="min-width: 250px; max-width: 300px">
-                            <q-select v-model="anoMultiple" multiple label-color="primary" :options="anos" use-chips
-                                stack-label label="Filtrar por anos" />
-                        </div>
-                        <div style="min-width: 250px; max-width: 300px">
-                            <q-select v-model="temaMultiple" multiple label-color="primary" :options="temas" use-chips
-                                stack-label label="Tema ou Disciplina" />
-                        </div>
-                        <div style="min-width: 250px; max-width: 300px">
-                            <q-select v-model="tipoConteudoMultiple" multiple label-color="primary"
-                                :options="tipoConteudo" use-chips stack-label label="Tipo de conteúdo" />
-                        </div>
-                        <div style="min-width: 250px; max-width: 300px">
-                            <q-select v-model="ordenarMultiple" label-color="primary" :options="ordenar" use-chips
-                                stack-label label="Ordenar por:" />
-                        </div>
+
                     </div>
                 </q-card-section>
-                <q-table title="Catalogação Mensal Por Usuário" :data="dataTable" :columns="columns" color="primary" row-key="name">
+                <q-table title="Catalogação Mensal Por Usuário" :data="dataTable" :columns="columns" color="primary"
+                    row-key="name">
                     <template v-slot:top-right>
                         <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps
                             @click="exportToCsv" />
@@ -37,16 +23,15 @@
             </q-card>
         </section>
         <q-separator />
-        <q-card-section>
-            <VueApexCharts height="450" type="bar" :options="chartOptions" :series="series" />
+        <q-card-section v-if="render">
+            <VueApexCharts height="450" :options="chartOptions" :series="mapSeries" />
         </q-card-section>
     </div>
 </template>
 
 <script>
-import { exportTable } from '@composables/ToCsv';
 import VueApexCharts from "vue-apexcharts";
-
+import { exportTable } from "@composables/ToCsv";
 
 export default {
     name: 'CatalogacaoMensalPorUsuario',
@@ -56,73 +41,90 @@ export default {
     data () {
         return {
             columns: [
-                { name: 'Titulo', align: 'center', label: 'Títulos', field: 'titulos' },
-                { name: 'Descricao', label: 'Descrição', field: 'descricao' },
-                { name: 'Author', label: 'Autor', field: 'autor' },
-                { name: 'Q.Downloads', label: 'Q.Downloads', field: 'qt_downloads' },
-                { name: 'Qt.Acessos', label: 'Qt.Acessos', field: 'qt_access' },
-                { name: 'Dt.Criacao', label: 'Dt.Criação', field: 'created_at' }
+
+                { name: 'Nome', align: 'center', label: 'Nome', field: 'name' },
+                { name: 'Total', label: 'total', field: 'total' }
+
             ],
-            dataTable: [],
-            series: [{ name: "Quantidade", data: [] }],
             mesMultiple: null,
             anoMultiple: null,
-            temaMultiple: null,
-            tipoConteudoMultiple: null,
-            ordenarMultiple: null,
-            meses: [
-                "Janeiro",
-                "Fevereiro",
-                "Março",
-                "Abril",
-                "Maio",
-                "Junho",
-                "Julho",
-                "Agosto",
-                "Setembro",
-                "Outubro",
-                "Novembro",
-                "Dezembro",
-            ],
-            anos: ["2022", "2021", "2020", "2019", "2018"],
-            temas: ["Matemática", "Física", "Química", "Sexualidade"],
-            tipoConteudo: [
-                "Videos",
-                "Apresentações",
-                "Áudios",
-                "Aplicativos",
-                "Games",
-            ],
-            ordenar: [
-                "Mais baixados",
-                "Mais visualizados",
-                "Mais acessados",
-                "Catalogado por usuário",
-            ],
+            dataTable: [],
+            mapSeries: [],
+            render: false,
+
+            //Inicia configuração do gráfico
             chartOptions: {
                 chart: {
-                    id: "vuechart-teste",
                     height: 430,
-                    width: "100%",
                     type: "bar",
                 },
-                title: {
-                    text: "hola",
-                    align: "center",
-                },
+
                 plotOptions: {
                     bar: {
-                        horizontal: true,
+                        horizontal: false,
+                        // horizontal: true,
+                        dataLabels: {
+                            position: 'top',
+                        },
                     },
-                },
+                },//plotOptions
                 dataLabels: {
-                    enabled: false,
+                    enabled: true,
+                    offsetX: -6,
+                    style: {
+                        fontSize: '12px',
+                        colors: ['#00ffff']
+                    }
                 },
                 xaxis: {
                     categories: [],
                 },
+                stroke: {
+                    show: true,
+                    width: 1,
+                    colors: ['#000000']
+                },
+                tooltip: {
+                    shared: true,
+                    intersect: false
+                },
             },
+        }
+    },
+    created () {
+        this.getDataTable();
 
+    },
+    methods: {
+        exportToCsv () {
+            exportTable(this.dataTable, this.columns);
+        },
+
+        async getDataTable () {
+            this.$q.loading.show();
+            const { data } = await axios.get(`/dashboard/catalogacao-mensal-por-usuario`);
+            if (data.success) {
+                this.dataTable = data.metadata;
+                // define as as cetegorias com o spread operator (...)
+                this.chartOptions = {
+                    ...this.chartOptions,
+                    ...{
+                        xaxis: {
+                            categories: data.metadata.map((item) => item.name),
+                        },
+                    },
+                };
+                // define as series
+                this.mapSeries = [
+                    {
+                        name: "Quantidade",
+                        data: data.metadata.map((item) => item.total),
+                    },
+                ];
+                // renderiza
+                this.render = data.success;
+            }
+            this.$q.loading.hide();
         }
     },
     methods: {
