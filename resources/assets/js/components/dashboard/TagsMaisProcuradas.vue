@@ -100,8 +100,8 @@ export default {
                 },
                 stroke: {
                     show: true,
-                    width: 1,
-                    colors: ['#000000']
+                    width: 3,
+                    colors: ['#008B8B']
                 },
                 tooltip: {
                     shared: true,

@@ -24,7 +24,6 @@
       <div>
         <CatalogacaoPorCanal :isDashboard="true"></CatalogacaoPorCanal>
       </div>
-      <q-separator spaced />
       <div>
         <ConteudosMaisBaixados :isDashboard="true"></ConteudosMaisBaixados>
       </div>

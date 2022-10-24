@@ -85,10 +85,9 @@ export default {
                     offsetX: -6,
                     style: {
                         fontSize: '12px',
-                        colors: ['#00f']
+                        colors: ['#008B8B']
                     }
                 },
-
                 xaxis: {
                     categories: [],
                 },
