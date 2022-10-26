@@ -16,6 +16,7 @@ class DashboardController extends ApiController
 
     public function getById(Request $request, $id)
     {
+
         DashboardData::setRequest($request);
         return $this->successResponse(DashboardData::getDataFromId($id));
     }

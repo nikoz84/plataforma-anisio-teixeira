@@ -2,12 +2,10 @@
 
 namespace App\Services;
 
-use App\Models\Aplicativo;
-use App\Models\Conteudo;
-use App\Models\Tag;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class DashboardData
 {
@@ -15,13 +13,18 @@ class DashboardData
 
     public static function conteudosPorAno()
     {
+        $date = self::$request->get('ano');
+        $ordenarPor = self::$request->get('ordenarPor', 'DESC');
+
         return DB::table('conteudos')
             ->selectRaw('extract(year from conteudos.created_at) as ano, COUNT(*) as total')
             ->groupByRaw('extract(year from conteudos.created_at)')
-            ->orderBy('total', 'DESC')
+            ->when($date, function ($query) use ($date) {
+                $query->whereYear('created_at', $date);
+            })
+            ->orderBy('ano', $ordenarPor)
             ->get();
     }
-
 
     public static function aplicativosMaisVisualizados()
     {
