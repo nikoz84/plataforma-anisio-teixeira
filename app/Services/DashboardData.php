@@ -10,20 +10,41 @@ use Carbon\Carbon;
 class DashboardData
 {
     protected static $request = null;
+    protected static $response = null;
 
     public static function conteudosPorAno()
-    {
-        $date = self::$request->get('ano');
+    { //Carregando a table
+
         $ordenarPor = self::$request->get('ordenarPor', 'DESC');
+        $date = self::$request->get('ano');
+
 
         return DB::table('conteudos')
             ->selectRaw('extract(year from conteudos.created_at) as ano, COUNT(*) as total')
-            ->groupByRaw('extract(year from conteudos.created_at)')
             ->when($date, function ($query) use ($date) {
-                $query->whereYear('created_at', $date);
+                return $query->whereYear('created_at', $date);
             })
+            ->groupByRaw('extract(year from conteudos.created_at)')
             ->orderBy('ano', $ordenarPor)
             ->get();
+    }
+
+    public static function filtroAnos()
+    { // Carregar o filtro anos
+
+        return DB::table('conteudos')
+            ->selectRaw('extract(year from conteudos.created_at) as ano')
+            ->groupByRaw('extract(year from conteudos.created_at)')
+            ->orderBy('ano', "DESC")
+            ->get()->pluck('ano');
+    }
+
+    public static function filtroOrdenarPor()
+    {
+        return [
+            'ASC',
+            'DESC'
+        ];
     }
 
     public static function aplicativosMaisVisualizados()
@@ -81,8 +102,6 @@ class DashboardData
     }
 
 
-
-
     public static function tiposDeMidia()
     {
         return DB::table('tipos AS t')
@@ -97,21 +116,20 @@ class DashboardData
 
     public static function setRequest(Request $request)
     {
-
         self::$request = $request;
+        return new static;
     }
 
     public static function getDataFromId($id)
     {
-
         if ($id) {
             $nameClass = self::class;
             $method = Str::camel($id, '-');
-            $resposta = call_user_func("{$nameClass}::{$method}");
-
-            return $resposta;
+            self::$response = call_user_func("{$nameClass}::{$method}");
         }
+        return self::$response;
     }
+
 
     public static function getCards()
     {

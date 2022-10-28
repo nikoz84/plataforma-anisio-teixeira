@@ -16,8 +16,17 @@ class DashboardController extends ApiController
 
     public function getById(Request $request, $id)
     {
+        $dashboardData = DashboardData::setRequest($request)->getDataFromId($id);
 
-        DashboardData::setRequest($request);
-        return $this->successResponse(DashboardData::getDataFromId($id));
+        return $this->successResponse($dashboardData);
+    }
+
+    //Chamada da rota
+    public function getFiltros(Request $request, $id)
+    {
+        return $this->successResponse([
+            'anos' => DashboardData::filtroAnos(),
+            'ordenarPor' => DashboardData::filtroOrdenarPor(),
+        ]);
     }
 }

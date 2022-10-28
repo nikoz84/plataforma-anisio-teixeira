@@ -3,11 +3,11 @@
     <q-card-section v-if="!isDashboard">
       <div class="text-dark text-h6">Filtros</div>
       <div class="row q-gutter-md">
-        <q-select class="col" dense v-model="ano" label-color="primary" :options="OptionsAnos"
+        <q-select class="col" dense v-model="ano" label-color="primary" :options="filtroAnos"
           label="Filtrar por anos" />
-        <q-select class="col" dense v-model="ordenarPor" label-color="primary" :options="opcoesOrdem" option-value="id"
-          option-label="nome" stack-label emit-value map-options label="Ordenar por" />
-        <q-btn class="col" color="primary" label="Pesquisar" @click="getDataTable" />
+        <q-select class="col" dense v-model="ordenarPor" label-color="primary" :options="filtroOrdenarPor"
+          option-value="id" option-label="nome" stack-label emit-value map-options label="Ordenar por" />
+        <q-btn class="col" color="primary" label="Pesquisar" @click="getFiltros" />
         <q-btn class="col" color="primary" :to="buttonRedirect.url">
           {{ buttonRedirect.label }}
         </q-btn>
@@ -45,10 +45,9 @@ export default {
   props: ['isDashboard'],
   data () {
     return {
-      OptionsAnos: [],
-      mapOptionsMes: [],
-      opcoesOrdem: [{ id: 'DESC', nome: 'Descendente' }, { id: 'ASC', nome: 'Ascendente' }],
-      ano: null,
+      filtroAnos: [],
+      filtroOrdenarPor: [],
+      ano: [],
       ordenarPor: null,
       columns: [
         {
@@ -109,6 +108,7 @@ export default {
   },
   created () {
     this.getDataTable();
+    this.getFiltros();
   },
 
 
@@ -120,12 +120,10 @@ export default {
     async getDataTable () {
       this.render = false;
       this.$q.loading.show();
-      const { data } = await axios.get(`/dashboard/conteudos-por-ano`,
-        { params: { ano: this.ano, ordenarPor: this.ordenarPor } });
-      console.log(data)
+      const { data } = await axios.get(`/dashboard/conteudos-por-ano`)
+      // console.log(data)
       this.prepararDados(data)
-      this.OptionsAnos = data.metadata.map((item) => item.ano),
-        this.$q.loading.hide();
+      this.$q.loading.hide();
     },
     async prepararDados (data) {
       if (data.success) {
@@ -146,11 +144,20 @@ export default {
           },
         ];
 
-        this.OptionsAnos = data.metadata.map((item) => item.ano),
-
-          this.render = data.success;
+        this.render = data.success;
       }
 
+    },
+    async getFiltros () {
+      this.render = false;
+      const { data } = await axios.get(`/dashboard/filtros/conteudos-por-ano?ano=${this.ano}&ordenarPor=${this.ordenarPor}`);
+
+      if (data.success) {
+        this.filtroAnos = data.metadata.anos;
+        this.filtroOrdenarPor = data.metadata.ordenarPor;
+
+      }
+      this.render = data.success;
     }
   },
 };
