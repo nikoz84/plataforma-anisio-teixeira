@@ -7,7 +7,7 @@
           label="Filtrar por anos" />
         <q-select class="col" dense v-model="ordenarPor" label-color="primary" :options="filtroOrdenarPor"
           option-value="id" option-label="nome" stack-label emit-value map-options label="Ordenar por" />
-        <q-btn class="col" color="primary" label="Pesquisar" @click="getFiltros" />
+        <q-btn class="col" color="primary" label="Pesquisar" @click="getDataTable" />
         <q-btn class="col" color="primary" :to="buttonRedirect.url">
           {{ buttonRedirect.label }}
         </q-btn>
@@ -111,7 +111,6 @@ export default {
     this.getFiltros();
   },
 
-
   methods: {
     exportToCsv () {
       exportTable(this.dataTable, this.columns);
@@ -124,9 +123,10 @@ export default {
         params: {
           ano: this.ano,
           ordenarPor: this.ordenarPor
-        }
+        },
+        method: 'get',
+
       })
-      // console.log(data)
       this.prepararDados(data)
       this.$q.loading.hide();
     },
@@ -151,11 +151,10 @@ export default {
 
       }
       this.render = true;
-
     },
     async getFiltros () {
 
-      const { data } = await axios.get(`/dashboard/filtros/conteudos-por-ano?ano=${this.ano}&ordenarPor=${this.ordenarPor}`);
+      const { data } = await axios.get(`/dashboard/filtros/conteudos-por-ano`);
 
       if (data.success) {
         this.filtroAnos = data.metadata.anos;
