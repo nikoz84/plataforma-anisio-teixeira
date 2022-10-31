@@ -17,7 +17,7 @@
             </div>
         </q-card-section>
         <q-card-section v-if="!isDashboard">
-            <q-table title="Conteúdos mais baixados" :data="dataTable" :columns="columns" color="primary" row-key="name"
+            <q-table title="Conteúdos" :data="dataTable" :columns="columns" color="primary" row-key="name"
                 :pagination="{ rowsPerPage: 20 }">
                 <template v-slot:top-right>
                     <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps @click="exportToCsv" />
@@ -25,10 +25,10 @@
             </q-table>
         </q-card-section>
         <q-card-section v-if="render">
-            <VueApexCharts height="450" type="bar" :options="chartOptions" :series="mapSeries" />
+            <VueApexCharts height="450" :options="chartOptions" :series="mapSeries" />
         </q-card-section>
         <q-card-actions>
-            <q-btn color="primary" class="full-width" flat :to="buttonRedirect.url" size="sm">
+            <q-btn color="primary" class="full-width" :to="buttonRedirect.url" size="sm">
                 {{ buttonRedirect.label }}
             </q-btn>
         </q-card-actions>
@@ -58,6 +58,13 @@ export default {
                     label: "Título",
                     field: "title",
                     sortable: true,
+                    width: "100%"
+
+                },
+                {
+                    name: "Quantidade",
+                    label: "Downloads",
+                    field: "qt_downloads"
                 },
                 { name: "qt_downloads", label: "Qt_downloads", field: "qt_downloads" },
             ],
@@ -68,19 +75,22 @@ export default {
             chartOptions: {
                 chart: {
                     id: "vuechart-conteudos",
-                    height: 430,
+                    height: 500,
                     width: "100%",
                     type: "bar",
                 },
                 title: {
                     text: "Conteúdos mais baixados",
-                    align: "center",
+                    align: "left",
+                    margin: 55,
                 },
+
                 plotOptions: {
                     bar: {
                         horizontal: false,
                     },
                 },
+
                 dataLabels: {
                     enabled: false,
                     positions: top,
@@ -91,10 +101,13 @@ export default {
             },
         };
     },
+
     computed: {
         buttonRedirect () {
             return this.isDashboard ?
-                { label: 'Ver relatório completo', url: '/admin/dashboard/conteudos-mais-baixados' } :
+                {
+                    label: 'Ver relatório completo', url: '/admin/dashboard/conteudos-mais-baixados'
+                } :
                 { label: 'Voltar', url: '/admin/dashboard/listar' }
         }
     },

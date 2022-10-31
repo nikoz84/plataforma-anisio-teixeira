@@ -1,25 +1,42 @@
 <template>
-  <div class="row q-pa-md q-gutter-md">
+  <div class="q-gutter-md q-mt-sm q-pl-sm">
     <div class="q-mb-md">
-      <div class="text-h5 title-page text-primary separatriz q-pb-md">
+      <div class="text-h5 title-page text-primary separatriz">
         Dashboard
       </div>
-      <div class="separatriz-6"></div>
+      <div class=" separatriz-6"></div>
     </div>
-    <div class="flex justify-center q-gutter-md">
-      <ConteudosPorAno :isDashboard="true"></ConteudosPorAno>
-    </div>
-    <div class="flex justify-center q-gutter-md">
-      <TiposDeMidia :isDashboard="true"></TiposDeMidia>
-    </div>
-    <div class="flex justify-center q-gutter-md">
-      <TagsMaisProcuradas :isDashboard="true"></TagsMaisProcuradas>
-    </div>
-    <div class="flex justify-center q-gutter-md">
-      <ConteudosMaisBaixados :isDashboard="true"></ConteudosMaisBaixados>
-    </div>
-    <div class="row items-start q-gutter-md q-mb-xl"></div>
 
+    <div class="flex q-gutter-x-sm q-gutter-y-lg q-mt-md">
+      <div>
+        <ConteudosPorAno :isDashboard="true"></ConteudosPorAno>
+      </div>
+      <div>
+        <AplicativosMaisVisualizados :isDashboard="true"></AplicativosMaisVisualizados>
+      </div>
+
+      <div>
+        <CatalogacaoMensalPorUsuario :isDashboard="true"></CatalogacaoMensalPorUsuario>
+      </div>
+      <div>
+        <CatalogacaoTotalMensal :isDashboard="true"></CatalogacaoTotalMensal>
+      </div>
+      <div>
+        <CatalogacaoPorCanal :isDashboard="true"></CatalogacaoPorCanal>
+      </div>
+      <div>
+        <ConteudosMaisBaixados :isDashboard="true"></ConteudosMaisBaixados>
+      </div>
+      <div>
+        <ConteudosMaisAcessados :isDashboard="true"></ConteudosMaisAcessados>
+      </div>
+      <div>
+        <TagsMaisProcuradas :isDashboard="true"></TagsMaisProcuradas>
+      </div>
+      <div>
+        <TiposDeMidia :isDashboard="true"></TiposDeMidia>
+      </div>
+    </div>
     <q-card>
       <q-separator />
     </q-card>
@@ -37,11 +54,15 @@ import {
 import {
   CardDashboard,
   ConteudosPorAno,
-  TiposDeMidia,
-  TagsMaisProcuradas,
+  AplicativosMaisVisualizados,
+  CatalogacaoPorCanal,
+  CatalogacaoMensalPorUsuario,
+  CatalogacaoTotalMensal,
   ConteudosMaisBaixados,
-
+  TagsMaisProcuradas,
+  TiposDeMidia
 } from "@components/dashboard";
+import ConteudosMaisAcessados from "../components/dashboard/ConteudosMaisAcessados.vue";
 
 export default {
   name: "Dashboard",
@@ -54,10 +75,14 @@ export default {
     QSeparator,
     CardDashboard,
     ConteudosPorAno,
-    TiposDeMidia,
+    AplicativosMaisVisualizados,
+    CatalogacaoPorCanal,
+    CatalogacaoMensalPorUsuario,
+    CatalogacaoTotalMensal,
+    ConteudosMaisBaixados,
+    ConteudosMaisAcessados,
     TagsMaisProcuradas,
-    ConteudosMaisBaixados
-
+    TiposDeMidia
   },
 };
 </script>

@@ -16,7 +16,41 @@ class DashboardController extends ApiController
 
     public function getById(Request $request, $id)
     {
-        DashboardData::setRequest($request);
-        return $this->successResponse(DashboardData::getDataFromId($id));
+        $dashboardData = DashboardData::setRequest($request)->getDataFromId($id);
+
+        return $this->successResponse($dashboardData);
+    }
+
+    //Chamada da rota
+    public function getFiltros(Request $request, $id)
+    {
+        return $this->successResponse([
+            'anos' => DashboardData::setRequest($request)->filtroAnos(),
+            'ordenarPor' => DashboardData::filtroOrdenarPor(),
+        ]);
+    }
+
+    public function getFiltrosMes(Request $request, $id)
+    {
+        return $this->successResponse([
+            'mes' => DashboardData::setRequest($request)->filtroMes(),
+            'ordenarPor' => DashboardData::filtroOrdenarPor(),
+        ]);
+    }
+
+    public function getFiltrosAplicativos(Request $request, $id)
+    {
+        return $this->successResponse([
+            'aplicativos' => DashboardData::setRequest($request)->filtrosAplicativos(),
+            'ordenarPor' => DashboardData::filtroOrdenarPor(),
+        ]);
+    }
+
+    public function getFiltroscatalogacaoPorCanal(Request $request, $id)
+    {
+        return $this->successResponse([
+            'aplicativos' => DashboardData::setRequest($request)->filtrosCatalogacaoPorCanal(),
+            'ordenarPor' => DashboardData::filtroOrdenarPor(),
+        ]);
     }
 }

@@ -17,7 +17,7 @@
             </div>
         </q-card-section>
         <q-card-section v-if="!isDashboard">
-            <q-table title="Tipos de Mídia" :data="dataTable" :columns="columns" color="primary" row-key="name"
+            <q-table title="Conteúdos" :data="dataTable" :columns="columns" color="primary" row-key="name"
                 :pagination="{ rowsPerPage: 20 }">
                 <template v-slot:top-right>
                     <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps @click="exportToCsv" />
@@ -25,10 +25,10 @@
             </q-table>
         </q-card-section>
         <q-card-section v-if="render">
-            <VueApexCharts height="450" type="bar" :options="chartOptions" :series="mapSeries" />
+            <VueApexCharts height="450" :options="chartOptions" :series="mapSeries" />
         </q-card-section>
         <q-card-actions>
-            <q-btn color="primary" class="full-width" flat :to="buttonRedirect.url" size="sm">
+            <q-btn color="primary" class="full-width" :to="buttonRedirect.url" size="sm">
                 {{ buttonRedirect.label }}
             </q-btn>
         </q-card-actions>
@@ -47,24 +47,21 @@ export default {
     props: ['isDashboard'],
     data () {
         return {
-            MapOptionsAnos: [],
-            mapOptionsMes: [],
-            anoMultiple: null,
-            mesMultiple: null,
             columns: [
-                {
-                    name: "name",
-                    align: "center",
-                    label: "Nome",
-                    field: "name",
-                    sortable: true,
-                },
-                { name: "total", label: "Total", field: "total" },
+
+                { name: 'Nome', align: 'center', label: 'Nome', field: 'name' },
+                { name: 'Quantidade', label: 'Quantidade', field: 'total' },
+
+
             ],
-            dataTable: [],
+
             mapSeries: [],
+            dataTable: [],
+            mesMultiple: null,
+            anoMultiple: null,
             render: false,
-            // Inicio da configuração do gráfico
+
+
             chartOptions: {
                 chart: {
                     id: "vuechart-tipos",
@@ -73,8 +70,9 @@ export default {
                     type: "bar",
                 },
                 title: {
-                    text: "Tipos de Mídia",
-                    align: "center",
+                    text: "Tipos de mídia",
+                    align: "left",
+                    margin: 55,
                 },
                 plotOptions: {
                     bar: {
@@ -98,15 +96,22 @@ export default {
                 { label: 'Voltar', url: '/admin/dashboard/listar' }
         }
     },
+    computed: {
+        buttonRedirect () {
+            return this.isDashboard ?
+                {
+                    label: 'Ver relatório completo', url: '/admin/dashboard/tipos-de-media'
+                } :
+                { label: 'Voltar', url: '/admin/dashboard/listar' }
+        }
+    },
     created () {
-        console.log(this.disableTable)
         this.getDataTable();
     },
     methods: {
         exportToCsv () {
             exportTable(this.dataTable, this.columns);
         },
-
 
         async getDataTable () {
             this.$q.loading.show();
@@ -125,15 +130,12 @@ export default {
                 // define as series
                 this.mapSeries = [
                     {
-                        name: "Total",
+                        name: "Quantidade",
                         data: data.metadata.map((item) => item.total),
                     },
                 ];
-
-                this.MapOptionsName = data.metadata.map((item) => item.name),
-
-                    // renderiza
-                    this.render = data.success;
+                // renderiza
+                this.render = data.success;
             }
             this.$q.loading.hide();
         },

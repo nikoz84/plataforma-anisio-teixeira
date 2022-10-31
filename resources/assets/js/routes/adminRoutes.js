@@ -41,7 +41,7 @@ import {
   conteudosMaisBaixadosRoute,
   conteudosMaisAcessadosRoute,
   tagsMaisProcuradasRoute,
-  aplicativosMaisVizualizadosRoute,
+  aplicativosMaisVisualizadosRoute,
   tiposDeMidiaRoute,
 } from "./dashboardRoutes";
 
@@ -65,7 +65,7 @@ const adminRoutes = {
     conteudosMaisBaixadosRoute,
     conteudosMaisAcessadosRoute,
     tagsMaisProcuradasRoute,
-    aplicativosMaisVizualizadosRoute,
+    aplicativosMaisVisualizadosRoute,
     tiposDeMidiaRoute,
     {
       path: "conteudos/listar",

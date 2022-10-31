@@ -40,7 +40,7 @@ import VueApexCharts from "vue-apexcharts";
 import { exportTable } from "@composables/ToCsv";
 
 export default {
-    name: 'CatalogacaoMensalPorUsuario',
+    name: 'AplicativosMaisVisualizados',
     components: {
         VueApexCharts
     },
@@ -49,8 +49,8 @@ export default {
         return {
             columns: [
 
-                { name: 'Nome', align: 'center', label: 'Nome', field: 'name' },
-                { name: 'Total', label: 'total', field: 'total' }
+                { name: 'Nome', align: 'left', label: 'Nome', field: 'name' },
+                { name: 'Quantidade', label: 'Quantidade', field: 'qt_access' }
 
             ],
             mesMultiple: null,
@@ -63,9 +63,30 @@ export default {
             chartOptions: {
                 chart: {
                     height: 430,
-                    type: "bar",
+                    type: "line",
+                    zoom: {
+                        enabled: true,
+                        type: 'x',
+                        autoScaleYaxis: false,
+                        zoomedArea: {
+                            fill: {
+                                color: '#90CAF9',
+                                opacity: 0.4
+                            },
+                            stroke: {
+                                color: '#0D47A1',
+                                opacity: 0.4,
+                                width: 1
+                            }
+                        }
+                    },
                 },
+                title: {
+                    text: "Aplicativos mais visualizados",
+                    align: "left",
+                    margin: 55,
 
+                },
                 plotOptions: {
                     bar: {
                         horizontal: false,
@@ -75,23 +96,23 @@ export default {
                         },
                     },
                 },//plotOptions
-                title: {
-                    text: "Catalogação mensal total por usúario",
-                    align: "left",
-                    margin: 55,
-                },
+
                 dataLabels: {
-                    enabled: false,
+                    enabled: true,
                     offsetX: -6,
                     style: {
-                        fontSize: '12px',
+                        fontSize: '10px',
                         colors: ['#008B8B']
                     }
                 },
                 xaxis: {
                     categories: [],
                 },
-
+                stroke: {
+                    show: true,
+                    width: 3,
+                    colors: ['#008B8B']
+                },
                 tooltip: {
                     shared: true,
                     intersect: false
@@ -102,7 +123,9 @@ export default {
     computed: {
         buttonRedirect () {
             return this.isDashboard ?
-                { label: 'Ver relatório completo', url: '/admin/dashboard/catalogacao-mensal-por-usuario' } :
+                {
+                    label: 'Ver relatório completo', url: '/admin/dashboard/aplicativos-mais-visualizados'
+                } :
                 { label: 'Voltar', url: '/admin/dashboard/listar' }
         }
     },
@@ -116,7 +139,7 @@ export default {
 
         async getDataTable () {
             this.$q.loading.show();
-            const { data } = await axios.get(`/dashboard/catalogacao-mensal-por-usuario`);
+            const { data } = await axios.get(`/dashboard/aplicativos-mais-visualizados`);
             if (data.success) {
                 this.dataTable = data.metadata;
                 // define as as cetegorias com o spread operator (...)
@@ -132,21 +155,13 @@ export default {
                 this.mapSeries = [
                     {
                         name: "Quantidade",
-                        data: data.metadata.map((item) => item.total),
+                        data: data.metadata.map((item) => item.qt_access),
                     },
                 ];
                 // renderiza
                 this.render = data.success;
             }
             this.$q.loading.hide();
-        }
-    },
-    methods: {
-        exportToCsv () {
-            exportTable(this.dataTable, this.columns)
-        },
-        getDataTable () {
-            console.log('oisio')
         }
     }
 }
