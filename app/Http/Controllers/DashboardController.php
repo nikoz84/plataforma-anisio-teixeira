@@ -25,7 +25,7 @@ class DashboardController extends ApiController
     public function getFiltros(Request $request, $id)
     {
         return $this->successResponse([
-            'anos' => DashboardData::filtroAnos(),
+            'anos' => DashboardData::setRequest($request)->filtroAnos(),
             'ordenarPor' => DashboardData::filtroOrdenarPor(),
         ]);
     }

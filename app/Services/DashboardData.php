@@ -13,11 +13,11 @@ class DashboardData
     protected static $response = null;
 
     public static function conteudosPorAno()
-    { //Carregando a table
+    {
+        //Carregando a table
 
         $ordenarPor = self::$request->get('ordenarPor', 'DESC');
         $date = self::$request->get('ano');
-
 
         return DB::table('conteudos')
             ->selectRaw('extract(year from conteudos.created_at) as ano, COUNT(*) as total')
@@ -98,7 +98,7 @@ class DashboardData
         return DB::table('tags')
             ->select(['name', 'searched'])
             ->orderBy('searched', 'desc')
-            ->limit(15)->get();
+            ->limit(10)->get();
     }
 
 

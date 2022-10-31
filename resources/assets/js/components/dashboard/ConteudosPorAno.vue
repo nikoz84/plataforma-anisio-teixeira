@@ -47,7 +47,7 @@ export default {
     return {
       filtroAnos: [],
       filtroOrdenarPor: [],
-      ano: [],
+      ano: null,
       ordenarPor: null,
       columns: [
         {
@@ -120,7 +120,12 @@ export default {
     async getDataTable () {
       this.render = false;
       this.$q.loading.show();
-      const { data } = await axios.get(`/dashboard/conteudos-por-ano`)
+      const { data } = await axios.get(`/dashboard/conteudos-por-ano`, {
+        params: {
+          ano: this.ano,
+          ordenarPor: this.ordenarPor
+        }
+      })
       // console.log(data)
       this.prepararDados(data)
       this.$q.loading.hide();
@@ -144,20 +149,18 @@ export default {
           },
         ];
 
-        this.render = data.success;
       }
+      this.render = true;
 
     },
     async getFiltros () {
-      this.render = false;
+
       const { data } = await axios.get(`/dashboard/filtros/conteudos-por-ano?ano=${this.ano}&ordenarPor=${this.ordenarPor}`);
 
       if (data.success) {
         this.filtroAnos = data.metadata.anos;
         this.filtroOrdenarPor = data.metadata.ordenarPor;
-
       }
-      this.render = data.success;
     }
   },
 };
