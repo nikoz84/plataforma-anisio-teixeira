@@ -141,7 +141,6 @@ export default {
             },
           },
         };
-
         this.mapSeries = [
           {
             name: "Total",
