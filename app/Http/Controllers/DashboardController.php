@@ -27,6 +27,10 @@ class DashboardController extends ApiController
         return $this->successResponse([
             'anos' => DashboardData::setRequest($request)->filtroAnos(),
             'ordenarPor' => DashboardData::filtroOrdenarPor(),
+            'mes' => DashboardData::setRequest($request)->filtroMes(),
+            'nome' => DashboardData::setRequest($request)->filtroUsuario(),
+            'titulo' => DashboardData::setRequest($request)->filtroTitulo()
+
         ]);
     }
 }
