@@ -27,30 +27,14 @@ class DashboardController extends ApiController
         return $this->successResponse([
             'anos' => DashboardData::setRequest($request)->filtroAnos(),
             'ordenarPor' => DashboardData::filtroOrdenarPor(),
-        ]);
-    }
-
-    public function getFiltrosMes(Request $request, $id)
-    {
-        return $this->successResponse([
             'mes' => DashboardData::setRequest($request)->filtroMes(),
-            'ordenarPor' => DashboardData::filtroOrdenarPor(),
-        ]);
-    }
-
-    public function getFiltrosAplicativos(Request $request, $id)
-    {
-        return $this->successResponse([
             'aplicativos' => DashboardData::setRequest($request)->filtrosAplicativos(),
-            'ordenarPor' => DashboardData::filtroOrdenarPor(),
-        ]);
-    }
-
-    public function getFiltroscatalogacaoPorCanal(Request $request, $id)
-    {
-        return $this->successResponse([
-            'aplicativos' => DashboardData::setRequest($request)->filtrosCatalogacaoPorCanal(),
-            'ordenarPor' => DashboardData::filtroOrdenarPor(),
+            'canal' => DashboardData::setRequest($request)->filtrosCatalogacaoPorCanal(),
+            'baixados' => DashboardData::setRequest($request)->filtrosMaisBaixados(),
+            'acessados' => DashboardData::setRequest($request)->filtrosMaisAcessados(),
+            'maisProcuradas' => DashboardData::setRequest($request)->filtrosMaisProcuradas(),
+            'midias' => DashboardData::setRequest($request)->filtrosMidia(),
+            'usuarios' => DashboardData::setRequest($request)->filtrosPorUsuario()
         ]);
     }
 }
