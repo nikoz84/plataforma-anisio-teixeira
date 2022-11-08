@@ -73,8 +73,6 @@ export default {
             end: '',
             filtroOrdenarPor: [],
             ordenarPor: null,
-            filtroMeses: [],
-            filtroMeses: null,
             columns: [
                 {
                     name: "periodo", align: "left", label: "Período", field: "periodo", sortable: true,
@@ -152,7 +150,7 @@ export default {
                     start: this.start,
                     end: this.end,
                     ordenarPor: this.ordenarPor,
-                    filtroMeses: this.filtroMeses
+
 
                 },
             })
@@ -187,7 +185,7 @@ export default {
 
             if (data.success) {
                 this.filtroOrdenarPor = data.metadata.ordenarPor;
-                this.filtroMeses = data.metadata.filtroMeses;
+
             }
         }
     },
