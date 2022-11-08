@@ -30,52 +30,19 @@ class DashboardData
             ->get();
     }
 
-    public static function filtroAnos()
-    { // Carregar o filtro anos
 
-        return DB::table('conteudos')
-            ->selectRaw('extract(year from conteudos.created_at) as ano')
-            ->groupByRaw('extract(year from conteudos.created_at)')
-            ->orderBy('ano', "DESC")
-            ->get()->pluck('ano');
-    }
 
-    public static function filtroUsuario()
-    {
-        return DB::table('users as u')
-            ->select(DB::raw('u.name, count(u.id) AS total'))
-            ->join('conteudos AS c', 'u.id', '=', 'c.user_id')
-            ->groupBy('u.name')
-            ->orderBy('u.name', "ASC")
-            ->get()->pluck('name');
-    }
+    // public static function filtroMes()
+    // { // Carregar o filtro anos
 
-    public static function filtroMes()
-    { // Carregar o filtro anos
+    //     return DB::table('conteudos')
+    //         ->selectRaw('extract(month from conteudos.created_at) as mes')
+    //         ->groupByRaw('extract(month from conteudos.created_at)')
+    //         ->orderBy('mes', "DESC")
+    //         ->get()->pluck('mes');
+    // }
 
-        return DB::table('conteudos')
-            ->selectRaw('extract(month from conteudos.created_at) as mes')
-            ->groupByRaw('extract(month from conteudos.created_at)')
-            ->orderBy('mes', "DESC")
-            ->get()->pluck('mes');
-    }
 
-    public function filtroTitulo()
-    {
-        return DB::table('conteudos')
-            ->select('title')
-            ->Limit(10)
-            ->orderBy('title', "DESC")
-            ->get()->pluck('title');
-    }
-
-    public static function filtroOrdenarPor()
-    {
-        return [
-            'ASC',
-            'DESC'
-        ];
-    }
 
     public static function aplicativosMaisVisualizados()
     {
@@ -102,18 +69,33 @@ class DashboardData
     {
 
         $ordenarPor = self::$request->get('ordenarPor', 'DESC');
-        $nome = self::$request->get('nome');
+        $usuario_id = self::$request->get('id');
+        // dd($usuario_id);
+        $mes = self::$request->get('mes');
+        $ano = self::$request->get('ano');
+
+        $limit = self::$request->get('limit');  // rows 1000 / 100 
 
         return DB::table('users as u')
-            ->select(DB::raw('u.name, count(u.id) AS total'))
+            ->select(DB::raw("u.name, 
+                count(u.id) AS total, 
+                upper(to_char(c.created_at, 'TMMonth')) as mes,  
+                row_number() OVER () AS id, 
+                extract(YEAR from c.created_at) as ano"))
             ->join('conteudos AS c', 'u.id', '=', 'c.user_id')
-            ->limit(10)
-            ->when($nome, function ($query) use ($nome) {
-                return $query->where('u.name', $nome);
+            ->when($usuario_id, function ($query) use ($usuario_id) {
+                return $query->where('u.id', '=', $usuario_id);
             })
+            ->when($mes, function ($query) use ($mes) {
+                return $query->whereRaw("upper(to_char(c.created_at, 'TMMonth')) = '{$mes}'");
+            })
+            ->when($ano, function ($query) use ($ano) {
+                return $query->whereRaw("extract(YEAR from c.created_at) = {$ano}");
+            })
+            ->groupByRaw("upper(to_char(c.created_at, 'TMMonth')), ano")
             ->groupBy('u.name')
             ->orderBy('total', $ordenarPor)
-            ->get();
+            ->paginate($limit);
     }
 
 
@@ -209,4 +191,6 @@ class DashboardData
             ['id' => 'tipos-de-midia', 'titulo' => 'Tipo de mídia', 'componente' => 'TiposDeMidia'],
         ]);
     }
+
+    /** FILTROS */
 }
