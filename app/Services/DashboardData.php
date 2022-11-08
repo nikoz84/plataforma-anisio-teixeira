@@ -75,17 +75,12 @@ class DashboardData
 
     public static function catalogacaoPorCanal()
     {
-        $ordenarPor = self::$request->get('ordenarPor', 'DESC');
-        $date = self::$request->get('ano');
 
         return DB::table('canais AS ca')
             ->select(DB::raw('ca.name, count(ca.id) AS total'))
             ->join('conteudos AS c', 'ca.id', '=', 'c.canal_id')
-            ->when($date, function ($query) use ($date) {
-                return $query->whereYear('created_at', $date);
-            })
             ->groupBy('ca.name')
-            ->orderBy('total', 'DESC', $ordenarPor)
+            ->orderBy('total', 'DESC')
             ->get();
     }
 
@@ -111,31 +106,40 @@ class DashboardData
     }
     public static function catalogacaoTotalMensal()
     {
-        $inicio = Carbon::createFromFormat('Y-m-d', self::$request->get('inicio'))->format('d-m-Y');
-        $fim = Carbon::createFromFormat('Y-m-d', self::$request->get('fim'))->format('d-m-Y');
-        $ordenarPor = self::$request->get('quantidade');
+        $start = self::$request->get('start');
+        $end = self::$request->get('end');
+        $ordenarPor = self::$request->get('ordenarPor', 'DESC');
 
-        return DB::table('conteudos')->selectRaw('extract(month from conteudos.created_at) as mes, COUNT(*) as quantidade')
-            ->when(!$inicio && !$fim, function ($q) use ($inicio, $fim) {
-                return $q->whereBetween('conteudos.created_at', [$inicio, $fim]);
+        return DB::table('conteudos')->selectRaw('extract(month from conteudos.created_at) as periodo, COUNT(*) as quantidade')
+            ->when($start && $end, function ($q) use ($start, $end) {
+                return $q->whereBetween('conteudos.created_at', [$start, $end]);
             })
-            ->when($ordenarPor, function ($q) use ($ordenarPor) {
-                return $q->orderBy('quantidade', [$ordenarPor]);
-            })
+
             ->groupByRaw('extract(month from conteudos.created_at)')
-            ->orderBy('quantidade', 'DESC')
+            ->orderBy('quantidade', 'DESC', $ordenarPor)
             ->get();
     }
 
-    public static function filtroMes()
-    { // Carregar o filtro por mês
+    public static function filtroMeses()
+    {
+        $meses = [
+            ["value" => 1, "label" => "Janeiro"],
+            ["value" => 2, "label" => "Fevereiro"],
+            ["value" => 3, "label" => "Março"],
+            ["value" => 4, "label" => "Abril"],
+            ["value" => 5, "label" => "Maio"],
+            ["value" => 6, "label" => "Junho"],
+            ["value" => 7, "label" => "Julho"],
+            ["value" => 8, "label" => "Agosto"],
+            ["value" => 9, "label" => "Setembro"],
+            ["value" => 10, "label" => "Outubro"],
+            ["value" => 11, "label" => "Novembro"],
+            ["value" => 12, "label" => "Dezembro"],
+        ];
 
-        return DB::table('conteudos')
-            ->selectRaw('extract(month from conteudos.created_at) as mes')
-            ->groupByRaw('extract(month from conteudos.created_at)')
-            ->orderBy('mes', "DESC")
-            ->get()->pluck('mes');
+        return $meses;
     }
+
 
     public static function conteudosMaisBaixados()
     {

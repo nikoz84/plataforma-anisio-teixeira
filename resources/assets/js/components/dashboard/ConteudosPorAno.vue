@@ -107,11 +107,10 @@ export default {
     }
   },
   created () {
-    console.log(this.disableTable)
+
     this.getDataTable();
     this.getFiltros();
   },
-
 
   methods: {
     exportToCsv () {
@@ -128,7 +127,6 @@ export default {
         },
         method: 'get',
       })
-      // console.log(data)
       this.prepararDados(data)
       this.$q.loading.hide();
     },
@@ -143,7 +141,6 @@ export default {
             },
           },
         };
-
         this.mapSeries = [
           {
             name: "Total",
@@ -153,7 +150,6 @@ export default {
 
       }
       this.render = true;
-
     },
     async getFiltros () {
 

@@ -2,23 +2,45 @@
     <q-card>
         <q-card-section v-if="!isDashboard">
             <div class="text-dark text-h6">Filtros</div>
-            <div class="q-gutter-md row items-start">
-                <div style="min-width: 150px; max-width: 200px">
-                    <q-select v-model="mesMultiple" multiple label-color="primary" :options="mapOptionsMes" use-chips
-                        stack-label label="Filtrar por meses" />
-                </div>
-                <div style="min-width: 150px; max-width: 200px">
-                    <q-select v-model="anoMultiple" multiple label-color="primary" :options="MapOptionsAnos" use-chips
-                        stack-label label="Filtrar por anos" />
-                </div>
-                <div style="min-width: 150px; max-width: 200px">
-                    <q-btn color="primary" label="Pesquisar" size="md" @click='pesquisarFiltros()' />
-                </div>
+            <div class="row q-gutter-md">
+                <q-input filled dense v-model="start" mask="" :rules="['start']">
+                    <template v-slot:append>
+                        <q-icon name="event" class="cursor-pointer">
+                            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                                <q-date v-model="start">
+                                    <div class="row items-center justify-end">
+                                        <q-btn v-close-popup label="Close" color="primary" flat />
+                                    </div>
+                                </q-date>
+                            </q-popup-proxy>
+                        </q-icon>
+                    </template>
+                </q-input>
+                <q-input filled dense v-model="end" mask="" :rules="['end']">
+                    <template v-slot:append>
+                        <q-icon name="event" class="cursor-pointer">
+                            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                                <q-date v-model="end">
+                                    <div class="row items-center justify-end">
+                                        <q-btn v-close-popup label="Close" color="primary" flat />
+                                    </div>
+                                </q-date>
+                            </q-popup-proxy>
+                        </q-icon>
+                    </template>
+                </q-input>
+                <q-select class="col" dense v-model="ordenarPor" label-color="primary" :options="filtroOrdenarPor"
+                    option-value="id" option-label="nome" stack-label emit-value map-options label="Ordenar por" />
+                <q-btn class="col" color="primary" label="Pesquisar" @click="getDataTable" />
+                <q-btn class="col" color="primary" :to="buttonRedirect.url">
+                    {{ buttonRedirect.label }}
+                </q-btn>
+
             </div>
         </q-card-section>
         <q-card-section v-if="!isDashboard">
-            <q-table title="Conteúdos" :data="dataTable" :columns="columns" color="primary" row-key="name"
-                :pagination="{ rowsPerPage: 20 }">
+            <q-table v-if="render" title="Catalogação total mensal" :data="dataTable" :columns="columns" color="primary"
+                row-key="name" :pagination="{ rowsPerPage: 20 }">
                 <template v-slot:top-right>
                     <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps @click="exportToCsv" />
                 </template>
@@ -27,7 +49,7 @@
         <q-card-section v-if="render">
             <VueApexCharts height="450" :options="chartOptions" :series="mapSeries" />
         </q-card-section>
-        <q-card-actions>
+        <q-card-actions v-if="isDashboard">
             <q-btn color="primary" class="full-width" :to="buttonRedirect.url" size="sm">
                 {{ buttonRedirect.label }}
             </q-btn>
@@ -39,30 +61,25 @@
 import { exportTable } from "@composables/ToCsv";
 import VueApexCharts from "vue-apexcharts";
 
-
 export default {
-    name: "CatalogacaoTotalMensal",
+    name: "CatalaogacaoTotalMensal",
     components: {
         VueApexCharts,
     },
     props: ['isDashboard'],
     data () {
         return {
+            start: '',
+            end: '',
+            filtroOrdenarPor: [],
+            ordenarPor: null,
+            filtroMeses: [],
+            filtroMeses: null,
             columns: [
                 {
-                    name: "mes",
-                    align: "left",
-                    label: "Mês",
-                    field: "mes",
-                    sortable: true,
-                    width: "100%"
-
+                    name: "periodo", align: "left", label: "Período", field: "periodo", sortable: true,
                 },
-                {
-                    name: "Quantidade",
-                    label: "Quantidade",
-                    field: "quantidade"
-                },
+                { name: "quantidade", label: "Quantidade", field: "quantidade" },
             ],
             dataTable: [],
             mapSeries: [],
@@ -70,23 +87,43 @@ export default {
             // Inicio da configuração do gráfico
             chartOptions: {
                 chart: {
-                    height: 350,
-                    type: 'area'
+
+                    height: 430,
+                    width: "100%",
+                    type: "bar",
+                    animations: {
+                        enabled: true,
+                        easing: 'easeinout',
+                        speed: 800,
+                        animateGradually: {
+                            enabled: true,
+                            delay: 200
+                        },
+                        dynamicAnimation: {
+                            enabled: true,
+                            speed: 350
+                        }
+                    }
                 },
                 title: {
                     text: "Catalogação total mensal",
                     align: "left",
                     margin: 55,
                 },
-
+                plotOptions: {
+                    bar: {
+                        horizontal: true,
+                    },
+                },
                 dataLabels: {
                     enabled: false,
+                    positions: top,
                 },
                 xaxis: {
                     categories: [],
                 },
             },
-        }
+        };
     },
     computed: {
         buttonRedirect () {
@@ -96,43 +133,65 @@ export default {
         }
     },
     created () {
+
         this.getDataTable();
+        this.getFiltros();
+
     },
+
     methods: {
         exportToCsv () {
             exportTable(this.dataTable, this.columns);
         },
 
         async getDataTable () {
+            this.render = false;
             this.$q.loading.show();
-            const { data } = await axios.get(`/dashboard/catalogacao-total-mensal`);
+            const { data } = await axios.get(`/dashboard/catalogacao-total-mensal`, {
+                params: {
+                    start: this.start,
+                    end: this.end,
+                    ordenarPor: this.ordenarPor,
+                    filtroMeses: this.filtroMeses
+
+                },
+            })
+
+            this.prepararDados(data)
+            this.$q.loading.hide();
+        },
+        async prepararDados (data) {
             if (data.success) {
                 this.dataTable = data.metadata;
-                // define as as cetegorias com o spread operator (...)
                 this.chartOptions = {
                     ...this.chartOptions,
                     ...{
                         xaxis: {
-                            categories: data.metadata.map((item) => item.mes),
+                            categories: data.metadata.map((item) => item.periodo),
                         },
                     },
                 };
-                // define as series
                 this.mapSeries = [
                     {
-                        name: "Download",
+                        name: "Quantidade",
                         data: data.metadata.map((item) => item.quantidade),
                     },
                 ];
-                // renderiza
-                this.render = data.success;
+
             }
-            this.$q.loading.hide();
+            this.render = true;
         },
+        async getFiltros () {
+
+            const { data } = await axios.get(`/dashboard/filtros/catalogacao-total-mensal`);
+
+            if (data.success) {
+                this.filtroOrdenarPor = data.metadata.ordenarPor;
+                this.filtroMeses = data.metadata.filtroMeses;
+            }
+        }
     },
 };
 </script>
-<style scoped>
 
-</style>
 

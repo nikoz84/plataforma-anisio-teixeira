@@ -146,7 +146,7 @@ export default {
             exportTable(this.dataTable, this.columns)
         },
         getDataTable () {
-            console.log('oisio')
+            // console.log('oisio')
         }
     }
 }

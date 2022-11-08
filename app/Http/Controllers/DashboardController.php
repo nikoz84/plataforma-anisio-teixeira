@@ -26,30 +26,7 @@ class DashboardController extends ApiController
     {
         return $this->successResponse([
             'anos' => DashboardData::setRequest($request)->filtroAnos(),
-            'ordenarPor' => DashboardData::filtroOrdenarPor(),
-        ]);
-    }
-
-    public function getFiltrosMes(Request $request, $id)
-    {
-        return $this->successResponse([
-            'mes' => DashboardData::setRequest($request)->filtroMes(),
-            'ordenarPor' => DashboardData::filtroOrdenarPor(),
-        ]);
-    }
-
-    public function getFiltrosAplicativos(Request $request, $id)
-    {
-        return $this->successResponse([
-            'aplicativos' => DashboardData::setRequest($request)->filtrosAplicativos(),
-            'ordenarPor' => DashboardData::filtroOrdenarPor(),
-        ]);
-    }
-
-    public function getFiltroscatalogacaoPorCanal(Request $request, $id)
-    {
-        return $this->successResponse([
-            'aplicativos' => DashboardData::setRequest($request)->filtrosCatalogacaoPorCanal(),
+            'meses' => DashboardData::filtroMeses(),
             'ordenarPor' => DashboardData::filtroOrdenarPor(),
         ]);
     }

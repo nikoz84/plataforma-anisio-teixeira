@@ -300,9 +300,7 @@ Route::group(
         Route::get('/dashboard', [DashboardController::class, 'getCards'])->name('cards.dashboard');
         Route::get('/dashboard/{id}', [DashboardController::class, 'getById'])->name('data.x.id');
         Route::get('/dashboard/filtros/{id}', [DashboardController::class, 'getFiltros'])->name('filtros');
-        Route::get('/dashboard/filtros/mes/{id}', [DashboardController::class, 'getFiltrosMes'])->name('filtrosMes');
-        Route::get('dashboard/filtros/aplicativos/{id}', [DashboardController::class, 'getFiltrosAplicativos'])->name('filtrosAplicativos');
-        Route::get('dashboard/filtros/canal/{id}', [DashboardController::class, 'getFiltroscatalogacaoPorCanal'])->name('filtrosCatalogacaoPorCanal');
+
 
         /** RELATÓRIOS */
         Route::group(['prefix' => 'relatorio', 'as' => 'relatorio.'], function () {
