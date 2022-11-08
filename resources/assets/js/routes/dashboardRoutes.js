@@ -1,7 +1,6 @@
 import Dashboard from "@pages/Dashboard.vue";
 import {
   ConteudosPorAno,
-  CatalogacaoMensal,
   CatalogacaoPorCanal,
   CatalogacaoMensalPorUsuario,
   CatalogacaoTotalMensal,
@@ -33,17 +32,6 @@ const conteudoPorAnoRoute = {
   meta: {
     requiresAuth: true,
     title: "Catalogação por ano",
-    layout: Admin,
-  },
-};
-const catalogacaoMensalRoute = {
-  path: "dashboard/catalogacao-mensal",
-  components: {
-    admin: CatalogacaoMensal,
-  },
-  meta: {
-    requiresAuth: true,
-    title: "Catalogação mensal",
     layout: Admin,
   },
 };
@@ -147,7 +135,6 @@ const tiposDeMidiaRoute = {
 export {
   listarDashboardRoute,
   conteudoPorAnoRoute,
-  catalogacaoMensalRoute,
   catalogacaoPorCanalRoute,
   catalogacaoMensalPorUsuarioRoute,
   catalogacaoTotalMensalRoute,
