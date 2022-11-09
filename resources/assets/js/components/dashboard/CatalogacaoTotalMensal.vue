@@ -142,12 +142,9 @@ export default {
             if (data.success) {
                 this.filtroMes = data.metadata.mes;
                 this.filtroOrdenarPor = data.metadata.ordenarPor;
-<<<<<<< HEAD
-=======
                 this.filtroMes = data.metadata.meses.map(function (e) {
                     return e.label;
                 });
->>>>>>> cc3bf26e (Correção das rotas)
             }
         }
     },
