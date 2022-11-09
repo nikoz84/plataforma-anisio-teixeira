@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Cache\RateLimiting\Limit;
 
 class DashboardData
 {
@@ -29,23 +30,19 @@ class DashboardData
             ->get();
     }
 
-    public static function filtroAnos()
-    { // Carregar o filtro anos
 
-        return DB::table('conteudos')
-            ->selectRaw('extract(year from conteudos.created_at) as ano')
-            ->groupByRaw('extract(year from conteudos.created_at)')
-            ->orderBy('ano', "DESC")
-            ->get()->pluck('ano');
-    }
 
-    public static function filtroOrdenarPor()
-    {
-        return [
-            'ASC',
-            'DESC'
-        ];
-    }
+    // public static function filtroMes()
+    // { // Carregar o filtro anos
+
+    //     return DB::table('conteudos')
+    //         ->selectRaw('extract(month from conteudos.created_at) as mes')
+    //         ->groupByRaw('extract(month from conteudos.created_at)')
+    //         ->orderBy('mes', "DESC")
+    //         ->get()->pluck('mes');
+    // }
+
+
 
     public static function aplicativosMaisVisualizados()
     {
@@ -66,31 +63,80 @@ class DashboardData
             ->orderBy('total', 'DESC')
             ->get();
     }
+
+    // Catalogação mensal total por usuario
     public static function catalogacaoMensalPorUsuario()
     {
+
+        $ordenarPor = self::$request->get('ordenarPor', 'DESC');
+        $usuario_id = self::$request->get('id');
+        // dd($usuario_id);
+        $mes = self::$request->get('mes');
+        $ano = self::$request->get('ano');
+
+        $limit = self::$request->get('limit');  // rows 1000 / 100 
+
         return DB::table('users as u')
-            ->select(DB::raw('u.name, count(u.id) AS total'))
+            ->select(DB::raw("u.name, 
+                count(u.id) AS total, 
+                upper(to_char(c.created_at, 'TMMonth')) as mes,  
+                row_number() OVER () AS id, 
+                extract(YEAR from c.created_at) as ano"))
             ->join('conteudos AS c', 'u.id', '=', 'c.user_id')
-            ->limit(10)
+            ->when($usuario_id, function ($query) use ($usuario_id) {
+                return $query->where('u.id', '=', $usuario_id);
+            })
+            ->when($mes, function ($query) use ($mes) {
+                return $query->whereRaw("upper(to_char(c.created_at, 'TMMonth')) = '{$mes}'");
+            })
+            ->when($ano, function ($query) use ($ano) {
+                return $query->whereRaw("extract(YEAR from c.created_at) = {$ano}");
+            })
+            ->groupByRaw("upper(to_char(c.created_at, 'TMMonth')), ano")
             ->groupBy('u.name')
-            ->orderBy('total', 'DESC')
-            ->get();
+            ->orderBy('total', $ordenarPor)
+            ->paginate($limit);
     }
+
+
+    // Catalogação total mensal
     public static function catalogacaoTotalMensal()
     {
+        $ordenarPor = self::$request->get('ordenarPor', 'DESC');
+        $date = self::$request->get('mes');
+
         return DB::table('conteudos')->selectRaw('extract(month from conteudos.created_at) as mes, COUNT(*) as quantidade')
+            ->when($date, function ($query) use ($date) {
+                return $query->whereMonth('created_at', $date);
+            })
             ->groupByRaw('extract(month from conteudos.created_at)')
-            ->orderBy('quantidade', 'DESC')
+            ->orderBy('mes', $ordenarPor)
             ->get();
     }
+
+
     public static function conteudosMaisBaixados()
     {
-        return DB::table('conteudos')->select(['title', 'qt_downloads'])->limit(10)->orderBy('qt_downloads', 'desc')->get();
+        $ordenarPor = self::$request->get('ordenarPor', 'DESC');
+        $titulo = self::$request->get('titulo');
+
+        return DB::table('conteudos')->select(['title', 'qt_downloads'])
+            ->when($titulo, function ($query) use ($titulo) {
+                return $query->where('title', $titulo);
+            })
+            ->limit(10)
+            ->orderBy('qt_downloads', $ordenarPor)
+            ->get();
     }
 
     public static function conteudosMaisAcessados()
     {
-        return DB::table('conteudos')->select(['title', 'qt_access'])->limit(10)->orderBy('qt_access', 'desc')->get();
+        return DB::table('conteudos')
+            ->select(['title', 'qt_access'])
+
+            ->limit(10)
+            ->orderBy('qt_access', 'desc')
+            ->get();
     }
 
     public static function tagsMaisProcuradas()
@@ -145,4 +191,6 @@ class DashboardData
             ['id' => 'tipos-de-midia', 'titulo' => 'Tipo de mídia', 'componente' => 'TiposDeMidia'],
         ]);
     }
+
+    /** FILTROS */
 }

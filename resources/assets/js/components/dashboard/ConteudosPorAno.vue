@@ -124,7 +124,7 @@ export default {
           ano: this.ano,
           ordenarPor: this.ordenarPor
         },
-        method: 'get',
+
 
       })
       this.prepararDados(data)
@@ -164,5 +164,6 @@ export default {
   },
 };
 </script>
+<style scoped>
 
-
+</style>
