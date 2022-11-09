@@ -32,18 +32,6 @@ class DashboardData
 
 
 
-    // public static function filtroMes()
-    // { // Carregar o filtro anos
-
-    //     return DB::table('conteudos')
-    //         ->selectRaw('extract(month from conteudos.created_at) as mes')
-    //         ->groupByRaw('extract(month from conteudos.created_at)')
-    //         ->orderBy('mes', "DESC")
-    //         ->get()->pluck('mes');
-    // }
-
-
-
     public static function aplicativosMaisVisualizados()
     {
         return DB::table('aplicativos')
@@ -119,12 +107,18 @@ class DashboardData
     {
         $ordenarPor = self::$request->get('ordenarPor', 'DESC');
         $titulo = self::$request->get('titulo');
+        $ano = self::$request->get('ano');
+        $limit = self::$request->get('limit', '20');  // rows 1000 / 100 
 
-        return DB::table('conteudos')->select(['title', 'qt_downloads'])
+
+        return DB::table('conteudos')->select(['created_at', 'title', 'qt_downloads'])
             ->when($titulo, function ($query) use ($titulo) {
                 return $query->where('title', $titulo);
             })
-            ->limit(10)
+            ->when($ano, function ($query) use ($ano) {
+                return $query->whereRaw("extract(YEAR from created_at) = {$ano}");
+            })
+            ->limit($limit)
             ->orderBy('qt_downloads', $ordenarPor)
             ->get();
     }

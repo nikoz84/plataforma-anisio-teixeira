@@ -3,23 +3,28 @@
         <q-card-section v-if="!isDashboard">
             <div class="text-dark text-h6">Filtros</div>
             <div class="row q-gutter-md">
-                <q-select class="col" dense v-model="titulo" label-color="primary" :options="filtroTitulo"
+                <q-select class="col" clearable dense v-model="titulo" label-color="primary" :options="filtroTitulo"
                     label="Filtrar por título" />
+                <q-select class="col" clearable dense v-model="ano" label-color="primary" :options="filtroAnos"
+                    label="Filtrar por ano" />
                 <q-select class="col" dense v-model="ordenarPor" label-color="primary" :options="filtroOrdenarPor"
                     option-value="id" option-label="nome" stack-label emit-value map-options label="Ordenar por" />
                 <q-btn class="col" color="primary" label="Pesquisar" @click="getDataTable" />
-                <q-btn class="col" color="primary" :to="buttonRedirect.url">
+                <q-btn class="col" color="secondary" :to="buttonRedirect.url">
                     {{ buttonRedirect.label }}
                 </q-btn>
 
             </div>
         </q-card-section>
         <q-card-section v-if="!isDashboard">
-            <q-table v-if="render" title="Conteúdos" :data="dataTable" :columns="columns" color="primary" row-key="name"
-                width="100%" :pagination="{ rowsPerPage: 20 }">
+
+            <q-table v-if="render" title="Conteúdos mais baixados" :data="dataTable" :columns="columns" color="primary"
+                row-key="name" width="100%" :pagination="{ rowsPerPage: limit }">
+
                 <template v-slot:top-right>
                     <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps @click="exportToCsv" />
                 </template>
+
             </q-table>
         </q-card-section>
         <q-card-section v-if="render">
@@ -42,7 +47,7 @@ export default {
     components: {
         VueApexCharts,
     },
-    props: ['isDashboard'],
+    props: ['isDashboard', 'TipoPesquisa'],
     data () {
         return {
             columns: [
@@ -50,7 +55,7 @@ export default {
                     name: "titulo",
                     align: "left",
                     label: "Título",
-                    field: "title",
+                    field: "title", format: val => val.toUpperCase().replace(/[-\\]/g, '').split(' ', 8).join(' '),
                     sortable: true,
                     width: "100%"
 
@@ -62,6 +67,9 @@ export default {
                 },
             ],
             filtroTitulo: [],
+            filtroAnos: [],
+            ano: '',
+            limit: 20,
             filtroOrdenarPor: [],
             titulo: null,
             ordenarPor: null,
@@ -111,7 +119,8 @@ export default {
                     label: 'Ver relatório completo', url: '/admin/dashboard/conteudos-mais-baixados'
                 } :
                 { label: 'Voltar', url: '/admin/dashboard/listar' }
-        }
+        },
+
     },
     created () {
         this.getDataTable();
@@ -129,6 +138,7 @@ export default {
             const { data } = await axios.get(`/dashboard/conteudos-mais-baixados`, {
                 params: {
                     titulo: this.titulo,
+                    ano: this.ano,
                     ordenarPor: this.ordenarPor
                 }
             })
@@ -165,8 +175,9 @@ export default {
         async getFiltros () {
 
             const { data } = await axios.get(`/dashboard/filtros/conteudos-mais-baixados`);
-
+            console.log(data);
             if (data.success) {
+                this.filtroAnos = data.metadata.anos
                 this.filtroTitulo = data.metadata.titulo;
                 this.filtroOrdenarPor = data.metadata.ordenarPor;
             }
