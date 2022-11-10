@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
+use App\Services\DashboardFiltros;
 use App\Services\DashboardData;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class DashboardController extends ApiController
 {
@@ -25,9 +25,9 @@ class DashboardController extends ApiController
     public function getFiltros(Request $request, $id)
     {
         return $this->successResponse([
-            'anos' => DashboardData::setRequest($request)->filtroAnos(),
-            'meses' => DashboardData::filtroMeses(),
-            'ordenarPor' => DashboardData::filtroOrdenarPor(),
+            'anos' => DashboardFiltros::filtroAnos(),
+            'meses' => DashboardFiltros::filtroMeses(),
+            'ordenarPor' => DashboardFiltros::filtroOrdenarPor(),
         ]);
     }
 }

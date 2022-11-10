@@ -5,7 +5,6 @@ namespace App\Services;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Carbon\Carbon;
 
 class DashboardData
 {
@@ -29,23 +28,8 @@ class DashboardData
             ->get();
     }
 
-    public static function filtroAnos()
-    { // Carregar o filtro anos
 
-        return DB::table('conteudos')
-            ->selectRaw('extract(year from conteudos.created_at) as ano')
-            ->groupByRaw('extract(year from conteudos.created_at)')
-            ->orderBy('ano', "DESC")
-            ->get()->pluck('ano');
-    }
 
-    public static function filtroOrdenarPor()
-    {
-        return [
-            'ASC',
-            'DESC'
-        ];
-    }
 
     public static function aplicativosMaisVisualizados()
     {
@@ -63,14 +47,7 @@ class DashboardData
             ->get();
     }
 
-    public function filtrosAplicativos()
-    {
-        return DB::table('aplicativos')
-            ->selectRaw('extract(month from aplicativos.created_at) as mes')
-            ->groupByRaw('extract(month from aplicativos.created_at)')
-            ->orderBy('mes', "DESC")
-            ->get()->pluck('mes');
-    }
+
 
 
     public static function catalogacaoPorCanal()
@@ -84,16 +61,6 @@ class DashboardData
             ->get();
     }
 
-    public function filtrosCatalogacaoPorCanal()
-    {
-
-        return DB::table('canais AS ca')
-            ->select(DB::raw('ca.name, count(ca.id) AS total'))
-            ->join('conteudos AS c', 'ca.id', '=', 'c.canal_id')
-            ->groupBy('ca.name')
-            ->orderBy('total', 'DESC')
-            ->get();
-    }
     public static function catalogacaoMensalPorUsuario()
     {
         return DB::table('users as u')
@@ -110,35 +77,18 @@ class DashboardData
         $end = self::$request->get('end');
         $ordenarPor = self::$request->get('ordenarPor', 'DESC');
 
-        return DB::table('conteudos')->selectRaw('extract(month from conteudos.created_at) as periodo, COUNT(*) as quantidade')
+        return DB::table('conteudos')
+            ->selectRaw("to_char(conteudos.created_at,'TMMONTH') as periodo, 
+            COUNT(*) as quantidade")
             ->when($start && $end, function ($q) use ($start, $end) {
                 return $q->whereBetween('conteudos.created_at', [$start, $end]);
             })
 
-            ->groupByRaw('extract(month from conteudos.created_at)')
+            ->groupByRaw("to_char(conteudos.created_at,'TMMONTH')")
             ->orderBy('quantidade', 'DESC', $ordenarPor)
             ->get();
     }
 
-    public static function filtroMeses()
-    {
-        $meses = [
-            ["value" => 1, "label" => "Janeiro"],
-            ["value" => 2, "label" => "Fevereiro"],
-            ["value" => 3, "label" => "Março"],
-            ["value" => 4, "label" => "Abril"],
-            ["value" => 5, "label" => "Maio"],
-            ["value" => 6, "label" => "Junho"],
-            ["value" => 7, "label" => "Julho"],
-            ["value" => 8, "label" => "Agosto"],
-            ["value" => 9, "label" => "Setembro"],
-            ["value" => 10, "label" => "Outubro"],
-            ["value" => 11, "label" => "Novembro"],
-            ["value" => 12, "label" => "Dezembro"],
-        ];
-
-        return $meses;
-    }
 
 
     public static function conteudosMaisBaixados()

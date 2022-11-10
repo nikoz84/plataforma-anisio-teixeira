@@ -3,7 +3,7 @@
         <q-card-section v-if="!isDashboard">
             <div class="text-dark text-h6">Filtros</div>
             <div class="row q-gutter-md">
-                <q-input filled dense v-model="start" mask="" :rules="['start']">
+                <q-input filled dense v-model="start" mask="" :rules="['start']" clearable>
                     <template v-slot:append>
                         <q-icon name="event" class="cursor-pointer">
                             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -16,7 +16,7 @@
                         </q-icon>
                     </template>
                 </q-input>
-                <q-input filled dense v-model="end" mask="" :rules="['end']">
+                <q-input filled dense v-model="end" mask="" :rules="['end']" clearable>
                     <template v-slot:append>
                         <q-icon name="event" class="cursor-pointer">
                             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -30,12 +30,14 @@
                     </template>
                 </q-input>
                 <q-select class="col" dense v-model="ordenarPor" label-color="primary" :options="filtroOrdenarPor"
-                    option-value="id" option-label="nome" stack-label emit-value map-options label="Ordenar por" />
-                <q-btn class="col" color="primary" label="Pesquisar" @click="getDataTable" />
-                <q-btn class="col" color="primary" :to="buttonRedirect.url">
-                    {{ buttonRedirect.label }}
-                </q-btn>
-
+                    option-value="id" option-label="nome" stack-label emit-value map-options label="Ordenar por"
+                    clearable />
+                <div class="row q-gutter-md">
+                    <q-btn class="col" color="primary" label="Pesquisar" @click="getDataTable" />
+                    <q-btn class="col" color="secondary" :to="buttonRedirect.url">
+                        {{ buttonRedirect.label }}
+                    </q-btn>
+                </div>
             </div>
         </q-card-section>
         <q-card-section v-if="!isDashboard">
