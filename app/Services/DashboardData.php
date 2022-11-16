@@ -56,7 +56,7 @@ class DashboardData
     {
         return DB::table('conteudos')->selectRaw('extract(month from conteudos.created_at) as mes, COUNT(*) as quantidade')
             ->groupByRaw('extract(month from conteudos.created_at)')
-            ->orderBy('quantidade', 'DESC')
+            ->orderBy('mes', 'ASC')
             ->get();
     }
     public static function conteudosMaisBaixados()
