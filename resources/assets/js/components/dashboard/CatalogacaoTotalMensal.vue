@@ -3,7 +3,7 @@
         <q-card-section v-if="!isDashboard">
             <div class="text-dark text-h6">Filtros</div>
             <div class="row q-gutter-md">
-                <q-input filled dense v-model="start" mask="" :rules="['start']" clearable>
+                <q-input filled dense v-model="data" mask="" :rules="['start']" clearable>
                     <template v-slot:append>
                         <q-icon name="event" class="cursor-pointer">
                             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -16,7 +16,7 @@
                         </q-icon>
                     </template>
                 </q-input>
-                <q-input filled dense v-model="end" mask="" :rules="['end']" clearable>
+                <q-input filled dense v-model="fim" mask="" :rules="['end']" clearable>
                     <template v-slot:append>
                         <q-icon name="event" class="cursor-pointer">
                             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -143,6 +143,7 @@ export default {
         exportToCsv () {
             exportTable(this.dataTable, this.columns);
         },
+
 
         async getDataTable () {
             this.render = false;

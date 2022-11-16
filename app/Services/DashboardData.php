@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -73,6 +74,7 @@ class DashboardData
     }
     public static function catalogacaoTotalMensal()
     {
+
         $start = self::$request->get('start');
         $end = self::$request->get('end');
         $ordenarPor = self::$request->get('ordenarPor', 'DESC');
