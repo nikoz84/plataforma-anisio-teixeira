@@ -35,8 +35,6 @@ class PlayListController extends ApiController
     {
         $playlist = new PlayList;
 
-        //dd($request->all());
-
         $this->authorize('create', $playlist);
 
         $playlist->fill($request->validated());
@@ -65,8 +63,8 @@ class PlayListController extends ApiController
             ->paginate($limit);
 
         $paginator->getCollection()->transform(function ($item) use ($term) {
-            $replace = preg_replace('/('.$term.')/i', '<b>$1</b> ', Str::lower($item->title));
-            $item->title = '<p>'.Str::replace('B>', 'b>', Str::title($replace)).'</p>';
+            $replace = preg_replace('/(' . $term . ')/i', '<b>$1</b> ', Str::lower($item->title));
+            $item->title = '<p>' . Str::replace('B>', 'b>', Str::title($replace)) . '</p>';
 
             return $item;
         });

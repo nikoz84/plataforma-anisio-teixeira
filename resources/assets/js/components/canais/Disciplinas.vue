@@ -7,7 +7,7 @@
     <h5 class="text-center">{{ disciplinas.name }}</h5>
     <ul class="nav nav-pills nav-stacked">
       <li v-for="(disciplina, d) in disciplinas.components" :key="d">
-        <router-link
+        <q-btn
           :to="{
             name: 'Listar',
             params: { slug: $route.params.slug },
@@ -18,7 +18,7 @@
           }"
         >
           {{ disciplina.name }}
-        </router-link>
+        </q-btn>
       </li>
     </ul>
   </nav>

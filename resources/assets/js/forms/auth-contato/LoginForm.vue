@@ -3,43 +3,22 @@
     <div class="row no-wrap justify-center">
       <q-card class="col-sm-6">
         <q-card-section>
-          <div class="text-center text-h5">Faça seu Login</div>
+          <div class="text-center text-h5">Faça seu Login asda</div>
         </q-card-section>
         <q-separator inset />
         <q-card-section>
-          <q-form
-            @submit.prevent="onSubmit()"
-            class="q-gutter-md"
-            ref="loginForm"
-          >
-            <q-input
-              filled
-              v-model="email"
-              label="Seu E-mail *"
-              hint="E-mail"
-              type="email"
-              bottom-slots
-              :error="errors.email && errors.email.length > 0"
-            >
+          <q-form class="q-gutter-md" ref="loginForm">
+            <q-input filled v-model="email" label="Seu E-mail *" hint="E-mail" type="email" bottom-slots
+              :error="errors.email && errors.email.length > 0">
               <template v-slot:error>
                 <ShowErrors :errors="errors.email"></ShowErrors>
               </template>
             </q-input>
-            <q-input
-              v-model="password"
-              filled
-              :type="isPwd ? 'password' : 'text'"
-              hint="Senha"
-              bottom-slots
-              :error="errors.password && errors.password.length > 0"
-              autocomplete="on"
-            >
+            <q-input v-model="password" filled :type="isPwd ? 'password' : 'text'" hint="Senha" bottom-slots
+              :error="errors.password && errors.password.length > 0" autocomplete="on">
               <template v-slot:append>
-                <q-icon
-                  :name="isPwd ? 'visibility_off' : 'visibility'"
-                  class="cursor-pointer"
-                  @click="isPwd = !isPwd"
-                />
+                <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
+                  @click="isPwd = !isPwd" />
               </template>
               <template v-slot:error>
                 <ShowErrors :errors="errors.password"></ShowErrors>
@@ -47,12 +26,7 @@
             </q-input>
             <RecaptchaForm :errors="errors.recaptcha"></RecaptchaForm>
             <div>
-              <q-btn
-                class="full-width"
-                label="Entrar"
-                type="submit"
-                color="primary"
-              />
+              <q-btn class="full-width" label="Entrar" @click="onSubmit" color="primary" />
             </div>
           </q-form>
         </q-card-section>
@@ -74,7 +48,6 @@ import {
   QCardActions,
   QInput,
   QForm,
-  QImg,
   QSeparator,
   QSpace
 } from "quasar";
@@ -92,7 +65,7 @@ export default {
     QSpace,
     RecaptchaForm
   },
-  data() {
+  data () {
     return {
       email: null,
       password: null,
@@ -105,26 +78,26 @@ export default {
   },
   methods: {
     ...mapActions(["login"]),
-    async onSubmit() {
+    async onSubmit () {
       this.$q.loading.show();
       this.errors = {};
-
-      let credentials = { 
-        email: this.email, 
-        password: this.password, 
+      console.log('oisdiosa')
+      let credentials = {
+        email: this.email,
+        password: this.password,
         recaptcha: grecaptcha.getResponse()
       };
 
-      let {redirect, errors} = await this.login(credentials);
-      if(redirect){
+      let { redirect, errors } = await this.login(credentials);
+      if (redirect) {
         this.$q.loading.hide();
         axios.defaults.headers.common.Authorization = `Bearer ${localStorage.token}`;
-        this.$router.replace("/admin/conteudos/listar");
+        this.$router.replace("/admin/dashboard/listar");
       }
       this.errors = errors;
       this.$q.loading.hide();
       grecaptcha.reset();
-      
+
     }
   }
 };

@@ -5,30 +5,16 @@
         Painel de Controle
       </strong>
     </q-item-label>
-    <ReportsMenu></ReportsMenu>
-    <q-item
-      to="/admin/resumo/listar"
-      aria-label="Resumo da pat"
-      title="Resumo da pat"
-      clickable
-      tabindex="0"
-      active-class="active-link-pat"
-    >
+    <q-item to="/admin/dashboard/listar" aria-label="Resumo da pat" title="Resumo da pat" clickable tabindex="0"
+      active-class="active-link-pat">
       <q-item-section>
-        <q-item-label>Resumo</q-item-label>
+        <q-item-label>DashBoard</q-item-label>
       </q-item-section>
     </q-item>
-
-    <q-item
-      v-for="(link, i) in linksAdmin"
-      :key="`admin-${i}`"
-      :to="`/admin/${link.slug}/listar`"
-      :aria-label="`IR: ${link.label}`"
-      :title="`IR: ${link.label}`"
-      clickable
-      tabindex="0"
-      active-class="active-link-pat"
-    >
+    <ReportsMenu></ReportsMenu>
+    <q-item v-for="(link, i) in linksAdmin" :key="`admin-${i}`" :to="`/admin/${link.slug}/listar`"
+      :aria-label="`IR: ${link.label}`" :title="`IR: ${link.label}`" clickable tabindex="0"
+      active-class="active-link-pat">
       <q-item-section>
         <q-item-label>{{ link.label }}</q-item-label>
       </q-item-section>
@@ -55,7 +41,7 @@ export default {
   computed: {
     ...mapState(["linksAdmin", "isLogged"]),
   },
-  mounted() {
+  mounted () {
     this.getLinksAdmin();
   },
   methods: {

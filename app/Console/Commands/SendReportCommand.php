@@ -47,15 +47,11 @@ class SendReportCommand extends Command
     {
         //$carbon = Carbon::now();
 
-        //dd($carbon->year);
-
         $request = new Request([
             'limit' => 100,
         ]);
 
         $relatorios = new ReportPat($request);
-
-        //dd($relatorios->postsPerMonth());
 
         $pdf = PDF::loadView(
             'relatorios.pdf-tipo-conteudo-x-mes',
@@ -91,8 +87,6 @@ class SendReportCommand extends Command
             ]
         );
         */
-
-        //dd($analyticsData);
 
         $this->info('The command was successful!');
     }

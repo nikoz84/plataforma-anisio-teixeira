@@ -6,9 +6,9 @@
     <div class="separatriz-6"></div>
     <div class="row justify-center q-py-lg q-gutter-lg">
       Assista a lista de reprodução
-      <router-link :to="{ path: '/praticas-inspiradoras' }"
-        >Visitar</router-link
-      >
+      <q-btn :to="{ path: '/praticas-inspiradoras' }">
+        Visitar
+      </q-btn>
     </div>
   </section>
 </template>

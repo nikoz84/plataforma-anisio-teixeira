@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Canal;
+use Illuminate\Support\Facades\Http;
 
 class ColaborativusService
 {
@@ -18,12 +19,12 @@ class ColaborativusService
     {
         $this->canal = Canal::find(8);
 
-        $this->api = $this->canal->options['back_url'].self::URL_SERVICE;
+        $this->api = $this->canal->options['back_url'] . self::URL_SERVICE;
     }
 
     public function findCourses()
     {
-        $response = Curl::to($this->api)
+        $response = Http::to($this->api)
             ->withData([
                 'moodlewsrestformat' => 'json',
                 'wstoken' => $this->canal->token,
@@ -44,7 +45,7 @@ class ColaborativusService
             ]);
         }
 
-        dd($courses);
+        //dd($courses);
 
         return $courses;
     }
@@ -55,11 +56,11 @@ class ColaborativusService
         $base64 = '';
         $type = pathinfo($file, PATHINFO_EXTENSION);
         if (pathinfo($file, PATHINFO_BASENAME) == 'destaque-home-plataforma.jpg') {
-            $data = file_get_contents($url.'?token='.$this->canal->token);
+            $data = file_get_contents($url . '?token=' . $this->canal->token);
         }
 
         if ($data) {
-            $base64 = 'data:image/'.$type.';base64,'.base64_encode($data);
+            $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
         }
 
         return $base64;
@@ -73,14 +74,14 @@ class ColaborativusService
      */
     public function findCoursePerId($course_id)
     {
-        $response = Curl::to($this->api)
+        $response = Http::to($this->api)
             ->withData([
                 'moodlewsrestformat' => 'json',
                 'wstoken' => $this->canal->token,
                 'wsfunction' => 'core_course_get_courses',
                 'options[ids][0]=' => $course_id,
             ]);
-        dd($response);
+        //dd($response);
         //->asJsonResponse()
         //->get();
 
@@ -96,7 +97,7 @@ class ColaborativusService
     public function getCategories($is_object = false)
     {
         $categories = '&wsfunction=core_course_get_categories';
-        $request = file_get_contents($this->api.$categories);
+        $request = file_get_contents($this->api . $categories);
         $categories_api = json_decode($request, $is_object);
 
         return $categories_api;
@@ -119,6 +120,11 @@ class ColaborativusService
         }
 
         return $coursesById;
+    }
+
+    public function getCourses()
+    {
+        //
     }
 
     /**

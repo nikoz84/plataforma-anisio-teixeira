@@ -114,7 +114,7 @@ class Analytics
     {
         $sql = "WITH data AS (
                     SELECT id, created_at, canal_id,
-                      (SELECT upper(name) FROM canais WHERE id = canal_id) AS name
+                    (SELECT upper(name) FROM canais WHERE id = canal_id) AS name
                     FROM conteudos
                     WHERE created_at BETWEEN ? AND ?
                 ) SELECT to_char(created_at,'TMMONTH') AS month,
@@ -153,36 +153,35 @@ class Analytics
         return DB::select($sql);
     }
 
-    public function TotalConteudosAcessadosUltimostresMeses()
+    public function TotalConteudosAcessadosUltimosTresMeses()
     {
-        $sql = "SELECT id, title as name, created_at::DATE as data,
-         sum(qt_access) as total,
-         CASE WHEN EXTRACT(MONTH from created_at) = 1 THEN
-          'Janeiro'
-       WHEN EXTRACT(MONTH from created_at) = 2 THEN
-          'Fevereiro'
-       WHEN EXTRACT(MONTH from created_at) = 3 THEN
-          'Março'
-       WHEN EXTRACT(MONTH from created_at) = 4 THEN
-          'Abril'
-       WHEN EXTRACT(MONTH from created_at) = 5 THEN
-          'Maio'
-       WHEN EXTRACT(MONTH from created_at) = 6 THEN
-          'Junho'
-       WHEN EXTRACT(MONTH from created_at) = 7 THEN
-          'Julho'
-       WHEN EXTRACT(MONTH from created_at) = 8 THEN
-          'Agosto'
-       WHEN EXTRACT(MONTH from created_at) = 9 THEN
-          'Setembro'
-       WHEN EXTRACT(MONTH from created_at) = 10 THEN
-          'Outubro'
-       WHEN EXTRACT(MONTH from created_at) = 11 THEN
-          'Novembro'
-       WHEN EXTRACT(MONTH from created_at)= 12 THEN
-       'Dezembro'
+        $sql = "SELECT id, title as name, created_at::DATE as data, sum(qt_access) as total,
+        CASE WHEN EXTRACT(MONTH from created_at) = 1 THEN
+            'Janeiro'
+        WHEN EXTRACT(MONTH from created_at) = 2 THEN
+            'Fevereiro'
+        WHEN EXTRACT(MONTH from created_at) = 3 THEN
+            'Março'
+        WHEN EXTRACT(MONTH from created_at) = 4 THEN
+            'Abril'
+        WHEN EXTRACT(MONTH from created_at) = 5 THEN
+            'Maio'
+        WHEN EXTRACT(MONTH from created_at) = 6 THEN
+            'Junho'
+        WHEN EXTRACT(MONTH from created_at) = 7 THEN
+            'Julho'
+        WHEN EXTRACT(MONTH from created_at) = 8 THEN
+            'Agosto'
+        WHEN EXTRACT(MONTH from created_at) = 9 THEN
+            'Setembro'
+        WHEN EXTRACT(MONTH from created_at) = 10 THEN
+            'Outubro'
+        WHEN EXTRACT(MONTH from created_at) = 11 THEN
+            'Novembro'
+        WHEN EXTRACT(MONTH from created_at)= 12 THEN
+        'Dezembro'
         END AS month from conteudos
-        WHERE created_at between '?' and '?' GROUP BY MONTH, data, id, title ORDER BY TOTAL DESC LIMIT 10";
+        WHERE created_at between '01-01-2020' and '01-04-2020' GROUP BY MONTH, data, id, title ORDER BY TOTAL DESC LIMIT 10";
 
         return DB::select($sql, [$this->data_inicio, $this->data_fim]);
     }
@@ -211,29 +210,29 @@ class Analytics
         CASE WHEN action = 'sugerencia' THEN 'sugestao' ELSE action END as name,
         CASE WHEN EXTRACT(MONTH from created_at) = 1 THEN
           'Janeiro'
-       WHEN EXTRACT(MONTH from created_at) = 2 THEN
-          'Fevereiro'
-       WHEN EXTRACT(MONTH from created_at) = 3 THEN
-          'Março'
-       WHEN EXTRACT(MONTH from created_at) = 4 THEN
-          'Abril'
-       WHEN EXTRACT(MONTH from created_at) = 5 THEN
-          'Maio'
-       WHEN EXTRACT(MONTH from created_at) = 6 THEN
-          'Junho'
-       WHEN EXTRACT(MONTH from created_at) = 7 THEN
-          'Julho'
-       WHEN EXTRACT(MONTH from created_at) = 8 THEN
-          'Agosto'
-       WHEN EXTRACT(MONTH from created_at) = 9 THEN
-          'Setembro'
-       WHEN EXTRACT(MONTH from created_at) = 10 THEN
-          'Outubro'
-       WHEN EXTRACT(MONTH from created_at) = 11 THEN
-          'Novembro'
-       WHEN EXTRACT(MONTH from created_at)= 12 THEN
-       'Dezembro'
-        END AS month
+        WHEN EXTRACT(MONTH from created_at) = 2 THEN
+            'Fevereiro'
+        WHEN EXTRACT(MONTH from created_at) = 3 THEN
+            'Março'
+        WHEN EXTRACT(MONTH from created_at) = 4 THEN
+            'Abril'
+        WHEN EXTRACT(MONTH from created_at) = 5 THEN
+            'Maio'
+        WHEN EXTRACT(MONTH from created_at) = 6 THEN
+            'Junho'
+        WHEN EXTRACT(MONTH from created_at) = 7 THEN
+            'Julho'
+        WHEN EXTRACT(MONTH from created_at) = 8 THEN
+            'Agosto'
+        WHEN EXTRACT(MONTH from created_at) = 9 THEN
+            'Setembro'
+        WHEN EXTRACT(MONTH from created_at) = 10 THEN
+            'Outubro'
+        WHEN EXTRACT(MONTH from created_at) = 11 THEN
+            'Novembro'
+        WHEN EXTRACT(MONTH from created_at)= 12 THEN
+        'Dezembro'
+            END AS month
         FROM contatos
         where created_at between '?' and '?'
         group by EXTRACT(MONTH from created_at), action
@@ -356,7 +355,7 @@ class Analytics
     public function getSeries($data, $title = '')
     {
         $collect = collect($data);
-        if (! $collect->contains('month')) {
+        if (!$collect->contains('month')) {
             return [
                 'title' => $title,
                 'render' => $this->render_graph,
