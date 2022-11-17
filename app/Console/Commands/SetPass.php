@@ -38,7 +38,7 @@ class SetPass extends Command
     public function handle()
     {
         $emails = [
-            'nicolas.hernandez@educacao.ba.gov.br'
+            'email'
         ];
 
         foreach ($emails as $email) {
