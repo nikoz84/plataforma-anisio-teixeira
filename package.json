@@ -40,7 +40,7 @@
     "apexcharts": "^3.30.0",
     "axios": "^0.23.0",
     "fastclick": "^1.0.6",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "number-shortener": "^1.0.1",
     "quasar": "^1.16.0",
     "vue": "^2.7.8",
