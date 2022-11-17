@@ -3,32 +3,8 @@
         <q-card-section v-if="!isDashboard">
             <div class="text-dark text-h6">Filtros</div>
             <div class="row q-gutter-md">
-                <q-input filled dense v-model="data" mask="" :rules="['start']" clearable>
-                    <template v-slot:append>
-                        <q-icon name="event" class="cursor-pointer">
-                            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                                <q-date v-model="start">
-                                    <div class="row items-center justify-end">
-                                        <q-btn v-close-popup label="Close" color="primary" flat />
-                                    </div>
-                                </q-date>
-                            </q-popup-proxy>
-                        </q-icon>
-                    </template>
-                </q-input>
-                <q-input filled dense v-model="fim" mask="" :rules="['end']" clearable>
-                    <template v-slot:append>
-                        <q-icon name="event" class="cursor-pointer">
-                            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                                <q-date v-model="end">
-                                    <div class="row items-center justify-end">
-                                        <q-btn v-close-popup label="Close" color="primary" flat />
-                                    </div>
-                                </q-date>
-                            </q-popup-proxy>
-                        </q-icon>
-                    </template>
-                </q-input>
+                <q-input v-model="start" filled type="date" hint="Native date" clearable />
+                <q-input v-model="end" filled type="date" hint="Native date" clearable />
                 <q-select class="col" dense v-model="ordenarPor" label-color="primary" :options="filtroOrdenarPor"
                     option-value="id" option-label="nome" stack-label emit-value map-options label="Ordenar por"
                     clearable />
