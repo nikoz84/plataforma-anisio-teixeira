@@ -15,11 +15,23 @@ class DashboardData
 
     public static function conteudosPorAno()
     {
-        return DB::table('conteudos')->selectRaw('extract(year from conteudos.created_at) as ano, COUNT(*) as total')
+        return DB::table('conteudos')
+            ->selectRaw('extract(year from conteudos.created_at) as ano, COUNT(*) as total')
             ->groupByRaw('extract(year from conteudos.created_at)')
             ->orderBy('total', 'DESC')
             ->get();
     }
+
+
+    public static function aplicativosMaisVisualizados()
+    {
+        return DB::table('aplicativos')
+            ->select(['name', 'options->qt_access as qt_access'])
+            ->limit(10)
+            ->orderBy('options->qt_access', 'DESC')
+            ->get();
+    }
+
 
     public static function catalogacaoPorCanal()
     {
@@ -66,14 +78,6 @@ class DashboardData
     }
 
 
-    public static function aplicativosMaisVisualizados()
-    {
-        return DB::table('aplicativos')
-            ->select(['name', 'options->qt_access as qt_access'])
-            ->limit(10)
-            ->orderBy('options->qt_access', 'DESC')
-            ->get();
-    }
 
 
     public static function tiposDeMidia()
@@ -109,15 +113,15 @@ class DashboardData
     public static function getCards()
     {
         return collect([
-            ['id' => 'conteudos-por-ano', 'titulo' => 'Conteúdo por ano'],
-            ['id' => 'catalogacao-por-canal', 'titulo' => 'Catalogação por canal'],
-            ['id' => 'catalogacao-mensal-por-usuario', 'titulo' => 'Catalogação mensal por usuário'],
-            ['id' => 'catalogacao-total-mensal', 'titulo' => 'Catalogação total mensal'],
-            ['id' => 'conteudos-mais-baixados', 'titulo' => 'Conteúdo mais baixado'],
-            ['id' => 'conteudos-mais-acessados', 'titulo' => 'Conteúdo mais acessado'],
-            ['id' => 'tags-mais-procuradas', 'titulo' => 'Palavra-chave mais procurada'],
-            ['id' => 'aplicativos-mais-visualizados', 'titulo' => 'Aplicativo mais vizualizados'],
-            ['id' => 'tipos-de-midia', 'titulo' => 'Tipo de mídia'],
+            ['id' => 'conteudos-por-ano', 'titulo' => 'Conteúdo por ano', 'componente' => 'ConteudosPorAno'],
+            ['id' => 'aplicativos-mais-visualizados', 'titulo' => 'Aplicativos mais visualizados', 'componente' => 'AplicativosMaisVisualizados'],
+            ['id' => 'catalogacao-por-canal', 'titulo' => 'Catalogação por canal', 'componente' => 'CatalogacaoPorCanal'],
+            ['id' => 'catalogacao-mensal-por-usuario', 'titulo' => 'Catalogação mensal por usuário', 'componente' => 'CatalogacaoMensalPorUsuario'],
+            ['id' => 'catalogacao-total-mensal', 'titulo' => 'Catalogação total mensal', 'componente' => 'CatalogacaoTotalMensal'],
+            ['id' => 'conteudos-mais-baixados', 'titulo' => 'Conteúdo mais baixado', 'componente' => 'ConteudoMaisBaixados'],
+            ['id' => 'conteudos-mais-acessados', 'titulo' => 'Conteúdo mais acessado', 'componente' => 'ConteudosMaisAcessados'],
+            ['id' => 'tags-mais-procuradas', 'titulo' => 'Palavra-chave mais procurada', 'componente' => 'TagsMaisProcuaradas'],
+            ['id' => 'tipos-de-midia', 'titulo' => 'Tipo de mídia', 'componente' => 'TiposDeMidia'],
         ]);
     }
 }

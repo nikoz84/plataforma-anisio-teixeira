@@ -1,42 +1,34 @@
 <template>
-  <div class="q-pa-lg">
-    <section>
-      <q-card>
-        <q-separator />
-        <q-card-section>
-          <div class="text-dark text-h6">Filtros</div>
-        </q-card-section>
-        <q-table
-          v-if="render"
-          title="Conteúdos"
-          :data="dataTable"
-          :columns="columns"
-          color="primary"
-          row-key="name"
-          :pagination="{ rowsPerPage: 20 }"
-        >
-          <template v-slot:top-right>
-            <q-btn
-              color="primary"
-              icon-right="archive"
-              label="Export to csv"
-              no-caps
-              @click="exportToCsv"
-            />
-          </template>
-        </q-table>
-      </q-card>
-    </section>
-    <q-separator />
-    <q-card-section v-if="render">
-      <VueApexCharts
-        height="450"
-        type="bar"
-        :options="chartOptions"
-        :series="mapSeries"
-      />
+  <q-card>
+    <q-card-section v-if="!isDashboard">
+      <div class="text-dark text-h6">Filtros</div>
+      <div class="q-gutter-md row items-start">
+        <div style="min-width: 250px; max-width: 200px">
+          <q-select v-model="anoMultiple" label-color="primary" :options="MapOptionsAnos" stack-label
+            label="Filtrar por anos" />
+        </div>
+        <div style="min-width: 150px; max-width: 200px">
+          <q-btn color="primary" label="Pesquisar" size="md" @click='pesquisarFiltros()' />
+        </div>
+      </div>
     </q-card-section>
-  </div>
+    <q-card-section v-if="!isDashboard">
+      <q-table title="Conteúdos" :data="dataTable" :columns="columns" color="primary" row-key="name"
+        :pagination="{ rowsPerPage: 20 }">
+        <template v-slot:top-right>
+          <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps @click="exportToCsv" />
+        </template>
+      </q-table>
+    </q-card-section>
+    <q-card-section v-if="render">
+      <VueApexCharts height="450" :options="chartOptions" :series="mapSeries" />
+    </q-card-section>
+    <q-card-actions>
+      <q-btn color="primary" class="full-width" :to="buttonRedirect.url" size="sm">
+        {{ buttonRedirect.label }}
+      </q-btn>
+    </q-card-actions>
+  </q-card>
 </template>
 
 <script>
@@ -48,15 +40,16 @@ export default {
   components: {
     VueApexCharts,
   },
-  data() {
+  props: ['isDashboard'],
+  data () {
     return {
+      MapOptionsAnos: [],
+      mapOptionsMes: [],
+      anoMultiple: null,
+      mesMultiple: null,
       columns: [
         {
-          name: "ano",
-          align: "center",
-          label: "Ano",
-          field: "ano",
-          sortable: true,
+          name: "ano", align: "left", label: "Ano", field: "ano", sortable: true,
         },
         { name: "total", label: "Total", field: "total" },
       ],
@@ -70,14 +63,28 @@ export default {
           height: 430,
           width: "100%",
           type: "bar",
+          animations: {
+            enabled: true,
+            easing: 'easeinout',
+            speed: 800,
+            animateGradually: {
+              enabled: true,
+              delay: 200
+            },
+            dynamicAnimation: {
+              enabled: true,
+              speed: 350
+            }
+          }
         },
         title: {
           text: "Conteúdos por ano",
-          align: "center",
+          align: "left",
+          margin: 55,
         },
         plotOptions: {
           bar: {
-            horizontal: false,
+            horizontal: true,
           },
         },
         dataLabels: {
@@ -90,14 +97,23 @@ export default {
       },
     };
   },
-  created() {
+  computed: {
+    buttonRedirect () {
+      return this.isDashboard ?
+        { label: 'Ver relatório completo', url: '/admin/dashboard/conteudos-por-ano' } :
+        { label: 'Voltar', url: '/admin/dashboard/listar' }
+    }
+  },
+  created () {
+    console.log(this.disableTable)
     this.getDataTable();
   },
   methods: {
-    exportToCsv() {
+    exportToCsv () {
       exportTable(this.dataTable, this.columns);
     },
-    async getDataTable() {
+
+    async getDataTable () {
       this.$q.loading.show();
       const { data } = await axios.get(`/dashboard/conteudos-por-ano`);
       if (data.success) {
@@ -118,11 +134,16 @@ export default {
             data: data.metadata.map((item) => item.total),
           },
         ];
-        // renderiza
-        this.render = data.success;
+
+        this.MapOptionsAnos = data.metadata.map((item) => item.ano),
+          // this.MapOptionsMes = data.metadata.map((item) => mes),
+          // renderiza
+          this.render = data.success;
       }
       this.$q.loading.hide();
     },
   },
 };
 </script>
+
+

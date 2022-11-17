@@ -1,47 +1,38 @@
 <template>
-    <div>
-        <q-section>
-            <q-card>
-                <q-separator />
-                <q-card-section>
-                    <div class="text-dark text-h6">Filtros</div>
-                    <div class="q-gutter-md row items-start">
-                        <div style="min-width: 250px; max-width: 300px">
-                            <q-select v-model="mesMultiple" multiple label-color="primary" :options="meses" use-chips
-                                stack-label label="Filtrar por meses" />
-                        </div>
-                        <div style="min-width: 250px; max-width: 300px">
-                            <q-select v-model="anoMultiple" multiple label-color="primary" :options="anos" use-chips
-                                stack-label label="Filtrar por anos" />
-                        </div>
-                        <div style="min-width: 250px; max-width: 300px">
-                            <q-select v-model="temaMultiple" multiple label-color="primary" :options="temas" use-chips
-                                stack-label label="Tema ou Disciplina" />
-                        </div>
-                        <div style="min-width: 250px; max-width: 300px">
-                            <q-select v-model="tipoConteudoMultiple" multiple label-color="primary"
-                                :options="tipoConteudo" use-chips stack-label label="Tipo de conteúdo" />
-                        </div>
-                        <div style="min-width: 250px; max-width: 300px">
-                            <q-select v-model="ordenarMultiple" label-color="primary" :options="ordenar" use-chips
-                                stack-label label="Ordenar por:" />
-                        </div>
-                    </div>
-                </q-card-section>
-                <q-table title="Tipos De Mídia" :data="data" :columns="columns" color="primary" row-key="name">
-                    <template v-slot:top-right>
-                        <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps
-                            @click="exportTable" />
-                    </template>
-                </q-table>
-            </q-card>
-        </q-section>
-        <q-separator />
-        <q-card-section>
-            <VueApexCharts height="450" v-if="render" type="bar" :options="chartOptions" :series="series" />
-
+    <q-card>
+        <q-card-section v-if="!isDashboard">
+            <div class="text-dark text-h6">Filtros</div>
+            <div class="q-gutter-md row items-start">
+                <div style="min-width: 150px; max-width: 200px">
+                    <q-select v-model="mesMultiple" multiple label-color="primary" :options="mapOptionsMes" use-chips
+                        stack-label label="Filtrar por meses" />
+                </div>
+                <div style="min-width: 150px; max-width: 200px">
+                    <q-select v-model="anoMultiple" multiple label-color="primary" :options="MapOptionsAnos" use-chips
+                        stack-label label="Filtrar por anos" />
+                </div>
+                <div style="min-width: 150px; max-width: 200px">
+                    <q-btn color="primary" label="Pesquisar" size="md" @click='pesquisarFiltros()' />
+                </div>
+            </div>
         </q-card-section>
-    </div>
+        <q-card-section v-if="!isDashboard">
+            <q-table title="Conteúdos" :data="dataTable" :columns="columns" color="primary" row-key="name"
+                :pagination="{ rowsPerPage: 20 }">
+                <template v-slot:top-right>
+                    <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps @click="exportToCsv" />
+                </template>
+            </q-table>
+        </q-card-section>
+        <q-card-section v-if="render">
+            <VueApexCharts height="450" :options="chartOptions" :series="mapSeries" />
+        </q-card-section>
+        <q-card-actions>
+            <q-btn color="primary" class="full-width" :to="buttonRedirect.url" size="sm">
+                {{ buttonRedirect.label }}
+            </q-btn>
+        </q-card-actions>
+    </q-card>
 </template>
 
 <script>
@@ -52,54 +43,24 @@ export default {
     components: {
         VueApexCharts
     },
+    props: ['isDashboard'],
     data () {
         return {
             columns: [
 
-                { name: 'Titulo', align: 'center', label: 'Títulos', field: 'titulos' },
-                { name: 'Descricao', label: 'Descrição', field: 'descricao' },
-                { name: 'Author', label: 'Autor', field: 'autor' },
-                { name: 'Q.Downloads', label: 'Q.Downloads', field: 'qt_downloads' },
-                { name: 'Qt.Acessos', label: 'Qt.Acessos', field: 'qt_access' },
-                { name: 'Dt.Criacao', label: 'Dt.Criação', field: 'created_at' }
+                { name: 'Nome', align: 'center', label: 'Nome', field: 'name' },
+                { name: 'Quantidade', label: 'Quantidade', field: 'total' },
+
 
             ],
 
-            series: [{ name: "Quantidade", data: [] }],
+            mapSeries: [],
+            dataTable: [],
             mesMultiple: null,
             anoMultiple: null,
-            temaMultiple: null,
-            tipoConteudoMultiple: null,
-            ordenarMultiple: null,
-            meses: [
-                "Janeiro",
-                "Fevereiro",
-                "Março",
-                "Abril",
-                "Maio",
-                "Junho",
-                "Julho",
-                "Agosto",
-                "Setembro",
-                "Outubro",
-                "Novembro",
-                "Dezembro",
-            ],
-            anos: ["2022", "2021", "2020", "2019", "2018"],
-            temas: ["Matemática", "Física", "Química", "Sexualidade"],
-            tipoConteudo: [
-                "Videos",
-                "Apresentações",
-                "Áudios",
-                "Aplicativos",
-                "Games",
-            ],
-            ordenar: [
-                "Mais baixados",
-                "Mais visualizados",
-                "Mais acessados",
-                "Catalogado por usuário",
-            ],
+            render: false,
+
+
             chartOptions: {
                 chart: {
                     id: "vuechart-teste",
@@ -108,12 +69,13 @@ export default {
                     type: "bar",
                 },
                 title: {
-                    text: "hola",
-                    align: "center",
+                    text: "Tipos de mídia",
+                    align: "left",
+                    margin: 55,
                 },
                 plotOptions: {
                     bar: {
-                        horizontal: true,
+                        horizontal: false,
                     },
                 },
                 dataLabels: {
@@ -126,14 +88,50 @@ export default {
 
         }
     },
+    computed: {
+        buttonRedirect () {
+            return this.isDashboard ?
+                {
+                    label: 'Ver relatório completo', url: '/admin/dashboard/tipos-de-media'
+                } :
+                { label: 'Voltar', url: '/admin/dashboard/listar' }
+        }
+    },
     created () {
-        this.getListarMidia();
+        console.log(this.disableTable)
+        this.getDataTable();
     },
     methods: {
+        exportToCsv () {
+            exportTable(this.dataTable, this.columns);
+        },
 
-        getListarMidia () {
-            console.log('Cheguei aqui')
-        }
+        async getDataTable () {
+            this.$q.loading.show();
+            const { data } = await axios.get(`/dashboard/tipos-de-midia`);
+            if (data.success) {
+                this.dataTable = data.metadata;
+                // define as as cetegorias com o spread operator (...)
+                this.chartOptions = {
+                    ...this.chartOptions,
+                    ...{
+                        xaxis: {
+                            categories: data.metadata.map((item) => item.name),
+                        },
+                    },
+                };
+                // define as series
+                this.mapSeries = [
+                    {
+                        name: "Quantidade",
+                        data: data.metadata.map((item) => item.total),
+                    },
+                ];
+                // renderiza
+                this.render = data.success;
+            }
+            this.$q.loading.hide();
+        },
     },
 }
 </script>
