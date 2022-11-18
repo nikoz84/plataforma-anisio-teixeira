@@ -10,7 +10,7 @@
                 <q-select class="col" dense v-model="ordenarPor" label-color="primary" :options="filtroOrdenarPor"
                     option-value="id" option-label="nome" stack-label emit-value map-options label="Ordenar por" />
                 <q-btn class="col" color="primary" label="Pesquisar" @click="getDataTable" />
-                <q-btn class="col" color="secondary" :to="buttonRedirect.url">
+                <q-btn class="col" color="negative" :to="buttonRedirect.url">
                     {{ buttonRedirect.label }}
                 </q-btn>
 
@@ -154,6 +154,7 @@ export default {
                     ...this.chartOptions,
                     ...{
                         xaxis: {
+
                             categories: data.metadata.map((item) => item.title),
                         },
                     },
@@ -161,7 +162,7 @@ export default {
                 // define as series
                 this.mapSeries = [
                     {
-                        name: "Download",
+                        name: "Quantidade de Download",
                         data: data.metadata.map((item) => item.qt_downloads),
                     },
                 ];
