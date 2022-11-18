@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use App\Services\DashboardData;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Services\DashboardFiltros;
 
 class DashboardController extends ApiController
 {
@@ -25,16 +25,11 @@ class DashboardController extends ApiController
     public function getFiltros(Request $request, $id)
     {
         return $this->successResponse([
-            'anos' => DashboardData::setRequest($request)->filtroAnos(),
-            'ordenarPor' => DashboardData::filtroOrdenarPor(),
-            'mes' => DashboardData::setRequest($request)->filtroMes(),
-            'aplicativos' => DashboardData::setRequest($request)->filtrosAplicativos(),
-            'canal' => DashboardData::setRequest($request)->filtrosCatalogacaoPorCanal(),
-            'baixados' => DashboardData::setRequest($request)->filtrosMaisBaixados(),
-            'acessados' => DashboardData::setRequest($request)->filtrosMaisAcessados(),
-            'maisProcuradas' => DashboardData::setRequest($request)->filtrosMaisProcuradas(),
-            'midias' => DashboardData::setRequest($request)->filtrosMidia(),
-            'usuarios' => DashboardData::setRequest($request)->filtrosPorUsuario()
+            'anos' => DashboardFiltros::filtroAnos(),
+            'ordenarPor' => DashboardFiltros::filtroOrdenarPor(),
+            'meses' => DashboardFiltros::filtroMeses(),
+            'usuarios' => DashboardFiltros::filtroUsuario(),
+            'titulo' => DashboardFiltros::filtroTitulo(),
         ]);
     }
 }
