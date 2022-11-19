@@ -299,7 +299,7 @@ Route::group(
         Route::get('/resumo', [HomeController::class, 'getAnalytics'])->name('catalogacao.blog.e.plataforma');
         Route::get('/dashboard', [DashboardController::class, 'getCards'])->name('cards.dashboard');
         Route::get('/dashboard/{id}', [DashboardController::class, 'getById'])->name('data.x.id');
-
+        Route::get('/dashboard/filtros/{id}', [DashboardController::class, 'getFiltros'])->name('filtros');
 
         /** RELATÓRIOS */
         Route::group(['prefix' => 'relatorio', 'as' => 'relatorio.'], function () {

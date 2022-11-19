@@ -2,18 +2,20 @@
   <q-card>
     <q-card-section v-if="!isDashboard">
       <div class="text-dark text-h6">Filtros</div>
-      <div class="q-gutter-md row items-start">
-        <div style="min-width: 250px; max-width: 200px">
-          <q-select v-model="anoMultiple" label-color="primary" :options="MapOptionsAnos" stack-label
-            label="Filtrar por anos" />
-        </div>
-        <div style="min-width: 150px; max-width: 200px">
-          <q-btn color="primary" label="Pesquisar" size="md" @click='pesquisarFiltros()' />
-        </div>
+      <div class="row q-gutter-md">
+        <q-select class="col" dense v-model="ano" label-color="primary" :options="filtroAnos"
+          label="Filtrar por anos" />
+        <q-select class="col" dense v-model="ordenarPor" label-color="primary" :options="filtroOrdenarPor"
+          option-value="id" option-label="nome" stack-label emit-value map-options label="Ordenar por" />
+        <q-btn class="col" color="primary" label="Pesquisar" @click="getDataTable" />
+        <q-btn class="col" color="primary" :to="buttonRedirect.url">
+          {{ buttonRedirect.label }}
+        </q-btn>
+
       </div>
     </q-card-section>
     <q-card-section v-if="!isDashboard">
-      <q-table title="Conteúdos" :data="dataTable" :columns="columns" color="primary" row-key="name"
+      <q-table v-if="render" title="Conteúdos" :data="dataTable" :columns="columns" color="primary" row-key="name"
         :pagination="{ rowsPerPage: 20 }">
         <template v-slot:top-right>
           <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps @click="exportToCsv" />
@@ -23,7 +25,7 @@
     <q-card-section v-if="render">
       <VueApexCharts height="450" :options="chartOptions" :series="mapSeries" />
     </q-card-section>
-    <q-card-actions>
+    <q-card-actions v-if="isDashboard">
       <q-btn color="primary" class="full-width" :to="buttonRedirect.url" size="sm">
         {{ buttonRedirect.label }}
       </q-btn>
@@ -43,10 +45,10 @@ export default {
   props: ['isDashboard'],
   data () {
     return {
-      MapOptionsAnos: [],
-      mapOptionsMes: [],
-      anoMultiple: null,
-      mesMultiple: null,
+      filtroAnos: [],
+      filtroOrdenarPor: [],
+      ano: null,
+      ordenarPor: null,
       columns: [
         {
           name: "ano", align: "left", label: "Ano", field: "ano", sortable: true,
@@ -107,18 +109,32 @@ export default {
   created () {
     console.log(this.disableTable)
     this.getDataTable();
+    this.getFiltros();
   },
+
+
   methods: {
     exportToCsv () {
       exportTable(this.dataTable, this.columns);
     },
 
     async getDataTable () {
+      this.render = false;
       this.$q.loading.show();
-      const { data } = await axios.get(`/dashboard/conteudos-por-ano`);
+      const { data } = await axios.get(`/dashboard/conteudos-por-ano`, {
+        params: {
+          ano: this.ano,
+          ordenarPor: this.ordenarPor
+        },
+        method: 'get',
+      })
+      // console.log(data)
+      this.prepararDados(data)
+      this.$q.loading.hide();
+    },
+    async prepararDados (data) {
       if (data.success) {
         this.dataTable = data.metadata;
-        // define as as cetegorias com o spread operator (...)
         this.chartOptions = {
           ...this.chartOptions,
           ...{
@@ -127,7 +143,7 @@ export default {
             },
           },
         };
-        // define as series
+
         this.mapSeries = [
           {
             name: "Total",
@@ -135,13 +151,19 @@ export default {
           },
         ];
 
-        this.MapOptionsAnos = data.metadata.map((item) => item.ano),
-          // this.MapOptionsMes = data.metadata.map((item) => mes),
-          // renderiza
-          this.render = data.success;
       }
-      this.$q.loading.hide();
+      this.render = true;
+
     },
+    async getFiltros () {
+
+      const { data } = await axios.get(`/dashboard/filtros/conteudos-por-ano`);
+
+      if (data.success) {
+        this.filtroAnos = data.metadata.anos;
+        this.filtroOrdenarPor = data.metadata.ordenarPor;
+      }
+    }
   },
 };
 </script>
