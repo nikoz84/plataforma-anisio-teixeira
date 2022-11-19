@@ -107,7 +107,7 @@ export default {
         }
     },
     created () {
-        console.log(this.disableTable)
+
         this.getDataTable();
         this.getFiltros();
     },
@@ -127,7 +127,7 @@ export default {
                     ordenarPor: this.ordenarPor
                 },
             })
-            // console.log(data)
+
             this.prepararDados(data)
             this.$q.loading.hide();
         },
