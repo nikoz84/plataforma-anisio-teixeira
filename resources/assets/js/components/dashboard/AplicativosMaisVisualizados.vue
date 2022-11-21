@@ -2,23 +2,21 @@
     <q-card>
         <q-card-section v-if="!isDashboard">
             <div class="text-dark text-h6">Filtros</div>
-            <div class="q-gutter-md row items-start">
-                <div style="min-width: 150px; max-width: 200px">
-                    <q-select v-model="mesMultiple" multiple label-color="primary" :options="mapOptionsMes" use-chips
-                        stack-label label="Filtrar por meses" />
-                </div>
-                <div style="min-width: 150px; max-width: 200px">
-                    <q-select v-model="anoMultiple" multiple label-color="primary" :options="MapOptionsAnos" use-chips
-                        stack-label label="Filtrar por anos" />
-                </div>
-                <div style="min-width: 150px; max-width: 200px">
-                    <q-btn color="primary" label="Pesquisar" size="md" @click='pesquisarFiltros()' />
-                </div>
+            <div class="row q-gutter-md">
+                <q-select class="col" dense v-model="ano" label-color="primary" :options="filtroAnos"
+                    label="Filtrar por anos" />
+                <q-select class="col" dense v-model="ordenarPor" label-color="primary" :options="filtroOrdenarPor"
+                    option-value="id" option-label="nome" stack-label emit-value map-options label="Ordenar por" />
+                <q-btn class="col" color="primary" label="Pesquisar" @click="getDataTable" />
+                <q-btn class="col" color="primary" :to="buttonRedirect.url">
+                    {{ buttonRedirect.label }}
+                </q-btn>
+
             </div>
         </q-card-section>
         <q-card-section v-if="!isDashboard">
-            <q-table title="Conteúdos" :data="dataTable" :columns="columns" color="primary" row-key="name"
-                :pagination="{ rowsPerPage: 20 }">
+            <q-table v-if="render" title="Aplicativos Mais Visualizados" :data="dataTable" :columns="columns"
+                color="primary" row-key="name" :pagination="{ rowsPerPage: 20 }">
                 <template v-slot:top-right>
                     <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps @click="exportToCsv" />
                 </template>
@@ -27,7 +25,7 @@
         <q-card-section v-if="render">
             <VueApexCharts height="450" :options="chartOptions" :series="mapSeries" />
         </q-card-section>
-        <q-card-actions>
+        <q-card-actions v-if="isDashboard">
             <q-btn color="primary" class="full-width" :to="buttonRedirect.url" size="sm">
                 {{ buttonRedirect.label }}
             </q-btn>
@@ -36,113 +34,107 @@
 </template>
 
 <script>
-import VueApexCharts from "vue-apexcharts";
 import { exportTable } from "@composables/ToCsv";
+import VueApexCharts from "vue-apexcharts";
 
 export default {
-    name: 'AplicativosMaisVisualizados',
+    name: "AplicativosMaisVisualizados",
     components: {
-        VueApexCharts
+        VueApexCharts,
     },
     props: ['isDashboard'],
     data () {
         return {
+            filtroAnos: [],
+            filtroOrdenarPor: [],
+            ano: null,
+            ordenarPor: null,
             columns: [
-
-                { name: 'Nome', align: 'left', label: 'Nome', field: 'name' },
-                { name: 'Quantidade', label: 'Quantidade', field: 'qt_access' }
-
+                {
+                    name: "name", align: "left", label: "Nome", field: "name", sortable: true,
+                },
+                { name: "qt_access", label: "Q.Acessos", field: "qt_access" },
             ],
-            mesMultiple: null,
-            anoMultiple: null,
             dataTable: [],
             mapSeries: [],
             render: false,
-
-            //Inicia configuração do gráfico
+            // Inicio da configuração do gráfico
             chartOptions: {
                 chart: {
+                    id: "vuechart-conteudos",
                     height: 430,
-                    type: "line",
-                    zoom: {
+                    width: "100%",
+                    type: "bar",
+                    animations: {
                         enabled: true,
-                        type: 'x',
-                        autoScaleYaxis: false,
-                        zoomedArea: {
-                            fill: {
-                                color: '#90CAF9',
-                                opacity: 0.4
-                            },
-                            stroke: {
-                                color: '#0D47A1',
-                                opacity: 0.4,
-                                width: 1
-                            }
+                        easing: 'easeinout',
+                        speed: 800,
+                        animateGradually: {
+                            enabled: true,
+                            delay: 200
+                        },
+                        dynamicAnimation: {
+                            enabled: true,
+                            speed: 350
                         }
-                    },
+                    }
                 },
                 title: {
                     text: "Aplicativos mais visualizados",
                     align: "left",
                     margin: 55,
-
                 },
                 plotOptions: {
                     bar: {
-                        horizontal: false,
-                        // horizontal: true,
-                        dataLabels: {
-                            position: 'top',
-                        },
+                        horizontal: true,
                     },
-                },//plotOptions
-
+                },
                 dataLabels: {
-                    enabled: true,
-                    offsetX: -6,
-                    style: {
-                        fontSize: '10px',
-                        colors: ['#008B8B']
-                    }
+                    enabled: false,
+                    positions: top,
                 },
                 xaxis: {
                     categories: [],
                 },
-                stroke: {
-                    show: true,
-                    width: 3,
-                    colors: ['#008B8B']
-                },
-                tooltip: {
-                    shared: true,
-                    intersect: false
-                },
             },
-        }
+        };
     },
     computed: {
         buttonRedirect () {
             return this.isDashboard ?
-                {
-                    label: 'Ver relatório completo', url: '/admin/dashboard/aplicativos-mais-visualizados'
-                } :
+                { label: 'Ver relatório completo', url: '/admin/dashboard/aplicativos-mais-visualizados' } :
                 { label: 'Voltar', url: '/admin/dashboard/listar' }
         }
     },
     created () {
+
         this.getDataTable();
+        this.getFiltros();
     },
+
+
     methods: {
         exportToCsv () {
             exportTable(this.dataTable, this.columns);
         },
 
         async getDataTable () {
+            this.render = false;
             this.$q.loading.show();
-            const { data } = await axios.get(`/dashboard/aplicativos-mais-visualizados`);
+            const { data } = await axios.get(`/dashboard/aplicativos-mais-visualizados`, {
+                params: {
+                    name: this.name,
+                    ordenarPor: this.ordenarPor
+                },
+
+            })
+
+            this.prepararDados(data)
+            this.$q.loading.hide();
+        },
+        async prepararDados (data) {
             if (data.success) {
                 this.dataTable = data.metadata;
-                // define as as cetegorias com o spread operator (...)
                 this.chartOptions = {
                     ...this.chartOptions,
                     ...{
@@ -151,21 +143,29 @@ export default {
                         },
                     },
                 };
-                // define as series
+
                 this.mapSeries = [
                     {
-                        name: "Quantidade",
+                        name: "QT.Acesso",
                         data: data.metadata.map((item) => item.qt_access),
                     },
                 ];
-                // renderiza
-                this.render = data.success;
-            }
-            this.$q.loading.hide();
-        }
-    }
-}
-</script>
-<style scoped>
 
-</style>
+            }
+            this.render = true;
+
+        },
+        async getFiltros () {
+
+            const { data } = await axios.get(`/dashboard/filtros/aplicativos-mais-visualizados`);
+
+            if (data.success) {
+                this.filtroAnos = data.metadata.anos;
+                this.filtroOrdenarPor = data.metadata.ordenarPor;
+            }
+        }
+    },
+};
+</script>
+
+

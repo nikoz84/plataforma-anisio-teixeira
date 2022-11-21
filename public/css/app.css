@@ -4032,10 +4032,7 @@ body.platform-ios:not(.native-mobile) .q-dialog__inner--top .q-select__dialog--f
   font-size: 12px;
 }
 .q-slider--editable {
-<<<<<<< HEAD
   cursor: -webkit-grab;
-=======
->>>>>>> origin/master
   cursor: grab;
 }
 .q-slider--no-value .q-slider__thumb,
