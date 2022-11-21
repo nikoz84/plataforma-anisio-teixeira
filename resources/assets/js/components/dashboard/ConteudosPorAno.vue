@@ -111,6 +111,7 @@ export default {
     this.getFiltros();
   },
 
+
   methods: {
     exportToCsv () {
       exportTable(this.dataTable, this.columns);
@@ -125,8 +126,8 @@ export default {
           ordenarPor: this.ordenarPor
         },
 
-
       })
+    
       this.prepararDados(data)
       this.$q.loading.hide();
     },

@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-use Illuminate\Cache\RateLimiting\Limit;
 
 class DashboardData
 {
@@ -31,19 +30,27 @@ class DashboardData
     }
 
 
-
     public static function aplicativosMaisVisualizados()
     {
+
+        $ordenarPor = self::$request->get('ordenarPor', 'DESC');
+        $date = self::$request->get('ano');
+
         return DB::table('aplicativos')
             ->select(['name', 'options->qt_access as qt_access'])
+            ->when($date, function ($query) use ($date) {
+                return $query->whereYear('created_at', $date);
+            })
             ->limit(10)
-            ->orderBy('options->qt_access', 'DESC')
+            ->orderBy('options->qt_access', 'DESC', $ordenarPor)
             ->get();
     }
 
 
+
     public static function catalogacaoPorCanal()
     {
+
         return DB::table('canais AS ca')
             ->select(DB::raw('ca.name, count(ca.id) AS total'))
             ->join('conteudos AS c', 'ca.id', '=', 'c.canal_id')
@@ -52,17 +59,11 @@ class DashboardData
             ->get();
     }
 
-    // Catalogação mensal total por usuario
+     
     public static function catalogacaoMensalPorUsuario()
     {
-
         $ordenarPor = self::$request->get('ordenarPor', 'DESC');
-        $usuario_id = self::$request->get('id');
-        // dd($usuario_id);
-        $mes = self::$request->get('mes');
-        $ano = self::$request->get('ano');
-
-        $limit = self::$request->get('limit');  // rows 1000 / 100 
+        $date = self::$request->get('ano');
 
         return DB::table('users as u')
             ->select(DB::raw("u.name, 
@@ -86,20 +87,23 @@ class DashboardData
             ->paginate($limit);
     }
 
-
-    // Catalogação total mensal
+      
     public static function catalogacaoTotalMensal()
     {
+        $start = self::$request->get('start');
+        $end = self::$request->get('end');
         $ordenarPor = self::$request->get('ordenarPor', 'DESC');
-        $date = self::$request->get('mes');
 
-        return DB::table('conteudos')->selectRaw('extract(month from conteudos.created_at) as mes, COUNT(*) as quantidade')
-            ->when($date, function ($query) use ($date) {
-                return $query->whereMonth('created_at', $date);
+        return DB::table('conteudos')
+            ->selectRaw("to_char(conteudos.created_at,'TMMONTH') as periodo, 
+            COUNT(*) as quantidade")
+            ->when($start && $end, function ($q) use ($start, $end) {
+                return $q->whereBetween('conteudos.created_at', [$start, $end]);
             })
-            ->groupByRaw('extract(month from conteudos.created_at)')
-            ->orderBy('mes', $ordenarPor)
-            ->get();
+
+            ->groupByRaw("to_char(conteudos.created_at,'TMMONTH')")
+            ->orderBy('quantidade', 'DESC', $ordenarPor)
+          ->get();
     }
 
 
@@ -123,15 +127,16 @@ class DashboardData
             ->get();
     }
 
+
     public static function conteudosMaisAcessados()
     {
         return DB::table('conteudos')
             ->select(['title', 'qt_access'])
-
             ->limit(10)
             ->orderBy('qt_access', 'desc')
             ->get();
     }
+
 
     public static function tagsMaisProcuradas()
     {
@@ -152,6 +157,9 @@ class DashboardData
             ->orderBy('total', 'DESC')
             ->get();
     }
+
+
+
 
 
     public static function setRequest(Request $request)

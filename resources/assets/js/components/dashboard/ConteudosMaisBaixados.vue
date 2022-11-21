@@ -50,10 +50,15 @@ export default {
     props: ['isDashboard', 'TipoPesquisa'],
     data () {
         return {
+            MapOptionsAnos: [],
+            mapOptionsMes: [],
+            anoMultiple: null,
+            mesMultiple: null,
             columns: [
                 {
                     name: "titulo",
                     align: "left",
+
                     label: "Título",
                     field: "title", format: val => val.toUpperCase().replace(/[-\\]/g, '').split(' ', 8).join(' '),
                     sortable: true,
@@ -65,6 +70,7 @@ export default {
                     label: "Downloads",
                     field: "qt_downloads"
                 },
+                { name: "qt_downloads", label: "Qt_downloads", field: "qt_downloads" },
             ],
             filtroTitulo: [],
             filtroAnos: [],
@@ -82,7 +88,7 @@ export default {
                     id: "vuechart-conteudos",
                     height: 500,
                     width: "100%",
-                    type: "line",
+                    type: "bar",
                 },
                 title: {
                     text: "Conteúdos mais baixados",
@@ -94,7 +100,6 @@ export default {
                     bar: {
                         horizontal: false,
                     },
-
                 },
 
                 dataLabels: {
@@ -104,10 +109,6 @@ export default {
                 xaxis: {
                     categories: [],
                 },
-                stroke: {
-                    curve: 'smooth',
-                },
-
             },
         };
     },
@@ -131,6 +132,7 @@ export default {
         exportToCsv () {
             exportTable(this.dataTable, this.columns);
         },
+
 
         async getDataTable () {
             this.render = false;
@@ -167,7 +169,11 @@ export default {
                     },
                 ];
 
-            }
+                this.MapOptionsQt_downloads = data.metadata.map((item) => item.title),
+                    // this.MapOptionsMes = data.metadata.map((item) => mes),
+                    // renderiza
+                    this.render = data.success;
+                    }
 
             this.render = true;
         },
@@ -186,7 +192,3 @@ export default {
     },
 };
 </script>
-<style scoped>
-
-</style>
-

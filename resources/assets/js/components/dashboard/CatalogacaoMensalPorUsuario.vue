@@ -78,14 +78,12 @@ export default {
 
             ],
 
-
             //Inicia configuração do gráfico
             chartOptions: {
                 chart: {
                     height: 430,
                     type: "bar",
                 },
-
                 plotOptions: {
                     bar: {
                         horizontal: false,
@@ -111,7 +109,6 @@ export default {
                 xaxis: {
                     categories: [],
                 },
-
                 tooltip: {
                     shared: true,
                     intersect: false
@@ -139,7 +136,6 @@ export default {
         exportToCsv () {
             exportTable(this.dataTable, this.columns);
         },
-
         async getDataTable () {
             this.render = false;
             this.$q.loading.show();
@@ -179,9 +175,7 @@ export default {
             }
             // renderiza
             this.render = true;
-
         },
-
         async getFiltros () {
             const { data } = await axios(`/dashboard/filtros/catalogacao-mensal-por-usuario`);
             console.log(data);
@@ -205,5 +199,4 @@ export default {
         }
     }
 }
-
 </script>

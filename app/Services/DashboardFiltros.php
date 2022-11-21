@@ -46,4 +46,26 @@ class DashboardFiltros
             ->whereIn('u.role_id', [1, 2, 3])
             ->get(['name', 'id']);
     }
+
+
+
+    public static function filtrosCatalogacaoPorCanal()
+    {
+
+        return DB::table('canais AS ca')
+            ->select(DB::raw('ca.name, count(ca.id) AS total'))
+            ->join('conteudos AS c', 'ca.id', '=', 'c.canal_id')
+            ->groupBy('ca.name')
+            ->orderBy('total', 'DESC')
+            ->get();
+    }
+
+    public static function filtrosAplicativos()
+    {
+        return DB::table('aplicativos')
+            ->selectRaw('extract(month from aplicativos.created_at) as mes')
+            ->groupByRaw('extract(month from aplicativos.created_at)')
+            ->orderBy('mes', "DESC")
+            ->get()->pluck('mes');
+    }
 }
