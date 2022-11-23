@@ -2,23 +2,21 @@
     <q-card>
         <q-card-section v-if="!isDashboard">
             <div class="text-dark text-h6">Filtros</div>
-            <div class="q-gutter-md row items-start">
-                <div style="min-width: 150px; max-width: 200px">
-                    <q-select v-model="mesMultiple" multiple label-color="primary" :options="mapOptionsMes" use-chips
-                        stack-label label="Filtrar por meses" />
-                </div>
-                <div style="min-width: 150px; max-width: 200px">
-                    <q-select v-model="anoMultiple" multiple label-color="primary" :options="MapOptionsAnos" use-chips
-                        stack-label label="Filtrar por anos" />
-                </div>
-                <div style="min-width: 150px; max-width: 200px">
-                    <q-btn color="primary" label="Pesquisar" size="md" @click='pesquisarFiltros()' />
-                </div>
+            <div class="row q-gutter-md">
+                <q-select class="col" dense v-model="ano" label-color="primary" :options="filtroAnos"
+                    label="Filtrar por anos" />
+                <q-select class="col" dense v-model="ordenarPor" label-color="primary" :options="filtroOrdenarPor"
+                    option-value="id" option-label="nome" stack-label emit-value map-options label="Ordenar por" />
+                <q-btn class="col" color="primary" label="Pesquisar" @click="getDataTable" />
+                <q-btn class="col" color="primary" :to="buttonRedirect.url">
+                    {{ buttonRedirect.label }}
+                </q-btn>
+
             </div>
         </q-card-section>
         <q-card-section v-if="!isDashboard">
-            <q-table title="Conteúdos" :data="dataTable" :columns="columns" color="primary" row-key="name"
-                :pagination="{ rowsPerPage: 20 }">
+            <q-table v-if="render" title="Tipos de Mídia" :data="dataTable" :columns="columns" color="primary"
+                row-key="name" :pagination="{ rowsPerPage: 20 }">
                 <template v-slot:top-right>
                     <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps @click="exportToCsv" />
                 </template>
@@ -27,7 +25,7 @@
         <q-card-section v-if="render">
             <VueApexCharts height="450" :options="chartOptions" :series="mapSeries" />
         </q-card-section>
-        <q-card-actions>
+        <q-card-actions v-if="isDashboard">
             <q-btn color="primary" class="full-width" :to="buttonRedirect.url" size="sm">
                 {{ buttonRedirect.label }}
             </q-btn>
@@ -47,27 +45,39 @@ export default {
     props: ['isDashboard'],
     data () {
         return {
+            filtroAnos: [],
+            filtroOrdenarPor: [],
+            ano: null,
+            ordenarPor: null,
             columns: [
-
-                { name: 'Nome', align: 'center', label: 'Nome', field: 'name' },
-                { name: 'Quantidade', label: 'Quantidade', field: 'total' },
-
-
+                {
+                    name: "name", align: "left", label: "Nome", field: "name", sortable: true,
+                },
+                { name: "total", label: "Total", field: "total" },
             ],
-
-            mapSeries: [],
             dataTable: [],
-            mesMultiple: null,
-            anoMultiple: null,
+            mapSeries: [],
             render: false,
-
-
+            // Inicio da configuração do gráfico
             chartOptions: {
                 chart: {
-                    id: "vuechart-tipos",
+                    id: "vuechart-conteudos",
                     height: 430,
                     width: "100%",
                     type: "bar",
+                    animations: {
+                        enabled: true,
+                        easing: 'easeinout',
+                        speed: 800,
+                        animateGradually: {
+                            enabled: true,
+                            delay: 200
+                        },
+                        dynamicAnimation: {
+                            enabled: true,
+                            speed: 350
+                        }
+                    }
                 },
                 title: {
                     text: "Tipos de mídia",
@@ -76,7 +86,7 @@ export default {
                 },
                 plotOptions: {
                     bar: {
-                        horizontal: false,
+                        horizontal: true,
                     },
                 },
                 dataLabels: {
@@ -96,29 +106,35 @@ export default {
                 { label: 'Voltar', url: '/admin/dashboard/listar' }
         }
     },
-    computed: {
-        buttonRedirect () {
-            return this.isDashboard ?
-                {
-                    label: 'Ver relatório completo', url: '/admin/dashboard/tipos-de-media'
-                } :
-                { label: 'Voltar', url: '/admin/dashboard/listar' }
-        }
-    },
     created () {
+
         this.getDataTable();
+        this.getFiltros();
     },
+
+
     methods: {
         exportToCsv () {
             exportTable(this.dataTable, this.columns);
         },
 
         async getDataTable () {
+            this.render = false;
             this.$q.loading.show();
-            const { data } = await axios.get(`/dashboard/tipos-de-midia`);
+            const { data } = await axios.get(`/dashboard/tipos-de-midia`, {
+                params: {
+                    name: this.name,
+                    ordenarPor: this.ordenarPor
+                },
+
+            })
+
+            this.prepararDados(data)
+            this.$q.loading.hide();
+        },
+        async prepararDados (data) {
             if (data.success) {
                 this.dataTable = data.metadata;
-                // define as as cetegorias com o spread operator (...)
                 this.chartOptions = {
                     ...this.chartOptions,
                     ...{
@@ -127,18 +143,29 @@ export default {
                         },
                     },
                 };
-                // define as series
+
                 this.mapSeries = [
                     {
-                        name: "Quantidade",
+                        name: "Total",
                         data: data.metadata.map((item) => item.total),
                     },
                 ];
-                // renderiza
-                this.render = data.success;
+
             }
-            this.$q.loading.hide();
+            this.render = true;
+
         },
+        async getFiltros () {
+
+            const { data } = await axios.get(`/dashboard/filtros/tipos-de-midia`);
+
+            if (data.success) {
+                this.filtroAnos = data.metadata.anos;
+                this.filtroOrdenarPor = data.metadata.ordenarPor;
+            }
+        }
     },
 };
 </script>
+
+
