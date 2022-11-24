@@ -39,6 +39,7 @@
 import { exportTable } from "@composables/ToCsv";
 import VueApexCharts from "vue-apexcharts";
 
+
 export default {
     name: "CatalogacaoTotalMensal",
     components: {

@@ -39,27 +39,26 @@
 </template>
 
 <script>
-import { exportFile } from 'quasar';
+import { exportTable } from '@composables/ToCsv';
 import VueApexCharts from "vue-apexcharts";
 
+
 export default {
-    name: 'CatalogacaoMensal',
+    name: 'ConteudosMensal',
     components: {
         VueApexCharts
     },
     data () {
         return {
             columns: [
-
                 { name: 'Titulo', align: 'center', label: 'Títulos', field: 'titulos' },
                 { name: 'Descricao', label: 'Descrição', field: 'descricao' },
                 { name: 'Author', label: 'Autor', field: 'autor' },
                 { name: 'Q.Downloads', label: 'Q.Downloads', field: 'qt_downloads' },
                 { name: 'Qt.Acessos', label: 'Qt.Acessos', field: 'qt_access' },
                 { name: 'Dt.Criacao', label: 'Dt.Criação', field: 'created_at' }
-
             ],
-
+            dataTable: [],
             series: [{ name: "Quantidade", data: [] }],
             mesMultiple: null,
             anoMultiple: null,
@@ -119,6 +118,14 @@ export default {
                 },
             },
 
+        }
+    },
+    methods: {
+        exportToCsv () {
+            exportTable(this.dataTable, this.columns)
+        },
+        getDataTable () {
+            console.log('oisio')
         }
     }
 }

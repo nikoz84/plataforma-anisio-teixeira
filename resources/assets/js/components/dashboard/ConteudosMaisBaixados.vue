@@ -47,10 +47,14 @@ export default {
     props: ['isDashboard'],
     data () {
         return {
+            MapOptionsAnos: [],
+            mapOptionsMes: [],
+            anoMultiple: null,
+            mesMultiple: null,
             columns: [
                 {
                     name: "title",
-                    align: "left",
+                    align: "center",
                     label: "Título",
                     field: "title",
                     sortable: true,
@@ -62,6 +66,7 @@ export default {
                     label: "Downloads",
                     field: "qt_downloads"
                 },
+                { name: "qt_downloads", label: "Qt_downloads", field: "qt_downloads" },
             ],
             dataTable: [],
             mapSeries: [],
@@ -72,7 +77,7 @@ export default {
                     id: "vuechart-conteudos",
                     height: 500,
                     width: "100%",
-                    type: "line",
+                    type: "bar",
                 },
                 title: {
                     text: "Conteúdos mais baixados",
@@ -84,7 +89,6 @@ export default {
                     bar: {
                         horizontal: false,
                     },
-
                 },
 
                 dataLabels: {
@@ -94,10 +98,6 @@ export default {
                 xaxis: {
                     categories: [],
                 },
-                stroke: {
-                    curve: 'smooth',
-                },
-
             },
         };
     },
@@ -112,12 +112,14 @@ export default {
         }
     },
     created () {
+        console.log(this.disableTable)
         this.getDataTable();
     },
     methods: {
         exportToCsv () {
             exportTable(this.dataTable, this.columns);
         },
+
 
         async getDataTable () {
             this.$q.loading.show();
@@ -136,19 +138,18 @@ export default {
                 // define as series
                 this.mapSeries = [
                     {
-                        name: "Download",
+                        name: "Qt.Downloads",
                         data: data.metadata.map((item) => item.qt_downloads),
                     },
                 ];
-                // renderiza
-                this.render = data.success;
+
+                this.MapOptionsQt_downloads = data.metadata.map((item) => item.title),
+                    // this.MapOptionsMes = data.metadata.map((item) => mes),
+                    // renderiza
+                    this.render = data.success;
             }
             this.$q.loading.hide();
         },
     },
 };
 </script>
-<style scoped>
-
-</style>
-

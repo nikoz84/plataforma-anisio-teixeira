@@ -36,12 +36,13 @@
 </template>
 
 <script>
+import { exportTable } from "@composables/ToCsv";
 import VueApexCharts from "vue-apexcharts";
 
 export default {
-    name: 'TiposDeMidia',
+    name: "TiposDeMidia",
     components: {
-        VueApexCharts
+        VueApexCharts,
     },
     props: ['isDashboard'],
     data () {
@@ -63,7 +64,7 @@ export default {
 
             chartOptions: {
                 chart: {
-                    id: "vuechart-teste",
+                    id: "vuechart-tipos",
                     height: 430,
                     width: "100%",
                     type: "bar",
@@ -80,12 +81,19 @@ export default {
                 },
                 dataLabels: {
                     enabled: false,
+                    positions: top,
                 },
                 xaxis: {
                     categories: [],
                 },
             },
-
+        };
+    },
+    computed: {
+        buttonRedirect () {
+            return this.isDashboard ?
+                { label: 'Ver relatório completo', url: '/admin/dashboard/tipos-de-midia' } :
+                { label: 'Voltar', url: '/admin/dashboard/listar' }
         }
     },
     computed: {
@@ -132,8 +140,5 @@ export default {
             this.$q.loading.hide();
         },
     },
-}
+};
 </script>
-<style scoped>
-
-</style>
