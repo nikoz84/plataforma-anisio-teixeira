@@ -179,19 +179,7 @@ export default {
                 this.filtroMeses = data.metadata.meses;
             }
         },
-
-        getDataTable () {
-        filtrarNome (val, update) {
-            update(() => {
-                if (val === '') {
-                    this.usuariosFiltrados = this.filtroUsuarios
-                } else {
-                    const needle = val.toLowerCase()
-                    this.usuariosFiltrados = this.filtroUsuarios.filter(v => v.name.toLowerCase().indexOf(needle) > -1)
-                }
-            })
-        }
-    }
+},
 }
 </script>
 
