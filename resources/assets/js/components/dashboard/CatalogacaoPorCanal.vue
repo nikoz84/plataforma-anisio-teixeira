@@ -3,10 +3,11 @@
         <q-card-section v-if="!isDashboard">
             <div class="text-dark text-h6">Filtros</div>
             <div class="row q-gutter-md">
-                <q-select class="col" dense v-model="ano" label-color="primary" :options="filtroAnos"
+                <q-select class="col" clearable dense v-model="ano" label-color="primary" :options="filtroAnos"
                     label="Filtrar por anos" />
-                <q-select class="col" dense v-model="ordenarPor" label-color="primary" :options="filtroOrdenarPor"
-                    option-value="id" option-label="nome" stack-label emit-value map-options label="Ordenar por" />
+                <q-select class="col" clearable dense v-model="ordenarPor" label-color="primary"
+                    :options="filtroOrdenarPor" option-value="id" option-label="nome" stack-label emit-value map-options
+                    label="Ordenar por" />
                 <q-btn class="col" color="primary" label="Pesquisar" @click="getDataTable" />
                 <q-btn class="col" color="primary" :to="buttonRedirect.url">
                     {{ buttonRedirect.label }}
