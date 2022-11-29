@@ -3,17 +3,17 @@
         <q-card-section v-if="!isDashboard">
             <div class="text-dark text-h6">Filtros</div>
             <div class="row q-gutter-md">
-                <q-input v-model="start" filled type="date" hint="Native date" clearable />
-                <q-input v-model="end" filled type="date" hint="Native date" clearable />
+                <q-input class="col" v-model="start" filled type="date" clearable />
+                <q-input class="col" v-model="end" filled type="date" clearable />
                 <q-select class="col" dense v-model="ordenarPor" label-color="primary" :options="filtroOrdenarPor"
                     option-value="id" option-label="nome" stack-label emit-value map-options label="Ordenar por"
                     clearable />
-                <div class="row q-gutter-md">
-                    <q-btn class="col" color="primary" label="Pesquisar" @click="getDataTable" />
-                    <q-btn class="col" color="secondary" :to="buttonRedirect.url">
-                        {{ buttonRedirect.label }}
-                    </q-btn>
-                </div>
+            </div>
+            <div class="row q-mt-lg q-gutter-md justify-end">
+                <q-btn class="col-2" color="primary" label="Pesquisar" @click="getDataTable" />
+                <q-btn class="col-2" color="secondary" :to="buttonRedirect.url">
+                    {{ buttonRedirect.label }}
+                </q-btn>
             </div>
         </q-card-section>
         <q-card-section v-if="!isDashboard">
