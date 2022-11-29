@@ -9,7 +9,7 @@
                     :options="filtroOrdenarPor" option-value="id" option-label="nome" stack-label emit-value map-options
                     label="Ordenar por" />
                 <q-btn class="col" color="primary" label="Pesquisar" @click="getDataTable" />
-                <q-btn class="col" color="primary" :to="buttonRedirect.url">
+                <q-btn class="col" color="secondary" :to="buttonRedirect.url">
                     {{ buttonRedirect.label }}
                 </q-btn>
 
