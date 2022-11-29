@@ -122,6 +122,7 @@ export default {
         title () {
             return `Catalogação mensal por usuário`
         }
+
     },
     created () {
         this.getDataTable();
@@ -171,7 +172,6 @@ export default {
         },
         async getFiltros () {
             const { data } = await axios(`/dashboard/filtros/catalogacao-mensal-por-usuario`);
-            console.log(data);
             if (data.success) {
                 this.filtroUsuarios = data.metadata.usuarios;
                 this.filtroOrdenarPor = data.metadata.ordenarPor;
@@ -192,4 +192,4 @@ export default {
     }
 }
 </script>
-Footer
+
