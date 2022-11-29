@@ -64,7 +64,6 @@ import {
 } from "@components/dashboard";
 import ConteudosMaisAcessados from "../components/dashboard/ConteudosMaisAcessados.vue";
 
-
 export default {
   name: "Dashboard",
   components: {

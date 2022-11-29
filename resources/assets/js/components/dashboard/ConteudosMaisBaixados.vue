@@ -45,10 +45,14 @@ export default {
     props: ['isDashboard'],
     data () {
         return {
+            MapOptionsAnos: [],
+            mapOptionsMes: [],
+            anoMultiple: null,
+            mesMultiple: null,
             columns: [
                 {
-                    name: "titulo",
-                    align: "left",
+                    name: "title",
+                    align: "center",
                     label: "Título",
                     field: "title",
                     sortable: true,
@@ -60,6 +64,7 @@ export default {
                     label: "Downloads",
                     field: "qt_downloads"
                 },
+                { name: "qt_downloads", label: "Qt_downloads", field: "qt_downloads" },
             ],
             filtroTitulo: [],
             filtroOrdenarPor: [],
@@ -74,7 +79,7 @@ export default {
                     id: "vuechart-conteudos",
                     height: 500,
                     width: "100%",
-                    type: "line",
+                    type: "bar",
                 },
                 title: {
                     text: "Conteúdos mais baixados",
@@ -86,7 +91,6 @@ export default {
                     bar: {
                         horizontal: false,
                     },
-
                 },
 
                 dataLabels: {
@@ -96,10 +100,6 @@ export default {
                 xaxis: {
                     categories: [],
                 },
-                stroke: {
-                    curve: 'smooth',
-                },
-
             },
         };
     },
@@ -122,6 +122,7 @@ export default {
         exportToCsv () {
             exportTable(this.dataTable, this.columns);
         },
+
 
         async getDataTable () {
             this.render = false;
@@ -151,11 +152,14 @@ export default {
                 // define as series
                 this.mapSeries = [
                     {
-                        name: "Download",
+                        name: "Qt.Downloads",
                         data: data.metadata.map((item) => item.qt_downloads),
                     },
                 ];
 
+                this.MapOptionsQt_downloads = data.metadata.map((item) => item.title),
+                   
+                    this.render = data.success;
             }
 
             this.render = true;
@@ -174,7 +178,3 @@ export default {
     },
 };
 </script>
-<style scoped>
-
-</style>
-
