@@ -175,7 +175,9 @@ export default {
         : { label: "Voltar", url: "/admin/dashboard/listar" };
     },
   },
+
   created() {
+
     this.getDataTable();
     this.getFiltros();
   },
@@ -193,9 +195,10 @@ export default {
           ano: this.ano,
           ordenarPor: this.ordenarPor,
         },
-        
-      });
-      this.prepararDados(data);
+
+      })
+      this.prepararDados(data)
+
       this.$q.loading.hide();
     },
     async prepararDados(data) {
@@ -261,8 +264,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-.text-h5 {
-  line-height: 3rem;
-}
-</style>
+

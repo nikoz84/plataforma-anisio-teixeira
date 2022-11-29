@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Cache\RateLimiting\Limit;
 
 class DashboardData
 {
@@ -28,9 +29,6 @@ class DashboardData
             ->orderBy('ano', $ordenarPor)
             ->get();
     }
-
-
-
 
     public static function aplicativosMaisVisualizados()
     {
@@ -63,15 +61,35 @@ class DashboardData
 
     public static function catalogacaoMensalPorUsuario()
     {
+      
+
         $ordenarPor = self::$request->get('ordenarPor', 'DESC');
-        $date = self::$request->get('ano');
+        $usuario_id = self::$request->get('id');
+        $mes = self::$request->get('mes');
+        $ano = self::$request->get('ano');
+
+        $limit = self::$request->get('limit');
+
         return DB::table('users as u')
-            ->select(DB::raw('u.name, count(u.id) AS total'))
+            ->select(DB::raw("u.name, 
+                count(u.id) AS total, 
+                upper(to_char(c.created_at, 'TMMonth')) as mes,  
+                row_number() OVER () AS id, 
+                extract(YEAR from c.created_at) as ano"))
             ->join('conteudos AS c', 'u.id', '=', 'c.user_id')
-            ->limit(10)
+            ->when($usuario_id, function ($query) use ($usuario_id) {
+                return $query->where('u.id', '=', $usuario_id);
+            })
+            ->when($mes, function ($query) use ($mes) {
+                return $query->whereRaw("upper(to_char(c.created_at, 'TMMonth')) = '{$mes}'");
+            })
+            ->when($ano, function ($query) use ($ano) {
+                return $query->whereRaw("extract(YEAR from c.created_at) = {$ano}");
+            })
+            ->groupByRaw("upper(to_char(c.created_at, 'TMMonth')), ano")
             ->groupBy('u.name')
-            ->orderBy('total', 'DESC')
-            ->get();
+            ->orderBy('total', $ordenarPor)
+            ->paginate($limit);
     }
 
 
@@ -113,9 +131,6 @@ class DashboardData
     }
 
 
-
-
-
     public static function tagsMaisProcuradas()
     {
         return DB::table('tags')
@@ -137,9 +152,6 @@ class DashboardData
             ->orderBy('total', 'DESC')
             ->get();
     }
-
-
-
 
 
     public static function setRequest(Request $request)
