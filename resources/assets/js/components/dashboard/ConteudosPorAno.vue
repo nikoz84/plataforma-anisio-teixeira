@@ -107,7 +107,6 @@ export default {
     }
   },
   created () {
-
     this.getDataTable();
     this.getFiltros();
   },
@@ -125,7 +124,7 @@ export default {
           ano: this.ano,
           ordenarPor: this.ordenarPor
         },
-        method: 'get',
+      
       })
       this.prepararDados(data)
       this.$q.loading.hide();
@@ -163,5 +162,6 @@ export default {
   },
 };
 </script>
+<style scoped>
 
-
+</style>
