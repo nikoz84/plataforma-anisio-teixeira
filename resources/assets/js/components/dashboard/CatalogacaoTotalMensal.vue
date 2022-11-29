@@ -3,8 +3,8 @@
         <q-card-section v-if="!isDashboard">
             <div class="text-dark text-h6">Filtros</div>
             <div class="row q-gutter-md">
-                <q-input v-model="start" filled type="date" hint="Native date" clearable />
-                <q-input v-model="end" filled type="date" hint="Native date" clearable />
+                <q-input v-model="start" filled type="date" clearable />
+                <q-input v-model="end" filled type="date" clearable />
                 <q-select class="col" dense v-model="ordenarPor" label-color="primary" :options="filtroOrdenarPor"
                     option-value="id" option-label="nome" stack-label emit-value map-options label="Ordenar por"
                     clearable />
@@ -170,5 +170,3 @@ export default {
     },
 };
 </script>
-
-
