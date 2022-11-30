@@ -17,7 +17,7 @@ class DashboardData
     {
         //Carregando a table
 
-        $ordenarPor = self::$request->get('ordenarPor', 'DESC');
+        $ordenarPor = self::$request->get('ordenarPor', 'ASC');
         $date = self::$request->get('ano');
 
         return DB::table('conteudos')
@@ -60,8 +60,6 @@ class DashboardData
 
     public static function catalogacaoMensalPorUsuario()
     {
-      
-
         $ordenarPor = self::$request->get('ordenarPor', 'DESC');
         $usuario_id = self::$request->get('id');
         $mes = self::$request->get('mes');
@@ -90,7 +88,6 @@ class DashboardData
             ->orderBy('total', $ordenarPor)
             ->paginate($limit);
     }
-
 
     public static function catalogacaoTotalMensal()
     {
@@ -128,7 +125,8 @@ class DashboardData
         return DB::table('conteudos')
             ->select(['title', 'qt_access'])
             ->limit(10)
-            ->orderBy('qt_access', 'desc')->get();
+            ->orderBy('qt_access', 'desc')
+            ->get();
     }
 
 
