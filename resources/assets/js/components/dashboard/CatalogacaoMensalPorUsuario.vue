@@ -46,7 +46,6 @@
 import VueApexCharts from "vue-apexcharts";
 import { exportTable } from "@composables/ToCsv";
 import { date } from 'quasar'
-
 export default {
     name: 'CatalogacaoMensalPorUsuario',
     components: {
@@ -75,9 +74,7 @@ export default {
                 { name: 'mes', align: 'center', label: 'Mês', field: 'mes' },
                 { name: 'Nome', align: 'left', label: 'Nome', field: 'name', format: val => val.toUpperCase().replace(/[-\\]/g, '').split(' ', 4).join(' ') },
                 { name: 'Total', label: 'total', field: 'total' }
-
             ],
-
             //Inicia configuração do gráfico
             chartOptions: {
                 chart: {
@@ -122,7 +119,6 @@ export default {
                 { label: 'Ver relatório completo', url: '/admin/dashboard/catalogacao-mensal-por-usuario' } :
                 { label: 'Voltar', url: '/admin/dashboard/listar' }
         },
-
         title () {
             return `Catalogação mensal por usuário`
         }
@@ -151,7 +147,6 @@ export default {
             this.prepararDados(data)
             this.$q.loading.hide();
         },
-
         async prepararDados (data) {
             if (data.success) {
                 this.dataTable = data.metadata.data;
@@ -171,14 +166,12 @@ export default {
                         data: data.metadata.data.map((item) => item.total),
                     },
                 ];
-
             }
             // renderiza
             this.render = true;
         },
         async getFiltros () {
             const { data } = await axios(`/dashboard/filtros/catalogacao-mensal-por-usuario`);
-            console.log(data);
             if (data.success) {
                 this.filtroUsuarios = data.metadata.usuarios;
                 this.filtroOrdenarPor = data.metadata.ordenarPor;
@@ -195,7 +188,6 @@ export default {
                     this.usuariosFiltrados = this.filtroUsuarios.filter(v => v.name.toLowerCase().indexOf(needle) > -1)
                 }
             })
-
         }
     }
 }

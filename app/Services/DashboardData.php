@@ -29,7 +29,6 @@ class DashboardData
             ->get();
     }
 
-
     public static function aplicativosMaisVisualizados()
     {
 
@@ -59,11 +58,14 @@ class DashboardData
             ->get();
     }
 
-     
     public static function catalogacaoMensalPorUsuario()
     {
         $ordenarPor = self::$request->get('ordenarPor', 'DESC');
-        $date = self::$request->get('ano');
+        $usuario_id = self::$request->get('id');
+        $mes = self::$request->get('mes');
+        $ano = self::$request->get('ano');
+
+        $limit = self::$request->get('limit');
 
         return DB::table('users as u')
             ->select(DB::raw("u.name, 
@@ -87,7 +89,6 @@ class DashboardData
             ->paginate($limit);
     }
 
-      
     public static function catalogacaoTotalMensal()
     {
         $start = self::$request->get('start');
@@ -103,27 +104,16 @@ class DashboardData
 
             ->groupByRaw("to_char(conteudos.created_at,'TMMONTH')")
             ->orderBy('quantidade', 'DESC', $ordenarPor)
-          ->get();
+            ->get();
     }
+
 
 
     public static function conteudosMaisBaixados()
     {
-        $ordenarPor = self::$request->get('ordenarPor', 'DESC');
-        $titulo = self::$request->get('titulo');
-        $ano = self::$request->get('ano');
-        $limit = self::$request->get('limit', '20');  // rows 1000 / 100 
-
-
-        return DB::table('conteudos')->select(['created_at', 'title', 'qt_downloads'])
-            ->when($titulo, function ($query) use ($titulo) {
-                return $query->where('title', $titulo);
-            })
-            ->when($ano, function ($query) use ($ano) {
-                return $query->whereRaw("extract(YEAR from created_at) = {$ano}");
-            })
-            ->limit($limit)
-            ->orderBy('qt_downloads', $ordenarPor)
+        return DB::table('conteudos')
+            ->select(['title', 'qt_downloads'])
+            ->limit(10)->orderBy('qt_downloads', 'desc')
             ->get();
     }
 
@@ -159,9 +149,6 @@ class DashboardData
     }
 
 
-
-
-
     public static function setRequest(Request $request)
     {
         self::$request = $request;
@@ -193,6 +180,4 @@ class DashboardData
             ['id' => 'tipos-de-midia', 'titulo' => 'Tipo de mídia', 'componente' => 'TiposDeMidia'],
         ]);
     }
-
-    /** FILTROS */
 }

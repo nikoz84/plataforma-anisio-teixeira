@@ -125,7 +125,7 @@ export default {
           ano: this.ano,
           ordenarPor: this.ordenarPor
         },
-
+      
       })
     
       this.prepararDados(data)

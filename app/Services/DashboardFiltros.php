@@ -9,7 +9,18 @@ class DashboardFiltros
     public static function filtroMeses()
     {
         return [
-            'JANEIRO', 'FEVEREIRO', 'MARÇO', 'ABRIL', 'MAIO', 'JUNHO', 'JULHO', 'AGOSTO', 'SETEMBRO', 'OUTUBRO', 'NOVEMBRO', 'DEZEMBRO'
+            'JANEIRO',
+            'FEVEREIRO',
+            'MARÇO',
+            'ABRIL',
+            'MAIO',
+            'JUNHO',
+            'JULHO',
+            'AGOSTO',
+            'SETEMBRO',
+            'OUTUBRO',
+            'NOVEMBRO',
+            'DEZEMBRO'
         ];
     }
 
@@ -17,8 +28,8 @@ class DashboardFiltros
     {
         return DB::table('conteudos')
             ->select('title')
-            ->Limit(10)
-            ->orderBy('title', "DESC")
+            ->limit(10)
+            ->orderby('title', "DESC")
             ->get()->pluck('title');
     }
 
@@ -31,8 +42,7 @@ class DashboardFiltros
     }
 
     public static function filtroAnos()
-    { // Carregar o filtro anos
-
+    {
         return DB::table('conteudos')
             ->selectRaw('extract(year from conteudos.created_at) as ano')
             ->groupByRaw('extract(year from conteudos.created_at)')
@@ -46,7 +56,6 @@ class DashboardFiltros
             ->whereIn('u.role_id', [1, 2, 3])
             ->get(['name', 'id']);
     }
-
 
 
     public static function filtrosCatalogacaoPorCanal()

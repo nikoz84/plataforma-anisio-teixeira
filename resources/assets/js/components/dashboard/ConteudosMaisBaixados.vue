@@ -56,9 +56,8 @@ export default {
             mesMultiple: null,
             columns: [
                 {
-                    name: "titulo",
-                    align: "left",
-
+                    name: "title",
+                    align: "center",
                     label: "Título",
                     field: "title", format: val => val.toUpperCase().replace(/[-\\]/g, '').split(' ', 8).join(' '),
                     sortable: true,
@@ -170,10 +169,9 @@ export default {
                 ];
 
                 this.MapOptionsQt_downloads = data.metadata.map((item) => item.title),
-                    // this.MapOptionsMes = data.metadata.map((item) => mes),
-                    // renderiza
+                   
                     this.render = data.success;
-                    }
+            }
 
             this.render = true;
         },
