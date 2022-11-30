@@ -126,6 +126,7 @@ export default {
         }
     },
     created () {
+
         this.getDataTable();
     },
     methods: {
