@@ -16,7 +16,7 @@ class DashboardData
     {
         //Carregando a table
 
-        $ordenarPor = self::$request->get('ordenarPor', 'DESC');
+        $ordenarPor = self::$request->get('ordenarPor', 'ASC');
         $date = self::$request->get('ano');
 
         return DB::table('conteudos')
@@ -28,9 +28,6 @@ class DashboardData
             ->orderBy('ano', $ordenarPor)
             ->get();
     }
-
-
-
 
     public static function aplicativosMaisVisualizados()
     {
@@ -64,16 +61,33 @@ class DashboardData
     public static function catalogacaoMensalPorUsuario()
     {
         $ordenarPor = self::$request->get('ordenarPor', 'DESC');
-        $date = self::$request->get('ano');
-        return DB::table('users as u')
-            ->select(DB::raw('u.name, count(u.id) AS total'))
-            ->join('conteudos AS c', 'u.id', '=', 'c.user_id')
-            ->limit(10)
-            ->groupBy('u.name')
-            ->orderBy('total', 'DESC')
-            ->get();
-    }
+        $usuario_id = self::$request->get('id');
+        $mes = self::$request->get('mes');
+        $ano = self::$request->get('ano');
 
+        $limit = self::$request->get('limit');
+
+        return DB::table('users as u')
+            ->select(DB::raw("u.name, 
+                count(u.id) AS total, 
+                upper(to_char(c.created_at, 'TMMonth')) as mes,  
+                row_number() OVER () AS id, 
+                extract(YEAR from c.created_at) as ano"))
+            ->join('conteudos AS c', 'u.id', '=', 'c.user_id')
+            ->when($usuario_id, function ($query) use ($usuario_id) {
+                return $query->where('u.id', '=', $usuario_id);
+            })
+            ->when($mes, function ($query) use ($mes) {
+                return $query->whereRaw("upper(to_char(c.created_at, 'TMMonth')) = '{$mes}'");
+            })
+            ->when($ano, function ($query) use ($ano) {
+                return $query->whereRaw("extract(YEAR from c.created_at) = {$ano}");
+            })
+            ->groupByRaw("upper(to_char(c.created_at, 'TMMonth')), ano")
+            ->groupBy('u.name')
+            ->orderBy('total', $ordenarPor)
+            ->paginate($limit);
+    }
 
     public static function catalogacaoTotalMensal()
     {
@@ -109,11 +123,9 @@ class DashboardData
         return DB::table('conteudos')
             ->select(['title', 'qt_access'])
             ->limit(10)
-            ->orderBy('qt_access', 'desc')->get();
+            ->orderBy('qt_access', 'desc')
+            ->get();
     }
-
-
-
 
 
     public static function tagsMaisProcuradas()
@@ -123,8 +135,6 @@ class DashboardData
             ->orderBy('searched', 'desc')
             ->limit(10)->get();
     }
-
-
 
 
     public static function tiposDeMidia()
@@ -137,9 +147,6 @@ class DashboardData
             ->orderBy('total', 'DESC')
             ->get();
     }
-
-
-
 
 
     public static function setRequest(Request $request)

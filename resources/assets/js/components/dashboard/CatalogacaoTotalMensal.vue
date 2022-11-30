@@ -1,4 +1,5 @@
 <template>
+
   <q-card>
     <q-card-section v-if="!isDashboard" class="qmb-md">
       <div class="q-mb-md">
@@ -96,6 +97,7 @@
       </q-btn>
     </q-card-actions>
   </q-card>
+
 </template>
 
 <script>
@@ -186,6 +188,7 @@ export default {
                   zoomout: false,
                   reset: false,
                 },
+
               },
             },
             xaxis: {
@@ -200,6 +203,7 @@ export default {
                   fontFamily: "Helvetica, Arial, sans-serif",
                   fontWeight: 100,
                   cssClass: "apexcharts-xaxis-title",
+
                 },
               },
               labels: {
@@ -262,6 +266,7 @@ export default {
                 rotate: 270,
               },
             },
+
           },
         };
         // define as series
@@ -275,6 +280,7 @@ export default {
         this.render = data.success;
       }
       this.$q.loading.hide();
+
     },
   },
 };
