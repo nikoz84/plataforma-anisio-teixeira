@@ -96,7 +96,7 @@ class DashboardData
         $end = self::$request->get('end');
         $ordenarPor = self::$request->get('ordenarPor', 'DESC');
         return DB::table('conteudos')
-            ->selectRaw("to_char(conteudos.created_at,'TMMONTH') as periodo, 
+            ->selectRaw("to_char(conteudos.created_at,'TMMONTH') as mes, 
             COUNT(*) as quantidade")
             ->when($start && $end, function ($q) use ($start, $end) {
                 return $q->whereBetween('conteudos.created_at', [$start, $end]);
