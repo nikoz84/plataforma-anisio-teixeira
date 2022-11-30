@@ -123,6 +123,7 @@ export default {
 
     },
     created () {
+
         this.getDataTable();
         this.getFiltros();
 

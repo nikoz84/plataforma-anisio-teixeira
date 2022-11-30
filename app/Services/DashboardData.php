@@ -2,10 +2,11 @@
 
 namespace App\Services;
 
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Carbon\Carbon;
+
 
 class DashboardData
 {
@@ -29,6 +30,7 @@ class DashboardData
             ->get();
     }
 
+
     public static function aplicativosMaisVisualizados()
     {
 
@@ -44,8 +46,6 @@ class DashboardData
             ->orderBy('options->qt_access', 'DESC', $ordenarPor)
             ->get();
     }
-
-
 
     public static function catalogacaoPorCanal()
     {
@@ -91,9 +91,11 @@ class DashboardData
 
     public static function catalogacaoTotalMensal()
     {
+
         $start = self::$request->get('start');
         $end = self::$request->get('end');
         $ordenarPor = self::$request->get('ordenarPor', 'DESC');
+
 
         return DB::table('conteudos')
             ->selectRaw("to_char(conteudos.created_at,'TMMONTH') as periodo, 
