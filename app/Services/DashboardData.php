@@ -95,8 +95,6 @@ class DashboardData
         $start = self::$request->get('start');
         $end = self::$request->get('end');
         $ordenarPor = self::$request->get('ordenarPor', 'DESC');
-
-
         return DB::table('conteudos')
             ->selectRaw("to_char(conteudos.created_at,'TMMONTH') as periodo, 
             COUNT(*) as quantidade")
@@ -105,7 +103,7 @@ class DashboardData
             })
 
             ->groupByRaw("to_char(conteudos.created_at,'TMMONTH')")
-            ->orderBy('quantidade', 'DESC', $ordenarPor)
+            ->orderBy('mes', 'ASC', $ordenarPor)
             ->get();
     }
 
