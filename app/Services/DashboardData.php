@@ -17,7 +17,7 @@ class DashboardData
     {
         //Carregando a table
 
-        $ordenarPor = self::$request->get('ordenarPor', 'DESC');
+        $ordenarPor = self::$request->get('ordenarPor', 'ASC');
         $date = self::$request->get('ano');
 
         return DB::table('conteudos')
