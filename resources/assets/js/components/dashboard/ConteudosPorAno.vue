@@ -175,13 +175,10 @@ export default {
         : { label: "Voltar", url: "/admin/dashboard/listar" };
     },
   },
-
   created() {
-
     this.getDataTable();
     this.getFiltros();
   },
-
 
   methods: {
     exportToCsv() {
@@ -196,11 +193,8 @@ export default {
           ano: this.ano,
           ordenarPor: this.ordenarPor,
         },
-
-      })
-    
-      this.prepararDados(data)
-
+      });
+      this.prepararDados(data);
       this.$q.loading.hide();
     },
     async prepararDados(data) {
@@ -252,10 +246,7 @@ export default {
       }
       this.render = true;
     },
-
-    async getFiltros () {
-
-
+    async getFiltros() {
       const { data } = await axios.get(`/dashboard/filtros/conteudos-por-ano`);
 
       if (data.success) {
@@ -266,4 +257,8 @@ export default {
   },
 };
 </script>
-
+<style scoped>
+.text-h5 {
+  line-height: 3rem;
+}
+</style>
