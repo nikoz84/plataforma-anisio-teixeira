@@ -1,6 +1,5 @@
 import CardDashboard from "./CardDashboard.vue";
 import ConteudosPorAno from "./ConteudosPorAno.vue";
-import CatalogacaoMensal from "./CatalogacaoMensal.vue";
 import CatalogacaoPorCanal from "./CatalogacaoPorCanal.vue";
 import CatalogacaoMensalPorUsuario from "./CatalogacaoMensalPorUsuario.vue";
 import CatalogacaoTotalMensal from "./CatalogacaoTotalMensal.vue";
@@ -12,7 +11,6 @@ import TiposDeMidia from "./TiposDeMidia.vue";
 export {
   CardDashboard,
   ConteudosPorAno,
-  CatalogacaoMensal,
   CatalogacaoPorCanal,
   CatalogacaoMensalPorUsuario,
   CatalogacaoTotalMensal,

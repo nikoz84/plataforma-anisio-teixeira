@@ -39,6 +39,7 @@
 import { exportTable } from "@composables/ToCsv";
 import VueApexCharts from "vue-apexcharts";
 
+
 export default {
     name: "ConteudosMaisAcessados",
     components: {
@@ -117,7 +118,6 @@ export default {
         }
     },
     created () {
-        console.log(this.disableTable)
         this.getDataTable();
     },
     methods: {

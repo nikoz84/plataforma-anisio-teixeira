@@ -81,7 +81,6 @@ export default {
     async onSubmit () {
       this.$q.loading.show();
       this.errors = {};
-      console.log('oisdiosa')
       let credentials = {
         email: this.email,
         password: this.password,

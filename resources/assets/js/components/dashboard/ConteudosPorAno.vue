@@ -1,30 +1,94 @@
 <template>
   <q-card>
     <q-card-section v-if="!isDashboard">
+      <div class="q-mb-md">
+        <div class="text-h5 title-page text-primary separatriz q-mb-xm">
+          Conteúdos por Ano
+        </div>
+        <div class="separatriz-6"></div>
+      </div>
       <div class="text-dark text-h6">Filtros</div>
-      <div class="q-gutter-md row items-start">
-        <div style="min-width: 250px; max-width: 200px">
-          <q-select v-model="anoMultiple" label-color="primary" :options="MapOptionsAnos" stack-label
-            label="Filtrar por anos" />
-        </div>
-        <div style="min-width: 150px; max-width: 200px">
-          <q-btn color="primary" label="Pesquisar" size="md" @click='pesquisarFiltros()' />
-        </div>
+      <div class="row q-gutter-md">
+        <q-select
+          class="col"
+          dense
+          clearable
+          v-model="ano"
+          label-color="primary"
+          :options="filtroAnos"
+          label="Filtrar por anos"
+        />
+        <q-select
+          class="col"
+          dense
+          clearable
+          v-model="ordenarPor"
+          label-color="primary"
+          :options="filtroOrdenarPor"
+          option-value="id"
+          option-label="nome"
+          stack-label
+          emit-value
+          map-options
+          label="Ordenar por"
+        />
+        <q-btn
+          class="col"
+          color="primary"
+          label="Pesquisar"
+          @click="getDataTable"
+        />
+        <q-btn class="col" color="primary" :to="buttonRedirect.url">
+          {{ buttonRedirect.label }}
+        </q-btn>
       </div>
     </q-card-section>
-    <q-card-section v-if="!isDashboard">
-      <q-table title="Conteúdos" :data="dataTable" :columns="columns" color="primary" row-key="name"
-        :pagination="{ rowsPerPage: 20 }">
-        <template v-slot:top-right>
-          <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps @click="exportToCsv" />
-        </template>
-      </q-table>
+
+    <q-card-section
+      v-if="!isDashboard"
+      horizontal
+      class="q-ma-sm"
+      style="border: 1px solid rgba(0, 0, 0, 0.12); min-height: 650px"
+    >
+      <q-card-section>
+        <q-table
+          flat
+          dense
+          :data="dataTable"
+          :columns="columns"
+          color="primary"
+          row-key="name"
+          :pagination="{ rowsPerPage: 20 }"
+        >
+        </q-table>
+        <q-btn
+          color="primary"
+          icon-right="archive"
+          label="Exportar em .csv"
+          no-caps
+          @click="exportToCsv"
+        />
+      </q-card-section>
+      <q-separator vertical />
+      <q-card-section class="q-table">
+        <VueApexCharts
+          height="100%"
+          :options="chartOptions"
+          :series="mapSeries"
+        />
+      </q-card-section>
     </q-card-section>
-    <q-card-section v-if="render">
+
+    <q-card-section v-if="isDashboard">
       <VueApexCharts height="450" :options="chartOptions" :series="mapSeries" />
     </q-card-section>
-    <q-card-actions>
-      <q-btn color="primary" class="full-width" :to="buttonRedirect.url" size="sm">
+    <q-card-actions v-if="isDashboard">
+      <q-btn
+        color="primary"
+        class="full-width"
+        :to="buttonRedirect.url"
+        size="sm"
+      >
         {{ buttonRedirect.label }}
       </q-btn>
     </q-card-actions>
@@ -40,16 +104,20 @@ export default {
   components: {
     VueApexCharts,
   },
-  props: ['isDashboard'],
-  data () {
+  props: ["isDashboard"],
+  data() {
     return {
-      MapOptionsAnos: [],
-      mapOptionsMes: [],
-      anoMultiple: null,
-      mesMultiple: null,
+      filtroAnos: [],
+      filtroOrdenarPor: [],
+      ano: null,
+      ordenarPor: null,
       columns: [
         {
-          name: "ano", align: "left", label: "Ano", field: "ano", sortable: true,
+          name: "ano",
+          align: "left",
+          label: "Ano",
+          field: "ano",
+          sortable: true,
         },
         { name: "total", label: "Total", field: "total" },
       ],
@@ -65,17 +133,17 @@ export default {
           type: "bar",
           animations: {
             enabled: true,
-            easing: 'easeinout',
+            easing: "easeinout",
             speed: 800,
             animateGradually: {
               enabled: true,
-              delay: 200
+              delay: 200,
             },
             dynamicAnimation: {
               enabled: true,
-              speed: 350
-            }
-          }
+              speed: 350,
+            },
+          },
         },
         title: {
           text: "Conteúdos por ano",
@@ -98,52 +166,99 @@ export default {
     };
   },
   computed: {
-    buttonRedirect () {
-      return this.isDashboard ?
-        { label: 'Ver relatório completo', url: '/admin/dashboard/conteudos-por-ano' } :
-        { label: 'Voltar', url: '/admin/dashboard/listar' }
-    }
+    buttonRedirect() {
+      return this.isDashboard
+        ? {
+            label: "Ver relatório completo",
+            url: "/admin/dashboard/conteudos-por-ano",
+          }
+        : { label: "Voltar", url: "/admin/dashboard/listar" };
+    },
   },
-  created () {
-    console.log(this.disableTable)
+  created() {
     this.getDataTable();
+    this.getFiltros();
   },
+
   methods: {
-    exportToCsv () {
+    exportToCsv() {
       exportTable(this.dataTable, this.columns);
     },
 
-    async getDataTable () {
+    async getDataTable() {
+      this.render = false;
       this.$q.loading.show();
-      const { data } = await axios.get(`/dashboard/conteudos-por-ano`);
+      const { data } = await axios.get(`/dashboard/conteudos-por-ano`, {
+        params: {
+          ano: this.ano,
+          ordenarPor: this.ordenarPor,
+        },
+      });
+      this.prepararDados(data);
+      this.$q.loading.hide();
+    },
+    async prepararDados(data) {
       if (data.success) {
         this.dataTable = data.metadata;
-        // define as as cetegorias com o spread operator (...)
         this.chartOptions = {
           ...this.chartOptions,
           ...{
             xaxis: {
               categories: data.metadata.map((item) => item.ano),
+              title: {
+                text: "(quantidade)",
+                offsetX: 0,
+                offsetY: 0,
+                style: {
+                  color: undefined,
+                  fontSize: "12px",
+                  fontFamily: "Helvetica, Arial, sans-serif",
+                  fontWeight: 100,
+                  cssClass: "apexcharts-xaxis-title",
+                },
+              },
+            },
+            yaxis: {
+              title: {
+                text: "(ano)",
+                offsetX: 0,
+                offsetY: 0,
+                style: {
+                  color: undefined,
+                  fontSize: "12px",
+                  fontFamily: "Helvetica, Arial, sans-serif",
+                  fontWeight: 400,
+                  cssClass: "apexcharts-yaxis-title",
+                },
+              },
+              labels: {
+                rotate: 0,
+              },
             },
           },
         };
-        // define as series
         this.mapSeries = [
           {
             name: "Total",
             data: data.metadata.map((item) => item.total),
           },
         ];
-
-        this.MapOptionsAnos = data.metadata.map((item) => item.ano),
-          // this.MapOptionsMes = data.metadata.map((item) => mes),
-          // renderiza
-          this.render = data.success;
       }
-      this.$q.loading.hide();
+      this.render = true;
+    },
+    async getFiltros() {
+      const { data } = await axios.get(`/dashboard/filtros/conteudos-por-ano`);
+
+      if (data.success) {
+        this.filtroAnos = data.metadata.anos;
+        this.filtroOrdenarPor = data.metadata.ordenarPor;
+      }
     },
   },
 };
 </script>
-
-
+<style scoped>
+.text-h5 {
+  line-height: 3rem;
+}
+</style>

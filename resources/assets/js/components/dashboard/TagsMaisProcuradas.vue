@@ -38,49 +38,48 @@
 <script>
 import { exportTable } from "@composables/ToCsv";
 import VueApexCharts from "vue-apexcharts";
-export default {
-    name: 'TagsMaisProcuradas',
-    components: {
 
+export default {
+    name: "TagsMaisProcuradas",
+    components: {
         VueApexCharts,
     },
     props: ['isDashboard'],
     data () {
         return {
-            //
+            MapOptionsAnos: [],
+            mapOptionsMes: [],
+            anoMultiple: null,
+            mesMultiple: null,
             columns: [
                 {
-                    name: 'name',
-                    align: 'left',
+                    name: "name",
+                    align: "center",
                     label: "Nome",
                     field: "name",
                     sortable: true,
-                    width: "100%"
                 },
-                {
-                    name: "Quantidade",
-                    label: "Quantidade",
-                    field: "searched"
-
-                }
+                { name: "searched", label: "Procuradas", field: "searched" },
             ],
             dataTable: [],
             mapSeries: [],
             render: false,
-            //Inicia configuração do gráfico
+            // Inicio da configuração do gráfico
             chartOptions: {
                 chart: {
+                    id: "vuechart-Tags",
                     height: 430,
-                    type: "line"
+                    width: "100%",
+                    type: "bar",
                 },
-
+                title: {
+                    text: "Palavras-Chave",
+                    align: "center",
+                },
                 plotOptions: {
                     bar: {
                         horizontal: false,
-                        dataLabels: {
-                            position: 'top'
-                        },
-                    }
+                    },
                 },
                 title: {
                     text: "Palavras chave mais procuradas",
@@ -108,6 +107,13 @@ export default {
                     intersect: false
                 },
             },
+        };
+    },
+    computed: {
+        buttonRedirect () {
+            return this.isDashboard ?
+                { label: 'Ver relatório completo', url: '/admin/dashboard/tags-mais-procuradas' } :
+                { label: 'Voltar', url: '/admin/dashboard/listar' }
         }
     },
     computed: {
@@ -120,13 +126,14 @@ export default {
         }
     },
     created () {
-        console.log(this.disableTable)
+
         this.getDataTable();
     },
     methods: {
         exportToCsv () {
             exportTable(this.dataTable, this.columns);
         },
+
 
         async getDataTable () {
             this.$q.loading.show();
@@ -145,19 +152,18 @@ export default {
                 // define as series
                 this.mapSeries = [
                     {
-                        name: "searched",
+                        name: "Total",
                         data: data.metadata.map((item) => item.searched),
                     },
                 ];
-                // renderiza
-                this.render = data.success;
+
+                this.MapOptionsName = data.metadata.map((item) => item.name),
+                    // this.MapOptionsMes = data.metadata.map((item) => mes),
+                    // renderiza
+                    this.render = data.success;
             }
             this.$q.loading.hide();
         },
     },
 };
 </script>
-<style scoped>
-
-</style>
-
