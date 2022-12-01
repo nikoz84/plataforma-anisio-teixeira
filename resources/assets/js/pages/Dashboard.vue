@@ -87,3 +87,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.text-h5 {
+  line-height: 3rem;
+}
+</style>
