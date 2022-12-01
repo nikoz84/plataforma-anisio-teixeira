@@ -2,23 +2,30 @@
     <q-card>
         <q-card-section v-if="!isDashboard">
             <div class="text-dark text-h6">Filtros</div>
-            <div class="q-gutter-md row items-start">
-                <div style="min-width: 150px; max-width: 200px">
-                    <q-select v-model="mesMultiple" multiple label-color="primary" :options="mapOptionsMes" use-chips
-                        stack-label label="Filtrar por meses" />
-                </div>
-                <div style="min-width: 150px; max-width: 200px">
-                    <q-select v-model="anoMultiple" multiple label-color="primary" :options="MapOptionsAnos" use-chips
-                        stack-label label="Filtrar por anos" />
-                </div>
-                <div style="min-width: 150px; max-width: 200px">
-                    <q-btn color="primary" label="Pesquisar" size="md" @click='pesquisarFiltros()' />
-                </div>
+            <div class="row q-gutter-md">
+                <q-select class="col" clearable dense v-model="mes" label-color="primary" :options="filtroMeses"
+                    label="Filtrar por mês" />
+                <q-select class="col" clearable dense v-model="ano" label-color="primary" :options="filtroAnos"
+                    label="Filtrar por ano" />
+
+                <q-select class="col" dense clearable v-model="usuario" option-value="id" option-label="name"
+                    stack-label emit-value map-options label-color="primary" :options="usuariosFiltrados" use-input
+                    @filter="filtrarNome" label="Filtrar por usuário" />
+
+                <q-select class="col" dense v-model="ordenarPor" label-color="primary" :options="filtroOrdenarPor"
+                    option-value="id" option-label="nome" stack-label emit-value map-options label="Ordenar por" />
+
+            </div>
+            <div class="row q-mt-lg q-gutter-md justify-end">
+                <q-btn class="col-2" color="primary" label="Pesquisar" @click="getDataTable" />
+                <q-btn class="col-2" color="secondary" :to="buttonRedirect.url">
+                    {{ buttonRedirect.label }}
+                </q-btn>
             </div>
         </q-card-section>
         <q-card-section v-if="!isDashboard">
-            <q-table title="Conteúdos" :data="dataTable" :columns="columns" color="primary" row-key="name"
-                :pagination="{ rowsPerPage: 20 }">
+            <q-table v-if="render" :title="title" :data="dataTable" :columns="columns" color="primary" row-key="id"
+                :pagination="{ rowsPerPage: limit }">
                 <template v-slot:top-right>
                     <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps @click="exportToCsv" />
                 </template>
@@ -27,7 +34,7 @@
         <q-card-section v-if="render">
             <VueApexCharts height="450" :options="chartOptions" :series="mapSeries" />
         </q-card-section>
-        <q-card-actions>
+        <q-card-actions v-if="isDashboard">
             <q-btn color="primary" class="full-width" :to="buttonRedirect.url" size="sm">
                 {{ buttonRedirect.label }}
             </q-btn>
@@ -38,7 +45,7 @@
 <script>
 import VueApexCharts from "vue-apexcharts";
 import { exportTable } from "@composables/ToCsv";
-
+import { date } from 'quasar'
 export default {
     name: 'CatalogacaoMensalPorUsuario',
     components: {
@@ -47,25 +54,33 @@ export default {
     props: ['isDashboard'],
     data () {
         return {
-            columns: [
-
-                { name: 'Nome', align: 'center', label: 'Nome', field: 'name' },
-                { name: 'Total', label: 'total', field: 'total' }
-
-            ],
-            mesMultiple: null,
-            anoMultiple: null,
+            filtroMeses: [],
+            filtroUsuarios: [],
+            filtroOrdenarPor: [],
+            filtroAnos: [],
+            usuariosFiltrados: [],
+            limit: 20,
+            mes: '',
+            ano: '',
+            usuario: null,
+            dateInicio: '',
+            dateFim: '',
+            ordenarPor: null,
             dataTable: [],
             mapSeries: [],
             render: false,
-
+            columns: [
+                { name: 'ano', align: 'center', label: 'Ano', field: 'ano' },
+                { name: 'mes', align: 'center', label: 'Mês', field: 'mes' },
+                { name: 'Nome', align: 'left', label: 'Nome', field: 'name', format: val => val.toUpperCase().replace(/[-\\]/g, '').split(' ', 4).join(' ') },
+                { name: 'Total', label: 'total', field: 'total' }
+            ],
             //Inicia configuração do gráfico
             chartOptions: {
                 chart: {
                     height: 430,
                     type: "bar",
                 },
-
                 plotOptions: {
                     bar: {
                         horizontal: false,
@@ -91,7 +106,6 @@ export default {
                 xaxis: {
                     categories: [],
                 },
-
                 tooltip: {
                     shared: true,
                     intersect: false
@@ -104,27 +118,44 @@ export default {
             return this.isDashboard ?
                 { label: 'Ver relatório completo', url: '/admin/dashboard/catalogacao-mensal-por-usuario' } :
                 { label: 'Voltar', url: '/admin/dashboard/listar' }
+        },
+        title () {
+            return `Catalogação mensal por usuário`
         }
+
     },
     created () {
         this.getDataTable();
+        this.getFiltros();
     },
     methods: {
         exportToCsv () {
             exportTable(this.dataTable, this.columns);
         },
-
         async getDataTable () {
+            this.render = false;
             this.$q.loading.show();
-            const { data } = await axios.get(`/dashboard/catalogacao-mensal-por-usuario`);
+            const { data } = await axios.get(`/dashboard/catalogacao-mensal-por-usuario`, {
+                params: {
+                    id: this.usuario,
+                    limit: this.limit,
+                    ordenarPor: this.ordenarPor,
+                    mes: this.mes,
+                    ano: this.ano,
+                }
+            })
+            this.prepararDados(data)
+            this.$q.loading.hide();
+        },
+        async prepararDados (data) {
             if (data.success) {
-                this.dataTable = data.metadata;
+                this.dataTable = data.metadata.data;
                 // define as as cetegorias com o spread operator (...)
                 this.chartOptions = {
                     ...this.chartOptions,
                     ...{
                         xaxis: {
-                            categories: data.metadata.map((item) => item.name),
+                            categories: data.metadata.data.map((item) => item.mes),
                         },
                     },
                 };
@@ -132,25 +163,22 @@ export default {
                 this.mapSeries = [
                     {
                         name: "Quantidade",
-                        data: data.metadata.map((item) => item.total),
+                        data: data.metadata.data.map((item) => item.total),
                     },
                 ];
-                // renderiza
-                this.render = data.success;
             }
-            this.$q.loading.hide();
-        }
-    },
-    methods: {
-        exportToCsv () {
-            exportTable(this.dataTable, this.columns)
+            // renderiza
+            this.render = true;
         },
-        getDataTable () {
-            console.log('oisio')
-        }
-    }
+        async getFiltros () {
+            const { data } = await axios(`/dashboard/filtros/catalogacao-mensal-por-usuario`);
+            if (data.success) {
+                this.filtroUsuarios = data.metadata.usuarios;
+                this.filtroOrdenarPor = data.metadata.ordenarPor;
+                this.filtroAnos = data.metadata.anos
+                this.filtroMeses = data.metadata.meses;
+            }
+        },
+},
 }
 </script>
-<style scoped>
-
-</style>

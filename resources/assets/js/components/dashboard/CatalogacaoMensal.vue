@@ -3,12 +3,9 @@
         <q-card-section>
             <div class="text-dark text-h6">Filtros</div>
             <div class="q-gutter-md row items-start">
+
                 <div style="min-width: 250px; max-width: 300px">
-                    <q-select v-model="mesMultiple" multiple label-color="primary" :options="meses" use-chips
-                        stack-label label="Filtrar por meses" />
-                </div>
-                <div style="min-width: 250px; max-width: 300px">
-                    <q-select v-model="anoMultiple" multiple label-color="primary" :options="anos" use-chips stack-label
+                    <q-select v-model="ano" multiple label-color="primary" :options="anos" use-chips stack-label
                         label="Filtrar por anos" />
                 </div>
                 <div style="min-width: 250px; max-width: 300px">
@@ -61,7 +58,7 @@ export default {
             dataTable: [],
             series: [{ name: "Quantidade", data: [] }],
             mesMultiple: null,
-            anoMultiple: null,
+            ano: null,
             temaMultiple: null,
             tipoConteudoMultiple: null,
             ordenarMultiple: null,

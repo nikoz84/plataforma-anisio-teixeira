@@ -126,7 +126,7 @@ export default {
         }
     },
     created () {
-        console.log(this.disableTable)
+
         this.getDataTable();
     },
     methods: {

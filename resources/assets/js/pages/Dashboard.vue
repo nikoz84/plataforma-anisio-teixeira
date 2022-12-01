@@ -1,39 +1,40 @@
 <template>
-  <div class="q-gutter-md q-mt-sm q-pl-sm">
+  <div class="q-ml-sm q-mt-sm">
     <div class="q-mb-md">
-      <div class="text-h5 title-page text-primary separatriz">
-        Dashboard
-      </div>
-      <div class=" separatriz-6"></div>
+      <div class="text-h5 title-page text-primary separatriz">Dashboard</div>
+      <div class="separatriz-6"></div>
     </div>
 
-    <div class="flex q-gutter-x-sm q-gutter-y-lg q-mt-md">
-      <div>
+    <div class="q-gutter-sm row">
+      <div class="col-4">
         <ConteudosPorAno :isDashboard="true"></ConteudosPorAno>
       </div>
-      <div>
-        <AplicativosMaisVisualizados :isDashboard="true"></AplicativosMaisVisualizados>
+      <div class="col-3">
+        <AplicativosMaisVisualizados
+          :isDashboard="true"
+        ></AplicativosMaisVisualizados>
       </div>
-
-      <div>
-        <CatalogacaoMensalPorUsuario :isDashboard="true"></CatalogacaoMensalPorUsuario>
+      <div class="col-4">
+        <CatalogacaoMensalPorUsuario
+          :isDashboard="true"
+        ></CatalogacaoMensalPorUsuario>
       </div>
-      <div>
+      <div class="col-4">
         <CatalogacaoTotalMensal :isDashboard="true"></CatalogacaoTotalMensal>
       </div>
-      <div>
+      <div class="col-3">
         <CatalogacaoPorCanal :isDashboard="true"></CatalogacaoPorCanal>
       </div>
-      <div>
+      <div class="col-4">
         <ConteudosMaisBaixados :isDashboard="true"></ConteudosMaisBaixados>
       </div>
-      <div>
+      <div class="col-4">
         <ConteudosMaisAcessados :isDashboard="true"></ConteudosMaisAcessados>
       </div>
-      <div>
+      <div class="col-3">
         <TagsMaisProcuradas :isDashboard="true"></TagsMaisProcuradas>
       </div>
-      <div>
+      <div class="col-4">
         <TiposDeMidia :isDashboard="true"></TiposDeMidia>
       </div>
     </div>
@@ -60,7 +61,7 @@ import {
   CatalogacaoTotalMensal,
   ConteudosMaisBaixados,
   TagsMaisProcuradas,
-  TiposDeMidia
+  TiposDeMidia,
 } from "@components/dashboard";
 import ConteudosMaisAcessados from "../components/dashboard/ConteudosMaisAcessados.vue";
 
@@ -82,7 +83,12 @@ export default {
     ConteudosMaisBaixados,
     ConteudosMaisAcessados,
     TagsMaisProcuradas,
-    TiposDeMidia
+    TiposDeMidia,
   },
 };
 </script>
+<style scoped>
+.text-h5 {
+  line-height: 3rem;
+}
+</style>
