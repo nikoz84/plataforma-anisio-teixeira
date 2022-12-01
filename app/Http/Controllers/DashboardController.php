@@ -26,8 +26,10 @@ class DashboardController extends ApiController
     {
         return $this->successResponse([
             'anos' => DashboardFiltros::filtroAnos(),
-            'meses' => DashboardFiltros::filtroMeses(),
             'ordenarPor' => DashboardFiltros::filtroOrdenarPor(),
+            'meses' => DashboardFiltros::filtroMeses(),
+            'usuarios' => DashboardFiltros::filtroUsuario(),
+            'titulo' => DashboardFiltros::filtroTitulo(),
         ]);
     }
 }
