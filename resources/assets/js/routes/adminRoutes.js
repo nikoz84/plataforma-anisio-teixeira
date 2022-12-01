@@ -34,7 +34,6 @@ import { Contato } from "@components/exibir";
 import {
   listarDashboardRoute,
   conteudoPorAnoRoute,
-  catalogacaoMensalRoute,
   catalogacaoPorCanalRoute,
   catalogacaoMensalPorUsuarioRoute,
   catalogacaoTotalMensalRoute,
@@ -58,7 +57,6 @@ const adminRoutes = {
   children: [
     listarDashboardRoute,
     conteudoPorAnoRoute,
-    catalogacaoMensalRoute,
     catalogacaoPorCanalRoute,
     catalogacaoMensalPorUsuarioRoute,
     catalogacaoTotalMensalRoute,
