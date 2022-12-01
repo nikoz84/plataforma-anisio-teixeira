@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Carbon\Carbon;
-use Illuminate\Cache\RateLimiting\Limit;
+
 
 class DashboardData
 {
@@ -30,6 +30,7 @@ class DashboardData
             ->get();
     }
 
+
     public static function aplicativosMaisVisualizados()
     {
 
@@ -46,8 +47,6 @@ class DashboardData
             ->get();
     }
 
-
-
     public static function catalogacaoPorCanal()
     {
 
@@ -61,8 +60,6 @@ class DashboardData
 
     public static function catalogacaoMensalPorUsuario()
     {
-      
-
         $ordenarPor = self::$request->get('ordenarPor', 'DESC');
         $usuario_id = self::$request->get('id');
         $mes = self::$request->get('mes');
@@ -92,22 +89,21 @@ class DashboardData
             ->paginate($limit);
     }
 
-
     public static function catalogacaoTotalMensal()
     {
+
         $start = self::$request->get('start');
         $end = self::$request->get('end');
         $ordenarPor = self::$request->get('ordenarPor', 'DESC');
-
         return DB::table('conteudos')
-            ->selectRaw("to_char(conteudos.created_at,'TMMONTH') as periodo, 
+            ->selectRaw("to_char(conteudos.created_at,'TMMONTH') as mes, 
             COUNT(*) as quantidade")
             ->when($start && $end, function ($q) use ($start, $end) {
                 return $q->whereBetween('conteudos.created_at', [$start, $end]);
             })
 
             ->groupByRaw("to_char(conteudos.created_at,'TMMONTH')")
-            ->orderBy('quantidade', 'DESC', $ordenarPor)
+            ->orderBy('mes', 'ASC', $ordenarPor)
             ->get();
     }
 
@@ -127,7 +123,8 @@ class DashboardData
         return DB::table('conteudos')
             ->select(['title', 'qt_access'])
             ->limit(10)
-            ->orderBy('qt_access', 'desc')->get();
+            ->orderBy('qt_access', 'desc')
+            ->get();
     }
 
 
@@ -138,8 +135,6 @@ class DashboardData
             ->orderBy('searched', 'desc')
             ->limit(10)->get();
     }
-
-
 
 
     public static function tiposDeMidia()
