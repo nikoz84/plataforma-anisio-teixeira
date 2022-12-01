@@ -79,8 +79,12 @@
       </q-card-section>
     </q-card-section>
 
-    <q-card-section v-if="isDashboard">
-      <VueApexCharts height="450" :options="chartOptions" :series="mapSeries" />
+    <q-card-section v-if="isDashboard" style="min-height: 450px">
+      <VueApexCharts
+        height="100%"
+        :options="chartOptions"
+        :series="mapSeries"
+      />
     </q-card-section>
     <q-card-actions v-if="isDashboard">
       <q-btn
@@ -128,7 +132,7 @@ export default {
       chartOptions: {
         chart: {
           id: "vuechart-conteudos",
-          height: 430,
+          height: 450,
           width: "100%",
           type: "bar",
           animations: {
@@ -148,7 +152,7 @@ export default {
         title: {
           text: "Conteúdos por ano",
           align: "left",
-          margin: 55,
+          margin: 80,
         },
         plotOptions: {
           bar: {
@@ -161,6 +165,35 @@ export default {
         },
         xaxis: {
           categories: [],
+          title: {
+            text: "quantidade",
+            offsetX: 0,
+            offsetY: 0,
+            style: {
+              color: undefined,
+              fontSize: "12px",
+              fontFamily: "Helvetica, Arial, sans-serif",
+              fontWeight: 100,
+              cssClass: "apexcharts-xaxis-title",
+            },
+          },
+        },
+        yaxis: {
+          title: {
+            text: "(ano)",
+            offsetX: 0,
+            offsetY: 0,
+            style: {
+              color: undefined,
+              fontSize: "12px",
+              fontFamily: "Helvetica, Arial, sans-serif",
+              fontWeight: 400,
+              cssClass: "apexcharts-yaxis-title",
+            },
+          },
+          labels: {
+            rotate: 0,
+          },
         },
       },
     };
@@ -205,35 +238,6 @@ export default {
           ...{
             xaxis: {
               categories: data.metadata.map((item) => item.ano),
-              title: {
-                text: "(quantidade)",
-                offsetX: 0,
-                offsetY: 0,
-                style: {
-                  color: undefined,
-                  fontSize: "12px",
-                  fontFamily: "Helvetica, Arial, sans-serif",
-                  fontWeight: 100,
-                  cssClass: "apexcharts-xaxis-title",
-                },
-              },
-            },
-            yaxis: {
-              title: {
-                text: "(ano)",
-                offsetX: 0,
-                offsetY: 0,
-                style: {
-                  color: undefined,
-                  fontSize: "12px",
-                  fontFamily: "Helvetica, Arial, sans-serif",
-                  fontWeight: 400,
-                  cssClass: "apexcharts-yaxis-title",
-                },
-              },
-              labels: {
-                rotate: 0,
-              },
             },
           },
         };
