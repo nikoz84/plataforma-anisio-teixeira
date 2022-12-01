@@ -1,10 +1,8 @@
 <template>
   <div class="q-gutter-md q-mt-sm q-pl-sm">
     <div class="q-mb-md">
-      <div class="text-h5 title-page text-primary separatriz">
-        Dashboard
-      </div>
-      <div class=" separatriz-6"></div>
+      <div class="text-h5 title-page text-primary separatriz">Dashboard</div>
+      <div class="separatriz-6"></div>
     </div>
 
     <div class="flex q-gutter-x-sm q-gutter-y-lg q-mt-md">
@@ -12,11 +10,15 @@
         <ConteudosPorAno :isDashboard="true"></ConteudosPorAno>
       </div>
       <div>
-        <AplicativosMaisVisualizados :isDashboard="true"></AplicativosMaisVisualizados>
+        <AplicativosMaisVisualizados
+          :isDashboard="true"
+        ></AplicativosMaisVisualizados>
       </div>
 
       <div>
-        <CatalogacaoMensalPorUsuario :isDashboard="true"></CatalogacaoMensalPorUsuario>
+        <CatalogacaoMensalPorUsuario
+          :isDashboard="true"
+        ></CatalogacaoMensalPorUsuario>
       </div>
       <div>
         <CatalogacaoTotalMensal :isDashboard="true"></CatalogacaoTotalMensal>
@@ -60,10 +62,9 @@ import {
   CatalogacaoTotalMensal,
   ConteudosMaisBaixados,
   TagsMaisProcuradas,
-  TiposDeMidia
+  TiposDeMidia,
 } from "@components/dashboard";
 import ConteudosMaisAcessados from "../components/dashboard/ConteudosMaisAcessados.vue";
-
 
 export default {
   name: "Dashboard",
@@ -83,7 +84,12 @@ export default {
     ConteudosMaisBaixados,
     ConteudosMaisAcessados,
     TagsMaisProcuradas,
-    TiposDeMidia
+    TiposDeMidia,
   },
 };
 </script>
+<style scoped>
+.text-h5 {
+  line-height: 3rem;
+}
+</style>
