@@ -7,7 +7,6 @@ use App\Http\Controllers\ApiController;
 use App\Services\DashboardFiltros;
 use App\Services\DashboardData;
 
-
 class DashboardController extends ApiController
 {
     public function getCards()
