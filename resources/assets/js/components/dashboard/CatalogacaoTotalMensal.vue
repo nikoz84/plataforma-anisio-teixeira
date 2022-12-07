@@ -10,42 +10,71 @@
       <div class="text-dark text-h6">Filtros</div>
       <div class="q-gutter-md row items-start">
         <div style="min-width: 150px; max-width: 200px">
-          <q-select v-model="mesMultiple" multiple label-color="primary" :options="mapOptionsMes" use-chips stack-label
-            label="Filtrar por meses" />
+        <q-input v-model="start" filled type="date" clearable />
+    </div>
+    <div style="min-width: 150px; max-width: 200px">
+        <q-input v-model="end" filled type="date" clearable />
         </div>
         <div style="min-width: 150px; max-width: 200px">
-          <q-select v-model="anoMultiple" multiple label-color="primary" :options="MapOptionsAnos" use-chips stack-label
-            label="Filtrar por anos" />
-        </div>
-        <div style="min-width: 150px; max-width: 200px">
-          <q-btn color="primary" label="Pesquisar" size="md" @click="pesquisarFiltros()" />
+          <q-btn class="col" 
+          color="primary" 
+          label="Pesquisar" 
+          @click="getDataTable" />
+                    <q-btn class="col" color="secondary" :to="buttonRedirect.url">
+                        {{ buttonRedirect.label }}
+                    </q-btn>
         </div>
       </div>
     </q-card-section>
 
-    <q-card-section v-if="!isDashboard" horizontal class="q-ma-sm"
-      style="border: 1px solid rgba(0, 0, 0, 0.12); min-height: 650px">
+    <q-card-section
+      v-if="!isDashboard"
+      horizontal
+      class="q-ma-sm"
+      style="border: 1px solid rgba(0, 0, 0, 0.12); min-height: 650px"
+    >
       <q-card-section>
-        <q-table flat dense :data="dataTable" :columns="columns" color="primary" row-key="name"
-          :pagination="{ rowsPerPage: 20 }">
+        <q-table
+          flat
+          dense
+          :data="dataTable"
+          :columns="columns"
+          color="primary"
+          row-key="name"
+          :pagination="{ rowsPerPage: 20 }"
+        >
         </q-table>
-        <q-btn color="primary" icon-right="archive" label="Exportar em .csv" no-caps @click="exportToCsv" />
+        <q-btn
+          color="primary"
+          icon-right="archive"
+          label="Exportar em .csv"
+          no-caps
+          @click="exportToCsv"
+        />
       </q-card-section>
       <q-separator vertical />
       <q-card-section class="q-table">
-        <VueApexCharts height="100%" :options="chartOptions" :series="mapSeries" />
+        <VueApexCharts
+          height="100%"
+          :options="chartOptions"
+          :series="mapSeries"
+        />
       </q-card-section>
     </q-card-section>
 
     <q-card-section v-if="isDashboard" style="min-height: 450px">
-      <VueApexCharts height="100%" :options="chartOptions" :series="mapSeries" />
+      <VueApexCharts
+        height="100%"
+        :options="chartOptions"
+        :series="mapSeries"
+      />
     </q-card-section>
 
-    <q-card-actions>
-      <q-btn color="primary" class="full-width" :to="buttonRedirect.url" size="sm">
+<q-card-actions v-if="isDashboard">
+    <q-btn color="primary" class="full-width" :to="buttonRedirect.url" size="sm">
         {{ buttonRedirect.label }}
-      </q-btn>
-    </q-card-actions>
+    </q-btn>
+</q-card-actions>
   </q-card>
 </template>
 
@@ -59,7 +88,7 @@ export default {
     VueApexCharts,
   },
   props: ["isDashboard"],
-  data () {
+  data() {
     return {
       columns: [
         {
@@ -79,6 +108,10 @@ export default {
       dataTable: [],
       mapSeries: [],
       render: false,
+      start:'',
+      end:'',
+      filtroOrdenarPor: [],
+      ordenarPor:null,
       // Inicio da configuração do gráfico
       chartOptions: {
         chart: {
@@ -101,26 +134,35 @@ export default {
     };
   },
   computed: {
-    buttonRedirect () {
-      return this.isDashboard
-        ? {
-          label: "Ver relatório completo",
-          url: "/admin/dashboard/catalogacao-total-mensal",
-        }
-        : { label: "Voltar", url: "/admin/dashboard/listar" };
-    },
+      buttonRedirect () {
+          return this.isDashboard ?
+              { label: 'Ver relatório completo', url: '/admin/dashboard/catalogacao-total-mensal' } :
+              { label: 'Voltar', url: '/admin/dashboard/listar' }
+      }
   },
-  created () {
+  created() {
     this.getDataTable();
+    this.getFiltros();
   },
   methods: {
-    exportToCsv () {
+    exportToCsv() {
       exportTable(this.dataTable, this.columns);
     },
+      async getDataTable () {
+          this.render = false;
+          this.$q.loading.show();
+          const { data } = await axios.get(`/dashboard/catalogacao-total-mensal`, {
+              params: {
+                  start: this.start,
+                  end: this.end,
+                  ordenarPor: this.ordenarPor,
+              },
+          })
 
-    async getDataTable () {
-      this.$q.loading.show();
-      const { data } = await axios.get(`/dashboard/catalogacao-total-mensal`);
+          this.prepararDados(data)
+          this.$q.loading.hide();
+      },
+      async prepararDados (data) {
       if (data.success) {
         this.dataTable = data.metadata;
         // define as as cetegorias com o spread operator (...)
@@ -223,12 +265,18 @@ export default {
             data: data.metadata.map((item) => item.quantidade),
           },
         ];
-        // renderiza
-        this.render = data.success;
-      }
-      this.$q.loading.hide();
+        
+        this.render = true;
+    }
     },
-  },
+    async getFiltros () {
+        const { data } = await axios.get(`/dashboard/filtros/catalogacao-total-mensal`);
+
+        if (data.success) {
+            this.filtroOrdenarPor = data.metadata.ordenarPor;
+        }
+    }
+}
 };
 </script>
 <style scoped>
