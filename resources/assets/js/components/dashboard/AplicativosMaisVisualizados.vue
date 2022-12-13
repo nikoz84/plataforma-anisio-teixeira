@@ -86,7 +86,7 @@ export default {
                 },
                 plotOptions: {
                     bar: {
-                        horizontal: true,
+                        horizontal: false,
                     },
                 },
                 dataLabels: {
