@@ -13,10 +13,10 @@ class IatDocsController extends Controller
     {
         $path = Storage::disk('iat-docs')->path($id);
 
-        // iat-docs/diref
         $files = File::allFiles($path);
 
+        $directories = Storage::allDirectories();
 
-        return view('pages.iatDocs', ['documentos' => $files]);
+        return view('pages.iatDocs', ['documentos' => $files, 'diretorios' => $directories]);
     }
 }

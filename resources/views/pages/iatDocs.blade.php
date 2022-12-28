@@ -9,10 +9,22 @@
 </head>
 
 <body>
-    @foreach ($documentos as $documento)
-        {{ $documento }}
-        <a href="#">{{ url("documentos/{$documento}") }}</a>
-    @endForeach
+
+    @foreach ($diretorios as $diretorio)
+        <p>{{ class_basename($diretorio) }}</p>
+        @foreach ($documentos as $documento)
+            <p>{{ basename($documento) }}</p>
+            <input type="text" value="{{ $documento }}" id="caminho-{{ $loop->index }}">
+            <button onclick="copiarCaminho({{ $loop->index }})">Copiar link</button>
+        @endforeach
+    @endforeach
 </body>
 
 </html>
+<script>
+    function copiarCaminho(indice) {
+        var input = document.getElementById('caminho-' + indice);
+        input.select();
+        document.execCommand('copy');
+    }
+</script>
