@@ -138,7 +138,7 @@ return [
 
         'iat-docs' => [
             'driver' => 'local',
-            'root' => storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'conteudos' . DIRECTORY_SEPARATOR . 'iat-docs'),
+            'root' => storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'conteudos' . DIRECTORY_SEPARATOR . 'conteudos-digitais' . DIRECTORY_SEPARATOR . 'iat-docs'),
             'url' => env('APP_URL') . '/storage/conteudos/iat-docs',
             'visibility' => 'public',
 

@@ -9,20 +9,14 @@ use Illuminate\Support\Facades\Storage;
 
 class IatDocsController extends Controller
 {
-    public function iatDocs($rand = false)
+    public function iatDocs($id)
     {
-        $path = $this->storage::disk('iat-docs');
-        $path = $path->getDriver()->getAdapter()->getPathPrefix();
+        $path = Storage::disk('iat-docs')->path($id);
+
+        // iat-docs/diref
         $files = File::allFiles($path);
 
-        if (!$rand) {
-            return collect($files)->map(function ($file) {
-                return Storage::disk('iat-docs')->url("{$file->getFilename()}");
-            });
-        }
 
-        return collect($files)->map(function ($file) {
-            return Storage::disk('iat-docs')->url("{$file->getFilename()}");
-        })->shuffle();
+        return view('pages.iatDocs', ['documentos' => $files]);
     }
 }
