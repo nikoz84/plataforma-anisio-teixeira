@@ -13,10 +13,31 @@ class IatDocsController extends Controller
     {
         $path = Storage::disk('iat-docs')->path($id);
 
-        $files = File::allFiles($path);
+        return view('pages.iatDocs', ['root' => $this->lerDiretorio($path), 'subdiretorios' => $this->lerSubDiretorio($path)]);
+    }
 
-        $directories = Storage::allDirectories();
+    public function lerDiretorio($folder)
+    {
+        $arquivos = collect([]);
 
-        return view('pages.iatDocs', ['documentos' => $files, 'diretorios' => $directories]);
+        //Lista todos os arquivos
+        $files = File::files($folder);
+        $arquivos->put($folder, $files);
+        return $arquivos;
+    }
+
+    public function lerSubDiretorio($path)
+    {
+
+        $folders = File::directories($path, true);
+        $files = collect([]);
+
+
+        foreach ($folders as $folder) {
+
+            $files->put($folder, $this->lerDiretorio($folder));
+        }
+
+        return $files;
     }
 }
