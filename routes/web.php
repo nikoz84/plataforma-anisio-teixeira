@@ -24,7 +24,7 @@ Route::get('/docs', function (Request $request) {
 */
 
 /** Iat Docs  */
-Route::get('/iat-docs/{id}', [IatDocsController::class, 'iatDocs']);
+Route::get('/iat-docs/{id}', [IatDocsController::class, 'diretorio']);
 
 
 /** Redireção de páginas antigas */

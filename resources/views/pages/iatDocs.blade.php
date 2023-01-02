@@ -21,12 +21,14 @@
             </p>
         @endforeach
     @endforeach  --}}
-    @foreach ($root as $key => $file)
-        Nome da pasta: {{ basename($key) }}<br />
+    @foreach ($root as $path)
+        Nome da pasta:<br />
+
+        @foreach ($root as $key => $files)
+            {{ $key }}<br />
+        @endforeach
     @endforeach
-    @foreach ($subdiretorios as $diretorio)
-        {{ $diretorio }}
-    @endforeach
+
 
 </body>
 
