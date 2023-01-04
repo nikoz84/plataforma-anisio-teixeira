@@ -9,25 +9,26 @@
 </head>
 
 <body>
+    <ul>
+        @foreach ($root as $key => $value )
+        <li>
+            <strong>
+            Nome da pasta: {{ $key->name }}<br />
+    </strong>
+       
+            @foreach ($tree as $value)
+                  <p>
+            <input type="text" value="{{ $value }}" id="caminho-{{ $loop->index }}">
+            <button onclick="copiarCaminho({{ $loop->index }})">Copiar link</button>
+        </p>
+            @endforeach
+      
 
-    {{--  @foreach ($diretorio as $folder)
-        <strong>
-            Nome da pasta: {{ basename($folder) }}<br />
-        </strong>
-        @foreach ($arquivos as $file)
-            <p>
-                <input type="text" value="{{ $file }}" id="caminho-{{ $loop->index }}">
-                <button onclick="copiarCaminho({{ $loop->index }})">Copiar link</button>
-            </p>
-        @endforeach
-    @endforeach  --}}
-    @foreach ($root as $path)
-        Nome da pasta:<br />
-
-        @foreach ($root as $key => $files)
-            {{ $key }}<br />
-        @endforeach
-    @endforeach
+               
+            </li>
+            @endforeach
+        </ul>
+    
 
 
 </body>
