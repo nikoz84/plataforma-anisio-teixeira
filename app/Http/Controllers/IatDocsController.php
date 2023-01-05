@@ -12,11 +12,12 @@ class IatDocsController extends Controller
 {
     public function diretorio($id)
     {
-        $path = null;
-        if ($id) {
-            $path = Storage::disk('iat-docs')->path($id);
+
+        if (!Storage::disk('iat-docs')->exists($id)) {
+            return response('Não existe');
         }
 
+        $path  = Storage::disk('iat-docs')->path($id);
 
         return view('pages.iatDocs', [
             'diretorio' => $this->lerRaiz($path),
