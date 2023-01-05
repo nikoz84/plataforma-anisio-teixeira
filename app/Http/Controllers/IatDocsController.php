@@ -47,7 +47,7 @@ class IatDocsController extends Controller
         return collect([
             'name' => $file->getFilename(),
             'extension' => $file->getExtension(),
-            'size' => $file->getSize(),
+            'size' => bytes_to_human($file->getSize()),
             'url' => Storage::disk('iat-docs')->url($url)
         ]);
     }

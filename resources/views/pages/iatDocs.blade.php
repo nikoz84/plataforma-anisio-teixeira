@@ -12,10 +12,13 @@
 
 <body>
     <section class="container">
-        <h5 class="mt-5">Listar todos os arquivos da para raiz {{ $diretorio->folder_name }}</h5>
+        <h5 class="mt-5">Listar todos os arquivos da para raiz <b
+                class="text-primary">{{ $diretorio->folder_name }}</b></h5>
         <ul>
             @foreach ($diretorio->files as $file)
-                <li><a href="{{ $file->get('url') }}" download> {{ $file->get('name') }} </a> - {{ $file->get('size') }}
+                <li>
+                    <a href="{{ $file->get('url') }}" download> {{ $file->get('name') }} </a> -
+                    {{ $file->get('size') }}
                 </li>
             @endforeach
         </ul>
