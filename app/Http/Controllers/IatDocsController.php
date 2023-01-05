@@ -5,77 +5,69 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Contracts\Filesystem\Factory;
+use Illuminate\Filesystem\Filesystem;
 
 
 class IatDocsController extends Controller
 {
     public function diretorio($id)
     {
-        // Pega o diretorio principal
-        $path = Storage::disk('iat-docs')->path($id);
+        $path = null;
+        if ($id) {
+            $path = Storage::disk('iat-docs')->path($id);
+        }
+
+
         return view('pages.iatDocs', [
-            'root' => $path, 'tree' => $this->lerDiretorio($path)
+            'diretorio' => $this->lerRaiz($path),
+            'subdiretorios' => $this->lerSubDiretorio($path),
         ]);
     }
 
-
-
-    public function lerDiretorio($folder)
+    public function lerRaiz($path)
     {
-        // Obtém uma lista de todos os arquivos na pasta raiz
-        $rootFiles = File::allFiles($folder);
+        $basename = basename($path);
 
-
-        // Obtém uma lista de todas as subpastas na pasta raiz
-        $rootSubFolders = File::directories($folder);
-
-
-        //Carrega uma lista 
-        $tree = [];
-
-        // Adiciona os arquivos da pasta raiz à lista
-        $tree = array_merge([$folder, $rootFiles]);
-        // dd($tree);
-
-        // Percorre as subpastas da pasta raiz
-        foreach ($rootSubFolders as $subfolder) {
-
-            // Obtém uma lista de todos os arquivos na subpasta atual
-            $subfolderFiles = File::files($subfolder);
-            // dd($subfolderFiles);
-        }
-        // Adiciona as subpastas da subpasta atual à lista
-        $tree = array_merge($tree, $subfolderFiles);
-
-        // Obtém uma lista de todas as subpastas da subpasta atual
-        $subSubfolders = File::directories($subfolder);
-
-        // Adiciona as subpastas da subpasta atual à lista
-        $tree = array_merge($tree, $subSubfolders);
-
-        // Repete o processo para cada uma das subpastas da subpasta atual
-        foreach ($subSubfolders as $subSubfolder) {
-            $subSubfolderFiles = File::files($subSubfolder);
-            $tree = array_merge($tree, $subSubfolderFiles);
-        }
-        // dd($tree);
-        return $tree;
+        return (object)[
+            'folder' => $path,
+            'folder_name' => $basename,
+            'files' => collect(File::files($path))->map(function ($file) {
+                return $this->metadata($file);
+            })
+        ];
     }
 
+    public function metadata($file, $path = '')
+    {
+        $filename = $file->getFilename();
+        $subdiretorio = DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $filename;
+        $url = $path ? $subdiretorio : $filename;
 
-    // public function lerSubDiretorio($path)
-    // {
+        return collect([
+            'name' => $file->getFilename(),
+            'extension' => $file->getExtension(),
+            'size' => $file->getSize(),
+            'url' => Storage::disk('iat-docs')->url($url)
+        ]);
+    }
 
-    //     $folders = File::directories($path, true);
+    public function lerSubDiretorio($path)
+    {
 
-    //     $files = collect([]);
+        $folders = collect(File::directories($path, true));
 
-    //     foreach ($folders as $folder) {
-    //         //Metodo put define chave e valor fornecidos na coleção
-    //         $files->put($folder, $this->lerDiretorio($folder));
-    //     }
-    //     dd($files);
-    //     return $files->all();
-    // }
+        return $folders->map(function ($folder) {
+            $basename = basename($folder);
+
+            return (object) [
+                'folder' => $folder,
+                'folder_name' => $basename,
+                'files' => collect(File::files($folder))->map(
+                    function ($file) use ($basename) {
+                        return $this->metadata($file, $basename);
+                    }
+                )
+            ];
+        });
+    }
 }

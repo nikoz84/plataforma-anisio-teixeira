@@ -147,9 +147,8 @@ trait FileSystemLogic
     public function getImagesGallery($rand = false)
     {
         $path = $this->storage::disk('galeria');
-        $path = self::windowsDirectory(
-            $path->getDriver()->getAdapter()->getPathPrefix()
-        );
+        $path = $path->getDriver()->getAdapter()->getPathPrefix();
+        
         $files = File::allFiles($path);
 
         if (! $rand) {

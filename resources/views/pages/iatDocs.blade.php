@@ -9,27 +9,29 @@
 </head>
 
 <body>
+    <h5>Listar todos os arquivos da para raiz {{ $diretorio->folder_name }}</h5>
     <ul>
-        @foreach ($root as $key => $value )
-        <li>
-            <strong>
-            Nome da pasta: {{ $key->name }}<br />
-    </strong>
-       
-            @foreach ($tree as $value)
-                  <p>
-            <input type="text" value="{{ $value }}" id="caminho-{{ $loop->index }}">
-            <button onclick="copiarCaminho({{ $loop->index }})">Copiar link</button>
-        </p>
-            @endforeach
-      
+        @foreach ($diretorio->files as $file)
+            <li><a href="{{ $file->get('url') }}" download> {{ $file->get('name') }} </a> - {{ $file->get('size') }}</li>
+        @endforeach
+    </ul>
 
-               
+    <h5>Lista de subdiretorios</h5>
+    <ul>
+        @foreach ($subdiretorios as $subdiretorio)
+            <li>
+                {{ $subdiretorio->folder_name }}
+                <ul>
+                    @foreach ($subdiretorio->files as $file)
+                        <li>
+                            <a href="{{ $file->get('url') }}" download> {{ $file->get('name') }} </a> -
+                            {{ $file->get('size') }}
+                        </li>
+                    @endforeach
+                </ul>
             </li>
-            @endforeach
-        </ul>
-    
-
+        @endforeach
+        </li>
 
 </body>
 

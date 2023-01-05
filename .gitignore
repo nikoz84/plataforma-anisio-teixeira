@@ -8,6 +8,7 @@
 /storage/*.key
 /storage/dumps/*
 /storage/ssr/*
+/storage/certs/*
 /vendor
 /.idea
 /.vagrant
