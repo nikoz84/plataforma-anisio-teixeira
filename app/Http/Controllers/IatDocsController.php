@@ -18,6 +18,10 @@ class IatDocsController extends Controller
         }
 
         $path  = Storage::disk('iat-docs')->path($id);
+        // Storage::disk('public')->listContents(''));
+        $tree = $this->getTree($path);
+
+        return dd($tree);
 
         return view('pages.iatDocs', [
             'diretorio' => $this->lerRaiz($path),
@@ -70,5 +74,24 @@ class IatDocsController extends Controller
                 )
             ];
         });
+    }
+
+    public function getTree($path)
+    {
+        $tree = [];
+
+        $branch = [
+            'label' => basename($path)
+        ];
+
+        foreach (File::files($path) as $key => $file) {
+            $branch['children'][$key]['file'] = basename($file);
+        }
+
+        foreach (File::directories($path) as $directory) {
+            $branch['children'][] = $this->getTree($directory);
+        }
+
+        return array_merge($tree, $branch);
     }
 }
