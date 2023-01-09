@@ -11,21 +11,31 @@
 </head>
 
 <body>
+
     <section class="container">
-        <h5 class="mt-5">Listar todos os arquivos da para raiz <b
-                class="text-primary">{{ $diretorio->folder_name }}</b></h5>
-        <ul>
-            @foreach ($diretorio->files as $file)
-                <li>
-                    <a href="{{ $file->get('url') }}" download> {{ $file->get('name') }} </a> -
-                    {{ $file->get('size') }}
-                </li>
-            @endforeach
-        </ul>
+        <br />
+
+        @php
+            function showItem($item)
+            {
+                if (array_key_exists('file', $item)) {
+                    echo '<li><a href="' . $item['path'] . '" download><i class="fas fa-file">' . $item['file'] . '</i></a></li>';
+                } elseif (array_key_exists('children', $item)) {
+                    echo '<ul><i class="fas fa-folder">' . $item['label'] . '</i>';
+                    foreach ($item['children'] as $actual) {
+                        showItem($actual);
+                    }
+                    echo '</ul>';
+                }
+            }
+        @endphp
 
         <h5>Lista de subdiretorios</h5>
         <ul>
-            @foreach ($subdiretorios as $subdiretorio)
+            @php
+                showItem($tree);
+            @endphp
+            {{--           @foreach ($subdiretorios as $subdiretorio)
                 <li>
                     {{ $subdiretorio->folder_name }}
                     <ul>
@@ -37,8 +47,19 @@
                         @endforeach
                     </ul>
                 </li>
+            @endforeach --}}
+
+        </ul>
+        {{-- <h5 class="mt-5">Listar todos os arquivos da pasta raiz <b
+               class="text-primary">{{ $diretorio->folder_name }}</b></h5>  --}}
+        {{-- <ul> 
+            @foreach ($diretorio->files as $file)
+                <li>
+                    <a href="{{ $file->get('url') }}" download> {{ $file->get('name') }} </a> -
+                    {{ $file->get('size') }}
+                </li>
             @endforeach
-            </li>
+        </ul>  --}}
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
