@@ -19,7 +19,9 @@
             function showItem($item)
             {
                 if (array_key_exists('file', $item)) {
-                    echo '<li><a href="' . $item['path'] . '" download><i class="fas fa-file">' . $item['file'] . '</i></a></li>';
+                    echo '<li><i class="fas fa-file">' . $item['file'] . '</i></li>';
+                    echo '<input type="text" value="' . $item['path'] . '" id="text_' . $item['file'] . '">';
+                    echo '<button id="button_' . $item['file'] . '" data-link_arquivo="' . $item['path'] . '" onClick="copiar(this)">Copiar link</button>';
                 } elseif (array_key_exists('children', $item)) {
                     echo '<ul><i class="fas fa-folder">' . $item['label'] . '</i>';
                     foreach ($item['children'] as $actual) {
@@ -65,5 +67,22 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
     </script>
 </body>
+<script type="text/javascript" defer>
+    function copiar(item) {
+        navigator.clipboard.writeText(item.dataset.link_arquivo);
+    }
+    //const textInput = document.getElementById('text');
+    //const copyButton = document.getElementById('copy');
+
+    /*copyButton.addEventListener('click', () => {
+        textInput.select();
+        document.execCommand('copy');
+    });*/
+    /*function copiarCaminho(indice) {
+        var input = document.getElementById('caminho-' + indice);
+        input.select();
+        document.execCommand('copy');
+    }*/
+</script>
 
 </html>
