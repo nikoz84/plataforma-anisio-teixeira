@@ -124,7 +124,6 @@
 
     .arquivo {
         border-bottom: 1px solid #dee2e6;
-        /* background-color: #fafbff; */
     }
 
     .arquivo:nth-child(even) {
