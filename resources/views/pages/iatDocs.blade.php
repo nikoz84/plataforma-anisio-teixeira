@@ -24,7 +24,8 @@
             echo '<input hidden type="text" value="' . $item['path'] . '" id="text_' . $item['file'] . '">';
             echo '<i class="muted">
                 <button type="button" class="btn-clipboard mt-0 me-0" aria-label="Copiar Link" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="<b>Copiar link</b>
-                <br>para área de transferência" data-bs-original-title="Copiar Link" id="button_' . $item['file'] . '" data-link_arquivo="' . $item['path'] . '" onClick="copiar(this)">
+                <br>para área de transferência" data-bs-original-title="Copiar Link" id="button_' . $item['file'] . '"
+                 data-link_arquivo="' . $item['url'] . '" onClick="copiar(this)">
                     <i class="bi bi-clipboard" width="48" height="48">
                     </i>
                 </button>
@@ -36,7 +37,8 @@
             <div class="accordion-item">
                 <h2 class="diretorio accordion-header fa-folder fas">
                     <button class="accordion-button text-uppercase 
-                    collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse' . $nmpasta . '" aria-expanded="false" aria-controls="collapseOne">
+                    collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse' . $nmpasta . '" 
+                    aria-expanded="false" aria-controls="collapseOne">
                         ' . $item['label'] . '
                     </button>
                 </h2>

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Filesystem\Filesystem;
-
+use Illuminate\Support\Str;
 
 class IatDocsController extends Controller
 {
@@ -86,16 +86,23 @@ class IatDocsController extends Controller
             'label' => basename($path)
         ];
 
+
         foreach (File::files($path) as $key => $file) {
-
             $branch['children'][$key]['file'] = basename($file);
+            $branch['children'][$key]['label'] = basename($file);
             $branch['children'][$key]['path'] = $file->getPathname();
+            $branch['children'][$key]['url'] = $this->getUrl($file);
         }
-
         foreach (File::directories($path) as $directory) {
             $branch['children'][] = $this->getTree($directory);
         }
 
         return array_merge($tree, $branch);
+    }
+
+    public function getUrl($file)
+    {
+        $url = Str::afterLast($file->getPathname(), 'iat-docs');
+        return Storage::disk('iat-docs')->url($url);
     }
 }
