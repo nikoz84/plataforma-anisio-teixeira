@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\ConteudoController;
 use App\Http\Controllers\RedirectRoutesController;
-
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\IatDocsController;
 
 //use Illuminate\Support\Facades\Auth;
 //use Illuminate\Support\Facades\DB;
@@ -22,6 +22,10 @@ Route::get('/docs', function (Request $request) {
 });
 
 */
+
+/** Iat Docs  */
+Route::get('/iat-docs/{id}', [IatDocsController::class, 'diretorio']);
+
 
 /** Redireção de páginas antigas */
 Route::permanentRedirect('/home/ipes', '/ipes');
@@ -60,5 +64,3 @@ Route::get('/incorporar-conteudo/{id}', [ConteudoController::class, 'incorporarC
 
 Route::get('/{any}', [\App\Http\Controllers\ApiController::class, 'home'])
     ->where('any', '.*');
-
-

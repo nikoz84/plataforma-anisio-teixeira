@@ -3,12 +3,9 @@
         <q-card-section>
             <div class="text-dark text-h6">Filtros</div>
             <div class="q-gutter-md row items-start">
+
                 <div style="min-width: 250px; max-width: 300px">
-                    <q-select v-model="mesMultiple" multiple label-color="primary" :options="meses" use-chips
-                        stack-label label="Filtrar por meses" />
-                </div>
-                <div style="min-width: 250px; max-width: 300px">
-                    <q-select v-model="anoMultiple" multiple label-color="primary" :options="anos" use-chips stack-label
+                    <q-select v-model="ano" multiple label-color="primary" :options="anos" use-chips stack-label
                         label="Filtrar por anos" />
                 </div>
                 <div style="min-width: 250px; max-width: 300px">
@@ -39,30 +36,29 @@
 </template>
 
 <script>
-import { exportFile } from 'quasar';
+import { exportTable } from '@composables/ToCsv';
 import VueApexCharts from "vue-apexcharts";
 
+
 export default {
-    name: 'CatalogacaoMensal',
+    name: 'ConteudosMensal',
     components: {
         VueApexCharts
     },
     data () {
         return {
             columns: [
-
                 { name: 'Titulo', align: 'center', label: 'Títulos', field: 'titulos' },
                 { name: 'Descricao', label: 'Descrição', field: 'descricao' },
                 { name: 'Author', label: 'Autor', field: 'autor' },
                 { name: 'Q.Downloads', label: 'Q.Downloads', field: 'qt_downloads' },
                 { name: 'Qt.Acessos', label: 'Qt.Acessos', field: 'qt_access' },
                 { name: 'Dt.Criacao', label: 'Dt.Criação', field: 'created_at' }
-
             ],
-
+            dataTable: [],
             series: [{ name: "Quantidade", data: [] }],
             mesMultiple: null,
-            anoMultiple: null,
+            ano: null,
             temaMultiple: null,
             tipoConteudoMultiple: null,
             ordenarMultiple: null,
@@ -119,6 +115,14 @@ export default {
                 },
             },
 
+        }
+    },
+    methods: {
+        exportToCsv () {
+            exportTable(this.dataTable, this.columns)
+        },
+        getDataTable () {
+            console.log('oisio')
         }
     }
 }
