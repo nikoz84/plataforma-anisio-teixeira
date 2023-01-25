@@ -79,9 +79,13 @@
     </script>
 </body>
 <script type="text/javascript" defer>
-    function copiar(item) {
-        //navigator.clipboard.writeText(item.dataset.link_arquivo);
-        document.execCommand(item.dataset.link_arquivo);
+    async function copiar(item) {
+        // navigator.clipboard.writeText(item.dataset.link_arquivo);
+        try {
+            await navigator.clipboard.writeText(item.dataset.link_arquivo);
+        } catch (e) {
+            concole.log(e);
+        }
     }
 </script>
 
