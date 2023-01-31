@@ -79,21 +79,11 @@
     </script>
 </body>
 <script type="text/javascript" defer>
-    /*async function copiar(item) {
-        // navigator.clipboard.writeText(item.dataset.link_arquivo);
-        try {
-            await navigator.clipboard.writeText(item.dataset.link_arquivo);
-        } catch (e) {
-            concole.log(e);
-        }
-    }*/
     async function copiar(item) {
         if (navigator.clipboard) {
             try {
                 await navigator.clipboard.writeText(item.dataset.link_arquivo);
-                console.log("Texto copiado com sucesso usando navigator.clipboard.writeText()");
             } catch (e) {
-                console.log("Erro ao copiar o texto usando navigator.clipboard.writeText(): ", e);
                 fallbackCopyText(item.dataset.link_arquivo);
             }
         } else {
@@ -161,16 +151,12 @@
     }
 
     .btn-clipboard {
-        /* display: block; */
-        /* padding: 0.5em; */
-        /* line-height: 1; */
+        
         color: #212529;
         background-color: transparent;
         border: 0;
-        /* border-radius: 0.25rem; */
         font-size: 20px;
         line-height: 1px;
-        /* padding-top: 0.5em; */
         padding-left: 1rem;
     }
 
