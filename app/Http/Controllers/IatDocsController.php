@@ -19,15 +19,12 @@ class IatDocsController extends Controller
 
         $path  = Storage::disk('iat-docs')->path($id);
 
-        // Storage::disk('public')->listContents(''));
         $tree = $this->getTree($path);
-        //dd($tree);
 
         return view('pages.iatDocs', [
             'diretorio' => $this->lerRaiz($path),
             'subdiretorios' => $this->lerSubDiretorio($path),
             'tree'      => $tree
-
         ]);
     }
 
@@ -53,7 +50,6 @@ class IatDocsController extends Controller
         return collect([
             'name' => $file->getFilename(),
             'extension' => $file->getExtension(),
-            //'size' => bytes_to_human($file->getSize()),
             'url' => Storage::disk('iat-docs')->url($url)
         ]);
     }
