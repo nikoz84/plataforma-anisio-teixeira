@@ -79,13 +79,36 @@
     </script>
 </body>
 <script type="text/javascript" defer>
-    async function copiar(item) {
+    /*async function copiar(item) {
         // navigator.clipboard.writeText(item.dataset.link_arquivo);
         try {
             await navigator.clipboard.writeText(item.dataset.link_arquivo);
         } catch (e) {
             concole.log(e);
         }
+    }*/
+    async function copiar(item) {
+        if (navigator.clipboard) {
+            try {
+                await navigator.clipboard.writeText(item.dataset.link_arquivo);
+                console.log("Texto copiado com sucesso usando navigator.clipboard.writeText()");
+            } catch (e) {
+                console.log("Erro ao copiar o texto usando navigator.clipboard.writeText(): ", e);
+                fallbackCopyText(item.dataset.link_arquivo);
+            }
+        } else {
+            fallbackCopyText(item.dataset.link_arquivo);
+        }
+    }
+
+    function fallbackCopyText(text) {
+        var textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        textArea.remove();
+        console.log("Texto copiado com sucesso usando o fallback document.execCommand('copy')");
     }
 </script>
 
