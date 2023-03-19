@@ -7,18 +7,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <script>
-        $(document).ready(function() {
-            $('#inputOculto').hide();
-            $('#folder').change(function() {
-                if ($('#folder').val() == 'novapasta') {
-                    $('#inputOculto').show();
-                } else {
-                    $('#inputOculto').hide();
-                }
-            });
-        });
-    </script>
+
 </head>
 
 <body>
@@ -39,7 +28,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('file.upload') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('file.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label for="folder">Pasta de destino:</label>
@@ -67,7 +56,6 @@
                         <label class="form-label" for="inputFile">Arquivo:</label>
                         <input type="file" name="file" id="file"
                             class="form-control @error('file') is-invalid @enderror" multiple>
-
                         @error('file')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -75,8 +63,6 @@
                     <div class="mb-3">
                         <button type="submit" class="btn btn-success">Upload</button>
                     </div>
-
-
                 </form>
 
             </div>
@@ -85,3 +71,16 @@
 </body>
 
 </html>
+
+<script>
+    $(document).ready(function() {
+        $('#inputOculto').hide();
+        $('#folder').change(function() {
+            if ($('#folder').val() == 'novapasta') {
+                $('#inputOculto').show();
+            } else {
+                $('#inputOculto').hide();
+            }
+        });
+    });
+</script>

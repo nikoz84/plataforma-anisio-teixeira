@@ -16,13 +16,15 @@ class FileUploadController extends Controller
         return view('pages.fileUpload', ['folders' => $folders]);
     }
 
+
+
     public function store(Request $request)
     {
 
         $request->validate([
             'folder' => 'sometimes|required|string|max:255',
-            'new_folder' => 'sometimes|required|string|max:255',
             'file' => 'required|file|max:10240',
+            // 'new_folder' => 'sometimes|required|string|max:255',
         ]);
 
         $folder = $request->input('folder');
@@ -32,6 +34,7 @@ class FileUploadController extends Controller
 
         if ($new_folder) {
             $folder = $new_folder;
+
             if (!file_exists(public_path('storage/conteudos/conteudos-digitais/iat-docs/documentos/' . $folder))) {
                 mkdir(public_path('storage/conteudos/conteudos-digitais/iat-docs/documentos/' . $folder));
             }
@@ -42,6 +45,6 @@ class FileUploadController extends Controller
         }
         $file->move('storage/conteudos/conteudos-digitais/iat-docs/documentos/' . $folder, '' . $file->getClientOriginalName());
 
-        return redirect('/upload-file')->with('success', 'Arquivo enviado com sucesso!');
+        return redirect('/file-upload')->with('success', 'Arquivo enviado com sucesso!');
     }
 }
