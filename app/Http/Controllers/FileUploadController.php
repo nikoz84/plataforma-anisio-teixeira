@@ -24,7 +24,7 @@ class FileUploadController extends Controller
         $request->validate([
             'folder' => 'sometimes|required|string|max:255',
             'file' => 'required|file|max:10240',
-            // 'new_folder' => 'sometimes|required|string|max:255',
+            'new_folder' => 'required_if:folder,novapasta',
         ]);
 
         $folder = $request->input('folder');

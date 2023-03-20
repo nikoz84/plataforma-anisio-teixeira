@@ -66,7 +66,8 @@
                 }
         } @endphp
         <h3 class="text-bg-primary p-3">Estrutura de Arquivos</h3>
-        <a href="#" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
+        <a href="{{ route('form.upload') }}" type="button" class="btn btn-primary" {{--  data-bs-toggle="modal"  --}}
+            {{--  data-bs-target="#uploadModal"  --}}>
             upload
         </a>
         <ul class="p-0 ul-mae">

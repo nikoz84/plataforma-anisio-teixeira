@@ -18,6 +18,11 @@
             <div class="panel-heading text-center mt-5">
                 <h2>Upload de arquivos</h2>
             </div>
+            <div>
+                <a href="{{ route('file.doc') }}" type="button" class="btn btn-primary">
+                    Voltar
+                </a>
+            </div>
 
             <div class="panel-body mt-5">
 
@@ -44,7 +49,7 @@
                     <div class="mb-3" id="inputOculto">
                         <div class="mb-3">
                             <label class="form-label" for="inputNewFolder">Crie uma nova pasta</label>
-                            <input type="text" class="form-control" name="new_folder"
+                            <input type="text" class="form-control" name="new_folder" value="{{ old('new_folder') }}"
                                 placeholder="Nome da Nova Pasta">
                             @error('new_folder')
                                 <span>{{ $message }}</span>
