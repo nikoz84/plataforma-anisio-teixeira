@@ -15,8 +15,8 @@
 
         <div class="panel panel-primary">
 
-            <div class="panel-heading text-center mt-5">
-                <h2>Upload de arquivos</h2>
+            <div class="panel-heading text-left mt-5">
+                <h2 class="text-bg-primary p-3">Upload de arquivos</h2>
             </div>
 
 
