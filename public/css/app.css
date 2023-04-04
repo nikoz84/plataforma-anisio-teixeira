@@ -4038,7 +4038,7 @@ body.platform-ios:not(.native-mobile) .q-dialog__inner--top .q-select__dialog--f
 .q-slider--no-value .q-slider__thumb,
 .q-slider--no-value .q-slider__track {
   visibility: hidden;
-}
+
 .q-slider--focus .q-slider__thumb {
   transform: scale(1);
 }
