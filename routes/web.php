@@ -28,12 +28,14 @@ Route::get('/docs', function (Request $request) {
 Route::get('/iat-docs/{id}', [IatDocsController::class, 'diretorio']);
 Route::get('/iat-docs/documentos/', [IatDocsController::class, 'diretorio'])->name('file.doc');
 
+
+
 /***Iat Docs Upload */
 Route::get('file-upload', [FileUploadController::class, 'index']);
 
-Route::post('upload-file', [FileUploadController::class, 'store'])->name('file.store');
-
 Route::get('file-upload', [FileUploadController::class, 'index'])->name('form.upload');
+
+Route::post('upload-file', [FileUploadController::class, 'store'])->name('file.store');
 
 
 /** Redireção de páginas antigas */

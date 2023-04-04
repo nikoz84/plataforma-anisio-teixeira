@@ -18,13 +18,9 @@
             <div class="panel-heading text-center mt-5">
                 <h2>Upload de arquivos</h2>
             </div>
-            <div>
-                <a href="{{ route('file.doc') }}" type="button" class="btn btn-primary">
-                    Voltar
-                </a>
-            </div>
 
-            <div class="panel-body mt-5">
+
+            <div class="card mt-5 p-5">
 
                 @if ($message = Session::get('success'))
                     <div class="alert alert-success alert-dismissible fade show mb-2" role="alert">
@@ -37,12 +33,12 @@
                     @csrf
                     <div class="mb-3">
                         <label for="folder">Pasta de destino:</label>
-                        <select class="form-select" id="folder" name="folder">
-                            <option value="">-- Selecione --</option>
+                        <select class="form-select form-select-md" id="folder" name="folder">
+                            <option value="" selected disabled>---Selecione---</option>
                             @foreach ($folders as $folder)
                                 <option value="{{ $folder }}">{{ $folder }}</option>
                             @endforeach
-                            <option value="novapasta">Nova pasta</option>
+                            <option value="novapasta">Nova Pasta</option>
                         </select>
                     </div>
 
@@ -65,13 +61,18 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="mb-3">
-                        <button type="submit" class="btn btn-success">Upload</button>
-                    </div>
-                </form>
+                    <div class="mb-3 d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">Upload</button>
 
+                        <a href="{{ route('file.doc') }}" type="button" class="btn btn-primary">
+                            Voltar
+                        </a>
+                    </div>
             </div>
+            </form>
+
         </div>
+    </div>
     </div>
 </body>
 
