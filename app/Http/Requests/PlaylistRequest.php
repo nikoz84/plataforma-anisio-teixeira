@@ -43,7 +43,7 @@ class PlaylistRequest extends FormRequest
      *
      * @return array
      */
-    public function validated()
+    public function validated($key = null, $default = null)
     {
         if (request()->method() == 'POST') {
             $data = collect($this->toArray());
