@@ -19,7 +19,7 @@
     <meta property="og:title" content="@yield('title', $title)" />
     <meta property="og:description" content="@yield('description', $description)" />
     {{-- <meta property=”og:type” content=”{{ $meta->og_type }}”/> --}}
-    <meta property="og:image" content="'image',$image ? $image :" />
+    {{-- <meta property="og:image" content="'image',$image ? $image :" /> --}}
     <meta property="og:locale" content="@yield('locale', $locale)" />
     <meta property="og:sitename" content="@yield('sitename', $sitename)" />
     <meta property="og:url" content="@yield('url', $url)" />
@@ -28,7 +28,7 @@
     <meta name="twitter:site" content="@yield('url', $url)" />
     <meta name="twitter:title" content="@yield('title', $title)">
     <meta name="twitter:creator" content="@yield('author', $author)" />
-    <meta name="twitter:image" content="'image' , $image ? $image :">
+    {{-- <meta name="twitter:image" content="'image' , $image ? $image :"> --}}
 
     <link rel="canonical" href="@yield('canonical', $canonical)">
     <link rel="manifest" href="/manifest.json" preload>

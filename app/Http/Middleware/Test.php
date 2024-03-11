@@ -16,7 +16,7 @@ class Test
      */
     public function handle($request, Closure $next)
     {
-        session()->flash('test', 'text-key-from-middleware');
+        //session()->flash('test', 'text-key-from-middleware');
 
         return $next($request);
     }

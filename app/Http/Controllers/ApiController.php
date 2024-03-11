@@ -8,6 +8,7 @@ use Illuminate\Http\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Request;
 use Jaybizzle\CrawlerDetect\CrawlerDetect;
+use Illuminate\Support\Facades\Config;
 
 class ApiController extends Controller
 {
@@ -23,7 +24,7 @@ class ApiController extends Controller
 
     public function __construct(Request $request, CrawlerDetect $crawlerDetect)
     {
-        $this->seo = new SearchEngineOptimization($request);
+        //$this->seo = new SearchEngineOptimization($request);
         $this->crawlerDetect = $crawlerDetect;
         $this->request = $request;
     }
@@ -35,14 +36,24 @@ class ApiController extends Controller
      */
     public function home()
     {
-        $data = $this->seo->getDefaultData();
+       // $data = $this->seo->getDefaultData();
         //$crawler = 'Mozilla/5.0 (compatible; aiHitBot/2.9; +https://www.aihitdata.com/about)';
 
-        if ($this->crawlerDetect->isCrawler()) {
-            $data = $this->seo->getMetadata();
+        // if ($this->crawlerDetect->isCrawler()) {
+        //     $data = $this->seo->getMetadata();
 
-            $url = $this->request::fullUrl();
-        }
+        //     $url = $this->request::fullUrl();
+        // }
+        $data = [
+            'title' => Config::get('seo.title'),
+            'author' => Config::get('seo.author'),
+            'url' => $this->request::fullUrl(),
+            'description' => Config::get('seo.description'),
+            'keywords' => Config::get('seo.keywords'),
+            'canonical' => Config::get('seo.canonical'),
+            'locale' => Config::get('seo.locale'),
+            'sitename' => Config::get('seo.sitename'),
+        ];;
 
         return view('index', $data);
     }
@@ -60,24 +71,5 @@ class ApiController extends Controller
             'max' => 'O número máximo de caracteres para este campo é de :max',
             'mimes' => 'Formato do arquivo é incorreto',
         ];
-    }
-
-    private function getHtmlFromPuppeteer()
-    {
-        /*
-            $response = Http::get('http://localhost:4000/ssr', [
-                'url' => $url
-            ]);
-            */
-        //$ssr_content = file_get_contents($ssr_server);
-        //
-        // Did we get the content?
-        //
-        /*
-            if ($response->getStatusCode() != 500) {
-                echo $response->getContent();
-                die;
-            }
-            */
     }
 }
