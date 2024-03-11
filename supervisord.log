@@ -1,0 +1,12 @@
+2024-03-11 16:58:05,536 INFO Set uid to user 0 succeeded
+2024-03-11 16:58:05,542 INFO supervisord started with pid 1
+2024-03-11 16:58:06,545 INFO spawned: 'apache' with pid 7
+2024-03-11 16:58:06,550 INFO spawned: 'cron' with pid 9
+2024-03-11 16:58:07,604 INFO success: apache entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-03-11 16:58:07,605 INFO success: cron entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-03-11 17:01:33,949 INFO reaped unknown pid 379 (exit status 0)
+2024-03-11 17:01:55,995 INFO reaped unknown pid 389 (exit status 0)
+2024-03-11 17:02:36,075 INFO reaped unknown pid 413 (exit status 0)
+2024-03-11 17:18:45,914 INFO reaped unknown pid 582 (exit status 0)
+2024-03-11 17:30:40,184 INFO reaped unknown pid 693 (exit status 0)
+2024-03-11 17:31:07,241 INFO reaped unknown pid 719 (exit status 0)

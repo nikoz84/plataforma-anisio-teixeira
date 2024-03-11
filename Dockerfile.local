@@ -1,0 +1,67 @@
+FROM composer:latest as vendor
+
+FROM node:18 AS node
+FROM php:8.2.8-apache as base
+
+ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV ACCEPT_EULA=Y
+ENV DEBIAN_FRONTEND=noninteractive
+WORKDIR /var/www/html
+
+COPY --from=vendor /usr/bin/composer /bin/composer
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
+
+RUN apt-get update && apt-get install -y apt-utils libpq-dev \
+    gnupg2 \
+    libzip-dev \
+    nano \
+    vim \
+    cron \
+    supervisor \
+    git \
+    libwebp-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libmcrypt-dev \
+    libgd-dev \
+    jpegoptim \
+    optipng \
+    pngquant \
+    gifsicle \
+    libxml2-dev
+
+# PHP Extensions
+RUN docker-php-ext-configure zip
+RUN docker-php-ext-configure gd --enable-gd --with-webp --with-jpeg --with-freetype
+RUN docker-php-ext-install -j$(nproc) exif gd zip pdo pdo_pgsql ftp bcmath xml
+RUN pecl install xdebug && docker-php-ext-enable xdebug \
+    && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.mode=coverage" >> /usr/local/etc/php/conf.d/xdebug.ini
+
+RUN a2enmod rewrite
+
+RUN mkdir -p /var/log/supervisor
+COPY ./docker/SUPERVISOR/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+RUN printf 'upload_max_filesize = 16M \npost_max_size = 64M\n' > /usr/local/etc/php/conf.d/uploads.ini
+
+# Desativa o limite de memória e Remove o limite de tempo de execução
+RUN printf '%s\n%s\n' "max_execution_time = -1" "memory_limit = -1" > /usr/local/etc/php/conf.d/memory.ini
+
+RUN (crontab -l ; echo "* * * * * cd /var/www/html && /usr/local/bin/php artisan schedule:run >> /dev/null 2>&1") | crontab
+RUN printf '[PHP]\ndate.timezone = "America/Bahia"\n' > /usr/local/etc/php/conf.d/tzone.ini
+
+COPY ./docker/APACHE/000-default.conf /etc/apache2/sites-available
+COPY ./docker/SUPERVISOR/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+COPY --chown=www-data:www-data . .
+
+RUN npm install -g npx
+RUN git config --global --add safe.directory /var/www/html
+
+CMD ["supervisord","-c","/etc/supervisor/conf.d/supervisord.conf"]
