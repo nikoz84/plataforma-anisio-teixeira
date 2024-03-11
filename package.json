@@ -23,7 +23,7 @@
     "es6-promise": "^4.2.8",
     "laravel-mix": "^5.0.9",
     "lodash": "^4.17.20",
-    "node-sass": "^7.0.0",
+    "node-sass": "^7.0.3",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.43.5",
     "sass-loader": "^7.3.1",
