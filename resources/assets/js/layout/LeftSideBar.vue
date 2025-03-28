@@ -206,7 +206,7 @@ export default {
   },
   methods: {
     goToColaborativus () {
-      window.open("http://colaborativus.pat.educacao.ba.gov.br", "_blank");
+      window.open("http://colaborativus.educacao.ba.gov.br", "_blank");
     },
   },
 };
